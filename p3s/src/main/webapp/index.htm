@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+		<!--styling-->
+
+		<link rel="stylesheet" type="text/css" href="styles/normalize.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+		<!--angular-->
+
+		<base href="/">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/1.1.1/angular-chart.min.js"></script>
+
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+
+		
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.0/moment.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.js"></script>
+
+		<script src="http://localhost:8080/p3sweb/scripts/app.js"></script>
+
+		<title>Patent Place</title>
+
+	</head>
+
+	<body ng-app="myApp">
+
+		<header ng-controller="dashboard">
+
+			<div class="container">
+				<div>
+					<a ui-sref="user-profile">User profile</a>
+					<p>EST <span id="estClock"></span></p>
+					<p>CET <span id="cetClock"></span></p>
+				</div>
+				<p><span>{{todayFxRate}}</span><span><i class="{{fxindicator}}"></i></span><span>{{yestFxRate}}</span></p>
+				</div>
+			</div>
+
+			
+
+		</header>
+
+		<main class="container">
+			<nav>
+				<ul>
+  					<a ui-sref="patents">Patents</a>
+					<a ui-sref="transactions">Transactions</a>
+				</ul>
+			</nav>	
+			<section ui-view>
+			  
+			</section>
+		</main>
+
+	 	
+	 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>	
+	</body>
+
+</html>

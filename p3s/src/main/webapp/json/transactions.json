@@ -1,0 +1,25 @@
+{
+	"transactions": [
+		{
+			"transId": "T4397",
+			"patentTotal": "3",
+			"transDate": "13/05/2016",
+			"cost": "$6, 400",
+			"status": "In progress"
+		},
+		{
+			"transId": "T2397",
+			"patentTotal": "1",
+			"transDate": "11/06/2015",
+			"cost": "$4, 500",
+			"status": "Failed"
+		},
+		{
+			"transId": "T8397",
+			"patentTotal": "2",
+			"transDate": "01/10/2016",
+			"cost": "$3, 600",
+			"status": "In progress"
+		}
+	]
+}

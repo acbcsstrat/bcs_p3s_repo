@@ -1,0 +1,28 @@
+{
+	"patents": [
+		{
+			"appNo": "B1287346",
+			"clientRef": "#23981",
+			"costNow": "$1, 340",
+			"costEnd": "June 9, 2016",
+			"costNext": "£1, 900",
+			"renewDate": "Oct 31st, 2016"
+		},
+		{
+			"appNo": "C1287346",
+			"clientRef": "#23981",
+			"costNow": "$1, 340",
+			"costEnd": "June 9, 2016",
+			"costNext": "£1, 900",
+			"renewDate": "Oct 31st, 2016"
+		},
+		{
+			"appNo": "Y1287346",
+			"clientRef": "#23981",
+			"costNow": "$1, 340",
+			"costEnd": "June 9, 2016",
+			"costNext": "£1, 900",
+			"renewDate": "Oct 31st, 2016"
+		}
+	]
+}

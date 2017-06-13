@@ -1,0 +1,26 @@
+<aspectj>
+<aspects>
+<aspect name="com.bcs.p3s.model.Patent_Roo_Jpa_ActiveRecord"/>
+<aspect name="com.bcs.p3s.model.P3SUser_Roo_Jpa_Entity"/>
+<aspect name="com.bcs.p3s.model.Patent_Roo_ToString"/>
+<aspect name="com.bcs.p3s.controller.web.BusinessController_Roo_Controller"/>
+<aspect name="com.bcs.p3s.controller.web.P3SUserController_Roo_Controller"/>
+<aspect name="com.bcs.p3s.model.Patent_Roo_Jpa_Entity"/>
+<aspect name="com.bcs.p3s.model.Business_Roo_ToString"/>
+<aspect name="com.bcs.p3s.controller.web.PatentController_Roo_Controller"/>
+<aspect name="com.bcs.p3s.model.Patent_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.Business_Roo_JavaBean"/>
+<aspect name="com.bcs.p3s.model.P3SUser_Roo_Finder"/>
+<aspect name="com.bcs.p3s.model.P3SUser_Roo_Jpa_ActiveRecord"/>
+<aspect name="com.bcs.p3s.model.P3SUser_Roo_JavaBean"/>
+<aspect name="com.bcs.p3s.model.P3SUser_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.controller.web.ApplicationConversionServiceFactoryBean_Roo_ConversionService"/>
+<aspect name="com.bcs.p3s.model.Business_Roo_Jpa_Entity"/>
+<aspect name="com.bcs.p3s.model.Business_Roo_Jpa_ActiveRecord"/>
+<aspect name="com.bcs.p3s.model.Business_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.Patent_Roo_JavaBean"/>
+<aspect name="com.bcs.p3s.model.P3SUser_Roo_ToString"/>
+<aspect name="com.bcs.p3s.model.Patent_Roo_Finder"/>
+</aspects>
+</aspectj>
+

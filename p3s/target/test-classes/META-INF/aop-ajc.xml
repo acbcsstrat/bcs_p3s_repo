@@ -1,0 +1,17 @@
+<aspectj>
+<aspects>
+<aspect name="com.bcs.p3s.model.BusinessIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.P3SUserDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.BusinessIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.BusinessDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.P3SUserIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.PatentIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.PatentDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.BusinessDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.P3SUserDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.PatentIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.PatentDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.P3SUserIntegrationTest_Roo_IntegrationTest"/>
+</aspects>
+</aspectj>
+
