@@ -1,3 +1,13 @@
+/**
+ * 
+ */
+/**
+ * @author merinp
+ *
+ *handler class for dealing with redirection to index.htm after successful login
+ */
+
+
 package com.bcs.p3s.security;
 
 import java.io.IOException;
@@ -14,37 +24,28 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 
-public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler  {
+
+public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler  {
 
 	
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-	private RequestCache requestCache = new HttpSessionRequestCache();
+	
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, 
 		      HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		SavedRequest savedRequest = requestCache.getRequest(request, response);
-		if (savedRequest == null) {
-			String targetUrl = determineTargetUrl(authentication);
-			
-			if (response.isCommitted()) {
-	            
-	            return;
-	        }
-			
-			//SavedRequest savedRequest = requestCache.getRequest(request, response);
-			redirectStrategy.sendRedirect(request, response, targetUrl);
-		}
 		
-        // Use the DefaultSavedRequest URL
-        String targetUrl = savedRequest.getRedirectUrl();
-        
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+		
+		String targetUrl = determineTargetUrl(authentication);
+			
+		if (response.isCommitted()) {
+	            
+	           return;
+	    }
+		redirectStrategy.sendRedirect(request, response, targetUrl);
+		
 		
 	}
 	
@@ -93,17 +94,6 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
 		this.redirectStrategy = redirectStrategy;
 	}
-
-
-	public RequestCache getRequestCache() {
-		return requestCache;
-	}
-
-
-	public void setRequestCache(RequestCache requestCache) {
-		this.requestCache = requestCache;
-	}
-	
 	
 
 }
