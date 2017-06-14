@@ -1,3 +1,4 @@
+// Andy initial Git test - remove this soon
 package com.bcs.p3s.model;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
