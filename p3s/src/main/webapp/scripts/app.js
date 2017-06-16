@@ -13,7 +13,7 @@ app.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', functio
     .state("user-profile", {
         url: "/user-profile",
         templateUrl: "http://localhost:8080/p3sweb/templates/user-profile.htm",
-        controller: "patentCtrl"
+        controller: "userProfileCtrl"
     })
     .state("patents", {
         url: "/patents",
@@ -349,6 +349,70 @@ app.controller('userController', ['$scope', '$http', function($scope, $http) {
     });
 
 }]);
+
+
+app.factory('userProfileService', ['$http', '$q', function($http, $q) {
+
+    var factory = {};
+
+        var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-user/';
+
+        factory.getUser = function() {
+            var deferred= $q.defer();
+            
+            $http.get(REST_SERVICE_URI)
+                .then(function(response){
+                	console.log('success')
+                    deferred.resolve(response.data);
+
+                }, function(errResponse) {
+                    console.log('error');
+                    deferred.reject(errResponse)
+                }
+            );
+            return deferred.promise;
+        }
+
+    return factory;
+
+}])
+
+app.controller('userProfileCtrl', ['$scope', 'userProfileService', function($scope, userProfileService) {
+
+    $scope.fetchUser = function(){
+        userProfileService.getUser()
+            .then(
+            function(d) {
+            	
+                $scope.user = d;
+                // $scope.emailAddress = $scope.user.emailAddress;
+                // $scope.emailAddress = $scope.user.emailAddress;
+                // $scope.firstName = $scope.user.firstName;
+                // $scope.lastName = $scope.user.lastName;
+                // $scope.businessName = $scope.user.businessName;
+                // $scope.phoneNumber = $scope.user.phoneNumber;
+                // $scope.street = $scope.user.street;
+                // $scope.city = $scope.user.city;
+                // $scope.USstate = $scope.user.USstate;
+                // $scope.zip = $scope.user.zip;
+                // $scope.timezone = $scope.user.timezone;
+                // $scope.businessNumber = $scope.user.businessNumber;
+                // $scope.billingStreet = $scope.user.billingStreet;
+                // $scope.billingCity = $scope.user.billingCity;
+                // $scope.billingState = $scope.user.billingState;
+                // $scope.billingZip = $scope.user.billingZip;
+
+                console.log($scope.user)
+            },
+            function(errResponse){
+                console.error('Error while fetching Users');
+            }
+        );
+    }
+
+    $scope.fetchUser();
+
+}])
 
 app.factory('transTabFactory', function() {
 

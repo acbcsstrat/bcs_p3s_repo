@@ -59,6 +59,7 @@ public class UserProfileUI extends Business {
     	this.setBillingState(myBusiness.getBillingState());
     	this.setBillingZip(myBusiness.getBillingZip());
     	this.setIsBillingAddressSame(myBusiness.getIsBillingAddressSame());
+    	this.setBusinessNumber(myBusiness.getBusinessNumber());
 	
 	}
 
