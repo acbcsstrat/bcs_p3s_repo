@@ -44,10 +44,7 @@ public class PatentServiceImpl implements PatentService {
 	}
 	
 
-	public UserProfileUI getUserProfileUI() {
-		UserProfileUI userProfileUI = new UserProfileUI();
-		return userProfileUI; 
-	}
+	
 	
 	
 //	private static final AtomicLong counter = new AtomicLong();

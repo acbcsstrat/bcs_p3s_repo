@@ -23,6 +23,7 @@ import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.service.PatentService;
+import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.util.config.EnvironmentSpecificProperties;
 import com.bcs.p3s.util.config.PropertyReader;
 import com.bcs.p3s.util.lang.Universal;
@@ -31,7 +32,7 @@ import com.bcs.p3s.util.lang.Universal;
 public class UserProfileRestController extends Universal {
  
     @Autowired
-    PatentService patentService;  //Service which will do all data retrieval/manipulation work
+    UserService userService;  //Service which will do all data retrieval/manipulation work
  
     
     //------------------- Retrieve All Patents (For this Business) --------------------------------------------------
@@ -40,7 +41,7 @@ public class UserProfileRestController extends Universal {
     public ResponseEntity<UserProfileUI> getUserProfileUI() {
     	System.out.println("UserProfileRestController : /rest-user/ (get UserProfile) invoked ");
 
-    	UserProfileUI userProfileUI = patentService.getUserProfileUI();
+    	UserProfileUI userProfileUI = userService.getUserProfileUI();
 
         return new ResponseEntity<UserProfileUI>(userProfileUI, HttpStatus.OK);
     }

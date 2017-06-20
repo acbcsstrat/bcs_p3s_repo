@@ -13,7 +13,7 @@ public interface PatentService {
 	List<Patent> listAllPatentsForMyBusiness(); // Possibly unused externally
 	List<PatentUI> listAllPatentUIsForMyBusiness(); 
 	
-	UserProfileUI getUserProfileUI();
+	
 
 	
 	
