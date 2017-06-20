@@ -23,9 +23,12 @@ import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.service.PatentService;
+import com.bcs.p3s.util.config.EnvironmentSpecificProperties;
+import com.bcs.p3s.util.config.PropertyReader;
+import com.bcs.p3s.util.lang.Universal;
  
 @RestController
-public class UserProfileRestController {
+public class UserProfileRestController extends Universal {
  
     @Autowired
     PatentService patentService;  //Service which will do all data retrieval/manipulation work
@@ -38,13 +41,13 @@ public class UserProfileRestController {
     	System.out.println("UserProfileRestController : /rest-user/ (get UserProfile) invoked ");
 
     	UserProfileUI userProfileUI = patentService.getUserProfileUI();
-    	
+
         return new ResponseEntity<UserProfileUI>(userProfileUI, HttpStatus.OK);
     }
  
  
     
-    //-------------------Retrieve Single Patent--------------------------------------------------------
+    //-------------------Retrieve Single User OBSOLETE - see below --------------------------------------------------------
      
     // Tmp fix - in case Patrick invoke Merin's initial API  - ie /rest-user/{user-id} 
     @RequestMapping(value = "/rest-user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

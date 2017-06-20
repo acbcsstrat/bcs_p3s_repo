@@ -10,6 +10,10 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.ManyToMany;
 
 @RooJavaBean
 @RooToString
@@ -80,4 +84,23 @@ public class Patent {
      */
     @NotNull
     private String patentPublicationNumber;
+
+    /**
+     */
+    @NotNull
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Notification> notifications = new ArrayList<Notification>();
+
+
+
+    // Setters pushed to support P3S 'Enums'
+    public void setRenewalStatus(String renewalStatus) {
+    	// Line here - using YET TO BE WRITTEN ENUM. something very much like
+    	// this.renewalStatus = (new PatentRenewalStatusEnum(renewalStatus)).toString();
+    	
+    	this.renewalStatus = renewalStatus;
+    }
+    
+
+
 }

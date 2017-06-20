@@ -1,4 +1,4 @@
-package com.bcs.p3s.util;
+package com.bcs.p3s.util.date;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

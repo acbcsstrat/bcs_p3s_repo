@@ -15,5 +15,6 @@
         <field:display field="renewalYear" id="s_com_bcs_p3s_model_Patent_renewalYear" object="${patent}" z="user-managed"/>
         <field:display field="renewalStatus" id="s_com_bcs_p3s_model_Patent_renewalStatus" object="${patent}" z="user-managed"/>
         <field:display field="patentPublicationNumber" id="s_com_bcs_p3s_model_Patent_patentPublicationNumber" object="${patent}" z="user-managed"/>
+        <field:display field="notifications" id="s_com_bcs_p3s_model_Patent_notifications" object="${patent}" z="OF4f6iAUSWqJvpkk9Ruyd7/2Dss="/>
     </page:show>
 </div>

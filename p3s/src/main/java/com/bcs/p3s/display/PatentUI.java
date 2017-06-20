@@ -11,12 +11,19 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.util.DateUtil;
+import com.bcs.p3s.util.date.DateUtil;
 
 /**
- * Agreed 6th June 2017 that a request for multiple patents would include, within each patent, 
- * all the reuired data for the 'view patent' page.
- * Hence this extended class contains all the notifications, et al
+ * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
+ * 
+ * ITEMS HEREIN NEEDING EXTERNAL SETTING:
+ *	 none (yet)(todo)
+ * 
+ * Further notes specific to this class:
+ * 
+ *   Agreed 6th June 2017 that a request for multiple patents would include, within each patent, 
+ *   all the required data for the 'view patent' page.
+ *   Hence this extended class contains all the notifications, et al
  * 
  * @author andyc
  *

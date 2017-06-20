@@ -22,9 +22,10 @@ import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.service.PatentService;
+import com.bcs.p3s.util.lang.Universal;
  
 @RestController
-public class PatentRestController {
+public class PatentRestController extends Universal {
  
     @Autowired
     PatentService patentService;  //Service which will do all data retrieval/manipulation work
@@ -41,7 +42,14 @@ public class PatentRestController {
     	List<PatentUI> patentUIs = patentService.listAllPatentUIsForMyBusiness();
     	
     	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) ret Qty "+patentUIs.size());
-	//    	if(patentUIs.isEmpty()){
+
+    	
+    	
+    	
+    	
+    	
+    	
+    	//    	if(patentUIs.isEmpty()){
 	//            return new ResponseEntity<List<PatentUI>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
 	//        }
 //        for(Patent p : patents) {
