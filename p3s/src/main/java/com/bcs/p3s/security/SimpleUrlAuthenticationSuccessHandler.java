@@ -25,11 +25,16 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.P3SUser;
+import com.bcs.p3s.session.PostLoginSessionBean;
+
 
 public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler  {
 
 	
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	public HttpSession session;
 	
 	
 	@Override
@@ -44,7 +49,12 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 	            
 	           return;
 	    }
-		redirectStrategy.sendRedirect(request, response, targetUrl);
+		
+		session = populateAuthenticationAttributes(request);
+		if(session != null)
+			redirectStrategy.sendRedirect(request, response, targetUrl);
+		else
+			throw new ServletException();
 		
 		
 	}
@@ -65,6 +75,7 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
             }
         }
  
+        
         if (isUser) {
             return "/index.htm";
         } 
@@ -77,6 +88,29 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
         }
     }
 
+/**
+ * 
+ * 
+ * New method added for handling session
+ * @param authentication
+ * @return
+ */
+	protected HttpSession populateAuthenticationAttributes(HttpServletRequest request) {
+		
+		session = request.getSession(true);
+        PostLoginSessionBean postSession = new PostLoginSessionBean();
+        
+        P3SUser myUser = SecurityUtil.getMyUser();
+        postSession.setUser(myUser);
+    	Business myBusiness = SecurityUtil.getMyBusiness();
+    	postSession.setBusiness(myBusiness);
+        session.setAttribute("postSession",postSession);
+        
+        return session;
+        
+	}
+	
+/** Code changes for populating session variabled end **/	
 	
 	protected void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.persistence.TypedQuery;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,20 +19,36 @@ import com.bcs.p3s.display.UserProfileUI;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
+import com.bcs.p3s.session.PostLoginSessionBean;
 
 @Service("PatentService")
 public class PatentServiceImpl implements PatentService {
 
+	@Autowired
+	HttpSession session;
+	
+	
+	
 	// (Likely) Only used internally (below) -could be protected
 	public List<Patent> listAllPatentsForMyBusiness() { 
     	System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() invoked ");
-
-    	Business myBusiness = SecurityUtil.getMyBusiness();
-        TypedQuery<Patent> tq_patents = Patent.findPatentsByBusiness(myBusiness);
-    	List<Patent> patents = tq_patents.getResultList();
     	
-    	System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() ret Qty "+patents.size());
-        return patents;
+    /** MP170620 Code changes for implementing session starts **/	
+    	List<Patent> patents = null;
+    	if(session != null){
+    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+    	
+    	 	
+	    	TypedQuery<Patent> tq_patents = Patent.findPatentsByBusiness(pLoginSession.getBusiness());
+	    	patents = tq_patents.getResultList();
+	    	
+	    	System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() ret Qty "+patents.size());
+        
+    	}
+    	
+    /** MP170620 Code changes for implementing session ends **/	
+    	
+    	return patents;
 	}
 
 	
@@ -42,7 +61,7 @@ public class PatentServiceImpl implements PatentService {
 		}
 		return patentUIs; 
 	}
-	
+
 
 	
 	
