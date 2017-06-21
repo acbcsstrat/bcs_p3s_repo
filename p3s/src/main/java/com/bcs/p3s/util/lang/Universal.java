@@ -25,7 +25,7 @@ public class Universal extends BcsLogger implements Loggable {
 		return ! isEmpty(val);
 	}
 
-    protected void fail(String message) {
+    public void fail(String message) {
     	logInternalError().fatal(message);
     	throw new P3SRuntimeException(message);
     }

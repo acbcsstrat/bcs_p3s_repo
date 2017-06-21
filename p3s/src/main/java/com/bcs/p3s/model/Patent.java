@@ -5,7 +5,6 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
-import com.bcs.p3s.util.lang.Universal;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -24,7 +23,7 @@ import javax.persistence.ManyToMany;
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord(finders = { "findPatentsByBusiness" })
-public class Patent extends Universal {
+public class Patent {
 
     /**
      */

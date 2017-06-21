@@ -7,7 +7,7 @@ public abstract class P3SAbstractEnum extends Universal {
     protected String value;
 
     
-    protected void fail(String message) {
+    public void fail(String message) {
     	logInternalError().fatal(message);
     	throw new P3SEnumException(message);
     }

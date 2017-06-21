@@ -15,6 +15,7 @@ import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.util.date.DateUtil;
+import com.bcs.p3s.util.lang.Universal;
 
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
@@ -126,7 +127,11 @@ public class PatentUI extends Patent {
 
 			// find existing match, & switch on
 			int imatch = allNotificationUIs.indexOf(matchTarget);
-			if (imatch == -1) fail("NotificationUI handling has failed.");
+//			if (imatch == -1) fail("NotificationUI handling has failed.");
+			if (imatch == -1) {
+				Universal universal = new Universal();
+				universal.fail("NotificationUI handling has failed.");
+			}
 			NotificationUI match = allNotificationUIs.get(imatch);
 			match.setIsOn(true);
 		}
