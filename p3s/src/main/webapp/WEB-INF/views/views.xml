@@ -6,8 +6,8 @@
     <put-attribute name="body" value="/WEB-INF/views/index.jspx"/>
   </definition>
 
-  <definition extends="default" name="dummy">
-    <put-attribute name="body" value="/WEB-INF/views/dummy.jspx"/>
+  <definition extends="default" name="whoami">
+    <put-attribute name="body" value="/WEB-INF/views/whoami.jsp"/>
   </definition>
 
   <definition extends="public" name="dataAccessFailure">

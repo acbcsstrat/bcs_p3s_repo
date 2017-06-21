@@ -2,6 +2,7 @@ package com.bcs.p3s.util.lang;
 
 
 
+import com.bcs.p3s.enump3s.P3SEnumException;
 import com.bcs.p3s.util.log.BcsLogger;
 import com.bcs.p3s.util.log.Loggable;
 
@@ -24,5 +25,9 @@ public class Universal extends BcsLogger implements Loggable {
 		return ! isEmpty(val);
 	}
 
+    protected void fail(String message) {
+    	logInternalError().fatal(message);
+    	throw new P3SRuntimeException(message);
+    }
 	
 }

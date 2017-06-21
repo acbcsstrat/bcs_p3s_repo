@@ -37,8 +37,6 @@ public class PatentRestController extends Universal {
     public ResponseEntity<List<PatentUI>> listAllPatentUIsForBusiness() {
     	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) invoked ");
 
-    	List<Patent> patents = patentService.listAllPatentsForMyBusiness();
-
     	List<PatentUI> patentUIs = patentService.listAllPatentUIsForMyBusiness();
     	
     	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) ret Qty "+patentUIs.size());

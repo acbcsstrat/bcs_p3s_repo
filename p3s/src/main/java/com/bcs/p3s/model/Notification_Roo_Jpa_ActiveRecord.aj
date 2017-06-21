@@ -26,10 +26,6 @@ privileged aspect Notification_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT COUNT(o) FROM Notification o", Long.class).getSingleResult();
     }
     
-    public static List<Notification> Notification.findAllNotifications() {
-        return entityManager().createQuery("SELECT o FROM Notification o", Notification.class).getResultList();
-    }
-    
     public static List<Notification> Notification.findAllNotifications(String sortFieldName, String sortOrder) {
         String jpaQuery = "SELECT o FROM Notification o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {

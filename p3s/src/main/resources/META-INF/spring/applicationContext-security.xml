@@ -21,7 +21,9 @@
         <intercept-url pattern="/**" access="isAuthenticated()" />
         
 	    <session-management>
-	        <concurrency-control max-sessions="1" />
+			<!-- DISABLE concurrency-control during Development 
+				        <concurrency-control max-sessions="1" />
+			 -->
 	    </session-management>
     </http>
  <!-- MP14062017 - Code changes for redirection to index.htm after login starts -->   
@@ -35,7 +37,9 @@
     <!-- Configure Authentication mechanism -->
     <authentication-manager alias="authenticationManager">
 	   <authentication-provider>
-            <password-encoder ref="bcryptEncoder"/>
+            <!--   
+            	DISABLE encrypted passwords during Development <password-encoder ref="bcryptEncoder"/>
+            -->
 		<jdbc-user-service data-source-ref="dataSource"
  
 		   users-by-username-query="

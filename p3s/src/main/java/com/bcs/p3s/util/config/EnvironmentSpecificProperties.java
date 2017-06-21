@@ -37,7 +37,6 @@ public class EnvironmentSpecificProperties extends Universal {
 	 */
 	public EnvironmentSpecificProperties(String propPath, String filename) throws IOException {
 
-		//actmp
 		propertyreader = new PropertyReader(propPath, filename);
 		properties = propertyreader.getAllProperties(); 
 		if (isEmpty(host) || propertyreader==null || properties==null) {

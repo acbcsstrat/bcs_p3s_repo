@@ -90,11 +90,10 @@ public class PropertyReader extends Universal {
 //
 //		try {
 //    		//input = App3.class.getClassLoader().getResourceAsStream(filename);
-////actmp
 //			
 //    		input = getClass().getClassLoader().getResourceAsStream(filename);
 //    		if(input==null){
-//    	            System.out.println(" TODO    actmp Sorry, unable to find " + filename);
+//    	            System.out.println(" TODO    Sorry, unable to find " + filename);
 //    		    return null;
 //    		}
 //			

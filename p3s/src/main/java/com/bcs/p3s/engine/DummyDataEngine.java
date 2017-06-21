@@ -21,34 +21,22 @@ public class DummyDataEngine {
 	public final String WITHHELD = "NOT PROVIDED";
 	
 	
-//	public PatentUI populateExtendedFieldsWithDummyData(Patent patent) {
-	public void populateExtendedFieldsWithDummyData(PatentUI patentUI, Patent patent) {
-		System.out.println("                     DummyDataEngine:populateExtendedFieldsWithDummyData() invoked");
-		
-		// Port across the inherited fields which ARE required
-		patentUI.setPatentApplicationNumber(patent.getPatentApplicationNumber());
-		patentUI.setTitle(patent.getTitle());
-		patentUI.setFilingDate(patent.getFilingDate());
-		patentUI.setPrimaryApplicantName(patent.getPrimaryApplicantName());
-		patentUI.setPatentPublicationNumber(patent.getPatentPublicationNumber());
-		patentUI.setClientRef(patent.getClientRef());
-		patentUI.setShortTitle(patent.getShortTitle());
-		patentUI.setEpoPatentStatus(patent.getEpoPatentStatus());
-		patentUI.setRenewalStatus(patent.getRenewalStatus());
+	public DummyDataEngine() {
+		System.out.println("                     Reminder: Still using DummyDataEngine");
+	}
+	
+	public void populateExtendedPatentFieldsWithDummyData(PatentUI patentUI, Patent patent) {
+		//System.out.println("                     DummyDataEngine:populateExtendedPatentFieldsWithDummyData() invoked");
 		
 		// Those inherited fields NOT required - identify as such
 		// by setting safe (where possible) but obviously Dummy, values
-		patentUI.setBusiness(null);
-		patentUI.setLastRenewedDateExEpo(new Date(0)); 
-		patentUI.setRenewalYear(1970); 
 
 		// Now the additional fields
 		patentUI.setCurrentRenewalCost(new BigDecimal("1.11"));
 		patentUI.setCostBandEndDate(nowPlusNdays(2));
 		patentUI.setRenewalCostNextStage(new BigDecimal("1111111.11"));
+		patentUI.setRenewalDueDate(dummyFilingDateToThisyearRenewDueDate(patentUI.getFilingDate()));
 
-		patentUI.setRenewalDueDate(dummyFilingDateToThisyearRenewDueDate(patent.getFilingDate()));
-				
 	}
 	
 	
@@ -59,22 +47,22 @@ public class DummyDataEngine {
 		int thisyear = c.get(Calendar.YEAR);
 		c.setTime(fd);
 		c.set(Calendar.YEAR, thisyear);
-		System.out.println("                     MID MID DummyDataEngine:filingDateToFutureRenewDueDate("+fd.toString()+") returns "+c.getTime().toString());
+		//System.out.println("                     MID MID DummyDataEngine:filingDateToFutureRenewDueDate("+fd.toString()+") returns "+c.getTime().toString());
 		Date result = this.lastDayofGivenMonth(c);
-		System.out.println("                     DummyDataEngine:dummyFilingDateToThisyearRenewDueDate("+fd.toString()+") returns "+result.toString());
+		//System.out.println("                     DummyDataEngine:dummyFilingDateToThisyearRenewDueDate("+fd.toString()+") returns "+result.toString());
 		return result;
-	}
-
-	public Date OBS_lastDayofThisMonth() {
-		Calendar c = Calendar.getInstance();    
-		c.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));    
-		return c.getTime();
 	}
 
 	public Date lastDayofGivenMonth(Calendar c) {
 		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));    
 		return c.getTime();
 	}
+
+//	public Date OBS_lastDayofThisMonth() {
+//		Calendar c = Calendar.getInstance();    
+//		c.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));    
+//		return c.getTime();
+//	}
 
 	public Date nowPlusNdays(int n) {
 		Calendar c = Calendar.getInstance();    

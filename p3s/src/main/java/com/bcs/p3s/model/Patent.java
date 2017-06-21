@@ -3,6 +3,10 @@ package com.bcs.p3s.model;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
+import com.bcs.p3s.util.lang.Universal;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import javax.persistence.Temporal;
@@ -15,10 +19,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
 
+
+
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord(finders = { "findPatentsByBusiness" })
-public class Patent {
+public class Patent extends Universal {
 
     /**
      */
@@ -92,15 +98,14 @@ public class Patent {
     private List<Notification> notifications = new ArrayList<Notification>();
 
 
-
-    // Setters pushed to support P3S 'Enums'
-    public void setRenewalStatus(String renewalStatus) {
-    	// Line here - using YET TO BE WRITTEN ENUM. something very much like
-    	// this.renewalStatus = (new PatentRenewalStatusEnum(renewalStatus)).toString();
-    	
-    	this.renewalStatus = renewalStatus;
-    }
+    
+    
     
 
+    // Setters pushed to support P3S 'Enums'
+
+    public void setRenewalStatus(String renewalStatus) {
+    	this.renewalStatus = (new RenewalStatusEnum(renewalStatus)).toString();
+    }
 
 }
