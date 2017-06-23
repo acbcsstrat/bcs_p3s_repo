@@ -4,6 +4,7 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -21,10 +22,10 @@ public class Business {
     /**
      */
     @NotNull
-    @Min(4L)
-    @Max(4L)
+    @Min(100L)
+    @Max(9999L)
     private Integer businessPin;
-
+    
     /**
      */
     @NotNull
@@ -83,4 +84,6 @@ public class Business {
      */
     @NotNull
     private Long billingZip;
+
+    
 }

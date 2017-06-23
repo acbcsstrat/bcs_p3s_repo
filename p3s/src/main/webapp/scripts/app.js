@@ -370,8 +370,27 @@ app.factory('userProfileService', ['$http', '$q', function($http, $q) {
                     deferred.reject(errResponse)
                 }
             );
+            
+            
             return deferred.promise;
         }
+        
+        factory.updateUser = function(user) {
+            var deferred = $q.defer();
+            $http.put(REST_SERVICE_URI, user)
+                .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                },
+                function(errResponse){
+                    console.error('Error while creating User');
+                    console.log(errResponse);
+                    deferred.reject(errResponse);
+                }
+            );
+            return deferred.promise;
+        }
+
 
     return factory;
 
@@ -385,23 +404,6 @@ app.controller('userProfileCtrl', ['$scope', 'userProfileService', function($sco
             function(d) {
             	
                 $scope.user = d;
-                // $scope.emailAddress = $scope.user.emailAddress;
-                // $scope.emailAddress = $scope.user.emailAddress;
-                // $scope.firstName = $scope.user.firstName;
-                // $scope.lastName = $scope.user.lastName;
-                // $scope.businessName = $scope.user.businessName;
-                // $scope.phoneNumber = $scope.user.phoneNumber;
-                // $scope.street = $scope.user.street;
-                // $scope.city = $scope.user.city;
-                // $scope.USstate = $scope.user.USstate;
-                // $scope.zip = $scope.user.zip;
-                // $scope.timezone = $scope.user.timezone;
-                // $scope.businessNumber = $scope.user.businessNumber;
-                // $scope.billingStreet = $scope.user.billingStreet;
-                // $scope.billingCity = $scope.user.billingCity;
-                // $scope.billingState = $scope.user.billingState;
-                // $scope.billingZip = $scope.user.billingZip;
-
                 console.log($scope.user)
             },
             function(errResponse){
@@ -409,8 +411,18 @@ app.controller('userProfileCtrl', ['$scope', 'userProfileService', function($sco
             }
         );
     }
+    
+    
+    $scope.submit = function() {
+    	alert("Inside sub,it() in app.js");
+    	userProfileService.updateUser($scope.user);
+        console.log($scope.user.id);
+    }
+    
+    
 
     $scope.fetchUser();
+    
 
 }])
 

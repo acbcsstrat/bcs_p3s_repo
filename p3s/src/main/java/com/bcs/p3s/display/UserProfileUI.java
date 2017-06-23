@@ -26,14 +26,14 @@ import com.bcs.p3s.security.SecurityUtil;
  * 
  * @author andyc
  */
-public class UserProfileUI extends Business {
+public class UserProfileUI {
 
 	// The 4 fields from P3SUser
     private String firstName;
     private String lastName;
     private String emailAddress;
 
-
+    private Business business;
 	
 	public UserProfileUI() {
 		//DummyDataEngine dummy = new DummyDataEngine();
@@ -47,19 +47,7 @@ public class UserProfileUI extends Business {
     	this.setEmailAddress(myUser.getEmailAddress());
     	
     	// Fields from Business
-    	this.setBusinessName(myBusiness.getBusinessName());
-    	this.setPhoneNumber(myBusiness.getPhoneNumber());
-    	this.setTimezone(myBusiness.getTimezone());
-    	this.setStreet(myBusiness.getStreet());
-    	this.setCity(myBusiness.getCity());
-    	this.setUSstate(myBusiness.getUSstate());
-    	this.setZip(myBusiness.getZip());
-    	this.setBillingStreet(myBusiness.getBillingStreet());
-    	this.setBillingCity(myBusiness.getBillingCity());
-    	this.setBillingState(myBusiness.getBillingState());
-    	this.setBillingZip(myBusiness.getBillingZip());
-    	this.setIsBillingAddressSame(myBusiness.getIsBillingAddressSame());
-    	this.setBusinessNumber(myBusiness.getBusinessNumber());
+    	this.business = myBusiness;
 	
 	}
 
@@ -86,5 +74,26 @@ public class UserProfileUI extends Business {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
+
+
+	public Business getBusiness() {
+		return business;
+	}
+
+
+	public void setBusiness(Business business) {
+		this.business = business;
+	}
+
+
+
+
+	
+
+
+
+	
+	
+	
 
 }
