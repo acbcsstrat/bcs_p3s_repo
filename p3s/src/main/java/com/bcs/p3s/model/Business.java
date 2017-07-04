@@ -63,6 +63,7 @@ public class Business {
 
     /**
      */
+    @NotNull
     private Boolean isBillingAddressSame;
 
     /**

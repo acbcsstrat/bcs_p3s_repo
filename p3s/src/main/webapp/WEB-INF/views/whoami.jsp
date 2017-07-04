@@ -26,8 +26,12 @@
 	<td>${numpatents}</td>
  </tr>
  <tr>
+	<td>&nbsp;</td>
 	<td></td>
-	<td></td>
+ </tr>
+ <tr>
+	<td>Website <br/> build timestamp</td>
+	<td>${buildtimestamp}</td>
  </tr>
 </table>
 

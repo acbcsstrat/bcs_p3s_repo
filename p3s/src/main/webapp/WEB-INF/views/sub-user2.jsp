@@ -14,6 +14,57 @@
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	
+	<script>
+	$(document).ready(function(){
+		
+		
+		var $select = $('#timezone');
+		
+		//request the JSON data and parse into the select element
+		$.ajax({
+		  type:"GET",
+		  url: '../public/timezones.json',
+		  dataType:'JSON',
+		  success:function(data){
+			//alert("Inside success");
+		    $select.html('');
+		    $.each(data.timezones, function(key, val){
+		      $select.append('<option id="' + val.abbr + '">' + val.abbr + '</option>');
+		    })
+		  },
+		  error:function(){
+		    alert("Inside error");
+		  }
+		});
+		
+		
+		 $('#isBillingAddressSame').change(function(){
+			alert("Inside function");
+		     if($(this).is(":checked")){
+		    	 //$(this).val('true');
+		    	 $('#isBillingAddressSame').prop('value', "true");
+		    	 alert($('#isBillingAddressSame').prop('value'));
+		         alert("Value set as true");
+		     }else{
+		    	
+		    	 $('#isBillingAddressSame').prop('value', "false");
+		    	 alert($('#isBillingAddressSame').prop('value'));
+		     }
+		}); 
+		
+		
+        /* $("#isBillingAddressSame").is(':checked', function(){
+        	alert("Inside again");
+            $("#isBillingAddressSame").prop('value', 'true');
+        }); */
+  
+		
+	}); 
+	
+	</script>	
+	
 </head>
 <body>
 	<c:if test="${not empty error}">
@@ -122,9 +173,8 @@
 				<div class="form-group row">
 					<label class="col-md-5" for="timezone">Time Zone</label>
 					<div class="col-md-2">
-						<select class="form-control" ng-model="selected_timezone" ng-options="x.abbr for x in timezone">
-							<option class="form-control" value='${user.business.timezone}'></option>
-						</select>
+						<input readonly="readonly" class="form-control" id="timezone" name="business.timezone" value='${user.business.timezone}' ng-model="selected_timezone" ng-options="x.abbr for x in timezone"/>
+						
 					</div>
 					
 				</div>

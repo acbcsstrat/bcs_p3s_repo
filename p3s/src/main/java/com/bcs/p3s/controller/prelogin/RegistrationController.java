@@ -35,15 +35,18 @@ public class RegistrationController extends Universal{
     
     DummyDataEngine engine = new DummyDataEngine();
     
-	 
+	 /**
+	  * 
+	  * 
+	  * Implementing as web request with jsp (WEB-INF\views\new-user.jsp) -- >
+	  * Similar to /rest-user/ POST request (1.1 Create Primary Account in API doc)
+	  */
 	@RequestMapping(value = "/prelogin/new-user", method = RequestMethod.POST)
-    public String createNewUser(@Valid P3SUser p3sUser, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+	public String createNewUser(@Valid P3SUser p3sUser, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		
 		
 		/** Checking whether email Address already exist **/
 		boolean isNewUser = userService.checkUser(p3sUser.getEmailAddress());
-		
-		
 		
 		if(isNewUser){
 			
@@ -52,7 +55,7 @@ public class RegistrationController extends Universal{
 	        
 	        Business business = p3sUser.getBusiness();
 	        //hardcoded values .. need to be changed later 
-	        business.setTimezone("utc");
+	        //business.setTimezone("utc");   /* commenting as value set from dropdown */
 	        business.setIsBillingAddressSame(false);
 	        //hardcoded values end
 	        
@@ -141,6 +144,14 @@ public class RegistrationController extends Universal{
 		return "sub-user";
 	}
 	
+	
+	/**
+	  * 
+	  * 
+	  * Implementing as web request with jsp WEB-INF\views\sub-user.jsp
+	  * Similar to /rest-subsequent-user-step1/ POST request (1.2  Create subordinate account stage 1  in API doc)
+	  */
+	
 	@RequestMapping(value = "/prelogin/sub-user", method = RequestMethod.POST)
     public String createSubUserStep1(@Valid Business business, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest)  {
 		
@@ -180,6 +191,14 @@ public class RegistrationController extends Universal{
 		return "sub-user2";
         
 	}
+	
+	
+	/**
+	  * 
+	  * 
+	  * Implementing as web request with jsp (WEB-INF\views\sub-user2.jsp)
+	  * Similar to /rest-subsequent-user-step2/ POST request (1.3  Create subordinate account stage 2  in API doc)
+	  */
 	
 	@RequestMapping(value = "/prelogin/sub-user2", method = RequestMethod.POST)
     public String createSubUserStep2(@Valid P3SUser user, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest){

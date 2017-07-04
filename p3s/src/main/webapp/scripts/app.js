@@ -15,6 +15,11 @@ app.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', functio
         templateUrl: "http://localhost:8080/p3sweb/templates/user-profile.htm",
         controller: "userProfileCtrl"
     })
+    .state("list-users", {
+        url: "/list-users",
+        templateUrl: "http://localhost:8080/p3sweb/templates/list-users.htm",
+        controller: "userProfileListCtrl"
+    })
     .state("patents", {
         url: "/patents",
         templateUrl: "http://localhost:8080/p3sweb/templates/patents/patent-nav.htm",
@@ -413,6 +418,27 @@ app.factory('userProfileService', ['$http', '$q', function($http, $q) {
             return deferred.promise;
         }
 
+        factory.getUsers = function() {
+        	//alert("Inside getUsers");
+        	
+        	var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-users/';
+            var deferred= $q.defer();
+            
+            $http.get(REST_SERVICE_URI)
+                .then(function(response){
+                	console.log('success')
+                    deferred.resolve(response.data);
+                	console.log('exit')
+
+                }, function(errResponse) {
+                    console.log('error');
+                    deferred.reject(errResponse)
+                }
+            );
+            
+            console.log('returning')
+            return deferred.promise;
+        }
 
     return factory;
 
@@ -453,6 +479,29 @@ app.controller('userProfileCtrl', ['$scope', 'userProfileService', function($sco
 }])
 
 
+app.controller('userProfileListCtrl', ['$scope', 'userProfileService', function($scope, userProfileService) {
+	//alert("Inside common");
+	 
+	 
+    $scope.fetchUsers = function(){
+    	//alert("Inside fetchUsers");
+    	userProfileService.getUsers()
+            .then(
+            function(d) {
+            	
+                $scope.users = d;
+                console.log($scope.users.firstName)
+            },
+            function(errResponse){
+                console.error('Error while fetching Users');
+            }
+        );
+    }
+    
+    $scope.fetchUsers();
+   
+    
+}]);
 
 
 app.controller('addPatentCtrl', ['$scope', 'addPatentService', '$state', function($scope, addPatentService, $state) {

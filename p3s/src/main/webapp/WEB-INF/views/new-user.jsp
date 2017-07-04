@@ -12,19 +12,50 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	
 	<script>
-	 $(function() {
-		$('#isBillingAddressSame').change(function(){
+	$(document).ready(function(){
+		
+		
+		var $select = $('#timezone');
+		
+		//request the JSON data and parse into the select element
+		$.ajax({
+		  type:"GET",
+		  url: '../public/timezones.json',
+		  dataType:'JSON',
+		  success:function(data){
+			//alert("Inside success");
+		    $select.html('');
+		    $.each(data.timezones, function(key, val){
+		      $select.append('<option id="' + val.abbr + '">' + val.abbr + '</option>');
+		    })
+		  },
+		  error:function(){
+		    alert("Inside error");
+		  }
+		});
+		
+		
+		 $('#isBillingAddressSame').change(function(){
 			alert("Inside function");
 		     if($(this).is(":checked")){
 		    	 //$(this).val('true');
-		    	 $('#isBillingAddressSame').attr('value', true);
-		          alert("Value set as true");
+		    	 $('#isBillingAddressSame').prop('value', "true");
+		    	 alert($('#isBillingAddressSame').prop('value'));
+		         alert("Value set as true");
 		     }else{
-		    	 //$(this).val('false');
-		    	 $('#isBillingAddressSame').attr('value', false);
-		          alert("Value set as false");
+		    	
+		    	 $('#isBillingAddressSame').prop('value', "false");
+		    	 alert($('#isBillingAddressSame').prop('value'));
 		     }
-		});
+		}); 
+		
+		
+        /* $("#isBillingAddressSame").is(':checked', function(){
+        	alert("Inside again");
+            $("#isBillingAddressSame").prop('value', 'true');
+        }); */
+  
+		
 	}); 
 	
 	</script>	
@@ -145,8 +176,8 @@
 				<div class="form-group row">
 					<label class="col-md-5" for="timezone">Time Zone</label>
 					<div class="col-md-2">
-						<select class="form-control" ng-model="selected_timezone" ng-options="x.abbr for x in timezone">
-							<option class="form-control" ng-model="user.timezone"></option>
+						<select class="form-control" id="timezone" name="business.timezone" ng-model="selected_timezone" ng-options="x.abbr for x in timezone">
+							
 						</select>
 					</div>
 					
@@ -157,11 +188,13 @@
 		<div class="col-offset-6 col-md-6">
 			<fieldset>
 				<legend class="font-weight-bold">Billing address</legend>
-				<input type="checkbox" name="business.isBillingAddressSame" id="isBillingAddressSame" checked="checked"/> <p>Is billing address same as your business address? </p>
+				<div class="form-group row"><input type="checkbox" name="business.isBillingAddressSame" id="isBillingAddressSame" checked="checked" value="true"/> &nbsp; 
+					 Is billing address same as your business address?
+				</div> 
 				<div class="form-group row">
 					<label class="col-md-5" for="billingStreet">Street</label>
 					<div class="col-md-7">
-						<input type="text" name="business.billingStreet" class="form-control" value='${p3sUser.business.billingStreet}' id="billing_street" required>
+						<input type="text" name="business.billingStreet" id="billingStreet" class="form-control" value='${p3sUser.business.billingStreet}' id="billing_street" required>
 					</div>
 				</div>
 				<div class="form-group row">
