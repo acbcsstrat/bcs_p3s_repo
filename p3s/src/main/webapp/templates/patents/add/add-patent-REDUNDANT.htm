@@ -1,0 +1,33 @@
+<div class="row" ng-controller="patentCtrl">
+	<div class="col-md-6">
+		<form ng-submit="submit()">
+			<div class="form-group">
+				<label class="col-xs-4" for="patentApplicationNumber">Application No</label>
+				<input ng-model="patent.patentApplicationNumber" class="form-control" type="text" name="patentApplicationNumber">
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4" for="clientRef">Client Reference</label>
+				<input ng-model="patent.clientRef" class="form-control" type="text" name="clientRef">
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4" for="currentRenewalCost">Cost to now</label>
+				<input ng-model="patent.currentRenewalCost" class="form-control" type="text" name="currentRenewalCost">
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4" for="costBandEndDate">Cost band end date</label>
+				<input ng-model="patent.costBandEndDate" class="form-control" type="text" name="costBandEndDate">
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4" for="renewalCostNextStage">Cost next</label>
+				<input ng-model="patent.renewalCostNextStage" class="form-control" type="text" name="renewalCostNextStage">
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4" for="renewalDueDate">Renewal due date</label>
+				<input ng-model="patent.renewalDueDate" class="form-control" type="text" name="renewalDueDate">
+			</div>
+			<div class="form-group">
+				<button id="submit" type="submit">Add</button>
+			</div>									
+		</form>
+	</div>
+</div>

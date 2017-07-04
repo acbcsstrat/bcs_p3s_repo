@@ -1,8 +1,10 @@
 package com.bcs.p3s.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.persistence.TypedQuery;
@@ -14,12 +16,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.UserProfileUI;
+import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.lang.Universal;
 
 @Service("PatentService")
 public class PatentServiceImpl implements PatentService {
@@ -30,7 +36,7 @@ public class PatentServiceImpl implements PatentService {
 	
 	
 	// (Likely) Only used internally (below) -could be protected
-	public List<Patent> listAllPatentsForMyBusiness() { 
+	protected List<Patent> listAllPatentsForMyBusiness() { 
     	System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() invoked ");
     	
     /** MP170620 Code changes for implementing session starts **/	
@@ -63,6 +69,112 @@ public class PatentServiceImpl implements PatentService {
 	}
 
 
+	public PatentUI searchEpoForPatent(String patentApplicationNumber) {
+		PatentUI returnedValue = null;
+
+		DummyDataEngine dummy = new DummyDataEngine();
+		returnedValue = dummy.createDummyPatentUiForSearchAddPatent(patentApplicationNumber);
+		
+		return returnedValue;
+	}
+
+
+	
+
+	
+	/**
+	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications - and, for each, whether it is on or off.
+	 * patent.notifications just holds those that are ON.
+	 * 
+	 * Approach used below: Get ALL into SortSet. Replace those that are ON.
+	 * Sorted by display order
+	 * @param notifications
+	 */
+	public synchronized List<NotificationUI> createNotificationUIs(List<Notification> notifications) {
+
+		List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
+		
+		// Assemble ALL notificationUIs (identifiable by ID)
+		List<Notification> allNotifications = Notification.findAllNotifications();
+		for (Notification anotification : allNotifications) {
+			NotificationUI notificationUI = new NotificationUI(anotification);
+			allNotificationUIs.add(notificationUI);
+		}
+
+		// In below code:
+		//  indexOf relies on equals() in NotificationUI
+		//  Sorting relies on compareTo() in NotificationUI
+		
+		
+		// Switch ON as appropriate
+		for (Notification notification : notifications) { // i.e. each ON notification
+			NotificationUI matchTarget = new NotificationUI(notification);
+
+			// find existing match, & switch on
+			int imatch = allNotificationUIs.indexOf(matchTarget);
+//			if (imatch == -1) fail("NotificationUI handling has failed.");
+			if (imatch == -1) {
+				Universal universal = new Universal();
+				universal.fail("NotificationUI handling has failed.");
+			}
+			NotificationUI match = allNotificationUIs.get(imatch);
+			match.setIsOn(true);
+		}
+
+		// Sort of displayOrder (for UI convenience)
+		Collections.sort(allNotificationUIs);
+		
+//		System.out.println("acdebug - *ALL* notificationUIs after processing");
+//		for (NotificationUI notificationUI : allNotificationUIs) {
+//			System.out.println("          "+notificationUI.getId()+",   "+notificationUI.getIsOn()+",   "+notificationUI.getDisplayOrder()+",    "+notificationUI.getTitle());
+//		}
+		return allNotificationUIs;
+	}
+
+	
+//	public void createNotificationUIs(List<Notification> notifications) {
+//
+//		// Assemble ALL notificationUIs (identifiable by ID)
+//		List<Notification> allNotifications = Notification.findAllNotifications();
+//		for (Notification anotification : allNotifications) {
+//			NotificationUI notificationUI = new NotificationUI(anotification);
+//			allNotificationUIs.add(notificationUI);
+//		}
+//
+//		// In below code:
+//		//  indexOf relies on equals() in NotificationUI
+//		//  Sorting relies on compareTo() in NotificationUI
+//		
+//		
+//		// Switch ON as appropriate
+//		for (Notification notification : notifications) { // i.e. each ON notification
+//			NotificationUI matchTarget = new NotificationUI(notification);
+//
+//			// find existing match, & switch on
+//			int imatch = allNotificationUIs.indexOf(matchTarget);
+////			if (imatch == -1) fail("NotificationUI handling has failed.");
+//			if (imatch == -1) {
+//				Universal universal = new Universal();
+//				universal.fail("NotificationUI handling has failed.");
+//			}
+//			NotificationUI match = allNotificationUIs.get(imatch);
+//			match.setIsOn(true);
+//		}
+//
+//		// Sort of displayOrder (for UI convenience)
+//		Collections.sort(allNotificationUIs);
+//		
+////		System.out.println("acdebug - *ALL* notificationUIs after processing");
+////		for (NotificationUI notificationUI : allNotificationUIs) {
+////			System.out.println("          "+notificationUI.getId()+",   "+notificationUI.getIsOn()+",   "+notificationUI.getDisplayOrder()+",    "+notificationUI.getTitle());
+////		}
+//	}
+
+	
+	
+	
+	
+	
 	
 	
 	

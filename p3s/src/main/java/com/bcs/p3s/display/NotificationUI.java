@@ -37,6 +37,28 @@ public class NotificationUI extends Notification  implements Comparable<Notifica
 		this.setIsOn(false);
 
 	}
+	
+	
+// Created 170703, but immediately redundant (for now)  acTidy
+//	/**
+//	 * Creates a NotificationUI from 'this' NotificationUI
+//	 * 
+//	 * @return the corresponding Notification Object
+//	 */
+//	public Notification toNotification() {
+//		Notification notification  = new Notification();
+//		
+//		notification.setId(this.getId());
+//		notification.setVersion(this.getVersion());
+//		notification.setTitle(this.getTitle());
+//		notification.setDefaultOn(this.getDefaultOn());
+//		notification.setDisplayOrder(this.getDisplayOrder());
+//		notification.setEmailTemplateId(this.getEmailTemplateId());
+//	    
+//		return notification;
+//	}
+
+		
 		
 		
 	// Ordinary getters/setters

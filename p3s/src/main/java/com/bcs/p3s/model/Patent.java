@@ -60,7 +60,7 @@ public class Patent {
 
     /**
      */
-    @NotNull
+//////////    @NotNull
     @Size(max = 20)
     private String shortTitle;
 
@@ -98,8 +98,11 @@ public class Patent {
 
 
     
-    
-    
+//    // 170629 TMP for process new addpatent json data in PatentRestController - provide default constructor
+//    public Patent() {
+//	   	System.out.println(" acTmp - Patent() tmp default constructor " );
+//    }
+//    
 
     // Setters pushed to support P3S 'Enums'
 
@@ -107,4 +110,5 @@ public class Patent {
     	this.renewalStatus = (new RenewalStatusEnum(renewalStatus)).toString();
     }
 
+    
 }
