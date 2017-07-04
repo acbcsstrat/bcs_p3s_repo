@@ -10,7 +10,7 @@ import javax.validation.constraints.Min;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
+@RooJpaActiveRecord(finders = { "findBusinessesByBusinessNumber"})
 public class Business {
 
     /**
