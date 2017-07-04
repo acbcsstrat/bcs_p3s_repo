@@ -48,11 +48,26 @@ app.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', functio
         controller: "patentCtrl"
     })
 
-    .state("patents.add", {
-        url: "/add-patents",
-        templateUrl: "templates/patents/add/add-patent.htm",
-        controller: "patentCtrl"
+
+    
+    .state("search-epo-for-patent", {
+        url: "/search-epo-for-patent",
+        templateUrl: "http://localhost:8080/p3sweb/templates/patents/add/search-epo-for-patent.htm",
+        controller: "addPatentCtrl"
     })
+    .state("add-patent", {
+        url: "/add-patent",
+		params: {
+			obj: null
+		},
+		templateUrl: "http://localhost:8080/p3sweb/templates/patents/add/new-patent-reviewed.htm",
+        controller: "addPatentCtrl"
+    })
+
+    
+    
+    
+    
     .state("transactions", {
         url: "/transactions",
         templateUrl: "templates/transactions/transaction-nav.htm",
@@ -108,7 +123,8 @@ app.factory('loadPatents', function($http, $q) {
 
     factory.fetchAllPatents = function() {
         
-        var deferred = $q.defer();
+    	//alert(' GET ALL');
+    	var deferred = $q.defer();
          $http.get(REST_SERVICE_URI)
             .then(
             function (response) {
@@ -124,17 +140,23 @@ app.factory('loadPatents', function($http, $q) {
     }
 
     factory.createPatent = function(patent) {
+    	alert(' CREATE PATENT');
+    	patent.id = '99';
+    	alert(' CREATE PATENT2');
         var deferred = $q.defer();
         $http.post(REST_SERVICE_URI, patent)
             .then(
             function (response) {
+            	alert(' CREATE PATENT aa ');
                 deferred.resolve(response.data);
             },
             function(errResponse){
+            	alert(' CREATE PATENT vbbb');
                 console.error('Error while creating User');
                 deferred.reject(errResponse);
             }
         );
+    	alert(' CREATE PATENT ccc');
         return deferred.promise;
     }
 
@@ -396,6 +418,10 @@ app.factory('userProfileService', ['$http', '$q', function($http, $q) {
 
 }])
 
+
+
+
+
 app.controller('userProfileCtrl', ['$scope', 'userProfileService', function($scope, userProfileService) {
 
     $scope.fetchUser = function(){
@@ -425,6 +451,108 @@ app.controller('userProfileCtrl', ['$scope', 'userProfileService', function($sco
     
 
 }])
+
+
+
+
+app.controller('addPatentCtrl', ['$scope', 'addPatentService', '$state', function($scope, addPatentService, $state) {
+
+	$scope.goSearchEpo = function() {
+		$state.go('add-patent', {obj: $scope.patent.patentApplicationNumber});
+    }
+	
+    $scope.fetchCandidatePatent = function(){
+    	// why does this get called twice ?
+    	//alert('in fetchCandidatePatent - about to search for '+$state.params.obj);
+    	var searchPatentApplicationNumber = $state.params.obj;
+    	//alert('searchPatentApplicationNumber is also '+searchPatentApplicationNumber);
+
+    	addPatentService.findPatent(searchPatentApplicationNumber)
+        .then(
+	        function(d) {
+	            $scope.patent = d;
+	            console.log('JJJ');
+	            ///console.log($scope.patent)
+	        },
+	        function(errResponse){
+	            console.error('Error while finding patent');
+	        }
+        );
+    }
+
+	
+    $scope.submit = function() {
+    	addPatentService.savePatent($scope.patent);
+    	console.log($scope.patent.patentApplicationNumber);
+
+    	// pmdToDo : Will be code here for: No Match Found. Try again?
+    	
+    	//alert('finally: ToDo - goto dashboard ');
+    	$state.go('patents.list');   //    	/patents/list-patents
+    }
+    
+    $scope.fetchCandidatePatent();
+}])
+
+
+
+
+
+
+
+app.factory('addPatentService', ['$http', '$q', function($http, $q) {
+    var factory = {};
+
+        var REST_SEARCH_PATENT_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-search-patents/';
+
+        factory.findPatent = function(searchName, $scope) {
+            var deferred= $q.defer();
+
+            var fred = REST_SEARCH_PATENT_SERVICE_URI + searchName;
+            
+            $http.get(fred)
+                .then(function(response){
+                	console.log('add patent success');
+                	deferred.resolve(response.data)
+                }, function(errResponse) {
+                    console.log('add patent error');
+                    deferred.reject(errResponse)
+                }
+            );
+            return deferred.promise;
+        }
+
+        
+        
+        var REST_SAVE_PATENT_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-patents/';
+
+        factory.savePatent = function(patent) {
+        	var deferred= $q.defer();
+            $http.post(REST_SAVE_PATENT_SERVICE_URI, patent)
+                .then(function(response){
+                	console.log('save patent success')
+
+                }, function(errResponse) {
+                    console.log('save patent error');
+                    deferred.reject(errResponse)
+                }
+            );
+            return deferred.promise;
+        }
+        return factory;
+
+}])
+
+
+
+
+
+
+
+
+
+
+
 
 app.factory('transTabFactory', function() {
 

@@ -1,11 +1,11 @@
 package com.bcs.p3s.util.random;
 
-public class Random {
+public class RandomGenerator {
 	
 	int seed;
 
     // initial condition of the random number generator
-    public Random(int seed) { this.seed = seed; }
+    public RandomGenerator(int seed) { this.seed = seed; }
 
     public int nextInt(int min, int max) {
         

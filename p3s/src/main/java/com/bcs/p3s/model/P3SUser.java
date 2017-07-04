@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord(finders = { "findP3SUsersByEmailAddress" })
+@RooJpaActiveRecord(finders = { "findP3SUsersByEmailAddress" ,"findP3SUsersByBusiness" })
 public class P3SUser {
 
     /**

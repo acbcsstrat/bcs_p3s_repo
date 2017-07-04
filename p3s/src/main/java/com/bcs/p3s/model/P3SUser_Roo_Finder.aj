@@ -3,11 +3,20 @@
 
 package com.bcs.p3s.model;
 
+import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 privileged aspect P3SUser_Roo_Finder {
+    
+    public static Long P3SUser.countFindP3SUsersByBusiness(Business business) {
+        if (business == null) throw new IllegalArgumentException("The business argument is required");
+        EntityManager em = P3SUser.entityManager();
+        TypedQuery q = em.createQuery("SELECT COUNT(o) FROM P3SUser AS o WHERE o.business = :business", Long.class);
+        q.setParameter("business", business);
+        return ((Long) q.getSingleResult());
+    }
     
     public static Long P3SUser.countFindP3SUsersByEmailAddress(String emailAddress) {
         if (emailAddress == null || emailAddress.length() == 0) throw new IllegalArgumentException("The emailAddress argument is required");
@@ -15,6 +24,29 @@ privileged aspect P3SUser_Roo_Finder {
         TypedQuery q = em.createQuery("SELECT COUNT(o) FROM P3SUser AS o WHERE o.emailAddress = :emailAddress", Long.class);
         q.setParameter("emailAddress", emailAddress);
         return ((Long) q.getSingleResult());
+    }
+    
+    public static TypedQuery<P3SUser> P3SUser.findP3SUsersByBusiness(Business business) {
+        if (business == null) throw new IllegalArgumentException("The business argument is required");
+        EntityManager em = P3SUser.entityManager();
+        TypedQuery<P3SUser> q = em.createQuery("SELECT o FROM P3SUser AS o WHERE o.business = :business", P3SUser.class);
+        q.setParameter("business", business);
+        return q;
+    }
+    
+    public static TypedQuery<P3SUser> P3SUser.findP3SUsersByBusiness(Business business, String sortFieldName, String sortOrder) {
+        if (business == null) throw new IllegalArgumentException("The business argument is required");
+        EntityManager em = P3SUser.entityManager();
+        StringBuilder queryBuilder = new StringBuilder("SELECT o FROM P3SUser AS o WHERE o.business = :business");
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            queryBuilder.append(" ORDER BY ").append(sortFieldName);
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                queryBuilder.append(" ").append(sortOrder);
+            }
+        }
+        TypedQuery<P3SUser> q = em.createQuery(queryBuilder.toString(), P3SUser.class);
+        q.setParameter("business", business);
+        return q;
     }
     
     public static TypedQuery<P3SUser> P3SUser.findP3SUsersByEmailAddress(String emailAddress) {

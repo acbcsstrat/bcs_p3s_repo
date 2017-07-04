@@ -36,19 +36,8 @@ public class UserProfileUI {
     private Business business;
 	
 	public UserProfileUI() {
-		//DummyDataEngine dummy = new DummyDataEngine();
 		
-		P3SUser myUser = SecurityUtil.getMyUser();
-    	Business myBusiness = SecurityUtil.getMyBusiness();
 
-    	// Fields from P3SUser
-    	this.setFirstName(myUser.getFirstName());
-    	this.setLastName(myUser.getLastName());
-    	this.setEmailAddress(myUser.getEmailAddress());
-    	
-    	// Fields from Business
-    	this.business = myBusiness;
-	
 	}
 
 

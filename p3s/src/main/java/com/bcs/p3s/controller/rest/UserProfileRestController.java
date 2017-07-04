@@ -1,5 +1,6 @@
 package com.bcs.p3s.controller.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -36,6 +37,7 @@ public class UserProfileRestController extends Universal {
  
     @Autowired
     UserService userService;  //Service which will do all data retrieval/manipulation work
+  
     @Autowired
     HttpSession session ;
  
@@ -46,7 +48,9 @@ public class UserProfileRestController extends Universal {
     public ResponseEntity<UserProfileUI> getUserProfileUI() {
     	System.out.println("UserProfileRestController : /rest-user/ (get UserProfile) invoked ");
 
-    	UserProfileUI userProfileUI = userService.getUserProfileUI();
+    	 PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+         P3SUser p3sUser = pLoginSession.getUser();
+    	UserProfileUI userProfileUI = userService.getUserProfileUI(p3sUser);
 
         return new ResponseEntity<UserProfileUI>(userProfileUI, HttpStatus.OK);
     }
@@ -86,7 +90,28 @@ public class UserProfileRestController extends Universal {
       		//logging
       	}
     }
+    
+    
+    //-----------------------List all users for my business---------------------------------------------------------------------
  
-
+    @RequestMapping(value = "/rest-users/", method = RequestMethod.GET)
+    public ResponseEntity<List<UserProfileUI>> listUsers() {
+    	
+    	System.out.println("Inside listUsers");
+    	System.out.println("####here comes the session in Controller "+session.getCreationTime() + "id ::" + session.getId());
+    	   	
+    	List<P3SUser> p3sUser = userService.getAllUsers();
+    	
+    	List<UserProfileUI> userProfileUI = new ArrayList<UserProfileUI>();
+    	
+    	for(P3SUser user  : p3sUser){
+    		UserProfileUI userUI = new UserProfileUI();
+    		userUI = userService.getUserProfileUI(user);
+    		userProfileUI.add(userUI);
+    	}
+    	
+        return new ResponseEntity<List<UserProfileUI>>(userProfileUI, HttpStatus.OK);
+    }
+    
  
 }

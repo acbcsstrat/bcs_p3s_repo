@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bcs.p3s.display.UserProfileUI;
-import com.bcs.p3s.email.SendEmail;
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.enump3s.UserStatus;
 import com.bcs.p3s.model.Business;
@@ -207,6 +206,7 @@ public class RegistrationController extends Universal{
 			/**
 			 * Sending email address verification email to user comes here
 			 */
+			uiModel.addAttribute("emailAddress", user.getEmailAddress());  //this line can be removed once email functionality got implemented
 			return "reg-success";
 		}
 		else{

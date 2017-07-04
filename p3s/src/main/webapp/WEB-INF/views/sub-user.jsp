@@ -24,7 +24,7 @@
 	<form  action="<c:url value='/prelogin/sub-user' />" method="POST">
 		<div class="col-md-6">
 			<fieldset>
-				<legend class="font-weight-bold">User Info</legend>
+				<legend class="font-weight-bold">Business Info</legend>
 				<div class="form-group row">
 					<label class="col-md-5" for="businessNumber">Business Number</label>
 					<div class="col-md-7">
@@ -41,6 +41,7 @@
 			
 			<div class="col-offset-6 col-md-6">
 				<button class="btn btn-success" type="submit">Submit</button>
+				<a href="../login">Back</a>
 			</div>
 		</div>
 	</form>

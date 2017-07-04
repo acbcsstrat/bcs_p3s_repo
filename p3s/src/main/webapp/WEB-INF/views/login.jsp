@@ -20,6 +20,13 @@
          <tr>
             <td><input name="submit" type="submit" value="submit" /></td>
          </tr>
+         
+         <tr>
+         	<td>New User? <a href="/p3sweb/prelogin/new-user">Click here</a>	</td>
+         </tr>
+         <tr>
+         	<td>Subordinate User? <a href="/p3sweb/prelogin/sub-user">Click here</a>	</td>
+         </tr>
       </table>
   </form>
 </body>
