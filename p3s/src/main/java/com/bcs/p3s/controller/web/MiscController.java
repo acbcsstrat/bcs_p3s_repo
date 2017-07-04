@@ -14,6 +14,7 @@ import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.service.PatentService;
+import com.bcs.p3s.util.config.BuildinfoPropertyReader;
 
 
 
@@ -32,11 +33,14 @@ public class MiscController {
             Business myBuisness = SecurityUtil.getMyBusiness();
         	List<PatentUI> patentUIs = patentService.listAllPatentUIsForMyBusiness();
 
+        	BuildinfoPropertyReader buildinfoPropertyReader = new BuildinfoPropertyReader();
+        	String buildTimestamp = buildinfoPropertyReader.getBuildTimestamp();
         	
             uiModel.addAttribute("me", me);
             uiModel.addAttribute("myBusiness", myBuisness);
             uiModel.addAttribute("patents", patentUIs);
             uiModel.addAttribute("numpatents", patentUIs.size() );
+            uiModel.addAttribute("buildtimestamp", buildTimestamp );
             
             
             return "whoami";
