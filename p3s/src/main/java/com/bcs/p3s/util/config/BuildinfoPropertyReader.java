@@ -5,8 +5,14 @@ import java.util.Properties;
 
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
+import com.bcs.p3s.util.env.Hostname;
 
 
+
+// acTidy
+// much (all) of this should be subsumed into p3sweb/WEB-INF/classes/buildinfo.properties
+
+// + deal with the late bolt-on - which db being used
 
 
 
@@ -35,23 +41,75 @@ public class BuildinfoPropertyReader extends Universal {
 
 	public String getBuildTimestamp() {
 		String timestamp = null;
+		String filespec = "/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/buildinfo.properties"; // for CCP007
+		
+		String hostname = Hostname.getHostname();
+		System.out.println("Hostname tells me host is "+hostname);
+		if ("reviewsystem".equalsIgnoreCase(hostname)) {
+			filespec = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/buildinfo.properties"; 
+		}
+		
+		
 		try {
-			timestamp = getBuildInfo().getProperty(BUILDINFO_KEY);
+			timestamp = getBuildInfo(filespec).getProperty(BUILDINFO_KEY);
 		} 
 		catch (IOException ioe) {
-			logInternalError().warn("Unable to read properties from "+BUILDINFO_FILENAME);
+			logInternalError().warn("Unable to read properties from "+filespec);
 			ioe.printStackTrace();
 			timestamp = FAIL_MESSAGE; 
 		}
 		return timestamp;
 	}
 
-	
+// acTidy - former tmp whilst discover paths	
+	public Properties getBuildInfo(String filespec) throws IOException {
+		propertyreader = new PropertyReader("", filespec);
+		properties = propertyreader.getAllProperties();
+		return properties;
+	}
 	public Properties getBuildInfo() throws IOException {
 		propertyreader = new PropertyReader(BUILDINFO_LOCATION, BUILDINFO_FILENAME);
 		properties = propertyreader.getAllProperties();
 		return properties;
 	}
 
+
+	
+	
+	public String whichDB() {
+		String dbname = FAIL_MESSAGE;
+		String fullDbStr = "";
+
+		String filespec = "/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/META-INF/spring/database.properties"; // for CCP007
+		
+		String hostname = Hostname.getHostname();
+		if ("reviewsystem".equalsIgnoreCase(hostname)) {
+			filespec = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/database.properties";
+		}
+
+		
+		try {
+			fullDbStr = getBuildInfo(filespec).getProperty("database.url");
+			//	database.url=jdbc:mysql://cc-scrape:3306/p3s
+			if (fullDbStr!=null) {
+				int hh = fullDbStr.lastIndexOf('/');
+				dbname = fullDbStr.substring(hh+1);
+				
+				int ii = fullDbStr.indexOf('/');
+				int jj = fullDbStr.indexOf(":33");
+				String append = " on " + fullDbStr.substring(ii+2, jj);
+				dbname += append;
+				System.out.println("created dbname = "+dbname);
+			}
+		} 
+		catch (IOException ioe) {
+			logInternalError().warn("Unable to read properties from "+filespec);
+			ioe.printStackTrace();
+		}
+		return dbname;
+	}
+	
+	
+	
 	
 }

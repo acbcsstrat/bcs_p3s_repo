@@ -15,6 +15,7 @@ import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.util.config.BuildinfoPropertyReader;
+import com.bcs.p3s.util.env.Hostname;
 
 
 
@@ -35,12 +36,17 @@ public class MiscController {
 
         	BuildinfoPropertyReader buildinfoPropertyReader = new BuildinfoPropertyReader();
         	String buildTimestamp = buildinfoPropertyReader.getBuildTimestamp();
+        	String dbname = buildinfoPropertyReader.whichDB();
+    		String hostname = Hostname.getHostname();
+
         	
             uiModel.addAttribute("me", me);
             uiModel.addAttribute("myBusiness", myBuisness);
             uiModel.addAttribute("patents", patentUIs);
             uiModel.addAttribute("numpatents", patentUIs.size() );
             uiModel.addAttribute("buildtimestamp", buildTimestamp );
+            uiModel.addAttribute("dbname", dbname );
+            uiModel.addAttribute("hostname", hostname );
             
             
             return "whoami";

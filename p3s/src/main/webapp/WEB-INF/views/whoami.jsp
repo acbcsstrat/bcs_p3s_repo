@@ -33,6 +33,14 @@
 	<td>Website <br/> build timestamp</td>
 	<td>${buildtimestamp}</td>
  </tr>
+ <tr>
+	<td>Using dB</td>
+	<td>${dbname}</td>
+ </tr>
+ <tr>
+	<td>Host</td>
+	<td>${hostname}</td>
+ </tr>
 </table>
 
 </body>
