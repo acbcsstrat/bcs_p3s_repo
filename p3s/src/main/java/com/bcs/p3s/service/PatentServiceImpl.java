@@ -28,7 +28,7 @@ import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 
 @Service("PatentService")
-public class PatentServiceImpl implements PatentService {
+public class PatentServiceImpl extends Universal implements PatentService {
 
 	@Autowired
 	HttpSession session;
@@ -51,6 +51,7 @@ public class PatentServiceImpl implements PatentService {
 	    	System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() ret Qty "+patents.size());
         
     	}
+    	else logInternalError().fatal("PatentServiceImpl : listAllPatentsForMyBusiness() has empty session");
     	
     /** MP170620 Code changes for implementing session ends **/	
     	
@@ -78,6 +79,44 @@ public class PatentServiceImpl implements PatentService {
 		return returnedValue;
 	}
 
+
+	
+	public Patent findById(long id) { 
+    	String err = "PatentServiceImpl : findById("+id+") ";
+    	System.out.println(err+"invoked ");
+    	
+    	Patent patent = null;
+    	if(session == null) logInternalError().fatal(err+"has empty session");
+    	else {
+    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+    		Business usersBusiness = pLoginSession.getBusiness();
+    		patent = Patent.findPatent(new Long(id));
+    		if (patent==null) logInternalError().warn(err+"finds no matching patent. {url rewriting?}");
+    		else {
+    			if (patent.getBusiness().getId() != usersBusiness.getId()) logM().warn(err+" rqsted by userId"+pLoginSession.getUser().getId()); 
+    		}
+    	}
+    	return patent;
+	}
+
+	
+
+	public void  deletePatentById(long id) { 
+    	String err = "PatentServiceImpl : deletePatentById("+id+") ";
+    	System.out.println(err+"invoked ");
+    	
+    	Patent patent = null;
+    	if(session == null) logInternalError().fatal(err+"has empty session");
+    	else {
+    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+    		Business usersBusiness = pLoginSession.getBusiness();
+    		patent = Patent.findPatent(new Long(id));
+    		if (patent==null) logInternalError().warn(err+"finds no matching patent. {url rewriting?}");
+    		else {
+    			patent.remove(); 
+    		}
+    	}
+	}
 
 	
 

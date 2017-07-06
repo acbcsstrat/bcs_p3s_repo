@@ -5,8 +5,10 @@ import java.util.List;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.UserProfileUI;
+import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.session.PostLoginSessionBean;
 
 
 
@@ -33,6 +35,24 @@ public interface PatentService {
 	 */
 	public List<NotificationUI> createNotificationUIs(List<Notification> notifications);
 
+
+	/**
+	 * Find Patent given it's ID
+	 * @param id patent id (as long)
+	 * @return the patent - or null (if no match, or fail, or malicious)
+	 */
+	public Patent findById(long id);
+
+	
+
+	/**
+	 * Delete a Patent given it's ID
+	 * @param id patent id (as long)
+	 */
+	public void deletePatentById(long id); 
+
+
+	
 	
 	
 //	Patent findById(long id);

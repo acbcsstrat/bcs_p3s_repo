@@ -55,12 +55,13 @@ public class Patent {
 
     /**
      */
+    // May be Null
     @Size(min = 8, max = 16)
     private String clientRef;
 
     /**
      */
-//////////    @NotNull
+    // May be Null
     @Size(max = 20)
     private String shortTitle;
 

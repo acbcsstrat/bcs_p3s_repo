@@ -42,7 +42,7 @@ public class UserProfileRestController extends Universal {
     HttpSession session ;
  
     
-    //------------------- Retrieve All Patents (For this Business) --------------------------------------------------
+    //------------------- Retrieve deatils for this currently-logged-in User --------------------------------------------------
      
     @RequestMapping(value = "/rest-user/", method = RequestMethod.GET)
     public ResponseEntity<UserProfileUI> getUserProfileUI() {
