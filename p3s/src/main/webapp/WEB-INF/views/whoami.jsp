@@ -30,7 +30,7 @@
 	<td></td>
  </tr>
  <tr>
-	<td>Website <br/> build timestamp</td>
+	<td>Website build timestamp</td>
 	<td>${buildtimestamp}</td>
  </tr>
  <tr>
