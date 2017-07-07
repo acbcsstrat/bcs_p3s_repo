@@ -28,7 +28,7 @@ import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 
 @Service("PatentService")
-public class PatentServiceImpl extends PatentServiceAuthorisationTools implements PatentService {
+public class PatentServiceImpl extends ServiceAuthorisationTools implements PatentService {
 
 	protected String PREFIX = this.getClass().getName() + " : "; 
 
