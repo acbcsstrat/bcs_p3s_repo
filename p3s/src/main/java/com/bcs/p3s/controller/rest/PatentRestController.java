@@ -123,23 +123,78 @@ public class PatentRestController extends Universal {
 	public ResponseEntity<Patent> deletePatent(@PathVariable("id") long id) {
 		log().debug("PatentRestController : /rest-patents/ deletePatent() invoked ");
 	
-		Patent patent = patentService.findById(id);
-		if (patent == null) {
-			System.out.println("Unable to delete. Patent with id " + id + " not found");
-				return new ResponseEntity<Patent>(HttpStatus.NOT_FOUND);
-		    }
-		
-		    patentService.deletePatentById(id);
-		    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
-		}
+	    patentService.deletePatentById(id);
+	    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
+	}
+  
+  
+//formerly 
+//    // Implements API section 2.5
+//    // User has confirmed this is the correct patent. So persist it
+//	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.DELETE)
+//	public ResponseEntity<Patent> deletePatent(@PathVariable("id") long id) {
+//		log().debug("PatentRestController : /rest-patents/ deletePatent() invoked ");
+//	
+//		Patent patent = patentService.findById(id);
+//		if (patent == null) {
+//			System.out.println("Unable to delete. Patent with id " + id + " not found");
+//				return new ResponseEntity<Patent>(HttpStatus.NOT_FOUND);
+//		    }
+//		
+//		    patentService.deletePatentById(id);
+//		    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
+//		}
 
   
   
   
-	//------------------- next ... a Patent --------------------------------------------------------
+    //------------------- Update a Patent --------------------------------------------------------
   
   
-  
+    // Implements API section 2.5
+    // Update Patent: 3 things may be changed: shortTitle, clientRef and which Notifications
+
+	// Cannot PROVE this yet - ASSUME can get a PatentUI, & not the linked list ...
+
+	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.PUT) 
+	public ResponseEntity<PatentUI> updatePatent(@PathVariable("id") long id, @RequestBody PatentUI patentUI) {
+		
+		log().debug("PatentRestController : /rest-patents/ updatePatent() invoked ");
+		Patent updatedPatent = null;
+		try {
+			System.out.println("PatentRestController : /rest-patents/ [PUT] invoked - i.e. UPDATE Patent");
+	
+			Patent existingPatent = patentService.findById(id);
+			if (existingPatent == null) {
+				System.out.println("Unable to update. Patent with id " + id + " not found");
+			} else {
+				updatedPatent = patentService.updatePatent(id, patentUI);
+			}
+
+		
+		
+		
+		} catch (Exception e) {
+			System.out.println("PatentRestController updatePatent() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+
+  		System.out.println(" ");
+  		System.out.println(" ");
+  		System.out.println(" ");
+
+  		
+  		
+		log().debug("PatentRestController : /rest-patents/ updatePatent() completed.");
+	  	if(updatedPatent == null) {
+	  		return new ResponseEntity<PatentUI>(HttpStatus.NOT_FOUND); //You many decide to return HttpStatus.NO_CONTENT
+	  	}
+	  	else {
+	  		PatentUI updatedPatentUI = new PatentUI(updatedPatent);
+	  		return new ResponseEntity<PatentUI>(updatedPatentUI, HttpStatus.OK);
+	  	}
+   }
     
     
     
@@ -147,8 +202,9 @@ public class PatentRestController extends Universal {
     
     
     
+	
     
-    
+	//------------------- next ... a Patent : ARE NO MORE ???  --------------------------------------------------------
     
     
     

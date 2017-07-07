@@ -28,16 +28,18 @@ import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 
 @Service("PatentService")
-public class PatentServiceImpl extends Universal implements PatentService {
+public class PatentServiceImpl extends PatentServiceAuthorisationTools implements PatentService {
 
-	@Autowired
-	HttpSession session;
-	
-	
+	protected String PREFIX = this.getClass().getName() + " : "; 
+
 	
 	// (Likely) Only used internally (below) -could be protected
 	protected List<Patent> listAllPatentsForMyBusiness() { 
-    	System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() invoked ");
+
+		String err = PREFIX+"listAllPatentsForMyBusiness() ";
+		checkNoActionRequired(err);
+
+		log().debug(err+" invoked ");
     	
     /** MP170620 Code changes for implementing session starts **/	
     	List<Patent> patents = null;
@@ -59,7 +61,17 @@ public class PatentServiceImpl extends Universal implements PatentService {
 	}
 
 	
+	
+	
+	
+	
 	public List<PatentUI> listAllPatentUIsForMyBusiness() {
+
+		String err = PREFIX+"listAllPatentUIsForMyBusiness() ";
+		checkNoActionRequired(err);
+
+		log().debug(err+" invoked ");
+    	
 		List<Patent> patents = listAllPatentsForMyBusiness();
 		List<PatentUI> patentUIs = new ArrayList<PatentUI>();
 		for (Patent patent: patents) {
@@ -71,8 +83,13 @@ public class PatentServiceImpl extends Universal implements PatentService {
 
 
 	public PatentUI searchEpoForPatent(String patentApplicationNumber) {
-		PatentUI returnedValue = null;
 
+		String err = PREFIX+"searchEpoForPatent("+patentApplicationNumber+") ";
+		checkNotNull(patentApplicationNumber, err);
+
+		log().debug(err+" invoked ");
+    	
+		PatentUI returnedValue = null;
 		DummyDataEngine dummy = new DummyDataEngine();
 		returnedValue = dummy.createDummyPatentUiForSearchAddPatent(patentApplicationNumber);
 		
@@ -82,8 +99,11 @@ public class PatentServiceImpl extends Universal implements PatentService {
 
 	
 	public Patent findById(long id) { 
-    	String err = "PatentServiceImpl : findById("+id+") ";
-    	System.out.println(err+"invoked ");
+
+		String err = PREFIX+"findById("+id+") ";
+		checkThisIsMyPatent(id, err);
+
+		log().debug(err+" invoked ");
     	
     	Patent patent = null;
     	if(session == null) logInternalError().fatal(err+"has empty session");
@@ -101,25 +121,78 @@ public class PatentServiceImpl extends Universal implements PatentService {
 
 	
 
+// formerly
+	//	public void  deletePatentById(long id) { 
+//    	authReminder();
+//    	//String err = PREFIX+"PatentServiceImpl : deletePatentById("+id+") ";
+//    	String err = PREFIX+"deletePatentById("+id+") ";
+//    	System.out.println(err+"invoked ");
+//    	
+//    	Patent patent = null;
+//    	if(session == null) logInternalError().fatal(err+"has empty session");
+//    	else {
+//    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+//    		Business usersBusiness = pLoginSession.getBusiness();
+//    		patent = Patent.findPatent(new Long(id));
+//    		if (patent==null) logInternalError().warn(err+"finds no matching patent. {url rewriting?}");
+//    		else {
+//    			patent.remove(); 
+//    		}
+//    	}
+//	}
 	public void  deletePatentById(long id) { 
-    	String err = "PatentServiceImpl : deletePatentById("+id+") ";
-    	System.out.println(err+"invoked ");
-    	
-    	Patent patent = null;
-    	if(session == null) logInternalError().fatal(err+"has empty session");
-    	else {
-    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
-    		Business usersBusiness = pLoginSession.getBusiness();
-    		patent = Patent.findPatent(new Long(id));
-    		if (patent==null) logInternalError().warn(err+"finds no matching patent. {url rewriting?}");
-    		else {
-    			patent.remove(); 
-    		}
-    	}
+
+		String err = PREFIX+"deletePatentById("+id+") ";
+		checkThisIsMyPatent(id, err);
+
+		log().debug(err+" invoked ");
+
+    	Patent patent = Patent.findPatent(id);
+    	patent.remove(); 
 	}
 
 	
 
+	public Patent updatePatent(long id, PatentUI patentUI) { 
+
+		String err = PREFIX+"updatePatent("+id+") ";
+		checkUpdatePatent(id, patentUI, err); 
+		
+		log().debug(err+" invoked ");
+    	
+    	Patent updatedPatent = null;
+    	try {
+
+    		// coz have dun Auth (Not yet written!!), can TRUST notNull, not malicious, etc ... - acTidy
+
+    		Patent patent = findById(id);
+    		patent.setClientRef(patentUI.getClientRef());
+    		patent.setShortTitle(patentUI.getShortTitle());
+    		patent.setNotifications(new ArrayList<Notification>());
+    		for (NotificationUI notificationUI : patentUI.getNotificationUIs()) {
+    			if (notificationUI.getIsOn()) {
+    				Long notificationId = notificationUI.getId();
+    				Notification notification = Notification.findNotification(notificationId);
+    				patent.getNotifications().add(notification);
+    			}
+    		}
+    		
+    		patent.merge();
+    	} 
+    	catch (Exception e) {
+    		// this catch here as (a) cannot yet PROVE this code *&* (b) cannot trust exception to appear if thrown
+    		System.out.println("PatentServiceImpl updatePatent() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new RuntimeException(e);
+    	}
+    	return updatedPatent;
+	}
+
+	
+	
+	
+	
 	
 	/**
 	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications - and, for each, whether it is on or off.

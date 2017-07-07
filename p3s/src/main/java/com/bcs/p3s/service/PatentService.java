@@ -54,6 +54,16 @@ public interface PatentService {
 
 	
 	
+	/**
+	 * Update a Patent given it's ID and the PatentUI
+	 * @param id patent id (as long)
+	 * @return the updated patent - or null (if no match, or fail, or malicious)
+	 */
+	public Patent updatePatent(long id, PatentUI patentUI); 
+
+
+	
+	
 	
 //	Patent findById(long id);
 //	
