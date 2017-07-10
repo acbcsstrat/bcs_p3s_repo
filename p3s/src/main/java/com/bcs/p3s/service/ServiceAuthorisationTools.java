@@ -23,17 +23,6 @@ public class ServiceAuthorisationTools extends Universal {
 	@Autowired
 	HttpSession session;
 
-	// for UPDATE patent
-//	if (patentUI==null || id<1 || (id!=patentUI.getId()) ) {
-//		if (patent.getBusiness().getId() != usersBusiness.getId()) logM().warn(err+" rqsted by userId"+pLoginSession.getUser().getId()); 
-//		return null;
-//	}   also check : UI.getNotificationUIs() notNull
-
-	//
-//	PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
-//	Business usersBusiness = pLoginSession.getBusiness();
-
-	
 	
 	protected void authReminder() {
 		System.out.println("");
@@ -53,10 +42,11 @@ public class ServiceAuthorisationTools extends Universal {
 		;
 	}
 
-		protected void checkUpdatePatent(long id, PatentUI patentUI, String err) {
-			checkThisIsMyPatent(id, err);
+	protected void checkUpdatePatent(long id, PatentUI patentUI, String err) {
+		checkThisIsMyPatent(id, err);
 		checkNotNull(patentUI, err);
 		checkIsTrue((patentUI.getId().longValue()==id), err);
+		checkPatentUIhasNotificationUIs(patentUI, err);
 	}
 	
 	
@@ -113,6 +103,14 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 	protected void checkIsFalse(boolean otherWay, String err) { checkIsTrue( ! otherWay, err); }
 	
+	/** Any PatentUI should have (about) 10 NotificationUIs */
+	protected void checkPatentUIhasNotificationUIs(PatentUI patentUI, String err) {
+		if (patentUI==null) 										failInternalError(err+" [patentUI isNull]");
+		if (patentUI.getNotificationUIs()==null) 					failInternalError(err+" [patentUI has null notificationUIs]");
+		int numNotificationUIs = patentUI.getNotificationUIs().size();
+		// Limit? Currently are exactly 10, but big review seems likely. 5 seems safeest.
+		if (numNotificationUIs < 5 )								failInternalError(err+" [patentUI has only "+numNotificationUIs+" notificationUIs]"); 
+	}
 	
 	
 	
