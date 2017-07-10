@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bcs.p3s.display.UserProfileUI;
 import com.bcs.p3s.engine.DummyDataEngine;
-import com.bcs.p3s.enump3s.UserStatus;
+import com.bcs.p3s.enump3s.UserStatusEnum;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.service.UserService;
@@ -50,7 +50,7 @@ public class RegistrationController extends Universal{
 		
 		if(isNewUser){
 			
-			p3sUser.setStatus("disabled");
+			p3sUser.setStatus(UserStatusEnum.DISABLED);
 	        p3sUser.setUserrole("user");
 	        
 	        Business business = p3sUser.getBusiness();
@@ -125,8 +125,8 @@ public class RegistrationController extends Universal{
 			return "error";
 		}
 		
-		if(UserStatus.DISABLED.equals(user.get(0).getStatus())){
-				user.get(0).setStatus(UserStatus.ENABLED);
+		if(UserStatusEnum.DISABLED.equals(user.get(0).getStatus())){
+				user.get(0).setStatus(UserStatusEnum.ENABLED);
 				userService.updateUser(user.get(0), user.get(0).getBusiness());
 		}	
 		else{
@@ -215,7 +215,7 @@ public class RegistrationController extends Universal{
 		boolean isNewUser = userService.checkUser(user.getEmailAddress());
 		
 		if(isNewUser){
-			user.setStatus("disabled");
+			user.setStatus(UserStatusEnum.DISABLED);
 			user.setUserrole("user");
 			
 			Business business = preSession.getBusiness();   //getting business Info from session; ignoring user manipulations
