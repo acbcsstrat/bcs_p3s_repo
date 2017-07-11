@@ -2,6 +2,11 @@ package com.bcs.p3s.model;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.bcs.p3s.enump3s.InvoiceStatusEnum;
+import com.bcs.p3s.enump3s.InvoiceTypeEnum;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import javax.persistence.Temporal;
@@ -66,4 +71,15 @@ public class Invoice {
      */
     @NotNull
     private String invoiceTemplateId;
+
+    
+    
+    // Setters pushed to support P3S 'Enums'
+
+    public void setInvoiceStatus(String invoiceStatus) {
+    	this.invoiceStatus = (new InvoiceStatusEnum(invoiceStatus)).toString();
+    }
+    public void setInvoiceType(String invoiceType) {
+    	this.invoiceType = (new InvoiceTypeEnum(invoiceType)).toString();
+    }
 }

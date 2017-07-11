@@ -72,10 +72,6 @@ privileged aspect Renewal_Roo_JavaBean {
         return this.renewalStatus;
     }
     
-    public void Renewal.setRenewalStatus(String renewalStatus) {
-        this.renewalStatus = renewalStatus;
-    }
-    
     public Integer Renewal.getRenewalAttemptsMade() {
         return this.renewalAttemptsMade;
     }

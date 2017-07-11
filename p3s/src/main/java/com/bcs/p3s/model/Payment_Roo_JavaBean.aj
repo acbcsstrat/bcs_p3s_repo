@@ -33,10 +33,6 @@ privileged aspect Payment_Roo_JavaBean {
         return this.transType;
     }
     
-    public void Payment.setTransType(String transType) {
-        this.transType = transType;
-    }
-    
     public P3SUser Payment.getInitiatedByUserId() {
         return this.initiatedByUserId;
     }
@@ -71,10 +67,6 @@ privileged aspect Payment_Roo_JavaBean {
     
     public String Payment.getLatestTransStatus() {
         return this.latestTransStatus;
-    }
-    
-    public void Payment.setLatestTransStatus(String latestTransStatus) {
-        this.latestTransStatus = latestTransStatus;
     }
     
     public String Payment.getStatusDesc() {

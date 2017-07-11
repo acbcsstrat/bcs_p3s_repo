@@ -2,29 +2,19 @@ package com.bcs.p3s.display;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.bcs.p3s.engine.DummyDataEngine;
-import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.util.date.DateUtil;
-import com.bcs.p3s.util.lang.Universal;
 
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 

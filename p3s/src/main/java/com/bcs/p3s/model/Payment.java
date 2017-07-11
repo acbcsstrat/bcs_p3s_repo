@@ -1,7 +1,13 @@
 package com.bcs.p3s.model;
+
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.bcs.p3s.enump3s.PaymentStatusEnum;
+import com.bcs.p3s.enump3s.PaymentTypeEnum;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
+
 import javax.validation.constraints.NotNull;
 import javax.persistence.OneToOne;
 import java.util.Date;
@@ -116,6 +122,18 @@ public class Payment {
     /**
      */
     @NotNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private List<Renewal> renewal = new ArrayList<Renewal>();
+
+
+
+    // Setters pushed to support P3S 'Enums'
+
+    public void setTransType(String transType) {
+        this.transType = (new PaymentTypeEnum(transType)).toString();
+    }
+    
+    public void setLatestTransStatus(String latestTransStatus) {
+        this.latestTransStatus = (new PaymentStatusEnum(latestTransStatus)).toString();
+    }
 }

@@ -1,5 +1,5 @@
-// Andy initial Git test - remove this soon
 package com.bcs.p3s.model;
+
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -82,6 +82,7 @@ public class Patent {
     private Integer renewalYear;
 
     /**
+     * Enum: RenewalStatusEnum :WARNING: This duplicates Renewal:renewalStatus
      */
     @NotNull
     private String renewalStatus;
@@ -99,12 +100,6 @@ public class Patent {
     private List<Notification> notifications = new ArrayList<Notification>();
 
 
-    
-//    // 170629 TMP for process new addpatent json data in PatentRestController - provide default constructor
-//    public Patent() {
-//	   	System.out.println(" acTmp - Patent() tmp default constructor " );
-//    }
-//    
 
     // Setters pushed to support P3S 'Enums'
 

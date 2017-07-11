@@ -37,10 +37,6 @@ privileged aspect Invoice_Roo_JavaBean {
         return this.invoiceStatus;
     }
     
-    public void Invoice.setInvoiceStatus(String invoiceStatus) {
-        this.invoiceStatus = invoiceStatus;
-    }
-    
     public Invoice Invoice.getPreceedingInvoiceId() {
         return this.preceedingInvoiceId;
     }
@@ -51,10 +47,6 @@ privileged aspect Invoice_Roo_JavaBean {
     
     public String Invoice.getInvoiceType() {
         return this.invoiceType;
-    }
-    
-    public void Invoice.setInvoiceType(String invoiceType) {
-        this.invoiceType = invoiceType;
     }
     
     public String Invoice.getDocPath() {

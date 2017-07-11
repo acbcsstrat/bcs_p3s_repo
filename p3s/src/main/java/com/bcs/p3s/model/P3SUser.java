@@ -1,4 +1,5 @@
 package com.bcs.p3s.model;
+
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -60,6 +61,6 @@ public class P3SUser {
     /**
      */
     @NotNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private List<LoginMessage> loginMessagesToDisplay = new ArrayList<LoginMessage>();
 }
