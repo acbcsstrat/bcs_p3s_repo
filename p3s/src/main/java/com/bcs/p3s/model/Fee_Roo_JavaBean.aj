@@ -9,6 +9,14 @@ import java.math.BigDecimal;
 
 privileged aspect Fee_Roo_JavaBean {
     
+    public Renewal Fee.getRenewal() {
+        return this.renewal;
+    }
+    
+    public void Fee.setRenewal(Renewal renewal) {
+        this.renewal = renewal;
+    }
+    
     public BigDecimal Fee.getRenewalFee_EUR() {
         return this.renewalFee_EUR;
     }
@@ -71,14 +79,6 @@ privileged aspect Fee_Roo_JavaBean {
     
     public void Fee.setSubTotal_USD(BigDecimal subTotal_USD) {
         this.subTotal_USD = subTotal_USD;
-    }
-    
-    public Renewal Fee.getRenewal() {
-        return this.renewal;
-    }
-    
-    public void Fee.setRenewal(Renewal renewal) {
-        this.renewal = renewal;
     }
     
 }

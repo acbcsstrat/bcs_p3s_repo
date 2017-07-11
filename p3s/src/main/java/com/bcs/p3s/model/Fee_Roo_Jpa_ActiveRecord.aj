@@ -14,7 +14,7 @@ privileged aspect Fee_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Fee.entityManager;
     
-    public static final List<String> Fee.fieldNames4OrderClauseFilter = java.util.Arrays.asList("renewalFee_EUR", "extensionFee_EUR", "processingFee_USD", "expressFee_USD", "urgentFee_USD", "latePayPenalty_USD", "fxRate", "subTotal_USD", "renewal");
+    public static final List<String> Fee.fieldNames4OrderClauseFilter = java.util.Arrays.asList("renewal", "renewalFee_EUR", "extensionFee_EUR", "processingFee_USD", "expressFee_USD", "urgentFee_USD", "latePayPenalty_USD", "fxRate", "subTotal_USD");
     
     public static final EntityManager Fee.entityManager() {
         EntityManager em = new Fee().entityManager;

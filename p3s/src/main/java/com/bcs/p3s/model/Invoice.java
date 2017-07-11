@@ -17,6 +17,12 @@ public class Invoice {
     /**
      */
     @NotNull
+    @ManyToOne
+    private Payment payment;
+
+    /**
+     */
+    @NotNull
     private String invoiceNumber;
 
     /**
@@ -60,10 +66,4 @@ public class Invoice {
      */
     @NotNull
     private String invoiceTemplateId;
-
-    /**
-     */
-    @NotNull
-    @ManyToOne
-    private Payment payment;
 }

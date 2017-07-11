@@ -14,6 +14,12 @@ public class Fee {
     /**
      */
     @NotNull
+    @OneToOne
+    private Renewal renewal;
+
+    /**
+     */
+    @NotNull
     private BigDecimal renewalFee_EUR;
 
     /**
@@ -50,10 +56,4 @@ public class Fee {
      */
     @NotNull
     private BigDecimal subTotal_USD;
-
-    /**
-     */
-    @NotNull
-    @OneToOne
-    private Renewal renewal;
 }

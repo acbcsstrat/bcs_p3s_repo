@@ -17,6 +17,12 @@ public class Certificate {
     /**
      */
     @NotNull
+    @OneToOne
+    private Renewal renewal;
+
+    /**
+     */
+    @NotNull
     private String certificateName;
 
     /**
@@ -42,10 +48,4 @@ public class Certificate {
      */
     @NotNull
     private String certificateTemplateId;
-
-    /**
-     */
-    @NotNull
-    @OneToOne
-    private Renewal renewal;
 }

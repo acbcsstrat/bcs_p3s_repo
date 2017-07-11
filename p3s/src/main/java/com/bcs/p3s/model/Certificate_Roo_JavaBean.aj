@@ -9,6 +9,14 @@ import java.util.Date;
 
 privileged aspect Certificate_Roo_JavaBean {
     
+    public Renewal Certificate.getRenewal() {
+        return this.renewal;
+    }
+    
+    public void Certificate.setRenewal(Renewal renewal) {
+        this.renewal = renewal;
+    }
+    
     public String Certificate.getCertificateName() {
         return this.certificateName;
     }
@@ -47,14 +55,6 @@ privileged aspect Certificate_Roo_JavaBean {
     
     public void Certificate.setCertificateTemplateId(String certificateTemplateId) {
         this.certificateTemplateId = certificateTemplateId;
-    }
-    
-    public Renewal Certificate.getRenewal() {
-        return this.renewal;
-    }
-    
-    public void Certificate.setRenewal(Renewal renewal) {
-        this.renewal = renewal;
     }
     
 }

@@ -9,6 +9,14 @@ import java.util.Date;
 
 privileged aspect Invoice_Roo_JavaBean {
     
+    public Payment Invoice.getPayment() {
+        return this.payment;
+    }
+    
+    public void Invoice.setPayment(Payment payment) {
+        this.payment = payment;
+    }
+    
     public String Invoice.getInvoiceNumber() {
         return this.invoiceNumber;
     }
@@ -71,14 +79,6 @@ privileged aspect Invoice_Roo_JavaBean {
     
     public void Invoice.setInvoiceTemplateId(String invoiceTemplateId) {
         this.invoiceTemplateId = invoiceTemplateId;
-    }
-    
-    public Payment Invoice.getPayment() {
-        return this.payment;
-    }
-    
-    public void Invoice.setPayment(Payment payment) {
-        this.payment = payment;
     }
     
 }
