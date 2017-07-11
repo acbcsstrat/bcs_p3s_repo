@@ -16,20 +16,20 @@ privileged aspect P3SFeeSole_Roo_JavaBean {
         this.processingFee_USD = processingFee_USD;
     }
     
-    public BigDecimal P3SFeeSole.getExpressFee_USD() {
-        return this.expressFee_USD;
+    public BigDecimal P3SFeeSole.getExpressFee_Percent() {
+        return this.expressFee_Percent;
     }
     
-    public void P3SFeeSole.setExpressFee_USD(BigDecimal expressFee_USD) {
-        this.expressFee_USD = expressFee_USD;
+    public void P3SFeeSole.setExpressFee_Percent(BigDecimal expressFee_Percent) {
+        this.expressFee_Percent = expressFee_Percent;
     }
     
-    public BigDecimal P3SFeeSole.getUrgentFee_USD() {
-        return this.urgentFee_USD;
+    public BigDecimal P3SFeeSole.getUrgentFee_Percent() {
+        return this.urgentFee_Percent;
     }
     
-    public void P3SFeeSole.setUrgentFee_USD(BigDecimal urgentFee_USD) {
-        this.urgentFee_USD = urgentFee_USD;
+    public void P3SFeeSole.setUrgentFee_Percent(BigDecimal urgentFee_Percent) {
+        this.urgentFee_Percent = urgentFee_Percent;
     }
     
     public BigDecimal P3SFeeSole.getLatePayPenalty_USD() {

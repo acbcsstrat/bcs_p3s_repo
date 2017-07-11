@@ -25,16 +25,16 @@ privileged aspect P3SFeeSoleDataOnDemand_Roo_DataOnDemand {
     
     public P3SFeeSole P3SFeeSoleDataOnDemand.getNewTransientP3SFeeSole(int index) {
         P3SFeeSole obj = new P3SFeeSole();
-        setExpressFee_USD(obj, index);
+        setExpressFee_Percent(obj, index);
         setLatePayPenalty_USD(obj, index);
         setProcessingFee_USD(obj, index);
-        setUrgentFee_USD(obj, index);
+        setUrgentFee_Percent(obj, index);
         return obj;
     }
     
-    public void P3SFeeSoleDataOnDemand.setExpressFee_USD(P3SFeeSole obj, int index) {
-        BigDecimal expressFee_USD = BigDecimal.valueOf(index);
-        obj.setExpressFee_USD(expressFee_USD);
+    public void P3SFeeSoleDataOnDemand.setExpressFee_Percent(P3SFeeSole obj, int index) {
+        BigDecimal expressFee_Percent = BigDecimal.valueOf(index);
+        obj.setExpressFee_Percent(expressFee_Percent);
     }
     
     public void P3SFeeSoleDataOnDemand.setLatePayPenalty_USD(P3SFeeSole obj, int index) {
@@ -47,9 +47,9 @@ privileged aspect P3SFeeSoleDataOnDemand_Roo_DataOnDemand {
         obj.setProcessingFee_USD(processingFee_USD);
     }
     
-    public void P3SFeeSoleDataOnDemand.setUrgentFee_USD(P3SFeeSole obj, int index) {
-        BigDecimal urgentFee_USD = BigDecimal.valueOf(index);
-        obj.setUrgentFee_USD(urgentFee_USD);
+    public void P3SFeeSoleDataOnDemand.setUrgentFee_Percent(P3SFeeSole obj, int index) {
+        BigDecimal urgentFee_Percent = BigDecimal.valueOf(index);
+        obj.setUrgentFee_Percent(urgentFee_Percent);
     }
     
     public P3SFeeSole P3SFeeSoleDataOnDemand.getSpecificP3SFeeSole(int index) {

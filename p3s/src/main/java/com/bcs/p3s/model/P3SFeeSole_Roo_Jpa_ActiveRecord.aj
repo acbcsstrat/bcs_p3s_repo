@@ -14,7 +14,7 @@ privileged aspect P3SFeeSole_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager P3SFeeSole.entityManager;
     
-    public static final List<String> P3SFeeSole.fieldNames4OrderClauseFilter = java.util.Arrays.asList("processingFee_USD", "expressFee_USD", "urgentFee_USD", "latePayPenalty_USD");
+    public static final List<String> P3SFeeSole.fieldNames4OrderClauseFilter = java.util.Arrays.asList("processingFee_USD", "expressFee_Percent", "urgentFee_Percent", "latePayPenalty_USD");
     
     public static final EntityManager P3SFeeSole.entityManager() {
         EntityManager em = new P3SFeeSole().entityManager;
