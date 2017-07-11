@@ -11,5 +11,6 @@
         <field:display field="business" id="s_com_bcs_p3s_model_P3SUser_business" object="${p3suser}" z="user-managed"/>
         <field:display field="userrole" id="s_com_bcs_p3s_model_P3SUser_userrole" object="${p3suser}" z="user-managed"/>
         <field:display field="password" id="s_com_bcs_p3s_model_P3SUser_password" object="${p3suser}" z="user-managed"/>
+        <field:display field="loginMessagesToDisplay" id="s_com_bcs_p3s_model_P3SUser_loginMessagesToDisplay" object="${p3suser}" z="x/ugqJ+0ogmvvHq5Rodz81h7FC8="/>
     </page:show>
 </div>

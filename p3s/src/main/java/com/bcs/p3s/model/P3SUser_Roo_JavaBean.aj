@@ -4,7 +4,9 @@
 package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
+import java.util.List;
 
 privileged aspect P3SUser_Roo_JavaBean {
     
@@ -70,6 +72,14 @@ privileged aspect P3SUser_Roo_JavaBean {
     
     public void P3SUser.setPassword(String password) {
         this.password = password;
+    }
+    
+    public List<LoginMessage> P3SUser.getLoginMessagesToDisplay() {
+        return this.loginMessagesToDisplay;
+    }
+    
+    public void P3SUser.setLoginMessagesToDisplay(List<LoginMessage> loginMessagesToDisplay) {
+        this.loginMessagesToDisplay = loginMessagesToDisplay;
     }
     
 }

@@ -5,6 +5,7 @@ package com.bcs.p3s.controller.web;
 
 import com.bcs.p3s.controller.web.P3SUserController;
 import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -71,6 +72,7 @@ privileged aspect P3SUserController_Roo_Controller {
     void P3SUserController.populateEditForm(Model uiModel, P3SUser p3SUser) {
         uiModel.addAttribute("p3SUser", p3SUser);
         uiModel.addAttribute("businesses", Business.findAllBusinesses());
+        uiModel.addAttribute("loginmessages", LoginMessage.findAllLoginMessages());
     }
     
     String P3SUserController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

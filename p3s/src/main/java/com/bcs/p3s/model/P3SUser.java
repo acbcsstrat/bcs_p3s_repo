@@ -5,10 +5,14 @@ import org.springframework.roo.addon.tostring.RooToString;
 import javax.validation.constraints.NotNull;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.ManyToMany;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord(finders = { "findP3SUsersByEmailAddress" ,"findP3SUsersByBusiness" })
+@RooJpaActiveRecord(finders = { "findP3SUsersByEmailAddress", "findP3SUsersByBusiness" })
 public class P3SUser {
 
     /**
@@ -52,4 +56,10 @@ public class P3SUser {
      */
     @NotNull
     private String password;
+
+    /**
+     */
+    @NotNull
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<LoginMessage> loginMessagesToDisplay = new ArrayList<LoginMessage>();
 }

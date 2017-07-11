@@ -11,5 +11,6 @@
         <field:select field="business" id="c_com_bcs_p3s_model_P3SUser_business" itemValue="id" items="${businesses}" path="/businesses" required="true" z="user-managed"/>
         <field:input field="userrole" id="c_com_bcs_p3s_model_P3SUser_userrole" required="true" z="user-managed"/>
         <field:input field="password" id="c_com_bcs_p3s_model_P3SUser_password" required="true" z="user-managed"/>
+        <field:select field="loginMessagesToDisplay" id="c_com_bcs_p3s_model_P3SUser_loginMessagesToDisplay" itemValue="id" items="${loginmessages}" multiple="true" path="/loginmessages" required="true" z="H+pSh7NgV4tprFS+seSwRqjbMGo="/>
     </form:update>
 </div>
