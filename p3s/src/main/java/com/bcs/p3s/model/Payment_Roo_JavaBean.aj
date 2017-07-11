@@ -133,12 +133,12 @@ privileged aspect Payment_Roo_JavaBean {
         this.billingAddressZip = billingAddressZip;
     }
     
-    public List<Renewal> Payment.getRenewal() {
-        return this.renewal;
+    public List<Renewal> Payment.getRenewals() {
+        return this.renewals;
     }
     
-    public void Payment.setRenewal(List<Renewal> renewal) {
-        this.renewal = renewal;
+    public void Payment.setRenewals(List<Renewal> renewals) {
+        this.renewals = renewals;
     }
     
 }

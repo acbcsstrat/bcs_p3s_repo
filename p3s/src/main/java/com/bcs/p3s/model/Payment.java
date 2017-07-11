@@ -123,7 +123,7 @@ public class Payment {
      */
     @NotNull
     @ManyToMany(cascade = CascadeType.REFRESH)
-    private List<Renewal> renewal = new ArrayList<Renewal>();
+    private List<Renewal> renewals = new ArrayList<Renewal>();
 
 
 

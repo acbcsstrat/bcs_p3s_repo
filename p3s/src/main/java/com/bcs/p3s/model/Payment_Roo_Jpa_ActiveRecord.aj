@@ -14,7 +14,7 @@ privileged aspect Payment_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Payment.entityManager;
     
-    public static final List<String> Payment.fieldNames4OrderClauseFilter = java.util.Arrays.asList("P3S_TransRef", "MC_TransRef", "transType", "initiatedByUserId", "transStartDate", "transTargetEndDate", "lastUpdatedDate", "latestTransStatus", "statusDesc", "latestInvoice", "transAmount_USD", "isBillingAddressSame", "billingAddressStreet", "billingAddressCity", "billingAddressState", "billingAddressZip", "renewal");
+    public static final List<String> Payment.fieldNames4OrderClauseFilter = java.util.Arrays.asList("P3S_TransRef", "MC_TransRef", "transType", "initiatedByUserId", "transStartDate", "transTargetEndDate", "lastUpdatedDate", "latestTransStatus", "statusDesc", "latestInvoice", "transAmount_USD", "isBillingAddressSame", "billingAddressStreet", "billingAddressCity", "billingAddressState", "billingAddressZip", "renewals");
     
     public static final EntityManager Payment.entityManager() {
         EntityManager em = new Payment().entityManager;

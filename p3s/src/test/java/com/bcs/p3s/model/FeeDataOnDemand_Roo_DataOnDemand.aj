@@ -6,7 +6,6 @@ package com.bcs.p3s.model;
 import com.bcs.p3s.model.Fee;
 import com.bcs.p3s.model.FeeDataOnDemand;
 import com.bcs.p3s.model.Renewal;
-import com.bcs.p3s.model.RenewalDataOnDemand;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect FeeDataOnDemand_Roo_DataOnDemand {
@@ -25,9 +23,6 @@ privileged aspect FeeDataOnDemand_Roo_DataOnDemand {
     private Random FeeDataOnDemand.rnd = new SecureRandom();
     
     private List<Fee> FeeDataOnDemand.data;
-    
-    @Autowired
-    RenewalDataOnDemand FeeDataOnDemand.renewalDataOnDemand;
     
     public Fee FeeDataOnDemand.getNewTransientFee(int index) {
         Fee obj = new Fee();
@@ -69,7 +64,7 @@ privileged aspect FeeDataOnDemand_Roo_DataOnDemand {
     }
     
     public void FeeDataOnDemand.setRenewal(Fee obj, int index) {
-        Renewal renewal = renewalDataOnDemand.getSpecificRenewal(index);
+        Renewal renewal = null;
         obj.setRenewal(renewal);
     }
     
