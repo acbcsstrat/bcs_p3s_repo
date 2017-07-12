@@ -16,11 +16,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.UserProfileUI;
 import com.bcs.p3s.engine.DummyDataEngine;
+import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
@@ -121,38 +124,6 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 	
 
-// formerly
-	//	public void  deletePatentById(long id) { 
-//    	authReminder();
-//    	//String err = PREFIX+"PatentServiceImpl : deletePatentById("+id+") ";
-//    	String err = PREFIX+"deletePatentById("+id+") ";
-//    	System.out.println(err+"invoked ");
-//    	
-//    	Patent patent = null;
-//    	if(session == null) logInternalError().fatal(err+"has empty session");
-//    	else {
-//    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
-//    		Business usersBusiness = pLoginSession.getBusiness();
-//    		patent = Patent.findPatent(new Long(id));
-//    		if (patent==null) logInternalError().warn(err+"finds no matching patent. {url rewriting?}");
-//    		else {
-//    			patent.remove(); 
-//    		}
-//    	}
-//	}
-	public void  deletePatentById(long id) { 
-
-		String err = PREFIX+"deletePatentById("+id+") ";
-		checkThisIsMyPatent(id, err);
-
-		log().debug(err+" invoked ");
-
-    	Patent patent = Patent.findPatent(id);
-    	patent.remove(); 
-	}
-
-	
-
 	public Patent updatePatent(long id, PatentUI patentUI) { 
 
 		String err = PREFIX+"updatePatent("+id+") ";
@@ -189,6 +160,69 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
     	return updatedPatent;
 	}
 
+
+	
+	public void  deletePatentById(long id) { 
+
+		String err = PREFIX+"deletePatentById("+id+") ";
+		checkThisIsMyPatent(id, err);
+
+		log().debug(err+" invoked ");
+
+    	Patent patent = Patent.findPatent(id);
+    	patent.remove(); 
+	}
+	// formerly
+		//	public void  deletePatentById(long id) { 
+//	    	authReminder();
+//	    	//String err = PREFIX+"PatentServiceImpl : deletePatentById("+id+") ";
+//	    	String err = PREFIX+"deletePatentById("+id+") ";
+//	    	System.out.println(err+"invoked ");
+//	    	
+//	    	Patent patent = null;
+//	    	if(session == null) logInternalError().fatal(err+"has empty session");
+//	    	else {
+//	    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+//	    		Business usersBusiness = pLoginSession.getBusiness();
+//	    		patent = Patent.findPatent(new Long(id));
+//	    		if (patent==null) logInternalError().warn(err+"finds no matching patent. {url rewriting?}");
+//	    		else {
+//	    			patent.remove(); 
+//	    		}
+//	    	}
+//		}
+
+	
+
+	public FxRateUI getFxRate() {
+
+		String err = PREFIX+"getFxRate() ";
+		checkNoActionRequired(err);
+
+		log().debug(err+" invoked ");
+    	
+		FxRateUI fxRateUI = new FxRateUI(); 
+
+		// Todays rate
+		GlobalVariableSole todaysRate = GlobalVariableSole.findOnlyGlobalVariableSole(); 
+		fxRateUI.setCurrentRate(todaysRate.getCurrentRate());
+		fxRateUI.setCurrentRateActiveDate(todaysRate.getCurrentRateActiveDate() );
+		
+		// The previous rate
+		ArchivedRate yesterdaysRate = ArchivedRate.findLatestArchivedRate();
+		fxRateUI.setLastRate(yesterdaysRate.getFxRate());
+		fxRateUI.setLastRateActiveDate(yesterdaysRate.getActiveFromDate());
+    	
+    	return fxRateUI;
+	}
+
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

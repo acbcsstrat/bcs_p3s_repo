@@ -28,14 +28,14 @@ privileged aspect ArchivedRateDataOnDemand_Roo_DataOnDemand {
     
     public ArchivedRate ArchivedRateDataOnDemand.getNewTransientArchivedRate(int index) {
         ArchivedRate obj = new ArchivedRate();
-        setArchivedDate(obj, index);
+        setActiveFromDate(obj, index);
         setFxRate(obj, index);
         return obj;
     }
     
-    public void ArchivedRateDataOnDemand.setArchivedDate(ArchivedRate obj, int index) {
-        Date archivedDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
-        obj.setArchivedDate(archivedDate);
+    public void ArchivedRateDataOnDemand.setActiveFromDate(ArchivedRate obj, int index) {
+        Date activeFromDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        obj.setActiveFromDate(activeFromDate);
     }
     
     public void ArchivedRateDataOnDemand.setFxRate(ArchivedRate obj, int index) {

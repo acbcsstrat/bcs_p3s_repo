@@ -8,6 +8,9 @@ import com.bcs.p3s.model.GlobalVariableSoleDataOnDemand;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -26,12 +29,18 @@ privileged aspect GlobalVariableSoleDataOnDemand_Roo_DataOnDemand {
     public GlobalVariableSole GlobalVariableSoleDataOnDemand.getNewTransientGlobalVariableSole(int index) {
         GlobalVariableSole obj = new GlobalVariableSole();
         setCurrentRate(obj, index);
+        setCurrentRateActiveDate(obj, index);
         return obj;
     }
     
     public void GlobalVariableSoleDataOnDemand.setCurrentRate(GlobalVariableSole obj, int index) {
         BigDecimal currentRate = BigDecimal.valueOf(index);
         obj.setCurrentRate(currentRate);
+    }
+    
+    public void GlobalVariableSoleDataOnDemand.setCurrentRateActiveDate(GlobalVariableSole obj, int index) {
+        Date currentRateActiveDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        obj.setCurrentRateActiveDate(currentRateActiveDate);
     }
     
     public GlobalVariableSole GlobalVariableSoleDataOnDemand.getSpecificGlobalVariableSole(int index) {

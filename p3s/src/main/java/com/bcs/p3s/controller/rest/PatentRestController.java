@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.engine.TemporaryProcessingEngine;
 //import com.bcs.p3s.controller.web.User;
@@ -77,7 +78,7 @@ public class PatentRestController extends Universal {
 	
 	
 	
-    //------------------- User confirms this EPO rectrieved Patent is the correct one - so add it to the list of patents --------------------------------------------------
+    //------------------- User confirms this EPO retrieved Patent is the correct one - so add it to the list of patents --------------------------------------------------
     
     // Implements API section 2.3
     // User has confirmed this is the correct patent. So persist it
@@ -113,46 +114,13 @@ public class PatentRestController extends Universal {
    }
 
 	
-	
-  
-	//------------------- Delete a Patent --------------------------------------------------------
 
-    // Implements API section 2.5
-    // User has confirmed this is the correct patent. So persist it
-	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Patent> deletePatent(@PathVariable("id") long id) {
-		log().debug("PatentRestController : /rest-patents/ deletePatent() invoked ");
 	
-	    patentService.deletePatentById(id);
-	    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
-	}
-  
-  
-//formerly 
-//    // Implements API section 2.5
-//    // User has confirmed this is the correct patent. So persist it
-//	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.DELETE)
-//	public ResponseEntity<Patent> deletePatent(@PathVariable("id") long id) {
-//		log().debug("PatentRestController : /rest-patents/ deletePatent() invoked ");
-//	
-//		Patent patent = patentService.findById(id);
-//		if (patent == null) {
-//			System.out.println("Unable to delete. Patent with id " + id + " not found");
-//				return new ResponseEntity<Patent>(HttpStatus.NOT_FOUND);
-//		    }
-//		
-//		    patentService.deletePatentById(id);
-//		    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
-//		}
-
-  
-  
-  
     //------------------- Update a Patent --------------------------------------------------------
-  
-  
-    // Implements API section 2.5
-    // Update Patent: 3 things may be changed: shortTitle, clientRef and which Notifications
+	  
+	  
+    // Implements API section 2.4
+    // Update Patent: Customer is permitted to change 3 things: shortTitle, clientRef and which Notifications
 
 	// Cannot PROVE this yet - ASSUME can get a PatentUI, & not the linked list ...
 
@@ -198,63 +166,60 @@ public class PatentRestController extends Universal {
     
     
     
-    
-    
-    
-    
+  
+	//------------------- Delete a Patent --------------------------------------------------------
+
+    // Implements API section 2.5
+    // User has confirmed this is the correct patent. So persist it
+	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Patent> deletePatent(@PathVariable("id") long id) {
+		log().debug("PatentRestController : /rest-patents/ deletePatent() invoked ");
 	
+	    patentService.deletePatentById(id);
+	    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
+	}
+  
+  
+//formerly 
+//    // Implements API section 2.5
+//    // User has confirmed this is the correct patent. So persist it
+//	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.DELETE)
+//	public ResponseEntity<Patent> deletePatent(@PathVariable("id") long id) {
+//		log().debug("PatentRestController : /rest-patents/ deletePatent() invoked ");
+//	
+//		Patent patent = patentService.findById(id);
+//		if (patent == null) {
+//			System.out.println("Unable to delete. Patent with id " + id + " not found");
+//				return new ResponseEntity<Patent>(HttpStatus.NOT_FOUND);
+//		    }
+//		
+//		    patentService.deletePatentById(id);
+//		    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
+//		}
+
+  
     
-	//------------------- next ... a Patent : ARE NO MORE ???  --------------------------------------------------------
     
-    
-    
-    
-    
+	//------------------- Fetch FX rate --------------------------------------------------------
+
+    // Implements API section 2.6
+    @RequestMapping(value = "/rest-fxrate/", method = RequestMethod.GET)
+    public ResponseEntity<FxRateUI> getFxRate() {
+    	System.out.println("PatentRestController : /rest-fxrate/ invoked ");
+
+    	FxRateUI fxRateUI = patentService.getFxRate();
+    	
+        return new ResponseEntity<FxRateUI>(fxRateUI, HttpStatus.OK);
+    }
+  
+
+	
+	//------------------- next ... a Patent : ARE THERE ANY MORE ???  --------------------------------------------------------
+
     
     
     
     
 //    //-------------------Retrieve Single Patent--------------------------------------------------------
- 
-     
-     
-//    //------------------- Update a Patent --------------------------------------------------------
-
-	//     
-//    @RequestMapping(value = "/rest-patent/{id}", method = RequestMethod.PUT)
-//    public ResponseEntity<Patent> updatePatent(@PathVariable("id") long id, @RequestBody Patent patent) {
-//        System.out.println("Updating Patent " + id);
-//         
-//        Patent currentPatent = patentService.findById(id);
-//         
-//        if (currentPatent==null) {
-//            System.out.println("Patent with id " + id + " not found");
-//            return new ResponseEntity<Patent>(HttpStatus.NOT_FOUND);
-//        }
-// 
-//        currentPatent.setPatentApplicationNumber(patent.getPatentApplicationNumber());
-//        currentPatent.setClientRef(patent.getClientRef());
-//         
-//        patentService.updatePatent(currentPatent);
-//        return new ResponseEntity<Patent>(currentPatent, HttpStatus.OK);
-//    }
-// 
-//    
-//    
-//    //------------------- Delete a Patent --------------------------------------------------------
-//     
-//    @RequestMapping(value = "/rest-patent/{id}", method = RequestMethod.DELETE)
-//    public ResponseEntity<Patent> deletePatent(@PathVariable("id") long id) {
-//        System.out.println("Fetching & Deleting Patent with id " + id);
-// 
-//        Patent patent = patentService.findById(id);
-//        if (patent == null) {
-//            System.out.println("Unable to delete. Patent with id " + id + " not found");
-//            return new ResponseEntity<Patent>(HttpStatus.NOT_FOUND);
-//        }
-// 
-//        patentService.deletePatentById(id);
-//        return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
-//    }
- 
+	// Not required
 }

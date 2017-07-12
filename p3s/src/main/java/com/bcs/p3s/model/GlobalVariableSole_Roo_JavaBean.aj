@@ -5,6 +5,7 @@ package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.GlobalVariableSole;
 import java.math.BigDecimal;
+import java.util.Date;
 
 privileged aspect GlobalVariableSole_Roo_JavaBean {
     
@@ -14,6 +15,14 @@ privileged aspect GlobalVariableSole_Roo_JavaBean {
     
     public void GlobalVariableSole.setCurrentRate(BigDecimal currentRate) {
         this.currentRate = currentRate;
+    }
+    
+    public Date GlobalVariableSole.getCurrentRateActiveDate() {
+        return this.currentRateActiveDate;
+    }
+    
+    public void GlobalVariableSole.setCurrentRateActiveDate(Date currentRateActiveDate) {
+        this.currentRateActiveDate = currentRateActiveDate;
     }
     
 }

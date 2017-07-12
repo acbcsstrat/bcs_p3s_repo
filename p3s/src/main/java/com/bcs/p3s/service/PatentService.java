@@ -2,6 +2,7 @@ package com.bcs.p3s.service;
 
 import java.util.List;
 
+import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.UserProfileUI;
@@ -62,6 +63,15 @@ public interface PatentService {
 	public Patent updatePatent(long id, PatentUI patentUI); 
 
 
+	
+	/**
+	 * Get the current FX Rate
+	 * @return a fully populated FxRateUI containing the current rate
+	 */
+	public FxRateUI getFxRate(); 
+
+
+	
 	
 	
 	

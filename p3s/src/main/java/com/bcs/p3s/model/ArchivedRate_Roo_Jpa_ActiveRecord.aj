@@ -14,7 +14,7 @@ privileged aspect ArchivedRate_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager ArchivedRate.entityManager;
     
-    public static final List<String> ArchivedRate.fieldNames4OrderClauseFilter = java.util.Arrays.asList("archivedDate", "fxRate");
+    public static final List<String> ArchivedRate.fieldNames4OrderClauseFilter = java.util.Arrays.asList("fxRate", "activeFromDate");
     
     public static final EntityManager ArchivedRate.entityManager() {
         EntityManager em = new ArchivedRate().entityManager;

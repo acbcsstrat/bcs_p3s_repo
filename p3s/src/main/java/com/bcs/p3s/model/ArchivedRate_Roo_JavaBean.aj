@@ -9,20 +9,20 @@ import java.util.Date;
 
 privileged aspect ArchivedRate_Roo_JavaBean {
     
-    public Date ArchivedRate.getArchivedDate() {
-        return this.archivedDate;
-    }
-    
-    public void ArchivedRate.setArchivedDate(Date archivedDate) {
-        this.archivedDate = archivedDate;
-    }
-    
     public BigDecimal ArchivedRate.getFxRate() {
         return this.fxRate;
     }
     
     public void ArchivedRate.setFxRate(BigDecimal fxRate) {
         this.fxRate = fxRate;
+    }
+    
+    public Date ArchivedRate.getActiveFromDate() {
+        return this.activeFromDate;
+    }
+    
+    public void ArchivedRate.setActiveFromDate(Date activeFromDate) {
+        this.activeFromDate = activeFromDate;
     }
     
 }
