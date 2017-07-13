@@ -1,0 +1,40 @@
+<patentnav></patentnav>
+<div class="row">
+	<div class="col-md-6">
+		<p ng-show="$root.currentUser">Hi, {{$root.currentUser.firstname}}</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<a ui-sref="login" ng-click="$ctrl.logout()">Logout</a>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped text-md-center">
+			<thead class="thead-inverse">
+				<tr>
+					<td ng-click="sortBy('name')" class="align-middle">Application No. </td>
+					<td class="align-middle">Client Ref</td>
+					<td class="align-middle">Cost now</td>
+					<td class="align-middle">Cost band end</td>
+					<td class="align-middle">Cost next</td>
+					<td class="align-middle">Renewal Date</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="patent in $ctrl.patents">
+					<td><a ui-sref="app.patents.patent({patentId: patent.id})" ng-bind="patent.patentApplicationNumber"></a></td>
+					<td ng-bind="patent.clientRef"></td>
+					<td>$ {{patent.currentRenewalCost}}</td>
+					<td ng-bind="patent.costBandEndDateUI"></td>
+					<td>$ {{patent.renewalCostNextStage}}</td>
+					<td ng-bind="patent.renewalDueDateUI"></td>
+				</tr>
+			</tbody>
+		</table>
+		<ui-view></ui-view>
+	</div>
+</div> 
+           
+            

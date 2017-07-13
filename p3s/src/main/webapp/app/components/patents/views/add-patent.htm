@@ -1,0 +1,22 @@
+<patentnav></patentnav>
+<div class="row">
+	<div class="col-md-12">
+		<form  ng-submit="goSearchEpo()">
+			<div class="col-md-6">
+				<fieldset>
+					<legend class="font-weight-bold">Search by Patent Number</legend>
+
+					<div class="form-group row">
+						<label class="col-md-5" for="searchName">Search name</label>
+						<div class="col-md-7">
+							<input type="text" name="searchName" class="form-control" ng-model="patent.patentApplicationNumber" id="patentApplicationNumber" ng-bind="patentApplicationNumber" required>
+						</div>
+					</div>
+				</fieldset>
+				<div class="col-md-6">
+					<button class="btn btn-success" type="submit">Submit</button>
+				</div>
+			</div>
+		</form>	
+	</div>
+</form>
