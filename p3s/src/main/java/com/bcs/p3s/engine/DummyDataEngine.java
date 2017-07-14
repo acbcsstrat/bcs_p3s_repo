@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -14,10 +15,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
@@ -44,6 +47,9 @@ public class DummyDataEngine extends Universal {
 	}
 	
 	public void populateExtendedPatentFieldsWithDummyData(PatentUI patentUI, Patent patent) {
+
+		log().debug("DummyDataEngine populateExtendedPatentFieldsWithDummyData() invoked");
+
 		//System.out.println("                     DummyDataEngine:populateExtendedPatentFieldsWithDummyData() invoked");
 		
 		// Those inherited fields NOT required - identify as such
@@ -59,7 +65,7 @@ public class DummyDataEngine extends Universal {
 	
 
 	/**
-	 * 1/3 of time return No-Match
+	 * One third of time return No-Match
 	 * Else generate a patent
 	 */
 	public PatentUI createDummyPatentUiForSearchAddPatent(String patentApplicationNumber) {
@@ -101,7 +107,70 @@ public class DummyDataEngine extends Universal {
 	}
 	
 	
-	
+	public List<FxRateUI> makeDummyFxRateHistory(BigDecimal seedRate, Date endsBefore, String timeperiod) { 
+		// Ends before is Todays timestamp. So generated list should stop 1 day before this
+		
+		final long DAY = 24 * 60 * 60 * 1000;
+		
+		log().debug("DummyDataEngine makeDummyFxRateHistory() invoked");
+
+		List<FxRateUI> history = new ArrayList<FxRateUI>();
+
+//		// Todays rate
+//		FxRateUI todaysRate = new FxRateUI(); 
+//		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
+//		todaysRate.setRate(current.getCurrentRate());
+//		todaysRate.setRateActiveDate(current.getCurrentRateActiveDate());
+//		history.add(todaysRate);
+		
+		// process timeperiod
+		// acToDo
+
+		
+		// Generate history
+		BigDecimal inc = new BigDecimal(0.01); 
+		BigDecimal gik = seedRate;
+
+		BigDecimal formatted = null;
+
+//		formatted.setScale(4, BigDecimal.ROUND_CEILING);
+//		System.out.println("gik pre  = "+gik.toString());
+//		System.out.println("formatted pre= "+formatted.toString());
+		
+		
+		long disTime = endsBefore.getTime();
+	    for (int ii = 1 ; ii <= 7 ; ii++) {
+
+	    	gik = gik.add(inc);
+	    	formatted = gik;
+	    	formatted = formatted.setScale(4, BigDecimal.ROUND_CEILING);
+	    	System.out.println("formatted loop = "+formatted.toString());
+	    	
+	    	disTime -= DAY;
+	    	Date dDay = new Date(disTime);
+	    	FxRateUI dis = new FxRateUI(formatted, dDay);
+	    	history.add(dis);
+	    }
+
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    // reverse the list order, to make it - oldest first
+	    System.out.println("hiatory list PRE reverse :");
+	    for (FxRateUI r : history) { System.out.println(r.toString()); }
+	    
+	    List<FxRateUI> shallowCopy = history.subList(0, history.size());
+	    Collections.reverse(shallowCopy);
+	    
+	    System.out.println("hiatory list POST reverse :");
+	    for (FxRateUI r : shallowCopy) { System.out.println(r.toString()); }
+		
+		return shallowCopy;
+	}
 	
 	
 	

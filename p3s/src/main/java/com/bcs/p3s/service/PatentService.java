@@ -2,14 +2,12 @@ package com.bcs.p3s.service;
 
 import java.util.List;
 
+import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
-import com.bcs.p3s.display.UserProfileUI;
-import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.session.PostLoginSessionBean;
 
 
 
@@ -66,9 +64,18 @@ public interface PatentService {
 	
 	/**
 	 * Get the current FX Rate
-	 * @return a fully populated FxRateUI containing the current rate
+	 * @return a fully populated FxRateCurrentUI containing the current rate (and last rate)
 	 */
-	public FxRateUI getFxRate(); 
+	public FxRateCurrentUI getCurrentFxRate(); 
+
+
+	
+	/**
+	 * Get FX Rate history
+	 * @param the timeperiod requested
+	 * @return FX Rates for the timeperiod requested
+	 */
+	public List<FxRateUI> getFxRateHistory(String timeperiod); 
 
 
 	

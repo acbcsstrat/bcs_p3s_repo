@@ -5,44 +5,40 @@ import java.util.Date;
 
 
 
-// Created for API section 2.6
-// Exists purely to provide structure to the JSON file
+// Created for API section 2.6 & 2.9
+// Holds a single FX Rate, and the datetime it became effective
 
 public class FxRateUI {
 
-    private BigDecimal 	currentRate;
-    private Date 		currentRateActiveDate;
-    private BigDecimal 	lastRate;
-    private Date 		lastRateActiveDate;
+    protected 	BigDecimal 	rate;
+    protected 	Date 		rateActiveDate;
 
+    // For dev convenience
+    public FxRateUI() { ; }
+    public FxRateUI(BigDecimal rightnowRate, Date when) {
+		rate = rightnowRate;
+		rateActiveDate = when;
+    }
+    public String toString() {
+    	return rate.toString() + "  at " + rateActiveDate.getTime();
+    }
 
+    
 
 
     // Routine Bean getters & setters
-
-    public BigDecimal getCurrentRate() {
-		return currentRate;
+    
+    public BigDecimal getRate() {
+		return rate;
 	}
-	public void setCurrentRate(BigDecimal currentRate) {
-		this.currentRate = currentRate;
+	public void setRate(BigDecimal rate) {
+		this.rate = rate;
 	}
-	public Date getCurrentRateActiveDate() {
-		return currentRateActiveDate;
+	public Date getRateActiveDate() {
+		return rateActiveDate;
 	}
-	public void setCurrentRateActiveDate(Date currentRateActiveDate) {
-		this.currentRateActiveDate = currentRateActiveDate;
-	}
-	public BigDecimal getLastRate() {
-		return lastRate;
-	}
-	public void setLastRate(BigDecimal lastRate) {
-		this.lastRate = lastRate;
-	}
-	public Date getLastRateActiveDate() {
-		return lastRateActiveDate;
-	}
-	public void setLastRateActiveDate(Date lastRateActiveDate) {
-		this.lastRateActiveDate = lastRateActiveDate;
+	public void setRateActiveDate(Date rateActiveDate) {
+		this.rateActiveDate = rateActiveDate;
 	}
 
 }

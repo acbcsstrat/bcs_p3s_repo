@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.engine.TemporaryProcessingEngine;
@@ -202,16 +203,28 @@ public class PatentRestController extends Universal {
     
 	//------------------- Fetch FX rate --------------------------------------------------------
 
-    // Implements API section 2.6
-    @RequestMapping(value = "/rest-fxrate/", method = RequestMethod.GET)
-    public ResponseEntity<FxRateUI> getFxRate() {
-    	System.out.println("PatentRestController : /rest-fxrate/ invoked ");
+		    // Implements API section 2.6
+		    @RequestMapping(value = "/rest-fxrate/", method = RequestMethod.GET)
+		    public ResponseEntity<FxRateCurrentUI> getFxRate() {
+		    	System.out.println("PatentRestController : /rest-fxrate/ invoked ");
 
-    	FxRateUI fxRateUI = patentService.getFxRate();
-    	
-        return new ResponseEntity<FxRateUI>(fxRateUI, HttpStatus.OK);
-    }
-  
+		    	FxRateCurrentUI fxRateCurrentUI = patentService.getCurrentFxRate();
+		    	
+		        return new ResponseEntity<FxRateCurrentUI>(fxRateCurrentUI, HttpStatus.OK);
+		    }
+			
+
+		    // Implements API section 2.9
+		    @RequestMapping(value = "/rest-fxrates/{period}", method = RequestMethod.GET)
+		    public ResponseEntity<List<FxRateUI>> getFxRate(@PathVariable("period") String period) {
+		    	System.out.println("PatentRestController : /rest-fxrates/"+period+" invoked ");
+
+				List<FxRateUI> history = patentService.getFxRateHistory(period);
+		    	
+		        return new ResponseEntity<List<FxRateUI>>(history, HttpStatus.OK);
+		    }
+			
+		
 
 	
 	//------------------- next ... a Patent : ARE THERE ANY MORE ???  --------------------------------------------------------

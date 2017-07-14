@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
@@ -194,14 +195,47 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 	
 
-	public FxRateUI getFxRate() {
+	
+	public FxRateCurrentUI getCurrentFxRate() {
 
-		String err = PREFIX+"getFxRate() ";
+		String err = PREFIX+"getCurrentFxRate() ";
 		checkNoActionRequired(err);
 
 		log().debug(err+" invoked ");
     	
-		FxRateUI fxRateUI = new FxRateUI(); 
+		// Todays rate
+		FxRateUI todaysRate = new FxRateUI(); 
+		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
+		todaysRate.setRate(current.getCurrentRate());
+		todaysRate.setRateActiveDate(current.getCurrentRateActiveDate());
+		
+		// The previous rate
+		FxRateUI lastRate = new FxRateUI();
+		ArchivedRate previous = ArchivedRate.findLatestArchivedRate();
+		lastRate.setRate(previous.getFxRate());
+		lastRate.setRateActiveDate(previous.getActiveFromDate());
+		
+		FxRateCurrentUI fxRateCurrentUI = new FxRateCurrentUI();
+		fxRateCurrentUI.setCurrentFXRate(todaysRate);
+		fxRateCurrentUI.setLastFXRate(lastRate);
+		
+    	return fxRateCurrentUI;
+	}
+
+
+
+	public List<FxRateUI> getFxRateHistory(String timeperiod) { 
+
+		String err = PREFIX+"getFxRateHistory("+timeperiod+") ";
+		checkNoActionRequired(err);
+
+		log().debug(err+" invoked ");
+    	
+		List<FxRateUI> history = new ArrayList<FxRateUI>();
+		
+		
+		
+/*		FxRateUI fxRateUI = new FxRateUI(); 
 
 		// Todays rate
 		GlobalVariableSole todaysRate = GlobalVariableSole.findOnlyGlobalVariableSole(); 
@@ -212,11 +246,29 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		ArchivedRate yesterdaysRate = ArchivedRate.findLatestArchivedRate();
 		fxRateUI.setLastRate(yesterdaysRate.getFxRate());
 		fxRateUI.setLastRateActiveDate(yesterdaysRate.getActiveFromDate());
-    	
-    	return fxRateUI;
+*/    	
+		
+		GlobalVariableSole tmp1 = GlobalVariableSole.findOnlyGlobalVariableSole();
+		DummyDataEngine dummy = new DummyDataEngine();
+		List<FxRateUI> badData = dummy.makeDummyFxRateHistory(tmp1.getCurrentRate(), tmp1.getCurrentRateActiveDate(), timeperiod); 
+		
+		for (FxRateUI r : badData) {
+			history.add(r);
+		}
+		
+		
+		// Todays rate
+		FxRateUI todaysRate = new FxRateUI(); 
+		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
+		todaysRate.setRate(current.getCurrentRate());
+		todaysRate.setRateActiveDate(current.getCurrentRateActiveDate());
+
+		history.add(todaysRate);
+		
+		return history;
 	}
 
-	
+
 	
 	
 	
