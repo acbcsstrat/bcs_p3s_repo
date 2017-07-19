@@ -2,8 +2,8 @@
 
     <div id="tabs">
         <ul>
-            <li ng-repeat="tab in $ctrl.tabs" 
-                ng-class="{active:$ctrl.isActiveTab(tab.url)}" 
+            <li ng-repeat="tab in $ctrl.tabs"
+                ng-class="{active:$ctrl.isActiveTab(tab.url)}"
                 ng-click="$ctrl.onClickTab(tab)">{{tab.title}}</li> <!--applies active to the returned tab url -->
         </ul>
 
@@ -15,113 +15,75 @@
 		    <div class="col-md-12">
 		    	<h2>Patent Information</h2>
 				<h3>Application Number: {{$ctrl.patent.patentApplicationNumber}}</h3>
-		    </div>    	
+		    </div>
 	    </div>
-	    <div class="row">
-			<div class="col-md-6">
-				<table class="table">
-			    	<tr>
-			    		<th class="text-xs-right">Short Name</th>
-			    		<td>{{$ctrl.patent.shortTitle}}</td>
-			    	</tr>
-			    	<tr>
-			    		<th class="text-xs-right">Client Reference</th>
-			    		<td>{{$ctrl.patent.clientRef}}</td>
-			    	</tr>
-			    	<tr>
-			    		<th class="text-xs-right">Applicant Name</th>
-			    		<td>{{$ctrl.patent.primaryApplicantName}}</td>
-			    	</tr>
-			    	<tr>
-			    		<th class="text-xs-right">Publication Number</th>
-			    		<td>{{$ctrl.patent.patentPublicationNumber}}</td>
-			    	</tr>
-			    	<tr>
-			    		<th class="text-xs-right">Title</th>
-			    		<td>{{$ctrl.patent.title}}</td>
-			    	</tr>
-			    	<tr>
-			    		<th class="text-xs-right">Filing date</th>
-			    		<td>{{$ctrl.patent.filingDateUI}}</td>
-			    	</tr>	    	    	    	    	
-			    </table>
-			</div>
-			<div class="col-md-6">
-				<div class="row">
-					<div class="col-md-4 text-xs-left">
-						<h4>Cost</h4>
-						<p>{{$ctrl.patent.currentRenewalCost}}</p>
-					</div>
 
-					<div class="col-md-8 text-xs-left">
-						<h4>Status</h4>
-						<p>{{$ctrl.patent.renewalStatus}}</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<h4>Patent Notifications</h4>
-						<form>
+	    <div class="row">
+		    <div class="col-md-12">
+		    	<form>
+			    	<div class="row">
+			    		<div class="col-md-6">
+							<table class="table">
+						    	<tr>
+						    		<th class="text-xs-right">Short Name</th>
+						    		<td>{{$ctrl.patent.shortTitle}}</td>
+						    	</tr>
+						    	<tr>
+						    		<th class="text-xs-right">Client Reference</th>
+						    		<td>{{$ctrl.patent.clientRef}}</td>
+						    	</tr>
+						    	<tr>
+						    		<th class="text-xs-right">Applicant Name</th>
+						    		<td>{{$ctrl.patent.primaryApplicantName}}</td>
+						    	</tr>
+						    	<tr>
+						    		<th class="text-xs-right">Publication Number</th>
+						    		<td>{{$ctrl.patent.patentPublicationNumber}}</td>
+						    	</tr>
+						    	<tr>
+						    		<th class="text-xs-right">Title</th>
+						    		<td>{{$ctrl.patent.title}}</td>
+						    	</tr>
+						    	<tr>
+						    		<th class="text-xs-right">Filing date</th>
+						    		<td>{{$ctrl.patent.filingDateUI}}</td>
+						    	</tr>
+						    </table>
+				    	</div>
+						<div class="col-md-6">
 							<div class="row">
-								<div class="col-md-6">
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="gp-begin">Green period begins
-										</label>
-									</div>
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="gp-end-7w">Green period ends in 7 weeks
-										</label>
-									</div>
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="gp-end-4w">Green period ends in 4 weeks
-										</label>
-									</div>
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="ap-begin-1w">Amber period begins in 1 week
-										</label>
-									</div>
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="rp-being-1w">Red period begins in 1 week
-										</label>
-									</div>								
+								<div class="col-md-4 text-xs-left">
+									<h4>Cost</h4>
+									<p>{{$ctrl.patent.currentRenewalCost}}</p>
 								</div>
-								<div class="col-md-6">	
-									
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="patent-ext">Patent is ‘On Extension’
-										</label>
-									</div>
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="bp-end-4m">Blue period ends in 4 months
-										</label>
-									</div>
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="bp-end-2m">Blue periods ends in 2 months
-										</label>
-									</div>
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="brp-begin-1w">Brown period beings in 1 week
-										</label>
-									</div>							
-									<div class="form-check">
-										<label class="form-check-label">
-											<input class="form-check-input" type="checkbox" name="patent-end-5d">Last 5 days for renewal via PatentPlace
-										</label>
+
+								<div class="col-md-8 text-xs-left">
+									<h4>Status</h4>
+									<p>{{$ctrl.patent.renewalStatus}}</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<h4>Patent Notifications</h4>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-check" ng-repeat="checkbox in $ctrl.patent.notificationUIs">
+												<label class="form-check-label">
+													<input class="form-check-input" type="checkbox" ng-model="checkbox.isOn" name="selectedBox[]" value="{{checkbox.title}}">{{checkbox.title}}
+												</label>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</form>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<input type="submit" id="submit" class="btn btn-success" value="Submit" ng-click="$ctrl.updatePatent($ctrl.patent)">
+							</div>
+						</div>
 					</div>
-				</div>				
+				</form>
 			</div>
 		</div>
 	</script>
@@ -137,8 +99,8 @@
 				</tbody>
 			</table>
 			<h3>Application Number: {{$ctrl.patent.patentApplicationNumber}}</h3>
-			<canvas class="chart chart-line" chart-data="$ctrl.data" chart-labels="$ctrl.labels" 
-	chart-series="$ctrl.series" chart-click="$ctrl.onClick"></canvas> 
+			<canvas class="chart chart-line" chart-data="$ctrl.data" chart-labels="$ctrl.labels"
+	chart-series="$ctrl.series" chart-click="$ctrl.onClick"></canvas>
 		</div>
 	</script>
 	<script type="text/ng-template" id="renewal-history.htm">

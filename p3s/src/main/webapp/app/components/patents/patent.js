@@ -5,7 +5,7 @@ angular.module('myApp').component('patent', {
 	},
 	templateUrl: 'p3sweb/app/components/patents/views/patent-item.htm',
 	// controllerAs: 'graphDataController', this can be 
-	controller: ['patentTabFactory', function(patentTabFactory) {
+	controller: ['patentTabFactory', 'patentsService', function(patentTabFactory, patentsService) {
 		var vm = this;
 
 	  	vm.tabs = patentTabFactory.tabs;
@@ -21,7 +21,6 @@ angular.module('myApp').component('patent', {
 	    }
 
      	vm.selectedPatent = vm.patentItem;
-
 
 
      	//========== graphs
@@ -56,6 +55,15 @@ angular.module('myApp').component('patent', {
             }
         }
 
+        //============ form data
+
+        vm.updatePatent = function(patent) {
+        	// console.log(event)
+        	var id = patent.id;
+        	patentsService.updatePatent(patent, id);
+        }
+
+        vm.checkbox = {}
 	  	
 	}]
 

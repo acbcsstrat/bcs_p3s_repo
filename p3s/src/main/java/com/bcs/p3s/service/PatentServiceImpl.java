@@ -2,32 +2,23 @@ package com.bcs.p3s.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
 
 import javax.persistence.TypedQuery;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
-import com.bcs.p3s.display.UserProfileUI;
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 
@@ -123,43 +114,107 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
     	return patent;
 	}
 
-	
 
-	public Patent updatePatent(long id, PatentUI patentUI) { 
+	// The patentUI parameter MAY be provided as a PatentUI, or more likely a LinkedHashMap, so, here, accept either
+	public Patent flexibleUpdatePatent(long id, Object untypedPatentUI) { 
 
-		String err = PREFIX+"updatePatent("+id+") ";
-		checkUpdatePatent(id, patentUI, err); 
+		String err = PREFIX+"flexibleUpdatePatent("+id+") ";
+
+		// Re: check*() safety - Unusually (& Scarily!) do not check*() YET
+		// First identify parameter TYPE. THEN check. But ensure safety checks ARE performed
+
+		// Meanwhile: Do what we can, for now
+		if (untypedPatentUI instanceof PatentUI) {
+			checkUpdatePatent(id, (PatentUI) untypedPatentUI, err);
+		} else 
+		if (untypedPatentUI instanceof LinkedHashMap) {
+			checkThisIsMyPatent(id, err);
+			checkNotNull(untypedPatentUI, err);
+			// Further check*()s to be performed!
+		}
+		else failInternalError("flexibleUpdatePatent() passed unexpected objectType = "+untypedPatentUI.getClass().getName());
+
 		
 		log().debug(err+" invoked ");
+		Patent updatedPatent = findById(id);
+		try {
+			PatentUI patentUI = null; 
     	
-    	Patent updatedPatent = null;
-    	try {
+			if (untypedPatentUI instanceof PatentUI) {
+				patentUI = (PatentUI) untypedPatentUI;
 
-    		// coz have dun Auth (Not yet written!!), can TRUST notNull, not malicious, etc ... - acTidy
+				updatedPatent.setClientRef(patentUI.getClientRef());
+				updatedPatent.setShortTitle(patentUI.getShortTitle());
+				updatedPatent.setNotifications(new ArrayList<Notification>());
+	    		for (NotificationUI notificationUI : patentUI.getNotificationUIs()) {
+	    			if (notificationUI.getIsOn()) {
+	    				Long notificationId = notificationUI.getId();
+	    				Notification notification = Notification.findNotification(notificationId);
+	    				updatedPatent.getNotifications().add(notification);
+	    			}
+	    		}
+			} else { 
+				// Retrieve the required data from the LinkedHashMap
+				LinkedHashMap data = (LinkedHashMap) untypedPatentUI;
+				String clientRef = (String) data.get("clientRef");
+				String shortTitle = (String) data.get("ShortTitle");
+				// Now apply that data
+				updatedPatent.setClientRef(clientRef);
+				updatedPatent.setShortTitle(shortTitle);
+				updatedPatent.setNotifications(flexibleExtractNotifications(data));
+			
+				// NOW ! - can perform the remaining check*()s - which were: checkIsTrue((patentUI.getId().longValue()==id), err)   &    checkPatentUIhasNotificationUIs(patentUI, err);
+				Integer ID = (Integer) data.get("id");
+				if (ID.longValue()!=id) 				failInternalError(err+"  [on check id=id]");
+				List<Object> allNotificationUIs = (List<Object>) data.get("notificationUIs");
+				if (allNotificationUIs.size() < 5 )		failInternalError(err+" [patentUI has only "+allNotificationUIs.size()+" notificationUIs]"); 
+			}
 
-    		Patent patent = findById(id);
-    		patent.setClientRef(patentUI.getClientRef());
-    		patent.setShortTitle(patentUI.getShortTitle());
-    		patent.setNotifications(new ArrayList<Notification>());
-    		for (NotificationUI notificationUI : patentUI.getNotificationUIs()) {
-    			if (notificationUI.getIsOn()) {
-    				Long notificationId = notificationUI.getId();
-    				Notification notification = Notification.findNotification(notificationId);
-    				patent.getNotifications().add(notification);
-    			}
-    		}
-    		
-    		patent.merge();
+			// At long last !
+			updatedPatent.merge();
+			
     	} 
     	catch (Exception e) {
     		// this catch here as (a) cannot yet PROVE this code *&* (b) cannot trust exception to appear if thrown
-    		System.out.println("PatentServiceImpl updatePatent() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
+    		System.out.println("PatentServiceImpl flexibleUpdatePatent() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			throw new RuntimeException(e);
     	}
     	return updatedPatent;
 	}
+
+	// Tidy the above by extracting this
+	protected List<Notification> flexibleExtractNotifications(LinkedHashMap untypedPatentUI) { 
+		List<Notification> result = new ArrayList<Notification>();
+		//if patentUI is a LinkedHashMap, notificationUIs will (likely) be too. But check, just in case
+		List<Object> allNotificationUIs = (List<Object>) untypedPatentUI.get("notificationUIs");
+		for (Object obNotificationUI : allNotificationUIs) {
+			if (obNotificationUI instanceof NotificationUI) {
+				NotificationUI notificationUI = (NotificationUI) obNotificationUI;
+				if (notificationUI.getIsOn()) {
+    				Long notificationId = notificationUI.getId();
+    				Notification notification = Notification.findNotification(notificationId);
+    				result.add(notification);
+				}
+			}
+			else {
+				LinkedHashMap obNotification = (LinkedHashMap) obNotificationUI;
+				Integer ID = (Integer) obNotification.get("id");
+				Boolean ISON = (Boolean) obNotification.get("isOn");
+				if (ISON.booleanValue()) {
+    				long notificationId = ID.longValue();
+    				Notification notification = Notification.findNotification(notificationId);
+    				result.add(notification);
+				}
+			}
+		}
+    	return result;
+	}
+	
+
+	
+	
 
 
 	

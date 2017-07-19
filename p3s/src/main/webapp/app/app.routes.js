@@ -16,17 +16,26 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     })
     .state('app', {
         url: ''
+        // resolve: {
+        //     currentAuth: ['authentication', function(authentication) {
+        //         return authentication.requireAuth();
+        //     }]
+        // }
     })
+    .state('app.profile', {
+        url: '/profile',
+        component: 'profile'
+    })    
     .state('app.patents', {
         url: '/patents',
         component: 'patents',
         resolve: {
-            patents: function(patentsService) {
+            patents: ['patentsService', function(patentsService) {
                 return patentsService.fetchAllPatents();
-            },
-            graphs: function(patentsService) {
+            }],
+            graphs: ['patentsService', function(patentsService) {
                 return  patentsService.fetchGraphData();
-            }
+            }]
         },
         params: {
             navigation: 'patentnav'
@@ -36,16 +45,16 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         url: '/{patentId}',
         component: 'patent',
         resolve: {
-            patent: function(patents, $stateParams) {
+            patent: ['patents', '$stateParams', function(patents, $stateParams) {
                 return patents.find(function(patent){ 
                     return patent.id == $stateParams.patentId;
                 })
-            },
-            graph: function(graphs, $stateParams) {
+            }],
+            graph: ['graphs', '$stateParams', function(graphs, $stateParams) {
                 return graphs.dataset.find(function(graph){
                     return graph.id == $stateParams.patentId;
                 })
-            }
+            }]
         }
     })
     .state('app.add-patent', {

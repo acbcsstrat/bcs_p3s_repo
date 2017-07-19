@@ -43,12 +43,12 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 
 	protected void checkUpdatePatent(long id, PatentUI patentUI, String err) {
+		// Note!: This method only checks for PatentUI, If instead is LinkedHashMap, client must do own checking
 		checkThisIsMyPatent(id, err);
 		checkNotNull(patentUI, err);
 		checkIsTrue((patentUI.getId().longValue()==id), err);
 		checkPatentUIhasNotificationUIs(patentUI, err);
 	}
-	
 	
 	// End of   : Higher Level tools
 	

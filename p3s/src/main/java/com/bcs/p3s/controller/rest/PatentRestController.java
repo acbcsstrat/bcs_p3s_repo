@@ -118,30 +118,25 @@ public class PatentRestController extends Universal {
 
 	
     //------------------- Update a Patent --------------------------------------------------------
-	  
-	  
+	
     // Implements API section 2.4
     // Update Patent: Customer is permitted to change 3 things: shortTitle, clientRef and which Notifications
-
-	// Cannot PROVE this yet - ASSUME can get a PatentUI, & not the linked list ...
-
+	//
+	// Note !
+	// The patentUI parameter MAY be provided as a PatentUI, or more likely a LinkedHashMap, so, here, accept either
 	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.PUT) 
-	public ResponseEntity<PatentUI> updatePatent(@PathVariable("id") long id, @RequestBody PatentUI patentUI) {
+	public ResponseEntity<PatentUI> updatePatent2(@PathVariable("id") long id, @RequestBody Object untypedPatentUI) {
 		
-		log().debug("PatentRestController : /rest-patents/ updatePatent() invoked ");
-		Patent updatedPatent = null;
+		log().debug("PatentRestController : /rest-patents/ updatePatent() [tolerant] invoked ");
+		if (untypedPatentUI!=null) log().debug("  param untypedPatentUI is of type " + untypedPatentUI.getClass().getName());
+		
 		try {
-			System.out.println("PatentRestController : /rest-patents/ [PUT] invoked - i.e. UPDATE Patent");
-	
 			Patent existingPatent = patentService.findById(id);
 			if (existingPatent == null) {
 				System.out.println("Unable to update. Patent with id " + id + " not found");
 			} else {
-				updatedPatent = patentService.updatePatent(id, patentUI);
+				patentService.flexibleUpdatePatent(id, untypedPatentUI);
 			}
-
-		
-		
 		
 		} catch (Exception e) {
 			System.out.println("PatentRestController updatePatent() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
@@ -149,25 +144,22 @@ public class PatentRestController extends Universal {
 			e.printStackTrace();
 		}
 
-  		System.out.println(" ");
-  		System.out.println(" ");
-  		System.out.println(" ");
-
+		
+		Patent nowPersistedPatent = patentService.findById(id);
   		
-  		
-		log().debug("PatentRestController : /rest-patents/ updatePatent() completed.");
-	  	if(updatedPatent == null) {
+	  	if(nowPersistedPatent == null) {
 	  		return new ResponseEntity<PatentUI>(HttpStatus.NOT_FOUND); //You many decide to return HttpStatus.NO_CONTENT
 	  	}
 	  	else {
-	  		PatentUI updatedPatentUI = new PatentUI(updatedPatent);
+	  		PatentUI updatedPatentUI = new PatentUI(nowPersistedPatent);
 	  		return new ResponseEntity<PatentUI>(updatedPatentUI, HttpStatus.OK);
 	  	}
    }
     
-    
-    
-  
+	
+	
+	
+	
 	//------------------- Delete a Patent --------------------------------------------------------
 
     // Implements API section 2.5

@@ -56,10 +56,10 @@ public interface PatentService {
 	/**
 	 * Update a Patent given it's ID and the PatentUI
 	 * @param id patent id (as long)
+	 * @param untypedPatentUI MAY be provided as a PatentUI, or more likely a LinkedHashMap. Either is accepted
 	 * @return the updated patent - or null (if no match, or fail, or malicious)
 	 */
-	public Patent updatePatent(long id, PatentUI patentUI); 
-
+	public Patent flexibleUpdatePatent(long id, Object untypedPatentUI) ;
 
 	
 	/**

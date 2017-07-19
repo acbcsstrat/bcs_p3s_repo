@@ -3,7 +3,7 @@ app.factory('patentsService', function($http, $q) {
     var factory = {};
 
 		//var REST_SERVICE_URI = '../../p3sweb/assets/json/patents.json';
-		var REST_SERVICE_URI = '../../p3sweb/rest-patents/';
+		var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-patents/';
 
         factory.fetchAllPatents = function() {
         
@@ -19,6 +19,23 @@ app.factory('patentsService', function($http, $q) {
                 }
             );
 
+            return deferred.promise;
+        }
+
+        factory.updatePatent = function(patent, id) {
+            console.log(patent)
+
+            var deferred = $q.defer();
+            $http.put(REST_SERVICE_URI+id, patent)
+                .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                },
+                function(errResponse){
+                    console.error('Error while updating patent');
+                    deferred.reject(errResponse);
+                }
+            );
             return deferred.promise;
         }
 
@@ -38,6 +55,8 @@ app.factory('patentsService', function($http, $q) {
 
             return deferred.promise;
         }
+
+
 
     return factory;
 
