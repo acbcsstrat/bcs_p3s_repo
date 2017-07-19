@@ -1,5 +1,7 @@
 package com.bcs.p3s.util.env;
 
+import com.bcs.p3s.util.lang.Universal;
+
 //import com.bcs.p3s.util.os.Hostname;
 
 //import java.util.Map;
@@ -12,68 +14,139 @@ package com.bcs.p3s.util.env;
  *   None
  *   
  */
-public class P3SEnvironmentKnowledge {
+public class P3SEnvironmentKnowledge extends Universal {
 
-	public static final String PROPERTYFILENAME = "PatentExpressway.properties";
-	public static final String PROPERTYFILEDEFAULTLOCATION = "/utils";
+	public static final String DATABASECONFIGFILENAME = "database.properties";
+	public static final String BUILDINFO_FILENAME = "buildinfo.properties";
+
+//	public static final String PROPERTYFILENAME = "PatentExpressway.properties";
+//	public static final String PROPERTYFILEDEFAULTLOCATION = "/utils";
 	
 	
 	public static final String Hostnames[] = {
 			  "CCP020"					// Andy's Lenovo 
 			, "CCP007"					// Andy's Dell 
 			, "avid-ox790-013"			// Merin's PC
-			, "patrickwork"				// Patrick's PC
+			// Pat's WAS "patrickwork" - now seems DESKTOP-H575IU3
+			, "DESKTOP-H575IU3"			// Patrick's PC
 			, "reviewsystem"			// Tomacat-A (on Linode)
 			// YET TO INCLUDE: other Linux Hosts? Dev, Test, Demo & Production
 	};
 		
+
+	
+	/**
+	 * Provides the path of the database property file on this host
+	 */
+	public final String getDatabaseConfigFilespec()  {
+		String path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";  // Deafult PC tomcat
+		String host = Hostname.getHostname();
 		
+		
+		// Logic: If Lenovo or merin is under eclipse, else Dell or Pat or TomcatA or scrape. 
+		if ("CCP020".equals(host) || "avid-ox790-013".equals(host)) {
+			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/";
+		}
+		if ("DESKTOP-H575IU3".equals(host)) {
+			path = "C:/xampp/tomcat/p3sweb/WEB-INF/classes/META-INF/spring/";
+		}
+		if ("reviewsystem".equals(host)) {
+			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+		}
+		
+		if ( ! "CCP007".equals(host) ) {
+			logInternalError().warn("P3SEnvironmentKnowledge getDatabaseConfigFilespec given unexpected host : "+host);
+		}
+		log().debug("P3SEnvironmentKnowledge getDatabaseConfigFilespec predicts that db conf file is in "+path);
+		
+		
+		return appendFilenameToPath(path, DATABASECONFIGFILENAME);
+	};
+	
+	
+
+	/**
+	 * Provides the path of the database property file on this host
+	 */
+	public final String getBuildinfoFilespec()  {
+		String path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/";  // Deafult PC tomcat
+		String host = Hostname.getHostname();
+		
+		
+		// Logic: If Lenovo or merin is under eclipse, else Dell or Pat or TomcatA or scrape. 
+		if ("CCP020".equals(host) || "avid-ox790-013".equals(host)) {
+			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/";
+		}
+		if ("DESKTOP-H575IU3".equals(host)) {
+			path = "C:/xampp/tomcat/p3sweb/WEB-INF/classes/";
+		}
+		if ("reviewsystem".equals(host)) {
+			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";
+		}
+		
+		if ( ! "CCP007".equals(host) ) {
+			logInternalError().warn("P3SEnvironmentKnowledge getBuildinfoFilespec given unexpected host : "+host);
+		}
+		log().debug("P3SEnvironmentKnowledge getBuildinfoFilespec predicts that buildinfo file is in "+path);
+		
+		
+		return appendFilenameToPath(path, BUILDINFO_FILENAME);
+	};
+	
+	
+
+	
+	
+	
+	
+	
+	
 	/**
 	 * Environment-Specific (i.e. Host Specific) Properties which must exist for every environment. 
 	 */
-	public static final String MandatedESProperties[] = {
-			  "Dummy1"					// role ...
-			// YET TO INCLUDE: Everything     acToDo
-	};
+//	public static final String MandatedESProperties[] = {
+//			  "Dummy1"					// role ...
+//			// YET TO INCLUDE: Everything     acToDo
+//	};
 		
 	/**
 	 * Non-Environment-Specific Properties which must exist. 
 	 */
-	public static final String MandatedGenericProperties[] = {
-			  "Universal1"					// role ...
-			// YET TO INCLUDE: Everything
-	};
+//	public static final String MandatedGenericProperties[] = {
+//			  "Universal1"					// role ...
+//			// YET TO INCLUDE: Everything
+//	};
 		
 		
 	/**
 	 * Location of the main property file on this host
 	 * Will end with forwardslash, ready for filename to be prepended
 	 */
-	public static final String pathToPropertyFile()  {
-		String path = PROPERTYFILEDEFAULTLOCATION;
-
-		//String hostname = Hostname.getWinHostname(); 
-		//if ("avid-ox790-013".equals(hostname)) path = "/WHATEVER";
-		
-		if ( ! path.endsWith("/")) path += "/"; 
-		return null;
-	};
+//	public static final String pathToPropertyFile()  {
+//		String path = PROPERTYFILEDEFAULTLOCATION;
+//
+//		//String hostname = Hostname.getWinHostname(); 
+//		//if ("avid-ox790-013".equals(hostname)) path = "/WHATEVER";
+//		
+//		if ( ! path.endsWith("/")) path += "/"; 
+//		return null;
+//	};
 	
 	/**
 	 * Provides the path of the main property file on this host
 	 */
-	public static final String getPropertyFilePath()  {
-		String path = PROPERTYFILEDEFAULTLOCATION;
-
-		//String hostname = Hostname.getWinHostname(); 
-		//if ("avid-ox790-013".equals(hostname)) path = "/WHATEVER";
-		
-		if ( ! path.endsWith("/")) path += "/"; 
-		return path;
-	};
+//	public static final String getPropertyFilePath()  {
+//		String path = PROPERTYFILEDEFAULTLOCATION;
+//
+//		//String hostname = Hostname.getWinHostname(); 
+//		//if ("avid-ox790-013".equals(hostname)) path = "/WHATEVER";
+//		
+//		if ( ! path.endsWith("/")) path += "/"; 
+//		return path;
+//	};
 	
 	
-// acTidy  -these were old Moneycorp values. Useful for Scavenging	
+// acTidy  -these were old Moneycorp values. Useful for Scavenging **************	
 //	public static String default_property_fileName = "moneycorp_patent_renewals.properties"; 
 //	// deliberately corrupt above, to exercise logging
 //
@@ -104,4 +177,17 @@ public class P3SEnvironmentKnowledge {
 //	 * );
 //	 */
 
+	
+	public String appendFilenameToPath(String path, String filename) {
+		final String SEPARATOR = "/";
+		String composite = path;
+		if (isEmpty(path)) {
+			composite = "";
+		} else {
+			if ( ! path.endsWith(SEPARATOR))
+			composite += SEPARATOR;
+		}
+		return composite+filename;
+	}
+	
 }

@@ -33,8 +33,8 @@ public class PatentRestController extends Universal {
     // Implements API section 2.1 - Get all patents for this business
     @RequestMapping(value = "/rest-patents/", method = RequestMethod.GET)
     public ResponseEntity<List<PatentUI>> listAllPatentUIsForBusiness() {
-		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() invoked.");
-    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) invoked ");
+		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() invoked. zaphod ");
+    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) invoked zaaaaaaaaaaaaaaaa");
 
     	List<PatentUI> patentUIs = patentService.listAllPatentUIsForMyBusiness();
     	
@@ -125,9 +125,9 @@ public class PatentRestController extends Universal {
 	// Note !
 	// The patentUI parameter MAY be provided as a PatentUI, or more likely a LinkedHashMap, so, here, accept either
 	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.PUT) 
-	public ResponseEntity<PatentUI> updatePatent2(@PathVariable("id") long id, @RequestBody Object untypedPatentUI) {
+	public ResponseEntity<PatentUI> updatePatent(@PathVariable("id") long id, @RequestBody Object untypedPatentUI) {
 		
-		log().debug("PatentRestController : /rest-patents/ updatePatent() [tolerant] invoked ");
+		log().debug("PatentRestController : /rest-patents/ updatePatent() [tolerant] invoked   -  untypedPppp  ");
 		if (untypedPatentUI!=null) log().debug("  param untypedPatentUI is of type " + untypedPatentUI.getClass().getName());
 		
 		try {
