@@ -79,6 +79,8 @@ public class UserProfileRestController extends Universal {
     	System.out.println(" ****************** ");
     	System.out.println(" ****************** ");
     	System.out.println(" ****************** ");
+
+    	if ( ! ( obUser instanceof UserProfileUI)) notYet("updateUser given object which is NOT a UserProfileUI");
     	
     	UserProfileUI user = (UserProfileUI) obUser;
     	

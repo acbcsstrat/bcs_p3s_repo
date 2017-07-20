@@ -17,6 +17,7 @@ import com.bcs.p3s.util.log.Loggable;
  **/
 public class Universal extends BcsLogger implements Loggable {
 
+	
 	public boolean isEmpty(String val) {
 		if (val==null || val.trim().length()==0) return true;
 		return false;
@@ -29,5 +30,16 @@ public class Universal extends BcsLogger implements Loggable {
     	logInternalError().fatal(message);
     	throw new P3SRuntimeException(message);
     }
-	
+
+    
+    // Temporary - for Development:
+    public void notYet(String msg) {
+    	String message = "    *************  NOT YET IMPLEMENTED - So this will not work  ************* ";
+    	if (notEmpty(msg)) message += msg;
+    	log().fatal(message);
+    }
+    public void notYet() {
+    	notYet("Default");
+    }
+    
 }

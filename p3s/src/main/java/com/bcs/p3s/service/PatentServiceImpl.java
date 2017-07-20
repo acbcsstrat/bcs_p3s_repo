@@ -157,7 +157,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				// Retrieve the required data from the LinkedHashMap
 				LinkedHashMap data = (LinkedHashMap) untypedPatentUI;
 				String clientRef = (String) data.get("clientRef");
-				String shortTitle = (String) data.get("ShortTitle");
+				String shortTitle = (String) data.get("shortTitle");
 				// Now apply that data
 				updatedPatent.setClientRef(clientRef);
 				updatedPatent.setShortTitle(shortTitle);

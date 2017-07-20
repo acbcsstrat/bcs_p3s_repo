@@ -56,13 +56,13 @@ public class Patent {
     /**
      */
     // May be Null
-    @Size(min = 8, max = 16)
+    @Size(min = 1, max = 30)
     private String clientRef;
 
     /**
      */
     // May be Null
-    @Size(max = 20)
+    @Size(max = 25)
     private String shortTitle;
 
     /**
