@@ -25,7 +25,6 @@ app.factory('userService', function($http, $q) {
         
         factory.updateUser = function(user) {
 
-        	alert(' in userService.js updateUser ');
             console.log(user)
 
             var deferred = $q.defer();
