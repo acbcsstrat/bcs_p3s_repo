@@ -1,3 +1,15 @@
+<div class="row">
+	<div class="col-md-6">
+		<p ng-show="$root.currentUser">Hi, {{$root.currentUser.firstname}}</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<a ui-sref="login" ng-click="$ctrl.logout()">Logout</a>
+	</div>
+</div>
+
+
 <form  action="#" method="POST" name="userProfileForm">
 	<div class="col-md-6">
 
@@ -6,7 +18,7 @@
 			<div class="form-group row">
 				<label class="col-md-5" for="emailAddress">Email address</label>
 				<div class="col-md-7">
-					<input type="email" name="emailAddress" ng-model="user.emailAddress" class="form-control" id="emailAddress" value="hello" email required>
+					<input type="email" name="emailAddress" ng-model="$ctrl.user.emailAddress" class="form-control" id="emailAddress" value="hello" email required>
 					<p ng-show="userProfileForm.emailAddress.$error.required && userProfileForm.emailAddress.$dirty">Please fill out this field</p>
 					<p ng-show="userProfileForm.emailAddress.$error.email && userProfileForm.emailAddress.$dirty">Enter a valid email</p>
 				</div>
@@ -14,14 +26,14 @@
 			<div class="form-group row">
 				<label class="col-md-5" for="firstName">First name</label>
 				<div class="col-md-7">
-					<input type="text" name="firstName" class="form-control" ng-model="user.firstName" id="firstName" ng-bind="firstName" required>
+					<input type="text" name="firstName" class="form-control" ng-model="$ctrl.user.firstName" id="firstName" ng-bind="firstName" required>
 					<p ng-show="userProfileForm.firstName.$error.required && userProfileForm.firstName.$dirty">Please fill out this field</p>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="lastName">Last name</label>
 				<div class="col-md-7">
-					<input type="text" class="form-control" name="lastName" ng-model="user.lastName"  id="lastName" required>
+					<input type="text" class="form-control" name="lastName" ng-model="$ctrl.user.lastName"  id="lastName" required>
 					<p ng-show="userProfileForm.lastName.$invalid && !userProfileForm.lastName.$pristine">Please fill out this field</p>
 
 				</div>
@@ -33,7 +45,7 @@
 			<div class="form-group row">
 				<label class="col-md-5" for="new_password">New password</label>
 				<div class="col-md-7">
-					<input type="text" name="new_password" ng-model="user.newPassword" class="form-control" id="new_password" minlength="8" required>
+					<input type="text" name="new_password" ng-model="$ctrl.user.newPassword" class="form-control" id="new_password" minlength="8" required>
 					<p ng-show="userProfileForm.new_password.$error.required && userProfileForm.new_password.$dirty">Please fill out this field</p>
 					<p ng-show="userProfileForm.new_password.$error.minlength">Password needs to be a minimum of 8 characters</p>
 				</div>
@@ -70,42 +82,42 @@
 			<div class="form-group row">
 				<label class="col-md-5" for="businessName">Business name</label>
 				<div class="col-md-7">
-					<input type="text" name="businessName" class="form-control" ng-model="user.businessName" id="businessName" required>
+					<input type="text" name="businessName" class="form-control" ng-model="$ctrl.user.business.businessName" id="businessName" required>
 					<p ng-show="userProfileForm.businessName.$error.required && userProfileForm.businessName.$dirty">Please fill out this field</p>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="phoneNumber">Business phone number</label>
 				<div class="col-md-7">
-					<input type="text" name="phoneNumber" class="form-control" ng-model="user.phoneNumber" id="phoneNumber" required>
+					<input type="text" name="phoneNumber" class="form-control" ng-model="$ctrl.user.phoneNumber" id="phoneNumber" required>
 					<p ng-show="userProfileForm.phoneNumber.$error.required && userProfileForm.phoneNumber.$dirty">Please fill out this field</p>					
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="street">Street</label>
 				<div class="col-md-7">
-					<input type="text" name="street" class="form-control" ng-model="user.street" id="street" required>
+					<input type="text" name="street" class="form-control" ng-model="$ctrl.user.street" id="street" required>
 					<p ng-show="userProfileForm.street.$error.required && userProfileForm.street.$dirty">Please fill out this field</p>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="city">City</label>
 				<div class="col-md-7">
-					<input type="text" name="city" class="form-control" ng-model="user.city" id="city" required>
+					<input type="text" name="city" class="form-control" ng-model="$ctrl.user.city" id="city" required>
 					<p ng-show="userProfileForm.city.$error.required && userProfileForm.city.$dirty">Please fill out this field</p>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="USstate">State</label>
 				<div class="col-md-7">
-					<input type="text" name="USstate" class="form-control" ng-model="user.USstate" id="USstate" required>
+					<input type="text" name="USstate" class="form-control" ng-model="$ctrl.user.usstate" id="USstate" required>
 					<p ng-show="userProfileForm.USstate.$error.required && userProfileForm.USstate.$dirty">Please fill out this field</p>					
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="zip">Zip</label>
 				<div class="col-md-7">
-					<input type="text" name="zip" class="form-control" ng-model="user.zip" id="zip" required>
+					<input type="text" name="zip" class="form-control" ng-model="$ctrl.user.zip" id="zip" required>
 				</div>
 				<p ng-show="userProfileForm.zip.$error.required && userProfileForm.zip.$dirty">Please fill out this field</p>						
 			</div>
@@ -129,42 +141,64 @@
 			<div class="form-group row">
 				<label class="col-md-5" for="phone_number">Business phone number</label>
 				<div class="col-md-7">
-					<input type="text" name="phone_number" class="form-control" ng-model="user.businessNumber" id="phone_number" required>
+					<input type="text" name="phone_number" class="form-control" ng-model="$ctrl.user.businessNumber" id="phone_number" required>
 				</div>
 				<p ng-show="userProfileForm.phone_number.$error.required && userProfileForm.phone_number.$dirty">Please fill out this field</p>		
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="billing_street">Street</label>
 				<div class="col-md-7">
-					<input type="text" name="billing_street" class="form-control" ng-model="user.billingStreet" id="billing_street" required>
+					<input type="text" name="billing_street" class="form-control" ng-model="$ctrl.user.billingStreet" id="billing_street" required>
 					<p ng-show="userProfileForm.billing_street.$error.required && userProfileForm.billing_street.$dirty">Please fill out this field</p>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="billing_city">City</label>
 				<div class="col-md-7">
-					<input type="text" name="billing_city" class="form-control" ng-model="user.billingCity" id="billing_city" required>
+					<input type="text" name="billing_city" class="form-control" ng-model="$ctrl.user.billingCity" id="billing_city" required>
 				</div>
 				<p ng-show="userProfileForm.billing_city.$error.required && userProfileForm.billing_city.$dirty">Please fill out this field</p>
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="billing_state">State</label>
 				<div class="col-md-7">
-					<input type="text" name="billing_state" class="form-control" ng-model="user.billingState" id="billing_state" required>
+					<input type="text" name="billing_state" class="form-control" ng-model="$ctrl.user.billingState" id="billing_state" required>
 					<p ng-show="userProfileForm.billing_state.$error.required && userProfileForm.billing_state.$dirty">Please fill out this field</p>					
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="billing_zip">Zip</label>
 				<div class="col-md-7">
-					<input type="text" name="billing_zip" class="form-control" ng-model="user.billingZip" id="billing_zip" required>
+					<input type="text" name="billing_zip" class="form-control" ng-model="$ctrl.user.billingZip" id="billing_zip" required>
 					<p ng-show="userProfileForm.billing_zip.$error.required && userProfileForm.billing_zip.$dirty">Please fill out this field</p>
 				</div>
 			</div>
 		</fieldset>
 	</div>
+
 	<div class="col-offset-6 col-md-6">
-		<button class="btn btn-success" type="submit">Submit</button>
+		<fieldset>
+			<legend class="font-weight-bold">For adding further Users</legend>
+			<div class="form-group row">
+				<label class="col-md-5" for="phone_number">Business Number</label>
+				<div class="col-md-7">
+					<input type="text" name="phone_number" class="form-control" ng-model="$ctrl.user.businessNumber" id="phone_number" required>
+				</div>
+				<p ng-show="userProfileForm.phone_number.$error.required && userProfileForm.phone_number.$dirty">Please fill out this field</p>		
+			</div>
+			<div class="form-group row">
+				<label class="col-md-5" for="billing_street">Business PIN</label>
+				<div class="col-md-7">
+					<input type="text" name="billing_street" class="form-control" ng-model="$ctrl.user.businessPin" id="billing_street" required>
+					<p ng-show="userProfileForm.billing_street.$error.required && userProfileForm.billing_street.$dirty">Please fill out this field</p>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="col-offset-6 col-md-6">
+		<!--   <button class="btn btn-success" type="submit">Submit</button>  -->
+		<input type="submit" id="submit" class="btn btn-success" value="Submit" ng-click="$ctrl.updateUser($ctrl.user)">
 	</div>
 
 </form>	

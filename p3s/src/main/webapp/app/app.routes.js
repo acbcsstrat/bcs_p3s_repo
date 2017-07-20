@@ -26,6 +26,22 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         url: '/profile',
         component: 'profile'
     })    
+
+    
+    
+    .state('app.userprofile', {
+        url: '/userprofile',
+        component: 'user',
+        resolve: {
+            user: ['userService', function(userService) {
+                return userService.fetchUser();
+            }]
+        }
+    })
+
+    
+    
+    
     .state('app.patents', {
         url: '/patents',
         component: 'patents',

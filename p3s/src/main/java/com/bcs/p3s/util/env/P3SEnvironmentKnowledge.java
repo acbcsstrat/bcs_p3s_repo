@@ -39,7 +39,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 	 * Provides the path of the database property file on this host
 	 */
 	public final String getDatabaseConfigFilespec()  {
-		String path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";  // Deafult PC tomcat
+		String defaultpath = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";  // Deafult PC tomcat
+		String path = null;
 		String host = Hostname.getHostname();
 		
 		
@@ -48,17 +49,18 @@ public class P3SEnvironmentKnowledge extends Universal {
 			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
-			path = "C:/xampp/tomcat/p3sweb/WEB-INF/classes/META-INF/spring/";
+			path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
 		if ("reviewsystem".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
 		
-		if ( ! "CCP007".equals(host) ) {
+		if ( (path==null) && ! "CCP007".equals(host) ) {
 			logInternalError().warn("P3SEnvironmentKnowledge getDatabaseConfigFilespec given unexpected host : "+host);
 		}
 		log().debug("P3SEnvironmentKnowledge getDatabaseConfigFilespec predicts that db conf file is in "+path);
 		
+		if (path==null) { path = defaultpath; }
 		
 		return appendFilenameToPath(path, DATABASECONFIGFILENAME);
 	};
@@ -78,7 +80,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
-			path = "C:/xampp/tomcat/p3sweb/WEB-INF/classes/";
+			path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
 		}
 		if ("reviewsystem".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";

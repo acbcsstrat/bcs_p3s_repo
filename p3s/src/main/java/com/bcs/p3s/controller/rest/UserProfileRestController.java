@@ -67,9 +67,21 @@ public class UserProfileRestController extends Universal {
     }
     
    //----------------------Update User Info ---------------------------------------------------------------------------------
+//    @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
+//    public ResponseEntity<UserProfileUI> updateUser(@RequestBody UserProfileUI user , UriComponentsBuilder ucBuilder) {
     @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
-    public ResponseEntity<UserProfileUI> updateUser(@RequestBody UserProfileUI user , UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<UserProfileUI> updateUser(@RequestBody Object obUser , UriComponentsBuilder ucBuilder) {
       
+    	log().fatal(" REACHED    AAAAAAAAAAAAAAAAAAAAAA  UserProfileRestController updateUser ");
+    	String msg = " ****************** "+"UserProfileRestController updateUser invoked with UserProfileUI of "+obUser.getClass().getName();
+    	log().fatal(msg);
+    	System.out.println(msg);
+    	System.out.println(" ****************** ");
+    	System.out.println(" ****************** ");
+    	System.out.println(" ****************** ");
+    	
+    	UserProfileUI user = (UserProfileUI) obUser;
+    	
         PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
         P3SUser p3sUser = pLoginSession.getUser();
         p3sUser.setEmailAddress(user.getEmailAddress());
