@@ -107,7 +107,7 @@ public class DummyDataEngine extends Universal {
 	}
 	
 	
-	public List<FxRateUI> makeDummyFxRateHistory(BigDecimal seedRate, Date endsBefore, String timeperiod) { 
+	public List<FxRateUI> makeDummyFxRateHistory(BigDecimal seedRate, Date endsBefore, int numdays) { 
 		// Ends before is Todays timestamp. So generated list should stop 1 day before this
 		
 		final long DAY = 24 * 60 * 60 * 1000;
@@ -116,35 +116,18 @@ public class DummyDataEngine extends Universal {
 
 		List<FxRateUI> history = new ArrayList<FxRateUI>();
 
-//		// Todays rate
-//		FxRateUI todaysRate = new FxRateUI(); 
-//		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
-//		todaysRate.setRate(current.getCurrentRate());
-//		todaysRate.setRateActiveDate(current.getCurrentRateActiveDate());
-//		history.add(todaysRate);
-		
-		// process timeperiod
-		// acToDo
-
-		
-		// Generate history
+		// Generate dummy history
 		BigDecimal inc = new BigDecimal(0.01); 
 		BigDecimal gik = seedRate;
-
 		BigDecimal formatted = null;
-
-//		formatted.setScale(4, BigDecimal.ROUND_CEILING);
-//		System.out.println("gik pre  = "+gik.toString());
-//		System.out.println("formatted pre= "+formatted.toString());
-		
-		
 		long disTime = endsBefore.getTime();
-	    for (int ii = 1 ; ii <= 7 ; ii++) {
+
+		for (int ii = 1 ; ii <= numdays ; ii++) {
 
 	    	gik = gik.add(inc);
 	    	formatted = gik;
 	    	formatted = formatted.setScale(4, BigDecimal.ROUND_CEILING);
-	    	System.out.println("formatted loop = "+formatted.toString());
+	    	//System.out.println("formatted loop = "+formatted.toString());
 	    	
 	    	disTime -= DAY;
 	    	Date dDay = new Date(disTime);
@@ -153,21 +136,9 @@ public class DummyDataEngine extends Universal {
 	    }
 
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    // reverse the list order, to make it - oldest first
-	    System.out.println("hiatory list PRE reverse :");
-	    for (FxRateUI r : history) { System.out.println(r.toString()); }
-	    
+	    // Now reverse the list order, to make it oldest-first
 	    List<FxRateUI> shallowCopy = history.subList(0, history.size());
 	    Collections.reverse(shallowCopy);
-	    
-	    System.out.println("hiatory list POST reverse :");
-	    for (FxRateUI r : shallowCopy) { System.out.println(r.toString()); }
 		
 		return shallowCopy;
 	}

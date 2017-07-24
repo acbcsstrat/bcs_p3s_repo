@@ -1,5 +1,6 @@
 package com.bcs.p3s.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -287,25 +288,13 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		log().debug(err+" invoked ");
     	
 		List<FxRateUI> history = new ArrayList<FxRateUI>();
+		int numdays = period2days(timeperiod);
+		if (numdays < 1) return history;
 		
-		
-		
-/*		FxRateUI fxRateUI = new FxRateUI(); 
-
-		// Todays rate
-		GlobalVariableSole todaysRate = GlobalVariableSole.findOnlyGlobalVariableSole(); 
-		fxRateUI.setCurrentRate(todaysRate.getCurrentRate());
-		fxRateUI.setCurrentRateActiveDate(todaysRate.getCurrentRateActiveDate() );
-		
-		// The previous rate
-		ArchivedRate yesterdaysRate = ArchivedRate.findLatestArchivedRate();
-		fxRateUI.setLastRate(yesterdaysRate.getFxRate());
-		fxRateUI.setLastRateActiveDate(yesterdaysRate.getActiveFromDate());
-*/    	
 		
 		GlobalVariableSole tmp1 = GlobalVariableSole.findOnlyGlobalVariableSole();
 		DummyDataEngine dummy = new DummyDataEngine();
-		List<FxRateUI> badData = dummy.makeDummyFxRateHistory(tmp1.getCurrentRate(), tmp1.getCurrentRateActiveDate(), timeperiod); 
+		List<FxRateUI> badData = dummy.makeDummyFxRateHistory(tmp1.getCurrentRate(), tmp1.getCurrentRateActiveDate(), numdays); 
 		
 		for (FxRateUI r : badData) {
 			history.add(r);
@@ -315,14 +304,27 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		// Todays rate
 		FxRateUI todaysRate = new FxRateUI(); 
 		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
-		todaysRate.setRate(current.getCurrentRate());
+		BigDecimal formatted = current.getCurrentRate();
+    	formatted = formatted.setScale(4, BigDecimal.ROUND_CEILING);
+		todaysRate.setRate(formatted);
 		todaysRate.setRateActiveDate(current.getCurrentRateActiveDate());
-
 		history.add(todaysRate);
-		
+
+	    System.out.println(err+" returning following rate history:");
+	    for (FxRateUI r : history) { System.out.println("   "+r.toString()); }
+
 		return history;
 	}
-
+	protected int period2days(String timeperiod) {
+		int numdays = -1;
+		if ("week".equalsIgnoreCase(timeperiod)) return 7;
+		if ("fortnight".equalsIgnoreCase(timeperiod)) return 14;
+		if ("month".equalsIgnoreCase(timeperiod)) return 30;
+		if ("quarter".equalsIgnoreCase(timeperiod)) return 91;
+		if ("halfyear".equalsIgnoreCase(timeperiod)) return 182;
+		if ("year".equalsIgnoreCase(timeperiod)) return 365;
+		return numdays; 
+	}
 
 	
 	
