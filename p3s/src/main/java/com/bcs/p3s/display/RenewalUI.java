@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
+import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.service.TransactionService;
@@ -33,12 +34,12 @@ import com.bcs.p3s.util.date.DateUtil;
 // *   Agreed 6th June 2017 that a request for multiple patents would include, within each patent, 
 // *   all the required data for the 'view patent' page.
 // *   Hence this extended class contains all the notifications, et al
- * 
+// * 
  * 
  * @author andyc
  *
  */
-public class PaymentUI extends Payment {
+public class RenewalUI extends Renewal {
 
 //    @Autowired
 //    PatentService patentService;  //Service which will do all data retrieval/manipulation work
@@ -46,52 +47,33 @@ public class PaymentUI extends Payment {
 	
 	// Additional UI members go here
 
-    private String transStartDateUI;
-    private String transTargetEndDateUI;
-    private String lastUpdatedDateUI;
+    private String renewalDueDateUI;
 
 
-	
     
-	// Constructor - converting a Payment (aka Transaction) to a PaymentUI
-	public PaymentUI(Payment payment) {
+    
+	// Constructor - converting a Renewal to a RenewalUI
+	public RenewalUI(Renewal renewal) {
 
 		
-		this.setId(payment.getId());
-		this.setVersion(payment.getVersion());
-		
-		this.setP3S_TransRef(payment.getP3S_TransRef());  // (payment
-		this.setMC_TransRef(payment.getMC_TransRef());
-		this.setTransType(payment.getTransType());
-		this.setInitiatedByUserId(payment.getInitiatedByUserId());
-		this.setTransStartDate(payment.getTransStartDate());
-		this.setTransTargetEndDate(payment.getTransTargetEndDate());
-		this.setLastUpdatedDate(payment.getLastUpdatedDate());
-		this.setLatestTransStatus(payment.getLatestTransStatus());
-		this.setStatusDesc(payment.getStatusDesc());
-		this.setLatestInvoice(payment.getLatestInvoice());
-		this.setTransAmount_USD(payment.getTransAmount_USD());
-		this.setIsBillingAddressSame(payment.getIsBillingAddressSame());
-		this.setBillingAddressStreet(payment.getBillingAddressStreet());
-		this.setBillingAddressCity(payment.getBillingAddressCity());
-		this.setBillingAddressState(payment.getBillingAddressState());
-		this.setBillingAddressZip(payment.getBillingAddressZip());
+		this.setId(renewal.getId());
+		this.setVersion(renewal.getVersion());
+
+		this.setPatent(renewal.getPatent());
+		this.setActivePaymentId(renewal.getActivePaymentId());
+		this.setFee(renewal.getFee());
+		this.setCertificate(renewal.getCertificate());
+		this.setRenewalYear(renewal.getRenewalYear());
+		this.setRenewalDueDate(renewal.getRenewalDueDate());
+		this.setRenewalPeriod(renewal.getRenewalPeriod());
+		this.setRenewalStatus(renewal.getRenewalStatus());
+		this.setRenewalAttemptsMade(renewal.getRenewalAttemptsMade());
 		
 
 		// Now the additional fields - WHICH ARE
-
-		this.setTransStartDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getTransStartDate()));
-		this.setTransTargetEndDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getTransTargetEndDate()));
-		this.setLastUpdatedDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getLastUpdatedDate()));
+		this.setRenewalDueDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getRenewalDueDate()));
 		
-		
-		
-		
-		
-		
-		
-		
-//		patentUI.setCurrentRenewalCost(new BigDecimal("1.11"));
+		//		patentUI.setCurrentRenewalCost(new BigDecimal("1.11"));
 //		patentUI.setCostBandEndDate(nowPlusNdays(2));
 //		patentUI.setRenewalCostNextStage(new BigDecimal("1111111.11"));
 //		patentUI.setRenewalDueDate(dummyFilingDateToThisyearRenewDueDate(patent.getFilingDate()));
@@ -136,31 +118,17 @@ public class PaymentUI extends Payment {
 	
 	
 	// Ordinary getters/setters
+	
+	public String getRenewalDueDateUI() {
+		return renewalDueDateUI;
+	}
+	
+	public void setRenewalDueDateUI(String renewalDueDateUI) {
+		this.renewalDueDateUI = renewalDueDateUI;
+	}
 
-	public String getTransStartDateUI() {
-		return transStartDateUI;
-	}
-	public void setTransStartDateUI(String transStartDateUI) {
-		this.transStartDateUI = transStartDateUI;
-	}
 	
-	public String getTransTargetEndDateUI() {
-		return transTargetEndDateUI;
-	}
-	public void setTransTargetEndDateUI(String transTargetEndDateUI) {
-		this.transTargetEndDateUI = transTargetEndDateUI;
-	}
-	
-	public String getLastUpdatedDateUI() {
-		return lastUpdatedDateUI;
-	}
-	public void setLastUpdatedDateUI(String lastUpdatedDateUI) {
-		this.lastUpdatedDateUI = lastUpdatedDateUI;
-	}
-	
-	
-	
-//	public BigDecimal getCurrentRenewalCost() {
+	//	public BigDecimal getCurrentRenewalCost() {
 //		return currentRenewalCost;
 //	}
 //
