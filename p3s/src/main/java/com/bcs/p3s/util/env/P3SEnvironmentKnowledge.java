@@ -44,9 +44,12 @@ public class P3SEnvironmentKnowledge extends Universal {
 		String host = Hostname.getHostname();
 		
 		
-		// Logic: If Lenovo or merin is under eclipse, else Dell or Pat or TomcatA or scrape. 
-		if ("CCP020".equals(host) || "avid-ox790-013".equals(host)) {
+		// Logic: If Lenovo or Merin : is under eclipse, else Dell or Pat or TomcatA [or scrape]. 
+		if ("CCP020".equals(host)) {
 			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/";
+		}
+		if ("avid-ox790-013".equals(host)) {
+			path = "C:/MERIN/Documents/PatentPlace/P3S local repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
 			path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
@@ -75,9 +78,12 @@ public class P3SEnvironmentKnowledge extends Universal {
 		String host = Hostname.getHostname();
 		
 		
-		// Logic: If Lenovo or merin is under eclipse, else Dell or Pat or TomcatA or scrape. 
-		if ("CCP020".equals(host) || "avid-ox790-013".equals(host)) {
+		// Logic: If Lenovo or Merin : is under eclipse, else Dell or Pat or TomcatA [or scrape]. 
+		if ("CCP020".equals(host)) {
 			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/";
+		}
+		if ("avid-ox790-013".equals(host)) {
+			path = "C:/MERIN/Documents/PatentPlace/P3S local repos/bcs_p3s_repo/p3s/src/main/resources/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
 			path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";

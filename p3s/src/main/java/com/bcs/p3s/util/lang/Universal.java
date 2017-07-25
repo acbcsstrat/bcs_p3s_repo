@@ -32,6 +32,18 @@ public class Universal extends BcsLogger implements Loggable {
     }
 
     
+    public void logAttention(String msg) {
+    	log().fatal("                                                               ");
+    	log().fatal("                                                               ");
+    	log().fatal("  ***************************************************************************");
+    	log().fatal("  ***************************************************************************");
+    	log().fatal("  ****  "+msg+"  ****");
+    	log().fatal("  ***************************************************************************");
+    	log().fatal("  ***************************************************************************");
+    	log().fatal("                                                               ");
+    	log().fatal("                                                               ");
+    }
+
     // Temporary - for Development:
     public void notYet(String msg) {
     	String message = "    *************  NOT YET IMPLEMENTED - So this will not work  ************* ";

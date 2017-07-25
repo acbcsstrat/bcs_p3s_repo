@@ -7,7 +7,6 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.UserProfileUI;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 //import com.bcs.p3s.controller.web.User;
-import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.security.SecurityUtil;
-import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PostLoginSessionBean;
-import com.bcs.p3s.util.config.EnvironmentSpecificProperties;
-import com.bcs.p3s.util.config.PropertyReader;
 import com.bcs.p3s.util.lang.Universal;
  
 @RestController
@@ -42,7 +35,7 @@ public class UserProfileRestController extends Universal {
     HttpSession session ;
  
     
-    //------------------- Retrieve deatils for this currently-logged-in User --------------------------------------------------
+    //------------------- Retrieve details for this currently-logged-in User --------------------------------------------------
      
     @RequestMapping(value = "/rest-user/", method = RequestMethod.GET)
     public ResponseEntity<UserProfileUI> getUserProfileUI() {
@@ -70,15 +63,15 @@ public class UserProfileRestController extends Universal {
 //    @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
 //    public ResponseEntity<UserProfileUI> updateUser(@RequestBody UserProfileUI user , UriComponentsBuilder ucBuilder) {
     @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
-    public ResponseEntity<UserProfileUI> updateUser(@RequestBody Object obUser , UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<UserProfileUI> updateUser(@RequestBody UserProfileUI obUser , UriComponentsBuilder ucBuilder) {
       
-    	log().fatal(" REACHED    AAAAAAAAAAAAAAAAAAAAAA  UserProfileRestController updateUser ");
+//    	log().fatal(" REACHED    AAAAAAAAAAAAAAAAAAAAAA  UserProfileRestController updateUser ");
     	String msg = " ****************** "+"UserProfileRestController updateUser invoked with UserProfileUI of "+obUser.getClass().getName();
     	log().fatal(msg);
-    	System.out.println(msg);
-    	System.out.println(" ****************** ");
-    	System.out.println(" ****************** ");
-    	System.out.println(" ****************** ");
+//    	System.out.println(msg);
+//    	System.out.println(" ****************** ");
+//    	System.out.println(" ****************** ");
+//    	System.out.println(" ****************** ");
 
     	if ( ! ( obUser instanceof UserProfileUI)) notYet("updateUser given object which is NOT a UserProfileUI");
     	
@@ -127,5 +120,8 @@ public class UserProfileRestController extends Universal {
         return new ResponseEntity<List<UserProfileUI>>(userProfileUI, HttpStatus.OK);
     }
     
+    
+    //----------------------- Default Controller in case nowt else matches ---------------------------------------------------------------------
+
  
 }
