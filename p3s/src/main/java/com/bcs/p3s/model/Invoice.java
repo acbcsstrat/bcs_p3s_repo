@@ -21,7 +21,6 @@ public class Invoice {
 
     /**
      */
-    @NotNull
     @ManyToOne
     private Payment payment;
 

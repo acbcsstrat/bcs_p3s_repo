@@ -6,6 +6,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import javax.persistence.Temporal;
@@ -37,7 +38,7 @@ public class Renewal {
 
     /**
      */
-    @ManyToOne
+    @OneToOne
     private Certificate certificate;
 
     /**

@@ -13,7 +13,6 @@ public class Fee {
 
     /**
      */
-    @NotNull
     @OneToOne
     private Renewal renewal;
 
