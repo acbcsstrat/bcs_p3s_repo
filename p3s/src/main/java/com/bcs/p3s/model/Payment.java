@@ -22,6 +22,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
 
+// Note! : Payment was formerly called Transaction  (But Roo wouldn't allow that term)
+
+
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord

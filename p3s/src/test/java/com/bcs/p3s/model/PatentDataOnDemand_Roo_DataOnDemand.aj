@@ -55,8 +55,8 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
     
     public void PatentDataOnDemand.setClientRef(Patent obj, int index) {
         String clientRef = "clientRef_" + index;
-        if (clientRef.length() > 16) {
-            clientRef = clientRef.substring(0, 16);
+        if (clientRef.length() > 30) {
+            clientRef = clientRef.substring(0, 30);
         }
         obj.setClientRef(clientRef);
     }
@@ -103,8 +103,8 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
     
     public void PatentDataOnDemand.setShortTitle(Patent obj, int index) {
         String shortTitle = "shortTitle_" + index;
-        if (shortTitle.length() > 20) {
-            shortTitle = shortTitle.substring(0, 20);
+        if (shortTitle.length() > 25) {
+            shortTitle = shortTitle.substring(0, 25);
         }
         obj.setShortTitle(shortTitle);
     }

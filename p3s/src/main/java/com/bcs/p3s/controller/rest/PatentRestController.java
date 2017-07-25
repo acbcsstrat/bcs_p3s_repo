@@ -33,8 +33,8 @@ public class PatentRestController extends Universal {
     // Implements API section 2.1 - Get all patents for this business
     @RequestMapping(value = "/rest-patents/", method = RequestMethod.GET)
     public ResponseEntity<List<PatentUI>> listAllPatentUIsForBusiness() {
-		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() invoked. zaphod ");
-    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) invoked zaaaaaaaaaaaaaaaa");
+		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() invoked. ");
+    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) invoked ");
 
     	List<PatentUI> patentUIs = patentService.listAllPatentUIsForMyBusiness();
     	

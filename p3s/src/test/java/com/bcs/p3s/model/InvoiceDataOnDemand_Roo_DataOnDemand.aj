@@ -5,7 +5,6 @@ package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.InvoiceDataOnDemand;
-import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.PaymentDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -40,7 +39,6 @@ privileged aspect InvoiceDataOnDemand_Roo_DataOnDemand {
         setInvoiceTemplateId(obj, index);
         setInvoiceType(obj, index);
         setIssueDate(obj, index);
-        setPayment(obj, index);
         setPreceedingInvoiceId(obj, index);
         return obj;
     }
@@ -78,11 +76,6 @@ privileged aspect InvoiceDataOnDemand_Roo_DataOnDemand {
     public void InvoiceDataOnDemand.setIssueDate(Invoice obj, int index) {
         Date issueDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setIssueDate(issueDate);
-    }
-    
-    public void InvoiceDataOnDemand.setPayment(Invoice obj, int index) {
-        Payment payment = paymentDataOnDemand.getRandomPayment();
-        obj.setPayment(payment);
     }
     
     public void InvoiceDataOnDemand.setPreceedingInvoiceId(Invoice obj, int index) {
