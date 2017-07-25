@@ -93,7 +93,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     })
     .state('app.transaction-history', {
         url: '/transaction-history',
-        component: 'transactionhistory',   
+        component: 'transactions',   
+        resolve: {
+            patents: ['transactionsService', function(transactionsService) {
+                return transactionsService.fetchAllHistoricTransactions();
+            }]
+        },
         params: {
             navigation: 'transactionnav'
         }
