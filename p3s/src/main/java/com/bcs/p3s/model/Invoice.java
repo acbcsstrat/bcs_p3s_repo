@@ -72,6 +72,23 @@ public class Invoice {
     private String invoiceTemplateId;
 
     
+
+
+
+    
+    // Special methods
+    public String getUrl() {
+    	String path = docPath;
+    	String SEPARATOR = "/";
+    	if (docPath==null || docPath.trim().length()==0) {
+    		path = "";
+		} else {
+			if ( ! docPath.endsWith(SEPARATOR))
+				path += SEPARATOR;
+		}
+		return path+filename;
+    }
+
     
     // Setters pushed to support P3S 'Enums'
 

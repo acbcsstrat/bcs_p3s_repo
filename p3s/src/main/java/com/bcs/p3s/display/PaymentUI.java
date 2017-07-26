@@ -22,13 +22,15 @@ import com.bcs.p3s.util.date.DateUtil;
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
  * 
- * ITEMS HEREIN NEEDING EXTERNAL SETTING:
+ * ITEMS HEREIN NEEDING EXTERNAL SETTING (i.e. cannot be (reliably) set by this class):
+ * 		None YET ********** acTidy
 // * 	CurrentRenewalCost
 // * 	CostBandEndDate
 // * 	RenewalCostNextStage
 // * 	RenewalDueDate
 // * 
 // * Further notes specific to this class:
+ * 		None YET ********** acTidy
 // * 
 // *   Agreed 6th June 2017 that a request for multiple patents would include, within each patent, 
 // *   all the required data for the 'view patent' page.
@@ -49,7 +51,7 @@ public class PaymentUI extends Payment {
     private String transStartDateUI;
     private String transTargetEndDateUI;
     private String lastUpdatedDateUI;
-
+    private String invoiceUrl;
 
 	
     
@@ -61,7 +63,7 @@ public class PaymentUI extends Payment {
 		this.setVersion(payment.getVersion());
 		
 		this.setP3S_TransRef(payment.getP3S_TransRef());  // (payment
-		this.setMC_TransRef(payment.getMC_TransRef());
+		this.setMC_TransRef(null); // See JavaDoc for Payment:MC_TransRef
 		this.setTransType(payment.getTransType());
 		this.setInitiatedByUserId(payment.getInitiatedByUserId());
 		this.setTransStartDate(payment.getTransStartDate());
@@ -76,7 +78,7 @@ public class PaymentUI extends Payment {
 		this.setBillingAddressCity(payment.getBillingAddressCity());
 		this.setBillingAddressState(payment.getBillingAddressState());
 		this.setBillingAddressZip(payment.getBillingAddressZip());
-		
+
 
 		// Now the additional fields - WHICH ARE
 
@@ -84,6 +86,7 @@ public class PaymentUI extends Payment {
 		this.setTransTargetEndDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getTransTargetEndDate()));
 		this.setLastUpdatedDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getLastUpdatedDate()));
 		
+		this.setInvoiceUrl(this.getLatestInvoice().getUrl());
 		
 		
 		
@@ -157,7 +160,13 @@ public class PaymentUI extends Payment {
 	public void setLastUpdatedDateUI(String lastUpdatedDateUI) {
 		this.lastUpdatedDateUI = lastUpdatedDateUI;
 	}
-	
+	public String getInvoiceUrl() {
+		return invoiceUrl;
+	}
+	public void setInvoiceUrl(String invoiceUrl) {
+		this.invoiceUrl = invoiceUrl;
+	}
+
 	
 	
 //	public BigDecimal getCurrentRenewalCost() {

@@ -90,7 +90,10 @@ privileged aspect BusinessDataOnDemand_Roo_DataOnDemand {
     }
     
     public void BusinessDataOnDemand.setPhoneNumber(Business obj, int index) {
-        Long phoneNumber = new Integer(index).longValue();
+        String phoneNumber = "phoneNumber_" + index;
+        if (phoneNumber.length() > 40) {
+            phoneNumber = phoneNumber.substring(0, 40);
+        }
         obj.setPhoneNumber(phoneNumber);
     }
     

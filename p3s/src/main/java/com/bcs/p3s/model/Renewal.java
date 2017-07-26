@@ -3,6 +3,7 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
+import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 
 import javax.persistence.ManyToOne;
@@ -53,7 +54,7 @@ public class Renewal {
     private Date renewalDueDate;
 
     /**
-     * i.e. the renewal colour
+     * The renewal colour.  Enum: RenewalColourEnum 
      */
     private String renewalPeriod;
 
@@ -72,6 +73,9 @@ public class Renewal {
 
     // Setters pushed to support P3S 'Enums'
 
+    public void setRenewalPeriod(String renewalPeriod) {
+        this.renewalPeriod = (new RenewalColourEnum(renewalPeriod)).toString();
+    }
     public void setRenewalStatus(String renewalStatus) {
         this.renewalStatus = (new RenewalStatusEnum(renewalStatus)).toString();
     }

@@ -90,7 +90,8 @@ public class DummyDataEngine extends Universal {
 		patent.setBusiness(SecurityUtil.getMyBusiness()); 
 		patent.setPrimaryApplicantName("Tim Berners-Lee");
 		patent.setPatentPublicationNumber("123P");
-		patent.setRenewalStatus(RenewalStatusEnum.ABANDONED);
+		//patent.setRenewalStatus(RenewalStatusEnum.ABANDONED);
+		patent.setRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 
 		// Create default notifications
 		patent.setNotifications(new ArrayList<Notification>());
@@ -229,7 +230,6 @@ public Business generatePinNumber(Business business){
 			RandomGenerator rand = new RandomGenerator((int) System.currentTimeMillis());
 			ranNumber = rand.nextInt(1000,9999);
 		}while(ranNumber <= 1000 || ranNumber > 9999);
-		
 		business.setBusinessPin(ranNumber);
 		
 		

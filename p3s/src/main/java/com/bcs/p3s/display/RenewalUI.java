@@ -23,18 +23,11 @@ import com.bcs.p3s.util.date.DateUtil;
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
  * 
- * ITEMS HEREIN NEEDING EXTERNAL SETTING:
-// * 	CurrentRenewalCost
-// * 	CostBandEndDate
-// * 	RenewalCostNextStage
-// * 	RenewalDueDate
-// * 
-// * Further notes specific to this class:
-// * 
-// *   Agreed 6th June 2017 that a request for multiple patents would include, within each patent, 
-// *   all the required data for the 'view patent' page.
-// *   Hence this extended class contains all the notifications, et al
-// * 
+ * ITEMS HEREIN NEEDING EXTERNAL SETTING (i.e. cannot be (reliably) set by this class):
+ * 	None
+ * 
+ * Further notes specific to this class:
+ * 	This class does NOT carry the Patent Object 
  * 
  * @author andyc
  *
@@ -48,7 +41,8 @@ public class RenewalUI extends Renewal {
 	// Additional UI members go here
 
     private String renewalDueDateUI;
-
+    private String certificateUrl;
+    private PatentUI patentUI;
 
     
     
@@ -72,16 +66,20 @@ public class RenewalUI extends Renewal {
 
 		// Now the additional fields - WHICH ARE
 		this.setRenewalDueDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getRenewalDueDate()));
-		
-		//		patentUI.setCurrentRenewalCost(new BigDecimal("1.11"));
-//		patentUI.setCostBandEndDate(nowPlusNdays(2));
-//		patentUI.setRenewalCostNextStage(new BigDecimal("1111111.11"));
-//		patentUI.setRenewalDueDate(dummyFilingDateToThisyearRenewDueDate(patent.getFilingDate()));
-				
-//		DummyDataEngine dummy = new DummyDataEngine();
-//		System.out.println("Calling DummyDataEngine:populateExtendedPatentFieldsWithDummyData for patent "+patent.getPatentApplicationNumber());
-//    	dummy.populateExtendedPatentFieldsWithDummyData(this, patent);
+		this.setCertificateUrl(renewal.getCertificate().getUrl());
 
+		PatentUI pui = new PatentUI(this.getPatent()); 
+		// acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine
+		System.out.println("   acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
+/*		 * 	CurrentRenewalCost
+		 * 	CostBandEndDate
+		 * 	RenewalCostNextStage
+		 * 	RenewalDueDate
+*/
+		DummyDataEngine dummyEngine = new DummyDataEngine();
+		dummyEngine.populateExtendedPatentFieldsWithDummyData(pui, this.getPatent());
+
+		this.setPatentUI(pui);
 	}
 
 
@@ -122,11 +120,32 @@ public class RenewalUI extends Renewal {
 	public String getRenewalDueDateUI() {
 		return renewalDueDateUI;
 	}
-	
 	public void setRenewalDueDateUI(String renewalDueDateUI) {
 		this.renewalDueDateUI = renewalDueDateUI;
 	}
 
+	public String getCertificateUrl() {
+		return certificateUrl;
+	}
+	public void setCertificateUrl(String certificateUrl) {
+		this.certificateUrl = certificateUrl;
+	}
+
+	public PatentUI getPatentUI() {
+		return patentUI;
+	}
+	public void setPatentUI(PatentUI patentUI) {
+		this.patentUI = patentUI;
+	}
+
+	
+	
+	
+	
+	
+    
+
+    
 	
 	//	public BigDecimal getCurrentRenewalCost() {
 //		return currentRenewalCost;

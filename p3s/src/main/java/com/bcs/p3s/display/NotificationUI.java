@@ -8,11 +8,10 @@ import com.bcs.p3s.model.Patent;
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
  * 
- * ITEMS HEREIN NEEDING EXTERNAL SETTING:
+ * ITEMS HEREIN NEEDING EXTERNAL SETTING (i.e. cannot be (reliably) set by this class):
  * 	 isOn
  * 
  * Further notes specific to this class:
- * 
  *   None 
  * 
  * @author andyc

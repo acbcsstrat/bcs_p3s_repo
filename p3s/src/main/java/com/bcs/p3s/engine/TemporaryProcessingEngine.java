@@ -107,7 +107,8 @@ public class TemporaryProcessingEngine extends Universal {
 			   	// & now other tweaks to keep Patent happy
 			   	patent.setRenewalYear(-1);
 			   	patent.setEpoPatentStatus("EMPTY");
-			   	patent.setRenewalStatus(RenewalStatusEnum.ABANDONED);
+			   	//patent.setRenewalStatus(RenewalStatusEnum.ABANDONED);
+			   	patent.setRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 	
 		   	
 			   	// Now extract and populate the Notifications

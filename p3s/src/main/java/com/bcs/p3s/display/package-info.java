@@ -19,10 +19,10 @@
  *   the extended 'fields'.
  *   However, sometime this will not be possible, which is why each class-level javadoc has a section 
  *   titled
- *     ITEMS HEREIN NEEDING EXTERNAL SETTING: 
+ *     ITEMS HEREIN NEEDING EXTERNAL SETTING (i.e. cannot be (reliably) set by this class): 
  *   This is a warning to the client, that after constructing such a *UI class, the fields 
  *   listed in this section will still need setting (If required). 
- *   For NPE avoidance, WHEN REQUIRED, even if not set, such fields will be aset to a Non-Null value. 
+ *   For NPE avoidance, WHEN REQUIRED, even if not set, such fields will be set to a Non-Null value. 
  * 
  * @author andyc
  *

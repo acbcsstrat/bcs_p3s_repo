@@ -64,10 +64,6 @@ privileged aspect Renewal_Roo_JavaBean {
         return this.renewalPeriod;
     }
     
-    public void Renewal.setRenewalPeriod(String renewalPeriod) {
-        this.renewalPeriod = renewalPeriod;
-    }
-    
     public String Renewal.getRenewalStatus() {
         return this.renewalStatus;
     }

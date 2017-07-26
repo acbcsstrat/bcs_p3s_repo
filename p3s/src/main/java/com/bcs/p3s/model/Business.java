@@ -34,7 +34,8 @@ public class Business {
     /**
      */
     @NotNull
-    private Long phoneNumber;
+    @Size(max = 40)
+    private String phoneNumber;
 
     /**
      */

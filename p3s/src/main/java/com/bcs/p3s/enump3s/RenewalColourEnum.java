@@ -19,6 +19,7 @@ public class RenewalColourEnum extends P3SAbstractEnum {
                 String sofar = null;
                 if (colour.equalsIgnoreCase(RenewalColourEnum.GREEN)) sofar = RenewalColourEnum.GREEN;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.AMBER)) sofar = RenewalColourEnum.AMBER;  
+                if (colour.equalsIgnoreCase("Yellow")) sofar = RenewalColourEnum.AMBER;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.RED)) sofar = RenewalColourEnum.RED;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.BLUE)) sofar = RenewalColourEnum.BLUE;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.BROWN)) sofar = RenewalColourEnum.BROWN;  

@@ -31,11 +31,11 @@ privileged aspect Business_Roo_JavaBean {
         this.businessName = businessName;
     }
     
-    public Long Business.getPhoneNumber() {
+    public String Business.getPhoneNumber() {
         return this.phoneNumber;
     }
     
-    public void Business.setPhoneNumber(Long phoneNumber) {
+    public void Business.setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
     
