@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Future;
 import javax.persistence.ManyToOne;
@@ -20,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.EntityManager;
 import javax.persistence.ManyToMany;
 
 // Note! : Payment was formerly called Transaction  (But Roo wouldn't allow that term)
@@ -130,6 +133,35 @@ public class Payment {
 
 
 
+    
+    
+    
+    // DIY finder 
+    // Approach: All renewals in a transaction must be from the same business 
+    public static List<Payment> findPaymentsByBusiness(Business business) {
+    	if (business==null) return null;
+    	List<Payment> result = new ArrayList<Payment>(); 
+
+    	List<Payment> everyonesPayments = Payment.findAllPayments();
+    	for (Payment someonesPayment : everyonesPayments) {
+        	Renewal rrr = null;
+        	Patent ppp = null;
+        	Business bbb = null;
+    		List<Renewal> someonesRenewals = someonesPayment.getRenewals();
+    		if (someonesRenewals.size()>0) rrr = someonesRenewals.get(0);
+    		if (rrr != null) ppp = rrr.getPatent();
+    		if (ppp != null) {
+    			bbb = ppp.getBusiness();
+    			if (bbb!=null && (bbb.getId()==business.getId())) {
+    				result.add(someonesPayment);
+    			}
+    		}
+    	}
+        return result;
+    }
+    
+    
+    
     // Setters pushed to support P3S 'Enums'
 
     public void setTransType(String transType) {

@@ -15,10 +15,17 @@ import com.bcs.p3s.model.Patent;
 public interface TransactionService {
 
 	/**
+	 * get all in-progress Payments aka Transactions
+	 * @return All Current  Transactions (For this Business) - i.e. Status is neither Completed nor Failed
+	 */
+	public List<PaymentUI> listCurrentTransactionsForBusiness();
+
+		
+	/**
 	 * get all finished Payments aka Transactions
 	 * @return All Historic Transactions (For this Business) - i.e. Completed and Failed
 	 */
-	public List<PaymentUI> listAllPaymentUIsForMyBusiness();
+	public List<PaymentUI> listHistoricTransactionsForBusiness();
 
 		
 //	//List<Patent> listAllPatentsForMyBusiness(); // Possibly unused externally

@@ -50,6 +50,13 @@ public class ServiceAuthorisationTools extends Universal {
 		checkPatentUIhasNotificationUIs(patentUI, err);
 	}
 	
+
+	
+	
+	
+	
+	
+	
 	// End of   : Higher Level tools
 	
 	

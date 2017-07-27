@@ -19,6 +19,7 @@ import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.service.TransactionServiceImpl;
 import com.bcs.p3s.util.date.DateUtil;
+import com.bcs.p3s.util.lang.Universal;
 
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
@@ -27,7 +28,7 @@ import com.bcs.p3s.util.date.DateUtil;
  * 	None
  * 
  * Further notes specific to this class:
- * 	This class does NOT carry the Patent Object 
+ * 	This class DOES carry both the Patent Object and the Payment (aka Transaction) object 
  * 
  * @author andyc
  *
@@ -66,11 +67,13 @@ public class RenewalUI extends Renewal {
 
 		// Now the additional fields - WHICH ARE
 		this.setRenewalDueDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getRenewalDueDate()));
-		this.setCertificateUrl(renewal.getCertificate().getUrl());
+		this.setCertificateUrl(null);
+		if (renewal.getCertificate() != null) this.setCertificateUrl(renewal.getCertificate().getUrl());
 
 		PatentUI pui = new PatentUI(this.getPatent()); 
 		// acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine
-		System.out.println("   acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
+		System.out.println("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
+		(new Universal()).log().debug("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
 /*		 * 	CurrentRenewalCost
 		 * 	CostBandEndDate
 		 * 	RenewalCostNextStage

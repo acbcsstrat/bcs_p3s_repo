@@ -32,7 +32,17 @@ public class TransactionRestController extends Universal {
     
     //------------------- Retrieve All Current Transactions (For this Business) --------------------------------------------------
      
-    // Implements API section 3.1 - xxx
+    // Implements API section 3.1
+    // v similar to below 3.2, but status must be neither of Completed nor Failed
+    @RequestMapping(value = "/rest-current-transactions/", method = RequestMethod.GET)
+    public ResponseEntity<List<PaymentUI>> listCurrentTransactionsForBusiness() {
+		log().debug("TransactionRestController : /rest-current-transactions/ listCurrentTransactionsForBusiness() invoked.  ");
+
+    	List<PaymentUI> paymentUIs = transactionService.listCurrentTransactionsForBusiness();
+    	
+		log().debug("TransactionRestController : /rest-current-transactions/ listCurrentTransactionsForBusiness() returning "+paymentUIs.size()+" transactions.");
+        return new ResponseEntity<List<PaymentUI>>(paymentUIs, HttpStatus.OK);
+    }
 
     
     //------------------- Retrieve all Historic Transactions (For this Business) --------------------------------------------------
@@ -40,12 +50,12 @@ public class TransactionRestController extends Universal {
     // Implements API section 3.2
     // v similar to above 3.1, but status must be Completed or Failed
     @RequestMapping(value = "/rest-historic-transactions/", method = RequestMethod.GET)
-    public ResponseEntity<List<PaymentUI>> listAllPaymentUIsForBusiness() {
-		log().debug("TransactionRestController : /rest-historic-transactions/ listAllPaymentUIsForBusiness() invoked.  ");
+    public ResponseEntity<List<PaymentUI>> listHistoricTransactionsForBusiness() {
+		log().debug("TransactionRestController : /rest-historic-transactions/ listHistoricTransactionsForBusiness() invoked.  ");
 
-    	List<PaymentUI> paymentUIs = transactionService.listAllPaymentUIsForMyBusiness();
+    	List<PaymentUI> paymentUIs = transactionService.listHistoricTransactionsForBusiness();
     	
-		log().debug("TransactionRestController : /rest-historic-transactions/ listAllPatentUIsForBusiness() returning "+paymentUIs.size()+" transactions.");
+		log().debug("TransactionRestController : /rest-historic-transactions/ listHistoricTransactionsForBusiness() returning "+paymentUIs.size()+" transactions.");
         return new ResponseEntity<List<PaymentUI>>(paymentUIs, HttpStatus.OK);
     }
 

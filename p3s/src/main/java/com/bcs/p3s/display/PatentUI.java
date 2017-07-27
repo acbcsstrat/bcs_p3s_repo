@@ -96,6 +96,11 @@ public class PatentUI extends Patent {
 
 	}
 
+	
+	
+	
+	
+	
 
 	
 	
@@ -151,7 +156,10 @@ public class PatentUI extends Patent {
 
 	public List<NotificationUI> getNotificationUIs() {
 		return this.allNotificationUIs;
-		// No Setter - see createNotificationUIs()
+	}
+	public void setNotificationUIs(List<NotificationUI> allNotificationUIs) {
+		// Hardly ever needed. See createNotificationUIs()
+		this.allNotificationUIs = allNotificationUIs;
 	}
 
 	

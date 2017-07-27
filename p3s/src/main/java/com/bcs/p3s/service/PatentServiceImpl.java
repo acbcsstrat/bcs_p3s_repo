@@ -28,39 +28,9 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 	protected String PREFIX = this.getClass().getName() + " : "; 
 
-	
-	// (Likely) Only used internally (below) -could be protected
-	protected List<Patent> listAllPatentsForMyBusiness() { 
 
-		String err = PREFIX+"listAllPatentsForMyBusiness() ";
-		checkNoActionRequired(err);
+	// Start of - the methods which implement the prototypes in the Interface
 
-		log().debug(err+" invoked ");
-    	
-    /** MP170620 Code changes for implementing session starts **/	
-    	List<Patent> patents = null;
-    	if(session != null){
-    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
-    	
-    	 	
-	    	TypedQuery<Patent> tq_patents = Patent.findPatentsByBusiness(pLoginSession.getBusiness());
-	    	patents = tq_patents.getResultList();
-	    	
-	    	System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() ret Qty "+patents.size());
-        
-    	}
-    	else logInternalError().fatal("PatentServiceImpl : listAllPatentsForMyBusiness() has empty session");
-    	
-    /** MP170620 Code changes for implementing session ends **/	
-    	
-    	return patents;
-	}
-
-	
-	
-	
-	
-	
 	public List<PatentUI> listAllPatentUIsForMyBusiness() {
 
 		String err = PREFIX+"listAllPatentUIsForMyBusiness() ";
@@ -78,6 +48,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	}
 
 
+
 	public PatentUI searchEpoForPatent(String patentApplicationNumber) {
 
 		String err = PREFIX+"searchEpoForPatent("+patentApplicationNumber+") ";
@@ -93,6 +64,62 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	}
 
 
+	
+	/**
+	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications - and, for each, whether it is on or off.
+	 * patent.notifications just holds those that are ON.
+	 * 
+	 * Approach used below: Get ALL into SortSet. Replace those that are ON.
+	 * Sorted by display order
+	 * @param notifications
+	 */
+	public synchronized List<NotificationUI> createNotificationUIs(List<Notification> notifications) {
+
+		String err = PREFIX+"createNotificationUIs() ";
+		checkNoActionRequired(err);  // because such data is not sensitive. Is anonymous
+
+		log().debug(err+" invoked ");
+		
+		List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
+		
+		// Assemble ALL notificationUIs (identifiable by ID)
+		List<Notification> allNotifications = Notification.findAllNotifications();
+		for (Notification anotification : allNotifications) {
+			NotificationUI notificationUI = new NotificationUI(anotification);
+			allNotificationUIs.add(notificationUI);
+		}
+
+		// In below code:
+		//  indexOf relies on equals() in NotificationUI
+		//  Sorting relies on compareTo() in NotificationUI
+		
+		
+		// Switch ON as appropriate
+		for (Notification notification : notifications) { // i.e. each ON notification
+			NotificationUI matchTarget = new NotificationUI(notification);
+
+			// find existing match, & switch on
+			int imatch = allNotificationUIs.indexOf(matchTarget);
+//			if (imatch == -1) fail("NotificationUI handling has failed.");
+			if (imatch == -1) {
+				Universal universal = new Universal();
+				universal.fail("NotificationUI handling has failed.");
+			}
+			NotificationUI match = allNotificationUIs.get(imatch);
+			match.setIsOn(true);
+		}
+
+		// Sort of displayOrder (for UI convenience)
+		Collections.sort(allNotificationUIs);
+		
+//		System.out.println("acdebug - *ALL* notificationUIs after processing");
+//		for (NotificationUI notificationUI : allNotificationUIs) {
+//			System.out.println("          "+notificationUI.getId()+",   "+notificationUI.getIsOn()+",   "+notificationUI.getDisplayOrder()+",    "+notificationUI.getTitle());
+//		}
+		return allNotificationUIs;
+	}
+
+	
 	
 	public Patent findById(long id) { 
 
@@ -116,6 +143,20 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	}
 
 
+	
+	public void  deletePatentById(long id) { 
+
+		String err = PREFIX+"deletePatentById("+id+") ";
+		checkThisIsMyPatent(id, err);
+
+		log().debug(err+" invoked ");
+
+    	Patent patent = Patent.findPatent(id);
+    	patent.remove(); 
+	}
+
+	
+	
 	// The patentUI parameter MAY be provided as a PatentUI, or more likely a LinkedHashMap, so, here, accept either
 	public Patent flexibleUpdatePatent(long id, Object untypedPatentUI) { 
 
@@ -185,72 +226,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
     	return updatedPatent;
 	}
 
-	// Tidy the above by extracting this
-	protected List<Notification> flexibleExtractNotifications(LinkedHashMap untypedPatentUI) { 
-		List<Notification> result = new ArrayList<Notification>();
-		//if patentUI is a LinkedHashMap, notificationUIs will (likely) be too. But check, just in case
-		List<Object> allNotificationUIs = (List<Object>) untypedPatentUI.get("notificationUIs");
-		for (Object obNotificationUI : allNotificationUIs) {
-			if (obNotificationUI instanceof NotificationUI) {
-				NotificationUI notificationUI = (NotificationUI) obNotificationUI;
-				if (notificationUI.getIsOn()) {
-    				Long notificationId = notificationUI.getId();
-    				Notification notification = Notification.findNotification(notificationId);
-    				result.add(notification);
-				}
-			}
-			else {
-				LinkedHashMap obNotification = (LinkedHashMap) obNotificationUI;
-				Integer ID = (Integer) obNotification.get("id");
-				Boolean ISON = (Boolean) obNotification.get("isOn");
-				if (ISON.booleanValue()) {
-    				long notificationId = ID.longValue();
-    				Notification notification = Notification.findNotification(notificationId);
-    				result.add(notification);
-				}
-			}
-		}
-    	return result;
-	}
 	
-
-	
-	
-
-
-	
-	public void  deletePatentById(long id) { 
-
-		String err = PREFIX+"deletePatentById("+id+") ";
-		checkThisIsMyPatent(id, err);
-
-		log().debug(err+" invoked ");
-
-    	Patent patent = Patent.findPatent(id);
-    	patent.remove(); 
-	}
-	// formerly
-		//	public void  deletePatentById(long id) { 
-//	    	authReminder();
-//	    	//String err = PREFIX+"PatentServiceImpl : deletePatentById("+id+") ";
-//	    	String err = PREFIX+"deletePatentById("+id+") ";
-//	    	System.out.println(err+"invoked ");
-//	    	
-//	    	Patent patent = null;
-//	    	if(session == null) logInternalError().fatal(err+"has empty session");
-//	    	else {
-//	    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
-//	    		Business usersBusiness = pLoginSession.getBusiness();
-//	    		patent = Patent.findPatent(new Long(id));
-//	    		if (patent==null) logInternalError().warn(err+"finds no matching patent. {url rewriting?}");
-//	    		else {
-//	    			patent.remove(); 
-//	    		}
-//	    	}
-//		}
-
-	
-
 	
 	public FxRateCurrentUI getCurrentFxRate() {
 
@@ -278,8 +254,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
     	return fxRateCurrentUI;
 	}
 
-
-
+	
+	
 	public List<FxRateUI> getFxRateHistory(String timeperiod) { 
 
 		String err = PREFIX+"getFxRateHistory("+timeperiod+") ";
@@ -315,6 +291,77 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 		return history;
 	}
+
+	
+	// End of - the methods which implement the prototypes in the Interface
+	
+
+	
+	
+	
+	
+	
+	
+	// Start of - Support methods - NOT exposed through the interface
+
+	// Tidy flexibleUpdatePatent() above by extracting this
+	protected List<Notification> flexibleExtractNotifications(LinkedHashMap untypedPatentUI) { 
+		List<Notification> result = new ArrayList<Notification>();
+		//if patentUI is a LinkedHashMap, notificationUIs will (likely) be too. But check, just in case
+		List<Object> allNotificationUIs = (List<Object>) untypedPatentUI.get("notificationUIs");
+		for (Object obNotificationUI : allNotificationUIs) {
+			if (obNotificationUI instanceof NotificationUI) {
+				NotificationUI notificationUI = (NotificationUI) obNotificationUI;
+				if (notificationUI.getIsOn()) {
+    				Long notificationId = notificationUI.getId();
+    				Notification notification = Notification.findNotification(notificationId);
+    				result.add(notification);
+				}
+			}
+			else {
+				LinkedHashMap obNotification = (LinkedHashMap) obNotificationUI;
+				Integer ID = (Integer) obNotification.get("id");
+				Boolean ISON = (Boolean) obNotification.get("isOn");
+				if (ISON.booleanValue()) {
+    				long notificationId = ID.longValue();
+    				Notification notification = Notification.findNotification(notificationId);
+    				result.add(notification);
+				}
+			}
+		}
+    	return result;
+	}
+
+	
+	
+	protected List<Patent> listAllPatentsForMyBusiness() { 
+
+		String err = PREFIX+"listAllPatentsForMyBusiness() ";
+		checkNoActionRequired(err);
+
+		log().debug(err+" invoked ");
+    	
+    /** MP170620 Code changes for implementing session starts **/	
+    	List<Patent> patents = null;
+    	if(session != null){
+    		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+    	
+    	 	
+	    	TypedQuery<Patent> tq_patents = Patent.findPatentsByBusiness(pLoginSession.getBusiness());
+	    	patents = tq_patents.getResultList();
+	    	
+	    	System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() ret Qty "+patents.size());
+        
+    	}
+    	else logInternalError().fatal("PatentServiceImpl : listAllPatentsForMyBusiness() has empty session");
+    	
+    /** MP170620 Code changes for implementing session ends **/	
+    	
+    	return patents;
+	}
+
+	
+	
 	protected int period2days(String timeperiod) {
 		int numdays = -1;
 		if ("week".equalsIgnoreCase(timeperiod)) return 7;
@@ -328,64 +375,32 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications - and, for each, whether it is on or off.
-	 * patent.notifications just holds those that are ON.
-	 * 
-	 * Approach used below: Get ALL into SortSet. Replace those that are ON.
-	 * Sorted by display order
-	 * @param notifications
-	 */
-	public synchronized List<NotificationUI> createNotificationUIs(List<Notification> notifications) {
 
-		List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
-		
-		// Assemble ALL notificationUIs (identifiable by ID)
-		List<Notification> allNotifications = Notification.findAllNotifications();
-		for (Notification anotification : allNotifications) {
-			NotificationUI notificationUI = new NotificationUI(anotification);
-			allNotificationUIs.add(notificationUI);
-		}
+	
+	
 
-		// In below code:
-		//  indexOf relies on equals() in NotificationUI
-		//  Sorting relies on compareTo() in NotificationUI
-		
-		
-		// Switch ON as appropriate
-		for (Notification notification : notifications) { // i.e. each ON notification
-			NotificationUI matchTarget = new NotificationUI(notification);
+	
 
-			// find existing match, & switch on
-			int imatch = allNotificationUIs.indexOf(matchTarget);
-//			if (imatch == -1) fail("NotificationUI handling has failed.");
-			if (imatch == -1) {
-				Universal universal = new Universal();
-				universal.fail("NotificationUI handling has failed.");
-			}
-			NotificationUI match = allNotificationUIs.get(imatch);
-			match.setIsOn(true);
-		}
+	
+	
+	// End of - Support methods - NOT exposed through the interface
 
-		// Sort of displayOrder (for UI convenience)
-		Collections.sort(allNotificationUIs);
-		
-//		System.out.println("acdebug - *ALL* notificationUIs after processing");
-//		for (NotificationUI notificationUI : allNotificationUIs) {
-//			System.out.println("          "+notificationUI.getId()+",   "+notificationUI.getIsOn()+",   "+notificationUI.getDisplayOrder()+",    "+notificationUI.getTitle());
-//		}
-		return allNotificationUIs;
-	}
 
+	
+
+
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 //	public void createNotificationUIs(List<Notification> notifications) {
 //
