@@ -21,7 +21,12 @@
 	   	</font>
 	</c:if>
 
-AC - this create as experimet after error
+This page may be shown if an error occurs.
+If a stack-dump is displayed below, the first part of it may be useful to the BackEnd development team, to understand the cause of the error.
+<br/>
+Thus far, such errors are mostly caused by out-of-date data in the database.
+<p/>
+[deliberate typo: experimet]
 <br/>
 <pre>
 ..vax.servlet.ServletException: File [/WEB-INF/views/uncaughtException.jsp] not found
