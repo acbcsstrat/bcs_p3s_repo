@@ -22,6 +22,7 @@ import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.BasketContents;
 
 @Service("PatentService")
 public class PatentServiceImpl extends ServiceAuthorisationTools implements PatentService {
@@ -32,6 +33,18 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	// Start of - the methods which implement the prototypes in the Interface
 
 	public List<PatentUI> listAllPatentUIsForMyBusiness() {
+
+		try {
+			;
+//			acBasket41PaymentTestHarness();  // for dev of Basket costs ...
+	} 
+	catch (Exception e) {
+		// this catch here as (a) cannot yet PROVE this code *&* (b) cannot trust exception to appear if thrown
+		System.out.println("PatentServiceImpl acBasket41PaymentTestHarness() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
+		System.out.println(e.getMessage());
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	}
 
 		String err = PREFIX+"listAllPatentUIsForMyBusiness() ";
 		checkNoActionRequired(err);
@@ -293,7 +306,26 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	}
 
 	
-	// End of - the methods which implement the prototypes in the Interface
+
+	
+	
+	private void acBasket41PaymentTestHarness() {
+		log().fatal("Using TESTHARNESS to force tesing of ....");
+		// Andy bodge to test BASKET devt code
+//		BasketContents basket = new BasketContents();
+//		DummyDataEngine dumeng = new DummyDataEngine();
+
+		List<Long> pats = new ArrayList<Long>();
+		pats.add(1L);
+		
+		PaymentServiceImpl impl = new PaymentServiceImpl();
+		impl.showBasketDetails(pats);
+		
+		
+		
+		
+	}
+// End of - the methods which implement the prototypes in the Interface
 	
 
 	

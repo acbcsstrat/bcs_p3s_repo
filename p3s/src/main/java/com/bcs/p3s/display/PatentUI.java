@@ -75,7 +75,7 @@ public class PatentUI extends Patent {
 		this.setBusiness(patent.getBusiness());
 		this.setLastRenewedDateExEpo(patent.getLastRenewedDateExEpo()); 
 		this.setRenewalYear(patent.getRenewalYear());
-		this.setNotifications(patent.getNotifications());
+		this.setNotifications(null); // UI will never want Notifications. Just NotificationUIs
 
 		
 		// Special work required here

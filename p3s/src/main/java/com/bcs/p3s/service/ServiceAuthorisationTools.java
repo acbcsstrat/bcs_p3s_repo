@@ -1,5 +1,7 @@
 package com.bcs.p3s.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,13 @@ public class ServiceAuthorisationTools extends Universal {
 		checkNotNull(patentUI, err);
 		checkIsTrue((patentUI.getId().longValue()==id), err);
 		checkPatentUIhasNotificationUIs(patentUI, err);
+	}
+	
+	protected void checkAreMyPatents(List<Long> patentIds, String err) {
+		checkNotNull(patentIds, err);
+		for (Long patentId : patentIds) {
+			checkThisIsMyPatent(patentId, err);
+		}
 	}
 	
 

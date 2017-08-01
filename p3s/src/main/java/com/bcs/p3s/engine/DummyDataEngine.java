@@ -143,7 +143,17 @@ public class DummyDataEngine extends Universal {
 		
 		return shallowCopy;
 	}
+
 	
+	public BigDecimal inventTotalBasketCost(List<Long> patentIds) {
+		BigDecimal inventedRubbish = new BigDecimal(1234.56);
+		int numbeOfPatents = patentIds.size();
+		BigDecimal multiplicity = new BigDecimal(numbeOfPatents);
+		return inventedRubbish.multiply(multiplicity);
+	}
+
+		
+		
 	
 	
 	
@@ -247,5 +257,27 @@ public Business generatePinNumber(Business business){
 		return business;
 		
 	}
+
+
+
+
+
+
+
+
+//Start of TEMPORARY code - expect to be redundant after development complete 
+
+	
+	
+	public List<Long> gimmeTwoLongs() {
+		List<Long> result = new ArrayList<Long>();
+		result.add(new Long(1));
+		result.add(new Long(2));
+		return result;
+	}
+	
+	
+//End of TEMPORARY code - expect to be redundant after development complete 
+
 
 }
