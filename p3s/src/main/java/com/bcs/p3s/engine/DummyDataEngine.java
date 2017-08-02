@@ -172,7 +172,7 @@ public class DummyDataEngine extends Universal {
 	}
 
 	public String gimmeAnyInvoiceUrl() {
-		return "hardcodedpdffolder/invoices/dummyInvoiceNumber 1.pdf";
+		return "hardcodedpdffolder/invoices/dummyInvoiceNumber1.pdf";
 	}
 	
 	public String gimmeEmptyPostPayWarningMessage() {
