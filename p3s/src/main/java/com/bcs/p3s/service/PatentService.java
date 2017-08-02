@@ -2,6 +2,7 @@ package com.bcs.p3s.service;
 
 import java.util.List;
 
+import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
@@ -78,7 +79,7 @@ public interface PatentService {
 	public List<FxRateUI> getFxRateHistory(String timeperiod); 
 
 
-	
+	public CostAnalysisData getCostAnalysisData(long id);
 	
 	
 	
