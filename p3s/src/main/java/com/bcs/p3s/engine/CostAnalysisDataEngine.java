@@ -306,7 +306,7 @@ public class CostAnalysisDataEngine extends Universal{
 	 * @return fee UI object (breakdown fee) for @param phase
 	 */
 	
-	public FeeUI getCurrentPhaseCost(String currentPhase, P3SFeeSole p3sFee , EpoFee epoFee , BigDecimal fxRate){
+	public FeeUI getCurrentPhaseCost(String currentPhase, P3SFeeSole p3sFee , EpoFee epoFee, BigDecimal fxRate){
 		
 		FeeUI feeUI = new FeeUI(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
 					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
@@ -450,19 +450,15 @@ public class CostAnalysisDataEngine extends Universal{
 	 * @return Fx Variance for current phase in last 6 months 
 	 *    format :- HashMap<Date,FeeUI> for last 6 months 
 	 */
-	public HashMap<Date,FeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee , EpoFee epoFee ){
+	public HashMap<String,FeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee, EpoFee epoFee){
 		
 		
-		HashMap<Date, BigDecimal> data = new HashMap<Date, BigDecimal>();
-		HashMap<Date, FeeUI> lineChart = new HashMap<Date, FeeUI>();
-		Calendar calendar = Calendar.getInstance();
-		lineChart.put(calendar.getTime(), caData.getFee());
-		data = getOldfxRates();
-		for (Date key : data.keySet()) {
-		    BigDecimal fxValue = data.get(key);
-		    FeeUI eachFee = getCurrentPhaseCost(caData.getCurrentcostBand(),p3sFee,epoFee, fxValue);
-		    lineChart.put(key, eachFee);
-		}
+		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
+		HashMap<String, FeeUI> lineChart = new HashMap<String, FeeUI>();
+		
+		archivedRateList = getArchivedData();
+		lineChart = getAllFeeUI(archivedRateList,caData);
+		
 		return lineChart;
 	}
 	
@@ -485,9 +481,7 @@ public class CostAnalysisDataEngine extends Universal{
 		Calendar calendar = Calendar.getInstance();
 		
 		while(dates.size() <=5 ){
-			Date date = utils.addDays(calendar.getTime(), -(n));
-			//Date formattedDate = utils.getFormatedForDB(date);
-			//dates.add(formattedDate); 
+			dates.add(utils.addDays(calendar.getTime(), -(n))); 
 			n=n+1;
 		}
 		
@@ -502,23 +496,47 @@ public class CostAnalysisDataEngine extends Universal{
 	 * 		Date being the last 5 days
 	 * 		BigDecimal for corresponding fxRates
 	 */
-	public HashMap<Date, BigDecimal> getOldfxRates(){
+	public List<ArchivedRate> getArchivedData(){
 		
-		HashMap<Date, BigDecimal> hashData = new HashMap<Date, BigDecimal>();
-		int n =1;
-		BigDecimal fxRate = new BigDecimal(0.0);
-		Calendar calendar = Calendar.getInstance();
-		List<Date> xAxisDates = getLast5Days();
-		for(Date eachDate : xAxisDates){
-			//get the corresponding fxRate for each date from DB
-			fxRate = ArchivedRate.findArchivedRateForDate(eachDate);
-			hashData.put(eachDate, fxRate);
-			
-			
-		}
-		return hashData;
+		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
+		//List<ArchivedRate> archivedRateListPart = new ArrayList<ArchivedRate>();
+		
+		archivedRateList = ArchivedRate.findArchivedRateEntries(0, 5);
+		
+		return archivedRateList;
 	}
 	
 	
-	
+	public HashMap<String, FeeUI> getAllFeeUI(List<ArchivedRate> archivedRateList , CostAnalysisData caData){
+		
+		HashMap<String, FeeUI> lineChart = new HashMap<String, FeeUI>();
+		
+		
+		Calendar calendar = Calendar.getInstance();
+		lineChart.put(utils.dateToUSStringWithDayOfWeek(calendar.getTime()), caData.getFee());
+		
+		for (ArchivedRate eachData : archivedRateList) {
+			
+			FeeUI fee = new FeeUI(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
+					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
+		    BigDecimal fxValue = eachData.getFxRate();
+		    BigDecimal subTotal = (caData.getFee().getRenewalFee_EUR().multiply(fxValue)).
+		    						add(caData.getFee().getProcessingFee_USD()).
+		    						add(caData.getFee().getExtensionFee_EUR().multiply(fxValue)).
+		    						add(caData.getFee().getUrgentFee_USD()).
+		    						add(caData.getFee().getExpressFee_USD()).
+		    						add(caData.getFee().getLatePayPenalty_USD());
+		    
+		    fee.setRenewalFee_EUR(caData.getFee().getRenewalFee_EUR());
+		    fee.setProcessingFee_USD(caData.getFee().getProcessingFee_USD());
+		    fee.setExtensionFee_EUR(caData.getFee().getExtensionFee_EUR());
+		    fee.setExpressFee_USD(caData.getFee().getExpressFee_USD());
+		    fee.setUrgentFee_USD(caData.getFee().getUrgentFee_USD());
+		    fee.setLatePayPenalty_USD(caData.getFee().getLatePayPenalty_USD());
+		    fee.setFxRate(fxValue);
+		    fee.setSubTotal_USD(subTotal);
+		    lineChart.put(utils.dateToUSStringWithDayOfWeek(eachData.getActiveFromDate()), fee);
+		}
+		return lineChart;
+	}
 }

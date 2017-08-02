@@ -434,6 +434,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		//get the renewal year from the Patents DB
 		//get the current renewal period from session object -- to be implemented later
 		
+		
 		if(RenewalStatusEnum.RENEWAL_IN_PLACE .equals(patent.getRenewalStatus())){
 			/**
 			 * 
@@ -541,9 +542,9 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		 * GET THE LINE CHART INFO 
 		 * 
 		 */
-		HashMap<Date, FeeUI> lineChart = new HashMap<Date, FeeUI>();
-		//lineChart = costEngines.getLineChartData(caData);
-		
+		HashMap<String, FeeUI> lineChart = new HashMap<String, FeeUI>();
+		lineChart = costEngines.getLineChartData(caData,p3sFee,epoFee);
+		caData.setLineChart(lineChart);
 		return caData;
 	}
 

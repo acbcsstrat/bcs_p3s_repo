@@ -47,7 +47,7 @@ public class CostAnalysisData {
 	 * LINE CHART DATA
 	 * @return HashMap
 	 */
-	HashMap<Date,BigDecimal> lineChart;
+	HashMap<String,FeeUI> lineChart;
 	
 	public Date getGreenStartDate() {
 		return greenStartDate;
@@ -225,11 +225,11 @@ public class CostAnalysisData {
 		this.fee = fee;
 	}
 
-	public HashMap<Date, BigDecimal> getLineChart() {
+	public HashMap<String, FeeUI> getLineChart() {
 		return lineChart;
 	}
 
-	public void setLineChart(HashMap<Date, BigDecimal> lineChart) {
+	public void setLineChart(HashMap<String, FeeUI> lineChart) {
 		this.lineChart = lineChart;
 	}
 	
