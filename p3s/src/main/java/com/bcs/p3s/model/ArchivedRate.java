@@ -44,4 +44,14 @@ public class ArchivedRate {
         return theMostRecent;
     }
 
+    public static BigDecimal findArchivedRateForDate(Date activeFromDate) {
+    	// Would like to use "SELECT o FROM ArchivedRate o order by o.activeFromDate desc limit 1";
+        String jpaQuery = "SELECT o FROM ArchivedRate o where o.activeFromDate  = :activeFromDate" ;
+
+        TypedQuery<ArchivedRate> query  = entityManager().createQuery(jpaQuery, ArchivedRate.class);
+        query.setParameter("activeFromDate", activeFromDate);
+
+        return query.getSingleResult().getFxRate();
+    }
+
 }
