@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import com.bcs.p3s.util.random.RandomGenerator;
+import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 
 import javax.servlet.http.HttpSession;
 
@@ -152,11 +153,36 @@ public class DummyDataEngine extends Universal {
 		return inventedRubbish.multiply(multiplicity);
 	}
 
+	public BigDecimal inventExpectedCost() {
+		BigDecimal inventedRubbish = new BigDecimal(808.08);
+		return inventedRubbish;
+	}
+
+	public String generatep3sTransRef() {
+		return "CQ 465 735 QC";
+	}
 		
-		
+	public BankTransferPaymentDetails generateBankTransferPaymentDetails() {
+		BankTransferPaymentDetails ikk = new BankTransferPaymentDetails();
+		ikk.setAccountNumber("12345678");
+		ikk.setItem1("This is Item 1");
+		ikk.setItem2("This IS item 2");
+		ikk.setItem3("ThIS is item 3");
+		return ikk;
+	}
+
+	public String gimmeAnyInvoiceUrl() {
+		return "hardcodedpdffolder/invoices/dummyInvoiceNumber 1.pdf";
+	}
 	
+	public String gimmeEmptyPostPayWarningMessage() {
+		return "Nut'n gone wrong yet ...";
+	}
 	
-	
+	public String genericDummyBillingAddressLine() {
+		return "strDummy BillingAddress line ";
+	}
+	public Long genericDummyBillingAddressZip() { return 11111L; }
 	
 	
 	
@@ -269,13 +295,20 @@ public Business generatePinNumber(Business business){
 
 	
 	
-	public List<Long> gimmeTwoLongs() {
-		List<Long> result = new ArrayList<Long>();
-		result.add(new Long(1));
-		result.add(new Long(2));
-		return result;
-	}
-	
+public List<Long> gimmeTwoLongs() {
+	List<Long> result = new ArrayList<Long>();
+	result.add(new Long(1));
+	result.add(new Long(2));
+	return result;
+}
+
+public Date add48hours(Date start) {
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(start);
+	calendar.add(Calendar.HOUR, 48);
+	return calendar.getTime();
+}
+
 	
 //End of TEMPORARY code - expect to be redundant after development complete 
 

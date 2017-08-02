@@ -29,7 +29,7 @@ public class ServiceAuthorisationTools extends Universal {
 	protected void authReminder() {
 		System.out.println("");
 		System.out.println("AUTHORISATION REMINDER:");
-		System.out.println("PatentServiceAuthorisationTools authReminder Invoked - This is a REMINDER that you don't yet have proper auorisation checking");
+		System.out.println("ServiceAuthorisationTools authReminder Invoked - This is a REMINDER that you don't yet have proper auorisation checking");
 		System.out.println("");
 		// EVERY service method (& else/where?) should invoke this until proper tools are in place
 	}
@@ -75,10 +75,10 @@ public class ServiceAuthorisationTools extends Universal {
 	protected PostLoginSessionBean me = null;
 	protected PostLoginSessionBean checkThisIsMy() {
 		if (me==null) {
-			log().debug("PatentServiceAuthorisationTools me singleton being instantiated."); // Use this to monitor destructions
+			log().debug("ServiceAuthorisationTools me singleton being instantiated."); // Use this to monitor destructions
 			me = (PostLoginSessionBean) session.getAttribute("postSession");
 			if ((me==null) || (me.getUser()==null) || (me.getBusiness()==null) ) {
-				String msg = "***  PatentServiceAuthorisationTools checkThisIsMy() failed to retreive good session info ***";
+				String msg = "***  ServiceAuthorisationTools checkThisIsMy() failed to retreive good session info *** (Possibly not logged in?)";
 				System.out.println(msg);
 				logInternalError().fatal(msg);
 				assert false : "4768";

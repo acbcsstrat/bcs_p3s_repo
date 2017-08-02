@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.PatentUI;
@@ -218,16 +217,9 @@ public class PatentRestController extends Universal {
 		        return new ResponseEntity<List<FxRateUI>>(history, HttpStatus.OK);
 		    }
 			
-		  //-------------------- Fetch Cost Analysis Data ----------------------------------------------
-		    @RequestMapping(value = "/rest-cost-analysis/", method = RequestMethod.GET)
-		    //@RequestMapping(value = "/rest-cost-analysis/", method = RequestMethod.GET)
-		    public ResponseEntity<CostAnalysisData> getCAData() {
-		    	
-		    	CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(1);
-		    	System.out.println("Inside Fetch CA data method");
-		    	return new ResponseEntity<CostAnalysisData>(costAnalysisData, HttpStatus.OK);
+		
 
-		    }
+	
 	//------------------- next ... a Patent : ARE THERE ANY MORE ???  --------------------------------------------------------
 
     

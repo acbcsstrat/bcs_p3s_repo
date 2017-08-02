@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord(finders = { "findDiscountPercentsByBusiness"})
+@RooJpaActiveRecord
 public class DiscountPercent {
 
     /**

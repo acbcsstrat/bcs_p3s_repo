@@ -1,11 +1,8 @@
 package com.bcs.p3s.service;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -13,26 +10,16 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Service;
 
-import com.bcs.p3s.display.CostAnalysisData;
-import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
-import com.bcs.p3s.display.RenewalDates;
-import com.bcs.p3s.engine.CostAnalysisDataEngine;
 import com.bcs.p3s.engine.DummyDataEngine;
-import com.bcs.p3s.enump3s.RenewalColourEnum;
-import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.DiscountPercent;
-import com.bcs.p3s.model.EpoFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
-import com.bcs.p3s.model.P3SFeeSole;
 import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.BasketContents;
@@ -46,18 +33,6 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	// Start of - the methods which implement the prototypes in the Interface
 
 	public List<PatentUI> listAllPatentUIsForMyBusiness() {
-
-		try {
-			;
-//			acBasket41PaymentTestHarness();  // for dev of Basket costs ...
-	} 
-	catch (Exception e) {
-		// this catch here as (a) cannot yet PROVE this code *&* (b) cannot trust exception to appear if thrown
-		System.out.println("PatentServiceImpl acBasket41PaymentTestHarness() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
-		System.out.println(e.getMessage());
-		e.printStackTrace();
-		throw new RuntimeException(e);
-	}
 
 		String err = PREFIX+"listAllPatentUIsForMyBusiness() ";
 		checkNoActionRequired(err);
@@ -322,23 +297,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 	
 	
-	private void acBasket41PaymentTestHarness() {
-		log().fatal("Using TESTHARNESS to force tesing of ....");
-		// Andy bodge to test BASKET devt code
-//		BasketContents basket = new BasketContents();
-//		DummyDataEngine dumeng = new DummyDataEngine();
 
-		List<Long> pats = new ArrayList<Long>();
-		pats.add(1L);
-		
-		PaymentServiceImpl impl = new PaymentServiceImpl();
-		impl.showBasketDetails(pats);
-		
-		
-		
-		
-	}
-// End of - the methods which implement the prototypes in the Interface
+	// End of - the methods which implement the prototypes in the Interface
 	
 
 	
@@ -432,154 +392,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 
 	
-	@Override
-	public CostAnalysisData getCostAnalysisData(long id)  {
-		// TODO Auto-generated method stub
-		CostAnalysisDataEngine costEngines = new CostAnalysisDataEngine();
-		CostAnalysisData caData = new CostAnalysisData();
-		P3SFeeSole p3sFee = new P3SFeeSole();
-		EpoFee epoFee = new EpoFee();
-		boolean renewedByP3S = false;   //a boolean value to determine whether current renewal done from our system
-		boolean isDiscountedRate = false; //a boolean value to check whether the business has got any discount rates
-		//boolean renewalWindowOpened = false;  // a boolean value to determine whether we are still in doldrums
-		RenewalDates allDates = new RenewalDates();
-		Patent patent = Patent.findPatent(id);
-		System.out.println("Got the new patent with filing date as " + patent.getFilingDate());
-		
-		/** Check whether current business has got any reduced Fees.
-		 * 		If so get the discounted rates ( PROCESSING FEE, EXPRESS FEE, URGENT FEE AND LATE PAY PENALTY )
-		 * 		Else get the actual P3SFEESOLE entries
-		 *  **/
-		TypedQuery<DiscountPercent> query  =  DiscountPercent.findDiscountPercentsByBusiness(patent.getBusiness());
-		if(query.getResultList().size() > 0){
-			isDiscountedRate = true;
-			DiscountPercent discountRate = query.getSingleResult();
-			p3sFee = costEngines.findDiscountedFees(discountRate);
-		}
-		else{
-			p3sFee = P3SFeeSole.findP3SFeeSole((long) 1);  //passing 1 as P3SSoleFee will be having single entry every time 
-		}
-		
-		/**
-		 * GET THE EPO FEES FOR THE CURRENT RENEWAL YEAR
-		 */
-		epoFee.setRenewalYear(patent.getRenewalYear());
-		epoFee = EpoFee.findEpoFeesByRenewalYear(epoFee);
-		//get the renewal year from the Patents DB
-		//get the current renewal period from session object -- to be implemented later
-		
-		if(RenewalStatusEnum.RENEWAL_IN_PLACE .equals(patent.getRenewalStatus())){
-			/**
-			 * 
-			 * Calculate the actual renewal due date and window close and open dates -- method call here
-			 */
-			try {
-				allDates = costEngines.getRenewalWindowDates(patent);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//check whether the renewal has been done from our system
-			TypedQuery<Renewal> q  =  Renewal.findRenewalsByPatent(patent);
-			if(q.getResultList().size() == 0){
-				System.out.println("No renewals for this patent being made from our system");
-				
-				System.out.println("Check whether renewal window still opened for the current renewal year. "
-						+ "If "
-							+ "so show price for todays rate "
-						+ "else "
-							+ "Show price for the green period for next year renewal");
-			}
-			else{ //loop for renewal being made
-				
-				System.out.println("Total number of renewals being made from our system " + q.getResultList().size());
-				System.out.println("Now need to find whether any renewal made for the current renewal year");
-				System.out.println("Iterate through the renewals list");
-				
-				List <Renewal> renewals = q.getResultList();
-				for(Renewal renewal : renewals){
-					if(renewal.getRenewalYear() == patent.getRenewalYear()){   //renewal being made for the current year from our system
-						renewedByP3S = true;
-						
-						System.out.println("Check whether renewal window still opened for the current renewal year. "
-								+ "If "
-									+ "so show price for todays rate "
-								+ "else "
-									+ "Show price for the next year renewal");
-						
-						if(allDates.isRenewalWindowStillOpened()){
-							System.out.println("Renewal window still opened");
-							System.out.println("Show price for current phase");
-							caData = costEngines.getAllPhasesInfo(allDates);
-							caData = costEngines.getAllCosts(caData,p3sFee,epoFee);
-							caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
-							caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),p3sFee,epoFee));
-						}
-						else{
-							System.out.println("Renewal window closed");
-							System.out.println("Show price for green period for next renewal year [Green period]");
-							caData = costEngines.getNextPhasesInfo(allDates);
-							epoFee.setRenewalYear(patent.getRenewalYear()+1); 
-							epoFee = EpoFee.findEpoFeesByRenewalYear(epoFee);
-							caData = costEngines.getAllCosts(caData,p3sFee,epoFee);
-							caData.setCurrentcostBand(RenewalColourEnum.GREEN);
-							caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),p3sFee,epoFee));
-						}
-					}
-						
-				}
-				
-				if(!renewedByP3S){
-					System.out.println("Renewal made for the current year but from a different system");
-					System.out.println("Check whether renewal window still opened for the current renewal year. "
-							+ "If "
-								+ "so show price for the green period "
-							+ "else "
-								+ "Show price for the green period for next year renewal");
-					if(allDates.isRenewalWindowStillOpened()){
-						System.out.println("Renewal window still opened");
-						System.out.println("Show price for green period for this renewal year");
-						caData = costEngines.getAllPhasesInfo(allDates);
-						caData = costEngines.getAllCosts(caData,p3sFee,epoFee);
-						/**
-						 * SET THE COLOR AS GREEN
-						 */
-						caData.setCurrentcostBand(RenewalColourEnum.GREEN);
-						caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),p3sFee,epoFee));
-					}
-					else{
-						System.out.println("Renewal window closed");
-						System.out.println("Show price for green period for next renewal year [Green Period]");
-						caData = costEngines.getNextPhasesInfo(allDates);
-						epoFee.setRenewalYear(patent.getRenewalYear()+1); 
-						epoFee = EpoFee.findEpoFeesByRenewalYear(epoFee);
-						caData = costEngines.getAllCosts(caData,p3sFee,epoFee);
-						caData.setCurrentcostBand(RenewalColourEnum.GREEN);
-						caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),p3sFee,epoFee));
-					}
-				}
-				
-			}
-				
-		}
-		
-		else if(RenewalStatusEnum.SHOW_PRICE .equals(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS .equals(patent.getRenewalStatus())){
-			//DISPLAY TODAYS AMOUNT STRAIGHT AWAY
-			caData = costEngines.getAllPhasesInfo(allDates);
-			caData = costEngines.getAllCosts(caData,p3sFee,epoFee);
-			caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
-			caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),p3sFee,epoFee));
-		}
-		
-		/**
-		 * GET THE LINE CHART INFO 
-		 * 
-		 */
-		HashMap<Date, FeeUI> lineChart = new HashMap<Date, FeeUI>();
-		//lineChart = costEngines.getLineChartData(caData);
-		
-		return caData;
-	}
+
 
 	
 	
