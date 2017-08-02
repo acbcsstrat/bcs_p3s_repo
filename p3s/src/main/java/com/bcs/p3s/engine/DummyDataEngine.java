@@ -12,20 +12,15 @@ import java.util.Random;
 import com.bcs.p3s.util.random.RandomGenerator;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.bcs.p3s.display.FxRateUI;
-import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.engine.dummyclasses.Api4dotXdataFromGETworkaround;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
-import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -153,10 +148,10 @@ public class DummyDataEngine extends Universal {
 		return inventedRubbish.multiply(multiplicity);
 	}
 
-	public BigDecimal inventExpectedCost() {
-		BigDecimal inventedRubbish = new BigDecimal(808.08);
-		return inventedRubbish;
-	}
+//	public BigDecimal inventExpectedCost() {
+//		BigDecimal inventedRubbish = new BigDecimal(808.08);
+//		return inventedRubbish;
+//	}
 
 	public String generatep3sTransRef() {
 		return "CQ 465 735 QC";
@@ -179,13 +174,63 @@ public class DummyDataEngine extends Universal {
 		return "Nut'n gone wrong yet ...";
 	}
 	
-	public String genericDummyBillingAddressLine() {
-		return "strDummy BillingAddress line ";
+//	public String genericDummyBillingAddressLine() {
+//		return "strDummy BillingAddress line ";
+//	}
+//	public Long genericDummyBillingAddressZip() { return 11111L; }
+	
+	// api 4.1
+	public Api4dotXdataFromGETworkaround getApi41data(String raw) {
+		Api4dotXdataFromGETworkaround result = new Api4dotXdataFromGETworkaround();
+		
+		ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
+		List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs(raw);
+		result.patentIds = patentsInBasket;
+		
+		return result;
 	}
-	public Long genericDummyBillingAddressZip() { return 11111L; }
-	
-	
-	
+	// api 4.2
+	public Api4dotXdataFromGETworkaround getApi42data(String raw) {
+		Api4dotXdataFromGETworkaround result = new Api4dotXdataFromGETworkaround();
+		
+		String[] elements = raw.split(":",-1); 
+		String elly;
+		
+		System.out.println("   First Element is : elements[0] = "+elements[0]);
+		ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
+		List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs(elements[0]);
+		result.patentIds = patentsInBasket;
+
+		elly = caratToDotConvertor(elements[1]);
+		System.out.println("   Second Element is : elements[1] = "+elly);
+		result.expectedCost = new BigDecimal(elly);
+		
+		return result;
+	}
+	// api 4.3
+	public Api4dotXdataFromGETworkaround getApi43data(String raw) {
+		Api4dotXdataFromGETworkaround result = new Api4dotXdataFromGETworkaround();
+		
+		String[] elements = raw.split(":",-1); 
+		String elly;
+		
+		System.out.println("   First Element is : elements[0] = "+elements[0]);
+		ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
+		List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs(elements[0]);
+		result.patentIds = patentsInBasket;
+
+		elly = caratToDotConvertor(elements[1]);
+		System.out.println("   Second Element is : elements[1] = "+elly);
+		result.expectedCost = new BigDecimal(elly);
+
+		System.out.println("   Third Element is : elements[2] = "+elements[2]);
+		result.billingAddressStreet = elements[2];
+		result.billingAddressCity = elements[3];
+		result.billingAddressState = elements[4];
+		result.billingAddressZip = new Long(elements[5]);
+
+		return result;
+	}
 	
 	
 	
@@ -284,7 +329,14 @@ public Business generatePinNumber(Business business){
 		
 	}
 
-
+	/**
+	 * Seems cannot have a DOT in a url?
+	 * leasways, split, extracting on colon, turns 808.08 into 808.
+	 * Workaround. replace dot with carat. This replaces any carats with dots 
+	 */
+	String caratToDotConvertor(String raw) {
+		return raw.replace('^','.');
+	}
 
 
 

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
+import com.bcs.p3s.engine.dummyclasses.Api4dotXdataFromGETworkaround;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
@@ -45,11 +47,17 @@ public class PaymentRestController extends Universal {
     	
     	BasketContents basketContents;
     	try {
-	
-			ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
-			List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs( (String) obby);
-			
-			basketContents = paymentService.showBasketContents(patentsInBasket);
+
+    		// In due course, an extractor (like below) should be used here. meanshile, use DummyDataEngine & classses from com.bcs.p3s.engine.dummyclasses
+//			ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
+//			List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs( (String) obby);
+
+    		DummyDataEngine dummy = new DummyDataEngine();
+    		Api4dotXdataFromGETworkaround tmp = dummy.getApi41data( (String) obby );
+    		
+    		
+    		
+			basketContents = paymentService.showBasketContents(tmp.patentIds);
 			   	
 
 		} catch (Exception e) {
@@ -68,12 +76,13 @@ public class PaymentRestController extends Universal {
 
     
     // Below is a temporary GET variant of the above POSt method: for development and testing purposes only // acToDo 
-    @RequestMapping(value = "/rest-basket/", method = RequestMethod.GET)
-    public ResponseEntity<BasketContents> showBasketContentsAsGET() {
+    @RequestMapping(value = "/rest-basket/{api41cmd}", method = RequestMethod.GET)
+    public ResponseEntity<BasketContents> showBasketContentsAsGET(@PathVariable("api41cmd") String api41cmd) {
 
-    	log().debug("PaymentRestController : /rest-basket/ showBasketContentsAsGET() invoked.  ");
+    	log().debug("PaymentRestController : /rest-basket/ showBasketContentsAsGET() invoked.   Param="+api41cmd);
 
-    	return showBasketContents("1, 2 ");
+    	
+    	return showBasketContents(api41cmd);
     }
 
     
@@ -91,14 +100,12 @@ public class PaymentRestController extends Universal {
     	
     	BankTransferPreCommitDetails bankTransferPreCommitDetails;
     	try {
+
+    		DummyDataEngine dummy = new DummyDataEngine();
+    		Api4dotXdataFromGETworkaround tmp = dummy.getApi42data( (String) obby );
+
     		
-			ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
-			List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs( (String) obby);
-			
-			DummyDataEngine dummy = new DummyDataEngine();
-			BigDecimal expectedCost = dummy.inventExpectedCost();
-			
-			bankTransferPreCommitDetails = paymentService.showBankTransferPreCommitDetails(patentsInBasket, expectedCost);
+			bankTransferPreCommitDetails = paymentService.showBankTransferPreCommitDetails(tmp.patentIds, tmp.expectedCost);
 
     	} catch (Exception e) {
 			System.out.println("PaymentRestController showBankTransferPreCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ");
@@ -116,12 +123,12 @@ public class PaymentRestController extends Universal {
 
     
     // Below is a temporary GET variant of the above POSt method: for development and testing purposes only // acToDo 
-    @RequestMapping(value = "/rest-prepare-banktransfer/", method = RequestMethod.GET)
-    public ResponseEntity<BankTransferPreCommitDetails> showBankTransferPreCommitDetailsAsGET() {
+    @RequestMapping(value = "/rest-prepare-banktransfer/{api42cmd}", method = RequestMethod.GET)
+    public ResponseEntity<BankTransferPreCommitDetails> showBankTransferPreCommitDetailsAsGET(@PathVariable("api42cmd") String api42cmd) {
 
-    	log().debug("PaymentRestController : /rest-prepare-banktransfer/ showBankTransferPreCommitDetailsAsGET() invoked.  ");
+    	log().debug("PaymentRestController : /rest-prepare-banktransfer/ showBankTransferPreCommitDetailsAsGET() invoked.   Param="+api42cmd);
 
-    	return showBankTransferPreCommitDetails("1, 2 ");
+    	return showBankTransferPreCommitDetails(api42cmd);
     }
 
     
@@ -141,19 +148,16 @@ public class PaymentRestController extends Universal {
     	BankTransferPostCommitDetails bankTransferPostCommitDetails;
     	try {
     		
-			ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
-			List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs( (String) obby);
-			
-			DummyDataEngine dummy = new DummyDataEngine();
-			BigDecimal expectedCost = dummy.inventExpectedCost();
-			
-			bankTransferPostCommitDetails = paymentService.showBankTransferPostCommitDetails(patentsInBasket, expectedCost 
-					, dummy.genericDummyBillingAddressLine() 
-					, dummy.genericDummyBillingAddressLine() 
-					, dummy.genericDummyBillingAddressLine() 
-					, dummy.genericDummyBillingAddressZip()  
-			); 
+    		DummyDataEngine dummy = new DummyDataEngine();
+    		Api4dotXdataFromGETworkaround tmp = dummy.getApi43data( (String) obby );
 
+    		
+			bankTransferPostCommitDetails = paymentService.showBankTransferPostCommitDetails(tmp.patentIds, tmp.expectedCost
+					, tmp.billingAddressStreet
+					, tmp.billingAddressCity
+					, tmp.billingAddressState
+					, tmp.billingAddressZip
+			);
 			
     	} catch (Exception e) {
 			System.out.println("PaymentRestController showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ");
@@ -171,12 +175,12 @@ public class PaymentRestController extends Universal {
 
     
     // Below is a temporary GET variant of the above POSt method: for development and testing purposes only // acToDo 
-    @RequestMapping(value = "/rest-committed-banktransfer/", method = RequestMethod.GET)
-    public ResponseEntity<BankTransferPostCommitDetails> showBankTransferPostCommitDetailsAsGET() {
+    @RequestMapping(value = "/rest-committed-banktransfer/{api43cmd}", method = RequestMethod.GET)
+    public ResponseEntity<BankTransferPostCommitDetails> showBankTransferPostCommitDetailsAsGET(@PathVariable("api43cmd") String api43cmd) {
 
-    	log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetailsAsGET() invoked.  ");
+    	log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetailsAsGET() invoked.   Param="+api43cmd);
 
-    	return showBankTransferPostCommitDetails("1, 2 ");
+    	return showBankTransferPostCommitDetails(api43cmd);
     }
 
     
