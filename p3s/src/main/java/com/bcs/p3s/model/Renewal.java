@@ -16,7 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
+@RooJpaActiveRecord(finders = { "findRenewalsByPatent" })
 public class Renewal {
 
     /**
