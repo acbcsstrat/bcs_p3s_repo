@@ -218,12 +218,12 @@ public class CostAnalysisDataEngine extends Universal{
 		/**
 		 * SETTING ALL RESPECTIVE DATES TO STRING FORMAT 
 		 */
-		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeek(greenStart));
-		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeek(amberStart));
-		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeek(redStart));
-		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeek(blueStart));
-		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeek(brownStart));
-		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeek(caData.getBrownEndDate()));
+		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(greenStart));
+		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(amberStart));
+		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(redStart));
+		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blueStart));
+		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(brownStart));
+		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBrownEndDate()));
 		
 		if(allDates.isRenewalWindowStillOpened())
 			caData.setCurrentcostBand(getCurrentPhase(caData));
@@ -430,12 +430,12 @@ public class CostAnalysisDataEngine extends Universal{
 		/**
 		 * SETTING ALL RESPECTIVE DATES TO STRING FORMAT 
 		 */
-		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeek(greenStart));
-		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeek(amberStart));
-		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeek(redStart));
-		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeek(blueStart));
-		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeek(brownStart));
-		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeek(caData.getBrownEndDate()));
+		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(greenStart));
+		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(amberStart));
+		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(redStart));
+		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blueStart));
+		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(brownStart));
+		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBrownEndDate()));
 		
 		
 		caData.setCurrentcostBand(RenewalColourEnum.GREEN);
@@ -457,7 +457,7 @@ public class CostAnalysisDataEngine extends Universal{
 		HashMap<String, FeeUI> lineChart = new HashMap<String, FeeUI>();
 		
 		archivedRateList = getArchivedData();
-		lineChart = getAllFeeUI(archivedRateList,caData);
+		lineChart = getAllFeeUI(archivedRateList,caData,p3sFee, epoFee);
 		
 		return lineChart;
 	}
@@ -507,35 +507,20 @@ public class CostAnalysisDataEngine extends Universal{
 	}
 	
 	
-	public HashMap<String, FeeUI> getAllFeeUI(List<ArchivedRate> archivedRateList , CostAnalysisData caData){
+	public HashMap<String, FeeUI> getAllFeeUI(List<ArchivedRate> archivedRateList , CostAnalysisData caData, P3SFeeSole p3sFee, EpoFee epoFee){
 		
 		HashMap<String, FeeUI> lineChart = new HashMap<String, FeeUI>();
 		
-		
 		Calendar calendar = Calendar.getInstance();
-		lineChart.put(utils.dateToUSStringWithDayOfWeek(calendar.getTime()), caData.getFee());
+		lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(calendar.getTime()), caData.getFee());
 		
 		for (ArchivedRate eachData : archivedRateList) {
 			
 			FeeUI fee = new FeeUI(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
 					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
 		    BigDecimal fxValue = eachData.getFxRate();
-		    BigDecimal subTotal = (caData.getFee().getRenewalFee_EUR().multiply(fxValue)).
-		    						add(caData.getFee().getProcessingFee_USD()).
-		    						add(caData.getFee().getExtensionFee_EUR().multiply(fxValue)).
-		    						add(caData.getFee().getUrgentFee_USD()).
-		    						add(caData.getFee().getExpressFee_USD()).
-		    						add(caData.getFee().getLatePayPenalty_USD());
-		    
-		    fee.setRenewalFee_EUR(caData.getFee().getRenewalFee_EUR());
-		    fee.setProcessingFee_USD(caData.getFee().getProcessingFee_USD());
-		    fee.setExtensionFee_EUR(caData.getFee().getExtensionFee_EUR());
-		    fee.setExpressFee_USD(caData.getFee().getExpressFee_USD());
-		    fee.setUrgentFee_USD(caData.getFee().getUrgentFee_USD());
-		    fee.setLatePayPenalty_USD(caData.getFee().getLatePayPenalty_USD());
-		    fee.setFxRate(fxValue);
-		    fee.setSubTotal_USD(subTotal);
-		    lineChart.put(utils.dateToUSStringWithDayOfWeek(eachData.getActiveFromDate()), fee);
+		    fee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxValue);
+		    lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(eachData.getActiveFromDate()), fee);
 		}
 		return lineChart;
 	}
