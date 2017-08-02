@@ -218,12 +218,12 @@ public class CostAnalysisDataEngine extends Universal{
 		/**
 		 * SETTING ALL RESPECTIVE DATES TO STRING FORMAT 
 		 */
-		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeek(greenStart));
-		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeek(amberStart));
-		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeek(redStart));
-		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeek(blueStart));
-		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeek(brownStart));
-		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeek(caData.getBrownEndDate()));
+		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(greenStart));
+		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(amberStart));
+		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(redStart));
+		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blueStart));
+		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(brownStart));
+		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBrownEndDate()));
 		
 		if(allDates.isRenewalWindowStillOpened())
 			caData.setCurrentcostBand(getCurrentPhase(caData));
@@ -306,7 +306,7 @@ public class CostAnalysisDataEngine extends Universal{
 	 * @return fee UI object (breakdown fee) for @param phase
 	 */
 	
-	public FeeUI getCurrentPhaseCost(String currentPhase, P3SFeeSole p3sFee , EpoFee epoFee , BigDecimal fxRate){
+	public FeeUI getCurrentPhaseCost(String currentPhase, P3SFeeSole p3sFee , EpoFee epoFee, BigDecimal fxRate){
 		
 		FeeUI feeUI = new FeeUI(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
 					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
@@ -430,12 +430,12 @@ public class CostAnalysisDataEngine extends Universal{
 		/**
 		 * SETTING ALL RESPECTIVE DATES TO STRING FORMAT 
 		 */
-		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeek(greenStart));
-		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeek(amberStart));
-		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeek(redStart));
-		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeek(blueStart));
-		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeek(brownStart));
-		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeek(caData.getBrownEndDate()));
+		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(greenStart));
+		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(amberStart));
+		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(redStart));
+		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blueStart));
+		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(brownStart));
+		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBrownEndDate()));
 		
 		
 		caData.setCurrentcostBand(RenewalColourEnum.GREEN);
@@ -450,19 +450,15 @@ public class CostAnalysisDataEngine extends Universal{
 	 * @return Fx Variance for current phase in last 6 months 
 	 *    format :- HashMap<Date,FeeUI> for last 6 months 
 	 */
-	public HashMap<Date,FeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee , EpoFee epoFee ){
+	public HashMap<String,FeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee, EpoFee epoFee){
 		
 		
-		HashMap<Date, BigDecimal> data = new HashMap<Date, BigDecimal>();
-		HashMap<Date, FeeUI> lineChart = new HashMap<Date, FeeUI>();
-		Calendar calendar = Calendar.getInstance();
-		lineChart.put(calendar.getTime(), caData.getFee());
-		data = getOldfxRates();
-		for (Date key : data.keySet()) {
-		    BigDecimal fxValue = data.get(key);
-		    FeeUI eachFee = getCurrentPhaseCost(caData.getCurrentcostBand(),p3sFee,epoFee, fxValue);
-		    lineChart.put(key, eachFee);
-		}
+		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
+		HashMap<String, FeeUI> lineChart = new HashMap<String, FeeUI>();
+		
+		archivedRateList = getArchivedData();
+		lineChart = getAllFeeUI(archivedRateList,caData,p3sFee, epoFee);
+		
 		return lineChart;
 	}
 	
@@ -485,9 +481,7 @@ public class CostAnalysisDataEngine extends Universal{
 		Calendar calendar = Calendar.getInstance();
 		
 		while(dates.size() <=5 ){
-			Date date = utils.addDays(calendar.getTime(), -(n));
-			//Date formattedDate = utils.getFormatedForDB(date);
-			//dates.add(formattedDate); 
+			dates.add(utils.addDays(calendar.getTime(), -(n))); 
 			n=n+1;
 		}
 		
@@ -502,23 +496,32 @@ public class CostAnalysisDataEngine extends Universal{
 	 * 		Date being the last 5 days
 	 * 		BigDecimal for corresponding fxRates
 	 */
-	public HashMap<Date, BigDecimal> getOldfxRates(){
+	public List<ArchivedRate> getArchivedData(){
 		
-		HashMap<Date, BigDecimal> hashData = new HashMap<Date, BigDecimal>();
-		int n =1;
-		BigDecimal fxRate = new BigDecimal(0.0);
-		Calendar calendar = Calendar.getInstance();
-		List<Date> xAxisDates = getLast5Days();
-		for(Date eachDate : xAxisDates){
-			//get the corresponding fxRate for each date from DB
-			fxRate = ArchivedRate.findArchivedRateForDate(eachDate);
-			hashData.put(eachDate, fxRate);
-			
-			
-		}
-		return hashData;
+		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
+		//List<ArchivedRate> archivedRateListPart = new ArrayList<ArchivedRate>();
+		
+		archivedRateList = ArchivedRate.findArchivedRateEntries(0, 5);
+		
+		return archivedRateList;
 	}
 	
 	
-	
+	public HashMap<String, FeeUI> getAllFeeUI(List<ArchivedRate> archivedRateList , CostAnalysisData caData, P3SFeeSole p3sFee, EpoFee epoFee){
+		
+		HashMap<String, FeeUI> lineChart = new HashMap<String, FeeUI>();
+		
+		Calendar calendar = Calendar.getInstance();
+		lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(calendar.getTime()), caData.getFee());
+		
+		for (ArchivedRate eachData : archivedRateList) {
+			
+			FeeUI fee = new FeeUI(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
+					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
+		    BigDecimal fxValue = eachData.getFxRate();
+		    fee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxValue);
+		    lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(eachData.getActiveFromDate()), fee);
+		}
+		return lineChart;
+	}
 }
