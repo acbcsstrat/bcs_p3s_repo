@@ -32,6 +32,8 @@ public class UserProfileUI {
     private String firstName;
     private String lastName;
     private String emailAddress;
+    
+    private Boolean isEmailNotification;
 
     private Business business;
 	
@@ -64,11 +66,17 @@ public class UserProfileUI {
 		this.emailAddress = emailAddress;
 	}
 
+	public Boolean getIsEmailNotification() {
+		return isEmailNotification;
+	}
+
+	public void setIsEmailNotification(Boolean isEmailNotification) {
+		this.isEmailNotification = isEmailNotification;
+	}
 
 	public Business getBusiness() {
 		return business;
 	}
-
 
 	public void setBusiness(Business business) {
 		this.business = business;

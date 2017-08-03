@@ -1,18 +1,18 @@
-angular.module('myApp').component('user', {
-  	bindings: { user: '<' },
+app.component('user', {
+  	bindings: { 
+        user: '<',
+        timezones: '<'
+    },
 	templateUrl: 'p3sweb/app/components/user/views/user-profile.htm',
-	controller: ['userService', function(userService) {
+	controller: ['userService', 'timezoneService', function(userService, timezoneService) {
 		
 		var vm = this;
 
-        //============ form data
+        vm.message = "hello";
 
         vm.updateUser = function(user) {
-        	// console.log(event)
         	userService.updateUser(user);
         }
-
-        vm.checkbox = {}
 	  	
 	}]
 });

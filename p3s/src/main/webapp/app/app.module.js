@@ -1,7 +1,7 @@
-var app = angular.module('myApp', ['ui.router', 'chart.js', 'ui.bootstrap', 'firebase']);
+var app = angular.module('myApp', ['ui.router', 'chart.js', 'ui.bootstrap']);
 
-app.run(["$state", '$transitions', '$q', 'authentication', '$rootScope',
-    function($state, $transitions, $q, authentication, $rootScope) {
+app.run(["$state", '$transitions', '$q', '$rootScope',
+    function($state, $transitions, $q, $rootScope) {
 
 //  //redirects to login page if we're not signed in
 //    $transitions.onBefore({to: 'app.**'}, function(trans) {

@@ -5,26 +5,53 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-6">
-		<a ui-sref="login" ng-click="$ctrl.logout()">Logout</a>
-	</div>
-</div>
-<div class="row">
 	<div class="col-md-12">
 		<table class="table table-bordered table-striped text-md-center">
 			<thead class="thead-inverse">
 				<tr>
-					<td ng-click="sortBy('name')" class="align-middle">Application No. </td>
-					<td class="align-middle">Client Ref</td>
-					<td class="align-middle">Cost now</td>
-					<td class="align-middle">Cost band end</td>
-					<td class="align-middle">Cost next</td>
-					<td class="align-middle">Renewal Date</td>
+					<td class="align-middle">
+						<a ng-click="sortBy('patentApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse" class="align-middle">Application No.  <!--show if not showing(false)-->
+							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
+						</a>
+					</td>
+					<td class="align-middle">
+						<a ng-click="$ctrl.sortType = 'clientRef'; $ctrl.sortReverse = !$ctrl.sortReverse">Client Ref
+							<span ng-show="$ctrl.sortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
+						</a>							
+					</td>
+					<td class="align-middle">
+						<a ng-click="$ctrl.sortType = 'currentRenewalCost'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost now
+							<span ng-show="$ctrl.sortType == 'currentRenewalCost' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'currentRenewalCost' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+						</a>
+					</td>
+					<td class="align-middle">
+						<a ng-click="$ctrl.sortType = 'costBandEndDateUI'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost band end
+							<span ng-show="$ctrl.sortType == 'costBandEndDateUI' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'costBandEndDateUI' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+						</a>
+					</td>
+					<td class="align-middle">
+						<a ng-click="$ctrl.sortType = 'renewalCostNextStage'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost next
+							<span ng-show="$ctrl.sortType == 'renewalCostNextStage' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'renewalCostNextStage' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+						</a>
+					</td>						
+					<td class="align-middle">
+						<a ng-click="$ctrl.sortType = 'renewalDueDateUI'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Date
+							<span ng-show="$ctrl.sortType == 'renewalDueDateUI' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'renewalDueDateUI' && $ctrl.sortReverse" class="fa fa-caret-down"></span>	
+						</a>
+					</td>							
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="patent in $ctrl.patents">
-					<td><a ui-sref="app.patents.patent({patentId: patent.id})" ng-bind="patent.patentApplicationNumber"></a></td>
+				<tr ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+					<td>
+						<a ui-sref="app.patents.patent({patentId: patent.id})" ng-bind="patent.patentApplicationNumber"></a>
+					</td>
 					<td ng-bind="patent.clientRef"></td>
 					<td>$ {{patent.currentRenewalCost}}</td>
 					<td ng-bind="patent.costBandEndDateUI"></td>
@@ -36,5 +63,3 @@
 		<ui-view></ui-view>
 	</div>
 </div> 
-           
-            

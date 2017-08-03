@@ -1,16 +1,4 @@
-<div class="row">
-	<div class="col-md-6">
-		<p ng-show="$root.currentUser">Hi, {{$root.currentUser.firstname}}</p>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-6">
-		<a ui-sref="login" ng-click="$ctrl.logout()">Logout</a>
-	</div>
-</div>
-
-
-<form  action="#" method="POST" name="userProfileForm">
+<form name="userProfileForm" ng-submit="$ctrl.updateUser($ctrl.user)">
 	<div class="col-md-6">
 
 		<fieldset>
@@ -18,7 +6,7 @@
 			<div class="form-group row">
 				<label class="col-md-5" for="emailAddress">Email address</label>
 				<div class="col-md-7">
-					<input type="email" name="emailAddress" ng-model="$ctrl.user.emailAddress" class="form-control" id="emailAddress" value="hello" email required>
+					<input type="email" name="emailAddress" ng-model="$ctrl.user.emailAddress" class="form-control" required>
 					<p ng-show="userProfileForm.emailAddress.$error.required && userProfileForm.emailAddress.$dirty">Please fill out this field</p>
 					<p ng-show="userProfileForm.emailAddress.$error.email && userProfileForm.emailAddress.$dirty">Enter a valid email</p>
 				</div>
@@ -53,7 +41,7 @@
 			<div class="form-group row">
 				<label class="col-md-5" for="confirm_password">Confirm password</label>
 				<div class="col-md-7">
-					<input type="text" name="confirm_password" class="form-control" ng-model="confirm_password" id="confirmPassword">
+					<input type="text" name="confirm_password" class="form-control" ng-model="$ctrl.user.confirm_password" id="confirmPassword">
 					<p ng-show="userProfileForm.confirm_password.$error.required && userProfileForm.confirm_password.$dirty">Please fill out this field</p>
 				</div>
 			</div>
@@ -62,19 +50,23 @@
 		<fieldset class="form-group">
 			<legend class="font-weight-bold">Email notifications</legend>
 			<p>Do you want to receive email notificaitons?</p>
-			<div class="col-md-2">
-				<label class="form-check-label">
-	    			<input type="radio" class="form-check-input" name="opt_notification_y" id="opt_notification_y" value="option1" checked>
-					Yes
-				</label>				
-			</div>
-			<div class="col-md-2">
-			  	<label class="form-check-label">
-	    			<input type="radio" class="form-check-input" name="opt_notification_n" id="opt_notification_n" value="option2" required>
-					No
-				</label>
+			<div class="col-md-4">
+
+				<!-- <div class="form-check form-check-inline">
+				  	<label class="form-check-label">
+				    	<input class="form-check-input" ng-model="$ctrl.user.isEmailNotification" type="radio" name="opt_notification" id="opt_notification_y" value="option1" checked>
+				    	Yes
+				  	</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  	<label class="form-check-label">
+				    	<input class="form-check-input" ng-model="$ctrl.user.isEmailNotification" type="radio" name="opt_notification" id="opt_notification_n" value="option2">
+				    	No
+				  	</label>
+				</div> -->
 			</div>
 		</fieldset>					
+
 	</div>
 	<div class="col-md-6">
 		<fieldset>
@@ -123,14 +115,17 @@
 			</div>
 			<div class="form-group row">
 				<label class="col-md-5" for="timezone">Time Zone</label>
-				<div class="col-md-2">
-					<select class="form-control" ng-model="selected_timezone" ng-options="x.abbr for x in timezone">
-						<option class="form-control" ng-model="user.timezone">{{selected_timezone}}</option>
+				<div class="col-md-4">
+
+					<select name="timezone" class="form-control"
+					    ng-init="userTimezone._abbr = $ctrl.user.business.timezone"
+					    ng-change="$ctrl.user.business.timezone = userTimezone._abbr"
+					    ng-model="userTimezone._abbr" 
+					    ng-options="zone.text as zone.abbr for zone in $ctrl.timezones">
 					</select>
+					<!--removed track by zone.text in ng-options-->
 				</div>
-				<div class="col-md-5">
-					<p>{{selected_timezone.value}}</p>	
-				</div>
+
 			</div>
 		</fieldset>
 	</div>
@@ -198,7 +193,7 @@
 
 	<div class="col-offset-6 col-md-6">
 		<!--   <button class="btn btn-success" type="submit">Submit</button>  -->
-		<input type="submit" id="submit" class="btn btn-success" value="Submit" ng-click="$ctrl.updateUser($ctrl.user)">
+		<input type="submit" id="submit" class="btn btn-success" value="Submit">
 	</div>
 
 </form>	

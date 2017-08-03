@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.bcs.p3s.display.UserProfileUI;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
+import com.bcs.p3s.security.SecurityUtil;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -82,13 +83,23 @@ public class UserProfileRestController extends Universal {
         p3sUser.setEmailAddress(user.getEmailAddress());
         p3sUser.setFirstName(user.getFirstName());
         p3sUser.setLastName(user.getLastName());
+        p3sUser.setIsEmailNotification(user.getIsEmailNotification());
         
+        //
+        p3sUser.setIsEmailNotification(false);
         Business business = user.getBusiness();
+        business.setVersion(p3sUser.getBusiness().getVersion());
         p3sUser.setBusiness(business);
         
       	String response = userService.updateUser(p3sUser,business);
 
       	if("success".equals(response)){
+      		//set the session object with the updated values from DB
+      		P3SUser myUser = SecurityUtil.getMyUser();
+      		pLoginSession.setUser(myUser);
+        	Business myBusiness = SecurityUtil.getMyBusiness();
+        	pLoginSession.setBusiness(myBusiness);
+            session.setAttribute("postSession",pLoginSession);
       		return new ResponseEntity<UserProfileUI>(user, HttpStatus.OK);
       		//logging
       	}

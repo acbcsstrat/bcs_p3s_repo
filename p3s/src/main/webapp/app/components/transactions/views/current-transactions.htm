@@ -1,3 +1,5 @@
+<transactionnav></transactionnav>
+
 <form class="form-inline mb-2">
 	<div class="form-group">
 		<div class="input-group">
@@ -45,12 +47,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="trans in transaction | orderBy:sortType:sortReverse | filter:searchTrans">
-					<td><a ui-sref="transactions.current.item">{{trans.transId}}</a></td>
-					<td>{{trans.patentTotal}}</td>
-					<td>{{trans.transDate}}</td>
-					<td>{{trans.cost}}</td>
-					<td>{{trans.status}}</td>
+				<tr ng-repeat="transaction in $ctrl.transactions | orderBy:sortType:sortReverse | filter:searchTrans">
+					<td><a ui-sref="app.transactions.transaction({transId: transaction.id})" ng-bind="transaction.transactionId"></a></td>
+					<td ng-bind="transaction.listRenewalsInfoUI.length"></td>
+					<td ng-bind="transaction.transStartDateUI"></td>
+					<td ng-bind="transaction.transAmountUSD"></td>
+					<td ng-bind="transaction.latestTransStatus"></td>
 				</tr>
 			</tbody>
 		</table>

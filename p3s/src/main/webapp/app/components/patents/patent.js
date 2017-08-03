@@ -1,23 +1,24 @@
-angular.module('myApp').component('patent', {
+app.component('patent', {
 	bindings: { 
 		patent: '<',
-		graph: '<'
+		graph: '<',
+		renewal: '<'
 	},
 	templateUrl: 'p3sweb/app/components/patents/views/patent-item.htm',
 	// controllerAs: 'graphDataController', this can be 
-	controller: ['patentTabFactory', 'patentsService', function(patentTabFactory, patentsService) {
+	controller: ['patentTabService', 'patentsService', '$state', function(patentTabService, patentsService, $state) {
 		var vm = this;
 
-	  	vm.tabs = patentTabFactory.tabs;
-		vm.currentTab = patentTabFactory.currentTab;
+	  	vm.tabs = patentTabService.tabs;
+		vm.currentTab = patentTabService.currentTab;
 
 	    vm.onClickTab = function(currentTab) {
-	        patentTabFactory.onClickTab(currentTab);
-	        vm.currentTab = patentTabFactory.currentTab;
+	        patentTabService.onClickTab(currentTab);
+	        vm.currentTab = patentTabService.currentTab;
 	    };
 
 	    vm.isActiveTab = function(tabUrl) {
-	        return tabUrl == patentTabFactory.currentTab;
+	        return tabUrl == patentTabService.currentTab;
 	    }
 
      	vm.selectedPatent = vm.patentItem;
@@ -53,17 +54,56 @@ angular.module('myApp').component('patent', {
 				    }
 			  	};
             }
+
+            var checkBoxes = changeObj.patent.currentValue.notificationUIs;
+        	var newArr = [];
+
+        	function chunk(arr, size) {
+        		for (i=0; i < arr.length; i+=size) {
+	        		newArr.push(arr.slice(i, i+size));
+	        	}
+	        	return newArr;
+        	}       	
+
+        	vm.chunkedData = chunk(checkBoxes, 3);
+            
         }
+
+
+
+
 
         //============ form data
 
+     	vm.deletePatent = function(id){
+     		console.log(id)
+	        patentsService.deletePatent(id)
+	            .then(function(){
+	             	$state.go('app.patents', {}, {reload: true})
+             	.then(function(){
+	             		$timeout(function(){patentsService.fetchAllPatents()}, 400);
+	             	})
+	             },
+	            function(errResponse){
+	                console.error('Error while deleting Patent');
+	            }
+	        );
+	    }
+
         vm.updatePatent = function(patent) {
-        	// console.log(event)
         	var id = patent.id;
         	patentsService.updatePatent(patent, id);
         }
 
-        vm.checkbox = {}
+	    vm.editing=[];
+	    
+	    vm.editItem = function (index) {
+	        vm.editing[index] = true;
+	    }
+
+	    vm.doneEditing = function (index) {
+	        vm.editing[index] = false;
+	    };
 	  	
 	}]
 

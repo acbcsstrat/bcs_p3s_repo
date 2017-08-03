@@ -37,33 +37,25 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.js"></script>
 
-		<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
 
-		<script>
-		  // Initialize Firebase
-	  		var config = {
-			    apiKey: "AIzaSyCrqA7_fDDhZNFOmLsaV5V-BAu1hKEqD4M",
-			    authDomain: "patentplace-b467f.firebaseapp.com",
-			    databaseURL: "https://patentplace-b467f.firebaseio.com",
-			    projectId: "patentplace-b467f",
-			    storageBucket: "",
-			    messagingSenderId: "530434615966"
-	  		};
-	  		firebase.initializeApp(config);
-		</script>
-
-		<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 
 		<script src="p3sweb/app/app.module.js"></script>
 		<script src="p3sweb/app/app.routes.js"></script>
 
 		<!--services-->
 
+		<script src="p3sweb/app/components/app/timezoneService.js"></script>
+
+		<script src="p3sweb/app/components/patents/searchPatentService.js"></script> 
+		<script src="p3sweb/app/components/patents/patentTabService.js"></script> 
 		<script src="p3sweb/app/components/patents/patentsService.js"></script>
 		<script src="p3sweb/app/components/register/authenticationService.js"></script>
- 		<script src="p3sweb/app/components/transactions/transactionsService.js"></script>
-		<script src="p3sweb/app/components/user/userService.js"></script> 
-		
+		<script src="p3sweb/app/components/transactions/currentTransactionsService.js"></script>
+		<script src="p3sweb/app/components/transactions/transactionHistoryService.js"></script>
+		<script src="p3sweb/app/components/transactions/currentTransactionTabService.js"></script>
+		<script src="p3sweb/app/components/transactions/transactionHistoryTabService.js"></script>
+		<script src="p3sweb/app/components/user/userService.js"></script>
+
 		<!--components-->
 
     	<script src="p3sweb/app/components/register/register.js"></script>		
@@ -72,11 +64,14 @@
     	<script src="p3sweb/app/components/patents/patents.js"></script>
     	<script src="p3sweb/app/components/patents/patent.js"></script>
     	<script src="p3sweb/app/components/patents/add-patent.js"></script>
+    	<script src="p3sweb/app/components/patents/search-patent.js"></script>
     	<script src="p3sweb/app/components/patents/patent-navigation.js"></script>
-    	
+
     	<script src="p3sweb/app/components/transactions/transaction-navigation.js"></script>
-    	<script src="p3sweb/app/components/transactions/transactions.js"></script>
+    	<script src="p3sweb/app/components/transactions/current-transactions.js"></script>
+    	<script src="p3sweb/app/components/transactions/current-transaction.js"></script>
     	<script src="p3sweb/app/components/transactions/transaction-history.js"></script>
+    	<script src="p3sweb/app/components/transactions/transaction-history-item.js"></script>
 
     	<script src="p3sweb/app/components/user/user.js"></script>
 
@@ -91,7 +86,7 @@
 			<!--   <nav ng-show="currentUser"> -->	
 			<nav>	
 				<a ui-sref="app.patents">Patents</a>
-				<a ui-sref="app.transactions">Transactions</a>
+				<a ui-sref="app.current-transactions">Transactions</a>
 				<a ui-sref="app.userprofile">Profile</a>
 			</nav>
 			
