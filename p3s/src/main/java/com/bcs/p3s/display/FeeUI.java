@@ -35,6 +35,18 @@ public class FeeUI {
 	
 	public FeeUI(Fee fee){
 		
+		this.setRenewalFee_EUR(fee.getRenewalFee_EUR());
+		this.setExtensionFee_EUR(fee.getExtensionFee_EUR());
+		this.setProcessingFee_USD(fee.getProcessingFee_USD());
+		this.setExpressFee_USD(fee.getExpressFee_USD());
+		this.setUrgentFee_USD(fee.getUrgentFee_USD());
+		this.setLatePayPenalty_USD(fee.getLatePayPenalty_USD());
+		this.setFxRate(fee.getFxRate());
+		this.setSubTotal_USD(fee.getSubTotal_USD());
+		
+		this.setRenewalFee_USD(fee.getRenewalFee_EUR().multiply(fee.getFxRate()));
+		this.setExtensionFee_EUR(fee.getExtensionFee_EUR().multiply(fee.getFxRate()));
+		
 	}
 
 	public BigDecimal getRenewalFee_EUR() {

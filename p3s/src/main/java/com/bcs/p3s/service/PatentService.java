@@ -7,6 +7,7 @@ import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 
@@ -80,6 +81,8 @@ public interface PatentService {
 
 
 	public CostAnalysisData getCostAnalysisData(long id);
+	
+	public RenewalUI getRenewalHistory(long id);
 	
 	
 	

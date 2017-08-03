@@ -11,6 +11,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.bcs.p3s.engine.DummyDataEngine;
+import com.bcs.p3s.model.Certificate;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
@@ -37,13 +38,14 @@ public class RenewalUI extends Renewal {
 
 //    @Autowired
 //    PatentService patentService;  //Service which will do all data retrieval/manipulation work
-	TransactionService transactionService = new TransactionServiceImpl();
+	//TransactionService transactionService = new TransactionServiceImpl();
 	
 	// Additional UI members go here
 
     private String renewalDueDateUI;
     private String certificateUrl;
     private PatentUI patentUI;
+    private FeeUI feeUI;
 
     
     
@@ -55,9 +57,7 @@ public class RenewalUI extends Renewal {
 		this.setVersion(renewal.getVersion());
 
 		this.setPatent(renewal.getPatent());
-		this.setActivePaymentId(renewal.getActivePaymentId());
-		this.setFee(renewal.getFee());
-		this.setCertificate(renewal.getCertificate());
+		
 		this.setRenewalYear(renewal.getRenewalYear());
 		this.setRenewalDueDate(renewal.getRenewalDueDate());
 		this.setRenewalPeriod(renewal.getRenewalPeriod());
@@ -67,10 +67,32 @@ public class RenewalUI extends Renewal {
 
 		// Now the additional fields - WHICH ARE
 		this.setRenewalDueDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getRenewalDueDate()));
+		
+		//Get the certificate details
+		//Certificate certificate = Certificate.
 		this.setCertificateUrl(null);
 		if (renewal.getCertificate() != null) this.setCertificateUrl(renewal.getCertificate().getUrl());
 
-		PatentUI pui = new PatentUI(this.getPatent()); 
+		//Get the FeeUI
+		
+		FeeUI feeUI = new FeeUI(renewal.getFee());
+		this.setFee(null);
+		this.setFeeUI(feeUI);
+		
+		//Get the paymentUI details
+		renewal.getActivePaymentId().setRenewals(null);
+		renewal.getActivePaymentId().setLatestInvoice(null);
+		renewal.getActivePaymentId().setInitiatedByUserId(null);
+		this.setActivePaymentId(renewal.getActivePaymentId());
+		
+		//set patent to null use only patentUI
+		
+		PatentUI pui = new PatentUI(this.getPatent());
+		this.setPatent(null);
+		pui.setBusiness(null);
+		pui.setNotifications(null);
+		pui.setNotificationUIs(null);
+		
 		// acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine
 		System.out.println("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
 		(new Universal()).log().debug("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
@@ -141,14 +163,14 @@ public class RenewalUI extends Renewal {
 		this.patentUI = patentUI;
 	}
 
-	
-	
-	
-	
-	
-    
+	public FeeUI getFeeUI() {
+		return feeUI;
+	}
 
-    
+	public void setFeeUI(FeeUI feeUI) {
+		this.feeUI = feeUI;
+	}
+
 	
 	//	public BigDecimal getCurrentRenewalCost() {
 //		return currentRenewalCost;

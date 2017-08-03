@@ -20,6 +20,7 @@ import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalDates;
+import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.engine.CostAnalysisDataEngine;
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
@@ -425,7 +426,11 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		}
 		
 		//GET THE FX RATE FROM DB
-		BigDecimal fxRate = new BigDecimal(1.0608);
+		// Todays rate
+		FxRateUI todaysRate = new FxRateUI(); 
+		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
+		BigDecimal fxRate = current.getCurrentRate();
+		fxRate = fxRate.setScale(4, BigDecimal.ROUND_CEILING);
 		/**
 		 * GET THE EPO FEES FOR THE CURRENT RENEWAL YEAR
 		 */
@@ -440,6 +445,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			 * 
 			 * Calculate the actual renewal due date and window close and open dates -- method call here
 			 */
+			log().debug("Renewal In Place status for the patent");
 			try {
 				allDates = costEngines.getRenewalWindowDates(patent);
 			} catch (ParseException e) {
@@ -448,7 +454,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			}
 			//check whether the renewal has been done from our system
 			TypedQuery<Renewal> q  =  Renewal.findRenewalsByPatent(patent);
-			if(q.getResultList().size() == 0){
+			if(q.getResultList() == null){
+				log().debug("No renewals for this patent being made from our system for the current patent");
 				System.out.println("No renewals for this patent being made from our system");
 				
 				System.out.println("Check whether renewal window still opened for the current renewal year. "
@@ -477,6 +484,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 						if(allDates.isRenewalWindowStillOpened()){
 							System.out.println("Renewal window still opened");
 							System.out.println("Show price for current phase");
+							log().debug("Renewal window still opened. Show price for current phase");
 							caData = costEngines.getAllPhasesInfo(allDates);
 							caData = costEngines.getAllCosts(caData,p3sFee,epoFee);
 							caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
@@ -546,6 +554,40 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		lineChart = costEngines.getLineChartData(caData,p3sFee,epoFee);
 		caData.setLineChart(lineChart);
 		return caData;
+	}
+
+
+
+	@Override
+	public RenewalUI getRenewalHistory(long id) {
+		// TODO Auto-generated method stub
+		
+		RenewalUI renewalUI = null;
+		List<Renewal> renewals = new ArrayList<Renewal>();
+		
+		String err = "Inside getRenewalHistory(" + id +")";
+		if(Long.valueOf(id)==null){
+			logM().debug("Invoked getRenewalHistory(id) with id as null");
+			return renewalUI;
+			
+		}
+		
+		checkThisIsMyPatent(id, err);
+			
+		Patent patent = Patent.findPatent(id);
+		TypedQuery<Renewal> q  =  Renewal.findRenewalsByPatent(patent);
+		
+		if(q.getResultList() == null){
+			log().debug("findRenewalsByPatent(" + patent.getId() + ") returned an empty list");
+			return null;
+		}
+		
+		log().debug("findRenewalsByPatent(" + patent.getId() + ") returned list of size [" + q.getResultList().size() + "]" );
+		renewals = q.getResultList();
+		for(Renewal renewal : renewals){
+			renewalUI = new RenewalUI(renewal);
+		}
+		return renewalUI;
 	}
 
 	

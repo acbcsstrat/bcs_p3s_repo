@@ -41,6 +41,7 @@ public class CostAnalysisDataEngine extends Universal{
 	public RenewalDates getRenewalWindowDates(Patent patent) throws ParseException{
 	//public static void main(String[] args) throws ParseException{
 		
+		log().debug("CostAnalysisDataEngine getRenewalWindowDates() invoked : ");
 		RenewalDates allDates = new RenewalDates();
 		
 	/**
@@ -168,6 +169,8 @@ public class CostAnalysisDataEngine extends Universal{
             else{
             	System.out.println("LOG PANIC ERROR THIS CASE");
             	System.out.println("SOMETHING WENT WRONG");
+            	log().debug("CostAnalysisDataEngine getRenewalWindowDates() : SOME UNEXPECTED DATA FROM DB");
+            	log().fatal("CostAnalysisDataEngine getRenewalWindowDates() : SOME UNEXPECTED DATA FROM DB");
             }
 		}
         

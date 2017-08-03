@@ -16,6 +16,7 @@ import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.engine.TemporaryProcessingEngine;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.model.Patent;
@@ -221,13 +222,30 @@ public class PatentRestController extends Universal {
 		
 
 		  //-------------------- Fetch Cost Analysis Data ----------------------------------------------
+		  //@RequestMapping(value = "/rest-cost-analysis/{id}", method = RequestMethod.GET)    //will be the actual method
+		    //public ResponseEntity<CostAnalysisData> getCAData(@PathVariable("id") long id) {
 		    @RequestMapping(value = "/rest-cost-analysis/", method = RequestMethod.GET)
-		    //@RequestMapping(value = "/rest-cost-analysis/", method = RequestMethod.GET)
 		    public ResponseEntity<CostAnalysisData> getCAData() {
 		    	
+		    	log().debug("PatentRestController : /rest-cost-analysis/ invoked ");
+		    	//check whether id is null
+		    	//CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(id);
 		    	CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(1);
 		    	System.out.println("Inside Fetch CA data method");
 		    	return new ResponseEntity<CostAnalysisData>(costAnalysisData, HttpStatus.OK);
+		    }
+		    
+		    
+		  //---------------------Fetch Renewal History ------------------------------------------------
+		    //@RequestMapping(value = "/rest-renewal-history/{id}", method = RequestMethod.GET)    //will be the actual method
+		    //public ResponseEntity<RenewalUI> getRenewalHistory(@PathVariable("id") long id) {
+		    @RequestMapping(value = "/rest-renewal-history/", method = RequestMethod.GET)
+		    public ResponseEntity<RenewalUI> getRenewalHistory() {
+		    	log().debug("PatentRestController : /rest-renewal-history/ invoked ");
+		    	//check whether id is null
+		    	//RenewalUI renewalHistoryData = patentService.getRenewalHistory(id);
+		    	RenewalUI renewalHistoryData = patentService.getRenewalHistory(1);
+		    	return new ResponseEntity<RenewalUI>(renewalHistoryData, HttpStatus.OK);
 		    }
 	
 	//------------------- next ... a Patent : ARE THERE ANY MORE ???  --------------------------------------------------------
