@@ -1,0 +1,31 @@
+<transactionnav></transactionnav>
+
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped text-md-center">
+			<thead class="thead-inverse">
+				<tr>
+					<td class="align-middle">Transaction No. </td>
+					<td class="align-middle">Trans Ref</td>
+					<td class="align-middle">Cost now</td>
+					<td class="align-middle">Cost band end</td>
+					<td class="align-middle">Cost next</td>
+					<td class="align-middle">Renewal Date</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="patent in $ctrl.patents">
+					<td><a ui-sref="transactions.transaction({transId: transaction.id})" ng-bind="patent.transactionNumber"></a></td>
+					<td ng-bind="patent.transRef"></td>
+					<td ng-bind="patent.currentRenewalCost"></td>
+					<td ng-bind="patent.costBandEndDate"></td>
+					<td ng-bind="patent.renewalCostNextStage"></td>
+					<td ng-bind="patent.renewalDueDate"></td>
+				</tr>
+			</tbody>
+		</table>
+		<ui-view></ui-view>
+	</div>
+</div> 
+           
+            

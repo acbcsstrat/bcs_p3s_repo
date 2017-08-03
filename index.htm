@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+		<!--styling-->
+
+		<link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+<!-- 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+
+		<!--angular-->
+
+		<base href="/">
+
+		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/1.1.1/angular-chart.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.0/moment.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.js"></script>
+
+
+
+		<script src="p3sweb/app/app.module.js"></script>
+		<script src="p3sweb/app/app.routes.js"></script>
+
+		<!--services-->
+
+		<script src="p3sweb/app/components/app/timezoneService.js"></script>
+
+		<script src="p3sweb/app/components/patents/searchPatentService.js"></script> 
+		<script src="p3sweb/app/components/patents/patentTabService.js"></script> 
+		<script src="p3sweb/app/components/patents/patentsService.js"></script>
+		<script src="p3sweb/app/components/register/authenticationService.js"></script>
+		<script src="p3sweb/app/components/transactions/currentTransactionsService.js"></script>
+		<script src="p3sweb/app/components/transactions/transactionHistoryService.js"></script>
+		<script src="p3sweb/app/components/transactions/currentTransactionTabService.js"></script>
+		<script src="p3sweb/app/components/transactions/transactionHistoryTabService.js"></script>
+		<script src="p3sweb/app/components/user/userService.js"></script>
+
+		<!--components-->
+
+    	<script src="p3sweb/app/components/register/register.js"></script>		
+    	<script src="p3sweb/app/components/register/login.js"></script>
+
+    	<script src="p3sweb/app/components/patents/patents.js"></script>
+    	<script src="p3sweb/app/components/patents/patent.js"></script>
+    	<script src="p3sweb/app/components/patents/add-patent.js"></script>
+    	<script src="p3sweb/app/components/patents/search-patent.js"></script>
+    	<script src="p3sweb/app/components/patents/patent-navigation.js"></script>
+
+    	<script src="p3sweb/app/components/transactions/transaction-navigation.js"></script>
+    	<script src="p3sweb/app/components/transactions/current-transactions.js"></script>
+    	<script src="p3sweb/app/components/transactions/current-transaction.js"></script>
+    	<script src="p3sweb/app/components/transactions/transaction-history.js"></script>
+    	<script src="p3sweb/app/components/transactions/transaction-history-item.js"></script>
+
+    	<script src="p3sweb/app/components/user/user.js"></script>
+
+		<title>Patent Place</title>
+
+	</head>
+
+	<body ng-app="myApp">
+
+		<main class="container">
+			
+			<!--   <nav ng-show="currentUser"> -->	
+			<nav>	
+				<a ui-sref="app.patents">Patents</a>
+				<a ui-sref="app.current-transactions">Transactions</a>
+				<a ui-sref="app.userprofile">Profile</a>
+			</nav>
+			
+			<ui-view></ui-view>
+		</main>
+	</body>
+
+</html>
+
+
