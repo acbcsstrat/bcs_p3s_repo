@@ -71,4 +71,39 @@ public class DateUtil {
 		
 		return cal.getTime();
 	}
+	
+	public Calendar getLastDayOfMonth(Date date){
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.MONTH, 1);  
+	        calendar.set(Calendar.DAY_OF_MONTH, 1);  
+	        calendar.add(Calendar.DATE, -1);  
+	        return calendar;
+		}
+
+	public Date getTodaysDate(){
+		
+		Calendar calendar = Calendar.getInstance();
+		int month = calendar.get(Calendar.MONTH);
+	    int year = Calendar.getInstance().get(Calendar.YEAR);
+	    int day = calendar.get(Calendar.DAY_OF_MONTH);
+	    
+	    Calendar todays = Calendar.getInstance();
+	    todays.set(year, month, day , 00,00);  
+	    
+	    return todays.getTime();
+	}
+
+	public int getYearsBetweenDates(Date first, Date last){
+		
+		int years =0;
+		Calendar a = Calendar.getInstance();
+		a.setTime(first);
+	    Calendar b = Calendar.getInstance();
+	    b.setTime(last);
+	    
+		years = a.get(Calendar.YEAR) - b.get(Calendar.YEAR);
+		return years;
+	}
 }

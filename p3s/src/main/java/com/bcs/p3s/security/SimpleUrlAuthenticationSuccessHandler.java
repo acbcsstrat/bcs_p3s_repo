@@ -25,6 +25,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -34,8 +35,10 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 
 	
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	private PostLoginDataEngine moreData = new PostLoginDataEngine();
 	public HttpSession session;
-	
+	protected String PREFIX = this.getClass().getName() + " : "; 
+	public PostLoginSessionBean postSession;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, 
@@ -50,9 +53,18 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 	           return;
 	    }
 		
-		session = populateAuthenticationAttributes(request);
-		if(session != null)
+		setPostSession(populateAuthenticationAttributes(request));
+		if(session != null){
+			
+			/**
+			 * CALL TO POPULATE EXTENDED PATENT FIELDS
+			 */
+			PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+			pLoginSession = moreData.getExtendedPatentData(pLoginSession);
+			session.setAttribute("postSession",pLoginSession);
+			
 			redirectStrategy.sendRedirect(request, response, targetUrl);
+		}
 		else
 			throw new ServletException();
 		
@@ -95,7 +107,7 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
  * @param authentication
  * @return
  */
-	protected HttpSession populateAuthenticationAttributes(HttpServletRequest request) {
+	protected PostLoginSessionBean populateAuthenticationAttributes(HttpServletRequest request) {
 		
 		session = request.getSession(true);
         PostLoginSessionBean postSession = new PostLoginSessionBean();
@@ -106,7 +118,7 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
     	postSession.setBusiness(myBusiness);
         session.setAttribute("postSession",postSession);
         
-        return session;
+        return postSession;
         
 	}
 	
@@ -128,6 +140,17 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
 		this.redirectStrategy = redirectStrategy;
 	}
+
+
+	public PostLoginSessionBean getPostSession() {
+		return postSession;
+	}
+
+
+	public void setPostSession(PostLoginSessionBean postSession) {
+		this.postSession = postSession;
+	}
 	
 
+	
 }

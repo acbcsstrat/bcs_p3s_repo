@@ -22,11 +22,11 @@ public class CostAnalysisData {
 	private String brownStartDateUI;
 	private String brownEndDateUI;
 	
-	private BigDecimal greenCost;
-	private BigDecimal amberCost;
-	private BigDecimal redCost;
-	private BigDecimal blueCost;
-	private BigDecimal brownCost;
+	private BigDecimal greenStageCost;
+	private BigDecimal amberStageCost;
+	private BigDecimal redStageCost;
+	private BigDecimal blueStageCost;
+	private BigDecimal brownStageCost;
 	
 	private String currentcostBand;
 	
@@ -145,44 +145,44 @@ public class CostAnalysisData {
 		this.brownEndDateUI = brownEndDateUI;
 	}
 
-	public BigDecimal getGreenCost() {
-		return greenCost;
+	public BigDecimal getGreenStageCost() {
+		return greenStageCost;
 	}
 
-	public void setGreenCost(BigDecimal greenCost) {
-		this.greenCost = greenCost;
+	public void setGreenStageCost(BigDecimal greenCost) {
+		this.greenStageCost = greenCost;
 	}
 
-	public BigDecimal getAmberCost() {
-		return amberCost;
+	public BigDecimal getAmberStageCost() {
+		return amberStageCost;
 	}
 
-	public void setAmberCost(BigDecimal amberCost) {
-		this.amberCost = amberCost;
+	public void setAmberStageCost(BigDecimal amberCost) {
+		this.amberStageCost = amberCost;
 	}
 
-	public BigDecimal getRedCost() {
-		return redCost;
+	public BigDecimal getRedStageCost() {
+		return redStageCost;
 	}
 
-	public void setRedCost(BigDecimal redCost) {
-		this.redCost = redCost;
+	public void setRedStageCost(BigDecimal redCost) {
+		this.redStageCost = redCost;
 	}
 
-	public BigDecimal getBlueCost() {
-		return blueCost;
+	public BigDecimal getBlueStageCost() {
+		return blueStageCost;
 	}
 
-	public void setBlueCost(BigDecimal blueCost) {
-		this.blueCost = blueCost;
+	public void setBlueStageCost(BigDecimal blueCost) {
+		this.blueStageCost = blueCost;
 	}
 
-	public BigDecimal getBrownCost() {
-		return brownCost;
+	public BigDecimal getBrownStageCost() {
+		return brownStageCost;
 	}
 
-	public void setBrownCost(BigDecimal brownCost) {
-		this.brownCost = brownCost;
+	public void setBrownStageCost(BigDecimal brownCost) {
+		this.brownStageCost = brownCost;
 	}
 
 	public String getCurrentcostBand() {

@@ -9,8 +9,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.CostAnalysisData;
@@ -23,6 +27,8 @@ import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.engine.CostAnalysisDataEngine;
 import com.bcs.p3s.engine.DummyDataEngine;
+import com.bcs.p3s.engine.PatentStatus;
+import com.bcs.p3s.engine.PatentStatusEngine;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
@@ -32,16 +38,33 @@ import com.bcs.p3s.model.EpoFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.P3SFeeSole;
+import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Renewal;
+import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.BasketContents;
+import com.bcs.p3s.wrap.CombinedFee;
+import com.bcs.p3s.wrap.PatentExtendedData;
 
 @Service("PatentService")
 public class PatentServiceImpl extends ServiceAuthorisationTools implements PatentService {
 
+	
+	@Autowired
+	HttpSession session;
+	
 	protected String PREFIX = this.getClass().getName() + " : "; 
+	
+	
+	
+
+	public PatentServiceImpl(HttpSession session) {
+		super();
+		this.session = session;
+	}
+
 
 
 	// Start of - the methods which implement the prototypes in the Interface
@@ -56,7 +79,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		List<Patent> patents = listAllPatentsForMyBusiness();
 		List<PatentUI> patentUIs = new ArrayList<PatentUI>();
 		for (Patent patent: patents) {
-			PatentUI patentUI = new PatentUI(patent);
+			//PatentUI patentUI = new PatentUI(patent);
+			PatentUI patentUI = populateDataToPatentUI(patent);
 			patentUIs.add(patentUI);
 		}
 		return patentUIs; 
@@ -64,18 +88,27 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 
 
-	public PatentUI searchEpoForPatent(String patentApplicationNumber) {
+	public PatentUI searchEpoForPatent(String patentApplicationNumber, PostLoginSessionBean postSession) {
 
 		String err = PREFIX+"searchEpoForPatent("+patentApplicationNumber+") ";
 		checkNotNull(patentApplicationNumber, err);
 
+		System.out.println("Post Login session is " + postSession.getBusiness());
 		log().debug(err+" invoked ");
     	
-		PatentUI returnedValue = null;
+		Patent patent = null;
 		DummyDataEngine dummy = new DummyDataEngine();
-		returnedValue = dummy.createDummyPatentUiForSearchAddPatent(patentApplicationNumber);
+		patent = dummy.createDummyPatentForSearchAddPatent(patentApplicationNumber,postSession);
 		
-		return returnedValue;
+		/**
+		 * CALL TO Cost Calculation Engine
+		 * 
+		 */
+		postSession = new PatentStatusEngine().getExtendedDataForNewPatent(patent, postSession);
+		session.setAttribute("postSession", postSession);
+		PatentUI patentUI = populateDataToPatentUI(patent);
+		//patentUIs.add(patentUI);
+		return patentUI;
 	}
 
 
@@ -439,19 +472,27 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		//get the renewal year from the Patents DB
 		//get the current renewal period from session object -- to be implemented later
 		
+		try {
+			allDates = costEngines.getRenewalWindowDates(patent);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		if(RenewalStatusEnum.RENEWAL_IN_PLACE .equals(patent.getRenewalStatus())){
+		if(allDates == null){
+			
+			log().debug("CostAnalysisDataEngine getRenewalWindowDates(patent) for renewal status "+ patent.getRenewalStatus()+" returned null");
+        	log().fatal("CostAnalysisDataEngine getRenewalWindowDates(patent) for renewal status "+ patent.getRenewalStatus()+" returned null");
+        	return null;
+		}
+		
+		if(RenewalStatusEnum.RENEWAL_IN_PLACE .equalsIgnoreCase(patent.getRenewalStatus())){
 			/**
 			 * 
 			 * Calculate the actual renewal due date and window close and open dates -- method call here
 			 */
 			log().debug("Renewal In Place status for the patent");
-			try {
-				allDates = costEngines.getRenewalWindowDates(patent);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			//check whether the renewal has been done from our system
 			TypedQuery<Renewal> q  =  Renewal.findRenewalsByPatent(patent);
 			if(q.getResultList() == null){
@@ -538,7 +579,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				
 		}
 		
-		else if(RenewalStatusEnum.SHOW_PRICE .equals(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS .equals(patent.getRenewalStatus())){
+		else if(RenewalStatusEnum.SHOW_PRICE .equalsIgnoreCase(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS .equalsIgnoreCase(patent.getRenewalStatus())){
 			//DISPLAY TODAYS AMOUNT STRAIGHT AWAY
 			caData = costEngines.getAllPhasesInfo(allDates);
 			caData = costEngines.getAllCosts(caData,p3sFee,epoFee);
@@ -546,6 +587,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),p3sFee,epoFee,fxRate));
 		}
 		
+		// ELSE THE STATUS WILL BE LIKE TOO_LATE OR NO_FURTHER_RENEWAL_NEEDED :- DISABLE CA BUTTON ON THESE CASES
 		/**
 		 * GET THE LINE CHART INFO 
 		 * 
@@ -590,12 +632,79 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		return renewalUI;
 	}
 
-	
-	
+	/**
+	 * This method called to fetch extended patent data from 
+	 */
+@Override	
+public PatentUI populateDataToPatentUI(Patent patent){
+		
+		String err = PREFIX+"populateDataToPatentUI(patentUI) ";
+		boolean patentFound = false;
+		PatentUI patentUI = new PatentUI(patent);
+		
+		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		List<PatentExtendedData> extendedDatas = pLoginSession.getExtendedPatentUI();
+		
+		
+		
+			for(PatentExtendedData extendedData : extendedDatas){
+				if(extendedData.getPatentId() == null){
+					patentUI.setRenewalDueDate(extendedData.getRenewalDueDate());
+					patentUI.setCurrentRenewalCost(extendedData.getCurrentRenewalCost());
+					patentUI.setCostBandEndDate(extendedData.getCostBandEndDate());
+					patentUI.setRenewalCostNextStage(extendedData.getRenewalCostNextStage());
+					return patentUI;
+				}
+				
+				else if(extendedData.getPatentId().equals(patentUI.getId())){
+					patentFound = true;
+					patentUI.setRenewalDueDate(extendedData.getRenewalDueDate());
+					patentUI.setCurrentRenewalCost(extendedData.getCurrentRenewalCost());
+					patentUI.setCostBandEndDate(extendedData.getCostBandEndDate());
+					patentUI.setRenewalCostNextStage(extendedData.getRenewalCostNextStage());
+					return patentUI;
+				}
+			}
+		
+		
+		
+		
+		return patentUI;
+	}
+
+
+
+	@Override
+	public PostLoginSessionBean populateSessionBean() {
+		PostLoginSessionBean postSession = new PostLoginSessionBean();
+	    
+	    P3SUser myUser = SecurityUtil.getMyUser();
+	    postSession.setUser(myUser);
+		Business myBusiness = SecurityUtil.getMyBusiness();
+		postSession.setBusiness(myBusiness);
+		
+		session.setAttribute("postSession", postSession);
+		return postSession;
+	}
+
+
+
+/*@PostConstruct
+public void init() {
 
 	
-
+	PostLoginSessionBean postSession = new PostLoginSessionBean();
+    
+    P3SUser myUser = SecurityUtil.getMyUser();
+    postSession.setUser(myUser);
+	Business myBusiness = SecurityUtil.getMyBusiness();
+	postSession.setBusiness(myBusiness);
 	
+	
+}*/
+
+
+
 	
 	// End of - Support methods - NOT exposed through the interface
 

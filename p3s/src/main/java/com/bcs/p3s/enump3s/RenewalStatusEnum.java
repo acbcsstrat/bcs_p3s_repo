@@ -9,7 +9,7 @@ package com.bcs.p3s.enump3s;
 public class RenewalStatusEnum extends P3SAbstractEnum {
 
     public static final String RENEWAL_IN_PLACE			= "Renewal in place"; 
-    public static final String SHOW_PRICE				= "SHOW_PRICE";
+    public static final String SHOW_PRICE				= "Show price";
     public static final String IN_PROGRESS				= "Renewal in progress";
     //public static final String ABANDONED				= "Abandoned"; // No longer supported
     public static final String TOO_LATE					= "Too late to renew";

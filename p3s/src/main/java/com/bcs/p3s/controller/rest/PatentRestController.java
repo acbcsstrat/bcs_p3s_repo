@@ -1,11 +1,18 @@
 package com.bcs.p3s.controller.rest;
  
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.swing.event.PopupMenuListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,18 +24,28 @@ import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalUI;
+import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.engine.TemporaryProcessingEngine;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.PatentService;
+import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.PatentExtendedData;
  
 @RestController
+@Configuration
+@ComponentScan("com.bcs.p3s")
 public class PatentRestController extends Universal {
  
     @Autowired
     PatentService patentService;  //Service which will do all data retrieval/manipulation work
  
+    @Autowired
+    HttpSession session ;
+    
+    
+    
     
     //------------------- Retrieve All Patents (For this Business) --------------------------------------------------
      
@@ -38,17 +55,18 @@ public class PatentRestController extends Universal {
 		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() invoked. ");
     	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) invoked ");
 
+    	PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+    	//postSession = patentService.populateSessionBean();
     	List<PatentUI> patentUIs = patentService.listAllPatentUIsForMyBusiness();
     	
     	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) ret Qty "+patentUIs.size());
-
     	
-    	
-    	
-    	
-    	
-		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() returning "+patentUIs.size()+" patents.");
-    	
+		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() returning "+patentUIs.size()+" patents. "
+				+ "Set PatentUI from patents data fetched from DB");
+		
+		
+		log().debug("PatentRestController : /rest-patents/ getExtendedPatentData(patentUI) returning "+patentUIs.size()+" "
+				+ "patents. Set extended fileds in PatentUI as well");
         return new ResponseEntity<List<PatentUI>>(patentUIs, HttpStatus.OK);
     }
  
@@ -63,7 +81,8 @@ public class PatentRestController extends Universal {
 		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
 		System.out.println("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
   	
-	  	PatentUI patentUI = patentService.searchEpoForPatent(patentApplicationNumber);
+		PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+	  	PatentUI patentUI = patentService.searchEpoForPatent(patentApplicationNumber,postSession);
 	  	
 	  	System.out.println("PatentRestController :  (searchEpoForPatent()) ret: dummy (PatentUI=null)"+ (patentUI==null));
 	  	System.out.println("gash got "+  	patentApplicationNumber);
@@ -222,15 +241,15 @@ public class PatentRestController extends Universal {
 		
 
 		  //-------------------- Fetch Cost Analysis Data ----------------------------------------------
-		  //@RequestMapping(value = "/rest-cost-analysis/{id}", method = RequestMethod.GET)    //will be the actual method
-		    //public ResponseEntity<CostAnalysisData> getCAData(@PathVariable("id") long id) {
-		    @RequestMapping(value = "/rest-cost-analysis/", method = RequestMethod.GET)
-		    public ResponseEntity<CostAnalysisData> getCAData() {
+		  @RequestMapping(value = "/rest-cost-analysis/{id}", method = RequestMethod.GET)    //will be the actual method
+		    public ResponseEntity<CostAnalysisData> getCAData(@PathVariable("id") long id) {
+		    //@RequestMapping(value = "/rest-cost-analysis/", method = RequestMethod.GET)
+		    //public ResponseEntity<CostAnalysisData> getCAData() {
 		    	
 		    	log().debug("PatentRestController : /rest-cost-analysis/ invoked ");
 		    	//check whether id is null
-		    	//CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(id);
-		    	CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(1);
+		    	CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(id);
+		    	//CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(2);
 		    	System.out.println("Inside Fetch CA data method");
 		    	return new ResponseEntity<CostAnalysisData>(costAnalysisData, HttpStatus.OK);
 		    }

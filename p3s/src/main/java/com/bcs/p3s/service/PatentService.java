@@ -10,6 +10,7 @@ import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.session.PostLoginSessionBean;
 
 
 
@@ -23,7 +24,7 @@ public interface PatentService {
 	 * @param patentApplicationNumber
 	 * @return Either a PatentUI or NULL if no match 
 	 */
-	public PatentUI searchEpoForPatent(String patentApplicationNumber);
+	public PatentUI searchEpoForPatent(String patentApplicationNumber , PostLoginSessionBean postSession);
 
 	
 	/**
@@ -84,7 +85,9 @@ public interface PatentService {
 	
 	public RenewalUI getRenewalHistory(long id);
 	
+	public PatentUI populateDataToPatentUI(Patent patent);
 	
+	public PostLoginSessionBean populateSessionBean();
 	
 //	Patent findById(long id);
 //	

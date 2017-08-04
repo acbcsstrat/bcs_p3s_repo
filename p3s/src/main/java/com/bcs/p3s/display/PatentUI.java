@@ -2,19 +2,29 @@ package com.bcs.p3s.display;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.servlet.ServletContext;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
 import com.bcs.p3s.engine.DummyDataEngine;
+import com.bcs.p3s.engine.PostLoginDataEngine;
+import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.PatentServiceImpl;
+import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.date.DateUtil;
+import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.PatentExtendedData;
+
 
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
@@ -35,11 +45,14 @@ import com.bcs.p3s.util.date.DateUtil;
  * @author andyc
  *
  */
+@Component
+@Scope(value="session")
 public class PatentUI extends Patent {
 
 //    @Autowired
 //    PatentService patentService;  //Service which will do all data retrieval/manipulation work
-	PatentService patentService = new PatentServiceImpl();
+	//PatentService patentService = new PatentServiceImpl();
+	
 	
     private BigDecimal currentRenewalCost;
 
@@ -79,8 +92,8 @@ public class PatentUI extends Patent {
 
 		
 		// Special work required here
-		System.out.println("(patentService==null) = "+(patentService==null));
-		allNotificationUIs = patentService.createNotificationUIs(patent.getNotifications());
+		//System.out.println("(patentService==null) = "+(patentService==null));
+		allNotificationUIs =createNotificationUIs(patent.getNotifications());
 
 		
 
@@ -90,9 +103,13 @@ public class PatentUI extends Patent {
 //		patentUI.setRenewalCostNextStage(new BigDecimal("1111111.11"));
 //		patentUI.setRenewalDueDate(dummyFilingDateToThisyearRenewDueDate(patent.getFilingDate()));
 				
-		DummyDataEngine dummy = new DummyDataEngine();
+		//extended data fetched from postsession bean object
+		
+		/*DummyDataEngine dummy = new DummyDataEngine();
 		System.out.println("Calling DummyDataEngine:populateExtendedPatentFieldsWithDummyData for patent "+patent.getPatentApplicationNumber());
-    	dummy.populateExtendedPatentFieldsWithDummyData(this, patent);
+    	dummy.populateExtendedPatentFieldsWithDummyData(this, patent); */
+		
+		
 
 	}
 
@@ -219,4 +236,60 @@ public class PatentUI extends Patent {
 		this.renewalDueDate = renewalDueDate;
 	}
 
+	
+	/**
+	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications - and, for each, whether it is on or off.
+	 * patent.notifications just holds those that are ON.
+	 * 
+	 * Approach used below: Get ALL into SortSet. Replace those that are ON.
+	 * Sorted by display order
+	 * @param notifications
+	 */
+	public synchronized List<NotificationUI> createNotificationUIs(List<Notification> notifications) {
+
+		//String err = PREFIX+"createNotificationUIs() ";
+		//checkNoActionRequired(err);  // because such data is not sensitive. Is anonymous
+
+		//log().debug(err+" invoked ");
+		
+		List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
+		
+		// Assemble ALL notificationUIs (identifiable by ID)
+		List<Notification> allNotifications = Notification.findAllNotifications();
+		for (Notification anotification : allNotifications) {
+			NotificationUI notificationUI = new NotificationUI(anotification);
+			allNotificationUIs.add(notificationUI);
+		}
+
+		// In below code:
+		//  indexOf relies on equals() in NotificationUI
+		//  Sorting relies on compareTo() in NotificationUI
+		
+		
+		// Switch ON as appropriate
+		for (Notification notification : notifications) { // i.e. each ON notification
+			NotificationUI matchTarget = new NotificationUI(notification);
+
+			// find existing match, & switch on
+			int imatch = allNotificationUIs.indexOf(matchTarget);
+//			if (imatch == -1) fail("NotificationUI handling has failed.");
+			if (imatch == -1) {
+				Universal universal = new Universal();
+				universal.fail("NotificationUI handling has failed.");
+			}
+			NotificationUI match = allNotificationUIs.get(imatch);
+			match.setIsOn(true);
+		}
+
+		// Sort of displayOrder (for UI convenience)
+		Collections.sort(allNotificationUIs);
+		
+//		System.out.println("acdebug - *ALL* notificationUIs after processing");
+//		for (NotificationUI notificationUI : allNotificationUIs) {
+//			System.out.println("          "+notificationUI.getId()+",   "+notificationUI.getIsOn()+",   "+notificationUI.getDisplayOrder()+",    "+notificationUI.getTitle());
+//		}
+		return allNotificationUIs;
+	}
+	
+	
 }

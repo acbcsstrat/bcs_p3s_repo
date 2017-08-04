@@ -15,7 +15,7 @@ import com.bcs.p3s.util.lang.Universal;
 public class PatentStatus extends Universal {
 
 	/** Are we able to offer a price to renew this patent */
-	protected Boolean canRenew = null;  
+	protected Boolean canRenew = null;   
 
 	/** Are outside the annual 9month renewal window */
 	protected Boolean doldrums = null;
@@ -52,6 +52,7 @@ public class PatentStatus extends Universal {
 	/** If we can offer a price right now, this is the price ! */
 	protected BigDecimal renewalPriceUSD = null;
 
+	protected String currentRenewalStatus;
 
 	
 //	/**  */
@@ -162,5 +163,15 @@ public class PatentStatus extends Universal {
 	public void setRenewalPriceUSD(BigDecimal renewalPriceUSD) {
 		this.renewalPriceUSD = renewalPriceUSD;
 	}
+
+	public String getCurrentRenewalStatus() {
+		return currentRenewalStatus;
+	}
+
+	public void setCurrentRenewalStatus(String currentRenewalStatus) {
+		this.currentRenewalStatus = currentRenewalStatus;
+	}
+	
+	
 
 }

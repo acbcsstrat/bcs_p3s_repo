@@ -104,11 +104,43 @@ public class TemporaryProcessingEngine extends Universal {
 			   	}
 			   	if ("patentPublicationNumber".equals(key.trim())) patent.setPatentPublicationNumber(value);
 			   	
+			   	
+			   	if ("renewalYear".equals(key.trim())) {
+			   		
+			   		
+			   		Integer year = 0;
+			   		if (ob instanceof Integer) {
+			   			year = (Integer) ob;
+			   		} 
+			   		
+				   	
+			   		patent.setRenewalYear(year);
+			   	}
+			   	
+			   	if ("epoPatentStatus".equals(key.trim())) patent.setEpoPatentStatus(value);
+			   	
+			   	if ("renewalStatus".equals(key.trim())) patent.setRenewalStatus(value);
+			   	
+			   	if ("lastRenewedDateExEpo".equals(key.trim())) {
+			   		
+			   		Date itch = null;
+			   		if (ob instanceof Long) {
+				   		itch = new Date((Long) ob);
+			   		} 
+			   		else {
+			   			Long when = new Long((String) ob);
+			   			itch = new Date(when);
+			   		}
+				   	verbose("xyz have last renewd epo date of "+(new DateUtil()).dateToUSStringWithDayOfWeek(itch));
+			   		
+			   		
+			   		patent.setLastRenewedDateExEpo(itch);
+			   	}
 			   	// & now other tweaks to keep Patent happy
-			   	patent.setRenewalYear(-1);
+			   	/*patent.setRenewalYear(-1);
 			   	patent.setEpoPatentStatus("EMPTY");
 			   	//patent.setRenewalStatus(RenewalStatusEnum.ABANDONED);
-			   	patent.setRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
+			   	patent.setRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);*/
 	
 		   	
 			   	// Now extract and populate the Notifications
