@@ -48,7 +48,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="transaction in $ctrl.transactionHistory | orderBy:sortType:sortReverse | filter:searchTrans">
-					<td><a ui-sref="app.transaction-history.transaction-history-item({transHistoryId: transaction.id})">{{transaction.p3S_TransRef}}</a></td>
+					<td><a ui-sref="transaction-history.transaction-history-item({transHistoryId: transaction.id})">{{transaction.p3S_TransRef}}</a></td>
 					<td>
 						<span ng-repeat="item in transaction.renewalUIs">{{item.patentUI.patentApplicationNumber}}<br></span>	
 					</td>

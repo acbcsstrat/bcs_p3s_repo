@@ -21,7 +21,7 @@
 
 		<base href="/">
 
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
@@ -44,36 +44,36 @@
 
 		<!--services-->
 
-		<script src="p3sweb/app/components/app/timezoneService.js"></script>
+		<script src="p3sweb/app/components/app/services/timezoneService.js"></script>
 
-		<script src="p3sweb/app/components/patents/searchPatentService.js"></script> 
-		<script src="p3sweb/app/components/patents/patentTabService.js"></script> 
-		<script src="p3sweb/app/components/patents/patentsService.js"></script>
+		<script src="p3sweb/app/components/patents/services/searchPatentService.js"></script> 
+		<script src="p3sweb/app/components/patents/services/patentTabService.js"></script> 
+		<script src="p3sweb/app/components/patents/services/patentsService.js"></script>
 		<script src="p3sweb/app/components/register/authenticationService.js"></script>
-		<script src="p3sweb/app/components/transactions/currentTransactionsService.js"></script>
-		<script src="p3sweb/app/components/transactions/transactionHistoryService.js"></script>
-		<script src="p3sweb/app/components/transactions/currentTransactionTabService.js"></script>
-		<script src="p3sweb/app/components/transactions/transactionHistoryTabService.js"></script>
-		<script src="p3sweb/app/components/user/userService.js"></script>
+		<script src="p3sweb/app/components/transactions/services/currentTransactionsService.js"></script>
+		<script src="p3sweb/app/components/transactions/services/transactionHistoryService.js"></script>
+		<script src="p3sweb/app/components/transactions/services/currentTransactionTabService.js"></script>
+		<script src="p3sweb/app/components/transactions/services/transactionHistoryTabService.js"></script>
+		<script src="p3sweb/app/components/user/services/userService.js"></script>
 
 		<!--components-->
 
     	<script src="p3sweb/app/components/register/register.js"></script>		
     	<script src="p3sweb/app/components/register/login.js"></script>
 
-    	<script src="p3sweb/app/components/patents/patents.js"></script>
-    	<script src="p3sweb/app/components/patents/patent.js"></script>
-    	<script src="p3sweb/app/components/patents/add-patent.js"></script>
-    	<script src="p3sweb/app/components/patents/search-patent.js"></script>
-    	<script src="p3sweb/app/components/patents/patent-navigation.js"></script>
+    	<script src="p3sweb/app/components/patents/components/patents.js"></script>
+    	<script src="p3sweb/app/components/patents/components/patent.js"></script>
+    	<script src="p3sweb/app/components/patents/components/add-patent.js"></script>
+    	<script src="p3sweb/app/components/patents/components/search-patent.js"></script>
+    	<script src="p3sweb/app/components/patents/components/patent-navigation.js"></script>
 
-    	<script src="p3sweb/app/components/transactions/transaction-navigation.js"></script>
-    	<script src="p3sweb/app/components/transactions/current-transactions.js"></script>
-    	<script src="p3sweb/app/components/transactions/current-transaction.js"></script>
-    	<script src="p3sweb/app/components/transactions/transaction-history.js"></script>
-    	<script src="p3sweb/app/components/transactions/transaction-history-item.js"></script>
+    	<script src="p3sweb/app/components/transactions/components/transaction-navigation.js"></script>
+    	<script src="p3sweb/app/components/transactions/components/current-transactions.js"></script>
+    	<script src="p3sweb/app/components/transactions/components/current-transaction-item.js"></script>
+    	<script src="p3sweb/app/components/transactions/components/transaction-history.js"></script>
+    	<script src="p3sweb/app/components/transactions/components/transaction-history-item.js"></script>
 
-    	<script src="p3sweb/app/components/user/user.js"></script>
+    	<script src="p3sweb/app/components/user/components/user.js"></script>
 
 		<title>Patent Place</title>
 
@@ -85,9 +85,9 @@
 			
 			<!--   <nav ng-show="currentUser"> -->	
 			<nav>	
-				<a ui-sref="app.patents">Patents</a>
-				<a ui-sref="app.current-transactions">Transactions</a>
-				<a ui-sref="app.userprofile">Profile</a>
+				<a ui-sref="patents">Patents</a>
+				<a ui-sref="current-transactions">Transactions</a>
+				<a ui-sref="profile">Profile</a>
 			</nav>
 			
 			<ui-view></ui-view>

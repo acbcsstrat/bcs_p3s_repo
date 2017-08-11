@@ -5,12 +5,25 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-4">
+		<form class="form-inline">
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon"><i class="fa fa-search"></i></div>
+					<input type="text" class="form-control" name="searchPatents" ng-model="searchPatents">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">		
 		<table class="table table-bordered table-striped text-md-center">
 			<thead class="thead-inverse">
 				<tr>
 					<td class="align-middle">
-						<a ng-click="sortBy('patentApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse" class="align-middle">Application No.  <!--show if not showing(false)-->
+						<a ng-click="$ctrl.sortType = 'patentApplicationNumber'; $ctrl.sortReverse = !$ctrl.sortReverse">Application No.  <!--show if not showing(false)-->
 							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
@@ -48,9 +61,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+				<tr ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.sortType:$ctrl.sortReverse | filter:searchPatents">
 					<td>
-						<a ui-sref="app.patents.patent({patentId: patent.id})" ng-bind="patent.patentApplicationNumber"></a>
+						<a ui-sref="patents.patent({patentId: patent.id})" ng-bind="patent.patentApplicationNumber"></a>
 					</td>
 					<td ng-bind="patent.clientRef"></td>
 					<td>$ {{patent.currentRenewalCost}}</td>

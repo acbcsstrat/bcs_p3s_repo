@@ -16,20 +16,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', function($stat
         url: '/register',
         component: 'register'
     })
-    .state('app', {
-        url: ''
-        // resolve: {
-        //     currentAuth: ['authentication', function(authentication) {
-        //         return authentication.requireAuth();
-        //     }]
-        // }
-    })
-    .state('app.profile', {
+    .state('profile', {
         url: '/profile',
-        component: 'profile'
-    })
-    .state('app.userprofile', {
-        url: '/userprofile',
         component: 'user',
         resolve: {
             user: ['userService', function(userService) {
@@ -40,16 +28,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', function($stat
             }]
         }
     })
-    .state('app.patents', {
+    .state('patents', {
         url: '/patents',
         component: 'patents',
         resolve: {
             patents: ['patentsService', function(patentsService) {
                 return patentsService.fetchAllPatents();
             }],
-            graphs: ['patentsService', function(patentsService) {
-                return  patentsService.fetchGraphData();
-            }],
+            // graphs: ['patentsService', function(patentsService) {
+            //     return  patentsService.fetchGraphData();
+            // }],
             renewals: ['patentsService', function(patentsService) {
                 return  patentsService.fetchRenewalHistory();
             }]
@@ -58,7 +46,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', function($stat
             navigation: 'patentnav'
         }
     })
-    .state('app.patents.patent', {
+    .state('patents.patent', {
         url: '/{patentId}',
         component: 'patent',
         resolve: {
@@ -67,24 +55,23 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', function($stat
                     return patent.id == $stateParams.patentId;
                 })
             }],
-            graph: ['graphs', '$stateParams', function(graphs, $stateParams) {
-                return graphs.dataset.find(function(graph){
-                    return graph.id == $stateParams.patentId;
-                })
+            graph: ['patentsService', '$stateParams',function(patentsService, $stateParams) {
+            	console.log($stateParams.patentId);
+                return  patentsService.fetchGraphData($stateParams.patentId); //PARAMS ID TO BE PASSED
             }],
             renewal: ['renewals', function(renewals){
                 return renewals;
             }]
         }
     })
-    .state('app.search-patent', {
+    .state('search-patent', {
         url: '/search-patent',
         component: 'searchpatent',
         params: {
             navigation: 'patentnav'
         }
     })
-    .state('app.add-patent', {
+    .state('add-patent', {
         url: '^/add-patent',
         component: 'addpatent',
         params: {
@@ -92,7 +79,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', function($stat
             obj: null
         }
     })
-    .state('app.current-transactions', {
+    .state('current-transactions', {
         url: '/current-transactions',
         component: 'currentTransactions',
         resolve: {
@@ -104,7 +91,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', function($stat
             navigation: 'transactionnav'
         }
     })
-    .state('app.current-transactions.current-transaction-item', {
+    .state('current-transactions.current-transaction-item', {
         url: '/{transId}',
         component: 'currentTransaction',
         resolve: {
@@ -115,7 +102,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', function($stat
             }]
         }
     })
-    .state('app.transaction-history', {
+    .state('transaction-history', {
         url: '/transaction-history',
         component: 'transactionHistory',
         resolve: {
@@ -127,7 +114,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', function($stat
             navigation: 'transactionnav'
         }
     })
-    .state('app.transaction-history.transaction-history-item', {
+    .state('transaction-history.transaction-history-item', {
         url: '/{transHistoryId}',
         component: 'transactionHistoryItem',
         resolve: {

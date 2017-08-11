@@ -6,38 +6,55 @@
         </ul>
         <div id="mainView">
 	        <div class="row">
-	            <div ng-include="$ctrl.currentTab"></div>
-	        </div>
+	        	<div class="col-md-12 text-xs-center">
+	            	<div ng-include="$ctrl.currentTab"></div>
+	        	</div>
+	    	</div>
       	</div>
     </div>
     <script type="text/ng-template" id="current-transaction-info.htm">
-	    <div class="row" ng-repeat="transaction in $ctrl.transaction">
-	    	<div class="col-md-12 text-xs-center">
-				<h2>Transaction Reference: <span ng-bind=""></span></h2>
-				<table class="table table-inverse">
-					<thead>
-						<tr>
-							<td class="font-weight-bold">Application No: <span ng-bind="transaction.transactionId"></span></td>
-							<td class="font-weight-bold">Short Name: <span ng-bind=""></span></td>
-							<td class="font-weight-bold">Client Reference <span ng-bind=""></span></td>	
-						</tr>
-					
-					</thead>
-					<tbody>
-						<tr>
-							<td class="font-weight-bold">Official fee: <span ng-bind=""></span></td>
-							<td class="font-weight-bold">Processing fee: <span ng-bind=""></span></td>
-							<td class="font-weight-bold">EPO surcharge: <span ng-bind=""></span></td>
-						</tr>
-						<tr>
-							<td class="font-weight-bold">Urgent clearance fee: <span ng-bind=""></span></td>
-							<td class="font-weight-bold">Sub-total: <span ng-bind=""></span></td>
-						</tr>
-					</tbody>
-				</table>
+	    <h2>Transaction Reference: <span ng-bind="$ctrl.transactionItemRef"></span></h2>
+			<p><span></span></p>
+			<p>Transaction Total: <span ng-bind="{{$ctrl.transactionTotal}}"></span></p>
+			<p>Transaction Date: <span ng-bind="{{$ctrl.transactionDate}}"></span></p>
+
+			<div class="row" ng-repeat="transaction in $ctrl.transactionItem">
+				<div class="col-md-12">
+					<table class="table table-inverse">
+						<thead>
+							<tr>
+								<td class="font-weight-bold">Application No: <span ng-bind="transaction.patent.patentApplicationNumber"></span></td>
+								<td class="font-weight-bold">Short Name: <span ng-bind="transaction.patent.shortTitle"></span></td>
+								<td class="font-weight-bold">Client Reference <span ng-bind="transaction.patent.clientRef"></span></td>	
+							</tr>
+						
+						</thead>
+						<tbody>
+							<tr>
+								<td class="font-weight-bold">Official fee: <span ng-bind="transaction.fee.renewalFee_EUR"></span></td>
+								<td class="font-weight-bold">Processing fee: <span ng-bind="transaction.fee.processingFee_USD"></span></td>
+								<td class="font-weight-bold">EPO surcharge: <span ng-bind="transaction.fee.extensionFee_EUR"></span></td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Urgent clearance fee: <span ng-bind="transaction.fee.urgentFee_USD"></span></td>
+								<td class="font-weight-bold">Sub-total: <span ng-bind="transaction.fee.subTotal_USD"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
-    </div>
+			<div class="row">
+				<div class="offset-md-8 col-md-4">
+					<div class="row">
+						<div class="col-md-6">
+							<a href="p3sweb/{{$ctrl.transactionPdf}}" target="_blank" class="btn btn-success btn-lg btn-block">View Invoice</a>
+						</div>
+						<div class="col-md-6">
+							<a href="p3sweb/{{$ctrl.transactionPdf}}"" class="btn btn-success btn-lg btn-block" download>Download Invoice</a>
+						</div>	
+					</div>
+				</div>
+			</div>
 		
 	</script>
 	<script type="text/ng-template" id="current-transaction-status.htm">

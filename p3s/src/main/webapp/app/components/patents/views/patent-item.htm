@@ -107,11 +107,46 @@
 		</div>
 	</script>
 	<script type="text/ng-template" id="cost-analysis.htm">
-		<div class="col-md-6 text-xs-left">
+		<div class="col-md-12 text-xs-left">
 			<h2>Cost Analysis</h2>
 			<h3>Application Number: {{$ctrl.patent.patentApplicationNumber}}</h3>
-			<canvas class="chart chart-line" chart-data="$ctrl.data" chart-labels="$ctrl.labels"
-	chart-series="$ctrl.series" chart-click="$ctrl.onClick"></canvas>
+			<div class="row">
+				<div class="col-md-6">
+					<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.lineData" chart-labels="$ctrl.lineLabels" chart-series="$ctrl.lineSeries" chart-options="$ctrl.lineOptions" chart-dataset-override="$ctrl.lineDatasetOverride"></canvas>
+				</div>
+				<div class="col-md-6">
+					<canvas id="patentBarChart" class="chart chart-bar"
+					  chart-data="$ctrl.barData" chart-labels="$ctrl.barLabels" chart-series="$ctrl.barSeries" chart-options="$ctrl.barOptions" chart-dataset-override="$ctrl.barDatasetOverride">
+					</canvas>
+				</div>
+				<div class="col-md-6">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<td class="font-weight-bold">Fee Make-up</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="font-weight-bold">Official fee</td>
+								<td>{{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Processing fee</td>
+								<td>{{$ctrl.feeBreakDown.processingFeeUSD}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Exchange rate USD/EUR</td>
+								<td>{{$ctrl.feeBreakDown.fxRate}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Sub-total</td>
+								<td>{{$ctrl.feeBreakDown.subTotal_USD}}</td>
+							</tr>							
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</script>
 	<script type="text/ng-template" id="renewal-history.htm">

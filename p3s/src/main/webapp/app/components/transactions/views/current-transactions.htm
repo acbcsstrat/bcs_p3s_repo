@@ -47,12 +47,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="transaction in $ctrl.transactions | orderBy:sortType:sortReverse | filter:searchTrans">
-					<td><a ui-sref="app.transactions.transaction({transId: transaction.id})" ng-bind="transaction.transactionId"></a></td>
-					<td ng-bind="transaction.listRenewalsInfoUI.length"></td>
-					<td ng-bind="transaction.transStartDateUI"></td>
-					<td ng-bind="transaction.transAmountUSD"></td>
-					<td ng-bind="transaction.latestTransStatus"></td>
+				<tr ng-repeat="transaction in $ctrl.transactions | orderBy:$ctrl.sortType:$ctrl.sortReverse | filter:searchTrans">
+					<td><a ui-sref="current-transactions.current-transaction-item({transId: transaction.id})">{{transaction.p3S_TransRef}}</a></td>
+					<td>
+						<span ng-repeat="item in transaction.renewalUIs">{{item.patentUI.patentApplicationNumber}}<br></span>	
+					</td>
+					<td>{{transaction.transStartDateUI}}</td>
+					<td>{{transaction.transAmount_USD}}</td>
+					<td>{{transaction.latestTransStatus}}</td>
 				</tr>
 			</tbody>
 		</table>
