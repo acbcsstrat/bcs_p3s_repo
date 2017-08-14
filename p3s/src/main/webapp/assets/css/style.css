@@ -1,0 +1,87 @@
+.active {
+    background-color: #FFF;
+    color: #000;
+    font-weight: bold;
+}
+
+.tab-panel {
+	display: none;
+}
+
+.tab-panel.active {
+	display: block;
+}
+
+input.required {
+	outline: none!important;
+}
+
+input.ng-invalid {
+	outline: 1px solid red;
+}
+
+input.ng-pristine {
+	outline: none;
+}
+
+.fade.in {
+  opacity: 1;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal-backdrop .fade .in {
+  opacity: 0.5 !important;
+}
+
+
+.modal-backdrop.fade {
+    opacity: 0.5 !important;
+}
+
+
+/********UNIVERSAL********
+************************/
+
+html, body { 
+	height: 100%; 
+	font-size: 62.5%;
+	overflow-y: auto; 
+	text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    overflow-x: hidden;
+}
+
+body { width: 100%; display: table; font-size: 1.4rem;}
+
+main { height: 100%; }
+/*main.app { padding-top: 3.8rem;}*/
+
+* { box-sizing: border-box; }
+
+.container { width: 80%; margin: 0 auto; }
+.container-full { margin: 0 auto; width: 100%; }
+
+.page-row {	display: table-row; height: 1px; }
+
+.page-row-expanded { height: 100%; }
+
+.text-nowrap { white-space: nowrap; }
+
+.nounderline { text-decoration: none!important; }
+
+.clear { clear: both; }
+
+select.form-control:not([size]):not([multiple]) {
+	height: 29px;
+}
+
+
+
+
+
+
+

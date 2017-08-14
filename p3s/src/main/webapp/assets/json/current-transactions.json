@@ -1,0 +1,38 @@
+[  
+   {  
+      "id": 1,
+      "transactionId":"T282",
+      "transStartDateUI": "Tue Oct 31, 2017",
+      "transAmountUSD": 4500,
+      "listRenewalsInfoUI":[  
+         {  
+            "patentApplicationNumber":"112.4"
+         },
+         {  
+            "patentApplicationNumber":"312.4"
+         },
+         {
+            "patentApplicationNumber":"11312.4"
+         }
+      ],
+      "latestTransStatus": "In progress"
+   },
+   {
+      "id": 2,
+      "transactionId":"T182",
+      "transStartDateUI": "Sat Oct 28, 2017",
+      "transAmountUSD": 3500,
+      "listRenewalsInfoUI":[  
+         {  
+            "patentApplicationNumber":"5555"
+         },
+         {  
+            "patentApplicationNumber":"352.4"
+         },
+         {  
+            "patentApplicationNumber":"4312.4"
+         }
+      ],
+      "latestTransStatus": "In progress"
+   }
+]

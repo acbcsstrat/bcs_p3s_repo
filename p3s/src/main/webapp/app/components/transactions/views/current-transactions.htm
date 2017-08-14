@@ -1,0 +1,65 @@
+<transactionnav></transactionnav>
+
+<form class="form-inline mb-2">
+	<div class="form-group">
+		<div class="input-group">
+			<div class="input-group-addon"><i class="fa fa-search"></i></div>
+			<input type="text" class="form-control mr-2" id="transId" name="transId" ng-model="searchTrans">
+		</div>
+	</div>
+</form>
+
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped text-md-center">
+			<thead>
+				<tr>
+					<td class="align-middle">
+						<a href="#" ng-click="sortType = 'transId'; sortReverse = !sortReverse">Transaction ID <!--show if not showing(false)-->
+							<span ng-show="sortType == 'transId' && !sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="sortType == 'transId' && sortReverse" class="fa fa-caret-down"></span>			
+						</a>
+					</td>
+					<td class="align-middle">
+						<a href="#" ng-click="sortType='patentTotal'; sortReverse = !sortReverse">No. of patents 
+							<span ng-show="sortType == 'patentTotal' && !sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="sortType == 'patentTotal' && sortReverse" class="fa fa-caret-down"></span>							
+						</a>
+					</td>
+					<td class="align-middle">
+						<a href="#" ng-click="sortType='transDate'; sortReverse=!sortReverse">Transaction date
+							<span ng-show="sortType == 'transDate' && !sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="sortType == 'transDate' && sortReverse" class="fa fa-caret-down"></span>			
+						</a>
+					</td>
+					<td class="align-middle">
+						<a href="#" ng-click="sortType='cost'; sortReverse=!sortReverse">Cost
+							<span ng-show="sortType == 'cost' && !sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="sortType == 'cost' && sortReverse" class="fa fa-caret-down"></span>			
+						</a>	
+					</td>
+					<td class="align-middle">
+						<a href="#" ng-click="sortType='status'; sortReverse=!sortReverse">Status
+							<span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-down"></span>			
+						</a>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="transaction in $ctrl.transactions | orderBy:$ctrl.sortType:$ctrl.sortReverse | filter:searchTrans">
+					<td><a ui-sref="current-transactions.current-transaction-item({transId: transaction.id})">{{transaction.p3S_TransRef}}</a></td>
+					<td>
+						<span ng-repeat="item in transaction.renewalUIs">{{item.patentUI.patentApplicationNumber}}<br></span>	
+					</td>
+					<td>{{transaction.transStartDateUI}}</td>
+					<td>{{transaction.transAmount_USD}}</td>
+					<td>{{transaction.latestTransStatus}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<div ui-view></div>	
+	</div>
+</div>				
+
+
