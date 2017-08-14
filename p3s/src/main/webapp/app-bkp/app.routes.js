@@ -1,8 +1,4 @@
-app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProvider', 'IdleProvider', function($stateProvider, $urlRouterProvider, $qProvider, KeepaliveProvider, IdleProvider) {
-
-    IdleProvider.idle(600);
-    IdleProvider.timeout(60);
-    KeepaliveProvider.interval(5);
+app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', function($stateProvider, $urlRouterProvider, $qProvider) {
 
     $qProvider.errorOnUnhandledRejections(false);
 
@@ -131,17 +127,5 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         params: {
             navigation: 'transactionnav'
         }
-    })
-    .state('basket', {
-        url: '/basket',
-        component: 'basket'
-    })
-    .state('banktransfer-confirm', {
-        url: '/confirm-transaction',
-        component: 'banktransferConfirm'
     })    
-    .state('banktransfer-finalise', {
-        url: '/complete-transaction',
-        component: 'banktransferFinalise'
-    })
 }]);
