@@ -55,6 +55,7 @@ app.factory('patentsService', function($http, $q) {
         factory.fetchGraphData = function(id) {
         
             var deferred = $q.defer();
+            //$http.get('../../p3sweb/assets/json/cost-data.json')
             $http.get('http://localhost:8080/p3sweb/rest-cost-analysis/'+id)
                 .then(
                 function (response) {

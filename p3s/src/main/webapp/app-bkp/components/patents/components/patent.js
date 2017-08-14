@@ -36,6 +36,8 @@ app.component('patent', {
 
 
 	            	var caFee = vm.graph.fee;
+	            	
+	            
 
 	            	vm.feeBreakDown = {
 	            		renewalFeeEUR: caFee.renewalFee_EUR,
@@ -92,22 +94,26 @@ app.component('patent', {
 					const caBar = vm.graph;
 					const barDataArr = [];
 					const barLabelArr = [];
+					
+			
 
 					Object.keys(caBar).forEach(data => {
 
 						const dayData = caBar[data];
 
-						if (data.includes('UI')) {
+						if (data.includes('DateUI')) {
 							dayData.slice()
 							barLabelArr.push(dayData);
 						}
 
-						if (data.includes('StageCost')) {
+						if (data.includes('Cost')) {
 							barDataArr.push(dayData);
 						}
 
 					})
-
+					
+					console.log(barDataArr)
+						
 				  	vm.barLabels = barLabelArr;
 				  	vm.barData = barDataArr;
 					vm.barSeries = ['Series A', 'Series B'];

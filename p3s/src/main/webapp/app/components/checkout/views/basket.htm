@@ -1,0 +1,48 @@
+<ngcart-cart></ngcart-cart>
+
+
+<div class="row">
+	<div class="col-md-6">
+		<form class="form">
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 text-md-right" for="firstName">First Name</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" name="firstName" ng-model="$ctrl.billingDetails.firstName">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 text-md-right" for="lastName">Last Name</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" name="lastName" ng-model="$ctrl.billingDetails.lastName">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 text-md-right" for="billingStreet">Street</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" name="businessStreet" ng-model="$ctrl.billingDetails.billingStreet">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 text-md-right" for="billingCity">City</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" name="billingCity" ng-model="$ctrl.billingDetails.billingCity">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 text-md-right" for="billingState">State</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" name="billingState" ng-model="$ctrl.billingDetails.billingState">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 text-md-right" for="billingZip">Zip</label>
+				<div class="col-md-6">
+					<input class="form-control" type="text" name="billingZip" ng-model="$ctrl.billingDetails.billingZip">
+				</div>
+			</div>						
+		</form>
+	</div>
+	<div class="col-md-6">
+		<ngcart-checkout service="log"></ngcart-checkout>
+	</div>					
+</div>

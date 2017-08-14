@@ -1,7 +1,8 @@
-var app = angular.module('myApp', ['ui.router', 'chart.js', 'ui.bootstrap']);
+var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngAnimate']);
 
-app.run(["$state", '$transitions', '$q', '$rootScope',
-    function($state, $transitions, $q, $rootScope) {
+app.run(['Idle', function(Idle) {
+
+	Idle.watch();
 
 }]);
 
