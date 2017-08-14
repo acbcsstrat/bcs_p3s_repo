@@ -46,6 +46,11 @@ public class PatentStatusEngine extends Universal {
 		Date todays = new DateUtil().getTodaysDate();
 		RenewalDates allDates = getCurrentRenewalInfo(patent);
 		
+		
+		renewalInfo.setNineMonthStart(allDates.getCurrentWindowOpenDate());
+		renewalInfo.setNineMonthEnd(allDates.getCurrentWindowCloseDate());
+		renewalInfo.setRenewalDueDate(allDates.getCurrentRenewalDueDate());
+		
 		Date lastRenewed = patent.getLastRenewedDateExEpo();
 		
 		if(todays.after(allDates.getCurrentWindowCloseDate())){
@@ -57,6 +62,8 @@ public class PatentStatusEngine extends Universal {
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				renewalInfo.setAlreadyRenewed(true);
+				renewalInfo.setDoldrums(true);
 			}
 			else{
 				renewalInfo.setCanRenew(false);
@@ -64,6 +71,8 @@ public class PatentStatusEngine extends Universal {
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.TOO_LATE);
 				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				renewalInfo.setAlreadyRenewed(false);
+				renewalInfo.setDoldrums(true);
 			}
 		}
 		
@@ -75,6 +84,8 @@ public class PatentStatusEngine extends Universal {
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				renewalInfo.setAlreadyRenewed(true);
+				renewalInfo.setDoldrums(false);
 			}
 			else if(allDates.getRenewalYear() == patent.getRenewalYear()+1){
 				renewalInfo.setCanRenew(true);
@@ -82,6 +93,9 @@ public class PatentStatusEngine extends Universal {
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE);
 				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				
+				renewalInfo.setAlreadyRenewed(false);
+				renewalInfo.setDoldrums(false);
 			}
 			else{
 				renewalInfo.setCanRenew(false);
@@ -89,6 +103,9 @@ public class PatentStatusEngine extends Universal {
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.TOO_LATE);
 				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				
+				renewalInfo.setAlreadyRenewed(false);
+				renewalInfo.setDoldrums(false);
 			}
 		}
 		
@@ -145,6 +162,8 @@ public class PatentStatusEngine extends Universal {
         renewalEnd.setTime(actualCurrentRenewalDate.getTime());
         System.out.println("Actual Due Date again" +actualCurrentRenewalDate.getTime());
         renewalEnd.add(Calendar.MONTH, 6);
+        /** P3S WIndow close date is 2 days before the actual closing date **/
+        renewalEnd.add(Calendar.DATE, -2);
         
         System.out.println("Calculated Window for this year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
         
@@ -198,6 +217,9 @@ public class PatentStatusEngine extends Universal {
     	    renewalEnd.setTime(actualPrevRenewalDate.getTime());
     	    System.out.println("Actual Due Date again" +actualPrevRenewalDate.getTime());
     	    renewalEnd.add(Calendar.MONTH, 6);
+    	    
+    	    /** P3S WIndow close date is 2 days before the actual closing date **/
+            renewalEnd.add(Calendar.DATE, -2);
     	    System.out.println("Doldrums for previous year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
     	    
     	    allDates.setCurrentRenewalDueDate(prevRenewalDate.getTime());
@@ -247,7 +269,7 @@ public String getNextPhase(String currentPhase){
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLUE))
 			nextPhase = RenewalColourEnum.BROWN;
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BROWN))
-			nextPhase = RenewalColourEnum.GREEN;
+			nextPhase = RenewalColourEnum.NOCOLOR;
 		return nextPhase;
 	}
 	

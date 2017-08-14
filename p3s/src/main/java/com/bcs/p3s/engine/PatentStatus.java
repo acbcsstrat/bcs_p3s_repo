@@ -53,7 +53,6 @@ public class PatentStatus extends Universal {
 	protected BigDecimal renewalPriceUSD = null;
 
 	protected String currentRenewalStatus;
-
 	
 //	/**  */
 //	protected 

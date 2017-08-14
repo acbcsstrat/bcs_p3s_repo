@@ -181,8 +181,9 @@ public class CostAnalysisDataEngine extends Universal{
 			}
         }
         else if(patent.getRenewalStatus().equalsIgnoreCase(RenewalStatusEnum.SHOW_PRICE) || patent.getRenewalStatus().equalsIgnoreCase(RenewalStatusEnum.IN_PROGRESS) ){
-        	Calendar todays = Calendar.getInstance();
-        	if((todays.getTime()).after(renewalStart.getTime()) && (todays.getTime()).before(renewalEnd.getTime())){
+        	//Calendar todays = Calendar.getInstance();
+        	Date todays = new DateUtil().getTodaysDate();
+        	if(todays.after(renewalStart.getTime()) && todays.before(renewalEnd.getTime())){
 	        	System.out.println("Renewal for filing Due "+ actualCurrentRenewalDate.getTime());
 				allDates.setCurrentRenewalDueDate(actualCurrentRenewalDate.getTime());
 				allDates.setCurrentWindowOpenDate(renewalStart.getTime());
@@ -214,9 +215,9 @@ public class CostAnalysisDataEngine extends Universal{
 	            renewalEnd.add(Calendar.MONTH, 6);
 	            System.out.println("Doldrums for previous year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
 	            
-	            if((todays.getTime()).after(renewalStart.getTime()) && (todays.getTime()).before(renewalEnd.getTime())){
-		        	System.out.println("Renewal for filing Due "+ actualCurrentRenewalDate.getTime());
-					allDates.setCurrentRenewalDueDate(actualCurrentRenewalDate.getTime());
+	            if(todays.after(renewalStart.getTime()) && todays.before(renewalEnd.getTime())){
+		        	System.out.println("Renewal for filing Due "+ actualPrevRenewalDate.getTime());
+					allDates.setCurrentRenewalDueDate(actualPrevRenewalDate.getTime());
 					allDates.setCurrentWindowOpenDate(renewalStart.getTime());
 					allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
 	        	}
@@ -230,8 +231,9 @@ public class CostAnalysisDataEngine extends Universal{
 	/**
 	* STEP 2 : Check whether renewal window still opened for the current filing due date
 	*/
-		Calendar todays = Calendar.getInstance();
-		if((todays.getTime()).after(allDates.getCurrentWindowOpenDate()) && (todays.getTime()).before(allDates.getCurrentWindowCloseDate())){
+      //Calendar todays = Calendar.getInstance();
+    	Date todays = new DateUtil().getTodaysDate();
+		if(todays.after(allDates.getCurrentWindowOpenDate()) && todays.before(allDates.getCurrentWindowCloseDate())){
 			System.out.println("Renewal window still opened");
 			allDates.setRenewalWindowStillOpened(true);
 		}
@@ -296,20 +298,24 @@ public class CostAnalysisDataEngine extends Universal{
 	 */
 	public String getCurrentPhase(CostAnalysisData caData){
 		
-		Calendar todaysDate = Calendar.getInstance();
-		if((todaysDate.getTime()).after(caData.getGreenStartDate()) && (todaysDate.getTime()).before(caData.getBrownEndDate())){
+		//Calendar todays = Calendar.getInstance();
+    	Date todaysDate = new DateUtil().getTodaysDate();
+		if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getBrownEndDate())){
 			
-			if((todaysDate.getTime()).after(caData.getGreenStartDate()) && (todaysDate.getTime()).before(caData.getAmberStartDate()))
+			if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getAmberStartDate()))
 				caData.setCurrentcostBand(RenewalColourEnum.GREEN);
-			else if ((todaysDate.getTime()).after(caData.getAmberStartDate()) && (todaysDate.getTime()).before(caData.getRedStartDate())) 
+			else if (todaysDate.after(caData.getAmberStartDate()) && todaysDate.before(caData.getRedStartDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.AMBER);
-			else if ((todaysDate.getTime()).after(caData.getRedStartDate()) && (todaysDate.getTime()).before(caData.getBlueStartDate())) 
+			else if (todaysDate.after(caData.getRedStartDate()) && todaysDate.before(caData.getBlueStartDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.RED);
-			else if ((todaysDate.getTime()).after(caData.getBlueStartDate()) && (todaysDate.getTime()).before(caData.getBrownStartDate())) 
+			else if (todaysDate.after(caData.getBlueStartDate()) && todaysDate.before(caData.getBrownStartDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.BLUE);
-			else if ((todaysDate.getTime()).after(caData.getBrownStartDate()) && (todaysDate.getTime()).before(caData.getBrownEndDate())) 
+			else if (todaysDate.after(caData.getBrownStartDate()) && todaysDate.before(caData.getBrownEndDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.BROWN);
 			
+		}
+		else{
+			caData.setCurrentcostBand(RenewalColourEnum.NOCOLOR);
 		}
 		return caData.getCurrentcostBand();
 	}

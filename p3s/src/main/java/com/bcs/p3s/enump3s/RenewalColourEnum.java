@@ -9,6 +9,8 @@ public class RenewalColourEnum extends P3SAbstractEnum {
     public static final String RED   = "Red"; 
     public static final String BLUE  = "Blue";
     public static final String BROWN = "Brown";
+    
+    public static final String NOCOLOR = "NoColor";
 
 
     // Constructor - Which verifies the value provided
@@ -23,6 +25,7 @@ public class RenewalColourEnum extends P3SAbstractEnum {
                 if (colour.equalsIgnoreCase(RenewalColourEnum.RED)) sofar = RenewalColourEnum.RED;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.BLUE)) sofar = RenewalColourEnum.BLUE;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.BROWN)) sofar = RenewalColourEnum.BROWN;  
+                if (colour.equalsIgnoreCase(RenewalColourEnum.NOCOLOR)) sofar = RenewalColourEnum.NOCOLOR;  
 
                 if (sofar != null) {
                 	this.value = sofar.toString();

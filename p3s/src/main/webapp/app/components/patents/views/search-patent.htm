@@ -1,0 +1,23 @@
+<patentnav></patentnav>
+<div class="row">
+	<div class="col-md-6">
+		<form ng-submit="$ctrl.findPatent(searchPatent)" name="searchPatentForm">
+			<fieldset>
+				<legend class="font-weight-bold">Search by Patent Number</legend>
+
+				<div class="form-group row">
+					<label class="col-md-5" for="searchPatent">Search name</label>
+					<div class="col-md-7">
+						<input type="text" name="searchPatent" ng-model="searchPatent" class="form-control" required>
+					</div>
+				</div>
+
+			</fieldset>
+			<div class="row">
+				<div class="offset-md-8 col-md-4">
+					<button type="submit" class="btn btn-success btn-block btn-lg">Submit</button>
+				</div>
+			</div>
+		</form>	
+	</div>
+</div>

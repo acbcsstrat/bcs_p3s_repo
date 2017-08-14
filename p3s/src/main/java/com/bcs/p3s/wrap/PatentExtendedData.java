@@ -18,6 +18,8 @@ public class PatentExtendedData {
 	
 	private Long patentId;
 	
+	private Boolean canRenew;
+	
 	private BigDecimal currentRenewalCost;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -39,6 +41,15 @@ public class PatentExtendedData {
 
 	public void setPatentId(Long patentId) {
 		this.patentId = patentId;
+	}
+
+	
+	public Boolean getCanRenew() {
+		return canRenew;
+	}
+
+	public void setCanRenew(Boolean canRenew) {
+		this.canRenew = canRenew;
 	}
 
 	public BigDecimal getCurrentRenewalCost() {

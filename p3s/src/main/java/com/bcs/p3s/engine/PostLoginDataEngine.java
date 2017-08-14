@@ -22,6 +22,7 @@ import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.model.RenewalIntegrationTest;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.CombinedFee;
@@ -43,7 +44,7 @@ public class PostLoginDataEngine extends Universal{
 		
 		CostAnalysisDataEngine caEngine = new CostAnalysisDataEngine();
 		CostAnalysisData caData = new CostAnalysisData();
-		
+		PatentStatusEngine patentStatus = new PatentStatusEngine();
 		String err = PREFIX+"getExtendedPatentData(session) ";
 		log().debug("invoked : " + PREFIX +  err);
 		
@@ -60,10 +61,21 @@ public class PostLoginDataEngine extends Universal{
     	if(patents.size() != 0){
     		
 	    	for(Patent patent : patents){
-	    		try {
-	    			
-	    			PatentExtendedData extendedData = new PatentExtendedData();
-					RenewalDates renewalDates = caEngine.getRenewalWindowDates(patent);
+	    		PatentExtendedData extendedData = new PatentExtendedData();
+				//RenewalDates renewalDates = caEngine.getRenewalWindowDates(patent);
+				PatentStatus renewalInfo = patentStatus.getRenewalInfo(patent);
+				
+				/**
+				 * below methods in CAEngine Class
+				 * So setting the calculated value to renewaldates
+				 */
+				
+				RenewalDates renewalDates = new RenewalDates();
+				renewalDates.setCurrentRenewalDueDate(renewalInfo.getRenewalDueDate());
+				renewalDates.setCurrentWindowOpenDate(renewalInfo.getNineMonthStart());
+				renewalDates.setCurrentWindowCloseDate(renewalInfo.getNineMonthEnd());
+
+				if(!renewalInfo.getDoldrums()){
 					caData = caEngine.getAllPhasesInfo(renewalDates);
 					String currentPhase = caEngine.getCurrentPhase(caData);
 					CombinedFee fee = caEngine.getFeeObj(patent);
@@ -76,12 +88,14 @@ public class PostLoginDataEngine extends Universal{
 					extendedData.setCurrentRenewalCost(currentfeeUI.getSubTotal_USD());
 					extendedData.setRenewalCostNextStage(nextStageFeeUI.getSubTotal_USD());
 					extendedData.setCostBandEndDate(getCostBandEnddate(caData).getTime());
-					
-					allData.add(extendedData);
-				} catch (ParseException e) {
-					
-					e.printStackTrace();
 				}
+				else{
+					extendedData.setPatentId(patent.getId());
+					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
+					extendedData.setCurrentCostBand(patent.getRenewalStatus());
+				}
+				
+				allData.add(extendedData);
 	    	}
 	    	
     	}

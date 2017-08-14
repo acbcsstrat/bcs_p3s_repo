@@ -85,6 +85,10 @@ public class DateUtil {
 	public Date getTodaysDate(){
 		
 		Calendar calendar = Calendar.getInstance();
+		
+		@SuppressWarnings("deprecation")
+		Date date = new Date(2017, 5, 28, 00, 00);
+		calendar.setTime(date);
 		int month = calendar.get(Calendar.MONTH);
 	    int year = Calendar.getInstance().get(Calendar.YEAR);
 	    int day = calendar.get(Calendar.DAY_OF_MONTH);

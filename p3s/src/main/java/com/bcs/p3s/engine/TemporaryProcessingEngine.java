@@ -1,5 +1,7 @@
 package com.bcs.p3s.engine;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -175,6 +177,12 @@ public class TemporaryProcessingEngine extends Universal {
 					   	// isOn is usually true or false. But If it is 0, this indicates it's been inverted (at least once - assume once)
 					   	if (ison instanceof Integer) {
 					   		onSoFar = ! onSoFar ;
+					   	}
+					   	
+					   	Boolean isOn = (Boolean) ison;
+					   	
+					   	if(!isOn){
+					   		onSoFar = false ;
 					   	}
 					 
 					   	// & now - if selected - add to the ON list
