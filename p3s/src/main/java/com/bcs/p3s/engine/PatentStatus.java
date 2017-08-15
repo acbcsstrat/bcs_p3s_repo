@@ -30,7 +30,8 @@ public class PatentStatus extends Universal {
 	protected Integer epoYearNumberRenewed; // Integer so can be null
 	
 	/** patent renewal year number for this patent now */
-	protected Integer thisYearNumber; 
+	protected Integer activeRenewalYear;
+	
 	
 	/** EPO confirm year n renewed & this is year n+1 */
 	protected Boolean goodFollowOn = null; 
@@ -115,12 +116,12 @@ public class PatentStatus extends Universal {
 		this.epoYearNumberRenewed = epoYearNumberRenewed;
 	}
 
-	public Integer getThisYearNumber() {
-		return thisYearNumber;
+	public Integer getActiveRenewalYear() {
+		return activeRenewalYear;
 	}
 
-	public void setThisYearNumber(Integer thisYearNumber) {
-		this.thisYearNumber = thisYearNumber;
+	public void setActiveRenewalYear(Integer thisYearNumber) {
+		this.activeRenewalYear = thisYearNumber;
 	}
 
 	public Boolean getGoodFollowOn() {

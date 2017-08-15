@@ -39,38 +39,42 @@ import com.bcs.p3s.wrap.PatentExtendedData;
 public class PatentStatusEngine extends Universal {
 	
 	protected String PREFIX = this.getClass().getName() + " : "; 
+	RenewalDatesEngine datesEngineObj = new RenewalDatesEngine();
+	
 	public PatentStatus getRenewalInfo(Patent patent){
 		
 		PatentStatus renewalInfo = new PatentStatus();
 		
 		Date todays = new DateUtil().getTodaysDate();
-		RenewalDates allDates = getCurrentRenewalInfo(patent);
+		RenewalDates allDates = datesEngineObj.getRenewalDates(patent);
 		
 		
 		renewalInfo.setNineMonthStart(allDates.getCurrentWindowOpenDate());
 		renewalInfo.setNineMonthEnd(allDates.getCurrentWindowCloseDate());
 		renewalInfo.setRenewalDueDate(allDates.getCurrentRenewalDueDate());
+		renewalInfo.setActiveRenewalYear(allDates.getRenewalYear());
 		
-		Date lastRenewed = patent.getLastRenewedDateExEpo();
+		//Date lastRenewed = patent.getLastRenewedDateExEpo();
 		
-		if(todays.after(allDates.getCurrentWindowCloseDate())){
+		if(todays.after(allDates.getCurrentWindowCloseDate())){ //ie, doldrum of the active renewal year
 			//we are in doldrums
-			//check whether last renewed date lies between current window dates
-			if(lastRenewed.after(allDates.getCurrentWindowOpenDate()) && lastRenewed.before(allDates.getCurrentWindowCloseDate()) ){
+			//check whether a renewal made for the active renewal year else we are too late
+			//if(lastRenewed.after(allDates.getCurrentWindowOpenDate()) && lastRenewed.before(allDates.getCurrentWindowCloseDate()) ){
+			if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()){
 				renewalInfo.setCanRenew(false);
 				renewalInfo.setGoodFollowOn(true);
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
-				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				//renewalInfo.setThisYearNumber(allDates.getRenewalYear());
 				renewalInfo.setAlreadyRenewed(true);
 				renewalInfo.setDoldrums(true);
 			}
 			else{
 				renewalInfo.setCanRenew(false);
 				renewalInfo.setGoodFollowOn(false);
-				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
+				renewalInfo.setEpoYearNumberRenewed(patent.getLastRenewedYearEpo());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.TOO_LATE);
-				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				//renewalInfo.setThisYearNumber(allDates.getRenewalYear());
 				renewalInfo.setAlreadyRenewed(false);
 				renewalInfo.setDoldrums(true);
 			}
@@ -78,21 +82,21 @@ public class PatentStatusEngine extends Universal {
 		
 		else{
 			
-			if(allDates.getRenewalYear() == patent.getRenewalYear()){
+			if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()){
 				renewalInfo.setCanRenew(false);
 				renewalInfo.setGoodFollowOn(true);
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
-				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				//renewalInfo.setThisYearNumber(allDates.getRenewalYear());
 				renewalInfo.setAlreadyRenewed(true);
 				renewalInfo.setDoldrums(false);
 			}
-			else if(allDates.getRenewalYear() == patent.getRenewalYear()+1){
+			else if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()+1){
 				renewalInfo.setCanRenew(true);
 				renewalInfo.setGoodFollowOn(true);
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE);
-				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				//renewalInfo.setThisYearNumber(allDates.getRenewalYear());
 				
 				renewalInfo.setAlreadyRenewed(false);
 				renewalInfo.setDoldrums(false);
@@ -102,7 +106,7 @@ public class PatentStatusEngine extends Universal {
 				renewalInfo.setGoodFollowOn(false);
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.TOO_LATE);
-				renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				//renewalInfo.setThisYearNumber(allDates.getRenewalYear());
 				
 				renewalInfo.setAlreadyRenewed(false);
 				renewalInfo.setDoldrums(false);
@@ -113,149 +117,7 @@ public class PatentStatusEngine extends Universal {
 	}
 	
 	
-	public RenewalDates getCurrentRenewalInfo(Patent patent){
-		
-		
-		log().debug("CostAnalysisDataEngine getRenewalWindowDates(patent) invoked : ");
-		RenewalDates allDates = new RenewalDates();
-		
-	/**
-	 * STEP 1 : Calculate the actual renewal due date [FOR THE CURRENT YEAR - THIS CALCULATED YEAR MAY OR MAY NOT BE THE CURRENT RENEWAL YEAR]
-	 */
-		
-		/** 
-		 * STEP 1.1 :- Calculating the next Renewal Due Date - get the last day of the month containing the anniversary of the filing Date
-		 * 
-		 */
-		
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(patent.getFilingDate());
-		
-		Calendar monthEndFilingDate = Calendar.getInstance();
-		
-        /**
-         * STEP 1.2 :- generate the date for this year with the last day of month of filing patent
-         * 
-         */
-		
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
-        int yearNow = Calendar.getInstance().get(Calendar.YEAR);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        
-        monthEndFilingDate.set(year, month, day , 23,59);
-        Calendar nextRenewalDate = Calendar.getInstance();
-        nextRenewalDate.set(yearNow, month, day , 23,59);  
-        System.out.println("Anniversary Date is "+ nextRenewalDate.getTime());
-        Calendar actualCurrentRenewalDate = new DateUtil().getLastDayOfMonth(nextRenewalDate.getTime());
-        System.out.println("Calculated renewal due for this year"+ actualCurrentRenewalDate.getTime());
-        
-        /**
-         * STEP 1.3 :-Get the boundary dates for the above filing due date - 3 months prior and 6 months after
-         */
-        Calendar renewalStart = Calendar.getInstance();
-        renewalStart.setTime(actualCurrentRenewalDate.getTime());
-        renewalStart.add(Calendar.MONTH, -3);
-        renewalStart.setTime(new DateUtil().getMidnight(renewalStart.getTime()));
-        
-        Calendar renewalEnd = Calendar.getInstance();
-        renewalEnd.setTime(actualCurrentRenewalDate.getTime());
-        System.out.println("Actual Due Date again" +actualCurrentRenewalDate.getTime());
-        renewalEnd.add(Calendar.MONTH, 6);
-        /** P3S WIndow close date is 2 days before the actual closing date **/
-        renewalEnd.add(Calendar.DATE, -2);
-        
-        System.out.println("Calculated Window for this year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
-        
-        
-        Calendar tempRenYearStart = Calendar.getInstance();
-        tempRenYearStart.setTime(actualCurrentRenewalDate.getTime());
-        tempRenYearStart.add(Calendar.MONTH, -6);    //due date - 6 months or renewalStart -6
-        tempRenYearStart.setTime(new DateUtil().getMidnight(renewalStart.getTime()));
-		
-      /**
-       * STEP 1.4 :- Get the current renewal year
-       */
-       
-		/** STEP 1.4.1 - GET THE YEARS BETWEEN (Calculated renewal due for this year) AND (last day of month of filing patent) **/
-        int yearsBetween = new DateUtil().getYearsBetweenDates(new DateUtil().getTodaysDate(), monthEndFilingDate.getTime());
-        int renewalYear = yearsBetween + 1;
-        
-        /** STEP 1.4.2 - CHECK THE POSITION OF TODAYS DATE IN RNEWAL WINDOW  
-         * 					
-         * 				1. If todays date before tempRenYearStart, we are still in last years window
-         * 						renewal year = renewal year - 1
-         * 						Calculate window open and close for last year as set to allDates
-         * 
-         * 				2. If todays date after tempRenYearStart, we are in current years window
-         * 						renewal year = renewal year
-         * 						
-         * **/
-        
-     /************************************************************************************************************************************************/   
-        /*** NOTE : ASSUMING RENEWAL YEAR STARTS ON RENEWAL WINDOW START DATE AND ENDS ON THE DAY WHEN THE RENEWAL WINDOW FOR NEXT YEAR OPENS  **/
-     /************************************************************************************************************************************************/
-        
-        Date todays = new DateUtil().getTodaysDate();
-        if(todays.before(renewalStart.getTime())){
-        	renewalYear = renewalYear-1;
-        	
-        	//Calculating Previous year details in the same way
-            
-            Calendar prevRenewalDate = Calendar.getInstance();
-    	    prevRenewalDate.set(yearNow-1, month, day , 23,59);  
-    	    System.out.println("Renewal date 1 year before " + prevRenewalDate.getTime());
-    	    Calendar actualPrevRenewalDate = new DateUtil().getLastDayOfMonth(prevRenewalDate.getTime());
-    	    System.out.println("This year renewal due "+ actualPrevRenewalDate.getTime());
-    	    
-    	    renewalStart = Calendar.getInstance();
-    	    renewalStart.setTime(actualPrevRenewalDate.getTime());
-    	    renewalStart.add(Calendar.MONTH, -3);
-    	    renewalStart.setTime(new DateUtil().getMidnight(renewalStart.getTime()));
-    	    
-    	    renewalEnd = Calendar.getInstance();
-    	    renewalEnd.setTime(actualPrevRenewalDate.getTime());
-    	    System.out.println("Actual Due Date again" +actualPrevRenewalDate.getTime());
-    	    renewalEnd.add(Calendar.MONTH, 6);
-    	    
-    	    /** P3S WIndow close date is 2 days before the actual closing date **/
-            renewalEnd.add(Calendar.DATE, -2);
-    	    System.out.println("Doldrums for previous year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
-    	    
-    	    allDates.setCurrentRenewalDueDate(prevRenewalDate.getTime());
-    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
-    		allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
-        }
-        
-        else{
-        	allDates.setCurrentRenewalDueDate(actualCurrentRenewalDate.getTime());
-    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
-    		allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
-        }
-        
-        allDates.setRenewalYear(renewalYear);
-        
-        return allDates;
-	}
-
-	
-	public Integer getRenewalYear(RenewalDates allDates, Patent patent){
-		
-		if(allDates == null){
-			log().fatal("Passed null into");
-			return 0;
-		}
-		
-		
-		Date todays = new DateUtil().getTodaysDate();
-		if( todays.after(allDates.getCurrentWindowOpenDate()) && todays.before(allDates.getCurrentWindowCloseDate())){
-			
-		}
-		return 1;
-	}
-	
-	
-public String getNextPhase(String currentPhase){
+	public String getNextPhase(String currentPhase){
 		
 		String err = PREFIX+"getNextPhase(currentPhase) ";
 		String nextPhase = "";
@@ -270,6 +132,8 @@ public String getNextPhase(String currentPhase){
 			nextPhase = RenewalColourEnum.BROWN;
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BROWN))
 			nextPhase = RenewalColourEnum.NOCOLOR;
+		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.NOCOLOR))
+			nextPhase = RenewalColourEnum.GREEN;
 		return nextPhase;
 	}
 	
@@ -293,10 +157,11 @@ public String getNextPhase(String currentPhase){
 	}
 	
 	
-	public PostLoginSessionBean getExtendedDataForNewPatent(Patent patent, PostLoginSessionBean pLoginSession){
+public PostLoginSessionBean getExtendedDataForNewPatent(Patent patent, PostLoginSessionBean pLoginSession){
 		
 		CostAnalysisDataEngine caEngine = new CostAnalysisDataEngine();
 		CostAnalysisData caData = new CostAnalysisData();
+		PatentStatusEngine patentStatus = new PatentStatusEngine();
 		
 		String err = PREFIX+"getExtendedDataForNewPatent(session) ";
 		log().debug("invoked : " + PREFIX +  err);
@@ -305,19 +170,42 @@ public String getNextPhase(String currentPhase){
 		try {
 	    			
 	    	PatentExtendedData newPatentData = new PatentExtendedData();
-			RenewalDates renewalDates = caEngine.getRenewalWindowDates(patent);
-			caData = caEngine.getAllPhasesInfo(renewalDates);
-			String currentPhase = caEngine.getCurrentPhase(caData);
-			CombinedFee fee = caEngine.getFeeObj(patent);
-			FeeUI currentfeeUI = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-			FeeUI nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-					
-			newPatentData.setPatentId(patent.getId());
-			newPatentData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
-			newPatentData.setCurrentCostBand(caData.getCurrentcostBand());
-			newPatentData.setCurrentRenewalCost(currentfeeUI.getSubTotal_USD());
-			newPatentData.setRenewalCostNextStage(nextStageFeeUI.getSubTotal_USD());
-			newPatentData.setCostBandEndDate(getCostBandEnddate(caData).getTime());
+	    	PatentStatus renewalInfo = patentStatus.getRenewalInfo(patent);
+			
+			/**
+			 * below methods in CAEngine Class
+			 * So setting the calculated value to renewaldates
+			 */
+			
+			RenewalDates renewalDates = new RenewalDates();
+			renewalDates.setCurrentRenewalDueDate(renewalInfo.getRenewalDueDate());
+			renewalDates.setCurrentWindowOpenDate(renewalInfo.getNineMonthStart());
+			renewalDates.setCurrentWindowCloseDate(renewalInfo.getNineMonthEnd());
+
+			//good to follow and not in doldrum: so we can show the prices
+			//	either Show price or Renewal In Place
+			if(renewalInfo.getGoodFollowOn() && !renewalInfo.getDoldrums()){
+				caData = caEngine.getAllPhasesInfo(renewalDates);
+				String currentPhase = caEngine.getCurrentPhase(caData);
+				CombinedFee fee = caEngine.getFeeObj(patent);
+				FeeUI currentfeeUI = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+				
+				FeeUI nextStageFeeUI = null;
+				if(!currentPhase.equalsIgnoreCase(RenewalColourEnum.BROWN))  //If brown no next stage
+					nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+				
+				newPatentData.setPatentId(patent.getId());
+				newPatentData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
+				newPatentData.setCurrentCostBand(caData.getCurrentcostBand());
+				newPatentData.setCurrentRenewalCost(currentfeeUI.getSubTotal_USD());
+				newPatentData.setRenewalCostNextStage(nextStageFeeUI.getSubTotal_USD());
+				newPatentData.setCostBandEndDate(getCostBandEnddate(caData).getTime());
+			}
+			else{
+				newPatentData.setPatentId(patent.getId());
+				newPatentData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
+				newPatentData.setCurrentCostBand(renewalInfo.getCurrentRenewalStatus());
+			}
 					
 			if(pLoginSession.getExtendedPatentUI() == null){
 				List<PatentExtendedData> firstData = new ArrayList<PatentExtendedData>();
@@ -336,9 +224,6 @@ public String getNextPhase(String currentPhase){
 			e.printStackTrace();
 		}
 	    	
-    	
-    	
-    	
 		return pLoginSession;
 		
 	}

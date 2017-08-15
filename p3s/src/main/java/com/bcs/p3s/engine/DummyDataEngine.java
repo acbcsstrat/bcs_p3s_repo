@@ -93,7 +93,7 @@ public class DummyDataEngine extends Universal {
 		patent.setPrimaryApplicantName("Tim Berners-Lee");
 		patent.setPatentPublicationNumber("123P");
 		patent.setLastRenewedDateExEpo(nowPlusNdays(-660));
-		patent.setRenewalYear(4);
+		patent.setLastRenewedYearEpo(4);
 		patent.setEpoPatentStatus("EXAMINATION REQUESTED");
 		/**
 		 * CALL TO PatentStatusEngine PROCESSING ENGINE
@@ -104,7 +104,7 @@ public class DummyDataEngine extends Universal {
 		renewalInfo = new PatentStatusEngine().getRenewalInfo(patent);
 
 		patent.setRenewalStatus(renewalInfo.getCurrentRenewalStatus());
-		patent.setRenewalYear(renewalInfo.getThisYearNumber());
+		patent.setRenewalYear(renewalInfo.getActiveRenewalYear());
 		
 		
 		
