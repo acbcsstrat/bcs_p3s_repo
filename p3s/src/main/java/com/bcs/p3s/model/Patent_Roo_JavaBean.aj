@@ -83,6 +83,14 @@ privileged aspect Patent_Roo_JavaBean {
         this.lastRenewedDateExEpo = lastRenewedDateExEpo;
     }
     
+    public Integer Patent.getLastRenewedYearEpo() {
+        return this.lastRenewedYearEpo;
+    }
+    
+    public void Patent.setLastRenewedYearEpo(Integer lastRenewedYearEpo) {
+        this.lastRenewedYearEpo = lastRenewedYearEpo;
+    }
+    
     public Integer Patent.getRenewalYear() {
         return this.renewalYear;
     }

@@ -119,6 +119,18 @@ public class TemporaryProcessingEngine extends Universal {
 			   		patent.setRenewalYear(year);
 			   	}
 			   	
+			   	if ("lastRenewedYearEpo".equals(key.trim())) {
+			   		
+			   		
+			   		Integer year = 0;
+			   		if (ob instanceof Integer) {
+			   			year = (Integer) ob;
+			   		} 
+			   		
+				   	
+			   		patent.setLastRenewedYearEpo(year);
+			   	}
+			   	
 			   	if ("epoPatentStatus".equals(key.trim())) patent.setEpoPatentStatus(value);
 			   	
 			   	if ("renewalStatus".equals(key.trim())) patent.setRenewalStatus(value);

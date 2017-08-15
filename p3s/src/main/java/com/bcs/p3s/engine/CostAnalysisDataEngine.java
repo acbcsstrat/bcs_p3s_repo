@@ -46,190 +46,12 @@ public class CostAnalysisDataEngine extends Universal{
 	//public static void main(String[] args) throws ParseException{
 		
 		log().debug("CostAnalysisDataEngine getRenewalWindowDates(patent) invoked : ");
-		RenewalDates allDates = new RenewalDates();
 		
+		
+		RenewalDates allDates = new RenewalDatesEngine().getRenewalDates(patent);
+        
 	/**
-	 * STEP 1 : Calculate the actual renewal due date
-	 */
-		
-		/** 
-		 * STEP 1.1 :- Calculatng th next Renewal Due Date - get te last day of the month containing the anniversary of the filing Date
-		 * 
-		 */
-		
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(patent.getFilingDate());
-		/*SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		Date convertedDate = dateFormat.parse("02/05/2009");
-		calendar.setTime(convertedDate);*/
-		
-        /**
-         * STEP 1.2 :- generate the date for this year with the last day of month of filing patent
-         * 
-         */
-		
-        int month = calendar.get(Calendar.MONTH);
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        
-        Calendar nextRenewalDate = Calendar.getInstance();
-        nextRenewalDate.set(year, month, day , 23,59);  
-        System.out.println("Anniversary Date is "+ nextRenewalDate.getTime());
-        Calendar actualCurrentRenewalDate = getLastDayOfMonth(nextRenewalDate.getTime());
-        System.out.println("This year renewal due "+ actualCurrentRenewalDate.getTime());
-        
-        /**
-         * STEP 1.3 :-Get the boundary dates for the above filing due date - 3 months prior and 6 months after
-         */
-        Calendar renewalStart = Calendar.getInstance();
-        renewalStart.setTime(actualCurrentRenewalDate.getTime());
-        renewalStart.add(Calendar.MONTH, -3);
-        renewalStart.setTime(utils.getMidnight(renewalStart.getTime()));
-        
-        Calendar renewalEnd = Calendar.getInstance();
-        renewalEnd.setTime(actualCurrentRenewalDate.getTime());
-        System.out.println("Actual Due Date again" +actualCurrentRenewalDate.getTime());
-        renewalEnd.add(Calendar.MONTH, 6);
-        
-        System.out.println("Doldrums for current are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
-        
-        /**
-         * STEP 1.4 :- Compare whether the last renewal date(FROM DB) lies in between start and end date 
-         */
-        Calendar lastReneweddate = Calendar.getInstance();
-        lastReneweddate.setTime(patent.getLastRenewedDateExEpo());
-		/*SimpleDateFormat dateFormat1 = new SimpleDateFormat("MM/dd/yyyy");
-		Date convertedDate1 = dateFormat1.parse("02/05/2016");
-		lastReneweddate.setTime(convertedDate1);*/
-		
-        if(patent.getRenewalStatus().equalsIgnoreCase(RenewalStatusEnum.RENEWAL_IN_PLACE)){
-			if( lastReneweddate.after(renewalStart) && lastReneweddate.before(renewalEnd)){
-				System.out.println("Renewal for filing Due "+ actualCurrentRenewalDate.getTime());
-				allDates.setCurrentRenewalDueDate(actualCurrentRenewalDate.getTime());
-				allDates.setCurrentWindowOpenDate(renewalStart.getTime());
-				allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
-				
-				/**
-				 * GET THE NEXT YEAR'S RENEWAL INFO
-				 */
-				Calendar nextRenewalDueDate = Calendar.getInstance();
-				nextRenewalDueDate.set(year+1, month, day , 23,59);  
-	            System.out.println("Renewal date 1 year after " + nextRenewalDueDate.getTime());
-	            Calendar actualNextRenewalDate = getLastDayOfMonth(nextRenewalDueDate.getTime());
-	            System.out.println("Next year renewal due "+ actualNextRenewalDate.getTime());
-	            
-	            renewalStart = Calendar.getInstance();
-	            renewalStart.setTime(actualNextRenewalDate.getTime());
-	            renewalStart.add(Calendar.MONTH, -3);
-	            renewalStart.setTime(utils.getMidnight(renewalStart.getTime()));
-	            
-	            renewalEnd = Calendar.getInstance();
-	            renewalEnd.setTime(actualNextRenewalDate.getTime());
-	            System.out.println("Actual Due Date again" +actualNextRenewalDate.getTime());
-	            renewalEnd.add(Calendar.MONTH, 6);
-	            System.out.println("Doldrums for next year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
-	            
-	            allDates.setNextRenewalDueDate(actualNextRenewalDate.getTime());
-	            allDates.setNextWindowOpenDate(renewalStart.getTime());
-	            allDates.setNexttWindowCloseDate(renewalEnd.getTime());
-			}
-			
-			/**
-	         * STEP 1.5 :- Get the previous year renewal due date and check whether last Renewed Date (FROM DB) lies in between start date and end date 
-	         */
-			
-			else{
-				
-				/**
-				 * SET THE NEXT YEAR'S RENEWAL INFO AS PREVIOUSLY CALCULATED DATES
-				 */
-				allDates.setNextRenewalDueDate(actualCurrentRenewalDate.getTime());
-	            allDates.setNextWindowOpenDate(renewalStart.getTime());
-	            allDates.setNexttWindowCloseDate(renewalEnd.getTime());
-	            
-				Calendar prevRenewalDate = Calendar.getInstance();
-	            prevRenewalDate.set(year-1, month, day , 23,59);  
-	            System.out.println("Renewal date 1 year before " + prevRenewalDate.getTime());
-	            Calendar actualPrevRenewalDate = getLastDayOfMonth(prevRenewalDate.getTime());
-	            System.out.println("This year renewal due "+ actualPrevRenewalDate.getTime());
-	            
-	            renewalStart = Calendar.getInstance();
-	            renewalStart.setTime(actualPrevRenewalDate.getTime());
-	            renewalStart.add(Calendar.MONTH, -3);
-	            renewalStart.setTime(utils.getMidnight(renewalStart.getTime()));
-	            
-	            renewalEnd = Calendar.getInstance();
-	            renewalEnd.setTime(actualPrevRenewalDate.getTime());
-	            System.out.println("Actual Due Date again" +actualPrevRenewalDate.getTime());
-	            renewalEnd.add(Calendar.MONTH, 6);
-	            System.out.println("Doldrums for previous year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
-	            
-	            if(lastReneweddate.after(renewalStart) && lastReneweddate.before(renewalEnd)){
-	    			System.out.println("Renewal for filing Due "+ actualPrevRenewalDate.getTime());
-	    			allDates.setCurrentRenewalDueDate(actualPrevRenewalDate.getTime());
-	    			allDates.setCurrentWindowOpenDate(renewalStart.getTime());
-	    			allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
-	    			
-	    		}
-	            else{
-	            	System.out.println("LOG PANIC ERROR THIS CASE");
-	            	System.out.println("SOMETHING WENT WRONG");
-	            	log().debug("CostAnalysisDataEngine getRenewalWindowDates(patent) : SOME UNEXPECTED DATA FROM DB");
-	            	log().fatal("CostAnalysisDataEngine getRenewalWindowDates(patent) : SOME UNEXPECTED DATA FROM DB");
-	            	return null;
-	            }
-			}
-        }
-        else if(patent.getRenewalStatus().equalsIgnoreCase(RenewalStatusEnum.SHOW_PRICE) || patent.getRenewalStatus().equalsIgnoreCase(RenewalStatusEnum.IN_PROGRESS) ){
-        	//Calendar todays = Calendar.getInstance();
-        	Date todays = new DateUtil().getTodaysDate();
-        	if(todays.after(renewalStart.getTime()) && todays.before(renewalEnd.getTime())){
-	        	System.out.println("Renewal for filing Due "+ actualCurrentRenewalDate.getTime());
-				allDates.setCurrentRenewalDueDate(actualCurrentRenewalDate.getTime());
-				allDates.setCurrentWindowOpenDate(renewalStart.getTime());
-				allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
-        	}
-        	else{
-        	
-	        	/**
-				 * SET THE NEXT YEAR'S RENEWAL INFO AS PREVIOUSLY CALCULATED DATES
-				 */
-				allDates.setNextRenewalDueDate(actualCurrentRenewalDate.getTime());
-	            allDates.setNextWindowOpenDate(renewalStart.getTime());
-	            allDates.setNexttWindowCloseDate(renewalEnd.getTime());
-	            
-				Calendar prevRenewalDate = Calendar.getInstance();
-	            prevRenewalDate.set(year-1, month, day , 23,59);  
-	            System.out.println("Renewal date 1 year before " + prevRenewalDate.getTime());
-	            Calendar actualPrevRenewalDate = getLastDayOfMonth(prevRenewalDate.getTime());
-	            System.out.println("This year renewal due "+ actualPrevRenewalDate.getTime());
-	            
-	            renewalStart = Calendar.getInstance();
-	            renewalStart.setTime(actualPrevRenewalDate.getTime());
-	            renewalStart.add(Calendar.MONTH, -3);
-	            renewalStart.setTime(utils.getMidnight(renewalStart.getTime()));
-	            
-	            renewalEnd = Calendar.getInstance();
-	            renewalEnd.setTime(actualPrevRenewalDate.getTime());
-	            System.out.println("Actual Due Date again" +actualPrevRenewalDate.getTime());
-	            renewalEnd.add(Calendar.MONTH, 6);
-	            System.out.println("Doldrums for previous year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
-	            
-	            if(todays.after(renewalStart.getTime()) && todays.before(renewalEnd.getTime())){
-		        	System.out.println("Renewal for filing Due "+ actualPrevRenewalDate.getTime());
-					allDates.setCurrentRenewalDueDate(actualPrevRenewalDate.getTime());
-					allDates.setCurrentWindowOpenDate(renewalStart.getTime());
-					allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
-	        	}
-	            else{
-	            	log().debug("CostAnalysisDataEngine getRenewalWindowDates(patent) for renewal status "+ patent.getRenewalStatus()+" : SOME UNEXPECTED DATA FROM DB");
-	            	log().fatal("CostAnalysisDataEngine getRenewalWindowDates(patent) for renewal status "+ patent.getRenewalStatus()+" : SOME UNEXPECTED DATA FROM DB");
-	            	return null;
-	            }
-        	}
-        }
-	/**
-	* STEP 2 : Check whether renewal window still opened for the current filing due date
+	* Check whether renewal window still opened for the current filing due date
 	*/
       //Calendar todays = Calendar.getInstance();
     	Date todays = new DateUtil().getTodaysDate();
@@ -314,7 +136,7 @@ public class CostAnalysisDataEngine extends Universal{
 				caData.setCurrentcostBand(RenewalColourEnum.BROWN);
 			
 		}
-		else{
+		else{//CAN BE DOLDRUM OR TOO LATE TO RENEW
 			caData.setCurrentcostBand(RenewalColourEnum.NOCOLOR);
 		}
 		return caData.getCurrentcostBand();
@@ -336,7 +158,7 @@ public class CostAnalysisDataEngine extends Universal{
 		BigDecimal blueCost = new BigDecimal(0);
 		BigDecimal brownCost = new BigDecimal(0);
 		//below needs to be changed once MC starts sending daily rate files
-		BigDecimal fxRate = new BigDecimal(1.0608);
+		BigDecimal fxRate = new BigDecimal(0.88);
 		
 		greenCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD());
 		caMoreData.setGreenStageCost(greenCost);
@@ -436,6 +258,8 @@ public class CostAnalysisDataEngine extends Universal{
 			feeUI.setUrgentFee_USD((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 			feeUI.setSubTotal_USD(brownCost);
 		}
+		
+		
 			
 		feeUI.setFxRate(fxRate);
 		return feeUI;

@@ -21,6 +21,7 @@ import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.RenewalIntegrationTest;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -92,7 +93,7 @@ public class PostLoginDataEngine extends Universal{
 				else{
 					extendedData.setPatentId(patent.getId());
 					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
-					extendedData.setCurrentCostBand(patent.getRenewalStatus());
+					extendedData.setCurrentCostBand(renewalInfo.getCurrentRenewalStatus());
 				}
 				
 				allData.add(extendedData);
@@ -147,53 +148,5 @@ public class PostLoginDataEngine extends Universal{
 	}
 	
 	
-	public PostLoginSessionBean getExtendedDataForNewPatent(Patent patent, PostLoginSessionBean pLoginSession){
-		
-		CostAnalysisDataEngine caEngine = new CostAnalysisDataEngine();
-		CostAnalysisData caData = new CostAnalysisData();
-		
-		String err = PREFIX+"getExtendedDataForNewPatent(session) ";
-		log().debug("invoked : " + PREFIX +  err);
-		
-		
-		try {
-	    			
-	    	PatentExtendedData newPatentData = new PatentExtendedData();
-			RenewalDates renewalDates = caEngine.getRenewalWindowDates(patent);
-			caData = caEngine.getAllPhasesInfo(renewalDates);
-			String currentPhase = caEngine.getCurrentPhase(caData);
-			CombinedFee fee = caEngine.getFeeObj(patent);
-			FeeUI currentfeeUI = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-			FeeUI nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-					
-			newPatentData.setPatentId(patent.getId());
-			newPatentData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
-			newPatentData.setCurrentCostBand(caData.getCurrentcostBand());
-			newPatentData.setCurrentRenewalCost(currentfeeUI.getSubTotal_USD());
-			newPatentData.setRenewalCostNextStage(nextStageFeeUI.getSubTotal_USD());
-			newPatentData.setCostBandEndDate(getCostBandEnddate(caData).getTime());
-					
-			if(pLoginSession.getExtendedPatentUI() == null){
-				List<PatentExtendedData> firstData = new ArrayList<PatentExtendedData>();
-				firstData.add(newPatentData);
-				pLoginSession.setExtendedPatentUI(firstData);
-			}
-			else{
-				
-				List<PatentExtendedData> allData = pLoginSession.getExtendedPatentUI();
-				allData.add(newPatentData);
-				pLoginSession.setExtendedPatentUI(allData);
-			}
-				
-	    }
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	    	
-    	
-    	
-    	
-		return pLoginSession;
-		
-	}
+	
 }

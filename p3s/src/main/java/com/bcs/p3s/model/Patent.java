@@ -76,6 +76,9 @@ public class Patent {
     @DateTimeFormat(style = "M-")
     private Date lastRenewedDateExEpo;
 
+    @NotNull
+    private Integer lastRenewedYearEpo; 
+    
     /**
      */
     @NotNull
