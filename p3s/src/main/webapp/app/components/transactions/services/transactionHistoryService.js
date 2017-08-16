@@ -2,7 +2,8 @@ app.factory('transactionHistoryService', function($http, $q) {
 
 	var factory = {};
 
-		var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-historic-transactions/';
+	var appUrl = domain;
+	var REST_SERVICE_URI = appUrl +'rest-historic-transactions/';
 
 		factory.fetchTransactionHistory = function() {
 
