@@ -3,8 +3,11 @@ app.factory('patentsService', function($http, $q) {
     var factory = {};
 
         //var REST_SERVICE_URI = '../../p3sweb/assets/json/patents.json';
-        var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-patents/';
+    	var appUrl = domain;
+        //var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-patents/';
+    	var REST_SERVICE_URI = appUrl+'rest-patents/';
 
+    	console.log(REST_SERVICE_URI);
         factory.fetchAllPatents = function() {
         
             var deferred = $q.defer();
