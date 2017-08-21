@@ -71,7 +71,7 @@ public class PatentUI extends Patent {
 
 
 	// Constructor - converting a Patent to a PatentUI
-	public PatentUI(Patent patent) {
+	public PatentUI(Patent patent, List<PatentExtendedData> extendedDatas) {
 
 		this.setId(patent.getId());
 		this.setVersion(patent.getVersion());
@@ -87,6 +87,7 @@ public class PatentUI extends Patent {
 		this.setRenewalStatus(patent.getRenewalStatus());
 		this.setBusiness(patent.getBusiness());
 		this.setLastRenewedDateExEpo(patent.getLastRenewedDateExEpo()); 
+		this.setLastRenewedYearEpo(patent.getLastRenewedYearEpo()); 
 		this.setRenewalYear(patent.getRenewalYear());
 		this.setNotifications(null); // UI will never want Notifications. Just NotificationUIs
 
@@ -95,9 +96,27 @@ public class PatentUI extends Patent {
 		//System.out.println("(patentService==null) = "+(patentService==null));
 		allNotificationUIs =createNotificationUIs(patent.getNotifications());
 
-		
+		//SETTING REMAINING FROM EXTENDED DATA ARGUMENT PASSED
+		if(! (extendedDatas == null) ){
+			for(PatentExtendedData extendedData : extendedDatas){
+				if(extendedData.getPatentId() == null){
+					this.setRenewalDueDate(extendedData.getRenewalDueDate());
+					this.setCurrentRenewalCost(extendedData.getCurrentRenewalCost());
+					this.setCostBandEndDate(extendedData.getCostBandEndDate());
+					this.setRenewalCostNextStage(extendedData.getRenewalCostNextStage());
+					
+				}
+				
+				else if(extendedData.getPatentId().equals(this.getId())){
+					this.setRenewalDueDate(extendedData.getRenewalDueDate());
+					this.setCurrentRenewalCost(extendedData.getCurrentRenewalCost());
+					this.setCostBandEndDate(extendedData.getCostBandEndDate());
+					this.setRenewalCostNextStage(extendedData.getRenewalCostNextStage());
+				}
+			}
+		}
 
-		// Now the additional fields - WHICH ARE
+		
 //		patentUI.setCurrentRenewalCost(new BigDecimal("1.11"));
 //		patentUI.setCostBandEndDate(nowPlusNdays(2));
 //		patentUI.setRenewalCostNextStage(new BigDecimal("1111111.11"));
@@ -170,6 +189,18 @@ public class PatentUI extends Patent {
 
 	
 	// Getter/setters requiring special processing
+
+	public PatentUI() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+
+
+
+
 
 	public List<NotificationUI> getNotificationUIs() {
 		return this.allNotificationUIs;

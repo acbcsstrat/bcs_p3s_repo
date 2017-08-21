@@ -53,6 +53,13 @@ public class PostLoginDataEngine extends Universal{
 		List<Patent> patents = null;
 		
 		//PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		/** Clear the session data for PatentExtendedData**/
+		pLoginSession.setExtendedPatentUI(null);
+		
+		if( !(pLoginSession.getExtendedPatentUI() == null)){
+			//MP to add logs
+			return pLoginSession;
+		}
 		
 		TypedQuery<Patent> tq_patents = Patent.findPatentsByBusiness(pLoginSession.getBusiness());
     	patents = tq_patents.getResultList();

@@ -388,8 +388,8 @@ public class CostAnalysisDataEngine extends Universal{
 		
 		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
 		//List<ArchivedRate> archivedRateListPart = new ArrayList<ArchivedRate>();
-		
-		archivedRateList = ArchivedRate.findArchivedRateEntries(0, 5);
+		//MP - need to look into this method later
+		archivedRateList = ArchivedRate.findArchivedRateEntries(0, 5); //getting the last 6 days rate
 		
 		return archivedRateList;
 	}

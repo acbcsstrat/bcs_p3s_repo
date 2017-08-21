@@ -6,6 +6,7 @@ import java.util.List;
 import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
 import com.bcs.p3s.wrap.BankTransferPreCommitDetails;
 import com.bcs.p3s.wrap.BasketContents;
+import com.bcs.p3s.wrap.InBasket;
 
 public interface PaymentService {
 
@@ -19,7 +20,7 @@ public interface PaymentService {
 	 * Provide details for display in the Bank Transfer Pre-Commit page
 	 * @return A fully populated BankTransferPreCommitDetails object
 	 */
-	public BankTransferPreCommitDetails showBankTransferPreCommitDetails(List<Long> patentIds, BigDecimal totalCostUSD);
+	public BankTransferPreCommitDetails showBankTransferPreCommitDetails(InBasket basket);
 
 	/**
 	 * Provide details for display in the Bank Transfer Post-Commit page

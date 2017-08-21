@@ -14,6 +14,7 @@ import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.engine.PaymentProcessingEngine;
 import com.bcs.p3s.engine.PaymentTimingEngine;
+import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
@@ -23,6 +24,8 @@ import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
 import com.bcs.p3s.wrap.BankTransferPreCommitDetails;
 import com.bcs.p3s.wrap.BasketContents;
+import com.bcs.p3s.wrap.InBasket;
+import com.bcs.p3s.wrap.PatentExtendedData;
 
 @Service("PaymentService")
 public class PaymentServiceImpl extends ServiceAuthorisationTools implements PaymentService {
@@ -62,23 +65,53 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	
 	
     /** Implements API section 4.2 **/
-	public BankTransferPreCommitDetails showBankTransferPreCommitDetails(List<Long> patentIds, BigDecimal totalCostUSDin) {
+	public BankTransferPreCommitDetails showBankTransferPreCommitDetails(InBasket basket) {
 
 		String err = PREFIX+"showBankTransferPreCommitDetails() ";
-		checkAreMyPatents(patentIds, err);
-		checkNotNull(totalCostUSDin, err);
+		BigDecimal latestCalculatedCost = new BigDecimal("0.0");
+		checkAreMyPatents(basket.getPatentIds(), err);
+		checkNotNull(basket.getExpectedCost(), err);
 		log().debug(err+" invoked ");
 
-		
+		PostLoginDataEngine recalculateEngine = new PostLoginDataEngine();
 		BankTransferPreCommitDetails bankTransferCheckoutPreCommit = new BankTransferPreCommitDetails();
 		
 		try {
-			populateBankTransferPreCommitDetails(bankTransferCheckoutPreCommit, patentIds);
+			//populateBankTransferPreCommitDetails(bankTransferCheckoutPreCommit, basket.getPatentIds());
 
-		
+			/**
+			 * RECALCULATE THE RENEWAL COSTS AGAIN AGAIN
+			 * Calling the same method that we are calling as part of POST Login calculations - getExtendedPatentData(session)
+			 * 	recalculating all patent data and restore that in session
+			 */
+			PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+			if(pLoginSession == null){
+				//MP to add logs
+				return null;
+			}
+			pLoginSession = recalculateEngine.getExtendedPatentData(pLoginSession);
+			
+			//add up the cost for the patents in the basket
+			
+			if(!(pLoginSession.getExtendedPatentUI() == null) ){
+				
+				List<PatentExtendedData> sessionData = pLoginSession.getExtendedPatentUI();
+				for(PatentExtendedData eachSessionData : sessionData){
+					if(basket.getPatentIds().contains(eachSessionData.getPatentId())){
+						latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost());
+					}
+				}
+				bankTransferCheckoutPreCommit.setTotalCostUSD(latestCalculatedCost);
+			}
+			
+			
+			bankTransferCheckoutPreCommit = populateBankTransferPreCommitDetails(bankTransferCheckoutPreCommit, basket.getPatentIds());
 			// Check that expected price matches calculated
-			BigDecimal expected = totalCostUSDin.setScale(2, BigDecimal.ROUND_CEILING);
-			BigDecimal calculated = bankTransferCheckoutPreCommit.getTotalCostUSD().setScale(2, BigDecimal.ROUND_CEILING);
+			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_CEILING);
+			//BigDecimal calculated = bankTransferCheckoutPreCommit.getTotalCostUSD().setScale(2, BigDecimal.ROUND_CEILING);
+			
+			BigDecimal calculated = latestCalculatedCost.setScale(2, BigDecimal.ROUND_CEILING);
+			
 			if (expected.compareTo(calculated) != 0) {
 				err += "Expected Total Price differs from calculated. Expected="+expected.toString()+"  calculated="+calculated.toString();
 				logM().warn(err);
@@ -151,20 +184,44 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	protected void populateBasketContents(BasketContents basketContents, List<Long> patentIds) {
 
 		basketContents.setOrderedPatentUIs(new ArrayList<PatentUI>());
+		
+		/**
+		 * RECALCULATE THE RENEWAL COSTS AGAIN AGAIN
+		 * Calling the same method that we are calling as part of POST Login calculations - getExtendedPatentData(session)
+		 * 	recalculating all patent data and restore that in session
+		 */
+		PostLoginDataEngine recalculateEngine = new PostLoginDataEngine();
+		BigDecimal latestCalculatedCost = new BigDecimal("0.0");
+		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		if(pLoginSession == null){
+			//MP to add logs
+			return ;
+		}
+		pLoginSession = recalculateEngine.getExtendedPatentData(pLoginSession);
+		
+		//add up the cost for the patents in the basket
+		
+		if(!(pLoginSession.getExtendedPatentUI() == null) ){
+			
+			List<PatentExtendedData> sessionData = pLoginSession.getExtendedPatentUI();
+			for(PatentExtendedData eachSessionData : sessionData){
+				if(patentIds.contains(eachSessionData.getPatentId())){
+					latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost());
+				}
+			}
+			basketContents.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_CEILING));
+		}
+		
 
+		List<PatentExtendedData> extendedData = pLoginSession.getExtendedPatentUI();
+		
 		for (Long patid : patentIds) {
 			Patent patent = Patent.findPatent(patid);
 			if (patent==null) logInternalError().fatal("PaymentServiceImpl populateBasketContents (for showBasketContents) given invalid PatentID of "+patid);
-			PatentUI pui = new PatentUI(patent);
+			PatentUI pui = new PatentUI(patent, extendedData);
 			basketContents.getOrderedPatentUIs().add(pui);
 		}
 
-//	total cost uses INVENTED data - acToDo
-		DummyDataEngine dummy = new DummyDataEngine();
-		basketContents.setTotalCostUSD(dummy.inventTotalBasketCost(patentIds));
-
-		
-		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
 	    P3SUser p3sUser = pLoginSession.getUser();
 	    Business business = pLoginSession.getBusiness();
 
@@ -183,21 +240,19 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	}
 	
 	
-	protected void populateBankTransferPreCommitDetails(BankTransferPreCommitDetails bankTransferPreCommitDetails, List<Long> patentIds) {
+	protected BankTransferPreCommitDetails populateBankTransferPreCommitDetails(BankTransferPreCommitDetails bankTransferPreCommitDetails, List<Long> patentIds) {
 
 		bankTransferPreCommitDetails.setOrderedPatentUIs(new ArrayList<PatentUI>());
 
+		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		List<PatentExtendedData> extendedData = pLoginSession.getExtendedPatentUI();
+		
 		for (Long patid : patentIds) {
 			Patent patent = Patent.findPatent(patid);
 			if (patent==null) logInternalError().fatal("PaymentServiceImpl populateBankTransferPreCommitDetails given invalid PatentID of "+patid);
-			PatentUI pui = new PatentUI(patent);
+			PatentUI pui = new PatentUI(patent,extendedData);
 			bankTransferPreCommitDetails.getOrderedPatentUIs().add(pui);
 		}
-
-////	total cost uses INVENTED data - acToDo - until the PatentUIs have price
-		DummyDataEngine dummy = new DummyDataEngine();
-		bankTransferPreCommitDetails.setTotalCostUSD(dummy.inventTotalBasketCost(patentIds));
-
 		
 	    Date now = new Date();
 	    bankTransferPreCommitDetails.setDateNowLocalTime(now);
@@ -209,6 +264,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	    bankTransferPreCommitDetails.setTransTargetEndDate(endDate);
 	    String endDateUI = new DateUtil().dateToUSStringWithDayOfWeekandTimeandZone(endDate);
 	    bankTransferPreCommitDetails.setTransTargetEndDateUI(endDateUI);
+	    
+	    return bankTransferPreCommitDetails;
 
 	}
 	

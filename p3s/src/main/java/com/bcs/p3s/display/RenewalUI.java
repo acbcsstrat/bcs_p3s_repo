@@ -87,7 +87,7 @@ public class RenewalUI extends Renewal {
 		
 		//set patent to null use only patentUI
 		
-		PatentUI pui = new PatentUI(this.getPatent());
+		PatentUI pui = new PatentUI(this.getPatent(),null);
 		this.setPatent(null);
 		pui.setBusiness(null);
 		pui.setNotifications(null);

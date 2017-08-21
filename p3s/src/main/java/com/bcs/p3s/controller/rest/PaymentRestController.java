@@ -1,6 +1,7 @@
 package com.bcs.p3s.controller.rest;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
+import com.bcs.p3s.engine.TemporaryProcessingEngine;
 import com.bcs.p3s.engine.dummyclasses.Api4dotXdataFromGETworkaround;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
@@ -21,6 +23,7 @@ import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
 import com.bcs.p3s.wrap.BankTransferPreCommitDetails;
 import com.bcs.p3s.wrap.BasketContents;
+import com.bcs.p3s.wrap.InBasket;
 
 
 /*
@@ -42,22 +45,18 @@ public class PaymentRestController extends Universal {
     public ResponseEntity<BasketContents> showBasketContents(@RequestBody Object obby) {
 
     	log().debug("PaymentRestController : /rest-basket/ showBasketContents() invoked.  ");
-
-    	if ( ! (obby instanceof String)) throw new P3SRuntimeException("PaymentRestController : /rest-basket/ showBasketContents() NOT passed String");
     	
-    	BasketContents basketContents;
+    	if ( ! (obby instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("PaymentRestController : /rest-basket/ showBasketContents() NOT passed String");
+    	
+    	BasketContents basketContents = null;
     	try {
 
-    		// In due course, an extractor (like below) should be used here. meanshile, use DummyDataEngine & classses from com.bcs.p3s.engine.dummyclasses
-//			ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
-//			List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs( (String) obby);
+    		//In due course, an extractor (like below) should be used here. meanshile, use DummyDataEngine & classses from com.bcs.p3s.engine.dummyclasses
+			ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
+			List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs((LinkedHashMap<String,Object>) obby);
 
-    		DummyDataEngine dummy = new DummyDataEngine();
-    		Api4dotXdataFromGETworkaround tmp = dummy.getApi41data( (String) obby );
     		
-    		
-    		
-			basketContents = paymentService.showBasketContents(tmp.patentIds);
+			basketContents = paymentService.showBasketContents(patentsInBasket);
 			   	
 
 		} catch (Exception e) {
@@ -70,12 +69,12 @@ public class PaymentRestController extends Universal {
 
   	
 		log().debug("PaymentRestController : /rest-basket/ showBasketContents() returning. Content follows (unless null)");
-		if (basketContents!=null) log().debug(basketContents.toString());
+		//if (basketContents!=null) log().debug(basketContents.toString());
 		return new ResponseEntity<BasketContents>(basketContents, HttpStatus.OK);
     }
 
     
-    // Below is a temporary GET variant of the above POSt method: for development and testing purposes only // acToDo 
+   /* // Below is a temporary GET variant of the above POSt method: for development and testing purposes only // acToDo 
     @RequestMapping(value = "/rest-basket/{api41cmd}", method = RequestMethod.GET)
     public ResponseEntity<BasketContents> showBasketContentsAsGET(@PathVariable("api41cmd") String api41cmd) {
 
@@ -83,7 +82,7 @@ public class PaymentRestController extends Universal {
 
     	
     	return showBasketContents(api41cmd);
-    }
+    }*/
 
     
 
@@ -91,21 +90,27 @@ public class PaymentRestController extends Universal {
 
     // Implements API section 4.2
     // Provide details for display in the about-to-Commit-to-bank-transfer page
+    //Sending IDs and totalUSDCost
     @RequestMapping(value = "/rest-prepare-banktransfer/", method = RequestMethod.POST)
     public ResponseEntity<BankTransferPreCommitDetails> showBankTransferPreCommitDetails(@RequestBody Object obby) {
 
     	log().debug("PaymentRestController : /rest-prepare-banktransfer/ showBankTransferPreCommitDetails() invoked.  ");
 
-    	if ( ! (obby instanceof String)) throw new P3SRuntimeException("PaymentRestController : /rest-prepare-banktransfer/ showBankTransferPreCommitDetails() NOT passed String");
+    	if ( ! (obby instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("PaymentRestController : /rest-prepare-banktransfer/ showBankTransferPreCommitDetails() NOT passed String");
     	
-    	BankTransferPreCommitDetails bankTransferPreCommitDetails;
+    	BankTransferPreCommitDetails bankTransferPreCommitDetails = null;
+    	InBasket basketContents = new InBasket();
     	try {
 
-    		DummyDataEngine dummy = new DummyDataEngine();
-    		Api4dotXdataFromGETworkaround tmp = dummy.getApi42data( (String) obby );
-
+    		/*DummyDataEngine dummy = new DummyDataEngine();
+    		Api4dotXdataFromGETworkaround tmp = dummy.getApi42data( (String) obby );*/
     		
-			bankTransferPreCommitDetails = paymentService.showBankTransferPreCommitDetails(tmp.patentIds, tmp.expectedCost);
+    		basketContents = new ExtractSubmittedDataEngine().getBasketContentsFromCheckOutForm(obby);
+    		
+    		//get the ids from the object
+    		
+    		
+			bankTransferPreCommitDetails = paymentService.showBankTransferPreCommitDetails(basketContents);
 
     	} catch (Exception e) {
 			System.out.println("PaymentRestController showBankTransferPreCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ");

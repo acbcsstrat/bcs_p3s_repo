@@ -98,6 +98,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		log().debug(err+" invoked ");
     	
 		Patent patent = null;
+		
+		//STILL USING DUMMYDATAENGINE BECAUSE NO EPO SCRAPE EXIST
 		DummyDataEngine dummy = new DummyDataEngine();
 		patent = dummy.createDummyPatentForSearchAddPatent(patentApplicationNumber,postSession);
 		
@@ -624,12 +626,12 @@ public PatentUI populateDataToPatentUI(Patent patent){
 		
 		String err = PREFIX+"populateDataToPatentUI(patentUI) ";
 		boolean patentFound = false;
-		PatentUI patentUI = new PatentUI(patent);
+		
 		
 		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
 		List<PatentExtendedData> extendedDatas = pLoginSession.getExtendedPatentUI();
 		
-		
+		PatentUI patentUI = new PatentUI(patent,extendedDatas);
 		
 			for(PatentExtendedData extendedData : extendedDatas){
 				if(extendedData.getPatentId() == null){

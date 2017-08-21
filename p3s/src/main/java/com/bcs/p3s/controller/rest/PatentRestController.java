@@ -150,6 +150,7 @@ public class PatentRestController extends Universal {
 		
 		log().debug("PatentRestController : /rest-patents/ updatePatent() [tolerant] invoked   -  untypedPppp  ");
 
+		PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
 		if (untypedPatentUI!=null) log().debug("  param untypedPatentUI is of type " + untypedPatentUI.getClass().getName());
 		
 		try {
@@ -173,7 +174,7 @@ public class PatentRestController extends Universal {
 	  		return new ResponseEntity<PatentUI>(HttpStatus.NOT_FOUND); //You many decide to return HttpStatus.NO_CONTENT
 	  	}
 	  	else {
-	  		PatentUI updatedPatentUI = new PatentUI(nowPersistedPatent);
+	  		PatentUI updatedPatentUI = new PatentUI(nowPersistedPatent,postSession.getExtendedPatentUI());
 	  		return new ResponseEntity<PatentUI>(updatedPatentUI, HttpStatus.OK);
 	  	}
    }

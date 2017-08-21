@@ -161,12 +161,12 @@ public class DummyDataEngine extends Universal {
 	}
 
 	
-	public BigDecimal inventTotalBasketCost(List<Long> patentIds) {
+	/*public BigDecimal inventTotalBasketCost(List<Long> patentIds) {
 		BigDecimal inventedRubbish = new BigDecimal(1234.56);
 		int numbeOfPatents = patentIds.size();
 		BigDecimal multiplicity = new BigDecimal(numbeOfPatents);
 		return inventedRubbish.multiply(multiplicity);
-	}
+	}*/
 
 //	public BigDecimal inventExpectedCost() {
 //		BigDecimal inventedRubbish = new BigDecimal(808.08);
@@ -200,7 +200,7 @@ public class DummyDataEngine extends Universal {
 //	public Long genericDummyBillingAddressZip() { return 11111L; }
 	
 	// api 4.1
-	public Api4dotXdataFromGETworkaround getApi41data(String raw) {
+	/*public Api4dotXdataFromGETworkaround getApi41data(String raw) {
 		Api4dotXdataFromGETworkaround result = new Api4dotXdataFromGETworkaround();
 		
 		ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
@@ -209,8 +209,8 @@ public class DummyDataEngine extends Universal {
 		
 		return result;
 	}
-	// api 4.2
-	public Api4dotXdataFromGETworkaround getApi42data(String raw) {
+	// api 4.2 - ACTUAL VALUES COMING FROM POST 
+*/	/*public Api4dotXdataFromGETworkaround getApi42data(String raw) {
 		Api4dotXdataFromGETworkaround result = new Api4dotXdataFromGETworkaround();
 		
 		String[] elements = raw.split(":",-1); 
@@ -226,7 +226,7 @@ public class DummyDataEngine extends Universal {
 		result.expectedCost = new BigDecimal(elly);
 		
 		return result;
-	}
+	}*/
 	// api 4.3
 	public Api4dotXdataFromGETworkaround getApi43data(String raw) {
 		Api4dotXdataFromGETworkaround result = new Api4dotXdataFromGETworkaround();
@@ -236,8 +236,8 @@ public class DummyDataEngine extends Universal {
 		
 		System.out.println("   First Element is : elements[0] = "+elements[0]);
 		ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
-		List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs(elements[0]);
-		result.patentIds = patentsInBasket;
+		//List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs(elements[0]);
+		//result.patentIds = patentsInBasket;
 
 		elly = caratToDotConvertor(elements[1]);
 		System.out.println("   Second Element is : elements[1] = "+elly);
