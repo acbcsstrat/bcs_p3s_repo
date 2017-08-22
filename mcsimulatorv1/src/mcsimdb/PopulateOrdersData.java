@@ -61,11 +61,11 @@ public class PopulateOrdersData extends Universal{
 	      BigDecimal currentRate = new BigDecimal(0.0);
 	      while (rs_rate.next())
 	      {
-	    	  currentRate = rs.getBigDecimal("current_rate");
+	    	  currentRate = rs_rate.getBigDecimal("current_rate");
 		  }
 	      
 	      orderData.UsdToEurRate = currentRate;
-	      orderData.EURAmount = orderData.USDAmount.divide(currentRate);
+	      orderData.EURAmount = (orderData.USDAmount).divide(currentRate,2, BigDecimal.ROUND_HALF_UP);
 	      
 	      //NOW HARDCODING THE SPEED PROPERTY
 	      orderData.speed = "SEPA";

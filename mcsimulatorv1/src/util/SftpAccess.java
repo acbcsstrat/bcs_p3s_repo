@@ -381,8 +381,9 @@ public class SftpAccess extends Universal {
 		String oneLine = "";
 		oneLine = newOrder.getP3sRef()+ COMMA_DELIMITER + newOrder.getUsdToEurRate()+ COMMA_DELIMITER + 
 				newOrder.getUSDAmount() + COMMA_DELIMITER + newOrder.getEURAmount() + COMMA_DELIMITER +
+				newOrder.getTransStartDate() + COMMA_DELIMITER + newOrder.getTransTargetEndDate() + COMMA_DELIMITER +
 				newOrder.getDestination() + COMMA_DELIMITER +newOrder.getSpeed() + COMMA_DELIMITER +
-				newOrder.getNowDate().getTime();
+				newOrder.getNowDate();
 		
 		lines.add(FILE_HEADER);
 		lines.add(oneLine);
