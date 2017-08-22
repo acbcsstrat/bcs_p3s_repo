@@ -57,7 +57,7 @@ public class Launch {
 		
 		try{
 			sftp.connectToSftp();
-			processEngine.generateOrdersFile();
+			processEngine.generateOrdersFile((long)1);
 		}
 		catch (Exception e) {
 			//log().error("Failure within moneycorp specific utilities - 3", e);
