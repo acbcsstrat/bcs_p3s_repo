@@ -38,8 +38,6 @@ app.component('patents', {
       var userTimedOut = false;
 
       var href=""
-      var appUrl = domain;
-  	
 
       	$scope.$on('IdleTimeout', function() {
         	closeModals();
@@ -52,10 +50,10 @@ app.component('patents', {
         // })
 
 	        if (userTimedOut) {
-	        	$http.post(appUrl+'resources/j_spring_security_logout')
+	        	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
 	        	.then(
 	        		function(){
-		        		window.location = appUrl +'login';
+		        		window.location = 'http://localhost:8080/p3sweb/login';
 	        		}    
 	    		)    	
 	        }

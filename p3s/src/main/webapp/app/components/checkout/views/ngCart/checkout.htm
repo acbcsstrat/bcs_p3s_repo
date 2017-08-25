@@ -1,7 +1,73 @@
-<div ng-if="service=='http' || service == 'log'">
-    <button class="btn btn-primary" ng-click="checkout()" ng-disabled="!ngCart.getTotalItems()" ng-transclude>Checkout</button>
+<div class="row">
+    <div class="col-md-6">
+        <form class="form" name="billingForm">
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 text-md-right" for="firstName">First Name</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="firstName" ng-model="billingDetails.firstName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 text-md-right" for="lastName">Last Name</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="lastName"  ng-model="billingDetails.lastName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 text-md-right" for="billingStreet">Street</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="businessStreet" ng-model="billingDetails.billingStreet">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 text-md-right" for="billingCity">City</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="billingCity" ng-model="billingDetails.billingCity">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 text-md-right" for="billingState">State</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="billingState" ng-model="billingDetails.billingState">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 text-md-right" for="billingZip">Zip</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="billingZip" ng-model="billingDetails.billingZip">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Date</td>
+                    <td>{{summary.date}}</td>
+                </tr>
+                <tr>
+                    <td>Total patents</td>
+                    <td>{{summary.totalPatents}}</td>
+                </tr>
+                <tr>
+                    <td>Patents</td>
+                    <td>
+                        <span ng-repeat="x in summary.patents">{{x}}<br></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Total Cost</td>
+                    <td>$ {{summary.totalCost}}</td>
+                </tr>                                           
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<div ng-if="service=='http' || service == 'log'">
+    <button class="btn btn-primary" ng-click="checkout()" ng-disabled="!ngCart.getTotalItems()">Checkout</button>
+</div>
 
 <div ng-if="service=='paypal'">
 

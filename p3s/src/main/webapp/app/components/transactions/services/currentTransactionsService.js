@@ -2,8 +2,7 @@ app.factory('currentTransactionsService', function($http, $q) {
 
 	var factory = {};
 
-		var appUrl = domain;
-		var REST_SERVICE_URI = appUrl +'rest-current-transactions/';
+		var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-current-transactions/';
 
 		factory.fetchCurrentTransactions = function() {
 

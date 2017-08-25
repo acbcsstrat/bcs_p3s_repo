@@ -1,94 +1,34 @@
-<!-- <div class="row">
-	<div class="col-md-12">
-		<table class="table text-md-center">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Application Number</th>
-					<th>Client Reference</th>
-					<th>Sub-total</th>
-					<th>Renewal Status</th>
-					<th>Renewal Deadline</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="item in ngCart.getCart().items track by $index">
-				 	<td>
-				 		<span ng-click="ngCart.removeItemById(item.getId())"><i class="fa fa-times fa-2x"></i></span>
-					</td>
-					<td>{{ item.getName() }}</td>
-					 <td>
-				   	{{ item.getQuantity() | number }}
-				    </td>
-				    <td>
-				    	{{ item.getPrice() | currency}}
-					</td>
-					<td ng-repeat="x in $ctrl.basketContent">
-					{{x}}
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="row">
-			<div class="offset-md-9 col-md-3">
-				<div class="row">
-					<div class="col-md-6">
-						<a ui-sref="patents" class="btn btn-success btn-block">Add more patents</a>
-					</div>
-					<div class="col-md-6">
-						<p>Total: <span>{{ ngCart.totalCost() | currency }}</span></p>
-					</div>				
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
- -->
-
 <div class="alert alert-warning" role="alert" ng-show="ngCart.getTotalItems() === 0">
     Your cart is empty
 </div>
 
 <div class="table-responsive col-lg-12" ng-show="ngCart.getTotalItems() > 0">
-
     <table class="table table-striped ngCart cart text-md-center">
-
         <thead>
-        <tr>
-            <th></th>
-            <th></th>
-            <th class="text-md-center">Quantity</th>
-            <th class="text-md-center">Amount</th>
-        </tr>
+            <tr>
+                <th class="text-md-center">Application No.</th>
+                <th class="text-md-center">Client Reference</th>
+                <th class="text-md-center">Short Description</th>
+                <th class="text-md-center">Amount</th>
+                <th class="text-md-center"></th>
+            </tr>
         </thead>
-        <tfoot>
-        <tr ng-show="ngCart.getTax()">
-            <td></td>
-            <td></td>
-            <td>Tax ({{ ngCart.getTaxRate() }}%):</td>
-            <td>{{ ngCart.getTax() | currency }}</td>
-        </tr>
-        <tr ng-show="ngCart.getShipping()">
-            <td></td>
-            <td></td>
-            <td>Shipping:</td>
-            <td>{{ ngCart.getShipping() | currency }}</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td>Total:</td>
-            <td>{{ ngCart.totalCost() | currency }}</td>
-        </tr>
-        </tfoot>
         <tbody>
-        <tr ng-repeat="item in ngCart.getCart().items track by $index">
-            <td><span ng-click="ngCart.removeItemById(item.getId())"><i class="fa fa-times fa-2x"></i></span></td>
-
-            <td>{{ item.getName() }}</td>
-            <td><span class="glyphicon glyphicon-minus" ng-class="{'disabled':item.getQuantity()==1}"
-                      ng-click="item.setQuantity(-1, true)"></span>&nbsp;&nbsp;
-                {{ item.getQuantity() | number }}&nbsp;&nbsp;
-                <span class="glyphicon glyphicon-plus" ng-click="item.setQuantity(1, true)"></span></td>
-            <td>{{ item.getPrice() | currency}}</td>
-        </tr>
+            <tr ng-repeat="item in ngCart.getCart().items track by $index">
+                <td>{{item.getData().patentApplicationNumber}}</td>
+                <td>{{item.getData().clientRef}}</td>
+                <td>{{item.getData().shortTitle}}</td>
+                <td>{{ item.getPrice() | currency}}</td>
+                <td><span ng-click="ngCart.removeItemById(item.getId())"><i class="fa fa-times fa-1x"></i></span></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total Cost:</td>
+                <td>{{ ngCart.totalCost() | currency }}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

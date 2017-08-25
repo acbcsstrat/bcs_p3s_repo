@@ -36,7 +36,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/patents',
         component: 'patents',
         resolve: {
-            patents: ['patentsService', function(patentsService) {
+            patents: ['patentsService', function(patentsService) { 
+              
                 return patentsService.fetchAllPatents();
             }],
             // graphs: ['patentsService', function(patentsService) {
@@ -59,9 +60,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
                     return patent.id == $stateParams.patentId;
                 })
             }],
-            graph: ['patentsService', '$stateParams',function(patentsService, $stateParams) {
-            	console.log($stateParams.patentId);
-                return  patentsService.fetchGraphData($stateParams.patentId); //PARAMS ID TO BE PASSED
+            graph: ['patentsService', '$stateParams',function(patentsService, $stateParams) { 
+                return  patentsService.fetchGraphData($stateParams.patentId);  
             }],
             renewal: ['renewals', function(renewals){
                 return renewals;
@@ -136,12 +136,19 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/basket',
         component: 'basket'
     })
-    .state('banktransfer-confirm', {
-        url: '/confirm-transaction',
-        component: 'banktransferConfirm'
+    .state('bank-transfer-preparation', {
+        url: '/bank-transfer-preparation',
+        component: 'bankTransferPreparation',
+        params: {
+            patentObj: null,
+            orderObj: null
+        }
     })    
-    .state('banktransfer-finalise', {
-        url: '/complete-transaction',
-        component: 'banktransferFinalise'
+    .state('bank-transfer-success', {
+        url: '/bank-transfer-success',
+        component: 'bankTransferSuccess',
+        params: {
+            orderObj: null
+        }
     })
 }]);

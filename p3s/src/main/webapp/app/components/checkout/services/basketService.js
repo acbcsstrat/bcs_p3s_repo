@@ -2,14 +2,13 @@ app.factory('basketService', ['$http', '$q', function($http, $q){
 
 	var factory = {};
 
-	var appUrl = domain;
-	var REST_SERVICE_URI = appUrl +'rest-basket/1,2';
+		var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-basket/';
 
-		factory.fetchBasketItems = function() {
+		factory.fetchBasketPatents = function(ids) {
 
 			var deferred = $q.defer();
 
-			$http.get(REST_SERVICE_URI)
+			$http.post(REST_SERVICE_URI, ids)
 			.then(
 				function(response){
 					deferred.resolve(response.data)

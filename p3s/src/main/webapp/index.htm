@@ -81,34 +81,48 @@
     	<script src="p3sweb/app/components/transactions/components/transaction-history-item.js"></script>
 
     	<script src="p3sweb/app/components/checkout/components/basket.js"></script>
-    	<script src="p3sweb/app/components/checkout/components/banktransferConfirm.js"></script>    	
+    	<script src="p3sweb/app/components/checkout/components/bankTransferPreparation.js"></script>    	
+    	<script src="p3sweb/app/components/checkout/components/bankTransferSuccess.js"></script>    	
 
     	<script src="p3sweb/app/components/user/components/user.js"></script>
-    	
-    	<script src="p3sweb/assets/config/config.js"></script>
 
 		<title>Patent Place</title>
 
 	</head>
 
 	<body ng-app="myApp">
-
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<nav class="nav navbar-light">
+						<div class="row">
+							<div class="col-md-6">
+								<ul class="nav">
+									<li class="nav-item"><a class="nav-link" ui-sref="patents">Patents</a></li>
+									<li class="nav-item"><a class="nav-link" ui-sref="current-transactions">Transactions</a></li>
+									<li class="nav-item"><a class="nav-link" ui-sref="profile">Profile</a></li>
+								</ul>
+								<!-- https://v4-alpha.getbootstrap.com/components/navs/ CHECK THIS OUT ON RETURN -->
+							</div>
+							<div class="col-md-6 text-md-right">
+								<ul class="nav">
+									<li class="nav-item"><a ui-sref="basket">
+										<ngcart-summary></ngcart-summary>
+									</a></li>
+									<li class="nav-item"><a href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a></li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+		
 		<main class="container">
 			
-			<!--   <nav ng-show="currentUser"> -->	
-			<nav>	
-				<a ui-sref="patents">Patents</a>
-				<a ui-sref="current-transactions">Transactions</a>
-				<a ui-sref="profile">Profile</a>
-				<a ui-sref="basket">
-					<ngcart-summary></ngcart-summary>
-				</a>
-			</nav>
-			
-			<ui-view></ui-view>
-			
-			<!-- MP adding a logout button -->
-			<a href="/p3sweb/resources/j_spring_security_logout">Logout</a>
+		
+
+		<ui-view></ui-view>
 		</main>
 	</body>
 

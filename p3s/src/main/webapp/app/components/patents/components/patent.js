@@ -33,8 +33,6 @@ app.component('patent', {
 	            	var patentLineChart = angular.element(document.getElementById('#patentLineChart"'));
 	            	var patentBarChart = angular.element(document.getElementById('#patentBarChart"'));
 
-
-
 	            	var caFee = vm.graph.fee;
 
 	            	vm.feeBreakDown = {
