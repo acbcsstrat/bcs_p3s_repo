@@ -39,14 +39,14 @@ public class P3SEnvironmentKnowledge extends Universal {
 	 * Provides the path of the database property file on this host
 	 */
 	public final String getDatabaseConfigFilespec()  {
-		String defaultpath = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";  // Deafult PC tomcat
+		String defaultpath = "C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";  // Deafult PC tomcat
 		String path = null;
 		String host = Hostname.getHostname();
 		
 		
 		// Logic: If Lenovo or Merin : is under eclipse, else Dell or Pat or TomcatA [or scrape]. 
 		if ("CCP020".equals(host)) {
-			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/";
+			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/"; // assumes running from war
 		}
 		if ("avid-ox790-013".equals(host)) {
 			path = "C:/MERIN/Documents/PatentPlace/P3S local repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/";
@@ -58,13 +58,15 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("reviewsystem".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
+		if ("CCP007".equals(host)) {
+			// path = defaultpath; // If running from war
+			path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse
+		}
 		
-		if ( (path==null) && ! "CCP007".equals(host) ) {
+		if (path==null) {
 			logInternalError().warn("P3SEnvironmentKnowledge getDatabaseConfigFilespec given unexpected host : "+host);
 		}
 		log().debug("P3SEnvironmentKnowledge getDatabaseConfigFilespec predicts that db conf file is in "+path);
-		
-		if (path==null) { path = defaultpath; }
 		
 		return appendFilenameToPath(path, DATABASECONFIGFILENAME);
 	};
