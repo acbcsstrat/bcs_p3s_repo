@@ -43,6 +43,8 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
         setBillingAddressState(obj, index);
         setBillingAddressStreet(obj, index);
         setBillingAddressZip(obj, index);
+        setFailureReason(obj, index);
+        setHasFailed(obj, index);
         setInitiatedByUserId(obj, index);
         setIsBillingAddressSame(obj, index);
         setLastUpdatedDate(obj, index);
@@ -50,7 +52,6 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
         setLatestTransStatus(obj, index);
         setMC_TransRef(obj, index);
         setP3S_TransRef(obj, index);
-        setStatusDesc(obj, index);
         setTransAmount_USD(obj, index);
         setTransStartDate(obj, index);
         setTransTargetEndDate(obj, index);
@@ -76,6 +77,16 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
     public void PaymentDataOnDemand.setBillingAddressZip(Payment obj, int index) {
         Long billingAddressZip = new Integer(index).longValue();
         obj.setBillingAddressZip(billingAddressZip);
+    }
+    
+    public void PaymentDataOnDemand.setFailureReason(Payment obj, int index) {
+        String failureReason = "failureReason_" + index;
+        obj.setFailureReason(failureReason);
+    }
+    
+    public void PaymentDataOnDemand.setHasFailed(Payment obj, int index) {
+        Boolean hasFailed = Boolean.TRUE;
+        obj.setHasFailed(hasFailed);
     }
     
     public void PaymentDataOnDemand.setInitiatedByUserId(Payment obj, int index) {
@@ -111,11 +122,6 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
     public void PaymentDataOnDemand.setP3S_TransRef(Payment obj, int index) {
         String P3S_TransRef = "P3S_TransRef_" + index;
         obj.setP3S_TransRef(P3S_TransRef);
-    }
-    
-    public void PaymentDataOnDemand.setStatusDesc(Payment obj, int index) {
-        String statusDesc = "statusDesc_" + index;
-        obj.setStatusDesc(statusDesc);
     }
     
     public void PaymentDataOnDemand.setTransAmount_USD(Payment obj, int index) {

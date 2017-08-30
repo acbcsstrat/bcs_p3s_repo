@@ -69,12 +69,20 @@ privileged aspect Payment_Roo_JavaBean {
         return this.latestTransStatus;
     }
     
-    public String Payment.getStatusDesc() {
-        return this.statusDesc;
+    public Boolean Payment.getHasFailed() {
+        return this.hasFailed;
     }
     
-    public void Payment.setStatusDesc(String statusDesc) {
-        this.statusDesc = statusDesc;
+    public void Payment.setHasFailed(Boolean hasFailed) {
+        this.hasFailed = hasFailed;
+    }
+    
+    public String Payment.getFailureReason() {
+        return this.failureReason;
+    }
+    
+    public void Payment.setFailureReason(String failureReason) {
+        this.failureReason = failureReason;
     }
     
     public Invoice Payment.getLatestInvoice() {

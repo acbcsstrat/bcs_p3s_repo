@@ -9,7 +9,7 @@ public class PaymentStatusEnum extends P3SAbstractEnum {
 	public static final String FUNDS_SENT = "Funds Sent";
 	public static final String EPO_RECEIVED = "EPO Received";
 	public static final String EPO_INSTRUCTED = "EPO Instructed";
-	public static final String FAILED = "Failed";
+	//public static final String FAILED = "Failed"; // AC 170830 Payment:hasFailed makes this redundant
 	public static final String COMPLETED = "Completed";
 
 	// Yes - is an oddity here. If client pays a penalty, we may not know which
@@ -40,8 +40,8 @@ public class PaymentStatusEnum extends P3SAbstractEnum {
 		if (status.equalsIgnoreCase(PaymentStatusEnum.EPO_INSTRUCTED) || status.equalsIgnoreCase("EPO_INSTRUCTED"))
 			sofar = PaymentStatusEnum.EPO_INSTRUCTED;
 
-		if (status.equalsIgnoreCase(PaymentStatusEnum.FAILED) || status.equalsIgnoreCase("FAILED"))
-			sofar = PaymentStatusEnum.FAILED;
+		//if (status.equalsIgnoreCase(PaymentStatusEnum.FAILED) || status.equalsIgnoreCase("FAILED"))
+		//	sofar = PaymentStatusEnum.FAILED;
 
 		if (status.equalsIgnoreCase(PaymentStatusEnum.COMPLETED) || status.equalsIgnoreCase("COMPLETED"))
 			sofar = PaymentStatusEnum.COMPLETED;

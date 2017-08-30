@@ -72,7 +72,9 @@ public class PaymentUI extends Payment {
 		this.setTransTargetEndDate(payment.getTransTargetEndDate());
 		this.setLastUpdatedDate(payment.getLastUpdatedDate());
 		this.setLatestTransStatus(payment.getLatestTransStatus());
-		this.setStatusDesc(payment.getStatusDesc());
+
+		this.setHasFailed(payment.getHasFailed());
+		this.setFailureReason(payment.getFailureReason());
 
 		Invoice invoice = payment.getLatestInvoice();
 		invoice.setPayment(null);
@@ -133,7 +135,7 @@ public class PaymentUI extends Payment {
 		boolean result = false;
 		String status = this.getLatestTransStatus();
 		if (PaymentStatusEnum.COMPLETED.equalsIgnoreCase(status)
-				|| PaymentStatusEnum.FAILED.equalsIgnoreCase(status)) {
+				|| this.getHasFailed()) {
 			result = true;
 		}
 		return result;

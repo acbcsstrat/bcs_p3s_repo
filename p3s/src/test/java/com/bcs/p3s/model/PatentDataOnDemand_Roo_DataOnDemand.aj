@@ -38,6 +38,7 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
         setEpoPatentStatus(obj, index);
         setFilingDate(obj, index);
         setLastRenewedDateExEpo(obj, index);
+        setLastRenewedYearEpo(obj, index);
         setPatentApplicationNumber(obj, index);
         setPatentPublicationNumber(obj, index);
         setPrimaryApplicantName(obj, index);
@@ -74,6 +75,11 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
     public void PatentDataOnDemand.setLastRenewedDateExEpo(Patent obj, int index) {
         Date lastRenewedDateExEpo = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setLastRenewedDateExEpo(lastRenewedDateExEpo);
+    }
+    
+    public void PatentDataOnDemand.setLastRenewedYearEpo(Patent obj, int index) {
+        Integer lastRenewedYearEpo = new Integer(index);
+        obj.setLastRenewedYearEpo(lastRenewedYearEpo);
     }
     
     public void PatentDataOnDemand.setPatentApplicationNumber(Patent obj, int index) {

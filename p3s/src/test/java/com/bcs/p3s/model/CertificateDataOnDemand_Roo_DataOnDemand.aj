@@ -6,7 +6,6 @@ package com.bcs.p3s.model;
 import com.bcs.p3s.model.Certificate;
 import com.bcs.p3s.model.CertificateDataOnDemand;
 import com.bcs.p3s.model.Renewal;
-import com.bcs.p3s.model.RenewalDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect CertificateDataOnDemand_Roo_DataOnDemand {
@@ -27,9 +25,6 @@ privileged aspect CertificateDataOnDemand_Roo_DataOnDemand {
     private Random CertificateDataOnDemand.rnd = new SecureRandom();
     
     private List<Certificate> CertificateDataOnDemand.data;
-    
-    @Autowired
-    RenewalDataOnDemand CertificateDataOnDemand.renewalDataOnDemand;
     
     public Certificate CertificateDataOnDemand.getNewTransientCertificate(int index) {
         Certificate obj = new Certificate();
@@ -68,7 +63,7 @@ privileged aspect CertificateDataOnDemand_Roo_DataOnDemand {
     }
     
     public void CertificateDataOnDemand.setRenewal(Certificate obj, int index) {
-        Renewal renewal = renewalDataOnDemand.getSpecificRenewal(index);
+        Renewal renewal = null;
         obj.setRenewal(renewal);
     }
     
