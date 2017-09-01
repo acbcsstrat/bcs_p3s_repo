@@ -4,6 +4,7 @@
 angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
     .controller('CartController',['$scope', 'ngCart', function($scope, ngCart) {
+    	console.log("anytime here")
         $scope.ngCart = ngCart;
     }])
 
@@ -88,7 +89,9 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
         return {
             restrict : 'E',
             scope: {
-                id:'@'
+                service:'@',
+                settings:'=',
+                ngModel: '='
             },
             controller : ('CartController', ['$rootScope', '$scope', 'ngCart', 'fulfilmentProvider', 'basketService', function($rootScope, $scope, ngCart, fulfilmentProvider, basketService) {
                 $scope.ngCart = ngCart;
@@ -110,27 +113,29 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
                     var patentObj = {
                         patent_ids: patent_ids,
-                        totalCostUSD: totalCost
+                        totalCostUSD: totalCost,
+                        dateNowLocalTime :null
                     }
      
                     var billingDetails = $scope.billingDetails;
                     var orderObj =  {
                         billingCity: billingDetails.billingCity,
                         billingStreet: billingDetails.billingStreet,
+                        billingState: billingDetails.billingState,
                         billingZip: billingDetails.billingZip,
                         firstName: billingDetails.firstName,
                         lastName: billingDetails.lastName,
                         totalCostUSD: totalCost,
-                        patents: patent_ids
+                        patent_ids: patent_ids
                     }
 
                     
-
                     fulfilmentProvider.setService($scope.service);
                     fulfilmentProvider.setSettings($scope.settings);
+                    console.log("Here comes inside directive")
                     fulfilmentProvider.checkout(patentObj, orderObj)
                         .then(function (data, status, headers, config, $state, $timeout) {
-                                $rootScope.$broadcast('ngCart:checkout_succeeded', data);
+                                $rootScope.$broadcast('ngCart', data);
                             },
                             function (data, status, headers, config) {
                                 $rootScope.$broadcast('ngCart:checkout_failed', {
@@ -180,29 +185,30 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                                 totalCost: response.totalCostUSD
                             }
 
-                            var recentValue = {
-                                id: (function(){
-                                    var patentIdArr = [];
-                                    patentArr.forEach(function(patent){
-                                        patentIdArr.push(patent.id)
-                                    })
-                                    return patentIdArr;
-                                }()),
-                                currentRenewalCost: (function(){
-                                    var costArr = [];
-                                    patentArr.forEach(function(patent){
-                                        costArr.push(patent.currentRenewalCost)
-                                    })
-                                    return costArr;                                 
-                                }())
-                            }
-                            cartItems.forEach(function(currentValue, index, array){
-                                if(currentValue._id = recentValue.id) {
-                                    currentValue._price = recentValue.currentRenewalCost[index];
-                                } else {
-                                    currentValue._price = currentValue._price;
-                                }
-                            })
+                            // var recentValue = {
+                            //     id: (function(){
+                            //         var patentIdArr = [];
+                            //         patentArr.forEach(function(patent){
+                            //             patentIdArr.push(patent.id)
+                            //         })
+                            //         return patentIdArr;
+                            //     }()),
+                            //     currentRenewalCost: (function(){
+                            //         var costArr = [];
+                            //         patentArr.forEach(function(patent){
+                            //             costArr.push(patent.currentRenewalCost)
+                            //         })
+                            //         return costArr;                                 
+                            //     }())
+                            // }
+
+                            // cartItems.forEach(function(currentValue, index, array){
+                            //     if(currentValue._id = recentValue.id) {
+                            //         currentValue._price = recentValue.currentRenewalCost[index];
+                            //     } else {
+                            //         currentValue._price = currentValue._price;
+                            //     }
+                            // })
                         },
                         function(errResponse){
                             console.log(errResponse)

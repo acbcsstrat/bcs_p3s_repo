@@ -188,13 +188,14 @@ public class CostAnalysisDataEngine extends Universal{
 	/**
 	 * 
 	 * @param currentPhase
-	 * @return fee UI object (breakdown fee) for @param phase
+	 * @return fee object (breakdown fee) for @param phase
 	 */
 	
-	public FeeUI getCurrentPhaseCost(String currentPhase, P3SFeeSole p3sFee , EpoFee epoFee, BigDecimal fxRate){
+	public Fee getCurrentPhaseCost(String currentPhase, P3SFeeSole p3sFee , EpoFee epoFee, BigDecimal fxRate){
 		
-		FeeUI feeUI = new FeeUI(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
-					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
+		Fee fee = new Fee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
+					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
+		//Fee fee = new Fee();
 		
 		
 		BigDecimal greenCost = new BigDecimal(0);
@@ -203,47 +204,56 @@ public class CostAnalysisDataEngine extends Universal{
 		BigDecimal blueCost = new BigDecimal(0);
 		BigDecimal brownCost = new BigDecimal(0);
 		
+		fee.setFxRate(fxRate);
 		
 		if(RenewalColourEnum.GREEN .equals(currentPhase)){
 			//greenCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate));
 			greenCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD());
-			feeUI.setRenewalFeeEUR(epoFee.getRenewalFee_EUR());
-			feeUI.setRenewalFeeUSD(epoFee.getRenewalFee_EUR().multiply(fxRate));
-			feeUI.setProcessingFeeUSD(p3sFee.getProcessingFee_USD());
-			feeUI.setSubTotalUSD(greenCost);
+
+			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
+			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
+			fee.setProcessingFee_USD(p3sFee.getProcessingFee_USD());
+			fee.setSubTotal_USD(greenCost);
+
 		}
 		
 		else if(RenewalColourEnum.AMBER .equals(currentPhase)){
 			//amberCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate)).add(p3sFee.getExpressFee_Percent().multiply(fxRate));
 			amberCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).
 					add(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
-			feeUI.setRenewalFeeEUR(epoFee.getRenewalFee_EUR());
-			feeUI.setRenewalFeeUSD(epoFee.getRenewalFee_EUR().multiply(fxRate));
-			feeUI.setProcessingFeeUSD(p3sFee.getProcessingFee_USD());
-			feeUI.setExpressFeeUSD(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
-			feeUI.setSubTotalUSD(amberCost);
+
+			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
+			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
+			fee.setProcessingFee_USD(p3sFee.getProcessingFee_USD());
+			fee.setExpressFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
+			fee.setSubTotal_USD(amberCost);
+
 		}
 		
 		else if(RenewalColourEnum.RED .equals(currentPhase)){
 			//redCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate)).add(p3sFee.getUrgentFee_Percent().multiply(fxRate));
 			redCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).
 					add(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
-			feeUI.setRenewalFeeEUR(epoFee.getRenewalFee_EUR());
-			feeUI.setRenewalFeeUSD(epoFee.getRenewalFee_EUR().multiply(fxRate));
-			feeUI.setProcessingFeeUSD(p3sFee.getProcessingFee_USD());
-			feeUI.setUrgentFeeUSD(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
-			feeUI.setSubTotalUSD(redCost);
+
+			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
+			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
+			fee.setProcessingFee_USD(p3sFee.getProcessingFee_USD());
+			fee.setUrgentFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
+			fee.setSubTotal_USD(redCost);
+
 		}
 		
 		else if(RenewalColourEnum.BLUE .equals(currentPhase)){
 			//blueCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate)).add(epoFee.getExtensionFee_EUR());
 			blueCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate));
-			feeUI.setRenewalFeeEUR(epoFee.getRenewalFee_EUR());
-			feeUI.setRenewalFeeUSD(epoFee.getRenewalFee_EUR().multiply(fxRate));
-			feeUI.setProcessingFeeUSD(p3sFee.getProcessingFee_USD());
-			feeUI.setExtensionFeeEUR(epoFee.getExtensionFee_EUR());
-			feeUI.setExtensionFeeUSD(epoFee.getExtensionFee_EUR().multiply(fxRate));
-			feeUI.setSubTotalUSD(blueCost);
+
+			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
+			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
+			fee.setProcessingFee_USD(p3sFee.getProcessingFee_USD());
+			fee.setExtensionFee_EUR(epoFee.getExtensionFee_EUR());
+			//fee.setExtensionFee_USD(epoFee.getExtensionFee_EUR().multiply(fxRate));
+			fee.setSubTotal_USD(blueCost);
+
 		}
 		
 		else if(RenewalColourEnum.BROWN .equals(currentPhase)){
@@ -251,19 +261,21 @@ public class CostAnalysisDataEngine extends Universal{
 			brownCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate)).
 					add((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)))); 
 			
-			feeUI.setRenewalFeeEUR(epoFee.getRenewalFee_EUR());
-			feeUI.setRenewalFeeUSD(epoFee.getRenewalFee_EUR().multiply(fxRate));
-			feeUI.setProcessingFeeUSD(p3sFee.getProcessingFee_USD());
-			feeUI.setExtensionFeeEUR(epoFee.getExtensionFee_EUR());
-			feeUI.setExtensionFeeUSD(epoFee.getExtensionFee_EUR().multiply(fxRate));
-			feeUI.setUrgentFeeUSD((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
-			feeUI.setSubTotalUSD(brownCost);
+
+			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
+			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
+			fee.setProcessingFee_USD(p3sFee.getProcessingFee_USD());
+			fee.setExtensionFee_EUR(epoFee.getExtensionFee_EUR());
+			//fee.setExtensionFee_USD(epoFee.getExtensionFee_EUR().multiply(fxRate));
+			fee.setUrgentFee_USD((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
+			fee.setSubTotal_USD(brownCost);
+
 		}
 		
 		
 			
-		feeUI.setFxRate(fxRate);
-		return feeUI;
+		fee.setFxRate(fxRate);
+		return fee;
 	}
 
 	public P3SFeeSole findDiscountedFees(DiscountPercent discount){
@@ -404,11 +416,13 @@ public class CostAnalysisDataEngine extends Universal{
 		
 		for (ArchivedRate eachData : archivedRateList) {
 			
-			FeeUI fee = new FeeUI(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
-					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
+			Fee fee = new Fee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
+					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
 		    BigDecimal fxValue = eachData.getFxRate();
 		    fee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxValue);
-		    lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(eachData.getActiveFromDate()), fee);
+		    //NOW POPULATE FEEUI 
+		    FeeUI feeUI = new FeeUI(fee);
+		    lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(eachData.getActiveFromDate()), feeUI);
 		}
 		return lineChart;
 	}

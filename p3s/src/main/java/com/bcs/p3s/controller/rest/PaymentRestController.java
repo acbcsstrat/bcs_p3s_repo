@@ -143,26 +143,23 @@ public class PaymentRestController extends Universal {
 
     // Implements API section 4.3
     // Provide details for display in the have-just-Commited-to-bank-transfer page
+    // BankTransferPostCommitDetails name as because the user just commit to the payment even though at back end it is not yet committed
     @RequestMapping(value = "/rest-committed-banktransfer/", method = RequestMethod.POST)
     public ResponseEntity<BankTransferPostCommitDetails> showBankTransferPostCommitDetails(@RequestBody Object obby) {
 
     	log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() invoked.  ");
 
-    	if ( ! (obby instanceof String)) throw new P3SRuntimeException("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() NOT passed String");
+    	if ( ! (obby instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() NOT passed String");
     	
+    	InBasket basketContents = new InBasket();
     	BankTransferPostCommitDetails bankTransferPostCommitDetails;
     	try {
     		
-    		DummyDataEngine dummy = new DummyDataEngine();
+    		/*DummyDataEngine dummy = new DummyDataEngine();
     		Api4dotXdataFromGETworkaround tmp = dummy.getApi43data( (String) obby );
-
-    		
-			bankTransferPostCommitDetails = paymentService.showBankTransferPostCommitDetails(tmp.patentIds, tmp.expectedCost
-					, tmp.billingAddressStreet
-					, tmp.billingAddressCity
-					, tmp.billingAddressState
-					, tmp.billingAddressZip
-			);
+*/
+    		basketContents = new ExtractSubmittedDataEngine().getBasketContentsPreCommitForm(obby);
+			bankTransferPostCommitDetails = paymentService.showBankTransferPostCommitDetails(basketContents);
 			
     	} catch (Exception e) {
 			System.out.println("PaymentRestController showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ");

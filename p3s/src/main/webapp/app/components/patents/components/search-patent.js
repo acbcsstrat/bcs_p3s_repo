@@ -11,6 +11,7 @@ app.component('searchpatent', {
 				function(data) {
 					var patent = data;
 					$timeout(function() {
+						console.log("Here is patent serach")
 						$state.go('add-patent', {obj: patent});
 					}, 2000);	
 				},

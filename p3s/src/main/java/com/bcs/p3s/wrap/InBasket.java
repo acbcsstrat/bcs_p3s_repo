@@ -12,10 +12,10 @@ public class InBasket {
 		public BigDecimal expectedCost;
 
 		// Here are the ADDITIONAL fields for API section 4.3
-		public String billingAddressStreet;
-		public String billingAddressCity;
-		public String billingAddressState;
-		public Long billingAddressZip;
+		public String billingStreet;
+		public String billingCity;
+		public String billingState;
+		public Long billingZip;
 		public List<Long> getPatentIds() {
 			return patentIds;
 		}
@@ -28,31 +28,32 @@ public class InBasket {
 		public void setExpectedCost(BigDecimal expectedCost) {
 			this.expectedCost = expectedCost;
 		}
-		public String getBillingAddressStreet() {
-			return billingAddressStreet;
+		public String getBillingStreet() {
+			return billingStreet;
 		}
-		public void setBillingAddressStreet(String billingAddressStreet) {
-			this.billingAddressStreet = billingAddressStreet;
+		public void setBillingStreet(String billingStreet) {
+			this.billingStreet = billingStreet;
 		}
-		public String getBillingAddressCity() {
-			return billingAddressCity;
+		public String getBillingCity() {
+			return billingCity;
 		}
-		public void setBillingAddressCity(String billingAddressCity) {
-			this.billingAddressCity = billingAddressCity;
+		public void setBillingCity(String billingCity) {
+			this.billingCity = billingCity;
 		}
-		public String getBillingAddressState() {
-			return billingAddressState;
+		public String getBillingState() {
+			return billingState;
 		}
-		public void setBillingAddressState(String billingAddressState) {
-			this.billingAddressState = billingAddressState;
+		public void setBillingState(String billingState) {
+			this.billingState = billingState;
 		}
-		public Long getBillingAddressZip() {
-			return billingAddressZip;
+		public Long getBillingZip() {
+			return billingZip;
 		}
-		public void setBillingAddressZip(Long billingAddressZip) {
-			this.billingAddressZip = billingAddressZip;
+		public void setBillingZip(Long billingZip) {
+			this.billingZip = billingZip;
 		}
-
+		
+		
 		
 		
 

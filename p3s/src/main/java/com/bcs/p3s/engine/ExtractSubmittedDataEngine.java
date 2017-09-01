@@ -9,6 +9,8 @@ import java.util.StringTokenizer;
 
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
+import com.bcs.p3s.wrap.BankTransferPreCommitDetails;
 import com.bcs.p3s.wrap.InBasket;
 
 /**
@@ -97,6 +99,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 		   			}
 		   		}
 		   		
+		   		
 		   		if ("patent_ids".equals(key.trim())) {
 		   			
 		   			//LinkedHashMap<String, Object> listOfIds = (LinkedHashMap<String, Object>) obValue;
@@ -144,4 +147,75 @@ public class ExtractSubmittedDataEngine extends Universal {
 	}
 
 	
+	public InBasket getBasketContentsPreCommitForm(Object obby){
+		
+		InBasket basket = new InBasket();
+		
+		try {
+
+		   	LinkedHashMap<String, Object> basketObject = (LinkedHashMap<String, Object>) obby; 
+		   	List<String> keys = new ArrayList<String>(basketObject.keySet());
+		   	
+		   	for(String key : keys){
+		   		
+		   		Object obValue = basketObject.get(key);
+		   		String strValue = null;
+				if(obValue instanceof String)
+		   			strValue = (String)obValue;
+		   		
+		   		if("totalCostUSD".equals(key.trim())){
+		   			if(obValue instanceof Double || obValue instanceof Integer){
+		   				basket.setExpectedCost(BigDecimal.valueOf((Double) obValue));
+		   			}
+		   		}
+		   		
+		   		if("billingStreet".equals(key.trim())){
+	   				basket.setBillingStreet(strValue);
+		   		}
+		   		
+		   		if("billingCity".equals(key.trim())){
+	   				basket.setBillingCity(strValue);
+		   		}
+		   		
+		   		if("billingState".equals(key.trim())){
+	   				basket.setBillingState(strValue);
+		   		}
+		   		
+		   		if("billingZip".equals(key.trim())){
+		   			if(obValue instanceof Double || obValue instanceof Integer){
+		   				Long longy = Long.valueOf(obValue.toString());;
+		   				basket.setBillingZip(longy);
+		   			}
+		   		}
+	   		
+		   		if ("patent_ids".equals(key.trim())) {
+		   			
+		   			if(! (obValue instanceof ArrayList<?>))
+		   				throw new P3SRuntimeException("PaymentRestController : /rest-prepare-banktransfer/ getBasketContentsFromCheckOutForm() NOT passed Arraylist of patentids");
+		   			ArrayList<Integer> elements =  (ArrayList<Integer>) obValue;
+		   			
+		   			List<Long> orderedPatentIds = new ArrayList<Long>();
+		   			if(! (elements.isEmpty())){
+		   				for(Integer element : elements){
+		   					if(element instanceof Integer){
+		   						Long longy = new Long(element);
+		   						orderedPatentIds.add(longy);
+		   					}
+		   				}
+		   				
+		   			}
+		   			basket.setPatentIds(orderedPatentIds);;
+			   	}
+		   	}
+		   	
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			//Class Cast Exception mostly
+			System.out.println(e.getMessage());
+		}
+		
+		
+		return basket;
+	}
 }

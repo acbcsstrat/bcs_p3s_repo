@@ -23,7 +23,6 @@ app.factory('patentsService', function($http, $q) {
 
         factory.updatePatent = function(patent, id) {
             
-            console.log(id)
             var deferred = $q.defer();
             $http.put(REST_SERVICE_URI+id, patent)
                 .then(
@@ -52,12 +51,10 @@ app.factory('patentsService', function($http, $q) {
         }
 
         factory.fetchGraphData = function(id) {
-            console.log(id)
             var deferred = $q.defer();
             $http.get('http://localhost:8080/p3sweb/rest-cost-analysis/'+id)
                 .then(
                 function (response) {
-                    console.log(response)
                     deferred.resolve(response.data);
                 },
                 function(errResponse){

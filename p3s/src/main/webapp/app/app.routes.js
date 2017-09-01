@@ -140,8 +140,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/bank-transfer-preparation',
         component: 'bankTransferPreparation',
         params: {
-            patentObj: null,
-            orderObj: null
+        	orderObj: null,
+        	patentObj: null
         }
     })    
     .state('bank-transfer-success', {

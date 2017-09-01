@@ -1,41 +1,40 @@
-<div class="row">
+<div class="row" ng-controller="CartController">
 	<div class="col-md-6">
 		<p>Please check the transaction details. When you press the 'Complete payment' button below, you are entering into a legal contract  with.</p>
 		<p>You will be shown the (US) bank account details, to which you must make online payment.</p>
 		<p>The funds must be received by our US account, by:</p>
-		<p>13:30 hours April 5th 2017  CDT (Daylight time if appropriate and possible!)</p>
+		<p>{{patentObj.transTargetEndDateUI}} (Daylight time if appropriate and possible!)</p>
 		<p>The exchange rate offered will be held until that time. Thereafter, if no payment is made, penalty charges apply, and will continue to accrue</p>
 	</div>
 	<div class="col-md-6">
-		<div class="timer">
-			
-		</div>
 		<table class="table">
 			<tbody>
 				<tr>
 					<td>Patents: </td>
-					<td></td>
+					<td>{{patentObj.totalPatents}}</td>
 				</tr>
 				<tr>
 					<td>Total patents: </td>
-					<td></td>
+					<td>{{patentObj.totalPatents}}</td>
 				</tr>
 				<tr>
 					<td>Date: </td>
-					<td></td>
+					<td> {{patentObj.dateNowLocalTime}} </td>
 				</tr>
 				<tr>
-					<td>Grand total: </td>
-					<td></td>
+					<td>Total Cost</td>
+                    <td>{{patentObj.totalCostUSD}}</td>
 				</tr>				
 			</tbody>
 		</table>
 		<div class="row">
 			<div class="col-md-4">
+			<div ng-if="service=='http' || service == 'log'">
 				<button class="btn btn-danger btn-block btn-lg">Cancel transaction</button>
+				</div>
 			</div>
 			<div class="col-md-4">
-				<button class="btn btn-primary btn-block btn-lg" ng-click="$ctrl.finalizeOrder()">Complete payment</button>		
+				<button class="btn btn-primary btn-block btn-lg" ng-click="$ctrl.commitTransfer()">Complete payment</button>		
 			</div>
 		</div>
 		
