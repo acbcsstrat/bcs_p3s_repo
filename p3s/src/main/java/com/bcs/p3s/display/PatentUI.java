@@ -30,9 +30,9 @@ import com.bcs.p3s.wrap.PatentExtendedData;
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
  * 
  * ITEMS HEREIN NEEDING EXTERNAL SETTING (i.e. cannot be (reliably) set by this class):
- * 	CurrentRenewalCost
+ * 	CurrentRenewalCostUSD
  * 	CostBandEndDate
- * 	RenewalCostNextStage
+ * 	RenewalCostNextStageUSD
  * 	RenewalDueDate
  * 
  * Further notes specific to this class:
@@ -54,17 +54,19 @@ public class PatentUI extends Patent {
 	//PatentService patentService = new PatentServiceImpl();
 	
 	
-    private BigDecimal currentRenewalCost;
+    private BigDecimal currentRenewalCostUSD;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MMM-dd-yyyy")
     private Date costBandEndDate;
 
-    private BigDecimal renewalCostNextStage;
+    private BigDecimal renewalCostNextStageUSD;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MMM-dd-yyyy")
     private Date renewalDueDate;
+
+    private String costBandColour;  
 
     
 	List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
@@ -99,19 +101,21 @@ public class PatentUI extends Patent {
 		//SETTING REMAINING FROM EXTENDED DATA ARGUMENT PASSED
 		if(! (extendedDatas == null) ){
 			for(PatentExtendedData extendedData : extendedDatas){
-				if(extendedData.getPatentId() == null){
+				if(extendedData.getPatentId() == null){ // Happens within add-patent processing 
 					this.setRenewalDueDate(extendedData.getRenewalDueDate());
-					this.setCurrentRenewalCost(extendedData.getCurrentRenewalCost());
+					this.setCostBandColour(extendedData.getCurrentCostBand());
+					this.setCurrentRenewalCostUSD(extendedData.getCurrentRenewalCost());
 					this.setCostBandEndDate(extendedData.getCostBandEndDate());
-					this.setRenewalCostNextStage(extendedData.getRenewalCostNextStage());
+					this.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
 					
 				}
 				
 				else if(extendedData.getPatentId().equals(this.getId())){
 					this.setRenewalDueDate(extendedData.getRenewalDueDate());
-					this.setCurrentRenewalCost(extendedData.getCurrentRenewalCost());
+					this.setCostBandColour(extendedData.getCurrentCostBand());
+					this.setCurrentRenewalCostUSD(extendedData.getCurrentRenewalCost());
 					this.setCostBandEndDate(extendedData.getCostBandEndDate());
-					this.setRenewalCostNextStage(extendedData.getRenewalCostNextStage());
+					this.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
 				}
 			}
 		}
@@ -233,14 +237,28 @@ public class PatentUI extends Patent {
 	
 	
 	
+	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // acToDo 01-sep-2017
+
+	public BigDecimal getCurrentRenewalCost() {
+		return currentRenewalCostUSD;
+	}
+	public BigDecimal getRenewalCostNextStage() {
+		return renewalCostNextStageUSD;
+	}
+	
+	// End of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification.
+	
+	
+	
+	
 	// Ordinary getters/setters
 	
-	public BigDecimal getCurrentRenewalCost() {
-		return currentRenewalCost;
+	public BigDecimal getCurrentRenewalCostUSD() {
+		return currentRenewalCostUSD;
 	}
 
-	public void setCurrentRenewalCost(BigDecimal currentRenewalCost) {
-		this.currentRenewalCost = currentRenewalCost;
+	public void setCurrentRenewalCostUSD(BigDecimal currentRenewalCostUSD) {
+		this.currentRenewalCostUSD = currentRenewalCostUSD;
 	}
 
 	public Date getCostBandEndDate() {
@@ -251,12 +269,12 @@ public class PatentUI extends Patent {
 		this.costBandEndDate = costBandEndDate;
 	}
 
-	public BigDecimal getRenewalCostNextStage() {
-		return renewalCostNextStage;
+	public BigDecimal getRenewalCostNextStageUSD() {
+		return renewalCostNextStageUSD;
 	}
 
-	public void setRenewalCostNextStage(BigDecimal renewalCostNextStage) {
-		this.renewalCostNextStage = renewalCostNextStage;
+	public void setRenewalCostNextStageUSD(BigDecimal renewalCostNextStageUSD) {
+		this.renewalCostNextStageUSD = renewalCostNextStageUSD;
 	}
 
 	public Date getRenewalDueDate() {
@@ -267,6 +285,16 @@ public class PatentUI extends Patent {
 		this.renewalDueDate = renewalDueDate;
 	}
 
+	public String getCostBandColour() {
+		return costBandColour;
+	}
+
+	public void setCostBandColour(String costBandColour) {
+		this.costBandColour = costBandColour;
+	}
+
+	
+	
 	
 	/**
 	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications - and, for each, whether it is on or off.

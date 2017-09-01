@@ -57,9 +57,9 @@ public class DummyDataEngine extends Universal {
 		// by setting safe (where possible) but obviously Dummy, values
 
 		// Now the additional fields
-		patentUI.setCurrentRenewalCost(new BigDecimal("1.11"));
+		patentUI.setCurrentRenewalCostUSD(new BigDecimal("1.11"));
 		patentUI.setCostBandEndDate(nowPlusNdays(2));
-		patentUI.setRenewalCostNextStage(new BigDecimal("1111111.11"));
+		patentUI.setRenewalCostNextStageUSD(new BigDecimal("1111111.11"));
 		patentUI.setRenewalDueDate(dummyFilingDateToThisyearRenewDueDate(patentUI.getFilingDate()));
 
 	}

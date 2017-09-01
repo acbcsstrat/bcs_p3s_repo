@@ -636,18 +636,18 @@ public PatentUI populateDataToPatentUI(Patent patent){
 			for(PatentExtendedData extendedData : extendedDatas){
 				if(extendedData.getPatentId() == null){
 					patentUI.setRenewalDueDate(extendedData.getRenewalDueDate());
-					patentUI.setCurrentRenewalCost(extendedData.getCurrentRenewalCost());
+					patentUI.setCurrentRenewalCostUSD(extendedData.getCurrentRenewalCost());
 					patentUI.setCostBandEndDate(extendedData.getCostBandEndDate());
-					patentUI.setRenewalCostNextStage(extendedData.getRenewalCostNextStage());
+					patentUI.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
 					return patentUI;
 				}
 				
 				else if(extendedData.getPatentId().equals(patentUI.getId())){
 					patentFound = true;
 					patentUI.setRenewalDueDate(extendedData.getRenewalDueDate());
-					patentUI.setCurrentRenewalCost(extendedData.getCurrentRenewalCost());
+					patentUI.setCurrentRenewalCostUSD(extendedData.getCurrentRenewalCost());
 					patentUI.setCostBandEndDate(extendedData.getCostBandEndDate());
-					patentUI.setRenewalCostNextStage(extendedData.getRenewalCostNextStage());
+					patentUI.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
 					return patentUI;
 				}
 			}

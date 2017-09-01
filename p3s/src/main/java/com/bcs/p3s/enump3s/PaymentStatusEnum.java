@@ -3,8 +3,15 @@ package com.bcs.p3s.enump3s;
 public class PaymentStatusEnum extends P3SAbstractEnum {
 
 	public static final String INITIATED = "Initiated";
-	public static final String PENDING = "Pending"; // Wouldn't 'Awaiting Funds'
+
+	
+//obs public static final String PENDING = "Pending"; // Wouldn't 'Awaiting Funds'
+	public static final String AWAITING_FUNDS = "Awaiting Funds"; // Wouldn't 'Awaiting Funds'
 													// be a better title? acTidy
+
+	
+	
+	
 	public static final String FUNDS_RECEIVED = "Funds Received";
 	public static final String FUNDS_SENT = "Funds Sent";
 	public static final String EPO_RECEIVED = "EPO Received";
@@ -25,8 +32,14 @@ public class PaymentStatusEnum extends P3SAbstractEnum {
 		if (status.equalsIgnoreCase(PaymentStatusEnum.INITIATED) || status.equalsIgnoreCase("INITIATED"))
 			sofar = PaymentStatusEnum.INITIATED;
 
-		if (status.equalsIgnoreCase(PaymentStatusEnum.PENDING) || status.equalsIgnoreCase("PENDING"))
-			sofar = PaymentStatusEnum.PENDING;
+		if (status.equalsIgnoreCase(PaymentStatusEnum.AWAITING_FUNDS) || status.equalsIgnoreCase("AWAITING_FUNDS"))
+			sofar = PaymentStatusEnum.AWAITING_FUNDS;
+
+		// Start of Legacy / Redundant option - to be removed as soon a 'Pending' is removed from all dBs. // acToDo 01-sep-2017
+		// AWAITING_FUNDS was formerly known as PENDING
+		if (status.equalsIgnoreCase("PENDING"))
+			sofar = PaymentStatusEnum.AWAITING_FUNDS;
+		// End of Legacy / Redundant option - to be removed as soon a 'Pending' is removed from all dBs. // acToDo 01-sep-2017
 
 		if (status.equalsIgnoreCase(PaymentStatusEnum.FUNDS_RECEIVED) || status.equalsIgnoreCase("FUNDS_RECEIVED"))
 			sofar = PaymentStatusEnum.FUNDS_RECEIVED;

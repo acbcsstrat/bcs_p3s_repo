@@ -8,25 +8,25 @@ import com.bcs.p3s.model.Fee;
 
 public class FeeUI {
 	
-	private BigDecimal renewalFee_EUR;
+	private BigDecimal renewalFeeEUR;
     
-    private BigDecimal extensionFee_EUR;
+    private BigDecimal extensionFeeEUR;
     
-    private BigDecimal renewalFee_USD;
+    private BigDecimal renewalFeeUSD;
     
-    private BigDecimal extensionFee_USD;
+    private BigDecimal extensionFeeUSD;
    
-    private BigDecimal processingFee_USD;
+    private BigDecimal processingFeeUSD;
     
-    private BigDecimal expressFee_USD;
+    private BigDecimal expressFeeUSD;
 
-    private BigDecimal urgentFee_USD;
+    private BigDecimal urgentFeeUSD;
     
-    private BigDecimal latePayPenalty_USD;
+    private BigDecimal latePayPenaltyUSD;
 
     private BigDecimal fxRate;
 
-    private BigDecimal subTotal_USD;
+    private BigDecimal subTotalUSD;
     
     
     
@@ -35,99 +35,150 @@ public class FeeUI {
 	
 	public FeeUI(Fee fee){
 		
-		this.setRenewalFee_EUR(fee.getRenewalFee_EUR());
-		this.setExtensionFee_EUR(fee.getExtensionFee_EUR());
-		this.setProcessingFee_USD(fee.getProcessingFee_USD());
-		this.setExpressFee_USD(fee.getExpressFee_USD());
-		this.setUrgentFee_USD(fee.getUrgentFee_USD());
-		this.setLatePayPenalty_USD(fee.getLatePayPenalty_USD());
+		this.setRenewalFeeEUR(fee.getRenewalFee_EUR());
+		this.setExtensionFeeEUR(fee.getExtensionFee_EUR());
+		this.setProcessingFeeUSD(fee.getProcessingFee_USD());
+		this.setExpressFeeUSD(fee.getExpressFee_USD());
+		this.setUrgentFeeUSD(fee.getUrgentFee_USD());
+		this.setLatePayPenaltyUSD(fee.getLatePayPenalty_USD());
 		this.setFxRate(fee.getFxRate());
-		this.setSubTotal_USD(fee.getSubTotal_USD());
+		this.setSubTotalUSD(fee.getSubTotal_USD());
 		
-		this.setRenewalFee_USD(fee.getRenewalFee_EUR().multiply(fee.getFxRate()));
-		this.setExtensionFee_EUR(fee.getExtensionFee_EUR().multiply(fee.getFxRate()));
+		this.setRenewalFeeUSD(fee.getRenewalFee_EUR().multiply(fee.getFxRate()));
+		this.setExtensionFeeEUR(fee.getExtensionFee_EUR().multiply(fee.getFxRate()));
 		
 	}
 
-	public BigDecimal getRenewalFee_EUR() {
-		return renewalFee_EUR;
-	}
 
-	public void setRenewalFee_EUR(BigDecimal renewalFee_EUR) {
-		this.renewalFee_EUR = renewalFee_EUR;
-	}
-
-	public BigDecimal getExtensionFee_EUR() {
-		return extensionFee_EUR;
-	}
-
-	public void setExtensionFee_EUR(BigDecimal extensionFee_EUR) {
-		this.extensionFee_EUR = extensionFee_EUR;
+	
+	
+	public FeeUI(BigDecimal renewalFeeEUR, BigDecimal extensionFeeEUR, BigDecimal renewalFeeUSD,
+			BigDecimal extensionFeeUSD, BigDecimal processingFeeUSD, BigDecimal expressFeeUSD,
+			BigDecimal urgentFeeUSD, BigDecimal latePayPenaltyUSD, BigDecimal fxRate, BigDecimal subTotalUSD) {
+		super();
+		this.renewalFeeEUR = renewalFeeEUR;
+		this.extensionFeeEUR = extensionFeeEUR;
+		this.renewalFeeUSD = renewalFeeUSD;
+		this.extensionFeeUSD = extensionFeeUSD;
+		this.processingFeeUSD = processingFeeUSD;
+		this.expressFeeUSD = expressFeeUSD;
+		this.urgentFeeUSD = urgentFeeUSD;
+		this.latePayPenaltyUSD = latePayPenaltyUSD;
+		this.fxRate = fxRate;
+		this.subTotalUSD = subTotalUSD;
 	}
 
 	
-	public FeeUI(BigDecimal renewalFee_EUR, BigDecimal extensionFee_EUR, BigDecimal renewalFee_USD,
-			BigDecimal extensionFee_USD, BigDecimal processingFee_USD, BigDecimal expressFee_USD,
-			BigDecimal urgentFee_USD, BigDecimal latePayPenalty_USD, BigDecimal fxRate, BigDecimal subTotal_USD) {
-		super();
-		this.renewalFee_EUR = renewalFee_EUR;
-		this.extensionFee_EUR = extensionFee_EUR;
-		this.renewalFee_USD = renewalFee_USD;
-		this.extensionFee_USD = extensionFee_USD;
-		this.processingFee_USD = processingFee_USD;
-		this.expressFee_USD = expressFee_USD;
-		this.urgentFee_USD = urgentFee_USD;
-		this.latePayPenalty_USD = latePayPenalty_USD;
-		this.fxRate = fxRate;
-		this.subTotal_USD = subTotal_USD;
-	}
+	
+	
+	
+	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // acToDo 01-sep-2017
 
+	public BigDecimal getRenewalFee_EUR() {
+		return renewalFeeEUR;
+	}
+	
+	public BigDecimal getExtensionFee_EUR() {
+		return extensionFeeEUR;
+	}
+	
 	public BigDecimal getRenewalFee_USD() {
-		return renewalFee_USD;
+		return renewalFeeUSD;
 	}
-
-	public void setRenewalFee_USD(BigDecimal renewalFee_USD) {
-		this.renewalFee_USD = renewalFee_USD;
-	}
-
+	
 	public BigDecimal getExtensionFee_USD() {
-		return extensionFee_USD;
+		return extensionFeeUSD;
 	}
-
-	public void setExtensionFee_USD(BigDecimal extensionFee_USD) {
-		this.extensionFee_USD = extensionFee_USD;
-	}
-
+	
 	public BigDecimal getProcessingFee_USD() {
-		return processingFee_USD;
+		return processingFeeUSD;
 	}
-
-	public void setProcessingFee_USD(BigDecimal processingFee_USD) {
-		this.processingFee_USD = processingFee_USD;
-	}
-
+	
 	public BigDecimal getExpressFee_USD() {
-		return expressFee_USD;
+		return expressFeeUSD;
 	}
-
-	public void setExpressFee_USD(BigDecimal expressFee_USD) {
-		this.expressFee_USD = expressFee_USD;
-	}
-
+	
 	public BigDecimal getUrgentFee_USD() {
-		return urgentFee_USD;
+		return urgentFeeUSD;
 	}
-
-	public void setUrgentFee_USD(BigDecimal urgentFee_USD) {
-		this.urgentFee_USD = urgentFee_USD;
-	}
-
+	
 	public BigDecimal getLatePayPenalty_USD() {
-		return latePayPenalty_USD;
+		return latePayPenaltyUSD;
+	}
+	
+	public BigDecimal getSubTotal_USD() {
+		return subTotalUSD;
+	}
+	
+	// End of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification.
+	
+	
+	
+	
+	// Ordinary getters/setters
+	
+	public BigDecimal getRenewalFeeEUR() {
+		return renewalFeeEUR;
 	}
 
-	public void setLatePayPenalty_USD(BigDecimal latePayPenalty_USD) {
-		this.latePayPenalty_USD = latePayPenalty_USD;
+	public void setRenewalFeeEUR(BigDecimal renewalFeeEUR) {
+		this.renewalFeeEUR = renewalFeeEUR;
+	}
+
+	public BigDecimal getExtensionFeeEUR() {
+		return extensionFeeEUR;
+	}
+
+	public void setExtensionFeeEUR(BigDecimal extensionFeeEUR) {
+		this.extensionFeeEUR = extensionFeeEUR;
+	}
+
+	public BigDecimal getRenewalFeeUSD() {
+		return renewalFeeUSD;
+	}
+
+	public void setRenewalFeeUSD(BigDecimal renewalFeeUSD) {
+		this.renewalFeeUSD = renewalFeeUSD;
+	}
+
+	public BigDecimal getExtensionFeeUSD() {
+		return extensionFeeUSD;
+	}
+
+	public void setExtensionFeeUSD(BigDecimal extensionFeeUSD) {
+		this.extensionFeeUSD = extensionFeeUSD;
+	}
+
+	public BigDecimal getProcessingFeeUSD() {
+		return processingFeeUSD;
+	}
+
+	public void setProcessingFeeUSD(BigDecimal processingFeeUSD) {
+		this.processingFeeUSD = processingFeeUSD;
+	}
+
+	public BigDecimal getExpressFeeUSD() {
+		return expressFeeUSD;
+	}
+
+	public void setExpressFeeUSD(BigDecimal expressFeeUSD) {
+		this.expressFeeUSD = expressFeeUSD;
+	}
+
+	public BigDecimal getUrgentFeeUSD() {
+		return urgentFeeUSD;
+	}
+
+	public void setUrgentFeeUSD(BigDecimal urgentFeeUSD) {
+		this.urgentFeeUSD = urgentFeeUSD;
+	}
+
+	public BigDecimal getLatePayPenaltyUSD() {
+		return latePayPenaltyUSD;
+	}
+
+	public void setLatePayPenaltyUSD(BigDecimal latePayPenaltyUSD) {
+		this.latePayPenaltyUSD = latePayPenaltyUSD;
 	}
 
 	public BigDecimal getFxRate() {
@@ -138,12 +189,12 @@ public class FeeUI {
 		this.fxRate = fxRate;
 	}
 
-	public BigDecimal getSubTotal_USD() {
-		return subTotal_USD;
+	public BigDecimal getSubTotalUSD() {
+		return subTotalUSD;
 	}
 
-	public void setSubTotal_USD(BigDecimal subTotal_USD) {
-		this.subTotal_USD = subTotal_USD;
+	public void setSubTotalUSD(BigDecimal subTotalUSD) {
+		this.subTotalUSD = subTotalUSD;
 	}
     
     
