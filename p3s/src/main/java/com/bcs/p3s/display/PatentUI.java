@@ -68,6 +68,22 @@ public class PatentUI extends Patent {
 
     private String costBandColour;  
 
+	private BigDecimal currentRenewalFeeEUR;
+	private BigDecimal currentExtensionFeeEUR;
+	private BigDecimal currentProcessingFeeEUR;
+	private BigDecimal currentExpressFeeEUR;
+	private BigDecimal currentUrgentFeeEUR;
+	private BigDecimal latePayPenaltyEUR;
+	private BigDecimal currentTotalEUR;
+	private BigDecimal currentRenewalFeeUSD;
+	private BigDecimal currentExtensionFeeUSD;
+	private BigDecimal currentProcessingFeeUSD;
+	private BigDecimal currentExpressFeeUSD;
+	private BigDecimal currentUrgentFeeUSD;
+	private BigDecimal latePayPenaltyUSD;
+	private BigDecimal currentTotalUSD;
+	private BigDecimal fxRate;
+
     
 	List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
 
@@ -116,6 +132,27 @@ public class PatentUI extends Patent {
 					this.setCurrentRenewalCostUSD(extendedData.getCurrentRenewalCost());
 					this.setCostBandEndDate(extendedData.getCostBandEndDate());
 					this.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
+
+					// Set all the *costUSD & *costEUR fields
+					if (extendedData.getFee()!=null) {
+						FeeUI feeUI = new FeeUI(extendedData.getFee());
+						
+						this.setCurrentRenewalFeeEUR(feeUI.getRenewalFeeEUR());
+						this.setCurrentExtensionFeeEUR(feeUI.getExtensionFeeEUR());
+						this.setCurrentProcessingFeeEUR(feeUI.getProcessingFeeEUR());
+						this.setCurrentExpressFeeEUR(feeUI.getExpressFeeEUR());
+						this.setCurrentUrgentFeeEUR(feeUI.getUrgentFeeEUR());
+						this.setLatePayPenaltyEUR(feeUI.getLatePayPenaltyEUR());
+						this.setCurrentTotalEUR(feeUI.getSubTotalEUR());
+						this.setCurrentRenewalFeeUSD(feeUI.getRenewalFeeUSD());
+						this.setCurrentExtensionFeeUSD(feeUI.getExtensionFeeUSD());
+						this.setCurrentProcessingFeeUSD(feeUI.getProcessingFeeUSD());
+						this.setCurrentExpressFeeUSD(feeUI.getExpressFeeUSD());
+						this.setCurrentUrgentFeeUSD(feeUI.getUrgentFeeUSD());
+						this.setLatePayPenaltyUSD(feeUI.getLatePayPenaltyUSD());
+						this.setCurrentTotalUSD(feeUI.getSubTotalUSD());
+						this.setFxRate(feeUI.getFxRate());
+					}
 				}
 			}
 		}
@@ -132,8 +169,6 @@ public class PatentUI extends Patent {
 		System.out.println("Calling DummyDataEngine:populateExtendedPatentFieldsWithDummyData for patent "+patent.getPatentApplicationNumber());
     	dummy.populateExtendedPatentFieldsWithDummyData(this, patent); */
 		
-		
-
 	}
 
 	
@@ -193,17 +228,6 @@ public class PatentUI extends Patent {
 
 	
 	// Getter/setters requiring special processing
-
-	public PatentUI() {
-		// TODO Auto-generated constructor stub
-	}
-
-
-
-
-
-
-
 
 
 	public List<NotificationUI> getNotificationUIs() {
@@ -292,6 +316,116 @@ public class PatentUI extends Patent {
 	public void setCostBandColour(String costBandColour) {
 		this.costBandColour = costBandColour;
 	}
+
+	
+
+	public BigDecimal getCurrentRenewalFeeEUR() {
+		return currentRenewalFeeEUR;
+	}
+	public void setCurrentRenewalFeeEUR(BigDecimal currentRenewalFeeEUR) {
+		this.currentRenewalFeeEUR = currentRenewalFeeEUR;
+	}
+
+	public BigDecimal getCurrentExtensionFeeEUR() {
+		return currentExtensionFeeEUR;
+	}
+	public void setCurrentExtensionFeeEUR(BigDecimal currentExtensionFeeEUR) {
+		this.currentExtensionFeeEUR = currentExtensionFeeEUR;
+	}
+
+
+	public BigDecimal getCurrentProcessingFeeEUR() {
+		return currentProcessingFeeEUR;
+	}
+	public void setCurrentProcessingFeeEUR(BigDecimal currentProcessingFeeEUR) {
+		this.currentProcessingFeeEUR = currentProcessingFeeEUR;
+	}
+
+	public BigDecimal getCurrentExpressFeeEUR() {
+		return currentExpressFeeEUR;
+	}
+	public void setCurrentExpressFeeEUR(BigDecimal currentExpressFeeEUR) {
+		this.currentExpressFeeEUR = currentExpressFeeEUR;
+	}
+
+	public BigDecimal getCurrentUrgentFeeEUR() {
+		return currentUrgentFeeEUR;
+	}
+	public void setCurrentUrgentFeeEUR(BigDecimal currentUrgentFeeEUR) {
+		this.currentUrgentFeeEUR = currentUrgentFeeEUR;
+	}
+
+	public BigDecimal getLatePayPenaltyEUR() {
+		return latePayPenaltyEUR;
+	}
+	public void setLatePayPenaltyEUR(BigDecimal latePayPenaltyEUR) {
+		this.latePayPenaltyEUR = latePayPenaltyEUR;
+	}
+
+	public BigDecimal getCurrentTotalEUR() {
+		return currentTotalEUR;
+	}
+	public void setCurrentTotalEUR(BigDecimal currentTotalEUR) {
+		this.currentTotalEUR = currentTotalEUR;
+	}
+
+	public BigDecimal getCurrentRenewalFeeUSD() {
+		return currentRenewalFeeUSD;
+	}
+	public void setCurrentRenewalFeeUSD(BigDecimal currentRenewalFeeUSD) {
+		this.currentRenewalFeeUSD = currentRenewalFeeUSD;
+	}
+
+	public BigDecimal getCurrentExtensionFeeUSD() {
+		return currentExtensionFeeUSD;
+	}
+	public void setCurrentExtensionFeeUSD(BigDecimal currentExtensionFeeUSD) {
+		this.currentExtensionFeeUSD = currentExtensionFeeUSD;
+	}
+
+	public BigDecimal getCurrentProcessingFeeUSD() {
+		return currentProcessingFeeUSD;
+	}
+	public void setCurrentProcessingFeeUSD(BigDecimal currentProcessingFeeUSD) {
+		this.currentProcessingFeeUSD = currentProcessingFeeUSD;
+	}
+
+	public BigDecimal getCurrentExpressFeeUSD() {
+		return currentExpressFeeUSD;
+	}
+	public void setCurrentExpressFeeUSD(BigDecimal currentExpressFeeUSD) {
+		this.currentExpressFeeUSD = currentExpressFeeUSD;
+	}
+
+	public BigDecimal getCurrentUrgentFeeUSD() {
+		return currentUrgentFeeUSD;
+	}
+	public void setCurrentUrgentFeeUSD(BigDecimal currentUrgentFeeUSD) {
+		this.currentUrgentFeeUSD = currentUrgentFeeUSD;
+	}
+
+	public BigDecimal getLatePayPenaltyUSD() {
+		return latePayPenaltyUSD;
+	}
+	public void setLatePayPenaltyUSD(BigDecimal latePayPenaltyUSD) {
+		this.latePayPenaltyUSD = latePayPenaltyUSD;
+	}
+
+	public BigDecimal getCurrentTotalUSD() {
+		return currentTotalUSD;
+	}
+	public void setCurrentTotalUSD(BigDecimal currentTotalUSD) {
+		this.currentTotalUSD = currentTotalUSD;
+	}
+
+	public BigDecimal getFxRate() {
+		return fxRate;
+	}
+	public void setFxRate(BigDecimal fxRate) {
+		this.fxRate = fxRate;
+	}
+
+	
 
 	
 	

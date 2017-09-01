@@ -62,12 +62,6 @@ privileged aspect Invoice_Roo_Jpa_ActiveRecord {
     }
     
     @Transactional
-    public void Invoice.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.persist(this);
-    }
-    
-    @Transactional
     public void Invoice.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
