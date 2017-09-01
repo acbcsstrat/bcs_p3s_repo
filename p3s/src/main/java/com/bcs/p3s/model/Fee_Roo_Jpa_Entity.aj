@@ -24,6 +24,10 @@ privileged aspect Fee_Roo_Jpa_Entity {
     @Column(name = "version")
     private Integer Fee.version;
     
+    public Fee.new() {
+        super();
+    }
+
     public Long Fee.getId() {
         return this.id;
     }
