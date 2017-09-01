@@ -12,6 +12,8 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 
 @RooJavaBean
@@ -97,5 +99,15 @@ public class Invoice {
     }
     public void setInvoiceType(String invoiceType) {
     	this.invoiceType = (new InvoiceTypeEnum(invoiceType)).toString();
+    }
+    
+    
+    public Invoice persist() {  
+    	Invoice invoice = new Invoice();
+    	EntityManager em = EpoFee.entityManager();
+        //if (em == null) this.entityManager = entityManager();
+        em.persist(this);
+        invoice = Invoice.findInvoice(this.getId());
+        return invoice;
     }
 }

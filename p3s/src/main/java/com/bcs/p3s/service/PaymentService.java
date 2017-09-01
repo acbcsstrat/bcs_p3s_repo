@@ -26,7 +26,6 @@ public interface PaymentService {
 	 * Provide details for display in the Bank Transfer Post-Commit page
 	 * @return A fully populated BankTransferPostCommitDetails object
 	 */
-	public BankTransferPostCommitDetails showBankTransferPostCommitDetails(List<Long> patentIds, BigDecimal totalCostUSD, 
-			String billingStreet, String billingCity, String billingState, Long billingZip);
+	public BankTransferPostCommitDetails showBankTransferPostCommitDetails(InBasket basket);
 
 }

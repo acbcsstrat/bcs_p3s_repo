@@ -22,6 +22,7 @@ import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
+import com.bcs.p3s.model.Fee;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.RenewalIntegrationTest;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -87,15 +88,18 @@ public class PostLoginDataEngine extends Universal{
 					caData = caEngine.getAllPhasesInfo(renewalDates);
 					String currentPhase = caEngine.getCurrentPhase(caData);
 					CombinedFee fee = caEngine.getFeeObj(patent);
-					FeeUI currentfeeUI = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-					FeeUI nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-					
+					Fee currentfee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+					FeeUI currentFeeUI = new FeeUI(currentfee);
+					Fee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+					FeeUI nextStageFeeUI = new FeeUI(nextStageFee);
 					extendedData.setPatentId(patent.getId());
 					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
 					extendedData.setCurrentCostBand(caData.getCurrentcostBand());
-					extendedData.setCurrentRenewalCost(currentfeeUI.getSubTotal_USD());
+					extendedData.setCurrentRenewalCost(currentFeeUI.getSubTotal_USD());
 					extendedData.setRenewalCostNextStage(nextStageFeeUI.getSubTotal_USD());
 					extendedData.setCostBandEndDate(getCostBandEnddate(caData).getTime());
+					//extendedData.setFeeUI(currentFeeUI);
+					extendedData.setFee(currentfee);
 				}
 				else{
 					extendedData.setPatentId(patent.getId());

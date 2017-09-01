@@ -36,7 +36,7 @@ public class Payment {
     /**
      * For security do not send this to the front end
      */
-    @NotNull
+   // @NotNull - This will be null during the initial insert
     private String MC_TransRef;
 
     /**

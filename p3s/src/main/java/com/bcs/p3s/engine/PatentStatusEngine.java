@@ -10,6 +10,7 @@ import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
+import com.bcs.p3s.model.Fee;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.date.DateUtil;
@@ -188,12 +189,17 @@ public PostLoginSessionBean getExtendedDataForNewPatent(Patent patent, PostLogin
 				caData = caEngine.getAllPhasesInfo(renewalDates);
 				String currentPhase = caEngine.getCurrentPhase(caData);
 				CombinedFee fee = caEngine.getFeeObj(patent);
-				FeeUI currentfeeUI = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+				
+				//FeeUI currentfeeUI = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+				Fee currentFee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+				FeeUI currentfeeUI = new FeeUI(currentFee);
 				
 				FeeUI nextStageFeeUI = null;
-				if(!currentPhase.equalsIgnoreCase(RenewalColourEnum.BROWN))  //If brown no next stage
-					nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-				
+				if(!currentPhase.equalsIgnoreCase(RenewalColourEnum.BROWN)) { //If brown no next stage
+					/*nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); */
+					Fee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
+					nextStageFeeUI = new FeeUI(nextStageFee);
+				}
 				newPatentData.setPatentId(patent.getId());
 				newPatentData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
 				newPatentData.setCurrentCostBand(caData.getCurrentcostBand());
