@@ -2,6 +2,7 @@ package com.bcs.p3s.model;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bcs.p3s.enump3s.InvoiceStatusEnum;
 import com.bcs.p3s.enump3s.InvoiceTypeEnum;
@@ -11,16 +12,21 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceContext;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
+@RooJpaActiveRecord(finders = { "findInvoicesByInvoiceNumber" })
 public class Invoice {
 
+	
     /**
      */
     @ManyToOne
@@ -29,6 +35,7 @@ public class Invoice {
     /**
      */
     @NotNull
+    @Column(unique = true)
     private String invoiceNumber;
 
     /**
@@ -101,11 +108,10 @@ public class Invoice {
     	this.invoiceType = (new InvoiceTypeEnum(invoiceType)).toString();
     }
     
-    
+    @Transactional
     public Invoice persist() {  
-    	Invoice invoice = new Invoice();
-    	EntityManager em = EpoFee.entityManager();
-        //if (em == null) this.entityManager = entityManager();
+    	Invoice invoice = new Invoice();  
+    	EntityManager em = this.entityManager();
         em.persist(this);
         invoice = Invoice.findInvoice(this.getId());
         return invoice;

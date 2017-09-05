@@ -2,6 +2,8 @@ package com.bcs.p3s.model;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import javax.persistence.EntityManager;
@@ -73,5 +75,13 @@ public class Fee {
 		
 	}
     
+	 @Transactional
+	 public Fee persist() {  
+	    Fee fee = new Fee();  
+	    EntityManager em = this.entityManager();
+	    em.persist(this);
+	    fee = Fee.findFee(this.getId());
+	    return fee;
+	  }
     
 }

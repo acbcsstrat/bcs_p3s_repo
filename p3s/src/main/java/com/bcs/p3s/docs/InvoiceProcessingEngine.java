@@ -29,7 +29,7 @@ public class InvoiceProcessingEngine {
 		invoice.setInvoiceStatus(InvoiceStatusEnum.OPEN);
 		invoice.setPreceedingInvoiceId(null);
 		invoice.setInvoiceType(InvoiceTypeEnum.PROFORMA);
-		//dummy values starts
+		//dummy values start
 		invoice.setDocPath("hardcodedpdffolder/invoices/");
 		invoice.setFilename("dummyInvoiceNumber1.pdf");
 		//dummy values end

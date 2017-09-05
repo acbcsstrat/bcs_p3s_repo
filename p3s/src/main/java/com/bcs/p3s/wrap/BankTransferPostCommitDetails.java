@@ -13,6 +13,14 @@ public class BankTransferPostCommitDetails extends BankTransferPreCommitDetails 
 	
 	protected String proformaInvoiceUrl;
 	
+	protected String billingStreet;
+	
+	protected String billingCity;
+	
+	protected String billingState;
+	
+	protected Long billingZip;
+	
 	/**
 	 * Ignore if empty. Else is a warning that the price has changed since the last page. 
 	 * UI can chose what action to take.
@@ -63,6 +71,38 @@ public class BankTransferPostCommitDetails extends BankTransferPreCommitDetails 
 
 	public void setWarningMessage(String warningMessage) {
 		this.warningMessage = warningMessage;
+	}
+	
+	public String getBillingStreet() {
+		return billingStreet;
+	}
+
+	public void setBillingStreet(String billingStreet) {
+		this.billingStreet = billingStreet;
+	}
+
+	public String getBillingCity() {
+		return billingCity;
+	}
+
+	public void setBillingCity(String billingCity) {
+		this.billingCity = billingCity;
+	}
+
+	public String getBillingState() {
+		return billingState;
+	}
+
+	public void setBillingState(String billingState) {
+		this.billingState = billingState;
+	}
+
+	public Long getBillingZip() {
+		return billingZip;
+	}
+
+	public void setBillingZip(Long billingZip) {
+		this.billingZip = billingZip;
 	}
 
 	// convenience, for debugging & logging

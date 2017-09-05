@@ -2,10 +2,12 @@ package com.bcs.p3s.model;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 
+import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -78,5 +80,14 @@ public class Renewal {
     }
     public void setRenewalStatus(String renewalStatus) {
         this.renewalStatus = (new RenewalStatusEnum(renewalStatus)).toString();
+    }
+    
+    @Transactional
+    public Renewal persist() {  
+    	Renewal renewal = new Renewal();  
+    	EntityManager em = this.entityManager();
+        em.persist(this);
+        renewal = Renewal.findRenewal(this.getId());
+        return renewal;
     }
 }

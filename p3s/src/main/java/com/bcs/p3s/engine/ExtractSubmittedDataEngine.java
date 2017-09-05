@@ -94,10 +94,13 @@ public class ExtractSubmittedDataEngine extends Universal {
 		   			strValue = (String)obValue;
 		   		
 		   		if("totalCostUSD".equals(key.trim())){
-		   			if(obValue instanceof Double || obValue instanceof Integer){
+		   			if(obValue instanceof Double ){
 		   				basket.setExpectedCost(BigDecimal.valueOf((Double) obValue));
 		   			}
+		   			else if (obValue instanceof Integer)
+		   				basket.setExpectedCost(BigDecimal.valueOf((Integer) obValue));
 		   		}
+		   		
 		   		
 		   		
 		   		if ("patent_ids".equals(key.trim())) {

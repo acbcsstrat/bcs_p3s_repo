@@ -28,7 +28,14 @@ public class FeeUI {
 
     private BigDecimal subTotalUSD;
     
+    // & provide to FE anyway, just in case are useful
+    private BigDecimal processingFeeEUR;
+    private BigDecimal expressFeeEUR;
+    private BigDecimal urgentFeeEUR;
+    private BigDecimal latePayPenaltyEUR;
+    private BigDecimal subTotalEUR;
     
+
     
 
 	
@@ -45,8 +52,14 @@ public class FeeUI {
 		this.setSubTotalUSD(fee.getSubTotal_USD());
 		
 		this.setRenewalFeeUSD(fee.getRenewalFee_EUR().multiply(fee.getFxRate()));
-		this.setExtensionFeeEUR(fee.getExtensionFee_EUR().multiply(fee.getFxRate()));
-		
+		this.setExtensionFeeUSD(fee.getExtensionFee_EUR().multiply(fee.getFxRate()));
+
+		this.setProcessingFeeEUR(dollarsToEuro(processingFeeUSD));
+		this.setExpressFeeEUR(dollarsToEuro(expressFeeUSD));
+		this.setUrgentFeeEUR(dollarsToEuro(urgentFeeUSD));
+		this.setLatePayPenaltyEUR(dollarsToEuro(latePayPenaltyUSD));
+		this.setSubTotalEUR(dollarsToEuro(subTotalUSD));
+
 	}
 
 
@@ -66,6 +79,20 @@ public class FeeUI {
 		this.latePayPenaltyUSD = latePayPenaltyUSD;
 		this.fxRate = fxRate;
 		this.subTotalUSD = subTotalUSD;
+		
+		this.setProcessingFeeEUR(dollarsToEuro(processingFeeUSD));
+		this.setExpressFeeEUR(dollarsToEuro(expressFeeUSD));
+		this.setUrgentFeeEUR(dollarsToEuro(urgentFeeUSD));
+		this.setLatePayPenaltyEUR(dollarsToEuro(latePayPenaltyUSD));
+		this.setSubTotalEUR(dollarsToEuro(subTotalUSD));
+	}
+
+	
+	
+	public BigDecimal dollarsToEuro(BigDecimal dollars) {
+		if (dollars==null || fxRate==null || (fxRate.compareTo(BigDecimal.ZERO) == 0)) return null;
+		BigDecimal euros = dollars.divide(fxRate, 2, BigDecimal.ROUND_CEILING);
+		return euros;
 	}
 
 	
@@ -198,5 +225,43 @@ public class FeeUI {
 	}
     
     
+	
+	public BigDecimal getProcessingFeeEUR() {
+		return processingFeeEUR;
+	}
+	public void setProcessingFeeEUR(BigDecimal processingFeeEUR) {
+		this.processingFeeEUR = processingFeeEUR;
+	}
+
+	public BigDecimal getExpressFeeEUR() {
+		return expressFeeEUR;
+	}
+	public void setExpressFeeEUR(BigDecimal expressFeeEUR) {
+		this.expressFeeEUR = expressFeeEUR;
+	}
+
+	public BigDecimal getUrgentFeeEUR() {
+		return urgentFeeEUR;
+	}
+	public void setUrgentFeeEUR(BigDecimal urgentFeeEUR) {
+		this.urgentFeeEUR = urgentFeeEUR;
+	}
+
+	public BigDecimal getLatePayPenaltyEUR() {
+		return latePayPenaltyEUR;
+	}
+	public void setLatePayPenaltyEUR(BigDecimal latePayPenaltyEUR) {
+		this.latePayPenaltyEUR = latePayPenaltyEUR;
+	}
+
+
+	public BigDecimal getSubTotalEUR() {
+		return subTotalEUR;
+	}
+	public void setSubTotalEUR(BigDecimal subTotalEUR) {
+		this.subTotalEUR = subTotalEUR;
+	}
+
+
 
 }

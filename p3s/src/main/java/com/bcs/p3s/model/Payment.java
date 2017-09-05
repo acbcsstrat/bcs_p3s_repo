@@ -2,6 +2,8 @@ package com.bcs.p3s.model;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -32,7 +34,7 @@ public class Payment {
      */
     @NotNull
     private String P3S_TransRef;
-
+ 
     /**
      * For security do not send this to the front end
      */
@@ -162,6 +164,16 @@ public class Payment {
 
     public void setLatestTransStatus(String latestTransStatus) {
         this.latestTransStatus = (new PaymentStatusEnum(latestTransStatus)).toString();
+    }
+    
+    
+    @Transactional
+    public Payment persist() {  
+    	Payment payment = new Payment();  
+    	EntityManager em = this.entityManager();
+        em.persist(this);
+        payment = Payment.findPayment(this.getId());
+        return payment;
     }
 
 }

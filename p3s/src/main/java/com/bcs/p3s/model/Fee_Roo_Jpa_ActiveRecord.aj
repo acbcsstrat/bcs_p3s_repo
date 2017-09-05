@@ -62,12 +62,6 @@ privileged aspect Fee_Roo_Jpa_ActiveRecord {
     }
     
     @Transactional
-    public void Fee.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.persist(this);
-    }
-    
-    @Transactional
     public void Fee.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
