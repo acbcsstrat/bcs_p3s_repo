@@ -33,6 +33,11 @@ public class Notification {
      */
     @NotNull
     private String emailTemplateId;
+    
+    /**
+     */
+    @NotNull
+    private String costbandcolor;
 
 
 

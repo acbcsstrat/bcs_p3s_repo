@@ -600,16 +600,17 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 
 	@Override
-	public RenewalUI getRenewalHistory(long id) {
+	public List<RenewalUI> getRenewalHistory(long id) {
 		// TODO Auto-generated method stub
 		
 		RenewalUI renewalUI = null;
+		List<RenewalUI> completedRenewals = new ArrayList<RenewalUI>();
 		List<Renewal> renewals = new ArrayList<Renewal>();
 		
 		String err = "Inside getRenewalHistory(" + id +")";
 		if(Long.valueOf(id)==null){
 			logM().debug("Invoked getRenewalHistory(id) with id as null");
-			return renewalUI;
+			return completedRenewals;
 			
 		}
 		
@@ -627,8 +628,10 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		renewals = q.getResultList();
 		for(Renewal renewal : renewals){
 			renewalUI = new RenewalUI(renewal);
+			if(renewalUI.isRenewedSuccessfully())
+				completedRenewals.add(renewalUI);
 		}
-		return renewalUI;
+		return completedRenewals;
 	}
 
 	/**

@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
+import com.bcs.p3s.enump3s.PaymentStatusEnum;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.PatentService;
@@ -68,7 +70,7 @@ public class PatentUI extends Patent {
 
     private String costBandColour;  
 
-	private BigDecimal currentRenewalFeeEUR;
+	/*private BigDecimal currentRenewalFeeEUR;
 	private BigDecimal currentExtensionFeeEUR;
 	private BigDecimal currentProcessingFeeEUR;
 	private BigDecimal currentExpressFeeEUR;
@@ -82,7 +84,9 @@ public class PatentUI extends Patent {
 	private BigDecimal currentUrgentFeeUSD;
 	private BigDecimal latePayPenaltyUSD;
 	private BigDecimal currentTotalUSD;
-	private BigDecimal fxRate;
+	private BigDecimal fxRate;*/
+    
+    private FeeUI feeUI;
 
     
 	List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
@@ -136,96 +140,12 @@ public class PatentUI extends Patent {
 					// Set all the *costUSD & *costEUR fields
 					if (extendedData.getFee()!=null) {
 						FeeUI feeUI = new FeeUI(extendedData.getFee());
-						
-						this.setCurrentRenewalFeeEUR(feeUI.getRenewalFeeEUR());
-						this.setCurrentExtensionFeeEUR(feeUI.getExtensionFeeEUR());
-						this.setCurrentProcessingFeeEUR(feeUI.getProcessingFeeEUR());
-						this.setCurrentExpressFeeEUR(feeUI.getExpressFeeEUR());
-						this.setCurrentUrgentFeeEUR(feeUI.getUrgentFeeEUR());
-						this.setLatePayPenaltyEUR(feeUI.getLatePayPenaltyEUR());
-						this.setCurrentTotalEUR(feeUI.getSubTotalEUR());
-						this.setCurrentRenewalFeeUSD(feeUI.getRenewalFeeUSD());
-						this.setCurrentExtensionFeeUSD(feeUI.getExtensionFeeUSD());
-						this.setCurrentProcessingFeeUSD(feeUI.getProcessingFeeUSD());
-						this.setCurrentExpressFeeUSD(feeUI.getExpressFeeUSD());
-						this.setCurrentUrgentFeeUSD(feeUI.getUrgentFeeUSD());
-						this.setLatePayPenaltyUSD(feeUI.getLatePayPenaltyUSD());
-						this.setCurrentTotalUSD(feeUI.getSubTotalUSD());
-						this.setFxRate(feeUI.getFxRate());
+						this.setFeeUI(feeUI);
 					}
 				}
 			}
 		}
-
-		
-//		patentUI.setCurrentRenewalCost(new BigDecimal("1.11"));
-//		patentUI.setCostBandEndDate(nowPlusNdays(2));
-//		patentUI.setRenewalCostNextStage(new BigDecimal("1111111.11"));
-//		patentUI.setRenewalDueDate(dummyFilingDateToThisyearRenewDueDate(patent.getFilingDate()));
-				
-		//extended data fetched from postsession bean object
-		
-		/*DummyDataEngine dummy = new DummyDataEngine();
-		System.out.println("Calling DummyDataEngine:populateExtendedPatentFieldsWithDummyData for patent "+patent.getPatentApplicationNumber());
-    	dummy.populateExtendedPatentFieldsWithDummyData(this, patent); */
-		
 	}
-
-	
-	
-	
-	
-	
-
-	
-	
-// Created 170703, but immediately redundant (for now)  acTidy
-//	/**
-//	 * Creates a Patent from 'this' PatentUI
-//	 * 
-//	 * Notes:
-//	 * - creates Notifications from NotificationUIs
-//	 * - otherwise, all fields are populated from the extended Patent fields.
-//	 *  
-//	 *  It is the clients responsibility to ensure all required fields in the PatentUI are populated
-//	 *  
-//	 * @return the corresponding Patent Object
-//	 */
-//	public Patent toPatent() {
-//		Patent patent = new Patent();
-//		
-//		patent.setId(this.getId());
-//		patent.setVersion(this.getVersion());
-//		patent.setPatentApplicationNumber(this.getPatentApplicationNumber());
-//		patent.setTitle(this.getTitle());
-//		patent.setFilingDate(this.getFilingDate());
-//		patent.setBusiness(this.getBusiness());
-//		patent.setPrimaryApplicantName(this.getPrimaryApplicantName());
-//		patent.setClientRef(this.getClientRef());
-//		patent.setShortTitle(this.getShortTitle());
-//		patent.setEpoPatentStatus(this.getEpoPatentStatus());
-//		patent.setLastRenewedDateExEpo(this.getLastRenewedDateExEpo());
-//		patent.setRenewalYear(this.getRenewalYear());
-//		patent.setRenewalStatus(this.getRenewalStatus());
-//		patent.setPatentPublicationNumber(this.getPatentPublicationNumber());
-//
-//		// Now - the Notifications
-//		List<Notification> notifications = new ArrayList<Notification>();
-//		for (NotificationUI nui : this.getNotificationUIs()) {
-//			if (nui.getIsOn()) {
-//				Notification notification = nui.toNotification();
-//				notifications.add(notification);
-//			}
-//		}
-//		patent.setNotifications(notifications);
-//	    
-//		return patent;
-//	}
-	
-	
-	
-	
-
 	
 	// Getter/setters requiring special processing
 
@@ -317,119 +237,14 @@ public class PatentUI extends Patent {
 		this.costBandColour = costBandColour;
 	}
 
-	
-
-	public BigDecimal getCurrentRenewalFeeEUR() {
-		return currentRenewalFeeEUR;
-	}
-	public void setCurrentRenewalFeeEUR(BigDecimal currentRenewalFeeEUR) {
-		this.currentRenewalFeeEUR = currentRenewalFeeEUR;
+	public FeeUI getFeeUI() {
+		return feeUI;
 	}
 
-	public BigDecimal getCurrentExtensionFeeEUR() {
-		return currentExtensionFeeEUR;
-	}
-	public void setCurrentExtensionFeeEUR(BigDecimal currentExtensionFeeEUR) {
-		this.currentExtensionFeeEUR = currentExtensionFeeEUR;
+	public void setFeeUI(FeeUI feeUI) {
+		this.feeUI = feeUI;
 	}
 
-
-	public BigDecimal getCurrentProcessingFeeEUR() {
-		return currentProcessingFeeEUR;
-	}
-	public void setCurrentProcessingFeeEUR(BigDecimal currentProcessingFeeEUR) {
-		this.currentProcessingFeeEUR = currentProcessingFeeEUR;
-	}
-
-	public BigDecimal getCurrentExpressFeeEUR() {
-		return currentExpressFeeEUR;
-	}
-	public void setCurrentExpressFeeEUR(BigDecimal currentExpressFeeEUR) {
-		this.currentExpressFeeEUR = currentExpressFeeEUR;
-	}
-
-	public BigDecimal getCurrentUrgentFeeEUR() {
-		return currentUrgentFeeEUR;
-	}
-	public void setCurrentUrgentFeeEUR(BigDecimal currentUrgentFeeEUR) {
-		this.currentUrgentFeeEUR = currentUrgentFeeEUR;
-	}
-
-	public BigDecimal getLatePayPenaltyEUR() {
-		return latePayPenaltyEUR;
-	}
-	public void setLatePayPenaltyEUR(BigDecimal latePayPenaltyEUR) {
-		this.latePayPenaltyEUR = latePayPenaltyEUR;
-	}
-
-	public BigDecimal getCurrentTotalEUR() {
-		return currentTotalEUR;
-	}
-	public void setCurrentTotalEUR(BigDecimal currentTotalEUR) {
-		this.currentTotalEUR = currentTotalEUR;
-	}
-
-	public BigDecimal getCurrentRenewalFeeUSD() {
-		return currentRenewalFeeUSD;
-	}
-	public void setCurrentRenewalFeeUSD(BigDecimal currentRenewalFeeUSD) {
-		this.currentRenewalFeeUSD = currentRenewalFeeUSD;
-	}
-
-	public BigDecimal getCurrentExtensionFeeUSD() {
-		return currentExtensionFeeUSD;
-	}
-	public void setCurrentExtensionFeeUSD(BigDecimal currentExtensionFeeUSD) {
-		this.currentExtensionFeeUSD = currentExtensionFeeUSD;
-	}
-
-	public BigDecimal getCurrentProcessingFeeUSD() {
-		return currentProcessingFeeUSD;
-	}
-	public void setCurrentProcessingFeeUSD(BigDecimal currentProcessingFeeUSD) {
-		this.currentProcessingFeeUSD = currentProcessingFeeUSD;
-	}
-
-	public BigDecimal getCurrentExpressFeeUSD() {
-		return currentExpressFeeUSD;
-	}
-	public void setCurrentExpressFeeUSD(BigDecimal currentExpressFeeUSD) {
-		this.currentExpressFeeUSD = currentExpressFeeUSD;
-	}
-
-	public BigDecimal getCurrentUrgentFeeUSD() {
-		return currentUrgentFeeUSD;
-	}
-	public void setCurrentUrgentFeeUSD(BigDecimal currentUrgentFeeUSD) {
-		this.currentUrgentFeeUSD = currentUrgentFeeUSD;
-	}
-
-	public BigDecimal getLatePayPenaltyUSD() {
-		return latePayPenaltyUSD;
-	}
-	public void setLatePayPenaltyUSD(BigDecimal latePayPenaltyUSD) {
-		this.latePayPenaltyUSD = latePayPenaltyUSD;
-	}
-
-	public BigDecimal getCurrentTotalUSD() {
-		return currentTotalUSD;
-	}
-	public void setCurrentTotalUSD(BigDecimal currentTotalUSD) {
-		this.currentTotalUSD = currentTotalUSD;
-	}
-
-	public BigDecimal getFxRate() {
-		return fxRate;
-	}
-	public void setFxRate(BigDecimal fxRate) {
-		this.fxRate = fxRate;
-	}
-
-	
-
-	
-	
-	
 	/**
 	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications - and, for each, whether it is on or off.
 	 * patent.notifications just holds those that are ON.
@@ -483,6 +298,8 @@ public class PatentUI extends Patent {
 //		}
 		return allNotificationUIs;
 	}
+	
+	
 	
 	
 }

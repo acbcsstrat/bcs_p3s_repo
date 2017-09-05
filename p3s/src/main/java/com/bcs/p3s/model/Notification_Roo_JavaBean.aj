@@ -39,4 +39,12 @@ privileged aspect Notification_Roo_JavaBean {
         this.emailTemplateId = emailTemplateId;
     }
     
+    public String Notification.getCostbandcolor() {
+        return this.costbandcolor;
+    }
+    
+    public void Notification.setCostbandcolor(String costbandcolor) {
+        this.costbandcolor = costbandcolor;
+    }
+    
 }

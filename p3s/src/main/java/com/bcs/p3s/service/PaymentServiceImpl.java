@@ -222,7 +222,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			throw new RuntimeException(e);
 		}
 		return bankTransferPostCommitDetails;
-}
+	}
 
 
 	// End of - the methods which implement the prototypes in the Interface

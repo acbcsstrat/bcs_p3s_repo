@@ -257,15 +257,15 @@ public class PatentRestController extends Universal {
 		    
 		    
 		  //---------------------Fetch Renewal History ------------------------------------------------
-		    //@RequestMapping(value = "/rest-renewal-history/{id}", method = RequestMethod.GET)    //will be the actual method
-		    //public ResponseEntity<RenewalUI> getRenewalHistory(@PathVariable("id") long id) {
-		    @RequestMapping(value = "/rest-renewal-history/", method = RequestMethod.GET)
-		    public ResponseEntity<RenewalUI> getRenewalHistory() {
+		    @RequestMapping(value = "/rest-renewal-history/{id}", method = RequestMethod.GET)    //will be the actual method
+		    public ResponseEntity<List<RenewalUI>> getRenewalHistory(@PathVariable("id") long id) {
+		    /*@RequestMapping(value = "/rest-renewal-history/", method = RequestMethod.GET)
+		    public ResponseEntity<RenewalUI> getRenewalHistory() {*/
 		    	log().debug("PatentRestController : /rest-renewal-history/ invoked ");
 		    	//check whether id is null
-		    	//RenewalUI renewalHistoryData = patentService.getRenewalHistory(id);
-		    	RenewalUI renewalHistoryData = patentService.getRenewalHistory(1);
-		    	return new ResponseEntity<RenewalUI>(renewalHistoryData, HttpStatus.OK);
+		    	List<RenewalUI> renewalHistoryData = patentService.getRenewalHistory(id);
+		    	//RenewalUI renewalHistoryData = patentService.getRenewalHistory(1);
+		    	return new ResponseEntity<List<RenewalUI>>(renewalHistoryData, HttpStatus.OK);
 		    }
 	
 	//------------------- next ... a Patent : ARE THERE ANY MORE ???  --------------------------------------------------------

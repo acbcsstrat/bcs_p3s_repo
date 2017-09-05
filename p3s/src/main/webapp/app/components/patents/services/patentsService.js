@@ -82,10 +82,12 @@ app.factory('patentsService', function($http, $q) {
             return deferred.promise;
         }
 
-        factory.fetchRenewalHistory = function() {
+        factory.fetchRenewalHistory = function(id) {
 
             var deferred = $q.defer();
-            $http.get('../../p3sweb/assets/json/renewal-history.json')
+            console.log(id)
+            //$http.get('../../p3sweb/assets/json/renewal-history.json')
+            $http.get('http://localhost:8080/p3sweb/rest-renewal-history/'+id)
                 .then(
                 function (response) {
                     deferred.resolve(response.data);

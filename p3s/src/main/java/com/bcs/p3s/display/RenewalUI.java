@@ -11,6 +11,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.bcs.p3s.engine.DummyDataEngine;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Certificate;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
@@ -171,6 +172,14 @@ public class RenewalUI extends Renewal {
 		this.feeUI = feeUI;
 	}
 
+	
+	public boolean isRenewedSuccessfully() {
+		boolean result = false;
+		String status = this.getRenewalStatus();
+		if (RenewalStatusEnum.RENEWAL_IN_PLACE.equalsIgnoreCase(status))
+			result = true;
+		return result;
+	}
 	
 	//	public BigDecimal getCurrentRenewalCost() {
 //		return currentRenewalCost;
