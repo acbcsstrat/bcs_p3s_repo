@@ -1,14 +1,12 @@
 package com.bcs.p3s.enump3s;
 
-import com.bcs.p3s.util.lang.Universal;
-
 public class RenewalColourEnum extends P3SAbstractEnum {
 
     public static final String GREEN = "Green";
     public static final String AMBER = "Amber";
     public static final String RED   = "Red"; 
     public static final String BLUE  = "Blue";
-    public static final String BROWN = "Brown";
+    public static final String BLACK = "Black";
     
     public static final String NOCOLOR = "NoColor";
 
@@ -24,8 +22,12 @@ public class RenewalColourEnum extends P3SAbstractEnum {
                 if (colour.equalsIgnoreCase("Yellow")) sofar = RenewalColourEnum.AMBER;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.RED)) sofar = RenewalColourEnum.RED;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.BLUE)) sofar = RenewalColourEnum.BLUE;  
-                if (colour.equalsIgnoreCase(RenewalColourEnum.BROWN)) sofar = RenewalColourEnum.BROWN;  
+                if (colour.equalsIgnoreCase(RenewalColourEnum.BLACK)) sofar = RenewalColourEnum.BLACK;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.NOCOLOR)) sofar = RenewalColourEnum.NOCOLOR;  
+
+            	// Start of Legacy / Redundant code. To be removed after 'brown' has been removed from all DbS
+                if (colour.equalsIgnoreCase("Brown")) sofar = RenewalColourEnum.BLACK;  
+                // End of Legacy / Redundant code. 
 
                 if (sofar != null) {
                 	this.value = sofar.toString();

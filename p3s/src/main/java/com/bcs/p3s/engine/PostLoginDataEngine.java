@@ -133,8 +133,8 @@ public class PostLoginDataEngine extends Universal{
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.RED))
 			nextPhase = RenewalColourEnum.BLUE;
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLUE))
-			nextPhase = RenewalColourEnum.BROWN;
-		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BROWN))
+			nextPhase = RenewalColourEnum.BLACK;
+		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLACK))
 			nextPhase = RenewalColourEnum.GREEN;
 		return nextPhase;
 	}
@@ -151,9 +151,9 @@ public class PostLoginDataEngine extends Universal{
 		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.RED))
 			cal.setTime(caData.getBlueStartDate());
 		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.BLUE))
-			cal.setTime(caData.getBrownStartDate());
-		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.BROWN))
-			cal.setTime(caData.getBrownEndDate());
+			cal.setTime(caData.getBlackStartDate());
+		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.BLACK))
+			cal.setTime(caData.getBlackEndDate());
 		
 		return cal;
 	}

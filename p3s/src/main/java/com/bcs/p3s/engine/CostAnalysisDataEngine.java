@@ -73,7 +73,7 @@ public class CostAnalysisDataEngine extends Universal{
 	 * This method gets called if Renewal_In_Place with window still opened or SHOW_PRICE 
 	 * @param allDates
 	 * @return 
-	 * 		all phases start dates [GREEN, AMBER, RED, BLUE OR BROWN]
+	 * 		all phases start dates [GREEN, AMBER, RED, BLUE OR BLACK]
 	 * 		also the currentPhase where we are right now
 	 */
 	public CostAnalysisData getAllPhasesInfo(RenewalDates allDates){
@@ -83,18 +83,18 @@ public class CostAnalysisDataEngine extends Universal{
 		Date amberStart = utils.getMidnight(utils.addDays(allDates.getCurrentRenewalDueDate(), -15));
 		Date redStart = utils.getMidnight(utils.addHours(allDates.getCurrentRenewalDueDate(), -48));
 		Date blueStart = utils.get8PM(utils.addHours(allDates.getCurrentRenewalDueDate(), -4));
-		Date brownStart = utils.getMidnight(utils.addDays(allDates.getCurrentWindowCloseDate(), -10));
+		Date blackStart = utils.getMidnight(utils.addDays(allDates.getCurrentWindowCloseDate(), -10));
 		
 		caData.setGreenStartDate(greenStart);
 		caData.setAmberStartDate(amberStart);
 		caData.setRedStartDate(redStart);
 		caData.setBlueStartDate(blueStart);
-		caData.setBrownStartDate(brownStart);
+		caData.setBlackStartDate(blackStart);
 		//caData.setBrownEndDate(utils.addDays(allDates.getCurrentWindowCloseDate(), -2));
-		caData.setBrownEndDate(allDates.getCurrentWindowCloseDate());
+		caData.setBlackEndDate(allDates.getCurrentWindowCloseDate());
 		System.out.println("Calculated Dates \n");
 		System.out.println(caData.getGreenStartDate() +" " + caData.getAmberStartDate() +" " + caData.getRedStartDate() +
-				" " + caData.getBlueStartDate() + " " + caData.getBrownStartDate() + " " + caData.getBrownEndDate());
+				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackEndDate());
 		
 		/**
 		 * SETTING ALL RESPECTIVE DATES TO STRING FORMAT 
@@ -103,8 +103,8 @@ public class CostAnalysisDataEngine extends Universal{
 		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(amberStart));
 		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(redStart));
 		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blueStart));
-		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(brownStart));
-		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBrownEndDate()));
+		caData.setBlackStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blackStart));
+		caData.setBlackEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackEndDate()));
 		
 		if(allDates.isRenewalWindowStillOpened())
 			caData.setCurrentcostBand(getCurrentPhase(caData));
@@ -123,18 +123,18 @@ public class CostAnalysisDataEngine extends Universal{
 		
 		//Calendar todays = Calendar.getInstance();
     	Date todaysDate = new DateUtil().getTodaysDate();
-		if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getBrownEndDate())){
+		if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getBlackEndDate())){
 			
-			if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getAmberStartDate()))
+			if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getGreenStartDate()))
 				caData.setCurrentcostBand(RenewalColourEnum.GREEN);
-			else if (todaysDate.after(caData.getAmberStartDate()) && todaysDate.before(caData.getRedStartDate())) 
+			else if (todaysDate.after(caData.getAmberStartDate()) && todaysDate.before(caData.getAmberStartDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.AMBER);
-			else if (todaysDate.after(caData.getRedStartDate()) && todaysDate.before(caData.getBlueStartDate())) 
+			else if (todaysDate.after(caData.getRedStartDate()) && todaysDate.before(caData.getRedStartDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.RED);
-			else if (todaysDate.after(caData.getBlueStartDate()) && todaysDate.before(caData.getBrownStartDate())) 
+			else if (todaysDate.after(caData.getBlueStartDate()) && todaysDate.before(caData.getBlueStartDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.BLUE);
-			else if (todaysDate.after(caData.getBrownStartDate()) && todaysDate.before(caData.getBrownEndDate())) 
-				caData.setCurrentcostBand(RenewalColourEnum.BROWN);
+			else if (todaysDate.after(caData.getBlackStartDate()) && todaysDate.before(caData.getBlackEndDate())) 
+				caData.setCurrentcostBand(RenewalColourEnum.BLACK);
 			
 		}
 		else{//CAN BE DOLDRUM OR TOO LATE TO RENEW
@@ -157,7 +157,7 @@ public class CostAnalysisDataEngine extends Universal{
 		BigDecimal amberCost = new BigDecimal(0);
 		BigDecimal redCost = new BigDecimal(0);
 		BigDecimal blueCost = new BigDecimal(0);
-		BigDecimal brownCost = new BigDecimal(0);
+		BigDecimal blackCost = new BigDecimal(0);
 		//below needs to be changed once MC starts sending daily rate files
 		BigDecimal fxRate = new BigDecimal(0.88);
 		
@@ -177,10 +177,10 @@ public class CostAnalysisDataEngine extends Universal{
 		
 		caMoreData.setBlueStageCost(blueCost);
 		
-		brownCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate)).
+		blackCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate)).
 				add((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)))); 
 		
-		caMoreData.setBrownStageCost(brownCost);
+		caMoreData.setBlackStageCost(blackCost);
 		
 		return caMoreData;
 	}
@@ -202,7 +202,7 @@ public class CostAnalysisDataEngine extends Universal{
 		BigDecimal amberCost = new BigDecimal(0);
 		BigDecimal redCost = new BigDecimal(0);
 		BigDecimal blueCost = new BigDecimal(0);
-		BigDecimal brownCost = new BigDecimal(0);
+		BigDecimal blackCost = new BigDecimal(0);
 		
 		fee.setFxRate(fxRate);
 		
@@ -256,9 +256,9 @@ public class CostAnalysisDataEngine extends Universal{
 
 		}
 		
-		else if(RenewalColourEnum.BROWN .equals(currentPhase)){
+		else if(RenewalColourEnum.BLACK .equals(currentPhase)){
 			//brownCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate)).add(epoFee.getExtensionFee_EUR()).add(p3sFee.getUrgentFee_Percent());
-			brownCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate)).
+			blackCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate)).
 					add((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)))); 
 			
 
@@ -268,7 +268,7 @@ public class CostAnalysisDataEngine extends Universal{
 			fee.setExtensionFee_EUR(epoFee.getExtensionFee_EUR());
 			//fee.setExtensionFee_USD(epoFee.getExtensionFee_EUR().multiply(fxRate));
 			fee.setUrgentFee_USD((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
-			fee.setSubTotal_USD(brownCost);
+			fee.setSubTotal_USD(blackCost);
 
 		}
 		
@@ -314,18 +314,18 @@ public class CostAnalysisDataEngine extends Universal{
 		Date amberStart = utils.getMidnight(utils.addDays(allDates.getNextRenewalDueDate(), -15));
 		Date redStart = utils.getMidnight(utils.addHours(allDates.getNextRenewalDueDate(), -48));
 		Date blueStart = utils.get8PM(utils.addHours(allDates.getNextRenewalDueDate(), -4));
-		Date brownStart = utils.getMidnight(utils.addDays(allDates.getNexttWindowCloseDate(), -10));
+		Date blackStart = utils.getMidnight(utils.addDays(allDates.getNexttWindowCloseDate(), -10));
 		
 		caData.setGreenStartDate(greenStart);
 		caData.setAmberStartDate(amberStart);
 		caData.setRedStartDate(redStart);
 		caData.setBlueStartDate(blueStart);
-		caData.setBrownStartDate(brownStart);
+		caData.setBlackStartDate(blackStart);
 		//caData.setBrownEndDate(utils.addDays(allDates.getNexttWindowCloseDate(), -2));
-		caData.setBrownEndDate(allDates.getNexttWindowCloseDate());
+		caData.setBlackEndDate(allDates.getNexttWindowCloseDate());
 		System.out.println("Calculated Dates \n");
 		System.out.println(caData.getGreenStartDate() +" " + caData.getAmberStartDate() +" " + caData.getRedStartDate() +
-				" " + caData.getBlueStartDate() + " " + caData.getBrownStartDate() + " " + caData.getBrownEndDate());
+				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackEndDate());
 		
 		/**
 		 * SETTING ALL RESPECTIVE DATES TO STRING FORMAT 
@@ -334,8 +334,8 @@ public class CostAnalysisDataEngine extends Universal{
 		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(amberStart));
 		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(redStart));
 		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blueStart));
-		caData.setBrownStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(brownStart));
-		caData.setBrownEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBrownEndDate()));
+		caData.setBlackStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blackStart));
+		caData.setBlackEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackEndDate()));
 		
 		
 		caData.setCurrentcostBand(RenewalColourEnum.GREEN);

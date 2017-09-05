@@ -130,8 +130,8 @@ public class PatentStatusEngine extends Universal {
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.RED))
 			nextPhase = RenewalColourEnum.BLUE;
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLUE))
-			nextPhase = RenewalColourEnum.BROWN;
-		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BROWN))
+			nextPhase = RenewalColourEnum.BLACK;
+		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLACK))
 			nextPhase = RenewalColourEnum.NOCOLOR;
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.NOCOLOR))
 			nextPhase = RenewalColourEnum.GREEN;
@@ -150,9 +150,9 @@ public class PatentStatusEngine extends Universal {
 		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.RED))
 			cal.setTime(caData.getBlueStartDate());
 		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.BLUE))
-			cal.setTime(caData.getBrownStartDate());
-		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.BROWN))
-			cal.setTime(caData.getBrownEndDate());
+			cal.setTime(caData.getBlackStartDate());
+		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.BLACK))
+			cal.setTime(caData.getBlackEndDate());
 		
 		return cal;
 	}
@@ -195,7 +195,7 @@ public PostLoginSessionBean getExtendedDataForNewPatent(Patent patent, PostLogin
 				FeeUI currentfeeUI = new FeeUI(currentFee);
 				
 				FeeUI nextStageFeeUI = null;
-				if(!currentPhase.equalsIgnoreCase(RenewalColourEnum.BROWN)) { //If brown no next stage
+				if(!currentPhase.equalsIgnoreCase(RenewalColourEnum.BLACK)) { //If black no next stage
 					/*nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); */
 					Fee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
 					nextStageFeeUI = new FeeUI(nextStageFee);

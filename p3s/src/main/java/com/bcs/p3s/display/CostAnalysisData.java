@@ -12,21 +12,21 @@ public class CostAnalysisData {
 	private Date amberStartDate;
 	private Date redStartDate;
 	private Date blueStartDate;
-	private Date brownStartDate;
-	private Date brownEndDate;
+	private Date blackStartDate;
+	private Date blackEndDate;
 	
 	private String greenStartDateUI;
 	private String amberStartDateUI;
 	private String redStartDateUI;
 	private String blueStartDateUI;
-	private String brownStartDateUI;
-	private String brownEndDateUI;
+	private String blackStartDateUI;
+	private String blackEndDateUI;
 	
 	private BigDecimal greenStageCost;
 	private BigDecimal amberStageCost;
 	private BigDecimal redStageCost;
 	private BigDecimal blueStageCost;
-	private BigDecimal brownStageCost;
+	private BigDecimal blackStageCost;
 	
 	private String currentcostBand;
 	
@@ -81,20 +81,20 @@ public class CostAnalysisData {
 		this.blueStartDate = blueStartDate;
 	}
 
-	public Date getBrownStartDate() {
-		return brownStartDate;
+	public Date getBlackStartDate() {
+		return blackStartDate;
 	}
 
-	public void setBrownStartDate(Date brownStartDate) {
-		this.brownStartDate = brownStartDate;
+	public void setBlackStartDate(Date blackStartDate) {
+		this.blackStartDate = blackStartDate;
 	}
 
-	public Date getBrownEndDate() {
-		return brownEndDate;
+	public Date getBlackEndDate() {
+		return blackEndDate;
 	}
 
-	public void setBrownEndDate(Date brownEndDate) {
-		this.brownEndDate = brownEndDate;
+	public void setBlackEndDate(Date blackEndDate) {
+		this.blackEndDate = blackEndDate;
 	}
 
 	public String getGreenStartDateUI() {
@@ -129,20 +129,20 @@ public class CostAnalysisData {
 		this.blueStartDateUI = blueStartDateUI;
 	}
 
-	public String getBrownStartDateUI() {
-		return brownStartDateUI;
+	public String getBlackStartDateUI() {
+		return blackStartDateUI;
 	}
 
-	public void setBrownStartDateUI(String brownStartDateUI) {
-		this.brownStartDateUI = brownStartDateUI;
+	public void setBlackStartDateUI(String blackStartDateUI) {
+		this.blackStartDateUI = blackStartDateUI;
 	}
 
-	public String getBrownEndDateUI() {
-		return brownEndDateUI;
+	public String getBlackEndDateUI() {
+		return blackEndDateUI;
 	}
 
-	public void setBrownEndDateUI(String brownEndDateUI) {
-		this.brownEndDateUI = brownEndDateUI;
+	public void setBlackEndDateUI(String blackEndDateUI) {
+		this.blackEndDateUI = blackEndDateUI;
 	}
 
 	public BigDecimal getGreenStageCost() {
@@ -177,12 +177,12 @@ public class CostAnalysisData {
 		this.blueStageCost = blueCost;
 	}
 
-	public BigDecimal getBrownStageCost() {
-		return brownStageCost;
+	public BigDecimal getBlackStageCost() {
+		return blackStageCost;
 	}
 
-	public void setBrownStageCost(BigDecimal brownCost) {
-		this.brownStageCost = brownCost;
+	public void setBlackStageCost(BigDecimal blackCost) {
+		this.blackStageCost = blackCost;
 	}
 
 	public String getCurrentcostBand() {
