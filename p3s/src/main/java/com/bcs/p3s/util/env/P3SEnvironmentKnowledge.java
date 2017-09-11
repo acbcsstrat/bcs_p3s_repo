@@ -18,6 +18,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 
 	public static final String DATABASECONFIGFILENAME = "database.properties";
 	public static final String BUILDINFO_FILENAME = "buildinfo.properties";
+	public static final String P3S_PROPERTYFILE_FILENAME = "p3s.properties";
 
 //	public static final String PROPERTYFILENAME = "PatentExpressway.properties";
 //	public static final String PROPERTYFILEDEFAULTLOCATION = "/utils";
@@ -36,7 +37,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 
 	
 	/**
-	 * Provides the path of the database property file on this host
+	 * Provides the filespec of the database property file on this host
 	 */
 	public final String getDatabaseConfigFilespec()  {
 		String defaultpath = "C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";  // Deafult PC tomcat
@@ -46,7 +47,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 		
 		// Logic: If Lenovo or Merin : is under eclipse, else Dell or Pat or TomcatA [or scrape]. 
 		if ("CCP020".equals(host)) {
-			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/"; // assumes running from war
+			// path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/"; 	// If running from eclipse
+			path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";	// If running from war 
 		}
 		if ("avid-ox790-013".equals(host)) {
 			path = "C:/MERIN/Documents/PatentPlace/P3S local repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/";
@@ -59,7 +61,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
 		if ("CCP007".equals(host)) {
-			// path = defaultpath; // If running from war
+			// path = defaultpath; // now redundant, but shows purpose of defaultpath 
+			// path = "C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";	// If running from war 	
 			path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse
 		}
 		
@@ -74,16 +77,40 @@ public class P3SEnvironmentKnowledge extends Universal {
 	
 
 	/**
-	 * Provides the path of the database property file on this host
+	 * Provides the filespec of the BuildInfo property file on this host
 	 */
 	public final String getBuildinfoFilespec()  {
-		String path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/";  // Deafult PC tomcat
+		String filespec = appendFilenameToPath(getMainPropertyFilePath(), BUILDINFO_FILENAME);
+		log().debug("P3SEnvironmentKnowledge getBuildinfoFilespec predicts that buildinfo file is at "+filespec);
+		return filespec ;
+	};
+	
+	
+
+	/**
+	 * Provides the filespec of the main P3S property file on this host
+	 */
+	public final String OBS_getP3SPropertyFileFilespec()  {
+		// for now, & likely always, this is the same as getBuildinfoFilespec() 
+		String filespec = appendFilenameToPath(getMainPropertyFilePath(), P3S_PROPERTYFILE_FILENAME);
+		log().debug("P3SEnvironmentKnowledge getP3SPropertyFileFilespec predicts that p3s property file is at "+filespec);
+		return filespec ;
+	};
+	
+	
+
+	/**
+	 * Provides the path of the main properties file folder on this host
+	 */
+	public final String getMainPropertyFilePath()  {
+		String path = null; // "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/";  // UNUSED Default PC tomcat
 		String host = Hostname.getHostname();
 		
 		
 		// Logic: If Lenovo or Merin : is under eclipse, else Dell or Pat or TomcatA [or scrape]. 
 		if ("CCP020".equals(host)) {
-			path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/";
+			//path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/";
+			path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/";
 		}
 		if ("avid-ox790-013".equals(host)) {
 			path = "C:/MERIN/Documents/PatentPlace/P3S local repos/bcs_p3s_repo/p3s/src/main/resources/";
@@ -95,13 +122,18 @@ public class P3SEnvironmentKnowledge extends Universal {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";
 		}
 		
-		if ( ! "CCP007".equals(host) ) {
-			logInternalError().warn("P3SEnvironmentKnowledge getBuildinfoFilespec given unexpected host : "+host);
+
+		if ("CCP007".equals(host) ) {
+			// C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/
+			path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/";
 		}
-		log().debug("P3SEnvironmentKnowledge getBuildinfoFilespec predicts that buildinfo file is in "+path);
+
+		if (path==null) {
+			logInternalError().warn("P3SEnvironmentKnowledge getMainPropertyFilePath given unexpected host : "+host);
+		}
+		log().debug("P3SEnvironmentKnowledge getMainPropertyFilePath predicts "+path);
 		
-		
-		return appendFilenameToPath(path, BUILDINFO_FILENAME);
+		return path;
 	};
 	
 	
@@ -133,7 +165,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 	 * Location of the main property file on this host
 	 * Will end with forwardslash, ready for filename to be prepended
 	 */
-//	public static final String pathToPropertyFile()  {
+//	public static final String pathToPropertyFile()  {  // acTidy
 //		String path = PROPERTYFILEDEFAULTLOCATION;
 //
 //		//String hostname = Hostname.getWinHostname(); 
@@ -146,7 +178,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 	/**
 	 * Provides the path of the main property file on this host
 	 */
-//	public static final String getPropertyFilePath()  {
+//	public static final String getPropertyFilePath()  { // acTidy
 //		String path = PROPERTYFILEDEFAULTLOCATION;
 //
 //		//String hostname = Hostname.getWinHostname(); 
@@ -157,36 +189,6 @@ public class P3SEnvironmentKnowledge extends Universal {
 //	};
 	
 	
-// acTidy  -these were old Moneycorp values. Useful for Scavenging **************	
-//	public static String default_property_fileName = "moneycorp_patent_renewals.properties"; 
-//	// deliberately corrupt above, to exercise logging
-//
-//	// Provide the 'hardcoded' knowledge
-//	static final Map<String, String> ENVS = new HashMap<String, String>() {
-//		{
-//			// Merin's PC
-//			put("avid-ox790-013", "/MERIN/Workspace/Latest/MoneyCorp/src/main/resources/META-INF/spring");
-//			// Andy's Dell
-//			put("CCP007", "/dev64/moneycorp/src/main/resources/META-INF/spring");
-//		}
-//	};
-//
-//	/*
-//	 * Other known environments (for PatentExpressway?) protected final String
-//	 * ABS_PATH_TO_PROPFILE_ON_TBTRIAL =
-//	 * "/MERIN/Workspace/Latest/"+"temp"+"/WEB-INF/classes/META-INF/spring"; //
-//	 * for tbTrial protected final String ABS_PATH_TO_PROPFILE_ON_APPSERV01 =
-//	 * "/var/www/tomcatbase/patentexpressway_prod/webapps/PE/WEB-INF/classes/META-INF/spring"
-//	 * ; protected final String ABS_PATH_TO_PROPFILE_ON_PETEST =
-//	 * "/var/www/tomcatbase/patentexpressway_test/webapps/PEtest/WEB-INF/classes/META-INF/spring"
-//	 * ; protected final String ABS_PATH_TO_PROPFILE_ON_PEDEMO =
-//	 * "/var/www/tomcatbase/patentexpressway_demo/webapps/PEdemo/WEB-INF/classes/META-INF/spring"
-//	 * ; protected final String ABS_PATH_TO_PROPFILE_ON_RACKSPACE_DEFAULT =
-//	 * "/var/www/tomcatbase/patentexpressway_prod/webapps/PE/WEB-INF/classes/META-INF/spring"
-//	 * ; // Andy's Lenovo //put("CCP019",
-//	 * "/workspace2/PatentExpressway March 2015/src/main/resources/META-INF/spring"
-//	 * );
-//	 */
 
 	
 	public String appendFilenameToPath(String path, String filename) {
