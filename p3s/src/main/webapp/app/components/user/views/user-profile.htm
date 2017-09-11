@@ -31,11 +31,11 @@
 		<fieldset>
 			<legend class="font-weight-bold">Password</legend>
 			<div class="form-group row">
-				<label class="col-md-5" for="new_password">New password</label>
+				<label class="col-md-5" for="newPassword">New password</label>
 				<div class="col-md-7">
-					<input type="text" name="new_password" ng-model="$ctrl.user.newPassword" class="form-control" id="new_password" minlength="8">
-					<p ng-show="userProfileForm.new_password.$error.required && userProfileForm.new_password.$dirty">Please fill out this field</p>
-					<p ng-show="userProfileForm.new_password.$error.minlength">Password needs to be a minimum of 8 characters</p>
+					<input type="text" name="newPassword" ng-model="$ctrl.user.newPassword" class="form-control" id="newPassword" ng-bind="newPassword"minlength="8">
+					<p ng-show="userProfileForm.newPassword.$error.required && userProfileForm.newPassword.$dirty">Please fill out this field</p>
+					<p ng-show="userProfileForm.newPassword.$error.minlength">Password needs to be a minimum of 8 characters</p>
 				</div>
 			</div>
 			<div class="form-group row">

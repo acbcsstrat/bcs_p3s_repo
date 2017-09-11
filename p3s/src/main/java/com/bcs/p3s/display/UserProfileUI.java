@@ -33,6 +33,8 @@ public class UserProfileUI {
     private String lastName;
     private String emailAddress;
     
+    private String newPassword;
+    
     private Boolean isEmailNotification;
 
     private Business business;
@@ -81,6 +83,25 @@ public class UserProfileUI {
 	public void setBusiness(Business business) {
 		this.business = business;
 	}
+
+
+
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+
+
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+
+	
+
+	
 
 
 
