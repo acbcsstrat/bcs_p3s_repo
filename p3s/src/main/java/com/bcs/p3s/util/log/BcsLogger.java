@@ -1,5 +1,8 @@
 package com.bcs.p3s.util.log;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -37,4 +40,34 @@ public class BcsLogger implements Loggable {
 		return loginternalerrorN4CU;
 	}
 
+	/**
+	 * panic() is use to log unexpected events. 
+	 * Logs as fatal, AND *WILL* send an email to dev team
+	 * By allowing this log action, invoking code can be simpler, as it is now allowed to crash
+	 * @param msg A string to be logged
+	 */
+	public void panic(String msg, Throwable x) {
+		String panicMsg = "PANIC: "+msg;
+		if (x==null) {
+			logInternalError().fatal(panicMsg);
+		}
+		else
+		{
+			logInternalError().fatal(panicMsg, x);
+		}
+		// Imminent functionality - now email this panic to dev team
+		String emailBody = panicMsg + "\n\n";
+		if (x!=null) {
+			emailBody += x.getMessage();
+			emailBody += "\n\n";
+
+			StringWriter errors = new StringWriter();
+			x.printStackTrace(new PrintWriter(errors));
+			emailBody += errors.toString();
+		}
+		// & - until email is available
+		log().debug("Prepared email body is:"+emailBody);
+	}
+	
+	
 }
