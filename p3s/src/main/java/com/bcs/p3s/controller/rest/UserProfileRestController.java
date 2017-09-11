@@ -85,8 +85,13 @@ public class UserProfileRestController extends Universal {
         p3sUser.setLastName(user.getLastName());
         p3sUser.setIsEmailNotification(user.getIsEmailNotification());
         
-        //
-        p3sUser.setIsEmailNotification(false);
+        //updating password as well
+        if(!(user.getNewPassword() == null)){
+        		p3sUser.setPassword(user.getNewPassword());
+        		log().debug(msg + "User updated password as well");
+        }
+        
+        //p3sUser.setIsEmailNotification(false);
         Business business = user.getBusiness();
         business.setVersion(p3sUser.getBusiness().getVersion());
         p3sUser.setBusiness(business);

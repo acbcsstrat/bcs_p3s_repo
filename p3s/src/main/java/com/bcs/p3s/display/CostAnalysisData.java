@@ -31,7 +31,7 @@ public class CostAnalysisData {
 	private String currentcostBand;
 	
 	/**
-	 * BELOW 3 PROPERTIES FOR DISPLAYING EXTRA INFO ON THE COST ANALYSIS PAGE
+	 * BELOW 3 PROPERTIES FOR DISPLAYING EXTRA INFO ON THE COST ANALYSIS PAGE - MAY BE NOT IN MVP
 	 */
 	private boolean extraText;
 	private String extraTextDate;

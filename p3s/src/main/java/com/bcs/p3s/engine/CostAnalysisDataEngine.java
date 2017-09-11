@@ -125,13 +125,13 @@ public class CostAnalysisDataEngine extends Universal{
     	Date todaysDate = new DateUtil().getTodaysDate();
 		if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getBlackEndDate())){
 			
-			if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getGreenStartDate()))
+			if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getAmberStartDate()))
 				caData.setCurrentcostBand(RenewalColourEnum.GREEN);
-			else if (todaysDate.after(caData.getAmberStartDate()) && todaysDate.before(caData.getAmberStartDate())) 
+			else if (todaysDate.after(caData.getAmberStartDate()) && todaysDate.before(caData.getRedStartDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.AMBER);
-			else if (todaysDate.after(caData.getRedStartDate()) && todaysDate.before(caData.getRedStartDate())) 
+			else if (todaysDate.after(caData.getRedStartDate()) && todaysDate.before(caData.getBlueStartDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.RED);
-			else if (todaysDate.after(caData.getBlueStartDate()) && todaysDate.before(caData.getBlueStartDate())) 
+			else if (todaysDate.after(caData.getBlueStartDate()) && todaysDate.before(caData.getBlackStartDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.BLUE);
 			else if (todaysDate.after(caData.getBlackStartDate()) && todaysDate.before(caData.getBlackEndDate())) 
 				caData.setCurrentcostBand(RenewalColourEnum.BLACK);
@@ -162,25 +162,22 @@ public class CostAnalysisDataEngine extends Universal{
 		BigDecimal fxRate = new BigDecimal(0.88);
 		
 		greenCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD());
-		caMoreData.setGreenStageCost(greenCost);
+		caMoreData.setGreenStageCost(greenCost.setScale(2, BigDecimal.ROUND_CEILING));
 		
-		amberCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).
-					add(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
+		amberCost = greenCost.add(greenCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 		
-		caMoreData.setAmberStageCost(amberCost);
+		caMoreData.setAmberStageCost(amberCost.setScale(2, BigDecimal.ROUND_CEILING)); 
 		
-		redCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).
-				add(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
+		redCost = greenCost.add(greenCost.multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
 		
-		caMoreData.setRedStageCost(redCost);
-		blueCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate)); 
+		caMoreData.setRedStageCost(redCost.setScale(2, BigDecimal.ROUND_CEILING));
+		blueCost = greenCost.add(epoFee.getExtensionFee_EUR().multiply(fxRate)); 
 		
-		caMoreData.setBlueStageCost(blueCost);
+		caMoreData.setBlueStageCost(blueCost.setScale(2, BigDecimal.ROUND_CEILING));
 		
-		blackCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate)).
-				add((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)))); 
+		blackCost = blueCost.add(blueCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 		
-		caMoreData.setBlackStageCost(blackCost);
+		caMoreData.setBlackStageCost(blackCost.setScale(2, BigDecimal.ROUND_CEILING));
 		
 		return caMoreData;
 	}
@@ -206,61 +203,65 @@ public class CostAnalysisDataEngine extends Universal{
 		
 		fee.setFxRate(fxRate);
 		
+		BigDecimal baseCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD());
+		blueCost = baseCost.add(epoFee.getExtensionFee_EUR().multiply(fxRate));
+		
 		if(RenewalColourEnum.GREEN .equals(currentPhase)){
 			//greenCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate));
-			greenCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD());
+			greenCost = baseCost;
 
 			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
 			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
 			fee.setProcessingFee_USD(p3sFee.getProcessingFee_USD());
-			fee.setSubTotal_USD(greenCost);
+			fee.setSubTotal_USD(greenCost.setScale(2, BigDecimal.ROUND_CEILING));
 
 		}
 		
 		else if(RenewalColourEnum.AMBER .equals(currentPhase)){
 			//amberCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate)).add(p3sFee.getExpressFee_Percent().multiply(fxRate));
-			amberCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).
-					add(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
+			/*amberCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).
+					add(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));*/
+			
+			amberCost = baseCost.add(baseCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 
 			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
 			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
 			fee.setProcessingFee_USD(p3sFee.getProcessingFee_USD());
 			fee.setExpressFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
-			fee.setSubTotal_USD(amberCost);
+			fee.setSubTotal_USD(amberCost.setScale(2, BigDecimal.ROUND_CEILING));
 
 		}
 		
 		else if(RenewalColourEnum.RED .equals(currentPhase)){
 			//redCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate)).add(p3sFee.getUrgentFee_Percent().multiply(fxRate));
-			redCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).
-					add(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
+			redCost = baseCost.add(baseCost.multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
 
 			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
 			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
 			fee.setProcessingFee_USD(p3sFee.getProcessingFee_USD());
 			fee.setUrgentFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate).multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
-			fee.setSubTotal_USD(redCost);
+			fee.setSubTotal_USD(redCost.setScale(2, BigDecimal.ROUND_CEILING));
 
 		}
 		
-		else if(RenewalColourEnum.BLUE .equals(currentPhase)){
+		else if(RenewalColourEnum.BLUE .equals(currentPhase)){ 
 			//blueCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate)).add(epoFee.getExtensionFee_EUR());
-			blueCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate));
+			blueCost = baseCost.add(epoFee.getExtensionFee_EUR().multiply(fxRate));
 
 			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
 			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
 			fee.setProcessingFee_USD(p3sFee.getProcessingFee_USD());
 			fee.setExtensionFee_EUR(epoFee.getExtensionFee_EUR());
 			//fee.setExtensionFee_USD(epoFee.getExtensionFee_EUR().multiply(fxRate));
-			fee.setSubTotal_USD(blueCost);
+			fee.setSubTotal_USD(blueCost.setScale(2, BigDecimal.ROUND_CEILING));
 
 		}
 		
 		else if(RenewalColourEnum.BLACK .equals(currentPhase)){
 			//brownCost = epoFee.getRenewalFee_EUR().add(p3sFee.getProcessingFee_USD().multiply(fxRate)).add(epoFee.getExtensionFee_EUR()).add(p3sFee.getUrgentFee_Percent());
-			blackCost = epoFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD()).add(epoFee.getExtensionFee_EUR().multiply(fxRate)).
-					add((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)))); 
-			
+			//blackCost = baseCost.add(epoFee.getExtensionFee_EUR().multiply(fxRate)).
+			//		add((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)))); 
+			blackCost = blueCost.add(blueCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 
 			fee.setRenewalFee_EUR(epoFee.getRenewalFee_EUR());
 			//fee.setRenewalFee_USD(epoFee.getRenewalFee_EUR().multiply(fxRate));
@@ -268,7 +269,7 @@ public class CostAnalysisDataEngine extends Universal{
 			fee.setExtensionFee_EUR(epoFee.getExtensionFee_EUR());
 			//fee.setExtensionFee_USD(epoFee.getExtensionFee_EUR().multiply(fxRate));
 			fee.setUrgentFee_USD((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
-			fee.setSubTotal_USD(blackCost);
+			fee.setSubTotal_USD(blackCost.setScale(2, BigDecimal.ROUND_CEILING));
 
 		}
 		
