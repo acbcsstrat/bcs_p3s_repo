@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService{
 		    	userProfileUI.setFirstName(user.getFirstName());
 		    	userProfileUI.setLastName(user.getLastName());
 		    	userProfileUI.setEmailAddress(user.getEmailAddress());
-		    	
+		    	userProfileUI.setIsEmailNotification(user.getIsEmailNotification());
 		    	// Fields from Business
 		    	userProfileUI.setBusiness(user.getBusiness());
 		return userProfileUI; 

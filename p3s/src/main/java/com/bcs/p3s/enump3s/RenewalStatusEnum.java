@@ -10,7 +10,8 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
 
     public static final String RENEWAL_IN_PLACE			= "Renewal in place"; 
     public static final String SHOW_PRICE				= "Show price";
-    public static final String IN_PROGRESS				= "Renewal in progress";
+    public static final String IN_PROGRESS				= "Payment in progress";
+    public static final String EPO_INSTRUCTED           = "EPO Instructed";
     //public static final String ABANDONED				= "Abandoned"; // No longer supported
     public static final String TOO_LATE					= "Too late to renew";
     public static final String NO_FURTHER_RENEWAL_NEEDED= "No further renewal needed";
@@ -35,6 +36,10 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
         if (status.equalsIgnoreCase(RenewalStatusEnum.IN_PROGRESS)
                 || status.equalsIgnoreCase("IN_PROGRESS")) 
         			sofar = RenewalStatusEnum.IN_PROGRESS;  
+        
+        if (status.equalsIgnoreCase(RenewalStatusEnum.EPO_INSTRUCTED)
+                || status.equalsIgnoreCase("EPO_INSTRUCTED")) 
+        			sofar = RenewalStatusEnum.EPO_INSTRUCTED;  
 
 //        if (status.equalsIgnoreCase(RenewalStatusEnum.ABANDONED) 
 //            || status.equalsIgnoreCase("ABANDONED")) 
