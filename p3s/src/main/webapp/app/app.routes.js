@@ -43,9 +43,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
             // graphs: ['patentsService', function(patentsService) {
             //     return  patentsService.fetchGraphData();
             // }],
-            renewals: ['patentsService', function(patentsService) {
+            /*renewals: ['patentsService', function(patentsService) {
                 return  patentsService.fetchRenewalHistory();
-            }]
+            }]*/
         },
         params: {
             navigation: 'patentnav'
@@ -63,8 +63,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
             graph: ['patentsService', '$stateParams',function(patentsService, $stateParams) { 
                 return  patentsService.fetchGraphData($stateParams.patentId);  
             }],
-            renewal: ['renewals', function(renewals){
-                return renewals;
+            renewal:['patentsService', '$stateParams',function(patentsService, $stateParams) { 
+                return  patentsService.fetchRenewalHistory($stateParams.patentId); 
             }]
         }
     })

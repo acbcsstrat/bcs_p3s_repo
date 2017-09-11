@@ -24,11 +24,17 @@ privileged aspect NotificationDataOnDemand_Roo_DataOnDemand {
     
     public Notification NotificationDataOnDemand.getNewTransientNotification(int index) {
         Notification obj = new Notification();
+        setCostbandcolor(obj, index);
         setDefaultOn(obj, index);
         setDisplayOrder(obj, index);
         setEmailTemplateId(obj, index);
         setTitle(obj, index);
         return obj;
+    }
+    
+    public void NotificationDataOnDemand.setCostbandcolor(Notification obj, int index) {
+        String costbandcolor = "costbandcolor_" + index;
+        obj.setCostbandcolor(costbandcolor);
     }
     
     public void NotificationDataOnDemand.setDefaultOn(Notification obj, int index) {

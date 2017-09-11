@@ -32,6 +32,7 @@ public class NotificationUI extends Notification  implements Comparable<Notifica
 		this.setDefaultOn(notification.getDefaultOn());
 		this.setDisplayOrder(notification.getDisplayOrder());
 		this.setEmailTemplateId(notification.getEmailTemplateId());
+		this.setCostbandcolor(notification.getCostbandcolor());
 
 		this.setIsOn(false);
 

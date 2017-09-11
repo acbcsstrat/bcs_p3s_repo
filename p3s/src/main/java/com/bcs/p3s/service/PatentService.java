@@ -83,7 +83,7 @@ public interface PatentService {
 
 	public CostAnalysisData getCostAnalysisData(long id);
 	
-	public RenewalUI getRenewalHistory(long id);
+	public List<RenewalUI> getRenewalHistory(long id);
 	
 	public PatentUI populateDataToPatentUI(Patent patent);
 	
