@@ -407,7 +407,7 @@ public class CostAnalysisDataEngine extends Universal{
 			
 			Fee fee = new Fee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
 					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
-		    BigDecimal fxValue = eachData.getFxRate();
+		    BigDecimal fxValue = eachData.getFxRate_P3s();
 		    fee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxValue);
 		    //NOW POPULATE FEEUI 
 		    FeeUI feeUI = new FeeUI(fee);
@@ -448,11 +448,11 @@ public class CostAnalysisDataEngine extends Universal{
 		 * GET THE FX RATE FROM DB
 		 */
 		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
-		BigDecimal fxRate = current.getCurrentRate();
-		fxRate = fxRate.setScale(4, BigDecimal.ROUND_CEILING);
+		BigDecimal fxRate = current.getCurrent_P3S_rate();
+		//fxRate = fxRate.setScale(4, BigDecimal.ROUND_CEILING);
 		
 		/**
-		 * GET THE EPO FEES FOR THE CURRENT RENEWAL YEAR
+		 * GET THE EPO FEES FOR THE CURRENT RENEWAL YEAR 
 		 */
 		epoFee.setRenewalYear(patent.getRenewalYear());
 		epoFee = EpoFee.findEpoFeesByRenewalYear(epoFee);

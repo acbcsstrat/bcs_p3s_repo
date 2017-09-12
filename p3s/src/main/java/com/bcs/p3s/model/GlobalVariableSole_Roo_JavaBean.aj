@@ -9,12 +9,28 @@ import java.util.Date;
 
 privileged aspect GlobalVariableSole_Roo_JavaBean {
     
-    public BigDecimal GlobalVariableSole.getCurrentRate() {
-        return this.currentRate;
+    public BigDecimal GlobalVariableSole.getCurrentMoneycorpRate() {
+        return this.currentMoneycorpRate;
     }
     
-    public void GlobalVariableSole.setCurrentRate(BigDecimal currentRate) {
-        this.currentRate = currentRate;
+    public void GlobalVariableSole.setCurrentMoneycorpRate(BigDecimal currentMoneycorpRate) {
+        this.currentMoneycorpRate = currentMoneycorpRate;
+    }
+    
+    public BigDecimal GlobalVariableSole.getCurrent_P3S_rate() {
+        return this.current_P3S_rate;
+    }
+    
+    public void GlobalVariableSole.setCurrent_P3S_rate(BigDecimal current_P3S_rate) {
+        this.current_P3S_rate = current_P3S_rate;
+    }
+    
+    public BigDecimal GlobalVariableSole.getRateUpliftPercent() {
+        return this.rateUpliftPercent;
+    }
+    
+    public void GlobalVariableSole.setRateUpliftPercent(BigDecimal rateUpliftPercent) {
+        this.rateUpliftPercent = rateUpliftPercent;
     }
     
     public Date GlobalVariableSole.getCurrentRateActiveDate() {

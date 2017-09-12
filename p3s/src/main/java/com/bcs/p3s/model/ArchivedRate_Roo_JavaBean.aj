@@ -9,12 +9,20 @@ import java.util.Date;
 
 privileged aspect ArchivedRate_Roo_JavaBean {
     
-    public BigDecimal ArchivedRate.getFxRate() {
-        return this.fxRate;
+    public BigDecimal ArchivedRate.getFxRate_MC() {
+        return this.fxRate_MC;
     }
     
-    public void ArchivedRate.setFxRate(BigDecimal fxRate) {
-        this.fxRate = fxRate;
+    public void ArchivedRate.setFxRate_MC(BigDecimal fxRate_MC) {
+        this.fxRate_MC = fxRate_MC;
+    }
+    
+    public BigDecimal ArchivedRate.getFxRate_P3s() {
+        return this.fxRate_P3s;
+    }
+    
+    public void ArchivedRate.setFxRate_P3s(BigDecimal fxRate_P3s) {
+        this.fxRate_P3s = fxRate_P3s;
     }
     
     public Date ArchivedRate.getActiveFromDate() {

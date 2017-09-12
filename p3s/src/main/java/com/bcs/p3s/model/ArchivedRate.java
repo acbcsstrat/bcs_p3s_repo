@@ -21,7 +21,9 @@ public class ArchivedRate {
     /**
      */
     @NotNull
-    private BigDecimal fxRate;
+    private BigDecimal fxRate_MC;
+    
+    private BigDecimal fxRate_P3s;
 
     /**
      */
@@ -40,18 +42,18 @@ public class ArchivedRate {
         List<ArchivedRate> mostRecent = (List<ArchivedRate>) query.getResultList();
         System.out.println("   size of latest ONE ArchivedRate is "+mostRecent.size());
         ArchivedRate theMostRecent = mostRecent.get(0);
-
+ 
         return theMostRecent;
     }
 
-    public static BigDecimal findArchivedRateForDate(Date activeFromDate) {
+    public static ArchivedRate findArchivedRateForDate(Date activeFromDate) {
     	// Would like to use "SELECT o FROM ArchivedRate o order by o.activeFromDate desc limit 1";
         String jpaQuery = "SELECT o FROM ArchivedRate o where o.activeFromDate  = :activeFromDate" ;
 
-        TypedQuery<ArchivedRate> query  = entityManager().createQuery(jpaQuery, ArchivedRate.class);
+        TypedQuery<ArchivedRate> query  = entityManager().createQuery(jpaQuery, ArchivedRate.class); 
         query.setParameter("activeFromDate", activeFromDate);
 
-        return query.getSingleResult().getFxRate();
+        return query.getSingleResult();
     }
     
     //METHOD TO GET LAST 6 DAYS RATE

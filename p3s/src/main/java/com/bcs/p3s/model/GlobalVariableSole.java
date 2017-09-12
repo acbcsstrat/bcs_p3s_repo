@@ -23,7 +23,17 @@ public class GlobalVariableSole {
      * TBD_acTidy How many Euros does One USD buy
      */
     @NotNull
-    private BigDecimal currentRate;
+    private BigDecimal currentMoneycorpRate;
+    
+    /**
+     * actual P3S FX Rate EUR->USD
+     */
+    private BigDecimal current_P3S_rate;
+    
+    /**
+     * Percentage by which currentP3sRate increase to currentMoneycorpRate
+     */
+    private BigDecimal rateUpliftPercent;
 
     /**
      * When this currentRate became active (i.e. current / live)
@@ -44,5 +54,6 @@ public class GlobalVariableSole {
         
         return globalVariableSole;
     }
+
 
 }

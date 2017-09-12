@@ -290,13 +290,13 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		// Todays rate
 		FxRateUI todaysRate = new FxRateUI(); 
 		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
-		todaysRate.setRate(current.getCurrentRate());
+		todaysRate.setRate(current.getCurrent_P3S_rate());
 		todaysRate.setRateActiveDate(current.getCurrentRateActiveDate());
 		
 		// The previous rate
 		FxRateUI lastRate = new FxRateUI();
 		ArchivedRate previous = ArchivedRate.findLatestArchivedRate();
-		lastRate.setRate(previous.getFxRate());
+		lastRate.setRate(previous.getFxRate_P3s());
 		lastRate.setRateActiveDate(previous.getActiveFromDate());
 		
 		FxRateCurrentUI fxRateCurrentUI = new FxRateCurrentUI();
@@ -322,7 +322,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		GlobalVariableSole tmp1 = GlobalVariableSole.findOnlyGlobalVariableSole();
 		DummyDataEngine dummy = new DummyDataEngine();
-		List<FxRateUI> badData = dummy.makeDummyFxRateHistory(tmp1.getCurrentRate(), tmp1.getCurrentRateActiveDate(), numdays); 
+		List<FxRateUI> badData = dummy.makeDummyFxRateHistory(tmp1.getCurrent_P3S_rate(), tmp1.getCurrentRateActiveDate(), numdays); 
 		
 		for (FxRateUI r : badData) {
 			history.add(r);
@@ -332,8 +332,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		// Todays rate
 		FxRateUI todaysRate = new FxRateUI(); 
 		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
-		BigDecimal formatted = current.getCurrentRate();
-    	formatted = formatted.setScale(4, BigDecimal.ROUND_CEILING);
+		BigDecimal formatted = current.getCurrent_P3S_rate();
+    	//formatted = formatted.setScale(4, BigDecimal.ROUND_CEILING);
 		todaysRate.setRate(formatted);
 		todaysRate.setRateActiveDate(current.getCurrentRateActiveDate());
 		history.add(todaysRate);
