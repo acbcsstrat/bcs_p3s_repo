@@ -132,7 +132,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                     
                     fulfilmentProvider.setService($scope.service);
                     fulfilmentProvider.setSettings($scope.settings);
-                    console.log("Here comes inside directive")
                     fulfilmentProvider.checkout(patentObj, orderObj)
                         .then(function (data, status, headers, config, $state, $timeout) {
                                 $rootScope.$broadcast('ngCart', data);
@@ -184,31 +183,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                                 totalPatents: response.orderedPatentUIs.length,
                                 totalCost: response.totalCostUSD
                             }
-
-                            // var recentValue = {
-                            //     id: (function(){
-                            //         var patentIdArr = [];
-                            //         patentArr.forEach(function(patent){
-                            //             patentIdArr.push(patent.id)
-                            //         })
-                            //         return patentIdArr;
-                            //     }()),
-                            //     currentRenewalCost: (function(){
-                            //         var costArr = [];
-                            //         patentArr.forEach(function(patent){
-                            //             costArr.push(patent.currentRenewalCost)
-                            //         })
-                            //         return costArr;                                 
-                            //     }())
-                            // }
-
-                            // cartItems.forEach(function(currentValue, index, array){
-                            //     if(currentValue._id = recentValue.id) {
-                            //         currentValue._price = recentValue.currentRenewalCost[index];
-                            //     } else {
-                            //         currentValue._price = currentValue._price;
-                            //     }
-                            // })
                         },
                         function(errResponse){
                             console.log(errResponse)

@@ -10,6 +10,7 @@ app.factory('transactionHistoryService', function($http, $q) {
 			$http.get(REST_SERVICE_URI)
 			.then(
 				function(response){
+					console.log(response)
 					deferred.resolve(response.data)
 				},
 				function(errResponse){

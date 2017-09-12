@@ -1,8 +1,28 @@
-.active {
-    background-color: #FFF;
-    color: #000;
+li.active {
     font-weight: bold;
 }
+
+
+table.scroll {
+     width: 100%;
+}
+
+table.scroll tbody,
+table.scroll thead { display: block; }
+
+thead tr th { 
+    line-height: 30px;
+}
+
+table.scroll tbody {
+    height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+
+
 
 .tab-panel {
 	display: none;
@@ -37,12 +57,20 @@ input.ng-pristine {
   opacity: 0.5 !important;
 }
 
+.td-ch-limit {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20ch;
+}
 
 .modal-backdrop.fade {
     opacity: 0.5 !important;
 }
 
-
+tr.hover-td-patent {
+  background: red;
+}
 /********UNIVERSAL********
 ************************/
 
@@ -51,18 +79,17 @@ html, body {
 	font-size: 62.5%;
 	overflow-y: auto; 
 	text-rendering: optimizeLegibility !important;
-    -webkit-font-smoothing: antialiased !important;
-    overflow-x: hidden;
+  -webkit-font-smoothing: antialiased !important;
+  overflow-x: hidden;
 }
 
 body { width: 100%; display: table; font-size: 1.4rem;}
 
 main { height: 100%; }
-/*main.app { padding-top: 3.8rem;}*/
 
 * { box-sizing: border-box; }
 
-.container { width: 80%; margin: 0 auto; }
+.container { width: 90%!important; margin: 0 auto; }
 .container-full { margin: 0 auto; width: 100%; }
 
 .page-row {	display: table-row; height: 1px; }
@@ -79,6 +106,11 @@ select.form-control:not([size]):not([multiple]) {
 	height: 29px;
 }
 
+@media (min-width: 1200px) {
+  .container {
+    max-width: 90%!important;
+  } 
+}
 
 
 

@@ -1,23 +1,161 @@
 <patentnav></patentnav>
 <div class="row">
-	<div class="col-md-6">
-		<form ng-submit="$ctrl.findPatent(searchPatent)" name="searchPatentForm">
+	<div class="col-md-8">
+		<form ng-submit="$ctrl.findPatent(searchPatent);"  name="searchPatentForm">
 			<fieldset>
-				<legend class="font-weight-bold">Search by Patent Number</legend>
-
 				<div class="form-group row">
-					<label class="col-md-5" for="searchPatent">Search name</label>
-					<div class="col-md-7">
-						<input type="text" name="searchPatent" ng-model="searchPatent" class="form-control" required>
+					<label class="col-md-2" for="searchPatent">EP No.</label>
+					<div class="col-md-5">
+						<input type="text" name="searchPatent" ng-model="searchPatent" class="form-control" placeholder="Search" required>
+					</div>
+					<div class="col-md-3">
+						<button type="submit" class="btn btn-success btn-block btn-lg">Submit</button>
 					</div>
 				</div>
 
 			</fieldset>
-			<div class="row">
-				<div class="offset-md-8 col-md-4">
-					<button type="submit" class="btn btn-success btn-block btn-lg">Submit</button>
-				</div>
-			</div>
 		</form>	
 	</div>
 </div>
+<div class="row" ng-show="$ctrl.queriedPatent && searchPatentForm.$submitted">
+    <div class="col-md-12">
+		<form ng-submit="$ctrl.submit($ctrl.queriedPatent)">
+			<div class="row">
+				<div class="col-md-6">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td class="text-xs-right col-form-label">
+									Description:
+								</td>
+								<td>
+					        		<input type="text" name="patentPublicationNumber" class="form-control" ng-model="$ctrl.queriedPatent.shortTitle">
+								</td>
+							</tr>
+							<tr>
+								<td class="text-xs-right col-form-label">
+									Client Ref:
+								</td>
+								<td>
+					        		<input type="text" name="patentPublicationNumber" class="form-control" ng-model="$ctrl.queriedPatent.clientRef">
+								</td>	
+							</tr>
+						 	<tr>
+							    <td>
+							        <label class="text-xs-right col-form-label">Primary Applicant Name:</label>
+						        </td>
+						        <td>
+						        	<input type="text" name="primaryApplicantName" class="form-control" ng-model="$ctrl.queriedPatent.primaryApplicantName" required readonly>
+						        </td>
+							</tr>
+							<tr>
+							    <td>
+						    		<label class="text-xs-right col-form-label">Application No:</label>
+					    		</td>
+					    		<td>
+					    			<input type="text" name="filingDateUI" class="form-control" ng-model="$ctrl.queriedPatent.patentApplicationNumber" required readonly>
+					    		</td>
+					    	</tr>
+					    	<tr>
+							    <td>
+						    		<label class="text-xs-right col-form-label">Publication No:</label>
+					    		</td>
+					    		<td>
+					    			<input type="text" name="title" class="form-control" ng-model="$ctrl.queriedPatent.patentPublicationNumber" required readonly>
+					    		</td>
+					    	</tr>
+					    	<tr>
+							    <td>
+						    		<label class="text-xs-right col-form-label">Title:</label>
+					    		</td>
+					    		<td>
+					    			<input type="text" name="title" class="form-control" ng-model="$ctrl.queriedPatent.title" required readonly>
+					    		</td>
+					    	</tr>
+					    	<tr>
+							    <td>
+						    		<label class="text-xs-right col-form-label">Filing Date:
+					    		</td>
+					    		<td>
+					    			<input type="text" name="title" class="form-control" ng-model="$ctrl.queriedPatent.filingDateUI" required readonly>
+					    		</td>
+					    	</tr>					    					    	
+						</tbody>
+					</table>
+				</div>
+
+				<div class="col-md-6">
+					<uib-tabset active="activePill" vertical="true" type="pills">
+						<uib-tab index="0" heading="Green" ng-attr-id="$ctrl.patentNotifications.green" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.green)">
+							<p class="btn">{{$ctrl.patentNotifications.green}} Stage</p>
+							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+								<div class="col-md-4" ng-repeat="item in checkbox">
+									<label class="form-check-label">
+										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
+									</label>
+								</div>
+							</div>	
+					    </uib-tab>
+					    <uib-tab index="1" heading="Yellow" ng-attr-id="$ctrl.patentNotifications.yellow" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.yellow)">
+					    	<p class="btn">{{$ctrl.patentNotifications.yellow}} Stage</p>
+							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+								<div class="col-md-4" ng-repeat="item in checkbox">
+									<label class="form-check-label">
+										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
+									</label>
+								</div>
+							</div>								    
+						</uib-tab>
+					    <uib-tab index="2" heading="Red" ng-attr-id="$ctrl.patentNotifications.red" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.red)">
+					    	<p class="btn">{{$ctrl.patentNotifications.red}} Stage</p>
+							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+								<div class="col-md-4" ng-repeat="item in checkbox">
+									<label class="form-check-label">
+										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
+									</label>
+								</div>
+							</div>								    
+						</uib-tab>
+					    <uib-tab index="3" heading="Blue" ng-attr-id="$ctrl.patentNotifications.blue" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)">
+					    	<p class="btn">{{$ctrl.patentNotifications.blue}} Stage</p>
+							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+								<div class="col-md-4" ng-repeat="item in checkbox">
+									<label class="form-check-label">
+										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
+									</label>
+								</div>
+							</div>								    
+						</uib-tab>
+					    <uib-tab index="4" heading="Black" ng-attr-id="$ctrl.patentNotifications.brown" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.black)">
+					    	<p class="btn">{{$ctrl.patentNotifications.black}} Stage</p>
+							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+								<div class="col-md-4" ng-repeat="item in checkbox">
+									<label class="form-check-label">
+										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
+									</label>
+								</div>
+							</div>								    
+						</uib-tab>
+					</uib-tabset>
+				</div>	 		
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<p>Enter details and confirm payment</p>
+					<div class="row">
+						<div class="col-md-6">
+							<button class="btn btn-success btn-block" type="submit">Submit</button>
+						</div>
+						<div class="col-md-6">
+							<button class="btn btn-danger btn-block" type="button" ng-click="$ctrl.cancelSearch()">Cancel</button>
+						</div>
+					</div>			
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+      

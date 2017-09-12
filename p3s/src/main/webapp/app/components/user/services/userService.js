@@ -10,6 +10,7 @@ app.factory('userService', function($http, $q) {
              $http.get(REST_SERVICE_URI)
                 .then(
                 function (response) {
+                    console.log(response.data)
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
@@ -30,10 +31,25 @@ app.factory('userService', function($http, $q) {
         
         factory.updateUser = function(user) {
 
-            console.log(user)
-
             var deferred = $q.defer();
             $http.put(REST_SERVICE_URI, user, config)
+                .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                },
+                function(errResponse){
+                    console.log(errResponse)
+                    deferred.reject(errResponse);
+                }
+            );
+            return deferred.promise;
+        }
+
+        factory.listUsers = function() {
+
+            var deferred = $q.defer();
+
+            $http.get('//localhost:8080/p3sweb/rest-users/')
                 .then(
                 function (response) {
                     deferred.resolve(response.data);

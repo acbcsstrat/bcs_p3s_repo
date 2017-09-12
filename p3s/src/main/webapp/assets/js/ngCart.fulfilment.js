@@ -17,15 +17,15 @@ angular.module('ngCart.fulfilment', [])
 
         this.checkout = function(patentObj, orderObj){
         	var provider = $injector.get('ngCart.fulfilment.' + this._obj.service);
-            this.toTransferConfirm(patentObj, orderObj);
+            // this.toTransferConfirm(patentObj, orderObj);
             return provider.checkout(this._obj.settings,patentObj ,orderObj);
         }
 
-        this.toTransferConfirm = function (patentObj, orderObj) {
-            $timeout(function() {
-                $state.go('bank-transfer-preparation', {orderObj: orderObj})
-            }, 200);
-        }
+        // this.toTransferConfirm = function (patentObj, orderObj) {
+        //     $timeout(function() {
+        //         $state.go('bank-transfer-preparation', {orderObj: orderObj})
+        //     }, 200);
+        // }
       
     }])
 
@@ -48,26 +48,23 @@ angular.module('ngCart.fulfilment', [])
             $http.post('http://localhost:8080/p3sweb/rest-prepare-banktransfer/', obj)
             .then(
                 function(response){
-                	console.log("Inside success of POST")
-                    deferred.resolve(response.data)
-                    console.log(response.data.totalCostUSD)
-                   var updatedPatentObj = {
+                    deferred.resolve(response.data);
+                    var patentArr = response.data.orderedPatentUIs;
+                    var updatedPatentObj = {
                         totalCostUSD: response.data.totalCostUSD,
                         dateNowLocalTime: response.data.dateNowLocalTimeUI,
                         transTargetEndDateUI:response.data.transTargetEndDateUI,
-                        /*patents: (function(){
+                        patents: (function(){
                             var patentAppNos = [];
                             patentArr.forEach(function(patent){
+                                console.log(patent)
                                 patentAppNos.push(patent.patentApplicationNumber)
                             });
                             return patentAppNos;
-                        }()),*/
+                        }()),
                         totalPatents: response.data.orderedPatentUIs.length
                     }
-                         
-                	console.log("before leaving to js")
-                	console.log(updatedPatentObj)
-                	console.log(order)
+                	console.log("before leaving to confirm")
                 	$state.go('bank-transfer-preparation', {orderObj:order,patentObj:updatedPatentObj})
                 },
                 function(errResponse){  

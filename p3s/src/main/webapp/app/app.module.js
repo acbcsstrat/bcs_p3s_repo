@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngAnimate']);
+var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies']);
 
 app.run(['Idle', function(Idle) {
 

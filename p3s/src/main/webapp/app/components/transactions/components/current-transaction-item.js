@@ -5,54 +5,19 @@ app.component('currentTransaction', {
 
 		var vm = this;
 
-		vm.tabs = currentTransactionTabService.tabs;
-		vm.currentTab = currentTransactionTabService.currentTab;
-
-	    vm.onClickTab = function(currentTab) {
-	        currentTransactionTabService.onClickTab(currentTab);
-	        vm.currentTab = currentTransactionTabService.currentTab;
-	    };
-
-	    vm.isActiveTab = function(tabUrl) {
-	        return tabUrl == currentTransactionTabService.currentTab;
-	    }
-
 	    vm.$onChanges = function(changeObj){
 
-	    	var currentItem = changeObj.transaction.currentValue;
-	    	console.log(currentItem)
-    	 	vm.patent = currentItem.renewalUIs;
-    	 	vm.transactionItemRef = currentItem.p3S_TransRef;
-    	 	vm.transactionPdf = currentItem.invoiceUrl;
-    	 	vm.transactionTotal = currentItem.transAmount_USD;
-    	 	// vm.transactionDate = currentItem.transStartDate;
+	    	vm.transStatus = ['Initiated', 'Pending', 'Rec. Funds', 'Funds Sent', 'EPO Rec.', 'EPO Ins.', 'Completed'];
 
-    	 	var init = function() {
-    	 		vm.transactionDate = new Date(currentItem.transStartDate)
-    	 	}
-    	 	
-    	 	init();
+	    	vm.patents = [];
 
-	   		vm.transactionItem = [];
-
-	 		vm.patent.forEach(function(value, index, array){
-
-	 			itemArray = []
-	 			itemArray.push(value);
-
-	 			itemArray.forEach(function(value, index, array){
-
-	 				itemObj = {};
-	 				itemObj.fee = value.fee;
-	 				itemObj.patent = value.patentUI;
-	 				
-	 				vm.transactionItem.push(itemObj)
-
-	 			})
-		 	})		 	
-
+	 		vm.transaction.renewalUIs.forEach(function(value, index, array){
+	 			vm.patents.push(value)			
+		 	})
     	}
 
+    	vm.$onInit =  function() {
+    		console.log(vm.transaction)
+    	}
 	}]
-
 });

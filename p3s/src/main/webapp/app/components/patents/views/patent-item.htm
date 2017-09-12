@@ -1,28 +1,25 @@
 <!--patentDetailctrl-->
-
-    <div id="tabs">
-        <ul>
-            <li ng-repeat="tab in $ctrl.tabs"
-                ng-class="{active:$ctrl.isActiveTab(tab.url)}"
-                ng-click="$ctrl.onClickTab(tab)">{{tab.title}}</li> <!--applies active to the returned tab url -->
-        </ul>
-
-	    <div ng-include="$ctrl.currentTab"></div>
-
-    </div>
-    <script type="text/ng-template" id="patent-info.htm">
-	    <div class="row">
-		    <div class="col-md-12">
-		    	<h2>Patent Information</h2>
+<uib-tabset type="pills">
+	<uib-tab heading="Patent Information">
+    	<div class="row">
+		    <div class="col-md-3">
 				<h3>Application Number: {{$ctrl.patent.patentApplicationNumber}}</h3>
+				<h3>Status: {{$ctrl.patent.renewalStatus}}</h3>				
 		    </div>
+		    <div class="col-md-6">
+	    		<uib-progress><uib-bar ng-repeat="bar in $ctrl.stacked track by $index" value="bar.value" type="{{bar.type}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></uib-bar></uib-progress>
+		    </div>
+		    <div class="col-md-3">
+		    	<p>Next stage: {{$ctrl.patent.costBandColour}}</p>
+		    	<p>Occurs: {{$ctrl.patent.costBandEndDateUI}}</p>
+		    </div>		    		    
 	    </div>
 
 	    <div class="row">
-		    <div class="col-md-12">
-		    	<form ng-submit="$ctrl.updatePatent($ctrl.patent)">
-			    	<div class="row">
-			    		<div class="col-md-6">
+	    	<div class="col-md-8">
+	    		<form class="form" ng-submit="$ctrl.updatePatent($ctrl.patent)">
+	    			<div class="row">
+		    			<div class="col-md-6">
 							<table class="table">
 						    	<tr>
 								    <th class="text-xs-right">Short Name</th>
@@ -43,7 +40,6 @@
 								    <td>
 								    	<span ng-click="$ctrl.editItem(2)"><i class="fa fa-edit fa-lg"></i></span> 					    	
 								    </td>
-								   						    		
 						    	</tr>
 						    	<tr>
 						    		<th class="text-xs-right">Applicant Name</th>
@@ -62,32 +58,56 @@
 						    		<td>{{$ctrl.patent.filingDateUI}}</td>
 						    	</tr>
 						    </table>
-				    	</div>
-						<div class="col-md-6">
-							<div class="row">
-								<div class="col-md-4 text-xs-left">
-									<h4>Cost</h4>
-									<p>{{$ctrl.patent.currentRenewalCost}}</p>
-								</div>
-
-								<div class="col-md-8 text-xs-left">
-									<h4>Status</h4>
-									<p>{{$ctrl.patent.renewalStatus}}</p>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<h4>Patent Notifications</h4>
+			    		</div>
+			    		<div class="col-md-6">
+							<h4>Patent Notifications</h4>
+							<uib-tabset active="activePill" vertical="true" type="pills">
+								<uib-tab index="0" heading="Green" ng-attr-id="$ctrl.patentNotifications.green" ng-init="$ctrl.displayNotifications($ctrl.patentNotifications.green)" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.green)">
 									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 										<div class="col-md-4" ng-repeat="item in checkbox">
 											<label class="form-check-label">
 												<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
 											</label>
 										</div>
-									
-									</div>
-								</div>
-							</div>			
+									</div>	
+							    </uib-tab>
+							    <uib-tab index="1" heading="Yellow" ng-attr-id="$ctrl.patentNotifications.yellow" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.yellow)">
+									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+										<div class="col-md-4" ng-repeat="item in checkbox">
+											<label class="form-check-label">
+												<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
+											</label>
+										</div>
+									</div>								    
+								</uib-tab>
+							    <uib-tab index="2" heading="Red" ng-attr-id="$ctrl.patentNotifications.red" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.red)">
+									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+										<div class="col-md-4" ng-repeat="item in checkbox">
+											<label class="form-check-label">
+												<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
+											</label>
+										</div>
+									</div>								    
+								</uib-tab>
+							    <uib-tab index="3" heading="Blue" ng-attr-id="$ctrl.patentNotifications.blue" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)">
+									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+										<div class="col-md-4" ng-repeat="item in checkbox">
+											<label class="form-check-label">
+												<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
+											</label>
+										</div>
+									</div>								    
+								</uib-tab>
+							    <uib-tab index="4" heading="Black" ng-attr-id="$ctrl.patentNotifications.brown" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.black)">
+									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+										<div class="col-md-4" ng-repeat="item in checkbox">
+											<label class="form-check-label">
+												<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
+											</label>
+										</div>
+									</div>								    
+								</uib-tab>
+							</uib-tabset>
 						</div>
 					</div>
 					<div class="row">
@@ -97,82 +117,177 @@
 									<input type="submit" id="submit" class="btn btn-block btn-lg btn-success" value="Update">
 								</div>	
 								<div class="col-md-6">
-									<input type="button" id="delete" class="btn btn-block  btn-lg btn-danger" value="Delete"  ng-click="$ctrl.deletePatent($ctrl.patent.id)">
+									<input type="button" id="delete" class="btn btn-block btn-lg btn-danger" value="Delete" ng-click="$ctrl.deletePatent($ctrl.patent.id)">
 								</div>	
 							</div>
 						</div>		
 					</div>
 				</form>
 			</div>
-		</div>
-	</script>
-	<script type="text/ng-template" id="cost-analysis.htm">
+			<div class="col-md-4">
+				<div class="row">
+					<h4>Renewal cost</h4>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<span>EUR</span>
+						<p>{{$ctrl.patent.currentTotalEUR}}</p>
+					</div>
+					<div class="col-md-4">
+						<i class="fa fa-long-arrow-right fa-2x"></i>
+					</div>
+					<div class="col-md-4">
+						<span>USD</span>
+						<p>{{$ctrl.patent.currentRenewalCostUSD}}</p>
+					</div>
+				</div>
+				<div class="row">
+					<p>Yesterday's price:</p>
+				</div>
+				<div class="row">
+					<p>Last week's price:</p>
+				</div>
+			</div>	
+	    </div>
+    </uib-tab>
+    <uib-tab heading="Cost Analysis">
 		<div class="col-md-12 text-xs-left">
-			<h2>Cost Analysis</h2>
-			<h3>Application Number: {{$ctrl.patent.patentApplicationNumber}}</h3>
 			<div class="row">
-				<div class="col-md-6">
-					<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.lineData" chart-labels="$ctrl.lineLabels" chart-series="$ctrl.lineSeries" chart-options="$ctrl.lineOptions" chart-dataset-override="$ctrl.lineDatasetOverride"></canvas>
-				</div>
-				<div class="col-md-6">
-					<canvas id="patentBarChart" class="chart chart-bar"
-					  chart-data="$ctrl.barData" chart-labels="$ctrl.barLabels" chart-series="$ctrl.barSeries" chart-options="$ctrl.barOptions" chart-dataset-override="$ctrl.barDatasetOverride">
-					</canvas>
-				</div>
-				<div class="col-md-6">
+				<div class="col-md-8">
+				  	<uib-tabset type="pills">
+				    	<uib-tab heading="Stage Cost Chart" classes="btn btn-primary">
+					    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.barData" chart-labels="$ctrl.barLabels" chart-series="$ctrl.barSeries" chart-options="$ctrl.barOptions" chart-dataset-override="$ctrl.barDatasetOverride" height="100px"></canvas>
+					    </uib-tab>
+					    <uib-tab heading="FX Chart" classes="btn btn-primary">
+			 				<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.lineData" chart-labels="$ctrl.lineLabels" chart-series="$ctrl.lineSeries" chart-options="$ctrl.lineOptions" chart-dataset-override="$ctrl.lineDatasetOverride" height="100px"></canvas>
+			    		</uib-tab>
+		    		</uib-tabset>
+    			</div>
+
+				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Cost breakdown</h4>
+						</div>
+						<div class="col-md-6">
+							<p>1 USD = {{$ctrl.usd2eur}}</p>
+						</div>	
+					</div>
+
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<td class="font-weight-bold">Fee Make-up</td>
+								<td></td>
+								<td class="font-weight-bold">EUR</td>
+								<td class="font-weight-bold">USD</td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td class="font-weight-bold">Official fee</td>
-								<td>{{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
-							</tr>
-							<tr>
-								<td class="font-weight-bold">Processing fee</td>
-								<td>{{$ctrl.feeBreakDown.processingFeeUSD}}</td>
-							</tr>
-							<tr>
-								<td class="font-weight-bold">Exchange rate USD/EUR</td>
-								<td>{{$ctrl.feeBreakDown.fxRate}}</td>
-							</tr>
-							<tr>
-								<td class="font-weight-bold">Sub-total</td>
-								<td>{{$ctrl.feeBreakDown.subTotal_USD}}</td>
-							</tr>							
-						</tbody>
+						<div class="table-responsive">
+							<tbody>
+								<tr>
+									<td class="font-weight-bold">Official fee</td>
+									<td>{{$ctrl.feeBreakDown.renewalFeeEUR}}</td>
+									<td>{{$ctrl.feeBreakDown.processingFeeEUR}}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-bold">Processing fee</td>
+									<td>{{$ctrl.feeBreakDown.processingFeeEUR}}</td>
+									<td>{{$ctrl.feeBreakDown.processingFeeUSD}}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-bold">Total</td>
+									<td>{{$ctrl.feeBreakDown.subTotalEUR}}</td>
+									<td>{{$ctrl.feeBreakDown.subTotalUSD}}</td>
+								</tr>
+							</tbody>
+						</div>
 					</table>
+					<h5>Save:</h5>
+					<p>$ {{$ctrl.stageSavings}}</p>
+					<p>Renew before: {{$ctrl.renewBefore | date: dd-mm-yy}}</p>
 				</div>
 			</div>
 		</div>
-	</script>
-	<script type="text/ng-template" id="renewal-history.htm">
-		<div class="col-md-12 text-xs-left">
-			<h2>Renewal History</h2>
-			<h3>Application Number: {{$ctrl.patent.patentApplicationNumber}}</h3>
-			<div class="row" ng-repeat="renewal in $ctrl.renewal">
-				<div class="col-md-12">
-					<table class="table table-inverse">
-						<thead>
-							<tr>
-								<td>Client Reference: <span ng-bind="renewal.clientRef"></span></td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Renewal year: <span ng-bind="renewal.renewalYear"></span></td>
-								<td>Renewal due date: <span ng-bind="renewal.renewalDueDateUI"></span></td>
-								<td>Fee make up: <span ng-bind="renewal.currentRenewalCost"></span></td>
-								<td>Breakdown fee: <span ng-bind="renewal.feeUI.subTotalUSD"></span></td>
-								<td><button class="btn btn-block btn-success">Download certificate</button></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+	</uib-tab>
+    <uib-tab heading="Renewal History">
+		<div class="row">
+			<div class="col-md-2">
+				<h4>App No.</h4>
+				<p>{{$ctrl.patent.patentApplicationNumber}}</p>
 			</div>
+			<div class="col-md-2">
+				<h4>Client Ref</h4>
+				<p>{{$ctrl.patent.clientRef}}</p>				
+			</div>
+			<div class="col-md-8">
+				<h4>Description</h4>
+				<p>{{$ctrl.patent.title}}</p>				
+			</div>
+		</div>
+		<div class="row" >
+			<div class="col-md-12">
+				<table class="table">
+					<thead>
+						<tr>
+							<td width="20%" ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
+								<span ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+								<span ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+							</td>
+							<td width="20%" ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
+								<span ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+								<span ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+							</td>
+							<td width="30%" ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse" colspan="2">Cost Breakdown
+								<span ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+								<span ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+							</td>
+							<td width="30%">Downloads</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+							<td width="20%">Year <span ng-bind="renewal.renewalYear"></span></td>
+							<td width="20%">{{renewal.renewalDueDateUI}}</td>
+							<td width="10%">
+								<p>Official Fee:</p>
+								<p>Processing Fee:</p>
+								<p>Total: </p>
+							</td>
+							<td width="20%">
+								<p>$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</p>
+								<p>$ {{$ctrl.feeBreakDown.processingFeeEUR}}</p>
+								<p>$ {{$ctrl.feeBreakDown.subTotalUSD}}</p>
+							</td>
+							<td width="30%">
+								<div class="row">
+									<div class="col-md-5">
+										<span><a href="#" class="btn btn-block btn-success" download>Certificate <i class="fa fa-file-pdf-o fa-2x"></i></a></span>
+									</div>
+									<div class="col-md-5">
+										<span><a href="#" class="btn btn-block btn-success" download>Invoice <i class="fa fa-file-pdf-o fa-2x"></i></a></span>
+									</div>	
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</uib-tab>
+   	
+</uib-tabset>
+
+
+  
+	    
+
+
+
+	
+
 			
-		</div>
-	</script>
+
+
+
+
+

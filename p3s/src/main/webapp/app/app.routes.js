@@ -20,11 +20,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/register',
         component: 'register'
     })
+    .state('dashboard', {
+        url: '/dashboard',
+        component: 'dashboard'
+    })
     .state('profile', {
         url: '/profile',
         component: 'user',
         resolve: {
             user: ['userService', function(userService) {
+                
                 return userService.fetchUser();
             }],
             timezones: ['timezoneService', function(timezoneService){
@@ -36,16 +41,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/patents',
         component: 'patents',
         resolve: {
-            patents: ['patentsService', function(patentsService) { 
-              
+            patents: ['patentsService', function(patentsService) {
                 return patentsService.fetchAllPatents();
             }],
-            // graphs: ['patentsService', function(patentsService) {
-            //     return  patentsService.fetchGraphData();
-            // }],
-            /*renewals: ['patentsService', function(patentsService) {
+            renewals: ['patentsService', function(patentsService) {
                 return  patentsService.fetchRenewalHistory();
-            }]*/
+            }]
         },
         params: {
             navigation: 'patentnav'
@@ -63,8 +64,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
             graph: ['patentsService', '$stateParams',function(patentsService, $stateParams) { 
                 return  patentsService.fetchGraphData($stateParams.patentId);  
             }],
-            renewal:['patentsService', '$stateParams',function(patentsService, $stateParams) { 
-                return  patentsService.fetchRenewalHistory($stateParams.patentId); 
+            renewal: ['renewals', function(renewals){
+                return renewals;
             }]
         }
     })
@@ -72,7 +73,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/search-patent',
         component: 'searchpatent',
         params: {
-            navigation: 'patentnav'
+            navigation: 'patentnav',
+            patent: null
         }
     })
     .state('add-patent', {
@@ -101,6 +103,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         resolve: {
             transaction: ['transactions', '$stateParams', function(transactions, $stateParams) {
                 return transactions.find(function(transaction){
+                    // console.log(transaction)
                     return transaction.id == $stateParams.transId;
                 })
             }]
@@ -124,6 +127,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         resolve: {
             transactionHistoryItem: ['transactionHistory', '$stateParams', function(transactionHistory, $stateParams){
                 return transactionHistory.find(function(transaction){
+
                     return transaction.id == $stateParams.transHistoryId;
                 })
             }]

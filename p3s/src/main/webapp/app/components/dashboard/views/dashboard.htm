@@ -1,0 +1,172 @@
+<div class="row">
+	<div class="col-md-3">
+		<h3>Colour Key</h3>
+		<div>
+			<p>{{$ctrl.colourPhaseTitle.title}} Phase</p>
+			<p>{{$ctrl.colourPhaseTitle.descrip}}</p>
+		</div>
+		<uib-tabset type="pills">
+		    <uib-tab heading="Green" ng-init="$ctrl.selectColour($ctrl.colourPhase.green)" ng-click="$ctrl.selectColour($ctrl.colourPhase.green)">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				</p>
+			</uib-tab>
+		    <uib-tab heading="Yellow" ng-click="$ctrl.selectColour($ctrl.colourPhase.yellow)">
+				<p>ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				</p>					
+			</uib-tab>
+		    <uib-tab heading="Red" ng-click="$ctrl.selectColour($ctrl.colourPhase.red)">
+				<p>sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				</p>					
+			</uib-tab>
+		    <uib-tab heading="Blue" ng-click="$ctrl.selectColour($ctrl.colourPhase.blue)">
+				<p>consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				</p>					
+			</uib-tab>
+		    <uib-tab heading="Black" ng-click="$ctrl.selectColour($ctrl.colourPhase.black)">
+				<p>Whattt Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				</p>					
+			</uib-tab>				
+		</uib-tabset>
+	</div>
+	<div class="col-md-3">
+		<h3>Total No. of Renewals: {{$ctrl.totalPatents}}</h3>
+		<div>
+			<canvas id="pie" class="chart chart-pie"
+			  chart-data="$ctrl.data" chart-labels="$ctrl.labels" chart-options="$ctrl.options" height="225px;">
+			</canvas> 
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="row">
+			<div class="col-md-3">
+				<h3>Renewals</h3>
+			</div>
+			<div class="col-md-9">
+				<ul class="nav">
+					<li><button ng-click="active = 1; $ctrl.getPatents(active)" ng-init=" $ctrl.getPatents(active)">{{$ctrl.greenRenewals.length}}</button></li>
+					<li><button ng-click="active = 2; $ctrl.getPatents(active)">{{$ctrl.yellowRenewals.length}}</button></li>
+					<li><button ng-click="active = 3; $ctrl.getPatents(active)">{{$ctrl.redRenewals.length}}</button></li>
+					<li><button ng-click="active = 4; $ctrl.getPatents(active)">{{$ctrl.blueRenewals.length}}</button></li>
+					<li><button ng-click="active = 5; $ctrl.getPatents(active)">{{$ctrl.blackRenewals.length}}</button></li>
+				</ul>
+				
+			</div>			
+			<div class="col-md-12">
+			<uib-tabset active="active" type="pills">
+				    <uib-tab index="1" ng-hide="true">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						</p>
+						<div uib-carousel active="active" no-wrap="$ctrl.noWrapSlides">
+				      		<div uib-slide ng-repeat="slide in $ctrl.slides track by slide.id" index="slide.id">
+						        <div class="carousel-caption">
+							        <div class="btn">
+							        	<h4>{{$ctrl.colourPhaseTitle.title}} Renewal</h4>
+							        </div>
+							        <table class="table">
+							        	<tr>
+							        		<td>App No.</td>
+							        		<td>{{$ctrl.greenRenewals.patentApplicationNumber}}</td>
+							        	</tr>
+							        	<tr>
+							        		<td>Description</td>
+							        		<td>{{$ctrl.greenRenewals.patentApplicationNumber}}</td>
+							        	</tr>
+							        	<tr>
+							        		<td>Due Date</td>
+							        		<td>{{$ctrl.greenRenewals.patentApplicationNumber}}</td>
+							        	</tr>
+							        </table>
+						        </div>
+					      	</div>
+					    </div>
+					</uib-tab>
+				    <uib-tab index="2" ng-hide="true">
+						<p>ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						</p>					
+					</uib-tab>
+				    <uib-tab index="3" ng-hide="true">
+						<p>sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						</p>					
+					</uib-tab>
+				    <uib-tab index="4" ng-hide="true">
+						<p>consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						</p>					
+					</uib-tab>
+				    <uib-tab index="5" ng-hide="true">
+						<p>Whattt Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						</p>					
+					</uib-tab>				
+				</uib-tabset>
+				
+			</div>				
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="row">
+			<div class="col-md-12">
+				<h3>Renewal Cost</h3>
+			</div>
+		</div>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8">
+		<div class="row">
+			<div class="col-md-7">
+				<h4>Life FX Chart</h4>
+			</div>
+			<div class="col-md-5">
+				<h4>high and low</h4>
+			</div>			
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="row">
+			<uib-tabset type="pills">
+			    <uib-tab heading="Stage Change">
+					<div>
+						<div class="col-md-12">
+							<table class="table">
+								<tr>
+									<td>Patent No.</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Description</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Amount</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Current Stage</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Next Stage</td>
+									<td></td>
+								</tr>			
+							</table>
+						</div>
+					</div>
+			</uib-tabset>
+		</div>
+	</div>
+</div>

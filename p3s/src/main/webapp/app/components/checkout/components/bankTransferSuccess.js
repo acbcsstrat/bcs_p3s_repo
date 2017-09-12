@@ -4,12 +4,9 @@ app.component('bankTransferSuccess', {
 
 		var vm = this;
 		var order = $stateParams.orderObj;
-		console.log($stateParams.orderObj)
+
 		$scope.orderObj = $stateParams.orderObj;
 		console.log("Success anytinme?????")
-		
-
-		console.log( order)
 
 	}
 })

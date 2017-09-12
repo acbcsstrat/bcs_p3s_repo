@@ -507,7 +507,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 							System.out.println("Show price for current phase");
 							log().debug("Renewal window still opened. Show price for current phase");
 							caData = costEngines.getAllPhasesInfo(allDates);
-							caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee());
+							caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 							caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
 							//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
 							Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
@@ -519,7 +519,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 							caData = costEngines.getNextPhasesInfo(allDates);
 							combinedFee.getEpoFee().setRenewalYear(patent.getRenewalYear()+1); 
 							combinedFee.setEpoFee(EpoFee.findEpoFeesByRenewalYear(combinedFee.getEpoFee()));
-							caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee());
+							caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 							caData.setCurrentcostBand(RenewalColourEnum.GREEN);
 							//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
 							Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
@@ -540,7 +540,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 						System.out.println("Renewal window still opened");
 						System.out.println("Show price for green period for this renewal year");
 						caData = costEngines.getAllPhasesInfo(allDates);
-						caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee());
+						caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 						/**
 						 * SET THE COLOR AS GREEN
 						 */
@@ -555,7 +555,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 						caData = costEngines.getNextPhasesInfo(allDates);
 						combinedFee.getEpoFee().setRenewalYear(patent.getRenewalYear()+1); 
 						combinedFee.setEpoFee(EpoFee.findEpoFeesByRenewalYear(combinedFee.getEpoFee()));
-						caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee());
+						caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 						caData.setCurrentcostBand(RenewalColourEnum.GREEN);
 						//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
 						Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
@@ -570,7 +570,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		else if(RenewalStatusEnum.SHOW_PRICE .equalsIgnoreCase(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS .equalsIgnoreCase(patent.getRenewalStatus())){
 			//DISPLAY TODAYS AMOUNT STRAIGHT AWAY
 			caData = costEngines.getAllPhasesInfo(allDates);
-			caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee());
+			caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 			caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
 			//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
 			Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
@@ -579,7 +579,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		else if(RenewalStatusEnum.TOO_LATE .equalsIgnoreCase(patent.getRenewalStatus())){
 			caData = costEngines.getAllPhasesInfo(allDates);
-			caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee());
+			caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 			caData.setCurrentcostBand(RenewalColourEnum.GREEN);
 			//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
 			Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());

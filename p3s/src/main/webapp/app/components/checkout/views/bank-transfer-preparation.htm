@@ -9,21 +9,23 @@
 	<div class="col-md-6">
 		<table class="table">
 			<tbody>
-				<tr>
+				<tr">
 					<td>Patents: </td>
-					<td>{{patentObj.totalPatents}}</td>
+					<td>
+						<span ng-repeat="p in $ctrl.patentObj.patents">{{p}}<br></span>
+					</td>
 				</tr>
 				<tr>
 					<td>Total patents: </td>
-					<td>{{patentObj.totalPatents}}</td>
+					<td>{{$ctrl.patentObj.totalPatents}}</td>
 				</tr>
 				<tr>
 					<td>Date: </td>
-					<td> {{patentObj.dateNowLocalTime}} </td>
+					<td> {{$ctrl.patentObj.dateNowLocalTime}} </td>
 				</tr>
 				<tr>
 					<td>Total Cost</td>
-                    <td>{{patentObj.totalCostUSD}}</td>
+                    <td>{{$ctrl.patentObj.totalCostUSD}}</td>
 				</tr>				
 			</tbody>
 		</table>

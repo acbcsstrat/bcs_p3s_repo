@@ -17,6 +17,7 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
+
 		<!--angular-->
 
 		<base href="/">
@@ -44,7 +45,7 @@
 		<script src="p3sweb/assets/js/lib/ngCart.js"></script>
 		<script src="p3sweb/assets/js/ngCart.fulfilment.js"></script>
 		<script src="p3sweb/assets/js/ngCart.directives.js"></script>
-		
+
 		<script src="p3sweb/app/app.module.js"></script>
 		<script src="p3sweb/app/app.routes.js"></script>
 
@@ -52,8 +53,12 @@
 
 		<script src="p3sweb/app/components/app/services/timezoneService.js"></script>
 
+		<script src="p3sweb/app/components/dashboard/services/dashboardService.js"></script>
+
 		<script src="p3sweb/app/components/patents/services/searchPatentService.js"></script> 
 		<script src="p3sweb/app/components/patents/services/patentTabService.js"></script> 
+		<script src="p3sweb/app/components/patents/services/chartTabService.js"></script> 
+		<script src="p3sweb/app/components/patents/services/patentsPhaseTabService.js"></script> 
 		<script src="p3sweb/app/components/patents/services/patentsService.js"></script>
 		<script src="p3sweb/app/components/register/authenticationService.js"></script>
 		<script src="p3sweb/app/components/transactions/services/currentTransactionsService.js"></script>
@@ -68,6 +73,8 @@
 
     	<script src="p3sweb/app/components/register/register.js"></script>		
     	<script src="p3sweb/app/components/register/login.js"></script>
+
+    	<script src="p3sweb/app/components/dashboard/components/dashboard.js"></script>
 
     	<script src="p3sweb/app/components/patents/components/patents.js"></script>
     	<script src="p3sweb/app/components/patents/components/patent.js"></script>
@@ -95,10 +102,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<nav class="nav navbar-light">
+					<nav class="navbar-light">
 						<div class="row">
 							<div class="col-md-6">
 								<ul class="nav">
+									<li class="nav-item"><a class="nav-link" ui-sref="dashboard">Dashboard</a></li>
 									<li class="nav-item"><a class="nav-link" ui-sref="patents">Patents</a></li>
 									<li class="nav-item"><a class="nav-link" ui-sref="current-transactions">Transactions</a></li>
 									<li class="nav-item"><a class="nav-link" ui-sref="profile">Profile</a></li>
@@ -120,12 +128,11 @@
 		</div>
 		
 		<main class="container">
-			
-		
-
-		<ui-view></ui-view>
+			<ui-view></ui-view>
 		</main>
 	</body>
+
+
 
 </html>
 

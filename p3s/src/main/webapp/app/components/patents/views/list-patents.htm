@@ -5,6 +5,26 @@
 	</div>
 </div>
 <div class="row">
+<uib-tabset type="pills">
+	<uib-tab heading="View All({{$ctrl.allPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.all" ng-init="$ctrl.displayPhase($ctrl.patentsTabs.all)" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.all)">
+    	
+    </uib-tab>
+    <uib-tab heading="Green({{$ctrl.greenPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.green" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.green)">
+		
+	</uib-tab>
+    <uib-tab heading="Yellow({{$ctrl.yellowPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.yellow" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.yellow)">
+		
+	</uib-tab>
+    <uib-tab heading="Red({{$ctrl.redPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.red" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.red)">
+		
+	</uib-tab>
+    <uib-tab heading="Blue({{$ctrl.bluePatentsLength}})" ng-attr-id="$ctrl.patentsTabs.blue" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.blue)">
+		
+	</uib-tab>
+    <uib-tab heading="Black({{$ctrl.brownPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.black" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.brown)">
+		
+	</uib-tab>				
+</uib-tabset>
 	<div class="col-md-4">
 		<form class="form-inline">
 			<div class="form-group">
@@ -17,65 +37,68 @@
 	</div>
 </div>
 
+
+
 <div class="row">
 	<div class="col-md-12">		
-		<table class="table table-bordered table-striped text-md-center">
+		<table class="table table-bordered table-striped text-md-center scroll">
 			<thead class="thead-inverse">
 				<tr>
-					<td class="align-middle">
+					<td width="10%" class="align-middle">
 						<a ng-click="$ctrl.sortType = 'patentApplicationNumber'; $ctrl.sortReverse = !$ctrl.sortReverse">Application No.  <!--show if not showing(false)-->
 							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
 					</td>
-					<td class="align-middle">
+					<td width="10%" class="align-middle">
 						<a ng-click="$ctrl.sortType = 'clientRef'; $ctrl.sortReverse = !$ctrl.sortReverse">Client Ref
 							<span ng-show="$ctrl.sortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							<span ng-show="$ctrl.sortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
 						</a>							
 					</td>
-					<td class="align-middle">
-						<a ng-click="$ctrl.sortType = 'currentRenewalCost'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost now
-							<span ng-show="$ctrl.sortType == 'currentRenewalCost' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'currentRenewalCost' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+					<td width="15%" class="align-middle">
+						<a ng-click="$ctrl.sortType = 'title'; $ctrl.sortReverse = !$ctrl.sortReverse">Description
+							<span ng-show="$ctrl.sortType == 'title' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'title' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
 						</a>
 					</td>
-					<td class="align-middle">
-						<a ng-click="$ctrl.sortType = 'costBandEndDateUI'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost band end
-							<span ng-show="$ctrl.sortType == 'costBandEndDateUI' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'costBandEndDateUI' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-						</a>
-					</td>
-					<td class="align-middle">
-						<a ng-click="$ctrl.sortType = 'renewalCostNextStage'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost next
+					<td width="40%" class="align-middle" colspan="3">
+						<a ng-click="$ctrl.sortType = 'renewalCostNextStage'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal status
 							<span ng-show="$ctrl.sortType == 'renewalCostNextStage' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							<span ng-show="$ctrl.sortType == 'renewalCostNextStage' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
 						</a>
-					</td>						
-					<td class="align-middle">
-						<a ng-click="$ctrl.sortType = 'renewalDueDateUI'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Date
+					</td>
+					<td width="40%" class="align-middle">
+						<a ng-click="$ctrl.sortType = 'renewalDueDateUI'; $ctrl.sortReverse = !$ctrl.sortReverse">Due date
 							<span ng-show="$ctrl.sortType == 'renewalDueDateUI' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'renewalDueDateUI' && $ctrl.sortReverse" class="fa fa-caret-down"></span>	
+							<span ng-show="$ctrl.sortType == 'renewalDueDateUI' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
 						</a>
 					</td>
-					<td class="align-middle">
-						Basket
-					</td>							
+					<td width="40%"></td>					
 				</tr>
 			</thead>
 
 			<tbody>
-				<tr ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.sortType:$ctrl.sortReverse | filter:searchPatents">
-					<td>
+				<tr ng-click="$ctrl.rowSelect($event)" ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.sortType:$ctrl.sortReverse | filter:searchPatents">
+					<td width="10%">
 						<a ui-sref="patents.patent({patentId: patent.id})" ng-bind="patent.patentApplicationNumber"></a>
 					</td>
-					<td ng-bind="patent.clientRef"></td>
-					<td>$ {{patent.currentRenewalCost}}</td>
-					<td ng-bind="patent.costBandEndDateUI"></td>
-					<td>$ {{patent.renewalCostNextStage}}</td>
-					<td ng-bind="patent.renewalDueDateUI"></td>
-					<td>
-					 	<ngcart-addtocart id="{{patent.id}}" name="patent_{{patent.id}}" price="{{patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="patent">
+					<td width="10%" ng-bind="patent.clientRef"></td>
+					<td width="15%" class="td-ch-limit">{{patent.title}}</td>
+					<td width="8%">
+						<span>$ {{patent.currentRenewalCost}}</span><br>
+						<span>{{date | date:'yyyy-MM-dd'}}</span>
+					</td>
+					<td width="24%"> 
+						<uib-progress><uib-bar ng-repeat="bar in $ctrl.progressBar track by $index" value="bar.value" type="{{bar.type}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></uib-bar></uib-progress>
+					</td>
+					<td width="8%">
+						<span>$ {{patent.renewalCostNextStage}}</span><br>
+						<span ng-bind="patent.costBandEndDateUI"></span>
+					</td>
+					<td width="15%" ng-bind="patent.renewalDueDateUI"></td>
+					<td width="10%" class="cartbtn">
+					 	<ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="patent_{{patent.id}}" price="{{patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="patent">
 						 	Add to cart
 					 	</ngcart-addtocart>
 				 	</td>
