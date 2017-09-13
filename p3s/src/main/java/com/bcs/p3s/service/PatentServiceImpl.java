@@ -67,6 +67,15 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		this.session = session;
 	}
 
+	public Patent persistPatent(Patent patent){
+		
+		String msg = PREFIX+"persistPatent("+patent+") ";
+		log().debug("invoked "+ msg);
+		Patent newPatent = null;
+		if(!(patent == null))
+			newPatent = patent.persist();
+		return newPatent;
+	}
 
 
 	// Start of - the methods which implement the prototypes in the Interface
@@ -297,7 +306,9 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		FxRateUI lastRate = new FxRateUI();
 		ArchivedRate previous = ArchivedRate.findLatestArchivedRate();
 		lastRate.setRate(previous.getFxRate_P3s());
-		lastRate.setRateActiveDate(previous.getActiveFromDate());
+		// To convert archived date to active date, substract one day (isGoodEnuf)
+		final long ONEDAY = 24 * 3600 * 1000;
+		lastRate.setRateActiveDate( new Date((previous.getArchivedDate()).getTime() - ONEDAY ) );
 		
 		FxRateCurrentUI fxRateCurrentUI = new FxRateCurrentUI();
 		fxRateCurrentUI.setCurrentFXRate(todaysRate);
