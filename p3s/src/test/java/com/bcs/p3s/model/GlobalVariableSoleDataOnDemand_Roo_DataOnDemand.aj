@@ -28,19 +28,31 @@ privileged aspect GlobalVariableSoleDataOnDemand_Roo_DataOnDemand {
     
     public GlobalVariableSole GlobalVariableSoleDataOnDemand.getNewTransientGlobalVariableSole(int index) {
         GlobalVariableSole obj = new GlobalVariableSole();
-        setCurrentRate(obj, index);
+        setCurrentMoneycorpRate(obj, index);
         setCurrentRateActiveDate(obj, index);
+        setCurrent_P3S_rate(obj, index);
+        setRateUpliftPercent(obj, index);
         return obj;
     }
     
-    public void GlobalVariableSoleDataOnDemand.setCurrentRate(GlobalVariableSole obj, int index) {
-        BigDecimal currentRate = BigDecimal.valueOf(index);
-        obj.setCurrentRate(currentRate);
+    public void GlobalVariableSoleDataOnDemand.setCurrentMoneycorpRate(GlobalVariableSole obj, int index) {
+        BigDecimal currentMoneycorpRate = BigDecimal.valueOf(index);
+        obj.setCurrentMoneycorpRate(currentMoneycorpRate);
     }
     
     public void GlobalVariableSoleDataOnDemand.setCurrentRateActiveDate(GlobalVariableSole obj, int index) {
         Date currentRateActiveDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setCurrentRateActiveDate(currentRateActiveDate);
+    }
+    
+    public void GlobalVariableSoleDataOnDemand.setCurrent_P3S_rate(GlobalVariableSole obj, int index) {
+        BigDecimal current_P3S_rate = BigDecimal.valueOf(index);
+        obj.setCurrent_P3S_rate(current_P3S_rate);
+    }
+    
+    public void GlobalVariableSoleDataOnDemand.setRateUpliftPercent(GlobalVariableSole obj, int index) {
+        BigDecimal rateUpliftPercent = BigDecimal.valueOf(index);
+        obj.setRateUpliftPercent(rateUpliftPercent);
     }
     
     public GlobalVariableSole GlobalVariableSoleDataOnDemand.getSpecificGlobalVariableSole(int index) {

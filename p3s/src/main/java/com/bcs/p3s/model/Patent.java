@@ -3,6 +3,7 @@ package com.bcs.p3s.model;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 
@@ -16,6 +17,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.EntityManager;
 import javax.persistence.ManyToMany;
 
 
@@ -110,5 +112,14 @@ public class Patent {
     	this.renewalStatus = (new RenewalStatusEnum(renewalStatus)).toString();
     }
 
+    
+    @Transactional
+    public Patent persist() {  
+    	Patent patent = new Patent();  
+    	EntityManager em = this.entityManager();
+        em.persist(this);
+        patent = Patent.findPatent(this.getId());
+        return patent;
+    }
     
 }

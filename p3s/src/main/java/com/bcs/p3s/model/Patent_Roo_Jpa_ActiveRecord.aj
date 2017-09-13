@@ -62,12 +62,6 @@ privileged aspect Patent_Roo_Jpa_ActiveRecord {
     }
     
     @Transactional
-    public void Patent.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.persist(this);
-    }
-    
-    @Transactional
     public void Patent.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {

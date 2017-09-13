@@ -67,6 +67,15 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		this.session = session;
 	}
 
+	public Patent persistPatent(Patent patent){
+		
+		String msg = PREFIX+"persistPatent("+patent+") ";
+		log().debug("invoked "+ msg);
+		Patent newPatent = null;
+		if(!(patent == null))
+			newPatent = patent.persist();
+		return newPatent;
+	}
 
 
 	// Start of - the methods which implement the prototypes in the Interface

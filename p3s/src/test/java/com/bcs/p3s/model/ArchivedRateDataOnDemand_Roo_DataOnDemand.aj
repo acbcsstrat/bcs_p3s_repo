@@ -29,7 +29,8 @@ privileged aspect ArchivedRateDataOnDemand_Roo_DataOnDemand {
     public ArchivedRate ArchivedRateDataOnDemand.getNewTransientArchivedRate(int index) {
         ArchivedRate obj = new ArchivedRate();
         setActiveFromDate(obj, index);
-        setFxRate(obj, index);
+        setFxRate_MC(obj, index);
+        setFxRate_P3s(obj, index);
         return obj;
     }
     
@@ -38,9 +39,14 @@ privileged aspect ArchivedRateDataOnDemand_Roo_DataOnDemand {
         obj.setActiveFromDate(activeFromDate);
     }
     
-    public void ArchivedRateDataOnDemand.setFxRate(ArchivedRate obj, int index) {
-        BigDecimal fxRate = BigDecimal.valueOf(index);
-        obj.setFxRate(fxRate);
+    public void ArchivedRateDataOnDemand.setFxRate_MC(ArchivedRate obj, int index) {
+        BigDecimal fxRate_MC = BigDecimal.valueOf(index);
+        obj.setFxRate_MC(fxRate_MC);
+    }
+    
+    public void ArchivedRateDataOnDemand.setFxRate_P3s(ArchivedRate obj, int index) {
+        BigDecimal fxRate_P3s = BigDecimal.valueOf(index);
+        obj.setFxRate_P3s(fxRate_P3s);
     }
     
     public ArchivedRate ArchivedRateDataOnDemand.getSpecificArchivedRate(int index) {
