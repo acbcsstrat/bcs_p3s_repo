@@ -16,6 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
@@ -29,7 +30,7 @@ public class Invoice {
 	
     /**
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Payment payment;
 
     /**

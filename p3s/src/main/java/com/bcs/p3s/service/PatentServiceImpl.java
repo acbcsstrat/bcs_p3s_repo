@@ -1,5 +1,7 @@
 package com.bcs.p3s.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -10,11 +12,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.CostAnalysisData;
@@ -42,6 +46,7 @@ import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.P3SFeeSole;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -212,8 +217,37 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 		log().debug(err+" invoked ");
 
-    	Patent patent = Patent.findPatent(id);
-    	patent.remove(); 
+		try{
+	    	Patent patent = Patent.findPatent(id);
+	    	//cascade delete not working .So manually deleting all the foreign references to this patent
+	    	TypedQuery<Renewal> q = Renewal.findRenewalsByPatent(patent);
+	    	List<Renewal> renewals = q.getResultList();
+	    	log().debug("Cascade deleting all the foreign key references for patent");
+	    	
+	    	for(Renewal renewal : renewals){
+	    		List<Renewal> rens = renewal.getActivePaymentId().getRenewals(); 
+	    		for(Renewal ren : rens){
+	    			if(ren .equals(renewal)){
+	    				rens.remove(ren);
+	    				break;
+	    			}
+	    		}
+	    		renewal.getActivePaymentId().setRenewals(rens);
+	    		renewal.remove();
+	    	}
+	    	
+	    	patent.remove(); 
+		}
+		catch(JpaSystemException e){
+			System.out.println(e.getMessage());
+			log().fatal("remove failed " + e.getMessage());
+			
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+			log().fatal("remove failed " + e.getMessage());
+			
+		}
 	}
 
 	

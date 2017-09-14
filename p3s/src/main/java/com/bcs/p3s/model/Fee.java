@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
+import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
 import javax.persistence.OneToOne;
 
@@ -16,7 +17,7 @@ public class Fee {
 
     /**
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Renewal renewal;
 
     /**

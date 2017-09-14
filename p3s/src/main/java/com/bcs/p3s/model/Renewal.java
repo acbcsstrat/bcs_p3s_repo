@@ -7,18 +7,25 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 
+import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord(finders = { "findRenewalsByPatent" })
+
 public class Renewal {
 
     /**
@@ -36,12 +43,12 @@ public class Renewal {
     /**
      */
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Fee fee;
 
     /**
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Certificate certificate;
 
     /**
@@ -85,9 +92,15 @@ public class Renewal {
     @Transactional
     public Renewal persist() {  
     	Renewal renewal = new Renewal();  
-    	EntityManager em = this.entityManager();
+    	EntityManager em = this.entityManager(); 
         em.persist(this);
         renewal = Renewal.findRenewal(this.getId());
         return renewal;
     }
+    
+//    @PreRemove
+//    private void preRemove() {
+//        Payment payment = this.getActivePaymentId();
+//        Payment.
+//    }
 }

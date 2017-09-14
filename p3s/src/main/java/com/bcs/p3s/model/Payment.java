@@ -21,7 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Value;
 
 // Note! : Payment was formerly called Transaction  (But Roo wouldn't allow that term)
@@ -95,7 +100,7 @@ public class Payment {
     /**
      */
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Invoice latestInvoice;
 
     /**
@@ -131,7 +136,7 @@ public class Payment {
     /**
      */
     @NotNull
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private List<Renewal> renewals = new ArrayList<Renewal>();
 
     // DIY finder
@@ -156,7 +161,7 @@ public class Payment {
         }
         return result;
     }
-
+    
     // Setters pushed to support P3S 'Enums'
     public void setTransType(String transType) {
         this.transType = (new PaymentTypeEnum(transType)).toString();
@@ -171,7 +176,7 @@ public class Payment {
     public Payment persist() {  
     	Payment payment = new Payment();  
     	EntityManager em = this.entityManager();
-        em.persist(this);
+        em.persist(this); 
         payment = Payment.findPayment(this.getId());
         return payment;
     }

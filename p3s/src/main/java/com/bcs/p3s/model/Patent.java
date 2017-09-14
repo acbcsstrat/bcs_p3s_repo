@@ -11,6 +11,9 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
@@ -25,6 +28,7 @@ import javax.persistence.ManyToMany;
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord(finders = { "findPatentsByBusiness" })
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class Patent {
 
     /**
