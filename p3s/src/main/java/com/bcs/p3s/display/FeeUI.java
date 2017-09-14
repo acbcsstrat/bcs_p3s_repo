@@ -2,6 +2,8 @@ package com.bcs.p3s.display;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+
 import com.bcs.p3s.model.Fee;
 
 
@@ -24,6 +26,7 @@ public class FeeUI {
     
     private BigDecimal latePayPenaltyUSD;
 
+    @Column(precision = 12, scale = 6)
     private BigDecimal fxRate;
 
     private BigDecimal subTotalUSD;

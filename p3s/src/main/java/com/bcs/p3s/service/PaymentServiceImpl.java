@@ -205,10 +205,9 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			 * 	b. Insert into Payment table  with the current invoice Id
 			 *  c. Insert into Fee table with renewalId as null
 			 * 	d. Insert into Renewal table with the current feeId
-			 *  e. Update payment_renewals join table with renewals
-			 * 	f. Update Fee table with the current renewalId
-			 * 	g. Update Invoice table with current paymentId
-			 * 	h. If above db operations success, then update Patent with renewal_status as Payment In Progress
+			 * 	e. Update Fee table with the current renewalId
+			 * 	f. Update Invoice table with current paymentId
+			 * 	g. If above db operations success, then update Patent with renewal_status as RENEWAL IN PLACE
 			 */ 
 			
 			commitTransaction(bankTransferPostCommitDetails,committedFee);
@@ -417,7 +416,6 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		/**
 		 * Each transaction may have multiple patents. So loop through each in orderedPatentIds and get the details from session
 		 */
-		List<Renewal> renewal_payment = new ArrayList<Renewal>();
 		List<PatentUI> orderedPatents = commitTransaction.getOrderedPatentUIs();
 		for(PatentUI eachPatent : orderedPatents){
 			
@@ -447,7 +445,6 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			renewal.setFee(currentFee);
 			currentRenewal = renewal.persist();
 			currentFee.setRenewal(currentRenewal);
-			renewal_payment.add(currentRenewal);
 			log().debug("Persisted Renewal Table successfully " + msg + "and returned renewal details with id as " + renewal.getId());
 			
 			if(currentRenewal == null){
@@ -458,20 +455,15 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			}
 		
 		}
-//e.Update payment_renewal table
-		if(!(renewal_payment == null)){
-			payment.setRenewals(renewal_payment);
-			payment.merge();
-			log().debug("payment_renewals join table persisted with "+ renewal_payment.size() +" renewal(s)");
-		}
-//f.Update currentFee Table with currentRenewal
+		
+//e.Update currentFee Table with currentRenewal
 		if(!(currentFee == null)){
 			currentFee.merge();
 			log().debug("Fee table updated with renewal id as "+ currentRenewal.getId());
 		}
 		
 		
-//g.Update currentInvoice Table with currentPayment
+//f.Update currentInvoice Table with currentPayment
 		if(!(currentInvoice == null)){
 			currentInvoice.merge(); 
 			log().debug("Invoice table updated with payment id as "+ currentPayment.getId());

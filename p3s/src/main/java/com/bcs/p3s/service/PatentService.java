@@ -37,12 +37,6 @@ public interface PatentService {
 	 */
 	public List<NotificationUI> createNotificationUIs(List<Notification> notifications);
 
-	
-	/**
-	 * Persist the patent details 
-	 * @param patent
-	 */
-	public Patent persistPatent(Patent patent);
 
 	/**
 	 * Find Patent given it's ID

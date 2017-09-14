@@ -330,7 +330,7 @@ public class TransactionServiceImpl extends ServiceAuthorisationTools implements
 //		FxRateUI lastRate = new FxRateUI();
 //		ArchivedRate previous = ArchivedRate.findLatestArchivedRate();
 //		lastRate.setRate(previous.getFxRate());
-//		lastRate.setRateActiveDate(previous.getActiveFromDate());
+//		lastRate.setRateActiveDate(previous.getArchivedDate());
 //		
 //		FxRateCurrentUI fxRateCurrentUI = new FxRateCurrentUI();
 //		fxRateCurrentUI.setCurrentFXRate(todaysRate);

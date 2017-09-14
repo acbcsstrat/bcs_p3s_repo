@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -23,16 +24,20 @@ public class GlobalVariableSole {
      * TBD_acTidy How many Euros does One USD buy
      */
     @NotNull
+    @Column(precision = 12, scale = 6)
     private BigDecimal currentMoneycorpRate;
     
     /**
      * actual P3S FX Rate EUR->USD
      */
+    @NotNull
+    @Column(precision = 12, scale = 6)
     private BigDecimal current_P3S_rate;
     
     /**
      * Percentage by which currentP3sRate increase to currentMoneycorpRate
      */
+    @NotNull
     private BigDecimal rateUpliftPercent;
 
     /**

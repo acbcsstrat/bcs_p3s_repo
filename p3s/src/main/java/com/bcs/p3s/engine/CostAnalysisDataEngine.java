@@ -403,6 +403,7 @@ public class CostAnalysisDataEngine extends Universal{
 		Calendar calendar = Calendar.getInstance();
 		lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(calendar.getTime()), caData.getFee());
 		
+		final long ONEDAY = 24 * 3600 * 1000;
 		for (ArchivedRate eachData : archivedRateList) {
 			
 			Fee fee = new Fee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
@@ -411,7 +412,10 @@ public class CostAnalysisDataEngine extends Universal{
 		    fee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxValue);
 		    //NOW POPULATE FEEUI 
 		    FeeUI feeUI = new FeeUI(fee);
-		    lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(eachData.getActiveFromDate()), feeUI);
+			// To convert archived date to active date, substract one day (isGoodEnuf)
+			Date becameActiveDate = new Date( eachData.getArchivedDate().getTime() - ONEDAY );
+			// formerly: lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(eachData.getActiveFromDate()), feeUI);
+		    lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(becameActiveDate), feeUI);
 		}
 		return lineChart;
 	}

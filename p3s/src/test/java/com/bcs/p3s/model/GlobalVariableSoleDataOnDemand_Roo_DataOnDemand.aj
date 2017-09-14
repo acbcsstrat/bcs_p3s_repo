@@ -37,6 +37,9 @@ privileged aspect GlobalVariableSoleDataOnDemand_Roo_DataOnDemand {
     
     public void GlobalVariableSoleDataOnDemand.setCurrentMoneycorpRate(GlobalVariableSole obj, int index) {
         BigDecimal currentMoneycorpRate = BigDecimal.valueOf(index);
+        if (currentMoneycorpRate.compareTo(new BigDecimal("999999.999999")) == 1) {
+            currentMoneycorpRate = new BigDecimal("999999.999999");
+        }
         obj.setCurrentMoneycorpRate(currentMoneycorpRate);
     }
     
@@ -47,6 +50,9 @@ privileged aspect GlobalVariableSoleDataOnDemand_Roo_DataOnDemand {
     
     public void GlobalVariableSoleDataOnDemand.setCurrent_P3S_rate(GlobalVariableSole obj, int index) {
         BigDecimal current_P3S_rate = BigDecimal.valueOf(index);
+        if (current_P3S_rate.compareTo(new BigDecimal("999999.999999")) == 1) {
+            current_P3S_rate = new BigDecimal("999999.999999");
+        }
         obj.setCurrent_P3S_rate(current_P3S_rate);
     }
     

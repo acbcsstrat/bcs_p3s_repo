@@ -24,7 +24,6 @@ import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalUI;
-import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.engine.TemporaryProcessingEngine;
 //import com.bcs.p3s.controller.web.User;
@@ -107,39 +106,33 @@ public class PatentRestController extends Universal {
     // User has confirmed this is the correct patent. So persist it
 					// would like to use:	(@RequestBody PatentUI patentUI) {
 	@RequestMapping(value = "/rest-patents/", method = RequestMethod.POST) 
-	public ResponseEntity<List<PatentUI>> savePatent(@RequestBody Object obby) {
+	public ResponseEntity<Void> savePatent(@RequestBody Object obby) {
 		log().debug("PatentRestController : /rest-patents/ savePatent() invoked ");
 		System.out.println("PatentRestController : /rest-patents/ savePatent() invoked ");
 		try {
 			System.out.println("PatentRestController : /rest-patents/ [POST] invoked - i.e. ADD Patent");
 	
-			Patent newPatent = new Patent();
-			ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
+			TemporaryProcessingEngine tmp = new TemporaryProcessingEngine();
 	
-			Patent patent = data.extractPatentFromAddPatentForm(obby); 
+			Patent patent = tmp.extractPatentFromAddPatentForm(obby); 
 			
 			
-		   	//patent.persist();
-			newPatent = patent.persist();
-		   	
-			if(!(newPatent == null))
-				log().debug("PatentRestController : /rest-patents/ savePatent() completed.");
-			//return ResponseEntity.ok().build();
-			else{
-				log().debug("PatentRestController : /rest-patents/ savePatent() failed.");
-				log().fatal("PatentRestController : /rest-patents/ savePatent() failed for patent " + patent);
-			}
-		   	
+	  		System.out.println(" Persist new patent ");
+		   	patent.persist();
 		   	
 		} catch (Exception e) {
 			System.out.println("PatentRestController addPatent() SUFFERED WATCHDOG WRAPPER EXCEPTION ");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
-		List<PatentUI> patentUIs = patentService.listAllPatentUIsForMyBusiness();
-  		return new ResponseEntity<List<PatentUI>>(patentUIs, HttpStatus.OK);
 
+  		System.out.println(" ");
+  		System.out.println(" ");
+  		System.out.println(" ");
+
+  		
+		log().debug("PatentRestController : /rest-patents/ savePatent() completed.");
+		return ResponseEntity.ok().build();
    }
 
 	

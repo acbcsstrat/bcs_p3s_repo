@@ -5,6 +5,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,8 +22,11 @@ public class ArchivedRate {
     /**
      */
     @NotNull
+    @Column(precision = 12, scale = 6)
     private BigDecimal fxRate_MC;
     
+    @NotNull
+    @Column(precision = 12, scale = 6)
     private BigDecimal fxRate_P3s;
 
     /**
@@ -30,7 +34,7 @@ public class ArchivedRate {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date activeFromDate;
+    private Date archivedDate;
 
     
     public static ArchivedRate findLatestArchivedRate() {

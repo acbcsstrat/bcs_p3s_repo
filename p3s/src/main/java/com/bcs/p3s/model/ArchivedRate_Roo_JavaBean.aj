@@ -25,12 +25,12 @@ privileged aspect ArchivedRate_Roo_JavaBean {
         this.fxRate_P3s = fxRate_P3s;
     }
     
-    public Date ArchivedRate.getActiveFromDate() {
-        return this.activeFromDate;
+    public Date ArchivedRate.getArchivedDate() {
+        return this.archivedDate;
     }
     
-    public void ArchivedRate.setActiveFromDate(Date activeFromDate) {
-        this.activeFromDate = activeFromDate;
+    public void ArchivedRate.setArchivedDate(Date archivedDate) {
+        this.archivedDate = archivedDate;
     }
     
 }

@@ -127,7 +127,7 @@ public class PatentUI extends Patent {
 					this.setCurrentRenewalCostUSD(extendedData.getCurrentRenewalCost());
 					this.setCostBandEndDate(extendedData.getCostBandEndDate());
 					this.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
-					break;
+					
 				}
 				
 				else if(extendedData.getPatentId().equals(this.getId())){
@@ -142,7 +142,6 @@ public class PatentUI extends Patent {
 						FeeUI feeUI = new FeeUI(extendedData.getFee());
 						this.setFeeUI(feeUI);
 					}
-					break;
 				}
 			}
 		}
