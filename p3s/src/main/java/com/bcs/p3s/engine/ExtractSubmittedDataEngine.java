@@ -127,7 +127,9 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   	if ("lastRenewedDateExEpo".equals(key.trim())) {
 			   		
 			   		Date itch = null;
-			   		if (ob instanceof Long) {
+			   		if(ob == null)
+			   			patent.setLastRenewedDateExEpo(null);
+			   		else if (ob instanceof Long) {
 				   		itch = new Date((Long) ob);
 			   		} 
 			   		else {

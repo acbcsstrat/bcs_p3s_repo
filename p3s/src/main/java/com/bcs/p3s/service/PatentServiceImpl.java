@@ -612,7 +612,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				
 		}
 		
-		else if(RenewalStatusEnum.SHOW_PRICE .equalsIgnoreCase(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS .equalsIgnoreCase(patent.getRenewalStatus())){
+		else if(RenewalStatusEnum.SHOW_PRICE .equalsIgnoreCase(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS .equalsIgnoreCase(patent.getRenewalStatus())
+					|| RenewalStatusEnum.EPO_INSTRUCTED .equalsIgnoreCase(patent.getRenewalStatus())){
 			//DISPLAY TODAYS AMOUNT STRAIGHT AWAY
 			caData = costEngines.getAllPhasesInfo(allDates);
 			caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());

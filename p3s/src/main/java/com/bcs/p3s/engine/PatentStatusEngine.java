@@ -61,7 +61,16 @@ public class PatentStatusEngine extends Universal {
 			//we are in doldrums
 			//check whether a renewal made for the active renewal year else we are too late
 			//if(lastRenewed.after(allDates.getCurrentWindowOpenDate()) && lastRenewed.before(allDates.getCurrentWindowCloseDate()) ){
-			if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()){
+			if(allDates.getRenewalYear() < 3){
+				/**
+				 * THis is the case when the new patent has a renewal year less than 3 ie, no Renewal needed 
+				 */
+				renewalInfo.setCanRenew(false);
+				renewalInfo.setGoodFollowOn(true);
+				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.NO_RENEWAL_NEEDED);
+			}
+			
+			else if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()){
 				renewalInfo.setCanRenew(false);
 				renewalInfo.setGoodFollowOn(true);
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
@@ -82,8 +91,29 @@ public class PatentStatusEngine extends Universal {
 		}
 		
 		else{
+			if(allDates.getRenewalYear() < 3){
+				/**
+				 * THis is the case when the new patent has a renewal year less than 3 ie, no Renewal needed 
+				 */
+				renewalInfo.setCanRenew(false);
+				renewalInfo.setGoodFollowOn(true);
+				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.NO_RENEWAL_NEEDED);
+			}
 			
-			if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()){
+			else if(allDates.getRenewalYear() == 3){
+				/**
+				 * THis is the case when patent being opened for first time renewal
+				 */
+				renewalInfo.setCanRenew(true);
+				renewalInfo.setGoodFollowOn(true);
+				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
+				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE);
+				//renewalInfo.setThisYearNumber(allDates.getRenewalYear());
+				renewalInfo.setAlreadyRenewed(false);
+				renewalInfo.setDoldrums(false);
+			}
+			
+			else if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()){
 				renewalInfo.setCanRenew(false);
 				renewalInfo.setGoodFollowOn(true);
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());
@@ -183,9 +213,16 @@ public PostLoginSessionBean getExtendedDataForNewPatent(Patent patent, PostLogin
 			renewalDates.setCurrentWindowOpenDate(renewalInfo.getNineMonthStart());
 			renewalDates.setCurrentWindowCloseDate(renewalInfo.getNineMonthEnd());
 
+			
+			if(RenewalStatusEnum.NO_RENEWAL_NEEDED .equals(renewalInfo.getCurrentRenewalStatus())){
+				
+				newPatentData.setPatentId(patent.getId());
+				newPatentData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
+				newPatentData.setCurrentCostBand(renewalInfo.getCurrentRenewalStatus());
+			}
 			//good to follow and not in doldrum: so we can show the prices
 			//	either Show price or Renewal In Place
-			if(renewalInfo.getGoodFollowOn() && !renewalInfo.getDoldrums()){
+			else if(renewalInfo.getGoodFollowOn() && !renewalInfo.getDoldrums()){
 				caData = caEngine.getAllPhasesInfo(renewalDates);
 				String currentPhase = caEngine.getCurrentPhase(caData);
 				CombinedFee fee = caEngine.getFeeObj(patent);

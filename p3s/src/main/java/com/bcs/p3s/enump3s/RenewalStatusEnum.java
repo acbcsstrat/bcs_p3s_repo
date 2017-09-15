@@ -14,7 +14,7 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
     public static final String EPO_INSTRUCTED           = "EPO Instructed";
     //public static final String ABANDONED				= "Abandoned"; // No longer supported
     public static final String TOO_LATE					= "Too late to renew";
-    public static final String NO_FURTHER_RENEWAL_NEEDED= "No further renewal needed";
+    public static final String NO_RENEWAL_NEEDED= "No renewal needed";
 
 
 
@@ -49,9 +49,9 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
             || status.equalsIgnoreCase("TOO_LATE")) 
         			sofar = RenewalStatusEnum.TOO_LATE;  
 
-        if (status.equalsIgnoreCase(RenewalStatusEnum.NO_FURTHER_RENEWAL_NEEDED) 
-            || status.equalsIgnoreCase("NO_FURTHER_RENEWAL_NEEDED")) 
-        			sofar = RenewalStatusEnum.NO_FURTHER_RENEWAL_NEEDED;  
+        if (status.equalsIgnoreCase(RenewalStatusEnum.NO_RENEWAL_NEEDED) 
+            || status.equalsIgnoreCase("NO_RENEWAL_NEEDED")) 
+        			sofar = RenewalStatusEnum.NO_RENEWAL_NEEDED;  
 
         			
         if (sofar != null) {
