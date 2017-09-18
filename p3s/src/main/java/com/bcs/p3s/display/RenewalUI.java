@@ -22,6 +22,7 @@ import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.service.TransactionServiceImpl;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.PatentExtendedData;
 
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
@@ -51,7 +52,7 @@ public class RenewalUI extends Renewal {
     
     
 	// Constructor - converting a Renewal to a RenewalUI
-	public RenewalUI(Renewal renewal) {
+	public RenewalUI(Renewal renewal,  List<PatentExtendedData> extendedDatas) {
 
 		
 		this.setId(renewal.getId());
@@ -88,7 +89,7 @@ public class RenewalUI extends Renewal {
 		
 		//set patent to null use only patentUI
 		
-		PatentUI pui = new PatentUI(this.getPatent(),null);
+		PatentUI pui = new PatentUI(this.getPatent(),extendedDatas);
 		this.setPatent(null);
 		pui.setBusiness(null);
 		pui.setNotifications(null);
@@ -102,8 +103,8 @@ public class RenewalUI extends Renewal {
 		 * 	RenewalCostNextStage
 		 * 	RenewalDueDate
 */
-		DummyDataEngine dummyEngine = new DummyDataEngine();
-		dummyEngine.populateExtendedPatentFieldsWithDummyData(pui, this.getPatent());
+		/*DummyDataEngine dummyEngine = new DummyDataEngine();
+		dummyEngine.populateExtendedPatentFieldsWithDummyData(pui, this.getPatent());*/
 
 		this.setPatentUI(pui);
 	}

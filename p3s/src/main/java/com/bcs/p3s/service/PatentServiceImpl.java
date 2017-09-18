@@ -670,10 +670,13 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			return null;
 		}
 		
+		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		List<PatentExtendedData> extendedDatas = pLoginSession.getExtendedPatentUI();
+		
 		log().debug("findRenewalsByPatent(" + patent.getId() + ") returned list of size [" + q.getResultList().size() + "]" );
 		renewals = q.getResultList();
 		for(Renewal renewal : renewals){
-			renewalUI = new RenewalUI(renewal);
+			renewalUI = new RenewalUI(renewal,extendedDatas);
 			if(renewalUI.isRenewedSuccessfully())
 				completedRenewals.add(renewalUI);
 		}

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.digester.ExtendedBaseRules;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.bcs.p3s.engine.DummyDataEngine;
@@ -21,6 +22,7 @@ import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.service.TransactionServiceImpl;
 import com.bcs.p3s.util.date.DateUtil;
+import com.bcs.p3s.wrap.PatentExtendedData;
 
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
@@ -59,7 +61,7 @@ public class PaymentUI extends Payment {
 	
     
 	// Constructor - converting a Payment (aka Transaction) to a PaymentUI
-	public PaymentUI(Payment payment) {
+	public PaymentUI(Payment payment, List<PatentExtendedData> sessionData) {
 		
 		this.setId(payment.getId());
 		this.setVersion(payment.getVersion());
@@ -100,7 +102,7 @@ public class PaymentUI extends Payment {
 		List<Renewal> rens =  payment.getRenewals();
 		for (Renewal aRenewal : rens) {
 			// Remove unwant data that would break the JSON
-			RenewalUI aRenUI = new RenewalUI(aRenewal);
+			RenewalUI aRenUI = new RenewalUI(aRenewal,sessionData);
 			aRenUI.setPatent(null);
 			aRenUI.setActivePaymentId(null);
 			//aRenUI.getFee().setRenewal(null); 

@@ -68,6 +68,7 @@ public class PatentStatusEngine extends Universal {
 				renewalInfo.setCanRenew(false);
 				renewalInfo.setGoodFollowOn(true);
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.NO_RENEWAL_NEEDED);
+				renewalInfo.setDoldrums(true);
 			}
 			
 			else if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()){
@@ -98,6 +99,7 @@ public class PatentStatusEngine extends Universal {
 				renewalInfo.setCanRenew(false);
 				renewalInfo.setGoodFollowOn(true);
 				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.NO_RENEWAL_NEEDED);
+				renewalInfo.setDoldrums(true);
 			}
 			
 			else if(allDates.getRenewalYear() == 3){

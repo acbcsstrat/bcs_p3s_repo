@@ -47,7 +47,7 @@ public class DummyDataEngine extends Universal {
 		System.out.println("                     Reminder: Still using DummyDataEngine");
 	}
 	
-	public void populateExtendedPatentFieldsWithDummyData(PatentUI patentUI, Patent patent) {
+	/*public void populateExtendedPatentFieldsWithDummyData(PatentUI patentUI, Patent patent) {
 
 		log().debug("DummyDataEngine populateExtendedPatentFieldsWithDummyData() invoked");
 
@@ -62,7 +62,7 @@ public class DummyDataEngine extends Universal {
 		patentUI.setRenewalCostNextStageUSD(new BigDecimal("1111111.11"));
 		patentUI.setRenewalDueDate(dummyFilingDateToThisyearRenewDueDate(patentUI.getFilingDate()));
 
-	}
+	}*/
 	
 
 	/**
