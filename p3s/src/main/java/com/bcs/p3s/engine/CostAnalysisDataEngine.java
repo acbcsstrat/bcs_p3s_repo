@@ -256,7 +256,7 @@ public class CostAnalysisDataEngine extends Universal{
 			//		add((epoFee.getRenewalFee_EUR().add(epoFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)))); 
 			
 			BigDecimal expressExtensionFeeUSD = (baseCostUSD.add(extensionFeeUSD)).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)));
-			subTotalUSD = baseCostUSD.add(expressExtensionFeeUSD);
+			subTotalUSD = baseCostUSD.add(extensionFeeUSD).add(expressExtensionFeeUSD);
 
 			fee.setExtensionFee_EUR(epoFee.getExtensionFee_EUR());
 			fee.setExpressFee_USD(expressExtensionFeeUSD);
