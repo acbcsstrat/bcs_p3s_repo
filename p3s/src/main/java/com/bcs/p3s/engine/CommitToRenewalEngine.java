@@ -26,6 +26,13 @@ import com.bcs.p3s.util.lang.Universal;
  *
  */
 public class CommitToRenewalEngine extends Universal {
+	
+	
+	public String generateP3sTransRef() {
+		DummyDataEngine dummy = new DummyDataEngine();
+		String result = dummy.generatep3sTransRef();
+		return result;
+	}
 
 	
 	

@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
+@RooJpaActiveRecord(finders = { "findFeesByRenewal"})
 public class Fee {
 
     /**

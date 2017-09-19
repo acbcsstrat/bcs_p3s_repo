@@ -15,8 +15,9 @@ import org.springframework.stereotype.Service;
 import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.docs.InvoiceProcessingEngine;
+import com.bcs.p3s.engine.CommitToRenewalEngine;
 import com.bcs.p3s.engine.DummyDataEngine;
-import com.bcs.p3s.engine.PaymentProcessingEngine;
+import com.bcs.p3s.engine.OrderProcessingEngine;
 import com.bcs.p3s.engine.PaymentTimingEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
@@ -332,8 +333,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 
 		populateBankTransferPreCommitDetails(bankTransferPostCommitDetails, basket);
 
-		PaymentProcessingEngine paymentProcessingEngine = new PaymentProcessingEngine();
-		String p3sTransRef = paymentProcessingEngine.generateP3sTransRef();
+		CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
+		String p3sTransRef = commitToRenewal.generateP3sTransRef();
 		bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);
 
 		DummyDataEngine dummy = new DummyDataEngine();
