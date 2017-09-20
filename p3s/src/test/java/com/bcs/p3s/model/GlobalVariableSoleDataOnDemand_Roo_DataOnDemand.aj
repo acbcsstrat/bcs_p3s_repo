@@ -31,6 +31,7 @@ privileged aspect GlobalVariableSoleDataOnDemand_Roo_DataOnDemand {
         setCurrentMoneycorpRate(obj, index);
         setCurrentRateActiveDate(obj, index);
         setCurrent_P3S_rate(obj, index);
+        setMoneycorpKey(obj, index);
         setRateUpliftPercent(obj, index);
         return obj;
     }
@@ -54,6 +55,11 @@ privileged aspect GlobalVariableSoleDataOnDemand_Roo_DataOnDemand {
             current_P3S_rate = new BigDecimal("999999.999999");
         }
         obj.setCurrent_P3S_rate(current_P3S_rate);
+    }
+    
+    public void GlobalVariableSoleDataOnDemand.setMoneycorpKey(GlobalVariableSole obj, int index) {
+        String moneycorpKey = "moneycorpKey_" + index;
+        obj.setMoneycorpKey(moneycorpKey);
     }
     
     public void GlobalVariableSoleDataOnDemand.setRateUpliftPercent(GlobalVariableSole obj, int index) {
