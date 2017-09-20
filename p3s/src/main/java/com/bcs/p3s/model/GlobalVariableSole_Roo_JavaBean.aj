@@ -41,4 +41,12 @@ privileged aspect GlobalVariableSole_Roo_JavaBean {
         this.currentRateActiveDate = currentRateActiveDate;
     }
     
+    public String GlobalVariableSole.getMoneycorpKey() {
+        return this.moneycorpKey;
+    }
+    
+    public void GlobalVariableSole.setMoneycorpKey(String moneycorpKey) {
+        this.moneycorpKey = moneycorpKey;
+    }
+    
 }

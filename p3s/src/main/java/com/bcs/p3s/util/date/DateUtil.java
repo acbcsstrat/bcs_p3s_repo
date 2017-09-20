@@ -110,4 +110,12 @@ public class DateUtil {
 		years = a.get(Calendar.YEAR) - b.get(Calendar.YEAR);
 		return years;
 	}
+	
+	public String dateForMoneyCorpFiles(Date date) {
+		if (date==null) return "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss z"); // Tue Oct 31, 2017
+		String result = sdf.format(date);
+		return result;
+	}
+	
 }

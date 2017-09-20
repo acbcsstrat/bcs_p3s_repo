@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
+import com.bcs.p3s.engine.OrderProcessingEngine;
 import com.bcs.p3s.engine.TemporaryProcessingEngine;
 import com.bcs.p3s.engine.dummyclasses.Api4dotXdataFromGETworkaround;
+import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
@@ -185,8 +187,13 @@ public class PaymentRestController extends Universal {
     	return showBankTransferPostCommitDetails(api43cmd);
     }
 
-    
-    
+    @RequestMapping(value = "/rest-create-csv", method = RequestMethod.GET)
+    public void createCSV(){
+    	
+    	OrderProcessingEngine test = new OrderProcessingEngine();
+		Payment payment = Payment.findPayment((long) 9);
+		test.createOrderCsv(payment);
+    }
     
 	//------------------- next ... a ARE THERE ANY MORE ???  --------------------------------------------------------
 

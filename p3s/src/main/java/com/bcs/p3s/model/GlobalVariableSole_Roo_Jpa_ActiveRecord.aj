@@ -14,7 +14,7 @@ privileged aspect GlobalVariableSole_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager GlobalVariableSole.entityManager;
     
-    public static final List<String> GlobalVariableSole.fieldNames4OrderClauseFilter = java.util.Arrays.asList("currentMoneycorpRate", "current_P3S_rate", "rateUpliftPercent", "currentRateActiveDate");
+    public static final List<String> GlobalVariableSole.fieldNames4OrderClauseFilter = java.util.Arrays.asList("currentMoneycorpRate", "current_P3S_rate", "rateUpliftPercent", "currentRateActiveDate", "moneycorpKey");
     
     public static final EntityManager GlobalVariableSole.entityManager() {
         EntityManager em = new GlobalVariableSole().entityManager;

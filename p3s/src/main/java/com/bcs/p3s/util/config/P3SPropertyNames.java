@@ -24,4 +24,11 @@ public interface P3SPropertyNames {
 	//String Payment_Status_While_Commit = "Initiated";
 	int Renewal_Attempts_Constant_In_Payment_Commit = 1;
 	
+	//EPO data
+	String Destination_EPO_Office = "EPO";
+	String EPO_Payment_Reference = "repl 28051033";
+	
+	String Payment_Type_SEPA = "SEPA";
+	String Payment_Type_SWIFT = "SWIFT";
+	
 }

@@ -2,6 +2,10 @@ package com.bcs.p3s.sftp.service;
 
 import java.util.ArrayList;
 
+import com.bcs.p3s.sftp.model.Order;
+
+
+
 /**
  * Provides client-facing, simple methods for operating the Moneycorp SFTP Interface
  *
@@ -13,7 +17,7 @@ public interface MoneycorpSftpAccess {
 	
 //	public com.bcs.p3s.sftp.model.Rate getLatestRate() throws P3sSftpException;
 
-//	public void createOrderFile(String ourRef, com.bcs.p3s.sftp.model.Order order) throws P3sSftpException;
+	public void createOrderFile(Order order) throws P3sSftpException;
 	
 //	public ArrayList<com.bcs.p3s.sftp.model.TxnStatus> getTxnStatuses() throws P3sSftpException;
 	

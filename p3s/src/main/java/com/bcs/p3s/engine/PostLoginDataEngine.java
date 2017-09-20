@@ -104,7 +104,7 @@ public class PostLoginDataEngine extends Universal{
 				else{
 					extendedData.setPatentId(patent.getId());
 					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
-					extendedData.setCurrentCostBand(renewalInfo.getCurrentRenewalStatus());
+					extendedData.setCurrentCostBand(RenewalColourEnum.NOCOLOR);
 				}
 				
 				allData.add(extendedData);

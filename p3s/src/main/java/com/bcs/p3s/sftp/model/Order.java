@@ -1,4 +1,4 @@
-package com.bcs.p3s.sftpmodel;
+package com.bcs.p3s.sftp.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,20 +10,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Order {
 	
+	private String p3sTransRef;
+	
 	private String srcCurrency;
 	
 	private String destCurrency;
-	
 	
 	private BigDecimal src_dest_fxRate;
 	
 	private BigDecimal subTotalUSD;
 	
-	private BigDecimal destCurrencyAmount;
+	private BigDecimal amountToEPO_USD;
 	
-	private BigDecimal holdingAmount;
+	private BigDecimal holdingAmountUSD;
 	
-	private BigDecimal convertedAmount;
+	private BigDecimal amountToEPO_EUR;
 	
 	private String destinationOffice;
 	
@@ -31,13 +32,19 @@ public class Order {
 	
 	private String reference;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
-	private Date paymentExpiryDate;
+	//all dates in yyyy/MM/dd HH:mm:ss z format
+	private String paymentValueDate;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
-	private Date datestamp;
+	private String currentDatestamp;
+
+	
+	public String getP3sTransRef() {
+		return p3sTransRef;
+	}
+
+	public void setP3sTransRef(String p3sTransRef) {
+		this.p3sTransRef = p3sTransRef;
+	}
 
 	public String getSrcCurrency() {
 		return srcCurrency;
@@ -48,7 +55,6 @@ public class Order {
 	}
 
 	
-
 	public String getDestCurrency() {
 		return destCurrency;
 	}
@@ -74,28 +80,28 @@ public class Order {
 		this.subTotalUSD = subTotalUSD;
 	}
 
-	public BigDecimal getDestCurrencyAmount() {
-		return destCurrencyAmount;
+	public BigDecimal getAmountToEPO_USD() {
+		return amountToEPO_USD;
 	}
 
-	public void setDestCurrencyAmount(BigDecimal destCurrencyAmount) {
-		this.destCurrencyAmount = destCurrencyAmount;
+	public void setAmountToEPO_USD(BigDecimal amountToEPO_USD) {
+		this.amountToEPO_USD = amountToEPO_USD;
 	}
 
-	public BigDecimal getHoldingAmount() {
-		return holdingAmount;
+	public BigDecimal getHoldingAmountUSD() {
+		return holdingAmountUSD;
 	}
 
-	public void setHoldingAmount(BigDecimal holdingAmount) {
-		this.holdingAmount = holdingAmount;
+	public void setHoldingAmountUSD(BigDecimal holdingAmount) {
+		this.holdingAmountUSD = holdingAmount;
 	}
 
-	public BigDecimal getConvertedAmount() {
-		return convertedAmount;
+	public BigDecimal getAmountToEPO_EUR() {
+		return amountToEPO_EUR;
 	}
 
-	public void setConvertedAmount(BigDecimal convertedAmount) {
-		this.convertedAmount = convertedAmount;
+	public void setAmountToEPO_EUR(BigDecimal amountToEPO_EUR) {
+		this.amountToEPO_EUR = amountToEPO_EUR;
 	}
 
 	public String getDestinationOffice() {
@@ -122,20 +128,20 @@ public class Order {
 		this.reference = reference;
 	}
 
-	public Date getPaymentExpiryDate() {
-		return paymentExpiryDate;
+	public String getPaymentValueDate() {
+		return paymentValueDate;
 	}
 
-	public void setPaymentExpiryDate(Date paymentExpiryDate) {
-		this.paymentExpiryDate = paymentExpiryDate;
+	public void setPaymentValueDate(String paymentExpiryDate) {
+		this.paymentValueDate = paymentExpiryDate;
 	}
 
-	public Date getDatestamp() {
-		return datestamp;
+	public String getCurrentDatestamp() {
+		return currentDatestamp;
 	}
 
-	public void setDatestamp(Date datestamp) {
-		this.datestamp = datestamp;
+	public void setCurrentDatestamp(String currentDatestamp) {
+		this.currentDatestamp = currentDatestamp;
 	}
 	
 	

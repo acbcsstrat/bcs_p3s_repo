@@ -150,6 +150,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	public BankTransferPostCommitDetails showBankTransferPostCommitDetails(InBasket basket) {
 
 		String err = PREFIX+"showBankTransferPostCommitDetails() ";
+		Payment currentPayment = new Payment();
+		OrderProcessingEngine orders = new OrderProcessingEngine();
 		BigDecimal latestCalculatedCost = new BigDecimal("0.0");
 		List<Fee> committedFee = new ArrayList<Fee>();
 		//checkAreMyPatents(patentIds, err);
@@ -212,8 +214,14 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			 * 	h. If above db operations success, then update Patent with renewal_status as Payment In Progress
 			 */ 
 			
-			commitTransaction(bankTransferPostCommitDetails,committedFee);
+			currentPayment = commitTransaction(bankTransferPostCommitDetails,committedFee);
 			//create and send the orders file to MC -- to do MP <<<<IMP NOTE !!!!>>>>
+			if(!(currentPayment == null))
+				orders.createOrderCsv(currentPayment);
+			else{
+				err += "Order file not created. Payment is null from commitTransaction(" + bankTransferPostCommitDetails +"," + committedFee +")";
+				logM().error(err);
+			}
 			
 		}
 		catch (Exception e) {
@@ -362,7 +370,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	 * @param fee
 	 */
 	
-	protected Boolean commitTransaction(BankTransferPostCommitDetails commitTransaction, List<Fee> fee){
+	protected Payment commitTransaction(BankTransferPostCommitDetails commitTransaction, List<Fee> fee){
 		
 		String msg = PREFIX+"commitTransaction("+commitTransaction+","+fee+ ") ";
 		Invoice invoice = new Invoice();
@@ -384,7 +392,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				dbSuccess = false;
 				log().debug("Invoice Table persistence failed " + msg);
 				log().error("Invoice Table persistence failed " + msg);
-				return dbSuccess;
+				return payment;
 			}
 			log().debug("Persisted Invoice Table successfully " + msg + "and returned invoice details with id as " + invoice.getId());
 			//payment.setLatestInvoice(currentInvoice);
@@ -394,7 +402,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			dbSuccess = false;
 			log().debug("Invoice Table persistence failed " + msg);
 			log().error("Invoice Table persistence failed " + msg);
-			return dbSuccess;
+			return payment;
 		}
 		
 //b.Insert into Payment
@@ -409,7 +417,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				dbSuccess = false;
 				log().debug("Payment Table persistence failed " + msg);
 				log().error("Payment Table persistence failed " + msg);
-				return dbSuccess;
+				return payment;
 			}
 			 
 		}
@@ -431,7 +439,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 					dbSuccess = false;
 					log().debug("Fee Table persistence failed " + msg);
 					log().error("Fee Table persistence failed " + msg);
-					return dbSuccess;
+					return payment;
 				}
 				log().debug("Persisted Fee Table successfully " + msg);
 			}
@@ -439,7 +447,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				dbSuccess = false;
 				log().debug("Fee Table persistence failed " + msg);
 				log().error("Fee Table persistence failed " + msg);
-				return dbSuccess;
+				return payment;
 			}
 			
 			//d.Insert into Renewal
@@ -455,7 +463,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				dbSuccess = false;
 				log().debug("Renewal Table persistence failed " + msg);
 				log().error("Renewal Table persistence failed " + msg);
-				return dbSuccess;
+				return payment;
 			}
 		
 		}
@@ -488,7 +496,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			
 		}
 		
-		return dbSuccess;
+		return payment;
 			
 	}
 	
