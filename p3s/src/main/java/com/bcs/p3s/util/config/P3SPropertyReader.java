@@ -67,10 +67,34 @@ import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 		private void doConstructorStuff() throws IOException {
 			P3SEnvironmentKnowledge envKnowledge = new P3SEnvironmentKnowledge();
 			String path = envKnowledge.getMainPropertyFilePath(); 
-			String filename = P3SEnvironmentKnowledge.P3S_PROPERTYFILE_FILENAME;
+			String filename = envKnowledge.P3S_PROPERTYFILE_FILENAME;
 			esp = new EnvironmentSpecificProperties(path, filename);
 		}
 	
+		
+		
+		/** These constructors are not needed (nor used) by the P3S website.
+		 * But other apps that use this P3S code (Like the Cron app) can use these duplicated constructors 
+		 * to provides alternative values applicable to that app.
+		 * @param esp
+		 */
+		public P3SPropertyReader(P3SEnvironmentKnowledge alienEsp) throws IOException {
+			doAlienConstructorStuff(alienEsp);
+		}
+		public P3SPropertyReader(int ignored, P3SEnvironmentKnowledge alienEsp) {
+			try {
+				doAlienConstructorStuff(alienEsp);
+			}
+			catch (IOException ioe) { /* swallow */ }
+		}
+		private void doAlienConstructorStuff(P3SEnvironmentKnowledge alienEsp) throws IOException {
+			P3SEnvironmentKnowledge envKnowledge = alienEsp;
+			String path = envKnowledge.getMainPropertyFilePath(); 
+			String filename = envKnowledge.P3S_PROPERTYFILE_FILENAME;
+			esp = new EnvironmentSpecificProperties(path, filename);
+		}
+		
+		
 		
 		
 		/**
@@ -81,7 +105,7 @@ import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 			if (esp==null) logInternalError().fatal("P3SPropertyReader:getEsp is null. Expect NPE.");
 			return esp; 
 		}
-	
+
 		/**
 		 * Read a named NON-Environment-specific property from the currently loaded Properties  
 		 * @param propertyname WITHOUT the prefix

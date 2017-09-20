@@ -48,6 +48,14 @@ public class GlobalVariableSole {
     @DateTimeFormat(style = "M-")
     private Date currentRateActiveDate;
 
+    /**
+     * The key to accessing the FX SFTP site. = password reversed.
+     */
+    @NotNull
+    private String moneycorpKey;
+
+    
+    
     
     public static GlobalVariableSole findOnlyGlobalVariableSole() {
 		List<GlobalVariableSole> allGVS = GlobalVariableSole.findAllGlobalVariableSoles();

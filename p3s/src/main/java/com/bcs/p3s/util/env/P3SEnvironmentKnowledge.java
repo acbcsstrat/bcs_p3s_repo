@@ -18,7 +18,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 
 	public static final String DATABASECONFIGFILENAME = "database.properties";
 	public static final String BUILDINFO_FILENAME = "buildinfo.properties";
-	public static final String P3S_PROPERTYFILE_FILENAME = "p3s.properties";
+	public              String P3S_PROPERTYFILE_FILENAME = "p3s.properties";
 
 //	public static final String PROPERTYFILENAME = "PatentExpressway.properties";
 //	public static final String PROPERTYFILEDEFAULTLOCATION = "/utils";
@@ -102,7 +102,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 	/**
 	 * Provides the path of the main properties file folder on this host
 	 */
-	public final String getMainPropertyFilePath()  {
+	public String getMainPropertyFilePath()  {
 		String path = null; // "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/";  // UNUSED Default PC tomcat
 		String host = Hostname.getHostname();
 		
