@@ -23,7 +23,8 @@ public class MoneycorpSftpAccessImpl extends Universal implements MoneycorpSftpA
 			String COMMA_DELIMITER = ",";
 				
 			//Orders CSV File Header 
-			String FILE_HEADER = "P3SRef,Ccy1,Ccy2,Rate,Ccy1AmountProvided,Ccy1ToCcy2Amount,Ccy1ToHoldingAccount,Ccy2AmountRequired,Destination,Method,Reference,ValueDate,Timestamp";
+			String FILE_HEADER = "PatentPlaceRef,Ccy1,Ccy2,Rate,Ccy1AmountProvided,Ccy1toCcy2AmountRequired,Ccy1toHOLDINGamountRequired,Ccy2AmountRequired,"
+					+ "DestinationPatentOffice,Method,ReferenceForDestinationPayment,ValueDate,CreationTimestamp";
 			
 			ArrayList<String> lines = new ArrayList<String>();
 			//Build the order content as like a csv - HAND CRAFTING THE FILE CONTENTS. THE FORMAT SHOULD BE THE SAME EVERYTIME

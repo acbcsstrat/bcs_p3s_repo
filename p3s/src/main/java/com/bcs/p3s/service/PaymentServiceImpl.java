@@ -164,6 +164,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		BankTransferPostCommitDetails bankTransferPostCommitDetails = new BankTransferPostCommitDetails();
 		
 		try {
+			
+			//not p3sTRansRef this time
 			populateBankTransferPostCommitDetails(bankTransferPostCommitDetails, basket);
 	
 			/**
@@ -191,6 +193,10 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				}
 				bankTransferPostCommitDetails.setTotalCostUSD(latestCalculatedCost);
 			}
+			//finally generate the p3sTransRef
+			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
+			String p3sTransRef = commitToRenewal.generateP3sTransRef(pLoginSession);
+			bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);
 		
 			// Check that expected price matches calculated
 			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_CEILING);
@@ -341,9 +347,9 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 
 		populateBankTransferPreCommitDetails(bankTransferPostCommitDetails, basket);
 
-		CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
-		String p3sTransRef = commitToRenewal.generateP3sTransRef();
-		bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);
+		/*CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
+		String p3sTransRef = commitToRenewal.generateP3sTransRef(bankTransferPostCommitDetails);
+		bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);*/
 
 		DummyDataEngine dummy = new DummyDataEngine();
 		BankTransferPaymentDetails bankTransferPaymentDetails = dummy.generateBankTransferPaymentDetails();

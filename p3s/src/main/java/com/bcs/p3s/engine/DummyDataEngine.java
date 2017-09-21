@@ -182,9 +182,9 @@ public class DummyDataEngine extends Universal {
 //		return inventedRubbish;
 //	}
 
-	public String generatep3sTransRef() {
+	/*public String generatep3sTransRef() {
 		return "CQ 465 735 QC";
-	}
+	}*/
 		
 	public BankTransferPaymentDetails generateBankTransferPaymentDetails() {
 		BankTransferPaymentDetails ikk = new BankTransferPaymentDetails();
