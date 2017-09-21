@@ -28,7 +28,7 @@ public class OrderProcessingEngine extends Universal{
 	
 	public void createOrderCsv(Payment payment){
 		
-		String msg = PREFIX + "createCsv("+payment+")";
+		String msg = PREFIX + "createCsv() for payment corresponding to " + payment.getId();
 		log().debug(msg +" invoked::::");
 		MoneycorpSftpAccessImpl sftpAccess = new MoneycorpSftpAccessImpl();
 		
@@ -36,7 +36,7 @@ public class OrderProcessingEngine extends Universal{
 			
 			Order order = populateOrdersFileData(payment);
 			if(order == null ){
-				log().fatal("populateOrdersFileData("+payment+") returned null ");
+				log().fatal("populateOrdersFileData() for payment corresponding to id : " + payment.getId() + " returned null ");
 				return;
 			}
 			Boolean isChecksPassed = doChecksums(order);
@@ -56,7 +56,7 @@ public class OrderProcessingEngine extends Universal{
 	
 	public Order populateOrdersFileData(Payment payment){
 		
-		String msg = PREFIX + "populateOrdersFileData("+payment+")";
+		String msg = PREFIX + "populateOrdersFileData() for payment corresponding to id : "+ payment.getId() ;
 		log().debug(msg +" invoked::::");
 		
 		Order order = new Order();
@@ -160,7 +160,7 @@ public class OrderProcessingEngine extends Universal{
 		checksum1 = order.getAmountToEPO_USD().add(order.getHoldingAmountUSD()).subtract(order.getSubTotalUSD());
 		checksum2 = order.getAmountToEPO_USD().divide(order.getSrc_dest_fxRate()).subtract(order.getAmountToEPO_EUR());
 		
-		if( checksum1.compareTo(zero) == 0  || checksum2.compareTo(zero) == 0 ){
+		if( !(checksum1.compareTo(zero) == 0  || checksum2.compareTo(zero) == 0 )){
 			isChecksumOk = false;
 			log().fatal("Order checksum FAILED with checksum1 as "+ checksum1 + " and checksum2 as " + checksum2);
 		}

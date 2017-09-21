@@ -23,6 +23,7 @@ public interface P3SPropertyNames {
 	//Payment commit properties
 	//String Payment_Status_While_Commit = "Initiated";
 	int Renewal_Attempts_Constant_In_Payment_Commit = 1;
+	int P3sTransRef_Length = 12;
 	
 	//EPO data
 	String Destination_EPO_Office = "EPO";

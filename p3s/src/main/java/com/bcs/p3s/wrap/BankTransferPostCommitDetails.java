@@ -34,12 +34,6 @@ public class BankTransferPostCommitDetails extends BankTransferPreCommitDetails 
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	// Ordinary getters & setters
 	public String getP3sTransRef() {
 		return p3sTransRef;

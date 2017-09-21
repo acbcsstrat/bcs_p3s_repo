@@ -1,6 +1,11 @@
 package com.bcs.p3s.engine;
 
+import java.lang.management.PlatformLoggingMXBean;
+
+import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
 
 /**
  * This engine handles the processing when a customer Commits to the renewal of one or more patenta.
@@ -28,12 +33,30 @@ import com.bcs.p3s.util.lang.Universal;
 public class CommitToRenewalEngine extends Universal {
 	
 	
-	public String generateP3sTransRef() {
-		DummyDataEngine dummy = new DummyDataEngine();
-		String result = dummy.generatep3sTransRef();
-		return result;
+	public String generateP3sTransRef(PostLoginSessionBean pLoginSession) {
+		
+		String p3sTransRef = "IP";
+		
+		if( !(pLoginSession.getBusiness() == null || pLoginSession.getUser() == null)){
+			String part1 = "";
+			String part2 = "";
+			
+			part1 = String.format("%04d", pLoginSession.getUser().getId());
+			part2 = String.format("%06d", pLoginSession.getBusiness().getId());
+			
+			p3sTransRef = p3sTransRef.concat(part1).concat(part2);
+			
+		}
+		
+		if(!(p3sTransRef.length() == P3SPropertyNames.P3sTransRef_Length) ){
+			logmaliciousN4CU.fatal("generateP3sTransRef() failed creating 12 character reference");
+			return p3sTransRef;
+		}
+			
+		return p3sTransRef;
 	}
 
+	
 	
 	
 }
