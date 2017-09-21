@@ -1,6 +1,8 @@
 package com.bcs.p3s.util.config;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
@@ -48,7 +50,7 @@ import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 		 * Instantiate & Attempt to open & read the main P3S property file
 		 * @throws IOException 
 		 */
-		public P3SPropertyReader() throws IOException {
+		public P3SPropertyReader() throws P3SPropertyException {
 			doConstructorStuff();
 		}
 		
@@ -62,13 +64,19 @@ import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 			try {
 				doConstructorStuff();
 			}
-			catch (IOException ioe) { /* swallow */ }
+			catch (P3SPropertyException ioe) { /* swallow */ }
 		}
-		private void doConstructorStuff() throws IOException {
+		private void doConstructorStuff() throws P3SPropertyException {
 			P3SEnvironmentKnowledge envKnowledge = new P3SEnvironmentKnowledge();
 			String path = envKnowledge.getMainPropertyFilePath(); 
 			String filename = envKnowledge.P3S_PROPERTYFILE_FILENAME;
-			esp = new EnvironmentSpecificProperties(path, filename);
+			try {
+				esp = new EnvironmentSpecificProperties(path, filename);
+			} catch (IOException io) {
+				String eMsg = "[Failed to open cron property file] P3SPropertyReader doConstructorStuff ";
+				String msg = logExceptionPreRethrow(eMsg,io);
+				throw new P3SPropertyException(msg, io);
+			}
 		}
 	
 		
@@ -78,20 +86,26 @@ import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 		 * to provides alternative values applicable to that app.
 		 * @param esp
 		 */
-		public P3SPropertyReader(P3SEnvironmentKnowledge alienEsp) throws IOException {
+		public P3SPropertyReader(P3SEnvironmentKnowledge alienEsp) throws P3SPropertyException {
 			doAlienConstructorStuff(alienEsp);
 		}
 		public P3SPropertyReader(int ignored, P3SEnvironmentKnowledge alienEsp) {
 			try {
 				doAlienConstructorStuff(alienEsp);
 			}
-			catch (IOException ioe) { /* swallow */ }
+			catch (P3SPropertyException ioe) { /* swallow */ }
 		}
-		private void doAlienConstructorStuff(P3SEnvironmentKnowledge alienEsp) throws IOException {
+		private void doAlienConstructorStuff(P3SEnvironmentKnowledge alienEsp) throws P3SPropertyException {
 			P3SEnvironmentKnowledge envKnowledge = alienEsp;
 			String path = envKnowledge.getMainPropertyFilePath(); 
 			String filename = envKnowledge.P3S_PROPERTYFILE_FILENAME;
-			esp = new EnvironmentSpecificProperties(path, filename);
+			try {
+				esp = new EnvironmentSpecificProperties(path, filename);
+			} catch (IOException io) {
+				String eMsg = "[Failed to open cron property file] P3SPropertyReader doConstructorStuff ";
+				String msg = logExceptionPreRethrow(eMsg,io);
+				throw new P3SPropertyException(msg, io);
+			}
 		}
 		
 		
@@ -190,4 +204,15 @@ import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 //		}
 	
 
+
+		protected String logExceptionPreRethrow(String err, Exception e) {
+			String msg = err + "sufferedException "+e.getClass().getName()+"  Message="+e.getMessage();
+			log().warn(msg, e);
+
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().warn("Stacktrace was: "+errors.toString());
+			
+			return msg;
+		}
 	}

@@ -7,5 +7,8 @@ public class P3SPropertyException extends Exception {
 	public P3SPropertyException(String message) {
         super(message);
     }
+	public P3SPropertyException(String message, Exception e) {
+        super(message, e);
+    }
 
 }
