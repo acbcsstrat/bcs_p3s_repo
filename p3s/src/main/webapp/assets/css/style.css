@@ -20,8 +20,38 @@ table.scroll tbody {
     overflow-x: hidden;
 }
 
+.slick-container {
+  max-width: 400px;  
+  border: 1px solid gray;
+  margin: auto;
+  padding: 15px;
+}
 
+.slick-next:before, .slick-prev:before {
+  color: #000;
+}
 
+input.ng-pristine + ul#strength {
+    display:none;
+}
+ul#strength {
+    display:inline;
+    list-style:none;
+    margin:0;
+    padding:0;
+    vertical-align:2px;
+}
+.point:last {
+    margin:0 !important;
+}
+.point {
+    background:#DDD;
+    border-radius:2px;
+    display:inline-block;
+    height:10px;
+    margin-right:2px;
+    width: 19.5%;
+}
 
 
 .tab-panel {
@@ -89,7 +119,7 @@ main { height: 100%; }
 
 * { box-sizing: border-box; }
 
-.container { width: 90%!important; margin: 0 auto; }
+.container { width: 90%!important; margin: 0 auto 0 120px; }
 .container-full { margin: 0 auto; width: 100%; }
 
 .page-row {	display: table-row; height: 1px; }
@@ -110,6 +140,13 @@ select.form-control:not([size]):not([multiple]) {
   .container {
     max-width: 90%!important;
   } 
+}
+
+.closed-sidenav {
+  background: grey;
+  min-height: 100%;
+  position: absolute;
+  width: 75px;
 }
 
 

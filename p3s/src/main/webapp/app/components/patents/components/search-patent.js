@@ -48,6 +48,7 @@ app.component('searchpatent', {
 			searchPatentService.findPatent(patentNo)
 			.then(
 				function(data) {
+					console.log(data)
 					vm.queriedPatent = data;
 					vm.displayNotifications(vm.patentNotifications.green)
 				},

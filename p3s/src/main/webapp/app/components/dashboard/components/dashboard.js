@@ -1,147 +1,374 @@
 app.component('dashboard', {
+	bindings: { 
+		patents: '<',
+		transactions: '<' 
+	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: ['dashboardService', 'patentsService', function(dashboardService, patentsService) {
+	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, dashboardService, fxService, patentsService) {
 
 		var vm = this;
+		
+		vm.$onInit = () => {
 
-		vm.colourPhase = {
-			green: 'green',
-			yellow: 'yellow',
-			red: 'red',
-			blue: 'blue',
-			black: 'black'
-
-		}
-
-		vm.getPatents = function(phase) {
-
-
+      		$scope.date = new Date()
+	      	
+			var transactions = vm.transactions;
+			var patents = vm.patents;
 
 			patentsService.fetchAllPatents()
 				.then(
 					function(response){
-
-						vm.greenRenewals = [];
-						vm.yellowRenewals = [];
-						vm.redRenewals = [];
-						vm.blueRenewals = [];
-						vm.blackRenewals = [];
-
-						vm.totalPatents = response.length;
-					 	vm.labels = ["Green", "Yellow", "Red", "Blue", "Black"];
-
 						response.forEach(function(item){
+							patentsService.fetchCostAnalysis(item.id)
+			                .then(
+			                    function(response){
 
-							switch(item.costBandColour) {
-								case 'Green':
-									vm.greenRenewals.push(item)
-								break;
-								case 'Yellow':
-									vm.yellowRenewals.push(item)
-								break;
-								case 'Red':
-									vm.redRenewals.push(item)
-								break;
-								case 'Blue':
-									vm.blueRenewals.push(item)
-								break;
-								case 'Black':
-									vm.blackRenewals.push(item)									
-							}
+			                        switch(item.costBandColour) {
+			                            case 'Green':
 
-				  		vm.data = [vm.greenRenewals.length, vm.yellowRenewals.length, vm.redRenewals.length, vm.blueRenewals.length, vm.blackRenewals.length];
+										var today = new Date().getTime();
+										var start = new Date(response.greenStartDate);
+										var end = new Date(response.amberStartDate);
 
-						})
+										var total = end - start;
+										var progress = today - start;
 
-					}, 
+										vm.greenRenewals.forEach(function(data){
+											data.progressBar =  Math.round(((progress) / (total)) * 100);
+										})					                                
+
+			                                break;
+			                            case 'Amber':
+
+										var today = new Date().getTime();
+										var start = new Date(response.amberStartDate);
+										var end = new Date(response.redStartDate);
+
+										var total = end - start;
+										var progress = today - start;
+
+										vm.amberRenewals.forEach(function(data){
+											data.progressBar =  Math.round(((progress) / (total)) * 100);
+										})					                         
+
+			                                break;
+			                            case 'Red':
+
+										var today = new Date().getTime();
+										var start = new Date(response.redStartDate);
+										var end = new Date(response.blueStartDate);
+
+										var total = end - start;
+										var progress = today - start;
+
+										vm.redRenewals.forEach(function(data){
+											data.progressBar =  Math.round(((progress) / (total)) * 100);
+										})								
+
+			                                break;
+			                            case 'Blue':
+
+										var today = new Date().getTime();
+										var start = response.blueStartDate;
+										var end = response.blackStartDate;
+
+										var total = end - start;
+										var progress = today - start;
+
+										vm.blueRenewals.forEach(function(data){
+											data.progressBar =  Math.round(((progress) / (total)) * 100);
+										})
+
+			                                break;
+			                            case 'Black':
+
+										var today = new Date().getTime();
+										var start = response.blackStartDate;
+										var end = response.blackEndDate;
+
+										var total = end - start;
+										var progress = today - start;
+
+										vm.blackRenewals.forEach(function(data){
+											data.progressBar =  Math.round(((progress) / (total)) * 100);
+										})
+
+			                        } //switch end
+		                    
+			        	
+			                    }, 
+			                    function(errResponse){
+			                        console.log('no')
+			                    }
+		                    )
+		            	})
+			        
+		                
+					},
 					function(errResponse){
-						console.log(errResponse)
+
 					}
-				)
+			)//patents request end
 
-				////////workings for carousel
+			//RECENT TRANSACTIONS	
 
-				var phaseArr;
-				var appNo, description, dueDate;
+			vm.recentTransArr = [];
 
-				switch(phase) {
+			transactions.forEach(function(data){
+				var d = new Date().getTime();
+				var hours =  d - data.lastUpdatedDate;
+				var recentTrans  = millsToHours(data, hours);
+				if(recentTrans !== undefined) {
+					vm.recentTransArr.push(recentTrans)
+				}
+			})
+
+			function millsToHours(data, millisec) {
+
+		        var seconds = (millisec / 1000).toFixed(0);
+		        var minutes = Math.floor(seconds / 60);
+		        var hours = "";
+
+		        if (minutes > 59) {
+		            hours = Math.floor(minutes / 60);
+		            hours = (hours >= 10) ? hours : "0" + hours;
+		            minutes = minutes - (hours * 60);
+		            minutes = (minutes >= 10) ? minutes : "0" + minutes;
+		        }
+
+		        seconds = Math.floor(seconds % 60);
+		        seconds = (seconds >= 10) ? seconds : "0" + seconds;
+
+		        if (hours < 48) {
+		            return data
+		        }
+
+		    }
+
+		    //RECENT STAGE CHANGES
+
+		    vm.recentStageArr = [];
+
+		    //RECENT STAGE CHANGES
+
+		    vm.recentRenewalArr = [];
+
+			vm.color = 0;
+
+			vm.greenRenewals = [];
+			vm.amberRenewals = [];
+			vm.redRenewals = [];
+			vm.blueRenewals = [];
+			vm.blackRenewals = [];
+
+			//COLOUR KEY
+
+			vm.colourKey = function(colour) {
+				switch(colour) {
+					case 0:
+						vm.colourPhaseTitle = {
+							title: vm.labels[0],
+							descrip: 'lorem'
+						}
+						vm.blueCarousel = true;
+					break;
 					case 1:
-						phaseArr = vm.greenRenewals;
+						vm.colourPhaseTitle = {
+							title: vm.labels[1],
+							descrip: 'loremmm'
+						}
+						vm.colour = 1;
 					break;
 					case 2:
-						phaseArr = vm.yellowRenewals;
+						vm.colourPhaseTitle = {
+							title: vm.labels[2],
+							descrip: 'lorem ipsum'
+						}
+						vm.colour = 2;
 					break;
 					case 3:
-						phaseArr = vm.redRenewals;
+						vm.colourPhaseTitle = {
+							title: vm.labels[3],
+							descrip: 'ispum galtoria'
+						}
+						vm.colour = 3;
 					break;
 					case 4:
-						phaseArr = vm.blueRenewals;
+						vm.colourPhaseTitle = {
+							title: vm.labels[4],
+							descrip: 'herisuhimas'
+						}
+						vm.colour = 4;
+				}
+			}
+
+			//TOTAL RENEWALS PIE CHART
+
+			vm.totalPatents = patents.length;
+
+			vm.labels = ["Green", "Yellow", "Red", "Blue", "Black"];
+
+			patents.forEach(function(item){
+				switch(item.costBandColour) {
+					case 'Green':
+						vm.greenRenewals.push(item)
 					break;
-					case 5:
-						phaseArr = vm.blackRenewals;							
+					case 'Amber':
+						vm.amberRenewals.push(item)
+					break;
+					case 'Red':
+						vm.redRenewals.push(item)
+					break;
+					case 'Blue':
+						vm.blueRenewals.push(item)
+					break;
+					case 'Black':
+						vm.blackRenewals.push(item)									
 				}
 
-			  	vm.active = 0;
-			  	var slides = vm.slides = [];
-			  	var currIndex = 0;
+				vm.data = [vm.greenRenewals.length, vm.amberRenewals.length, vm.redRenewals.length, vm.blueRenewals.length, vm.blackRenewals.length];
 
-			 	vm.addSlide = function() {
-				    // var newWidth = 600 + slides.length + 1;
-				    slides.push({
-				    	appNo: dueDate,
-				      	appNo: description,
-				      	id: currIndex++
-				    });
-			  	};
+			})
 
-				  if(phaseArr !== undefined) {
-					  for (var i = 0; i < phaseArr.length; i++) {
-					    	vm.addSlide();
-					    	var appNo = phaseArr[i];
-						}
-				  }
+			vm.phaseSliderInfo = function(id) {
 
-				  // console.log(appNo)
+				vm.phaseArr = [];
+
+				var phase;
+
+				switch(id) {
+					case 0:
+						phase = vm.greenRenewals;
+					break;
+					case 1:
+						phase = vm.amberRenewals;
+					break;
+					case 2:
+						phase = vm.redRenewals;
+					break;
+					case 3:
+						phase = vm.blueRenewals;
+					break;
+					case 4:
+						phase = vm.blackRenewals;								
+				}
 				
-		}
+				function loadPhase(i) {
+					vm.phaseArr.length = 0;
+						$timeout(function() {
+							vm.phaseArr = i;
+						}, 100);
 
-		vm.getPatents();
+				}
 
-		vm.selectColour = function(colour) {
-			switch(colour) {
-				case 'green':
-					vm.colourPhaseTitle = {
-						title: 'Green',
-						descrip: 'Lorem'
-					}
-				break;
-				case 'yellow':
-					vm.colourPhaseTitle = {
-						title: 'Yellow',
-						descrip: 'Lorem'
-					}
-				break;
-				case 'red':
-					vm.colourPhaseTitle = {
-						title: 'Red',
-						descrip: 'Lorem'
-					}
-				break;
-				case 'blue':
-					vm.colourPhaseTitle = {
-						title: 'Blue',
-						descrip: 'Lorem'
-					}
-				break;
-				case 'black':
-					vm.colourPhaseTitle = {
-						title: 'Black',
-						descrip: 'Lorem'
-					}
-			}
-		}
+				loadPhase(phase)
+
+		  	} //phaseSliderInfoEnd
+
+		} //$onInit end	
 
 
+		$scope.currentIndex = 0;
 
-	}]		
+	    $scope.slickConfig = {
+	    	arrows: true,
+		    enabled: true,
+		    autoplay: false,
+		    draggable: false,
+		    autoplaySpeed: 3000,
+		    method: {},
+		    event: {
+		    	afterChange: function (event, slick, currentSlide, nextSlide) {
+	        		$scope.currentIndex = currentSlide;
+
+	        		function patentFx(i) {
+						var fees = vm.phaseArr[i].feeUI;
+	        			vm.todaysPriceUSD = fees.subTotalUSD;
+	        			vm.todaysPriceEUR = fees.subTotalEUR;
+	        			vm.selecetedPatent = i;
+	        			vm.totalCostUSD = fees.subTotalUSD;
+	        			$timeout(function() {
+	        				fxService.fetchFxWeek()
+				        	.then(
+				        		function(data){
+				        			var dateArr = [];
+				        			//weekly
+
+				        			data.forEach(function(item){
+				        				dateArr.push(item.rateActiveDate)
+				        			});
+
+				        			dateArr.sort(function(a, b){
+				        				return a - b
+				        			});        			
+
+				        			var tD = new Date().getTime();
+				        			var lwD = tD - 604800000; //subtract a week in milliseconds
+				        			var lastWeekD = new Date(lwD).getDay();
+				        			var lastWeekDt = new Date(lwD).getDate();
+
+				        			dateArr.forEach(function(item, index){
+				        				//yesterday
+				        				if(item == dateArr[0]) {
+				        					var yesterdayFx = data[index].rate;
+				        					vm.yesterdaysPriceUSD = Math.floor(fees.subTotalEUR * yesterdayFx);
+				        					vm.yesterdaysPriceEUR = Math.floor(fees.subTotalEUR);
+				        				}
+				        				//weekly
+				        				if((new Date(item).getDay() == lastWeekD) && (new Date(item).getDate() == lastWeekDt)) {
+				        					var lastWeekFx = data[index].rate;
+				        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
+				        					vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);
+				        				}
+				        			})
+				        		},
+				        		function(error){
+
+				        		}
+				    		)
+
+				    		fxService.fetchFxMonth()
+				        	.then(
+				        		function(data){
+
+				        			var dateArr = [];
+
+				        			data.forEach(function(item){
+				        				dateArr.push(item.rateActiveDate)
+				        			});
+
+				        			dateArr.sort(function(a, b){
+				        				return a - b
+				        			});
+
+				        			var tD = new Date().getTime();
+				        			var lmD = tD - 2629746000; //subtract a month in milliseconds
+				        			var lastMonthD = new Date(lmD).getDay();
+				        			var lastMonthDt = new Date(lmD).getDate();
+
+				        			dateArr.forEach(function(item, index){
+				        				if((new Date(item).getDay() == lastMonthD) && (new Date(item).getDate() == lastMonthDt)) {
+				        					var lastMonthFx = data[index].rate;
+				        					vm.lastMonthsPriceUSD = Math.floor(fees.subTotalEUR * lastMonthFx);
+				        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
+				        				}
+				        			})
+				        		},
+				        		function(error){
+
+				        		}
+				    		)	
+	        			}, 100);
+					}
+	        		patentFx($scope.currentIndex)
+		        },
+		    	init: function(event, slick, currentSlide, nextSlide) {
+		    		slick.slickGoTo($scope.currentIndex);
+		    	}
+		    }
+		};
+
+		
+
+	}
 })

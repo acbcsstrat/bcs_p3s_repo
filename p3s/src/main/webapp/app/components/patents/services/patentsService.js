@@ -50,11 +50,12 @@ app.factory('patentsService', function($http, $q) {
             return deferred.promise;
         }
 
-        factory.fetchGraphData = function(id) {
+        factory.fetchCostAnalysis = function(id) {
             var deferred = $q.defer();
             $http.get('http://localhost:8080/p3sweb/rest-cost-analysis/'+id)
                 .then(
                 function (response) {
+                    // console.log(response.data)
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
@@ -82,10 +83,10 @@ app.factory('patentsService', function($http, $q) {
             return deferred.promise;
         }
 
-        factory.fetchRenewalHistory = function() {
+        factory.fetchRenewalHistory = function(id) {
 
             var deferred = $q.defer();
-            $http.get('../../p3sweb/assets/json/renewal-history.json')
+            $http.get('http://localhost:8080/p3sweb/rest-renewal-history/'+id)
                 .then(
                 function (response) {
                     deferred.resolve(response.data);
@@ -97,6 +98,9 @@ app.factory('patentsService', function($http, $q) {
             );
             return deferred.promise;
         }
+
+
+
         
     return factory;
 

@@ -1,11 +1,11 @@
 app.component('patent', {
 	bindings: { 
 		patent: '<',
-		graph: '<',
+		costAnalysis: '<',
 		renewal: '<'
 	},
 	templateUrl: 'p3sweb/app/components/patents/views/patent-item.htm',
-	controller: ['patentTabService', 'patentsService', '$state', '$timeout','$scope','chartTabService', function(patentTabService, patentsService, $state, $timeout, $scope, chartTabService) {
+	controller: ['patentTabService', 'patentsService', '$state', '$timeout','$scope','chartTabService', 'fxService',  function(patentTabService, patentsService, $state, $timeout, $scope, chartTabService, fxService) {
 
 		var vm = this;
 
@@ -14,30 +14,65 @@ app.component('patent', {
      	//GRAPHS ///////////////
 
 
-
      	vm.$onChanges = function(changeObj){
 
 	            if(changeObj.patent){
+
 	            	var patentLineChart = angular.element(document.getElementById('#patentLineChart"'));
 	            	var patentBarChart = angular.element(document.getElementById('#patentBarChart"'));
 
-	            	var caFee = vm.graph.fee;
-
+					var patent = vm.patent;
+	            	var caFee = vm.costAnalysis.fee;
+	            	var costBand = vm.costAnalysis;
+		            var renewalHistory = vm.renewal;
+		            console.log(costBand)
+		            	            					
 	            	vm.feeBreakDown = {
 	            		renewalFeeEUR: caFee.renewalFeeEUR,
+	            		renewalFeeUSD: caFee.renewalFeeUSD,
 	            		extensionFee: caFee.extensionFeeEUR,
 	            		renewalFeeUSD: caFee.renewalFeeUSD,
 	            		extensionFeeEur: caFee.extensionFeeEUR,
 	            		extensionFeeUSD: caFee.extensionFeeUSD,
+	            		processingFeeEUR: caFee.processingFeeEUR,
 	            		processingFeeUSD: caFee.processingFeeUSD,
 	            		expressFeeUSD: caFee.expressFeeUSD,
 	            		urgentFeeUSD: caFee.urgentFeeUSD,
 	            		latePayPenaltyUSD: caFee.latePayPenaltyUSD,
 	            		fxRate: caFee.fxRate,
-	            		subTotalUSD: caFee.subTotalUSD
+	            		subTotalEUR: caFee.subTotalEUR,
+	            		subTotalUSD: caFee.subTotalUSD,
+	            		bandSaving: function() {
+	            			var item = {};
+	            			switch(patent.costBandColour) {
+	            				case 'Green':
+	            					item.savings =  Math.round(costBand.amberStageCost - costBand.greenStageCost);
+	            					item.renewBefore = patent.costBandEndDate;
+	            				break;
+	            				case 'Amber':
+	            					item.savings =  Math.round(costBand.redStageCost - costBand.amberStageCost)
+	            					item.renewBefore = patent.costBandEndDate;
+	            				break;
+	            				case 'Red':
+	            					item.savings =  Math.round(costBand.blueStageCost - costBand.redStageCost);
+	            					item.renewBefore = patent.costBandEndDate;
+	            				break;
+	            				case 'Blue':
+	            					item.savings =  Math.round(costBand.blackStageCost - costBand.blueStageCost);
+	            					item.renewBefore = patent.costBandEndDate;
+	            				break;
+	            				case 'Black':
+	            					item.savings =  'N/A';
+	            					item.renewBefore = 'N/A'
+
+	            			}
+	            			return item;
+	            		}
 	            	}
 
-	            	const caLine = vm.graph.lineChart;
+	            	console.log(vm.feeBreakDown)
+
+	            	const caLine = vm.costAnalysis.lineChart;
 	            	const lineDataArr = [];
 	            	const lineLabelArr = [];      
 
@@ -75,7 +110,7 @@ app.component('patent', {
 				  	};
 
 
-					const caBar = vm.graph;
+					const caBar = vm.costAnalysis;
 					const barDataArr = [];
 					const barLabelArr = [];
 
@@ -105,13 +140,30 @@ app.component('patent', {
 
 
 
-
             //PROGRESS BAR
 
+ 			vm.progressBar = vm.patent.progressBar
 
- 			vm.stacked = [{value: 60, type: 'success'}];
-
-
+	        vm.nextStage = function() {
+        		var nextStage;
+        		switch(vm.patent.costBandColour) {
+        			case 'Green':
+        				nextStage = 'Amber'
+        			break;
+        			case 'Amber':
+        				nextStage = 'Red'
+        			break;
+        			case 'Red':
+        				nextStage = 'Blue'
+        			break;
+        			case 'Blue':
+        				nextStage = 'Black'
+        			break;
+        			case 'Black':
+        				nextStage = 'End'   			
+        		}
+        		return nextStage;
+        	}
 
 
 
@@ -120,14 +172,16 @@ app.component('patent', {
 
 			vm.patentNotifications = {
 				green: 'Green',
-				yellow: 'Amber',
+				amber: 'Amber',
 				red: 'Red',
 				blue: 'Blue',
 				black: 'Black'
 			}
 
 			vm.displayNotifications = function(phase) {
-	
+
+				vm.colourPhase = phase;
+
 				function phaseNotifications(phase) {
 			  		var notificationsArr = changeObj.patent.currentValue.notificationUIs;
 			  		var notifications = [];
@@ -153,7 +207,90 @@ app.component('patent', {
 
 	        	vm.chunkedData = chunk(phaseNotifications(phase), 3);
 
-			}            
+			}
+
+        	var cad =  vm.costAnalysis;
+        	var greenCost = cad.greenStageCost, amberCost = cad.amberStageCost, redCost = cad.redStageCost, blueCost = cad.blueStageCost, brownCost = cad.brownStageCost;
+
+        	var fxHistory = {}
+
+        	fxService.fetchFxWeek()
+        	.then(
+        		function(data){
+        			var dateArr = [];
+        			//weekly
+
+        			data.forEach(function(item){
+        				dateArr.push(item.rateActiveDate)
+        			});
+
+        			dateArr.sort(function(a, b){
+        				return a - b
+        			});        			
+
+
+        			var tD = new Date().getTime();
+        			var lwD = tD - 604800000; //subtract a week in milliseconds
+        			var lastWeekD = new Date(lwD).getDay();
+        			var lastWeekDt = new Date(lwD).getDate();
+
+        			dateArr.forEach(function(item, index){
+        				//yesterday
+        				if(item == dateArr[0]) {
+        					var yesterdayFx = data[index].rate;
+        					vm.yesterdaysPrice = Math.floor(vm.costAnalysis.fee.subTotalEUR * yesterdayFx);
+        				}
+        				//weekly
+        				if((new Date(item).getDay() == lastWeekD) && (new Date(item).getDate() == lastWeekDt)) {
+        					var lastWeekFx = data[index].rate;
+        					vm.lastWeeksPrice = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastWeekFx);
+        				}
+        			})
+        		},
+        		function(error){
+
+        		}
+    		)
+
+    		fxService.fetchFxMonth()
+        	.then(
+        		function(data){
+
+        			var dateArr = [];
+
+        			data.forEach(function(item){
+        				dateArr.push(item.rateActiveDate)
+        			});
+
+        			dateArr.sort(function(a, b){
+        				return a - b
+        			});
+
+        			var tD = new Date().getTime();
+        			var lmD = tD - 2629746000; //subtract a month in milliseconds
+        			var lastMonthD = new Date(lmD).getDay();
+        			var lastMonthDt = new Date(lmD).getDate();
+
+        			dateArr.forEach(function(item, index){
+        				if((new Date(item).getDay() == lastMonthD) && (new Date(item).getDate() == lastMonthDt)) {
+        					var lastMonthFx = data[index].rate;
+        					console.log(vm.patent.currentRenewalCostUSD, lastMonthFx)
+        					vm.lastMonthsPrice = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastMonthFx);
+        				}
+        			})
+        		},
+        		function(error){
+
+        		}
+    		)
+
+	        function usdFxEur() {
+	        	var fx = eval(1 * vm.costAnalysis.fee.fxRate);
+	        	vm.usd2eur = fx;
+	        }
+         	usdFxEur();
+
+
         }	
 
 
@@ -166,52 +303,10 @@ app.component('patent', {
 
         // PATENT INFORMATION //////////////////////
 
+
+
         vm.sortType = 'renewalYear';
-        vm.sortReverse = true;
-
-        vm.$onInit = function() {
-
-       
-
-        	var cad =  vm.graph;
-        	var greenCost = cad.greenStageCost, yellowCost = cad.amberStageCost, redCost = cad.redStageCost, blueCost = cad.blueStageCost, brownCost = cad.brownStageCost;
-
-   //      	switch (cad.currentcostBand) {
-			//     case 'Green':
-			//        	vm.stageSavings = eval(yellowCost - greenCost);
-			//        	vm.renewBefore = new Date(cad.blueStartDate);
-			//         break;
-			//     case 1:
-			//         day = "Monday";
-			//         break;
-			//     case 2:
-			//         day = "Tuesday";
-			//         break;
-			//     case 3:
-			//         day = "Wednesday";
-			//         break;
-			//     case 4:
-			//         day = "Thursday";
-			//         break;
-			//     case 5:
-			//         day = "Friday";
-			//         break;
-			//     case 6:
-			//         day = "Saturday";
-			// }
-
-   //      	if(vm.patent === 'Green') {
-
-   //      	}
-
-	        function usdFxEur() {
-	        	var fx = eval(1 * vm.graph.fee.fxRate);
-	        	vm.usd2eur = fx;
-	        }
-         	usdFxEur();
-	 	}
-
-       
+        vm.sortReverse = true;       
 
      	vm.deletePatent = function(id){
 	        patentsService.deletePatent(id)

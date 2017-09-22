@@ -7,6 +7,7 @@ app.component('addpatent', {
 		vm.patent = $stateParams.obj;
 
 	 	vm.submit = function(patent) {
+	 		console.log(patent)
 	    	patentsService.savePatent(patent)
 	            .then(function(){
 	             	$state.go('patents', {}, {reload: true})

@@ -10,10 +10,6 @@ app.component('user', {
 
         vm.message = "hello";
 
-        vm.$onInit = function() {
-            console.log(this.user)
-        }
-
         vm.updateUser = function(user) {
         	userService.updateUser(user);
         }
@@ -23,7 +19,6 @@ app.component('user', {
             userService.listUsers()
             .then(
                 function(response){
-                    console.log(response)
                     vm.listCompUsers = response;  
                 },
                 function(errResponse){

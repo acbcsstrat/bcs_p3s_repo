@@ -10,7 +10,6 @@ app.factory('userService', function($http, $q) {
              $http.get(REST_SERVICE_URI)
                 .then(
                 function (response) {
-                    console.log(response.data)
                     deferred.resolve(response.data);
                 },
                 function(errResponse){

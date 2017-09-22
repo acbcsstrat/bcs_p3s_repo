@@ -1,7 +1,7 @@
 app.component('patents', {
   	bindings: { patents: '<' },
 	templateUrl: 'p3sweb/app/components/patents/views/list-patents.htm',
-	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, patentsPhaseTabService, $rootScope) {
+	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, patentsPhaseTabService, $rootScope, patentsService) {
 
 		var vm = this;
 
@@ -10,61 +10,128 @@ app.component('patents', {
 		vm.patentsTabs = {
 			all: 1,
 			green: 2,
-			yellow: 3,
+			amber: 3,
 			red: 4,
 			blue: 5,
-			brown: 6
+			black: 6
 		}
 
 		vm.$onInit = () => {
 
-
+			vm.date = new Date()
 
 			var patents = vm.patents;
 
+			var greenProgress = [];
+			var amberProgress = [];
+			var redProgress = [];
+			var blueProgress = [];
+			var blackProgress = [];
+
 			patents.forEach(function(item){
+				patentsService.fetchCostAnalysis(item.id)
+                .then(
+                    function(response){
 
-			if (item.costBandColour === 'Green') {
-			     	var now = new Date(); //get todays date
-					var d = new Date(1505430000622 - 7889238000); //minus 3 months from the costband end date
-					d.setHours(0, 0, 0, 0); //set the hours to midnight
-					var greenStart = d.getTime(); //get the begin date of green in milliseconds
-					var end = patents[0].costBandEndDate - greenStart; //get total time between dates
-					var timeDiff = now.getTime() - greenStart; //get remainding time
-					var perc = Math.round((timeDiff / end) * 100) //work percentage
+                        switch(item.costBandColour) {
+                            case 'Green':
 
-					vm.progressBar = [{value: perc}];
+							var today = new Date().getTime();
+							var start = new Date(response.greenStartDate);
+							var end = new Date(response.amberStartDate);
 
-			} 
+							var total = end - start;
+							var progress = today - start;
 
-						var start = new Date(item.costBandEndDate);
-						var end = patents[0].costBandEndDate - start; 
-						var now = new Date(); //get todays date
-						
-						var end = patents[0].costBandEndDate - start; //get total time between dates
-						var timeDiff = now.getTime() - start; //get remainding time
-						var perc = Math.round((timeDiff / end) * 100) //work percentage
+							item.progressBar =  Math.round(((progress) / (total)) * 100)                                  
 
-						// vm.progressBar = [{value: perc}];
+                                break;
+                            case 'Amber':
+
+							var today = new Date().getTime();
+							var start = new Date(response.amberStartDate);
+							var end = new Date(response.redStartDate);
+
+							var total = end - start;
+							var progress = today - start;
+
+							item.progressBar =  Math.round(((progress) / (total)) * 100)                            
+
+                                break;
+                            case 'Red':
+
+							var today = new Date().getTime();
+							var start = new Date(response.redStartDate);
+							var end = new Date(response.blueStartDate);
+
+							var total = end - start;
+							var progress = today - start;
+
+							item.progressBar =  Math.round(((progress) / (total)) * 100)
+
+                                break;
+                            case 'Blue':
+
+							var today = new Date().getTime();
+							var start = response.blueStartDate;
+							var end = response.blackStartDate;
+
+							var total = end - start;
+							var progress = today - start;
+
+							item.progressBar =  Math.round(((progress) / (total)) * 100)
+
+                                break;
+                            case 'Black':
+
+							var today = new Date().getTime();
+							var start = response.blackStartDate;
+							var end = response.blackEndDate;
+
+							var total = end - start;
+							var progress = today - start;
+
+							item.progressBar =  Math.round(((progress) / (total)) * 100)
+
+							// console.log(item.progressBar)
+
+                        }
+        
+                    }, 
+                    function(errResponse){
+                        console.log('no')
+                    }
+                )
+
+				switch(item.costBandColour) {
+				    case 'Green':
+				    	greenProgress.push(item)
+				        break;
+				    case 'Amber':
+				    	amberProgress.push(item)				
+				        break;
+				    case 'Red':
+				    	redProgress.push(item)				   
+				        break;
+				    case 'Blue':
+				    	blueProgress.push(item)
+				        break;
+				    case 'Black':
+						blackProgress.push(item)
+			     	
+				}
 
 			})
 
-					
-
-			// console.log(patents)
-			// console.log(bandColourArr)
-
-			
-			
-
 			var allPatents = [];
 			var greenPatents = [];
-			var yellowPatents = [];
+			var amberPatents = [];
 			var redPatents = [];
 			var bluePatents = [];
-			var brownPatents = [];
+			var blackPatents = [];
 
 	     	patents.forEach(function(item){
+
 	     		if(item.costBandColour) {
 	     			allPatents.push(item);
 	     		} else {
@@ -77,8 +144,8 @@ app.component('patents', {
 	     			vm.patents = null;
 	     		}
 
-	     		if(item.costBandColour == 'Yellow') {
-	     			yellowPatents.push(item)
+	     		if(item.costBandColour == 'Amber') {
+	     			amberPatents.push(item)
 	     		} else {
 	     			vm.patents = null;
 	     		}
@@ -95,8 +162,8 @@ app.component('patents', {
 	     			vm.patents = null;
 	     		}
 
-	     		if(item.costBandColour == 'Brown') {
-	     			brownPatents.push(item)
+	     		if(item.costBandColour == 'Black') {
+	     			blackPatents.push(item)
 	     		} else {
 	     			vm.patents = null;
 	     		}
@@ -115,10 +182,10 @@ app.component('patents', {
  				vm.greenPatentsLength = greenPatents.length
  			}
 
-	     	if (yellowPatents.length === 0) {
- 				vm.yellowPatentsLength = 0;
+	     	if (amberPatents.length === 0) {
+ 				vm.amberPatentsLength = 0;
  			} else {
- 				vm.yellowPatentsLength = yellowPatents.length
+ 				vm.amberPatentsLength = amberPatents.length
  			}
 
  			if(redPatents.length === 0) {
@@ -133,12 +200,11 @@ app.component('patents', {
  				vm.bluePatentsLength = bluePatents.length
  			}
 
- 			if(brownPatents.length == 0) {
- 				vm.brownPatentsLength = 0;
+ 			if(blackPatents.length == 0) {
+ 				vm.blackPatentsLength = 0;
  			} else {
- 				vm.brownPatentsLength = brownPatents.length
+ 				vm.blackPatentsLength = blackPatents.length
  			}
-
 
 	  		vm.displayPhase = function(id) {
 				switch (id) {
@@ -149,16 +215,16 @@ app.component('patents', {
 				     	vm.patents = greenPatents;
 				        break;
 				    case 3:
-				     	vm.patents = yellowPatents;
+				     	vm.patents = amberPatents;
 				        break;
 				    case 4:
-				     	vm.patents = yellowPatents;
+				     	vm.patents = redPatents;
 				        break;
 				    case 5:
 				     	vm.patents = bluePatents;
 				     	break;
 			     	case 6:
-				    	vm.patents = brownPatents;
+				    	vm.patents = blackPatents;
 				}
 			}
 

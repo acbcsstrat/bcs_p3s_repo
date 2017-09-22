@@ -1,0 +1,53 @@
+<div ng-controller="mainNavCtrl">
+	 <section layout="row" flex>
+	    <md-sidenav class="md-sidenav-left" md-component-id="left"
+	                md-disable-backdrop md-whiteframe="3">
+	      	<md-toolbar class="md-theme-indigo">
+		      	<div class="row">
+			      	<div class="col-md-6">
+			      		<img src="p3sweb/assets/imgs/logos/PP-Icon.png">
+			      	</div>
+			      	<div class="col-md-6">
+				        <md-button ng-click="toggleLeft()">
+			          		<i class="fa fa-close fa-2x"></i>
+			        	</md-button>
+			      	</div>					      	
+		      	</div>
+	        </md-toolbar>
+      	 	<md-content layout-margin>
+      	 	<div layout="column" layout-align="center">
+	      	 	<div>
+	      	 		<a class="nav-link" ui-sref="profile">
+	      	 			<i class="fa fa-user-circle-o fa-5x"></i>
+      	 			</a>
+	      	 	</div>
+      	 		<div>
+      	 			<a class="nav-link" ui-sref="profile">
+		      	 		<h4>{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</h4>
+	      	 		</a>
+      	 			<p>{{$ctrl.user.business.businessName}}</p>
+      	 		</div>
+      	 	</div>
+				<nav class="navbar-light">
+					<ul class="nav">
+						<li class="nav-item" ui-sref-active="active" class="item active"><a class="nav-link" ui-sref="dashboard"><i class="fa fa-dashboard fa-2x"></i>Dashboard</a></li>
+						<li class="nav-item" ui-sref-active="active" class="item active"><a class="nav-link" ui-sref="patents"><i class="fa fa-clipboard fa-2x"></i>Patents</a></li>
+						<li class="nav-item" ui-sref-active="active" class="item active"><a class="nav-link" ui-sref="current-transactions"><i class="fa fa-credit-card fa-2x"></i>Transactions</a></li>
+					</ul>
+					<!-- https://v4-alpha.getbootstrap.com/components/navs/ CHECK THIS OUT ON RETURN -->
+				</nav>
+			</md-content>
+	    </md-sidenav>
+  	</section>
+  
+    <div layout="column" class="closed-sidenav">
+	    <div ng-click="toggleLeft()">
+	    	<i class="fa fa-reorder fa-3x"></i>
+	    </div>		    
+		<ul class="nav">
+			<li class="nav-item" ui-sref-active="active"><a ui-sref="dashboard"><i class="fa fa-dashboard fa-2x"></i></a></li>
+			<li class="nav-item" ui-sref-active="active"><a ui-sref="patents"><i class="fa fa-clipboard fa-2x"></i></a></li>
+			<li class="nav-item" ui-sref-active="active"><a ui-sref="current-transactions"><i class="fa fa-credit-card fa-2x"></i></a></li>
+		</ul>		    
+  	</div>
+</div>

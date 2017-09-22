@@ -5,35 +5,35 @@
 			<p>{{$ctrl.colourPhaseTitle.title}} Phase</p>
 			<p>{{$ctrl.colourPhaseTitle.descrip}}</p>
 		</div>
-		<uib-tabset type="pills">
-		    <uib-tab heading="Green" ng-init="$ctrl.selectColour($ctrl.colourPhase.green)" ng-click="$ctrl.selectColour($ctrl.colourPhase.green)">
+		<uib-tabset active="activeTab" type="pills">
+		    <uib-tab heading="Green" index="0" ng-init="$ctrl.colourKey(0);$ctrl.phaseSliderInfo(0)" ng-click="$ctrl.phaseSliderInfo(0)">
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				</p>
 			</uib-tab>
-		    <uib-tab heading="Yellow" ng-click="$ctrl.selectColour($ctrl.colourPhase.yellow)">
+		    <uib-tab heading="Yellow" index="1" ng-init="$ctrl.colourKey(1);" ng-click="$ctrl.phaseSliderInfo(1)">
 				<p>ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				</p>					
 			</uib-tab>
-		    <uib-tab heading="Red" ng-click="$ctrl.selectColour($ctrl.colourPhase.red)">
+		    <uib-tab heading="Red" index="2" ng-init="$ctrl.colourKey(2);" ng-click="$ctrl.phaseSliderInfo(2)">
 				<p>sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				</p>					
 			</uib-tab>
-		    <uib-tab heading="Blue" ng-click="$ctrl.selectColour($ctrl.colourPhase.blue)">
+		    <uib-tab heading="Blue" index="3" ng-init="$ctrl.colourKey(3);" ng-click="$ctrl.phaseSliderInfo(3)">
 				<p>consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				</p>					
 			</uib-tab>
-		    <uib-tab heading="Black" ng-click="$ctrl.selectColour($ctrl.colourPhase.black)">
+		    <uib-tab heading="Black" index="4" ng-init="$ctrl.colourKey(4);" ng-click="$ctrl.phaseSliderInfo(4)">
 				<p>Whattt Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				</p>					
+				</p>
 			</uib-tab>				
 		</uib-tabset>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<h3>Total No. of Renewals: {{$ctrl.totalPatents}}</h3>
 		<div>
 			<canvas id="pie" class="chart chart-pie"
@@ -41,70 +41,206 @@
 			</canvas> 
 		</div>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-4">
 		<div class="row">
 			<div class="col-md-3">
 				<h3>Renewals</h3>
 			</div>
 			<div class="col-md-9">
-				<ul class="nav">
-					<li><button ng-click="active = 1; $ctrl.getPatents(active)" ng-init=" $ctrl.getPatents(active)">{{$ctrl.greenRenewals.length}}</button></li>
-					<li><button ng-click="active = 2; $ctrl.getPatents(active)">{{$ctrl.yellowRenewals.length}}</button></li>
-					<li><button ng-click="active = 3; $ctrl.getPatents(active)">{{$ctrl.redRenewals.length}}</button></li>
-					<li><button ng-click="active = 4; $ctrl.getPatents(active)">{{$ctrl.blueRenewals.length}}</button></li>
-					<li><button ng-click="active = 5; $ctrl.getPatents(active)">{{$ctrl.blackRenewals.length}}</button></li>
-				</ul>
-				
+<!-- 				<ul class="nav nav-pills">
+					<li><button ng-click="active = 0; $ctrl.getPatents(active); $ctrl.colourKey(0)" ng-init="$ctrl.phaseSlide = 0; $ctrl.phaseSliderInfo($ctrl.phaseSlide)">Green ({{$ctrl.greenRenewals.length}})</button></li>
+					<li><button ng-click="active = 1; $ctrl.getPatents(active); $ctrl.colourKey(1)">Yellow ({{$ctrl.yellowRenewals.length}})</button></li>
+					<li><button ng-click="active = 2; $ctrl.getPatents(active); $ctrl.colourKey(2)">Red ({{$ctrl.redRenewals.length}})</button></li>
+					<li><button ng-click="active = 3; $ctrl.getPatents(active); $ctrl.colourKey(3)">Blue ({{$ctrl.blueRenewals.length}})</button></li>
+					<li><button ng-click="active = 4; $ctrl.getPatents(active); $ctrl.colourKey(4)">Black ({{$ctrl.blackRenewals.length}})</button></li>
+				</ul> -->
 			</div>			
 			<div class="col-md-12">
-			<uib-tabset active="active" type="pills">
-				    <uib-tab index="1" ng-hide="true">
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						</p>
-						<div uib-carousel active="active" no-wrap="$ctrl.noWrapSlides">
-				      		<div uib-slide ng-repeat="slide in $ctrl.slides track by slide.id" index="slide.id">
-						        <div class="carousel-caption">
-							        <div class="btn">
-							        	<h4>{{$ctrl.colourPhaseTitle.title}} Renewal</h4>
-							        </div>
-							        <table class="table">
-							        	<tr>
-							        		<td>App No.</td>
-							        		<td>{{$ctrl.greenRenewals.patentApplicationNumber}}</td>
-							        	</tr>
-							        	<tr>
-							        		<td>Description</td>
-							        		<td>{{$ctrl.greenRenewals.patentApplicationNumber}}</td>
-							        	</tr>
-							        	<tr>
-							        		<td>Due Date</td>
-							        		<td>{{$ctrl.greenRenewals.patentApplicationNumber}}</td>
-							        	</tr>
-							        </table>
+				<uib-tabset active="activeTab" type="pills">
+				    <uib-tab heading="Green" index="0" ng-init="$ctrl.colourKey(0); greenSlider = true" ng-click="$ctrl.phaseSliderInfo(0)">
+			            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+						    <slick data="$ctrl.phaseArr" settings="slickConfig">
+						        <div ng-repeat="item in $ctrl.phaseArr">
+						            <h4 class="color-black">Green Renewal {{$index + 1}} of {{$ctrl.greenRenewals.length}}</h4>
+						            <table class="color-black">
+						            	<tr>
+						            		<td>App No</td>
+						            		<td>{{item.patentApplicationNumber}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Description</td>
+						            		<td>{{item.title}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Due Date</td>
+						            		<td>{{item.renewalDueDateUI}}</td>
+						            	</tr>                         	
+						            </table>
+						            <div class="row">
+						            	<div class="col-md-12">
+						            		<uib-progress><uib-bar value="item.progressBar">{{item.progressBar}}%</uib-bar></uib-progress>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{date | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            </div>
 						        </div>
-					      	</div>
-					    </div>
+						    </slick>      	
+		            	</div>	
+			            <div ng-show="$ctrl.greenRenewals.length == 0">
+	                    	<p>No patents in green stage</p>
+	                    </div>
 					</uib-tab>
-				    <uib-tab index="2" ng-hide="true">
-						<p>ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						</p>					
+				    <uib-tab heading="Yellow" index="1" ng-init="$ctrl.colourKey(1); amberSlider = true" ng-click="$ctrl.phaseSliderInfo(1)">
+			            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+						    <slick data="$ctrl.phaseArr" settings="slickConfig">
+						        <div ng-repeat="item in $ctrl.phaseArr">
+						            <h4 class="color-black">Yellow Renewal {{$index + 1}} of {{$ctrl.amberRenewals.length}}</h4>
+						            <table class="color-black">
+						            	<tr>
+						            		<td>App No</td>
+						            		<td>{{item.patentApplicationNumber}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Description</td>
+						            		<td>{{item.title}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Due Date</td>
+						            		<td>{{item.renewalDueDateUI}}</td>
+						            	</tr>                         	
+						            </table>
+						            <div class="row">
+						            	<div class="col-md-12">
+						            		<uib-progress><uib-bar value="item.progressBar">{{item.progressBar}}%</uib-bar></uib-progress>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{date | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            </div>
+						        </div>
+						    </slick>      	
+		            	</div>		
+			            <div ng-show="$ctrl.amberRenewals.length == 0">
+	                    	<p>No patents in yellow stage</p>
+	                    </div>
+ 					</uib-tab>
+				    <uib-tab heading="Red" index="2" ng-init="$ctrl.colourKey(2); redSlider = true" ng-click="$ctrl.phaseSliderInfo(2)">
+			            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+						    <slick data="$ctrl.phaseArr" settings="slickConfig">
+						        <div ng-repeat="item in $ctrl.phaseArr">
+						            <h4 class="color-black">Red Renewal {{$index + 1}} of {{$ctrl.redRenewals.length}}</h4>
+						            <table class="color-black">
+						            	<tr>
+						            		<td>App No</td>
+						            		<td>{{item.patentApplicationNumber}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Description</td>
+						            		<td>{{item.title}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Due Date</td>
+						            		<td>{{item.renewalDueDateUI}}</td>
+						            	</tr>                         	
+						            </table>
+						            <div class="row">
+						            	<div class="col-md-12">
+						            		<uib-progress><uib-bar value="item.progressBar">{{item.progressBar}}%</uib-bar></uib-progress>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{date | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            </div>
+					            </div>
+						    </slick>
+		            	</div>			            
+			            <div ng-show="$ctrl.redRenewals.length == 0">
+	                    	<p>No patents in red stage</p>
+	                    </div>
 					</uib-tab>
-				    <uib-tab index="3" ng-hide="true">
-						<p>sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						</p>					
+				    <uib-tab heading="Blue" index="3" ng-init="$ctrl.colourKey(3); blueSlider = true;" ng-click="$ctrl.phaseSliderInfo(3)">
+			            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+						    <slick data="$ctrl.phaseArr" settings="slickConfig">
+						        <div ng-repeat="item in $ctrl.phaseArr">
+						            <h4 class="color-black">Blue Renewal {{$index + 1}} of {{$ctrl.blueRenewals.length}}</h4>
+						            <table class="color-black">
+						            	<tr>
+						            		<td>App No</td>
+						            		<td>{{item.patentApplicationNumber}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Description</td>
+						            		<td>{{item.title}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Due Date</td>
+						            		<td>{{item.renewalDueDateUI}}</td>
+						            	</tr>                         	
+						            </table>
+						            <div class="row">
+						            	<div class="col-md-12">
+						            		<uib-progress><uib-bar value="item.progressBar">{{item.progressBar}}%</uib-bar></uib-progress>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{date | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            </div>
+						        </div>
+						    </slick>      	
+		            	</div>			            
+			            <div ng-show="$ctrl.blueRenewals.length == 0">
+	                    	<p>No patents in blue stage</p>
+	                    </div>					            
 					</uib-tab>
-				    <uib-tab index="4" ng-hide="true">
-						<p>consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						</p>					
-					</uib-tab>
-				    <uib-tab index="5" ng-hide="true">
-						<p>Whattt Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						</p>					
+				    <uib-tab heading="Black" index="4" ng-init="$ctrl.colourKey(4); blackSlider = true" ng-click="$ctrl.phaseSliderInfo(4)">
+			            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+						    <slick data="$ctrl.phaseArr" settings="slickConfig">
+						        <div ng-repeat="item in $ctrl.phaseArr">
+						            <h4 class="color-black">Black Renewal {{$index + 1}} of {{$ctrl.blackRenewals.length}}</h4>
+						            <table class="color-black">
+						            	<tr>
+						            		<td>App No</td>
+						            		<td>{{item.patentApplicationNumber}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Description</td>
+						            		<td>{{item.title}}</td>
+						            	</tr>
+						            	<tr>
+						            		<td>Due Date</td>
+						            		<td>{{item.renewalDueDateUI}}</td>
+						            	</tr>
+						            </table>
+						            <div class="row">
+						            	<div class="col-md-12">
+						            		<uib-progress><uib-bar value="item.progressBar">{{item.progressBar}}%</uib-bar></uib-progress>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{date | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            	<div class="col-md-6">
+						            		<span>{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            	</div>
+						            </div>
+						        </div>
+						    </slick>      	
+		            	</div>
+		            	<div ng-show="$ctrl.blackRenewals.length == 0">
+                    		<p>No patents in black stage</p>
+                    	</div>
 					</uib-tab>				
 				</uib-tabset>
 				
@@ -113,39 +249,180 @@
 	</div>
 	<div class="col-md-3">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-9">
 				<h3>Renewal Cost</h3>
 			</div>
+			<div class="col-md-3">
+				<h5>{{$ctrl.renewalfxTimeframe}}</h5>
+			</div>			
 		</div>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		<div class="row" ng-if="!$ctrl.phaseArr.length">
+			<div class="col-md-12">
+				<p>No patents currently in this Stage</p>
+			</div>
+		</div>
+		<div ng-if="$ctrl.phaseArr.length">
+			<div class="row" >
+				<uib-tabset type="pills">
+					<uib-tab heading="Today" ng-init="$ctrl.renewalfxTimeframe = 'Today'" ng-click="$ctrl.renewalfxTimeframe = 'Today'">
+						<div class="row">
+							<div class="col-md-4">
+								<p>USD</p>
+								<p>$ {{$ctrl.todaysPriceUSD}}</p>
+							</div>
+							<div class="col-md-4">
+								
+							</div>
+							<div class="col-md-4">
+								<p>EUR</p>
+								<p>€ {{$ctrl.todaysPriceEUR}}</p>
+							</div>
+						</div>
+					</uib-tab>			
+					<uib-tab heading="Yesterday" ng-click="$ctrl.renewalfxTimeframe = 'Yesterday'">
+						<div class="row">
+							<div class="col-md-4">
+								<p>USD</p>
+								<p>$ {{$ctrl.yesterdaysPriceUSD}}</p>
+							</div>
+							<div class="col-md-4">
+								
+							</div>
+							<div class="col-md-4">
+								<p>EUR</p>
+								<p>€ {{$ctrl.yesterdaysPriceEUR}}</p>
+							</div>
+						</div>
+					</uib-tab>
+					<uib-tab heading="Last week" ng-click="$ctrl.renewalfxTimeframe = 'Last week'">
+						<div class="row">
+							<div class="col-md-4">
+								<p>USD</p>
+								<p>$ {{$ctrl.lastWeeksPriceUSD}}</p>
+							</div>
+							<div class="col-md-4">
+								
+							</div>
+							<div class="col-md-4">
+								<p>EUR</p>
+								<p>€ {{$ctrl.lastWeeksPriceEUR}}</p>
+							</div>
+						</div>
+					</uib-tab>	
+					<uib-tab heading="Last Mth" ng-click="$ctrl.renewalfxTimeframe = 'Last Mth'">
+						<div class="row">
+							<div class="col-md-4">
+								<p>USD</p>
+								<p>$ {{$ctrl.lastMonthsPriceUSD}}</p>
+							</div>
+							<div class="col-md-4">
+								
+							</div>
+							<div class="col-md-4">
+								<p>EUR</p>
+								<p>€ {{$ctrl.lastMonthsPriceEUR}}</p>
+							</div>
+						</div>
+					</uib-tab>									
+
+				</uib-tabset>
+			</div>
+			<div class="row">
+				<p>Four week variation: $ {{$ctrl.lastMonthsPriceUSD - $ctrl.yesterdaysPriceUSD}}</p>
+			</div>
+			<div class="row">
+			 	<ngcart-addtocart id="$ctrl.selectedPatent.id" class="cartbtn" name="patent_$ctrl.selectedPatent.id" price="{{$ctrl.totalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+				 	Renew Now
+		 		</ngcart-addtocart>
+			</div>
+		</div>
+	
 	</div>
 </div>
 <div class="row">
 	<div class="col-md-8">
 		<div class="row">
 			<div class="col-md-7">
-				<h4>Life FX Chart</h4>
+				<h3>Life FX Chart</h3>
 			</div>
 			<div class="col-md-5">
-				<h4>high and low</h4>
+				<h3>24hr High</h3>
 			</div>			
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="row">
+			<h3>Recent Activity</h3>
 			<uib-tabset type="pills">
 			    <uib-tab heading="Stage Change">
+					<div class="col-md-12">
+						<p ng-if="$ctrl.recentStageArr == 0">No recent activity in phase transitions</p>
+						<table class="table" ng-repeat="stage in $ctrl.recentStageArr" ng-if="stage">
+							<tr>
+								<td>Patent No.</td>
+								<td>{{}}</td>
+							</tr>
+							<tr>
+								<td>Description</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Amount</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Current Stage</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Next Stage</td>
+								<td></td>
+							</tr>			
+						</table>
+					</div>
+				</uib-tab>
+			    <uib-tab heading="Transactions">
+					<div class="col-md-12">
+						<p ng-if="$ctrl.recentTransArr == 0">No recent activity in transactions</p>
+						<table class="table" ng-repeat="trans in $ctrl.recentTransArr" ng-if="trans">
+							<tr>
+								<td>Transaction ID</td>
+								<td>{{trans.p3S_TransRef}}</td>
+							</tr>
+							<tr>
+								<td>Transaction Date</td>
+								<td>{{trans.transStartDate | date:'dd-mm-yy'}}</td>
+							</tr>
+							<tr>
+								<td>Patents</td>
+								<td>
+									<span ng-repeat="item in trans.renewalUIs" ng-if="transaction.renewalUIs.length == 1" >
+											{{item.patentUI.patentApplicationNumber}}<br>
+									</span>
+									<select ng-if="trans.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in trans.renewalUIs" ng-model="data.selectedOption">
+										<option value="" disabled selected>Multiple</option>									
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Total</td>
+								<td>$ {{trans.transAmount_USD}}</td>
+							</tr>
+							<tr>
+								<td>Transaction status</td>
+								<td>{{trans.latestTransStatus}}</td>
+							</tr>			
+						</table>
+					</div>
+				</uib-tab>
+			    <uib-tab heading="Renewals">
 					<div>
 						<div class="col-md-12">
-							<table class="table">
+							<p ng-if="$ctrl.recentRenewalArr == 0">No recent activity in renewals</p>
+							<table class="table" ng-repeat="renewals in $ctrl.recentRenewalArr" ng-if="renewals">
 								<tr>
 									<td>Patent No.</td>
-									<td></td>
+									<td>{{}}</td>
 								</tr>
 								<tr>
 									<td>Description</td>
@@ -166,6 +443,7 @@
 							</table>
 						</div>
 					</div>
+				</uib-tab>								
 			</uib-tabset>
 		</div>
 	</div>

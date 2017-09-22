@@ -1,15 +1,36 @@
-app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProvider', 'IdleProvider', function($stateProvider, $urlRouterProvider, $qProvider, KeepaliveProvider, IdleProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProvider', 'IdleProvider', '$mdThemingProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $qProvider, KeepaliveProvider, IdleProvider, $mdThemingProvider, slickCarouselConfig) {
 
-    IdleProvider.idle(600);
-    IdleProvider.timeout(60);
+    var customBlueMap =  $mdThemingProvider.extendPalette('light-blue', {
+        'contrastDefaultColor': 'light',
+        'contrastDarkColors': ['50'],
+        '50': 'ffffff'
+    });
+
+    $mdThemingProvider.definePalette('customBlue', customBlueMap);
+    $mdThemingProvider.theme('default')
+        .primaryPalette('customBlue', {
+          'default': '500',
+          'hue-1': '50'
+        })
+        .accentPalette('pink');
+    $mdThemingProvider.theme('altTheme')
+    .primaryPalette('purple')
+
+
+    IdleProvider.idle(570);
+    IdleProvider.timeout(30);
     KeepaliveProvider.interval(5);
 
     $qProvider.errorOnUnhandledRejections(false);
 
     $urlRouterProvider
-        .when('', '/patents')
-        .when('/', '/patents')
-        .otherwise('/patents');
+        .when('', '/dashboard')
+        .when('/', '/dashboard')
+        .otherwise('/dashboard');
+
+    slickCarouselConfig.dots = true;
+    slickCarouselConfig.autoplay = false;
+
 
     $stateProvider
     .state('login', {
@@ -22,14 +43,22 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
     })
     .state('dashboard', {
         url: '/dashboard',
-        component: 'dashboard'
+        component: 'dashboard',
+        resolve: {
+            patents: ['patentsService', function(patentsService) {
+                return patentsService.fetchAllPatents();
+            }],
+            transactions: ['currentTransactionsService', function(currentTransactionsService) {
+                return currentTransactionsService.fetchCurrentTransactions();
+            }]
+
+        }
     })
     .state('profile', {
         url: '/profile',
         component: 'user',
         resolve: {
             user: ['userService', function(userService) {
-                
                 return userService.fetchUser();
             }],
             timezones: ['timezoneService', function(timezoneService){
@@ -43,9 +72,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         resolve: {
             patents: ['patentsService', function(patentsService) {
                 return patentsService.fetchAllPatents();
-            }],
-            renewals: ['patentsService', function(patentsService) {
-                return  patentsService.fetchRenewalHistory();
             }]
         },
         params: {
@@ -61,11 +87,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
                     return patent.id == $stateParams.patentId;
                 })
             }],
-            graph: ['patentsService', '$stateParams',function(patentsService, $stateParams) { 
-                return  patentsService.fetchGraphData($stateParams.patentId);  
+            costAnalysis: ['patentsService', '$stateParams',function(patentsService, $stateParams) { 
+                return  patentsService.fetchCostAnalysis($stateParams.patentId);  
             }],
-            renewal: ['renewals', function(renewals){
-                return renewals;
+            renewal: ['patentsService','$stateParams', function(patentsService, $stateParams){
+                return  patentsService.fetchRenewalHistory($stateParams.patentId);  
+            }],
+            fx: ['fxService', function(fxService){
+
             }]
         }
     })
@@ -103,7 +132,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         resolve: {
             transaction: ['transactions', '$stateParams', function(transactions, $stateParams) {
                 return transactions.find(function(transaction){
-                    // console.log(transaction)
                     return transaction.id == $stateParams.transId;
                 })
             }]

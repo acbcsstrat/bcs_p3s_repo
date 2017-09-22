@@ -63,14 +63,29 @@
 					<td><a ui-sref="current-transactions.current-transaction-item({transId: transaction.id})">{{transaction.p3S_TransRef}}</a></td>
 					<td>{{transaction.transStartDateUI}}</td>
 					<td>
-						<span ng-repeat="item in transaction.renewalUIs">{{item.patentUI.patentApplicationNumber}}<br></span>	
+						
+						<span ng-if="transaction.renewalUIs.length == 1" ng-repeat="item in transaction.renewalUIs">
+							<span ng-if="item.patentUI.patentApplicationNumber.length">
+								{{item.patentUI.patentApplicationNumber}}<br>
+							</span>								
+						</span>
+						<select ng-if="transaction.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in transaction.renewalUIs" ng-model="data.selectedOption">
+							<option value="" disabled selected>Multiple</option>									
+						</select>						
+
 					</td>
 					<td>
 						<span ng-repeat="item in transaction.renewalUIs">{{item.patentUI.clientRef}}<br></span>	
 					</td>
 					<td>{{transaction.transStartDateUI}}</td>
 					<td>{{transaction.transAmount_USD}}</td>
-					<td>{{transaction.latestTransStatus}}</td>
+					<td>
+						<p>{{transaction.latestTransStatus}}</p>
+						<div class="progress-tracker">
+						<uib-progress><uib-bar value="transaction.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
+							
+						</div>						
+					</td>
 				</tr>
 			</tbody>
 		</table>
