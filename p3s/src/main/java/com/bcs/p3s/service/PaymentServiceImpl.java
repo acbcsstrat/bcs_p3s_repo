@@ -193,10 +193,10 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				}
 				bankTransferPostCommitDetails.setTotalCostUSD(latestCalculatedCost);
 			}
-			//finally generate the p3sTransRef
+			/*//finally generate the p3sTransRef
 			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
 			String p3sTransRef = commitToRenewal.generateP3sTransRef(pLoginSession);
-			bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);
+			bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);*/
 		
 			// Check that expected price matches calculated
 			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_CEILING);
@@ -425,7 +425,12 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				log().error("Payment Table persistence failed " + msg);
 				return payment;
 			}
-			 
+			
+			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
+			String p3sTransRef = commitToRenewal.generateP3sTransRef(currentPayment);
+			currentPayment.setP3S_TransRef(p3sTransRef);
+			currentPayment.merge();
+			
 		}
 		
 
@@ -519,7 +524,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		P3SUser user = pLoginSession.getUser();
 		payment.setP3S_TransRef(bankTransferPostCommitDetails.getP3sTransRef());
 		//MP to remove below line later ::::: IMP!!!!!!!!!!
-		payment.setMC_TransRef("TEMP_REF");
+		//payment.setMC_TransRef("TEMP_REF");  //initial insert this will be null
 		payment.setTransType(PaymentTypeEnum.BANK_TRANSFER);  //inside this method every time Bank Transfer until we provide CC payment option
 		payment.setInitiatedByUserId(user);
 		payment.setTransStartDate(bankTransferPostCommitDetails.getDateNowLocalTime());
