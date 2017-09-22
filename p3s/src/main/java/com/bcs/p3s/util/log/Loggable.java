@@ -15,4 +15,7 @@ public interface Loggable {
 	public final String MALICIOUS  		= "MALICIOUS";
 	public final String INTERNAL_ERROR 	= "INTERNAL_ERROR";
 
+	public final String CHANGE_OF_STATUS 	= "CHANGE_OF_STATUS";	// For logging change-of-status of either a patent or a transaction
+	public final String REMINDER_EMAIL_SENT = "REMINDER_EMAIL_SENT";
+
 }
