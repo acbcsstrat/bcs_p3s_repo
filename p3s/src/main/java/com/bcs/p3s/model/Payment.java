@@ -37,7 +37,7 @@ public class Payment {
 
     /**
      */
-    @NotNull
+    //@NotNull
     private String P3S_TransRef;
  
     /**
