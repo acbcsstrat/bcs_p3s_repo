@@ -86,17 +86,17 @@ import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 		 * to provides alternative values applicable to that app.
 		 * @param esp
 		 */
-		public P3SPropertyReader(P3SEnvironmentKnowledge alienEsp) throws P3SPropertyException {
-			doAlienConstructorStuff(alienEsp);
+		public P3SPropertyReader(P3SEnvironmentKnowledge alienEnvironmentKnowledge) throws P3SPropertyException {
+			doAlienConstructorStuff(alienEnvironmentKnowledge);
 		}
-		public P3SPropertyReader(int ignored, P3SEnvironmentKnowledge alienEsp) {
+		public P3SPropertyReader(int ignored, P3SEnvironmentKnowledge alienEnvironmentKnowledge) {
 			try {
-				doAlienConstructorStuff(alienEsp);
+				doAlienConstructorStuff(alienEnvironmentKnowledge);
 			}
 			catch (P3SPropertyException ioe) { /* swallow */ }
 		}
-		private void doAlienConstructorStuff(P3SEnvironmentKnowledge alienEsp) throws P3SPropertyException {
-			P3SEnvironmentKnowledge envKnowledge = alienEsp;
+		private void doAlienConstructorStuff(P3SEnvironmentKnowledge alienEnvironmentKnowledge) throws P3SPropertyException {
+			P3SEnvironmentKnowledge envKnowledge = alienEnvironmentKnowledge;
 			String path = envKnowledge.getMainPropertyFilePath(); 
 			String filename = envKnowledge.P3S_PROPERTYFILE_FILENAME;
 			try {
@@ -120,6 +120,16 @@ import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 			return esp; 
 		}
 
+		/**
+		 * Only needed if used by an application OTHER than P3S website, 
+		 * whereupon this allows a different set of properties to be injected
+		 */
+		public void setEsp(EnvironmentSpecificProperties newEsp) { 
+			this.esp = newEsp; 
+		}
+		
+		
+		
 		/**
 		 * Read a named NON-Environment-specific property from the currently loaded Properties  
 		 * @param propertyname WITHOUT the prefix
