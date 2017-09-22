@@ -46,6 +46,7 @@ public class RenewalUI extends Renewal {
 
     private String renewalDueDateUI;
     private String certificateUrl;
+    private String invoiceUrl;
     private PatentUI patentUI;
     private FeeUI feeUI;
 
@@ -75,6 +76,9 @@ public class RenewalUI extends Renewal {
 		this.setCertificateUrl(null);
 		if (renewal.getCertificate() != null) this.setCertificateUrl(renewal.getCertificate().getUrl());
 
+		//Get the invoice url
+		if(renewal.getActivePaymentId().getLatestInvoice() != null)
+			this.setInvoiceUrl(renewal.getActivePaymentId().getLatestInvoice().getUrl());
 		//Get the FeeUI
 		
 		FeeUI feeUI = new FeeUI(renewal.getFee());
@@ -172,8 +176,19 @@ public class RenewalUI extends Renewal {
 	public void setFeeUI(FeeUI feeUI) {
 		this.feeUI = feeUI;
 	}
-
 	
+	
+	public String getInvoiceUrl() {
+		return invoiceUrl;
+	}
+
+	public void setInvoiceUrl(String invoiceUrl) {
+		this.invoiceUrl = invoiceUrl;
+	}
+
+
+
+
 	public boolean isRenewedSuccessfully() {
 		boolean result = false;
 		String status = this.getRenewalStatus();

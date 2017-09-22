@@ -17,7 +17,6 @@ import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.PatentUI;
-import com.bcs.p3s.engine.dummyclasses.Api4dotXdataFromGETworkaround;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Notification;
