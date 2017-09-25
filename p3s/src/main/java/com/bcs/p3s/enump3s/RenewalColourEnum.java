@@ -30,11 +30,19 @@ public class RenewalColourEnum extends P3SAbstractEnum {
                 // End of Legacy / Redundant code. 
 
                 if (sofar != null) {
-                	this.value = sofar.toString();
+                	this.value = sofar;
                 } else {
                 	fail("RenewalColourEnum constructor passed invalid colour: "+colour);
                 }
     }
 
+    
+    /**
+     * Simple repeatable test. Is the value stored in this Enum: Red or not ?
+     * @return True is colour is Red.  False for any other scenario
+     */
+    public boolean isRed() {
+    	return this.value.equals(RED);
+    }
     
 }
