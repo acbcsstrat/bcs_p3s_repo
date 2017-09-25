@@ -40,10 +40,30 @@ public class BcsLogger implements Loggable {
 		return loginternalerrorN4CU;
 	}
 	
+	/**
+	 * To record a change-of-status of either a patent or a transaction
+	 * Message format: Patent|Transaction <Id> ..
+	 * e.g.
+	 *  Transaction IP0001000001 has been created for 2 patent(s) : aaaaaaaa.a bbbbbbb.b
+	 *  Transaction IP0001000001 has reached state : AWAITING_FUNDS | FUNDS_RECEIVED | FUNDS_SENT | EPO_RECEIVED
+	 *  Patent 123456789.1 has been EPO_INSTRUCTED				{ Note: Usually happens upon EPO_RECEIVED, but for RED happens earlier at FUNDS_RECEIVED }
+	 *  Patent 123456789.1 has been renewed, confirms EPO.  Was renewed by P3S | Not by P3S.
+	 *  Transaction IP0001000001 is now COMPLETED
+	 */
 	protected Logger logChangeOfStatusN4CU = null;
 	public Logger logChangeOfStatus() {
 		if (logChangeOfStatusN4CU==null) { logChangeOfStatusN4CU = Logger.getLogger(CHANGE_OF_STATUS); }
 		return logChangeOfStatusN4CU;
+	}
+
+	/**
+	 * e.g.
+	 *  Amber 2 weeks email sent for patent 123456789.2 to 3 recipients
+	 */
+	protected Logger logReminderEmailSentN4CU = null;
+	public Logger logReminderEmailSent() {
+		if (logReminderEmailSentN4CU==null) { logReminderEmailSentN4CU = Logger.getLogger(REMINDER_EMAIL_SENT); }
+		return logReminderEmailSentN4CU;
 	}
 
 
