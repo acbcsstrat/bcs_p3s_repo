@@ -1,6 +1,7 @@
 package com.bcs.p3s.enump3s;
 
 
+
 //	Values sent by Moneycorp (Which is a subset of these values) are
 //	-	awaitingfunds		Formerly Awaiting Funds and Pending
 //	-	fundsreceived		Formerly Funds Received
