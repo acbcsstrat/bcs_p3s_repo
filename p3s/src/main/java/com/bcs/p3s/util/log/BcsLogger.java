@@ -39,6 +39,14 @@ public class BcsLogger implements Loggable {
 		if (loginternalerrorN4CU==null) { loginternalerrorN4CU = Logger.getLogger(INTERNAL_ERROR); }
 		return loginternalerrorN4CU;
 	}
+	
+	protected Logger logChangeOfStatusN4CU = null;
+	public Logger logChangeOfStatus() {
+		if (logChangeOfStatusN4CU==null) { logChangeOfStatusN4CU = Logger.getLogger(CHANGE_OF_STATUS); }
+		return logChangeOfStatusN4CU;
+	}
+
+
 
 	/**
 	 * panic() is use to log unexpected events. 
