@@ -136,7 +136,7 @@ public class Payment {
     /**
      */
     @NotNull
-    @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.EAGER)
     private List<Renewal> renewals = new ArrayList<Renewal>();
 
     // DIY finder
