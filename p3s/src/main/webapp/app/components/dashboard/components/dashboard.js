@@ -4,10 +4,12 @@ app.component('dashboard', {
 		transactions: '<' 
 	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, dashboardService, fxService, patentsService) {
+	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, dashboardService, fxService, patentsRestService) {
 
 		var vm = this;
 		
+		$rootScope.page = 'Dashboard';
+
 		vm.$onInit = () => {
 
       		$scope.date = new Date()
@@ -15,11 +17,11 @@ app.component('dashboard', {
 			var transactions = vm.transactions;
 			var patents = vm.patents;
 
-			patentsService.fetchAllPatents()
+			patentsRestService.fetchAllPatents()
 				.then(
 					function(response){
 						response.forEach(function(item){
-							patentsService.fetchCostAnalysis(item.id)
+							patentsRestService.fetchCostAnalysis(item.id)
 			                .then(
 			                    function(response){
 

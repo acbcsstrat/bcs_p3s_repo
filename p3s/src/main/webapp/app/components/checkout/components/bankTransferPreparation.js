@@ -1,15 +1,15 @@
 app.component('bankTransferPreparation', {
 	templateUrl: 'p3sweb/app/components/checkout/views/bank-transfer-preparation.htm',
-	controller: ['bankTransferCommitService', '$state','$scope', '$stateParams','$timeout',function(bankTransferCommitService, $state, $scope, $stateParams, $timeout) {
+	controller: ['bankTransferCommitService', '$state','$scope', '$stateParams','$timeout', '$rootScope', function(bankTransferCommitService, $state, $scope, $stateParams, $timeout, $rootScope) {
 		
 		var vm = this;
+
+		$rootScope.page = 'Confirm Order';
 
 		vm.patentObj = $stateParams.patentObj;
 
 		vm.commitTransfer = function() {
 			
-
-
 			var order = $stateParams.orderObj;
 			order.totalCostUSD = $stateParams.patentObj.totalCostUSD;
 			bankTransferCommitService.commitTransfer(order).then(

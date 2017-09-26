@@ -1,8 +1,36 @@
-var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel']);
+var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment']);
 
-app.run(['Idle', function(Idle) {
+app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(Idle, userService, $rootScope, amMoment, $timeout) {
+
+
+    $rootScope.page = '';
+
+    userService.fetchUser()
+    .then(
+        function(response){
+            $rootScope.user = response;
+        },
+        function(errResponse){
+            console.log(errResponse)
+        }
+    )
 
 	Idle.watch();
+
+    function timeZoneClocks() {
+            var cet = moment.tz("Europe/London").format('HH:mm d/m/YY');
+            var est = moment.tz("America/Los_Angeles").format('HH:mm d/m/YY');
+        
+        var t = $timeout(function() {
+
+            $rootScope.cetTime = cet;
+            $rootScope.estTime =  est;
+            timeZoneClocks()
+        }, 500);
+    }
+
+   timeZoneClocks()
+
 
 }]);
 

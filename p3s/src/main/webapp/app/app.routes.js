@@ -45,8 +45,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/dashboard',
         component: 'dashboard',
         resolve: {
-            patents: ['patentsService', function(patentsService) {
-                return patentsService.fetchAllPatents();
+            patents: ['patentsRestService', function(patentsRestService) {
+                return patentsRestService.fetchAllPatents();
             }],
             transactions: ['currentTransactionsService', function(currentTransactionsService) {
                 return currentTransactionsService.fetchCurrentTransactions();
@@ -70,8 +70,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/patents',
         component: 'patents',
         resolve: {
-            patents: ['patentsService', function(patentsService) {
-                return patentsService.fetchAllPatents();
+            patents: ['patentsRestService', function(patentsRestService) {
+                return patentsRestService.fetchAllPatents();
             }]
         },
         params: {
@@ -87,11 +87,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
                     return patent.id == $stateParams.patentId;
                 })
             }],
-            costAnalysis: ['patentsService', '$stateParams',function(patentsService, $stateParams) { 
-                return  patentsService.fetchCostAnalysis($stateParams.patentId);  
+            costAnalysis: ['patentsRestService', '$stateParams',function(patentsRestService, $stateParams) { 
+                return  patentsRestService.fetchCostAnalysis($stateParams.patentId);  
             }],
-            renewal: ['patentsService','$stateParams', function(patentsService, $stateParams){
-                return  patentsService.fetchRenewalHistory($stateParams.patentId);  
+            renewal: ['patentsRestService','$stateParams', function(patentsRestService, $stateParams){
+                return  patentsRestService.fetchRenewalHistory($stateParams.patentId);  
             }],
             fx: ['fxService', function(fxService){
 

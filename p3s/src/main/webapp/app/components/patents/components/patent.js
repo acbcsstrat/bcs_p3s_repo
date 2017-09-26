@@ -5,12 +5,10 @@ app.component('patent', {
 		renewal: '<'
 	},
 	templateUrl: 'p3sweb/app/components/patents/views/patent-item.htm',
-	controller: ['patentTabService', 'patentsService', '$state', '$timeout','$scope','chartTabService', 'fxService',  function(patentTabService, patentsService, $state, $timeout, $scope, chartTabService, fxService) {
+	controller: ['patentsRestService', '$state', '$timeout','$scope', 'fxService',  function(patentsRestService, $state, $timeout, $scope, fxService) {
 
 		var vm = this;
-
-
-
+		
      	//GRAPHS ///////////////
 
 
@@ -25,8 +23,7 @@ app.component('patent', {
 	            	var caFee = vm.costAnalysis.fee;
 	            	var costBand = vm.costAnalysis;
 		            var renewalHistory = vm.renewal;
-		            console.log(costBand)
-		            	            					
+			
 	            	vm.feeBreakDown = {
 	            		renewalFeeEUR: caFee.renewalFeeEUR,
 	            		renewalFeeUSD: caFee.renewalFeeUSD,
@@ -69,8 +66,6 @@ app.component('patent', {
 	            			return item;
 	            		}
 	            	}
-
-	            	console.log(vm.feeBreakDown)
 
 	            	const caLine = vm.costAnalysis.lineChart;
 	            	const lineDataArr = [];
@@ -274,7 +269,6 @@ app.component('patent', {
         			dateArr.forEach(function(item, index){
         				if((new Date(item).getDay() == lastMonthD) && (new Date(item).getDate() == lastMonthDt)) {
         					var lastMonthFx = data[index].rate;
-        					console.log(vm.patent.currentRenewalCostUSD, lastMonthFx)
         					vm.lastMonthsPrice = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastMonthFx);
         				}
         			})
@@ -309,11 +303,11 @@ app.component('patent', {
         vm.sortReverse = true;       
 
      	vm.deletePatent = function(id){
-	        patentsService.deletePatent(id)
+	        patentsRestService.deletePatent(id)
 	            .then(function(){
 	             	$state.go('patents', {}, {reload: true})
              	.then(function(){
-	             		$timeout(function(){patentsService.fetchAllPatents()}, 400);
+	             		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
 	             	})
 	             },
 	            function(errResponse){
@@ -324,7 +318,7 @@ app.component('patent', {
 
         vm.updatePatent = function(patent) {
         	var id = patent.id;
-        	patentsService.updatePatent(patent, id);
+        	patentsRestService.updatePatent(patent, id);
         }
 
 	    vm.editing=[];
@@ -352,20 +346,6 @@ app.component('patent', {
 
 
 
-
-
-
-		vm.caTabs = patentTabService.tabs;
-		vm.caCurrentTab = patentTabService.currentTab;
-
-	    vm.caOnClickTab = function(currentTab) {
-	        patentTabService.onClickTab(currentTab);
-	        vm.caCurrentTab = patentTabService.currentTab;
-	    };
-
-	    vm.caIsActiveTab = function(tabUrl) {
-	        return tabUrl == patentTabService.currentTab;
-	    }
 	  	
 	}]
 

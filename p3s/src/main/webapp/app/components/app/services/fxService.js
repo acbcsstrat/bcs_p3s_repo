@@ -6,7 +6,7 @@ app.factory('fxService', function($q, $http) {
 
 			var deferred = $q.defer()
 
-			$http.get('http://localhost:8080/p3sweb/rest-fxrates/week')
+			$http.get(domain+'rest-fxrates/week')
 			.then(
 				function(response){
 					deferred.resolve(response.data)
@@ -25,7 +25,7 @@ app.factory('fxService', function($q, $http) {
 
 			var deferred = $q.defer()
 
-			$http.get('http://localhost:8080/p3sweb/rest-fxrates/month')
+			$http.get(domain+'rest-fxrates/month')
 			.then(
 				function(response){
 					deferred.resolve(response.data)

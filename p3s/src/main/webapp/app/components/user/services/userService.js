@@ -2,7 +2,7 @@ app.factory('userService', function($http, $q) {
 
     var factory = {};
 
-		var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-user/';
+		var REST_SERVICE_URI = domain+'rest-user/';
 
         factory.fetchUser = function() {
         
@@ -48,7 +48,7 @@ app.factory('userService', function($http, $q) {
 
             var deferred = $q.defer();
 
-            $http.get('//localhost:8080/p3sweb/rest-users/')
+            $http.get(domain+'rest-users/')
                 .then(
                 function (response) {
                     deferred.resolve(response.data);
