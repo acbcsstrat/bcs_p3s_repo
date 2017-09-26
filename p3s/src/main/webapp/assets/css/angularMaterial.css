@@ -24,20 +24,12 @@ html {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility
 }
-body p,
+/*body p,
 html p {
     line-height: 1.846
 }
-body h3,
-html h3 {
-    display: block;
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    font-size: 1.17em;
-    font-weight: 700
-}
+*/
+
 button,
 html,
 input,
@@ -53,7 +45,7 @@ body {
 .inset {
     padding: 10px
 }
-a {
+/*a {
     background: 0 0;
     outline: 0
 }
@@ -80,8 +72,8 @@ h5 {
 h6 {
     font-size: .75em;
     margin: 2.33em 0
-}
-button,
+}*/
+/*button,
 input,
 select,
 textarea {
@@ -89,7 +81,7 @@ textarea {
     font-size: 100%;
     font-family: inherit;
     vertical-align: baseline
-}
+}*/
 button,
 html input[type=button],
 input[type=reset],

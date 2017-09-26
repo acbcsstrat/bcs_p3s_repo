@@ -155,7 +155,7 @@ app.component('dashboard', {
 
 		    vm.recentRenewalArr = [];
 
-			vm.color = 0;
+			// vm.color = 0;
 
 			vm.greenRenewals = [];
 			vm.amberRenewals = [];
@@ -165,42 +165,45 @@ app.component('dashboard', {
 
 			//COLOUR KEY
 
+			vm.selectedPhase;
+
 			vm.colourKey = function(colour) {
+				console.log
 				switch(colour) {
 					case 0:
 						vm.colourPhaseTitle = {
-							title: vm.labels[0],
-							descrip: 'lorem'
+							title: 'Green',
+							descrip: 'lorem',
+							color: '#53ab58'
 						}
-						vm.blueCarousel = true;
 					break;
 					case 1:
 						vm.colourPhaseTitle = {
-							title: vm.labels[1],
-							descrip: 'loremmm'
+							title: 'Yellow',
+							descrip: 'loremmm',
+							color: '#f9b233'						
 						}
-						vm.colour = 1;
 					break;
 					case 2:
 						vm.colourPhaseTitle = {
-							title: vm.labels[2],
-							descrip: 'lorem ipsum'
+							title: 'Red',
+							descrip: 'lorem ipsum',
+							color: '#e30613'
 						}
-						vm.colour = 2;
 					break;
 					case 3:
 						vm.colourPhaseTitle = {
-							title: vm.labels[3],
-							descrip: 'ispum galtoria'
+							title: 'Blue',
+							descrip: '24 Week Extension',
+							color: '#0097ce'					
 						}
-						vm.colour = 3;
 					break;
 					case 4:
 						vm.colourPhaseTitle = {
-							title: vm.labels[4],
-							descrip: 'herisuhimas'
+							title: 'Black',
+							descrip: 'herisuhimas',
+							color: '#3c3c3b'
 						}
-						vm.colour = 4;
 				}
 			}
 
