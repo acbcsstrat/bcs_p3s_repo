@@ -389,7 +389,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		Boolean dbSuccess = true;
 		log().debug(msg +" invoked ");
 		
-
+		List<Renewal> renewal_payment = new ArrayList<Renewal>();
+		List<PatentUI> orderedPatents = commitTransaction.getOrderedPatentUIs();
 //a.Insert into invoice
 		invoice = invoiceEngine.populateInvoiceData(commitTransaction); 
 		if(!(invoice == null)){
@@ -430,15 +431,14 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			String p3sTransRef = commitToRenewal.generateP3sTransRef(currentPayment);
 			currentPayment.setP3S_TransRef(p3sTransRef);
 			currentPayment.merge();
-			
+			logChangeOfStatus().debug("Transaction " + currentPayment.getP3S_TransRef() + " created with " + orderedPatents.size() +" patents ");
 		}
 		
 
 		/**
 		 * Each transaction may have multiple patents. So loop through each in orderedPatentIds and get the details from session
 		 */
-		List<Renewal> renewal_payment = new ArrayList<Renewal>();
-		List<PatentUI> orderedPatents = commitTransaction.getOrderedPatentUIs();
+		
 		for(PatentUI eachPatent : orderedPatents){
 			
 			Renewal renewal = new Renewal();
