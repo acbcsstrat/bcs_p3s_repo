@@ -1,53 +1,68 @@
 <div ng-controller="mainNavCtrl">
 	 <section layout="row" flex>
-	    <md-sidenav class="md-sidenav-left" md-component-id="left"
-	                md-disable-backdrop md-whiteframe="3">
-	      	<md-toolbar class="md-theme-indigo">
-		      	<div class="row">
-			      	<div class="col-md-6">
-			      		<img src="p3sweb/assets/imgs/logos/PP-Icon.png">
-			      	</div>
-			      	<div class="col-md-6">
-				        <md-button ng-click="toggleLeft()">
-			          		<i class="fa fa-close fa-2x"></i>
-			        	</md-button>
-			      	</div>					      	
+	    <md-sidenav class="md-sidenav-left bg-phase-black p-a-sm " md-component-id="left" md-disable-backdrop md-whiteframe="3">
+	      	<div class="row bg-phase-black p-a-xs">
+		      	<div class="col-md-6 d-flex justify-content-left align-items-center">
+		      		<img src="p3sweb/assets/imgs/logos/PP-Icon.png">
 		      	</div>
-	        </md-toolbar>
-      	 	<md-content layout-margin>
-      	 	<div layout="column" layout-align="center">
-	      	 	<div>
-	      	 		<a class="nav-link" ui-sref="profile">
-	      	 			<i class="fa fa-user-circle-o fa-5x"></i>
-      	 			</a>
+		      	<div class="col-md-6 d-flex justify-content-end align-items-center">
+			        <md-button ng-click="toggleLeft()" class="d-flex justify-content-right align-items-center"	>
+		          		<i class="fa fa-close fa-3x txt-white"></i>
+		        	</md-button>
+		      	</div>					      	
+	      	</div>
+      	 	<md-content class="bg-phase-black">
+	      	 	<div layout="column" class="p-pill-tabs m-b-md">
+		      	 	<div class="d-flex justify-content-center align-items-center">
+		      	 		<a class="nav-link txt-white" ui-sref="profile">
+		      	 			<i class="fa fa-user-circle-o fa-5x"></i>
+	      	 			</a>
+		      	 	</div>
+	      	 		<div class="d-flex justify-content-center align-items-center">
+	      	 			<a class="nav-link d-flex justify-content-center align-items-center txt-white" ui-sref="profile">
+			      	 		<h4 class="font-xl font-weight-bold">{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</h4>
+		      	 		</a>
+	      	 		</div>
+	      	 		<div class="d-flex justify-content-center align-items-center">
+		      	 		<p class="txt-white font-md text-center">{{$ctrl.user.business.businessName}}</p>
+		      	 	</div>
 	      	 	</div>
-      	 		<div>
-      	 			<a class="nav-link" ui-sref="profile">
-		      	 		<h4>{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</h4>
-	      	 		</a>
-      	 			<p>{{$ctrl.user.business.businessName}}</p>
-      	 		</div>
-      	 	</div>
-				<nav class="navbar-light">
-					<ul class="nav">
-						<li class="nav-item" ui-sref-active="active" class="item active"><a class="nav-link" ui-sref="dashboard"><i class="fa fa-dashboard fa-2x"></i>Dashboard</a></li>
-						<li class="nav-item" ui-sref-active="active" class="item active"><a class="nav-link" ui-sref="patents"><i class="fa fa-clipboard fa-2x"></i>Patents</a></li>
-						<li class="nav-item" ui-sref-active="active" class="item active"><a class="nav-link" ui-sref="current-transactions"><i class="fa fa-credit-card fa-2x"></i>Transactions</a></li>
-					</ul>
-					<!-- https://v4-alpha.getbootstrap.com/components/navs/ CHECK THIS OUT ON RETURN -->
-				</nav>
+	      	 	<div layout="row" class="p-pill-tabs d-flex justify-content-center">
+					<nav class="nav navbar-light">
+						<ul class="nav flex-column">
+							<li class="nav-item m-b-sm" ui-sref-active="active" class="item active">
+								<a class="nav-link txt-white d-flex align-items-center" ui-sref="dashboard"><i class="fa fa-dashboard fa-3x m-r-sm"></i><span class="font-lg">Dashboard</span></a>
+							</li>
+
+							<li class="nav-item m-b-sm" ui-sref-active="active" class="item active" ng-click="isCollapsed = !isCollapsed">
+								<a class="nav-link txt-white d-flex align-items-center" ui-sref="patents"><i class="fa fa-clipboard fa-3x m-r-sm"></i><span class="font-lg">Patents</span></a>
+							</li>
+
+							<li class="nav-item m-b-sm" ui-sref-active="active" class="item active">
+								<a class="nav-link txt-white d-flex align-items-center" ui-sref="current-transactions"><i class="fa fa-credit-card fa-3x m-r-sm"></i><span class="font-lg">Transactions</span></a>
+							</li>
+						</ul>
+						<!-- https://v4-alpha.getbootstrap.com/components/navs/ CHECK THIS OUT ON RETURN -->
+					</nav>
+				</div>
 			</md-content>
 	    </md-sidenav>
   	</section>
   
-    <div layout="column" class="closed-sidenav">
-	    <div ng-click="toggleLeft()">
-	    	<i class="fa fa-reorder fa-3x"></i>
+    <div layout="column" class="closed-sidenav bg-phase-black">
+	    <div ng-click="toggleLeft()" class="bg-phase-green">
+	    	<i class="fa fa-reorder fa-3x txt-white d-flex justify-content-center align-items-center m-a-sm"></i>
 	    </div>		    
-		<ul class="nav">
-			<li class="nav-item" ui-sref-active="active"><a ui-sref="dashboard"><i class="fa fa-dashboard fa-2x"></i></a></li>
-			<li class="nav-item" ui-sref-active="active"><a ui-sref="patents"><i class="fa fa-clipboard fa-2x"></i></a></li>
-			<li class="nav-item" ui-sref-active="active"><a ui-sref="current-transactions"><i class="fa fa-credit-card fa-2x"></i></a></li>
+		<ul class="nav flex-column d-flex justify-content-center align-items-center">
+			<li class="nav-item" ui-sref-active="active">
+				<a class="nav-link p-tb-md txt-white" ui-sref="dashboard"><i class="fa fa-dashboard fa-3x"></i></a>
+			</li>
+			<li class="nav-item" ui-sref-active="active">
+				<a class="nav-link p-tb-md txt-white" ui-sref="patents"><i class="fa fa-clipboard fa-3x"></i></a>
+			</li>
+			<li class="nav-item" ui-sref-active="active">
+				<a class="nav-link p-tb-md txt-white" ui-sref="current-transactions"><i class="fa fa-credit-card fa-3x"></i></a>
+			</li>
 		</ul>		    
   	</div>
 </div>

@@ -1,31 +1,31 @@
 <patentnav></patentnav>
 <div class="row">
 	<div class="col-md-6">
-		<p ng-show="$root.currentUser">Hi, {{$root.currentUser.firstname}}</p>
+		<div class="phase-tabs">
+			<uib-tabset type="pills" active="activePhaseTab">
+			
+				<uib-tab index="0" class="bg-white pill-radius p-xl-pill-tabs pill-tabs font-sm txt-black border-grey-xs" heading="View All({{$ctrl.allPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.all" ng-init="$ctrl.displayPhase($ctrl.patentsTabs.all)" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.all)">
+		    	
+			    </uib-tab>
+			    <uib-tab index="1" class="bg-phase-green pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Green({{$ctrl.greenPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.green" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.green)">
+					
+				</uib-tab>
+			    <uib-tab index="2" class="bg-phase-amber pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Yellow({{$ctrl.amberPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.amber" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.amber)">
+					
+				</uib-tab>
+			    <uib-tab index="3" class="bg-phase-red pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Red({{$ctrl.redPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.red" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.red)">
+					
+				</uib-tab>
+			    <uib-tab index="4" class="bg-phase-blue pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Blue({{$ctrl.bluePatentsLength}})" ng-attr-id="$ctrl.patentsTabs.blue" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.blue)">
+					
+				</uib-tab>
+			    <uib-tab index="5" class="bg-phase-black pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Black({{$ctrl.blackPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.black" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.black)">
+					
+				</uib-tab>
+			</uib-tabset>
+		</div>	
 	</div>
-</div>
-<div class="row">
-<uib-tabset type="pills">
-	<uib-tab heading="View All({{$ctrl.allPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.all" ng-init="$ctrl.displayPhase($ctrl.patentsTabs.all)" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.all)">
-    	
-    </uib-tab>
-    <uib-tab heading="Green({{$ctrl.greenPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.green" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.green)">
-		
-	</uib-tab>
-    <uib-tab heading="Yellow({{$ctrl.amberPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.amber" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.amber)">
-		
-	</uib-tab>
-    <uib-tab heading="Red({{$ctrl.redPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.red" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.red)">
-		
-	</uib-tab>
-    <uib-tab heading="Blue({{$ctrl.bluePatentsLength}})" ng-attr-id="$ctrl.patentsTabs.blue" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.blue)">
-		
-	</uib-tab>
-    <uib-tab heading="Black({{$ctrl.blackPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.black" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.black)">
-		
-	</uib-tab>				
-</uib-tabset>
-	<div class="col-md-4">
+	<div class="col-md-4 offset-md-3">
 		<form class="form-inline">
 			<div class="form-group">
 				<div class="input-group">

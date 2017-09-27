@@ -25,13 +25,18 @@ h1, .h1 { font-size: 3rem; };
 
 li a { color: #000!important; }
 
+.nav-link { padding:  0 0; }
+
+.p-a-xs { padding: .75rem; }
 .p-a-sm { padding: 1.5rem; }
 .p-tb-xs-lf-sm { padding: .75rem 1.5rem; }
-
+.p-tb-md { padding: 2.25rem 0; }
 .p-b-xl { padding-bottom: 4rem; }
 
 .p-lf-sm { padding-left: 1.5rem; padding-right: 1.5rem; }
-.p-lf-md { padding-left: 1.5rem; padding-right: 1.5rem; }
+.p-lf-md { padding-left: 2.25rem; padding-right: 2.25rem; }
+
+.m-a-sm { margin: 1.5rem; }
 
 .m-b-xs { margin-bottom: .75rem; }
 .m-b-sm { margin-bottom: 1.5rem; }
@@ -76,7 +81,6 @@ li a { color: #000!important; }
 /*THEME=====================*/
 
 .bg-light-grey { background: #f1f2f2; } /*ACTUAL COLOUR #f1f2f2. used darker due to screen issue*/
-.bg-dark-grey { background: #3c3c3b; }
 .bg-white { background: #fff; }
 .bg-phase-green { background: #53ab58; }
 .bg-phase-amber { background: #f9b233; }
@@ -88,7 +92,7 @@ li a { color: #000!important; }
 .border-grey-sm { border: 2px solid #c6c6c6; }
 
 .txt-black { color: #212121; }
-.txt-white, .pills a  { color: #fff; }
+.txt-white, .phase-tabs a  { color: #fff; }
 .txt-phase-green { color: #53ab58; }
 .txt-phase-amber { color: #f9b233 }
 .txt-phase-red { color: #e30613; }
@@ -102,44 +106,52 @@ li a { color: #000!important; }
 .widget-panel .nav-link { padding: 0 0; }
 .widget-title-border-btm { border-bottom: 1px solid #c6c6c6; }
 
-ul.nav-pills {
+.phase-tabs .nav-pills li.txt-black a { color: #000; }
+
+.phase-tabs .phase-pills, .phase-tabs ul.nav-pills, .view-tabs .view-pills, .view-tabs ul.nav-pills  {
   list-style-type: none;
   padding: 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap; /* nowrap if you only want one row */
 }
 
-ul.nav-pills li {
+.phase-tabs .phase-pills li {
   flex-grow: 1;
 /*  flex-basis: 0;*/ /*un comment to have li items spread evenly with same width*/
   margin-right: 10px;
   text-align: center;
 }
 
-ul.nav-pills li:last-child {
+.phase-tabs .phase-pills li:last-child {
   margin-right: 0;
 }
 
-.p-pill-tabs { padding: .2rem .4rem; } 
-.pill-tabs { min-width: 35px; }
+.phase-pills .pill-tabs { min-width: 35px; color: #fff;}
+.phase-pills .p-pill-tabs { padding: .2rem .4rem; }
+.phase-tabs .p-xl-pill-tabs { padding: .2rem 2rem; margin-right: 1rem}
+.phase-pills li a.nav-link { color: #fff; }
+
+.view-pills .pill-tabs, .view-pills .pill-tabs a, .view-pills ul.nav-pills .pill-tabs a { color: #000;}
+.view-pills .p-pill-tabs { padding: .2rem .8rem; }
+.view-tabs ul.nav-pills .p-few-pill-tabs a { padding: .3rem 2.5rem; } /* maybe use cols instead of this css*/
+.view-tabs .nav-view-list-item { margin-right: 1.5rem; }
+.view-tabs .nav-view-list-item .nav-view-link { display: block; color: #000; }
+
 .pill-radius { border-radius: 3.5rem; }
-/*.btn-sm
-.btn-md
-.btn-lg
 
-.pill-title
-
-.widget-body-md
-.widget-body-lg
-.widget-data-label
-
-.widget-body-xl*/
+.view-tabs .p-page-nav-tabs { padding: .7rem 1.4rem; }
 
 
 /*STATES=================*/
-li.active { font-weight: 500; }
+
+.nav-link:hover, .nav-link:active { color:#dbdbdb; }
+
+.view-tabs .nav-view-list-item .nav-view-link:hover, .nav-view-link:active {text-decoration: none; }
+.view-tabs li.nav-view-list-item.active { font-weight: bold; background: #53ab58; border: none;}
+.view-tabs li.nav-view-list-item.active a { color: #fff; font-weight: 500;}
+
 .widget-panel li.active { background: #53ab58; color: #fff;}
 .widget-panel li.active a { color: #fff;}
 .widget-panel li a { color: : #000; }
@@ -199,7 +211,6 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .closed-sidenav {
-  background: grey;
   min-height: 100%;
   position: absolute;
   width: 75px;
@@ -276,6 +287,8 @@ input.ng-pristine {
   outline: none;
 }
 
+
+/*OVERWRITE USER AGENT STYLES SHEETS*/
 
 
 
