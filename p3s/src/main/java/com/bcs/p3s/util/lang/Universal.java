@@ -30,6 +30,10 @@ public class Universal extends BcsLogger implements Loggable {
     	logInternalError().fatal(message);
     	throw new P3SRuntimeException(message);
     }
+    public void fail(String message, Exception e) {
+    	logInternalError().fatal(message+" : "+e.getMessage()+"  eType: "+e.getClass().getName());
+    	throw new P3SRuntimeException(message,e);
+    }
 
     
     public void logAttention(String msg) {
@@ -48,7 +52,7 @@ public class Universal extends BcsLogger implements Loggable {
     public void notYet(String msg) {
     	String message = "    *************  NOT YET IMPLEMENTED - So this will not work  ************* ";
     	if (notEmpty(msg)) message += msg;
-    	log().fatal(message);
+    	log().warn(message);
     }
     public void notYet() {
     	notYet("Default");

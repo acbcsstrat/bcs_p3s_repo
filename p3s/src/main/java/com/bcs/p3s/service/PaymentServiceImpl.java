@@ -15,9 +15,8 @@ import org.springframework.stereotype.Service;
 import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.docs.InvoiceProcessingEngine;
-import com.bcs.p3s.engine.CommitToRenewalEngine;
 import com.bcs.p3s.engine.DummyDataEngine;
-import com.bcs.p3s.engine.OrderProcessingEngine;
+import com.bcs.p3s.engine.PaymentProcessingEngine;
 import com.bcs.p3s.engine.PaymentTimingEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
@@ -43,7 +42,7 @@ import com.bcs.p3s.wrap.PatentExtendedData;
 @Service("PaymentService")
 public class PaymentServiceImpl extends ServiceAuthorisationTools implements PaymentService {
 
-	@Autowired
+	//@ Autowired
 	HttpSession session;
 
 	protected String PREFIX = this.getClass().getName() + " : "; 
@@ -150,10 +149,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	public BankTransferPostCommitDetails showBankTransferPostCommitDetails(InBasket basket) {
 
 		String err = PREFIX+"showBankTransferPostCommitDetails() ";
-		Payment currentPayment = new Payment();
-		OrderProcessingEngine orders = new OrderProcessingEngine();
 		BigDecimal latestCalculatedCost = new BigDecimal("0.0");
-		List<Fee> committedFee = new ArrayList<Fee>();
+		Fee committedFee = null;
 		//checkAreMyPatents(patentIds, err);
 		checkAreMyPatents(basket.getPatentIds(), err);
 		//checkNotNull(totalCostUSDin, err);
@@ -164,8 +161,6 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		BankTransferPostCommitDetails bankTransferPostCommitDetails = new BankTransferPostCommitDetails();
 		
 		try {
-			
-			//not p3sTRansRef this time
 			populateBankTransferPostCommitDetails(bankTransferPostCommitDetails, basket);
 	
 			/**
@@ -188,15 +183,11 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				for(PatentExtendedData eachSessionData : sessionData){
 					if(basket.getPatentIds().contains(eachSessionData.getPatentId())){
 						latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost());
-						committedFee.add(eachSessionData.getFee());
+						committedFee = eachSessionData.getFee();
 					}
 				}
 				bankTransferPostCommitDetails.setTotalCostUSD(latestCalculatedCost);
 			}
-			/*//finally generate the p3sTransRef
-			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
-			String p3sTransRef = commitToRenewal.generateP3sTransRef(pLoginSession);
-			bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);*/
 		
 			// Check that expected price matches calculated
 			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_CEILING);
@@ -210,24 +201,17 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			
 			/**
 			 * All checks completed , now do the persist
-			 * 	a. Insert into Invoice table with paymentId as null
-			 * 	b. Insert into Payment table  with the current invoice Id
-			 *  c. Insert into Fee table with renewalId as null
+			 * 	a. Insert into Fee table with renewalId as null
+			 * 	b. Insert into Invoice table with paymentId as null
+			 * 	c. Insert into Payment table  with the current invoice Id
 			 * 	d. Insert into Renewal table with the current feeId
-			 *  e. Update payment_renewals join table with renewals
-			 * 	f. Update Fee table with the current renewalId
-			 * 	g. Update Invoice table with current paymentId
-			 * 	h. If above db operations success, then update Patent with renewal_status as Payment In Progress
+			 * 	e. Update Fee table with the current renewalId
+			 * 	f. Update Invoice table with current paymentId
+			 * 	g. If above db operations success, then update Patent with renewal_status as RENEWAL IN PLACE
 			 */ 
 			
-			currentPayment = commitTransaction(bankTransferPostCommitDetails,committedFee);
+			commitTransaction(bankTransferPostCommitDetails,committedFee);
 			//create and send the orders file to MC -- to do MP <<<<IMP NOTE !!!!>>>>
-			if(!(currentPayment == null))
-				orders.createOrderCsv(currentPayment);
-			else{
-				err += "Order file not created. Payment is null from commitTransaction(" + bankTransferPostCommitDetails +"," + committedFee +")";
-				logM().error(err);
-			}
 			
 		}
 		catch (Exception e) {
@@ -347,9 +331,9 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 
 		populateBankTransferPreCommitDetails(bankTransferPostCommitDetails, basket);
 
-		/*CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
-		String p3sTransRef = commitToRenewal.generateP3sTransRef(bankTransferPostCommitDetails);
-		bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);*/
+		PaymentProcessingEngine paymentProcessingEngine = new PaymentProcessingEngine();
+		String p3sTransRef = paymentProcessingEngine.generateP3sTransRef();
+		bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);
 
 		DummyDataEngine dummy = new DummyDataEngine();
 		BankTransferPaymentDetails bankTransferPaymentDetails = dummy.generateBankTransferPaymentDetails();
@@ -376,7 +360,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	 * @param fee
 	 */
 	
-	protected Payment commitTransaction(BankTransferPostCommitDetails commitTransaction, List<Fee> fee){
+	protected Boolean commitTransaction(BankTransferPostCommitDetails commitTransaction, Fee fee){
 		
 		String msg = PREFIX+"commitTransaction("+commitTransaction+","+fee+ ") ";
 		Invoice invoice = new Invoice();
@@ -389,17 +373,33 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		Boolean dbSuccess = true;
 		log().debug(msg +" invoked ");
 		
-		List<Renewal> renewal_payment = new ArrayList<Renewal>();
-		List<PatentUI> orderedPatents = commitTransaction.getOrderedPatentUIs();
-//a.Insert into invoice
-		invoice = invoiceEngine.populateInvoiceData(commitTransaction); 
+//a. Insert into Fee Table
+		if(!(fee == null)){
+			currentFee = fee.persist();
+			if(currentFee == null){
+				dbSuccess = false;
+				log().debug("Fee Table persistence failed " + msg);
+				log().error("Fee Table persistence failed " + msg);
+				return dbSuccess;
+			}
+			log().debug("Persisted Fee Table successfully " + msg);
+		}
+		else{
+			dbSuccess = false;
+			log().debug("Fee Table persistence failed " + msg);
+			log().error("Fee Table persistence failed " + msg);
+			return dbSuccess;
+		}
+		
+//b.Insert into invoice
+		invoice = invoiceEngine.populateProformaInvoiceData(commitTransaction); 
 		if(!(invoice == null)){
 			currentInvoice = invoice.persist();
 			if(currentInvoice == null){
 				dbSuccess = false;
 				log().debug("Invoice Table persistence failed " + msg);
 				log().error("Invoice Table persistence failed " + msg);
-				return payment;
+				return dbSuccess;
 			}
 			log().debug("Persisted Invoice Table successfully " + msg + "and returned invoice details with id as " + invoice.getId());
 			//payment.setLatestInvoice(currentInvoice);
@@ -409,89 +409,55 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			dbSuccess = false;
 			log().debug("Invoice Table persistence failed " + msg);
 			log().error("Invoice Table persistence failed " + msg);
-			return payment;
+			return dbSuccess;
 		}
 		
-//b.Insert into Payment
+//c.Insert into Payment
 		payment = populatePaymentData(commitTransaction);
 		payment.setLatestInvoice(currentInvoice);
 		if(!(payment == null)){
 			currentPayment = payment.persist();
 			log().debug("Persisted Payment Table successfully " + msg + "and returned payment details with id as " + payment.getId());
-			currentInvoice.setPayment(currentPayment);
-			 
+			
 			if(currentPayment == null){
 				dbSuccess = false;
 				log().debug("Payment Table persistence failed " + msg);
 				log().error("Payment Table persistence failed " + msg);
-				return payment;
+				return dbSuccess;
 			}
-			
-			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
-			String p3sTransRef = commitToRenewal.generateP3sTransRef(currentPayment);
-			currentPayment.setP3S_TransRef(p3sTransRef);
-			currentPayment.merge();
-			logChangeOfStatus().debug("Transaction " + currentPayment.getP3S_TransRef() + " created with " + orderedPatents.size() +" patents ");
 		}
 		
-
+//d.Insert into Renewal
 		/**
 		 * Each transaction may have multiple patents. So loop through each in orderedPatentIds and get the details from session
 		 */
-		
+		List<PatentUI> orderedPatents = commitTransaction.getOrderedPatentUIs();
 		for(PatentUI eachPatent : orderedPatents){
-			
 			Renewal renewal = new Renewal();
 			renewal = populateRenewalData(commitTransaction,eachPatent);
-			//c. Insert into Fee Table
-			if(!(fee == null)){
-				currentFee = renewal.getFee().persist();
-				if(currentFee == null){
-					dbSuccess = false;
-					log().debug("Fee Table persistence failed " + msg);
-					log().error("Fee Table persistence failed " + msg);
-					return payment;
-				}
-				log().debug("Persisted Fee Table successfully " + msg);
-			}
-			else{
-				dbSuccess = false;
-				log().debug("Fee Table persistence failed " + msg);
-				log().error("Fee Table persistence failed " + msg);
-				return payment;
-			}
-			
-			//d.Insert into Renewal
-			
 			renewal.setActivePaymentId(currentPayment);
 			renewal.setFee(currentFee);
 			currentRenewal = renewal.persist();
 			currentFee.setRenewal(currentRenewal);
-			renewal_payment.add(currentRenewal);
 			log().debug("Persisted Renewal Table successfully " + msg + "and returned renewal details with id as " + renewal.getId());
 			
 			if(currentRenewal == null){
 				dbSuccess = false;
 				log().debug("Renewal Table persistence failed " + msg);
 				log().error("Renewal Table persistence failed " + msg);
-				return payment;
+				return dbSuccess;
 			}
 		
 		}
-//e.Update payment_renewal table
-		if(!(renewal_payment == null)){
-			payment.setRenewals(renewal_payment);
-			payment.merge();
-			log().debug("payment_renewals join table persisted with "+ renewal_payment.size() +" renewal(s)");
-		}
-//f.Update currentFee Table with currentRenewal
+		
+//e.Update currentFee Table with currentRenewal
 		if(!(currentFee == null)){
 			currentFee.merge();
 			log().debug("Fee table updated with renewal id as "+ currentRenewal.getId());
 		}
 		
 		
-//g.Update currentInvoice Table with currentPayment
+//f.Update currentFee Table with currentRenewal
 		if(!(currentInvoice == null)){
 			currentInvoice.merge(); 
 			log().debug("Invoice table updated with payment id as "+ currentPayment.getId());
@@ -507,7 +473,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			
 		}
 		
-		return payment;
+		return dbSuccess;
 			
 	}
 	
@@ -524,7 +490,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		P3SUser user = pLoginSession.getUser();
 		payment.setP3S_TransRef(bankTransferPostCommitDetails.getP3sTransRef());
 		//MP to remove below line later ::::: IMP!!!!!!!!!!
-		//payment.setMC_TransRef("TEMP_REF");  //initial insert this will be null
+		payment.setMC_TransRef("TEMP_REF");
 		payment.setTransType(PaymentTypeEnum.BANK_TRANSFER);  //inside this method every time Bank Transfer until we provide CC payment option
 		payment.setInitiatedByUserId(user);
 		payment.setTransStartDate(bankTransferPostCommitDetails.getDateNowLocalTime());
@@ -555,7 +521,6 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			if(eachSessionData.getPatentId() == patentUI.getId()){
 				renewal.setRenewalDueDate(eachSessionData.getRenewalDueDate());
 				renewal.setRenewalPeriod(eachSessionData.getCurrentCostBand());
-				renewal.setFee(eachSessionData.getFee());
 				break;
 			}
 		}
@@ -564,8 +529,6 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		renewal.setRenewalAttemptsMade(P3SPropertyNames.Renewal_Attempts_Constant_In_Payment_Commit);
 		return renewal;
 	}
-	
-	
 
 	// End of - Support methods - NOT exposed through the interface
 

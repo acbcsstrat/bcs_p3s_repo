@@ -135,7 +135,7 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
     }
     
     public void PaymentDataOnDemand.setTransTargetEndDate(Payment obj, int index) {
-        Date transTargetEndDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        Date transTargetEndDate = new Date(new Date().getTime() + 10000000L);
         obj.setTransTargetEndDate(transTargetEndDate);
     }
     
