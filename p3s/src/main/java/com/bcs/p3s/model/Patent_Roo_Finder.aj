@@ -18,6 +18,14 @@ privileged aspect Patent_Roo_Finder {
         return ((Long) q.getSingleResult());
     }
     
+    public static Long Patent.countFindPatentsByPatentApplicationNumber(String patentApplicationNumber) {
+        if (patentApplicationNumber == null || patentApplicationNumber.length() == 0) throw new IllegalArgumentException("The patentApplicationNumber argument is required");
+        EntityManager em = Patent.entityManager();
+        TypedQuery q = em.createQuery("SELECT COUNT(o) FROM Patent AS o WHERE o.patentApplicationNumber = :patentApplicationNumber", Long.class);
+        q.setParameter("patentApplicationNumber", patentApplicationNumber);
+        return ((Long) q.getSingleResult());
+    }
+    
     public static TypedQuery<Patent> Patent.findPatentsByBusiness(Business business) {
         if (business == null) throw new IllegalArgumentException("The business argument is required");
         EntityManager em = Patent.entityManager();
@@ -38,6 +46,29 @@ privileged aspect Patent_Roo_Finder {
         }
         TypedQuery<Patent> q = em.createQuery(queryBuilder.toString(), Patent.class);
         q.setParameter("business", business);
+        return q;
+    }
+    
+    public static TypedQuery<Patent> Patent.findPatentsByPatentApplicationNumber(String patentApplicationNumber) {
+        if (patentApplicationNumber == null || patentApplicationNumber.length() == 0) throw new IllegalArgumentException("The patentApplicationNumber argument is required");
+        EntityManager em = Patent.entityManager();
+        TypedQuery<Patent> q = em.createQuery("SELECT o FROM Patent AS o WHERE o.patentApplicationNumber = :patentApplicationNumber", Patent.class);
+        q.setParameter("patentApplicationNumber", patentApplicationNumber);
+        return q;
+    }
+    
+    public static TypedQuery<Patent> Patent.findPatentsByPatentApplicationNumber(String patentApplicationNumber, String sortFieldName, String sortOrder) {
+        if (patentApplicationNumber == null || patentApplicationNumber.length() == 0) throw new IllegalArgumentException("The patentApplicationNumber argument is required");
+        EntityManager em = Patent.entityManager();
+        StringBuilder queryBuilder = new StringBuilder("SELECT o FROM Patent AS o WHERE o.patentApplicationNumber = :patentApplicationNumber");
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            queryBuilder.append(" ORDER BY ").append(sortFieldName);
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                queryBuilder.append(" ").append(sortOrder);
+            }
+        }
+        TypedQuery<Patent> q = em.createQuery(queryBuilder.toString(), Patent.class);
+        q.setParameter("patentApplicationNumber", patentApplicationNumber);
         return q;
     }
     

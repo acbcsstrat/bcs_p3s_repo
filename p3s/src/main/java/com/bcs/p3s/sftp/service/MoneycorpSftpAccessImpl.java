@@ -34,7 +34,7 @@ public class MoneycorpSftpAccessImpl extends Universal implements MoneycorpSftpA
 					order.getSubTotalUSD() + COMMA_DELIMITER + order.getAmountToEPO_USD() + COMMA_DELIMITER +
 					order.getHoldingAmountUSD() + COMMA_DELIMITER +order.getAmountToEPO_USD() + COMMA_DELIMITER +
 					order.getDestinationOffice()+COMMA_DELIMITER + order.getPaymentMethod() + COMMA_DELIMITER +
-					order.getReference()+ COMMA_DELIMITER +order.getPaymentValueDate() + COMMA_DELIMITER +
+					order.getBankPaymentReference()+ COMMA_DELIMITER +order.getPaymentValueDate() + COMMA_DELIMITER +
 					order.getCurrentDatestamp();
 			
 			lines.add(FILE_HEADER);

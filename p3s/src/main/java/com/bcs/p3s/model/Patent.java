@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.ManyToMany;
 
@@ -27,7 +28,7 @@ import javax.persistence.ManyToMany;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord(finders = { "findPatentsByBusiness" })
+@RooJpaActiveRecord(finders = { "findPatentsByBusiness" , "findPatentsByPatentApplicationNumber"}) 
 @OnDelete(action = OnDeleteAction.CASCADE)
 public class Patent {
 
