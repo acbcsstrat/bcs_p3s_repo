@@ -31,5 +31,8 @@ public interface P3SPropertyNames {
 	
 	String Payment_Type_SEPA = "SEPA";
 	String Payment_Type_SWIFT = "SWIFT";
-	
+
+	//Patent data
+	int Patent_Renewal_Max_Year = 20;
+
 }
