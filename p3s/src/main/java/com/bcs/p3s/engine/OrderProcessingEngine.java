@@ -85,7 +85,7 @@ public class OrderProcessingEngine extends Universal{
 			order.setAmountToEPO_EUR(toEpoEUR);
 			
 			order.setDestinationOffice(P3SPropertyNames.Destination_EPO_Office);
-			order.setBankPaymentReference(P3SPropertyNames.EPO_Payment_Reference);
+			order.setReference(P3SPropertyNames.EPO_Payment_Reference);
 			
 			order.setPaymentMethod(getPaymentMethod(payment));
 			

@@ -7,10 +7,6 @@ package com.bcs.p3s.engine;
  */
 public class PaymentProcessingEngine {
 
-	public String generateP3sTransRef() {
-		DummyDataEngine dummy = new DummyDataEngine();
-		String result = dummy.generatep3sTransRef();
-		return result;
-	}
+	
 	
 }

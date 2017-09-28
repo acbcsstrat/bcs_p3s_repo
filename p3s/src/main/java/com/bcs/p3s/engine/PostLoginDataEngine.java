@@ -24,6 +24,7 @@ import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Fee;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.model.RenewalIntegrationTest;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.CombinedFee;

@@ -2,9 +2,6 @@ package com.bcs.p3s.util.lang;
 
 
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import com.bcs.p3s.enump3s.P3SEnumException;
 import com.bcs.p3s.util.log.BcsLogger;
 import com.bcs.p3s.util.log.Loggable;
@@ -33,29 +30,7 @@ public class Universal extends BcsLogger implements Loggable {
     	logInternalError().fatal(message);
     	throw new P3SRuntimeException(message);
     }
-    public void fail(String message, Exception e) {
-    	logInternalError().fatal(message+" : "+e.getMessage()+"  eType: "+e.getClass().getName());
-    	throw new P3SRuntimeException(message,e);
-    }
 
-    
-    public void logErrorAndContinue(String message) {
-    	logInternalError().error(message);
-    	throw new P3SRuntimeException(message);
-    }
-    public void logErrorAndContinue(String message, Exception e) {
-    	logInternalError().error(message+" : "+e.getMessage()+"  eType: "+e.getClass().getName());
-    	// Capture & log the error stackdump
-		String dump = "stackDumP:" + "\n";
-		if (e!=null) {
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			dump += errors.toString();
-		}
-    	logInternalError().error(dump);
-    }
-    
-    
     
     public void logAttention(String msg) {
     	log().fatal("                                                               ");
@@ -73,7 +48,7 @@ public class Universal extends BcsLogger implements Loggable {
     public void notYet(String msg) {
     	String message = "    *************  NOT YET IMPLEMENTED - So this will not work  ************* ";
     	if (notEmpty(msg)) message += msg;
-    	log().warn(message);
+    	log().fatal(message);
     }
     public void notYet() {
     	notYet("Default");

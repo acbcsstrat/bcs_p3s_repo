@@ -367,7 +367,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 		   		
 		   		if("billingZip".equals(key.trim())){
 		   			if(obValue instanceof Double || obValue instanceof Integer || obValue instanceof String){
-		   				Long longy = Long.valueOf(obValue.toString());
+		   				Long longy = Long.valueOf(obValue.toString());;
 		   				basket.setBillingZip(longy);
 		   			}
 		   		}

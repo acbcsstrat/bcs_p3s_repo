@@ -3,14 +3,18 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import javax.validation.constraints.NotNull;
 import javax.persistence.OneToOne;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.Future;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,23 +23,27 @@ import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Value;
 
 // Note! : Payment was formerly called Transaction  (But Roo wouldn't allow that term)
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord(finders = { "findPaymentsByP3S_TransRef" })
+@RooJpaActiveRecord
 public class Payment {
 
     /**
      */
-    @NotNull
+    //@NotNull
     private String P3S_TransRef;
-
+ 
     /**
      * For security do not send this to the front end
      */
-    // @NotNull - This will be null during the initial insert
+   // @NotNull - This will be null during the initial insert
     private String MC_TransRef;
 
     /**
@@ -60,6 +68,7 @@ public class Payment {
     /**
      */
     @NotNull
+    //@Future
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date transTargetEndDate;
@@ -91,7 +100,7 @@ public class Payment {
     /**
      */
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Invoice latestInvoice;
 
     /**
@@ -152,7 +161,7 @@ public class Payment {
         }
         return result;
     }
-
+    
     // Setters pushed to support P3S 'Enums'
     public void setTransType(String transType) {
         this.transType = (new PaymentTypeEnum(transType)).toString();
@@ -161,13 +170,15 @@ public class Payment {
     public void setLatestTransStatus(String latestTransStatus) {
         this.latestTransStatus = (new PaymentStatusEnum(latestTransStatus)).toString();
     }
-
+    
+    
     @Transactional
-    public Payment persist() {
-        Payment payment = new Payment();
-        EntityManager em = this.entityManager();
-        em.persist(this);
+    public Payment persist() {  
+    	Payment payment = new Payment();  
+    	EntityManager em = this.entityManager();
+        em.persist(this); 
         payment = Payment.findPayment(this.getId());
         return payment;
     }
+
 }

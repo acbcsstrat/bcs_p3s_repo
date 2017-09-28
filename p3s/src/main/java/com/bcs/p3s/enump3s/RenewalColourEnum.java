@@ -44,8 +44,5 @@ public class RenewalColourEnum extends P3SAbstractEnum {
     public boolean isRed() {
     	return this.value.equals(RED);
     }
-    public boolean isNotRed() {
-    	return ! isRed();
-    }
     
 }
