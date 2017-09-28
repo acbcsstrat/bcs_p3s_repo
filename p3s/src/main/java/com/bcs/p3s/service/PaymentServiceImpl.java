@@ -42,7 +42,7 @@ import com.bcs.p3s.wrap.PatentExtendedData;
 @Service("PaymentService")
 public class PaymentServiceImpl extends ServiceAuthorisationTools implements PaymentService {
 
-	//@ Autowired
+	@Autowired
 	HttpSession session;
 
 	protected String PREFIX = this.getClass().getName() + " : "; 
