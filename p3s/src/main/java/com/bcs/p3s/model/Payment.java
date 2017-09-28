@@ -5,15 +5,12 @@ import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.transaction.annotation.Transactional;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
-import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import javax.validation.constraints.NotNull;
 import javax.persistence.OneToOne;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.TypedQuery;
 import org.springframework.format.annotation.DateTimeFormat;
-import javax.validation.constraints.Future;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -63,7 +60,6 @@ public class Payment {
     /**
      */
     @NotNull
-    @Future
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date transTargetEndDate;
