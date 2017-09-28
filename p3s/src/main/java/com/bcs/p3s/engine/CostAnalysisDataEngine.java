@@ -455,12 +455,15 @@ public class CostAnalysisDataEngine extends Universal{
 		/**
 		 * GET THE EPO FEES FOR THE CURRENT RENEWAL YEAR 
 		 */
-		epoFee.setRenewalYear(patent.getRenewalYear());
-		epoFee = EpoFee.findEpoFeesByRenewalYear(epoFee);
+		try {
+			epoFee.setRenewalYear(patent.getRenewalYear());
+			epoFee = EpoFee.findEpoFeesByRenewalYear(epoFee);
+			
+			combinedFee.setP3sFee(p3sFee);
+			combinedFee.setEpoFee(epoFee);
+			combinedFee.setFxRate(fxRate);
+		} catch (RuntimeException rte) { fail("epoFee failed"); }
 		
-		combinedFee.setP3sFee(p3sFee);
-		combinedFee.setEpoFee(epoFee);
-		combinedFee.setFxRate(fxRate);
 		
 		return combinedFee;
 	}
