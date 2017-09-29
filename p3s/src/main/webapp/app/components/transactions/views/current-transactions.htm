@@ -11,69 +11,82 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<table class="table table-bordered table-striped text-md-center">
-			<thead>
+		<table class="table table-bordered table-striped text-md-center scroll">
+			<thead class="thead-inverse">
 				<tr>
-					<td class="align-middle">
-						<a ng-click="sortType = 'transId'; sortReverse = !sortReverse">Transaction ID <!--show if not showing(false)-->
-							<span ng-show="sortType == 'transId' && !sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="sortType == 'transId' && sortReverse" class="fa fa-caret-down"></span>			
+					<td width="15%" class="align-middle">
+						<a ng-click="$ctrl.sortType = 'transId'; $ctrl.sortReverse = !$ctrl.sortReverse">Transaction ID <!--show if not showing(false)-->
+							<span ng-show="$ctrl.sortType == 'transId' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'transId' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
 					</td>
-					<td class="align-middle">
-						<a ng-click="sortType='patentTotal'; sortReverse = !sortReverse">No. of patents 
-							<span ng-show="sortType == 'patentTotal' && !sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="sortType == 'patentTotal' && sortReverse" class="fa fa-caret-down"></span>							
+					<td width="10%" class="align-middle">
+						<a ng-click="$ctrl.sortType='patentTotal'; $ctrl.sortReverse = !$ctrl.sortReverse">No. of patents 
+							<span ng-show="$ctrl.sortType == 'patentTotal' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'patentTotal' && $ctrl.sortReverse" class="fa fa-caret-down"></span>							
 						</a>
 					</td>
-					<td class="align-middle">
-						<a ng-click="sortType='patentApplicationNumber'; sortReverse=!sortReverse">App No.
-							<span ng-show="sortType == 'patentApplicationNumber' && !sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="sortType == 'patentApplicationNumber' && sortReverse" class="fa fa-caret-down"></span>			
+					<td width="15%" class="align-middle">
+						<a ng-click="$ctrl.sortType='patentApplicationNumber'; $ctrl.sortReverse=!$ctrl.sortReverse">App No.
+							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
 					</td>
-					<td class="align-middle">
-						<a ng-click="sortType='clientRef'; sortReverse=!sortReverse">Client Ref
-							<span ng-show="sortType == 'clientRef' && !sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="sortType == 'clientRef' && sortReverse" class="fa fa-caret-down"></span>			
+					<td width="20%" class="align-middle">
+						<a ng-click="$ctrl.sortType='clientRef'; $ctrl.sortReverse=!$ctrl.sortReverse">Client Ref
+							<span ng-show="$ctrl.sortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
 					</td>					
-					<td class="align-middle">
-						<a ng-click="sortType='transDate'; sortReverse=!sortReverse">Transaction Initiated
-							<span ng-show="sortType == 'transDate' && !sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="sortType == 'transDate' && sortReverse" class="fa fa-caret-down"></span>			
+					<td width="10%" class="align-middle">
+						<a ng-click="$ctrl.sortType='transDate'; $ctrl.sortReverse=!$ctrl.sortReverse">Transaction Initiated
+							<span ng-show="$ctrl.sortType == 'transDate' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'transDate' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
 					</td>
-					<td class="align-middle">
-						<a ng-click="sortType='cost'; sortReverse=!sortReverse">Cost
-							<span ng-show="sortType == 'cost' && !sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="sortType == 'cost' && sortReverse" class="fa fa-caret-down"></span>			
+					<td width="10%" class="align-middle">
+						<a ng-click="$ctrl.sortType='cost'; $ctrl.sortReverse=!$ctrl.sortReverse">Cost
+							<span ng-show="$ctrl.sortType == 'cost' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'cost' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>	
 					</td>
-					<td class="align-middle">
-						<a ng-click="sortType='status'; sortReverse=!sortReverse">Status
-							<span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-down"></span>			
+					<td width="20%" class="align-middle">
+						<a ng-click="$ctrl.sortType='status'; $ctrl.sortReverse=!$ctrl.sortReverse">Status
+							<span ng-show="$ctrl.sortType == 'status' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<span ng-show="$ctrl.sortType == 'status' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
 					</td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="transaction in $ctrl.transactions | orderBy:$ctrl.sortType:$ctrl.sortReverse | filter:searchTrans">
-					<td><a ui-sref="current-transactions.current-transaction-item({transId: transaction.id})">{{transaction.p3S_TransRef}}</a></td>
-					<td>{{transaction.transStartDateUI}}</td>
-					<td>
-						<span ng-repeat="item in transaction.renewalUIs">{{item.patentUI.patentApplicationNumber}}<br></span>	
+					<td width="15%">
+						<a ui-sref="current-transactions.current-transaction-item({transId: transaction.id})">{{transaction.p3S_TransRef}}</a>
 					</td>
-					<td>
+					<td width="10%">
+						{{transaction.transStartDateUI}}
+					</td>
+					<td width="15%">
+						<span ng-if="transaction.renewalUIs.length == 1" ng-repeat="item in transaction.renewalUIs">
+							<span ng-if="item.patentUI.patentApplicationNumber.length">
+								{{item.patentUI.patentApplicationNumber}}<br>
+							</span>								
+						</span>
+						<select ng-if="transaction.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in transaction.renewalUIs" ng-model="data.selectedOption">
+							<option value="" disabled selected>Multiple</option>									
+						</select>						
+
+					</td>
+					<td width="20%">
 						<span ng-repeat="item in transaction.renewalUIs">{{item.patentUI.clientRef}}<br></span>	
 					</td>
-					<td>{{transaction.transStartDateUI}}</td>
-					<td>{{transaction.transAmount_USD}}</td>
-					<td>
+					<td width="10%">{{transaction.transStartDateUI}}</td>
+					<td width="10%">{{transaction.transAmount_USD}}</td>
+					<td width="20%">
 						<p>{{transaction.latestTransStatus}}</p>
 						<div class="progress-tracker">
-							<progress value="{{transaction.renewalProgress}}" max="100" class="tracker-item"></progress>
+						<uib-progress><uib-bar value="transaction.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
+							
 						</div>						
 					</td>
 				</tr>

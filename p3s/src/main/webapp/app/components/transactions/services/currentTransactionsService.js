@@ -2,7 +2,7 @@ app.factory('currentTransactionsService', function($http, $q) {
 
 	var factory = {};
 
-		var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-current-transactions/';
+		var REST_SERVICE_URI = domain+'rest-current-transactions/';
 
 		factory.fetchCurrentTransactions = function() {
 
@@ -24,7 +24,7 @@ app.factory('currentTransactionsService', function($http, $q) {
 		factory.renewalProgress = function(currTransStatus) {
 
 			var renewalProgress = 0;
-
+			
 			switch(currTransStatus) {
 	    		case 'Initiated':
 	    			renewalProgress = 14

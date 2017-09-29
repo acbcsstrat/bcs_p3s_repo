@@ -2,7 +2,7 @@ app.factory('searchPatentService', ['$http', '$q', function($http, $q) {
 
     var factory = {};
 
-        var REST_SEARCH_PATENT_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-search-patents/';
+        var REST_SEARCH_PATENT_SERVICE_URI = domain+'rest-search-patents/';
 
         factory.findPatent = function(patentNo) {
             var deferred= $q.defer();

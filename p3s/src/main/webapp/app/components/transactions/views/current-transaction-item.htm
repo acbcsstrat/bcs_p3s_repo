@@ -1,21 +1,30 @@
 <uib-tabset type="pills">
 	<uib-tab heading="Transaction Details">
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-2">
 				<h2>Transaction ID</h2>
 				<p ng-bind="$ctrl.transaction.p3S_TransRef"></p>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-2">
 				<h2>Transaction Initated</h2>
 				<p>{{$ctrl.transaction.transStartDateUI}}</p>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-8">
 				<h2>{{$ctrl.transaction.latestTransStatus}}</h2>
-				<div class="progress-tracker">
-					<progress value="{{$ctrl.renewalProgress}}" max="100" class="tracker-item"></progress>
-				</div>				
+				<div class="steps">
+				    <ul id="progressTracker" class="steps-container">
+				        <li style="width:14.28%;" ng-repeat="li in $ctrl.transStatus track by $index" ng-init="activated = $ctrl.checkProgress()" ng-class="{true:'activated', 	false: ''}[li.active]">
+				            <div class="step">
+				                <div class="step-image"><span></span></div>
+				                <div class="step-current"><span>{{li.status}}</span></div>
+				            </div>
+				        </li>
+				    </ul>
+				    <div class="step-bar"  ng-style="{ 'width': $ctrl.transactionProgress + '%' }"></div>
+				</div>
 			</div>
 		</div>
+
 		<div ng-repeat="transaction in $ctrl.patents">
 			<div class="row">
 				<div class="col-md-2">
@@ -52,29 +61,23 @@
 						<h4 ng-bind="transaction.renewalStatus"></h4>
 						<div ng-if="transaction.renewalStatus == 'Payment in progress'">
 							<div class="progress-tracker">
-								<progress value="{{$ctrl.renewalProgress}}" max="100" class="tracker-item"></progress>
+								<uib-progress><uib-bar value="$ctrl.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
 							</div>
 							<p>ipsum</p>			
 						</div>			
 						<div ng-if="transaction.renewalStatus == 'EPO Instructed'">
 							<p>Lorem</p>
 							<div class="progress-tracker">
-								<progress value="{{$ctrl.renewalProgress}}" max="100" class="tracker-item"></progress>
+							<uib-progress><uib-bar value="$ctrl.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
 							</div>
 						</div>
 						<div ng-if="transaction.renewalStatus == 'Renewal in place'">
 							<p>Lorem</p>
 							<div class="progress-tracker">
-								<progress value="{{$ctrl.renewalProgress}}" max="100" class="tracker-item"></progress>
+							<uib-progress><uib-bar value="$ctrl.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
 							</div>
 						</div>						
 	
-<!-- 						<p ng-if="$ctrl.transaction.latestTransStatus == 'Funds Received'">consectetur adipisicing elit, sed do eiusmod.</p>						
-						<p ng-if="$ctrl.transaction.latestTransStatus == 'Funds Sent'">Lorem iadipisicing elit, sed do eiusmod.</p>
-						<p ng-if="$ctrl.transaction.latestTransStatus == 'EPO Received'">ipsum dolor sit amet, consectetur adit, sed do eiusmod.</p>
-						<p ng-if="$ctrl.transaction.latestTransStatus == 'EPO Instructed'">ipsum dolor sit amer adipisicing elit, sed do eiusmod.</p>
-						<p ng-if="$ctrl.transaction.latestTransStatus == 'Failed'">ipsum dolor sit amet, consectet elit, sed do eiusmod.</p>
-						<p ng-if="$ctrl.transaction.latestTransStatus == 'Completed'">ipsum dolor sit amdipisicing elit, sed do eiusmod.</p> -->
 					</div>
 				</div>			
 			</div>

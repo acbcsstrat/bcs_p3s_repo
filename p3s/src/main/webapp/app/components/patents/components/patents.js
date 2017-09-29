@@ -1,163 +1,155 @@
 app.component('patents', {
   	bindings: { patents: '<' },
 	templateUrl: 'p3sweb/app/components/patents/views/list-patents.htm',
-	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, patentsPhaseTabService, $rootScope) {
+	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService) {
 
 		var vm = this;
 
-		vm.testid = 1;
+		$rootScope.page = 'List Patents';
 
 		vm.patentsTabs = {
 			all: 1,
 			green: 2,
-			yellow: 3,
+			amber: 3,
 			red: 4,
 			blue: 5,
-			brown: 6
+			black: 6
 		}
 
 		vm.$onInit = () => {
+
+			var allPatents = [];
+			var greenPatents = [];
+			var amberPatents = [];
+			var redPatents = [];
+			var bluePatents = [];
+			var blackPatents = [];
+
+			vm.date = new Date()
 
 			var patents = vm.patents;
 
 			patents.forEach(function(item){
 
-			if (item.costBandColour === 'Green') {
-			     	var now = new Date(); //get todays date
-					var d = new Date(1505430000622 - 7889238000); //minus 3 months from the costband end date
-					d.setHours(0, 0, 0, 0); //set the hours to midnight
-					var greenStart = d.getTime(); //get the begin date of green in milliseconds
-					var end = patents[0].costBandEndDate - greenStart; //get total time between dates
-					var timeDiff = now.getTime() - greenStart; //get remainding time
-					var perc = Math.round((timeDiff / end) * 100) //work percentage
+				if(item.costBandColour) {
+	     			allPatents.push(item)
+			     	if(allPatents.length === 0) {
+						vm.allPatentsLength = 0;
+					} else {
+						vm.allPatentsLength = allPatents.length
+					}
+	     		} else {
+	     			vm.patents = null;
+	     		}
 
-					vm.progressBar = [{value: perc}];
+				switch(item.costBandColour) {
+					case 'Green':
+						greenPatents.push(item);
+					break;
+					case 'Amber':
+						amberPatents.push(item)
+					break;
+					case 'Red':
+						redPatents.push(item)
+					break;
+					case 'Blue':
+						bluePatents.push(item)
+					break;
+					case 'Black':
+						blackPatents.push(item)
+					break;
+					default: vm.patents = null;																								
+				}
 
-			} else {
-				var color = item.costBandColour;
-				var start = new Date(item.costBandEndDate);
-				var end = patents[0].costBandEndDate - start; 
-				var now = new Date(); //get todays date
-				
-				var end = patents[0].costBandEndDate - start; //get total time between dates
-				var timeDiff = now.getTime() - start; //get remainding time
-				var perc = Math.round((timeDiff / end) * 100) //work percentage
+		     	if(greenPatents.length === 0) { 
+	 				vm.greenPatentsLength = 0;
+	 			} else {
+	 				vm.greenPatentsLength = greenPatents.length
+	 			}
+		     	if (amberPatents.length === 0) {
+	 				vm.amberPatentsLength = 0;
+	 			} else {
+	 				vm.amberPatentsLength = amberPatents.length
+	 			}
+	 			if(redPatents.length === 0) {
+	 				vm.redPatentsLength = 0;
+	 			} else {
+	 				vm.redPatentsLength = redPatents.length;
+	 			}
+	 			if(bluePatents.length === 0) {
+	 				vm.bluePatentsLength = 0;
+	 			} else {
+	 				vm.bluePatentsLength = bluePatents.length
+	 			}
+	 			if(blackPatents.length == 0) {
+	 				vm.blackPatentsLength = 0;
+	 			} else {
+	 				vm.blackPatentsLength = blackPatents.length
+	 			}
 
-				vm.progressBar = [{value: perc}];
-			}
+	 			function calcProgress(start, end) {
 
-						
+					var today = new Date().getTime();
 
+					var total = end - start;
+					var progress = today - start;
+
+					return Math.round(((progress) / (total)) * 100);
+
+	 			}
+
+				patentsRestService.fetchCostAnalysis(item.id)
+                .then(
+                    function(response){
+
+                        switch(item.costBandColour) {
+                            case 'Green':
+
+							var start = new Date(response.greenStartDate);
+							var end = new Date(response.amberStartDate);
+
+							item.progressBar = calcProgress(start, end);						                                  
+
+                                break;
+                            case 'Amber':
+
+							var start = new Date(response.amberStartDate);
+							var end = new Date(response.redStartDate);
+
+							item.progressBar = calcProgress(start, end);                          
+
+                                break;
+                            case 'Red':
+
+							var start = new Date(response.redStartDate);
+							var end = new Date(response.blueStartDate);
+
+							item.progressBar = calcProgress(start, end);
+
+                                break;
+                            case 'Blue':
+
+							var start = response.blueStartDate;
+							var end = response.blackStartDate;
+
+							item.progressBar = calcProgress(start, end);
+
+                                break;
+                            case 'Black':
+
+							var start = response.blackStartDate;
+							var end = response.blackEndDate;
+
+							item.progressBar = calcProgress(start, end);
+
+                        }
+        
+                    }, 
+                    function(errResponse){
+                        console.log(errResponse)
+                    }
+                )
 			})
-
-
-			var allPatents = [];
-			var greenPatents = [];
-			var yellowPatents = [];
-			var redPatents = [];
-			var bluePatents = [];
-			var brownPatents = [];
-
-	     	patents.forEach(function(item){
-
-	    //  		switch(item.costBandColour) {
-	    //  			case item.costBandColour:
-	    //  				allPatents.push(item);
-
-	    //  			case item.costBandColour == 'Green':
-	    //  				greenPatents.push(item);
-	    //  			break;
-	    //  			case item.costBandColour == 'Yellow':
-	    //  				yellowPatents.push(item)
-	    //  			break;
-	    //  			case item.costBandColour == 'Red':
-	    //  				redPatents.push(item)
-     // 				break;
-     // 				case item.costBandColour == 'Blue':
-     // 					bluePatents.push(item)
- 				// 	break;
- 				// 	case item.costBandColour == 'Black':
- 				// 		brownPatents.push(item)
-					// break;
-					// default:
-					// 	vm.patents = null;
-	    //  		}
-
-
-	     		if(item.costBandColour) {
-	     			allPatents.push(item);
-	     		} else {
-	     			vm.patents = null;
-	     		}
-
-	     		if(item.costBandColour == 'Green') {
-	     			greenPatents.push(item);
-	     		}	else {
-	     			vm.patents = null;
-	     		}
-
-	     		if(item.costBandColour == 'Yellow') {
-	     			yellowPatents.push(item)
-	     		} else {
-	     			vm.patents = null;
-	     		}
-
-	     		if(item.costBandColour == 'Red') {
-	     			redPatents.push(item)
-	     		} else {
-	     			vm.patents = null;
-	     		}
-
-	     		if(item.costBandColour == 'Blue') {
-	     			bluePatents.push(item)
-	     		} else {
-	     			vm.patents = null;
-	     		}
-
-	     		if(item.costBandColour == 'Brown') {
-	     			brownPatents.push(item)
-	     		} else {
-	     			vm.patents = null;
-	     		}
-
-	     	})
-	     	
-	     	if(allPatents.length === 0) {
-				vm.allPatentsLength = 0;
-			} else {
-				vm.allPatentsLength = allPatents.length
-			}
-
-	     	if(greenPatents.length === 0) {
- 				vm.greenPatentsLength = 0;
- 			} else {
- 				vm.greenPatentsLength = greenPatents.length
- 			}
-
-	     	if (yellowPatents.length === 0) {
- 				vm.yellowPatentsLength = 0;
- 			} else {
- 				vm.yellowPatentsLength = yellowPatents.length
- 			}
-
- 			if(redPatents.length === 0) {
- 				vm.redPatentsLength = 0;
- 			} else {
- 				vm.redPatentsLength = redPatents.length;
- 			}
-
- 			if(bluePatents.length === 0) {
- 				vm.bluePatentsLength = 0;
- 			} else {
- 				vm.bluePatentsLength = bluePatents.length
- 			}
-
- 			if(brownPatents.length == 0) {
- 				vm.brownPatentsLength = 0;
- 			} else {
- 				vm.brownPatentsLength = brownPatents.length
- 			}
-
 
 	  		vm.displayPhase = function(id) {
 				switch (id) {
@@ -168,87 +160,22 @@ app.component('patents', {
 				     	vm.patents = greenPatents;
 				        break;
 				    case 3:
-				     	vm.patents = yellowPatents;
+				     	vm.patents = amberPatents;
 				        break;
 				    case 4:
-				     	vm.patents = yellowPatents;
+				     	vm.patents = redPatents;
 				        break;
 				    case 5:
 				     	vm.patents = bluePatents;
 				     	break;
 			     	case 6:
-				    	vm.patents = brownPatents;
+				    	vm.patents = blackPatents;
 				}
 			}
-
-
-
 		}
 
 	   	vm.sortType     = 'patentApplicationNumber'; // set the default sort type
-	  	vm.sortReverse  = false;  // set the default sort order
-
-		$scope.started = false;
-
-		
-      	function closeModals() {
-	        if ($scope.warning) {
-	          $scope.warning.close();
-	          $scope.warning = null;
-	        }
-
-	        if ($scope.timedout) {
-	          $scope.timedout.close();
-	          $scope.timedout = null;
-	        }
-      	}
-
-
-      	$scope.$on('IdleStart', function() {
-
-        	closeModals();
-
-        	$scope.warning = $uibModal.open({
-          		templateUrl: 'warning-dialog.html',
-          		windowClass: 'modal-danger'
-    		});
-      	});
-
-	  	$scope.$on('IdleEnd', function() {
-	    	closeModals();
-	  	});
-
-  		var userTimedOut = false;
-
-      	$scope.$on('IdleTimeout', function() {
-        	closeModals();
-
-     		userTimedOut = true;  
-
-	        if (userTimedOut) {
-	        	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
-	        	.then(
-	        		function(){
-		        		window.location.reload('http://localhost:8080/p3sweb/login');
-	        		}    
-	    		)    	
-	        }
-
-      	});
-
-      	function getDate() {
-      		$scope.date = new Date()
-      	}
-
-      	getDate();
-
-      	vm.rowSelect = function(event){
-
-      		if(!$(event.target).hasClass('cartbtn')) {
-	      		var id = ($($(event.currentTarget).find('a')));
-	      		var patentId = id[0].hash;
-	      		window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
-      		}
-      	}
+	  	vm.sortReverse  = false;  // set the default sort order		
+   
 	}
-});
+]});

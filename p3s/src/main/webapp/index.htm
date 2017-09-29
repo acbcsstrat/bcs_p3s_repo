@@ -6,17 +6,21 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700" rel="stylesheet">
 
 		<!--styling-->
 
 		<link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css">
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/stepProgress.css">
+		<link rel="stylesheet" href="assets/css/angularMaterial.css">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.7.1/slick.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.7.1/slick-theme.min.css">
+
 		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-
 
 		<!--angular-->
 
@@ -27,25 +31,31 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular-aria.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>		
+		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-cookies.min.js"></script>
-
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/1.1.1/angular-chart.min.js"></script>
-
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-idle/1.3.2/angular-idle.min.js"></script>
-
-
-
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.0/moment.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data-2012-2022.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.7.1/slick.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-slick-carousel/3.1.7/angular-slick.min.js"></script>
 
 		<script src="p3sweb/assets/js/lib/ngCart.js"></script>
 		<script src="p3sweb/assets/js/ngCart.fulfilment.js"></script>
 		<script src="p3sweb/assets/js/ngCart.directives.js"></script>
+
+		<script src="p3sweb/assets/config/config.js"></script>
 
 		<script src="p3sweb/app/app.module.js"></script>
 		<script src="p3sweb/app/app.routes.js"></script>
@@ -53,15 +63,13 @@
 		<!--services-->
 
 		<script src="p3sweb/app/components/app/services/timezoneService.js"></script>
+		<script src="p3sweb/app/components/app/services/fxService.js"></script> 
 
 		<script src="p3sweb/app/components/dashboard/services/dashboardService.js"></script>
 
-		<script src="p3sweb/app/components/patents/services/searchPatentService.js"></script> 
-		<script src="p3sweb/app/components/patents/services/patentTabService.js"></script> 
-		<script src="p3sweb/app/components/patents/services/chartTabService.js"></script> 
-		<script src="p3sweb/app/components/patents/services/patentsPhaseTabService.js"></script> 
-		<script src="p3sweb/app/components/patents/services/patentsService.js"></script>
-		<script src="p3sweb/app/components/register/authenticationService.js"></script>
+		<script src="p3sweb/app/components/patents/services/searchPatentService.js"></script>
+		<script src="p3sweb/app/components/patents/services/patentsRestService.js"></script>
+		
 		<script src="p3sweb/app/components/transactions/services/currentTransactionsService.js"></script>
 		<script src="p3sweb/app/components/transactions/services/transactionHistoryService.js"></script>
 		<script src="p3sweb/app/components/transactions/services/currentTransactionTabService.js"></script>
@@ -72,8 +80,13 @@
 
 		<!--components-->
 
+		<script src="p3sweb/app/components/register/authenticationService.js"></script>
     	<script src="p3sweb/app/components/register/register.js"></script>		
     	<script src="p3sweb/app/components/register/login.js"></script>
+
+    	<script src="p3sweb/app/components/app/components/idle.js"></script>
+    	<script src="p3sweb/app/components/app/components/main-nav.js"></script>
+    	<script src="p3sweb/app/components/app/components/basket-nav.js"></script>
 
     	<script src="p3sweb/app/components/dashboard/components/dashboard.js"></script>
 
@@ -99,38 +112,18 @@
 
 	</head>
 
-	<body ng-app="myApp">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<nav class="navbar-light">
-						<div class="row">
-							<div class="col-md-6">
-								<ul class="nav">
-									<li class="nav-item"><a class="nav-link" ui-sref="dashboard">Dashboard</a></li>
-									<li class="nav-item"><a class="nav-link" ui-sref="patents">Patents</a></li>
-									<li class="nav-item"><a class="nav-link" ui-sref="current-transactions">Transactions</a></li>
-									<li class="nav-item"><a class="nav-link" ui-sref="profile">Profile</a></li>
-								</ul>
-								<!-- https://v4-alpha.getbootstrap.com/components/navs/ CHECK THIS OUT ON RETURN -->
-							</div>
-							<div class="col-md-6 text-md-right">
-								<ul class="nav">
-									<li class="nav-item"><a ui-sref="basket">
-										<ngcart-summary></ngcart-summary>
-									</a></li>
-									<li class="nav-item"><a href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a></li>
-								</ul>
-							</div>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</div>
+	<body ng-app="myApp" ng-controller="coreCtrl" class="bg-light-grey">
 		
-		<main class="container">
+		<mainnav></mainnav>
+
+		<main class="container p-b-xl">
+			<basketnav></basketnav>
 			<ui-view></ui-view>
+			<idle></idle>
 		</main>
+
+
+	
 	</body>
 
 
