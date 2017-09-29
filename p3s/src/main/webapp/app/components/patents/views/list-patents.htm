@@ -1,31 +1,31 @@
 <patentnav></patentnav>
 <div class="row">
 	<div class="col-md-6">
-		<div class="phase-tabs">
-			<uib-tabset type="pills" active="activePhaseTab">
-			
-				<uib-tab index="0" class="bg-white pill-radius p-xl-pill-tabs pill-tabs font-sm txt-black border-grey-xs" heading="View All({{$ctrl.allPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.all" ng-init="$ctrl.displayPhase($ctrl.patentsTabs.all)" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.all)">
-		    	
-			    </uib-tab>
-			    <uib-tab index="1" class="bg-phase-green pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Green({{$ctrl.greenPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.green" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.green)">
-					
-				</uib-tab>
-			    <uib-tab index="2" class="bg-phase-amber pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Yellow({{$ctrl.amberPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.amber" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.amber)">
-					
-				</uib-tab>
-			    <uib-tab index="3" class="bg-phase-red pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Red({{$ctrl.redPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.red" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.red)">
-					
-				</uib-tab>
-			    <uib-tab index="4" class="bg-phase-blue pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Blue({{$ctrl.bluePatentsLength}})" ng-attr-id="$ctrl.patentsTabs.blue" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.blue)">
-					
-				</uib-tab>
-			    <uib-tab index="5" class="bg-phase-black pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Black({{$ctrl.blackPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.black" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.black)">
-					
-				</uib-tab>
-			</uib-tabset>
-		</div>	
+		<p ng-show="$root.currentUser">Hi, {{$root.currentUser.firstname}}</p>
 	</div>
-	<div class="col-md-4 offset-md-3">
+</div>
+<div class="row">
+<uib-tabset type="pills">
+	<uib-tab heading="View All({{$ctrl.allPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.all" ng-init="$ctrl.displayPhase($ctrl.patentsTabs.all)" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.all)">
+    	
+    </uib-tab>
+    <uib-tab heading="Green({{$ctrl.greenPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.green" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.green)">
+		
+	</uib-tab>
+    <uib-tab heading="Yellow({{$ctrl.yellowPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.yellow" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.yellow)">
+		
+	</uib-tab>
+    <uib-tab heading="Red({{$ctrl.redPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.red" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.red)">
+		
+	</uib-tab>
+    <uib-tab heading="Blue({{$ctrl.bluePatentsLength}})" ng-attr-id="$ctrl.patentsTabs.blue" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.blue)">
+		
+	</uib-tab>
+    <uib-tab heading="Black({{$ctrl.brownPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.black" ng-click="$ctrl.displayPhase($ctrl.patentsTabs.brown)">
+		
+	</uib-tab>				
+</uib-tabset>
+	<div class="col-md-4">
 		<form class="form-inline">
 			<div class="form-group">
 				<div class="input-group">
@@ -74,7 +74,7 @@
 							<span ng-show="$ctrl.sortType == 'renewalDueDateUI' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
 						</a>
 					</td>
-					<td width="40%"></td>
+					<td width="40%"></td>					
 				</tr>
 			</thead>
 
@@ -87,10 +87,10 @@
 					<td width="15%" class="td-ch-limit">{{patent.title}}</td>
 					<td width="8%">
 						<span>$ {{patent.currentRenewalCost}}</span><br>
-						<span>{{date | date:'dd-MM-yy'}}</span>
+						<span>{{date | date:'yyyy-MM-dd'}}</span>
 					</td>
 					<td width="24%"> 
-						<uib-progress><uib-bar value="patent.progressBar">{{patent.progressBar}}%</uib-bar></uib-progress>
+						<uib-progress><uib-bar ng-repeat="bar in $ctrl.progressBar track by $index" value="bar.value" type="{{bar.type}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></uib-bar></uib-progress>
 					</td>
 					<td width="8%">
 						<span>$ {{patent.renewalCostNextStage}}</span><br>
@@ -109,3 +109,23 @@
 		<ui-view></ui-view>
 	</div>
 </div> 
+
+<script type="text/ng-template" id="warning-dialog.html">
+  <div class="modal-header">
+   <h3>You're Idle. Do Something!</h3>
+  </div>
+  <div idle-countdown="countdown" ng-init="countdown=5" class="modal-body">
+   <uib-progressbar max="5" value="1" animate="true" class="progress-striped active">You'll be logged out in {{countdown}} second(s).</uib-progressbar>
+  </div>
+
+</script>
+<script type="text/ng-template" id="timedout-dialog.html">
+  <div class="modal-header">
+   <h3>You've Timed Out!</h3>
+  </div>
+  <div class="modal-body">
+   <p>
+      You were idle too long. Normally you'd be logged out, but in this demo just do anything and you'll be reset.
+   </p>
+ </div>
+</script>

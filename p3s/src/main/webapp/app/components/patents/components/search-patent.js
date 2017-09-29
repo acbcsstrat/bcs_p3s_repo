@@ -1,6 +1,6 @@
 app.component('searchpatent', {
 	templateUrl: 'p3sweb/app/components/patents/views/search-patent.htm',
-	controller: ['searchPatentService', '$state', '$stateParams', '$timeout', '$rootScope', 'patentsRestService',function(searchPatentService, $state, $stateParams, $timeout, $rootScope, patentsRestService) {
+	controller: ['searchPatentService', '$state', '$stateParams', '$timeout', '$rootScope', 'patentsService',function(searchPatentService, $state, $stateParams, $timeout, $rootScope, patentsService) {
 
 		var vm = this;
 	 	vm.queriedPatent = {};
@@ -60,11 +60,11 @@ app.component('searchpatent', {
 
 	 	vm.submit = function(patent) {
 	 		console.log(patent)
-	    	patentsRestService.savePatent(patent)
+	    	patentsService.savePatent(patent)
 	            .then(function(){
 	             	$state.go('patents', {}, {reload: true})
 	             	.then(function(){
-		             		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
+		             		$timeout(function(){patentsService.fetchAllPatents()}, 400);
 		             	})
 		             },
 		            function(errResponse){

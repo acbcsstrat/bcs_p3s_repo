@@ -5,10 +5,10 @@
 	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 	
-	<link rel="stylesheet" type="text/css" href="styles/normalize.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/normalize.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="styles/style.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	
 	<script>
@@ -30,7 +30,7 @@
 		    })
 		  },
 		  error:function(){
-		    alert("Inside error");
+		    //alert("Inside error");
 		  }
 		});
 		
@@ -40,12 +40,12 @@
 		     if($(this).is(":checked")){
 		    	 //$(this).val('true');
 		    	 $('#isBillingAddressSame').prop('value', "true");
-		    	 alert($('#isBillingAddressSame').prop('value'));
-		         alert("Value set as true");
+		    	// alert($('#isBillingAddressSame').prop('value'));
+		         //alert("Value set as true");
 		     }else{
 		    	
 		    	 $('#isBillingAddressSame').prop('value', "false");
-		    	 alert($('#isBillingAddressSame').prop('value'));
+		    	 //alert($('#isBillingAddressSame').prop('value'));
 		     }
 		}); 
 		

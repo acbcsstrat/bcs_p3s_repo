@@ -3,72 +3,56 @@ app.component('transactionHistoryItem', {
 		transactionHistoryItem: '<'
 	},
 	templateUrl: 'p3sweb/app/components/transactions/views/transaction-history-item.htm',
-	controller: ['transactionHistoryService', function(transactionHistoryService){
+	controller: ['transactionHistoryTabService', function(transactionHistoryTabService){
 
 		var vm = this;
 
+	  	vm.tabs = transactionHistoryTabService.tabs;
+		vm.currentTab = transactionHistoryTabService.currentTab;
+
+	    vm.onClickTab = function(currentTab) {
+	        transactionHistoryTabService.onClickTab(currentTab);
+	        vm.currentTab = transactionHistoryTabService.currentTab;
+	    };
+
+	    vm.isActiveTab = function(tabUrl) {
+	        return tabUrl == transactionHistoryTabService.currentTab;
+	    }
+
 	    vm.$onChanges = function(changeObj){
 
-	    	var currTransStatus = vm.transactionHistoryItem.latestTransStatus;	
+	    	var currentItem = changeObj.transactionHistoryItem.currentValue;
+	    	console.log(currentItem)
+    	 	vm.patent = currentItem.renewalUIs;
+    	 	vm.transactionItemRef = currentItem.p3S_TransRef;
+    	 	vm.transactionPdf = currentItem.invoiceUrl;
+    	 	vm.transactionTotal = currentItem.transAmount_USD;
+    	 	// vm.transactionDate = currentItem.transStartDate;
 
-			vm.transStatus = [
-				{status: 'Initiated', active: false, complete: false}, 
-				{status: 'Pending', active: false, complete: false}, 
-				{status: 'Funds Received', active: false, complete: false},
-				{status: 'Funds Sent', active: false, complete: false},
-				{status: 'EPO Received', active: false, complete: false}, 
-				{status: 'EPO Instructed', active: false, complete: false, complete: false},
-				{status: 'Completed', active: false, complete: false}
-			];
+    	 	var init = function() {
+    	 		vm.transactionDate = new Date(currentItem.transStartDate)
+    	 	}
+    	 	
+    	 	init();
 
-			vm.checkProgress = function() {
-				var statusIndex;
-				vm.transStatus.forEach(function(data, index){
-					if(data.status == currTransStatus) {
-						statusIndex = index;
-					}
-				})
+	   		vm.transactionItem = [];
 
-				for(i=0; i <= statusIndex; i++){
-					vm.transStatus[i].active = true;
-				}
+	 		vm.patent.forEach(function(value, index, array){
 
-				for(i=0; i < statusIndex; i++) {
-					vm.transStatus[i].complete = true;
-				}
+	 			itemArray = []
+	 			itemArray.push(value);
 
-			}
+	 			itemArray.forEach(function(value, index, array){
 
-	    	switch(currTransStatus) {
-	    		case 'Initiated':
-	    			vm.transactionProgress = 12.28;
-	    		break;
-	    		case 'Pending':
-	    			vm.transactionProgress = 26.56;
-	    		break;
-	    		case 'Funds Received':
-	    			vm.transactionProgress = 40;
-	    		break;
-	    		case 'Funds Sent':
-	    			vm.transactionProgress = 55;
-	    		break;
-	    		case 'EPO Received':
-	    			vm.transactionProgress = 68.8;
-	    		break;
-	    		case 'EPO Instructed':
-	    			vm.transactionProgress = 83;
-	    		break;
-	    		case 'Completed':
-	    			vm.transactionProgress = 95;	    			    			    			    			    		
-	    	}
+	 				itemObj = {};
+	 				itemObj.fee = value.fee;
+	 				itemObj.patent = value.patentUI;
+	 				
+	 				vm.transactionItem.push(itemObj)
 
-	    	vm.renewalProgress = transactionHistoryService.renewalProgress(currTransStatus);		
+	 			})
+		 	})		 	
 
-	    	vm.patents = [];
-
-	 		vm.transactionHistoryItem.renewalUIs.forEach(function(value, index, array){
-	 			vm.patents.push(value)			
-		 	})
     	}
 
 	   

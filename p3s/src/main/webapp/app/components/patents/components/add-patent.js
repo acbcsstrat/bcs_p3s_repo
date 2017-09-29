@@ -1,20 +1,18 @@
 app.component('addpatent', {
 	templateUrl: 'p3sweb/app/components/patents/views/add-patent.htm',
-	controller: ['patentsRestService', '$state', '$stateParams', '$rootScope', function(patentsRestService, $state, $stateParams, $rootScope) {
+	controller: ['patentsService', '$state', '$stateParams', function(patentsService, $state, $stateParams) {
 
 		var vm = this;
-
-		$rootScope.page = 'Add Patent';
 
 		vm.patent = $stateParams.obj;
 
 	 	vm.submit = function(patent) {
 	 		console.log(patent)
-	    	patentsRestService.savePatent(patent)
+	    	patentsService.savePatent(patent)
 	            .then(function(){
 	             	$state.go('patents', {}, {reload: true})
 	             	.then(function(){
-		             		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
+		             		$timeout(function(){patentsService.fetchAllPatents()}, 400);
 		             	})
 		             },
 		            function(errResponse){
