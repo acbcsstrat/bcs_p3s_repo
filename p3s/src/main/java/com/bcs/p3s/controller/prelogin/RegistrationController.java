@@ -56,9 +56,15 @@ public class RegistrationController extends Universal{
 	        Business business = p3sUser.getBusiness();
 	        //hardcoded values .. need to be changed later 
 	        //business.setTimezone("utc");   /* commenting as value set from dropdown */
-	        business.setIsBillingAddressSame(false);
+	        //business.setIsBillingAddressSame(false);
 	        //hardcoded values end
 	        
+	        if(business.getIsBillingAddressSame()){
+	        	business.setBillingCity(business.getCity());
+	        	business.setBillingState(business.getUSstate());
+	        	business.setBillingStreet(business.getStreet());
+	        	business.setBillingZip(business.getZip());
+	        }
 	        business = engine.generatePinNumber(business);
 	        
 	        /** Checking whether the generated Business Number is unique **/

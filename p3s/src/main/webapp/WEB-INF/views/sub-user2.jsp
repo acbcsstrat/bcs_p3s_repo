@@ -35,7 +35,7 @@
 		    })
 		  },
 		  error:function(){
-		    alert("Inside error");
+		    //alert("Inside error");
 		  }
 		});
 		
@@ -45,12 +45,12 @@
 		     if($(this).is(":checked")){
 		    	 //$(this).val('true');
 		    	 $('#isBillingAddressSame').prop('value', "true");
-		    	 alert($('#isBillingAddressSame').prop('value'));
-		         alert("Value set as true");
+		    	 //alert($('#isBillingAddressSame').prop('value'));
+		        // alert("Value set as true");
 		     }else{
 		    	
 		    	 $('#isBillingAddressSame').prop('value', "false");
-		    	 alert($('#isBillingAddressSame').prop('value'));
+		    	 //alert($('#isBillingAddressSame').prop('value'));
 		     }
 		}); 
 		

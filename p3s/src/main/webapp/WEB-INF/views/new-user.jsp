@@ -36,16 +36,23 @@
 		
 		
 		 $('#isBillingAddressSame').change(function(){
-			alert("Inside function");
+			//alert("Inside function");
 		     if($(this).is(":checked")){
 		    	 //$(this).val('true');
 		    	 $('#isBillingAddressSame').prop('value', "true");
-		    	// alert($('#isBillingAddressSame').prop('value'));
+		    	 document.getElementById('isBillingAddressSameh').value="true";
+		    	// $('#isBillingAddressSame').prop('checked', "true");
+		    	 $('#billingAddress').hide();
+		    	 //alert($('#isBillingAddressSame').prop('value'));
 		         //alert("Value set as true");
 		     }else{
 		    	
 		    	 $('#isBillingAddressSame').prop('value', "false");
-		    	 //alert($('#isBillingAddressSame').prop('value'));
+		    	 $('#isBillingAddressSame').attr('value', "false");
+		    	 document.getElementById('isBillingAddressSameh').value="false";
+		    	 //$('#isBillingAddressSame').prop('checked', "false");
+		    	 $('#billingAddress').show();
+		    	// alert($('#isBillingAddressSame').prop('value'));
 		     }
 		}); 
 		
@@ -190,29 +197,33 @@
 				<legend class="font-weight-bold">Billing address</legend>
 				<div class="form-group row"><input type="checkbox" name="business.isBillingAddressSame" id="isBillingAddressSame" checked="checked" value="true"/> &nbsp; 
 					 Is billing address same as your business address?
+					 
+					 <input type="hidden" id="isBillingAddressSameh" name="business.isBillingAddressSame"/>
 				</div> 
-				<div class="form-group row">
-					<label class="col-md-5" for="billingStreet">Street</label>
-					<div class="col-md-7">
-						<input type="text" name="business.billingStreet" id="billingStreet" class="form-control" value='${p3sUser.business.billingStreet}' id="billing_street" required>
+				<div id="billingAddress" style="display:none">
+					<div class="form-group row">
+						<label class="col-md-5" for="billingStreet">Street</label>
+						<div class="col-md-7">
+							<input type="text" name="business.billingStreet" id="billingStreet" class="form-control" value='${p3sUser.business.billingStreet}' id="billing_street" >
+						</div>
 					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-md-5" for="billingCity">City</label>
-					<div class="col-md-7">
-						<input type="text" name="business.billingCity" class="form-control" value='${p3sUser.business.billingCity}' id="billing_city" required>
+					<div class="form-group row">
+						<label class="col-md-5" for="billingCity">City</label>
+						<div class="col-md-7">
+							<input type="text" name="business.billingCity" class="form-control" value='${p3sUser.business.billingCity}' id="billing_city" >
+						</div>
 					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-md-5" for="billing_state">State</label>
-					<div class="col-md-7">
-						<input type="text" name="business.billingState" class="form-control" value='${p3sUser.business.billingState}' id="billing_state" required>
+					<div class="form-group row">
+						<label class="col-md-5" for="billing_state">State</label>
+						<div class="col-md-7">
+							<input type="text" name="business.billingState" class="form-control" value='${p3sUser.business.billingState}' id="billing_state" >
+						</div>
 					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-md-5" for="billingZip">Zip</label>
-					<div class="col-md-7">
-						<input type="text" name="business.billingZip" class="form-control" value='${p3sUser.business.billingZip}' id="billing_zip" required>
+					<div class="form-group row">
+						<label class="col-md-5" for="billingZip">Zip</label>
+						<div class="col-md-7">
+							<input type="text" name="business.billingZip" class="form-control" value='${p3sUser.business.billingZip}' id="billing_zip" >
+						</div>
 					</div>
 				</div>
 			</fieldset>
