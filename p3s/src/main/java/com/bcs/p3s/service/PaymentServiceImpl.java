@@ -223,7 +223,10 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			currentPayment = commitTransaction(bankTransferPostCommitDetails,committedFee);
 			//create and send the orders file to MC -- to do MP <<<<IMP NOTE !!!!>>>>
 			if(!(currentPayment == null))
-				orders.createOrderCsv(currentPayment);
+
+				// orders.createOrderCsv(currentPayment);
+				notYet("Writing SFTP file to SFTP site is inhibited for now: PaymentServiceImpl line 227");
+			
 			else{
 				err += "Order file not created. Payment is null from commitTransaction(" + bankTransferPostCommitDetails +"," + committedFee +")";
 				logM().error(err);
@@ -277,7 +280,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			List<PatentExtendedData> sessionData = pLoginSession.getExtendedPatentUI();
 			for(PatentExtendedData eachSessionData : sessionData){
 				if(patentIds.contains(eachSessionData.getPatentId())){
-					latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost());
+					latestCalculatedCost = latestCalculatedCost.add(eachSessionData.getCurrentRenewalCost());
 				}
 			}
 			basketContents.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_CEILING));
