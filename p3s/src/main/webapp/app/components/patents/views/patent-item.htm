@@ -7,10 +7,10 @@
 				<h3>Status: {{$ctrl.patent.renewalStatus}}</h3>				
 		    </div>
 		    <div class="col-md-6">
-				<uib-progress><uib-bar value="$ctrl.progressBar">{{$ctrl.progressBar}}%</uib-bar></uib-progress>
+	    		<uib-progress><uib-bar ng-repeat="bar in $ctrl.stacked track by $index" value="bar.value" type="{{bar.type}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></uib-bar></uib-progress>
 		    </div>
 		    <div class="col-md-3">
-		    	<p>Next stage: {{$ctrl.nextStage()}}</p>
+		    	<p>Next stage: {{$ctrl.patent.costBandColour}}</p>
 		    	<p>Occurs: {{$ctrl.patent.costBandEndDateUI}}</p>
 		    </div>		    		    
 	    </div>
@@ -63,7 +63,6 @@
 							<h4>Patent Notifications</h4>
 							<uib-tabset active="activePill" vertical="true" type="pills">
 								<uib-tab index="0" heading="Green" ng-attr-id="$ctrl.patentNotifications.green" ng-init="$ctrl.displayNotifications($ctrl.patentNotifications.green)" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.green)">
-									<h3>{{$ctrl.colourPhase}} Stage</h3>
 									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 										<div class="col-md-4" ng-repeat="item in checkbox">
 											<label class="form-check-label">
@@ -72,8 +71,7 @@
 										</div>
 									</div>	
 							    </uib-tab>
-							    <uib-tab index="1" heading="Yellow" ng-attr-id="$ctrl.patentNotifications.amber" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.amber)">
-									<h3>{{$ctrl.colourPhase}} Stage</h3>
+							    <uib-tab index="1" heading="Yellow" ng-attr-id="$ctrl.patentNotifications.yellow" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.yellow)">
 									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 										<div class="col-md-4" ng-repeat="item in checkbox">
 											<label class="form-check-label">
@@ -83,7 +81,6 @@
 									</div>								    
 								</uib-tab>
 							    <uib-tab index="2" heading="Red" ng-attr-id="$ctrl.patentNotifications.red" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.red)">
-									<h3>{{$ctrl.colourPhase}} Stage</h3>
 									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 										<div class="col-md-4" ng-repeat="item in checkbox">
 											<label class="form-check-label">
@@ -93,7 +90,6 @@
 									</div>								    
 								</uib-tab>
 							    <uib-tab index="3" heading="Blue" ng-attr-id="$ctrl.patentNotifications.blue" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)">
-									<h3>{{$ctrl.colourPhase}} Stage</h3>
 									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 										<div class="col-md-4" ng-repeat="item in checkbox">
 											<label class="form-check-label">
@@ -102,8 +98,7 @@
 										</div>
 									</div>								    
 								</uib-tab>
-							    <uib-tab index="4" heading="Black" ng-attr-id="$ctrl.patentNotifications.black" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.black)">
-									<h3>{{$ctrl.colourPhase}} Stage</h3>
+							    <uib-tab index="4" heading="Black" ng-attr-id="$ctrl.patentNotifications.brown" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.black)">
 									<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 										<div class="col-md-4" ng-repeat="item in checkbox">
 											<label class="form-check-label">
@@ -135,29 +130,23 @@
 				</div>
 				<div class="row">
 					<div class="col-md-4">
-						<span>USD</span>
-						<p>$ {{$ctrl.patent.feeUI.subTotalUSD}}</p>
+						<span>EUR</span>
+						<p>{{$ctrl.patent.currentTotalEUR}}</p>
 					</div>
 					<div class="col-md-4">
 						<i class="fa fa-long-arrow-right fa-2x"></i>
 					</div>
 					<div class="col-md-4">
-						<span>EUR</span>
-						<p>€ {{$ctrl.patent.feeUI.subTotalEUR}}</p>
+						<span>USD</span>
+						<p>{{$ctrl.patent.currentRenewalCostUSD}}</p>
 					</div>
 				</div>
 				<div class="row">
-					<p>Yesterday's price: $ {{$ctrl.yesterdaysPrice}}</p>
+					<p>Yesterday's price:</p>
 				</div>
 				<div class="row">
-					<p>Price last week: $ {{$ctrl.lastWeeksPrice}}</p>
+					<p>Last week's price:</p>
 				</div>
-				<div class="row">
-					<p>Price last month: $ {{$ctrl.lastMonthsPrice}}</p>
-				</div>
-				<div class="row">
-					<p>Four week variation: $ {{$ctrl.lastMonthsPrice - $ctrl.yesterdaysPrice}}</p>
-				</div>							
 			</div>	
 	    </div>
     </uib-tab>
@@ -181,7 +170,7 @@
 							<h4>Cost breakdown</h4>
 						</div>
 						<div class="col-md-6">
-							<p>1 USD = {{$ctrl.usd2eur}} EUR</p>
+							<p>1 USD = {{$ctrl.usd2eur}}</p>
 						</div>	
 					</div>
 
@@ -198,18 +187,13 @@
 								<tr>
 									<td class="font-weight-bold">Official fee</td>
 									<td>{{$ctrl.feeBreakDown.renewalFeeEUR}}</td>
-									<td>{{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
+									<td>{{$ctrl.feeBreakDown.processingFeeEUR}}</td>
 								</tr>
 								<tr>
 									<td class="font-weight-bold">Processing fee</td>
 									<td>{{$ctrl.feeBreakDown.processingFeeEUR}}</td>
 									<td>{{$ctrl.feeBreakDown.processingFeeUSD}}</td>
 								</tr>
-								<tr>
-									<td class="font-weight-bold">Extension Fee</td>
-									<td>{{$ctrl.feeBreakDown.extensionFeeEur}}</td>
-									<td>{{$ctrl.feeBreakDown.extensionFeeUSD}}</td>
-								</tr>								
 								<tr>
 									<td class="font-weight-bold">Total</td>
 									<td>{{$ctrl.feeBreakDown.subTotalEUR}}</td>
@@ -218,17 +202,9 @@
 							</tbody>
 						</div>
 					</table>
-					<div class="row">
-						<div class="col-md-8">
-							<h5>Save:</h5>
-							<p>$ {{$ctrl.feeBreakDown.bandSaving().savings}}</p>
-							<p>Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>							
-						</div>
-						<div class="col-md-4">
-						 	<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-						 	</ngcart-addtocart>									
-						</div>						
-					</div>
+					<h5>Save:</h5>
+					<p>$ {{$ctrl.stageSavings}}</p>
+					<p>Renew before: {{$ctrl.renewBefore | date: dd-mm-yy}}</p>
 				</div>
 			</div>
 		</div>

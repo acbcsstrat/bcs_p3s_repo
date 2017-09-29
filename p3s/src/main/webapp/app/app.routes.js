@@ -1,36 +1,15 @@
-app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProvider', 'IdleProvider', '$mdThemingProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $qProvider, KeepaliveProvider, IdleProvider, $mdThemingProvider, slickCarouselConfig) {
+app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProvider', 'IdleProvider', function($stateProvider, $urlRouterProvider, $qProvider, KeepaliveProvider, IdleProvider) {
 
-    var customBlueMap =  $mdThemingProvider.extendPalette('light-blue', {
-        'contrastDefaultColor': 'light',
-        'contrastDarkColors': ['50'],
-        '50': 'ffffff'
-    });
-
-    $mdThemingProvider.definePalette('customBlue', customBlueMap);
-    $mdThemingProvider.theme('default')
-        .primaryPalette('customBlue', {
-          'default': '500',
-          'hue-1': '50'
-        })
-        .accentPalette('pink');
-    $mdThemingProvider.theme('altTheme')
-    .primaryPalette('purple')
-
-
-    IdleProvider.idle(570);
-    IdleProvider.timeout(30);
+    IdleProvider.idle(600);
+    IdleProvider.timeout(60);
     KeepaliveProvider.interval(5);
 
     $qProvider.errorOnUnhandledRejections(false);
 
     $urlRouterProvider
-        .when('', '/dashboard')
-        .when('/', '/dashboard')
-        .otherwise('/dashboard');
-
-    slickCarouselConfig.dots = true;
-    slickCarouselConfig.autoplay = false;
-
+        .when('', '/patents')
+        .when('/', '/patents')
+        .otherwise('/patents');
 
     $stateProvider
     .state('login', {
@@ -45,14 +24,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/dashboard',
         component: 'dashboard',
         resolve: {
-            patents: ['patentsRestService', function(patentsRestService) {
-                return patentsRestService.fetchAllPatents();
-            }],
-            transactions: ['currentTransactionsService', function(currentTransactionsService) {
-                return currentTransactionsService.fetchCurrentTransactions();
+            patents: ['patentsService', function(patentsService) {
+                return patentsService.fetchAllPatents();
             }]
-
-        }
+        }        
     })
     .state('profile', {
         url: '/profile',
@@ -70,8 +45,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         url: '/patents',
         component: 'patents',
         resolve: {
-            patents: ['patentsRestService', function(patentsRestService) {
-                return patentsRestService.fetchAllPatents();
+            patents: ['patentsService', function(patentsService) {
+                return patentsService.fetchAllPatents();
+            }],
+            renewals: ['patentsService', function(patentsService) {
+                return  patentsService.fetchRenewalHistory();
             }]
         },
         params: {
@@ -87,14 +65,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
                     return patent.id == $stateParams.patentId;
                 })
             }],
-            costAnalysis: ['patentsRestService', '$stateParams',function(patentsRestService, $stateParams) { 
-                return  patentsRestService.fetchCostAnalysis($stateParams.patentId);  
+            graph: ['patentsService', '$stateParams',function(patentsService, $stateParams) { 
+                return  patentsService.fetchGraphData($stateParams.patentId);  
             }],
-            renewal: ['patentsRestService','$stateParams', function(patentsRestService, $stateParams){
-                return  patentsRestService.fetchRenewalHistory($stateParams.patentId);  
-            }],
-            fx: ['fxService', function(fxService){
-
+            renewal: ['renewals', function(renewals){
+                return renewals;
             }]
         }
     })

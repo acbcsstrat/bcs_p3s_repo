@@ -2,7 +2,7 @@ app.factory('basketService', ['$http', '$q', function($http, $q){
 
 	var factory = {};
 
-		var REST_SERVICE_URI = domain+'rest-basket/';
+		var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-basket/';
 
 		factory.fetchBasketPatents = function(ids) {
 

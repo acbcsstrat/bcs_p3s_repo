@@ -1,211 +1,69 @@
 app.component('dashboard', {
-	bindings: { 
-		patents: '<',
-		transactions: '<' 
-	},
+	bindings: { patents: '<' },
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, dashboardService, fxService, patentsRestService) {
+	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope) {
 
 		var vm = this;
+
+
+
 		
-		$rootScope.page = 'Dashboard';
 
 		vm.$onInit = () => {
 
-      		$scope.date = new Date()
-	      	
-			var transactions = vm.transactions;
-			var patents = vm.patents;
+			var patents = vm.patents;			
 
-			patentsRestService.fetchAllPatents()
-				.then(
-					function(response){
-						response.forEach(function(item){
-							patentsRestService.fetchCostAnalysis(item.id)
-			                .then(
-			                    function(response){
-
-			                        switch(item.costBandColour) {
-			                            case 'Green':
-
-										var today = new Date().getTime();
-										var start = new Date(response.greenStartDate);
-										var end = new Date(response.amberStartDate);
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.greenRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})					                                
-
-			                                break;
-			                            case 'Amber':
-
-										var today = new Date().getTime();
-										var start = new Date(response.amberStartDate);
-										var end = new Date(response.redStartDate);
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.amberRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})					                         
-
-			                                break;
-			                            case 'Red':
-
-										var today = new Date().getTime();
-										var start = new Date(response.redStartDate);
-										var end = new Date(response.blueStartDate);
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.redRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})								
-
-			                                break;
-			                            case 'Blue':
-
-										var today = new Date().getTime();
-										var start = response.blueStartDate;
-										var end = response.blackStartDate;
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.blueRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})
-
-			                                break;
-			                            case 'Black':
-
-										var today = new Date().getTime();
-										var start = response.blackStartDate;
-										var end = response.blackEndDate;
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.blackRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})
-
-			                        } //switch end
-		                    
-			        	
-			                    }, 
-			                    function(errResponse){
-			                        console.log('no')
-			                    }
-		                    )
-		            	})
-			        
-		                
-					},
-					function(errResponse){
-
-					}
-			)//patents request end
-
-			//RECENT TRANSACTIONS	
-
-			vm.recentTransArr = [];
-
-			transactions.forEach(function(data){
-				var d = new Date().getTime();
-				var hours =  d - data.lastUpdatedDate;
-				var recentTrans  = millsToHours(data, hours);
-				if(recentTrans !== undefined) {
-					vm.recentTransArr.push(recentTrans)
-				}
-			})
-
-			function millsToHours(data, millisec) {
-
-		        var seconds = (millisec / 1000).toFixed(0);
-		        var minutes = Math.floor(seconds / 60);
-		        var hours = "";
-
-		        if (minutes > 59) {
-		            hours = Math.floor(minutes / 60);
-		            hours = (hours >= 10) ? hours : "0" + hours;
-		            minutes = minutes - (hours * 60);
-		            minutes = (minutes >= 10) ? minutes : "0" + minutes;
-		        }
-
-		        seconds = Math.floor(seconds % 60);
-		        seconds = (seconds >= 10) ? seconds : "0" + seconds;
-
-		        if (hours < 48) {
-		            return data
-		        }
-
-		    }
-
-		    //RECENT STAGE CHANGES
-
-		    vm.recentStageArr = [];
-
-		    //RECENT STAGE CHANGES
-
-		    vm.recentRenewalArr = [];
-
-			// vm.color = 0;
+			vm.color = 0;
 
 			vm.greenRenewals = [];
-			vm.amberRenewals = [];
+			vm.yellowRenewals = [];
 			vm.redRenewals = [];
 			vm.blueRenewals = [];
 			vm.blackRenewals = [];
 
 			//COLOUR KEY
 
-			vm.selectedPhase;
-
 			vm.colourKey = function(colour) {
-				console.log
 				switch(colour) {
 					case 0:
 						vm.colourPhaseTitle = {
-							title: 'Green',
-							descrip: 'lorem',
-							color: '#53ab58'
+							title: vm.labels[0],
+							descrip: 'lorem'
 						}
+						vm.blueCarousel = true;
 					break;
 					case 1:
 						vm.colourPhaseTitle = {
-							title: 'Yellow',
-							descrip: 'loremmm',
-							color: '#f9b233'						
+							title: vm.labels[1],
+							descrip: 'loremmm'
 						}
+						vm.colour = 1;
 					break;
 					case 2:
 						vm.colourPhaseTitle = {
-							title: 'Red',
-							descrip: 'lorem ipsum',
-							color: '#e30613'
+							title: vm.labels[2],
+							descrip: 'lorem ipsum'
 						}
+						vm.colour = 2;
 					break;
 					case 3:
 						vm.colourPhaseTitle = {
-							title: 'Blue',
-							descrip: '24 Week Extension',
-							color: '#0097ce'					
+							title: vm.labels[3],
+							descrip: 'ispum galtoria'
 						}
+						vm.colour = 3;
 					break;
 					case 4:
 						vm.colourPhaseTitle = {
-							title: 'Black',
-							descrip: 'herisuhimas',
-							color: '#3c3c3b'
+							title: vm.labels[4],
+							descrip: 'herisuhimas'
 						}
+						vm.colour = 4;
 				}
 			}
+
+
+
 
 			//TOTAL RENEWALS PIE CHART
 
@@ -218,8 +76,8 @@ app.component('dashboard', {
 					case 'Green':
 						vm.greenRenewals.push(item)
 					break;
-					case 'Amber':
-						vm.amberRenewals.push(item)
+					case 'Yellow':
+						vm.yellowRenewals.push(item)
 					break;
 					case 'Red':
 						vm.redRenewals.push(item)
@@ -231,149 +89,86 @@ app.component('dashboard', {
 						vm.blackRenewals.push(item)									
 				}
 
-				vm.data = [vm.greenRenewals.length, vm.amberRenewals.length, vm.redRenewals.length, vm.blueRenewals.length, vm.blackRenewals.length];
+				vm.data = [vm.greenRenewals.length, vm.yellowRenewals.length, vm.redRenewals.length, vm.blueRenewals.length, vm.blackRenewals.length];
 
 			})
 
-			vm.phaseSliderInfo = function(id) {
+	   		// $scope.$watch('activeTab', function (active) {
+		    // 	if (active !== undefined) {
+		    //   		console.log('slide ' + active + ' is active');
+		    // 	}		
+   	 	// 	}) 
 
-				vm.phaseArr = [];
 
-				var phase;
 
-				switch(id) {
+   	 		vm.phaseSliderInfo = function(id) {
+
+   	 			var phaseArr;
+
+   	 			switch(id) {
 					case 0:
-						phase = vm.greenRenewals;
+						phaseArr = vm.greenRenewals;
 					break;
 					case 1:
-						phase = vm.amberRenewals;
+						phaseArr = vm.yellowRenewals;
 					break;
 					case 2:
-						phase = vm.redRenewals;
+						phaseArr = vm.redRenewals;
 					break;
 					case 3:
-						phase = vm.blueRenewals;
+						phaseArr = vm.blueRenewals;
 					break;
 					case 4:
-						phase = vm.blackRenewals;								
-				}
-				
-				function loadPhase(i) {
-					vm.phaseArr.length = 0;
-						$timeout(function() {
-							vm.phaseArr = i;
-						}, 100);
-
+						phaseArr = vm.blackRenewals;								
 				}
 
-				loadPhase(phase)
+	 			$scope.myInterval = 0;
+			  	$scope.noWrapSlides = false;
+			  	$scope.active = 0;
+			  	var slides = $scope.slides = [];
+			  	var currIndex = 0;
 
+		 	 	$scope.addSlide = function() {
+		 	 		var length = slides.length % phaseArr.length;
+		 	 		// console.log(phaseArr)
+				    slides.push({
+			      		appNo: phaseArr[length].patentApplicationNumber,
+			      		description: phaseArr[length].shortTitle,
+			      		dueDate: phaseArr[length].renewalDueDateUI,
+			      		id: currIndex++
+			    	});
+			  	};
+
+			  	for (var i = 0; i < phaseArr.length; i++) {
+			    	$scope.addSlide();
+			  	}
+
+	  			 
 		  	} //phaseSliderInfoEnd
 
 		} //$onInit end	
 
-
-		$scope.currentIndex = 0;
-
-	    $scope.slickConfig = {
-	    	arrows: true,
-		    enabled: true,
-		    autoplay: false,
-		    draggable: false,
-		    autoplaySpeed: 3000,
-		    method: {},
-		    event: {
-		    	afterChange: function (event, slick, currentSlide, nextSlide) {
-	        		$scope.currentIndex = currentSlide;
-
-	        		function patentFx(i) {
-						var fees = vm.phaseArr[i].feeUI;
-	        			vm.todaysPriceUSD = fees.subTotalUSD;
-	        			vm.todaysPriceEUR = fees.subTotalEUR;
-	        			vm.selecetedPatent = i;
-	        			vm.totalCostUSD = fees.subTotalUSD;
-	        			$timeout(function() {
-	        				fxService.fetchFxWeek()
-				        	.then(
-				        		function(data){
-				        			var dateArr = [];
-				        			//weekly
-
-				        			data.forEach(function(item){
-				        				dateArr.push(item.rateActiveDate)
-				        			});
-
-				        			dateArr.sort(function(a, b){
-				        				return a - b
-				        			});        			
-
-				        			var tD = new Date().getTime();
-				        			var lwD = tD - 604800000; //subtract a week in milliseconds
-				        			var lastWeekD = new Date(lwD).getDay();
-				        			var lastWeekDt = new Date(lwD).getDate();
-
-				        			dateArr.forEach(function(item, index){
-				        				//yesterday
-				        				if(item == dateArr[0]) {
-				        					var yesterdayFx = data[index].rate;
-				        					vm.yesterdaysPriceUSD = Math.floor(fees.subTotalEUR * yesterdayFx);
-				        					vm.yesterdaysPriceEUR = Math.floor(fees.subTotalEUR);
-				        				}
-				        				//weekly
-				        				if((new Date(item).getDay() == lastWeekD) && (new Date(item).getDate() == lastWeekDt)) {
-				        					var lastWeekFx = data[index].rate;
-				        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
-				        					vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);
-				        				}
-				        			})
-				        		},
-				        		function(error){
-
-				        		}
-				    		)
-
-				    		fxService.fetchFxMonth()
-				        	.then(
-				        		function(data){
-
-				        			var dateArr = [];
-
-				        			data.forEach(function(item){
-				        				dateArr.push(item.rateActiveDate)
-				        			});
-
-				        			dateArr.sort(function(a, b){
-				        				return a - b
-				        			});
-
-				        			var tD = new Date().getTime();
-				        			var lmD = tD - 2629746000; //subtract a month in milliseconds
-				        			var lastMonthD = new Date(lmD).getDay();
-				        			var lastMonthDt = new Date(lmD).getDate();
-
-				        			dateArr.forEach(function(item, index){
-				        				if((new Date(item).getDay() == lastMonthD) && (new Date(item).getDate() == lastMonthDt)) {
-				        					var lastMonthFx = data[index].rate;
-				        					vm.lastMonthsPriceUSD = Math.floor(fees.subTotalEUR * lastMonthFx);
-				        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
-				        				}
-				        			})
-				        		},
-				        		function(error){
-
-				        		}
-				    		)	
-	        			}, 100);
-					}
-	        		patentFx($scope.currentIndex)
-		        },
-		    	init: function(event, slick, currentSlide, nextSlide) {
-		    		slick.slickGoTo($scope.currentIndex);
-		    	}
-		    }
-		};
-
+  		$scope.onSlideChanged = function (nextSlide, direction, currentIndex) {
+			    console.log(currentIndex);
+		}		
 		
 
-	}
+	}	
 })
+.directive('onCarouselChange', function($parse) {
+    return {
+        require: '^uibCarousel',
+        link: function(scope, element, attrs, carouselCtrl) {
+            var fn = $parse(attrs.onCarouselChange);
+            var origSelect = carouselCtrl.select;
+            carouselCtrl.select = function(nextSlide, direction, currentIndex) {
+                    fn(scope, {
+                        nextSlide: nextSlide,
+                        direction: direction,
+                        currentIndex: this.getCurrentIndex(this)
+                    });
+                return origSelect.apply(this, arguments);
+            };
+        }
+    };
+});
