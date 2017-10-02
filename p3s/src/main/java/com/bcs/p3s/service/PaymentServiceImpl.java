@@ -407,6 +407,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			else {
 				Invoice newInvoice = Invoice.findInvoice(invoice.getId());
 				String invoiceNumber = invoiceEngine.generateProFormaInvoiceNumber(newInvoice); 
+				newInvoice.setInvoiceNumber(invoiceNumber);
+				newInvoice.merge();
 				
 				log().debug("Persisted Invoice Table. " + msg + "and returned invoice details with id as " + invoice.getId()
 				+ ", Invoice Number "+invoice.getInvoiceNumber());
