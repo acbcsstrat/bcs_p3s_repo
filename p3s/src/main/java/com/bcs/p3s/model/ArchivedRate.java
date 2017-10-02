@@ -63,11 +63,15 @@ public class ArchivedRate {
     //METHOD TO GET LAST 6 DAYS RATE
     
     public static List<ArchivedRate> findListArchivedRate() {
-        String jpaQuery = "SELECT o FROM ArchivedRate o order by o.activeFromDate desc";
+        /*String jpaQuery = "SELECT o FROM ArchivedRate o order by o.activeFromDate desc";
 
-        TypedQuery<ArchivedRate> query  = entityManager().createQuery(jpaQuery, ArchivedRate.class);
-        query.setMaxResults(6); 
-        List<ArchivedRate> mostRecent = (List<ArchivedRate>) query.getResultList();
+        TypedQuery<ArchivedRate> query  = entityManager().createQuery(jpaQuery, ArchivedRate.class);*/
+    	
+    	List<ArchivedRate> query  = ArchivedRate.findAllArchivedRates();
+        //query.setMaxResults(6);
+    	int size = query.size();
+       // query.subList(size, size-5);
+        List<ArchivedRate> mostRecent = (List<ArchivedRate>) query.subList(size-5, size);
         System.out.println("   size of latest ONE ArchivedRate is "+mostRecent.size());
         
         return mostRecent;

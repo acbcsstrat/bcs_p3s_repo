@@ -1,16 +1,24 @@
 package com.bcs.p3s.engine;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.Calendar;
 import java.util.Date;
 
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.util.date.DateUtil;
+import com.bcs.p3s.util.lang.Universal;
 
-public class RenewalDatesEngine {
+public class RenewalDatesEngine extends Universal{
+	
+	protected String PREFIX = this.getClass().getName() + " : "; 
 	
 	public RenewalDates getRenewalDates(Patent patent){
 			
+			String msg = PREFIX + "getRenewalDates(" +patent.getId() +")"; 
+			
+			log().debug(msg +" invoked for patent  [" + patent.getPatentApplicationNumber() + "]");
 			RenewalDates allDates = new RenewalDates();
 			
 			/** Call to PatentStatusEngine to get the current window dates **/
@@ -127,6 +135,7 @@ public class RenewalDatesEngine {
 		    	    allDates.setCurrentRenewalDueDate(actualPrevRenewalDate.getTime());
 		    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
 		    		allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
+		    		
 		        }
 		        
 		        else{
@@ -162,6 +171,13 @@ public class RenewalDatesEngine {
 		        }
 		        
 		        allDates.setRenewalYear(renewalYear);
+		        
+		        log().debug("CURRENT Renewal Year for patent [" + patent.getPatentApplicationNumber() +"] is " + allDates.getRenewalYear());
+		        log().debug("CURRENT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getCurrentRenewalDueDate());
+	    	    log().debug("CURRENT renewal window starts on "+ allDates.getCurrentWindowOpenDate() + " and ends on " + allDates.getCurrentWindowCloseDate());
+	    	    
+	    		log().debug("NEXT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
+	    		log().debug("NEXT renewal window starts on "+ allDates.getNextWindowOpenDate() + " and ends on " +  allDates.getNexttWindowCloseDate());
 			
 			
 			return allDates;

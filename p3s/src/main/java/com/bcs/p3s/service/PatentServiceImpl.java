@@ -482,6 +482,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	@Override
 	public CostAnalysisData getCostAnalysisData(long id)  {
 
+		String msg = PREFIX+"getCostAnalysisData("+id+") ";
+		log().debug( msg  + " invoked for patent id " + id);
 		CostAnalysisDataEngine costEngines = new CostAnalysisDataEngine();
 		CostAnalysisData caData = new CostAnalysisData();
 		
@@ -490,7 +492,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		RenewalDates allDates = new RenewalDates();
 		Patent patent = Patent.findPatent(id);
 		System.out.println("Got the new patent with filing date as " + patent.getFilingDate());
-		
+		log().debug("Queried database for patent id " + id+" and got hte filing date as " + patent.getFilingDate());
 		/** Check whether current business has got any reduced Fees.
 		 * 		If so get the discounted rates ( PROCESSING FEE, EXPRESS FEE, URGENT FEE AND LATE PAY PENALTY )
 		 * 		Else get the actual P3SFEESOLE entries

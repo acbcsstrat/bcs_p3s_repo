@@ -37,8 +37,10 @@ import com.bcs.p3s.wrap.CombinedFee;
 
 public class CostAnalysisDataEngine extends Universal{
 	
+	protected String PREFIX = this.getClass().getName() + " : "; 
 	
 	DateUtil utils = new DateUtil();
+	
 	public RenewalDates getRenewalWindowDates(Patent patent) throws ParseException{
 	//public static void main(String[] args) throws ParseException{
 		
@@ -387,7 +389,8 @@ public class CostAnalysisDataEngine extends Universal{
 		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
 		//List<ArchivedRate> archivedRateListPart = new ArrayList<ArchivedRate>();
 		//MP - need to look into this method later
-		archivedRateList = ArchivedRate.findArchivedRateEntries(0, 5); //getting the last 6 days rate
+		//archivedRateList = ArchivedRate.findArchivedRateEntries(0, 5); //getting the last 6 days rate
+		archivedRateList = ArchivedRate.findListArchivedRate();
 		
 		return archivedRateList;
 	}
@@ -420,6 +423,8 @@ public class CostAnalysisDataEngine extends Universal{
 	
 	public CombinedFee getFeeObj(Patent patent){
 		
+		String msg = PREFIX + " getFeeObj(" + patent.getId() + ")" ;
+		log().debug(msg +" invoked for patent [" + patent.getId() + "]");
 		CombinedFee combinedFee = new CombinedFee();
 		P3SFeeSole p3sFee = new P3SFeeSole();
 		EpoFee epoFee = new EpoFee();
@@ -437,11 +442,13 @@ public class CostAnalysisDataEngine extends Universal{
 		 *  **/
 		TypedQuery<DiscountPercent> query  =  DiscountPercent.findDiscountPercentsByBusiness(patent.getBusiness());
 		if(query.getResultList().size() > 0){
+			log().debug("Current patent [id = " + patent.getId() + "] is ELIGIBLE for DISCOUNTED FEES");
 			isDiscountedRate = true;
 			DiscountPercent discountRate = query.getSingleResult();
 			p3sFee = costEngines.findDiscountedFees(discountRate);
 		}
 		else{
+			log().debug("Current patent [id = " + patent.getId() + "] is NOT ELIGIBLE for DISCOUNTED FEES");
 			p3sFee = P3SFeeSole.findP3SFeeSole((long) 1);  //passing 1 as P3SSoleFee will be having single entry every time 
 		}
 		
@@ -461,6 +468,13 @@ public class CostAnalysisDataEngine extends Universal{
 		combinedFee.setP3sFee(p3sFee);
 		combinedFee.setEpoFee(epoFee);
 		combinedFee.setFxRate(fxRate);
+		
+		log().debug(msg + " returning with calculated fees for RENEWAL YEAR ["+ patent.getRenewalYear() +"]as :: "
+						+ "Express Fee Percent= " + combinedFee.getP3sFee().getExpressFee_Percent()
+				 		+ ", Processing Fee USD = " + combinedFee.getP3sFee().getProcessingFee_USD()
+		 				+ ", Urgent Fee Percent = " + combinedFee.getP3sFee().getUrgentFee_Percent()
+		 				+ ", Renewal Fee EUR = " + combinedFee.getEpoFee().getRenewalFee_EUR()
+		 				+ ", Extension Fee EUR = " + combinedFee.getEpoFee().getExtensionFee_EUR());
 		
 		return combinedFee;
 	}
