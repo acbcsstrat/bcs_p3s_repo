@@ -1,9 +1,11 @@
-var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment']);
+var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment', 'ngTable']);
 
 app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(Idle, userService, $rootScope, amMoment, $timeout) {
 
 
     $rootScope.page = '';
+
+    $rootScope.color = 'green';
 
     userService.fetchUser()
     .then(
@@ -18,8 +20,8 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 	Idle.watch();
 
     function timeZoneClocks() {
-            var cet = moment.tz("Europe/London").format('HH:mm d/m/YY');
-            var est = moment.tz("America/Los_Angeles").format('HH:mm d/m/YY');
+            var cet = moment.tz("Europe/London").format('HH:mm d/MM/YY');
+            var est = moment.tz("America/Los_Angeles").format('HH:mm d/MM/YY');
         
         var t = $timeout(function() {
 

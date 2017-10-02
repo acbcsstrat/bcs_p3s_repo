@@ -73,9 +73,17 @@
 					</div>		    			
 					<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 						<div class="col-md-4" ng-repeat="item in checkbox">
-							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
-							</label>
+							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+								<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
+									{{item.title}}
+									<div class="onoffswitch">
+										<label class="switch font-sm">
+										  <input type="checkbox" ng-model="item.isOn">
+										  <span class="slider round"></span>
+										</label>
+									</div>
+								</div>
+							</div>	
 						</div>
 					</div>
  					<div class="form-group row">

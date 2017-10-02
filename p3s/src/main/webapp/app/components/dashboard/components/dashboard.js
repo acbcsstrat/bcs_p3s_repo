@@ -112,7 +112,10 @@ app.component('dashboard', {
 					}
 			)//patents request end
 
-			//RECENT TRANSACTIONS	
+			//RECENT TRANSACTIONS
+
+			vm.currentphase = 'blue';
+
 
 			vm.recentTransArr = [];
 
@@ -124,6 +127,8 @@ app.component('dashboard', {
 					vm.recentTransArr.push(recentTrans)
 				}
 			})
+
+			console.log(vm.recentTransArr)
 
 			function millsToHours(data, millisec) {
 
@@ -211,7 +216,9 @@ app.component('dashboard', {
 
 			vm.totalPatents = patents.length;
 
-			vm.labels = ["Green", "Yellow", "Red", "Blue", "Black"];
+			vm.labels = ["Black", "Blue", "Red", "Yellow", "Green"];
+
+			vm.pieChartColours = ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
 
 			patents.forEach(function(item){
 				switch(item.costBandColour) {
@@ -231,7 +238,7 @@ app.component('dashboard', {
 						vm.blackRenewals.push(item)									
 				}
 
-				vm.data = [vm.greenRenewals.length, vm.amberRenewals.length, vm.redRenewals.length, vm.blueRenewals.length, vm.blackRenewals.length];
+				vm.data = [vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
 
 			})
 
@@ -311,7 +318,7 @@ app.component('dashboard', {
 				        			var lwD = tD - 604800000; //subtract a week in milliseconds
 				        			var lastWeekD = new Date(lwD).getDay();
 				        			var lastWeekDt = new Date(lwD).getDate();
-
+				        			// console.log(lastWeekD, lastWeekDt)
 				        			dateArr.forEach(function(item, index){
 				        				//yesterday
 				        				if(item == dateArr[0]) {
@@ -320,7 +327,9 @@ app.component('dashboard', {
 				        					vm.yesterdaysPriceEUR = Math.floor(fees.subTotalEUR);
 				        				}
 				        				//weekly
-				        				if((new Date(item).getDay() == lastWeekD) && (new Date(item).getDate() == lastWeekDt)) {
+
+				        				if((new Date(item).getDay() == lastWeekD)) { //NEEDS TO BE FIXED
+				        					console.log('what')
 				        					var lastWeekFx = data[index].rate;
 				        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
 				        					vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);

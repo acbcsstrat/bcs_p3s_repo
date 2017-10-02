@@ -1,89 +1,126 @@
-<uib-tabset type="pills">
-	<uib-tab heading="Transaction Details">
-		<div class="row">
-			<div class="col-md-2">
-				<h2>Transaction ID</h2>
-				<p ng-bind="$ctrl.transaction.p3S_TransRef"></p>
-			</div>
-			<div class="col-md-2">
-				<h2>Transaction Initated</h2>
-				<p>{{$ctrl.transaction.transStartDateUI}}</p>
-			</div>
-			<div class="col-md-8">
-				<h2>{{$ctrl.transaction.latestTransStatus}}</h2>
-				<div class="steps">
-				    <ul id="progressTracker" class="steps-container">
-				        <li style="width:14.28%;" ng-repeat="li in $ctrl.transStatus track by $index" ng-init="activated = $ctrl.checkProgress()" ng-class="{true:'activated', 	false: ''}[li.active]">
-				            <div class="step">
-				                <div class="step-image"><span></span></div>
-				                <div class="step-current"><span>{{li.status}}</span></div>
-				            </div>
-				        </li>
-				    </ul>
-				    <div class="step-bar"  ng-style="{ 'width': $ctrl.transactionProgress + '%' }"></div>
-				</div>
+<div class="selected-item-panel">
+	<div class="row m-b-lg">
+		<div class="col-md-4">
+			<div class="view-tabs">
+				<ul class="nav view-pills">
+					<li class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs active" ng-click="activeSelectedTab = 0">Transaction Details</li>
+				</ul>
 			</div>
 		</div>
+	</div>
 
-		<div ng-repeat="transaction in $ctrl.patents">
-			<div class="row">
-				<div class="col-md-2">
-					<p class="font-weight-bold">App No</p>
-					<p ng-bind="transaction.patentUI.patentApplicationNumber"></p>
-				</div>			
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<p class="font-weight-bold">Client Ref: <span class="font-weight-normal" ng-bind="transaction.patentUI.clientRef"></span></p>
-					<p class="font-weight-bold">Description: <span class="font-weight-normal" ng-bind="transaction.patentUI.title"></span></p>
-					<table class="table">
-						<tbody>
-							<tr>
-								<td class="font-weight-bold">Official fee: <span class="font-weight-normal" ng-bind="transaction.feeUI.renewalFee_USD"></span></td>
-							</tr>
-							<tr>
-								<td class="font-weight-bold">Processing fee: <span class="font-weight-normal" ng-bind="transaction.feeUI.processingFee_USD"></span></td>
-							</tr>
-							<tr>
-								<td class="font-weight-bold">EPO surcharge: <span class="font-weight-normal" ng-bind="transaction.feeUI.extensionFee_USD"></span></td>
-							</tr>
-							<tr>
-								<td class="font-weight-bold">Urgent clearance fee: <span class="font-weight-normal" ng-bind="transaction.feeUI.urgentFee_USD"></span></td>
-							</tr>	
-							<tr>
-								<td class="font-weight-bold">Sub-total: <span class="font-weight-normal" ng-bind="transaction.feeUI.subTotal_USD"></span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="col-md-6 text-xs-center">
-					<div>
-						<h4 ng-bind="transaction.renewalStatus"></h4>
-						<div ng-if="transaction.renewalStatus == 'Payment in progress'">
-							<div class="progress-tracker">
-								<uib-progress><uib-bar value="$ctrl.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
-							</div>
-							<p>ipsum</p>			
-						</div>			
-						<div ng-if="transaction.renewalStatus == 'EPO Instructed'">
-							<p>Lorem</p>
-							<div class="progress-tracker">
-							<uib-progress><uib-bar value="$ctrl.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
+	<div class="bg-white">
+		<uib-tabset type="pills" active="activeSelectedTab">
+			<uib-tab heading="Transaction Detailss" index="0" ng-hide="true">
+				<div class="selected-item-panel__head border-grey-xs--btm">
+					<div class="row d-flex align-items-center">
+						<div class="col-md-2">
+							<p class="font-weight-bold font-lg">Transaction ID</p>
+							<p class="font-md font-xl" ng-bind="$ctrl.transaction.p3S_TransRef"></p>
+						</div>
+						<div class="col-md-2">
+							<p class="font-weight-bold font-xl">Transaction Initated</p>
+							<p class="font-xl">{{$ctrl.transaction.transStartDateUI}}</p>
+						</div>
+						<div class="col-md-8 text-right">
+							<p class="font-weight-bold font-xl">{{$ctrl.transaction.latestTransStatus}}</p>
+							<div class="steps">
+							    <ul id="progressTracker" class="steps-container">
+							        <li style="width:14.28%;" ng-repeat="li in $ctrl.transStatus track by $index" ng-init="activated = $ctrl.checkProgress()" ng-class="{true:'activated', 	false: ''}[li.active]">
+							            <div class="step">
+							                <div class="step-image"><span></span></div>
+							                <div class="step-current"><span>{{li.status}}</span></div>
+							            </div>
+							        </li>
+							    </ul>
+							    <div class="step-bar"  ng-style="{ 'width': $ctrl.transactionProgress + '%' }"></div>
 							</div>
 						</div>
-						<div ng-if="transaction.renewalStatus == 'Renewal in place'">
-							<p>Lorem</p>
-							<div class="progress-tracker">
-							<uib-progress><uib-bar value="$ctrl.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
-							</div>
-						</div>						
-	
 					</div>
-				</div>			
-			</div>
-		</div>
-	</uib-tab>
-</uib-tabset>
+				</div>
+				
+				<div ng-repeat="transaction in $ctrl.patents" class="border-grey-xs--btm">
+					<div class="selected-item-panel__body">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="m-b-md">
+									<p class="font-weight-bold font-lg">App No: <span class="font-weight-normal" ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
+									<p class="font-weight-bold font-lg">Client Ref: <span class="font-weight-normal" ng-bind="transaction.patentUI.clientRef"></span></p>
+									<p class="font-weight-bold font-lg">Description: <span class="font-weight-normal" ng-bind="transaction.patentUI.title"></span></p>					
+								</div>
+								<div class="row m-b-sm">
+									<div class="col-md-6">
+										<p class="font-weight-bold font-md">Official fee: </p>
+									</div>
+									<div class="col-md-6">
+										<p class="font-md">$ {{transaction.feeUI.renewalFee_USD}}</p>
+									</div>
+								</div>
+								<div class="row m-b-sm">
+									<div class="col-md-6">
+										<p class="font-weight-bold font-md">Processing fee: </p>
+									</div>
+									<div class="col-md-6">
+										<p class="font-md">$ {{transaction.feeUI.processingFee_USD}}</p>
+									</div>
+								</div>
+								<div class="row m-b-sm">
+									<div class="col-md-6">
+										<p class="font-weight-bold font-md">EPO surcharge: </p>
+									</div>
+									<div class="col-md-6">
+										<p class="font-md">$ {{transaction.feeUI.extensionFee_USD}}</p>
+									</div>
+								</div>
+								<div class="row m-b-sm">		
+									<div class="col-md-6">
+										<p class="font-weight-bold font-md">Urgent clearance fee: </p>
+									</div>
+									<div class="col-md-6">
+										<p class="font-md">$ {{transaction.feeUI.urgentFee_USD}}</p>
+									</div>	
+								</div>
+								<div class="row m-b-sm">
+									<div class="col-md-6">
+										<p class="font-weight-bold font-md">Sub-total: </p>
+									</div>
+									<div class="col-md-6">
+										<p class="font-md">$ {{transaction.feeUI.subTotal_USD}}</p>
+									</div>	
+								</div>
+							</div>							
+							<div class="col-md-6 text-xs-center">
+								<div class="selected-item-panel__body bg-light-grey">
+									<div class="progress-trans">
+										<p class="font-xl font-weight-bold m-b-sm" ng-bind="transaction.renewalStatus"></p>
+										<div ng-if="transaction.renewalStatus == 'Payment in progress'">
+											<div class="progress-tracker m-b-sm">
+												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="33" max="100" class="tracker-item"></uib-bar></uib-progress>
+											</div>
+											<p>ipsum</p>			
+										</div>			
+										<div ng-if="transaction.renewalStatus == 'EPO Instructed'">
+											<p>Lorem</p>
+											<div class="progress-tracker m-b-sm">
+												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="66" max="100" class="tracker-item"></uib-bar></uib-progress>
+											</div>
+										</div>
+										<div ng-if="transaction.renewalStatus == 'Renewal in place'">
+											<p>Lorem</p>
+											<div class="progress-tracker m-b-sm">
+												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="100" max="100" class="tracker-item"></uib-bar></uib-progress>
+											</div>
+										</div>						
+									</div>
+								</div>
+							</div>		
+						</div>
+					</div>
+				</div>
+			</uib-tab>
+		</uib-tabset>
+	</div>
+</div>
 
    
     

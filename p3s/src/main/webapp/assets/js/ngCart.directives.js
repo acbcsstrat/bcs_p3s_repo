@@ -100,6 +100,42 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
                 var productData = ngCart.$cart.items;
 
+                var processingFeeArr = [];
+                var renewalFeeArr = [];
+                var extensionFeeArr = [];
+                var urgentFeeArr = [];
+
+                $scope.processingFee = 0;
+                $scope.renewalFee = 0;
+                $scope.extensionFee = 0;
+                $scope.urgentFee = 0;
+                
+                productData.forEach(function(data, i){
+
+                    processingFeeArr.push(data._data.feeUI.processingFeeUSD)
+                    renewalFeeArr.push(data._data.feeUI.renewalFeeUSD)
+                    extensionFeeArr.push(data._data.feeUI.extensionFeeUSD)
+                    urgentFeeArr.push(data._data.feeUI.urgentFeeUSD)
+                })
+
+                processingFeeArr.forEach(function(data, i){
+                    $scope.processingFee += data;
+                })
+                renewalFeeArr.forEach(function(data, i){
+                    $scope.renewalFee += data;
+                })
+                extensionFeeArr.forEach(function(data, i){
+                    $scope.extensionFee += data;
+                })
+                urgentFeeArr.forEach(function(data, i){
+                    console.log($scope.urgentFee)
+                    $scope.urgentFee += data;
+                })
+
+
+
+
+
                 $scope.checkout = function () {
 
                     var patent_ids = [];
@@ -110,6 +146,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                         cartItems = productData[data]._data;
                         patent_ids.push(cartItems.id);
                     })
+
 
                     var patentObj = {
                         patent_ids: patent_ids,

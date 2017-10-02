@@ -1,18 +1,22 @@
 <transactionnav></transactionnav>
 
-<form class="form-inline mb-2">
-	<div class="form-group">
-		<div class="input-group">
-			<div class="input-group-addon"><i class="fa fa-search"></i></div>
-			<input type="text" class="form-control mr-2" id="p3S_TransRef" name="p3S_TransRef" ng-model="searchTrans">
-		</div>
+<div class="row m-b-md">
+	<div class="col-md-3 offset-md-9">
+		<form class="form-inline">
+			 <div class="col-md-12">
+			 	<div class="input-group">
+					<input type="text" class="form-control pill-radius font-md" id="transId" name="transId" ng-model="searchTrans" placeholder="Search">
+					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+				</div>		
+			</div>	 
+		</form>
 	</div>
-</form>
+</div>
 
 <div class="row">
 	<div class="col-md-12">
-		<table class="table table-bordered table-striped text-md-center scroll">
-			<thead>
+		<table class="table table-bordered text-md-center scroll t-list font-md m-b-lg">
+			<thead class="thead-inverse font-weight-bold">
 				<tr>
 					<td width="15%" class="align-middle">
 						<a ng-click="$ctrl.sortType = 'transId'; $ctrl.sortReverse = !$ctrl.sortReverse">Transaction ID <!--show if not showing(false)-->
@@ -20,7 +24,7 @@
 							<span ng-show="$ctrl.sortType == 'transId' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
 					</td>
-					<td width="10%" class="align-middle">
+					<td width="8%" class="align-middle">
 						<a ng-click="$ctrl.sortType='patentTotal'; $ctrl.sortReverse = !$ctrl.sortReverse">No. of patents 
 							<span ng-show="$ctrl.sortType == 'patentTotal' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							<span ng-show="$ctrl.sortType == 'patentTotal' && $ctrl.sortReverse" class="fa fa-caret-down"></span>							
@@ -38,7 +42,7 @@
 							<span ng-show="$ctrl.sortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
 					</td>					
-					<td width="10%" class="align-middle">
+					<td width="12%" class="align-middle">
 						<a ng-click="$ctrl.sortType='transDate'; $ctrl.sortReverse=!$ctrl.sortReverse">Transaction Initiated
 							<span ng-show="$ctrl.sortType == 'transDate' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							<span ng-show="$ctrl.sortType == 'transDate' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
@@ -59,12 +63,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="transaction in $ctrl.transactionHistory | orderBy:sortType:sortReverse | filter:searchTrans">
+				<tr ng-click="$ctrl.rowSelect($event)" ng-repeat="transaction in $ctrl.transactionHistory | orderBy:sortType:sortReverse | filter:searchTrans">
 					<td width="15%">
-						<a ui-sref="current-transactions.current-transaction-item({transId: transaction.id})">{{transaction.p3S_TransRef}}</a>
+						<a class="txt-black" ui-sref="transaction-history.transaction-history-item({transHistoryId: transaction.id})" disabled>{{transaction.p3S_TransRef}}</a>
 					</td>
 					<td width="10%">
-						{{transaction.transStartDateUI}}
+						{{transaction.renewalUIs.length}}
 					</td>
 					<td width="15%">
 						<span ng-if="transaction.renewalUIs.length == 1" ng-repeat="item in transaction.renewalUIs">
@@ -72,7 +76,7 @@
 								{{item.patentUI.patentApplicationNumber}}<br>
 							</span>								
 						</span>
-						<select ng-if="transaction.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in transaction.renewalUIs" ng-model="data.selectedOption">
+						<select ng-if="transaction.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in transaction.renewalUIs" ng-model="data.selectedOption" class="pill-radius p-select-option border-xs-grey">
 							<option value="" disabled selected>Multiple</option>									
 						</select>						
 
@@ -81,19 +85,18 @@
 						<span ng-repeat="item in transaction.renewalUIs">{{item.patentUI.clientRef}}<br></span>	
 					</td>
 					<td width="10%">{{transaction.transStartDateUI}}</td>
-					<td width="10%">{{transaction.transAmount_USD}}</td>
+					<td width="10%">$ {{transaction.transAmount_USD}}</td>
 					<td width="20%">
-						<p>{{transaction.latestTransStatus}}</p>
-						<div class="progress-tracker">
-						<uib-progress><uib-bar value="transaction.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
-							
+						<p class="font-weight-bold">{{transaction.latestTransStatus}}</p>
+						<div class="progress-tracker progress-trans">
+							<uib-progress><uib-bar class="bg-phase-green pill-radius" value="transaction.renewalProgress" max="100" class="tracker-item"></uib-bar></uib-progress>
 						</div>						
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<ui-view></ui-view>
+		<div ui-view></div>	
 	</div>
-</div>				
+</div>					
 
 

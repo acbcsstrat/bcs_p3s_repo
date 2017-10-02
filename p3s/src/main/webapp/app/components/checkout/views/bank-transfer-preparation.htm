@@ -1,45 +1,90 @@
 <div class="row" ng-controller="CartController">
-	<div class="col-md-6">
-		<p>Please check the transaction details. When you press the 'Complete payment' button below, you are entering into a legal contract  with.</p>
-		<p>You will be shown the (US) bank account details, to which you must make online payment.</p>
-		<p>The funds must be received by our US account, by:</p>
-		<p>{{patentObj.transTargetEndDateUI}} (Daylight time if appropriate and possible!)</p>
-		<p>The exchange rate offered will be held until that time. Thereafter, if no payment is made, penalty charges apply, and will continue to accrue</p>
-	</div>
-	<div class="col-md-6">
-		<table class="table">
-			<tbody>
-				<tr">
-					<td>Patents: </td>
-					<td>
-						<span ng-repeat="p in $ctrl.patentObj.patents">{{p}}<br></span>
-					</td>
-				</tr>
-				<tr>
-					<td>Total patents: </td>
-					<td>{{$ctrl.patentObj.totalPatents}}</td>
-				</tr>
-				<tr>
-					<td>Date: </td>
-					<td> {{$ctrl.patentObj.dateNowLocalTime}} </td>
-				</tr>
-				<tr>
-					<td>Total Cost</td>
-                    <td>{{$ctrl.patentObj.totalCostUSD}}</td>
-				</tr>				
-			</tbody>
-		</table>
-		<div class="row">
-			<div class="col-md-4">
-			<div ng-if="service=='http' || service == 'log'">
-				<button class="btn btn-danger btn-block btn-lg">Cancel transaction</button>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<button class="btn btn-primary btn-block btn-lg" ng-click="$ctrl.commitTransfer()">Complete payment</button>		
-			</div>
-		</div>
-		
+    <div class="col-md-6">
+        <div class="content-panel bg-white">
+            <div class="content-panel__head border-grey-xs--btm">
+                <h3 class="font-xl font-weight-bold">Important notice</h3>
+            </div>
+            <div class="p-a-sm-wide border-grey-xs--btm">
+                <p class="font-md m-b-md">Please check the transaction details. When you press the 'Complete payment' button below, you are entering into a legal contract  with.  Tbe shown the (US) bank account details, to which you must make online payment. <span class="font-weight-medium">The funds must be received by our US account, by:</span></p>
+                <p class="font-weight-bold font-xl m-b-md">{{$ctrl.patentObj.transTargetEndDateUI}}</p>		
+				<p class="font-md">The exchange rate offered will be held until that time. Thereafter, if no payment is made, penalty charges apply, and will continue to accrue</p>
+            </div>
+           
+           
 
+        </div>
+
+    </div>
+	<div class="col-md-6">
+        <div class="content-panel bg-white">
+            <div class="content-panel__head border-grey-xs--btm">
+                <h3 class="font-xl font-weight-bold">Important notice</h3>
+            </div>
+             <div class="content-panel__body border-grey-xs--btm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="m-b-md">
+                            <div class="row font-lg">
+                                <div class="col-md-8">
+                                    <p class="font-weight-bold">Patents</p>                        
+                                </div>
+                                <div class="col-md-4">
+                                    <span ng-repeat="p in $ctrl.patentObj.patents">{{p}}<br></span>
+                                </div>                               
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="row font-lg">                                
+                                <div class="col-md-8">
+                                    <p class="font-weight-bold">Total patents</p>                        
+                                </div>                    
+                                <div class="col-md-4">
+                                    <p>{{$ctrl.patentObj.totalPatents}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="row font-lg">                                
+                                <div class="col-md-8">
+                                    <p class="font-weight-bold">Date</p>                        
+                                </div>                  
+                                <div class="col-md-4">
+                                    <p>{{$ctrl.patentObj.dateNowLocalTime}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row font-lg">                         
+                                <div class="col-md-8">
+                                    <p class="font-weight-bold">Total Cost</p>                        
+                                </div>
+                                <div class="col-md-4">
+                                    <p>$ {{$ctrl.patentObj.totalCostUSD}}</p>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>                       
+                </div>
+            </div>
+			<div class="content-panel__head">
+			<div class="row">
+					<div class="col-md-4">
+						<button class="btn bg-phase-red btn-block btn-lg font-weight-bold txt-white" ng-click="ngCart.empty()" ui-sref="patents">Cancel transaction</button>
+						</div>
+					<div class="col-md-4">
+						<button class="btn bg-phase-green btn-block btn-lg font-weight-bold txt-white" ng-click="$ctrl.commitTransfer(); ngCart.empty()">Complete payment</button>		
+					</div>						
+			</div>
+		
+			</div>		
+		</div>
+
+	
+
+
+
+		</div>
 	</div>	
 </div>
+
+

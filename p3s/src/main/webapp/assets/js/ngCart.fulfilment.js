@@ -57,7 +57,6 @@ angular.module('ngCart.fulfilment', [])
                         patents: (function(){
                             var patentAppNos = [];
                             patentArr.forEach(function(patent){
-                                console.log(patent)
                                 patentAppNos.push(patent.patentApplicationNumber)
                             });
                             return patentAppNos;

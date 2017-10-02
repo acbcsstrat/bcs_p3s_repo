@@ -7,17 +7,14 @@ app.component('patents', {
 
 		$rootScope.page = 'List Patents';
 
-		vm.patentsTabs = {
-			all: 1,
-			green: 2,
-			amber: 3,
-			red: 4,
-			blue: 5,
-			black: 6
-		}
+		vm.date = new Date();
+
+
 
 		vm.$onInit = () => {
 
+			var patents = vm.patents;
+			console.log(patents)
 			var allPatents = [];
 			var greenPatents = [];
 			var amberPatents = [];
@@ -25,9 +22,53 @@ app.component('patents', {
 			var bluePatents = [];
 			var blackPatents = [];
 
-			vm.date = new Date()
+			vm.colourPhase = function(item) {
+				switch(item.costBandColour) {
+					case 'Green':
+						$rootScope.color = 'green'
+					break;
+					case 'Amber':
+						$rootScope.color = 'amber'
+					break;
+					case 'Red':
+						$rootScope.color = 'red'
+					break;
+					case 'Blue':
+						$rootScope.color = 'blue'
+					break;
+					case 'Black':
+						$rootScope.color = 'black'
+					break;
+																							
+				}
+			}
 
-			var patents = vm.patents;
+	  		vm.displayPhase = function(id) {
+				switch (id) {
+				    case 1:
+				     	vm.patents = allPatents;
+				        break;
+				    case 2:
+				     	vm.patents = greenPatents;
+				        break;
+				    case 3:
+				     	vm.patents = amberPatents;
+				        break;
+				    case 4:
+				     	vm.patents = redPatents;
+				        break;
+				    case 5:
+				     	vm.patents = bluePatents;
+				     	break;
+			     	case 6:
+				    	vm.patents = blackPatents;
+				}
+			}
+
+			$timeout(function() {
+				vm.displayPhase(1)
+			}, 100);
+			
 
 			patents.forEach(function(item){
 
@@ -97,7 +138,7 @@ app.component('patents', {
 					return Math.round(((progress) / (total)) * 100);
 
 	 			}
-
+	 			
 				patentsRestService.fetchCostAnalysis(item.id)
                 .then(
                     function(response){
@@ -151,28 +192,15 @@ app.component('patents', {
                 )
 			})
 
-	  		vm.displayPhase = function(id) {
-				switch (id) {
-				    case 1:
-				     	vm.patents = allPatents;
-				        break;
-				    case 2:
-				     	vm.patents = greenPatents;
-				        break;
-				    case 3:
-				     	vm.patents = amberPatents;
-				        break;
-				    case 4:
-				     	vm.patents = redPatents;
-				        break;
-				    case 5:
-				     	vm.patents = bluePatents;
-				     	break;
-			     	case 6:
-				    	vm.patents = blackPatents;
-				}
-			}
 		}
+
+      	vm.rowSelect = function(event){
+      		if(!$(event.target).hasClass('cartbtn')) {
+	      		var id = ($($(event.currentTarget).find('a')));
+	      		var patentId = id[0].hash;
+	      		window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
+      		}
+      	}
 
 	   	vm.sortType     = 'patentApplicationNumber'; // set the default sort type
 	  	vm.sortReverse  = false;  // set the default sort order		

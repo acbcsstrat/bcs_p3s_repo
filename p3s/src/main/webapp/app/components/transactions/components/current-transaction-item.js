@@ -8,7 +8,7 @@ app.component('currentTransaction', {
 	    vm.$onChanges = function(changeObj){
 
 	    	var currTransStatus = vm.transaction.latestTransStatus;	
-
+	    	console.log(currTransStatus)
 			vm.transStatus = [
 				{status: 'Initiated', active: false, complete: false}, 
 				{status: 'Pending', active: false, complete: false}, 
@@ -67,6 +67,8 @@ app.component('currentTransaction', {
 	 		vm.transaction.renewalUIs.forEach(function(value, index, array){
 	 			vm.patents.push(value)			
 		 	})
+
+		 	console.log(vm.patents)
     	}
 	}]
 });

@@ -1,24 +1,67 @@
 app.component('searchpatent', {
 	templateUrl: 'p3sweb/app/components/patents/views/search-patent.htm',
-	controller: ['searchPatentService', '$state', '$stateParams', '$timeout', '$rootScope', 'patentsRestService',function(searchPatentService, $state, $stateParams, $timeout, $rootScope, patentsRestService) {
+	controller: ['searchPatentService', '$state', '$stateParams', '$timeout', '$rootScope', 'patentsRestService', '$timeout', function(searchPatentService, $state, $stateParams, $timeout, $rootScope, patentsRestService, $timeout) {
 
 		var vm = this;
 	 	vm.queriedPatent = {};
 
+	 	$rootScope.page = 'Add Patent';
+
 		vm.patentNotifications = {
 			green: 'Green',
-			yellow: 'Amber',
+			amber: 'Amber',
 			red: 'Red',
 			blue: 'Blue',
 			black: 'Black'
 		}
 
-		vm.displayNotifications = function(phase) {
-			function phaseNotifications(phase) {
+		vm.colourKey = function(colour) {
+			switch(colour) {
+				case 0:
+					vm.colourPhaseTitle = {
+						title: 'Green',
+						descrip: 'lorem',
+						color: '#53ab58'
+					}
+				break;
+				case 1:
+					vm.colourPhaseTitle = {
+						title: 'Amber',
+						descrip: 'loremmm',
+						color: '#f9b233'						
+					}
+				break;
+				case 2:
+					vm.colourPhaseTitle = {
+						title: 'Red',
+						descrip: 'lorem ipsum',
+						color: '#e30613'
+					}
+				break;
+				case 3:
+					vm.colourPhaseTitle = {
+						title: 'Blue',
+						descrip: '24 Week Extension',
+						color: '#0097ce'					
+					}
+				break;
+				case 4:
+					vm.colourPhaseTitle = {
+						title: 'Black',
+						descrip: 'herisuhimas',
+						color: '#3c3c3b'
+					}
+			}
+		}
 
+		vm.displayNotifications = function(phase) {
+
+			console.log(phase)
+
+			function phaseNotifications(phase) {
+				
 				var notificationsArr = vm.queriedPatent.notificationUIs;
 		  		var notifications = [];
-		  		console.log(phase)
 	  			
 		  		notificationsArr.forEach(function(data){
 		  			if(data.costbandcolor == phase) {
@@ -37,18 +80,20 @@ app.component('searchpatent', {
 	        		newArr.push(arr.slice(i, i+size));
 	        	}
 	        	return newArr;
-        	}       	
+        	}  	
         	
-    		vm.chunkedData = chunk(phaseNotifications(phase), 3);
+        	$timeout(function() {
+    			vm.chunkedData = chunk(phaseNotifications(phase), 3);
+    			vm.colourPhase = phase;
+    		}, 100)
+		}
 
-		}            
 
 		vm.findPatent = function(patentNo) {
 			
 			searchPatentService.findPatent(patentNo)
 			.then(
 				function(data) {
-					console.log(data)
 					vm.queriedPatent = data;
 					vm.displayNotifications(vm.patentNotifications.green)
 				},

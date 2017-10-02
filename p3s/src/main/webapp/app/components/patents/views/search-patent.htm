@@ -1,161 +1,210 @@
 <patentnav></patentnav>
-<div class="row">
-	<div class="col-md-8">
-		<form ng-submit="$ctrl.findPatent(searchPatent);"  name="searchPatentForm">
-			<fieldset>
-				<div class="form-group row">
-					<label class="col-md-2" for="searchPatent">EP No.</label>
-					<div class="col-md-5">
-						<input type="text" name="searchPatent" ng-model="searchPatent" class="form-control" placeholder="Search" required>
+<div class="content-panel bg-white">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="content-panel__head">
+				<div class="row">
+					<div class="col-md-12">
+						<form class="form-inline" ng-submit="$ctrl.findPatent(searchPatent);"  name="searchPatentForm">
+							<div class="form-group">
+								<label class="font-xl font-weight-bold m-r-lg" for="searchPatent">EP No.</label>
+
+							</div>
+							<div class="form-group">
+								<input type="text" name="searchPatent" ng-model="searchPatent" class="form-control pill-radius input-size-lg font-lg m-r-lg" placeholder="Search" required>
+								<button type="submit" class="btn btn-success btn-block btn-lg circle-radius-sm d-flex justify-content-center"><i class="fa fa-search fa-1x"></i></button>
+							</div>
+						</form>	
 					</div>
-					<div class="col-md-3">
-						<button type="submit" class="btn btn-success btn-block btn-lg">Submit</button>
-					</div>
-				</div>
-
-			</fieldset>
-		</form>	
-	</div>
-</div>
-<div class="row" ng-show="$ctrl.queriedPatent && searchPatentForm.$submitted">
-    <div class="col-md-12">
-		<form ng-submit="$ctrl.submit($ctrl.queriedPatent)">
-			<div class="row">
-				<div class="col-md-6">
-					<table class="table table-bordered">
-						<tbody>
-							<tr>
-								<td class="text-xs-right col-form-label">
-									Description:
-								</td>
-								<td>
-					        		<input type="text" name="patentPublicationNumber" class="form-control" ng-model="$ctrl.queriedPatent.shortTitle">
-								</td>
-							</tr>
-							<tr>
-								<td class="text-xs-right col-form-label">
-									Client Ref:
-								</td>
-								<td>
-					        		<input type="text" name="patentPublicationNumber" class="form-control" ng-model="$ctrl.queriedPatent.clientRef">
-								</td>	
-							</tr>
-						 	<tr>
-							    <td>
-							        <label class="text-xs-right col-form-label">Primary Applicant Name:</label>
-						        </td>
-						        <td>
-						        	<input type="text" name="primaryApplicantName" class="form-control" ng-model="$ctrl.queriedPatent.primaryApplicantName" required readonly>
-						        </td>
-							</tr>
-							<tr>
-							    <td>
-						    		<label class="text-xs-right col-form-label">Application No:</label>
-					    		</td>
-					    		<td>
-					    			<input type="text" name="filingDateUI" class="form-control" ng-model="$ctrl.queriedPatent.patentApplicationNumber" required readonly>
-					    		</td>
-					    	</tr>
-					    	<tr>
-							    <td>
-						    		<label class="text-xs-right col-form-label">Publication No:</label>
-					    		</td>
-					    		<td>
-					    			<input type="text" name="title" class="form-control" ng-model="$ctrl.queriedPatent.patentPublicationNumber" required readonly>
-					    		</td>
-					    	</tr>
-					    	<tr>
-							    <td>
-						    		<label class="text-xs-right col-form-label">Title:</label>
-					    		</td>
-					    		<td>
-					    			<input type="text" name="title" class="form-control" ng-model="$ctrl.queriedPatent.title" required readonly>
-					    		</td>
-					    	</tr>
-					    	<tr>
-							    <td>
-						    		<label class="text-xs-right col-form-label">Filing Date:
-					    		</td>
-					    		<td>
-					    			<input type="text" name="title" class="form-control" ng-model="$ctrl.queriedPatent.filingDateUI" required readonly>
-					    		</td>
-					    	</tr>					    					    	
-						</tbody>
-					</table>
-				</div>
-
-				<div class="col-md-6">
-					<uib-tabset active="activePill" vertical="true" type="pills">
-						<uib-tab index="0" heading="Green" ng-attr-id="$ctrl.patentNotifications.green" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.green)">
-							<p class="btn">{{$ctrl.patentNotifications.green}} Stage</p>
-							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
-								<div class="col-md-4" ng-repeat="item in checkbox">
-									<label class="form-check-label">
-										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
-									</label>
-								</div>
-							</div>	
-					    </uib-tab>
-					    <uib-tab index="1" heading="Yellow" ng-attr-id="$ctrl.patentNotifications.yellow" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.yellow)">
-					    	<p class="btn">{{$ctrl.patentNotifications.yellow}} Stage</p>
-							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
-								<div class="col-md-4" ng-repeat="item in checkbox">
-									<label class="form-check-label">
-										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
-									</label>
-								</div>
-							</div>								    
-						</uib-tab>
-					    <uib-tab index="2" heading="Red" ng-attr-id="$ctrl.patentNotifications.red" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.red)">
-					    	<p class="btn">{{$ctrl.patentNotifications.red}} Stage</p>
-							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
-								<div class="col-md-4" ng-repeat="item in checkbox">
-									<label class="form-check-label">
-										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
-									</label>
-								</div>
-							</div>								    
-						</uib-tab>
-					    <uib-tab index="3" heading="Blue" ng-attr-id="$ctrl.patentNotifications.blue" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)">
-					    	<p class="btn">{{$ctrl.patentNotifications.blue}} Stage</p>
-							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
-								<div class="col-md-4" ng-repeat="item in checkbox">
-									<label class="form-check-label">
-										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
-									</label>
-								</div>
-							</div>								    
-						</uib-tab>
-					    <uib-tab index="4" heading="Black" ng-attr-id="$ctrl.patentNotifications.brown" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.black)">
-					    	<p class="btn">{{$ctrl.patentNotifications.black}} Stage</p>
-							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
-								<div class="col-md-4" ng-repeat="item in checkbox">
-									<label class="form-check-label">
-										<input class="form-check-input" type="checkbox" ng-model="item.isOn">{{item.title}}
-									</label>
-								</div>
-							</div>								    
-						</uib-tab>
-					</uib-tabset>
-				</div>	 		
+				</div>		
 			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<p>Enter details and confirm payment</p>
-					<div class="row">
-						<div class="col-md-6">
-							<button class="btn btn-success btn-block" type="submit">Submit</button>
+		</div>		
+	</div>
+
+
+
+
+		<div class="row" ng-if="$ctrl.queriedPatent && searchPatentForm.$submitted">
+		    <div class="col-md-12">
+		    	<div class="content-panel__body">
+					<form ng-submit="$ctrl.submit($ctrl.queriedPatent)">
+						<div class="row">
+							<div class="col-md-8">	
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<td class="col-form-label font-lg font-weight-bold">
+												Description:
+											</td>
+											<td>
+								        		<input type="text" name="patentPublicationNumber" class="form-control border-none font-lg" ng-model="$ctrl.queriedPatent.shortTitle">
+											</td>
+										</tr>
+										<tr>
+											<td class="col-form-label font-lg font-weight-bold">
+												Client Ref:
+											</td>
+											<td>
+								        		<input type="text" name="patentPublicationNumber" class="form-control border-none font-lg" ng-model="$ctrl.queriedPatent.clientRef">
+											</td>	
+										</tr>
+									 	<tr>
+										    <td>
+										        <label class="col-form-label font-lg font-weight-bold">Primary Applicant Name:</label>
+									        </td>
+									        <td>
+									        	<input type="text" name="primaryApplicantName" class="form-control border-none font-lg" ng-model="$ctrl.queriedPatent.primaryApplicantName" required readonly>
+									        </td>
+										</tr>
+										<tr>
+										    <td>
+									    		<label class="col-form-label font-lg font-weight-bold">Application No:</label>
+								    		</td>
+								    		<td>
+								    			<input type="text" name="filingDateUI" class="form-control border-none font-lg" ng-model="$ctrl.queriedPatent.patentApplicationNumber" required readonly>
+								    		</td>
+								    	</tr>
+								    	<tr>
+										    <td>
+									    		<label class="col-form-label font-lg font-weight-bold">Publication No:</label>
+								    		</td>
+								    		<td>
+								    			<input type="text" name="title" class="form-control border-none font-lg" ng-model="$ctrl.queriedPatent.patentPublicationNumber" required readonly>
+								    		</td>
+								    	</tr>
+								    	<tr>
+										    <td>
+									    		<label class="col-form-label font-lg font-weight-bold">Title:</label>
+								    		</td>
+								    		<td>
+								    			<input type="text" name="title" class="form-control border-none font-lg" ng-model="$ctrl.queriedPatent.title" required readonly>
+								    		</td>
+								    	</tr>
+								    	<tr>
+										    <td>
+									    		<label class="col-form-label font-lg font-weight-bold">Filing Date:</label>
+								    		</td>
+								    		<td>
+								    			<input type="text" name="title" class="form-control border-none font-lg" ng-model="$ctrl.queriedPatent.filingDateUI" required readonly>
+								    		</td>
+								    	</tr>					    					    	
+									</tbody>
+								</table>
+							</div>
+							<div class="col-md-4">
+				    			<div class="m-b-md">
+				    				<div class="m-b-md">
+										<h4 class="font-weight-bold m-b-xs">Notifications</h4>
+									</div>
+									<p class="font-md">Select the collur and time frame to recieve email notifications for this patent prior to each stage.</p>
+				    			</div>
+								<div class="phase-pills m-b-xs">
+									<div class="pill-radius p-pill-tabs pill-tabs d-flex justify-content-center align-items-center flex-column m-b-sm" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
+										<span class="font-md font-weight-bold">{{$ctrl.colourPhaseTitle.title}} Stage</span>
+									</div>													
+								</div>					
+								<div class="row">
+									<div class="col-md-4">
+										<div class="notification-tabs">
+											<ul class="nav notification-pills flex-column">
+												<li class="green nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs active d-flex justify-content-center align-items-center m-b-xs" ng-init="$ctrl.colourKey(0);"  ng-click="activeNotificationTab = 0; $ctrl.displayNotifications($ctrl.patentNotifications.green); $ctrl.colourKey(0);">Green</li>
+												<li class="amber nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 1; $ctrl.displayNotifications($ctrl.patentNotifications.amber); $ctrl.colourKey(1);">Amber</li>
+												<li class="red nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 2; $ctrl.displayNotifications($ctrl.patentNotifications.red); $ctrl.colourKey(2);">Red</li>
+												<li class="blue nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs active d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 3; $ctrl.displayNotifications($ctrl.patentNotifications.blue); $ctrl.colourKey(3);">Blue</li>
+												<li class="black nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs d-flex justify-content-center align-items-center " ng-click="activeNotificationTab = 4; $ctrl.displayNotifications($ctrl.patentNotifications.black); $ctrl.colourKey(4);">Black</li>															
+											</ul>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<uib-tabset active="activeNotificationTab" vertical="true" type="pills">
+											<uib-tab index="0" heading="Green" ng-attr-id="$ctrl.patentNotifications.green" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.green)" ng-hide="true">
+												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
+														{{item.title}}
+														<div class="onoffswitch">
+															<label class="switch font-sm">
+															  <input type="checkbox" ng-model="item.isOn">
+															  <span class="slider round"></span>
+															</label>
+														</div>
+													</div>
+												</div>	
+										    </uib-tab>
+										    <uib-tab index="1" heading="Amber" ng-attr-id="$ctrl.patentNotifications.amber" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.amber)" ng-hide="true">
+												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
+														{{item.title}}
+														<div class="onoffswitch">
+															<label class="switch font-sm">
+															  <input type="checkbox" ng-model="item.isOn">
+															  <span class="slider round"></span>
+															</label>
+														</div>
+													</div>
+												</div>								    
+											</uib-tab>
+										    <uib-tab index="2" heading="Red" ng-attr-id="$ctrl.patentNotifications.red" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.red)" ng-hide="true">
+												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
+														{{item.title}}
+														<div class="onoffswitch">
+															<label class="switch font-sm">
+															  <input type="checkbox" ng-model="item.isOn">
+															  <span class="slider round"></span>
+															</label>
+														</div>
+													</div>
+												</div>	
+											</uib-tab>
+										    <uib-tab index="3" heading="Blue" ng-attr-id="$ctrl.patentNotifications.blue" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)" ng-hide="true">
+												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
+														{{item.title}}
+														<div class="onoffswitch">
+															<label class="switch font-sm">
+															  <input type="checkbox" ng-model="item.isOn">
+															  <span class="slider round"></span>
+															</label>
+														</div>
+													</div>
+												</div>					    
+											</uib-tab>
+										    <uib-tab index="4" heading="Black" ng-attr-id="$ctrl.patentNotifications.brown" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.black)" ng-hide="true">
+												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
+														{{item.title}}
+														<div class="onoffswitch">
+															<label class="switch font-sm">
+															  <input type="checkbox" ng-model="item.isOn">
+															  <span class="slider round"></span>
+															</label>
+														</div>
+													</div>
+												</div>								    
+											</uib-tab>
+										</uib-tabset>
+									</div> <!-- col end-->
+								</div>	 <!-- row end-->	
+							</div> <!--col end-->
+						</div> 	<!-- row end-->	
+
+						<div class="row">
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-6">
+										<button class="btn btn-success btn-block pill-radius font-lg" type="submit" ng-click="$ctrl.submit()">Submit</button>
+									</div>
+									<div class="col-md-6">
+										<button class="btn btn-danger btn-block pill-radius font-lg" type="button" ng-click="$ctrl.cancelSearch()">Cancel</button>
+									</div>
+								</div>			
+							</div>
 						</div>
-						<div class="col-md-6">
-							<button class="btn btn-danger btn-block" type="button" ng-click="$ctrl.cancelSearch()">Cancel</button>
-						</div>
-					</div>			
+					</form>
 				</div>
 			</div>
-		</form>
-	</div>
+		</div>
 </div>
-
 
 
       

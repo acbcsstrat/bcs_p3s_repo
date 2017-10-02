@@ -9,8 +9,48 @@ app.component('patent', {
 
 		var vm = this;
 		
-     	//GRAPHS ///////////////
+		vm.activePatentItemMenu = 'Patent Info';
+		vm.chartActive = 'Stage Cost Chart';
 
+		vm.colourKey = function(colour) {
+
+			switch(colour) {
+				case 0:
+					vm.colourPhaseTitle = {
+						title: 'Green',
+						descrip: 'lorem',
+						color: '#53ab58'
+					}
+				break;
+				case 1:
+					vm.colourPhaseTitle = {
+						title: 'Yellow',
+						descrip: 'loremmm',
+						color: '#f9b233'						
+					}
+				break;
+				case 2:
+					vm.colourPhaseTitle = {
+						title: 'Red',
+						descrip: 'lorem ipsum',
+						color: '#e30613'
+					}
+				break;
+				case 3:
+					vm.colourPhaseTitle = {
+						title: 'Blue',
+						descrip: '24 Week Extension',
+						color: '#0097ce'					
+					}
+				break;
+				case 4:
+					vm.colourPhaseTitle = {
+						title: 'Black',
+						descrip: 'herisuhimas',
+						color: '#3c3c3b'
+					}
+			}
+		}
 
      	vm.$onChanges = function(changeObj){
 
@@ -72,13 +112,13 @@ app.component('patent', {
 	            	const lineLabelArr = [];      
 
 					Object.keys(caLine).forEach(day => {
-
 						const dayData = caLine[day];
-
 						lineLabelArr.push(day);
 						lineDataArr.push(dayData.subTotal_USD)
 
 					})
+
+					vm.barChartColours = ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
 
 					vm.lineLabels = lineLabelArr;
 	             	vm.lineData = lineDataArr;
@@ -97,6 +137,9 @@ app.component('patent', {
 					    },
 			     		elements: {
 				            line: {
+				            	color: 'red',
+				            	width: '10',
+				            	fill: null,
 				                tension: 0, // disables bezier curves
 				                pointStyle: 'cross'
 				            }
@@ -136,8 +179,10 @@ app.component('patent', {
 
 
             //PROGRESS BAR
-
- 			vm.progressBar = vm.patent.progressBar
+            $timeout(function() {
+            	vm.progressBar = vm.patent.progressBar
+            }, 200);
+ 			
 
 	        vm.nextStage = function() {
         		var nextStage;
@@ -173,9 +218,10 @@ app.component('patent', {
 				black: 'Black'
 			}
 
-			vm.displayNotifications = function(phase) {
+			vm.colourPhase = 'Green';
 
-				vm.colourPhase = phase;
+			vm.displayNotifications = function(phase) {
+	
 
 				function phaseNotifications(phase) {
 			  		var notificationsArr = changeObj.patent.currentValue.notificationUIs;
@@ -200,7 +246,7 @@ app.component('patent', {
 		        	return newArr;
 	        	}       	
 
-	        	vm.chunkedData = chunk(phaseNotifications(phase), 3);
+	        	vm.chunkedData = chunk(phaseNotifications(phase), 8);
 
 			}
 
@@ -331,20 +377,10 @@ app.component('patent', {
 	        vm.editing[index] = false;
 	    };
 
-
-
-
-
-
-
-
-
-
-
-
-	    //TABS////////////////////////////
-
-
+		$timeout(function() {
+			vm.colourKey(0);
+			vm.displayNotifications(vm.patentNotifications.green)
+		}, 100);
 
 	  	
 	}]

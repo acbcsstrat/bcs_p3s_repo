@@ -12,13 +12,18 @@ app.component('currentTransactions', {
 	  	vm.sortReverse  = false;  // set the default sort order		
 
 		vm.$onInit = function() {
-
-			console.log(vm.transactions)
-
 			vm.transactions.forEach(function(data){
 				data.renewalProgress = currentTransactionsService.renewalProgress(data.latestTransStatus);
 			})
 		}
+
+      	vm.rowSelect = function(event){
+      		if(!$(event.target).hasClass('cartbtn')) {
+	      		var id = ($($(event.currentTarget).find('a')));
+	      		var patentId = id[0].hash;
+	      		window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
+      		}
+      	}
 
 	}
 });

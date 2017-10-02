@@ -1,8 +1,14 @@
-app.component('basket', {
-	templateUrl: 'p3sweb/app/components/checkout/views/basket.htm',
+app.component('checkout', {
+	templateUrl: 'p3sweb/app/components/checkout/views/checkout.htm',
 	controller: ['basketService', 'ngCart', 'fulfilmentProvider', '$rootScope', function(basketService, ngCart, fulfilmentProvider, $rootScope) {
 
 		var vm = this;
+
+		vm.$onInit = function() {
+			console.log('hello')
+		}
+
+		console.log(ngCart)
 
 		var cartItems = ngCart.$cart.items;
 		var processingFeeArr = [];
@@ -34,8 +40,8 @@ app.component('basket', {
 		urgentFeeArr.forEach(function(data, i){
 			vm.urgentFee += data;
 		})
-		
-		console.log(vm.processingFee, vm.renewalFee)			
+
+					
 
 		$rootScope.page = 'Basket';
 

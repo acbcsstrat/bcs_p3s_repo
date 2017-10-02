@@ -59,7 +59,7 @@ app.component('transactionHistoryItem', {
 	    			vm.transactionProgress = 83;
 	    		break;
 	    		case 'Completed':
-	    			vm.transactionProgress = 95;	    			    			    			    			    		
+	    			vm.transactionProgress = 100;	    			    			    			    			    		
 	    	}
 
 	    	vm.renewalProgress = transactionHistoryService.renewalProgress(currTransStatus);		

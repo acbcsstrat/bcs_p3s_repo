@@ -1,21 +1,29 @@
-<div class="m-t-xl m-b-xl">
+<div class="m-t-xl m-b-lg">
 	<div class="row">
-		<div class="col-md-10">
+		<div class="col-md-8">
 			<h1>{{$root.page}}</h1>
 		</div>
-		<div class="col-md-1">
-			<p class="font-md font-weight-bold">{{$root.user.firstName}}</p>
-			<a class="font-md" href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
+		<div class="col-md-4">
+			<div class="row d-flex align-items-center">
+				<div class="col-md-2 offset-md-6">
+					<i class="fa fa-user-circle-o fa-5x"></i>
+				</div>		
+				<div class="col-md-2">
+					<p class="font-md font-weight-bold">{{$root.user.firstName}}</p>
+					<a class="font-md txt-black" href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
+				</div>
+				<div class="col-md-2">
+					<a ui-sref="basket">
+						<ngcart-summary class="font-md txt-black"></ngcart-summary>
+					</a>
+				</div>					
+			</div>
 		</div>
-		<div class="col-md-1">
-			<a ui-sref="basket">
-				<ngcart-summary class="font-md"></ngcart-summary>
-			</a>
-		</div>
+
 	</div>
 	<div class="row">
 		<div class="col-md-9">
-			<span class="font-xl"><span class="font-weight-bold">EST:</span> {{$root.estTime}}</span> <span class="font-xl"><span class="font-weight-bold">CET:</span> {{$root.$root.cetTime}}</span> 
+			<span class="font-xl"><span class="font-weight-bold">EST:</span> {{$root.estTime}}</span> <span class="font-xl"><span class="font-weight-bold">CET:</span> {{$root.cetTime}}</span> 
 		</div>
 	</div>
 </div>	
