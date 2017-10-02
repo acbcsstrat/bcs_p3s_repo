@@ -30,6 +30,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Value;
 
 // Note! : Payment was formerly called Transaction  (But Roo wouldn't allow that term)
+// Hence you'll find numerous references to 'the transaction' throughout the code.
+// Not least as Transaction is a better description of the role of the object. Payment implies just the money. 
+
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
