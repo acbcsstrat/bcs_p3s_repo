@@ -404,8 +404,14 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				log().error("Invoice Table persistence failed " + msg);
 				return payment;
 			}
-			log().debug("Persisted Invoice Table successfully " + msg + "and returned invoice details with id as " + invoice.getId());
-			//payment.setLatestInvoice(currentInvoice);
+			else {
+				Invoice newInvoice = Invoice.findInvoice(invoice.getId());
+				String invoiceNumber = invoiceEngine.generateProFormaInvoiceNumber(newInvoice); 
+				
+				log().debug("Persisted Invoice Table. " + msg + "and returned invoice details with id as " + invoice.getId()
+				+ ", Invoice Number "+invoice.getInvoiceNumber());
+			}
+				//payment.setLatestInvoice(currentInvoice);
 		}
 		
 		else{

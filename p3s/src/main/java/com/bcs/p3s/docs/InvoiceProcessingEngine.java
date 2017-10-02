@@ -20,11 +20,14 @@ import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
  */
 public class InvoiceProcessingEngine {
 	
+	protected String PREFIX = this.getClass().getName() + " : "; 
+
+	
 	public Invoice populateInvoiceData(BankTransferPostCommitDetails postCommitData){
 		
 		Invoice invoice = new Invoice();
 		
-		invoice.setInvoiceNumber("IP5689");
+		invoice.setInvoiceNumber("Empty");
 		invoice.setIssueDate(Calendar.getInstance().getTime());
 		invoice.setInvoiceStatus(InvoiceStatusEnum.OPEN);
 		invoice.setPreceedingInvoiceId(null);
@@ -32,10 +35,18 @@ public class InvoiceProcessingEngine {
 		//dummy values start
 		invoice.setDocPath("hardcodedpdffolder/invoices/");
 		invoice.setFilename("dummyInvoiceNumber1.pdf");
-		//dummy values end
 		invoice.setInvoiceTemplateId("template1");
+		//dummy values end
 		
 		return invoice;
 	}
 
+	public String generateProFormaInvoiceNumber(Invoice invoice) {
+		if (invoice==null) return null;
+		String result = "IP";
+		result += String.format("%06d", invoice.getId());
+		result += "PF";
+		return result;
+	}
+	
 }
