@@ -18,6 +18,8 @@
         
         <intercept-url pattern="/login/**" access="permitAll" />
         <intercept-url pattern="/public/**" access="permitAll" />
+        <intercept-url pattern="/assets/css/**" access="permitAll" />
+        <intercept-url pattern="/assets/imgs/**" access="permitAll" />
 <!-- MP28062017 - Pre-login Page access changes start.. NB -> may be removed once Pat's wire frame in place -->
         <intercept-url pattern="/prelogin/**" access="permitAll" />
 <!-- MP28062017 - Pre-login Page access changes  end -->
