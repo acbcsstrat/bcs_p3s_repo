@@ -395,10 +395,14 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-					 		<ngcart-addtocart id="$ctrl.selectedPatent.id" class="cartbtn font-weight-bold" name="patent_$ctrl.selectedPatent.id" price="{{$ctrl.totalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
-				 			</ngcart-addtocart>							
+							<div ng-if="$ctrl.selectedPatent.renewalStatus !== 'Show price'" class="text-center">
+								<p class="font-md font-weight-bold txt-phase-green">{{$ctrl.selectedPatent.renewalStatus}}</p>
+							</div>
+							<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Show price'">
+						 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+					 			</ngcart-addtocart>										
+							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -439,8 +443,8 @@
 									</div>								
 								</div>
 								
-									<div class="row" ng-repeat="stage in $ctrl.recentStageArr" ng-if="stage">
-										<div class="col-md-12 m-t-md">
+									<div class="row m-t-md" ng-repeat="stage in $ctrl.recentStageArr" ng-if="stage">
+										<div class="col-md-12">
 											<table class="table font-sm m-b-md">
 												<tr>
 													<td>Patent No.</td>
@@ -471,16 +475,16 @@
 
 
 					    <uib-tab heading="Transactions" class="pill-radius p-few-pill-tabs pill-tabs font-sm bg-white border-grey-xs border-xs font-weight-medium txt-black">
-					    	<div class="widget-panel--max">	
+					    	<div class="widget-panel--max m-t-md">	
 								<div class="row" ng-if="$ctrl.recentTransArr == 0">
 									<div class="col-md-12 m-t-md">
 										<p class="font-md">No recent activity in transactions</p>
 									</div>								
 								</div>
 									    
-							    <div class="row" ng-repeat="trans in $ctrl.recentTransArr" ng-if="trans">
-									<div class="col-md-12 m-t-md">
-										<table class="table font-sm m-b-md">
+							    <div class="row m-b-md m-t-md border-grey-xs--btm" ng-repeat="trans in $ctrl.recentTransArr" ng-if="trans">
+									<div class="col-md-12">
+										<table class="table font-sm  ">
 											<tr>
 												<td class="font-weight-bold">Transaction ID</td>
 												<td>{{trans.p3S_TransRef}}</td>
@@ -508,12 +512,12 @@
 												<td class="font-weight-bold">Transaction status</td>
 												<td>{{trans.latestTransStatus}}</td>
 											</tr>
-											<tr>
+<!-- 											<tr>
 												<td class="col-md-5">
 												 	<ngcart-addtocart id="{{trans.id}}" class="cartbtn" name="trans_{{trans.id}}" price="{{trans.transAmount_USD}}" quantity="1" quantity-max="10" data="trans" >
 												 	</ngcart-addtocart>
 												</td>
-											</tr>
+											</tr> -->
 										</table>
 									</div>
 								</div>
@@ -521,7 +525,7 @@
 						</uib-tab>
 
 					    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs font-sm bg-white border-grey-xs border-xs font-weight-medium txt-black">
-					    	<div class="widget-panel--max">	
+					    	<div class="widget-panel--max m-t-md">	
 								<div class="row" ng-if="$ctrl.recentRenewalArr == 0">
 									<div class="col-md-12 m-t-md">
 										<p class="font-md">No recent activity in renewals</p>

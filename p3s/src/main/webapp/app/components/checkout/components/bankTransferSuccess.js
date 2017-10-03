@@ -8,7 +8,10 @@ app.component('bankTransferSuccess', {
 		$rootScope.page = 'Bank Transfer Details';
 
 		$scope.orderObj = $stateParams.orderObj;
-		console.log("Success anytinme?????")
+
+		
+		
+		console.log($scope.orderObj)
 
 	}
 ]})

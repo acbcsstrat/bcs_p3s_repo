@@ -10,7 +10,7 @@
                                     <p class="font-weight-bold">Transaction ID</p>                   
                                 </div>
                                 <div class="col-md-4">
-                                    <span ng-repeat="p in $ctrl.patentObj.patents">{{p}}<br></span>
+                                    <p>{{orderObj.p3sTransRef}}</p>
                                 </div>                               
                             </div>
                         </div>
@@ -20,7 +20,7 @@
                                     <p class="font-weight-bold">Date</p>                        
                                 </div>                    
                                 <div class="col-md-4">
-                                    <p>{{1288323623006 | date:'yyyy-MM-dd'}}</p>
+                                    <p>{{orderObj.dateNowLocalTimeUI}}</p> <!--dummy date-->
                                 </div>
                             </div>
                         </div>
@@ -41,54 +41,54 @@
 	<div class="col-md-6">
         <div class="content-panel bg-white">
             <div class="content-panel__head border-grey-xs--btm">
-                <h3 class="font-xl font-weight-bold">Important notice</h3>
+                <h3 class="font-xl font-weight-bold">Details</h3>
             </div>
-             <div class="content-panel__body border-grey-xs--btm">
+            <div class="content-panel__body border-grey-xs--btm">
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table font-lg">
 							<tbody>
 								<tr>
-									<td>Account Holder's Name: </td>
+									<td class="font-weight-bold">Account Holder's Name: </td>
+									<td>{{orderObj.bankTransferPaymentDetails.accountHoldersName}}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-bold">Account number: </td>
 									<td>{{orderObj.bankTransferPaymentDetails.accountNumber}}</td>
 								</tr>
 								<tr>
-									<td>Account number: </td>
-									<td>{{orderObj.bankTransferPaymentDetails.accountNumber}}</td>
-								</tr>
-								<tr>
-									<td>ABA Number: </td>
+									<td class="font-weight-bold">ABA Number: </td>
 									<td>{{orderObj.bankTransferPaymentDetails.item1}}</td>
 								</tr>
 								<tr>
-									<td>Bank Name:  </td>
+									<td class="font-weight-bold">Bank Name:  </td>
 									<td>{{orderObj.bankTransferPaymentDetails.item2}}</td>
 								</tr>
 								<tr>
-									<td>Bank address:  </td>
+									<td class="font-weight-bold">Bank address:  </td>
 									<td>Narnia Wardrobe</td>
 								</tr>
 								<tr>
-									<td>Reference:  </td>
+									<td class="font-weight-bold">Reference:  </td>
 									<td>{{orderObj.p3sTransRef}}</td>
 								</tr>	
 								<tr>
-									<td>Amount:  </td>
+									<td class="font-weight-bold">Amount:  </td>
 									<td>$ {{orderObj.totalCostUSD}}</td>
 								</tr>													
 							</tbody>
 						</table>
                     </div>                       
                 </div>
-				<div class="row">
-					<div class="col-md-4">
-						<button class="btn bg-phase-green btn-block btn-lg txt-white font-weight-bold">Downlad Invoice</button>
-					</div>
-					<div class="col-md-4">
-						<button class="btn bg-phase-green btn-block btn-lg txt-white font-weight-bold">Return to dashboard</button>		
-					</div>						
-				</div>
 			</div>
+            <div class="row m-t-lg">
+                <div class="col-md-4">
+                    <a class="btn bg-phase-green btn-block btn-lg txt-white font-weight-bold pill-radius" href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" download>Downlad Invoice</a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn bg-phase-green btn-block btn-lg txt-white font-weight-bold pill-radius" ui-sref="dashboard">Return to dashboard</a>       
+                </div>                      
+            </div>
 		</div>
 	</div>
 </div>	

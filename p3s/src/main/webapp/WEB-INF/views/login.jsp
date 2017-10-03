@@ -37,11 +37,6 @@
                <div class="content-panel__body bg-white">
                   <div class="row">
                      <div class="col-md-12">
-<!--                       <div class="row m-b-sm">
-                           <div class="col-md-12">
-                              <h2 class="font-weight-medium">User Details</h2>
-                           </div>
-                        </div> -->
                         <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form">
                            <div class="form-group row">
                               <label class="col-md-4 d-flex flex-column justify-content-center font-lg font-weight-bold" for="j_username">Name: </label>
@@ -61,11 +56,11 @@
                                  </div>
                               </div>
                         </form>
-                        <div class="row">
-                           <div class="col-md-3">
+                        <div class="row m-t-md">
+                           <div class="col-md-4">
                               <a class="btn btn-block pill-radius bg-phase-green font-md txt-white btn--event-p-sm font-weight-weight" href="/p3sweb/prelogin/new-user">New User</a>
                            </div>
-                           <div class="col-md-3">
+                           <div class="col-md-4">
                               <a class="btn btn-block pill-radius bg-phase-green font-md txt-white btn--event-p-sm font-weight-weight" href="/p3sweb/prelogin/sub-user">Register</a>
                            </div>
                         </div>          

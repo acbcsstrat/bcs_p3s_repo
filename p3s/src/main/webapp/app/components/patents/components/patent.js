@@ -24,7 +24,7 @@ app.component('patent', {
 				break;
 				case 1:
 					vm.colourPhaseTitle = {
-						title: 'Yellow',
+						title: 'Amber',
 						descrip: 'loremmm',
 						color: '#f9b233'						
 					}
@@ -109,21 +109,24 @@ app.component('patent', {
 
 	            	const caLine = vm.costAnalysis.lineChart;
 	            	const lineDataArr = [];
-	            	const lineLabelArr = [];      
-
+	            	const lineLabelArr = [];
 					Object.keys(caLine).forEach(day => {
+						console.log(day)
 						const dayData = caLine[day];
-						lineLabelArr.push(day);
+						lineLabelArr.push(day.slice(4, 10));
 						lineDataArr.push(dayData.subTotal_USD)
-
 					})
 
 					vm.barChartColours = ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
 
 					vm.lineLabels = lineLabelArr;
+
 	             	vm.lineData = lineDataArr;
 	     		  	vm.lineSeries = ['Series A', 'Series B'];
-				  	vm.lineDatasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+				  	vm.lineDatasetOverride = [
+				  		{ yAxisID: 'y-axis-1' }, 
+				  		{ yAxisID: 'y-axis-2' },
+				  		];
 				  	vm.lineOptions = {
 				    	scales: {
 				      		yAxes: [
@@ -137,7 +140,8 @@ app.component('patent', {
 					    },
 			     		elements: {
 				            line: {
-				            	color: 'red',
+				            	borderColor: '#c6c6c6',
+				            	borderWidth: 2,
 				            	width: '10',
 				            	fill: null,
 				                tension: 0, // disables bezier curves
@@ -282,7 +286,7 @@ app.component('patent', {
         					vm.yesterdaysPrice = Math.floor(vm.costAnalysis.fee.subTotalEUR * yesterdayFx);
         				}
         				//weekly
-        				if((new Date(item).getDay() == lastWeekD) && (new Date(item).getDate() == lastWeekDt)) {
+        				if((new Date(item).getDay() == lastWeekD)) {
         					var lastWeekFx = data[index].rate;
         					vm.lastWeeksPrice = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastWeekFx);
         				}

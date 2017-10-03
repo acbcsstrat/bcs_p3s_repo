@@ -25,28 +25,85 @@
 			</uib-tabset>
 		</div>	
 	</div>
-	<div class="col-md-2 offset-md-4">
+	<div class="col-md-4 offset-md-2">
 		<form class="form-inline">
-			<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control pill-radius font-md" name="searchPatents" ng-model="searchPatents" placeholder="Search Patents">
-					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="input-group">
+						<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['patentApplicationNumber']" placeholder="App No.">
+						<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+					</div>					
 				</div>
+				<div class="col-md-6">
+					<div class="input-group">
+						<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['clientRef']" placeholder="Client Ref">
+						<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+					</div>
+				</div>			
 			</div>
 		</form>
 	</div>
 </div>
 
+<div class="row m-b-xl">
+	<div class="col-md-12" id="scrollable-area" class="table-scroll">
+		<table ng-table="$ctrl.tableParams" class="table font-md t-list" show-filter="false" fixed-table-headers="scrollable-area">
+		    <tr ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(row)">
+		        <td width="13%" data-title="'Application No.'" filter="{ 'patentApplicationNumber': 'text'}" sortable="'patentApplicationNumber'">
+		            <a class="txt-black" ui-sref="patents.patent({patentId: row.id})">{{row.patentApplicationNumber}}</a>
+		        </td>
+		        <td width="13%" data-title="'Client Ref'" filter="{ 'clientRef': 'text'}" sortable="'clientRef'">
+		            {{row.clientRef}}
+		        </td>
+		        <td width="14%" data-title="'Description'" filter="{ 'title': 'text'}" sortable="'title'">
+		            {{row.title}}
+		        </td>
+		        <td width="8%">
+	
+					<div ng-if="row.renewalStatus == 'Show price'">
+						<span >$ {{row.currentRenewalCost}}</span><br>
+						<span>{{date | date:'dd-MM-yy'}}</span>
+					</div>		        	
+		        </td>
+		        <td width="14%" data-title="'Renewal status'" filter="{ 'renewalStatus': 'text'}" sortable="'renewalStatus'">
+					<div ng-if="row.renewalStatus !== 'Show price'">
+						<p class="font-md font-weight-bold txt-phase-green">{{row.renewalStatus}}</p>
+					</div>	
+					<div class="progress-phase" ng-if="row.renewalStatus == 'Show price'">
+						<uib-progress class="pill-radius font-sm font-weight-bold" ng-class="(row.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (row.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (row.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (row.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (row.costBandColour == 'Black' ? 'bg-phase-white': '')">
+							<uib-bar class="pill-radius d-flex align-items-center justify-content-center" value="row.progressBar">{{row.progressBar}}%</uib-bar>
+						</uib-progress>
+					</div>
+		        </td>
+		        <td width="8%">
+					<div ng-if="row.renewalStatus == 'Show price'">
+						<span>$ {{row.renewalCostNextStage}}</span>
+					</div>		        	
+		        </td>
 
+		        	
 
+		        <td width="15%" data-title="'Due date'" filter="{ 'renewalDueDateUI': 'text'}" sortable="'renewalDueDateUI'">
+		        	{{row.renewalDueDateUI}}</td>
+		        </td>
+		        <td width="10%">
+		        	<div ng-if="row.renewalStatus == 'Show price'">
+				 		<ngcart-addtocart id="{{row.id}}" class="cartbtn" name="patent_{{row.id}}" price="{{row.currentRenewalCost}}" quantity="1" quantity-max="10" data="row" >
+				 	</ngcart-addtocart>
+				 	</div>
+		        </td>                   
+		    </tr>
+		</table>
+	</div>
+</div>
 
-<div class="row">
-	<div class="col-md-12">
+<ui-view></ui-view>
+<!-- 
 		<table class="table table-bordered text-md-center scroll t-list font-md m-b-lg">
 			<thead class="font-weight-bold">
 				<tr>
 					<th width="10%" class="align-middle">
-						<a ng-click="$ctrl.sortType = 'patentApplicationNumber'; $ctrl.sortReverse = !$ctrl.sortReverse">Application No.  <!--show if not showing(false)-->
+						<a ng-click="$ctrl.sortType = 'patentApplicationNumber'; $ctrl.sortReverse = !$ctrl.sortReverse">Application No. show if not showing(false)
 							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
 						</a>
@@ -93,15 +150,13 @@
 						</div>
 					</td>
 					<td width="19%">
-						<div ng-if="patent.renewalStatus == 'Show price'">
-						</div>
 						<div class="progress-phase" ng-if="patent.renewalStatus == 'Show price'">
 							<uib-progress class="pill-radius font-sm font-weight-bold" ng-class="(patent.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (patent.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (patent.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (patent.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (patent.costBandColour == 'Black' ? 'bg-phase-white': '')">
 								<uib-bar class="pill-radius d-flex align-items-center justify-content-center" value="patent.progressBar">{{patent.progressBar}}%</uib-bar>
 							</uib-progress>
 						</div>
 						<div ng-if="patent.renewalStatus !== 'Show price'">
-							<p class="font-md font-weight-bold">No action requred</p>
+							<p class="font-md font-weight-bold">No action required</p>
 						</div>						
 					</td>
 					<td width="8%">
@@ -120,7 +175,7 @@
 				</tr>
 			</tbody>
 
-		</table>
-		<ui-view></ui-view>
+		</table> -->
+		
 	</div>
 </div> 

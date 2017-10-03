@@ -47,7 +47,11 @@ app.controller('mainNavCtrl', ['$scope', '$mdSidenav', function($scope, $mdSiden
     } 
 }]);
 
-app.controller('coreCtrl', ['$scope', 'Idle', 'Keepalive', '$uibModal', '$http', function($scope, Idle, Keepalive, $uibModal, $http){
+app.controller('coreCtrl', ['$scope', 'Idle', 'Keepalive', '$uibModal', '$http', function($scope, Idle, Keepalive, $uibModal, $http, $state){
+
+        $scope.refresh = function() {
+            console.log('hello')
+        }
 
       	function closeModals() {
 	        if ($scope.warning) {
@@ -83,6 +87,7 @@ app.controller('coreCtrl', ['$scope', 'Idle', 'Keepalive', '$uibModal', '$http',
      		userTimedOut = true;  
 
 	        if (userTimedOut) {
+                ngCart.empty();
 	        	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
 	        	.then(
 	        		function(){
@@ -104,7 +109,6 @@ app.directive('checkStrength', function () {
             var strength = {
                 colors: ['#F00', '#F90', '#FF0', '#9F0', '#0F0'],
                 mesureStrength: function (p) {
-
                     var _force = 0;                    
                     var _regex = /[$-/:-?{-~!"^_`\[\]]/g;
                                           
@@ -145,11 +149,11 @@ app.directive('checkStrength', function () {
             };
 
             scope.$watch(iAttrs.checkStrength, function () {
-                if (scope.password1 === '') {
+                if (scope.newPassword === '') {
                     iElement.children('li')
                         .css({ "background": "#DDD" })
                 } else {
-                    var c = strength.getColor(strength.mesureStrength(scope.password1));
+                    var c = strength.getColor(strength.mesureStrength(scope.newPassword));
                     iElement.css({ "display": "inline" });
                     iElement.children('li')
                         .css({ "background": "#DDD" })
