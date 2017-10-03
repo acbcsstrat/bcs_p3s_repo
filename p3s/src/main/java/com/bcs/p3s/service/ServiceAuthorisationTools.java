@@ -81,6 +81,9 @@ public class ServiceAuthorisationTools extends Universal {
 				String msg = "***  ServiceAuthorisationTools checkThisIsMy() failed to retreive good session info *** (Possibly not logged in?)";
 				System.out.println(msg);
 				logInternalError().fatal(msg);
+				System.out.println("(me==null) is "+(me==null));
+				if (me!=null) System.out.println("me.getUser() is "+me.getUser());
+				if (me!=null) System.out.println("me.getBusiness() is "+me.getBusiness());
 				assert false : "4768";
 			}
 		}
