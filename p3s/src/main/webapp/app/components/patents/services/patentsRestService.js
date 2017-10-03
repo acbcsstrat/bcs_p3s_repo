@@ -68,7 +68,7 @@ app.factory('patentsRestService', function($http, $q) {
         }
 
         factory.deletePatent = function(id) {
-
+            console.log(id)
             var deferred = $q.defer();
             $http.delete(REST_SERVICE_URI+id)
                 .then(

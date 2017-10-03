@@ -1,100 +1,73 @@
 <transactionnav></transactionnav>
 
 <div class="row m-b-md">
-	<div class="col-md-3 offset-md-9">
+	<div class="col-md-2 offset-md-10">
 		<form class="form-inline">
-			 <div class="col-md-12">
-			 	<div class="input-group">
-					<input type="text" class="form-control pill-radius font-md" id="transId" name="transId" ng-model="searchTrans" placeholder="Search">
+			<div class="col-md-12">
+				<div class="input-group">
+					<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['p3S_TransRef']" placeholder="Transaction ID">
 					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
-				</div>		
-			</div>	 
+				</div>					
+			</div>
+<!-- 			<div class="col-md-4">
+				<div class="input-group">
+					<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['patentApplicationNumber']" placeholder="App No.">
+					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group">
+					<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['clientRef']" placeholder="Client Ref">
+					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+				</div>
+			</div>	 -->				
 		</form>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-12">
-		<table class="table table-bordered text-md-center scroll t-list font-md m-b-lg">
-			<thead class="font-weight-bold">
-				<tr>
-					<th width="15%" class="align-middle">
-						<a ng-click="$ctrl.sortType = 'transId'; $ctrl.sortReverse = !$ctrl.sortReverse">Transaction ID <!--show if not showing(false)-->
-							<span ng-show="$ctrl.sortType == 'transId' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'transId' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
-						</a>
-					</th>
-					<th width="8%" class="align-middle">
-						<a ng-click="$ctrl.sortType='patentTotal'; $ctrl.sortReverse = !$ctrl.sortReverse">No. of patents 
-							<span ng-show="$ctrl.sortType == 'patentTotal' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'patentTotal' && $ctrl.sortReverse" class="fa fa-caret-down"></span>							
-						</a>
-					</th>
-					<th width="15%" class="align-middle">
-						<a ng-click="$ctrl.sortType='patentApplicationNumber'; $ctrl.sortReverse=!$ctrl.sortReverse">App No.
-							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
-						</a>
-					</th>
-					<th width="20%" class="align-middle">
-						<a ng-click="$ctrl.sortType='clientRef'; $ctrl.sortReverse=!$ctrl.sortReverse">Client Ref
-							<span ng-show="$ctrl.sortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
-						</a>
-					</th>					
-					<th width="12%" class="align-middle">
-						<a ng-click="$ctrl.sortType='transDate'; $ctrl.sortReverse=!$ctrl.sortReverse">Transaction Initiated
-							<span ng-show="$ctrl.sortType == 'transDate' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'transDate' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
-						</a>
-					</th>
-					<th width="10%" class="align-middle">
-						<a ng-click="$ctrl.sortType='cost'; $ctrl.sortReverse=!$ctrl.sortReverse">Cost
-							<span ng-show="$ctrl.sortType == 'cost' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'cost' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
-						</a>	
-					</th>
-					<th width="20%" class="align-middle">
-						<a ng-click="$ctrl.sortType='status'; $ctrl.sortReverse=!$ctrl.sortReverse">Status
-							<span ng-show="$ctrl.sortType == 'status' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'status' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
-						</a>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-click="$ctrl.rowSelect($event)" ng-repeat="transaction in $ctrl.transactions | orderBy:$ctrl.sortType:$ctrl.sortReverse | filter:searchTrans">
-					<td width="15%">
-						<a class="txt-black" ui-sref="current-transactions.current-transaction-item({transId: transaction.id})" disabled>{{transaction.p3S_TransRef}}</a>
-					</td>
-					<td width="10%">
-						{{transaction.renewalUIs.length}}
-					</td>
-					<td width="15%">
-						<span ng-if="transaction.renewalUIs.length == 1" ng-repeat="item in transaction.renewalUIs">
-							<span ng-if="item.patentUI.patentApplicationNumber.length">
-								{{item.patentUI.patentApplicationNumber}}<br>
-							</span>								
-						</span>
-						<select ng-if="transaction.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in transaction.renewalUIs" ng-model="data.selectedOption" class="pill-radius p-select-option border-xs-grey">
-							<option value="" disabled selected>Multiple</option>									
-						</select>						
 
-					</td>
-					<td width="20%">
-						<span ng-repeat="item in transaction.renewalUIs">{{item.patentUI.clientRef}}<br></span>	
-					</td>
-					<td width="10%">{{transaction.transStartDateUI}}</td>
-					<td width="10%">$ {{transaction.transAmount_USD}}</td>
-					<td width="20%">
-						<p class="font-weight-bold">{{transaction.latestTransStatus}}</p>
-						<div class="progress-tracker progress-trans">
-							<uib-progress><uib-bar class="bg-phase-green pill-radius" value="transaction.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
-						</div>						
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="row m-b-xl">
+			<div class="col-md-12" id="scrollable-area" class="table-scroll">
+				<table ng-table="$ctrl.tableParams" class="table font-md t-list" show-filter="false" fixed-table-headers="scrollable-area">
+				    <tr ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(patent)">
+				        <td width="15%" data-title="'Transaction ID'" filter="{ 'p3S_TransRef': 'text'}" sortable="'p3S_TransRef'">
+							<a class="txt-black" ui-sref="current-transactions.current-transaction-item({transId: row.id})" disabled>{{row.p3S_TransRef}}</a>
+				        </td>
+				        <td width="10%" data-title="'No. of patents'" filter="{ 'renewalUIs.length': 'text'}" sortable="'renewalUIs.length'">
+						{{row.renewalUIs.length}}
+				        </td>
+				        <td width="15%" data-title="'App No.'" filter="{ 'patentApplicationNumber': 'number'}" sortable="'patentApplicationNumber'">
+							<span ng-if="row.renewalUIs.length == 1" ng-repeat="item in row.renewalUIs">
+								<span ng-if="item.patentUI.patentApplicationNumber.length">
+									{{item.patentUI.patentApplicationNumber}}<br>
+								</span>								
+							</span>
+							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in row.renewalUIs" ng-model="data.selectedOption" class="pill-radius p-select-option border-xs-grey">
+								<option value="" disabled selected>Multiple</option>									
+							</select>	
+				        </td>
+				     
+				        <td width="15%" data-title="'Client Ref'" filter="{ 'clientRef': 'text'}" sortable="'clientRef'">
+							<span ng-repeat="item in row.renewalUIs">{{item.patentUI.clientRef}}<br></span>	
+				        </td>
+				        <td width="15%" data-title="'Transaction Initiated'" filter="{ transStartDateUI: 'text'}" sortable="'transStartDateUI'">
+				        	{{row.transStartDateUI}}
+				        </td>				        
+				        <td width="10%" data-title="'Cost'" filter="{ 'transAmount_USD': 'text'}" sortable="'transAmount_USD'">
+				        	$ {{row.transAmount_USD}}
+				        </td>
+				        <td width="20%" data-title="'Status'" filter="{ 'latestTransStatus': 'text'}" sortable="'latestTransStatus'">
+							<p class="font-weight-bold">{{row.latestTransStatus}}</p>
+							<div class="progress-tracker progress-trans">
+								<uib-progress><uib-bar class="bg-phase-green pill-radius" value="row.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
+							</div>	
+				        </td>      				                 
+				    </tr>
+				</table>
+			</div>
+		</div>
 		<div ui-view></div>	
 	</div>
 </div>				

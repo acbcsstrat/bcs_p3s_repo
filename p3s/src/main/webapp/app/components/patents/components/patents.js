@@ -1,7 +1,7 @@
 app.component('patents', {
   	bindings: { patents: '<' },
 	templateUrl: 'p3sweb/app/components/patents/views/list-patents.htm',
-	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService) {
+	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams) {
 
 		var vm = this;
 
@@ -9,12 +9,12 @@ app.component('patents', {
 
 		vm.date = new Date();
 
+	
 
 
 		vm.$onInit = () => {
 
 			var patents = vm.patents;
-			console.log(patents)
 			var allPatents = [];
 			var greenPatents = [];
 			var amberPatents = [];
@@ -22,7 +22,16 @@ app.component('patents', {
 			var bluePatents = [];
 			var blackPatents = [];
 
-			vm.colourPhase = function(item) {
+		   	vm.tableParams = new NgTableParams({
+		   		sorting: { patentApplicationNumber: "asc" },
+		        page: 1,            // show first page
+		        count: 10000,           // count per page
+		    }, {
+		        counts: [],
+		        dataset: vm.patents
+		    });
+
+			vm.colourPhase = function(item) {	
 				switch(item.costBandColour) {
 					case 'Green':
 						$rootScope.color = 'green'
@@ -44,24 +53,50 @@ app.component('patents', {
 			}
 
 	  		vm.displayPhase = function(id) {
+	  			console.log(id)
 				switch (id) {
 				    case 1:
 				     	vm.patents = allPatents;
+					   	vm.tableParams = new NgTableParams({
+					   		sorting: { patentApplicationNumber: "asc" },
+					        page: 1,            // show first page
+					        count: 10000,           // count per page
+					    }, {
+					        counts: [],
+					        dataset: vm.patents
+					    });
 				        break;
 				    case 2:
 				     	vm.patents = greenPatents;
+			     		vm.tableParams = new NgTableParams({}, {
+	       					dataset: vm.patents
+    					});
 				        break;
 				    case 3:
 				     	vm.patents = amberPatents;
+			     		vm.tableParams = new NgTableParams({}, {
+	       					dataset: vm.patents
+    					});
 				        break;
 				    case 4:
 				     	vm.patents = redPatents;
+			     		vm.tableParams = new NgTableParams({}, {
+	       					dataset: vm.patents
+    					});
+
 				        break;
 				    case 5:
 				     	vm.patents = bluePatents;
+			     		vm.tableParams = new NgTableParams({}, {
+	       					dataset: vm.patents
+    					});				     	
 				     	break;
 			     	case 6:
 				    	vm.patents = blackPatents;
+			     		vm.tableParams = new NgTableParams({}, {
+	       					dataset: vm.patents
+    					});
+
 				}
 			}
 
@@ -202,8 +237,22 @@ app.component('patents', {
       		}
       	}
 
-	   	vm.sortType     = 'patentApplicationNumber'; // set the default sort type
-	  	vm.sortReverse  = false;  // set the default sort order		
+	   // 	vm.sortType     = 'patentApplicationNumber'; // set the default sort type
+	  	// vm.sortReverse  = false;  // set the default sort order		
    
 	}
 ]});
+
+app.directive('fixedTableHeaders', ['$timeout', function($timeout) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      $timeout(function () {
+        
+          container = element.parentsUntil(attrs.fixedTableHeaders);
+	        element.stickyTableHeaders({ scrollableArea: container, "fixedOffset": 0 });
+
+      }, 0);
+    }
+  }
+}]);

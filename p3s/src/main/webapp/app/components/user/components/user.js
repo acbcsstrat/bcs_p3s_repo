@@ -4,14 +4,26 @@ app.component('user', {
         timezones: '<'
     },
 	templateUrl: 'p3sweb/app/components/user/views/user-profile.htm',
-	controller: ['userService', 'timezoneService', '$q', '$rootScope', function(userService, timezoneService, $q, $rootScope) {
+	controller: ['userService', 'timezoneService', '$q', '$rootScope', '$scope', '$timeout', function(userService, timezoneService, $q, $rootScope, $scope, $timeout) {
 		
 		var vm = this;
 
         $rootScope.page = 'Profile'
 
-        vm.updateUser = function(user) {
-        	userService.updateUser(user);
+        $scope.newPassword = '';
+
+        vm.$onInit = function() {
+            $scope.user = vm.user;
+        }
+
+        vm.updateUser = function(user, p) {
+            if (user.newPassword !== '') {
+                user.newPassword = p;
+                $timeout(function() {
+                    console.log(user)
+                    userService.updateUser(user);
+                }, 100);
+            }
         }
 
         userService.listUsers()

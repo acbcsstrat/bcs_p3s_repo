@@ -17,7 +17,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
     .primaryPalette('purple')
 
 
-    IdleProvider.idle(570);
+    IdleProvider.idle(560);
     IdleProvider.timeout(30);
     KeepaliveProvider.interval(5);
 

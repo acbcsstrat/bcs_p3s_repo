@@ -128,8 +128,6 @@ app.component('dashboard', {
 				}
 			})
 
-			console.log(vm.recentTransArr)
-
 			function millsToHours(data, millisec) {
 
 		        var seconds = (millisec / 1000).toFixed(0);
@@ -173,7 +171,6 @@ app.component('dashboard', {
 			vm.selectedPhase;
 
 			vm.colourKey = function(colour) {
-				console.log
 				switch(colour) {
 					case 0:
 						vm.colourPhaseTitle = {
@@ -294,6 +291,8 @@ app.component('dashboard', {
 	        		$scope.currentIndex = currentSlide;
 
 	        		function patentFx(i) {
+	        			vm.selectedPatent = vm.phaseArr[i];
+	        			console.log(vm.selectedPatent)
 						var fees = vm.phaseArr[i].feeUI;
 	        			vm.todaysPriceUSD = fees.subTotalUSD;
 	        			vm.todaysPriceEUR = fees.subTotalEUR;
@@ -329,7 +328,6 @@ app.component('dashboard', {
 				        				//weekly
 
 				        				if((new Date(item).getDay() == lastWeekD)) { //NEEDS TO BE FIXED
-				        					console.log('what')
 				        					var lastWeekFx = data[index].rate;
 				        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
 				        					vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);

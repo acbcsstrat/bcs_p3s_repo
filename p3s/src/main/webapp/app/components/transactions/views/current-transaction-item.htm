@@ -15,11 +15,11 @@
 				<div class="selected-item-panel__head border-grey-xs--btm">
 					<div class="row d-flex align-items-center">
 						<div class="col-md-2">
-							<p class="font-weight-bold font-lg">Transaction ID</p>
+							<p class="font-weight-bold font-xl">Transaction ID</p>
 							<p class="font-md font-xl" ng-bind="$ctrl.transaction.p3S_TransRef"></p>
 						</div>
 						<div class="col-md-2">
-							<p class="font-weight-bold font-xl">Transaction Initated</p>
+							<p class="font-weight-bold font-xl">{{$ctrl.transaction.latestTransStatus}}</p>
 							<p class="font-xl">{{$ctrl.transaction.transStartDateUI}}</p>
 						</div>
 						<div class="col-md-8 text-right">

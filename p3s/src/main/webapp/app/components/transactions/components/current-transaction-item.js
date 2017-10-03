@@ -11,7 +11,7 @@ app.component('currentTransaction', {
 	    	console.log(currTransStatus)
 			vm.transStatus = [
 				{status: 'Initiated', active: false, complete: false}, 
-				{status: 'Pending', active: false, complete: false}, 
+				{status: 'Awaiting Funds', active: false, complete: false}, 
 				{status: 'Funds Received', active: false, complete: false},
 				{status: 'Funds Sent', active: false, complete: false},
 				{status: 'EPO Received', active: false, complete: false}, 
@@ -41,7 +41,7 @@ app.component('currentTransaction', {
 	    		case 'Initiated':
 	    			vm.transactionProgress = 12.28;
 	    		break;
-	    		case 'Pending':
+	    		case 'Awaiting Funds':
 	    			vm.transactionProgress = 26.56;
 	    		break;
 	    		case 'Funds Received':

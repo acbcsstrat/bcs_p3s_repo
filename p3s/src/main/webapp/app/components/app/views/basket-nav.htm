@@ -5,12 +5,14 @@
 		</div>
 		<div class="col-md-4">
 			<div class="row d-flex align-items-center">
-				<div class="col-md-2 offset-md-6">
-					<i class="fa fa-user-circle-o fa-5x"></i>
+				<div class="col-md-2 offset-md-6 white-nav-a">
+					<a ui-sref="profile">
+						<i class="fa fa-user-circle-o fa-5x"></i>
+					</a>
 				</div>		
 				<div class="col-md-2">
 					<p class="font-md font-weight-bold">{{$root.user.firstName}}</p>
-					<a class="font-md txt-black" href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
+					<a class="font-md txt-black" ng-click="$ctrl.empty()" href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
 				</div>
 				<div class="col-md-2">
 					<a ui-sref="basket">
