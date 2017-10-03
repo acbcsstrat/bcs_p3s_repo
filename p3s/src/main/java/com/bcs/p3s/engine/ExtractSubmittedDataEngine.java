@@ -367,7 +367,13 @@ public class ExtractSubmittedDataEngine extends Universal {
 		   		
 		   		if("billingZip".equals(key.trim())){
 		   			if(obValue instanceof Double || obValue instanceof Integer || obValue instanceof String){
-		   				Long longy = Long.valueOf(obValue.toString());
+		   				Long longy ;
+		   				try {
+		   					longy = Long.valueOf(obValue.toString());
+		   				} catch (NumberFormatException nfe) { // FE should prevent this. If occurs, survive
+		   					longy = new Long(0);
+		   					logErrorAndContinue("Basket Billing Zipcode held non-numeric value : "+obValue.toString());
+		   				}
 		   				basket.setBillingZip(longy);
 		   			}
 		   		}

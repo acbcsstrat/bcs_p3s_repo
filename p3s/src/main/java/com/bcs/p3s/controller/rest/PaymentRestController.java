@@ -163,9 +163,7 @@ public class PaymentRestController extends Universal {
 			bankTransferPostCommitDetails = paymentService.showBankTransferPostCommitDetails(basketContents);
 			
     	} catch (Exception e) {
-			System.out.println("PaymentRestController showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ");
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+    		fail("PaymentRestController showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ",e);
 			
 			bankTransferPostCommitDetails = new BankTransferPostCommitDetails(); // to avoid compile error!
 		}

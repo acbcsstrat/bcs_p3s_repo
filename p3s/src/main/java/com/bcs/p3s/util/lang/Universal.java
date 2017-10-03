@@ -33,11 +33,14 @@ public class Universal extends BcsLogger implements Loggable {
     	logInternalError().fatal(message);
     	throw new P3SRuntimeException(message);
     }
+    public void fail(String message, Exception e) {
+    	logInternalError().fatal(message+" : "+e.getMessage()+"  eType: "+e.getClass().getName());
+    	throw new P3SRuntimeException(message,e);
+    }
 
     
     public void logErrorAndContinue(String message) {
     	logInternalError().error(message);
-    	throw new P3SRuntimeException(message);
     }
     public void logErrorAndContinue(String message, Exception e) {
     	logInternalError().error(message+" : "+e.getMessage()+"  eType: "+e.getClass().getName());
