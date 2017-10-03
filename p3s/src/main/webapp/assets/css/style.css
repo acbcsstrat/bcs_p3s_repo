@@ -10,9 +10,15 @@ html, body {
 }
 
 html { font-size: 62.5%; }
+
 * { box-sizing: border-box; }
 
+a { color: #000; }
+
 .container { width: 90%!important; margin: 0 auto 0 120px; }
+.pre-app-container {  width: 90%!important; margin: 0 auto; height: 100%;  }
+.center-container { width: 40%; }
+
 
 h1, h2, h3, h4, h5, h6, p {
   -webkit-margin-before: 0em;
@@ -71,7 +77,7 @@ h1, .h1 { font-size: 3rem; };
 .font-lg { font-size: 1.5rem; }
 .font-xl { font-size: 1.7rem; }
 
-
+.no-margin-btm { margin-bottom: 0!important; }
 
 
 
@@ -84,15 +90,16 @@ h1, .h1 { font-size: 3rem; };
 .widget-panel--max {   max-height: 450px; overflow-y: auto; overflow-x: hidden;}
 .closed-sidenav {
   min-height: 100%;
-  position: absolute;
+  position: fixed;
   width: 75px;
 }
+.fixed-position { position: fixed; }
 
 
 
 /*THEME=====================*/
 
-.bg-light-grey { background: #f1f2f2; } /*ACTUAL COLOUR #f1f2f2. used darker due to screen issue*/
+.bg-light-grey { background:  #d0d0d0 ; } /*#f1f2f2 actual colour */
 .bg-white { background: #fff; }
 .bg-phase-green { background: #53ab58; }
 .bg-phase-amber { background: #f9b233; }
@@ -264,15 +271,50 @@ input:checked + .slider:before {
 
 
 
+#scrollable-area {
+  margin: auto;
+  width: 100%;
+  height: 450px;
+  overflow-y: scroll;  /*<!-- here is what is important-->*/
+}
 
+table {
+  width: 100%;
+  border-spacing:0;
+  margin:0;
+}
 
+thead {
+  background: #fff;
+  margin-top: 0
+  width: 100%;
+}
 
+#style-1::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+}
 
 
 
 /*STATES=================*/
 
-.nav-link:hover, .nav-link:active { color:#dbdbdb; }
+.nav-link:hover, .nav-link:active, .nav-link:hover a, .nav-link:active a i { color:#dbdbdb; }
 
 .view-tabs .nav-view-list-item .nav-view-link:hover, .nav-view-link:active, .t-list a {text-decoration: none; }
 .view-tabs li.nav-view-list-item.active { font-weight: bold; background: #53ab58; border: none;  color: #fff;}
@@ -348,10 +390,10 @@ uib-progress.progressblue { height: 3rem; }
 /********UNIVERSAL********
 ************************/
 
-/*select.form-control:not([size]):not([multiple]) {
-	height: 29px;
+select.form-control:not([size]):not([multiple]) {
+	height: 31px;
 }
-*/
+
 
 
 
@@ -387,4 +429,4 @@ input.ng-pristine {
 a.txt-black, .txt-black a { color: #000; }
 
 
-.white-nav-a a:visited, .white-nav-a a:active, .white-nav-a a:focus, .white-nav-a a:link  { color: #fff!important; }  
+.white-nav-a a:visited, .white-nav-a a:focus { color: #fff!important; }  
