@@ -60,9 +60,9 @@
 		        </td>
 		        <td width="8%">
 	
-					<div ng-if="row.renewalStatus == 'Show price'">
-						<span >$ {{row.currentRenewalCost}}</span><br>
-						<span>{{date | date:'dd-MM-yy'}}</span>
+					<div ng-if="row.renewalStatus == 'Show price'" ng-class="(row.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (row.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + (row.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Black' ? 'txt-phase-white': '')">
+						<span class="font-weight-bold">$ {{row.currentRenewalCost}}</span><br>
+						<span>{{$ctrl.date | date:'MM/dd/yy'}}</span>
 					</div>		        	
 		        </td>
 		        <td width="14%" data-title="'Renewal status'" filter="{ 'renewalStatus': 'text'}" sortable="'renewalStatus'">
@@ -71,20 +71,21 @@
 					</div>	
 					<div class="progress-phase" ng-if="row.renewalStatus == 'Show price'">
 						<uib-progress class="pill-radius font-sm font-weight-bold" ng-class="(row.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (row.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (row.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (row.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (row.costBandColour == 'Black' ? 'bg-phase-white': '')">
-							<uib-bar class="pill-radius d-flex align-items-center justify-content-center" value="row.progressBar">{{row.progressBar}}%</uib-bar>
+							<uib-bar class="pill-radius d-flex align-items-center justify-content-center progress-15" value="row.progressBar">{{row.progressBar}}%</uib-bar>
 						</uib-progress>
 					</div>
 		        </td>
 		        <td width="8%">
-					<div ng-if="row.renewalStatus == 'Show price'">
-						<span>$ {{row.renewalCostNextStage}}</span>
+					<div ng-if="row.renewalStatus == 'Show price'" ng-class="(row.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + (row.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + (row.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + (row.costBandColour == 'Black' ? 'txt-phase-white': '')">
+						<span class="font-weight-bold">$ {{row.renewalCostNextStage}}</span><br>
+						<span>{{row.costBandEndDate | date:'MM/dd/yy'}}</span>
 					</div>		        	
 		        </td>
 
 		        	
 
 		        <td width="15%" data-title="'Due date'" filter="{ 'renewalDueDateUI': 'text'}" sortable="'renewalDueDateUI'">
-		        	{{row.renewalDueDateUI}}</td>
+		        	{{row.renewalDueDate | date:'MM/dd/yy'}}</td>
 		        </td>
 		        <td width="10%">
 		        	<div ng-if="row.renewalStatus == 'Show price'">
@@ -98,84 +99,3 @@
 </div>
 
 <ui-view></ui-view>
-<!-- 
-		<table class="table table-bordered text-md-center scroll t-list font-md m-b-lg">
-			<thead class="font-weight-bold">
-				<tr>
-					<th width="10%" class="align-middle">
-						<a ng-click="$ctrl.sortType = 'patentApplicationNumber'; $ctrl.sortReverse = !$ctrl.sortReverse">Application No. show if not showing(false)
-							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-down"></span>			
-						</a>
-					</th>
-					<th width="15%">
-						<a ng-click="$ctrl.sortType = 'clientRef'; $ctrl.sortReverse = !$ctrl.sortReverse">Client Ref
-							<span ng-show="$ctrl.sortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-						</a>							
-					</th>
-					<th width="15%">
-						<a ng-click="$ctrl.sortType = 'title'; $ctrl.sortReverse = !$ctrl.sortReverse">Description
-							<span ng-show="$ctrl.sortType == 'title' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'title' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-						</a>
-					</th>
-					<th width="30%" colspan="3">
-						<a ng-click="$ctrl.sortType = 'renewalCostNextStage'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal status
-							<span ng-show="$ctrl.sortType == 'renewalCostNextStage' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'renewalCostNextStage' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-						</a>
-					</th>
-					<th width="15%">
-						<a ng-click="$ctrl.sortType = 'renewalDueDateUI'; $ctrl.sortReverse = !$ctrl.sortReverse">Due date
-							<span ng-show="$ctrl.sortType == 'renewalDueDateUI' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-							<span ng-show="$ctrl.sortType == 'renewalDueDateUI' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-						</a>
-					</th>
-					<th width="10%" ></th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<tr ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.sortType:$ctrl.sortReverse | filter:searchPatents" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(patent)"  class="t-list-body__t-list-row font-md">
-					<td width="10%" >
-						<a class="txt-black" ui-sref="patents.patent({patentId: patent.id})" ng-bind="patent.patentApplicationNumber"></a>
-					</td>
-					<td width="15%" ng-bind="patent.clientRef"></td>
-					<td width="20%" class="td-ch-limit">{{patent.title}}</td>
-					<td width="8%">
-						<div ng-if="patent.renewalStatus == 'Show price'">
-							<span>$ {{patent.currentRenewalCost}}</span><br>
-							<span>{{date | date:'dd-MM-yy'}}</span>
-						</div>
-					</td>
-					<td width="19%">
-						<div class="progress-phase" ng-if="patent.renewalStatus == 'Show price'">
-							<uib-progress class="pill-radius font-sm font-weight-bold" ng-class="(patent.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (patent.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (patent.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (patent.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (patent.costBandColour == 'Black' ? 'bg-phase-white': '')">
-								<uib-bar class="pill-radius d-flex align-items-center justify-content-center" value="patent.progressBar">{{patent.progressBar}}%</uib-bar>
-							</uib-progress>
-						</div>
-						<div ng-if="patent.renewalStatus !== 'Show price'">
-							<p class="font-md font-weight-bold">No action required</p>
-						</div>						
-					</td>
-					<td width="8%">
-						<div ng-if="patent.renewalStatus == 'Show price'">
-							<span>$ {{patent.renewalCostNextStage}}</span><br>
-						</div>
-					</td>
-					<td width="20%" ng-bind="patent.renewalDueDateUI"></td>
-					<td width="10%" class="cartbtn">
-						<div ng-if="patent.renewalStatus == 'Show price'">
-						 	<ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="patent_{{patent.id}}" price="{{patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="patent" >
-							 	Add to cart
-						 	</ngcart-addtocart>
-					 	</div>
-				 	</td>
-				</tr>
-			</tbody>
-
-		</table> -->
-		
-	</div>
-</div> 

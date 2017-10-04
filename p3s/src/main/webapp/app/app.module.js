@@ -20,8 +20,9 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 	Idle.watch();
 
     function timeZoneClocks() {
-            var cet = moment.tz("Europe/London").format('HH:mm d/MM/YY');
-            var est = moment.tz("America/Los_Angeles").format('HH:mm d/MM/YY');
+
+            var cet = moment.tz("Europe/London").format('HH:mm MM/D/YY');
+            var est = moment.tz("America/New_York").format('HH:mm MM/D/YY');
         
         var t = $timeout(function() {
 
@@ -36,9 +37,11 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 
 }]);
 
-app.controller('mainNavCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
+app.controller('mainNavCtrl', ['$scope', '$mdSidenav', 'ngCart', function($scope, $mdSidenav, ngCart){
  	$scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
+
+   
 
     function buildToggler(componentId) {
       return function() {
@@ -47,12 +50,9 @@ app.controller('mainNavCtrl', ['$scope', '$mdSidenav', function($scope, $mdSiden
     } 
 }]);
 
-app.controller('coreCtrl', ['$scope', 'Idle', 'Keepalive', '$uibModal', '$http', function($scope, Idle, Keepalive, $uibModal, $http, $state){
+app.controller('coreCtrl', ['$scope', 'Idle', 'Keepalive', '$uibModal', '$http', 'ngCart', function($scope, Idle, Keepalive, $uibModal, $http, ngCart){
 
-        $scope.refresh = function() {
-            console.log('hello')
-        }
-
+         
       	function closeModals() {
 	        if ($scope.warning) {
 	          $scope.warning.close();
@@ -87,7 +87,7 @@ app.controller('coreCtrl', ['$scope', 'Idle', 'Keepalive', '$uibModal', '$http',
      		userTimedOut = true;  
 
 	        if (userTimedOut) {
-                ngCart.empty();
+                ngCart.empty()
 	        	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
 	        	.then(
 	        		function(){

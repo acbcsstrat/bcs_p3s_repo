@@ -56,6 +56,8 @@ app.component('patent', {
 
 	            if(changeObj.patent){
 
+	            	vm.selectedPatent =  changeObj.patent.currentValue;
+
 	            	var patentLineChart = angular.element(document.getElementById('#patentLineChart"'));
 	            	var patentBarChart = angular.element(document.getElementById('#patentBarChart"'));
 
@@ -63,7 +65,7 @@ app.component('patent', {
 	            	var caFee = vm.costAnalysis.fee;
 	            	var costBand = vm.costAnalysis;
 		            var renewalHistory = vm.renewal;
-			
+					console.log(vm.costAnalysis)
 	            	vm.feeBreakDown = {
 	            		renewalFeeEUR: caFee.renewalFeeEUR,
 	            		renewalFeeUSD: caFee.renewalFeeUSD,
@@ -111,9 +113,8 @@ app.component('patent', {
 	            	const lineDataArr = [];
 	            	const lineLabelArr = [];
 					Object.keys(caLine).forEach(day => {
-						console.log(day)
 						const dayData = caLine[day];
-						lineLabelArr.push(dayData.feeActiveDate);
+						lineLabelArr.push(day.slice(4, 10));
 						lineDataArr.push(dayData.subTotal_USD)
 					})
 
@@ -273,7 +274,6 @@ app.component('patent', {
         				return a - b
         			});        			
 
-
         			var tD = new Date().getTime();
         			var lwD = tD - 604800000; //subtract a week in milliseconds
         			var lastWeekD = new Date(lwD).getDay();
@@ -281,6 +281,7 @@ app.component('patent', {
 
         			dateArr.forEach(function(item, index){
         				//yesterday
+
         				if(item == dateArr[0]) {
         					var yesterdayFx = data[index].rate;
         					vm.yesterdaysPrice = Math.floor(vm.costAnalysis.fee.subTotalEUR * yesterdayFx);
@@ -334,7 +335,6 @@ app.component('patent', {
 	        }
          	usdFxEur();
 
-
         }	
 
 
@@ -347,10 +347,6 @@ app.component('patent', {
 
         // PATENT INFORMATION //////////////////////
 
-
-
-        vm.sortType = 'renewalYear';
-        vm.sortReverse = true;       
 
      	vm.deletePatent = function(id){
 	        patentsRestService.deletePatent(id)

@@ -7,12 +7,11 @@ app.component('patents', {
 
 		$rootScope.page = 'List Patents';
 
-		vm.date = new Date();
-
-	
-
+		
 
 		vm.$onInit = () => {
+
+			vm.date = new Date()
 
 			var patents = vm.patents;
 			var allPatents = [];
@@ -21,6 +20,8 @@ app.component('patents', {
 			var redPatents = [];
 			var bluePatents = [];
 			var blackPatents = [];
+
+			console.log(patents)
 
 		   	vm.tableParams = new NgTableParams({
 		   		sorting: { patentApplicationNumber: "asc" },
@@ -53,7 +54,6 @@ app.component('patents', {
 			}
 
 	  		vm.displayPhase = function(id) {
-	  			console.log(id)
 				switch (id) {
 				    case 1:
 				     	vm.patents = allPatents;
@@ -68,35 +68,58 @@ app.component('patents', {
 				        break;
 				    case 2:
 				     	vm.patents = greenPatents;
-			     		vm.tableParams = new NgTableParams({}, {
-	       					dataset: vm.patents
-    					});
+					   	vm.tableParams = new NgTableParams({
+					   		sorting: { patentApplicationNumber: "asc" },
+					        page: 1,            // show first page
+					        count: 10000,           // count per page
+					    }, {
+					        counts: [],
+					        dataset: vm.patents
+					    });
 				        break;
 				    case 3:
 				     	vm.patents = amberPatents;
-			     		vm.tableParams = new NgTableParams({}, {
-	       					dataset: vm.patents
-    					});
+					   	vm.tableParams = new NgTableParams({
+					   		sorting: { patentApplicationNumber: "asc" },
+					        page: 1,            // show first page
+					        count: 10000,           // count per page
+					    }, {
+					        counts: [],
+					        dataset: vm.patents
+					    });
 				        break;
 				    case 4:
 				     	vm.patents = redPatents;
-			     		vm.tableParams = new NgTableParams({}, {
-	       					dataset: vm.patents
-    					});
-
+					   	vm.tableParams = new NgTableParams({
+					   		sorting: { patentApplicationNumber: "asc" },
+					        page: 1,            // show first page
+					        count: 10000,           // count per page
+					    }, {
+					        counts: [],
+					        dataset: vm.patents
+					    });
 				        break;
 				    case 5:
 				     	vm.patents = bluePatents;
-			     		vm.tableParams = new NgTableParams({}, {
-	       					dataset: vm.patents
-    					});				     	
+					   	vm.tableParams = new NgTableParams({
+					   		sorting: { patentApplicationNumber: "asc" },
+					        page: 1,            // show first page
+					        count: 10000,           // count per page
+					    }, {
+					        counts: [],
+					        dataset: vm.patents
+					    });		     	
 				     	break;
 			     	case 6:
 				    	vm.patents = blackPatents;
-			     		vm.tableParams = new NgTableParams({}, {
-	       					dataset: vm.patents
-    					});
-
+					   	vm.tableParams = new NgTableParams({
+					   		sorting: { patentApplicationNumber: "asc" },
+					        page: 1,            // show first page
+					        count: 10000,           // count per page
+					    }, {
+					        counts: [],
+					        dataset: vm.patents
+					    });
 				}
 			}
 

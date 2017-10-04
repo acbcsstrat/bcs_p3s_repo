@@ -17,13 +17,14 @@ app.component('user', {
         }
 
         vm.updateUser = function(user, p) {
-            if (user.newPassword !== '') {
+            if (p !== '') {
                 user.newPassword = p;
-                $timeout(function() {
-                    console.log(user)
-                    userService.updateUser(user);
-                }, 100);
             }
+            $timeout(function() {
+                
+                userService.updateUser(user);
+            }, 100);
+            
         }
 
         userService.listUsers()

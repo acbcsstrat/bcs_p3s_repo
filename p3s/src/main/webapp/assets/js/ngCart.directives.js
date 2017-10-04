@@ -111,7 +111,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 $scope.urgentFee = 0;
                 
                 productData.forEach(function(data, i){
-
+                    console.log(data._data)
                     processingFeeArr.push(data._data.feeUI.processingFeeUSD)
                     renewalFeeArr.push(data._data.feeUI.renewalFeeUSD)
                     extensionFeeArr.push(data._data.feeUI.extensionFeeUSD)

@@ -17,7 +17,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
     .primaryPalette('purple')
 
 
-    IdleProvider.idle(560);
+    IdleProvider.idle(525);
     IdleProvider.timeout(30);
     KeepaliveProvider.interval(5);
 
@@ -51,7 +51,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
             transactions: ['currentTransactionsService', function(currentTransactionsService) {
                 return currentTransactionsService.fetchCurrentTransactions();
             }]
-
         }
     })
     .state('profile', {

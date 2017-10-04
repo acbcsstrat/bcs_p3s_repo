@@ -56,7 +56,7 @@
 	<div class="col-md-3">
 		<div class="bg-white widget-panel">
 			<div class="widget-panel__head widget-panel__head--border-btm">
-				<h3 class="font-xl font-weight-bold">Total No. of Renewals: {{$ctrl.totalPatents}}</h3>
+				<h3 class="font-xl font-weight-bold">Total No. of Patents: {{$ctrl.totalPatents}}</h3>
 			</div>
 			
 			<div class="widget-panel__body">
@@ -89,7 +89,7 @@
 			            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
 						    <slick data="$ctrl.phaseArr" settings="slickConfig">
 						        <div ng-repeat="item in $ctrl.phaseArr">
-						        	<div class="pill-radius  d-flex p-2 justify-content-center align-items-center flex-column m-b-md" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}" ng-hide="true">
+						        	<div class="pill-radius  d-flex p-2 justify-content-center align-items-center flex-column m-b-md" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
 						        		<p class="txt-white font-lg">Green Renewal {{$index + 1}} of {{$ctrl.greenRenewals.length}}</p>
 						        	</div>
 						           
@@ -109,13 +109,13 @@
 						            </table>
 						            <div class="row">
 						            	<div class="col-md-12 m-b-xs progress-phase">
-						            		<uib-progress class="ng-phase-amber pill-radius"><uib-bar class="ng-phase-green pill-radius"  value="item.progressBar"></uib-bar></uib-progress>
+						            		<uib-progress class="bg-phase-amber pill-radius"><uib-bar class="bg-phase-green pill-radius"  value="item.progressBar"></uib-bar></uib-progress>
 						            	</div>
 						            	<div class="col-md-6 text-left">
-						            		<span class="font-weight-bold">{{date | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-l-xs">{{date | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            	<div class="col-md-6 text-right">
-						            		<span class="font-weight-bold">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-r-xs">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            </div>
 						        </div>
@@ -151,10 +151,10 @@
 						            		<uib-progress class="bg-phase-red pill-radius" ><uib-bar class="bg-phase-amber pill-radius" value="item.progressBar"></uib-bar></uib-progress>
 						            	</div>
 						            	<div class="col-md-6 text-left">
-						            		<span class="font-weight-bold">{{date | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-l-xs">{{date | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            	<div class="col-md-6 text-right">
-						            		<span class="font-weight-bold">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-r-xs">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            </div>
 						        </div>
@@ -193,10 +193,10 @@
 						            		<uib-progress class="bg-phase-blue pill-radius"><uib-bar class="phase-red pill-radius" value="item.progressBar"></uib-bar></uib-progress>
 						            	</div>
 						            	<div class="col-md-6 text-left">
-						            		<span class="font-weight-bold">{{date | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-l-xs">{{date | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            	<div class="col-md-6 text-right">
-						            		<span class="font-weight-bold">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-r-xs">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            </div>
 					            </div>
@@ -232,10 +232,10 @@
 						            		<uib-progress class="bg-phase-black pill-radius"><uib-bar class="bg-phase-blue pill-radius" value="item.progressBar"></uib-bar></uib-progress>
 						            	</div>
 						            	<div class="col-md-6 text-left">
-						            		<span class="font-weight-bold">{{date | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-l-xs">{{date | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            	<div class="col-md-6 text-right">
-						            		<span class="font-weight-bold">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-r-xs">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            </div>
 						        </div>
@@ -271,10 +271,10 @@
 						            		<uib-progress class="pill-radius border-grey-xs"><uib-bar class="bg-phase-black pill-radius" value="item.progressBar"></uib-bar></uib-progress>
 						            	</div>
 						            	<div class="col-md-6 text-left">
-						            		<span class="font-weight-bold">{{date | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-l-xs">{{date | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            	<div class="col-md-6 text-right">
-						            		<span class="font-weight-bold">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
+						            		<span class="font-weight-bold m-r-xs">{{item.costBandEndDate | date:'dd-MM-yy'}}</span>
 						            	</div>
 						            </div>
 						        </div>

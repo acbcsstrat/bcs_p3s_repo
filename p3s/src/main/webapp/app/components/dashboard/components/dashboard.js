@@ -165,6 +165,7 @@ app.component('dashboard', {
 			vm.redRenewals = [];
 			vm.blueRenewals = [];
 			vm.blackRenewals = [];
+			vm.noAction = [];
 
 			//COLOUR KEY
 
@@ -213,9 +214,9 @@ app.component('dashboard', {
 
 			vm.totalPatents = patents.length;
 
-			vm.labels = ["Black", "Blue", "Red", "Yellow", "Green"];
+			vm.labels = ["No action required", "Black", "Blue", "Red", "Yellow", "Green"];
 
-			vm.pieChartColours = ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
+			vm.pieChartColours = ['#d1d1d1', '#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
 
 			patents.forEach(function(item){
 				switch(item.costBandColour) {
@@ -232,10 +233,16 @@ app.component('dashboard', {
 						vm.blueRenewals.push(item)
 					break;
 					case 'Black':
-						vm.blackRenewals.push(item)									
+						vm.blackRenewals.push(item)
+					break;
+					case 'NoColor':
+
+						vm.noAction.push(item)
 				}
 
-				vm.data = [vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
+
+
+				vm.data = [vm.noAction.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
 
 			})
 

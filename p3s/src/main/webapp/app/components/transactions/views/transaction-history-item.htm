@@ -20,7 +20,7 @@
 						</div>
 						<div class="col-md-2">
 							<p class="font-weight-bold font-xl">Transaction Initated</p>
-							<p class="font-xl">{{$ctrl.transaction.transStartDateUI}}</p>
+							<p class="font-xl">{{$ctrl.transaction.transStartDate | date: 'MM/dd/yy'}}</p>
 						</div>
 						<div class="col-md-8 text-right">
 							<p class="font-weight-bold font-xl">{{$ctrl.transaction.latestTransStatus}}</p>

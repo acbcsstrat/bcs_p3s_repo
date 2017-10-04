@@ -105,17 +105,21 @@ app.component('searchpatent', {
 
 	 	vm.submit = function(patent) {
 	 		console.log(patent)
-	    	patentsRestService.savePatent(patent)
-	            .then(function(){
-	             	$state.go('patents', {}, {reload: true})
-	             	.then(function(){
-		             		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
-		             	})
-		             },
-		            function(errResponse){
-		                console.error('Error while deleting Patent');
-		            }
-    	)};
+	 		$timeout(function(){
+				patentsRestService.savePatent(patent)
+		            .then(function(){
+		             	$state.go('patents', {}, {reload: true})
+		             	.then(function(){
+			             		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
+			             	})
+			             },
+			            function(errResponse){
+			                console.error('Error while deleting Patent');
+			            }
+	    		)
+	 		}, 100);
+	    	
+    		};
              	
         vm.cancelSearch = function() {
         	$state.go('search-patent', {}, {reload: true});

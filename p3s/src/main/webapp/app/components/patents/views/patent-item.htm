@@ -24,15 +24,30 @@
 						    </div>
 						    <div class="col-md-6">
 	    						<div ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="text-center">
-									<p class="font-md font-weight-bold">{{$ctrl.patent.renewalStatus}}</p>
+									<p class="font-lg font-weight-bold txt-phase-green">{{$ctrl.patent.renewalStatus}}</p>
 								</div>
 								<div ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-									<uib-progress class="pill-radius progress-bar-tall" ng-class="($ctrl.patent.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'bg-phase-white': '')"><uib-bar class="pill-radius progress-bar-tall font-md d-flex align-items-center justify-content-center" value="$ctrl.progressBar">{{$ctrl.progressBar}}%</uib-bar></uib-progress>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="text-center inline-container m-b-xs" ng-style="{'width': $ctrl.patent.progressBar + '%'}">
+												<span class="font-md font-weight-bold nowrap" ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentRenewalCost}}</span>
+											</div>
+											<div class="text-center inline-container m-b-xs"  ng-style="{'width': ((100 - $ctrl.patent.progressBar) - 1)  + '%'}">
+												<span class="font-md font-weight-bold nowrap" ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.renewalCostNextStageUSD}}</span>
+											</div>		
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<uib-progress class="pill-radius progress-bar-tall" ng-class="($ctrl.patent.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'bg-phase-white': '')"><uib-bar class="pill-radius progress-bar-tall font-md d-flex align-items-center justify-content-center font-weight-bold progress-10" value="$ctrl.progressBar">{{$ctrl.patent.progressBar}}%</uib-bar></uib-progress>											
+										</div>	
+									</div>
+																	
 								</div>
 						    </div>
 						    <div class="col-md-3">
-						    	<div ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-							    	<h3><span class="font-weight-bold">Next stage:</span> {{$ctrl.nextStage()}}</h3>
+						    	<div ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
+							    	<h3><span class="font-weight-bold">Next stage:</span> <span ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">{{$ctrl.nextStage()}}</span></h3>
 							    	<h3><span class="font-weight-bold">Occurs:</span> {{$ctrl.patent.costBandEndDateUI}}</h3>
 						    	</div>
 						    </div>		    		    
@@ -92,7 +107,7 @@
 							    				<div class="m-b-md">
 													<h4 class="font-weight-bold m-b-xs">Notifications</h4>
 												</div>
-												<p class="font-sm">Select the collur and time frame to recieve email notifications for this patent prior to each stage.</p>					    				
+												<p class="font-sm">Select the colour and time frame to recieve email notifications for this patent prior to each stage.</p>					    				
 							    			</div>
 											<div class="phase-pills m-b-sm">
 												<div class="pill-radius p-pill-tabs pill-tabs d-flex justify-content-center align-items-center flex-column" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
@@ -103,7 +118,7 @@
 												<div class="col-md-4">
 													<div class="notification-tabs">
 														<ul class="nav notification-pills flex-column">
-															<li class="green nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-sm bg-white border-grey-xs active d-flex justify-content-center align-items-center m-b-xs" ng-init="" ng-click="activeNotificationTab = 0; $ctrl.displayNotifications($ctrl.patentNotifications.green); $ctrl.colourKey(0);">Green</li>
+															<li class="green nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-sm bg-white border-grey-xs active d-flex justify-content-center align-items-center m-b-xs" ng-init="" ng-click="activeNotificationTab = 0; $ctrl.displayNotifications($ctrl.patentNotifications.green); $ctrl.colourKey(0);" ng-class="{bg-phase-green : activeNotificationTab == 0}">Green</li>
 															<li class="amber nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-sm bg-white border-grey-xs d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 1; $ctrl.displayNotifications($ctrl.patentNotifications.amber); $ctrl.colourKey(1);">Amber</li>
 															<li class="red nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-sm bg-white border-grey-xs d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 2; $ctrl.displayNotifications($ctrl.patentNotifications.red); $ctrl.colourKey(2);">Red</li>
 															<li class="blue nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-sm bg-white border-grey-xs active d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 3; $ctrl.displayNotifications($ctrl.patentNotifications.blue); $ctrl.colourKey(3);">Blue</li>
@@ -255,8 +270,15 @@
 								</div> <!-- row end -->
 								<div class="row">
 									<div class="col-md-12">
-								 		<ngcart-addtocart id="$$ctrl.patent.id" class="cartbtn font-weight-bold btn-block" name="patent_$$ctrl.patent.id" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-			 							</ngcart-addtocart>		
+			    						<div ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="text-center">
+											<p class="font-lg font-weight-bold txt-phase-green">{{$ctrl.patent.renewalStatus}}</p>
+										</div>
+										<div ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+											<div class="row">
+										 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+					 							</ngcart-addtocart>		
+											</div>
+										</div>
 									</div>
 								</div>	
 							</div>	
@@ -345,9 +367,14 @@
 									<p class="font-xl txt-phase-green font-weight-bold">$ {{$ctrl.feeBreakDown.bandSaving().savings}}</p>
 									<p class="font-lg">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
 								</div>
-								<div class="col-md-5 d-flex flex-column justify-content-end">
-								 	<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-								 	</ngcart-addtocart>
+								<div class="col-md-5 d-flex flex-column justify-content-center">
+		    						<div ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="text-center">
+										<p class="font-lg font-weight-bold txt-phase-green">{{$ctrl.patent.renewalStatus}}</p>
+									</div>
+									<div ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+								 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+								 		</ngcart-addtocart>
+								 	</div>
 								</div>						
 							</div> <!-- row end-->
 						</div>
@@ -355,7 +382,8 @@
 				</div>
 			</uib-tab>
 		    <uib-tab heading="Renewal History" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md"  index="2"  ng-hide="true">
-		    	<div class="selected-item-panel__head">
+
+		    	<div class="selected-item-panel__head border-grey-xs--btm">
 		    		<div class="row">
 						<div class="col-md-2">
 							<h4 class="font-weight-bold font-xl">App No.</h4>
@@ -375,51 +403,56 @@
 				<div class="selected-item-panel__body">
 					<div class="row">
 						<div class="col-md-12">
-							<table class="table">
-								<thead class="border-grey-xs--btm border-grey-xs--top">
-									<tr>
-										<td class="font-lg font-weight-bold" width="20%" ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
-											<span ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-											<span ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-										</td>
-										<td class="font-lg font-weight-bold"  width="20%" ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
-											<span ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-											<span ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-										</td>
-										<td class="font-lg font-weight-bold"  width="30%" ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse" colspan="2">Cost Breakdown
-											<span ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-											<span ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-										</td>
-										<td class="font-lg font-weight-bold" width="30%">Downloads</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
-										<td class="font-lg" width="20%">Year <span ng-bind="renewal.renewalYear"></span></td>
-										<td class="font-lg" width="20%">{{renewal.renewalDueDateUI}}</td>
-										<td class="font-lg" width="10%">
-											<p>Official Fee:</p>
-											<p>Processing Fee:</p>
-											<p class="font-weight-bold">Total: </p>
-										</td>
-										<td class="font-lg" width="20%">
-											<p>$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</p>
-											<p>$ {{$ctrl.feeBreakDown.processingFeeEUR}}</p>
-											<p class="font-weight-bold">$ {{$ctrl.feeBreakDown.subTotalUSD}}</p>
-										</td>
-										<td width="30%">
-											<div class="row">
-												<div class="col-md-5">
-													<a href="p3sweb/hardcodedpdffolder/certificates/dummyCertificateNumber1.pdf" class="btn btn-block bg-phase-green pill-radius p-pill-tabs txt-white" download>Certificate <i class="fa fa-file-pdf-o fa-2x"></i></a></span>
+							<div ng-if="$ctrl.renewal.length == 0">
+								<p class="font-weight-bold font-lg">This patent has not been renewed through Patent Place</p>
+							</div>
+							<div ng-if="$ctrl.renewal.length !== 0">
+								<table class="table">
+									<thead class="border-grey-xs--btm border-grey-xs--top">
+										<tr>
+											<td class="font-lg font-weight-bold" width="20%" ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
+												<span ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+												<span ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+											</td>
+											<td class="font-lg font-weight-bold"  width="20%" ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
+												<span ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+												<span ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+											</td>
+											<td class="font-lg font-weight-bold"  width="30%" ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse" colspan="2">Cost Breakdown
+												<span ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+												<span ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+											</td>
+											<td class="font-lg font-weight-bold" width="30%">Downloads</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+											<td class="font-lg" width="20%">Year <span ng-bind="renewal.renewalYear"></span></td>
+											<td class="font-lg" width="20%">{{renewal.renewalDueDate | date: 'MM/dd/yy'}}</td>
+											<td class="font-lg" width="10%">
+												<p>Official Fee:</p>
+												<p>Processing Fee:</p>
+												<p class="font-weight-bold">Total: </p>
+											</td>
+											<td class="font-lg" width="20%">
+												<p>$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</p>
+												<p>$ {{$ctrl.feeBreakDown.processingFeeEUR}}</p>
+												<p class="font-weight-bold">$ {{$ctrl.feeBreakDown.subTotalUSD}}</p>
+											</td>
+											<td width="30%">
+												<div class="row">
+													<div class="col-md-5">
+														<a href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" class="btn btn-block bg-phase-green pill-radius p-pill-tabs txt-white" download>Certificate <i class="fa fa-file-pdf-o fa-2x"></i></a></span>
+													</div>
+													<div class="col-md-5">
+														<a href="p3sweb/hardcodedpffolder/invoices/dummyInvoiceNumber1.pdf" class="btn btn-block bg-phase-green pill-radius p-pill-tabs txt-white" download>Invoice <i class="fa fa-file-pdf-o fa-2x"></i></a></span>
+													</div>	
 												</div>
-												<div class="col-md-5">
-													<a href="p3sweb/hardcodedpdffolder/invoices/dummyInvoiceNumber1.pdf" class="btn btn-block bg-phase-green pill-radius p-pill-tabs txt-white" download>Invoice <i class="fa fa-file-pdf-o fa-2x"></i></a></span>
-												</div>	
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

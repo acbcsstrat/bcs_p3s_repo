@@ -53,7 +53,7 @@
 							<span ng-repeat="item in row.renewalUIs">{{item.patentUI.clientRef}}<br></span>	
 				        </td>
 				        <td width="15%" data-title="'Transaction Initiated'" filter="{ transStartDateUI: 'text'}" sortable="'transStartDateUI'">
-				        	{{row.transStartDateUI}}
+				        	{{row.transStartDate | date: 'MM/dd/yy'}}
 				        </td>				        
 				        <td width="10%" data-title="'Cost'" filter="{ 'transAmount_USD': 'text'}" sortable="'transAmount_USD'">
 				        	$ {{row.transAmount_USD}}

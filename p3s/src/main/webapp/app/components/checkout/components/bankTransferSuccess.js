@@ -9,9 +9,8 @@ app.component('bankTransferSuccess', {
 
 		$scope.orderObj = $stateParams.orderObj;
 
-		
-		
 		console.log($scope.orderObj)
+	
 
 	}
 ]})
