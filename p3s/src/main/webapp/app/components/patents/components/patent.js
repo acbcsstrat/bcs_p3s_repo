@@ -65,7 +65,7 @@ app.component('patent', {
 	            	var caFee = vm.costAnalysis.fee;
 	            	var costBand = vm.costAnalysis;
 		            var renewalHistory = vm.renewal;
-					console.log(vm.costAnalysis)
+
 	            	vm.feeBreakDown = {
 	            		renewalFeeEUR: caFee.renewalFeeEUR,
 	            		renewalFeeUSD: caFee.renewalFeeUSD,
@@ -158,11 +158,22 @@ app.component('patent', {
 					const barLabelArr = [];
 
 					Object.keys(caBar).forEach(data => {
-
+						
 						const dayData = caBar[data];
-
-						if (data.includes('UI')) {
-							barLabelArr.push(dayData);
+						
+						if ((data.includes('StartDate')) && (!data.includes ('UI'))) {
+							console.log(dayData)
+							// dayData.forEach(function(data){
+							// 	var date 
+							// })
+							barLabelArr.push((function(){
+								var d = new Date(dayData);
+								var date = d.getDate();
+								var month = d.getMonth();
+								var year = d.getFullYear();
+								var date =  date +'/'+month+'/'+year;
+								return date;
+							}()))
 						}
 
 						if (data.includes('StageCost')) {
@@ -330,7 +341,8 @@ app.component('patent', {
     		)
 
 	        function usdFxEur() {
-	        	var fx = eval(1 * vm.costAnalysis.fee.fxRate);
+	        	var fx = eval(1 / vm.costAnalysis.fee.fxRate);
+	        	var fx = fx.toFixed(2)
 	        	vm.usd2eur = fx;
 	        }
          	usdFxEur();

@@ -341,8 +341,8 @@ public class CostAnalysisDataEngine extends Universal{
 	/**
 	 * 
 	 * @param caData
-	 * @return Fx Variance for current phase in last 6 months 
-	 *    format :- HashMap<Date,FeeUI> for last 6 weeks 
+	 * @return Fx Variance for current phase in last 6 weeks
+	 *    format :- TreeMap<Date,FeeUI> for last 6 weeks 
 	 */
 	public TreeMap<Date,FeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee, EpoFee epoFee){
 		

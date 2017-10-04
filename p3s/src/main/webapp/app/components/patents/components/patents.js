@@ -21,8 +21,6 @@ app.component('patents', {
 			var bluePatents = [];
 			var blackPatents = [];
 
-			console.log(patents)
-
 		   	vm.tableParams = new NgTableParams({
 		   		sorting: { patentApplicationNumber: "asc" },
 		        page: 1,            // show first page
