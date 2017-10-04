@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.PersistenceException;
@@ -636,10 +637,11 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		// ELSE THE STATUS WILL BE LIKE TOO_LATE OR NO_FURTHER_RENEWAL_NEEDED :- DISABLE CA BUTTON ON THESE CASES
 		/**
-		 * GET THE LINE CHART INFO 
+		 * GET THE LINE CHART INFO - NOW GETTING LAST 6 WEEKS INCLUDING TODAYS RATE HISTORY
 		 * 
 		 */
-		HashMap<String, FeeUI> lineChart = new HashMap<String, FeeUI>();
+		TreeMap<Date, FeeUI> lineChart = new TreeMap<Date, FeeUI>();
+		//List<FxRateUI> history = getFxRateHistory("week");
 		lineChart = costEngines.getLineChartData(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee());
 		caData.setLineChart(lineChart);
 		return caData;

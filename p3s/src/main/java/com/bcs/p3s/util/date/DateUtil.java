@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateUtil {
+public class DateUtil implements Comparable<String>{
 
 	public String dateToUSStringWithDayOfWeek(Date date) {
 		if (date==null) return "";
@@ -17,6 +17,14 @@ public class DateUtil {
 		if (date==null) return "";
 		// z, zz & zzz = BST.  zzzz = British Summer Time
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d, yyyy  HH:mm z"); // Tue Aug 1, 2017  15:11 BST
+		String result = sdf.format(date);
+		return result;
+	}
+	
+	public String dateToUSStringWithTimeandZone(Date date) {
+		if (date==null) return "";
+		// dd/MM/yyyy
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Aug 1, 2017  15:11 BST
 		String result = sdf.format(date);
 		return result;
 	}
@@ -117,5 +125,12 @@ public class DateUtil {
 		String result = sdf.format(date);
 		return result;
 	}
+
+	@Override
+	public int compareTo(String o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 }

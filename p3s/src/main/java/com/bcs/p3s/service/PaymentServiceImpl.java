@@ -443,6 +443,9 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			currentPayment.setP3S_TransRef(p3sTransRef);
 			currentPayment.merge();
 			logChangeOfStatus().debug("Transaction " + currentPayment.getP3S_TransRef() + " created with " + orderedPatents.size() +" patents ");
+			
+			//setting the generated p3s Ref to BankTransferPostCommitDetails - this object we are sending back to FE for displaying on final Payment page
+			commitTransaction.setP3sTransRef(currentPayment.getP3S_TransRef());
 		}
 		
 

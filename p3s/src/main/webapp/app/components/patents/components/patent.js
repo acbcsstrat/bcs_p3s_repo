@@ -113,7 +113,7 @@ app.component('patent', {
 					Object.keys(caLine).forEach(day => {
 						console.log(day)
 						const dayData = caLine[day];
-						lineLabelArr.push(day.slice(4, 10));
+						lineLabelArr.push(dayData.feeActiveDate);
 						lineDataArr.push(dayData.subTotal_USD)
 					})
 

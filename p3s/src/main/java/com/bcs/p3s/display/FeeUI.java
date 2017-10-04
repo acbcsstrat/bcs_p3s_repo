@@ -39,7 +39,7 @@ public class FeeUI {
     private BigDecimal subTotalEUR;
     
 
-    
+    private String feeActiveDate;
 
 	
 	
@@ -266,5 +266,14 @@ public class FeeUI {
 	}
 
 
+	public String getFeeActiveDate() {
+		return feeActiveDate;
+	}
+	public void setFeeActiveDate(String feeActiveDate) {
+		this.feeActiveDate = feeActiveDate;
+	}
+
+
+	
 
 }
