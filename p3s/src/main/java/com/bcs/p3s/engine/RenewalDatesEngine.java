@@ -1,5 +1,11 @@
 package com.bcs.p3s.engine;
 
+/**
+ * This engine calculates current Renewal Year and associated window opening and closing times
+ * calculates also the next Renewal window start/close dates as well
+ * POJO used is RenewalDates
+ */
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.Calendar;

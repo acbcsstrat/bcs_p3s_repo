@@ -28,13 +28,22 @@ import com.bcs.p3s.wrap.PatentExtendedData;
  * Can we sell a renewal of this patent?
  * 
  * LOGIC: for 'this' patent
- * - from filing date, are we in the 9 months? If in doldrums, abort.
- * - get patent:lastRenewedDateExEpo
- * - calculate the patent YEAR (e.g 5) that that renewal represented
- * - for 'this' 9 months, calculate the patent YEAR
+ * - get patent:lastRenewedYearExEpo
+ * - from filing date, are we in the 9 months? If in doldrums,
+ * 		- check whether last renewal being paid up and assign the renewal status as per that
+ * 		ie, if ren year < 3 - NO RENEWAL NEEDED
+ * 			if ren year == lastRenwedYearEpo - RENEWAL IN PLACE
+ * 			else - TOO LATE TO RENEW
+ *   
+ * - If not in doldrums;
+ * 		check whether the patent is renewable
+ * 		ie, if ren year < 3 - NO RENEWAL NEEDED
+ * 		if ren year = 3 - SHOW PRICES FOR YEAR 3
+ * 		if ren year == lastRenwedYearEpo - RENEWAL IN PLACE
+ * 		if ren year == lastRenwedYearEpo+1  - SHOW PRICES FOR CURRENT YEAR
  * - if this year NOT= lastRenewedYear+1 - log. PERHAPS CONTINUE ANYWAY? 
- * - if there is already a renewal-in-progress for-this-year, abort.
- * - Calculate Colour and price
+ * 
+ * POJO used is PatentStatus
  * 
  */
 public class PatentStatusEngine extends Universal {

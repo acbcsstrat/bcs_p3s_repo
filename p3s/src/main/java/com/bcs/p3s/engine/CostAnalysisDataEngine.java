@@ -35,9 +35,8 @@ import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.CombinedFee;
 
 /**
- * This engine holds the actual processing methods
- * It includes all the common methods that can be accessed for accessing lots of data before displaying Dashboard
- * Both Pricing Engines and Date Engines
+ * This engine holds the actual processing methods for CostAnalysis Page
+ * Both pricing and phase calculations being incorporated
  * @author MerinP
  */
 
@@ -48,7 +47,6 @@ public class CostAnalysisDataEngine extends Universal{
 	DateUtil utils = new DateUtil();
 	
 	public RenewalDates getRenewalWindowDates(Patent patent) throws ParseException{
-	//public static void main(String[] args) throws ParseException{
 		
 		log().debug("CostAnalysisDataEngine getRenewalWindowDates(patent) invoked : ");
 		
