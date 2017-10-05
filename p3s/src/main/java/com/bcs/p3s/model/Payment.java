@@ -92,7 +92,7 @@ public class Payment {
     /**
      */
     @NotNull
-    @Value("false")
+    //@Value("false")  Don't use. It resets data AFTER read from db
     private Boolean hasFailed;
 
     /**

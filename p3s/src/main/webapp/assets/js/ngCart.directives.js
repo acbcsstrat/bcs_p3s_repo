@@ -54,6 +54,9 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
     .directive('ngcartCart', [function(){
         return {
             restrict : 'E',
+            scope: {
+                ngModel: '='
+            },
             controller : 'CartController',
             scope: {},
             templateUrl: function(element, attrs) {
@@ -100,41 +103,49 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
                 var productData = ngCart.$cart.items;
 
-                var processingFeeArr = [];
-                var renewalFeeArr = [];
-                var extensionFeeArr = [];
-                var urgentFeeArr = [];
-
-                $scope.processingFee = 0;
-                $scope.renewalFee = 0;
-                $scope.extensionFee = 0;
-                $scope.urgentFee = 0;
-                
-                productData.forEach(function(data, i){
-                    console.log(data._data)
-                    processingFeeArr.push(data._data.feeUI.processingFeeUSD)
-                    renewalFeeArr.push(data._data.feeUI.renewalFeeUSD)
-                    extensionFeeArr.push(data._data.feeUI.extensionFeeUSD)
-                    urgentFeeArr.push(data._data.feeUI.urgentFeeUSD)
+                $rootScope.$on('ngCart:itemRemoved', function() {
+                    calcSummary()
                 })
 
-                processingFeeArr.forEach(function(data, i){
-                    $scope.processingFee += data;
-                })
-                renewalFeeArr.forEach(function(data, i){
-                    $scope.renewalFee += data;
-                })
-                extensionFeeArr.forEach(function(data, i){
-                    $scope.extensionFee += data;
-                })
-                urgentFeeArr.forEach(function(data, i){
-                    console.log($scope.urgentFee)
-                    $scope.urgentFee += data;
-                })
+                function calcSummary() {
+                    var processingFeeArr = [];
+                    var renewalFeeArr = [];
+                    var extensionFeeArr = [];
+                    var urgentFeeArr = [];
+                    var totalCostArr = [];
 
+                    $scope.processingFee = 0;
+                    $scope.renewalFee = 0;
+                    $scope.extensionFee = 0;
+                    $scope.urgentFee = 0;
+                    $scope.totalCost = 0;
+                    
+                    productData.forEach(function(data, i){
+                        processingFeeArr.push(data._data.feeUI.processingFeeUSD)
+                        renewalFeeArr.push(data._data.feeUI.renewalFeeUSD)
+                        extensionFeeArr.push(data._data.feeUI.extensionFeeUSD)
+                        urgentFeeArr.push(data._data.feeUI.urgentFeeUSD)
+                        totalCostArr.push(data._data.feeUI.subTotalUSD)
+                    })
 
+                    processingFeeArr.forEach(function(data, i){
+                        $scope.processingFee += data;
+                    })
+                    renewalFeeArr.forEach(function(data, i){
+                        $scope.renewalFee += data;
+                    })
+                    extensionFeeArr.forEach(function(data, i){
+                        $scope.extensionFee += data;
+                    })
+                    urgentFeeArr.forEach(function(data, i){
+                        $scope.urgentFee += data;
+                    })
+                   totalCostArr.forEach(function(data, i){
+                        $scope.totalCost += data;
+                    })                    
+                }
 
-
+                calcSummary()
 
                 $scope.checkout = function () {
 
@@ -218,7 +229,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                                     return patentAppNos;
                                 }()),
                                 totalPatents: response.orderedPatentUIs.length,
-                                totalCost: response.totalCostUSD
                             }
                         },
                         function(errResponse){

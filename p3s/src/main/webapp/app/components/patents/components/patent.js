@@ -114,7 +114,7 @@ app.component('patent', {
 	            	const lineLabelArr = [];
 					Object.keys(caLine).forEach(day => {
 						const dayData = caLine[day];
-						lineLabelArr.push(day.slice(4, 10));
+						lineLabelArr.push(dayData.feeActiveDate);
 						lineDataArr.push(dayData.subTotal_USD)
 					})
 
@@ -162,7 +162,6 @@ app.component('patent', {
 						const dayData = caBar[data];
 						
 						if ((data.includes('StartDate')) && (!data.includes ('UI'))) {
-							console.log(dayData)
 							// dayData.forEach(function(data){
 							// 	var date 
 							// })
