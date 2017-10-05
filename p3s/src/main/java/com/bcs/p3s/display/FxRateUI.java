@@ -11,7 +11,7 @@ import java.util.Date;
 public class FxRateUI {
 
     protected 	BigDecimal 	rate;
-    protected 	Date 		rateActiveDate;
+    protected 	Date rateActiveDate;
 
     // For dev convenience
     public FxRateUI() { ; }
