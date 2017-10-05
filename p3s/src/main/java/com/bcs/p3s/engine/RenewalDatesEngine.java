@@ -19,13 +19,16 @@ import com.bcs.p3s.util.lang.Universal;
 public class RenewalDatesEngine extends Universal{
 	
 	protected String PREFIX = this.getClass().getName() + " : "; 
+	RenewalDates allDates = new RenewalDates();
 	
 	public RenewalDates getRenewalDates(Patent patent){
+		
+		try{
 			
 			String msg = PREFIX + "getRenewalDates(" +patent.getId() +")"; 
 			
 			log().debug(msg +" invoked for patent  [" + patent.getPatentApplicationNumber() + "]");
-			RenewalDates allDates = new RenewalDates();
+			
 			
 			/** Call to PatentStatusEngine to get the current window dates **/
 	
@@ -185,8 +188,13 @@ public class RenewalDatesEngine extends Universal{
 	    		log().debug("NEXT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
 	    		log().debug("NEXT renewal window starts on "+ allDates.getNextWindowOpenDate() + " and ends on " +  allDates.getNexttWindowCloseDate());
 			
+	    		
+		}
+		catch(Exception e){
 			
-			return allDates;
+		}
+		
+		return allDates;
 	}
 
 }

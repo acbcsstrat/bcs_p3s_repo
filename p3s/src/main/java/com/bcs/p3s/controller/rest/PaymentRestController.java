@@ -1,5 +1,7 @@
 package com.bcs.p3s.controller.rest;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -56,14 +58,12 @@ public class PaymentRestController extends Universal {
 			ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
 			List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs((LinkedHashMap<String,Object>) obby);
 
-    		
 			basketContents = paymentService.showBasketContents(patentsInBasket);
-			   	
 
 		} catch (Exception e) {
-			System.out.println("PaymentRestController showBasketContents() SUFFERED WATCHDOG WRAPPER EXCEPTION ");
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 			
 			basketContents = new BasketContents(); // to avoid compile error!
 		}
@@ -114,9 +114,9 @@ public class PaymentRestController extends Universal {
 			bankTransferPreCommitDetails = paymentService.showBankTransferPreCommitDetails(basketContents);
 
     	} catch (Exception e) {
-			System.out.println("PaymentRestController showBankTransferPreCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ");
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+    		StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 			
 			bankTransferPreCommitDetails = new BankTransferPreCommitDetails(); // to avoid compile error!
 		}

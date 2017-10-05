@@ -34,6 +34,7 @@ import com.bcs.p3s.engine.CostAnalysisDataEngine;
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.engine.PatentStatus;
 import com.bcs.p3s.engine.PatentStatusEngine;
+import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.engine.RenewalDatesEngine;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -49,6 +50,8 @@ import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
+import com.bcs.p3s.scrape.service.EPOAccess;
+import com.bcs.p3s.scrape.service.EPOAccessImpl;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
@@ -109,15 +112,46 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 		String err = PREFIX+"searchEpoForPatent("+patentApplicationNumber+") ";
 		checkNotNull(patentApplicationNumber, err);
+		
+		PatentUI patentUI = null;
 
 		System.out.println("Post Login session is " + postSession.getBusiness());
 		log().debug(err+" invoked ");
     	
-		Patent patent = null;
+		Patent patent = new Patent();
 		
 		//STILL USING DUMMYDATAENGINE BECAUSE NO EPO SCRAPE EXIST
-		DummyDataEngine dummy = new DummyDataEngine();
-		patent = dummy.createDummyPatentForSearchAddPatent(patentApplicationNumber,postSession);
+		/*DummyDataEngine dummy = new DummyDataEngine();
+		patent = dummy.createDummyPatentForSearchAddPatent(patentApplicationNumber,postSession);*/
+		
+		/** Call to EPOAccess service class for retrieving EPO data **
+		 * 
+		 */
+		EPOAccess epo = new EPOAccessImpl();
+		patent = epo.populatePatentEPOData(patentApplicationNumber);
+		
+		if(patent == null){
+			return patentUI;
+		}
+		patent.setBusiness(postSession.getBusiness()); 
+		/**
+		 * CALL TO PatentStatusEngine PROCESSING ENGINE
+		 * CALCULATES THE RENEWAL YEAR AND RENEWAL STATUS FOR THE NEWLY ADDED PATENT
+		 */
+		PatentStatus renewalInfo = new PatentStatus();
+		renewalInfo = new PatentStatusEngine().getRenewalInfo(patent);
+
+		patent.setRenewalStatus(renewalInfo.getCurrentRenewalStatus());
+		patent.setRenewalYear(renewalInfo.getActiveRenewalYear());
+		
+		
+		
+		// Create default notifications
+		patent.setNotifications(new ArrayList<Notification>());
+		List<Notification> allNotifications = Notification.findAllNotifications();
+		for (Notification anotification : allNotifications) {
+			if (anotification.getDefaultOn()) patent.getNotifications().add(anotification);
+		}
 		
 		/**
 		 * CALL TO Cost Calculation Engine
@@ -125,7 +159,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		 */
 		postSession = new PatentStatusEngine().getExtendedDataForNewPatent(patent, postSession);
 		session.setAttribute("postSession", postSession);
-		PatentUI patentUI = populateDataToPatentUI(patent);
+		patentUI = populateDataToPatentUI(patent);
 		//patentUIs.add(patentUI);
 		return patentUI;
 	}
@@ -742,156 +776,26 @@ public PatentUI populateDataToPatentUI(Patent patent){
 		return postSession;
 	}
 
+	@Override
+	public List<PatentUI> persistAndCalculateFee(Patent patent) {
+		
+		PostLoginDataEngine moreData = new PostLoginDataEngine();
+		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		
+		pLoginSession = moreData.getExtendedPatentData(pLoginSession);
+		
+		List<Patent> patents = listAllPatentsForMyBusiness();
+		List<PatentUI> patentUIs = new ArrayList<PatentUI>();
+		for (Patent eachPatent: patents) {
+			//PatentUI patentUI = new PatentUI(patent);
+			PatentUI patentUI = populateDataToPatentUI(patent);
+			patentUIs.add(patentUI);
+		}
+		return patentUIs; 
+		
+		
+		
+	}
 
-
-/*@PostConstruct
-public void init() {
-
-	
-	PostLoginSessionBean postSession = new PostLoginSessionBean();
-    
-    P3SUser myUser = SecurityUtil.getMyUser();
-    postSession.setUser(myUser);
-	Business myBusiness = SecurityUtil.getMyBusiness();
-	postSession.setBusiness(myBusiness);
-	
-	
-}*/
-
-
-
-	
-	// End of - Support methods - NOT exposed through the interface
-
-
-	
-
-
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	public void createNotificationUIs(List<Notification> notifications) {
-//
-//		// Assemble ALL notificationUIs (identifiable by ID)
-//		List<Notification> allNotifications = Notification.findAllNotifications();
-//		for (Notification anotification : allNotifications) {
-//			NotificationUI notificationUI = new NotificationUI(anotification);
-//			allNotificationUIs.add(notificationUI);
-//		}
-//
-//		// In below code:
-//		//  indexOf relies on equals() in NotificationUI
-//		//  Sorting relies on compareTo() in NotificationUI
-//		
-//		
-//		// Switch ON as appropriate
-//		for (Notification notification : notifications) { // i.e. each ON notification
-//			NotificationUI matchTarget = new NotificationUI(notification);
-//
-//			// find existing match, & switch on
-//			int imatch = allNotificationUIs.indexOf(matchTarget);
-////			if (imatch == -1) fail("NotificationUI handling has failed.");
-//			if (imatch == -1) {
-//				Universal universal = new Universal();
-//				universal.fail("NotificationUI handling has failed.");
-//			}
-//			NotificationUI match = allNotificationUIs.get(imatch);
-//			match.setIsOn(true);
-//		}
-//
-//		// Sort of displayOrder (for UI convenience)
-//		Collections.sort(allNotificationUIs);
-//		
-////		System.out.println("acdebug - *ALL* notificationUIs after processing");
-////		for (NotificationUI notificationUI : allNotificationUIs) {
-////			System.out.println("          "+notificationUI.getId()+",   "+notificationUI.getIsOn()+",   "+notificationUI.getDisplayOrder()+",    "+notificationUI.getTitle());
-////		}
-//	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-//	private static final AtomicLong counter = new AtomicLong();
-//	
-//	private static List<Patent> patents;
-//	
-////	static{
-////		patents= populateDummyPatents();
-////	}
-//
-//	public List<Patent> findAllPatents() {
-//		return patents;
-//	}
-//	
-//	public Patent findById(long id) {
-//		for(Patent patent : patents){
-//			if(patent.getId() == id){
-//				return patent;
-//			}
-//		}
-//		return null;
-//	}
-//	
-//	public Patent findByName(String name) {
-//		for(Patent patent : patents){
-//			if(patent.getPatentApplicationNumber().equalsIgnoreCase(name)){
-//				return patent;
-//			}
-//		}
-//		return null;
-//	}
-//	
-//	public void savePatent(Patent patent) {
-//		patent.setId(counter.incrementAndGet());
-//		patents.add(patent);
-//	}
-//
-//	public void updatePatent(Patent patent) {
-//		int index = patents.indexOf(patent);
-//		patents.set(index, patent);
-//	}
-//
-//	public void deletePatentById(long id) {
-//		
-//		for (Iterator<Patent> iterator = patents.iterator(); iterator.hasNext(); ) {
-//		    Patent patent = iterator.next();
-//		    if (patent.getId() == id) {
-//		        iterator.remove();
-//		    }
-//		}
-//	}
-//
-//	public boolean isPatentExist(Patent patent) {
-//		return findByName(patent.getPatentApplicationNumber())!=null;
-//	}
-//	
-//	public void deleteAllPatents(){
-//		patents.clear();
-//	}
-//
-////	private static List<Patent> populateDummyPatents(){
-////		List<Patent> patents = new ArrayList<Patent>();
-////
-////		patents.add(new Patent(counter.incrementAndGet(), "US146432.4", "Hewey"));
-////		patents.add(new Patent(counter.incrementAndGet(), "GB444555", "Dewey"));
-////		patents.add(new Patent(counter.incrementAndGet(), "WO77665544", "Louie"));
-////
-////		return patents;
-////	}
 
 }

@@ -1,5 +1,7 @@
 package com.bcs.p3s.controller.rest;
  
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,20 +57,30 @@ public class PatentRestController extends Universal {
     @RequestMapping(value = "/rest-patents/", method = RequestMethod.GET)
     public ResponseEntity<List<PatentUI>> listAllPatentUIsForBusiness() {
 		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() invoked. ");
-    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) invoked ");
-
-    	PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
-    	//postSession = patentService.populateSessionBean();
-    	List<PatentUI> patentUIs = patentService.listAllPatentUIsForMyBusiness();
-    	
-    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) ret Qty "+patentUIs.size());
-    	
-		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() returning "+patentUIs.size()+" patents. "
-				+ "Set PatentUI from patents data fetched from DB");
+		List<PatentUI> patentUIs = null;
 		
-		
-		log().debug("PatentRestController : /rest-patents/ getExtendedPatentData(patentUI) returning "+patentUIs.size()+" "
-				+ "patents. Set extended fileds in PatentUI as well");
+		try{
+	    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) invoked ");
+	
+	    	PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+	    	//postSession = patentService.populateSessionBean();
+	    	patentUIs = patentService.listAllPatentUIsForMyBusiness();
+	    	
+	    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) ret Qty "+patentUIs.size());
+	    	
+			log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() returning "+patentUIs.size()+" patents. "
+					+ "Set PatentUI from patents data fetched from DB");
+			
+			
+			log().debug("PatentRestController : /rest-patents/ getExtendedPatentData(patentUI) returning "+patentUIs.size()+" "
+					+ "patents. Set extended fileds in PatentUI as well");
+		}
+		catch(Exception e){
+			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
+		}
         return new ResponseEntity<List<PatentUI>>(patentUIs, HttpStatus.OK);
     }
  
@@ -81,16 +93,27 @@ public class PatentRestController extends Universal {
 	@RequestMapping(value = "/rest-search-patents/{patentApplicationNumber}", method = RequestMethod.GET) 
 	public ResponseEntity<PatentUI> searchEpoForPatent(@PathVariable("patentApplicationNumber") String patentApplicationNumber) {
 		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
-		System.out.println("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
-  	
-		PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
-	  	PatentUI patentUI = patentService.searchEpoForPatent(patentApplicationNumber,postSession);
+		PatentUI patentUI = null;
+		
+		try{
+			System.out.println("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
 	  	
-	  	System.out.println("PatentRestController :  (searchEpoForPatent()) ret: dummy (PatentUI=null)"+ (patentUI==null));
-	  	System.out.println("gash got "+  	patentApplicationNumber);
-	  	
-	  	
-		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent("+patentApplicationNumber+") found match = "+(patentUI == null));
+			PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		  	patentUI = patentService.searchEpoForPatent(patentApplicationNumber,postSession);
+		  	
+		  	System.out.println("PatentRestController :  (searchEpoForPatent()) ret: dummy (PatentUI=null)"+ (patentUI==null));
+		  	System.out.println("gash got "+  	patentApplicationNumber);
+		  	
+		  	
+			log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent("+patentApplicationNumber+") found match = "+(patentUI == null));
+		}
+		
+		catch(Exception e){
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		
 	  	if(patentUI == null) {
 	  		return new ResponseEntity<PatentUI>(HttpStatus.NOT_FOUND); //You many decide to return HttpStatus.NO_CONTENT
 	  	}
@@ -110,6 +133,7 @@ public class PatentRestController extends Universal {
 	@RequestMapping(value = "/rest-patents/", method = RequestMethod.POST) 
 	public ResponseEntity<List<PatentUI>> savePatent(@RequestBody Object obby) {
 		log().debug("PatentRestController : /rest-patents/ savePatent() invoked ");
+		List<PatentUI> patentUIs = null;
 		System.out.println("PatentRestController : /rest-patents/ savePatent() invoked ");
 		try {
 			System.out.println("PatentRestController : /rest-patents/ [POST] invoked - i.e. ADD Patent");
@@ -118,6 +142,7 @@ public class PatentRestController extends Universal {
 			ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
 	
 			Patent patent = data.extractPatentFromAddPatentForm(obby); 
+			//calculate the extended data again
 			
 			
 		   	//patent.persist();
@@ -130,16 +155,18 @@ public class PatentRestController extends Universal {
 				log().debug("PatentRestController : /rest-patents/ savePatent() failed.");
 				log().fatal("PatentRestController : /rest-patents/ savePatent() failed for patent " + patent);
 			}
+			
+			patentUIs = patentService.persistAndCalculateFee(patent);
+	  		
 		   	
 		   	
 		} catch (Exception e) {
-			System.out.println("PatentRestController addPatent() SUFFERED WATCHDOG WRAPPER EXCEPTION ");
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 		}
+		return new ResponseEntity<List<PatentUI>>(patentUIs, HttpStatus.OK);
 		
-		List<PatentUI> patentUIs = patentService.listAllPatentUIsForMyBusiness();
-  		return new ResponseEntity<List<PatentUI>>(patentUIs, HttpStatus.OK);
 
    }
 
@@ -170,9 +197,9 @@ public class PatentRestController extends Universal {
 			}
 		
 		} catch (Exception e) {
-			System.out.println("PatentRestController updatePatent() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 		}
 
 		
@@ -199,16 +226,24 @@ public class PatentRestController extends Universal {
 	public ResponseEntity<Patent> deletePatent(@PathVariable("id") long id) {
 		log().debug("PatentRestController : /rest-patents/ deletePatent() invoked ");
 	
-		/**
-		 * EXTRA CAUTIOUS WHILE DELETING A PATENT WITH Payment In Progress or EPO Instructed
-		 */
-		Patent deletePatent = patentService.findById(id);
-		if(RenewalStatusEnum.IN_PROGRESS.equals(deletePatent.getRenewalStatus()) || RenewalStatusEnum.EPO_INSTRUCTED.equals(deletePatent.getRenewalStatus())){
-			log().debug("User tries to delete a patent with an ongoing payment. Aborted it");
-			 return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
+		try{
+			/**
+			 * EXTRA CAUTIOUS WHILE DELETING A PATENT WITH Payment In Progress or EPO Instructed
+			 */
+			Patent deletePatent = patentService.findById(id);
+			if(RenewalStatusEnum.IN_PROGRESS.equals(deletePatent.getRenewalStatus()) || RenewalStatusEnum.EPO_INSTRUCTED.equals(deletePatent.getRenewalStatus())){
+				log().debug("User tries to delete a patent with an ongoing payment. Aborted it");
+				 return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
+			}
+			
+		    patentService.deletePatentById(id);
+		}
+		catch(Exception e){
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 		}
 		
-	    patentService.deletePatentById(id);
 	    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
 	}
   

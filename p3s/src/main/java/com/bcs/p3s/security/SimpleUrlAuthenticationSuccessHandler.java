@@ -29,9 +29,10 @@ import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.lang.Universal;
 
 
-public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler  {
+public class SimpleUrlAuthenticationSuccessHandler extends Universal implements AuthenticationSuccessHandler  {
 
 	
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -46,6 +47,7 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 			throws IOException, ServletException {
 		
 		
+		log().debug("USER AUTHENTICATED");
 		String targetUrl = determineTargetUrl(authentication);
 			
 		if (response.isCommitted()) {
@@ -109,6 +111,8 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
  */
 	protected PostLoginSessionBean populateAuthenticationAttributes(HttpServletRequest request) {
 		
+		String msg = PREFIX + "populateAuthenticationAttributes(request)";
+		log().debug(msg + " invoked");
 		session = request.getSession(true);
         PostLoginSessionBean postSession = new PostLoginSessionBean();
         
@@ -117,7 +121,7 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
     	Business myBusiness = SecurityUtil.getMyBusiness();
     	postSession.setBusiness(myBusiness);
         session.setAttribute("postSession",postSession);
-        
+        log().debug("User details stored in session :: user id[" + postSession.getUser().getId() +"]");
         return postSession;
         
 	}

@@ -48,6 +48,8 @@ public class CostAnalysisDataEngine extends Universal{
 	
 	public RenewalDates getRenewalWindowDates(Patent patent) throws ParseException{
 		
+		String msg =  PREFIX + "getRenewalWindowDates(patent)";
+		log().debug(msg + " invoked for patent id [" + patent.getId() + "]");
 		log().debug("CostAnalysisDataEngine getRenewalWindowDates(patent) invoked : ");
 		
 		
@@ -61,9 +63,11 @@ public class CostAnalysisDataEngine extends Universal{
 		if(todays.after(allDates.getCurrentWindowOpenDate()) && todays.before(allDates.getCurrentWindowCloseDate())){
 			System.out.println("Renewal window still opened");
 			allDates.setRenewalWindowStillOpened(true);
+			log().debug("Renewal window **OPENED** for patent [" + patent.getId() + "]");
 		}
 		else{
 			allDates.setRenewalWindowStillOpened(false);
+			log().debug("Renewal window is being **CLOSED** for patent [" + patent.getId() + "]");
 		}
 		
 		
@@ -80,6 +84,9 @@ public class CostAnalysisDataEngine extends Universal{
 	 * 		also the currentPhase where we are right now
 	 */
 	public CostAnalysisData getAllPhasesInfo(RenewalDates allDates){
+		
+		String msg = "getAllPhasesInfo(allDates)";
+		log().debug(msg + " invoked");
 		
 		CostAnalysisData caData = new CostAnalysisData();
 		Date greenStart = allDates.getCurrentWindowOpenDate();
@@ -99,6 +106,8 @@ public class CostAnalysisDataEngine extends Universal{
 		System.out.println(caData.getGreenStartDate() +" " + caData.getAmberStartDate() +" " + caData.getRedStartDate() +
 				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackEndDate());
 		
+		log().debug("Calculated Dates in the order as ::: " + caData.getGreenStartDate() +" " + caData.getAmberStartDate() +" " + caData.getRedStartDate() +
+				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackEndDate());
 		/**
 		 * SETTING ALL RESPECTIVE DATES TO STRING FORMAT 
 		 */
@@ -114,6 +123,7 @@ public class CostAnalysisDataEngine extends Universal{
 		else
 			caData.setCurrentcostBand(RenewalColourEnum.GREEN);
 		
+		
 		return caData;
 	}
 	
@@ -125,6 +135,8 @@ public class CostAnalysisDataEngine extends Universal{
 	public String getCurrentPhase(CostAnalysisData caData){
 		
 		//Calendar todays = Calendar.getInstance();
+		String msg = "getCurrentPhase()";
+		log().debug( msg + " invoked for getting current phase");
     	Date todaysDate = new DateUtil().getTodaysDate();
 		if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getBlackEndDate())){
 			
@@ -143,6 +155,8 @@ public class CostAnalysisDataEngine extends Universal{
 		else{//CAN BE DOLDRUM OR TOO LATE TO RENEW
 			caData.setCurrentcostBand(RenewalColourEnum.NOCOLOR);
 		}
+		
+		log().debug( msg + " returning Current cost band is " + caData.getCurrentcostBand());
 		return caData.getCurrentcostBand();
 	}
 	
@@ -156,6 +170,7 @@ public class CostAnalysisDataEngine extends Universal{
 		
 		CostAnalysisData caMoreData = caData;
 		
+		String msg = PREFIX + "getAllCosts()";
 		BigDecimal greenCost = new BigDecimal(0);
 		BigDecimal amberCost = new BigDecimal(0);
 		BigDecimal redCost = new BigDecimal(0);
@@ -182,6 +197,10 @@ public class CostAnalysisDataEngine extends Universal{
 		blackCost = blueCost.add(blueCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 		
 		caMoreData.setBlackStageCost(blackCost.setScale(2, BigDecimal.ROUND_CEILING));
+		
+		log().debug( "getAllCosts() returning with fees respectively as " + caMoreData.getGreenStageCost() + " , " +
+				caMoreData.getAmberStageCost() + " , " + caMoreData.getRedStageCost() + " , " +
+				caMoreData.getBlueStageCost() + " , " + caMoreData.getBlackStageCost() + " , ");
 		
 		return caMoreData;
 	}
@@ -364,23 +383,6 @@ public class CostAnalysisDataEngine extends Universal{
         return calendar;
 	}
 
-	public List<Date> getLast5Days(){
-		
-		DateUtil utils = new DateUtil();
-		int n =1;
-		List<Date> dates = new ArrayList<Date>();
-		
-		Calendar calendar = Calendar.getInstance();
-		
-		while(dates.size() <=5 ){
-			dates.add(utils.addDays(calendar.getTime(), -(n))); 
-			n=n+1;
-		}
-		
-		return dates;
-		
-	}
-	
 	
 	/**
 	 * 
@@ -408,6 +410,7 @@ public class CostAnalysisDataEngine extends Universal{
 		archivedRateList = ArchivedRate.findAllArchivedRates();
 		Collections.reverse(archivedRateList);
 		int i = 6;
+		//GETTING THE 7th, 14th, 21st etc values from the list
 		for(ArchivedRate eachDay : archivedRateList ){
 			if(weeksRates.size() >= 7){
 				break;

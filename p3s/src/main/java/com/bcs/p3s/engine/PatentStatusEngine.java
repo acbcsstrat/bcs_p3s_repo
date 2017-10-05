@@ -53,6 +53,8 @@ public class PatentStatusEngine extends Universal {
 	
 	public PatentStatus getRenewalInfo(Patent patent){
 		
+		String msg = PREFIX + "getRenewalInfo(patent)";
+		log().debug( msg + " invoked for patent [" + patent.getId() +"]");
 		PatentStatus renewalInfo = new PatentStatus();
 		
 		Date todays = new DateUtil().getTodaysDate();
@@ -70,6 +72,7 @@ public class PatentStatusEngine extends Universal {
 			//we are in doldrums
 			//check whether a renewal made for the active renewal year else we are too late
 			//if(lastRenewed.after(allDates.getCurrentWindowOpenDate()) && lastRenewed.before(allDates.getCurrentWindowCloseDate()) ){
+			log().debug("****RENEWAL WINDOW CLOSED*****");
 			if(allDates.getRenewalYear() < 3){
 				/**
 				 * THis is the case when the new patent has a renewal year less than 3 ie, no Renewal needed 
@@ -101,6 +104,7 @@ public class PatentStatusEngine extends Universal {
 		}
 		
 		else{
+			log().debug("****RENEWAL WINDOW OPENED****");
 			if(allDates.getRenewalYear() < 3){
 				/**
 				 * THis is the case when the new patent has a renewal year less than 3 ie, no Renewal needed 

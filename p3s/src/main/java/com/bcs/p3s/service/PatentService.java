@@ -26,6 +26,10 @@ public interface PatentService {
 	 */
 	public PatentUI searchEpoForPatent(String patentApplicationNumber , PostLoginSessionBean postSession);
 
+	/**
+	 * Persist the newly added patent and calculated the related fees for the same
+	 */
+	public List<PatentUI> persistAndCalculateFee(Patent patent);
 	
 	/**
 	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications - and, for each, whether it is on or off.

@@ -1,5 +1,7 @@
 package com.bcs.p3s.util.date;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -130,6 +132,15 @@ public class DateUtil implements Comparable<String>{
 	public int compareTo(String o) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public Date stringToDate(String strDate) throws ParseException{
+		
+		DateFormat formatter = new SimpleDateFormat("yyyyMMdd"); 
+		Date date = formatter.parse(strDate);
+		DateFormat newFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String newDate = newFormat.format(date);
+		return newFormat.parse(newDate);
 	}
 
 	
