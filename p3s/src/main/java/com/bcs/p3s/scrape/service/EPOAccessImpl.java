@@ -75,8 +75,8 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        	sp.parse(iss, digest);
 	        }
 	        
-	        if((patent.getPatentApplicationNumber().substring(2)).equals(record.getPatentApplicationNumber()))
-	        	patent = populatePatent(patent,record);
+	        //if((patent.getPatentApplicationNumber().substring(2)).equals(record.getPatentApplicationNumber()))   // this check became redundant
+	        patent = populatePatent(patent,record);
 	        
 	        
 	
