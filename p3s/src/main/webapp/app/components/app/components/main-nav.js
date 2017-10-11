@@ -1,6 +1,6 @@
 app.component('mainnav', {
 	templateUrl: 'p3sweb/app/components/app/views/main-nav.htm',
-	controller: ['userService', function(userService){
+	controller: ['userService', 'mainNavService', function(userService, mainNavService){
 
 		var vm = this;
 
@@ -13,5 +13,20 @@ app.component('mainnav', {
 				console.log(errResponse)
 			}
 		)
+		vm.isOpen = isOpen;
+        vm.toggleOpen = toggleOpen;
+        vm.autoFocusContent = false;
+        vm.menu = mainNavService;
+        vm.status = {
+          isFirstOpen: true,
+          isFirstDisabled: false
+        };
+        function isOpen(section) {
+          return vm.menu.isSectionSelected(section);
+        }
+        function toggleOpen(section) {
+        	 
+          vm.menu.toggleSelectSection(section);
+        }
 	}]
 })

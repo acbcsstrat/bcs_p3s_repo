@@ -17,15 +17,13 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
         }
     )
 
-	Idle.watch();
 
     function timeZoneClocks() {
 
-            var cet = moment.tz("Europe/London").format('HH:mm MM/D/YY');
-            var est = moment.tz("America/New_York").format('HH:mm MM/D/YY');
-        
+        var cet = moment.tz("Europe/London").format('HH:mm MM/D/YY');
+        var est = moment.tz("America/New_York").format('HH:mm MM/D/YY');
+    
         var t = $timeout(function() {
-
             $rootScope.cetTime = cet;
             $rootScope.estTime =  est;
             timeZoneClocks()
@@ -34,14 +32,13 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 
    timeZoneClocks()
 
+   Idle.watch();
 
 }]);
 
-app.controller('mainNavCtrl', ['$scope', '$mdSidenav', 'ngCart', function($scope, $mdSidenav, ngCart){
+app.controller('mainNavCtrl', ['$scope', '$mdSidenav', 'ngCart', '$timeout', function($scope, $mdSidenav, ngCart,  $timeout){
  	$scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
-
-   
 
     function buildToggler(componentId) {
       return function() {
@@ -182,5 +179,40 @@ app.directive('pwCheck', [function () {
 }]);
 
 
+app.directive('menuToggle', [ '$timeout', function($timeout){
+    return {
+        scope: {
+            section: '=',
+            context: '='
+        },
+        templateUrl: 'p3sweb/app/components/app/views/main-nav-li.htm',
+        link: function($scope, $element) {
+            var controller = $scope.context
 
+            $scope.isOpen = function() {
+                 return controller.isOpen($scope.section);
+            };
+            $scope.toggle = function() {
+                controller.toggleOpen($scope.section);
+            };
+        }
+    };
+}])
+
+app.directive('menuLink', [ '$timeout', function($timeout){
+    return {
+        scope: {
+            section: '='
+        },
+        templateUrl: 'p3sweb/app/components/app/views/main-nav-li-item.htm',
+        link: function ($scope, $element) {
+            var controller = $element.parent().controller();
+            $scope.focusSection = function () {
+                // set flag to be used later when
+                // $locationChangeSuccess calls openPage()
+                controller.autoFocusContent = true;
+            };
+        }
+    };
+}])
 	

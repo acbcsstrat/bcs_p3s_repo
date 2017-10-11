@@ -36,8 +36,16 @@
 							</select>	
 				        </td>
 				     
-				        <td width="15%" title="'Client Ref'">
-							<span ng-repeat="item in row.renewalUIs">{{item.patentUI.clientRef}}<br></span>	
+				        <td width="15%" data-title="'Client Ref'" filter="{ 'clientRef': 'text'}" sortable="'clientRef'">
+							<span ng-if="row.renewalUIs.length == 1" ng-repeat="item in row.renewalUIs">
+								<span ng-if="item.patentUI.clientRef.length">
+									{{item.patentUI.clientRef}}<br>
+								</span>								
+							</span>
+							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.clientRef for item in row.renewalUIs" ng-model="data.selectedRefOption" class="pill-radius p-select-option border-xs-grey">
+								<option value="" disabled selected>Multiple</option>									
+							</select>			        	
+				
 				        </td>
 				        <td width="15%" title="'Transaction Initiated'" filter="{ 'transStartDateUI': 'text'}" sortable="'transStartDateUI'">
 				        	{{row.transStartDate | date: 'MM/dd/yy'}}

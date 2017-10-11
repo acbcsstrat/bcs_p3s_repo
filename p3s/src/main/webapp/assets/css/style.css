@@ -444,4 +444,100 @@ a.txt-black, .txt-black a { color: #000; }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-link { border: none; }
 
-.white-nav-a a:visited, .white-nav-a a:focus { color: #fff!important; }  
+.white-nav-a a:visited, .white-nav-a a:focus { color: #fff!important; } 
+
+.side-menu a:hover, .side-menu a:focus { color: #fff; }
+
+.md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
+  background: none;
+}
+
+md-sidenav {
+  overflow: visible;
+  
+}
+
+
+
+.side-menu, .side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  display: inline-block;
+}
+
+.side-menu .md-button.active {
+  color: #fff; /* deep-orange 500 */
+  background: #53ab58;
+}
+
+.side-menu .menu-toggle-list a.md-button {
+  display: block;
+  padding: 10px 30px 10px 50px;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+}
+
+.side-menu .menu-toggle-list .md-button {
+  display: block;
+  padding: 10px 30px;
+  text-transform: none;
+}
+
+/*.side-menu > li {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}*/
+
+.md-button-toggle .md-toggle-icon.toggled {
+  transform: rotateX(180deg);
+  -webkit-transform: rotateX(180deg);
+}
+
+.md-button-toggle.toggled {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.side-menu .md-button-toggle .md-toggle-icon {
+  margin: auto 0 auto auto;
+  width: 15px;
+  float: right;
+  transition: transform .3s ease-in-out;
+  -webkit-transition: -webkit-transform .3s ease-in-out;
+}
+
+.menu-toggle-list.ng-hide {
+  max-height: 0;
+}
+
+.side-menu .md-button {
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  margin: 0;
+  overflow: hidden;
+  padding: 15px 30px;
+  text-align: left;
+  text-decoration: none;
+  white-space: normal;
+  width: 100%;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.menu-toggle-list {
+  max-height: 1300px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  border-right: 4px solid #53ab58;
+  -webkit-transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
+  -webkit-transition-property: max-height;
+  -moz-transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
+  -moz-transition-property: max-height;
+  transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
+  transition-property: max-height;
+}
+
+.side-menu menu-toggle span, .side-menu menu-link span{
+  font-family: 'Maven Pro', sans-serif, arial, helvetica; }
+}

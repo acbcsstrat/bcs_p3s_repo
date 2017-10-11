@@ -45,43 +45,7 @@ body {
 .inset {
     padding: 10px
 }
-/*a {
-    background: 0 0;
-    outline: 0
-}
-h1 {
-    font-size: 2em;
-    margin: .67em 0
-}
-h2 {
-    font-size: 1.5em;
-    margin: .83em 0
-}
-h3 {
-    font-size: 1.17em;
-    margin: 1em 0
-}
-h4 {
-    font-size: 1em;
-    margin: 1.33em 0
-}
-h5 {
-    font-size: .83em;
-    margin: 1.67em 0
-}
-h6 {
-    font-size: .75em;
-    margin: 2.33em 0
-}*/
-/*button,
-input,
-select,
-textarea {
-    margin: 0;
-    font-size: 100%;
-    font-family: inherit;
-    vertical-align: baseline
-}*/
+
 button,
 html input[type=button],
 input[type=reset],
@@ -3436,17 +3400,11 @@ md-bottom-sheet.md-grid md-item p.md-grid-text {
     outline: 0;
     border: 0;
     padding: 6px;
+    margin-right: 10px;
     margin: 0;
     background: 0 0;
     white-space: nowrap;
     text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-style: inherit;
-    font-variant: inherit;
-    font-size: inherit;
-    font-family: inherit;
-    line-height: inherit;
     text-decoration: none;
     cursor: pointer;
     overflow: hidden;
@@ -3866,8 +3824,8 @@ md-icon {
     display: inline-block;
     vertical-align: middle;
     fill: currentcolor;
-    height: 24px;
-    width: 24px
+/*    height: 24px;
+    width: 24px*/
 }
 md-input-container {
     display: -webkit-flex;

@@ -4,13 +4,32 @@ app.component('dashboard', {
 		transactions: '<' 
 	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, dashboardService, fxService, patentsRestService) {
+	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, dashboardService, fxService, patentsRestService, $mdSidenav) {
 
 		var vm = this;
 		
 		$rootScope.page = 'Dashboard';
 
 		vm.$onInit = () => {
+
+		 	$scope.toggleLeft = buildToggler('left');
+    		$scope.toggleRight = buildToggler('right');
+
+		    function buildToggler(componentId) {
+		      	return function() {
+		        	$mdSidenav(componentId).toggle();
+		      	};
+		    }
+
+
+
+		    // $timeout(function() {
+		    //     $scope.toggleLeft()
+		    // }, 1000);
+
+		    // $timeout(function() {
+		    //     $scope.toggleLeft()
+		    // }, 5000)
 
       		$scope.date = new Date()
 	      	
@@ -214,9 +233,9 @@ app.component('dashboard', {
 
 			vm.totalPatents = patents.length;
 
-			vm.labels = ["No action required", "Black", "Blue", "Red", "Yellow", "Green"];
+			vm.doughnutLabels = ["No action required", "Black", "Blue", "Red", "Yellow", "Green"];
 
-			vm.pieChartColours = ['#d1d1d1', '#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
+			vm.doughnutColours = ['#d1d1d1', '#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
 
 			patents.forEach(function(item){
 				switch(item.costBandColour) {
@@ -241,8 +260,22 @@ app.component('dashboard', {
 				}
 
 
+			
+				vm.doughnutData = [vm.noAction.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
 
-				vm.data = [vm.noAction.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
+				vm.doughnutOptions = {
+				   showToolTips: true,
+				   tooltipEvents: [],
+				   animation: {
+				   	onComplete: function() {
+						var chartInstance = this.chart;
+						var ctx = chartInstance.ctx;
+						console.log(ctx)
+					      // this.showTooltips(this.config.data.datasets[0].doughnut,true);
+					   }
+				   }
+			   
+			};
 
 			})
 
@@ -299,7 +332,6 @@ app.component('dashboard', {
 
 	        		function patentFx(i) {
 	        			vm.selectedPatent = vm.phaseArr[i];
-	        			console.log(vm.selectedPatent)
 						var fees = vm.phaseArr[i].feeUI;
 	        			vm.todaysPriceUSD = fees.subTotalUSD;
 	        			vm.todaysPriceEUR = fees.subTotalEUR;

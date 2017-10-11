@@ -114,7 +114,7 @@ app.component('patent', {
 	            	const lineLabelArr = [];
 					Object.keys(caLine).forEach(day => {
 						const dayData = caLine[day];
-						lineLabelArr.push(dayData.feeActiveDate);
+						lineLabelArr.push(day.slice(4, 10));
 						lineDataArr.push(dayData.subTotal_USD)
 					})
 
@@ -129,6 +129,30 @@ app.component('patent', {
 				  		{ yAxisID: 'y-axis-2' },
 				  		];
 				  	vm.lineOptions = {
+				  		tooltips: {
+							titleFontSize: 12,
+							bodyFontSize: 14,
+							bodyFontStyle: 'bold',
+							xPadding: 15,
+							yPadding: 15,
+							enabled: true,
+							position: 'nearest',
+							custom: function(tooltip) {
+								tooltip.displayColors = false;
+							},
+							callbacks: {
+								label: function(x, y) {
+									return '$ ' + x.yLabel
+									
+								},
+								title: function(tooltipItem, data) {
+						          return;
+						        }
+
+
+							}
+
+						},
 				    	scales: {
 				      		yAxes: [
 					        	{
@@ -184,6 +208,31 @@ app.component('patent', {
 				  	vm.barData = barDataArr.slice(0, 5).sort(function(a, b){return b-a});
 					vm.barSeries = ['Series A', 'Series B'];
 					vm.barOptions = {
+						tooltips: {
+							titleFontSize: 12,
+							bodyFontSize: 14,
+							bodyFontStyle: 'bold',
+							xPadding: 15,
+							yPadding: 15,
+							enabled: true,
+							position: 'nearest',
+							custom: function(tooltip) {
+								
+								tooltip.displayColors = false;
+							},
+							callbacks: {
+								label: function(x, y) {
+									return '$ ' + x.xLabel
+									
+								},
+								title: function(tooltipItem, data) {
+						          return;
+						        }
+
+
+							}
+
+						},
 		                scaleShowGridLines: false,
 			            barShowStroke : false,
 			            barDatasetSpacing : 0
