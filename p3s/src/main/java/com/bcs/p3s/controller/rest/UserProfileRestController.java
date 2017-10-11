@@ -52,13 +52,14 @@ public class UserProfileRestController extends Universal {
  
     
     //-------------------Retrieve Single User OBSOLETE - see below --------------------------------------------------------
-     
-    // Tmp fix - in case Patrick invoke Merin's initial API  - ie /rest-user/{user-id} 
-    @RequestMapping(value = "/rest-user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserProfileUI> obsoletegetUserProfileUI_OBS(@PathVariable("id") long id) {
-    	System.out.println("UserProfileRestController : OBSOLETE /rest-user/{"+id+"}  (get UserProfile) invoked. Redirecting ... ");
-        return getUserProfileUI();
-    }
+
+// Commented out 10/10/17 - should now be safe 
+//    // Tmp fix - in case Patrick invoke Merin's initial API  - ie /rest-user/{user-id} 
+//    @RequestMapping(value = "/rest-user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<UserProfileUI> obsoletegetUserProfileUI_OBS(@PathVariable("id") long id) {
+//    	System.out.println("UserProfileRestController : OBSOLETE /rest-user/{"+id+"}  (get UserProfile) invoked. Redirecting ... ");
+//        return getUserProfileUI();
+//    }
     
    //----------------------Update User Info ---------------------------------------------------------------------------------
 //    @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
