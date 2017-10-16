@@ -58,10 +58,10 @@
                         </form>
                         <div class="row m-t-md">
                            <div class="col-md-4">
-                              <a class="btn btn-block pill-radius bg-phase-green font-md txt-white btn--event-p-sm font-weight-weight" href="/p3sweb/prelogin/new-user">New User</a>
+                              <a class="btn btn-block pill-radius bg-phase-green font-md txt-white btn--event-p-sm font-weight-weight" href="/p3sweb/register">New User</a>
                            </div>
                            <div class="col-md-4">
-                              <a class="btn btn-block pill-radius bg-phase-green font-md txt-white btn--event-p-sm font-weight-weight" href="/p3sweb/prelogin/sub-user">Register</a>
+                              <a class="btn btn-block pill-radius bg-phase-green font-md txt-white btn--event-p-sm font-weight-weight" href="/p3sweb/register">Register</a>
                            </div>
                         </div>          
                      </div>
