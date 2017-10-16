@@ -366,16 +366,35 @@ public class ExtractSubmittedDataEngine extends Universal {
 		   		}
 		   		
 		   		if("billingZip".equals(key.trim())){
-		   			if(obValue instanceof Double || obValue instanceof Integer || obValue instanceof String){
-		   				Long longy ;
+
+	   				String strZip = "";
+		   			if(obValue instanceof String){
+		   				strZip = (String) obValue;
+		   			}
+		   			else if(obValue instanceof Double || obValue instanceof Integer){ // This should be redundant now zip is a String. acTidy
 		   				try {
-		   					longy = Long.valueOf(obValue.toString());
+		   					logErrorAndContinue("This code should be redundant now zip is a String. Remove code once proven unused");
+		   					strZip = obValue.toString();
 		   				} catch (NumberFormatException nfe) { // FE should prevent this. If occurs, survive
-		   					longy = new Long(0);
 		   					logErrorAndContinue("Basket Billing Zipcode held non-numeric value : "+obValue.toString());
 		   				}
-		   				basket.setBillingZip(longy);
 		   			}
+	   				basket.setBillingZip(strZip);
+
+	   				
+	   				
+//		   			if(obValue instanceof Double || obValue instanceof Integer || obValue instanceof String){
+//		   				Long longy ;
+//		   				try {
+//		   					longy = Long.valueOf(obValue.toString());
+//		   				} catch (NumberFormatException nfe) { // FE should prevent this. If occurs, survive
+//		   					longy = new Long(0);
+//		   					logErrorAndContinue("Basket Billing Zipcode held non-numeric value : "+obValue.toString());
+//		   				}
+//		   				basket.setBillingZip(longy);
+//		   			}
+
+		   		
 		   		}
 	   		
 		   		if ("patent_ids".equals(key.trim())) {

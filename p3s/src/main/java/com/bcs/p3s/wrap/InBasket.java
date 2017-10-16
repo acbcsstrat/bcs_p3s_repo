@@ -15,7 +15,7 @@ public class InBasket {
 		public String billingStreet;
 		public String billingCity;
 		public String billingState;
-		public Long billingZip;
+		public String billingZip;
 		public List<Long> getPatentIds() {
 			return patentIds;
 		}
@@ -46,10 +46,10 @@ public class InBasket {
 		public void setBillingState(String billingState) {
 			this.billingState = billingState;
 		}
-		public Long getBillingZip() {
+		public String getBillingZip() {
 			return billingZip;
 		}
-		public void setBillingZip(Long billingZip) {
+		public void setBillingZip(String billingZip) {
 			this.billingZip = billingZip;
 		}
 		

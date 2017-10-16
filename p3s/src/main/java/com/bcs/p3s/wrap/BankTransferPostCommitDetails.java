@@ -19,7 +19,7 @@ public class BankTransferPostCommitDetails extends BankTransferPreCommitDetails 
 	
 	protected String billingState;
 	
-	protected Long billingZip;
+	protected String billingZip;
 	
 	/**
 	 * Ignore if empty. Else is a warning that the price has changed since the last page. 
@@ -91,11 +91,11 @@ public class BankTransferPostCommitDetails extends BankTransferPreCommitDetails 
 		this.billingState = billingState;
 	}
 
-	public Long getBillingZip() {
+	public String getBillingZip() {
 		return billingZip;
 	}
 
-	public void setBillingZip(Long billingZip) {
+	public void setBillingZip(String billingZip) {
 		this.billingZip = billingZip;
 	}
 

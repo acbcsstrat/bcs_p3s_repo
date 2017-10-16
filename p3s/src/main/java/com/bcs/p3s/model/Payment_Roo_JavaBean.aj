@@ -133,11 +133,11 @@ privileged aspect Payment_Roo_JavaBean {
         this.billingAddressState = billingAddressState;
     }
     
-    public Long Payment.getBillingAddressZip() {
+    public String Payment.getBillingAddressZip() {
         return this.billingAddressZip;
     }
     
-    public void Payment.setBillingAddressZip(Long billingAddressZip) {
+    public void Payment.setBillingAddressZip(String billingAddressZip) {
         this.billingAddressZip = billingAddressZip;
     }
     

@@ -26,7 +26,7 @@ public class BasketContents {
 	
 	protected String billingState;
 	
-	protected Long billingZip;
+	protected String billingZip;
 	
 	protected Date dateNowLocalTime;
 	protected String  dateNowLocalTimeUI;
@@ -76,10 +76,10 @@ public class BasketContents {
 	public void setBillingState(String billingState) {
 		this.billingState = billingState;
 	}
-	public Long getBillingZip() {
+	public String getBillingZip() {
 		return billingZip;
 	}
-	public void setBillingZip(Long billingZip) {
+	public void setBillingZip(String billingZip) {
 		this.billingZip = billingZip;
 	}
 	public Date getDateNowLocalTime() {

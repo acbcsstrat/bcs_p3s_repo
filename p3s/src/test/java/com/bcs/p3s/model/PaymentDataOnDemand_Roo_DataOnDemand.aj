@@ -75,7 +75,7 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
     }
     
     public void PaymentDataOnDemand.setBillingAddressZip(Payment obj, int index) {
-        Long billingAddressZip = new Integer(index).longValue();
+        String billingAddressZip = "billingAddressZip_" + index;
         obj.setBillingAddressZip(billingAddressZip);
     }
     
