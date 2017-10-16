@@ -57,7 +57,7 @@ privileged aspect BusinessDataOnDemand_Roo_DataOnDemand {
     }
     
     public void BusinessDataOnDemand.setBillingZip(Business obj, int index) {
-        Long billingZip = new Integer(index).longValue();
+        String billingZip = "billingZip_" + index;
         obj.setBillingZip(billingZip);
     }
     
@@ -113,7 +113,7 @@ privileged aspect BusinessDataOnDemand_Roo_DataOnDemand {
     }
     
     public void BusinessDataOnDemand.setZip(Business obj, int index) {
-        Long zip = new Integer(index).longValue();
+        String zip = "zip_" + index;
         obj.setZip(zip);
     }
     

@@ -71,11 +71,11 @@ privileged aspect Business_Roo_JavaBean {
         this.USstate = USstate;
     }
     
-    public Long Business.getZip() {
+    public String Business.getZip() {
         return this.zip;
     }
     
-    public void Business.setZip(Long zip) {
+    public void Business.setZip(String zip) {
         this.zip = zip;
     }
     
@@ -111,11 +111,11 @@ privileged aspect Business_Roo_JavaBean {
         this.billingState = billingState;
     }
     
-    public Long Business.getBillingZip() {
+    public String Business.getBillingZip() {
         return this.billingZip;
     }
     
-    public void Business.setBillingZip(Long billingZip) {
+    public void Business.setBillingZip(String billingZip) {
         this.billingZip = billingZip;
     }
     

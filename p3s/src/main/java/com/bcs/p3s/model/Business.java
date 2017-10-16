@@ -58,11 +58,14 @@ public class Business {
     private String USstate;
 
     /**
+     * Permit the more detailed format: 60025-2854
+     * Hence need convert from long to String
      */
     @NotNull
-    private Long zip;
+    private String zip;
 
     /**
+     * Oct17 - Now redundant - but don't remove yet - to avoid db mismatches
      */
     @NotNull
     private Boolean isBillingAddressSame;
@@ -85,7 +88,7 @@ public class Business {
     /**
      */
     @NotNull
-    private Long billingZip;
+    private String  billingZip;
 
     
 }

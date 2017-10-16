@@ -134,7 +134,7 @@ public class Payment {
     /**
      */
     @NotNull
-    private Long billingAddressZip;
+    private String billingAddressZip;
 
     /**
      */
