@@ -6,32 +6,33 @@
 }
 .steps .steps-container {
     background: #DDD;
-    height: 10px;
+    height: 8px;
     width: 100%;
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     -ms-border-radius: 10px;
     margin: 0;
-    list-style: none
+    list-style: none;
+    padding-left: 0;
 }
 .steps .steps-container li {
-    text-align: center;
+    text-align: left;
     list-style: none;
     float: left
 }
 .steps .steps-container li .step {
-    padding: 0 50px
+/*    padding: 0 50px*/
 }
 .steps .steps-container li .step .step-image {
-    margin: -14px 0 0 0
+    margin: -12px 0 0 0
 }
 .steps .steps-container li .step .step-image span {
     background-color: #DDD;
     display: block;
     width: 57px;
-    height: 37px;
-    margin: 0 auto;
+    height: 30px;
+/*    margin: 0 auto;*/
     border-radius: 15px;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
@@ -48,18 +49,15 @@
     font-style: italic;
     color: #538897
 }
-.steps .steps-container li.complete .step .step-image span {
-    background-color: #5DC177
-}
-.steps .steps-container li.complete .step .step-image span:after {
 
+.steps .steps-container li.complete .step .step-image span:after, .steps .steps-container li.failed-complete .step .step-image span:after, {
     display: block;
     font-family: FontAwesome;
     content: "\f00c";
     position: absolute;
     z-index: 1;
     width: 47px;
-    height: 27px;
+    height: 20px;
     margin: 5px;
     border-radius: 15px;
     -moz-border-radius: 15px;
@@ -69,35 +67,106 @@
     -moz-box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.15);
     -webkit-box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.15)*/
 }
-.steps .steps-container li.activated .step .step-image span {
-    background-color: #5DC177
+
+.steps .steps-container li.failed-complete .step .step-image span {
+    background-color: #ed1c24 /*red*/
 }
-.steps .steps-container li.activated .step .step-image span:after {
+
+.steps .steps-container li.complete .step .step-image span, .steps .steps-container li.active .step .step-image span {
+    background-color: #4EAA5A /*green*/
+}
+
+.steps .steps-container li.failed-complete .step .step-image span:after, .steps .steps-container li.complete .step .step-image span:after, .steps .steps-container li.failed .step .step-image span:after {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-family: 'FontAwesome';
+    font-size: 1.4rem;
+
+}
+
+.steps .steps-container li.failed .step .step-image span:after {
+    content: "\f00d";
+}
+
+.steps .steps-container li.active .step .step-image span:after {
+    display: flex;
+    color: #4EAA5A;
+    justify-content: center;
+    align-items: center;
+    font-family: FontAwesome; 
+    content: "\f111";
     background-color: #FFF;
-    display: block;
-    content: '';
     position: absolute;
     z-index: 1;
     width: 47px;
-    height: 27px;
+    height: 20px;
     margin: 5px;
     border-radius: 15px;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     -ms-border-radius: 15px;
-/*    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.15)*/
 }
-.steps .step-bar {
-    background-color: #5DC177;
-    height: 10px;
+
+.steps .steps-container li.failed-complete .step .step-image span:after, .steps .steps-container li.complete .step .step-image span:after {
+    display: flex;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    font-family: FontAwesome;
+    font-size: 1.4rem; 
+    content: "\f00c";
+    position: absolute;
+    z-index: 1;
+    width: 47px;
+    height: 20px;
+    margin: 5px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -ms-border-radius: 15px;
+}
+
+.steps .steps-container li.failed-active .step .step-image span:after {
+    display: flex;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    font-family: FontAwesome;
+    font-size: 1.4rem; 
+    content: "\f00d";
+    position: absolute;
+    z-index: 1;
+    width: 47px;
+    height: 20px;
+    margin: 5px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -ms-border-radius: 15px;
+}
+
+.steps .failed-step-bar {
+    background-color: #ed1c24;
+    height: 8px;
     position: absolute;
     top: 30px;
-    border-radius: 10px 0 0 10px;
-    -moz-border-radius: 10px 0 0 10px;
-    -webkit-border-radius: 10px 0 0 10px;
-    -ms-border-radius: 10px 0 0 10px
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -ms-border-radius: 10px    
+}
+
+.steps .step-bar {
+    background-color: #4EAA5A;
+    height: 8px;
+    position: absolute;
+    top: 30px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -ms-border-radius: 10px
 }
 .steps .step-bar.last {
     border-radius: 10px;

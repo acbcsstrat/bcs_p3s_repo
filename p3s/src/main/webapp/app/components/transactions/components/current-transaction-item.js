@@ -28,33 +28,34 @@ app.component('currentTransaction', {
 				})
 
 				for(i=0; i <= statusIndex; i++){
-					vm.transStatus[i].active = true;
-				}
-
-				for(i=0; i < statusIndex; i++) {
 					vm.transStatus[i].complete = true;
+					if(currTransStatus == vm.transStatus[i].status) { 
+						vm.transStatus[i].active = true;
+						vm.transStatus[i].complete = false;
+					}
 				}
 
+				console.log(vm.transStatus)
 			}
 
-	    	switch(currTransStatus) {
+			switch(currTransStatus) {
 	    		case 'Initiated':
-	    			vm.transactionProgress = 12.28;
+	    			vm.transactionProgress = 0;
 	    		break;
 	    		case 'Awaiting Funds':
-	    			vm.transactionProgress = 26.56;
+    				vm.transactionProgress = 17.28;
 	    		break;
 	    		case 'Funds Received':
-	    			vm.transactionProgress = 40;
+    				vm.transactionProgress = 34.56;	
 	    		break;
 	    		case 'Funds Sent':
-	    			vm.transactionProgress = 55;
+    				vm.transactionProgress = 51.84;	
 	    		break;
 	    		case 'EPO Received':
-	    			vm.transactionProgress = 68.8;
+    				vm.transactionProgress = 69.12;
 	    		break;
 	    		case 'EPO Instructed':
-	    			vm.transactionProgress = 83;
+    				vm.transactionProgress = 86.4;
 	    		break;
 	    		case 'Completed':
 	    			vm.transactionProgress = 100;	    			    			    			    			    		

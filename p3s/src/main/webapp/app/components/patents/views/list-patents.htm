@@ -4,28 +4,28 @@
 		<div class="phase-tabs">
 			<uib-tabset type="pills" active="activePhaseTab">
 			
-				<uib-tab index="0" class="bg-white pill-radius p-xl-pill-tabs pill-tabs font-sm txt-black border-grey-xs" heading="View All({{$ctrl.allPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.all" ng-click="$ctrl.displayPhase(1)" ui-sref="patents">
+				<uib-tab index="0" class="tab tab--reg bg-white pill-radius p-xl-pill-tabs pill-tabs font-sm txt-black border-grey-xs" heading="View All({{$ctrl.allPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.all" ng-click="$ctrl.displayPhase(1)" ui-sref="patents">
 		    	
 			    </uib-tab>
-			    <uib-tab index="1" class="bg-phase-green pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Green({{$ctrl.greenPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.green" ng-click="$ctrl.displayPhase(2)" ui-sref="patents">
+			    <uib-tab index="1" class="tab tab--reg bg-phase-green pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Green({{$ctrl.greenPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.green" ng-click="$ctrl.displayPhase(2)" ui-sref="patents">
 					
 				</uib-tab>
-			    <uib-tab index="2" class="bg-phase-amber pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Yellow({{$ctrl.amberPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.amber" ng-click="$ctrl.displayPhase(3)" ui-sref="patents">
+			    <uib-tab index="2" class="tab tab--reg bg-phase-amber pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Yellow({{$ctrl.amberPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.amber" ng-click="$ctrl.displayPhase(3)" ui-sref="patents">
 					
 				</uib-tab>
-			    <uib-tab index="3" class="bg-phase-red pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Red({{$ctrl.redPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.red" ng-click="$ctrl.displayPhase(4)" ui-sref="patents">
+			    <uib-tab index="3" class="tab tab--reg bg-phase-red pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Red({{$ctrl.redPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.red" ng-click="$ctrl.displayPhase(4)" ui-sref="patents">
 					
 				</uib-tab>
-			    <uib-tab index="4" class="bg-phase-blue pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Blue({{$ctrl.bluePatentsLength}})" ng-attr-id="$ctrl.patentsTabs.blue" ng-click="$ctrl.displayPhase(5)" ui-sref="patents">
+			    <uib-tab index="4" class="tab tab--reg bg-phase-blue pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Blue({{$ctrl.bluePatentsLength}})" ng-attr-id="$ctrl.patentsTabs.blue" ng-click="$ctrl.displayPhase(5)" ui-sref="patents">
 					
 				</uib-tab>
-			    <uib-tab index="5" class="bg-phase-black pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Black({{$ctrl.blackPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.black" ng-click="$ctrl.displayPhase(6)" ui-sref="patents">
+			    <uib-tab index="5" class="tab tab--reg bg-phase-black pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Black({{$ctrl.blackPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.black" ng-click="$ctrl.displayPhase(6)" ui-sref="patents">
 					
 				</uib-tab>
 			</uib-tabset>
 		</div>	
 	</div>
-	<div class="col-md-4 offset-md-2">
+	<div class="col-md-4">
 		<form class="form-inline">
 			<div class="row">
 				<div class="col-md-6">
@@ -59,7 +59,6 @@
 		            {{row.title}}
 		        </td>
 		        <td width="8%">
-	
 					<div ng-if="row.renewalStatus == 'Show price'" ng-class="(row.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (row.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + (row.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Black' ? 'txt-phase-white': '')">
 						<span class="font-weight-bold">$ {{row.currentRenewalCost}}</span><br>
 						<span>{{$ctrl.date | date:'MM/dd/yy'}}</span>

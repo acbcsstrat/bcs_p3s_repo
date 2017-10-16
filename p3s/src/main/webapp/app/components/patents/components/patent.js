@@ -58,8 +58,9 @@ app.component('patent', {
 
 	            	vm.selectedPatent =  changeObj.patent.currentValue;
 
-	            	var patentLineChart = angular.element(document.getElementById('#patentLineChart"'));
-	            	var patentBarChart = angular.element(document.getElementById('#patentBarChart"'));
+
+				    
+
 
 					var patent = vm.patent;
 	            	var caFee = vm.costAnalysis.fee;
@@ -114,7 +115,7 @@ app.component('patent', {
 	            	const lineLabelArr = [];
 					Object.keys(caLine).forEach(day => {
 						const dayData = caLine[day];
-						lineLabelArr.push(day.slice(4, 10));
+						lineLabelArr.push(dayData.feeActiveDate.slice(0, -5));
 						lineDataArr.push(dayData.subTotal_USD)
 					})
 
@@ -143,15 +144,11 @@ app.component('patent', {
 							callbacks: {
 								label: function(x, y) {
 									return '$ ' + x.yLabel
-									
 								},
 								title: function(tooltipItem, data) {
 						          return;
 						        }
-
-
 							}
-
 						},
 				    	scales: {
 				      		yAxes: [
@@ -217,7 +214,6 @@ app.component('patent', {
 							enabled: true,
 							position: 'nearest',
 							custom: function(tooltip) {
-								
 								tooltip.displayColors = false;
 							},
 							callbacks: {
@@ -228,15 +224,28 @@ app.component('patent', {
 								title: function(tooltipItem, data) {
 						          return;
 						        }
-
-
 							}
-
 						},
 		                scaleShowGridLines: false,
 			            barShowStroke : false,
-			            barDatasetSpacing : 0
+			            barDatasetSpacing : 0,
+			            animation: {
+			            	onComplete: function(c) {
+			            		// console.log(c.chart)
+			            	}
+			            }
 				  	};
+	            	var patentLineChart = angular.element(document.getElementById('patentLineChart'));
+	            	var patentBarChart = angular.element(document.getElementById('patentBarChart'));
+	            	console.log(patentBarChart)
+	    //         	$timeout(function(){
+					// 	var ctx = document.getElementById("patentBarChart").getContext("2d");
+					// 	console.log(ctx)
+	    //         	}, 1000)
+				    
+				 //    Chart.types.Bar.extend({
+					//     name: "BarAlt"
+					// })
 
 	            }
 

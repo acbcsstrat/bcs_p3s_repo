@@ -11,7 +11,7 @@ app.component('transactionHistory', {
 
 			var transactions = vm.transactionHistory;
 
-			var transactions = vm.transactionHistory;
+			console.log(vm.transactionHistory)
 
 			vm.tableParams = new NgTableParams({
 				sorting: { p3S_TransRef: "desc" },

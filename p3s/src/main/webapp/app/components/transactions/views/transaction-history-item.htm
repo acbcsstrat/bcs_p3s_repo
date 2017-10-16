@@ -16,24 +16,24 @@
 					<div class="row d-flex align-items-center">
 						<div class="col-md-2">
 							<p class="font-weight-bold font-lg">Transaction ID</p>
-							<p class="font-md font-xl" ng-bind="$ctrl.transaction.p3S_TransRef"></p>
+							<p class="font-md font-xl" ng-bind="$ctrl.transactionHistoryItem.p3S_TransRef"></p>
 						</div>
 						<div class="col-md-2">
 							<p class="font-weight-bold font-xl">Transaction Initated</p>
-							<p class="font-xl">{{$ctrl.transaction.transStartDate | date: 'MM/dd/yy'}}</p>
+							<p class="font-xl">{{$ctrl.transactionHistoryItem.transStartDate | date: 'MM/dd/yy'}}</p>
 						</div>
 						<div class="col-md-8 text-right">
-							<p class="font-weight-bold font-xl">{{$ctrl.transaction.latestTransStatus}}</p>
+							<p class="font-weight-bold font-xl">{{$ctrl.transactionHistoryItem.latestTransStatus}}</p>
 							<div class="steps">
-							    <ul id="progressTracker" class="steps-container">
-							        <li style="width:14.28%;" ng-repeat="li in $ctrl.transStatus track by $index" ng-init="activated = $ctrl.checkProgress()" ng-class="{true:'activated', 	false: ''}[li.active]">
+							    <ul id="progressTracker" class="steps-container d-flex justify-content-between">
+							        <li ng-repeat="li in $ctrl.transStatus track by $index" ng-init="$ctrl.checkProgress()" ng-class="(li.complete == true ? 'failed-complete': '') + ' ' + (li.active == true ? 'failed-active': '') + ' ' + (li.failed == true ? 'failed-complete': '')">
 							            <div class="step">
 							                <div class="step-image"><span></span></div>
 							                <div class="step-current"><span>{{li.status}}</span></div>
 							            </div>
-							        </li>
+							        </li>		
 							    </ul>
-							    <div class="step-bar" ng-style="{ 'width': $ctrl.transactionProgress + '%' }"></div>
+							    <div ng-class="($ctrl.hasFailed == true ? 'failed-step-bar' : 'step-bar')" ng-style="{ 'width': $ctrl.transactionProgress + '%' }"></div>
 							</div>
 						</div>
 					</div>
@@ -93,27 +93,21 @@
 								<div class="selected-item-panel__body bg-light-grey">
 									<div class="progress-trans">
 										<p class="font-xl font-weight-bold m-b-sm" ng-bind="transaction.renewalStatus"></p>
-										<div ng-if="transaction.renewalStatus == 'Payment in progress'">
+
 											<div class="progress-tracker m-b-sm">
-												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="33" max="100" class="tracker-item"></uib-bar></uib-progress>
+												<div ng-if="$ctrl.transactionHistoryItem.hasFailed">
+													<uib-progress><uib-bar class="bg-phase-red pill-radius" value="$ctrl.patentProgress" max="100" class="tracker-item"></uib-bar></uib-progress>													
+												</div>
+												<div ng-if="!$ctrl.transactionHistoryItem.hasFailed">
+													<uib-progress><uib-bar class="bg-phase-green pill-radius" value="$ctrl.patentProgress" max="100" class="tracker-item"></uib-bar></uib-progress>													
+												</div>
+
 											</div>
-											<p>ipsum</p>			
-										</div>			
-										<div ng-if="transaction.renewalStatus == 'EPO Instructed'">
-											<p>Lorem</p>
-											<div class="progress-tracker m-b-sm">
-												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="66" max="100" class="tracker-item"></uib-bar></uib-progress>
-											</div>
-										</div>
-										<div ng-if="transaction.renewalStatus == 'Renewal in place'">
-											<p>Lorem</p>
-											<div class="progress-tracker m-b-sm">
-												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="100" max="100" class="tracker-item"></uib-bar></uib-progress>
-											</div>
-										</div>						
+											<p>{{$ctrl.transactionHistoryItem.failureReason}}</p>							
+					
 									</div>
 								</div>
-							</div>		
+							</div>
 						</div>
 					</div>
 				</div>

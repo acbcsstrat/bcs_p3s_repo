@@ -74,10 +74,10 @@ h1, .h1 { font-size: 3rem; };
 
 .font-sm { font-size: 1.1rem; }
 .font-md { font-size: 1.3rem; }
-.font-lg { font-size: 1.5rem; }
-.font-xl { font-size: 1.7rem; }
-.font-xxl { font-size: 1.9rem; }
-.font-xxxl { font-size: 2.1rem; }
+.font-lg { font-size: 1.6rem; }
+.font-xl { font-size: 1.8rem; }
+.font-xxl { font-size: 2rem; }
+.font-xxxl { font-size: 2.2rem; }
 
 .no-margin-btm { margin-bottom: 0!important; }
 
@@ -95,6 +95,9 @@ h1, .h1 { font-size: 3rem; };
   position: fixed;
   width: 75px;
 }
+
+.closed-sidenav .nav-item,.closed-sidenav .nav-link { width: 100%; }
+.closed-sidenav .nav-link { padding: 1.5rem 0; }
 .fixed-position { position: fixed; }
 
 .inline-container { display: inline-block; }
@@ -135,10 +138,15 @@ h1, .h1 { font-size: 3rem; };
 
 /*MODULE=========================*/
 
-.font-weight-medium { font-weight: 500; }
-.border-none { border: none; }
-.ul-bullet-free { list-style-type: none; padding: 0;}
+.btn, .tab { padding-top: 0.5rem; padding-bottom: 0.5rem; letter-spacing: -0.01rem; }
+.btn--reg, .tab--reg { padding-right: 1.5rem; padding-left: 1.5rem; font-size: 1.3rem; line-height: 1.3rem; }
+.btn--lg, .tab--lg { padding-right: 2rem; padding-left: 2rem; font-size: 1.6rem; line-height: 1.6rem; }
 
+.font-weight-medium { font-weight: 500; }
+
+.border-none { border: none; }
+
+.ul-bullet-free { list-style-type: none; padding: 0;}
 
 .input-p-sm { padding: .75rem 1.5rem;}
 
@@ -154,7 +162,6 @@ h1, .h1 { font-size: 3rem; };
   padding: 0;
   display: flex;
   flex-direction: row;
-/*  justify-content: space-between;*/
   flex-wrap: wrap; /* nowrap if you only want one row */
 }
 
@@ -175,7 +182,7 @@ h1, .h1 { font-size: 3rem; };
 
 .phase-pills .pill-tabs { min-width: 35px; color: #fff;}
 .phase-pills .p-pill-tabs { padding: .2rem .4rem; }
-.phase-tabs .p-xl-pill-tabs { padding: .2rem 2rem; margin-right: 1rem}
+.phase-tabs li { margin-right: 1rem}
 .phase-pills li a.nav-link { color: #fff; }
 
 .view-pills .pill-tabs, .view-pills .pill-tabs a, .view-pills ul.nav-pills .pill-tabs a { color: #000;}
@@ -186,7 +193,7 @@ h1, .h1 { font-size: 3rem; };
 
 .btn--event-p-sm { padding: 0.75rem 1.5rem;  }
 
-.pill-radius { border-radius: 3.5rem; }
+.pill-radius { border-radius: 2.5rem; }
 .circle-radius-sm { 
   border-radius: 50%;
   width: 3rem;
@@ -194,8 +201,6 @@ h1, .h1 { font-size: 3rem; };
 }
 
 .view-tabs .p-page-nav-tabs { padding: .7rem 1.4rem; }
-
-
 
 .t-list { width: 100%; background: #fff;}
 .t-list th, .t-list td { vertical-align: middle; padding: 2rem .75rem; text-align: center;}
@@ -255,7 +260,7 @@ h1, .h1 { font-size: 3rem; };
 }
 
 input:checked + .slider {
-  background-color: #0097ce;
+  background-color: #53ab58;
 }
 
 input:focus + .slider {
@@ -339,6 +344,16 @@ thead {
 .widget-panel li.active a { color: #fff;}
 .widget-panel li a { color: : #000; }
 
+.closed-sidenav .active .nav-link { 
+  background: #484848; 
+  border-right: 3px solid #4EAA5A;
+  -webkit-transition: 0.75s;
+  -webkit-transition-property: all;
+  -moz-transition: 0.75s;
+  -moz-transition-property: all;
+  transition: 0.75s;
+  transition-property: all; }
+.closed-sidenav .active .nav-link i { margin-right: -0.3rem; }
 
 
 .slick-container { max-width: 400px; }
@@ -405,10 +420,18 @@ uib-progress.progressblue { height: 3rem; }
 ************************/
 
 select.form-control:not([size]):not([multiple]) {
-	height: 31px;
+	/*height: 31px;*/
 }
 
+input[type=checkbox], input[type=radio] {
+  vertical-align: middle;
+  position: relative;
+  bottom: 1.5px;
+}
 
+input[type=radio] {
+  bottom: 2px;
+}
 
 
 
@@ -443,6 +466,8 @@ input.ng-pristine {
 a.txt-black, .txt-black a { color: #000; }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-link { border: none; }
+
+.nav-link { padding: 0; }
 
 .white-nav-a a:visited, .white-nav-a a:focus { color: #fff!important; } 
 
