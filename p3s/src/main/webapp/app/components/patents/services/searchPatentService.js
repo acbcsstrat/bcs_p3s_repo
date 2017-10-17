@@ -5,7 +5,7 @@ app.factory('searchPatentService', ['$http', '$q', function($http, $q) {
         var REST_SEARCH_PATENT_SERVICE_URI = domain+'rest-search-patents/';
         
         factory.findPatent = function(patentNo) {
-        	alert(patentNo);
+        	//alert(patentNo);
             var deferred= $q.defer();
             
             var patentItem = REST_SEARCH_PATENT_SERVICE_URI + patentNo;
