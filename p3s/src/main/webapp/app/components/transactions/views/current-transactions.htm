@@ -30,7 +30,7 @@
 		<div class="row m-b-xl">
 			<div class="col-md-12" id="scrollable-area" class="table-scroll">
 				<table ng-table="$ctrl.tableParams" class="table font-md t-list" show-filter="false" fixed-table-headers="scrollable-area">
-				    <tr ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(patent)">
+				    <tr ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(patent)" ui-sref-active="active">
 				        <td width="15%" data-title="'Transaction ID'" filter="{ 'p3S_TransRef': 'text'}" sortable="'p3S_TransRef'">
 							<a class="txt-black" ui-sref="current-transactions.current-transaction-item({transId: row.id})" disabled>{{row.p3S_TransRef}}</a>
 				        </td>

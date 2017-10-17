@@ -1,26 +1,19 @@
 <patentnav></patentnav>
 <div class="row m-b-md">
-	<div class="col-md-6">
+	<div class="col-md-8">
 		<div class="phase-tabs">
 			<uib-tabset type="pills" active="activePhaseTab">
-			
 				<uib-tab index="0" class="tab tab--reg bg-white pill-radius p-xl-pill-tabs pill-tabs font-sm txt-black border-grey-xs" heading="View All({{$ctrl.allPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.all" ng-click="$ctrl.displayPhase(1)" ui-sref="patents">
-		    	
 			    </uib-tab>
 			    <uib-tab index="1" class="tab tab--reg bg-phase-green pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Green({{$ctrl.greenPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.green" ng-click="$ctrl.displayPhase(2)" ui-sref="patents">
-					
 				</uib-tab>
 			    <uib-tab index="2" class="tab tab--reg bg-phase-amber pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Yellow({{$ctrl.amberPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.amber" ng-click="$ctrl.displayPhase(3)" ui-sref="patents">
-					
 				</uib-tab>
 			    <uib-tab index="3" class="tab tab--reg bg-phase-red pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Red({{$ctrl.redPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.red" ng-click="$ctrl.displayPhase(4)" ui-sref="patents">
-					
 				</uib-tab>
 			    <uib-tab index="4" class="tab tab--reg bg-phase-blue pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Blue({{$ctrl.bluePatentsLength}})" ng-attr-id="$ctrl.patentsTabs.blue" ng-click="$ctrl.displayPhase(5)" ui-sref="patents">
-					
 				</uib-tab>
 			    <uib-tab index="5" class="tab tab--reg bg-phase-black pill-radius p-xl-pill-tabs pill-tabs font-sm txt-white" heading="Black({{$ctrl.blackPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.black" ng-click="$ctrl.displayPhase(6)" ui-sref="patents">
-					
 				</uib-tab>
 			</uib-tabset>
 		</div>	
@@ -48,7 +41,7 @@
 <div class="row m-b-xl">
 	<div class="col-md-12" id="scrollable-area" class="table-scroll">
 		<table ng-table="$ctrl.tableParams" class="table font-md t-list" show-filter="false" fixed-table-headers="scrollable-area">
-		    <tr ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(row)">
+		    <tr ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(row)" ui-sref-active="active">
 		        <td width="13%" data-title="'Application No.'" filter="{ 'patentApplicationNumber': 'text'}" sortable="'patentApplicationNumber'">
 		            <a class="txt-black" ui-sref="patents.patent({patentId: row.id})">{{row.patentApplicationNumber}}</a>
 		        </td>

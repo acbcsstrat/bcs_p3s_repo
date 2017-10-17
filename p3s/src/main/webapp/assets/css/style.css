@@ -211,7 +211,9 @@ h1, .h1 { font-size: 3rem; };
     white-space: nowrap; 
   }
 
-
+.t-list tr:hover, .t-list tr.active {
+  background: #f1f2f2;
+}
 
 .notification-pills .green, .notification-pills .amber, .notification-pills .red, .notification-pills .blue, .notification-pills .black { background: white; font-weight: bold }
 .notification-pills .green { color: #53ab58; border: 2px solid #53ab58; }
@@ -461,7 +463,7 @@ input.ng-pristine {
 
 .progress-trans .progress-bar, .progress-phase .progress-bar { height: 1.5rem; }
 .progress-bar-tall { height: 2rem; }
-.progress { margin-right: 2px; position: relative;}
+.progress { margin-right: 2px; position: relative; border-radius: 20px;}
 
 a.txt-black, .txt-black a { color: #000; }
 
