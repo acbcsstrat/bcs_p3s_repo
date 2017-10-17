@@ -47,7 +47,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 		
 		// Logic: If Lenovo or Merin : is under eclipse, else Dell or Pat or TomcatA [or scrape]. 
 		if ("CCP020".equals(host)) {
-			// path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/"; 		// If running from eclipse. Oct17update - this is now Obsolete
+			// path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/"; 		// OBS: If running from eclipse. Oct17update - this is now Obsolete
 			// path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";	// If running from war 
 			path = "C:/gitrepos/github/project-repo/p3s/src/main/resources/META-INF/spring/";    		// If running from eclipse
 		}
