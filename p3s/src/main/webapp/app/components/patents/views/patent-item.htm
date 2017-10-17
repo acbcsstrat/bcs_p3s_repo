@@ -30,7 +30,7 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="text-center inline-container m-b-xs" ng-style="{'width': $ctrl.patent.progressBar + '%'}">
-												<span class="font-md font-weight-bold nowrap" ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentRenewalCost}}</span>
+												<span class="font-md font-weight-bold nowrap" ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentRenewalCost}}</span>
 											</div>
 											<div class="text-center inline-container m-b-xs"  ng-style="{'width': ((100 - $ctrl.patent.progressBar) - 1)  + '%'}">
 												<span class="font-md font-weight-bold nowrap" ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.renewalCostNextStageUSD}}</span>

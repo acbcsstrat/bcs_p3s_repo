@@ -237,7 +237,7 @@ app.component('patent', {
 				  	};
 	            	var patentLineChart = angular.element(document.getElementById('patentLineChart'));
 	            	var patentBarChart = angular.element(document.getElementById('patentBarChart'));
-	            	console.log(patentBarChart)
+	            	// console.log(patentBarChart)
 	    //         	$timeout(function(){
 					// 	var ctx = document.getElementById("patentBarChart").getContext("2d");
 					// 	console.log(ctx)

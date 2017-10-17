@@ -115,6 +115,14 @@ public class ServiceAuthorisationTools extends Universal {
 																		failInternalError(err); 
 	}
 	
+	protected void checkEPNumberFormat(String str, String err) {
+		err += "  [on checkNotNull]";
+		if(!("EP".equals(str.substring(0,2))))
+			failInternalError(err); 
+		if(!(str.substring(2, 10).matches("[0-9]+")))
+			failInternalError(err); 
+	}
+	
 	protected void checkIsTrue(boolean errorIfFalse, String err) {
 		err += "  [on checkIsTrue]";
 		if (errorIfFalse==false) 
