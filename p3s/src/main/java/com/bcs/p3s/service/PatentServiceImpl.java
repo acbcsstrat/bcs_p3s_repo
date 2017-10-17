@@ -112,7 +112,13 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 		String err = PREFIX+"searchEpoForPatent("+patentApplicationNumber+") ";
 		checkNotNull(patentApplicationNumber, err);
+		checkEPNumberFormat(patentApplicationNumber, err);
 		
+		if(patentApplicationNumber.contains(".")){
+			int index = patentApplicationNumber.indexOf(".");
+			int length = patentApplicationNumber.length();
+			patentApplicationNumber = patentApplicationNumber.substring(0, index);
+		}
 		PatentUI patentUI = null;
 
 		System.out.println("Post Login session is " + postSession.getBusiness());

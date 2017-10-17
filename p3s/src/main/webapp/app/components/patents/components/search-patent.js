@@ -104,7 +104,6 @@ app.component('searchpatent', {
         }
 
 	 	vm.submit = function(patent) {
-	 		console.log(patent)
 	 		$timeout(function(){
 				patentsRestService.savePatent(patent)
 		            .then(function(){
@@ -114,12 +113,11 @@ app.component('searchpatent', {
 			             	})
 			             },
 			            function(errResponse){
-			                console.error('Error while deleting Patent');
+			                console.error('Error while saving Patent');
 			            }
 	    		)
-	 		}, 100);
-	    	
-    		};
+	 		}, 500);
+		};
              	
         vm.cancelSearch = function() {
         	$state.go('search-patent', {}, {reload: true});

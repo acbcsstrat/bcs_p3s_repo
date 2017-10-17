@@ -90,22 +90,17 @@ public class PatentRestController extends Universal {
     
     // Implements API section 2.2
     // Search EPO for a patent match on the ApplicationNumber entered
-	@RequestMapping(value = "/rest-search-patents/{patentApplicationNumber}", method = RequestMethod.GET) 
+	@RequestMapping(value = "/rest-search-patents/{patentApplicationNumber:.+}", method = RequestMethod.GET) 
 	public ResponseEntity<PatentUI> searchEpoForPatent(@PathVariable("patentApplicationNumber") String patentApplicationNumber) {
 		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
 		PatentUI patentUI = null;
 		
 		try{
 			System.out.println("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
-	  	
+			
 			PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
 		  	patentUI = patentService.searchEpoForPatent(patentApplicationNumber,postSession);
 		  	
-		  	System.out.println("PatentRestController :  (searchEpoForPatent()) ret: dummy (PatentUI=null)"+ (patentUI==null));
-		  	System.out.println("gash got "+  	patentApplicationNumber);
-		  	
-		  	
-			log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent("+patentApplicationNumber+") found match = "+(patentUI == null));
 		}
 		
 		catch(Exception e){
@@ -115,10 +110,13 @@ public class PatentRestController extends Universal {
 		}
 		
 	  	if(patentUI == null) {
+	  		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent("+patentApplicationNumber+") found no match");
 	  		return new ResponseEntity<PatentUI>(HttpStatus.NOT_FOUND); //You many decide to return HttpStatus.NO_CONTENT
 	  	}
-	  	else 
+	  	else{
+	  		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent("+patentApplicationNumber+") found match = " + (patentUI != null));
 	  		return new ResponseEntity<PatentUI>(patentUI, HttpStatus.OK);
+	  	}
 	}
    
 

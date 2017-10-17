@@ -39,9 +39,10 @@ app.factory('patentsRestService', function($http, $q) {
 
         factory.savePatent = function(patent) {
             var deferred= $q.defer();
+            console.log(REST_SERVICE_URI, patent)
             $http.post(REST_SERVICE_URI, patent)
                 .then(function(response){
-                    deferred.resolve(true)
+                    deferred.resolve(response.data)
                 }, function(errResponse) {
                     console.log('save patent error');
                     deferred.reject(errResponse)

@@ -52,7 +52,7 @@
 		            {{row.title}}
 		        </td>
 		        <td width="8%">
-					<div ng-if="row.renewalStatus == 'Show price'" ng-class="(row.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (row.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + (row.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Black' ? 'txt-phase-white': '')">
+					<div ng-if="row.renewalStatus == 'Show price'" ng-class="(row.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (row.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (row.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Black' ? 'txt-phase-white': '')">
 						<span class="font-weight-bold">$ {{row.currentRenewalCost}}</span><br>
 						<span>{{$ctrl.date | date:'MM/dd/yy'}}</span>
 					</div>		        	
