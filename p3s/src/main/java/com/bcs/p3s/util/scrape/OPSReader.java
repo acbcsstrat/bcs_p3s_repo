@@ -3,6 +3,7 @@ package com.bcs.p3s.util.scrape;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -56,6 +57,10 @@ public class OPSReader extends Universal{
 			StringWriter stack = new StringWriter();
 		    e.printStackTrace(new PrintWriter(stack));
 		    log().debug("Caught exception; inside "+ msg + " : " + stack.toString());
+		}
+		catch (FileNotFoundException e) {
+			log().debug("No data found for application number " + patentApplicationNumber);
+			return null;
 		}
 		catch (IOException e) {
 			

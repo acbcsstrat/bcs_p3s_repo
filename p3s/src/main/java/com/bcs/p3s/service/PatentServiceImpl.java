@@ -54,6 +54,7 @@ import com.bcs.p3s.scrape.service.EPOAccess;
 import com.bcs.p3s.scrape.service.EPOAccessImpl;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.BasketContents;
 import com.bcs.p3s.wrap.CombinedFee;
@@ -111,24 +112,46 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	public PatentUI searchEpoForPatent(String patentApplicationNumber, PostLoginSessionBean postSession) {
 
 		String err = PREFIX+"searchEpoForPatent("+patentApplicationNumber+") ";
-		checkNotNull(patentApplicationNumber, err);
-		checkEPNumberFormat(patentApplicationNumber, err);
-		
-		if(patentApplicationNumber.contains(".")){
-			int index = patentApplicationNumber.indexOf(".");
-			int length = patentApplicationNumber.length();
-			patentApplicationNumber = patentApplicationNumber.substring(0, index);
-		}
 		PatentUI patentUI = null;
 
-		System.out.println("Post Login session is " + postSession.getBusiness());
 		log().debug(err+" invoked ");
-    	
-		Patent patent = new Patent();
 		
-		//STILL USING DUMMYDATAENGINE BECAUSE NO EPO SCRAPE EXIST
-		/*DummyDataEngine dummy = new DummyDataEngine();
-		patent = dummy.createDummyPatentForSearchAddPatent(patentApplicationNumber,postSession);*/
+		checkNotNull(patentApplicationNumber, err);
+		checkEPNumberFormat(patentApplicationNumber, err);
+		int length = patentApplicationNumber.length();
+		
+		//truncating check digit from the EP number
+		if(patentApplicationNumber.contains(".")){
+			int index = patentApplicationNumber.indexOf(".");
+			patentApplicationNumber = patentApplicationNumber.substring(0, index);
+			int newlength = patentApplicationNumber.length();
+			
+			if(!(newlength == 10)){
+				String error = "Invalid length";
+				logM().fatal("EP number entered is invalid [" + patentApplicationNumber + "] :: " + error +" : " + newlength );
+				return null;
+			}
+			
+			log().debug("Truncated Application Number without check digit " + patentApplicationNumber);
+			
+		}
+		else if(!(length==10)){
+			String error = "Invalid length";
+			logM().fatal("EP number entered is invalid [" + patentApplicationNumber + "] :: " + error +" : " + length );
+			return null;
+		}
+		
+		//checking whether patent being added for the business
+		TypedQuery<Patent> patents = Patent.findPatentsByBusiness(postSession.getBusiness());
+		for(Patent patent : patents.getResultList()){
+			if(patentApplicationNumber.equals(patent.getPatentApplicationNumber())){
+				log().debug("Duplicate for the patent for the business. Patent Number[" + patentApplicationNumber + "] already exist for the business. "
+						+ "		Patent id[" +patent.getId() +"] and application number[" + patent.getPatentApplicationNumber() +"]" );
+				return patentUI;
+			}
+		}
+		
+		Patent patent = new Patent();
 		
 		/** Call to EPOAccess service class for retrieving EPO data **
 		 * 
@@ -140,6 +163,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			return patentUI;
 		}
 		patent.setBusiness(postSession.getBusiness()); 
+		
 		/**
 		 * CALL TO PatentStatusEngine PROCESSING ENGINE
 		 * CALCULATES THE RENEWAL YEAR AND RENEWAL STATUS FOR THE NEWLY ADDED PATENT
@@ -166,7 +190,6 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		postSession = new PatentStatusEngine().getExtendedDataForNewPatent(patent, postSession);
 		session.setAttribute("postSession", postSession);
 		patentUI = populateDataToPatentUI(patent);
-		//patentUIs.add(patentUI);
 		return patentUI;
 	}
 

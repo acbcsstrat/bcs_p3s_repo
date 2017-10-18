@@ -1,6 +1,9 @@
 package com.bcs.p3s.scrape.service;
 
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,6 +63,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        
 	        if(scrapeData == null){
 	        	log().debug("No patent Info found for patent appln number " + patentApplicationNumber);
+	        	log().fatal("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
 	        	return null;
 	        }
 	        
@@ -82,14 +86,26 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	
 		} 
 		catch(SAXException e){
-			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in " + msg );
+			log().error("Stacktrace was: "+errors.toString());
 		}
 		catch(ParserConfigurationException e){
-			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in " + msg );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		catch (FileNotFoundException e) {
+			log().debug("No data found for application number " + patentApplicationNumber);
+			return null;
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in " + msg );
+			log().error("Stacktrace was: "+errors.toString());
 		}
 		return patent;
 		

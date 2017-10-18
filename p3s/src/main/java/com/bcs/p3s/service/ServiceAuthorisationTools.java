@@ -116,11 +116,11 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 	
 	protected void checkEPNumberFormat(String str, String err) {
-		err += "  [on checkNotNull]";
+		err += "  [on checkEPNumberFormat]";
 		if(!("EP".equals(str.substring(0,2))))
-			failInternalError(err); 
+			failMalicious(err); 
 		if(!(str.substring(2, 10).matches("[0-9]+")))
-			failInternalError(err); 
+			failMalicious(err); 
 	}
 	
 	protected void checkIsTrue(boolean errorIfFalse, String err) {
