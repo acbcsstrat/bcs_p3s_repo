@@ -5,26 +5,14 @@
 		<form class="form-inline">
 			<div class="col-md-12">
 				<div class="input-group">
+
 					<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['p3S_TransRef']" placeholder="Transaction ID">
 					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
 				</div>					
 			</div>
-<!-- 			<div class="col-md-4">
-				<div class="input-group">
-					<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['patentApplicationNumber']" placeholder="App No.">
-					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="input-group">
-					<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['clientRef']" placeholder="Client Ref">
-					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
-				</div>
-			</div>				 -->	
 		</form>
 	</div>
 </div>
-
 <div class="row">
 	<div class="col-md-12">
 		<div class="row m-b-xl">
@@ -35,17 +23,17 @@
 							<a class="txt-black" ui-sref="current-transactions.current-transaction-item({transId: row.id})" disabled>{{row.p3S_TransRef}}</a>
 				        </td>
 				        <td width="10%" data-title="'No. of patents'" filter="{ 'renewalUIs.length': 'text'}" sortable="'renewalUIs.length'">
-						{{row.renewalUIs.length}}
+							{{row.renewalUIs.length}}
 				        </td>
-				        <td width="15%" data-title="'App No.'" filter="{ 'patentApplicationNumber': 'number'}" sortable="'patentApplicationNumber'">
+				        <td width="15%" data-title="'App No.'" filter="{ 'patentApplicationNumber': 'text'}" sortable="'patentApplicationNumber'">
 							<span ng-if="row.renewalUIs.length == 1" ng-repeat="item in row.renewalUIs">
 								<span ng-if="item.patentUI.patentApplicationNumber.length">
-									{{item.patentUI.patentApplicationNumber}}<br>
-								</span>								
+									{{item.patentUI.patentApplicationNumber}}
+								</span>
 							</span>
-							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in row.renewalUIs" ng-model="data.selectedAppOption" class="pill-radius p-select-option border-xs-grey">
-								<option value="" disabled selected>Multiple</option>									
-							</select>	
+							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in row.renewalUIs" ng-model="selectedAppOption" ng-change="transactionFilter(selectedAppOption, 'patentAppFilter')" class="pill-radius p-select-option border-xs-grey">
+									<option value="">Multiple</option>
+							</select>
 				        </td>
 				        <td width="15%" data-title="'Client Ref'" filter="{ 'clientRef': 'text'}" sortable="'clientRef'">
 							<span ng-if="row.renewalUIs.length == 1" ng-repeat="item in row.renewalUIs">
@@ -53,11 +41,11 @@
 									{{item.patentUI.clientRef}}<br>
 								</span>								
 							</span>
-							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.clientRef for item in row.renewalUIs" ng-model="data.selectedRefOption" class="pill-radius p-select-option border-xs-grey">
-								<option value="" disabled selected>Multiple</option>									
+							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.clientRef for item in row.renewalUIs" ng-model="selectedRefOption" class="pill-radius p-select-option border-xs-grey" ng-change="transactionFilter(selectedRefOption, 'clientRefFilter')">
+								<option value="">Multiple</option>
 							</select>			        	
 				        </td>
-				        <td width="15%" data-title="'Transaction Initiated'" filter="{ transStartDateUI: 'text'}" sortable="'transStartDateUI'">
+				        <td width="15%" data-title="'Transaction Initiated'" filter="{ 'transStartDateUI': 'text'}" sortable="'valueOf()[0]'">
 				        	{{row.transStartDate | date: 'MM/dd/yy'}}
 				        </td>				        
 				        <td width="10%" data-title="'Cost'" filter="{ 'transAmount_USD': 'text'}" sortable="'transAmount_USD'">

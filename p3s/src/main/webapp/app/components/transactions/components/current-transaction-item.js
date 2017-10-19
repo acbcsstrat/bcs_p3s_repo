@@ -1,14 +1,26 @@
 app.component('currentTransaction', {
-	bindings: { transaction: '<' },
+	bindings: { 
+		transaction: '<' 
+	},
 	templateUrl: 'p3sweb/app/components/transactions/views/current-transaction-item.htm',
-	controller: ['currentTransactionsService', 'currentTransactionTabService', function(currentTransactionsService, currentTransactionTabService) {
+	controller: ['currentTransactionsService', 'currentTransactionTabService', '$scope', function(currentTransactionsService, currentTransactionTabService, $scope) {
 
 		var vm = this;
+
+		$scope.$watch('$parent.filter', function(n, o){
+			if(n !== undefined ) {
+				if(n !== null) {
+					$scope.transactionsFilter = n.patentUI.patentApplicationNumber;
+				} else {
+					$scope.transactionsFilter = null;
+				}
+			}
+		})
 
 	    vm.$onChanges = function(changeObj){
 
 	    	var currTransStatus = vm.transaction.latestTransStatus;	
-	    	console.log(currTransStatus)
+
 			vm.transStatus = [
 				{status: 'Initiated', active: false, complete: false}, 
 				{status: 'Awaiting Funds', active: false, complete: false}, 
@@ -35,7 +47,6 @@ app.component('currentTransaction', {
 					}
 				}
 
-				console.log(vm.transStatus)
 			}
 
 			switch(currTransStatus) {
@@ -69,7 +80,7 @@ app.component('currentTransaction', {
 	 			vm.patents.push(value)			
 		 	})
 
-		 	console.log(vm.patents)
+	
     	}
 	}]
 });

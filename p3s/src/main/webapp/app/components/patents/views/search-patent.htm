@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="content-panel__head">
-				<div class="row">
+				<div class="row m-b-md">
 					<div class="col-md-12">
 						<form class="form-inline" ng-submit="$ctrl.findPatent(searchPatent);"  name="searchPatentForm">
 							<div class="form-group">
@@ -16,7 +16,12 @@
 							</div>
 						</form>	
 					</div>
-				</div>		
+				</div>
+				<div ng-cloak class="row" ng-if="!$ctrl.queriedPatent && searchPatentForm.$submitted ">
+					<div class="col-md-12">
+						<p class="font-md font-weight-medium">No results were found with this Patent Application number</p>
+					</div>
+				</div>
 			</div>
 		</div>		
 	</div>
@@ -24,7 +29,7 @@
 
 
 
-		<div class="row" ng-if="$ctrl.queriedPatent && searchPatentForm.$submitted">
+		<div ng-cloak class="row" ng-if="$ctrl.queriedPatent && searchPatentForm.$submitted">
 		    <div class="col-md-12">
 		    	<div class="content-panel__body">
 					<form ng-submit="$ctrl.submit($ctrl.queriedPatent)">
@@ -107,11 +112,13 @@
 									<div class="col-md-4">
 										<div class="notification-tabs">
 											<ul class="nav notification-pills flex-column">
-												<li class="green nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs active d-flex justify-content-center align-items-center m-b-xs" ng-init="$ctrl.colourKey(0);"  ng-click="activeNotificationTab = 0; $ctrl.displayNotifications($ctrl.patentNotifications.green); $ctrl.colourKey(0);">Green</li>
-												<li class="amber nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 1; $ctrl.displayNotifications($ctrl.patentNotifications.amber); $ctrl.colourKey(1);">Amber</li>
-												<li class="red nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 2; $ctrl.displayNotifications($ctrl.patentNotifications.red); $ctrl.colourKey(2);">Red</li>
-												<li class="blue nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs active d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 3; $ctrl.displayNotifications($ctrl.patentNotifications.blue); $ctrl.colourKey(3);">Blue</li>
-												<li class="black nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs d-flex justify-content-center align-items-center " ng-click="activeNotificationTab = 4; $ctrl.displayNotifications($ctrl.patentNotifications.black); $ctrl.colourKey(4);">Black</li>															
+												<li class="green-notification nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs active d-flex justify-content-center align-items-center m-b-xs" ng-init="$ctrl.colourKey(0); activeNotificationTab = 0;"  ng-click="activeNotificationTab = 0; $ctrl.displayNotifications($ctrl.patentNotifications.green); $ctrl.colourKey(0);" ng-class="{'txt-white bg-phase-green': activeNotificationTab == 0, 'bg-white txt-phase-green': activeNotificationTab !== 0}">Green</li>
+
+												<li class="amber-notification nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 1; $ctrl.displayNotifications($ctrl.patentNotifications.amber); $ctrl.colourKey(1);" ng-class="{'txt-white bg-phase-amber': activeNotificationTab == 1, 'bg-white txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
+
+												<li class="red-notification nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 2; $ctrl.displayNotifications($ctrl.patentNotifications.red); $ctrl.colourKey(2);" ng-class="{'txt-white bg-phase-red': activeNotificationTab == 2, 'bg-white txt-phase-red': activeNotificationTab !== 2}">Red</li>
+												<li class="blue-notification nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs active d-flex justify-content-center align-items-center m-b-xs" ng-click="activeNotificationTab = 3; $ctrl.displayNotifications($ctrl.patentNotifications.blue); $ctrl.colourKey(3);" ng-class="{'txt-white bg-phase-blue': activeNotificationTab == 3, 'bg-white txt-phase-blue': activeNotificationTab !== 3}">Blue</li>
+												<li class="black-notification nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-md bg-white border-grey-xs d-flex justify-content-center align-items-center " ng-click="activeNotificationTab = 4; $ctrl.displayNotifications($ctrl.patentNotifications.black); $ctrl.colourKey(4);" ng-class="{'txt-white bg-phase-black': activeNotificationTab == 4, 'bg-white txt-phase-black': activeNotificationTab !== 4}">Black</li>															
 											</ul>
 										</div>
 									</div>
@@ -120,11 +127,11 @@
 											<uib-tab index="0" heading="Green" ng-attr-id="$ctrl.patentNotifications.green" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.green)" ng-hide="true">
 												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
-														{{item.title}}
+														<span ng-bind="item.title"></span>
 														<div class="onoffswitch">
 															<label class="switch font-sm">
 															  <input type="checkbox" ng-model="item.isOn">
-															  <span class="slider round"></span>
+															  <span class="slider round bg-phase-green"></span>
 															</label>
 														</div>
 													</div>
@@ -133,11 +140,11 @@
 										    <uib-tab index="1" heading="Amber" ng-attr-id="$ctrl.patentNotifications.amber" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.amber)" ng-hide="true">
 												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
-														{{item.title}}
+														<span ng-bind="item.title"></span>
 														<div class="onoffswitch">
 															<label class="switch font-sm">
 															  <input type="checkbox" ng-model="item.isOn">
-															  <span class="slider round"></span>
+															  <span class="slider round bg-phase-amber"></span>
 															</label>
 														</div>
 													</div>
@@ -146,11 +153,11 @@
 										    <uib-tab index="2" heading="Red" ng-attr-id="$ctrl.patentNotifications.red" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.red)" ng-hide="true">
 												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
-														{{item.title}}
+														<span ng-bind="item.title"></span>
 														<div class="onoffswitch">
 															<label class="switch font-sm">
 															  <input type="checkbox" ng-model="item.isOn">
-															  <span class="slider round"></span>
+															  <span class="slider round bg-phase-red"></span>
 															</label>
 														</div>
 													</div>
@@ -159,11 +166,11 @@
 										    <uib-tab index="3" heading="Blue" ng-attr-id="$ctrl.patentNotifications.blue" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)" ng-hide="true">
 												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
-														{{item.title}}
+														<span ng-bind="item.title"></span>
 														<div class="onoffswitch">
 															<label class="switch font-sm">
 															  <input type="checkbox" ng-model="item.isOn">
-															  <span class="slider round"></span>
+															  <span class="slider round bg-phase-blue"></span>
 															</label>
 														</div>
 													</div>
@@ -172,11 +179,11 @@
 										    <uib-tab index="4" heading="Black" ng-attr-id="$ctrl.patentNotifications.brown" ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.black)" ng-hide="true">
 												<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
-														{{item.title}}
+														<span ng-bind="item.title"></span>
 														<div class="onoffswitch">
 															<label class="switch font-sm">
 															  <input type="checkbox" ng-model="item.isOn">
-															  <span class="slider round"></span>
+															  <span class="slider round bg-phase-black"></span>
 															</label>
 														</div>
 													</div>

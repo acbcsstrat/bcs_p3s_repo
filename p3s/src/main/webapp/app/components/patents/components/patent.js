@@ -58,10 +58,6 @@ app.component('patent', {
 
 	            	vm.selectedPatent =  changeObj.patent.currentValue;
 
-
-				    
-
-
 					var patent = vm.patent;
 	            	var caFee = vm.costAnalysis.fee;
 	            	var costBand = vm.costAnalysis;
@@ -295,6 +291,7 @@ app.component('patent', {
 
 			vm.displayNotifications = function(phase) {
 	
+				console.log(phase)
 
 				function phaseNotifications(phase) {
 			  		var notificationsArr = changeObj.patent.currentValue.notificationUIs;
@@ -405,12 +402,6 @@ app.component('patent', {
          	usdFxEur();
 
         }	
-
-
-
-
-
-
 
 
 

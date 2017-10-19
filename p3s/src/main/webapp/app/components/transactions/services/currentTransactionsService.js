@@ -51,10 +51,8 @@ app.factory('currentTransactionsService', function($http, $q) {
     		}
 
     		return renewalProgress;
-		    			    			    			
 
-    	}
-	
+    	}	
 
 	return factory;
 

@@ -1,5 +1,9 @@
 /*BASE======================*/
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 html, body { 
   height: 100%;
   width: 100%;
@@ -27,6 +31,7 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
   margin-bottom: 0;
 }
+
 h1, h2, h3, h4, h5, h6, p, li, button, a { font-family: 'Maven Pro', sans-serif, arial, helvetica; }
 
 h1, .h1 { font-size: 3rem; };
@@ -85,7 +90,10 @@ h1, .h1 { font-size: 3rem; };
 
 /*LAYOUT==================*/
 
-.widget-panel, .selected-item-panel, .content-panel { position: relative; }
+.widget-panel, .selected-item-panel, .content-panel { 
+  position: relative; 
+}
+
 .widget-panel .widget-panel__body, .selected-item-panel .selected-item-panel__body, .content-panel .content-panel__body { padding: 3rem 3rem ; }
 .widget-panel .widget-panel__head, .selected-item-panel .selected-item-panel__head, .content-panel .content-panel__head { padding: 1.5rem 3rem ;}
 .widget-row-top .widget-panel { min-height: 350px; }
@@ -215,12 +223,12 @@ h1, .h1 { font-size: 3rem; };
   background: #f1f2f2;
 }
 
-.notification-pills .green, .notification-pills .amber, .notification-pills .red, .notification-pills .blue, .notification-pills .black { background: white; font-weight: bold }
-.notification-pills .green { color: #53ab58; border: 2px solid #53ab58; }
-.notification-pills .amber { color: #f9b233; border: 2px solid #f9b233; }
-.notification-pills .red { color: #e30613; border: 2px solid #e30613; }
-.notification-pills .blue { color: #0097ce; border: 2px solid #0097ce; }
-.notification-pills .black { color: #3c3c3b; border: 2px solid #3c3c3b; }
+.green-notification, .amber-notification, .red-notification, .blue-notification, .black-notification { font-weight: 500 }
+.green-notification { border: 2px solid #53ab58; }
+.amber-notification { border: 2px solid #f9b233; }
+.red-notification { border: 2px solid #e30613; }
+.blue-notification { border: 2px solid #0097ce; }
+.black-notification { border: 2px solid #3c3c3b; }
 
 
 
@@ -261,8 +269,24 @@ h1, .h1 { font-size: 3rem; };
   transition: .4s;
 }
 
-input:checked + .slider {
+input:checked + .slider, input:checked + .slider.bg-phase-green {
   background-color: #53ab58;
+}
+
+input:checked + .slider.bg-phase-amber {
+  background-color: #f9b233;
+}
+
+input:checked + .slider.bg-phase-red {
+  background-color: #e30613;
+}
+
+input:checked + .slider.bg-phase-blue {
+  background-color: #0097ce;
+}
+
+input:checked + .slider.bg-phase-black {
+  background-color: #3c3c3b;
 }
 
 input:focus + .slider {
@@ -483,6 +507,8 @@ md-sidenav {
   overflow: visible;
   
 }
+
+
 
 
 

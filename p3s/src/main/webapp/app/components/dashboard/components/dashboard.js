@@ -233,9 +233,6 @@ app.component('dashboard', {
 
 			vm.totalPatents = patents.length;
 
-			vm.doughnutLabels = ["No action required", "Black", "Blue", "Red", "Yellow", "Green"];
-
-			vm.doughnutColours = ['#d1d1d1', '#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
 
 			patents.forEach(function(item){
 				switch(item.costBandColour) {
@@ -259,23 +256,22 @@ app.component('dashboard', {
 						vm.noAction.push(item)
 				}
 
+				
 
-			
-				vm.doughnutData = [vm.noAction.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
+				// $timeout(function() {
+					vm.doughnutLabels = ["No action required", "Black", "Blue", "Red", "Yellow", "Green"];
+					vm.doughnutColours = ['#d1d1d1', '#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
+					vm.doughnutData = [vm.noAction.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
+					vm.doughnutOptions = {
+				  		animation: {
+				  			duration: 1500,
+				  			easing: 'easeInSine'
+				  		}
+				  	};
+				// }, 10);
 
-				vm.doughnutOptions = {
-				   showToolTips: true,
-				   tooltipEvents: [],
-				   animation: {
-				   	onComplete: function() {
-						var chartInstance = this.chart;
-						var ctx = chartInstance.ctx;
-						console.log(ctx)
-					      // this.showTooltips(this.config.data.datasets[0].doughnut,true);
-					   }
-				   }
 			   
-			};
+			
 
 			})
 

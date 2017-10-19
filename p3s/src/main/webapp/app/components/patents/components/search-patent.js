@@ -95,10 +95,11 @@ app.component('searchpatent', {
 			.then(
 				function(data) {
 					vm.queriedPatent = data;
+					console.log()
 					vm.displayNotifications(vm.patentNotifications.green)
 				},
 				function(errResponse) {
-					console.error('Error while finding patent');
+					vm.queriedPatent = null;
 				}
 			);
         }

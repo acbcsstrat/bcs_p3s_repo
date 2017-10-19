@@ -23,13 +23,13 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="input-group">
-						<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['patentApplicationNumber']" placeholder="App No.">
+						<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['patentApplicationNumber']" ng-change="$ctrl.displayPatents()" placeholder="App No.">
 						<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
 					</div>					
 				</div>
 				<div class="col-md-6">
 					<div class="input-group">
-						<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['clientRef']" placeholder="Client Ref">
+						<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['clientRef']" ng-change="$ctrl.displayPatents()" placeholder="Client Ref">
 						<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
 					</div>
 				</div>			

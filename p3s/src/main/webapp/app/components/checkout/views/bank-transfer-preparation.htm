@@ -67,24 +67,18 @@
                 </div>
             </div>
 			<div class="content-panel__head">
-			<div class="row">
+    			<div class="row">
 					<div class="col-md-4">
 						<button class="btn bg-phase-red btn-block btn-lg font-weight-bold txt-white pill-radius" ng-click="ngCart.empty()" ui-sref="patents">Cancel transaction</button>
 						</div>
 					<div class="col-md-4">
-						<button class="btn bg-phase-green btn-block btn-lg font-weight-bold txt-white pill-radius" ng-click="$ctrl.commitTransfer(); ngCart.empty()">Complete payment</button>		
+						<button class="btn bg-phase-green btn-block btn-lg font-weight-bold txt-white pill-radius" ng-click="$ctrl.commitTransfer(); ngCart.empty()" ng-disabled="$ctrl.commitTransferBtn">Complete payment</button>		
 					</div>						
-			</div>
-		
+    			</div>
 			</div>		
 		</div>
+	</div>
+</div>	
 
-	
-
-
-
-		</div>
-	</div>	
-</div>
 
 

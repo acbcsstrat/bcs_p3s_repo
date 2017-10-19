@@ -1,13 +1,15 @@
 app.component('patents', {
   	bindings: { patents: '<' },
 	templateUrl: 'p3sweb/app/components/patents/views/list-patents.htm',
-	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams) {
+	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', '$state', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams, $state) {
 
 		var vm = this;
 
 		$rootScope.page = 'List Patents';
 
-		
+		vm.displayPatents = function() {
+			$state.go('patents')
+		}
 
 		vm.$onInit = () => {
 

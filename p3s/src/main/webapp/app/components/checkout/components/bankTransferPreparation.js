@@ -8,8 +8,16 @@ app.component('bankTransferPreparation', {
 
 		vm.patentObj = $stateParams.patentObj;
 
+		vm.tester = function() {
+			vm.commitTransferBtn = true;
+			console.log("button clicked");
+		}
+
 		vm.commitTransfer = function() {
 			
+			vm.commitTransferBtn = true;
+			console.log("button clicked");
+
 			var order = $stateParams.orderObj;
 			order.totalCostUSD = $stateParams.patentObj.totalCostUSD;
 			bankTransferCommitService.commitTransfer(order).then(

@@ -1,20 +1,55 @@
 app.component('currentTransactions', {
 	bindings: { 
-		transactions: '<' },
+		transactions: '<',
+		ngModel: '='
+	},
 	templateUrl: 'p3sweb/app/components/transactions/views/current-transactions.htm',
-	controller: function(currentTransactionsService, $rootScope, NgTableParams) {
+	controller: function(currentTransactionsService, $rootScope, NgTableParams, $scope) {
 
 		var vm = this;
 
 		$rootScope.page = 'Current Transactions'
 
 	   	vm.sortType     = 'transId'; // set the default sort type
-	  	vm.sortReverse  = false;  // set the default sort order		
+	  	vm.sortReverse  = false;  // set the default sort order	
+
+	  	$scope.transactionFilter = function(data, filter) {
+		  			
+			  		// if(filter == 'clientRefFilter') {
+			  		// 	$scope.selectedAppOption = data;
+			  		// 	$scope.filter = data;
+			  		// 	 if(angular.isDefined($scope.selectedAppOption)){
+			  		// 	 	console.log(data)
+				   //          delete $scope.selectedAppOption;
+				   //      }
+			  		// 	console.log('want to reset application')
+			  		// } else {
+			  		// 	$scope.filter = data;
+			  		// 	$scope.selectedRefOption = data;
+			  		// 	 if(angular.isDefined($scope.selectedRefOption)){
+			  		// 	 	console.log(data)
+				   //          delete $scope.selectedRefOption;
+				   //      }
+			  		// 	console.log('want to reset client')
+			  		// }
+				    if(filter == 'clientRefFilter') {
+				        // $scope.selectedAppOption = '';
+				        $scope.filter = data;
+				        console.log('want to reset applcation')
+				    } else {
+				        // $scope.selectedRefOption = '';
+				        $scope.filter = data;
+				        console.log('want to reset clent')
+				    }			  		
+
+		  	}
 
 		vm.$onInit = function() {
 
+
+
 			var transactions = vm.transactions;
-			console.log(transactions)
+
 			vm.transactions.forEach(function(data){
 				data.renewalProgress = currentTransactionsService.renewalProgress(data.latestTransStatus);
 			})
@@ -42,15 +77,13 @@ app.component('currentTransactions', {
 });
 
 app.directive('fixedTableHeaders', ['$timeout', function($timeout) {
-  return {
-    restrict: 'A',
-    link: function(scope, element, attrs) {
-      $timeout(function () {
-        
-          container = element.parentsUntil(attrs.fixedTableHeaders);
-	        element.stickyTableHeaders({ scrollableArea: container, "fixedOffset": 0 });
-
-      }, 0);
-    }
-  }
+  	return {
+	    restrict: 'A',
+	    link: function(scope, element, attrs) {
+	      	$timeout(function () {
+	      		container = element.parentsUntil(attrs.fixedTableHeaders);
+		        element.stickyTableHeaders({ scrollableArea: container, "fixedOffset": 0 });
+	      	}, 0);
+	    }
+  	}
 }]);

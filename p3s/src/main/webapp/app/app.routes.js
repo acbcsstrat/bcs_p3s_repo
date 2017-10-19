@@ -19,7 +19,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
 
     IdleProvider.idle(525);
     IdleProvider.timeout(30);
-    KeepaliveProvider.interval(5);
 
     $qProvider.errorOnUnhandledRejections(false);
 

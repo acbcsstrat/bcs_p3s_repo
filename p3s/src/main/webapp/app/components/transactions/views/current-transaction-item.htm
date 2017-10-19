@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				
-				<div ng-repeat="transaction in $ctrl.patents" class="border-grey-xs--btm">
+				<div ng-repeat="transaction in $ctrl.patents | filter: transactionsFilter" class="border-grey-xs--btm">
 					<div class="selected-item-panel__body">
 						<div class="row">
 							<div class="col-md-6">
