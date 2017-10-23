@@ -4,10 +4,8 @@
 package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import java.util.Date;
-import java.util.List;
 
 privileged aspect Patent_Roo_JavaBean {
     
@@ -109,14 +107,6 @@ privileged aspect Patent_Roo_JavaBean {
     
     public void Patent.setPatentPublicationNumber(String patentPublicationNumber) {
         this.patentPublicationNumber = patentPublicationNumber;
-    }
-    
-    public List<Notification> Patent.getNotifications() {
-        return this.notifications;
-    }
-    
-    public void Patent.setNotifications(List<Notification> notifications) {
-        this.notifications = notifications;
     }
     
 }

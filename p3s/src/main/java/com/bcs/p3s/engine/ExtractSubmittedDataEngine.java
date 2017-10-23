@@ -3,14 +3,20 @@ package com.bcs.p3s.engine;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Notification;
+import com.bcs.p3s.model.NotificationMapping;
+import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
@@ -27,6 +33,122 @@ import com.bcs.p3s.wrap.InBasket;
  *
  */
 public class ExtractSubmittedDataEngine extends Universal {
+	
+	public HashMap<String, Object> extractRegistrationForm(Object object){
+		
+		P3SUser user = new P3SUser();
+		
+		//LinkedHashMap<String, Object> newPatentHashMap = (LinkedHashMap<String, Object>) object.toString();
+		ArrayList<LinkedHashMap<String, String>> newObj = (ArrayList<LinkedHashMap<String, String>>) object;
+		HashMap<String, Object> contentMap = new HashMap<String, Object>();
+		for(LinkedHashMap<String, String> eachNewObj : newObj){
+			
+			List<String> mapdata = new ArrayList<String>(eachNewObj.values());
+			contentMap.put(mapdata.get(0), mapdata.get(1));
+			
+		}
+		System.out.println(contentMap);
+		
+	   	return contentMap;
+	}
+
+	/**
+	 * Extracting business details from contentMap
+	 */
+	public Business extractBusinessInfo(HashMap<String, Object> data){
+		
+		Business business = new Business();
+		
+		Iterator it = data.entrySet().iterator();
+	    while (it.hasNext()) {
+	    	String strValue = "";
+	        Map.Entry pair = (Map.Entry)it.next();
+	        Object value = pair.getValue();
+	        
+	        if(value instanceof String)
+	        	strValue = (String) value;
+	        
+	        if("businessName".equals(pair.getKey()))
+	        	business.setBusinessName(strValue);
+	       
+	        if("phoneNumber".equals(pair.getKey()))
+	        	business.setPhoneNumber(strValue);
+	        
+	        if("timezone".equals(pair.getKey()))
+	        	business.setTimezone(strValue);
+	        
+	        if("street".equals(pair.getKey()))
+	        	business.setStreet(strValue);
+	        
+	        if("city".equals(pair.getKey()))
+	        	business.setCity(strValue);
+	        
+	        if("usstate".equals(pair.getKey()))
+	        	business.setUSstate(strValue);
+	        
+	        if("zip".equals(pair.getKey()))
+	        	business.setZip(strValue);
+	        
+	        if("billingStreet".equals(pair.getKey()))
+	        	business.setBillingStreet(strValue);
+	        
+	        if("billingCity".equals(pair.getKey()))
+	        	business.setBillingCity(strValue);
+	        
+	        if("billingState".equals(pair.getKey()))
+	        	business.setBillingState(strValue);
+	        
+	        if("billingZip".equals(pair.getKey()))
+	        	business.setBillingZip(strValue);
+	        
+	    }
+		return business;
+		
+	}
+
+	
+	/**
+	 * Extracting user details from contentMap
+	 */
+	public P3SUser extractUserInfo(HashMap<String, Object> data){
+			
+		P3SUser user = new P3SUser();
+			
+			Iterator it = data.entrySet().iterator();
+		    while (it.hasNext()) {
+		    	String strValue = "";
+		        Map.Entry pair = (Map.Entry)it.next();
+		        Object value = pair.getValue();
+		        
+		        if(value instanceof String)
+		        	strValue = (String) value;
+		        
+		        if("firstName".equals(pair.getKey()))
+		        	user.setFirstName(strValue);
+		       
+		        if("lastName".equals(pair.getKey()))
+		        	user.setLastName(strValue);
+		        
+		        if("new_password".equals(pair.getKey()))
+		        	user.setPassword(strValue);
+		        
+		        if("password".equals(pair.getKey()))
+		        	user.setPassword(strValue);
+		        
+		        if("emailAddress".equals(pair.getKey()))
+		        	user.setEmailAddress(strValue);
+		        	
+		        if("isEmailNotification".equals(pair.getKey())){
+		        	if(value instanceof Boolean){
+		        		Boolean boolValue = (Boolean) value;
+		        		user.setIsEmailNotification(boolValue);
+		        	}
+		        }
+		        
+		    }
+		    
+		    return user;
+	}
 	
 	/**
 	 * 
@@ -145,9 +267,11 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   	//patent.setRenewalStatus(RenewalStatusEnum.ABANDONED);
 			   	patent.setRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);*/
 	
+			   	
+			   	//commenting below as notifications property removed from patent
 		   	
 			   	// Now extract and populate the Notifications
-			   	if ("notificationUIs".equals(key.trim())) {
+			/*   	if ("notificationUIs".equals(key.trim())) {
 				   	Object nob = newPatentHashMap.get(key); 
 	
 				   	ArrayList<Object> nobmap = (ArrayList<Object>) nob;
@@ -172,9 +296,9 @@ public class ExtractSubmittedDataEngine extends Universal {
 					   	
 					   	Boolean isOn = (Boolean) ison;
 					   	
-					   	/*if(!isOn){
+					   	if(!isOn){
 					   		onSoFar = false ;
-					   	}*/
+					   	}
 					 
 					   	// & now - if selected - add to the ON list
 					   	if (isOn) {
@@ -187,7 +311,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 				   	patent.setNotifications(onNotifications);
 				   	for (Notification n : patent.getNotifications()) {
 				   	}
-			   	}
+			   	}*/
 		   	}
 	   		
 
@@ -199,6 +323,86 @@ public class ExtractSubmittedDataEngine extends Universal {
 
    		return patent;
 	}
+
+
+public List<NotificationMapping> extractNotificationsFromAddPatentForm(Patent patent,Object obby) {
+		
+		List<NotificationMapping> mappings = new ArrayList<NotificationMapping>();
+		
+		
+		try {
+
+		   	LinkedHashMap<String, Object> newPatentHashMap = (LinkedHashMap<String, Object>) obby; 
+		   	Set<String> keys = newPatentHashMap.keySet();
+
+		   	for (String key : keys) {
+			   	String displayable = "";
+			   	Object tmp = newPatentHashMap.get(key);
+			   	if (tmp!=null) { 
+			   		displayable = tmp.toString();
+			   	}
+		   	}
+		   	
+		   	
+		   	// Process fields, one by one
+		   	String value = "nevernever";
+		   	LinkedHashMap<String, Object> notificationObjects = new LinkedHashMap<String, Object>();
+		   	
+		   	
+		   	for (String key : keys) {
+		
+				if ("notificationUIs".equals(key.trim())) {
+				   	Object nob = newPatentHashMap.get(key); 
+		
+				   	ArrayList<Object> nobmap = (ArrayList<Object>) nob;
+				   	
+				   	for (Object nobkeyOb : nobmap) {
+				   		String nobkey = nobkeyOb.toString(); 
+		
+				   		LinkedHashMap<String, Object> jsonNotificationFields = (LinkedHashMap<String, Object>) nobkeyOb;
+					   	
+				   		long nid = (Integer) jsonNotificationFields.get("id");
+		
+					   	Object defaultVal = jsonNotificationFields.get("defaultOn");
+					   	Boolean onSoFar = (Boolean) defaultVal;
+					   	
+					   	Object ison = jsonNotificationFields.get("isOn");
+				   		
+					   	// Here's the devious bit
+					   	// isOn is usually true or false. But If it is 0, this indicates it's been inverted (at least once - assume once)
+					   	if (ison instanceof Integer) {
+					   		onSoFar = ! onSoFar ;
+					   	}
+					   	
+					   	Boolean isOn = (Boolean) ison;
+					   	
+					   	if(!isOn){
+					   		onSoFar = false ;
+					   	}
+					 
+					   	// & now - if selected - add to the ON list
+					   	if (isOn) {
+					   		NotificationMapping eachMapping = new NotificationMapping();
+					   		eachMapping.setNotification_id(nid);
+					   		eachMapping.setPatent_id(patent.getId());
+					   		eachMapping.setUser_id(SecurityUtil.getMyUser().getId());
+					   		mappings.add(eachMapping);
+					   	}
+				   	}
+				   	
+		
+				   	
+				   	
+				}
+		   	}
+		}
+		catch(Exception e){
+			
+		}
+		
+		return mappings;
+	}
+	
 
 
 

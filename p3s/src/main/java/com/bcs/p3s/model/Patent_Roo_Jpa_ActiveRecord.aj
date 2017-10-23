@@ -14,7 +14,7 @@ privileged aspect Patent_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Patent.entityManager;
     
-    public static final List<String> Patent.fieldNames4OrderClauseFilter = java.util.Arrays.asList("patentApplicationNumber", "title", "filingDate", "business", "primaryApplicantName", "clientRef", "shortTitle", "epoPatentStatus", "lastRenewedDateExEpo", "lastRenewedYearEpo", "renewalYear", "renewalStatus", "patentPublicationNumber", "notifications");
+    public static final List<String> Patent.fieldNames4OrderClauseFilter = java.util.Arrays.asList("patentApplicationNumber", "title", "filingDate", "business", "primaryApplicantName", "clientRef", "shortTitle", "epoPatentStatus", "lastRenewedDateExEpo", "lastRenewedYearEpo", "renewalYear", "renewalStatus", "patentPublicationNumber");
     
     public static final EntityManager Patent.entityManager() {
         EntityManager em = new Patent().entityManager;

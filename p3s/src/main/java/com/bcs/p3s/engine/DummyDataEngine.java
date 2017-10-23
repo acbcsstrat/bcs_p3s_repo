@@ -119,11 +119,11 @@ public class DummyDataEngine extends Universal {
 		
 		
 		// Create default notifications
-		patent.setNotifications(new ArrayList<Notification>());
+		/*patent.setNotifications(new ArrayList<Notification>());
 		List<Notification> allNotifications = Notification.findAllNotifications();
 		for (Notification anotification : allNotifications) {
 			if (anotification.getDefaultOn()) patent.getNotifications().add(anotification);
-		}
+		}*/
 
 		//PatentUI patentUI = new PatentUI(patent);
 		//System.out.println(postSession.getExtendedPatentUI());

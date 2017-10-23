@@ -79,14 +79,6 @@ privileged aspect Business_Roo_JavaBean {
         this.zip = zip;
     }
     
-    public Boolean Business.getIsBillingAddressSame() {
-        return this.isBillingAddressSame;
-    }
-    
-    public void Business.setIsBillingAddressSame(Boolean isBillingAddressSame) {
-        this.isBillingAddressSame = isBillingAddressSame;
-    }
-    
     public String Business.getBillingStreet() {
         return this.billingStreet;
     }

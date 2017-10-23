@@ -30,6 +30,7 @@ import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.engine.TemporaryProcessingEngine;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
+import com.bcs.p3s.model.NotificationMapping;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.PatentService;
@@ -142,9 +143,14 @@ public class PatentRestController extends Universal {
 			Patent patent = data.extractPatentFromAddPatentForm(obby); 
 			//calculate the extended data again
 			
-			
 		   	//patent.persist();
 			newPatent = patent.persist();
+			
+			List<NotificationMapping> mappings = data.extractNotificationsFromAddPatentForm(newPatent, obby);
+			
+			for(NotificationMapping eachMapping : mappings){
+				eachMapping.persist();
+			}
 		   	
 			if(!(newPatent == null))
 				log().debug("PatentRestController : /rest-patents/ savePatent() completed.");

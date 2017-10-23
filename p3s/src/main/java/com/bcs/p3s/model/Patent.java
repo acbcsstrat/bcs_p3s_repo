@@ -102,12 +102,12 @@ public class Patent {
     private String patentPublicationNumber;
 
     /**
-     */
+     *//*
     // Formerly CascadeType.ALL, which rejects auto-delete child notifications
     @NotNull
     @ManyToMany(cascade = CascadeType.REFRESH)
     private List<Notification> notifications = new ArrayList<Notification>();
-
+*/
 
 
     // Setters pushed to support P3S 'Enums'

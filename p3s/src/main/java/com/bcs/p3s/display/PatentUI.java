@@ -19,7 +19,9 @@ import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Notification;
+import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -111,12 +113,13 @@ public class PatentUI extends Patent {
 		this.setLastRenewedDateExEpo(patent.getLastRenewedDateExEpo()); 
 		this.setLastRenewedYearEpo(patent.getLastRenewedYearEpo()); 
 		this.setRenewalYear(patent.getRenewalYear());
-		this.setNotifications(null); // UI will never want Notifications. Just NotificationUIs
+		//this.setNotifications(null); // UI will never want Notifications. Just NotificationUIs
 
 		
 		// Special work required here
 		//System.out.println("(patentService==null) = "+(patentService==null));
-		allNotificationUIs =createNotificationUIs(patent.getNotifications());
+		//allNotificationUIs =createNotificationUIs(patent.getNotifications());
+		allNotificationUIs =createNotificationUIs(patent.getId(),SecurityUtil.getMyUser().getId());
 
 		//SETTING REMAINING FROM EXTENDED DATA ARGUMENT PASSED
 		if(! (extendedDatas == null) ){
@@ -254,7 +257,7 @@ public class PatentUI extends Patent {
 	 * Sorted by display order
 	 * @param notifications
 	 */
-	public synchronized List<NotificationUI> createNotificationUIs(List<Notification> notifications) {
+	public synchronized List<NotificationUI> createNotificationUIs(Long patent_id,Long user_id) {
 
 		//String err = PREFIX+"createNotificationUIs() ";
 		//checkNoActionRequired(err);  // because such data is not sensitive. Is anonymous
@@ -262,9 +265,21 @@ public class PatentUI extends Patent {
 		//log().debug(err+" invoked ");
 		
 		List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
+		List<Notification> allOnNotifications = new ArrayList<Notification>();
 		
 		// Assemble ALL notificationUIs (identifiable by ID)
+		//List<Notification> allNotifications = Notification.findAllNotifications();
 		List<Notification> allNotifications = Notification.findAllNotifications();
+		if(!(patent_id == null)){
+			allOnNotifications = new NotificationMapping().getAllPatentNotificationsForUser(patent_id, user_id);
+		}
+		else{
+			for(Notification notification : allNotifications){
+				if(notification.getDefaultOn())
+					allOnNotifications.add(notification);
+			}
+		}
+		
 		for (Notification anotification : allNotifications) {
 			NotificationUI notificationUI = new NotificationUI(anotification);
 			allNotificationUIs.add(notificationUI);
@@ -276,7 +291,7 @@ public class PatentUI extends Patent {
 		
 		
 		// Switch ON as appropriate
-		for (Notification notification : notifications) { // i.e. each ON notification
+		for (Notification notification : allOnNotifications) { // i.e. each ON notification
 			NotificationUI matchTarget = new NotificationUI(notification);
 
 			// find existing match, & switch on

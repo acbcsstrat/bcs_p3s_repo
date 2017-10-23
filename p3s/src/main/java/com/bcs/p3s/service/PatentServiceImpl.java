@@ -45,6 +45,7 @@ import com.bcs.p3s.model.EpoFee;
 import com.bcs.p3s.model.Fee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
+import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.P3SFeeSole;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
@@ -177,11 +178,11 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		
 		// Create default notifications
-		patent.setNotifications(new ArrayList<Notification>());
+		/*patent.setNotifications(new ArrayList<Notification>());
 		List<Notification> allNotifications = Notification.findAllNotifications();
 		for (Notification anotification : allNotifications) {
 			if (anotification.getDefaultOn()) patent.getNotifications().add(anotification);
-		}
+		}*/
 		
 		/**
 		 * CALL TO Cost Calculation Engine
@@ -300,7 +301,22 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	    		renewal.remove();
 	    	}
 	    	
-	    	patent.remove(); 
+	    	
+	    	/**
+	    	 * SEPARATELY DELETE ALL THE MAPPINGS FOR THAT PATENT
+	    	 */
+	    	
+	    	List<NotificationMapping> allPatentNotifications = new NotificationMapping().getAllNotificationForPatent(id);
+			for(NotificationMapping eachMapping : allPatentNotifications){
+				eachMapping.remove();
+			}
+	    	
+	    	/**
+	    	 * FINALLY ITS SAFE TO DELETE THE PATENT
+	    	 */
+			patent.remove();
+			
+	    	
 		}
 		catch(JpaSystemException e){
 			System.out.println(e.getMessage());
@@ -338,6 +354,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		log().debug(err+" invoked ");
 		Patent updatedPatent = findById(id);
+		
+		List<NotificationMapping> mappingsList = new ArrayList<NotificationMapping>();
 		try {
 			PatentUI patentUI = null; 
     	
@@ -346,15 +364,25 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 				updatedPatent.setClientRef(patentUI.getClientRef());
 				updatedPatent.setShortTitle(patentUI.getShortTitle());
-				updatedPatent.setNotifications(new ArrayList<Notification>());
+				//updatedPatent.setNotifications(new ArrayList<Notification>());
+				/**
+				 * Get all notifications for the patent and delete existing data from notification_mapping table
+				 * insert into values then
+				 */
 	    		for (NotificationUI notificationUI : patentUI.getNotificationUIs()) {
 	    			if (notificationUI.getIsOn()) {
 	    				Long notificationId = notificationUI.getId();
 	    				Notification notification = Notification.findNotification(notificationId);
-	    				updatedPatent.getNotifications().add(notification);
+	    				NotificationMapping newMapping = new NotificationMapping();
+	    				newMapping.setNotification_id(notificationId);
+	    				newMapping.setPatent_id(patentUI.getId());
+	    				newMapping.setUser_id(SecurityUtil.getMyUser().getId());
+	    				mappingsList.add(newMapping);
+	    				//updatedPatent.getNotifications().add(notification);
 	    			}
 	    		}
-			} else { 
+			} 
+			else { 
 				// Retrieve the required data from the LinkedHashMap
 				LinkedHashMap data = (LinkedHashMap) untypedPatentUI;
 				String clientRef = (String) data.get("clientRef");
@@ -362,8 +390,9 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				// Now apply that data
 				updatedPatent.setClientRef(clientRef);
 				updatedPatent.setShortTitle(shortTitle);
-				updatedPatent.setNotifications(flexibleExtractNotifications(data));
-			
+				//updatedPatent.setNotifications(flexibleExtractNotifications(data));
+				
+				mappingsList = flexibleExtractNotifications(data);
 				// NOW ! - can perform the remaining check*()s - which were: checkIsTrue((patentUI.getId().longValue()==id), err)   &    checkPatentUIhasNotificationUIs(patentUI, err);
 				Integer ID = (Integer) data.get("id");
 				if (ID.longValue()!=id) 				failInternalError(err+"  [on check id=id]");
@@ -371,8 +400,23 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				if (allNotificationUIs.size() < 5 )		failInternalError(err+" [patentUI has only "+allNotificationUIs.size()+" notificationUIs]"); 
 			}
 
-			// At long last !
+			/**
+			 * independently merger patent and notification_mapping tables
+			 */
 			updatedPatent.merge();
+			/**
+			 * DELETE EXISTING NOTIFICATION MAPPING FOR THE PATENT FOR CURRENT USER
+			 */
+			
+			List<NotificationMapping> allOnNotifications = new NotificationMapping().getAllNotificationMappingsForUser(updatedPatent.getId(), SecurityUtil.getMyUser().getId());
+			for(NotificationMapping eachMapping : allOnNotifications){
+				eachMapping.remove();
+			}
+			if(mappingsList != null){
+				for(NotificationMapping eachMapping : mappingsList){
+					eachMapping.persist();
+				}
+			}
 			
     	} 
     	catch (Exception e) {
@@ -453,34 +497,28 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		return history;
 	}
 
-	
-
-	
-	
 
 	// End of - the methods which implement the prototypes in the Interface
 	
 
-	
-	
-	
-	
-	
-	
 	// Start of - Support methods - NOT exposed through the interface
 
 	// Tidy flexibleUpdatePatent() above by extracting this
-	protected List<Notification> flexibleExtractNotifications(LinkedHashMap untypedPatentUI) { 
-		List<Notification> result = new ArrayList<Notification>();
+	protected List<NotificationMapping> flexibleExtractNotifications(LinkedHashMap untypedPatentUI) { 
+		List<NotificationMapping> result = new ArrayList<NotificationMapping>();
 		//if patentUI is a LinkedHashMap, notificationUIs will (likely) be too. But check, just in case
 		List<Object> allNotificationUIs = (List<Object>) untypedPatentUI.get("notificationUIs");
 		for (Object obNotificationUI : allNotificationUIs) {
+			Integer intId = (Integer) untypedPatentUI.get("id");
 			if (obNotificationUI instanceof NotificationUI) {
 				NotificationUI notificationUI = (NotificationUI) obNotificationUI;
 				if (notificationUI.getIsOn()) {
     				Long notificationId = notificationUI.getId();
-    				Notification notification = Notification.findNotification(notificationId);
-    				result.add(notification);
+    				NotificationMapping mapping = new NotificationMapping();
+    				mapping.setNotification_id(notificationId);
+    				mapping.setPatent_id(intId.longValue());
+    				mapping.setUser_id(SecurityUtil.getMyUser().getId());
+    				result.add(mapping);
 				}
 			}
 			else {
@@ -489,8 +527,11 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				Boolean ISON = (Boolean) obNotification.get("isOn");
 				if (ISON.booleanValue()) {
     				long notificationId = ID.longValue();
-    				Notification notification = Notification.findNotification(notificationId);
-    				result.add(notification);
+    				NotificationMapping mapping = new NotificationMapping();
+    				mapping.setNotification_id(notificationId);
+    				mapping.setPatent_id(intId.longValue());
+    				mapping.setUser_id(SecurityUtil.getMyUser().getId());
+    				result.add(mapping);
 				}
 			}
 		}

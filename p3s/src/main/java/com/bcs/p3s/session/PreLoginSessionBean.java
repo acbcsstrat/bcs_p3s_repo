@@ -7,9 +7,15 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 import javax.servlet.http.HttpSessionEvent;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+
 import com.bcs.p3s.model.Business;
 
-public class PreLoginSessionBean implements HttpSession{
+@Component("preSession")
+@Scope(value = "session" , proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class PreLoginSessionBean {
 	
 
 	private Business business;
@@ -22,108 +28,5 @@ public class PreLoginSessionBean implements HttpSession{
 		this.business = business;
 	}
 
-	@Override
-	public long getCreationTime() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public long getLastAccessedTime() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ServletContext getServletContext() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setMaxInactiveInterval(int interval) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getMaxInactiveInterval() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public HttpSessionContext getSessionContext() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object getAttribute(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object getValue(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Enumeration getAttributeNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String[] getValueNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setAttribute(String name, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void putValue(String name, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeAttribute(String name) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeValue(String name) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void invalidate() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isNew() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	
 
 }

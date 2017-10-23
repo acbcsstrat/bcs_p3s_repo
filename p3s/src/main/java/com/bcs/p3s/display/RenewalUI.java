@@ -96,7 +96,7 @@ public class RenewalUI extends Renewal {
 		PatentUI pui = new PatentUI(this.getPatent(),extendedDatas);
 		this.setPatent(null);
 		pui.setBusiness(null);
-		pui.setNotifications(null);
+		//pui.setNotifications(null);
 		pui.setNotificationUIs(null);
 		
 		// acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine

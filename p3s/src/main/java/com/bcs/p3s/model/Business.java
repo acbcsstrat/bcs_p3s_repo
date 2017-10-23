@@ -62,13 +62,7 @@ public class Business {
      * Hence need convert from long to String
      */
     @NotNull
-    private String zip;
-
-    /**
-     * Oct17 - Now redundant - but don't remove yet - to avoid db mismatches
-     */
-    @NotNull
-    private Boolean isBillingAddressSame;
+    private String zip; 
 
     /**
      */

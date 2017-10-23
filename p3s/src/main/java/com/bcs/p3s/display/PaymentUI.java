@@ -107,7 +107,7 @@ public class PaymentUI extends Payment {
 			aRenUI.setActivePaymentId(null);
 			//aRenUI.getFee().setRenewal(null); 
 			// now remove data that doesn't break anything - but which is large, and we just don't need it
-			aRenUI.getPatentUI().setNotifications(null);
+			//aRenUI.getPatentUI().setNotifications(null);
 			aRenUI.getPatentUI().setNotificationUIs(null);
 			
 			this.getRenewalUIs().add(aRenUI);

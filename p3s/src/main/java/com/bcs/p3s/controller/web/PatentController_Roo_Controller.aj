@@ -5,7 +5,6 @@ package com.bcs.p3s.controller.web;
 
 import com.bcs.p3s.controller.web.PatentController;
 import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -106,7 +105,6 @@ privileged aspect PatentController_Roo_Controller {
         uiModel.addAttribute("patent", patent);
         addDateTimeFormatPatterns(uiModel);
         uiModel.addAttribute("businesses", Business.findAllBusinesses());
-        uiModel.addAttribute("notifications", Notification.findAllNotifications());
     }
     
     String PatentController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
