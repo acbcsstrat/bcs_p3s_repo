@@ -4,8 +4,6 @@
 
    <head>
 
-
-
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -18,6 +16,10 @@
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
       <title>Patent Place</title>
+
+      <script>
+      	
+      </script>
 
    	</head>
 
@@ -36,17 +38,31 @@
                   		</div>
                		</div>
                		<div class="content-panel__body bg-white">
+               			<div class="row m-b-lg">
+               				<div class="col-md-12">
+               					<a href="/p3sweb/login" class="font-md txt-phase-green font-weight-medium">Already have user account set up?</a>
+               				</div>
+               			</div>
                			<div class="row m-b-md" id="divQn">
                				<div class="col-md-6">
                					<span class="font-md font-weight-medium m-r-md">Is your firm already registered with Patent Place?</span>
-	                            	<label class="form-check-label font-md m-r-sm">Yes</label><input type="radio" name="typeRegister" id="subRegister">
-	                            	<label class="form-check-label font-md m-r-sm">No</label><input type="radio" name="typeRegister" id="initalRegister">	    	                            	
+                            	<label class="form-check-label font-md m-r-sm">Yes</label><input type="radio" name="typeRegister" id="subRegister">
+                            	<label class="form-check-label font-md m-r-sm">No</label><input type="radio" name="typeRegister" id="initalRegister">                       	
                				</div>
                			</div>
+               			
+               			<div class="row m-b-md" id="divSuccess">
+               				<div class="col-md-6" id="enableUser">
+               					<span class="font-md font-weight-medium m-r-md">Thank You for Registering with Patent Place. 
+               					We have sent you an email. Please <a id="enableUser" href="/p3sweb/register/new-user-verify/"> Click Here </a> in order to activate your account.</span>
+	                            		    	                            	
+               				</div>
+               			</div>
+               			
                			<div id="initialRegistration">
                				<div class="row">
 	                  			<div class="col-md-12">
-	                  				<form name="userDetails" id="userDetails" ng-controller="userProfileCtrl">
+	                  				<form name="initialUserForm" id="initialUserForm" ng-controller="userProfileCtrl">
 		                     			<div class="row m-b-lg">
 		                     				<div class="col-md-6">
 												<fieldset>
@@ -72,13 +88,13 @@
 													<div class="form-group row">
 														<label class="col-md-5 font-md font-weight-medium" for="new_password">Password</label>
 														<div class="col-md-7">
-															<input type="text" name="new_password" class="form-control pill-radius" id="new_password" minlength="8" required>
+															<input type="password" name="new_password" class="form-control pill-radius" id="new_password" minlength="8" required>
 														</div>
 													</div>
 													<div class="form-group row">
 														<label class="col-md-5 font-md font-weight-medium" for="confirm_password">Confirm password</label>
 														<div class="col-md-7">
-															<input type="text" name="confirm_password" class="form-control pill-radius" id="confirm_password" required>
+															<input type="password" name="confirm_password" class="form-control pill-radius" id="confirm_password" required>
 														</div>
 													</div>
 												</fieldset>
@@ -110,7 +126,7 @@
 
 														</div>														
 													</div>
-													<div id="subBilling">
+													<div id="pasteBusiness">
 														<div class="form-group row">
 															<label class="col-md-5 font-md font-weight-medium" for="billing_street">Street</label>
 															<div class="col-md-7">
@@ -145,7 +161,8 @@
 												</div>
 												<div class="row">
 													<div class="offset-md-8 col-md-4">
-								                        <button class="btn btn-block bg-phase-green pill-radius txt-white font-lg font-weight-medium p-wide-sm" type="submit" id="submit" disabled>Submit</button>									
+								                        <button class="btn btn-block bg-phase-green pill-radius txt-white font-lg font-weight-medium p-wide-sm" type="submit" id="initialRegistrationSubmit" disabled>Register</button>
+								                        <button class="btn btn-block bg-phase-green pill-radius txt-white font-lg font-weight-medium p-wide-sm" type="submit" id="subRegistrationSubmit" disabled>Register</button>											                        			
 													</div>
 												</div>		
 											</div>
@@ -196,14 +213,17 @@
 														<div class="form-group row">
 															<label class="col-md-5 font-md font-weight-medium" for="timezone">Time Zone</label>
 															<div class="col-md-2">
-																<!-- <select class="form-control pill-radius">
-																	<option class="form-control"></option>
-																</select> -->
-																<input type="text" name="timezone" class="form-control pill-radius" id="timezone" required>
+																<select class="form-control pill-radius" name="timezone">
+																	<option class="form-control">ET</option>
+																	<option class="form-control">CT</option>
+																	<option class="form-control">MT</option>
+																	<option class="form-control">PT</option>
+																	<option class="form-control">AKT</option>
+																	<option class="form-control">AKT</option>
+																</select>
 															</div>
 														</div>
 													</div>
-													
 												</fieldset>
 											</div>
 										</div>
@@ -212,23 +232,62 @@
 	                  		</div>
                			</div>
                			<div id="companyCode">
-               				<div class="row">
+               				<div class="row m-b-lg">
                					<div class="col-md-6">
                						<form name="companyCodeForm" id="companyCodeForm">
-               							<div class="form-group">
+               							<div class="form-group row">
                								<label class="col-md-5 font-md font-weight-medium">Business Number</label>
-               								<input class="form-control pill-radius" name="businessNumber"></input>
+               								<div class="col-md-7">
+               									<input class="form-control pill-radius" name="businessNumber">
+               								</div>
                							</div>
-               							<div class="form-group">
+               							<div class="form-group row">
                								<label class="col-md-5 font-md font-weight-medium">Business PIN</label>
-               								<input class="form-control pill-radius" name="businessPin"></input>
+               								<div class="col-md-7">
+               									<input class="form-control pill-radius" name="businessPin">
+               								</div>
                							</div>               							
-               							<div class="form-group">
-               								<input type="submit" name="companyCodeSubmit" class="btn btn-block bg-phase-green pill-radius txt-white font-lg font-weight-medium p-wide-sm">
+               							<div class="form-group row">
+               								<div class="col-md-7 offset-md-5">
+               									<input type="submit" name="companyCodeSubmit" id="companyCodeSubmit" class="btn btn-block bg-phase-green pill-radius txt-white font-md font-weight-medium p-wide-sm" value="Search">
+               								</div>
                							</div>
                						</form>
                					</div>
                				</div>
+               				<div id="businessConfirm">
+               					<div class="row">
+	               					<div class="col-md-6">
+	               						<div class="row">
+	               							<div class="col-md-12">
+	               								<table class="table font-md">
+			               							<tr>
+			               								<td class="font-weight-medium">Business</td>
+			               								<td id="businessNameConfirm"></td>
+			               							</tr>
+			               							<tr>
+			               								<td class="font-weight-medium">Address</td>
+			               								<td>
+			               									<span id="businessAddressStreetConfirm"></span><br>
+			               									<span id="businessAddressCityConfirm"></span><br>
+			               									<span id="businessAddressStateConfirm"></span><br>
+			               									<span id="businessAddressZipConfirm"></span>
+			               								</td>
+			               							</tr>               							
+			               						</table>
+	               							</div>	
+	               						</div>
+	               						<div class="row">
+		       								<div class="col-md-7 offset-md-5">
+		       									<input type="submit" id="businessConfirmSubmit" name="businessConfirmSubmit" class="btn btn-block bg-phase-green pill-radius txt-white font-md font-weight-medium p-wide-sm" value="Correct Business">
+		       								</div>
+		       							</div>	
+	               					</div>
+	               					
+	               				</div>
+       							
+               				</div>
+														               				
                			</div>
                		</div>
             	</div>
@@ -236,23 +295,28 @@
       	</div>
 
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.serializeJSON.min.js"></script>
+      	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 
       	<script>
+
+      		$('#initialRegistration').hide();
+      		$('#companyCode').hide();
+      		$('#businessConfirm').hide();
+      		$('#divSuccess').hide();
       	
 	      	$(document).ready(function(){
 
-	      		$('#initialRegistration').hide();
-	      		$('#subRegistration').hide();
-	      		$('#companyCode').hide();
+
 
 	      		$('#same_as_business').change(function(){
 	      			if(this.checked) {
 	      				var addObj = {}
-	      				var business = $('#copyBusiness input');
+	      				var business = $('#subBusiness input');
+
 	      				for(i=0;i < business.length; i++) {
+
 	      					switch(business[i].id) {
 	      						case 'street':
 	      							addObj.street = business[i].value;
@@ -260,7 +324,7 @@
 	      						case 'city':
 	      							addObj.city = business[i].value;
 	      						break;
-	      						case 'USstate':
+	      						case 'usstate':
 	      							addObj.USstate = business[i].value;
 	      						break;
 	      						case 'zip':
@@ -281,18 +345,57 @@
 
 	      		$('#terms-register').change(function(){
 	      			if(this.checked) {
-	      				$('#submit').removeAttr('disabled');
+	      				$('#initialRegistrationSubmit').removeAttr('disabled');
+	      				$('#subRegistrationSubmit').removeAttr('disabled');
 	      			} else {
-	      				$('#submit').prop('disabled', true);
+	      				$('#initialRegistrationSubmit').removeAttr('disabled');
+	      				$('#subRegistrationSubmit').prop('disabled', true);
 	      			}
 	      		})
 
 	      		$('#subRegister').change(function(){
 	      			if(this.checked) {
-	      				$('#initialRegistration').hide();
-	      				$('#companyCode').show();
+	      				$('#initialRegistration').hide()
+	      				$('#initialRegistrationSubmit').hide()
+	      				setTimeout(function() {
+		      				$('#subRegistrationSubmit').show();
+		      				$('#companyCode').show();
+	      				}, 0);
+
 	      			}
 	      		})
+
+	      		$('#initalRegister').change(function(){
+	      			if(this.checked) {
+	      				$('#initialRegistration').show();
+	      				$('#initialRegistrationSubmit').show();
+	      				$('#subRegistrationSubmit').hide()
+	      				$('#companyCode').hide();
+	      				$('#divSuccess').hide();
+	      			}
+	      		})
+
+  				$('#initialUserForm').submit(function(e){
+      				e.preventDefault();
+  					var dataString = JSON.stringify($('#initialUserForm').serializeArray());
+  					$.ajax({
+  						type: 'POST',
+  						url: 'http://localhost:8080/p3sweb/register/rest-user/',
+  						data: dataString,
+  					    contentType: "application/json",
+  						success: function(response) {
+  							console.log(response);
+  							$('#divSuccess').show();
+  							$('#initialRegistration').hide();
+  		      				$('#initialRegistrationSubmit').hide();
+  		      				$('#subRegistrationSubmit').hide()
+  		      				$('#companyCode').hide();
+  						},
+  						error:function(errResponse) {
+  							console.log('fail')
+  						}
+  					})
+  				})
 
       			$('#companyCodeForm').submit(function(e){
       				e.preventDefault();
@@ -307,15 +410,17 @@
   						data: dataString,
   					    dataType: 'json',
   						success: function(response) {
-  							console.log(response);
-  							console.log(response.street);
-  							$('#initialRegistration').show();
-  		      				$('#subRegistration').hide();
-  		      				$('#companyCode').hide();
-  		      				$('#divQn').hide();
-  							//var data = response.data;
-  							alert(response.businessName);
-  							alert(response.phoneNumber);
+  							var patentFound = true;
+  							if(patentFound) {
+  								$('#companyCodeSubmit').attr('disabled', true).hide()
+  							}
+  							console.log(response)
+  							$('#businessConfirm').show();
+  							$('#businessNameConfirm').html(response.businessName);
+  							$('#businessAddressStreetConfirm').html(response.street);
+  							$('#businessAddressCityConfirm').html(response.city);
+  							$('#businessAddressStateConfirm').html(response.usstate);
+  							$('#businessAddressZipConfirm').html(response.zip); 							
   							$('input[id=businessName]').val(response.businessName);
   							$('input[id=phoneNumber]').val(response.phoneNumber);
   							$('#subBusiness input[id=street]').val(response.street);
@@ -323,7 +428,6 @@
   							$('#subBusiness input[id=usstate]').val(response.usstate);
   							$('#subBusiness input[id=zip]').val(response.zip);
   							$('#subBusiness input[id=timezone]').val(response.timezone);
-
   							$('#subBilling input[id=billing_street]').val(response.billingStreet);
   							$('#subBilling input[id=billing_city]').val(response.billingCity);
   							$('#subBilling input[id=billing_state]').val(response.billingState);
@@ -336,31 +440,22 @@
   					})
   				})
 
-  				$('#userDetails').submit(function(e){
-      				e.preventDefault();
-  					var dataString = $('#userDetails').serializeArray();
-  					$.ajax({
-  						type: 'POST',
-  						//url: 'http://localhost:8080/p3sweb/register/rest-subsequent-user-step1/'+dataString,
-  						url: 'http://localhost:8080/p3sweb/register/rest-subsequent-user-step2/',
-  						data: JSON.stringify(dataString),
-  					    contentType: "application/json",
-  						success: function(response) {
-  							console.log(response);
-  						},
-  						error:function(errResponse) {
-  							console.log('fail')
-  						}
-  					})
+  				$('#businessConfirmSubmit').click(function(e){
+  					e.preventDefault()
+					$('#initialRegistration').show();
+      				$('#subRegistration').hide()
+      				$('#companyCode').hide()
+      				$('#divQn').hide();
   				})
   				
-	      		$('#initalRegister').change(function(){
-	      			if(this.checked) {
-	      				$('#initialRegistration').show();
-	      				$('#subRegistration').hide();
-	      				
-	      			}
-	      		})
+  				$('divSuccess').click(function(e)){
+	      			$('#initialRegistration').show();
+      				$('#subRegistration').hide()
+      				$('#companyCode').hide()
+      				$('#divQn').hide();
+      				
+	      		}
+
 	      	})
 
      	</script>
