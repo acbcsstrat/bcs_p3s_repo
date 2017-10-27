@@ -127,6 +127,9 @@ public class RecordDetails extends DigesterElements{
          	   isApplicationData = false;
          	   applicationList.add(application);
          	   //record.addApplication(application);
+         	  if("EP".equals(application.getCountryCode())){
+        		   record.setPatentApplicationNumber(application.getCountryCode().concat(application.getApplicationNumber()));
+        	   }
             }
 	    	if("reg:country".equals(qName)){
 	    		application.setCountryCode(temp);
@@ -136,7 +139,7 @@ public class RecordDetails extends DigesterElements{
 	    		record.setFilingDate(application.getFilingDate());
 	    	}
 	    	if("reg:doc-number".equals(qName)){
-	    		record.setPatentApplicationNumber(temp);
+	    		application.setApplicationNumber(temp);
 	    	}
 	    }
     	

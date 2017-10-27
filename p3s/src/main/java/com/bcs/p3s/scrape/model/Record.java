@@ -27,6 +27,10 @@ public class Record {
 	
 	private List<Events> events;
 	
+	private String representativeDetails;
+	
+	private List<IPClassification> ipcCodes;
+	
 
 	public String getPatentApplicationNumber() {
 		return patentApplicationNumber;
@@ -85,5 +89,24 @@ public class Record {
 		this.events = events;
 	}
 
+	public String getRepresentativeDetails() {
+		return representativeDetails;
+	}
+
+	public void setRepresentativeDetails(String representativeDetails) {
+		this.representativeDetails = representativeDetails;
+	}
+
+	public List<IPClassification> getIpcCodes() {
+		return ipcCodes;
+	}
+
+	public void setIpcCodes(List<IPClassification> ipcCodes) {
+		this.ipcCodes = ipcCodes;
+	}
+
+	
+
+	
 	
 }

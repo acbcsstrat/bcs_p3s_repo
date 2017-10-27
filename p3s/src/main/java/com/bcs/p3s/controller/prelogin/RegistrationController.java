@@ -59,12 +59,12 @@ public class RegistrationController extends Universal{
 	        //business.setIsBillingAddressSame(false);
 	        //hardcoded values end
 	        
-	        if(business.getIsBillingAddressSame()){
+	        /*if(business.getIsBillingAddressSame()){
 	        	business.setBillingCity(business.getCity());
 	        	business.setBillingState(business.getUSstate());
 	        	business.setBillingStreet(business.getStreet());
 	        	business.setBillingZip(business.getZip());
-	        }
+	        }*/
 	        business = engine.generatePinNumber(business);
 	        
 	        /** Checking whether the generated Business Number is unique **/

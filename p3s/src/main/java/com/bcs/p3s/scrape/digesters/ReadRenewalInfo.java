@@ -88,7 +88,7 @@ public class ReadRenewalInfo extends DigesterElements{
     		
     		
     	}
-    	record.setEvents(eventsList);;
+    	record.setEvents(eventsList);
     	
     }
 

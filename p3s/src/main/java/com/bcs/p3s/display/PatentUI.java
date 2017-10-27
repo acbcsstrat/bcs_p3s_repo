@@ -113,12 +113,13 @@ public class PatentUI extends Patent {
 		this.setLastRenewedDateExEpo(patent.getLastRenewedDateExEpo()); 
 		this.setLastRenewedYearEpo(patent.getLastRenewedYearEpo()); 
 		this.setRenewalYear(patent.getRenewalYear());
-		//this.setNotifications(null); // UI will never want Notifications. Just NotificationUIs
-
 		
-		// Special work required here
-		//System.out.println("(patentService==null) = "+(patentService==null));
-		//allNotificationUIs =createNotificationUIs(patent.getNotifications());
+		/*
+		 * MORE FIELDS ADDED FOR PATENT
+		 */
+		this.setRepresentative(patent.getRepresentative());
+		this.setIpcCodes(patent.getIpcCodes());
+		
 		allNotificationUIs =createNotificationUIs(patent.getId(),SecurityUtil.getMyUser().getId());
 
 		//SETTING REMAINING FROM EXTENDED DATA ARGUMENT PASSED
