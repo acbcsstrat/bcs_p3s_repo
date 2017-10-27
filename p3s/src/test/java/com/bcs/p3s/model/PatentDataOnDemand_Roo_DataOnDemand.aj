@@ -37,6 +37,7 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
         setClientRef(obj, index);
         setEpoPatentStatus(obj, index);
         setFilingDate(obj, index);
+        setIpcCodes(obj, index);
         setLastRenewedDateExEpo(obj, index);
         setLastRenewedYearEpo(obj, index);
         setPatentApplicationNumber(obj, index);
@@ -44,6 +45,7 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
         setPrimaryApplicantName(obj, index);
         setRenewalStatus(obj, index);
         setRenewalYear(obj, index);
+        setRepresentative(obj, index);
         setShortTitle(obj, index);
         setTitle(obj, index);
         return obj;
@@ -70,6 +72,11 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
     public void PatentDataOnDemand.setFilingDate(Patent obj, int index) {
         Date filingDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setFilingDate(filingDate);
+    }
+    
+    public void PatentDataOnDemand.setIpcCodes(Patent obj, int index) {
+        String ipcCodes = "ipcCodes_" + index;
+        obj.setIpcCodes(ipcCodes);
     }
     
     public void PatentDataOnDemand.setLastRenewedDateExEpo(Patent obj, int index) {
@@ -105,6 +112,11 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
     public void PatentDataOnDemand.setRenewalYear(Patent obj, int index) {
         Integer renewalYear = new Integer(index);
         obj.setRenewalYear(renewalYear);
+    }
+    
+    public void PatentDataOnDemand.setRepresentative(Patent obj, int index) {
+        String representative = "representative_" + index;
+        obj.setRepresentative(representative);
     }
     
     public void PatentDataOnDemand.setShortTitle(Patent obj, int index) {

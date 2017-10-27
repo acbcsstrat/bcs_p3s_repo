@@ -32,7 +32,6 @@ privileged aspect BusinessDataOnDemand_Roo_DataOnDemand {
         setBusinessNumber(obj, index);
         setBusinessPin(obj, index);
         setCity(obj, index);
-        setIsBillingAddressSame(obj, index);
         setPhoneNumber(obj, index);
         setStreet(obj, index);
         setTimezone(obj, index);
@@ -82,11 +81,6 @@ privileged aspect BusinessDataOnDemand_Roo_DataOnDemand {
     public void BusinessDataOnDemand.setCity(Business obj, int index) {
         String city = "city_" + index;
         obj.setCity(city);
-    }
-    
-    public void BusinessDataOnDemand.setIsBillingAddressSame(Business obj, int index) {
-        Boolean isBillingAddressSame = Boolean.TRUE;
-        obj.setIsBillingAddressSame(isBillingAddressSame);
     }
     
     public void BusinessDataOnDemand.setPhoneNumber(Business obj, int index) {
