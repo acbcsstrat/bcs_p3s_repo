@@ -26,7 +26,9 @@ import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.util.scrape.OPSReader;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.digesters.DigesterElements;
+import com.bcs.p3s.scrape.digesters.ReadAgent;
 import com.bcs.p3s.scrape.digesters.ReadApplicant;
+import com.bcs.p3s.scrape.digesters.ReadIPC;
 import com.bcs.p3s.scrape.digesters.ReadRenewalInfo;
 import com.bcs.p3s.scrape.digesters.RecordDetails;
 import com.bcs.p3s.scrape.digesters.Response;
@@ -44,7 +46,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		OPSReader reader = new OPSReader();
 		Patent patent = new Patent();
 		
-		List<DigesterElements> digesters = new ArrayList<DigesterElements>() ;
+		List<DigesterElements> digesters = new ArrayList<DigesterElements>();
 		try {
 			
 			
@@ -58,6 +60,8 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        digesters.add(new RecordDetails(record));
 	        digesters.add(new ReadApplicant(record));
 	        digesters.add(new ReadRenewalInfo(record));
+	        digesters.add(new ReadAgent(record));
+	        digesters.add(new ReadIPC(record));
 	           
 	        String scrapeData = reader.readEPO(patentApplicationNumber);
 	        
@@ -125,6 +129,8 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		patent.setTitle(record.getTitle());
 		findLatestRenewalInfo(record.getEvents(),patent);
 		findPrimaryApplicantName(record.getApplicants(),patent);
+		patent.setIpcCodes(record.getIpcCodes().get(0).getIpcCodes());
+		patent.setRepresentative(record.getRepresentativeDetails());
 		
 		return patent;
 		
@@ -149,7 +155,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		patent.setPrimaryApplicantName(applicants.get(0).getApplicantName());
 		
 	}
-		
+	
 	
 	
 }

@@ -38,6 +38,8 @@ public class UserProfileUI {
     private Boolean isEmailNotification;
 
     private Business business;
+    
+    private List<LoginMessageUI> loginMessages;
 	
 	public UserProfileUI() {
 		
@@ -84,34 +86,20 @@ public class UserProfileUI {
 		this.business = business;
 	}
 
-
-
-
 	public String getNewPassword() {
 		return newPassword;
 	}
-
-
-
 
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
 	}
 
+	public List<LoginMessageUI> getLoginMessages() {
+		return loginMessages;
+	}
 
-	
-
-	
-
-
-
-
-	
-
-
-
-	
-	
-	
+	public void setLoginMessages(List<LoginMessageUI> loginMessages) {
+		this.loginMessages = loginMessages;
+	}
 
 }

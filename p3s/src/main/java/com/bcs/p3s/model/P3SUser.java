@@ -5,6 +5,7 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import javax.validation.constraints.NotNull;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,6 @@ public class P3SUser {
     /**
      */
     @NotNull
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private List<LoginMessage> loginMessagesToDisplay = new ArrayList<LoginMessage>();
 }

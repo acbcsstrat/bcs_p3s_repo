@@ -261,57 +261,13 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   		
 			   		patent.setLastRenewedDateExEpo(itch);
 			   	}
-			   	// & now other tweaks to keep Patent happy
-			   	/*patent.setRenewalYear(-1);
-			   	patent.setEpoPatentStatus("EMPTY");
-			   	//patent.setRenewalStatus(RenewalStatusEnum.ABANDONED);
-			   	patent.setRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);*/
-	
 			   	
-			   	//commenting below as notifications property removed from patent
-		   	
-			   	// Now extract and populate the Notifications
-			/*   	if ("notificationUIs".equals(key.trim())) {
-				   	Object nob = newPatentHashMap.get(key); 
-	
-				   	ArrayList<Object> nobmap = (ArrayList<Object>) nob;
-				   	
-				   	for (Object nobkeyOb : nobmap) {
-				   		String nobkey = nobkeyOb.toString(); 
-	
-				   		LinkedHashMap<String, Object> jsonNotificationFields = (LinkedHashMap<String, Object>) nobkeyOb;
-					   	
-				   		long nid = (Integer) jsonNotificationFields.get("id");
-	
-					   	Object defaultVal = jsonNotificationFields.get("defaultOn");
-					   	Boolean onSoFar = (Boolean) defaultVal;
-					   	
-					   	Object ison = jsonNotificationFields.get("isOn");
-				   		
-					   	// Here's the devious bit
-					   	// isOn is usually true or false. But If it is 0, this indicates it's been inverted (at least once - assume once)
-					   	if (ison instanceof Integer) {
-					   		onSoFar = ! onSoFar ;
-					   	}
-					   	
-					   	Boolean isOn = (Boolean) ison;
-					   	
-					   	if(!isOn){
-					   		onSoFar = false ;
-					   	}
-					 
-					   	// & now - if selected - add to the ON list
-					   	if (isOn) {
-					   		Notification onny = Notification.findNotification(nid);
-					   		onNotifications.add(onny);
-					   	}
-				   	}
-				   	
-	
-				   	patent.setNotifications(onNotifications);
-				   	for (Notification n : patent.getNotifications()) {
-				   	}
-			   	}*/
+			   	/** 
+			   	 * ADDED AFTER DAN'S MEETING 24/10/2017 - STORING IPC CODES AND REP DETAILS FOR FUTURE REFERENCE
+			   	 */
+			   	if ("ipcCodes".equals(key.trim())) patent.setIpcCodes(value);
+			   	if ("representative".equals(key.trim())) patent.setRepresentative(value);
+			   	
 		   	}
 	   		
 

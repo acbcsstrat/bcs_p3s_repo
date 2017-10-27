@@ -109,4 +109,20 @@ privileged aspect Patent_Roo_JavaBean {
         this.patentPublicationNumber = patentPublicationNumber;
     }
     
+    public String Patent.getIpcCodes() {
+        return this.ipcCodes;
+    }
+    
+    public void Patent.setIpcCodes(String ipcCodes) {
+        this.ipcCodes = ipcCodes;
+    }
+    
+    public String Patent.getRepresentative() {
+        return this.representative;
+    }
+    
+    public void Patent.setRepresentative(String representative) {
+        this.representative = representative;
+    }
+    
 }

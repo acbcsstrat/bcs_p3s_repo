@@ -4,8 +4,12 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+
+import javax.persistence.EntityManager;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @RooJavaBean
@@ -32,4 +36,7 @@ public class LoginMessage {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date displayToDate;
+    
+    
+    
 }

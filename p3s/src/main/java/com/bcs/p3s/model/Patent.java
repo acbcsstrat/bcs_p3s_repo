@@ -100,6 +100,10 @@ public class Patent {
      */
     @NotNull
     private String patentPublicationNumber;
+    
+    private String ipcCodes;
+    
+    private String representative;
 
     /**
      *//*
