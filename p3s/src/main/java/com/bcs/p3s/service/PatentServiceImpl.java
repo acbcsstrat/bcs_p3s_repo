@@ -17,6 +17,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.orm.jpa.JpaSystemException;
@@ -118,29 +119,9 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		log().debug(err+" invoked ");
 		
 		checkNotNull(patentApplicationNumber, err);
-		checkEPNumberFormat(patentApplicationNumber, err);
-		int length = patentApplicationNumber.length();
+		//checkEPNumberFormat(patentApplicationNumber, err);
 		
-		//truncating check digit from the EP number
-		if(patentApplicationNumber.contains(".")){
-			int index = patentApplicationNumber.indexOf(".");
-			patentApplicationNumber = patentApplicationNumber.substring(0, index);
-			int newlength = patentApplicationNumber.length();
-			
-			if(!(newlength == 10)){
-				String error = "Invalid length";
-				logM().fatal("EP number entered is invalid [" + patentApplicationNumber + "] :: " + error +" : " + newlength );
-				return null;
-			}
-			
-			log().debug("Truncated Application Number without check digit " + patentApplicationNumber);
-			
-		}
-		else if(!(length==10)){
-			String error = "Invalid length";
-			logM().fatal("EP number entered is invalid [" + patentApplicationNumber + "] :: " + error +" : " + length );
-			return null;
-		}
+		patentApplicationNumber = validateAndFormatApplicationNumber(patentApplicationNumber);
 		
 		//checking whether patent being added for the business
 		TypedQuery<Patent> patents = Patent.findPatentsByBusiness(postSession.getBusiness());
@@ -865,6 +846,54 @@ public PatentUI populateDataToPatentUI(Patent patent){
 		
 		
 		
+	}
+	
+	/**
+	 * Formatting patentAppicationNumber
+	 * Checking for EP in front
+	 * Checking for check digit
+	 * Checking for white spaces
+	 * 			Returning string in a definite format "EP<8 numeric digits>" 
+	 * 
+	 * This formatted string being stored in the DB
+	 */
+	protected String validateAndFormatApplicationNumber(String patentApplicationNumber){
+		
+		int length = patentApplicationNumber.length();
+		int newlength = patentApplicationNumber.length();
+		boolean isFormatted = false;
+		
+		//truncating check digit from the EP number
+		if(patentApplicationNumber.contains(".")){
+			int index = patentApplicationNumber.indexOf(".");
+			patentApplicationNumber = patentApplicationNumber.substring(0, index);
+			isFormatted = true;
+			log().debug("Truncated Application Number without check digit " + patentApplicationNumber);
+			
+		}
+		
+		//checking for EP in front; if not append EP
+		if(!(patentApplicationNumber.startsWith("EP"))){
+			patentApplicationNumber = "EP"+patentApplicationNumber;
+			isFormatted = true;
+			log().debug("Appended 'EP' to user entered application number  " + patentApplicationNumber);
+		}
+		
+		//checking for space in between; if found delete all white spaces
+		if(StringUtils.containsWhitespace(patentApplicationNumber)){
+			patentApplicationNumber = StringUtils.deleteWhitespace(patentApplicationNumber);
+			isFormatted = true;
+		}
+		
+		newlength = patentApplicationNumber.length();
+		
+		if(! ( newlength == 10 ) ){
+			String error = "Invalid length for patent Application Number";
+			logM().fatal("EP number entered/formatted is invalid [" + patentApplicationNumber + "] :: " + error +" : " + length );
+			return null;
+		}
+		
+		return patentApplicationNumber;
 	}
 
 
