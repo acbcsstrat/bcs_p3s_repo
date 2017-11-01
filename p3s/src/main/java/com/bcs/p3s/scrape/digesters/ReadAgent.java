@@ -2,8 +2,10 @@ package com.bcs.p3s.scrape.digesters;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.springframework.security.taglibs.authz.AccessControlListTag;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -18,8 +20,7 @@ public class ReadAgent extends DigesterElements{
 	private Agent acct;
     
     private String temp;
-    private final String ADDRESS_DELIMITER = ",";
-    private Set<Agent> accList = new HashSet<Agent>();
+    private List<Agent> accList = new ArrayList<Agent>();
     private Boolean isCurrentAgentDetails = false;
     private Record record;
 	
@@ -49,12 +50,14 @@ public class ReadAgent extends DigesterElements{
                   String qName, Attributes attributes) throws SAXException {
            temp = "";
            if (qName.equalsIgnoreCase("reg:agents")) {
-        	   
-        	   if("N/P".equals(attributes.getValue("change-gazette-num"))){
-        		   acct = new Agent();
-	        	   isCurrentAgentDetails = true;
-	        	   acct.setChngGazetteNum(attributes.getValue("change-gazette-num"));
-        	   }
+        	   if(accList == null)
+        		   accList = new ArrayList<Agent>();
+        	  // if("N/P".equals(attributes.getValue("change-gazette-num"))){
+        	acct = new Agent();
+	        isCurrentAgentDetails = true;
+	        acct.setChngGazetteNum(attributes.getValue("change-gazette-num"));
+	        acct.setChangeDate(attributes.getValue("change-date"));
+        	//   }
         	  
          }
            
@@ -93,36 +96,17 @@ public class ReadAgent extends DigesterElements{
 	       
 	       if (qName.equalsIgnoreCase("reg:agents")) {
 	    	   isCurrentAgentDetails = false;
-	    	   record.setRepresentativeDetails(formatAgentDetails(acct));
+	    	   //record.setRepresentativeDetails(formatAgentDetails(acct));
+	    	   accList.add(acct);
+	    	   
 	       }
     
  	   }
  	  
- 	  
+ 	  record.setRepresentativesList(accList);
 
     }
     
-    protected String formatAgentDetails(Agent acct){
-    	
-    	String repDetails = "";
-    	
-    	if(acct.getAddress3() == null){
-    		repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
-        			concat(ADDRESS_DELIMITER).concat(acct.getCountry());
-    	}
-    	
-    	else if(acct.getAddress4() == null){
-    		repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
-        			concat(ADDRESS_DELIMITER).concat(acct.getAddress3()).concat(ADDRESS_DELIMITER).concat(acct.getCountry());
-    	}
-    	
-    	else{
-	    	repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
-	    			concat(ADDRESS_DELIMITER).concat(acct.getAddress3()).concat(ADDRESS_DELIMITER).concat(acct.getAddress4()).concat(ADDRESS_DELIMITER).
-	    			concat(acct.getCountry());
-    	}
-    	
-    	return repDetails;
-    }
+    
 
 }

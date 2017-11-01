@@ -72,26 +72,34 @@ public class Patent {
     private String shortTitle;
 
     /**
+     * updated on overnight scrape
      */
     @NotNull
     private String epoPatentStatus;
 
     /**
+     * updated on overnight scrape
      */
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date lastRenewedDateExEpo;
 
+    /**
+     * updated on overnight scrape
+     */
     @NotNull
     private Integer lastRenewedYearEpo; 
     
     /**
+     * calculated via overnight processing engine
+     * renewalYear will be updated when green starts and will remain the same until the next year's green starts
      */
     @NotNull
     private Integer renewalYear;
 
     /**
      * Enum: RenewalStatusEnum :WARNING: This duplicates Renewal:renewalStatus
+     * calculated via overnight processing engine
      */
     @NotNull
     private String renewalStatus;

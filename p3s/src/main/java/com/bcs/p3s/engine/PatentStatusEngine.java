@@ -46,6 +46,14 @@ import com.bcs.p3s.wrap.PatentExtendedData;
  * POJO used is PatentStatus
  * 
  */
+
+/**
+ * 
+ * @author MerinP
+ * 
+ * THIS CLASS MAY BECOME REDUNDANT FOR WEBSITE AND WILL BE MOVED TO CRON TASK
+ *
+ */
 public class PatentStatusEngine extends Universal {
 	
 	protected String PREFIX = this.getClass().getName() + " : "; 
@@ -67,23 +75,23 @@ public class PatentStatusEngine extends Universal {
 		renewalInfo.setActiveRenewalYear(allDates.getRenewalYear());
 		
 		//Date lastRenewed = patent.getLastRenewedDateExEpo();
+		if(allDates.getRenewalYear() < 3){
+			/**
+			 * THis is the case when the new patent has a renewal year less than 3 ie, no Renewal needed 
+			 */
+			renewalInfo.setCanRenew(false);
+			renewalInfo.setGoodFollowOn(true);
+			renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.NO_RENEWAL_NEEDED);
+			renewalInfo.setDoldrums(true);
+		}
 		
-		if(todays.after(allDates.getCurrentWindowCloseDate())){ //ie, doldrum of the active renewal year
+		else if(todays.after(allDates.getCurrentWindowCloseDate())){ //ie, doldrum of the active renewal year
 			//we are in doldrums
 			//check whether a renewal made for the active renewal year else we are too late
 			//if(lastRenewed.after(allDates.getCurrentWindowOpenDate()) && lastRenewed.before(allDates.getCurrentWindowCloseDate()) ){
 			log().debug("****RENEWAL WINDOW CLOSED*****");
-			if(allDates.getRenewalYear() < 3){
-				/**
-				 * THis is the case when the new patent has a renewal year less than 3 ie, no Renewal needed 
-				 */
-				renewalInfo.setCanRenew(false);
-				renewalInfo.setGoodFollowOn(true);
-				renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.NO_RENEWAL_NEEDED);
-				renewalInfo.setDoldrums(true);
-			}
 			
-			else if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()){
+			if(allDates.getRenewalYear() == patent.getLastRenewedYearEpo()){
 				renewalInfo.setCanRenew(false);
 				renewalInfo.setGoodFollowOn(true);
 				renewalInfo.setEpoYearNumberRenewed(patent.getRenewalYear());

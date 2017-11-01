@@ -17,6 +17,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.bcs.p3s.scrape.model.Agent;
 import com.bcs.p3s.scrape.model.Applicants;
 import com.bcs.p3s.scrape.model.Events;
 import com.bcs.p3s.scrape.model.Record;
@@ -36,6 +37,7 @@ import com.bcs.p3s.scrape.digesters.Response;
 public class EPOAccessImpl  extends Universal implements EPOAccess{
 	
 	protected String PREFIX = this.getClass().getName() + " : "; 
+	private final String ADDRESS_DELIMITER = ",";
 
 	@Override
 	public Patent populatePatentEPOData(String patentApplicationNumber) { 
@@ -130,7 +132,11 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		findLatestRenewalInfo(record.getEvents(),patent);
 		findPrimaryApplicantName(record.getApplicants(),patent);
 		patent.setIpcCodes(record.getIpcCodes().get(0).getIpcCodes());
-		patent.setRepresentative(record.getRepresentativeDetails());
+		//patent.setRepresentative(record.getRepresentativeDetails());
+		if(record.getRepresentativesList().size() > 1)
+			findRecentRepresentativeInfo(record.getRepresentativesList(),patent);
+		else
+			patent.setRepresentative(formatAgentDetails(record.getRepresentativesList().get(0)));
 		
 		return patent;
 		
@@ -156,6 +162,71 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		
 	}
 	
+	protected void findRecentRepresentativeInfo(List<Agent> agents, Patent patent){
+		String repDetails = "";
+		boolean isGood = true;
+		Agent recentAgent = new Agent();
+		
+		try {
+			
+			for(Agent agent : agents){
+				if(agent.getChangeDate() == null)
+					isGood = false;
+			}
+			
+			if(isGood){
+				Date latestDate = new DateUtil().stringToDate(agents.get(0).getChangeDate());
+				recentAgent = agents.get(0);
+				for(Agent agent : agents){
+					Date date = new DateUtil().stringToDate(agent.getChangeDate());
+					if(date.after(latestDate)){
+						latestDate = date;
+						recentAgent = agent;
+						//repDetails = formatAgentDetails(agent);
+					}
+				}
+				repDetails = formatAgentDetails(recentAgent);
+				patent.setRepresentative(repDetails);
+			}
+			
+			else{
+				patent.setRepresentative(formatAgentDetails(agents.get(0)));
+			}
+			
+		} 
+		
+		catch (ParseException e) {
+			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in findRecentRepresentativeInfo() "  );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+	}
+	
+	
+	protected String formatAgentDetails(Agent acct){
+    	
+    	String repDetails = "";
+    	
+    	if(acct.getAddress3() == null){
+    		repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
+        			concat(ADDRESS_DELIMITER).concat(acct.getCountry());
+    	}
+    	
+    	else if(acct.getAddress4() == null){
+    		repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
+        			concat(ADDRESS_DELIMITER).concat(acct.getAddress3()).concat(ADDRESS_DELIMITER).concat(acct.getCountry());
+    	}
+    	
+    	else{
+	    	repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
+	    			concat(ADDRESS_DELIMITER).concat(acct.getAddress3()).concat(ADDRESS_DELIMITER).concat(acct.getAddress4()).concat(ADDRESS_DELIMITER).
+	    			concat(acct.getCountry());
+    	}
+    	
+    	return repDetails;
+    }
 	
 	
 }

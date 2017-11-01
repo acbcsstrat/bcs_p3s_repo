@@ -27,7 +27,7 @@ public class Record {
 	
 	private List<Events> events;
 	
-	private String representativeDetails;
+	private List<Agent> representativesList;
 	
 	private List<IPClassification> ipcCodes;
 	
@@ -89,12 +89,13 @@ public class Record {
 		this.events = events;
 	}
 
-	public String getRepresentativeDetails() {
-		return representativeDetails;
+
+	public List<Agent> getRepresentativesList() {
+		return representativesList;
 	}
 
-	public void setRepresentativeDetails(String representativeDetails) {
-		this.representativeDetails = representativeDetails;
+	public void setRepresentativesList(List<Agent> representativesList) {
+		this.representativesList = representativesList;
 	}
 
 	public List<IPClassification> getIpcCodes() {

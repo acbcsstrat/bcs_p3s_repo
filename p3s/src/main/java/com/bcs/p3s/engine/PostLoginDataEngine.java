@@ -84,6 +84,12 @@ public class PostLoginDataEngine extends Universal{
 				renewalDates.setCurrentWindowOpenDate(renewalInfo.getNineMonthStart());
 				renewalDates.setCurrentWindowCloseDate(renewalInfo.getNineMonthEnd());
 
+				//This may change - pending Dan's decision
+				/**
+				 * We are displaying a rate to customer if Renewal window being opened, irrespective of the fact that they have been paid or not.
+				 * CHANCES ARE THE CONDITION MAY CHANGE TO SHOW PRICES ONLY IF THE STATUS IS SHOW_PRICE
+				 * ie, if(RenewalStatusEnum.SHOW_PRICE.equals(patent.getRenewalStatus())){
+				 */
 				if(!renewalInfo.getDoldrums()){
 					caData = caEngine.getAllPhasesInfo(renewalDates);
 					String currentPhase = caEngine.getCurrentPhase(caData);

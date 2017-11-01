@@ -60,6 +60,11 @@ public class CostAnalysisDataEngine extends Universal{
 	*/
       //Calendar todays = Calendar.getInstance();
     	Date todays = new DateUtil().getTodaysDate();
+    	if(allDates.getCurrentWindowOpenDate() == null){
+    		allDates.setRenewalWindowStillOpened(false);
+			log().debug("Renewal window is being **CLOSED** for patent [" + patent.getId() + "]");
+			return allDates;
+    	}
 		if(todays.after(allDates.getCurrentWindowOpenDate()) && todays.before(allDates.getCurrentWindowCloseDate())){
 			System.out.println("Renewal window still opened");
 			allDates.setRenewalWindowStillOpened(true);
@@ -500,6 +505,15 @@ public class CostAnalysisDataEngine extends Universal{
 		 * GET THE EPO FEES FOR THE CURRENT RENEWAL YEAR 
 		 */
 		epoFee.setRenewalYear(patent.getRenewalYear());
+		
+		/**
+		 * SAFE CHECK FOR PATENTS WITH RENEWAL YEAR LESS THAN 3
+		 * Solution :- set renewal year to 3 (in future) which is the nearest year for renewal
+		 */
+		if(epoFee.getRenewalYear() < 3){
+			log().debug("Patent renewal year < 3 , so set the Renewal Year to 3 which is the nearest");
+			epoFee.setRenewalYear(3);
+		}
 		epoFee = EpoFee.findEpoFeesByRenewalYear(epoFee);
 		
 		combinedFee.setP3sFee(p3sFee);

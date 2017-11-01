@@ -720,7 +720,15 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			caData.setFee(new FeeUI(fee));
 		}
 		
-		// ELSE THE STATUS WILL BE LIKE TOO_LATE OR NO_FURTHER_RENEWAL_NEEDED :- DISABLE CA BUTTON ON THESE CASES
+		// ELSE THE STATUS WILL BE LIKE NO_RENEWAL_NEEDED :- DISABLE CA BUTTON ON THESE CASES
+		// MP 31102017 - WE ARE NOT DISBALING CA - BUT WE ARE DISPLYING THE VERY NEXT RENEWAL WINDOW OPEN TIME
+		// NO GRAPHS AND NOT LINE CHARTS
+		// ABOVE SCENARIO CAN BE FOR PATENT YEAR < 3 OR > 20
+		else if(RenewalStatusEnum.NO_RENEWAL_NEEDED .equalsIgnoreCase(patent.getRenewalStatus())){
+			caData.setCurrentcostBand(RenewalColourEnum.NOCOLOR);
+			caData.setGreenStartDate(allDates.getNextWindowOpenDate());
+			return caData;
+		}
 		/**
 		 * GET THE LINE CHART INFO - NOW GETTING LAST 6 WEEKS INCLUDING TODAYS RATE HISTORY
 		 * 

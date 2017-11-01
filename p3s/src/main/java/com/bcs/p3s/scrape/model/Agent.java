@@ -1,5 +1,6 @@
 package com.bcs.p3s.scrape.model;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +28,7 @@ public class Agent {
 	private String country;
 	
     private String chngGazetteNum;
+    private String changeDate;
       
     
 	public Agent() {
@@ -89,6 +91,14 @@ public class Agent {
 
 		public void setCountry(String country) {
 			this.country = country;
+		}
+
+		public String getChangeDate() {
+			return changeDate;
+		}
+
+		public void setChangeDate(String changeDate) {
+			this.changeDate = changeDate;
 		}
 
 
