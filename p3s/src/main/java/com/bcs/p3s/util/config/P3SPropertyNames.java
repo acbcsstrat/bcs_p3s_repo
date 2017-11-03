@@ -12,11 +12,15 @@ package com.bcs.p3s.util.config;
 public interface P3SPropertyNames {
 
 	// Generic Properties
+
 	String Smtp_Host = "smtp_host";
+	public static final String P3S_support_email_address = "p3s_support_email_address"; 
 	
 	
 	
 	// Environment-Specific Properties
+	
+	// Email SENDing
 	String Email_From_Address = "email_from_address";
 	String Email_Debug = "email_debug";
 	
@@ -45,4 +49,13 @@ public interface P3SPropertyNames {
 	public static final String BCS_FX_SFTP_SITE_SECURE_FINGERPRINT = "bcs_fx_key";
 
 
+	// host web URL + support
+	public static final String P3S_WEB_URL_BASE = "p3s_web_url_base"; 
+	
+	// Document storage (terminate with forwardslash)
+	public static final String INVOICE_DOCUMENT_PATH = "invoice_doc_path";
+	public static final String CERTIFICATE_DOCUMENT_PATH = "certificate_doc_path";
+
+	
+	
 }

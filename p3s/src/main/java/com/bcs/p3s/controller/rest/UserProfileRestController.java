@@ -18,12 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.bcs.p3s.display.UserProfileUI;
+import com.bcs.p3s.docs.email.P3sEmail;
+import com.bcs.p3s.docs.email.P3sEmailFactory;
+import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.security.SecurityUtil;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.email.TmpEmailerDummy;
 import com.bcs.p3s.util.lang.Universal;
  
 @RestController
@@ -46,6 +50,52 @@ public class UserProfileRestController extends Universal {
          P3SUser p3sUser = pLoginSession.getUser();
     	UserProfileUI userProfileUI = userService.getUserProfileUI(p3sUser);
 
+    	
+    	
+    	
+    	
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	Start of: Here - tmp put Development HOOK for send EMAIL
+
+    // Real usage of this would be from a service ..
+    	
+    	System.out.println("UserProfileRestController : do HOOK for test emailing ");
+
+    	P3sEmailFactory emailFactory = new P3sEmailFactory();
+    	P3sEmail email = emailFactory.create(EmailTemplates.email_register_combined, "acdev@p3s.me");
+//    	String subject = email.getSubject();
+//    	String hBody = email.getHtmlBody();
+    	TmpEmailerDummy dummyEmailer = new TmpEmailerDummy();
+    	dummyEmailer.logEmail(email);
+    	
+    	System.out.println("UserProfileRestController : do HOOK finished ");
+    	
+    	
+//    	End of: Here - tmp put Development HOOK for send EMAIL
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
         return new ResponseEntity<UserProfileUI>(userProfileUI, HttpStatus.OK);
     }
  

@@ -35,6 +35,8 @@ public class Universal extends BcsLogger implements Loggable {
     }
     public void fail(String message, Exception e) {
     	logInternalError().fatal(message+" : "+e.getMessage()+"  eType: "+e.getClass().getName());
+    	// Capture & log the error stackdump
+    	logInternalError().error(exceptionStackDumpToString(e));
     	throw new P3SRuntimeException(message,e);
     }
 
@@ -45,15 +47,19 @@ public class Universal extends BcsLogger implements Loggable {
     public void logErrorAndContinue(String message, Exception e) {
     	logInternalError().error(message+" : "+e.getMessage()+"  eType: "+e.getClass().getName());
     	// Capture & log the error stackdump
+    	logInternalError().error(exceptionStackDumpToString(e));
+    }
+    
+    
+    protected String exceptionStackDumpToString(Exception e) {
 		String dump = "stackDumP:" + "\n";
 		if (e!=null) {
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			dump += errors.toString();
 		}
-    	logInternalError().error(dump);
+		return dump;
     }
-    
     
     public void logAttention(String msg) {
     	log().fatal("                                                               ");
