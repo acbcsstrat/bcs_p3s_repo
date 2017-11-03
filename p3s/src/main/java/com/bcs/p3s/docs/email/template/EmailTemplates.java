@@ -6,11 +6,10 @@ package com.bcs.p3s.docs.email.template;
  */
 public interface EmailTemplates {
 	
-	String email_register_combined = "email_register_combined";
+	String email_register_combined	= "email_register_combined";
 	
-	
-	
-//	email_reminder_standard			- ie template 2 (2a & 2b)
+	String email_reminder_standard	= "email_reminder_standard"; 
+			
 //
 //	email_reminder_colour_opens		- template 1
 //			

@@ -23,12 +23,25 @@ public interface Injectables {
 	String URL_TO_VERIFY_EMAIL = "URL_TO_VERIFY_EMAIL";
 	String URL_TO_FAQ = "URL_TO_FAQ";
 	
+	// User and Company details
 	String FIRSTNAME = "FIRSTNAME"; 
 	String LASTNAME = "LASTNAME"; 
 	String COMPANY_NAME = "COMPANY_NAME";
 	String COMPANY_CODE = "COMPANY_CODE";
 	String COMPANY_PIN = "COMPANY_PIN";
 
+	// Patent and renewal timing details
+	String TIME_BEFORE_CHANGE_PHRASE = "TIME_BEFORE_CHANGE_PHRASE";
+	String PATENT_APPLICATION_NUMBER = "PATENT_APPLICATION_NUMBER";
+	String PATENT_TITLE = "PATENT_TITLE";
+	String SHORT_TITLE = "SHORT_TITLE";
+	String PATENT_CLIENT_REF = "PATENT_CLIENT_REF";
+	String PRICE = "PRICE";
+	String TIMESTAMP_OF_NEXT_COLOUR_CHANGE = "TIMESTAMP_OF_NEXT_COLOUR_CHANGE";
+
+	
+	
+	
 	
 	// Array values   ===================================================================================
 	

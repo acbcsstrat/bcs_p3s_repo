@@ -23,6 +23,7 @@ import com.bcs.p3s.docs.email.P3sEmailFactory;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
+import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.service.UserService;
@@ -64,16 +65,25 @@ public class UserProfileRestController extends Universal {
 
     // Real usage of this would be from a service ..
     	
-    	System.out.println("UserProfileRestController : do HOOK for test emailing ");
-
-    	P3sEmailFactory emailFactory = new P3sEmailFactory();
-    	P3sEmail email = emailFactory.create(EmailTemplates.email_register_combined, "acdev@p3s.me");
-//    	String subject = email.getSubject();
-//    	String hBody = email.getHtmlBody();
-    	TmpEmailerDummy dummyEmailer = new TmpEmailerDummy();
-    	dummyEmailer.logEmail(email);
-    	
-    	System.out.println("UserProfileRestController : do HOOK finished ");
+//    	System.out.println("UserProfileRestController : do HOOK for test emailing ");
+//
+//    	P3sEmailFactory emailFactory = new P3sEmailFactory();
+//    	
+//    	// #1
+//    	//P3sEmail email = emailFactory.create(EmailTemplates.email_register_combined, "acdev@p3s.me",null,null,null,null);
+//
+//    	
+//    	// #2
+//    	P3SUser myUser = SecurityUtil.getMyUser();
+//    	Patent pat = Patent.findPatent(1L);
+//    	
+//    	P3sEmail email = emailFactory.create(EmailTemplates.email_reminder_standard, 
+//    			myUser,pat,"1234.56","2 weeks","Nov 21, 2017 23:59 CET");
+//
+//    	TmpEmailerDummy dummyEmailer = new TmpEmailerDummy();
+//    	dummyEmailer.logEmail(email);
+//    	
+//    	System.out.println("UserProfileRestController : do HOOK finished ");
     	
     	
 //    	End of: Here - tmp put Development HOOK for send EMAIL

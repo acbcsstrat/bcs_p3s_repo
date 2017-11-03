@@ -1,0 +1,28 @@
+Renewal reminder from thePatent.Place : [TIME_BEFORE_CHANGE_PHRASE] to go for patent [PATENT_APPLICATION_NUMBER]
+
+To:		[FIRSTNAME] [LASTNAME]
+		[COMPANY_NAME]
+
+This is the [TIME_BEFORE_CHANGE_PHRASE] reminder email for renewing Patent:
+Application number:	[PATENT_APPLICATION_NUMBER]
+Title:			[PATENT_TITLE]
+Your short title: 	[SHORT_TITLE]
+Your client reference:	[PATENT_CLIENT_REF]
+
+You can perform an EPO patent renewal now, for $[PRICE]
+
+You can renew this patent now via <a href="[LOGIN_URL]">[LOGIN_URL]</a>
+
+
+Hereafter - <For BoxCleverDigital consideration>
+Thereafter (which would be leaving it very late) we can still renew for a few limited days, at a higher cost, (reflecting the increased effort and risk to us).
+
+<<If colour is BLUE – AND – 2 weeks or less]
+You’ll be aware that this patent is already on extension, and will lapse soon. Don’t leave renewing it too late]
+
+<<If 2 weeks or less]
+Warning: as you are approaching a boundary, be aware that this price is only held until
+[TIMESTAMP_OF_NEXT_COLOUR_CHANGE]
+
+Kind regards,
+The Patent Place team

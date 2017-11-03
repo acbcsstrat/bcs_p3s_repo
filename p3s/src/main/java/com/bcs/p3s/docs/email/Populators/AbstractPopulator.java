@@ -66,6 +66,11 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 		currentLine = newString;
 		return (currentLine.indexOf(SQUAREOPEN)!=-1);
 	}
+	protected boolean injectLASTNAME() {
+		String newString = currentLine.replace(assembleTag(Injectables.LASTNAME), data.getLastname());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
 	protected boolean injectURL_TO_VERIFY_EMAIL() {
 		String newString = currentLine.replace(assembleTag(Injectables.URL_TO_VERIFY_EMAIL), data.getUrlToVerifyEmail());
 		currentLine = newString;
@@ -101,8 +106,44 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 		currentLine = newString;
 		return (currentLine.indexOf(SQUAREOPEN)!=-1);
 	}
+	protected boolean injectTIME_BEFORE_CHANGE_PHRASE() {
+		String newString = currentLine.replace(assembleTag(Injectables.TIME_BEFORE_CHANGE_PHRASE), data.getTimeBeforeChangePhrase());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectPATENT_APPLICATION_NUMBER() {
+		String newString = currentLine.replace(assembleTag(Injectables.PATENT_APPLICATION_NUMBER), data.getPatentApplicationNumber());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectPATENT_TITLE() {
+		String newString = currentLine.replace(assembleTag(Injectables.PATENT_TITLE), data.getPatentTitle());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectSHORT_TITLE() {
+		String newString = currentLine.replace(assembleTag(Injectables.SHORT_TITLE), data.getPatentShortTitle());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectPATENT_CLIENT_REF() {
+		String newString = currentLine.replace(assembleTag(Injectables.PATENT_CLIENT_REF), data.getPatentClientRef());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectPRICE() {
+		String newString = currentLine.replace(assembleTag(Injectables.PRICE), data.getPrice());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectTIMESTAMP_OF_NEXT_COLOUR_CHANGE() {
+		String newString = currentLine.replace(assembleTag(Injectables.TIMESTAMP_OF_NEXT_COLOUR_CHANGE), data.getTimestampOfNextColourChange());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
 
-
+	
+	
 
 	
 	
