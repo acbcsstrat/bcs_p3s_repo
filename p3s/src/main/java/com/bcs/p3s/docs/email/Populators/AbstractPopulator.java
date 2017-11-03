@@ -2,6 +2,7 @@ package com.bcs.p3s.docs.email.Populators;
 
 import java.util.List;
 
+import com.bcs.p3s.docs.email.Injectables;
 import com.bcs.p3s.docs.email.P3sEmail;
 import com.bcs.p3s.docs.email.P3sEmailData;
 import com.bcs.p3s.util.lang.Universal;
@@ -32,9 +33,10 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 	
 	// Code for Injecting values
 	final String SQUAREOPEN = "[";
+	final String SQUARECLOSE = "]";
 	protected String currentLine = "";		// For temporary use during injection. NEVER null
 	StringBuilder bodyWip = new StringBuilder(""); 
-	protected abstract boolean doAllInjectionsForCurrentLine();  // Subtype knows which of the below replace*() methods to call 
+	protected abstract boolean doAllInjectionsForCurrentLine();  // Subtype knows which of the below inject*() methods to call 
 	/** This has the big loop, and invokes the subtype doAllInjectionsForCurrentLine() for each line **/
 	protected String doAllInjectionsIntoBody(List<String> wholeTemplate) { 
 		String err = "AbstractPopulator doAllInjectionsIntoBody ("+templateName+") : ";
@@ -46,7 +48,7 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 			int attempts = 0;
 			while (moreInjectionsNeeded) {
 				moreInjectionsNeeded = doAllInjectionsForCurrentLine();
-				if (attempts++ >= MAXTAGS_PER_LINE)	
+				if (++attempts >= MAXTAGS_PER_LINE)	
 					fail(err+" FAILED to eradicate [s after "+MAXTAGS_PER_LINE
 							+" ATTEMPTS. line NOW is "+currentLine+" :: Line WAS : "+preInjectLine);
 				zz(err+" attempt "+attempts+" (result:"+moreInjectionsNeeded+") for line: "+currentLine);
@@ -56,6 +58,54 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 		}
 		return bodyWip.toString();
 	}
+	protected String assembleTag(String root) { return SQUAREOPEN + root + SQUARECLOSE; }
+
+	// Now the individual Injectors
+	protected boolean injectFIRSTNAME() {
+		String newString = currentLine.replace(assembleTag(Injectables.FIRSTNAME), data.getFirstname());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectURL_TO_VERIFY_EMAIL() {
+		String newString = currentLine.replace(assembleTag(Injectables.URL_TO_VERIFY_EMAIL), data.getUrlToVerifyEmail());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectCOMPANY_NAME() {
+		String newString = currentLine.replace(assembleTag(Injectables.COMPANY_NAME), data.getCompanyName());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectSUPPORT_EMAIL_ADDRESS() {
+		String newString = currentLine.replace(assembleTag(Injectables.SUPPORT_EMAIL_ADDRESS), data.getSupportEmailAddress());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectURL_TO_FAQ() {
+		String newString = currentLine.replace(assembleTag(Injectables.URL_TO_FAQ), data.getUrlToFaq());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectCOMPANY_CODE() {
+		String newString = currentLine.replace(assembleTag(Injectables.COMPANY_CODE), data.getCompanyCode());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectCOMPANY_PIN() {
+		String newString = currentLine.replace(assembleTag(Injectables.COMPANY_PIN), data.getCompanyPin());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectLOGIN_URL() {
+		String newString = currentLine.replace(assembleTag(Injectables.LOGIN_URL), data.getLoginUrl());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+
+
+
+	
+	
 	
 	
 	// Regular getters & setters

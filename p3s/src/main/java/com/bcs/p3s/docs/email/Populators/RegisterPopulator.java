@@ -42,19 +42,21 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 				fail(err+"obNewUserEmailAddress not a String. isNull="+(obNewUserEmailAddress==null));
 		String newUserEmailAddress = (String) obNewUserEmailAddress;
 
-		// Retrieve data from property file
-		String siteUrl = null;
+		// 1of3: Retrieve data from property file
+		String siteWordpressUrl = null;
+		String siteTomcatUrl = null;
 		try {
 			P3SPropertyReader reader = new P3SPropertyReader();
 			data.setSupportEmailAddress(reader.getGenericProperty(P3SPropertyNames.P3S_support_email_address));
-			siteUrl = reader.getESProperty(P3SPropertyNames.P3S_WEB_URL_BASE);
-			data.setLoginUrl(siteUrl);
+			siteWordpressUrl = reader.getESProperty(P3SPropertyNames.P3S_WEB_WORDPRESS_URL_BASE);
+			siteTomcatUrl = reader.getESProperty(P3SPropertyNames.P3S_WEB_TOMCAT_URL_BASE);
+			data.setLoginUrl(siteTomcatUrl);
 		} catch (P3SPropertyException e) {
 			fail(err+"property read failed",e);
 		}
 		
 		
-		// retrieve user & company details. 
+		// 2of3: retrieve user & company details. 
 		P3SUser userRecord = null;
 		try {
 			userRecord = P3SUser.findP3SUsersByEmailAddress(newUserEmailAddress).getSingleResult();
@@ -70,23 +72,32 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		data.setCompanyCode(company.getBusinessNumber());
 		data.setCompanyPin(company.getBusinessPin().toString());
 
-		String userMash = newUserEmailAddress + userRecord.getId().toString();
-		int    qwikInt  = userMash.hashCode(); // may be negative
-		if (qwikInt<0) qwikInt = qwikInt * -1; 
-//		Integer qwikInt = new Integer(userMash.hashCode()); // may be negative
-		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
-		zz("userMash is "+userMash);
-		zz("userHash is "+userHash);
-		int len = userHash.length();
-		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
-		zz("yields "+fragment6);
-				
-		String url2verifyEmail = siteUrl+"user/confirmuser/"+fragment6+"?email="+newUserEmailAddress;
-		zz("yields "+fragment6);
+		
+		// 3of3: Assemble any values requiring work here
+		String url2verifyEmail = generateUrlToVerifyEmail(newUserEmailAddress, userRecord, siteTomcatUrl);
+//		
+//		
+//		String userMash = newUserEmailAddress + userRecord.getId().toString();
+//		int    qwikInt  = userMash.hashCode(); // may be negative
+//		if (qwikInt<0) qwikInt = qwikInt * -1; 
+////		Integer qwikInt = new Integer(userMash.hashCode()); // may be negative
+//		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
+//		zz("userMash is "+userMash);
+//		zz("userHash is "+userHash);
+//		int len = userHash.length();
+//		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
+//		zz("yields "+fragment6);
+//				
+//		String url2verifyEmail = siteUrl+"user/confirmuser/"+fragment6+"?email="+newUserEmailAddress;
+//		zz("yields "+fragment6);
 		data.setUrlToVerifyEmail(url2verifyEmail);
+
+		data.setUrlToFaq(siteWordpressUrl+"faq");
+		
 		
 		// data is now populated with all the injectables required for this template
-		
+
+		// So ...
 		// Now Inject
 		prepareEmailContent();
 		
@@ -112,16 +123,21 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 	protected String injectIntoSubjectLine(List<String> wholeTemplate) {
 		String subjectLinePREinject = wholeTemplate.get(0);
 		// Only injectable is FIRSTNAME
-		String target = "["+Injectables.FIRSTNAME+"]";
-		String newval = data.getFirstname();
+//		String target = "["+Injectables.FIRSTNAME+"]";
+//		String newval = data.getFirstname();
+//		
+//		String newSubject = subjectLinePREinject.replace(target,newval);
+//
+		currentLine = subjectLinePREinject;
+		boolean ignore = injectFIRSTNAME();		
 		
-		String newSubject = subjectLinePREinject.replace(target,newval);
-
+		
+		
 		zz("RegisterPopulator prepareEmailContent : PREinject Subject WAS "+subjectLinePREinject);
-		zz("RegisterPopulator prepareEmailContent : injectIntoSubject has created "+newSubject);
+		zz("RegisterPopulator prepareEmailContent : injectIntoSubject has created "+currentLine);
 		
-		
-		return newSubject;
+
+		return currentLine;
 	}
 	
 	
@@ -135,12 +151,38 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 	
 	protected boolean doAllInjectionsForCurrentLine() {
 		// This Subtype knows which of the replace*() methods to call for this template group/type
+		// so now, for the current line, call them ALL sequentially. Stop early if no more work
 		boolean moreInjectionsNeeded = true; 
-		
+
+		if (moreInjectionsNeeded) moreInjectionsNeeded = injectFIRSTNAME();
+		if (moreInjectionsNeeded) moreInjectionsNeeded = injectURL_TO_VERIFY_EMAIL();
+		if (moreInjectionsNeeded) moreInjectionsNeeded = injectCOMPANY_NAME();
+		if (moreInjectionsNeeded) moreInjectionsNeeded = injectSUPPORT_EMAIL_ADDRESS();
+		if (moreInjectionsNeeded) moreInjectionsNeeded = injectURL_TO_FAQ();
+		if (moreInjectionsNeeded) moreInjectionsNeeded = injectCOMPANY_CODE();
+		if (moreInjectionsNeeded) moreInjectionsNeeded = injectCOMPANY_PIN();
+		if (moreInjectionsNeeded) moreInjectionsNeeded = injectLOGIN_URL();
 		
 		return moreInjectionsNeeded;
 	}
 
+	
+	protected String generateUrlToVerifyEmail(String newUserEmailAddress, P3SUser userRecord, String siteUrl) {
+		String userMash = newUserEmailAddress + userRecord.getId().toString();
+		int    qwikInt  = userMash.hashCode(); // may be negative
+		if (qwikInt<0) qwikInt = qwikInt * -1; 
+//		Integer qwikInt = new Integer(userMash.hashCode()); // may be negative
+		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
+		zz("userMash is "+userMash);
+		zz("userHash is "+userHash);
+		int len = userHash.length();
+		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
+		zz("yields "+fragment6);
+				
+		String url2verifyEmail = siteUrl+"user/confirmuser/"+fragment6+"?email="+newUserEmailAddress;
+		zz("yields "+fragment6);
+		return url2verifyEmail;
+	}
 	
 	
 	
