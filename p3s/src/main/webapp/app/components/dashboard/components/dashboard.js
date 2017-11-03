@@ -1,14 +1,53 @@
+// app.config(['ChartJsProvider', function (ChartJsProvider) {
+// 	console.log(ChartJsProvider)
+//     // Configure all charts
+//     // ChartJsProvider.setOptions({
+//     //   chartColors: ['#FF5252', '#FF8A80'],
+//     //   responsive: false
+//     // });
+//     // // Configure all line charts
+//     // ChartJsProvider.setOptions('line', {
+//     //   showLines: false
+//     // });
+//  }])
 app.component('dashboard', {
 	bindings: { 
 		patents: '<',
 		transactions: '<' 
 	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, dashboardService, fxService, patentsRestService, $mdSidenav) {
+	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, dashboardService, fxService, patentsRestService, $mdSidenav, patentsService, currentTransactionsService) {
 
 		var vm = this;
 		
 		$rootScope.page = 'Dashboard';
+
+		vm.fetchItemRenewal = function() {
+			patentsService.activePatentItemMenu();
+		}
+
+		vm.fetchItemTransaction = function(id) {
+			currentTransactionsService.fetchCurrentTransactions()
+			.then(
+				function(response) {
+					response.forEach(function(data) {
+
+						const transId = data.id;
+						
+						data.renewalUIs.forEach(function(data, i) {
+							if(data.patentUI.id == id) {
+								console.log(transId)
+								$state.go('current-transactions.current-transaction-item',{transId: transId})
+							}
+						})
+
+					})
+				},
+				function(errResponse) {
+					console.log(errResponse)
+				}
+			)
+		}
 
 		vm.$onInit = () => {
 
@@ -20,16 +59,6 @@ app.component('dashboard', {
 		        	$mdSidenav(componentId).toggle();
 		      	};
 		    }
-
-
-
-		    // $timeout(function() {
-		    //     $scope.toggleLeft()
-		    // }, 1000);
-
-		    // $timeout(function() {
-		    //     $scope.toggleLeft()
-		    // }, 5000)
 
       		$scope.date = new Date()
 	      	
@@ -133,9 +162,6 @@ app.component('dashboard', {
 
 			//RECENT TRANSACTIONS
 
-			vm.currentphase = 'blue';
-
-
 			vm.recentTransArr = [];
 
 			transactions.forEach(function(data){
@@ -184,7 +210,7 @@ app.component('dashboard', {
 			vm.redRenewals = [];
 			vm.blueRenewals = [];
 			vm.blackRenewals = [];
-			vm.noAction = [];
+			vm.greyRenewals = [];
 
 			//COLOUR KEY
 
@@ -195,37 +221,44 @@ app.component('dashboard', {
 					case 0:
 						vm.colourPhaseTitle = {
 							title: 'Green',
-							descrip: 'lorem',
+							descrip: '3 months before renewal date - 6 working days before renewal date',
 							color: '#53ab58'
 						}
 					break;
 					case 1:
 						vm.colourPhaseTitle = {
-							title: 'Yellow',
-							descrip: 'loremmm',
+							title: 'Amber',
+							descrip: '6 working days before renewal date - 3 working days before renewal date',
 							color: '#f9b233'						
 						}
 					break;
 					case 2:
 						vm.colourPhaseTitle = {
 							title: 'Red',
-							descrip: 'lorem ipsum',
+							descrip: '3 working days before renewal date - End of renewal date',
 							color: '#e30613'
 						}
 					break;
 					case 3:
 						vm.colourPhaseTitle = {
 							title: 'Blue',
-							descrip: '24 Week Extension',
+							descrip: 'Day after renewal date - 10 working days before end of extension',
 							color: '#0097ce'					
 						}
 					break;
 					case 4:
 						vm.colourPhaseTitle = {
 							title: 'Black',
-							descrip: 'herisuhimas',
+							descrip: '10 working days before the expiry of the extension period, and runs until the end of the 6th day before the end of the extension period.',
 							color: '#3c3c3b'
 						}
+					break;
+					case 5:
+						vm.colourPhaseTitle = {
+							title: 'Grey',
+							descrip: 'herisuhimassss',
+							color: '#bdbdbd'
+						}						
 				}
 			}
 
@@ -233,45 +266,84 @@ app.component('dashboard', {
 
 			vm.totalPatents = patents.length;
 
-
 			patents.forEach(function(item){
-				switch(item.costBandColour) {
-					case 'Green':
-						vm.greenRenewals.push(item)
-					break;
-					case 'Amber':
-						vm.amberRenewals.push(item)
-					break;
-					case 'Red':
-						vm.redRenewals.push(item)
-					break;
-					case 'Blue':
-						vm.blueRenewals.push(item)
-					break;
-					case 'Black':
-						vm.blackRenewals.push(item)
-					break;
-					case 'NoColor':
-
-						vm.noAction.push(item)
+				if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
+					switch(item.costBandColour) {
+						case 'Green':
+							vm.greenRenewals.push(item)
+						break;
+						case 'Amber':
+							vm.amberRenewals.push(item)
+						break;
+						case 'Red':
+							vm.redRenewals.push(item)
+						break;
+						case 'Blue':
+							vm.blueRenewals.push(item)
+						break;
+						case 'Black':
+							vm.blackRenewals.push(item)
+						break;
+					}
+				} else {
+					vm.greyRenewals.push(item)
 				}
 
+				vm.doughnutLabels = ["No action required", "Black", "Blue", "Red", "Yellow", "Green"];
+				vm.doughnutColours = ['#bdbdbd', '#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
+			 	$timeout(function () {
+			 		vm.doughnutData = [vm.greyRenewals.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
+			 	}, 500)
 				
+				vm.doughnutOptions = {
+					borderWidth: [100, 10],
+					responsive: true,
+					cutoutPercentage: 70,
+				    hover: {
+				      mode: false
+				    }	
+			 //  		animation: {
+			 //  			easing: 'easeInSine',
+			 //  			duration: 2000,
+			 //  			onComplete: function() {
+    // // WHY ALWAYS ME???
+				// 	        console.log("completed animation");
+				// 	        var chartInstance = this.chart;
+				// 	        var ctx = chartInstance.ctx;
+				// 	        ctx.textAlign = "center";
+				// 	        console.log(chartInstance)
+				// 	        Chart.helpers.each(this.data.datasets.forEach(function(dataset, i) {
+				// 	          var meta = chartInstance.controller.getDatasetMeta(i);
+				// 	          Chart.helpers.each(meta.data.forEach(function(bar, index) {
 
-				// $timeout(function() {
-					vm.doughnutLabels = ["No action required", "Black", "Blue", "Red", "Yellow", "Green"];
-					vm.doughnutColours = ['#d1d1d1', '#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
-					vm.doughnutData = [vm.noAction.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
-					vm.doughnutOptions = {
-				  		animation: {
-				  			duration: 1500,
-				  			easing: 'easeInSine'
-				  		}
-				  	};
-				// }, 10);
+				// 	            let offsetY = 0;
+				// 	            switch (bar._datasetIndex) {
+				// 	              case 1:
+				// 	              case 2:
+				// 	                // official or pending
+				// 	                if (bar._datasetIndex === 1) {
+				// 	                  // official offset
+				// 	                  offsetY = 14;
+				// 	                } else {
+				// 	                  // pending offset
+				// 	                  offsetY = -5;
+				// 	                }
+				// 	                // to change color
+				// 	                // ctx.fillStyle = "#ff00ff";
+				// 	                ctx.font = "15px";
+				// 	                // Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
+				// 	                /*ctx.shadowColor = "black";// string
+				// 									ctx.shadowOffsetX = 0; // integer
+				// 	                ctx.shadowOffsetY = 0; // integer
+				// 	                ctx.shadowBlur = 5; // integer*/
+				// 	                ctx.fillText(dataset.data[index], bar._model.x, bar._model.y + offsetY);
+				// 	            }
 
-			   
-			
+				// 	          }), this)
+				// 	        }), this);
+				// 	      }
+			 //  		},
+			  	};
 
 			})
 
@@ -295,9 +367,11 @@ app.component('dashboard', {
 						phase = vm.blueRenewals;
 					break;
 					case 4:
-						phase = vm.blackRenewals;								
+						phase = vm.blackRenewals;
+					break;			
+
 				}
-				
+
 				function loadPhase(i) {
 					vm.phaseArr.length = 0;
 						$timeout(function() {

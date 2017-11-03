@@ -9,6 +9,8 @@ app.component('transactionHistoryItem', {
 
 	    vm.$onChanges = function(changeObj){
 
+	    	console.log(vm.transactionHistoryItem)
+
 	    	var currTransStatus = vm.transactionHistoryItem.latestTransStatus;	
 
 			vm.transStatus = [
@@ -20,6 +22,8 @@ app.component('transactionHistoryItem', {
 				{status: 'EPO Instructed', active: false, complete: false},
 				{status: 'Completed', active: false, complete: false}
 			];
+
+			console.log(vm.transStatus)
 
 			vm.checkProgress = function() {
 
@@ -40,13 +44,11 @@ app.component('transactionHistoryItem', {
 							vm.transStatus[i].active = true;
 						}
 					} else {
-						vm.transStatus[i].active = true;
+						// vm.transStatus[i].active = true;
 						vm.transStatus[i].complete = true;						
 					}
 				}
 			}
-
-			console.log(vm.transStatus)
 
 			if(vm.transactionHistoryItem.hasFailed) {
 				vm.hasFailed = true;

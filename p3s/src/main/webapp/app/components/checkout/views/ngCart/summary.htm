@@ -1,6 +1,11 @@
-<i class="fa fa-shopping-basket fa-2x"></i><span>
+<div class="d-flex align-items-center">
+	<img src="p3sweb/assets/imgs/icons/cart_icon.png" class="m-r-xs">
+	<span class="bg-phase-green txt-white circle-radius-xs d-flex justify-content-center align-items-center">
+		{{ ngCart.getTotalItems() }}
+	</span>
+
 </div>
-{{ ngCart.getTotalItems() }}
+
 <!-- <ng-pluralize count="ngCart.getTotalItems()" when="{1: 'item', 'other':'items'}"></ng-pluralize> -->
 
 

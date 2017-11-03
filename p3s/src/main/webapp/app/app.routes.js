@@ -90,9 +90,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
             }],
             renewal: ['patentsRestService','$stateParams', function(patentsRestService, $stateParams){
                 return  patentsRestService.fetchRenewalHistory($stateParams.patentId);  
-            }],
-            fx: ['fxService', function(fxService){
-
             }]
         }
     })

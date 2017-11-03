@@ -3,8 +3,6 @@
 
    <head>
 
-
-
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -20,50 +18,53 @@
 
    </head>
 
-   <body class="bg-light-grey">
-      <div class="pre-app-container d-flex justify-content-center align-items-center">
-         <div class="center-container p-a-sm border">
+   <body class="bg-light-grey2">
+      <div class="container-pre-app d-flex justify-content-center align-items-center">
+         <div class="container-pre-app__center-box-40 p-a-sm border">
             <div class="content-panel">
-               <div class="content-panel__head text-center">
+               <div class="text-center">
                   <div class="row">
-                     <div class="col-md-12  d-flex justify-content-center align-items-center">
-                        <div class="m-r-md">
-                           <img src="assets/imgs/logos/PP-Icon.png">
+                     <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
+                        <div class="m-b-md">
+                           <img src="assets/imgs/logos/PP_icon_lg.png">
                         </div>
-                        <h1 class="font-weight-bold">Login</h1>
+                        <h1 class="font-weight-bold font-h1">Login</h1>
                      </div>
                   </div>
                </div>
-               <div class="content-panel__body bg-white">
+               <div class="content-panel__body">
                   <div class="row">
                      <div class="col-md-12">
                         <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form">
-                           <div class="form-group row">
-                              <label class="col-md-4 d-flex flex-column justify-content-center font-lg font-weight-bold" for="j_username">Name: </label>
-                              <div class="col-md-8">
-                                 <input type="text" name="j_username" class="form-control font-md pill-radius input-p-sm">
+                           <div class="form-group row m-b-sm">
+                              <div class="col-md-12">
+                                 <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username">
                               </div>
                            </div>
-                           <div class="form-group row">
-                              <label class="col-md-4 d-flex flex-column justify-content-center font-lg font-md font-weight-bold">Password: </label>         
-                                 <div class="col-md-8">
-                                    <input type="password" name="j_password" class="form-control font-md pill-radius input-p-sm">
-                                 </div>
+                           <div class="form-group row m-b-sm">
+                              <div class="col-md-12">
+                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password">
                               </div>
-                              <div class="form-group row no-margin-btm">
-                                 <div class="col-md-8 offset-md-4 text-right">
-                                    <input type="submit" value="Login" class="btn btn-block pill-radius bg-phase-green font-lg txt-white btn--event-p-sm font-weight-bold">
-                                 </div>
+                           </div>
+                           <div class="form-group d-flex justify-content-center flex-column m-b-sm">
+                              <div class="btn-default">
+                                 <input type="submit" value="Login" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
                               </div>
+                           </div>
                         </form>
-                        <div class="row m-t-md">
-                           <div class="col-md-4">
-                              <a class="btn btn-block pill-radius bg-phase-green font-md txt-white btn--event-p-sm font-weight-weight" href="/p3sweb/register">New User</a>
+                        <div class="row m-b-sm">
+                           <div class="col-md-12 text-center">
+                              <a href="" class="font-body text-center">Forgot Password?</a>
                            </div>
-                           <div class="col-md-4">
-                              <a class="btn btn-block pill-radius bg-phase-green font-md txt-white btn--event-p-sm font-weight-weight" href="/p3sweb/register">Register</a>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-12 d-flex justify-content-between align-items-center">
+                              <p class="font-body">Don't have an account?</p>
+                              <div class="btn-no-bg">
+                                 <a class="btn btn--lg btn-no-bg--green green-notification pill-radius txt-phase-green font-weight-medium font-body" href="/p3sweb/register">Register</a>
+                              </div>
                            </div>
-                        </div>          
+                        </div>
                      </div>
                   </div>
                </div>

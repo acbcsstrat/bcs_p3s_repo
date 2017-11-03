@@ -1,5 +1,6 @@
-<div class="content-panel bg-white">
-	<form name="userProfileForm" ng-submit="$ctrl.updateUser(user, newPassword)">
+
+<form name="userProfileForm" ng-submit="$ctrl.updateUser(user, newPassword)">
+	<div class="content-panel bg-white m-b-md">
 		<div class="content-panel__head text-center">
 			<div class="row">
 				<div class="col-md-6">
@@ -8,53 +9,53 @@
 							<i class="fa fa-user-circle-o fa-5x"></i>
 						</div>
 						<div class="col-md-10 d-flex justify-content-center align-items-start flex-column">
-			      	 		<p class="font-weight-bold font-xl">{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</p>
-	      	 				<p>{{$ctrl.user.business.businessName}}</p>
+			      	 		<p class="font-weight-bold font-h3 m-b-xs">{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</p>
+	      	 				<p class="font-h3">{{$ctrl.user.business.businessName}}</p>
 						</div>						
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="content-panel__body">
-			<div class="row">
-				<div class="col-md-6">
-					<fieldset>
-						<legend class="font-weight-bold font-xl m-b-sm">User Details</legend>
+			<div class="row m-b-md">
+				<div class="col-md-5">
+					<fieldset class="m-b-md">
+						<legend class="font-weight-bold font-h4 m-b-md">User Details</legend>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="emailAddress">Email:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="emailAddress">Email:</label>
 							<div class="col-md-7">
-								<input type="email" name="emailAddress" ng-model="user.emailAddress" class="form-control font-md pill-radius input-p-sm" readonly>
+								<input type="email" name="emailAddress" ng-model="user.emailAddress" class="form-control font-body pill-radius input-p-sm" readonly>
 								<p ng-show="userProfileForm.emailAddress.$error.required && userProfileForm.emailAddress.$dirty">Please fill out this field</p>
 								<p ng-show="userProfileForm.emailAddress.$error.email && userProfileForm.emailAddress.$dirty">Enter a valid email</p>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="firstName">First name:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="firstName">First name:</label>
 							<div class="col-md-7">
-								<input type="text" name="firstName" class="form-control font-md pill-radius input-p-sm" ng-model="user.firstName" id="firstName" ng-bind="firstName" required>
+								<input type="text" name="firstName" class="form-control font-body pill-radius input-p-sm" ng-model="user.firstName" id="firstName" ng-bind="firstName" required>
 								<p ng-show="userProfileForm.firstName.$error.required && userProfileForm.firstName.$dirty">Please fill out this field</p>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="lastName">Last name:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="lastName">Last name:</label>
 							<div class="col-md-7">
-								<input type="text" class="form-control font-md pill-radius input-p-sm" name="lastName" ng-model="user.lastName"  id="lastName" required>
+								<input type="text" class="form-control font-body pill-radius input-p-sm" name="lastName" ng-model="user.lastName"  id="lastName" required>
 								<p ng-show="userProfileForm.lastName.$invalid && !userProfileForm.lastName.$pristine">Please fill out this field</p>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="newPassword">Password:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="newPassword">Password:</label>
 							<div class="col-md-7">
-								<input type="password" name="newPassword" ng-model="newPassword" class="form-control font-md pill-radius input-p-sm m-b-xs" id="newPassword" ng-blur="visitednewPassword=true">
+								<input type="password" name="newPassword" ng-model="newPassword" class="form-control font-body pill-radius input-p-sm m-b-xs" id="newPassword" ng-blur="visitednewPassword=true">
 								<p ng-show="userProfileForm.newPassword.$error.required && userProfileForm.newPassword.$dirty">Please fill out this field</p>
 								<p ng-show="userProfileForm.newPassword.$error.minlength && visitednewPassword">Password needs to be a minimum of 8 characters</p>
 								<ul class="m-t-xs" id="strength" check-strength="newPassword"></ul>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="password2">Confirm password:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="password2">Confirm password:</label>
 							<div class="col-md-7">	
-								<input type="password" name="password2" class="form-control font-md pill-radius input-p-sm" ng-model="password2" id="confirmPassword" pw-check="newPassword" ng-blur="visitedPassword2=true">
+								<input type="password" name="password2" class="form-control font-body pill-radius input-p-sm" ng-model="password2" id="confirmPassword" pw-check="newPassword" ng-blur="visitedPassword2=true">
 								<div class="msg-block" ng-show="userProfileForm.$error"> 
 									<span class="msg-error" ng-show="userProfileForm.password2.$error.pwmatch && visitedPassword2">Passwords don't match.</span> 
    							 	</div>
@@ -63,11 +64,11 @@
 					</fieldset>
 					<fieldset class="form-group">
 						<legend class="font-weight-bold">Email notifications</legend>
-						<p class="font-md font-weight-medium">Do you want to receive email notificaitons?</p>
+						<p class="font-body font-weight-medium">Do you want to receive email notificaitons?</p>
 						<div class="row m-t-xs">
 							<div class="col-md-4">
 								<div class="onoffswitch">
-									<label class="switch font-sm">
+									<label class="switch font-body">
 									  <input type="checkbox" ng-model="user.isEmailNotification">
 									  <span class="slider round"></span>
 									</label>
@@ -76,55 +77,55 @@
 						</div>
 					</fieldset>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 offset-md-1">
 					<fieldset>
-						<legend class="font-weight-bold font-xl m-b-sm">Business Address</legend>
+						<legend class="font-weight-bold font-h4 m-b-sm">Business Address</legend>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="businessName">Business name:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="businessName">Business name:</label>
 							<div class="col-md-7">
-								<input type="text" name="businessName" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.businessName" id="businessName" readonly>
+								<input type="text" name="businessName" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.businessName" id="businessName" readonly>
 								<p ng-show="userProfileForm.businessName.$error.required && userProfileForm.businessName.$dirty">Please fill out this field</p>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="phoneNumber">Tel:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="phoneNumber">Tel:</label>
 							<div class="col-md-7">
-								<input type="text" name="phoneNumber" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.phoneNumber" id="phoneNumber" required>
+								<input type="text" name="phoneNumber" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.phoneNumber" id="phoneNumber" required>
 								<p ng-show="userProfileForm.phoneNumber.$error.required && userProfileForm.phoneNumber.$dirty">Please fill out this field</p>					
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="street">Street:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="street">Street:</label>
 							<div class="col-md-7">
-								<input type="text" name="street" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.street" id="street" required>
+								<input type="text" name="street" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.street" id="street" required>
 								<p ng-show="userProfileForm.street.$error.required && userProfileForm.street.$dirty">Please fill out this field</p>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="city">City:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="city">City:</label>
 							<div class="col-md-7">
-								<input type="text" name="city" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.city" id="city" required>
+								<input type="text" name="city" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.city" id="city" required>
 								<p ng-show="userProfileForm.city.$error.required && userProfileForm.city.$dirty">Please fill out this field</p>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="USstate">State:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="USstate">State:</label>
 							<div class="col-md-7">
-								<input type="text" name="USstate" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.usstate" id="USstate" required>
+								<input type="text" name="USstate" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.usstate" id="USstate" required>
 								<p ng-show="userProfileForm.USstate.$error.required && userProfileForm.USstate.$dirty">Please fill out this field</p>					
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="zip">Zip:</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="zip">Zip:</label>
 							<div class="col-md-7">
-								<input type="text" name="zip" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.zip" id="zip" required>
+								<input type="text" name="zip" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.zip" id="zip" required>
 							</div>
 							<p ng-show="userProfileForm.zip.$error.required && userProfileForm.zip.$dirty">Please fill out this field</p>						
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="timezone">Time Zone</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="timezone">Time Zone</label>
 							<div class="col-md-4">
-								<select name="timezone" class="form-control font-md pill-radius input-p-sm"
+								<select name="timezone" class="form-control font-body pill-radius input-p-sm"
 								    ng-init="userTimezone._abbr = user.business.timezone"
 								    ng-change="user.business.timezone = userTimezone._abbr"
 								    ng-model="userTimezone._abbr" 
@@ -138,90 +139,84 @@
 				</div>	
 			</div>
 			<div class="row">
-				<div class="col-md-6">
-					<div class="row border-grey-xs--btm m-b-xs">
+				<div class="col-md-5">
+					<div class="row border-grey-xs--btm m-b-sm p-b-sm">
 						<div class="col-md-6">
-							<p class="font-xl font-weight-bold">Company Users</p>
+							<p class="font-h4 font-weight-bold">Company Users</p>
 						</div>
-						<div class="col-md-6">
-							<p class="font-xl font-weight-bold">Total: {{$ctrl.companyUsers.length}}</p>
+						<div class="col-md-6 text-right">
+							<p class="font-h4 font-weight-bold">Total: {{$ctrl.companyUsers.length}}</p>
 						</div>						
 					</div>
 					<div class="row">
 						<div class="col-md-6" ng-repeat="users in $ctrl.chunkedData">
 							<ul class="ul-bullet-free">
-								<li class="font-md font-weight-medium" ng-repeat="item in users track by $index"><span>{{item.firstName}} {{item.lastName}}</span></li> <!-- removed {{$index + 1}}-->
+								<li class="font-body font-weight-medium" ng-repeat="item in users track by $index"><span>{{item.firstName}} {{item.lastName}}</span></li> <!-- removed {{$index + 1}}-->
 							</ul>
 						</div>
 					</div>							
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 offset-md-1">
 					<fieldset>
 						<div class="row">
-							<div class="col-md-6">
-								<legend class="font-weight-bold font-xl m-b-sm">Billing address</legend>
+							<div class="col-md-4">
+								<legend class="font-weight-bold font-h4 m-b-sm">Billing address</legend>
 							</div>
-							<div class="col-md-6">
-								<div class="row d-flex align-items-center">
-									<div class="col-md-6">
-										<p class="font-md font-weight-medium">Same as billing address?</p>
-									</div>
-									<div class="col-md-6">
-										<div class="row m-t-xs">
-											<div class="col-md-4">
-												<div class="onoffswitch">
-													<label class="switch font-sm">
-													  <input type="checkbox" ng-model="user.business.isBillingAddressSame">
-													  <span class="slider round"></span>
-													</label>
-												</div>
-											</div>							
-										</div>
-									</div>									
+							<div class="col-md-8">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="onoffswitch  d-flex align-items-center justify-content-end">
+											<span class="font-body font-weight-medium m-r-sm">Same as billing address?</span>
+											<label class="switch font-body">
+											  <input type="checkbox" ng-model="user.business.isBillingAddressSame">
+											  <span class="slider round"></span>
+											</label>
+										</div>										
+									</div>				
 								</div>
-
 							</div>						
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="billing_street">Street</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="billing_street">Street</label>
 							<div class="col-md-7">
-								<input ng-if="user.business.isBillingAddressSame" type="text" name="billing_street" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.billingStreet" id="billing_street" required>
-								<input ng-if="!$ctrl.user.business.isBillingAddressSame"  class="form-control font-md pill-radius input-p-sm" type="text" name="billing_street" id="billing_street">
+								<input ng-if="user.business.isBillingAddressSame" type="text" name="billing_street" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.billingStreet" id="billing_street" required>
+								<input ng-if="!$ctrl.user.business.isBillingAddressSame"  class="form-control font-body pill-radius input-p-sm" type="text" name="billing_street" id="billing_street">
 								<p ng-show="userProfileForm.billing_street.$error.required && userProfileForm.billing_street.$dirty">Please fill out this field</p>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="billing_city">City</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="billing_city">City</label>
 							<div class="col-md-7">
-								<input ng-if="user.business.isBillingAddressSame" type="text" name="billing_city" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.billingCity" id="billing_city" required>
-								<input ng-if="!$ctrl.user.business.isBillingAddressSame" type="text" name="billing_city" class="form-control font-md pill-radius input-p-sm" id="billing_city" required>
+								<input ng-if="user.business.isBillingAddressSame" type="text" name="billing_city" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.billingCity" id="billing_city" required>
+								<input ng-if="!$ctrl.user.business.isBillingAddressSame" type="text" name="billing_city" class="form-control font-body pill-radius input-p-sm" id="billing_city" required>
 							</div>
 							<p ng-show="userProfileForm.billing_city.$error.required && userProfileForm.billing_city.$dirty">Please fill out this field</p>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="billing_state">State</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="billing_state">State</label>
 							<div class="col-md-7">
-								<input ng-if="user.business.isBillingAddressSame" type="text" name="billing_state" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.billingState" id="billing_state" required>						
-								<input ng-if="!$ctrl.user.business.isBillingAddressSame" type="text" name="billing_state" class="form-control font-md pill-radius input-p-sm" id="billing_state" required>
+								<input ng-if="user.business.isBillingAddressSame" type="text" name="billing_state" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.billingState" id="billing_state" required>						
+								<input ng-if="!$ctrl.user.business.isBillingAddressSame" type="text" name="billing_state" class="form-control font-body pill-radius input-p-sm" id="billing_state" required>
 								<p ng-show="userProfileForm.billing_state.$error.required && userProfileForm.billing_state.$dirty">Please fill out this field</p>					
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-md-5 d-flex flex-column justify-content-center font-md font-weight-medium" for="billing_zip">Zip</label>
+							<label class="col-md-5 d-flex flex-column justify-content-center font-body font-weight-medium" for="billing_zip">Zip</label>
 							<div class="col-md-7">
-								<input ng-if="user.business.isBillingAddressSame" type="text" name="billing_zip" class="form-control font-md pill-radius input-p-sm" ng-model="user.business.billingZip" id="billing_zip" required>
-								<input ng-if="!$ctrl.user.business.isBillingAddressSame" type="text" name="billing_zip" class="form-control font-md pill-radius input-p-sm" id="billing_zip" required>
+								<input ng-if="user.business.isBillingAddressSame" type="text" name="billing_zip" class="form-control font-body pill-radius input-p-sm" ng-model="user.business.billingZip" id="billing_zip" required>
+								<input ng-if="!$ctrl.user.business.isBillingAddressSame" type="text" name="billing_zip" class="form-control font-body pill-radius input-p-sm" id="billing_zip" required>
 								<p ng-show="userProfileForm.billing_zip.$error.required && userProfileForm.billing_zip.$dirty">Please fill out this field</p>
 							</div>
 						</div>
 					</fieldset>
 				</div>				
-			</div>
-			<div class="col-offset-9 col-md-3">
-				<input type="submit" id="submit" class="btn pill-radius bg-phase-green font-lg txt-white btn--event-p-sm  font-weight-bold" value="Save Changes">
-			</div>
-		</div>
-	</form>
-</div>
+			</div> <!---row end-->
+		</div> <!-- content panel body end-->
+	</div><!-- content panel end -->
+	<div class="offset-md-10 col-md-2">
+		<button type="submit" id="submit" class="btn pill-radius bg-phase-green font-h4 txt-white btn--lg font-weight-medium">Save Changes<i class="fa fa-check fa-1x m-l-xs"></i></button>
+	</div>
+</form>
+
 
 

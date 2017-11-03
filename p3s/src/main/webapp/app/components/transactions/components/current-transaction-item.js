@@ -19,6 +19,8 @@ app.component('currentTransaction', {
 
 	    vm.$onChanges = function(changeObj){
 
+	    	console.log(vm.transaction)
+
 	    	var currTransStatus = vm.transaction.latestTransStatus;	
 
 			vm.transStatus = [

@@ -1,6 +1,7 @@
 <div class="d-flex justify-content-center">
-	<button ng-hide="inCart()" class="btn btn-success btn-block cartbtn pill-radius font-md" ng-click="ngCart.addItem(id, name, price, q, data)">Renew Now <i class="fa fa-shopping-basket fa-1x m-l-xs"></i></button>
-	<a ng-show="inCart()" class="cartbtn" ng-click="ngCart.removeItemById(id)">
-		<i class="cartbtn fa fa-times fa-2x"></i>
-	</a>	
+	<button ng-hide="inCart()" class="btn bg-phase-green cartbtn pill-radius btn--lg font-body font-body--component txt-white font-weight-medium d-flex" ng-click="ngCart.addItem(id, name, price, q, data)">Add <img class="m-l-xs" src="p3sweb/assets/imgs/icons/cart-icon-white-sm.png"></button>
+	<a ng-show="inCart()" class="btn bg-phase-red pill-radius btn--lg font-body font-body--component txt-white font-weight-medium" ng-click="ngCart.removeItemById(id)">
+		<span class="cartbtn">Remove <i class="fa fa-shopping-basket fa-1x m-l-xs"></i></span>
+	</a>
+
 </div>
