@@ -64,52 +64,50 @@
 				    				<div class="row">
 					    				<div class="col-md-6">
 					    					<p class="font-h4 font-weight-medium m-b-sm">Details</p>
-					    					<form class="form-inline">
-												<div class="form-group row">
-													<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Description: </label>
-													<div class="col-md-8">
-														<div class="d-flex justify-content-between align-items-center">
-															<span class="font-body" ng-hide="$ctrl.editing[1]">{{$ctrl.patent.shortTitle}}</span>
-													        <input type="text" class="font-body form-control m-r-sm" data-id="123" ng-show="$ctrl.editing[1]" ng-blur="$ctrl.doneEditing(1)" ng-model="$ctrl.patent.shortTitle" autofocus>
-													        <span ng-click="$ctrl.editItem(1)"><i class="fa fa-edit fa-2x"></i></span>
-														</div>
+											<div class="form-group row">
+												<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Description: </label>
+												<div class="col-md-8">
+													<div class="d-flex justify-content-between align-items-center">
+														<span class="font-body" ng-hide="$ctrl.editing[1]">{{$ctrl.patent.shortTitle}}</span>
+												        <input type="text" class="font-body form-control m-r-sm" data-id="123" ng-show="$ctrl.editing[1]" ng-blur="$ctrl.doneEditing(1)" ng-model="$ctrl.patent.shortTitle" autofocus>
+												        <span ng-click="$ctrl.editItem(1)"><i class="fa fa-edit fa-2x"></i></span>
 													</div>
 												</div>
-												<div class="form-group row">
-													<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Client Ref: </label>
-													<div class="col-md-8">
-														<div class="d-flex justify-content-between align-items-center">
-													 		<span class="font-body" ng-hide="$ctrl.editing[2]">{{$ctrl.patent.clientRef}}</span>
-											        		<input type="text" class="font-body form-control" data-id="123" ng-show="$ctrl.editing[2]" ng-blur="$ctrl.doneEditing(2)" ng-model="$ctrl.patent.clientRef" autofocus>
-											        		<span ng-click="$ctrl.editItem(2)"><i class="fa fa-edit fa-2x"></i></span>
-										        		</div>
-									        		</div>	
-												</div>
-												<div class="form-group row">
-													<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Applicant Name: </label>
-													<div class="col-md-8">
-										        		<input type="text" class="font-body form-control" data-id="123" ng-model="$ctrl.patent.primaryApplicantName" readonly>
-										        	</div>
-												</div>
-												<div class="form-group row">
-													<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Publication No: </label>
-													<div class="col-md-8">
-											        	<input type="text" class="font-body form-control" data-id="123" ng-model="$ctrl.patent.patentPublicationNumber" readonly>
-											        </div>
-												</div>
-												<div class="form-group row">
-													<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Title: </label>
-													<div class="col-md-8">
-											        	<input type="text" class="font-body form-control" data-id="123" ng-model="$ctrl.patent.title" readonly>
-											        </div>
-												</div>	
-												<div class="form-group row">
-													<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Filing date: </label>
-													<div class="col-md-8">
-											        	<input type="text" class="font-body form-control" data-id="123" ng-model="$ctrl.patent.filingDateUI" readonly>
-											        </div>
-												</div>																						
-											</form>
+											</div>
+											<div class="form-group row">
+												<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Client Ref: </label>
+												<div class="col-md-8">
+													<div class="d-flex justify-content-between align-items-center">
+												 		<span class="font-body" ng-hide="$ctrl.editing[2]">{{$ctrl.patent.clientRef}}</span>
+										        		<input type="text" class="font-body form-control" data-id="123" ng-show="$ctrl.editing[2]" ng-blur="$ctrl.doneEditing(2)" ng-model="$ctrl.patent.clientRef" autofocus>
+										        		<span ng-click="$ctrl.editItem(2)"><i class="fa fa-edit fa-2x"></i></span>
+									        		</div>
+								        		</div>	
+											</div>
+											<div class="form-group row">
+												<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Applicant Name: </label>
+												<div class="col-md-8">
+									        		<input type="text" class="font-body form-control" data-id="123" ng-model="$ctrl.patent.primaryApplicantName" readonly>
+									        	</div>
+											</div>
+											<div class="form-group row">
+												<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Publication No: </label>
+												<div class="col-md-8">
+										        	<input type="text" class="font-body form-control" data-id="123" ng-model="$ctrl.patent.patentPublicationNumber" readonly>
+										        </div>
+											</div>
+											<div class="form-group row">
+												<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Title: </label>
+												<div class="col-md-8">
+										        	<input type="text" class="font-body form-control" data-id="123" ng-model="$ctrl.patent.title" readonly>
+										        </div>
+											</div>	
+											<div class="form-group row">
+												<label class="font-body font-weight-medium col-md-4 d-flex align-items-center">Filing date: </label>
+												<div class="col-md-8">
+										        	<input type="text" class="font-body form-control" data-id="123" ng-model="$ctrl.patent.filingDateUI" readonly>
+										        </div>
+											</div>																						
 										</div>
 										
 							    		<div class="col-md-6 notification-pills">
@@ -221,7 +219,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-3 p-l-none" ng-if="$ctrl.patent.renewalStatus !== ('Renewal in place' || 'Too late to renew')">
+						<div class="col-md-3 p-l-none" ng-if="$ctrl.displayCost">
 							<div class="content-panel__body">
 								<div class="m-b-md">
 									<h4 class="font-weight-medium m-b-xs">FX Rate Impact</h4>
@@ -232,7 +230,7 @@
 											<p class="font-h4 font-weight-medium m-b-xs">USD</p>
 											<p class="font-h3">$ {{$ctrl.patent.feeUI.subTotalUSD}}</p>
 										</div>
-										<div class="col-md-2 text-center">
+										<div class="col-md-2 d-flex justify-content-center align-items-center">
 											<img src="p3sweb/assets/imgs/icons/arrows_icons_sm.png">
 										</div>
 										<div class="col-md-5 text-center">
@@ -296,7 +294,7 @@
 							</div>
 						</div>	
 					
-						<div class="col-md-3 p-l-none" ng-if="$ctrl.patent.renewalStatus == ('Renewal in place' || 'Too late to renew')">
+						<div class="col-md-3 p-l-none" ng-if="$ctrl.hideCost">
 							<div class="content-panel__body">
 								<div class="m-b-md">
 									<h4 class="font-weight-medium m-b-xs">FX Rate Impact</h4>
@@ -307,7 +305,7 @@
 											<p class="font-h4 font-weight-medium m-b-xs">USD</p>
 											<p class="font-h3">$ 0.00</p>
 										</div>
-										<div class="col-md-2 text-center">
+										<div class="col-md-2 d-flex justify-content-center align-items-center">
 											<img src="p3sweb/assets/imgs/icons/arrows_icons_sm.png">
 										</div>
 										<div class="col-md-5 text-center">
@@ -374,7 +372,7 @@
 				
 		    </uib-tab>
 		    <uib-tab heading="Cost Analysis" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md" index="1" ng-hide="true">
-		    	<div class="content-panel__body">
+		    	<div class="content-panel__body" ng-if="$ctrl.displayCost">
 		    		<div class="row">
 		    			<div class="col-md-8">
 		    				<div class="row">
@@ -412,30 +410,30 @@
 								</div>	
 							</div>
 							<div class="m-t-md">
-								<table class="table">
+								<table class="t-data">
 									<thead>
-										<tr>
-											<td></td>
+										<tr class="no-border-eb">
+											<td class="no-border-eb"></td>
 											<td class="font-h4 font-weight-medium">EUR</td>
 											<td class="font-h4 font-weight-medium">USD</td>
 										</tr>
 									</thead>
 									<div class="table-responsive">
 										<tbody>
-											<tr>
+											<tr class="no-border">
 												<td class="font-body font-weight-medium">Official fee</td>
 												<td class="font-body">€ {{$ctrl.feeBreakDown.renewalFeeEUR}}</td>
 												<td class="font-body">$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
 											</tr>
-											<tr>
-												<td class="font-body font-weight-medium">Processing fee</td>
-												<td class="font-body">€ {{$ctrl.feeBreakDown.processingFeeEUR}}</td>
-												<td class="font-body">$ {{$ctrl.feeBreakDown.processingFeeUSD}}</td>
+											<tr class="no-border">
+												<td class="font-body no-border font-weight-medium">Processing fee</td>
+												<td class="font-body no-border">€ {{$ctrl.feeBreakDown.processingFeeEUR}}</td>
+												<td class="font-body no-border">$ {{$ctrl.feeBreakDown.processingFeeUSD}}</td>
 											</tr>
-											<tr>
-												<td class="font-body font-weight-medium">Extension Fee</td>
-												<td class="font-body">€ {{$ctrl.feeBreakDown.extensionFeeEur}}</td>
-												<td class="font-body">$ {{$ctrl.feeBreakDown.extensionFeeUSD}}</td>
+											<tr class="no-border-eb">
+												<td class="font-body no-border font-weight-medium">Extension Fee</td>
+												<td class="font-body no-border">€ {{$ctrl.feeBreakDown.extensionFeeEur}}</td>
+												<td class="font-body no-border">$ {{$ctrl.feeBreakDown.extensionFeeUSD}}</td>
 											</tr>								
 											<tr>
 												<td class="font-body font-weight-medium">Total</td>
@@ -448,23 +446,128 @@
 							</div>
 							
 							<div class="row m-t-md">
-								<div class="col-md-7">
-									<p class="font-h3 font-weight-bold m-b-xs">Save:</p>
-									<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ {{$ctrl.feeBreakDown.bandSaving().savings}}</p>
-									<p class="font-h4">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
+								<div class="col-md-12 d-flex justify-content-between align-items-end">
+									<div>
+										<p class="font-h3 font-weight-bold m-b-xs">Save:</p>
+										<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ {{$ctrl.feeBreakDown.bandSaving().savings}}</p>
+										<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
+									</div>
+									<div>
+							        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
+									 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
+									 	</div>
+							        	<div ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
+									 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer" ui-sref="patents.patent({patentId: $ctrl.patent.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal<i class="fa fa-refresh fa-1x m-l-xs"></i></a>
+									 	</div>																		
+										<div ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+									 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+									 		</ngcart-addtocart>
+									 	</div>
+									</div>
+								</div>			
+							</div> <!-- row end-->
+						</div>
+					</div>
+				</div>
+		    	<div class="content-panel__body" ng-if="$ctrl.hideCost">
+		    		<div class="row">
+		    			<div class="col-md-8">
+		    				<div class="row">
+		    					<div class="col-md-12">
+			    					<div class="view-tabs">
+										<ul class="nav chart-pills">
+											<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">Stage Cost Chart</li>
+											<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">FX Chart</li>
+										</ul>
+									</div>	
+		    					</div>
+		    				</div>
+		    				<div class="row h-100 bg-no-chart">
+								<div class="col-md-12 d-flex align-items-center justify-content-center h-100">
+									<div class="d-flex justify-content-center align-items-center flex-column  container-content-40">
+										<p class="h4 font-weight-medium">Sorry</p>
+										<p class="h4 font-weight-medium">No Renewal Information Available</p>
+										<p class="h4 font-weight-medium">Status: <span class="txt-phase-green" ng-bind="$ctrl.patent.renewalStatus"></span></p>			
+										<div class="m-b-sm"></div>
+											<p class="font-body text-center">Information will be displayed when the selected patent is open for renewal. You can view and edit some information by clicking below.</p>											
+										<div class="m-b-sm"></div>
+										<div>
+								        	<div ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
+										 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer" ui-sref="patents.patent({patentId: $ctrl.patent.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal<i class="fa fa-refresh fa-1x m-l-xs"></i></a>
+										 	</div>																		
+											<div ng-if="$ctrl.patent.renewalStatus == 'Too late to renew'">
+										 		<p class="txt-phase-red font-weight-medium font-h4" ng-bind="$ctrl.patent.renewalStatus"></p>
+										 	</div>										 	
+										</div>										
+										<div class="m-b-sm"></div>
+										<p class="h4 font-weight-medium">Renewal Window Opens:</p>
+										<p class="h4 font-weight-medium txt-phase-green">Insert data</p>										
+									</div>
+				    			</div>
+		    				</div>
+	    				</div>
+						<div class="col-md-4 d-flex flex-column justify-content-between">
+							<div class="row d-flex justify-content-center align-items-center">
+								<div class="col-md-6">
+									<h4 class="font-weight-medium font-h4">Cost breakdown</h4>
 								</div>
-								<div class="col-md-5 d-flex align-items-end">
-						        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
-								 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
-								 	</div>
-						        	<div ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
-								 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer" ui-sref="patents.patent({patentId: $ctrl.patent.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal<i class="fa fa-refresh fa-1x m-l-xs"></i></a>
-								 	</div>																		
-									<div ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-								 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
-								 		</ngcart-addtocart>
-								 	</div>
-								</div>						
+							</div>
+							<div class="m-t-md">
+								<table class="t-data">
+									<thead>
+										<tr class="no-border-eb">
+											<td class="no-border-eb"></td>
+											<td class="font-h4 font-weight-medium">EUR</td>
+											<td class="font-h4 font-weight-medium">USD</td>
+										</tr>
+									</thead>
+									<div class="table-responsive">
+										<tbody>
+											<tr class="no-border">
+												<td class="font-body font-weight-medium">Official fee</td>
+												<td class="font-body">€ 0.00</td>
+												<td class="font-body">$ 0.00</td>
+											</tr>
+											<tr class="no-border">
+												<td class="font-body font-weight-medium">Processing fee</td>
+												<td class="font-body">€ 0.00</td>
+												<td class="font-body">$ 0.00</td>
+											</tr>
+											<tr class="no-border-eb">
+												<td class="font-body font-weight-medium">Extension Fee</td>
+												<td class="font-body">€ 0.00</td>
+												<td class="font-body">$ 0.00</td>
+											</tr>								
+											<tr>
+												<td class="font-body font-weight-medium">Total</td>
+												<td class="font-body font-weight-medium">€ 0.00</td>
+												<td class="font-body font-weight-medium">$ 0.00</td>
+											</tr>
+										</tbody>
+									</div>
+								</table>
+							</div>
+							
+							<div class="row m-t-md">
+								<div class="col-md-12 d-flex justify-content-between align-items-end">
+									<div>
+										<p class="font-h3 font-weight-bold m-b-xs">Save:</p>
+										<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ 0.00</p>
+										<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
+									</div>
+									<div>
+							        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
+									 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
+									 	</div>
+							        	<div ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
+									 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer" ui-sref="patents.patent({patentId: $ctrl.patent.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal<i class="fa fa-refresh fa-1x m-l-xs"></i></a>
+									 	</div>																		
+										<div ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+									 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+									 		</ngcart-addtocart>
+									 	</div>
+									</div>
+								</div>				
 							</div> <!-- row end-->
 						</div>
 					</div>
@@ -489,67 +592,93 @@
 					</div>
 		    	</div>
 				
-				<div class="content-panel__body">
-					<div class="row">
-						<div class="col-md-12">
-							<div ng-if="$ctrl.renewal.length == 0">
-								<p class="font-weight-bold font-h4">This patent has not been renewed through Patent Place</p>
+
+				<div ng-if="$ctrl.renewal.length == 0">
+					<div class="content-panel__body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row h-100 bg-no-chart">
+									<div class="col-md-12 d-flex align-items-center justify-content-center h-100">
+										<div class="d-flex justify-content-center align-items-center flex-column  container-content-40">
+											<p class="h4 font-weight-medium text-center">This patent has not yet been renewed through Patent Place</p>
+											<p class="h4 font-weight-medium">Status: <span class="txt-phase-green" ng-bind="$ctrl.patent.renewalStatus"></span></p>			
+											<div class="m-b-sm"></div>
+												<p class="font-body text-center">Information will be displayed when the selected patent is open for renewal. You can view and edit some information through the patent information tab.</p>											
+											<div class="m-b-sm"></div>
+											<div>
+									        	<div ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
+											 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer" ui-sref="patents.patent({patentId: $ctrl.patent.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal<i class="fa fa-refresh fa-1x m-l-xs"></i></a>
+											 	</div>																		
+												<div ng-if="$ctrl.patent.renewalStatus == 'Too late to renew'">
+											 		<p class="txt-phase-red font-weight-medium font-h4" ng-bind="$ctrl.patent.renewalStatus"></p>
+											 	</div>										 	
+											</div>										
+											<div class="m-b-sm"></div>
+											<p class="h4 font-weight-medium">Renewal Window Opens:</p>
+											<p class="h4 font-weight-medium txt-phase-green">Insert data</p>										
+										</div>
+					    			</div>
+			    				</div>
 							</div>
-							<div ng-if="$ctrl.renewal.length !== 0">
-								<table class="table">
-									<thead class="border-grey-xs--btm border-grey-xs--top">
-										<tr>
-											<td class="font-h4 font-weight-bold" width="20%" ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
-												<span ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-												<span ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-											</td>
-											<td class="font-h4 font-weight-bold"  width="20%" ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
-												<span ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-												<span ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-											</td>
-											<td class="font-h4 font-weight-bold"  width="30%" ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
-												<span ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-												<span ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-											</td>
-											<td class="font-h4 font-weight-bold" width="30%">Downloads</td>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
-											<td class="font-body" width="20%">Year <span ng-bind="renewal.renewalYear"></span></td>
-											<td class="font-body" width="20%">{{renewal.renewalDueDate | date: 'MM/dd/yy'}}</td>
-											<td class="font-body" width="30%">
-												<table class="table-borderless">
-													<tr>
-														<td class="font-body">Official Fee:</td>
-														<td class="font-body">$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
-													</tr>
-													<tr class="border-grey-xs--btm">
-														<td class="font-body">Processing Fee:</td>
-														<td class="font-body">$ {{$ctrl.feeBreakDown.processingFeeEUR}}</td>
-													</tr>														
+						</div>
+					</div>
+				</div>
+				<div ng-if="$ctrl.renewal.length !== 0">
+					<div class="content-panel__body">
+						<div class="row">
+							<table class="t-data">
+								<thead class="border-grey-xs--top">
+									<tr>
+										<td class="font-h4 font-weight-bold td-panel-p-l" width="20%" ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
+											<span ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+											<span ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+										</td>
+										<td class="font-h4 font-weight-bold"  width="20%" ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
+											<span ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+											<span ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+										</td>
+										<td class="font-h4 font-weight-bold"  width="30%" ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
+											<span ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+											<span ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+										</td>
+										<td class="font-h4 font-weight-bold" width="30%">Downloads</td>
+									</tr>
+								</thead>
+								<tbody class="border-grey-xs--btm">
+									<tr ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+										<td class="font-body td-panel-p-l" width="20%">Year <span ng-bind="renewal.renewalYear"></span></td>
+										<td class="font-body" width="20%">{{renewal.renewalDueDate | date: 'MM/dd/yy'}}</td>
+										<td class="font-body" width="30%">
+											<table class="table-borderless">
+												<tr>
+													<td class="font-body p-t-none">Official Fee:</td>
+													<td class="font-body p-t-none">$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
+												</tr>
+												<tr class="border-grey-xs--btm">
+													<td class="font-body">Processing Fee:</td>
+													<td class="font-body">$ {{$ctrl.feeBreakDown.processingFeeEUR}}</td>
+												</tr>														
 
-													<tr>
-														<td class="font-body font-weight-bold">Total: </td>
-														<td class="font-body font-weight-bold">$ {{$ctrl.feeBreakDown.subTotalUSD}}</td>
-													</tr>													
-												</table>
-											</td>
+												<tr>
+													<td class="font-body font-weight-bold">Total: </td>
+													<td class="font-body font-weight-bold">$ {{$ctrl.feeBreakDown.subTotalUSD}}</td>
+												</tr>													
+											</table>
+										</td>
 
-											<td width="30%">
-												<div class="row">
-													<div class="col-md-6 d-flex align-items-center">
-														<a href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center" download>Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
-													</div>
-													<div class="col-md-6 d-flex align-items-center">
-														<a href="p3sweb/hardcodedpffolder/invoices/dummyInvoiceNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
-													</div>	
+										<td width="30%">
+											<div class="row">
+												<div class="col-md-6 d-flex align-items-center">
+													<a href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center" download>Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
 												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+												<div class="col-md-6 d-flex align-items-center">
+													<a href="p3sweb/hardcodedpffolder/invoices/dummyInvoiceNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
+												</div>	
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

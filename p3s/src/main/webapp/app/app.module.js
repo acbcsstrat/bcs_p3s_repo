@@ -1,7 +1,6 @@
 var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment', 'ngTable']);
 
-app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(Idle, userService, $rootScope, amMoment, $timeout) {
-
+app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(Idle, userService, $rootScope, amMoment, $timeout, $uibModal) {
 
     $rootScope.page = '';
 
@@ -48,7 +47,6 @@ app.controller('mainNavCtrl', ['$scope', '$mdSidenav', 'ngCart', '$timeout', fun
 }]);
 
 app.controller('coreCtrl', ['$scope', 'Idle', 'Keepalive', '$uibModal', '$http', 'ngCart', function($scope, Idle, Keepalive, $uibModal, $http, ngCart){
-
          
       	function closeModals() {
 	        if ($scope.warning) {
