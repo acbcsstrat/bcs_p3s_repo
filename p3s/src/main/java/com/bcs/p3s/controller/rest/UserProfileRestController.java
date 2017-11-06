@@ -28,6 +28,7 @@ import com.bcs.p3s.security.SecurityUtil;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.email.EmailSender;
 import com.bcs.p3s.util.email.TmpEmailerDummy;
 import com.bcs.p3s.util.lang.Universal;
  
@@ -51,60 +52,6 @@ public class UserProfileRestController extends Universal {
          P3SUser p3sUser = pLoginSession.getUser();
     	UserProfileUI userProfileUI = userService.getUserProfileUI(p3sUser);
 
-    	
-    	
-    	
-    	
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	Start of: Here - tmp put Development HOOK for send EMAIL
-
-    // Real usage of this would be from a service ..
-    	
-//    	System.out.println("UserProfileRestController : do HOOK for test emailing ");
-//
-//    	P3sEmailFactory emailFactory = new P3sEmailFactory();
-//    	
-//    	// #1
-//    	//P3sEmail email = emailFactory.create(EmailTemplates.email_register_combined, "acdev@p3s.me",null,null,null,null);
-//
-//    	
-//    	// #2
-//    	P3SUser myUser = SecurityUtil.getMyUser();
-//    	Patent pat = Patent.findPatent(1L);
-//    	
-//    	P3sEmail email = emailFactory.create(EmailTemplates.email_reminder_standard, 
-//    			myUser,pat,"1234.56","2 weeks","Nov 21, 2017 23:59 CET");
-//
-//    	TmpEmailerDummy dummyEmailer = new TmpEmailerDummy();
-//    	dummyEmailer.logEmail(email);
-//    	
-//    	System.out.println("UserProfileRestController : do HOOK finished ");
-    	
-    	
-//    	End of: Here - tmp put Development HOOK for send EMAIL
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
     	
         return new ResponseEntity<UserProfileUI>(userProfileUI, HttpStatus.OK);
     }
@@ -136,6 +83,68 @@ public class UserProfileRestController extends Universal {
 //    	System.out.println(" ****************** ");
 
     	if ( ! ( obUser instanceof UserProfileUI)) notYet("updateUser given object which is NOT a UserProfileUI");
+    	
+
+    	
+    	
+    	
+    	
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	Start of: Here - tmp put Development HOOK for send EMAIL
+
+    // Real usage of this would be from a service ..
+    	
+    	System.out.println("UserProfileRestController : do HOOK for test emailing ");
+
+    	P3sEmailFactory emailFactory = new P3sEmailFactory();
+    	
+    	// #1
+    	//P3sEmail email = emailFactory.create(EmailTemplates.email_register_combined, "acdev@p3s.me",null,null,null,null);
+
+    	
+    	// #2
+    	P3SUser acUser = SecurityUtil.getMyUser();
+    	Patent pat = Patent.findPatent(1L);
+    	
+    	P3sEmail email = emailFactory.create(EmailTemplates.email_reminder_standard, 
+    			acUser,pat,"1234.56","2 weeks","Nov 21, 2017 23:59 CET");
+
+//    	TmpEmailerDummy dummyEmailer = new TmpEmailerDummy();
+//    	dummyEmailer.logEmail(email);
+
+    	EmailSender emailer = new EmailSender(email);
+    	emailer.setRecipientsToDevs();
+    	emailer.sendEmail();
+    	
+    	
+    	System.out.println("UserProfileRestController : do HOOK finished ");
+    	
+    	
+//    	End of: Here - tmp put Development HOOK for send EMAIL
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+//    	********    ********    ********    ********    ********    ********    ********    
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+
     	
     	UserProfileUI user = (UserProfileUI) obUser;
     	

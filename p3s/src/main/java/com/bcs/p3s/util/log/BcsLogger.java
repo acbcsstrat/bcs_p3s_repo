@@ -5,6 +5,9 @@ import java.io.StringWriter;
 
 import org.apache.log4j.Logger;
 
+import com.bcs.p3s.docs.email.P3sEmail;
+import com.bcs.p3s.util.email.EmailSender;
+
 /**
  * Provides logging methods.
  * Expect many other classes to Extended this
@@ -56,34 +59,49 @@ public class BcsLogger implements Loggable {
 		return logChangeOfStatusN4CU;
 	}
 
-	/**
-	 * e.g.
-	 *  Amber 2 weeks email sent for patent 123456789.2 to 3 recipients
-	 */
+	
+	// P3S receives no emails, but can send 3 types of email. Should log every email sent
+	/** As part of the sign-up process **/
+	protected Logger logRegistrationEmailSentN4CU = null;
+	public Logger logRegistrationEmailSent() {
+		if (logRegistrationEmailSentN4CU==null) { logRegistrationEmailSentN4CU = Logger.getLogger(REGISTRATION_EMAIL_SENT); }
+		return logRegistrationEmailSentN4CU;
+	}
+	/** e.g. Amber 2 weeks email sent for patent 123456789.2 to 3 recipients **/
 	protected Logger logReminderEmailSentN4CU = null;
 	public Logger logReminderEmailSent() {
 		if (logReminderEmailSentN4CU==null) { logReminderEmailSentN4CU = Logger.getLogger(REMINDER_EMAIL_SENT); }
 		return logReminderEmailSentN4CU;
 	}
+	/** Transaction created or progressed, where we need email the customer **/
+	protected Logger logTransactionEmailSentN4CU = null;
+	public Logger logTransactionEmailSent() {
+		if (logTransactionEmailSentN4CU==null) { logTransactionEmailSentN4CU = Logger.getLogger(TRANSACTION_EMAIL_SENT); }
+		return logTransactionEmailSentN4CU;
+	}
 
 
 
 	/**
-	 * panic() is use to log unexpected events. 
-	 * Logs as fatal, AND *WILL* send an email to dev team
+	 * panic() is uses to log unexpected/worrying events - to developers. 
+	 * Logs as fatal, Logs as panic, AND *WILL* send an email to dev team
 	 * By allowing this log action, invoking code can be simpler, as it is now allowed to crash
+	 * This method does NOT prevent subsequent operation.
 	 * @param msg A string to be logged
 	 */
 	public void panic(String msg, Throwable x) {
 		String panicMsg = "PANIC: "+msg;
+		Logger panicLogger = Logger.getLogger("PANIC_EMAIL_SENT");
 		if (x==null) {
 			logInternalError().fatal(panicMsg);
+			panicLogger.warn(panicMsg);
 		}
 		else
 		{
 			logInternalError().fatal(panicMsg, x);
+			panicLogger.warn(panicMsg, x);
 		}
-		// Imminent functionality - now email this panic to dev team
+		// now email this panic to dev team
 		String emailBody = panicMsg + "\n\n";
 		if (x!=null) {
 			emailBody += x.getMessage();
@@ -93,8 +111,11 @@ public class BcsLogger implements Loggable {
 			x.printStackTrace(new PrintWriter(errors));
 			emailBody += errors.toString();
 		}
-		// & - until email is available
-		log().debug("Prepared email body is:"+emailBody);
+		P3sEmail pan = new P3sEmail("panic", "PANIC message from P3Sweb !", emailBody, null, null);
+    	EmailSender emailer = new EmailSender(pan);
+    	emailer.setRecipientsToDevs();
+    	emailer.sendEmail();
+	
 	}
 	
 	
