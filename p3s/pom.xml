@@ -338,6 +338,15 @@
 		    <version>0.1.54</version>
 		</dependency>
 
+		<!-- Andy Chapman - 171103 for sending emails -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.5.0-b01</version>
+		</dependency>
+
+
+
 
     </dependencies>
     <build>
