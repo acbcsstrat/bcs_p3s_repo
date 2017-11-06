@@ -89,14 +89,23 @@ app.component('patent', {
 
 	            if(changeObj.patent){
 
-	            	console.log(changeObj.patent)
-
 	            	vm.selectedPatent =  changeObj.patent.currentValue;
 
 					var patent = vm.patent;
-	            	var caFee = vm.costAnalysis.fee;
+
+		            var status = patent.renewalStatus;
+
+		            if((status == 'Show price') || (status == 'Payment in progress') || (status == 'EPO Instructed')) {
+		            	vm.displayCost = true;
+		            	vm.hideCost = false;
+		            } else {
+		            	vm.displayCost = false;
+		            	vm.hideCost = true;
+		            }
+
 	            	var costBand = vm.costAnalysis;
-		            var renewalHistory = vm.renewal;
+		            var renewalHistory = vm.renewal;		            
+	            	var caFee = vm.costAnalysis.fee;
 
 	            	vm.feeBreakDown = {
 	            		renewalFeeEUR: caFee.renewalFeeEUR,
@@ -448,6 +457,7 @@ app.component('patent', {
 	    }
 
         vm.updatePatent = function(patent) {
+        	console.log(patent)
         	var id = patent.id;
         	patentsRestService.updatePatent(patent, id);
         }

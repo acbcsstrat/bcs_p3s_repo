@@ -166,6 +166,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                     }
      
                     var billingDetails = $scope.billingDetails;
+                    console.log(billingDetails)
                     var orderObj =  {
                         billingCity: billingDetails.billingCity,
                         billingStreet: billingDetails.billingStreet,

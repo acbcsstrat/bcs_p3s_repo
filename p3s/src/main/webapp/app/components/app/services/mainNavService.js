@@ -32,15 +32,14 @@ app.factory('mainNavService', function(){
       		
       		name: 'Transactions',
       		type: 'toggle',
-          icon: 'fa fa-credit-card',
       		pages: [
       			{
-		            name: 'Current Transactions',
+		            name: 'Current',
 		            state: 'current-transactions',
 		            type: 'link',
 		        },
 		        {
-		            name: 'Transaction History',
+		            name: 'History',
 		            state: 'transaction-history',
 		            type: 'link',
 		        }

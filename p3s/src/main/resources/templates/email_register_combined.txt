@@ -1,4 +1,31 @@
-line1 having [FIRSTNAME] embedded
-line2
-line3 this line has COMPANY_NAME embedded here [COMPANY_NAME]. Told you so.
-line4
+Patent Place email verification request
+Hello [FIRSTNAME], 
+
+Thank you for registering with The Patent Place.
+
+Before you login, please confirm your email address by clicking on the below link, or by copy-and-pasting the link address into a browser:
+
+<a href="[URL_TO_VERIFY_EMAIL]">[URL_TO_VERIFY_EMAIL]</a>
+
+You will not be able to login until you have confirmed your email address.
+
+
+
+For more information about thepatent.place, see our FAQ <a href="[URL_TO_FAQ]">here</a>
+
+Should you want to register a support request, contact : [SUPPORT_EMAIL_ADDRESS]
+
+
+
+Should your colleagues also wish to register with this same [COMPANY_NAME] account, they should register, indicating ‘firm already registered’ (or click <a href="[LOGIN_URL]">here</a>), and enter the following identifying credentials for your company:
+
+Company Code : 	[COMPANY_CODE]
+PIN:  			[COMPANY_PIN]
+
+(These details are also available to you from your User Profile page)
+
+
+
+We're delighted to have you on board!
+
+The Patent Place team

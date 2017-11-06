@@ -45,7 +45,7 @@
 			<p class="font-body font-weight-medium">There are currently know patents in this phase</p>
 		</div>
 	</div>
-	<div ng-hide="$ctrl.tableParams.data == 0" class="col-md-12 p-r-none" id="scrollable-area" class="table-scroll">
+	<div ng-hide="$ctrl.tableParams.data == 0" id="scrollable-area" class="table-scroll col-md-12 p-r-none">
 		<table ng-table="$ctrl.tableParams" class="table font-body t-list" show-filter="false" fixed-table-headers="scrollable-area">
 		    <tr ng-if="$ctrl.tableParams.data !== 0" ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
 		        <td data-title="'App No.'" filter="{ 'patentApplicationNumber': 'text'}" sortable="'patentApplicationNumber'">

@@ -2,6 +2,7 @@ package com.bcs.p3s.docs.email;
 
 import com.bcs.p3s.docs.email.Populators.AbstractPopulator;
 import com.bcs.p3s.docs.email.Populators.RegisterPopulator;
+import com.bcs.p3s.docs.email.Populators.ReminderEmailStandardPopulator;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.util.lang.Universal;
@@ -10,7 +11,13 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 
 	// default constructor
 	
-	public P3sEmail create(String template, Object param1) {  // extend params as needed ...
+	public P3sEmail create(String template 
+			, Object param1
+			, Object param2
+			, Object param3
+			, Object param4
+			, Object param5
+			) {  // extend params as needed ...
 		String err = "P3sEmailFactory create("+template+") : ";
 		P3sEmail email = null;
 		boolean noBuild = true;
@@ -18,6 +25,10 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 		
 		if (EmailTemplates.email_register_combined.equals(template)) {
 			pop = new RegisterPopulator(template, param1);
+			noBuild = false;
+		}
+		if (EmailTemplates.email_reminder_standard.equals(template)) {
+			pop = new ReminderEmailStandardPopulator(template, param1, param2, param3, param4, param5);
 			noBuild = false;
 		}
 		

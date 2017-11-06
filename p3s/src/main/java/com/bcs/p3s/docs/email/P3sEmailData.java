@@ -11,18 +11,29 @@ public class P3sEmailData {
 	String supportEmailAddress;
 	String loginUrl;
 	String urlToVerifyEmail;
+	String urlToFaq;
 	
+	// User and Company details
 	String firstname; 
 	String lastname;
-
 	String companyName; 
 	String companyCode;
 	String companyPin;
+	
+	// Patent and renewal timing details
+	String timeBeforeChangePhrase;
+	String patentApplicationNumber;
+	String patentTitle;
+	String patentShortTitle;
+	String patentClientRef;
+	String price;
+	String timestampOfNextColourChange;
 
 	
 	
-	// regular getters & setters
 	
+	// regular getters & setters
+
 	public String getSupportEmailAddress() {
 		return supportEmailAddress;
 	}
@@ -40,6 +51,12 @@ public class P3sEmailData {
 	}
 	public void setUrlToVerifyEmail(String urlToVerifyEmail) {
 		this.urlToVerifyEmail = urlToVerifyEmail;
+	}
+	public String getUrlToFaq() {
+		return urlToFaq;
+	}
+	public void setUrlToFaq(String urlToFaq) {
+		this.urlToFaq = urlToFaq;
 	}
 	public String getFirstname() {
 		return firstname;
@@ -70,6 +87,48 @@ public class P3sEmailData {
 	}
 	public void setCompanyPin(String companyPin) {
 		this.companyPin = companyPin;
+	}
+	public String getTimeBeforeChangePhrase() {
+		return timeBeforeChangePhrase;
+	}
+	public void setTimeBeforeChangePhrase(String timeBeforeChangePhrase) {
+		this.timeBeforeChangePhrase = timeBeforeChangePhrase;
+	}
+	public String getPatentApplicationNumber() {
+		return patentApplicationNumber;
+	}
+	public void setPatentApplicationNumber(String patentApplicationNumber) {
+		this.patentApplicationNumber = patentApplicationNumber;
+	}
+	public String getPatentTitle() {
+		return patentTitle;
+	}
+	public void setPatentTitle(String patentTitle) {
+		this.patentTitle = patentTitle;
+	}
+	public String getPatentShortTitle() {
+		return patentShortTitle;
+	}
+	public void setPatentShortTitle(String patentShortTitle) {
+		this.patentShortTitle = patentShortTitle;
+	}
+	public String getPatentClientRef() {
+		return patentClientRef;
+	}
+	public void setPatentClientRef(String patentClientRef) {
+		this.patentClientRef = patentClientRef;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
+	public String getTimestampOfNextColourChange() {
+		return timestampOfNextColourChange;
+	}
+	public void setTimestampOfNextColourChange(String timestampOfNextColourChange) {
+		this.timestampOfNextColourChange = timestampOfNextColourChange;
 	}
 	
 }

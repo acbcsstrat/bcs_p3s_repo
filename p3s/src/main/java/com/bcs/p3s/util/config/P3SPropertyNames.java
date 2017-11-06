@@ -50,7 +50,8 @@ public interface P3SPropertyNames {
 
 
 	// host web URL + support
-	public static final String P3S_WEB_URL_BASE = "p3s_web_url_base"; 
+	public static final String P3S_WEB_WORDPRESS_URL_BASE = "p3s_web_wordpress_url_base"; 
+	public static final String P3S_WEB_TOMCAT_URL_BASE = "p3s_web_tomcat_url_base"; 
 	
 	// Document storage (terminate with forwardslash)
 	public static final String INVOICE_DOCUMENT_PATH = "invoice_doc_path";
