@@ -92,12 +92,12 @@ public class P3SEnvironmentKnowledge extends Universal {
 	/**
 	 * Provides the filespec of the main P3S property file on this host
 	 */
-	public final String OBS_getP3SPropertyFileFilespec()  {
-		// for now, & likely always, this is the same as getBuildinfoFilespec() 
-		String filespec = appendFilenameToPath(getMainPropertyFilePath(), P3S_PROPERTYFILE_FILENAME);
-		log().debug("P3SEnvironmentKnowledge getP3SPropertyFileFilespec predicts that p3s property file is at "+filespec);
-		return filespec ;
-	};
+//	public final String OBS_getP3SPropertyFileFilespec()  {
+//		// for now, & likely always, this is the same as getBuildinfoFilespec() 
+//		String filespec = appendFilenameToPath(getMainPropertyFilePath(), P3S_PROPERTYFILE_FILENAME);
+//		log().debug("P3SEnvironmentKnowledge getP3SPropertyFileFilespec predicts that p3s property file is at "+filespec);
+//		return filespec ;
+//	};
 	
 	
 
@@ -139,7 +139,18 @@ public class P3SEnvironmentKnowledge extends Universal {
 	};
 	
 	
-
+	/**
+	 * Indicates if P3Sweb is running on a developer PC or not. 
+	 */
+	public static boolean isDeveloperPC() {
+		String host = Hostname.getHostname();
+		if ( ("CCP020".equals(host)) || ("avid-ox790-013".equals(host))
+		|| ("DESKTOP-H575IU3".equals(host)) || ("CCP007".equals(host)) ) {
+			return true;
+		}
+		else return false;
+	}
+	
 	
 	
 	
