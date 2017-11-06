@@ -579,6 +579,16 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		Patent patent = Patent.findPatent(id);
 		System.out.println("Got the new patent with filing date as " + patent.getFilingDate());
 		log().debug("Queried database for patent id " + id+" and got hte filing date as " + patent.getFilingDate());
+		
+		/** 
+		 * Checking whether patent year > 20
+		 */
+		if(patent.getRenewalYear()>20){
+			caData.setCurrentcostBand(RenewalColourEnum.GREY);
+			//caData.setGreenStartDate(allDates.getNextWindowOpenDate());
+			return caData;
+		}
+		
 		/** Check whether current business has got any reduced Fees.
 		 * 		If so get the discounted rates ( PROCESSING FEE, EXPRESS FEE, URGENT FEE AND LATE PAY PENALTY )
 		 * 		Else get the actual P3SFEESOLE entries
@@ -725,7 +735,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		// NO GRAPHS AND NOT LINE CHARTS
 		// ABOVE SCENARIO CAN BE FOR PATENT YEAR < 3 OR > 20
 		else if(RenewalStatusEnum.NO_RENEWAL_NEEDED .equalsIgnoreCase(patent.getRenewalStatus())){
-			caData.setCurrentcostBand(RenewalColourEnum.NOCOLOR);
+			caData.setCurrentcostBand(RenewalColourEnum.GREY);
 			caData.setGreenStartDate(allDates.getNextWindowOpenDate());
 			return caData;
 		}

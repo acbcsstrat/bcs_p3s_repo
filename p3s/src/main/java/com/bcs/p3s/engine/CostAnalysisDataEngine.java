@@ -158,7 +158,7 @@ public class CostAnalysisDataEngine extends Universal{
 			
 		}
 		else{//CAN BE DOLDRUM OR TOO LATE TO RENEW
-			caData.setCurrentcostBand(RenewalColourEnum.NOCOLOR);
+			caData.setCurrentcostBand(RenewalColourEnum.GREY);
 		}
 		
 		log().debug( msg + " returning Current cost band is " + caData.getCurrentcostBand());
