@@ -1,5 +1,10 @@
 package com.bcs.p3s.docs.email;
 
+import java.util.List;
+
+import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.wrap.TwoColRecord;
+
 /**
  * This holds all the Injectable data that a P3sEmail may require.
  * Builders populate those parts of this, as required,
@@ -29,6 +34,19 @@ public class P3sEmailData {
 	String price;
 	String timestampOfNextColourChange;
 
+	
+	// Transaction details
+	String transactionReference;
+	String timestampTargetFundsArrivel;
+	String numberOfPatents; 
+	List<Patent> patents;
+	List<TwoColRecord> paymentDetails;
+	String fieldb; 
+	String fieldc; 
+	
+	// Special getters
+	public String getCRLF() { return "\n"; }
+	public String getTxtForEachPatent() { return ", for each patent,"; }
 	
 	
 	
@@ -129,6 +147,48 @@ public class P3sEmailData {
 	}
 	public void setTimestampOfNextColourChange(String timestampOfNextColourChange) {
 		this.timestampOfNextColourChange = timestampOfNextColourChange;
+	}
+	public String getTransactionReference() {
+		return transactionReference;
+	}
+	public void setTransactionReference(String transactionReference) {
+		this.transactionReference = transactionReference;
+	}
+	public String getTimestampTargetFundsArrivel() {
+		return timestampTargetFundsArrivel;
+	}
+	public void setTimestampTargetFundsArrivel(String timestampTargetFundsArrivel) {
+		this.timestampTargetFundsArrivel = timestampTargetFundsArrivel;
+	}
+	public String getNumberOfPatents() {
+		return numberOfPatents;
+	}
+	public void setNumberOfPatents(String numberOfPatents) {
+		this.numberOfPatents = numberOfPatents;
+	}
+	public List<Patent> getPatents() {
+		return patents;
+	}
+	public void setPatents(List<Patent> patents) {
+		this.patents = patents;
+	}
+	public List<TwoColRecord> getPaymentDetails() {
+		return paymentDetails;
+	}
+	public void setPaymentDetails(List<TwoColRecord> paymentDetails) {
+		this.paymentDetails = paymentDetails;
+	}
+	public String getFieldb() {
+		return fieldb;
+	}
+	public void setFieldb(String fieldb) {
+		this.fieldb = fieldb;
+	}
+	public String getFieldc() {
+		return fieldc;
+	}
+	public void setFieldc(String fieldc) {
+		this.fieldc = fieldc;
 	}
 	
 }

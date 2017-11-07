@@ -31,19 +31,33 @@ public interface Injectables {
 	String COMPANY_PIN = "COMPANY_PIN";
 
 	// Patent and renewal timing details
-	String TIME_BEFORE_CHANGE_PHRASE = "TIME_BEFORE_CHANGE_PHRASE";
+	String TIME_BEFORE_CHANGE_PHRASE = "TIME_BEFORE_CHANGE_PHRASE";  // e.g. "2 weeks"
 	String PATENT_APPLICATION_NUMBER = "PATENT_APPLICATION_NUMBER";
 	String PATENT_TITLE = "PATENT_TITLE";
 	String SHORT_TITLE = "SHORT_TITLE";
 	String PATENT_CLIENT_REF = "PATENT_CLIENT_REF";
-	String PRICE = "PRICE";
-	String TIMESTAMP_OF_NEXT_COLOUR_CHANGE = "TIMESTAMP_OF_NEXT_COLOUR_CHANGE";
+	String PRICE = "PRICE";											// WithOUT currency symbol
+	String TIMESTAMP_OF_NEXT_COLOUR_CHANGE = "TIMESTAMP_OF_NEXT_COLOUR_CHANGE"; // Inc. Timezone
+
+	// Transaction details
+	String TRANSACTION_REFERENCE = "TRANSACTION_REFERENCE";
+	String TIMESTAMP_TARGET_FUNDS_ARRIVAL = "TIMESTAMP_TARGET_FUNDS_ARRIVAL";
+	String NUMBER_OF_PATENTS = "NUMBER_OF_PATENTS"; 
+	//String OUR_ACCOUNT_NUMBER = "OUR_ACCOUNT_NUMBER"; - acTidy - pretty sure redundant 
+	//String OUR_ABA_NNUMBER = "OUR_ABA_NNUMBER"; 
+	String FIELDB = "FIELDB"; 
+	String FIELDC = "FIELDC"; 
+	
+	// Fixed text formats - acTidy - are these needed?
+	String CRLF = "CRLF";
+	String TXT__FOR_EACH_PATENT = ", for each patent,";
+	
+	// 'Repeating Set' Identifiers  ===================================================================================
+	String THREECOL_TABLE_OF_PATENTS = "THREECOL_TABLE_OF_PATENTS"; 
+	String THREECOL_TABLE_OF_PAYMENT_DETAILS = "THREECOL_TABLE_OF_PAYMENT_DETAILS"; 
 
 	
 	
-	
-	
-	// Array values   ===================================================================================
 	
 	
 }

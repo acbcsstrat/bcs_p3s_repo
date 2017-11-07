@@ -25,6 +25,7 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 	// Constructor - populates the P3sEmailData
 	public RegisterPopulator(String templateName, Object obNewUserEmailAddress) {
 		super(templateName);  // set templateName
+		templatetype = EmailTypeEnum.REGISTER;
 		String err = "RegisterPopulator constructor : ";
 
 		if (EmailTemplates.email_register_combined.equals(templateName)) {
@@ -184,13 +185,5 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		return url2verifyEmail;
 	}
 	
-	
-	
-	
-	
-	public P3sEmail generateEmail() {
-		P3sEmail email = new P3sEmail(this.templateName, this.subject, this.htmlBody, this.attachmentPath, this.attachmentFilename);
-		return email;
-	}
 	
 }

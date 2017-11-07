@@ -10,22 +10,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.bcs.p3s.util.random.RandomGenerator;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 
 import com.bcs.p3s.display.FxRateUI;
-import com.bcs.p3s.display.PatentUI;
-import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
-import com.bcs.p3s.service.PatentService;
-import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.session.PostLoginSessionBean;
-import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -185,15 +177,17 @@ public class DummyDataEngine extends Universal {
 		return "CQ 465 735 QC";
 	}*/
 		
-	public BankTransferPaymentDetails generateBankTransferPaymentDetails() {
-		BankTransferPaymentDetails ikk = new BankTransferPaymentDetails();
-		ikk.setAccountNumber("12345678");
-		ikk.setItem1("This is Item 1");
-		ikk.setItem2("This IS item 2");
-		ikk.setItem3("ThIS is item 3");
-		return ikk;
-	}
 
+//	public BankTransferPaymentDetails generateBankTransferPaymentDetails() {
+//		BankTransferPaymentDetails ikk = new BankTransferPaymentDetails();
+//		ikk.setAccountNumber("12345678");
+//		ikk.setItem1("This is Item 1");
+//		ikk.setItem2("This IS item 2");
+//		ikk.setItem3("ThIS is item 3");
+//		return ikk;
+//	}
+
+	
 	public String gimmeAnyInvoiceUrl() {
 		return "hardcodedpdffolder/invoices/dummyInvoiceNumber1.pdf";
 	}

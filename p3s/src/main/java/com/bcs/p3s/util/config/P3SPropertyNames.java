@@ -54,8 +54,9 @@ public interface P3SPropertyNames {
 	public static final String P3S_WEB_TOMCAT_URL_BASE = "p3s_web_tomcat_url_base"; 
 	
 	// Document storage (terminate with forwardslash)
-	public static final String INVOICE_DOCUMENT_PATH = "invoice_doc_path";
-	public static final String CERTIFICATE_DOCUMENT_PATH = "certificate_doc_path";
+	//public static final String INVOICE_DOCUMENT_PATH = "invoice_doc_path";
+	//public static final String CERTIFICATE_DOCUMENT_PATH = "certificate_doc_path";
+	public static final String PATH_TO_PDF_DOCS = "path_to_pdf_docs";
 
 	
 	

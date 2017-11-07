@@ -21,7 +21,7 @@ Thereafter (which would be leaving it very late) we can still renew for a few li
 You’ll be aware that this patent is already on extension, and will lapse soon. Don’t leave renewing it too late]
 
 <<If 2 weeks or less]
-Warning: as you are approaching a boundary, be aware that this price is only held until
+Warning: as you are approaching a boundary, be aware that this price-band ends 
 [TIMESTAMP_OF_NEXT_COLOUR_CHANGE]
 
 Kind regards,

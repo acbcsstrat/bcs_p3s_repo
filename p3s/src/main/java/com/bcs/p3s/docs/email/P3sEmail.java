@@ -31,9 +31,14 @@ public class P3sEmail extends Universal implements P3sEmailInterface {
 	
 	
 
-	// Special getter
-	public boolean hasAttachment() {
-		return (attachmentFilename!=null);
+//	// Special getter
+//	public boolean hasAttachment() {
+//		return (attachmentFilename!=null);
+//	}
+	public boolean hasValidAttachmentDetails() {
+		boolean safe = false;
+		if (notEmpty(attachmentPath) && notEmpty(attachmentFilename)) safe = true;
+		return safe;
 	}
 	
 	

@@ -25,8 +25,10 @@ public class ReminderEmailStandardPopulator extends AbstractPopulator implements
 
 	// Constructor - populates the P3sEmailData
 	public ReminderEmailStandardPopulator(String templateName, Object p3suser, Object patent,
-			Object obPrice, Object obTimeBeforeChangePhrase, Object obTimestampOfNextColourChange) {
+			Object obPrice, Object obTimeBeforeChangePhrase, Object obTimestampOfNextColourChange) 
+	{
 		super(templateName);  // set templateName
+		templatetype = EmailTypeEnum.REMINDER;
 		String err = "ReminderEmailStandardPopulator constructor : ";
 
 		if (EmailTemplates.email_reminder_standard.equals(templateName)) {
@@ -181,12 +183,6 @@ public class ReminderEmailStandardPopulator extends AbstractPopulator implements
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectLOGIN_URL();
 		
 		return moreInjectionsNeeded;
-	}
-
-	
-	public P3sEmail generateEmail() {
-		P3sEmail email = new P3sEmail(this.templateName, this.subject, this.htmlBody, this.attachmentPath, this.attachmentFilename);
-		return email;
 	}
 	
 

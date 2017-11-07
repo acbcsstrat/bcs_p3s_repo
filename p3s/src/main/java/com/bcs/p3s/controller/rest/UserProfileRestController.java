@@ -31,6 +31,7 @@ import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.email.EmailSender;
 import com.bcs.p3s.util.email.TmpEmailerDummy;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.BankTransferPaymentDetails;
  
 @RestController
 public class UserProfileRestController extends Universal {
@@ -111,9 +112,38 @@ public class UserProfileRestController extends Universal {
     	P3SUser acUser = SecurityUtil.getMyUser();
     	Patent pat = Patent.findPatent(1L);
     	
-    	P3sEmail email = emailFactory.create(EmailTemplates.email_reminder_standard, 
-    			acUser,pat,"1234.56","2 weeks","Nov 21, 2017 23:59 CET");
+    	List<Patent> patents = new ArrayList<Patent>();  // findPatentsByBusiness
+    	patents.add(Patent.findPatent(1L));
+    	patents.add(Patent.findPatent(2L));
+    	BankTransferPaymentDetails payee = new BankTransferPaymentDetails();
+    	
+    	String pdfPath = "";
+    	String pdfFilename = "";
+    	
+    	
+    	
+    	P3sEmail email = emailFactory.create(EmailTemplates.email_proforma_invoice, 
+    			acUser,"IP0003000009","Nov 9, 2017 17:01 CET",null,"dummyInvoiceNumber1.pdf",patents,payee,"1234.89");
 
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+//    	protected void populateForProformaInvoice(String templateName, Object obP3suser
+//    			, Object obTxnRef, Object obFundsTargetArriveTime
+//    			, Object obAttachmentPath, Object obAttachmentFilename
+//    			, Object obPatents
+//    			, Object obPayeeDets, Object obPrice
+
+    	
+    	
+    	
+    	
+    	
+    	
 //    	TmpEmailerDummy dummyEmailer = new TmpEmailerDummy();
 //    	dummyEmailer.logEmail(email);
 

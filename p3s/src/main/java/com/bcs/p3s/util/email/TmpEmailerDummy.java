@@ -4,7 +4,7 @@ import com.bcs.p3s.docs.email.P3sEmail;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
- * a v short-lived class
+ * a v short-lived class - acDebug acTidy
  * until we want to actual email a P3sEmail - this class witl just LOG them
  * @author AndyC
  *
@@ -31,9 +31,9 @@ public class TmpEmailerDummy extends Universal {
 		log().info("HtmlBody:");
 		log().info(email.getHtmlBody());
 
-		log().info("Attachment:");
-		String attach = (email.hasAttachment()) ? email.getAttachmentPath()+"  ::  "+email.getAttachmentFilename(): "None";
-		log().info(attach);
+//		log().info("Attachment:");
+//		String attach = (email.hasAttachment()) ? email.getAttachmentPath()+"  ::  "+email.getAttachmentFilename(): "None";
+//		log().info(attach);
 
 		log().info("End of Email. Type: "+email.getTemplateName());
 

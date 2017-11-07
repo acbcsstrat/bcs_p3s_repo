@@ -1,5 +1,6 @@
 package com.bcs.p3s.docs.email.Populators;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bcs.p3s.docs.email.Injectables;
@@ -14,12 +15,14 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 	
 	
 	protected String templateName = null;
+	protected EmailTypeEnum templatetype;
 	protected P3sEmailData data = new P3sEmailData();
 	
 	protected String subject;
 	protected String htmlBody;
 	protected String attachmentPath;
 	protected String attachmentFilename;
+	protected List<String> recipients_to = new ArrayList<String>(); // populated by client after below work finished
 
 
 
@@ -27,7 +30,11 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 		this.templateName = templateName;
 	}
 	
-	public abstract P3sEmail generateEmail(); // Read template, instantiate p3sEmail, do inject
+	// why abstract - they all the same :  acTidy : public abstract P3sEmail generateEmail(); // Read template, instantiate p3sEmail, do inject
+	public P3sEmail generateEmail() {
+		P3sEmail email = new P3sEmail(this.templateName, this.subject, this.htmlBody, this.attachmentPath, this.attachmentFilename);
+		return email;
+	}
 
 
 	
@@ -141,10 +148,60 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 		currentLine = newString;
 		return (currentLine.indexOf(SQUAREOPEN)!=-1);
 	}
+	protected boolean injectTRANSACTION_REFERENCE() {
+		String newString = currentLine.replace(assembleTag(Injectables.TRANSACTION_REFERENCE), data.getTransactionReference());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectTIMESTAMP_TARGET_FUNDS_ARRIVAL() {
+		String newString = currentLine.replace(assembleTag(Injectables.TIMESTAMP_TARGET_FUNDS_ARRIVAL), data.getTimestampTargetFundsArrivel());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectNUMBER_OF_PATENTS() {
+		String newString = currentLine.replace(assembleTag(Injectables.NUMBER_OF_PATENTS), data.getNumberOfPatents());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectFIELDB() {
+		String newString = currentLine.replace(assembleTag(Injectables.FIELDB), data.getFieldb());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectFIELDC() {
+		String newString = currentLine.replace(assembleTag(Injectables.FIELDC), data.getFieldc());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
 
 	
 	
+	// methods for controlling the TO recipients
+	public void addRecipient(String another) { recipients_to.add(another);	}
+	public void removeRecipients() { recipients_to.clear(); }
+	public boolean hasNoRecipients() { return ! recipients_to.isEmpty(); }
+	public void setRecipientsToDevs() { 
+		removeRecipients();
+		addRecipient("andychapman1977@gmail.com");
+		addRecipient("andy.chapman@boxcleversoftware.com");
+	}
+	
 
+	
+	
+//	public void addRecipient(String another) {
+//	internalAddRecipient(another);
+//	setRecip = true;
+//}
+///** replace recipient with PanicDevs **/
+//public void setRecipientsToDevs() {
+//	internalAddRecipient("andychapman1977@gmail.com");
+//	internalAddRecipient("andy.chapman@boxcleversoftware.com");
+//	setRecip = true;
+//}
+
+	
+	
 	
 	
 	
