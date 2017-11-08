@@ -6,8 +6,6 @@ package com.bcs.p3s.engine;
  * POJO used is RenewalDates
  */
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -91,14 +89,20 @@ public class RenewalDatesEngine extends Universal{
 		       */
 		       
 				/** STEP 1.4.1 - GET THE YEARS BETWEEN (Calculated renewal due for this year) AND (last day of month of filing patent) **/
+		        /**
+		         * If not overnight process, get the renewal year from database
+		         */
+		        
 		        int yearsBetween = new DateUtil().getYearsBetweenDates(new DateUtil().getTodaysDate(), monthEndFilingDate.getTime());
 		        int renewalYear = yearsBetween + 1;
+		        
+		        Date todays = new DateUtil().getTodaysDate();
 		        
 		        /**
 		         * DIFFERENT SITUATION :: IF RENEWAL YEAR < 3 OR RENEWAL YEAR > 20
 		         */
 		        if(renewalYear < 3){
-		        	log().debug("Renewal year is less than 3. So renewal window remain closed until PATENT YEAR 3" );
+		        	
 		        	Calendar cal = Calendar.getInstance();
 		        	cal.setTime(patent.getFilingDate());
 		        	yearNow = cal.get(Calendar.YEAR);
@@ -122,7 +126,21 @@ public class RenewalDatesEngine extends Universal{
 			        
 			        System.out.println("Calculated Window for this year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
 			        
-		        	log().debug("Patent year 3 starts on " + actualYear3RenDue.getTime());
+		        	log().debug("Patent year 3 starts on " + actualYear3RenDue.getTime() + " and window opens on " + renewalStart.getTime());
+		        	
+		        	
+		        	if(todays.after(renewalStart.getTime())){
+		        		renewalYear = 3;
+		        		log().debug("Renewal WINDOW OPENED for patent year 3 " );
+		        		
+		        		allDates.setCurrentRenewalDueDate(actualYear3RenDue.getTime());
+			        	allDates.setCurrentWindowOpenDate(renewalStart.getTime());
+			        	allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
+		        	}
+		        	
+		        	else{
+		        		log().debug("Renewal year is less than 3. So renewal window remain closed until PATENT YEAR 3" );
+		        	}
 		        	
 		        	allDates.setRenewalYear(renewalYear);
 		        	
@@ -141,6 +159,8 @@ public class RenewalDatesEngine extends Universal{
 		    		
 		        	
 		        }
+		        
+		        
 		        /** STEP 1.4.2 - CHECK THE POSITION OF TODAYS DATE IN RNEWAL WINDOW  
 		         * 					
 		         * 				1. If todays date before tempRenYearStart, we are still in last years window
@@ -156,7 +176,6 @@ public class RenewalDatesEngine extends Universal{
 		        /*** NOTE : ASSUMING RENEWAL YEAR STARTS ON RENEWAL WINDOW START DATE AND ENDS ON THE DAY WHEN THE RENEWAL WINDOW FOR NEXT YEAR OPENS  **/
 		     /************************************************************************************************************************************************/
 		        
-		        Date todays = new DateUtil().getTodaysDate();
 		        if(todays.before(renewalStart.getTime())){
 		        	renewalYear = renewalYear-1;
 		        	
@@ -195,6 +214,7 @@ public class RenewalDatesEngine extends Universal{
 		        }
 		        
 		        else{
+		        	
 		        	allDates.setCurrentRenewalDueDate(actualCurrentRenewalDate.getTime());
 		    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
 		    		allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
@@ -204,26 +224,42 @@ public class RenewalDatesEngine extends Universal{
 		    		Calendar otherRenewalDate = Calendar.getInstance();
 		    	    otherRenewalDate.set(yearNow+1, month, day , 23,59);  
 		    	    System.out.println("Renewal date 1 year before " + otherRenewalDate.getTime());
-		    	    Calendar actualPrevRenewalDate = new DateUtil().getLastDayOfMonth(otherRenewalDate.getTime());
-		    	    System.out.println("This year renewal due "+ actualPrevRenewalDate.getTime());
+		    	    Calendar actualNextRenewalDate = new DateUtil().getLastDayOfMonth(otherRenewalDate.getTime());
+		    	    System.out.println("This year renewal due "+ actualNextRenewalDate.getTime());
 		    	    
 		    	    renewalStart = Calendar.getInstance();
-		    	    renewalStart.setTime(actualPrevRenewalDate.getTime());
+		    	    renewalStart.setTime(actualNextRenewalDate.getTime());
 		    	    renewalStart.add(Calendar.MONTH, -3);
 		    	    renewalStart.setTime(new DateUtil().getMidnight(renewalStart.getTime()));
 		    	    
 		    	    renewalEnd = Calendar.getInstance();
-		    	    renewalEnd.setTime(actualPrevRenewalDate.getTime());
-		    	    System.out.println("Actual Due Date again" +actualPrevRenewalDate.getTime());
+		    	    renewalEnd.setTime(actualNextRenewalDate.getTime());
+		    	    System.out.println("Actual Due Date again" +actualNextRenewalDate.getTime());
 		    	    renewalEnd.add(Calendar.MONTH, 6);
 		    	    
 		    	    /** P3S WIndow close date is 2 days before the actual closing date **/
 		            renewalEnd.add(Calendar.DATE, -2);
 		    	    System.out.println("Doldrums for previous year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
 		    	    
-		    	    allDates.setNextRenewalDueDate(actualCurrentRenewalDate.getTime());
+		    	    allDates.setNextRenewalDueDate(actualNextRenewalDate.getTime());
 		        	allDates.setNextWindowOpenDate(renewalStart.getTime());
 		        	allDates.setNexttWindowCloseDate(renewalEnd.getTime());
+		        	
+		    	    if(todays.after(renewalStart.getTime())){
+		    	    	
+		    	    	log().debug("Renewal window being OPENED for next year " + yearNow+1 + ".So increment renewalyear to plus 1");
+		    	    	renewalYear = renewalYear + 1;
+		    	    	allDates.setCurrentRenewalDueDate(actualNextRenewalDate.getTime());
+			    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
+			    		allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
+			    		
+			    		log().debug("This time set next renewal details to null");
+			    		allDates.setNextRenewalDueDate(null);
+				        allDates.setNextWindowOpenDate(null);
+				       	allDates.setNexttWindowCloseDate(null);
+		    	    }
+		    	    
+		    	    
 		        }
 		        
 		        allDates.setRenewalYear(renewalYear);
