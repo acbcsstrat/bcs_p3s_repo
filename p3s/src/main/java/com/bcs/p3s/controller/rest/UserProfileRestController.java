@@ -21,6 +21,7 @@ import com.bcs.p3s.display.UserProfileUI;
 import com.bcs.p3s.docs.email.P3sEmail;
 import com.bcs.p3s.docs.email.P3sEmailFactory;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
+import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
@@ -75,10 +76,11 @@ public class UserProfileRestController extends Universal {
     @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
     public ResponseEntity<UserProfileUI> updateUser(@RequestBody UserProfileUI obUser , UriComponentsBuilder ucBuilder) {
       
+    	String err = "UserProfileRestController updateUser [PUT] : ";
 //    	log().fatal(" REACHED    AAAAAAAAAAAAAAAAAAAAAA  UserProfileRestController updateUser ");
-    	String msg = " ****************** "+"UserProfileRestController updateUser invoked with UserProfileUI of "+obUser.getClass().getName();
-    	log().fatal(msg);
-//    	System.out.println(msg);
+    	//String msg = " ****************** "+"UserProfileRestController updateUser invoked with UserProfileUI of "+obUser.getClass().getName();
+    	//log().fatal(msg);
+    	//    	System.out.println(msg);
 //    	System.out.println(" ****************** ");
 //    	System.out.println(" ****************** ");
 //    	System.out.println(" ****************** ");
@@ -105,6 +107,7 @@ public class UserProfileRestController extends Universal {
     	P3sEmailFactory emailFactory = new P3sEmailFactory();
     	
     	// #1
+    	// DummyDataEngine dummy.generate6digitCode(seedUser)
     	//P3sEmail email = emailFactory.create(EmailTemplates.email_register_combined, "acdev@p3s.me",null,null,null,null);
 
     	
@@ -188,7 +191,7 @@ public class UserProfileRestController extends Universal {
         //updating password as well
         if(!(user.getNewPassword() == null)){
         		p3sUser.setPassword(user.getNewPassword());
-        		log().debug(msg + "User updated password as well");
+        		log().debug(err + "User updated password as well");
         }
         
         //p3sUser.setIsEmailNotification(false);

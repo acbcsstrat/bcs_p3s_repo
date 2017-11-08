@@ -6,6 +6,7 @@ import com.bcs.p3s.docs.email.Injectables;
 import com.bcs.p3s.docs.email.P3sEmail;
 import com.bcs.p3s.docs.email.template.EmailTemplateReader;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
+import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.util.config.P3SPropertyException;
@@ -40,7 +41,7 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		// Supports template EmailTemplates.email_register_combined (& potentially others in the future) 
 		String err = "RegisterPopulator populateForRegistration : ";
 		if  ( (obNewUserEmailAddress==null) || ! (obNewUserEmailAddress instanceof String)) 
-				fail(err+"obNewUserEmailAddress not a String. isNull="+(obNewUserEmailAddress==null));
+				fail(err+"bad param. (obNewUserEmailAddress==null)="+(obNewUserEmailAddress==null));
 		String newUserEmailAddress = (String) obNewUserEmailAddress;
 
 		// 1of3: Retrieve data from property file
@@ -76,21 +77,6 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		
 		// 3of3: Assemble any values requiring work here
 		String url2verifyEmail = generateUrlToVerifyEmail(newUserEmailAddress, userRecord, siteTomcatUrl);
-//		
-//		
-//		String userMash = newUserEmailAddress + userRecord.getId().toString();
-//		int    qwikInt  = userMash.hashCode(); // may be negative
-//		if (qwikInt<0) qwikInt = qwikInt * -1; 
-////		Integer qwikInt = new Integer(userMash.hashCode()); // may be negative
-//		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
-//		zz("userMash is "+userMash);
-//		zz("userHash is "+userHash);
-//		int len = userHash.length();
-//		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
-//		zz("yields "+fragment6);
-//				
-//		String url2verifyEmail = siteUrl+"user/confirmuser/"+fragment6+"?email="+newUserEmailAddress;
-//		zz("yields "+fragment6);
 		data.setUrlToVerifyEmail(url2verifyEmail);
 
 		data.setUrlToFaq(siteWordpressUrl+"faq");
@@ -168,22 +154,33 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 	}
 
 	
+//	protected String generateUrlToVerifyEmail(String newUserEmailAddress, P3SUser userRecord, String siteUrl) {
+//		String userMash = newUserEmailAddress + userRecord.getId().toString();
+//		int    qwikInt  = userMash.hashCode(); // may be negative
+//		if (qwikInt<0) qwikInt = qwikInt * -1; 
+////		Integer qwikInt = new Integer(userMash.hashCode()); // may be negative
+//		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
+//		zz("userMash is "+userMash);
+//		zz("userHash is "+userHash);
+//		int len = userHash.length();
+//		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
+//		zz("yields "+fragment6);
+//				
+//		String url2verifyEmail = siteUrl+"user/confirmuser/"+fragment6+"?email="+newUserEmailAddress;
+//		zz("yields "+fragment6);
+//		return url2verifyEmail;
+//	}
+	
 	protected String generateUrlToVerifyEmail(String newUserEmailAddress, P3SUser userRecord, String siteUrl) {
-		String userMash = newUserEmailAddress + userRecord.getId().toString();
-		int    qwikInt  = userMash.hashCode(); // may be negative
-		if (qwikInt<0) qwikInt = qwikInt * -1; 
-//		Integer qwikInt = new Integer(userMash.hashCode()); // may be negative
-		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
-		zz("userMash is "+userMash);
-		zz("userHash is "+userHash);
-		int len = userHash.length();
-		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
-		zz("yields "+fragment6);
+		DummyDataEngine dummy = new DummyDataEngine(); 
+		String fragment6 = dummy.generate6digitCode(userRecord);
+		zz("generateUrlToVerifyEmail yields frag6="+fragment6);
 				
 		String url2verifyEmail = siteUrl+"user/confirmuser/"+fragment6+"?email="+newUserEmailAddress;
-		zz("yields "+fragment6);
+		zz("yields url of : "+url2verifyEmail);
 		return url2verifyEmail;
 	}
 	
-	
+
+
 }

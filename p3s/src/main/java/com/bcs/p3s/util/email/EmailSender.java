@@ -45,21 +45,35 @@ public class EmailSender extends Universal {
     	message = new MimeMessage(mailsession);  
     	
     	try {
-			message.setFrom(new InternetAddress("noreply@mail.thepatent.place"));
-			message.setSubject(emailContent.getSubject());
-    		message.setContent(emailContent.getHtmlBody(), "text/html");
-			//    			BTW: From the JLS:
+    		//message.setContent(emailContent.getHtmlBody(), "text/html");
+    		//    			BTW: From the JLS:
 			//    			\n    \ u 000a: linefeed LF 
 			//    			\r    \ u 000d: carriage return CR 
-			//    		& for Plain text: message.setText(msgText);
-		} catch (Exception e1) {
+			//    		& for Plain text: (e.g. Visually Impaired: see https://stackoverflow.com/questions/29539882/not-receiving-
+    		//			also: gmail block because ipv6 PTR policy. see todo-later.txt
+			message.setFrom(new InternetAddress("noreply@mail.thepatent.place"));
+			message.setSubject(emailContent.getSubject());
+
+			// Body
+			MimeBodyPart messageHtmlBodyPart = new MimeBodyPart();
+			messageHtmlBodyPart.setContent(emailContent.getHtmlBody(), "text/html");
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(messageHtmlBodyPart);
+
+			// An attachment
+	    	if (content.hasValidAttachmentDetails()) {
+	    		String fullFilespec = content.getAttachmentPath() + content.getAttachmentFilename(); 
+	    		MimeBodyPart attachPart = new MimeBodyPart();
+				DataSource source = new FileDataSource(fullFilespec);
+				attachPart.setDataHandler(new DataHandler(source));
+				attachPart.setFileName(content.getAttachmentFilename());
+	    		multipart.addBodyPart(attachPart);
+	    	}
+	    	
+			message.setContent(multipart);
+    	} catch (Exception e1) {
 			fail("Failed whilst preparing email");
 		}  
-
-    	if (content.hasValidAttachmentDetails()) {
-    		String fullFilespec = content.getAttachmentPath() + content.getAttachmentFilename(); 
-    		addSingleAttachment(fullFilespec);
-    	}
 	}
 
 // acTidy - 171107 - maybe these are NOT redundant ??
@@ -75,20 +89,7 @@ public class EmailSender extends Universal {
 		setRecip = true;
 	}
 
-	public void addSingleAttachment(String fullFileSpec) {
-		try {
-			MimeBodyPart messageBodyPart = new MimeBodyPart();
-			DataSource source = new FileDataSource(fullFileSpec);
-			messageBodyPart.setDataHandler(new DataHandler(source));
-			messageBodyPart.setFileName(fullFileSpec);
-			Multipart multipart = new MimeMultipart();
-			multipart.addBodyPart(messageBodyPart);
-			message.setContent(multipart);
-		} catch (MessagingException e) {
-			fail("Failed whilst adding attachment : "+fullFileSpec);
-		}
-	}
-
+	
 	
 	/**
 	 * Sends the email prepared
@@ -106,9 +107,9 @@ public class EmailSender extends Universal {
 		} else {
 	    	try {
 				Transport.send(message);
+				log().info("Email sent."); 
 			} catch (MessagingException e) {
-		    	System.out.println("Transport.send(message); threw exception ");
-				e.printStackTrace();
+				log().fatal("Transport.send(message); threw exception", e); 
 			}  
 		}
 	}

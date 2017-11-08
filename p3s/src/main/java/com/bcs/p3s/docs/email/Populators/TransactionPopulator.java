@@ -97,17 +97,6 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		
 				
 		// 1of3: Retrieve data from property file
-//		String siteWordpressUrl = null;
-//		String siteTomcatUrl = null;
-//		try {
-//		P3SPropertyReader reader = new P3SPropertyReader();
-//		data.setSupportEmailAddress(reader.getGenericProperty(P3SPropertyNames.P3S_support_email_address));
-//		siteWordpressUrl = reader.getESProperty(P3SPropertyNames.P3S_WEB_WORDPRESS_URL_BASE);
-//		siteTomcatUrl = reader.getESProperty(P3SPropertyNames.P3S_WEB_TOMCAT_URL_BASE);
-//		data.setLoginUrl(siteTomcatUrl);
-//	} catch (P3SPropertyException e) {
-//		fail(err+"property read failed",e);
-//	}
 		try {
 			P3SPropertyReader reader = new P3SPropertyReader();
 			String pathToDocs = reader.getESProperty(P3SPropertyNames.PATH_TO_PDF_DOCS); 
@@ -173,21 +162,11 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 	
 	protected String injectIntoSubjectLine(List<String> wholeTemplate) {
 		String subjectLinePREinject = wholeTemplate.get(0);
-		// Only injectable is FIRSTNAME
-//			String target = "["+Injectables.FIRSTNAME+"]";
-//			String newval = data.getFirstname();
-//			
-//			String newSubject = subjectLinePREinject.replace(target,newval);
-//
 		currentLine = subjectLinePREinject;
 		boolean ignore = injectTRANSACTION_REFERENCE();
 		
-		
-		
 		zz("TransactionPopulator prepareEmailContent : PREinject Subject WAS "+subjectLinePREinject);
 		zz("TransactionPopulator prepareEmailContent : injectIntoSubject has created "+currentLine);
-		
-
 		return currentLine;
 	}
 	
@@ -240,6 +219,7 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		for (Patent patent : data.getPatents()) {
 			currentLine = subtemplate;
 			// use existing, unused, fields, but update on each loop/patent 
+			log().debug("acDebug TransactionPopulator 243: (data==null)="+(data==null)+"  (patent==null)="+(patent==null)); // discard once no longer populated with dodgy patent.getID(1L) - acTodo
 			data.setPatentApplicationNumber(patent.getPatentApplicationNumber());
 			data.setPatentShortTitle(patent.getShortTitle());
 			data.setPatentTitle(patent.getTitle());
@@ -272,27 +252,6 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 			bloc.append(currentLine);
 		}
 		currentLine = bloc.toString();
-	}
-	
-	
-	
-	
-	
-	protected String generateUrlToVerifyEmail(String newUserEmailAddress, P3SUser userRecord, String siteUrl) {
-		String userMash = newUserEmailAddress + userRecord.getId().toString();
-		int    qwikInt  = userMash.hashCode(); // may be negative
-		if (qwikInt<0) qwikInt = qwikInt * -1; 
-//			Integer qwikInt = new Integer(userMash.hashCode()); // may be negative
-		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
-		zz("userMash is "+userMash);
-		zz("userHash is "+userHash);
-		int len = userHash.length();
-		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
-		zz("yields "+fragment6);
-				
-		String url2verifyEmail = siteUrl+"user/confirmuser/"+fragment6+"?email="+newUserEmailAddress;
-		zz("yields "+fragment6);
-		return url2verifyEmail;
 	}
 	
 	

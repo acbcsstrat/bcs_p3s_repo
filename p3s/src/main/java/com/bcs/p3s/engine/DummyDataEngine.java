@@ -15,6 +15,7 @@ import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -262,7 +263,25 @@ public class DummyDataEngine extends Universal {
 	//	return inventedRubbish;
 	//}
 
-	
+	/**
+	 * This is NOT rubbish code - it will.may be used. But not here. Awaiting a home
+	 * Generates a 6digit code using the hash of seedUser.email + seedUser.ID
+	 * Protects against hash=0 or negative
+	 * @param seed
+	 * @return 6 digit number
+	 */
+	public String generate6digitCode(P3SUser seedUser) {
+		String userMash = seedUser.getEmailAddress() + seedUser.getId().toString();
+		int    qwikInt  = userMash.hashCode(); // may be negative
+		if (qwikInt<0) qwikInt = qwikInt * -1; 
+		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
+		//zz("userMash is "+userMash);
+		//zz("userHash is "+userHash);
+		int len = userHash.length();
+		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
+		//zz("yields "+fragment6);
+		return fragment6;
+	}
 	
 	
 	

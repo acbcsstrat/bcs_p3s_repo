@@ -106,10 +106,8 @@ public class ReminderEmailStandardPopulator extends AbstractPopulator implements
 		
 		
 		// 3of3: Assemble any values requiring work here
-// n/a
-//		String url2verifyEmail = generateUrlToVerifyEmail(newUserEmailAddress, userRecord, siteTomcatUrl);
-//		data.setUrlToFaq(siteWordpressUrl+"faq");
-		
+		// n/a
+
 		
 		// data is now populated with all the injectables required for this template
 

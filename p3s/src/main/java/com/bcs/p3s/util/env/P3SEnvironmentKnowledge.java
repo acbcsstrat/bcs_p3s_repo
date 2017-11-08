@@ -32,6 +32,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			, "DESKTOP-H575IU3"			// Patrick's PC
 			, "reviewsystem"			// Tomacat-A (on Linode)
 			// YET TO INCLUDE: other Linux Hosts? Dev, Test, Demo & Production
+			, "tomcatb"					// Tomacat-B (on Linode). Clone of TomcatA, with postfix Nov17
 	};
 		
 
@@ -59,7 +60,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// Original: path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
-		if ("reviewsystem".equals(host)) {
+		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
 		if ("CCP007".equals(host)) {
@@ -120,7 +121,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("DESKTOP-H575IU3".equals(host)) {
 			path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
 		}
-		if ("reviewsystem".equals(host)) {
+		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";
 		}
 		
