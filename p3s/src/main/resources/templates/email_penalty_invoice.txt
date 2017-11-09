@@ -1,0 +1,19 @@
+Subject: thePatent.Place : Your invoice for transaction IP0001000001
+Body:
+To:		[FIRST-NAME] [LAST-NAME]
+		[COMPANY NAME]
+In creating thepatent.place transaction [IP0001000001] for renewing the below [MM] patent(s) you had agreed that the payment of $[NNN.00] would reach our US bank account by:
+[ Nov 3, 2017  17:00 EST ]
+This was for patents:
+	[123456789]	[SHORT TITLE]
+	[123456789]	[SHORT TITLE]
+	[123456789]	[SHORT TITLE]
+	[123456789]	[SHORT TITLE]
+
+Unfortunately, this payment was not successfully received.
+As per our terms & conditions (hyperlink?), this transaction has failed and the attached penalty invoice falls due.
+If funds were sent, you may want to contact us (email or? hyperlink?),  to arrange restoration of such funds, as appropriate.
+We can still renew your patents for you. Just add them to the basket again.
+
+Kind regards,
+The Patent Place team

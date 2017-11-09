@@ -20,6 +20,7 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 	
 	protected String subject;
 	protected String htmlBody;
+	protected String attachmentRootPath;
 	protected String attachmentPath;
 	protected String attachmentFilename;
 	protected List<String> recipients_to = new ArrayList<String>(); // populated by client after below work finished
@@ -170,6 +171,13 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 	}
 	protected boolean injectFIELDC() {
 		String newString = currentLine.replace(assembleTag(Injectables.FIELDC), data.getFieldc());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
+	protected boolean injectPATENT_PLURALITY_TEXT_FRAGMENT() {
+		String qty = " is";
+		if ((data.getPatents()!=null) && (data.getPatents().size() > 1)) qty = "s are";
+		String newString = currentLine.replace(assembleTag(Injectables.PATENT_PLURALITY_TEXT_FRAGMENT), qty);
 		currentLine = newString;
 		return (currentLine.indexOf(SQUAREOPEN)!=-1);
 	}

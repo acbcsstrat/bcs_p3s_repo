@@ -20,7 +20,7 @@ import com.bcs.p3s.wrap.TwoColRecord;
 
 /**
  * The Populator for emails associated with Transactions
- *  Such emails are a cover-note for the Invoice or Transaction that they carry 
+ *  Such emails are a cover-note for the Invoice or Certificate PDF attachment that they carry 
  * For MVP, there is 4 such templates: all served by this populator: 
  * 				email_proforma_invoice
  * 				email_final_invoice	
@@ -36,7 +36,7 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 	// Constructor - populates the P3sEmailData
 	public TransactionPopulator(String templateName, Object obP3suser
 			, Object obTxnRef, Object obFundsTargetArriveTime
-			, Object dummy, Object obAttachmentFilename
+			, Object obAttachmentFilename
 			, Object obPatents
 			, Object obPayeeDets
 			, Object obPrice
@@ -48,7 +48,7 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		if (EmailTemplates.email_proforma_invoice.equals(templateName)) {
 			populateForProformaInvoice(templateName, obP3suser
 					, obTxnRef, obFundsTargetArriveTime
-					, null, obAttachmentFilename
+					, obAttachmentFilename
 					, obPatents, obPayeeDets, obPrice);
 		}
 		else fail(err+"cannot support offered template: "+templateName);
@@ -58,40 +58,39 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 
 	protected void populateForProformaInvoice(String templateName, Object obP3suser
 			, Object obTxnRef, Object obFundsTargetArriveTime
-			, Object dummy, Object obAttachmentFilename
+			, Object obAttachmentFilename
 			, Object obPatents
 			, Object obPayeeDets, Object obPrice
 	) {
 		// Supports template EmailTemplates.email_proforma_invoice 
 		String err = "TransactionPopulator populateForProformaInvoice : ";
 		
-		// Validate the parameters
-		if  ( isEmpty(templateName) || (obP3suser==null)  
-				|| (obTxnRef==null) || (obFundsTargetArriveTime==null)  
+		// Start validating and populating
+		populateUniversalFields(obP3suser, obTxnRef, obPatents);
+		
+		// Validate the remaining parameters
+		if  ( isEmpty(templateName) 
+				|| (obFundsTargetArriveTime==null)  
 				|| (obAttachmentFilename==null) 
-				|| (obPatents==null) || (obPayeeDets==null) || (obPrice==null)) { 
+				|| (obPayeeDets==null) || (obPrice==null)) { 
 					fail(err+"invoked with Bad Parameters : "+isEmpty(templateName)
-						+ (obP3suser==null)+(obTxnRef==null)+(obFundsTargetArriveTime==null) 
+						+ (obFundsTargetArriveTime==null) 
 						+ (obAttachmentFilename==null)  
-						+ (obPatents==null)+(obPayeeDets==null)+(obPrice==null)); 
+						+ (obPayeeDets==null)+(obPrice==null)); 
 		}
-		P3SUser userRecord = null;
 		String txnRef = null;
 		String fundsTargetArriveTime = null;
 		String attachmentPath = null;
 		String attachmentFilename= null;
-		List<Patent> patents = null; 
 		BankTransferPaymentDetails payeeDets = null;
 		String price = null;
 		try {
-			userRecord = (P3SUser) obP3suser;
-			txnRef = (String) obTxnRef;
 			fundsTargetArriveTime = (String) obFundsTargetArriveTime;
-			//attachmentPath = (String) obAttachmentPath;
 			attachmentFilename = (String) obAttachmentFilename;
-			patents = (List<Patent>) obPatents;
 			payeeDets = (BankTransferPaymentDetails) obPayeeDets;
 			price = (String) obPrice;
+			// known safe
+			txnRef = (String) obTxnRef;
 		} catch (Exception e) { fail(err+"failed casting of object parameters", e); }
 
 		
@@ -107,17 +106,10 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		
 		
 		// 2of3: retrieve user & company details. 
-		data.setFirstname(userRecord.getFirstName());
-		data.setLastname(userRecord.getLastName());
-		Business company = userRecord.getBusiness();	
-		data.setCompanyName(company.getBusinessName());
-
+		// n/a
 		
 		// 3of3: Assemble any values requiring work here - acTidy - titles
-		data.setTransactionReference(txnRef);
 		data.setTimestampTargetFundsArrivel(fundsTargetArriveTime);
-		data.setPatents(patents);
-		data.setNumberOfPatents(""+patents.size());
 
 		TwoColRecord a2colRecord = null;
 		List<TwoColRecord> payDets = new ArrayList<TwoColRecord>();
@@ -143,6 +135,59 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		
 		log().debug(err+" completed preparation for template: "+templateName);
 	}
+	
+	
+
+	
+	
+	
+	protected void populateUniversalFields(Object obP3suser, Object obTxnRef, Object obPatents) {
+		// Used for ALL Transaction templates 
+		String err = "TransactionPopulator populateUniversalFields : ";
+		
+		// Validate the parameters
+		if  ( (obP3suser==null) || (obTxnRef==null) || (obPatents==null) ) { 
+				fail(err+"invoked with Bad Parameters : "+(obP3suser==null)+(obTxnRef==null)+ (obPatents==null)); 
+		}
+		P3SUser userRecord = null;
+		String txnRef = null;
+		List<Patent> patents = null; 
+		try {
+			userRecord = (P3SUser) obP3suser;
+			txnRef = (String) obTxnRef;
+			patents = (List<Patent>) obPatents;
+		} catch (Exception e) { fail(err+"failed casting of object parameters", e); }
+
+		
+				
+		// 1of3: Retrieve data from property file
+		try {
+			P3SPropertyReader reader = new P3SPropertyReader();
+			String pathToDocs = reader.getESProperty(P3SPropertyNames.PATH_TO_PDF_DOCS); 
+			attachmentRootPath = reader.checkPathPropertyTerminated(pathToDocs);
+		} catch (P3SPropertyException e) {
+			fail(err+"property read failed",e);
+		}
+		
+		
+		// 2of3: retrieve user & company details. 
+		data.setFirstname(userRecord.getFirstName());
+		data.setLastname(userRecord.getLastName());
+		Business company = userRecord.getBusiness();	
+		data.setCompanyName(company.getBusinessName());
+
+		
+		// 3of3: Assemble any values requiring work here - acTidy - titles
+		data.setTransactionReference(txnRef);
+		data.setPatents(patents);
+		data.setNumberOfPatents(""+patents.size());
+	}
+
+	protected void populateXYYYYYYYFields(Object obP3suser, Object obTxnRef, Object obPatents) {
+
+	}
+	
+
 	
 	
 	protected void prepareEmailContent(String attachmentPath, String attachmentFilename) {

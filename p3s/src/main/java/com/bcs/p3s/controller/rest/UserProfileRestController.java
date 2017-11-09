@@ -126,31 +126,9 @@ public class UserProfileRestController extends Universal {
     	
     	
     	P3sEmail email = emailFactory.create(EmailTemplates.email_proforma_invoice, 
-    			acUser,"IP0003000009","Nov 9, 2017 17:01 CET",null,"dummyInvoiceNumber1.pdf",patents,payee,"1234.89");
+    			acUser,"IP0003000009","Nov 9, 2017 17:01 CET","dummyInvoiceNumber1.pdf",patents,payee,"1234.89");
 
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-//    	protected void populateForProformaInvoice(String templateName, Object obP3suser
-//    			, Object obTxnRef, Object obFundsTargetArriveTime
-//    			, Object obAttachmentPath, Object obAttachmentFilename
-//    			, Object obPatents
-//    			, Object obPayeeDets, Object obPrice
-
-    	
-    	
-    	
-    	
-    	
-    	
-//    	TmpEmailerDummy dummyEmailer = new TmpEmailerDummy();
-//    	dummyEmailer.logEmail(email);
-
-    	EmailSender emailer = new EmailSender(email);
+     	EmailSender emailer = new EmailSender(email);
     	emailer.setRecipientsToDevs();
     	emailer.sendEmail();
     	

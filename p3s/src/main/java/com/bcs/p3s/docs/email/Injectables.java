@@ -43,10 +43,9 @@ public interface Injectables {
 	String TRANSACTION_REFERENCE = "TRANSACTION_REFERENCE";
 	String TIMESTAMP_TARGET_FUNDS_ARRIVAL = "TIMESTAMP_TARGET_FUNDS_ARRIVAL";
 	String NUMBER_OF_PATENTS = "NUMBER_OF_PATENTS"; 
-	//String OUR_ACCOUNT_NUMBER = "OUR_ACCOUNT_NUMBER"; - acTidy - pretty sure redundant 
-	//String OUR_ABA_NNUMBER = "OUR_ABA_NNUMBER"; 
 	String FIELDB = "FIELDB"; 
 	String FIELDC = "FIELDC"; 
+	String PATENT_PLURALITY_TEXT_FRAGMENT = "PATENT_PLURALITY_TEXT_FRAGMENT"; 
 	
 	// Fixed text formats - acTidy - are these needed?
 	String CRLF = "CRLF";

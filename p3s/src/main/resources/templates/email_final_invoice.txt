@@ -1,0 +1,18 @@
+Subject: thePatent.Place : Your Invoice (now paid) for Transaction IP0001000001
+Body:
+To:		[FIRST-NAME] [LAST-NAME]
+		[COMPANY NAME]
+Thank you for creating transaction [IP0001000001] for renewing patent(s) :
+	[123456789]	[SHORT TITLE]
+	[123456789]	[SHORT TITLE]
+	[123456789]	[SHORT TITLE]
+	[123456789]	[SHORT TITLE]
+
+We have received your payment.
+Your patent renewal(s) are being processed. 
+Your invoice for this is attached.
+
+We will contact you again, [for each patent] as the EPO confirms that the patent(s) are renewed.
+
+Kind regards,
+The Patent Place team 

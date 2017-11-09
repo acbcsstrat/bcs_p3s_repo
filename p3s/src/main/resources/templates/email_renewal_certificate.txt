@@ -1,0 +1,10 @@
+Subject: thePatent.Place : Renewal has been completed 
+Body:
+To:		[FIRST-NAME] [LAST-NAME]
+		[COMPANY NAME]
+
+We are happy to confirm that your patent has been renewed.
+We attach our certificate confirming that this patent has been renewed via thepatent.place
+
+Kind regards,
+The Patent Place team 

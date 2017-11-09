@@ -20,7 +20,6 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 			, Object param5
 			, Object param6
 			, Object param7
-			, Object param8
 			)   // extend params as needed ...
 	{
 		String err = "P3sEmailFactory create("+template+") : ";
@@ -39,7 +38,7 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 			}
 			if (EmailTemplates.email_proforma_invoice.equals(template)) {
 				// or email_final_invoice email_certificate_invoice email_penalty_invoice
-				pop = new TransactionPopulator(template, param1, param2, param3, param4, param5, param6, param7, param8);
+				pop = new TransactionPopulator(template, param1, param2, param3, param4, param5, param6, param7);
 				noBuild = false;
 			}
 			
