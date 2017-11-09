@@ -1,18 +1,27 @@
-Subject: thePatent.Place : Your Invoice (now paid) for Transaction IP0001000001
-Body:
-To:		[FIRST-NAME] [LAST-NAME]
-		[COMPANY NAME]
-Thank you for creating transaction [IP0001000001] for renewing patent(s) :
-	[123456789]	[SHORT TITLE]
-	[123456789]	[SHORT TITLE]
-	[123456789]	[SHORT TITLE]
-	[123456789]	[SHORT TITLE]
+Subject: thePatent.Place : Your Invoice (now paid) for Transaction [TRANSACTION_REFERENCE]
+FINAL  INVOICE<br/>
+<table class="tblEmailBodyHeader"><tr><td>
+To:</td><td>[FIRSTNAME] [LASTNAME]</td></tr>
+<td></td><td>[COMPANY_NAME]</td></tr>
+</table>
+<p/>
+
+Thank you for creating transaction [TRANSACTION_REFERENCE] for renewing patent[PATENT_PLURALITY_S] :
+<table class="tblpatents3colinvemail">
+[THREECOL_TABLE_OF_PATENTS]<tr><td></td><td>[PATENT_APPLICATION_NUMBER]</td><td>[SHORT_TITLE]</td></tr>
+</table>
+<p/>
 
 We have received your payment.
-Your patent renewal(s) are being processed. 
+<br/>
+Your patent renewal[PATENT_PLURALITY_TEXT_FRAGMENT] being processed. 
+<br/>
 Your invoice for this is attached.
 
-We will contact you again, [for each patent] as the EPO confirms that the patent(s) are renewed.
+<p/>
+We will contact you again[TXT__FOR_EACH_PATENT] as the EPO confirms that the patent[PATENT_PLURALITY_TEXT_FRAGMENT] renewed.
 
+<p/>
 Kind regards,
-The Patent Place team 
+<br/>
+The Patent Place team

@@ -32,6 +32,8 @@ public class EmailDevTest extends Universal  {
 
 		if (code==100) {
 			log().debug("Generate Register email - email_register_combined");
+			email = emailFactory.create(EmailTemplates.email_register_combined, acUser.getEmailAddress(),null,null,null,null,null,null);
+			send();
 		}
 		else if (code>=200 && code <300) {
 			log().debug("Send an Invoice/certificate");
@@ -78,13 +80,29 @@ public class EmailDevTest extends Universal  {
 	
 	protected void emailPdf(int code) {
 		log().debug("emailPdf code="+code);
-		prepareSomeData();
+		//prepareSomeData();
 		preparePatents();
-		if (code==210 || code==260) patents = fourPatents; else patents.add(onePatent); 
+		if (code==210 || code==220 || code==260) 
+				patents = fourPatents; else patents.add(onePatent); 
 		
 		if (code>=200 && code<220) {
 			email = emailFactory.create(EmailTemplates.email_proforma_invoice, 
-					acUser,"IP0003000009","Nov 9, 2017 17:01 CET","dummyInvoiceNumber1.pdf",patents,payee,"1234.89");
+					acUser,"IP0003000009","Nov 22, 2017 17:01 CET","dummyInvoiceNumber1.pdf",patents,payee,"1234.89");
+			send();
+		}
+		else if (code>=220 && code<240) {
+			email = emailFactory.create(EmailTemplates.email_final_invoice, 
+					acUser,"IP0003000009","Nov 22, 2017 17:01 CET","dummyInvoiceNumber1.pdf",patents,payee,"1234.89");
+			send();
+		}
+		else if (code>=240 && code<250) {
+			email = emailFactory.create(EmailTemplates.email_renewal_certificate, 
+					acUser,"IP0003000009","Nov 22, 2017 17:01 CET","dummyCertificateNumber1.pdf",patents,payee,"1234.89");
+			send();
+		}
+		else if (code>=250 && code<270) {
+			email = emailFactory.create(EmailTemplates.email_penalty_invoice, 
+					acUser,"IP0003000009","Nov 22, 2017 17:01 CET","dummyInvoiceNumber1.pdf",patents,payee,"1234.89");
 			send();
 		}
 	}
@@ -99,10 +117,10 @@ public class EmailDevTest extends Universal  {
 	}
 
 	
-	protected void prepareSomeData() {
-		log().debug("genSomeData");
-		
-	}
+//	protected void prepareSomeData() {
+//		log().debug("genSomeData");
+//		
+//	}
 	protected void preparePatents() {
 		List<Patent> all = new ArrayList<Patent>();
 		all = (Patent.findPatentsByBusiness(acUser.getBusiness())).getResultList();

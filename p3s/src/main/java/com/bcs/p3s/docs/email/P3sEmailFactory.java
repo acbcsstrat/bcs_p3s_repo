@@ -1,6 +1,7 @@
 package com.bcs.p3s.docs.email;
 
 import com.bcs.p3s.docs.email.Populators.AbstractPopulator;
+import com.bcs.p3s.docs.email.Populators.CertificatePopulator;
 import com.bcs.p3s.docs.email.Populators.RegisterPopulator;
 import com.bcs.p3s.docs.email.Populators.ReminderEmailStandardPopulator;
 import com.bcs.p3s.docs.email.Populators.TransactionPopulator;
@@ -36,9 +37,15 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 				pop = new ReminderEmailStandardPopulator(template, param1, param2, param3, param4, param5);
 				noBuild = false;
 			}
-			if (EmailTemplates.email_proforma_invoice.equals(template)) {
-				// or email_final_invoice email_certificate_invoice email_penalty_invoice
+			if ((EmailTemplates.email_proforma_invoice.equals(template))
+					 || (EmailTemplates.email_final_invoice.equals(template))
+					 || (EmailTemplates.email_penalty_invoice.equals(template)) )
+			{
 				pop = new TransactionPopulator(template, param1, param2, param3, param4, param5, param6, param7);
+				noBuild = false;
+			}
+			if (EmailTemplates.email_renewal_certificate.equals(template)) {
+				pop = new CertificatePopulator(template, param1, param2, param3, param4, param5, param6, param7);
 				noBuild = false;
 			}
 			

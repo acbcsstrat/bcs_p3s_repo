@@ -45,11 +45,12 @@ public interface Injectables {
 	String NUMBER_OF_PATENTS = "NUMBER_OF_PATENTS"; 
 	String FIELDB = "FIELDB"; 
 	String FIELDC = "FIELDC"; 
-	String PATENT_PLURALITY_TEXT_FRAGMENT = "PATENT_PLURALITY_TEXT_FRAGMENT"; 
+	String PATENT_PLURALITY_TEXT_FRAGMENT = "PATENT_PLURALITY_TEXT_FRAGMENT"; // "is" or "s are"
+	String PATENT_PLURALITY_S = "PATENT_PLURALITY_S"; // "" or "s"
 	
 	// Fixed text formats - acTidy - are these needed?
 	String CRLF = "CRLF";
-	String TXT__FOR_EACH_PATENT = ", for each patent,";
+	String TXT__FOR_EACH_PATENT = "TXT__FOR_EACH_PATENT";
 	
 	// 'Repeating Set' Identifiers  ===================================================================================
 	String THREECOL_TABLE_OF_PATENTS = "THREECOL_TABLE_OF_PATENTS"; 
