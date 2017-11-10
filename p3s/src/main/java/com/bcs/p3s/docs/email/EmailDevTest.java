@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bcs.p3s.docs.email.template.EmailTemplates;
+import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
@@ -32,8 +33,7 @@ public class EmailDevTest extends Universal  {
 
 		if (code==100) {
 			log().debug("Generate Register email - email_register_combined");
-			email = emailFactory.create(EmailTemplates.email_register_combined, acUser.getEmailAddress(),null,null,null,null,null,null);
-			send();
+			emailRegistration();
 		}
 		else if (code>=200 && code <300) {
 			log().debug("Send an Invoice/certificate");
@@ -76,7 +76,17 @@ public class EmailDevTest extends Universal  {
 //		  <option value="760">email_reminder_after_black</option>
 	}
 	
+
+
 	
+	protected void emailRegistration() {
+		Business business = acUser.getBusiness();
+		email = emailFactory.create(EmailTemplates.email_register_combined, acUser.getEmailAddress(),
+				business.getBusinessNumber(), business.getBusinessPin(), null,null,null,null);
+		send();
+	}
+		
+
 	
 	protected void emailPdf(int code) {
 		log().debug("emailPdf code="+code);

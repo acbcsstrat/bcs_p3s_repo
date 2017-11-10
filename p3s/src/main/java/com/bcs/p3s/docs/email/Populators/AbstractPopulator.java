@@ -99,16 +99,16 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 		currentLine = newString;
 		return (currentLine.indexOf(SQUAREOPEN)!=-1);
 	}
-	protected boolean injectCOMPANY_CODE() {
-		String newString = currentLine.replace(assembleTag(Injectables.COMPANY_CODE), data.getCompanyCode());
-		currentLine = newString;
-		return (currentLine.indexOf(SQUAREOPEN)!=-1);
-	}
-	protected boolean injectCOMPANY_PIN() {
-		String newString = currentLine.replace(assembleTag(Injectables.COMPANY_PIN), data.getCompanyPin());
-		currentLine = newString;
-		return (currentLine.indexOf(SQUAREOPEN)!=-1);
-	}
+//	protected boolean injectCOMPANY_CODE() {  // acTidy
+//		String newString = currentLine.replace(assembleTag(Injectables.COMPANY_CODE), data.getCompanyCode());
+//		currentLine = newString;
+//		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+//	}
+//	protected boolean injectCOMPANY_PIN() {
+//		String newString = currentLine.replace(assembleTag(Injectables.COMPANY_PIN), data.getCompanyPin());
+//		currentLine = newString;
+//		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+//	}
 	protected boolean injectLOGIN_URL() {
 		String newString = currentLine.replace(assembleTag(Injectables.LOGIN_URL), data.getLoginUrl());
 		currentLine = newString;

@@ -55,6 +55,7 @@ public interface Injectables {
 	// 'Repeating Set' Identifiers  ===================================================================================
 	String THREECOL_TABLE_OF_PATENTS = "THREECOL_TABLE_OF_PATENTS"; 
 	String THREECOL_TABLE_OF_PAYMENT_DETAILS = "THREECOL_TABLE_OF_PAYMENT_DETAILS"; 
+	String THREECOL_TABLE_OF_COMPANY_DETAILS = "THREECOL_TABLE_OF_COMPANY_DETAILS"; 
 
 	
 	

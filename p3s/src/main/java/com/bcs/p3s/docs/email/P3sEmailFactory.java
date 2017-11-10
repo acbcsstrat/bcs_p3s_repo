@@ -6,7 +6,6 @@ import com.bcs.p3s.docs.email.Populators.RegisterPopulator;
 import com.bcs.p3s.docs.email.Populators.ReminderEmailStandardPopulator;
 import com.bcs.p3s.docs.email.Populators.TransactionPopulator;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
-import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.util.lang.Universal;
 
 public class P3sEmailFactory extends Universal implements EmailTemplates {

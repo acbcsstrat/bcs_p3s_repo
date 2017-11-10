@@ -1,11 +1,8 @@
 package com.bcs.p3s.docs.email.Populators;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.bcs.p3s.docs.email.Injectables;
-import com.bcs.p3s.docs.email.P3sEmail;
-import com.bcs.p3s.docs.email.P3sEmailData;
 import com.bcs.p3s.docs.email.template.EmailTemplateReader;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.model.Business;
@@ -14,8 +11,6 @@ import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
-import com.bcs.p3s.wrap.BankTransferPaymentDetails;
-import com.bcs.p3s.wrap.TwoColRecord;
 
 
 /**

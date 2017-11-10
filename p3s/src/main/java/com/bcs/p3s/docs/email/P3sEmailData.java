@@ -22,8 +22,8 @@ public class P3sEmailData {
 	String firstname; 
 	String lastname;
 	String companyName; 
-	String companyCode;
-	String companyPin;
+//	String companyCode; // acTidy
+//	String companyPin;
 	
 	// Patent and renewal timing details
 	String timeBeforeChangePhrase;
@@ -41,6 +41,7 @@ public class P3sEmailData {
 	String numberOfPatents; 
 	List<Patent> patents;
 	List<TwoColRecord> paymentDetails;
+	List<TwoColRecord> colleagueCompanyDetails;
 	String fieldb; 
 	String fieldc; 
 	
@@ -94,18 +95,18 @@ public class P3sEmailData {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	public String getCompanyCode() {
-		return companyCode;
-	}
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
-	}
-	public String getCompanyPin() {
-		return companyPin;
-	}
-	public void setCompanyPin(String companyPin) {
-		this.companyPin = companyPin;
-	}
+//	public String getCompanyCode() {
+//		return companyCode;
+//	}
+//	public void setCompanyCode(String companyCode) {
+//		this.companyCode = companyCode;
+//	}
+//	public String getCompanyPin() {
+//		return companyPin;
+//	}
+//	public void setCompanyPin(String companyPin) {
+//		this.companyPin = companyPin;
+//	}
 	public String getTimeBeforeChangePhrase() {
 		return timeBeforeChangePhrase;
 	}
@@ -177,6 +178,12 @@ public class P3sEmailData {
 	}
 	public void setPaymentDetails(List<TwoColRecord> paymentDetails) {
 		this.paymentDetails = paymentDetails;
+	}
+	public List<TwoColRecord> getColleagueCompanyDetails() {
+		return colleagueCompanyDetails;
+	}
+	public void setColleagueCompanyDetails(List<TwoColRecord> colleagueCompanyDetails) {
+		this.colleagueCompanyDetails = colleagueCompanyDetails;
 	}
 	public String getFieldb() {
 		return fieldb;
