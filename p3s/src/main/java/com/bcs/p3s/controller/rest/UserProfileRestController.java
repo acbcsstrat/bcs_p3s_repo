@@ -83,101 +83,10 @@ public class UserProfileRestController extends Universal {
     	//    	System.out.println(msg);
 //    	System.out.println(" ****************** ");
 //    	System.out.println(" ****************** ");
-//    	System.out.println(" ****************** ");
+//    	System.out.println(" ****************** "); // acTidy
 
     	if ( ! ( obUser instanceof UserProfileUI)) notYet("updateUser given object which is NOT a UserProfileUI");
     	
-
-    	
-    	
-    	
-    	
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	Start of: Here - tmp put Development HOOK for send EMAIL
-
-    // Real usage of this would be from a service ..
-    	
-    	System.out.println("UserProfileRestController : do HOOK for test emailing ");
-
-    	P3sEmailFactory emailFactory = new P3sEmailFactory();
-    	
-    	// #1
-    	// DummyDataEngine dummy.generate6digitCode(seedUser)
-    	//P3sEmail email = emailFactory.create(EmailTemplates.email_register_combined, "acdev@p3s.me",null,null,null,null);
-
-    	
-    	// #2
-    	P3SUser acUser = SecurityUtil.getMyUser();
-    	Patent pat = Patent.findPatent(1L);
-    	
-    	List<Patent> patents = new ArrayList<Patent>();  // findPatentsByBusiness
-    	patents.add(Patent.findPatent(1L));
-    	patents.add(Patent.findPatent(2L));
-    	BankTransferPaymentDetails payee = new BankTransferPaymentDetails();
-    	
-    	String pdfPath = "";
-    	String pdfFilename = "";
-    	
-    	
-    	
-    	P3sEmail email = emailFactory.create(EmailTemplates.email_proforma_invoice, 
-    			acUser,"IP0003000009","Nov 9, 2017 17:01 CET",null,"dummyInvoiceNumber1.pdf",patents,payee,"1234.89");
-
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-//    	protected void populateForProformaInvoice(String templateName, Object obP3suser
-//    			, Object obTxnRef, Object obFundsTargetArriveTime
-//    			, Object obAttachmentPath, Object obAttachmentFilename
-//    			, Object obPatents
-//    			, Object obPayeeDets, Object obPrice
-
-    	
-    	
-    	
-    	
-    	
-    	
-//    	TmpEmailerDummy dummyEmailer = new TmpEmailerDummy();
-//    	dummyEmailer.logEmail(email);
-
-    	EmailSender emailer = new EmailSender(email);
-    	emailer.setRecipientsToDevs();
-    	emailer.sendEmail();
-    	
-    	
-    	System.out.println("UserProfileRestController : do HOOK finished ");
-    	
-    	
-//    	End of: Here - tmp put Development HOOK for send EMAIL
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-//    	********    ********    ********    ********    ********    ********    ********    
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-
     	
     	UserProfileUI user = (UserProfileUI) obUser;
     	
