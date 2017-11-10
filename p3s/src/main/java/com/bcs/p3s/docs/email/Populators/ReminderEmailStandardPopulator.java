@@ -3,7 +3,6 @@ package com.bcs.p3s.docs.email.Populators;
 import java.util.List;
 
 import com.bcs.p3s.docs.email.Injectables;
-import com.bcs.p3s.docs.email.P3sEmail;
 import com.bcs.p3s.docs.email.template.EmailTemplateReader;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.model.Business;

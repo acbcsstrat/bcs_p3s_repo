@@ -1,9 +1,9 @@
 package com.bcs.p3s.docs.email.Populators;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bcs.p3s.docs.email.Injectables;
-import com.bcs.p3s.docs.email.P3sEmail;
 import com.bcs.p3s.docs.email.template.EmailTemplateReader;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.engine.DummyDataEngine;
@@ -12,6 +12,7 @@ import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
+import com.bcs.p3s.wrap.TwoColRecord;
 
 /**
  * The Populator for emails associated with the Registration process
@@ -24,7 +25,8 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 
 	
 	// Constructor - populates the P3sEmailData
-	public RegisterPopulator(String templateName, Object obNewUserEmailAddress) {
+	public RegisterPopulator(String templateName, Object obNewUserEmailAddress) 
+	{
 		super(templateName);  // set templateName
 		templatetype = EmailTypeEnum.REGISTER;
 		String err = "RegisterPopulator constructor : ";
@@ -40,9 +42,17 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 	protected void populateForRegistration(String templateName, Object obNewUserEmailAddress) {
 		// Supports template EmailTemplates.email_register_combined (& potentially others in the future) 
 		String err = "RegisterPopulator populateForRegistration : ";
-		if  ( (obNewUserEmailAddress==null) || ! (obNewUserEmailAddress instanceof String)) 
-				fail(err+"bad param. (obNewUserEmailAddress==null)="+(obNewUserEmailAddress==null));
-		String newUserEmailAddress = (String) obNewUserEmailAddress;
+
+		// Validate the parameters
+		if  ( (obNewUserEmailAddress==null)) { 
+				fail(err+"invoked with Bad Parameters : "+(obNewUserEmailAddress==null)); 
+		}
+		String newUserEmailAddress  = null;
+		try {
+			newUserEmailAddress = (String) obNewUserEmailAddress;
+		} catch (Exception e) { fail(err+"failed casting of object parameters", e); }
+
+		
 
 		// 1of3: Retrieve data from property file
 		String siteWordpressUrl = null;
@@ -58,7 +68,7 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		}
 		
 		
-		// 2of3: retrieve user & company details. 
+		// 2of3: retrieve user & company details. // acTidy  -review ALL these populator NofM messages
 		P3SUser userRecord = null;
 		try {
 			userRecord = P3SUser.findP3SUsersByEmailAddress(newUserEmailAddress).getSingleResult();
@@ -71,8 +81,8 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		data.setLastname(userRecord.getLastName());
 		company = userRecord.getBusiness(); 
 		data.setCompanyName(company.getBusinessName());
-		data.setCompanyCode(company.getBusinessNumber());
-		data.setCompanyPin(company.getBusinessPin().toString());
+//		data.setCompanyCode(company.getBusinessNumber());
+//		data.setCompanyPin(company.getBusinessPin().toString());  // acTidy
 
 		
 		// 3of3: Assemble any values requiring work here
@@ -80,7 +90,14 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		data.setUrlToVerifyEmail(url2verifyEmail);
 
 		data.setUrlToFaq(siteWordpressUrl+"faq");
-		
+
+		TwoColRecord a2colRecord = null;
+		List<TwoColRecord> colleagueCompanyDetails = new ArrayList<TwoColRecord>();
+		a2colRecord = new TwoColRecord("Company Code", company.getBusinessNumber());
+		colleagueCompanyDetails.add(a2colRecord);
+		a2colRecord = new TwoColRecord("Company PIN", company.getBusinessPin().toString());
+		colleagueCompanyDetails.add(a2colRecord);
+		data.setColleagueCompanyDetails(colleagueCompanyDetails);
 		
 		// data is now populated with all the injectables required for this template
 
@@ -91,6 +108,8 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		log().debug(err+" completed preparation for template: "+templateName);
 	}
 	
+
+
 	
 	protected void prepareEmailContent() {
 		String err = "RegisterPopulator prepareEmailContent : ";
@@ -146,30 +165,41 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectCOMPANY_NAME();
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectSUPPORT_EMAIL_ADDRESS();
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectURL_TO_FAQ();
-		if (moreInjectionsNeeded) moreInjectionsNeeded = injectCOMPANY_CODE();
-		if (moreInjectionsNeeded) moreInjectionsNeeded = injectCOMPANY_PIN();
+//		if (moreInjectionsNeeded) moreInjectionsNeeded = injectCOMPANY_CODE();  // acTidy
+//		if (moreInjectionsNeeded) moreInjectionsNeeded = injectCOMPANY_PIN();
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectLOGIN_URL();
 		
+		// Check for Repeating sets
+		if (moreInjectionsNeeded) {
+			if (currentLine.indexOf(assembleTag(Injectables.THREECOL_TABLE_OF_COMPANY_DETAILS))!=-1) processRepeatingSet();
+		}
+		moreInjectionsNeeded = (currentLine.indexOf(SQUAREOPEN)!=-1);
 		return moreInjectionsNeeded;
 	}
 
+
+	protected void processRepeatingSet() {
+		StringBuilder bloc = new StringBuilder("");
+		int prefixEnd = currentLine.indexOf(assembleTag(Injectables.THREECOL_TABLE_OF_COMPANY_DETAILS));
+		if (prefixEnd>0) bloc.append(currentLine,0,prefixEnd);
+
+		int repeatingLineStart = currentLine.indexOf(SQUARECLOSE, (prefixEnd+1));
+		String subtemplate;
+		if (currentLine.length()>repeatingLineStart) subtemplate = currentLine.substring(repeatingLineStart+1);
+		else subtemplate = currentLine; 
+
+		for (TwoColRecord detailLine : data.getColleagueCompanyDetails()) {
+			currentLine = subtemplate;
+			// update fields on each loop/detailLine
+			data.setFieldb(detailLine.getField1());
+			data.setFieldc(detailLine.getField2());
+			injectFIELDB();
+			injectFIELDC();
+			bloc.append(currentLine);
+		}
+		currentLine = bloc.toString();
+	}
 	
-//	protected String generateUrlToVerifyEmail(String newUserEmailAddress, P3SUser userRecord, String siteUrl) {
-//		String userMash = newUserEmailAddress + userRecord.getId().toString();
-//		int    qwikInt  = userMash.hashCode(); // may be negative
-//		if (qwikInt<0) qwikInt = qwikInt * -1; 
-////		Integer qwikInt = new Integer(userMash.hashCode()); // may be negative
-//		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
-//		zz("userMash is "+userMash);
-//		zz("userHash is "+userHash);
-//		int len = userHash.length();
-//		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
-//		zz("yields "+fragment6);
-//				
-//		String url2verifyEmail = siteUrl+"user/confirmuser/"+fragment6+"?email="+newUserEmailAddress;
-//		zz("yields "+fragment6);
-//		return url2verifyEmail;
-//	}
 	
 	protected String generateUrlToVerifyEmail(String newUserEmailAddress, P3SUser userRecord, String siteUrl) {
 		DummyDataEngine dummy = new DummyDataEngine(); 

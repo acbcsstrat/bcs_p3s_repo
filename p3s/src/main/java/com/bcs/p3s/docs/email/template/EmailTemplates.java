@@ -23,8 +23,8 @@ public interface EmailTemplates {
 	
 	
 	String email_proforma_invoice		= "email_proforma_invoice"; 
-//	String email_final_invoice			= "email_final_invoice"; 
-//	String email_certificate_invoice	= "email_certificate_invoice"; 
-//	String email_penalty_invoice		= "email_penalty_invoice"; 
+	String email_final_invoice			= "email_final_invoice"; 
+	String email_renewal_certificate	= "email_renewal_certificate"; 
+	String email_penalty_invoice		= "email_penalty_invoice"; 
 
 }

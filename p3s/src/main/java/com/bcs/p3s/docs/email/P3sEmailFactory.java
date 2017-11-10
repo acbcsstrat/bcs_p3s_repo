@@ -1,11 +1,11 @@
 package com.bcs.p3s.docs.email;
 
 import com.bcs.p3s.docs.email.Populators.AbstractPopulator;
+import com.bcs.p3s.docs.email.Populators.CertificatePopulator;
 import com.bcs.p3s.docs.email.Populators.RegisterPopulator;
 import com.bcs.p3s.docs.email.Populators.ReminderEmailStandardPopulator;
 import com.bcs.p3s.docs.email.Populators.TransactionPopulator;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
-import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.util.lang.Universal;
 
 public class P3sEmailFactory extends Universal implements EmailTemplates {
@@ -20,7 +20,6 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 			, Object param5
 			, Object param6
 			, Object param7
-			, Object param8
 			)   // extend params as needed ...
 	{
 		String err = "P3sEmailFactory create("+template+") : ";
@@ -37,9 +36,15 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 				pop = new ReminderEmailStandardPopulator(template, param1, param2, param3, param4, param5);
 				noBuild = false;
 			}
-			if (EmailTemplates.email_proforma_invoice.equals(template)) {
-				// or email_final_invoice email_certificate_invoice email_penalty_invoice
-				pop = new TransactionPopulator(template, param1, param2, param3, param4, param5, param6, param7, param8);
+			if ((EmailTemplates.email_proforma_invoice.equals(template))
+					 || (EmailTemplates.email_final_invoice.equals(template))
+					 || (EmailTemplates.email_penalty_invoice.equals(template)) )
+			{
+				pop = new TransactionPopulator(template, param1, param2, param3, param4, param5, param6, param7);
+				noBuild = false;
+			}
+			if (EmailTemplates.email_renewal_certificate.equals(template)) {
+				pop = new CertificatePopulator(template, param1, param2, param3, param4, param5, param6, param7);
 				noBuild = false;
 			}
 			
