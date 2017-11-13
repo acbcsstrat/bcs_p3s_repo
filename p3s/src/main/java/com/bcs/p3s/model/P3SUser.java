@@ -62,6 +62,6 @@ public class P3SUser {
     /**
      */
     @NotNull
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.EAGER)
     private List<LoginMessage> loginMessagesToDisplay = new ArrayList<LoginMessage>();
 }

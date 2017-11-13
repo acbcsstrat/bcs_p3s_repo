@@ -38,6 +38,8 @@ public interface P3SPropertyNames {
 	//Patent data
 	int Patent_Renewal_Max_Year = 20;
 	
+	//Modal popup urgency criteria
+	int GREE_BLUE_ENDS_IN = 7;
 
 	// SFTP 
 	public static final String WHICH_FX_SFTP_SITE = "fx_provider";

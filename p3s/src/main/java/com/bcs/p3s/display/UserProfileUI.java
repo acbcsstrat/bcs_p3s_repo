@@ -39,15 +39,12 @@ public class UserProfileUI {
 
     private Business business;
     
-    private List<LoginMessageUI> loginMessages;
-	
+    // SHOULD BE REMOVED AFTER TESTING
+    private LoginMessageUI messages;
+    
 	public UserProfileUI() {
 		
-
 	}
-
-
-
 
 	public String getFirstName() {
 		return firstName;
@@ -94,12 +91,12 @@ public class UserProfileUI {
 		this.newPassword = newPassword;
 	}
 
-	public List<LoginMessageUI> getLoginMessages() {
-		return loginMessages;
+	public LoginMessageUI getMessages() {
+		return messages;
 	}
 
-	public void setLoginMessages(List<LoginMessageUI> loginMessages) {
-		this.loginMessages = loginMessages;
+	public void setMessages(LoginMessageUI messages) {
+		this.messages = messages;
 	}
 
 }
