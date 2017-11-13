@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import org.joda.time.Days;
+import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.LoginMessageUI;
 import com.bcs.p3s.display.PatentUI;
@@ -29,6 +30,7 @@ import com.bcs.p3s.util.lang.Universal;
  * @author MerinP
  *
  */
+@Service("MiscService")
 public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscService {
 	
 	final String[] urgentColors = {RenewalColourEnum.AMBER, RenewalColourEnum.RED , RenewalColourEnum.BLACK};
