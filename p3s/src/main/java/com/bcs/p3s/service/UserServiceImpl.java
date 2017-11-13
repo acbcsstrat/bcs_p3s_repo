@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService{
 		
 		//Login Messages
 		
-		userProfileUI.setLoginMessages(findAllLoginMessagesForUser(user));
+		//userProfileUI.setLoginMessages(findAllLoginMessagesForUser(user));
 		
 		return userProfileUI; 
 	}
@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService{
 			
 			if(today.getTime().after(displayFrom.getTime()) && today.getTime().before(displayTill.getTime())){
 				LoginMessageUI messageUI = new LoginMessageUI();
-				messageUI.setMessageText(eachMessage.getMessageText());
+				//messageUI.setMessageText(eachMessage.getMessageText());
 				loginMessagesUI.add(messageUI);
 			}
 		}
