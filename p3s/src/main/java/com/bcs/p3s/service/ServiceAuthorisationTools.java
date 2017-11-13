@@ -1,5 +1,8 @@
 package com.bcs.p3s.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -7,7 +10,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.model.LoginMessage;
+import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 
@@ -164,6 +170,20 @@ public class ServiceAuthorisationTools extends Universal {
 	
 	// End of   : Failure Handling utils
 	
+	public boolean checkMessageForThisUser(List<Long> messagesID){
+		
+		boolean isMyMessage = true;
+		List<LoginMessage> messages = SecurityUtil.getMyUser().getLoginMessagesToDisplay();
+		
+		for (Long id : messagesID){
+			LoginMessage message = LoginMessage.findLoginMessage(id);
+			if(!(Arrays.asList(messages).contains(message))){
+				isMyMessage = false;
+				failMalicious("checkMessageForThisUser() found a malicious message Id being passed");
+			}
+		}
+		return isMyMessage;
+	}
 
 	
 }

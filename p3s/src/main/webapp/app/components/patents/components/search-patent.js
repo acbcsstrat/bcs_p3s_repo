@@ -83,7 +83,7 @@ app.component('searchpatent', {
         	}  	
         	
         	$timeout(function() {
-    			vm.chunkedData = chunk(phaseNotifications(phase), 3);
+    			vm.chunkedData = chunk(phaseNotifications(phase), 4);
     			vm.colourPhase = phase;
     		}, 100)
 		}

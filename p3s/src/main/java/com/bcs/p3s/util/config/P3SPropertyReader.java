@@ -215,6 +215,17 @@ import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 //		}
 	
 
+		
+		public String checkPathPropertyTerminated(String candidate) {
+			if (candidate==null) return candidate;
+			if (isEmpty(candidate)) return "";
+			if (candidate.endsWith("/")) 
+				return (candidate);
+			else
+				return (candidate+"/");
+		}
+		
+		
 
 		protected String logExceptionPreRethrow(String err, Exception e) {
 			String msg = err + "sufferedException "+e.getClass().getName()+"  Message="+e.getMessage();

@@ -32,6 +32,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			, "DESKTOP-H575IU3"			// Patrick's PC
 			, "reviewsystem"			// Tomacat-A (on Linode)
 			// YET TO INCLUDE: other Linux Hosts? Dev, Test, Demo & Production
+			, "tomcatb"					// Tomacat-B (on Linode). Clone of TomcatA, with postfix Nov17
 	};
 		
 
@@ -59,7 +60,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// Original: path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
-		if ("reviewsystem".equals(host)) {
+		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
 		if ("CCP007".equals(host)) {
@@ -92,12 +93,12 @@ public class P3SEnvironmentKnowledge extends Universal {
 	/**
 	 * Provides the filespec of the main P3S property file on this host
 	 */
-	public final String OBS_getP3SPropertyFileFilespec()  {
-		// for now, & likely always, this is the same as getBuildinfoFilespec() 
-		String filespec = appendFilenameToPath(getMainPropertyFilePath(), P3S_PROPERTYFILE_FILENAME);
-		log().debug("P3SEnvironmentKnowledge getP3SPropertyFileFilespec predicts that p3s property file is at "+filespec);
-		return filespec ;
-	};
+//	public final String OBS_getP3SPropertyFileFilespec()  {
+//		// for now, & likely always, this is the same as getBuildinfoFilespec() 
+//		String filespec = appendFilenameToPath(getMainPropertyFilePath(), P3S_PROPERTYFILE_FILENAME);
+//		log().debug("P3SEnvironmentKnowledge getP3SPropertyFileFilespec predicts that p3s property file is at "+filespec);
+//		return filespec ;
+//	};
 	
 	
 
@@ -120,7 +121,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("DESKTOP-H575IU3".equals(host)) {
 			path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
 		}
-		if ("reviewsystem".equals(host)) {
+		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";
 		}
 		
@@ -139,7 +140,18 @@ public class P3SEnvironmentKnowledge extends Universal {
 	};
 	
 	
-
+	/**
+	 * Indicates if P3Sweb is running on a developer PC or not. 
+	 */
+	public static boolean isDeveloperPC() {
+		String host = Hostname.getHostname();
+		if ( ("CCP020".equals(host)) || ("avid-ox790-013".equals(host))
+		|| ("DESKTOP-H575IU3".equals(host)) || ("CCP007".equals(host)) ) {
+			return true;
+		}
+		else return false;
+	}
+	
 	
 	
 	

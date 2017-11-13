@@ -57,7 +57,7 @@ public class CostAnalysisDataEngine extends Universal{
         
 	/**
 	* Check whether renewal window still opened for the current filing due date
-	*/
+	*//*
       //Calendar todays = Calendar.getInstance();
     	Date todays = new DateUtil().getTodaysDate();
     	if(allDates.getCurrentWindowOpenDate() == null){
@@ -73,7 +73,7 @@ public class CostAnalysisDataEngine extends Universal{
 		else{
 			allDates.setRenewalWindowStillOpened(false);
 			log().debug("Renewal window is being **CLOSED** for patent [" + patent.getId() + "]");
-		}
+		}*/
 		
 		
 	return allDates;
@@ -158,7 +158,7 @@ public class CostAnalysisDataEngine extends Universal{
 			
 		}
 		else{//CAN BE DOLDRUM OR TOO LATE TO RENEW
-			caData.setCurrentcostBand(RenewalColourEnum.NOCOLOR);
+			caData.setCurrentcostBand(RenewalColourEnum.GREY);
 		}
 		
 		log().debug( msg + " returning Current cost band is " + caData.getCurrentcostBand());

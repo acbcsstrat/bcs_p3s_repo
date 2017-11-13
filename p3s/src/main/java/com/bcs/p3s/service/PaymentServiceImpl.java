@@ -355,7 +355,9 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);*/
 
 		DummyDataEngine dummy = new DummyDataEngine();
-		BankTransferPaymentDetails bankTransferPaymentDetails = dummy.generateBankTransferPaymentDetails();
+		//BankTransferPaymentDetails bankTransferPaymentDetails = dummy.generateBankTransferPaymentDetails();
+		// Now superceded by: hardcoded BankTransferPaymentDetails 
+		BankTransferPaymentDetails bankTransferPaymentDetails = new BankTransferPaymentDetails();
 		bankTransferPostCommitDetails.setBankTransferPaymentDetails(bankTransferPaymentDetails);
 		
 		String proformaInvoiceUrl = dummy.gimmeAnyInvoiceUrl();

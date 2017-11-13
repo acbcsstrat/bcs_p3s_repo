@@ -83,7 +83,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 	        if("city".equals(pair.getKey()))
 	        	business.setCity(strValue);
 	        
-	        if("usstate".equals(pair.getKey()))
+	        if("USstate".equals(pair.getKey()))
 	        	business.setUSstate(strValue);
 	        
 	        if("zip".equals(pair.getKey()))

@@ -3,24 +3,30 @@ package com.bcs.p3s.controller.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.docs.email.EmailDevTest;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.util.config.BuildinfoPropertyReader;
 import com.bcs.p3s.util.env.Hostname;
+import com.bcs.p3s.util.lang.Universal;
 
 
 
 @Controller
-public class MiscController {
+public class MiscController extends Universal {
 
 		@Autowired
 		PatentService patentService;  //Service which will do all data retrieval/manipulation work
@@ -50,6 +56,19 @@ public class MiscController {
             
             
             return "whoami";
+	    }
+
+		
+		
+		@RequestMapping(value="/acgenerateemail", method = RequestMethod.POST, produces = "text/html")
+	    public String acgenerateemail(Model uiModel, String emailchoice) {
+			log().debug("acgenerateemail in MiscController invoked  : param = "+emailchoice);
+
+			int code = Integer.parseInt(emailchoice);
+			EmailDevTest tester = new EmailDevTest();
+			tester.testByCode(code);
+			
+            return "index";
 	    }
 	    
 

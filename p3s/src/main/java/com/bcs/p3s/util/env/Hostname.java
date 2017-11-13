@@ -29,9 +29,9 @@ public class Hostname {
 			name = java.net.InetAddress.getLocalHost().getHostName();
 		} catch (UnknownHostException e) {
 			// Here, static method calls non-static method, so
-			bcsLogger.logInternalError().error("PE2 Hostname has failed to access hostname", e);
+			bcsLogger.logInternalError().error("P3S Hostname has failed to access hostname", e);
 		}
-		bcsLogger.log().debug("PE2 Hostname returns "+name);
+		bcsLogger.log().debug("P3S Hostname returns "+name);
 		return name;
 	}
 

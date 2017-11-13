@@ -1,23 +1,20 @@
 <transactionnav></transactionnav>
 
 <div class="row m-b-md">
-	<div class="col-md-2 offset-md-10">
+	<div class="col-md-3 offset-md-9">
 		<form class="form-inline">
-			<div class="col-md-12">
-				<div class="input-group">
-
-					<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['p3S_TransRef']" placeholder="Transaction ID">
-					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
-				</div>					
-			</div>
+			<div class="input-group w-100">
+				<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="$ctrl.tableParams.filter()['p3S_TransRef']" placeholder="Transaction ID">
+				<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+			</div>					
 		</form>
 	</div>
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<div class="row m-b-xl">
-			<div class="col-md-12" id="scrollable-area" class="table-scroll">
-				<table ng-table="$ctrl.tableParams" class="table font-md t-list" show-filter="false" fixed-table-headers="scrollable-area">
+		<div class="row m-b-lg">
+			<div class="col-md-12 table-scroll p-r-none" id="scrollable-area">
+				<table ng-table="$ctrl.tableParams" class="font-body t-list" show-filter="false" fixed-table-headers="scrollable-area">
 				    <tr ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(patent)" ui-sref-active="active">
 				        <td width="15%" data-title="'Transaction ID'" filter="{ 'p3S_TransRef': 'text'}" sortable="'p3S_TransRef'">
 							<a class="txt-black" ui-sref="current-transactions.current-transaction-item({transId: row.id})" disabled>{{row.p3S_TransRef}}</a>
@@ -31,7 +28,7 @@
 									{{item.patentUI.patentApplicationNumber}}
 								</span>
 							</span>
-							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in row.renewalUIs" ng-model="selectedAppOption" ng-change="transactionFilter(selectedAppOption, 'patentAppFilter')" class="pill-radius p-select-option border-xs-grey">
+							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in row.renewalUIs" ng-model="selectedAppOption" ng-change="transactionFilter(selectedAppOption, 'patentAppFilter')" class="pill-radius form-control font-body">
 									<option value="">Multiple</option>
 							</select>
 				        </td>
@@ -41,7 +38,7 @@
 									{{item.patentUI.clientRef}}<br>
 								</span>								
 							</span>
-							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.clientRef for item in row.renewalUIs" ng-model="selectedRefOption" class="pill-radius p-select-option border-xs-grey" ng-change="transactionFilter(selectedRefOption, 'clientRefFilter')">
+							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.clientRef for item in row.renewalUIs" ng-model="selectedRefOption" class="pill-radius form-control font-body" ng-change="$ctrl.transactionFilter(selectedRefOption, 'clientRefFilter')">
 								<option value="">Multiple</option>
 							</select>			        	
 				        </td>
@@ -52,7 +49,7 @@
 				        	$ {{row.transAmount_USD}}
 				        </td>
 				        <td width="20%" data-title="'Status'" filter="{ 'latestTransStatus': 'text'}" sortable="'latestTransStatus'">
-							<p class="font-weight-bold">{{row.latestTransStatus}}</p>
+							<p class="font-weight-bold m-b-xs">{{row.latestTransStatus}}</p>
 							<div class="progress-tracker progress-trans">
 								<uib-progress><uib-bar class="bg-phase-green pill-radius" value="row.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
 							</div>	

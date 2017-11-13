@@ -17,8 +17,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
     .primaryPalette('purple')
 
 
-    IdleProvider.idle(525);
-    IdleProvider.timeout(30);
+    IdleProvider.idle(520);
+    IdleProvider.timeout(20);
+    KeepaliveProvider.http(domain+'keep-session-alive/');
+    KeepaliveProvider.interval(30)
 
     $qProvider.errorOnUnhandledRejections(false);
 
@@ -90,9 +92,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
             }],
             renewal: ['patentsRestService','$stateParams', function(patentsRestService, $stateParams){
                 return  patentsRestService.fetchRenewalHistory($stateParams.patentId);  
-            }],
-            fx: ['fxService', function(fxService){
-
             }]
         }
     })

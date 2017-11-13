@@ -1,7 +1,7 @@
 app.component('patents', {
   	bindings: { patents: '<' },
 	templateUrl: 'p3sweb/app/components/patents/views/list-patents.htm',
-	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', '$state', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams, $state) {
+	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', '$state', '$stateParams', 'currentTransactionsService', 'patentsService', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams, $state, $stateParams, currentTransactionsService, patentsService) {
 
 		var vm = this;
 
@@ -9,6 +9,34 @@ app.component('patents', {
 
 		vm.displayPatents = function() {
 			$state.go('patents')
+		}
+
+		vm.fetchItemRenewal = function() {
+			patentsService.activePatentItemMenu();
+		}
+
+		vm.fetchItemTransaction = function(id) {
+			// console.log(id)
+			currentTransactionsService.fetchCurrentTransactions()
+			.then(
+				function(response) {
+					response.forEach(function(data) {
+
+						const transId = data.id;
+						
+						data.renewalUIs.forEach(function(data, i) {
+							if(data.patentUI.id == id) {
+								console.log(transId)
+								$state.go('current-transactions.current-transaction-item',{transId: transId})
+							}
+						})
+
+					})
+				},
+				function(errResponse) {
+					console.log(errResponse)
+				}
+			)
 		}
 
 		vm.$onInit = () => {
@@ -22,6 +50,7 @@ app.component('patents', {
 			var redPatents = [];
 			var bluePatents = [];
 			var blackPatents = [];
+			var greyPatents = [];
 
 		   	vm.tableParams = new NgTableParams({
 		   		sorting: { patentApplicationNumber: "asc" },
@@ -31,27 +60,6 @@ app.component('patents', {
 		        counts: [],
 		        dataset: vm.patents
 		    });
-
-			vm.colourPhase = function(item) {	
-				switch(item.costBandColour) {
-					case 'Green':
-						$rootScope.color = 'green'
-					break;
-					case 'Amber':
-						$rootScope.color = 'amber'
-					break;
-					case 'Red':
-						$rootScope.color = 'red'
-					break;
-					case 'Blue':
-						$rootScope.color = 'blue'
-					break;
-					case 'Black':
-						$rootScope.color = 'black'
-					break;
-																							
-				}
-			}
 
 	  		vm.displayPhase = function(id) {
 				switch (id) {
@@ -65,7 +73,7 @@ app.component('patents', {
 					        counts: [],
 					        dataset: vm.patents
 					    });
-				        break;
+			        break;
 				    case 2:
 				     	vm.patents = greenPatents;
 					   	vm.tableParams = new NgTableParams({
@@ -76,7 +84,7 @@ app.component('patents', {
 					        counts: [],
 					        dataset: vm.patents
 					    });
-				        break;
+			        break;
 				    case 3:
 				     	vm.patents = amberPatents;
 					   	vm.tableParams = new NgTableParams({
@@ -87,7 +95,7 @@ app.component('patents', {
 					        counts: [],
 					        dataset: vm.patents
 					    });
-				        break;
+			        break;
 				    case 4:
 				     	vm.patents = redPatents;
 					   	vm.tableParams = new NgTableParams({
@@ -98,7 +106,7 @@ app.component('patents', {
 					        counts: [],
 					        dataset: vm.patents
 					    });
-				        break;
+			        break;
 				    case 5:
 				     	vm.patents = bluePatents;
 					   	vm.tableParams = new NgTableParams({
@@ -112,6 +120,17 @@ app.component('patents', {
 				     	break;
 			     	case 6:
 				    	vm.patents = blackPatents;
+					   	vm.tableParams = new NgTableParams({
+					   		sorting: { patentApplicationNumber: "asc" },
+					        page: 1,            // show first page
+					        count: 10000,           // count per page
+					    }, {
+					        counts: [],
+					        dataset: vm.patents
+					    });
+				    break;
+			     	case 7:
+				    	vm.patents = greyPatents;
 					   	vm.tableParams = new NgTableParams({
 					   		sorting: { patentApplicationNumber: "asc" },
 					        page: 1,            // show first page
@@ -141,24 +160,28 @@ app.component('patents', {
 	     			vm.patents = null;
 	     		}
 
-				switch(item.costBandColour) {
-					case 'Green':
-						greenPatents.push(item);
-					break;
-					case 'Amber':
-						amberPatents.push(item)
-					break;
-					case 'Red':
-						redPatents.push(item)
-					break;
-					case 'Blue':
-						bluePatents.push(item)
-					break;
-					case 'Black':
-						blackPatents.push(item)
-					break;
-					default: vm.patents = null;																								
-				}
+	     		if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
+					switch(item.costBandColour) {
+						case 'Green':
+							greenPatents.push(item);
+						break;
+						case 'Amber':
+							amberPatents.push(item)
+						break;
+						case 'Red':
+							redPatents.push(item)
+						break;
+						case 'Blue':
+							bluePatents.push(item)
+						break;
+						case 'Black':
+							blackPatents.push(item)
+						break;		
+						default: vm.patents = null;																								
+					}
+     			} else {
+					greyPatents.push(item)
+     			}
 
 		     	if(greenPatents.length === 0) { 
 	 				vm.greenPatentsLength = 0;
@@ -185,6 +208,12 @@ app.component('patents', {
 	 			} else {
 	 				vm.blackPatentsLength = blackPatents.length
 	 			}
+
+	 			if(greyPatents.length == 0) {
+	 				vm.greyPatentsLength = 0;
+	 			} else {
+	 				vm.greyPatentsLength = greyPatents.length
+	 			}	 			
 
 	 			function calcProgress(start, end) {
 

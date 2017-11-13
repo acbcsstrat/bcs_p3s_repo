@@ -10,22 +10,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.bcs.p3s.util.random.RandomGenerator;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 
 import com.bcs.p3s.display.FxRateUI;
-import com.bcs.p3s.display.PatentUI;
-import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.Notification;
+import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
-import com.bcs.p3s.service.PatentService;
-import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.session.PostLoginSessionBean;
-import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -185,15 +178,17 @@ public class DummyDataEngine extends Universal {
 		return "CQ 465 735 QC";
 	}*/
 		
-	public BankTransferPaymentDetails generateBankTransferPaymentDetails() {
-		BankTransferPaymentDetails ikk = new BankTransferPaymentDetails();
-		ikk.setAccountNumber("12345678");
-		ikk.setItem1("This is Item 1");
-		ikk.setItem2("This IS item 2");
-		ikk.setItem3("ThIS is item 3");
-		return ikk;
-	}
 
+//	public BankTransferPaymentDetails generateBankTransferPaymentDetails() {
+//		BankTransferPaymentDetails ikk = new BankTransferPaymentDetails();
+//		ikk.setAccountNumber("12345678");
+//		ikk.setItem1("This is Item 1");
+//		ikk.setItem2("This IS item 2");
+//		ikk.setItem3("ThIS is item 3");
+//		return ikk;
+//	}
+
+	
 	public String gimmeAnyInvoiceUrl() {
 		return "hardcodedpdffolder/invoices/dummyInvoiceNumber1.pdf";
 	}
@@ -268,7 +263,25 @@ public class DummyDataEngine extends Universal {
 	//	return inventedRubbish;
 	//}
 
-	
+	/**
+	 * This is NOT rubbish code - it will.may be used. But not here. Awaiting a home
+	 * Generates a 6digit code using the hash of seedUser.email + seedUser.ID
+	 * Protects against hash=0 or negative
+	 * @param seed
+	 * @return 6 digit number
+	 */
+	public String generate6digitCode(P3SUser seedUser) {
+		String userMash = seedUser.getEmailAddress() + seedUser.getId().toString();
+		int    qwikInt  = userMash.hashCode(); // may be negative
+		if (qwikInt<0) qwikInt = qwikInt * -1; 
+		String userHash = "736933735" + Integer.toString(qwikInt); // ensure len>8
+		//zz("userMash is "+userMash);
+		//zz("userHash is "+userHash);
+		int len = userHash.length();
+		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6
+		//zz("yields "+fragment6);
+		return fragment6;
+	}
 	
 	
 	

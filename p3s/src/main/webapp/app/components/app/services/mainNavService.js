@@ -4,7 +4,7 @@ app.factory('mainNavService', function(){
 	      		name: 'Dashboard',
 	      		type: 'link',
 	      		state: 'dashboard',
-	      		icon: 'fa fa-dashboard'
+	      		icon: 'p3sweb/assets/imgs/icons/dashboard_icon.png'
       		}];
 
 
@@ -25,27 +25,26 @@ app.factory('mainNavService', function(){
 
   				}
   			],
-  			icon: 'fa fa-clipboard'
+  			icon: 'p3sweb/assets/imgs/icons/patent_icon.png'
       	})
 
       	sections.push({
       		
       		name: 'Transactions',
       		type: 'toggle',
-          icon: 'fa fa-credit-card',
       		pages: [
       			{
-		            name: 'Current Transactions',
+		            name: 'Current',
 		            state: 'current-transactions',
 		            type: 'link',
 		        },
 		        {
-		            name: 'Transaction History',
+		            name: 'History',
 		            state: 'transaction-history',
 		            type: 'link',
 		        }
 	        ],
-          icon: 'fa fa-credit-card'
+          icon: 'p3sweb/assets/imgs/icons/transaction_icon.png'
   		})
      
      	// console.log(sections)

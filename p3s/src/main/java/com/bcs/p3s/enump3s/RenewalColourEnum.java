@@ -8,7 +8,7 @@ public class RenewalColourEnum extends P3SAbstractEnum {
     public static final String BLUE  = "Blue";
     public static final String BLACK = "Black";
     
-    public static final String NOCOLOR = "NoColor";
+    public static final String GREY = "GREY";
 
 
     // Constructor - Which verifies the value provided
@@ -23,7 +23,7 @@ public class RenewalColourEnum extends P3SAbstractEnum {
                 if (colour.equalsIgnoreCase(RenewalColourEnum.RED)) sofar = RenewalColourEnum.RED;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.BLUE)) sofar = RenewalColourEnum.BLUE;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.BLACK)) sofar = RenewalColourEnum.BLACK;  
-                if (colour.equalsIgnoreCase(RenewalColourEnum.NOCOLOR)) sofar = RenewalColourEnum.NOCOLOR;  
+                if (colour.equalsIgnoreCase(RenewalColourEnum.GREY)) sofar = RenewalColourEnum.GREY;  
 
             	// Start of Legacy / Redundant code. To be removed after 'brown' has been removed from all DbS
                 if (colour.equalsIgnoreCase("Brown")) sofar = RenewalColourEnum.BLACK;  

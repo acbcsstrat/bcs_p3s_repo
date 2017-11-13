@@ -46,6 +46,7 @@ public class PostLoginDataEngine extends Universal{
 		
 		CostAnalysisDataEngine caEngine = new CostAnalysisDataEngine();
 		CostAnalysisData caData = new CostAnalysisData();
+		RenewalDatesEngine datesEngineObj = new RenewalDatesEngine();
 		PatentStatusEngine patentStatus = new PatentStatusEngine();
 		String err = PREFIX+"getExtendedPatentData(session) ";
 		log().debug("invoked : " + PREFIX +  err);
@@ -71,26 +72,30 @@ public class PostLoginDataEngine extends Universal{
     		
 	    	for(Patent patent : patents){
 	    		PatentExtendedData extendedData = new PatentExtendedData();
-				//RenewalDates renewalDates = caEngine.getRenewalWindowDates(patent);
-				PatentStatus renewalInfo = patentStatus.getRenewalInfo(patent);
+				RenewalDates renewalDates = datesEngineObj.getRenewalDates(patent);
+				
+				/* Commenting from below as trial to change the patent price if in doldrum **/ //till line 87
+				//PatentStatus renewalInfo = patentStatus.getRenewalInfo(patent);
 				
 				/**
 				 * below methods in CAEngine Class
 				 * So setting the calculated value to renewaldates
 				 */
 				
-				RenewalDates renewalDates = new RenewalDates();
+				/*RenewalDates renewalDates = new RenewalDates();
 				renewalDates.setCurrentRenewalDueDate(renewalInfo.getRenewalDueDate());
 				renewalDates.setCurrentWindowOpenDate(renewalInfo.getNineMonthStart());
 				renewalDates.setCurrentWindowCloseDate(renewalInfo.getNineMonthEnd());
-
+*/
 				//This may change - pending Dan's decision
 				/**
 				 * We are displaying a rate to customer if Renewal window being opened, irrespective of the fact that they have been paid or not.
 				 * CHANCES ARE THE CONDITION MAY CHANGE TO SHOW PRICES ONLY IF THE STATUS IS SHOW_PRICE
 				 * ie, if(RenewalStatusEnum.SHOW_PRICE.equals(patent.getRenewalStatus())){
 				 */
-				if(!renewalInfo.getDoldrums()){
+				//if(!renewalInfo.getDoldrums()){
+				if(RenewalStatusEnum.SHOW_PRICE.equals(patent.getRenewalStatus())){
+					log().debug("Patent open for renewal and not paid yet. So calculate price and respective phase info");
 					caData = caEngine.getAllPhasesInfo(renewalDates);
 					String currentPhase = caEngine.getCurrentPhase(caData);
 					CombinedFee fee = caEngine.getFeeObj(patent);
@@ -110,7 +115,7 @@ public class PostLoginDataEngine extends Universal{
 				else{
 					extendedData.setPatentId(patent.getId());
 					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
-					extendedData.setCurrentCostBand(RenewalColourEnum.NOCOLOR);
+					extendedData.setCurrentCostBand(RenewalColourEnum.GREY);
 				}
 				
 				allData.add(extendedData);

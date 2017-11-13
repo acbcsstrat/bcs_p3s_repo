@@ -6362,9 +6362,9 @@ md-optgroup md-option {
 }
 md-sidenav {
     position: absolute;
-    width: 200px;
-    min-width: 250px;
-    max-width: 250px;
+    width: 220px;
+    min-width: 220px;
+    max-width: 220px;
     bottom: 0;
     z-index: 60;
     background-color: #fff;

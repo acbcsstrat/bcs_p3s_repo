@@ -18,13 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.bcs.p3s.display.UserProfileUI;
+import com.bcs.p3s.docs.email.P3sEmail;
+import com.bcs.p3s.docs.email.P3sEmailFactory;
+import com.bcs.p3s.docs.email.template.EmailTemplates;
+import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
+import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.email.EmailSender;
+import com.bcs.p3s.util.email.TmpEmailerDummy;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.BankTransferPaymentDetails;
  
 @RestController
 public class UserProfileRestController extends Universal {
@@ -46,6 +54,7 @@ public class UserProfileRestController extends Universal {
          P3SUser p3sUser = pLoginSession.getUser();
     	UserProfileUI userProfileUI = userService.getUserProfileUI(p3sUser);
 
+    	
         return new ResponseEntity<UserProfileUI>(userProfileUI, HttpStatus.OK);
     }
  
@@ -67,15 +76,17 @@ public class UserProfileRestController extends Universal {
     @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
     public ResponseEntity<UserProfileUI> updateUser(@RequestBody UserProfileUI obUser , UriComponentsBuilder ucBuilder) {
       
+    	String err = "UserProfileRestController updateUser [PUT] : ";
 //    	log().fatal(" REACHED    AAAAAAAAAAAAAAAAAAAAAA  UserProfileRestController updateUser ");
-    	String msg = " ****************** "+"UserProfileRestController updateUser invoked with UserProfileUI of "+obUser.getClass().getName();
-    	log().fatal(msg);
-//    	System.out.println(msg);
+    	//String msg = " ****************** "+"UserProfileRestController updateUser invoked with UserProfileUI of "+obUser.getClass().getName();
+    	//log().fatal(msg);
+    	//    	System.out.println(msg);
 //    	System.out.println(" ****************** ");
 //    	System.out.println(" ****************** ");
-//    	System.out.println(" ****************** ");
+//    	System.out.println(" ****************** "); // acTidy
 
     	if ( ! ( obUser instanceof UserProfileUI)) notYet("updateUser given object which is NOT a UserProfileUI");
+    	
     	
     	UserProfileUI user = (UserProfileUI) obUser;
     	
@@ -89,7 +100,7 @@ public class UserProfileRestController extends Universal {
         //updating password as well
         if(!(user.getNewPassword() == null)){
         		p3sUser.setPassword(user.getNewPassword());
-        		log().debug(msg + "User updated password as well");
+        		log().debug(err + "User updated password as well");
         }
         
         //p3sUser.setIsEmailNotification(false);

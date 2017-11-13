@@ -5,12 +5,45 @@ app.component('patent', {
 		renewal: '<'
 	},
 	templateUrl: 'p3sweb/app/components/patents/views/patent-item.htm',
-	controller: ['patentsRestService', '$state', '$timeout','$scope', 'fxService',  function(patentsRestService, $state, $timeout, $scope, fxService) {
+	controller: ['patentsRestService', '$state', '$timeout','$scope', 'fxService', '$stateParams', 'patentsService', 'currentTransactionsService', function(patentsRestService, $state, $timeout, $scope, fxService, $stateParams, patentsService, currentTransactionsService) {
 
 		var vm = this;
-		
+
 		vm.activePatentItemMenu = 'Patent Info';
+
+		$scope.$on('renewalHistory', function() {		
+			vm.activePatentItemMenu = 'Renewal History';
+			vm.activeSelectedTab = 2;
+		})
+
 		vm.chartActive = 'Stage Cost Chart';
+
+		vm.fetchItemRenewal = function() {
+			patentsService.activePatentItemMenu();
+		}
+
+		vm.fetchItemTransaction = function(id) {
+			currentTransactionsService.fetchCurrentTransactions()
+			.then(
+				function(response) {
+					response.forEach(function(data) {
+
+						const transId = data.id;
+						
+						data.renewalUIs.forEach(function(data, i) {
+							if(data.patentUI.id == id) {
+								console.log(transId)
+								$state.go('current-transactions.current-transaction-item',{transId: transId})
+							}
+						})
+
+					})
+				},
+				function(errResponse) {
+					console.log(errResponse)
+				}
+			)
+		}
 
 		vm.colourKey = function(colour) {
 
@@ -59,9 +92,20 @@ app.component('patent', {
 	            	vm.selectedPatent =  changeObj.patent.currentValue;
 
 					var patent = vm.patent;
-	            	var caFee = vm.costAnalysis.fee;
+
+		            var status = patent.renewalStatus;
+
+		            if((status == 'Show price') || (status == 'Payment in progress') || (status == 'EPO Instructed')) {
+		            	vm.displayCost = true;
+		            	vm.hideCost = false;
+		            } else {
+		            	vm.displayCost = false;
+		            	vm.hideCost = true;
+		            }
+
 	            	var costBand = vm.costAnalysis;
-		            var renewalHistory = vm.renewal;
+		            var renewalHistory = vm.renewal;		            
+	            	var caFee = vm.costAnalysis.fee;
 
 	            	vm.feeBreakDown = {
 	            		renewalFeeEUR: caFee.renewalFeeEUR,
@@ -119,7 +163,10 @@ app.component('patent', {
 
 					vm.lineLabels = lineLabelArr;
 
-	             	vm.lineData = lineDataArr;
+	             	$timeout(function(){
+	             		vm.lineData = lineDataArr;
+	             	}, 1000);
+
 	     		  	vm.lineSeries = ['Series A', 'Series B'];
 				  	vm.lineDatasetOverride = [
 				  		{ yAxisID: 'y-axis-1' }, 
@@ -231,17 +278,6 @@ app.component('patent', {
 			            	}
 			            }
 				  	};
-	            	var patentLineChart = angular.element(document.getElementById('patentLineChart'));
-	            	var patentBarChart = angular.element(document.getElementById('patentBarChart'));
-	            	// console.log(patentBarChart)
-	    //         	$timeout(function(){
-					// 	var ctx = document.getElementById("patentBarChart").getContext("2d");
-					// 	console.log(ctx)
-	    //         	}, 1000)
-				    
-				 //    Chart.types.Bar.extend({
-					//     name: "BarAlt"
-					// })
 
 	            }
 
@@ -290,8 +326,6 @@ app.component('patent', {
 			vm.colourPhase = 'Green';
 
 			vm.displayNotifications = function(phase) {
-	
-				console.log(phase)
 
 				function phaseNotifications(phase) {
 			  		var notificationsArr = changeObj.patent.currentValue.notificationUIs;
@@ -423,6 +457,7 @@ app.component('patent', {
 	    }
 
         vm.updatePatent = function(patent) {
+        	console.log(patent)
         	var id = patent.id;
         	patentsRestService.updatePatent(patent, id);
         }

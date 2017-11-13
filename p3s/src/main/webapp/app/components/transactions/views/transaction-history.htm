@@ -5,7 +5,7 @@
 		<form class="form-inline">
 			<div class="col-md-12">
 				<div class="input-group">
-					<input type="text" class="form-control pill-radius font-md" name="filter" ng-model="$ctrl.tableParams.filter()['p3S_TransRef']" placeholder="Transaction ID">
+					<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="$ctrl.tableParams.filter()['p3S_TransRef']" placeholder="Transaction ID">
 					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
 				</div>					
 			</div>
@@ -17,7 +17,7 @@
 	<div class="col-md-12">
 		<div class="row m-b-xl">
 			<div class="col-md-12" id="scrollable-area" class="table-scroll">
-				<table ng-table="$ctrl.tableParams" class="table font-md t-list" show-filter="false" fixed-table-headers="scrollable-area">
+				<table ng-table="$ctrl.tableParams" class="table font-body t-list" show-filter="false" fixed-table-headers="scrollable-area">
 				    <tr ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(patent)" ui-sref-active="active">
 				        <td width="15%" title="'Transaction ID'" filter="{ transId: 'text'}" sortable="'transId'" >
 						<a class="txt-black" ui-sref="transaction-history.transaction-history-item({transHistoryId: row.id})" disabled>{{row.p3S_TransRef}}</a>

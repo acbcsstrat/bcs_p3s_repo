@@ -2,110 +2,109 @@
     <div class="col-md-6">
         <div class="content-panel bg-white">
             <div class="content-panel__head border-grey-xs--btm">
-                <h3 class="font-xl font-weight-bold">Summary</h3>
+                <p class="font-h4 font-weight-medium">Summary</p>
             </div>
-            <div class="p-a-sm-wide border-grey-xs--btm">
-                <p class="font-md"><span class="font-weight-bold">Date</span> {{summary.date || date}}</p>
-                <p class="font-md"><span class="font-weight-bold ">Total No of Patents</span> {{summary.totalPatents}}</p>
+            <div class="content-panel__head border-grey-xs--btm">
+                <p class="font-body m-b-xs"><span class="font-weight-medium">Date: </span> {{summary.date || date}}</p>
+                <p class="font-body"><span class="font-weight-medium ">Total No of Patents: </span> {{summary.totalPatents}}</p>
             </div>
-            <div class="p-a-sm-wide border-grey-xs--btm">
+            <div class="content-panel__head border-grey-xs--btm">
                 <div class="row">
                     <div class="col-md-8">
-                        <p class="font-weight-bold font-md">Fee</p>                        
+                        <p class="font-weight-medium font-body">Fee</p>                        
                     </div>
                     <div class="col-md-4">
-                        <p class="font-weight-bold font-md">Amount</p>
+                        <p class="font-weight-medium font-body">Amount</p>
                     </div>                    
                 </div>
             </div>
-            <div class="p-a-sm-wide border-grey-xs--btm">
+            <div class="content-panel__head border-grey-xs--btm">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="m-b-md">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <p class="font-weight-bold font-md">Official Fees</p>                        
+                                    <p class="font-weight-medium font-body">Official Fees</p>                        
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-md">$ {{renewalFee | number:2}}</p>
+                                    <p class="font-body">$ {{renewalFee | number:2}}</p>
                                 </div>                               
                             </div>
                         </div>
                         <div class="m-b-md">
                             <div class="row">                                
                                 <div class="col-md-8">
-                                    <p class="font-weight-bold font-md">Processing Fees</p>                        
+                                    <p class="font-weight-medium font-body">Processing Fees</p>                        
                                 </div>                    
                                 <div class="col-md-4">
-                                    <p class="font-md">$ {{processingFee | number:2}}</p>
+                                    <p class="font-body">$ {{processingFee | number:2}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="m-b-md">
                             <div class="row">                                
                                 <div class="col-md-8">
-                                    <p class="font-weight-bold font-md">EPO Surcharges</p>                        
+                                    <p class="font-weight-medium font-body">EPO Surcharges</p>                        
                                 </div>                  
                                 <div class="col-md-4">
-                                    <p class="font-md">$ {{extensionFee | number:2}}</p>
+                                    <p class="font-body">$ {{extensionFee | number:2}}</p>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="row">                         
                                 <div class="col-md-8">
-                                    <p class="font-weight-bold font-md">Urgent Clearance Fees</p>                        
+                                    <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-md">$ {{urgentFee | number:2}}</p>
+                                    <p class="font-body">$ {{urgentFee | number:2}}</p>
                                 </div> 
                             </div>
                         </div>
                     </div>                       
                 </div>
             </div>
-            <div class="p-a-sm-wide">
+            <div class="content-panel__head">
                 <div class="row">
                     <div class="col-md-8">
-                        <p class="font-weight-bold font-lg">Total:</p> 
+                        <p class="font-weight-medium font-h4">Total:</p> 
                     </div>
                     <div class="col-md-4">
-                        <p class="font-weight-bold font-lg">{{ totalCost | currency }}</p>
+                        <p class="font-weight-medium font-h4">{{ totalCost | currency }}</p>
                     </div>
                 </div>
             </div>            
-
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="content-panel bg-white">
             <div class="content-panel__head border-grey-xs--btm">
-                <h3 class="font-xl font-weight-bold">Details</h3>
+                <p class="font-h4 font-weight-medium">Details</p>
             </div>
-            <div class="content-panel__body">
+            <div class="content-panel__head">
                 <form class="form" name="billingForm">
-                    <div class="row">
+                    <div class="row m-b-md">
                         <div class="col-md-12">
                             <div class="m-b-sm">
-                                <p class="font-md font-weight-bold ">Your Information</p>
+                                <p class="font-body font-weight-medium">Your Information</p>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 text-left font-sm font-weight-bold" for="email">Email</label>
+                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="email">Email</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-sm pill-radius" type="text" name="lastName"  ng-model="billingDetails.lastName">
+                                    <input class="form-control font-body pill-radius" type="text" name="lastName"  ng-model="billingDetails.email">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 text-left font-sm font-weight-bold" for="firstName">First Name</label>
+                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="firstName">First Name</label>
                         
                                 <div class="col-md-4">
-                                    <input class="form-control font-sm pill-radius" type="text" name="firstName" ng-model="billingDetails.firstName">
+                                    <input class="form-control font-body pill-radius" type="text" name="firstName" ng-model="billingDetails.firstName">
                                 </div>
-                                <label class="col-form-label col-md-2 text-left font-sm font-weight-bold" for="lastName">Last Name</label>
+                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="lastName">Last Name</label>
                                 
                                 <div class="col-md-4">
-                                    <input class="form-control font-sm pill-radius" type="text" name="lastName"  ng-model="billingDetails.lastName">
+                                    <input class="form-control font-body pill-radius" type="text" name="lastName"  ng-model="billingDetails.lastName">
                                 </div>                             
                             </div>                        
                         </div>
@@ -113,37 +112,37 @@
                     <div class="row m-b-sm">
                         <div class="col-md-12">
                             <div class="m-b-sm">    
-                                <p class="font-md font-weight-bold">Billing Address</p>
+                                <p class="font-body font-weight-medium">Billing Address</p>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 text-left font-sm font-weight-bold" for="billingStreet">Street</label>
+                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingStreet">Street</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-sm pill-radius" type="text" name="businessStreet" ng-model="billingDetails.billingStreet">
+                                    <input class="form-control font-body pill-radius" type="text" name="businessStreet" ng-model="billingDetails.billingStreet">
                                 </div>                                 
-                                <label class="col-form-label col-md-2 text-left font-sm font-weight-bold" for="billingCity">City</label>
+                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingCity">City</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-sm pill-radius" type="text" name="billingCity" ng-model="billingDetails.billingCity">
+                                    <input class="form-control font-body pill-radius" type="text" name="billingCity" ng-model="billingDetails.billingCity">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 text-left font-sm font-weight-bold" for="billingState">State</label>
+                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingState">State</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-sm pill-radius" type="text" name="billingState" ng-model="billingDetails.billingState">
+                                    <input class="form-control font-body pill-radius" type="text" name="billingState" ng-model="billingDetails.billingState">
                                 </div>
-                                <label class="col-form-label col-md-2 text-left font-sm font-weight-bold" for="billingZip">Zip</label>
+                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingZip">Zip</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-sm pill-radius" type="text" name="billingZip" ng-model="billingDetails.billingZip">
+                                    <input class="form-control font-body pill-radius" type="text" name="billingZip" ng-model="billingDetails.billingZip">
                                 </div>
                             </div>                    
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
-                        <label class="form-check-label font-md col-md-6">
-                            I accept the <span class="font-weight-bold m-r-xs">Terms and Conditions</span> <input type="checkbox" name="terms-checkout" ng-model="tcChecked">
+                        <label class="form-check-label font-body col-md-6">
+                            I accept the <span class="font-weight-medium m-r-xs">Terms and Conditions</span> <input type="checkbox" name="terms-checkout" ng-model="tcChecked">
                         </label>
                         <div class="col-md-6 text-right">
                             <div ng-if="service=='http' || service == 'log'">
-                                <button class="btn pill-radius bg-phase-green p-wide-sm txt-white font-lg font-weight-bold" ng-click="checkout(); test()" ng-disabled="!tcChecked || ngCart.getItems() == 0">Bank Transfer</button>
+                                <button class="btn btn--lg pill-radius bg-phase-green txt-white font-body font-weight-medium" ng-click="checkout()" ng-disabled="!tcChecked || ngCart.getItems() == 0">Bank Transfer</button>
                             </div>                    
                         </div>                
                     </div>

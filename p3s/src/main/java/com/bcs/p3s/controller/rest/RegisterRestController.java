@@ -89,7 +89,7 @@ public class RegisterRestController extends Universal{
 			//email notification default to OFF
 			user.setIsEmailNotification(true);
 			user.setBusiness(business);
-			//userService.createNewUser(user, business);
+			userService.createNewUser(user, business);
 			
 			/**
 			 * 
@@ -128,7 +128,7 @@ public class RegisterRestController extends Universal{
 		businessDetails = businessInfo.get(0);
 		
 		/** Validate pin against user entered Pin**/
-		if(!(businessPin.equals(businessDetails.getBusinessPin()))){
+		if(!(businessPin.equals(businessDetails.getBusinessPin().toString()))){
 			
 			log().debug("User entered BusinessPin[" +businessPin + "] verified against database");
 			return new ResponseEntity<Business>(businessDetails, HttpStatus.OK);
@@ -157,7 +157,7 @@ public class RegisterRestController extends Universal{
 		ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
 		HashMap<String, Object> contentMap = data.extractRegistrationForm(object);
 		
-		if(!(contentMap == null)){
+		if(contentMap == null){
 			log().error("Extract data from Registration Form failed");
 			return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
 		}
@@ -183,7 +183,8 @@ public class RegisterRestController extends Universal{
 			log().debug("Email address found stage");
 			user.setStatus(UserStatusEnum.ENABLED);
 			user.setUserrole("user");
-			
+			//setting email notification to true by default
+			user.setIsEmailNotification(true);
 			PreLoginSessionBean preSession = (PreLoginSessionBean) session.getAttribute("preSession");
 			business = preSession.getBusiness();   //getting business Info from session; ignoring user manipulations
 			user.setBusiness(business);
