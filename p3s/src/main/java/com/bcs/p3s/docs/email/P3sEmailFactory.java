@@ -3,7 +3,7 @@ package com.bcs.p3s.docs.email;
 import com.bcs.p3s.docs.email.Populators.AbstractPopulator;
 import com.bcs.p3s.docs.email.Populators.CertificatePopulator;
 import com.bcs.p3s.docs.email.Populators.RegisterPopulator;
-import com.bcs.p3s.docs.email.Populators.ReminderEmailStandardPopulator;
+import com.bcs.p3s.docs.email.Populators.ReminderStandardPopulator;
 import com.bcs.p3s.docs.email.Populators.TransactionPopulator;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.util.lang.Universal;
@@ -33,7 +33,7 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 				noBuild = false;
 			}
 			if (EmailTemplates.email_reminder_standard.equals(template)) {
-				pop = new ReminderEmailStandardPopulator(template, param1, param2, param3, param4, param5);
+				pop = new ReminderStandardPopulator(template, param1, param2, param3, param4, param5);
 				noBuild = false;
 			}
 			if ((EmailTemplates.email_proforma_invoice.equals(template))

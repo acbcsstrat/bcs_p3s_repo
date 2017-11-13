@@ -20,11 +20,13 @@ import com.bcs.p3s.util.config.P3SPropertyReader;
  * 		EmailTemplates.email_reminder_standard
  *   
  */
-public class ReminderEmailStandardPopulator extends AbstractPopulator implements Injectables {
+public class ReminderStandardPopulator extends AbstractPopulator implements Injectables {
 
 	// Constructor - populates the P3sEmailData
-	public ReminderEmailStandardPopulator(String templateName, Object p3suser, Object patent,
-			Object obPrice, Object obTimeBeforeChangePhrase, Object obTimestampOfNextColourChange) 
+	public ReminderStandardPopulator(String templateName, Object p3suser, Object patent
+			, Object obPrice
+			, Object obTimeBeforeChangePhrase		// e.g. '2 weeks'
+			, Object obTimestampOfNextColourChange) // e.g. 'Nov 22, 2017 17:01 CET'
 	{
 		super(templateName);  // set templateName
 		templatetype = EmailTypeEnum.REMINDER;
