@@ -253,10 +253,10 @@ public class RenewalDatesEngine extends Universal{
 			    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
 			    		allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
 			    		
-			    		log().debug("This time set next renewal details to null");
-			    		allDates.setNextRenewalDueDate(null);
-				        allDates.setNextWindowOpenDate(null);
-				       	allDates.setNexttWindowCloseDate(null);
+			    		log().debug("This time set next renewal details to same as current dates");
+			    		allDates.setNextRenewalDueDate(actualNextRenewalDate.getTime());
+				        allDates.setNextWindowOpenDate(actualNextRenewalDate.getTime());
+				       	allDates.setNexttWindowCloseDate(actualNextRenewalDate.getTime());
 		    	    }
 		    	    
 		    	    
