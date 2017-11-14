@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -32,7 +33,7 @@ public class EmailSender extends Universal {
 	 *  Client subsequently alter the recipients before sending   
 	 */
 	public EmailSender (P3sEmail emailContent) {
-		if (emailContent==null) fail("sendEmail() passed a null emailContent!");
+		if (emailContent==null) fail("EmailSender() passed a null emailContent!");
 		this.content = emailContent;
 
 		Properties properties = new Properties();  
@@ -113,19 +114,8 @@ public class EmailSender extends Universal {
 			}  
 		}
 	}
-	
 
-	protected void logEmail(P3sEmail emailContent) {
-		String msg = "Start of email sent:\nSubject:\n"+emailContent.getSubject() 
-		+ "\nBody:\n"+emailContent.getHtmlBody();
-		if (emailContent.hasValidAttachmentDetails()) 
-			msg += ("\nAttachment: "+emailContent.getAttachmentPath()+emailContent.getAttachmentFilename());
-		else msg += "\n(No attachment)";
-		msg += "\nEnd of email sent";
-		log().info(msg);
-	}
 	
-//171107 redundant - or NOT seemingly
 	protected void internalAddRecipient(String recip) {
 		try {
 			message.addRecipient(Message.RecipientType.TO,   
@@ -138,4 +128,30 @@ public class EmailSender extends Universal {
 			e1.printStackTrace();
 		}  
 	}
+
+
+	protected void logEmail(P3sEmail emailContent) {
+		String msg = "Start of email sent:\nSubject:\n"+emailContent.getSubject() 
+		+ "\nBody:\n"+emailContent.getHtmlBody();
+		if (emailContent.hasValidAttachmentDetails()) 
+			msg += ("\nAttachment: "+emailContent.getAttachmentPath()+emailContent.getAttachmentFilename());
+		else msg += "\n(No attachment)";
+		msg += "\nEnd of email sent";
+		msg += ("\nabove sent TO: "+getRecipientsAsStr()+"\n   ");
+		getLoggerForEmail(emailContent).info(msg);
+	}
+	
+	protected String getRecipientsAsStr() {
+		String recips = "Recips: ";
+		
+		Address[] addresses = null;
+		try {
+			addresses = message.getRecipients(Message.RecipientType.TO);
+		} catch (MessagingException e) {  /* Ignore */ }
+		if (addresses!=null) for (Address addr : addresses) {
+			recips += (addr.toString() + " ");
+		}
+		return recips;
+	}
+	
 }

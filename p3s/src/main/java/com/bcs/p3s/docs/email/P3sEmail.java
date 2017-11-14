@@ -1,5 +1,6 @@
 package com.bcs.p3s.docs.email;
 
+import com.bcs.p3s.docs.email.Populators.EmailTypeEnum;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -8,6 +9,7 @@ import com.bcs.p3s.util.lang.Universal;
 public class P3sEmail extends Universal implements P3sEmailInterface {
 
 	String templateName = null;
+	EmailTypeEnum emailType = EmailTypeEnum.NOTSET; 
 	String subject = null;
 	String htmlBody = null;
 	String attachmentPath = null;
@@ -15,11 +17,14 @@ public class P3sEmail extends Universal implements P3sEmailInterface {
 	// Note: client is responsible for providing recipient email addresses to emailer
 	
 	
-	public P3sEmail() {
+	private P3sEmail() {   // prevent default constructor
 		// default constructor
 	}
-	public P3sEmail(String templateName, String subject,String htmlBody, String attachmentPath, String attachmentFilename) {
+	public P3sEmail(String templateName, EmailTypeEnum emailType
+			, String subject,String htmlBody, String attachmentPath, String attachmentFilename) 
+	{
 		this.templateName = templateName;
+		this.emailType = emailType;
 		this.subject = subject;
 		this.htmlBody = htmlBody;
 		this.attachmentPath = attachmentPath;
@@ -49,6 +54,12 @@ public class P3sEmail extends Universal implements P3sEmailInterface {
 	}
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
+	}
+	public EmailTypeEnum getEmailType() {
+		return emailType;
+	}
+	public void setEmailType(EmailTypeEnum emailType) {
+		this.emailType = emailType;
 	}
 	public String getSubject() {
 		return subject;

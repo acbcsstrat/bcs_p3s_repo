@@ -67,7 +67,12 @@ public class EmailDevTest extends Universal {
 			log().debug("AFTER Black");
 			emailReminder(code, null);
 		 }
-		else
+		 else if (code==999) {
+			// test panic()
+			panic("Test PANIC message from EmailDevTest. \nNo attached exception.");
+		 }
+
+		 else
 			log().fatal("This should not be possible. Code=" + code);
 
 			//		  <option value="100">email_register_combined</option>
@@ -99,6 +104,7 @@ public class EmailDevTest extends Universal {
 			//		  <!--   <option value="700">WIP email_reminder_red_1day</option>  -->
 			//		  <option value="730">email_reminder_black_5day</option>
 			//		  <option value="760">email_reminder_after_black</option>
+			//		  <option value="999">test panic()</option>
 
 
 	}
@@ -196,10 +202,6 @@ public class EmailDevTest extends Universal {
 		emailer.sendEmail();
 	}
 
-	// protected void prepareSomeData() {
-	// log().debug("genSomeData");
-	//
-	// }
 	protected void preparePatents() {
 		List<Patent> all = new ArrayList<Patent>();
 		all = (Patent.findPatentsByBusiness(acUser.getBusiness())).getResultList();
@@ -239,13 +241,5 @@ public class EmailDevTest extends Universal {
 	// patents.add(Patent.findPatent(1L));
 	// patents.add(Patent.findPatent(2L));
 	// String pdfFilename = "";
-	// End of: Here - tmp put Development HOOK for send EMAIL
-	// ******** ******** ******** ******** ******** ******** ********
-	// ******** ******** ******** ******** ******** ******** ********
-	// ******** ******** ******** ******** ******** ******** ********
-	// ******** ******** ******** ******** ******** ******** ********
-	// ******** ******** ******** ******** ******** ******** ********
-	// ******** ******** ******** ******** ******** ******** ********
-	// ******** ******** ******** ******** ******** ******** ********
 
 }

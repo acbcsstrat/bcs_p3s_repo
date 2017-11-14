@@ -6,6 +6,7 @@ import java.io.StringWriter;
 import org.apache.log4j.Logger;
 
 import com.bcs.p3s.docs.email.P3sEmail;
+import com.bcs.p3s.docs.email.Populators.EmailTypeEnum;
 import com.bcs.p3s.util.email.EmailSender;
 
 /**
@@ -80,6 +81,15 @@ public class BcsLogger implements Loggable {
 		return logTransactionEmailSentN4CU;
 	}
 
+	public Logger getLoggerForEmail(P3sEmail emailContent) {
+		if (emailContent==null) return null;
+		EmailTypeEnum type = emailContent.getEmailType();
+		if (EmailTypeEnum.REGISTER==type) return logRegistrationEmailSent();
+		else if (EmailTypeEnum.REMINDER==type) return logReminderEmailSent();
+		else if (EmailTypeEnum.TRANSACTION==type) return logTransactionEmailSent();
+		else if (EmailTypeEnum.TRANSACTION==type) return logTransactionEmailSent();
+		else return logInternalError();
+	}
 
 
 	/**
@@ -89,17 +99,18 @@ public class BcsLogger implements Loggable {
 	 * This method does NOT prevent subsequent operation.
 	 * @param msg A string to be logged
 	 */
+	public void panic(String msg) { panic(msg, null); }
 	public void panic(String msg, Throwable x) {
 		String panicMsg = "PANIC: "+msg;
 		Logger panicLogger = Logger.getLogger("PANIC_EMAIL_SENT");
 		if (x==null) {
 			logInternalError().fatal(panicMsg);
-			panicLogger.warn(panicMsg);
+			panicLogger.fatal(panicMsg);
 		}
 		else
 		{
 			logInternalError().fatal(panicMsg, x);
-			panicLogger.warn(panicMsg, x);
+			panicLogger.fatal(panicMsg, x);
 		}
 		// now email this panic to dev team
 		String emailBody = panicMsg + "\n\n";
@@ -111,7 +122,7 @@ public class BcsLogger implements Loggable {
 			x.printStackTrace(new PrintWriter(errors));
 			emailBody += errors.toString();
 		}
-		P3sEmail pan = new P3sEmail("panic", "PANIC message from P3Sweb !", emailBody, null, null);
+		P3sEmail pan = new P3sEmail("panic", EmailTypeEnum.NOTSET, "PANIC message from P3Sweb !", emailBody, null, null);
     	EmailSender emailer = new EmailSender(pan);
     	emailer.setRecipientsToDevs();
     	emailer.sendEmail();

@@ -33,7 +33,8 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 	
 	// why abstract - they all the same :  acTidy : public abstract P3sEmail generateEmail(); // Read template, instantiate p3sEmail, do inject
 	public P3sEmail generateEmail() {
-		P3sEmail email = new P3sEmail(this.templateName, this.subject, this.htmlBody, this.attachmentPath, this.attachmentFilename);
+		P3sEmail email = new P3sEmail(this.templateName, this.templatetype
+				, this.subject, this.htmlBody, this.attachmentPath, this.attachmentFilename);
 		return email;
 	}
 

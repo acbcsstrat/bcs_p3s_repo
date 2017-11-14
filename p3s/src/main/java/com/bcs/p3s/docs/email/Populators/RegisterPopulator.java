@@ -60,7 +60,7 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		try {
 			P3SPropertyReader reader = new P3SPropertyReader();
 			data.setSupportEmailAddress(reader.getGenericProperty(P3SPropertyNames.P3S_support_email_address));
-			siteWordpressUrl = reader.getESProperty(P3SPropertyNames.P3S_WEB_WORDPRESS_URL_BASE);
+			siteWordpressUrl = reader.getGenericProperty(P3SPropertyNames.P3S_WEB_WORDPRESS_URL_BASE);
 			siteTomcatUrl = reader.getESProperty(P3SPropertyNames.P3S_WEB_TOMCAT_URL_BASE);
 			data.setLoginUrl(siteTomcatUrl);
 		} catch (P3SPropertyException e) {
