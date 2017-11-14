@@ -37,6 +37,7 @@ public class NotificationMapping {
         q.setParameter("patent_id", patent_id);
         q.setParameter("user_id", user_id);
 		
+
         List<NotificationMapping> q_list = q.getResultList();
         
         for(NotificationMapping n : q_list){

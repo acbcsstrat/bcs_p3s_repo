@@ -43,11 +43,12 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 	final String SQUAREOPEN = "[";
 	final String SQUARECLOSE = "]";
 	protected String currentLine = "";		// For temporary use during injection. NEVER null
-	StringBuilder bodyWip = new StringBuilder(""); 
+	StringBuilder bodyWip = null; 
 	protected abstract boolean doAllInjectionsForCurrentLine();  // Subtype knows which of the below inject*() methods to call 
 	/** This has the big loop, and invokes the subtype doAllInjectionsForCurrentLine() for each line **/
 	protected String doAllInjectionsIntoBody(List<String> wholeTemplate) { 
 		String err = "AbstractPopulator doAllInjectionsIntoBody ("+templateName+") : ";
+		bodyWip = new StringBuilder(""); // Important that this is reset here. Else extended class causes duplicate body 
 		// 1st line of template is subject line. Already processed. so remove it
 		wholeTemplate.remove(0);
 		for (String preInjectLine : wholeTemplate) {

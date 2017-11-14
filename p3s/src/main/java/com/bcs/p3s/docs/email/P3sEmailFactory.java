@@ -3,6 +3,9 @@ package com.bcs.p3s.docs.email;
 import com.bcs.p3s.docs.email.Populators.AbstractPopulator;
 import com.bcs.p3s.docs.email.Populators.CertificatePopulator;
 import com.bcs.p3s.docs.email.Populators.RegisterPopulator;
+import com.bcs.p3s.docs.email.Populators.ReminderBasicDetailsPopulator;
+import com.bcs.p3s.docs.email.Populators.ReminderColourOpenPopulator;
+import com.bcs.p3s.docs.email.Populators.ReminderInBlackPopulator;
 import com.bcs.p3s.docs.email.Populators.ReminderStandardPopulator;
 import com.bcs.p3s.docs.email.Populators.TransactionPopulator;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
@@ -28,14 +31,32 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 			boolean noBuild = true;
 			AbstractPopulator pop = null;
 			
+			// Email(s) supporting customer Registrations with P3S
 			if (EmailTemplates.email_register_combined.equals(template)) {
 				pop = new RegisterPopulator(template, param1);
 				noBuild = false;
 			}
+
+			// 'Notification' Emails : Reminding custoers that a patent can be renewed
 			if (EmailTemplates.email_reminder_standard.equals(template)) {
 				pop = new ReminderStandardPopulator(template, param1, param2, param3, param4, param5);
 				noBuild = false;
 			}
+			if (EmailTemplates.email_reminder_green_opens.equals(template)
+					 || EmailTemplates.email_reminder_blue_opens.equals(template)) {
+						pop = new ReminderColourOpenPopulator(template, param1, param2, param3);
+						noBuild = false;
+			}
+			if (EmailTemplates.email_reminder_black_5day.equals(template)) {
+				pop = new ReminderInBlackPopulator(template, param1, param2, param3, param4, param5);
+				noBuild = false;
+			}
+			if (EmailTemplates.email_reminder_after_black.equals(template)) {
+				pop = new ReminderBasicDetailsPopulator(template, param1, param2);
+				noBuild = false;
+			}
+			
+			// Transaction Emails - relating to a renewal order
 			if ((EmailTemplates.email_proforma_invoice.equals(template))
 					 || (EmailTemplates.email_final_invoice.equals(template))
 					 || (EmailTemplates.email_penalty_invoice.equals(template)) )

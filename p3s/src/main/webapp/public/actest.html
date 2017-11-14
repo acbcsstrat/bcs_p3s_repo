@@ -80,7 +80,7 @@ Bank Transfer <a href="../rest-prepare-banktransfer/1,2:808^08">Pre-Commit</a> (
 <br/>
 <p/>
 
-Generate Emails: 2
+Generate Emails:
 <br/>
 <form action="../acgenerateemail" method="POST">
 <select name="emailchoice">
@@ -93,8 +93,8 @@ Generate Emails: 2
   <option value="250">email_penalty_invoice - 1 patent</option>
   <option value="260">email_penalty_invoice - 4 patent</option>
 
-  <option value="300">*email_reminder_colour_opens - Green</option>
-  <option value="310">*email_reminder_colour_opens - Blue</option>
+  <option value="300">email_reminder_green_opens - Green</option>
+  <option value="310">email_reminder_blue_opens - Blue</option>
 
   <option value="400">email_reminder_standard - 6 weeks - Patent1</option>
   <option value="401">email_reminder_standard - 6 weeks - Patent2</option>
@@ -102,23 +102,17 @@ Generate Emails: 2
   <option value="403">email_reminder_standard - 6 weeks - Patent4</option>
   <option value="404">email_reminder_standard - 6 weeks - Patent5</option>
 
-  <option value="450">WIP email_reminder_standard - 12 weeks</option>
-  <option value="455">WIP email_reminder_standard - 2 weeks</option>
-  <option value="460">WIP email_reminder_standard - 7 days</option>
-  <option value="465">WIP email_reminder_standard - 5 days</option>
-  <option value="470">WIP email_reminder_standard - 3 days</option>
-  <option value="475">WIP email_reminder_standard - 2 days</option>
-  <option value="480">WIP email_reminder_standard - 1 day</option>
+  <option value="450">email_reminder_standard - 12 weeks</option>
+  <option value="455">email_reminder_standard - 2 weeks</option>
+  <option value="460">email_reminder_standard - 7 days</option>
+  <option value="465">email_reminder_standard - 5 days</option>
+  <option value="470">email_reminder_standard - 3 days</option>
+  <option value="475">email_reminder_standard - 2 days</option>
+  <option value="480">email_reminder_standard - 1 day</option>
 
-  <option value="700">*email_reminder_red_1day</option>
-  <option value="730">*email_reminder_black_5day</option>
-  <option value="760">*email_reminder_after_black</option>
-
-
-
-
-
-
+  <!--   <option value="700">WIP email_reminder_red_1day</option>  -->
+  <option value="730">email_reminder_black_5day</option>
+  <option value="760">email_reminder_after_black</option>
 </select>
 <input type="submit" value="submit">
 </form>

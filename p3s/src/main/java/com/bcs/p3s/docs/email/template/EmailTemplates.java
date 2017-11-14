@@ -6,22 +6,18 @@ package com.bcs.p3s.docs.email.template;
  */
 public interface EmailTemplates {
 	
+	// Email(s) supporting customer Registrations with P3S
 	String email_register_combined	= "email_register_combined";
-	
-	String email_reminder_standard	= "email_reminder_standard"; 
-			
-//
-//	email_reminder_colour_opens		- template 1
-//			
-//
-//	email_reminder_black_5day		Your’e leaving this really late !
-//
-//	email_reminder_red_1day			Cannot sell
-//
-//	email_reminder_after_black		afterBlack - phone us
 
-	
-	
+	// 'Notification' Emails : Reminding custoers that a patent can be renewed
+	String email_reminder_standard	= "email_reminder_standard"; 
+	String email_reminder_green_opens = "email_reminder_green_opens";
+	String email_reminder_blue_opens = "email_reminder_blue_opens";
+	//email_reminder_red_1day			Cannot sell  // 17113 DISCONTINUED - whats the point?
+	String email_reminder_black_5day = "email_reminder_black_5day";
+	String email_reminder_after_black = "email_reminder_after_black";
+
+	// Transaction Emails - relating to a renewal order
 	String email_proforma_invoice		= "email_proforma_invoice"; 
 	String email_final_invoice			= "email_final_invoice"; 
 	String email_renewal_certificate	= "email_renewal_certificate"; 

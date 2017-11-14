@@ -35,11 +35,11 @@ public class EmailDevTest extends Universal {
 			log().debug("Send an Invoice/certificate");
 			emailPdf(code);
 		}
-		// else if (code>=300 && code <400) {
-		// log().debug("Send an Reminder - Colour OPEN");
-		// log().fatal("NOT YET WRITTEN !!");
-		// }
-		else if (code >= 300 && code < 900) {
+		else if (code>=300 && code <400) {
+			log().debug("Send an Reminder Email - Colour Open");
+			emailReminder(code, "NOT.USED");
+		}
+		else if (code >= 400 && code < 700) {
 			log().debug("Send an Reminder Email");
 			String howSoon = "6 weeks";
 			//if (code >= 400 && code < 410) howSoon = "";
@@ -56,44 +56,51 @@ public class EmailDevTest extends Universal {
 		// else if (code==700) {
 		// log().debug("RED - 1 day left");
 		// }
-		// else if (code==730) {
-		// log().debug("BLACK - 5 days left");
-		// }
-		// else if (code==760) {
-		// log().debug("AFTER Black");
-		// }
+		 else if (code==730) {
+			 // email_reminder_black_5day 
+			 log().debug("BLACK - 5 days left");
+				String howSoon = "5 days";
+				emailReminder(code, howSoon);
+		 }
+		 else if (code==760) {
+			//email_reminder_after_black
+			log().debug("AFTER Black");
+			emailReminder(code, null);
+		 }
 		else
 			log().fatal("This should not be possible. Code=" + code);
 
-		// <option value="100">email_register_combined</option>
-		//
-		// <option value="200">email_proforma_invoice - 1 patent</option>
-		// <option value="210">email_proforma_invoice - 4 patents</option>
-		// <option value="220">email_final_invoice - 4 patents</option>
-		// <option value="240">email_renewal_certificate</option>
-		// <option value="250">email_penalty_invoice - 1 patent</option>
-		// <option value="260">email_penalty_invoice - 4 patent</option>
-		//
-		// <option value="300">*email_reminder_colour_opens - Green</option>
-		// <option value="310">*email_reminder_colour_opens - Blue</option>
-		//
-		// <option value="400">WIP email_reminder_standard - 6 weeks - Patent1</option>
-		// <option value="401">WIP email_reminder_standard - 6 weeks - Patent2</option>
-		// <option value="402">WIP email_reminder_standard - 6 weeks - Patent3</option>
-		// <option value="403">WIP email_reminder_standard - 6 weeks - Patent4</option>
-		// <option value="404">WIP email_reminder_standard - 6 weeks - Patent5</option>
-		//
-		//  <option value="450">WIP email_reminder_standard - 12 weeks</option>
-		//  <option value="455">WIP email_reminder_standard - 2 weeks</option>
-		//  <option value="460">WIP email_reminder_standard - 7 days</option>
-		//  <option value="465">WIP email_reminder_standard - 5 days</option>
-		//  <option value="470">WIP email_reminder_standard - 3 days</option>
-		//  <option value="475">WIP email_reminder_standard - 2 days</option>
-		//  <option value="480">WIP email_reminder_standard - 1 day</option>
-		//
-		// <option value="700">*email_reminder_red_1day</option>
-		// <option value="730">*email_reminder_black_5day</option>
-		// <option value="760">*email_reminder_after_black</option>
+			//		  <option value="100">email_register_combined</option>
+			//
+			//		  <option value="200">email_proforma_invoice - 1 patent</option>
+			//		  <option value="210">email_proforma_invoice - 4 patents</option>
+			//		  <option value="220">email_final_invoice - 4 patents</option>
+			//		  <option value="240">email_renewal_certificate</option>
+			//		  <option value="250">email_penalty_invoice - 1 patent</option>
+			//		  <option value="260">email_penalty_invoice - 4 patent</option>
+			//
+			//		  <option value="300">email_reminder_green_opens - Green</option>
+			//		  <option value="310">email_reminder_blue_opens - Blue</option>
+			//
+			//		  <option value="400">email_reminder_standard - 6 weeks - Patent1</option>
+			//		  <option value="401">email_reminder_standard - 6 weeks - Patent2</option>
+			//		  <option value="402">email_reminder_standard - 6 weeks - Patent3</option>
+			//		  <option value="403">email_reminder_standard - 6 weeks - Patent4</option>
+			//		  <option value="404">email_reminder_standard - 6 weeks - Patent5</option>
+			//
+			//		  <option value="450">email_reminder_standard - 12 weeks</option>
+			//		  <option value="455">email_reminder_standard - 2 weeks</option>
+			//		  <option value="460">email_reminder_standard - 7 days</option>
+			//		  <option value="465">email_reminder_standard - 5 days</option>
+			//		  <option value="470">email_reminder_standard - 3 days</option>
+			//		  <option value="475">email_reminder_standard - 2 days</option>
+			//		  <option value="480">email_reminder_standard - 1 day</option>
+			//
+			//		  <!--   <option value="700">WIP email_reminder_red_1day</option>  -->
+			//		  <option value="730">email_reminder_black_5day</option>
+			//		  <option value="760">email_reminder_after_black</option>
+
+
 	}
 
 	protected void emailRegistration() {
@@ -138,7 +145,17 @@ public class EmailDevTest extends Universal {
 
 		if (code >= 300 && code < 400) {
 			// email_reminder_colour_opens
-			log().fatal("NOT YET WRITTEN");
+			// reminder_standard - different patents
+			String colourOpenTemplate = null;
+			if (code==300) colourOpenTemplate = EmailTemplates.email_reminder_green_opens;
+			else if (code==310) colourOpenTemplate = EmailTemplates.email_reminder_blue_opens;
+			else fail("EmailDevTest emailReminder : Passed unexpected code");
+
+			email = emailFactory.create(colourOpenTemplate, acUser
+						, onePatent
+						, "786.00"
+						, null, null, null, null);
+			send();
 		}
 		else if (code >= 400 && code < 500) {
 			// reminder_standard - different patents
@@ -154,10 +171,17 @@ public class EmailDevTest extends Universal {
 			log().fatal("NOT YET WRITTEN");
 		} else if (code == 730) {
 			// email_reminder_black_5day
-			log().fatal("NOT YET WRITTEN");
+			email = emailFactory.create(EmailTemplates.email_reminder_black_5day, acUser
+					, onePatent, "82,547.00", howSoon
+					, "Nov 22, 2017 17:01 CET"
+					, null, null);
+			send();
 		} else if (code == 760) {
 			// email_reminder_after_black
-			log().fatal("NOT YET WRITTEN");
+			email = emailFactory.create(EmailTemplates.email_reminder_after_black, acUser
+						, onePatent
+						, null, null, null, null, null);
+			send();
 		}
 	}
 

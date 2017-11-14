@@ -40,6 +40,7 @@ public class P3sEmailData {
 	String timestampTargetFundsArrivel;
 	String numberOfPatents; 
 	List<Patent> patents;
+	List<TwoColRecord> patentDetails;
 	List<TwoColRecord> paymentDetails;
 	List<TwoColRecord> colleagueCompanyDetails;
 	String fieldb; 
@@ -173,6 +174,12 @@ public class P3sEmailData {
 	public void setPatents(List<Patent> patents) {
 		this.patents = patents;
 	}
+	public List<TwoColRecord> getPatentDetails() {
+		return patentDetails;
+	}
+	public void setPatentDetails(List<TwoColRecord> patentDetails) {
+		this.patentDetails = patentDetails;
+	}
 	public List<TwoColRecord> getPaymentDetails() {
 		return paymentDetails;
 	}
@@ -197,5 +204,8 @@ public class P3sEmailData {
 	public void setFieldc(String fieldc) {
 		this.fieldc = fieldc;
 	}
+
+	
+	
 	
 }

@@ -3,6 +3,8 @@
  * variation in email structure and/or content (like reminder emails) may have more than 1 populator - each focusing 
  * on a GROUPing of emails with similar characteristics.
  *
+ * i.e. Whilst there MAY be a 1:1 relationship between a populator & a template, this is flexible
+ *
  * Populators populate a P3sEmailData object, then use this data to create a P3sEmail
  * 
  * Populators know which EmailTemplate values they are responsible for, and how to create each
