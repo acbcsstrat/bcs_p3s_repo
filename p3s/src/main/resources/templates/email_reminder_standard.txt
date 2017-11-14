@@ -21,17 +21,17 @@ You can renew this patent now via <a href="[LOGIN_URL]">[LOGIN_URL]</a>
 <p/>
 
 
-Hereafter - <For BoxCleverDigital consideration>
+Hereafter - {For BoxCleverDigital consideration}
 <br/>
 Thereafter (which would be leaving it very late) we can still renew for a few limited days, at a higher cost, (reflecting the increased effort and risk to us).
 <p/>
 
-<<If colour is BLUE – AND – 2 weeks or less]
+{If colour is BLUE – AND – 2 weeks or less}
 <br/>
 You’ll be aware that this patent is already on extension, and will lapse soon. Don’t leave renewing it too late]
 <p/>
 
-<<If 2 weeks or less]
+{If 2 weeks or less}
 <br/>
 Warning: as you are approaching a boundary, be aware that this price-band ends 
 <br/>
