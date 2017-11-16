@@ -137,7 +137,7 @@ public class EmailSender extends Universal {
 			msg += ("\nAttachment: "+emailContent.getAttachmentPath()+emailContent.getAttachmentFilename());
 		else msg += "\n(No attachment)";
 		msg += "\nEnd of email sent";
-		msg += ("\nabove sent TO: "+getRecipientsAsStr()+"\n   ");
+		msg += ("\nabove sent TO: "+getRecipientsAsStr()+"\n                        ");
 		getLoggerForEmail(emailContent).info(msg);
 	}
 	
