@@ -90,6 +90,13 @@ public class Payment {
     private String latestTransStatus;
 
     /**
+     * Whether & when this has been sent to Moneycorp in an Order file
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date sentToMc;
+
+    /**
      */
     @NotNull
     //@Value("false")  Don't use. It resets data AFTER read from db
