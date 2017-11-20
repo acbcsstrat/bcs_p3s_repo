@@ -397,7 +397,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		List<Renewal> renewal_payment = new ArrayList<Renewal>();
 		List<PatentUI> orderedPatents = commitTransaction.getOrderedPatentUIs();
 //a.Insert into invoice
-		invoice = invoiceEngine.populateInvoiceData(commitTransaction); 
+		invoice = invoiceEngine.populateProformaInvoiceData(commitTransaction); 
 		if(!(invoice == null)){
 			currentInvoice = invoice.persist();
 			if(currentInvoice == null){

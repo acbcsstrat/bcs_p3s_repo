@@ -30,7 +30,7 @@ import javax.persistence.ManyToMany;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
+@RooJpaActiveRecord(finders = { "findPaymentsByP3S_TransRef" })
 public class Payment {
 
     /**
