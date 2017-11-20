@@ -48,11 +48,12 @@ public class BcsLogger implements Loggable {
 	 * To record a change-of-status of either a patent or a transaction
 	 * Message format: Patent|Transaction <Id> ..
 	 * e.g.
-	 *  Transaction IP0001000001 has been created for 2 patent(s) : aaaaaaaa.a bbbbbbb.b
-	 *  Transaction IP0001000001 has reached state : AWAITING_FUNDS | FUNDS_RECEIVED | FUNDS_SENT | EPO_RECEIVED
-	 *  Patent 123456789.1 has been EPO_INSTRUCTED				{ Note: Usually happens upon EPO_RECEIVED, but for RED happens earlier at FUNDS_RECEIVED }
-	 *  Patent 123456789.1 has been renewed, confirms EPO.  Was renewed by P3S | Not by P3S.
-	 *  Transaction IP0001000001 is now COMPLETED
+	 *  Transaction IP0001000001 [7] has been created for 2 patent(s) : aaaaaaaa.a bbbbbbb.b
+	 *  Transaction IP0001000001 [7] has reached state : AWAITING_FUNDS | FUNDS_SENT 
+	 *  Transaction IP0001000001 [7] has reached state : FUNDS_RECEIVED | EPO_RECEIVED : 1 Patent(s) were EPO-Instructed
+	 *  Patent 123456789.1 [1] has been EPO_INSTRUCTED				{ Note: Usually happens upon EPO_RECEIVED, but for RED happens earlier at FUNDS_RECEIVED }
+	 *  Patent 123456789.1 [1] has been renewed, confirms EPO.  Was renewed by P3S | Not by P3S.
+	 *  Transaction IP0001000001 [7] is now COMPLETED
 	 */
 	protected Logger logChangeOfStatusN4CU = null;
 	public Logger logChangeOfStatus() {
@@ -93,8 +94,9 @@ public class BcsLogger implements Loggable {
 
 
 	/**
-	 * panic() is uses to log unexpected/worrying events - to developers. 
-	 * Logs as fatal, Logs as panic, AND *WILL* send an email to dev team
+	 * panic() is used to log potentially (or definitely!) dangerous occurrences - to developers..
+	 * Such occurrences will not occur in normal, valid operation. 
+	 * Logs as fatal, AND sends an email to dev team
 	 * By allowing this log action, invoking code can be simpler, as it is now allowed to crash
 	 * This method does NOT prevent subsequent operation.
 	 * @param msg A string to be logged
