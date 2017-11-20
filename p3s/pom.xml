@@ -16,6 +16,7 @@
         <jackson.version>2.7.5</jackson.version>
 	    <tomcat.version>7.0.63</tomcat.version>
 	    <spring-security.version>3.2.5.RELEASE</spring-security.version>
+	    <javaxmail.version>1.5.0-b01</javaxmail.version>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>EEE dd-MMM-yyyy HH:mm z</maven.build.timestamp.format>
     </properties>
@@ -332,21 +333,21 @@
             <version>${spring-security.version}</version>
         </dependency>
 
+
+		<!--  Start of Dependencies added by Andy Chapman  -->
+
 		<dependency>
 		    <groupId>com.jcraft</groupId>
 		    <artifactId>jsch</artifactId>
 		    <version>0.1.54</version>
 		</dependency>
-
-		<!-- Andy Chapman - 171103 for sending emails -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-			<version>1.5.0-b01</version>
+            <version>${javaxmail.version}</version>
 		</dependency>
 
-
-
+		<!--  End of Dependencies added by Andy Chapman -->
 
     </dependencies>
     <build>
