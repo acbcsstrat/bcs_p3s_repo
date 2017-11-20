@@ -1,4 +1,5 @@
 package com.bcs.p3s.model;
+
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -6,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
-import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import javax.validation.constraints.NotNull;
 import javax.persistence.OneToOne;
 import java.util.Date;
@@ -14,7 +14,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import org.springframework.format.annotation.DateTimeFormat;
-import javax.validation.constraints.Future;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,10 +23,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.beans.factory.annotation.Value;
 
 // Note! : Payment was formerly called Transaction  (But Roo wouldn't allow that term)
 // Hence you'll find numerous references to 'the transaction' throughout the code.
@@ -88,6 +83,13 @@ public class Payment {
      */
     @NotNull
     private String latestTransStatus;
+
+    /**
+     * Whether & when this has been sent to Moneycorp in an Order file
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date sentToMc;
 
     /**
      */
@@ -165,6 +167,12 @@ public class Payment {
         return result;
     }
     
+    public static List<Payment> findPaymentsNotYetNotifiedToMoneycorp() {
+        EntityManager em = Payment.entityManager();
+        TypedQuery q = em.createQuery("SELECT o FROM Payment AS o WHERE o.sentToMc IS NULL", Payment.class);
+        return (List<Payment>) q.getResultList();
+    }
+
     // Setters pushed to support P3S 'Enums'
     public void setTransType(String transType) {
         this.transType = (new PaymentTypeEnum(transType)).toString();

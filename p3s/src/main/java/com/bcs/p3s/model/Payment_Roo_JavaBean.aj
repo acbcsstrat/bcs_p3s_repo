@@ -69,6 +69,14 @@ privileged aspect Payment_Roo_JavaBean {
         return this.latestTransStatus;
     }
     
+    public Date Payment.getSentToMc() {
+        return this.sentToMc;
+    }
+    
+    public void Payment.setSentToMc(Date sentToMc) {
+        this.sentToMc = sentToMc;
+    }
+    
     public Boolean Payment.getHasFailed() {
         return this.hasFailed;
     }

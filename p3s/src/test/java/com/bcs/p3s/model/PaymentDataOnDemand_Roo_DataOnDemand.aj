@@ -52,6 +52,7 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
         setLatestTransStatus(obj, index);
         setMC_TransRef(obj, index);
         setP3S_TransRef(obj, index);
+        setSentToMc(obj, index);
         setTransAmount_USD(obj, index);
         setTransStartDate(obj, index);
         setTransTargetEndDate(obj, index);
@@ -122,6 +123,11 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
     public void PaymentDataOnDemand.setP3S_TransRef(Payment obj, int index) {
         String P3S_TransRef = "P3S_TransRef_" + index;
         obj.setP3S_TransRef(P3S_TransRef);
+    }
+    
+    public void PaymentDataOnDemand.setSentToMc(Payment obj, int index) {
+        Date sentToMc = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        obj.setSentToMc(sentToMc);
     }
     
     public void PaymentDataOnDemand.setTransAmount_USD(Payment obj, int index) {
