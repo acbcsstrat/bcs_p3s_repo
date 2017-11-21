@@ -50,7 +50,7 @@ public class RegisterRestController extends Universal{
 		String msg = "RegisterRestController : /register/rest-user/  presistNewUser(user) ";
 		log().debug(msg + "invoked");
 		
-		DummyDataEngine engine = new DummyDataEngine();
+		GenericProcessingEngine engine = new GenericProcessingEngine();
 		
 		System.out.println(object);
 		ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
