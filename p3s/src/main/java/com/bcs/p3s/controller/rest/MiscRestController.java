@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.display.LoginMessageUI;
-import com.bcs.p3s.docs.PDFGenerators;
+/*import com.bcs.p3s.docs.PDFGenerators;
 import com.bcs.p3s.docs.TestMethods;
 import com.bcs.p3s.docs.pojo.BillToAddress;
 import com.bcs.p3s.docs.pojo.Invoice;
-import com.bcs.p3s.docs.pojo.PatentX;
+import com.bcs.p3s.docs.pojo.PatentX;*/
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.Patent;
