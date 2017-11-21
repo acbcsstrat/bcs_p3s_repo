@@ -20,7 +20,7 @@ public interface UserService {
 	
 	Boolean checkUser(String emailAddress);
 	
-	List<P3SUser> getUserByEmailAddress(String emailAddress);
+	P3SUser getUserByEmailAddress(String emailAddress);
 	
 	Boolean checkBusinessNum(String businessNumber);
 	

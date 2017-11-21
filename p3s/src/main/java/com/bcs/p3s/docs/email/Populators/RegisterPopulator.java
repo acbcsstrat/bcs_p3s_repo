@@ -7,6 +7,7 @@ import com.bcs.p3s.docs.email.Injectables;
 import com.bcs.p3s.docs.email.template.EmailTemplateReader;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.engine.DummyDataEngine;
+import com.bcs.p3s.engine.GenericProcessingEngine;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.util.config.P3SPropertyException;
@@ -202,12 +203,9 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 	
 	
 	protected String generateUrlToVerifyEmail(String newUserEmailAddress, P3SUser userRecord, String siteUrl) {
-		DummyDataEngine dummy = new DummyDataEngine(); 
-		String fragment6 = dummy.generate6digitCode(userRecord);
-		zz("generateUrlToVerifyEmail yields frag6="+fragment6);
-				
-		String url2verifyEmail = siteUrl+"user/confirmuser/"+fragment6+"?email="+newUserEmailAddress;
-		zz("yields url of : "+url2verifyEmail);
+		GenericProcessingEngine genEngine = new GenericProcessingEngine();
+		String fragment6 = genEngine.generateUrlVerificationCode(userRecord);
+		String url2verifyEmail = siteUrl+"register/new-user-verify/"+fragment6+"?emailAddress="+newUserEmailAddress;
 		return url2verifyEmail;
 	}
 	

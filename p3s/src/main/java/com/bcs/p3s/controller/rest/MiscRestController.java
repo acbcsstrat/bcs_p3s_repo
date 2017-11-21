@@ -1,11 +1,16 @@
 
 package com.bcs.p3s.controller.rest;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
+import javax.xml.transform.TransformerException;
 
+import org.junit.internal.runners.TestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.display.LoginMessageUI;
+import com.bcs.p3s.docs.PDFGenerators;
+import com.bcs.p3s.docs.TestMethods;
+import com.bcs.p3s.docs.pojo.BillToAddress;
+import com.bcs.p3s.docs.pojo.Invoice;
+import com.bcs.p3s.docs.pojo.PatentX;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.model.LoginMessage;
+import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.MiscService;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -63,6 +74,7 @@ public class MiscRestController extends Universal{
    }
     
     //------------------------------SUPPRESS ONE/MANY SYSTEM MESSAGES----------------------------------------
+   @RequestMapping(value="/login-messages/", method = RequestMethod.DELETE)
    public void suppressLoginMessages(@RequestBody Object obby){
 	   
 	   String msg = "suppressLoginMessages()";
@@ -76,4 +88,35 @@ public class MiscRestController extends Universal{
 	   miscService.suppressLoginMessages(suppressMessages);
 	   
    }
+   
+ //---test method-----
+  /* @RequestMapping(value="/create-xml/", method = RequestMethod.GET)
+   public void createXML() throws IOException, TransformerException{
+	   
+	   TestMethods method = new TestMethods();
+	   PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+	   Invoice xmlInvoice = new Invoice();
+	   List<Patent> allPatents = new ArrayList<Patent>();
+	   List<PatentX> invoicedPatents = new ArrayList<PatentX>();
+	   BillToAddress address = new BillToAddress();
+	   
+	   TypedQuery<Patent> patent = Patent.findPatentsByBusiness(postSession.getBusiness());
+	   allPatents = patent.getResultList();
+	   invoicedPatents.add(new PatentX(allPatents.get(0)));
+	   invoicedPatents.add(new PatentX(allPatents.get(1)));
+	   
+	   xmlInvoice.setPatents(invoicedPatents);
+	   
+	   address.setBillToName(postSession.getUser().getFirstName());
+	   address.setBillToStreet(postSession.getBusiness().getBillingStreet());
+	   address.setBillToCity(postSession.getBusiness().getBillingCity());
+	   
+	   xmlInvoice.setBillToAddress(address);
+	   
+	   method.createTestXml(xmlInvoice);
+	   
+	   //new PDFGenerators().createPDF(xmlInvoice);
+	   
+   } */
+   
 }

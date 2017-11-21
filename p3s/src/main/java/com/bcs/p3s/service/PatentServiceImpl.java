@@ -609,11 +609,14 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
         	return null;
 		}
 		
-		if(RenewalStatusEnum.RENEWAL_IN_PLACE .equalsIgnoreCase(patent.getRenewalStatus())){
-			/**
+		/**
+		 * Commenting below code as FE displays only the next renewal open date when the status is RENEWAL IN PLACE
+		 */
+/*		if(RenewalStatusEnum.RENEWAL_IN_PLACE .equalsIgnoreCase(patent.getRenewalStatus())){
+			*//**
 			 * 
 			 * Calculate the actual renewal due date and window close and open dates -- method call here
-			 */
+			 *//*
 			log().debug("Renewal In Place status for the patent");
 			
 			//check whether the renewal has been done from our system
@@ -684,9 +687,9 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 						System.out.println("Show price for green period for this renewal year");
 						caData = costEngines.getAllPhasesInfo(allDates);
 						caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
-						/**
+						*//**
 						 * SET THE COLOR AS GREEN
-						 */
+						 *//*
 						caData.setCurrentcostBand(RenewalColourEnum.GREEN);
 						//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
 						Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
@@ -708,8 +711,13 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				
 			}
 				
-		}
+		}*/
 		
+		if(RenewalStatusEnum.RENEWAL_IN_PLACE.equalsIgnoreCase(patent.getRenewalStatus())){
+			log().debug("Renewal in place for the current RENEWAL YEAR");
+			//only sending the next Renewal Year window open date
+			caData = costEngines.getNextPhasesInfo(allDates);
+		}
 		else if(RenewalStatusEnum.SHOW_PRICE .equalsIgnoreCase(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS .equalsIgnoreCase(patent.getRenewalStatus())
 					|| RenewalStatusEnum.EPO_INSTRUCTED .equalsIgnoreCase(patent.getRenewalStatus())){
 			//DISPLAY TODAYS AMOUNT STRAIGHT AWAY

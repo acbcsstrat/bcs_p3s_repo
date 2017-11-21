@@ -88,12 +88,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<P3SUser> getUserByEmailAddress(String emailAddress) {
+	public P3SUser getUserByEmailAddress(String emailAddress) {
 
-		List<P3SUser> user = null;
+		P3SUser user = null;
 		if(emailAddress != null){
 			TypedQuery<P3SUser> tq_p3suser = P3SUser.findP3SUsersByEmailAddress(emailAddress);
-			user = tq_p3suser.getResultList();
+			user = tq_p3suser.getSingleResult();
 		}
 		return user;
 	}
