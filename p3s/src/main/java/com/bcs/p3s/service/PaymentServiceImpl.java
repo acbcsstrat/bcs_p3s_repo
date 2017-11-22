@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.docs.InvoiceProcessingEngine;
+import com.bcs.p3s.docs.email.P3sEmail;
+import com.bcs.p3s.docs.email.P3sEmailFactory;
+import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.engine.CommitToRenewalEngine;
 import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.engine.OrderProcessingEngine;
@@ -30,9 +33,11 @@ import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
+import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.date.DateUtil;
+import com.bcs.p3s.util.email.EmailSender;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
 import com.bcs.p3s.wrap.BankTransferPreCommitDetails;
@@ -158,6 +163,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		checkAreMyPatents(basket.getPatentIds(), err);
 		//checkNotNull(totalCostUSDin, err);
 		checkNotNull(basket.getExpectedCost(), err);
+		List<Long> patentIdsInThisTransaction = new ArrayList<Long>(); 
 		log().debug(err+" invoked ");
 	
 		PostLoginDataEngine recalculateEngine = new PostLoginDataEngine();
@@ -186,14 +192,15 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				
 				List<PatentExtendedData> sessionData = pLoginSession.getExtendedPatentUI();
 				for(PatentExtendedData eachSessionData : sessionData){
-					if(basket.getPatentIds().contains(eachSessionData.getPatentId())){
+					if(basket.getPatentIds().contains(eachSessionData.getPatentId())) {
 						latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost());
 						committedFee.add(eachSessionData.getFee());
+						patentIdsInThisTransaction.add(eachSessionData.getPatentId());
 					}
 				}
 				bankTransferPostCommitDetails.setTotalCostUSD(latestCalculatedCost);
 			}
-			/*//finally generate the p3sTransRef
+			/*//finally generate the p3sTransRef // acTidy
 			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
 			String p3sTransRef = commitToRenewal.generateP3sTransRef(pLoginSession);
 			bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);*/
@@ -221,15 +228,40 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			 */ 
 			
 			currentPayment = commitTransaction(bankTransferPostCommitDetails,committedFee);
-			//create and send the orders file to MC -- to do MP <<<<IMP NOTE !!!!>>>>
-			if(!(currentPayment == null))
 
-				// orders.createOrderCsv(currentPayment);
-				notYet("Writing SFTP file to SFTP site is inhibited for now: PaymentServiceImpl line 227");
+			/**
+			 * 	i. Create proforma invoice
+			 *  j. Send booking email & proforma invoice to customer by email 
+			 */ 
+			log().warn("**** Booking made - but p3s cannot yet create an Proform Invoice (or any PDF) to email");
 			
-			else{
-				err += "Order file not created. Payment is null from commitTransaction(" + bankTransferPostCommitDetails +"," + committedFee +")";
-				logM().error(err);
+			// zaphod - acDebug - START of sent email code
+			// zaphod - acDebug - START of sent email code
+			// zaphod - acDebug - START of sent email code
+			// zaphod - acDebug - START of sent email code
+			// zaphod - acDebug - START of sent email code
+
+			sendProformaInvoiceEmail(bankTransferPostCommitDetails,committedFee, patentIdsInThisTransaction);
+				
+			
+			
+			
+			// zaphod - acDebug - END of sent email code
+			// zaphod - acDebug - END of sent email code
+			// zaphod - acDebug - END of sent email code
+			// zaphod - acDebug - END of sent email code
+			// zaphod - acDebug - END of sent email code
+			// zaphod - acDebug - END of sent email code
+			
+			
+			
+			//create and send the orders file to MC
+			// This is no longer done by p3sweb. p3sweb creates a payment record with sent_tp_mc = null.
+			// Cron invoked frequently, checks for such payments, writes the SFTP Order file, 
+			//  then writes a timestamp to payment:sent_tp_mc 
+			if(currentPayment == null) {
+				err += "Order not created. Payment is null from commitTransaction(" + bankTransferPostCommitDetails +"," + committedFee +")";
+				logInternalError().error(err);
 			}
 			
 		}
@@ -255,6 +287,83 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	
 	// Start of - Support methods - NOT exposed through the interface
 
+	
+	// zaphod - acDebug - START of sent email code
+	// zaphod - acDebug - START of sent email code
+	// zaphod - acDebug - START of sent email code
+	// zaphod - acDebug - START of sent email code
+	// zaphod - acDebug - START of sent email code
+	// zaphod - acDebug - START of sent email code
+	protected void sendProformaInvoiceEmail(BankTransferPostCommitDetails commitTransaction, List<Fee> fee
+				, List<Long> patentIdsInThisTransaction) {
+		log().debug("Send Proforma Invoice");
+		String err = PREFIX+"sendProformaInvoiceEmail : ";
+		if (commitTransaction==null || fee==null || patentIdsInThisTransaction==null) {
+			panic(err+"Error preparing to send ProformaInvoice email");
+			return;
+		}
+		try {
+			// Prepare data needed by the emailer
+			List<Patent> patents = new ArrayList<Patent>();
+			P3sEmailFactory emailFactory = new P3sEmailFactory();
+			P3SUser me = SecurityUtil.getMyUser();
+			String p3sRef = commitTransaction.getP3sTransRef();
+			if (isEmpty(p3sRef)) panic(err+"p3sRef is Empty!");  
+			BankTransferPaymentDetails payee = commitTransaction.getBankTransferPaymentDetails();
+			
+			Payment thisTransaction = Payment.findPaymentsByP3S_TransRef(p3sRef).getSingleResult();
+			String pdfFilename = thisTransaction.getLatestInvoice().getFilename();
+			String totUSDstr = thisTransaction.getTransAmount_USD().toString();
+			
+			for (Long patentId : patentIdsInThisTransaction) {
+				Patent thisPatent = Patent.findPatent(patentId);
+				patents.add(thisPatent);
+			}
+
+			PaymentTimingEngine timing = new PaymentTimingEngine();
+		    Date endDate = timing.whenCustomerFundsMustHaveReachedOurUsAccount(new Date());
+		    String endDateUI = new DateUtil().dateToUSStringWithDayOfWeekandTimeandZone(endDate);
+			
+		    String recipient = me.getEmailAddress();
+		    recipient = amendIfRqdForDev(recipient);
+		    
+	
+			P3sEmail email = emailFactory.create(EmailTemplates.email_proforma_invoice, me, p3sRef,
+					endDateUI, pdfFilename, patents, payee, totUSDstr);
+			send(email, recipient);
+		}
+		catch (RuntimeException rte) {
+			logErrorAndContinue(err+"Error preparing ProformaInvoice email. Now rethrow",rte);
+			throw rte;
+		}
+
+	}
+
+	
+	protected void send(P3sEmail email, String recipient) {
+		log().debug("send() proforma to "+recipient);
+		EmailSender emailer = new EmailSender(email);
+		//emailer.setRecipientsToDevs();
+		emailer.addRecipient(recipient);
+		emailer.sendEmail();
+	}
+	
+	protected String amendIfRqdForDev(String existing) {  // acTidy
+		// this temporary DEV code whilst using domain p3s.me
+		if ("andy@p3s.me".equalsIgnoreCase(existing)) return "andy.chapman@boxcleversoftware.com";
+		if ("merin@p3s.me".equalsIgnoreCase(existing)) return "merin.paul@boxcleversoftware.com";
+		if ("pat@p3s.me".equalsIgnoreCase(existing)) return "patrick.mcdermott@boxcleversoftware.com";
+		if ("dan@p3s.me".equalsIgnoreCase(existing)) return "dan.scobie@boxcleversoftware.com";
+		if ("guest@p3s.me".equalsIgnoreCase(existing)) return "andy.chapman@boxcleversoftware.com";
+		return existing;
+	}
+	// zaphod - acDebug - END of sent email code
+	// zaphod - acDebug - END of sent email code
+	// zaphod - acDebug - END of sent email code
+	// zaphod - acDebug - END of sent email code
+	// zaphod - acDebug - END of sent email code
+	
+	
 	protected void populateBasketContents(BasketContents basketContents, List<Long> patentIds) {
 
 		basketContents.setOrderedPatentUIs(new ArrayList<PatentUI>());
@@ -513,7 +622,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			log().debug("Invoice table updated with payment id as "+ currentPayment.getId());
 		}
 
-//g. Update Patent table for all ordered Patents
+//h. Update Patent table for all ordered Patents
 		if(dbSuccess){
 			for(PatentUI eachPatent : orderedPatents){
 				Patent patent = Patent.findPatent(eachPatent.getId());
@@ -522,6 +631,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			}
 			
 		}
+
 		
 		return payment;
 			

@@ -20,7 +20,7 @@ public class EmailTemplateReader extends Universal {
 		P3SEnvironmentKnowledge envKnowledge = new P3SEnvironmentKnowledge();
 		String templatespath = envKnowledge.getMainPropertyFilePath() + "templates/"; 
 		String filename = ""+templateName+".txt";
-		//System.out.println("zaphod: EmailTemplateReader: path = "+templatespath);
+		//System.out.println("EmailTemplateReader: path = "+templatespath);
 		
 		Path path = Paths.get(templatespath+filename);
 		try {

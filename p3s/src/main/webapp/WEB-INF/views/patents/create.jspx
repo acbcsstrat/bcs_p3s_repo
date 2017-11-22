@@ -15,7 +15,9 @@
         <field:input field="renewalYear" id="c_com_bcs_p3s_model_Patent_renewalYear" required="true" validationMessageCode="field_invalid_integer" z="user-managed"/>
         <field:input field="renewalStatus" id="c_com_bcs_p3s_model_Patent_renewalStatus" required="true" z="user-managed"/>
         <field:input field="patentPublicationNumber" id="c_com_bcs_p3s_model_Patent_patentPublicationNumber" required="true" z="user-managed"/>
-        <field:select field="notifications" id="c_com_bcs_p3s_model_Patent_notifications" itemValue="id" items="${notifications}" multiple="true" path="/notifications" required="true" z="gZKAPNg9AhDdft9ujVtm+CqkDV0="/>
+        <field:input field="lastRenewedYearEpo" id="c_com_bcs_p3s_model_Patent_lastRenewedYearEpo" required="true" validationMessageCode="field_invalid_integer" z="AVg+GL0+wxiNob3xmZR7eSsxUis="/>
+        <field:input field="ipcCodes" id="c_com_bcs_p3s_model_Patent_ipcCodes" z="exRX3pXCFkBzfCwbQdwLUvLzCFE="/>
+        <field:input field="representative" id="c_com_bcs_p3s_model_Patent_representative" z="X8KD4ZURQpV4WgOkImV/wEtAvN0="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_com_bcs_p3s_model_Patent" render="${not empty dependencies}" z="user-managed"/>
 </div>

@@ -156,7 +156,7 @@ public class PaymentRestController extends Universal {
     	BankTransferPostCommitDetails bankTransferPostCommitDetails;
     	try {
     		
-    		/*DummyDataEngine dummy = new DummyDataEngine();
+    		/*DummyDataEngine dummy = new DummyDataEngine();  // acTidy
     		Api4dotXdataFromGETworkaround tmp = dummy.getApi43data( (String) obby );
 */
     		basketContents = new ExtractSubmittedDataEngine().getBasketContentsPreCommitForm(obby);

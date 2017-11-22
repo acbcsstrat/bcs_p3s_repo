@@ -19,7 +19,6 @@ public final class BankTransferPaymentDetails {
 		item1 = "ABA_Bk4_Brch146";
 		item2 = "item2";
 		item3 = "item3";
-		
 	}
 	
 
