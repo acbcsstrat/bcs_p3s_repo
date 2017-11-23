@@ -13,15 +13,19 @@ import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.LoginMessageUI;
 import com.bcs.p3s.display.UserProfileUI;
+import com.bcs.p3s.docs.email.P3sEmail;
+import com.bcs.p3s.docs.email.P3sEmailFactory;
+import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.email.EmailSender;
 
 @Service("UserService")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	HttpSession session;
@@ -124,6 +128,20 @@ public class UserServiceImpl implements UserService{
 		
 	}
 	
+
+	
+	public void sendRegistrationEmail(String emailAddress) {
+		P3sEmailFactory factory = new P3sEmailFactory();
+		P3sEmail email = factory.create(EmailTemplates.email_register_combined, emailAddress, null, null, null, null, null, null);
+
+		EmailSender emailer = new EmailSender(email);
+		emailer.addRecipient(emailAddress);
+		emailer.sendEmail();
+	}
+
+	
+	
+	// support methods
 	protected List<LoginMessageUI> findAllLoginMessagesForUser(P3SUser user){
 		
 		List<LoginMessage> loginMessages = user.getLoginMessagesToDisplay();

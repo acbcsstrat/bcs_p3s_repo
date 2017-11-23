@@ -235,24 +235,9 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			 */ 
 			log().warn("**** Booking made - but p3s cannot yet create an Proform Invoice (or any PDF) to email");
 			
-			// zaphod - acDebug - START of sent email code
-			// zaphod - acDebug - START of sent email code
-			// zaphod - acDebug - START of sent email code
-			// zaphod - acDebug - START of sent email code
-			// zaphod - acDebug - START of sent email code
 
-			sendProformaInvoiceEmail(bankTransferPostCommitDetails,committedFee, patentIdsInThisTransaction);
+			sendProformaInvoiceEmail(bankTransferPostCommitDetails, patentIdsInThisTransaction);
 				
-			
-			
-			
-			// zaphod - acDebug - END of sent email code
-			// zaphod - acDebug - END of sent email code
-			// zaphod - acDebug - END of sent email code
-			// zaphod - acDebug - END of sent email code
-			// zaphod - acDebug - END of sent email code
-			// zaphod - acDebug - END of sent email code
-			
 			
 			
 			//create and send the orders file to MC
@@ -288,17 +273,11 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	// Start of - Support methods - NOT exposed through the interface
 
 	
-	// zaphod - acDebug - START of sent email code
-	// zaphod - acDebug - START of sent email code
-	// zaphod - acDebug - START of sent email code
-	// zaphod - acDebug - START of sent email code
-	// zaphod - acDebug - START of sent email code
-	// zaphod - acDebug - START of sent email code
-	protected void sendProformaInvoiceEmail(BankTransferPostCommitDetails commitTransaction, List<Fee> fee
+	protected void sendProformaInvoiceEmail(BankTransferPostCommitDetails commitTransaction
 				, List<Long> patentIdsInThisTransaction) {
 		log().debug("Send Proforma Invoice");
 		String err = PREFIX+"sendProformaInvoiceEmail : ";
-		if (commitTransaction==null || fee==null || patentIdsInThisTransaction==null) {
+		if (commitTransaction==null || patentIdsInThisTransaction==null) {
 			panic(err+"Error preparing to send ProformaInvoice email");
 			return;
 		}
@@ -348,7 +327,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		emailer.sendEmail();
 	}
 	
-	protected String amendIfRqdForDev(String existing) {  // acTidy
+	protected String amendIfRqdForDev(String existing) {  // acTidy acDebug
 		// this temporary DEV code whilst using domain p3s.me
 		if ("andy@p3s.me".equalsIgnoreCase(existing)) return "andy.chapman@boxcleversoftware.com";
 		if ("merin@p3s.me".equalsIgnoreCase(existing)) return "merin.paul@boxcleversoftware.com";
@@ -357,11 +336,6 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		if ("guest@p3s.me".equalsIgnoreCase(existing)) return "andy.chapman@boxcleversoftware.com";
 		return existing;
 	}
-	// zaphod - acDebug - END of sent email code
-	// zaphod - acDebug - END of sent email code
-	// zaphod - acDebug - END of sent email code
-	// zaphod - acDebug - END of sent email code
-	// zaphod - acDebug - END of sent email code
 	
 	
 	protected void populateBasketContents(BasketContents basketContents, List<Long> patentIds) {

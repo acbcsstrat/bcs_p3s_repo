@@ -18,7 +18,8 @@ public class GenericProcessingEngine extends Universal {
 		String userMash = seedUser.getEmailAddress() + seedUser.getId().toString();
 		int    qwikInt  = userMash.hashCode(); // may be negative
 		if (qwikInt<0) qwikInt = qwikInt * -1; 
-		String userHash = Integer.toString(qwikInt); // ensure len>8
+		String userHash = Integer.toString(qwikInt); 
+		if (userHash.length() < 9) userHash="845396235"+userHash; // ensure len>8. Should be unnecessary
 		
 		int len = userHash.length();
 		String fragment6 = userHash.substring(len-8, len-2); // ignore last 2, then take last 6

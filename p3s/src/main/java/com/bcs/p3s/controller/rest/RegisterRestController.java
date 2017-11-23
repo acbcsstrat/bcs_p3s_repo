@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,15 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bcs.p3s.display.UserProfileUI;
-import com.bcs.p3s.docs.email.P3sEmailFactory;
-import com.bcs.p3s.docs.email.template.EmailTemplates;
-import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.engine.GenericProcessingEngine;
 import com.bcs.p3s.enump3s.UserStatusEnum;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
-import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PreLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
@@ -36,7 +31,7 @@ import com.bcs.p3s.util.lang.Universal;
 @RestController
 @Configuration
 @ComponentScan("com.bcs.p3s")
-public class RegisterRestController extends Universal{
+public class RegisterRestController extends Universal {
 	
 	@Autowired
     UserService userService;
@@ -95,17 +90,13 @@ public class RegisterRestController extends Universal{
 			user.setIsEmailNotification(true);
 			user.setBusiness(business);
 			userService.createNewUser(user, business);
-			
-			/**
-			 * 
-			 * Sending email address verification email to user comes here - AC to add
-			 */
-			new P3sEmailFactory().create(EmailTemplates.email_register_combined, user.getEmailAddress(), null, null, null, null, null, null);
 		}
 		else{
-			//logging
-			
+			log().warn("User requested register, but already has an account (albeit maybe not verified)");
+			// Here, send email anyway. User will be expecting it (maybe NEEDS it). & cannot hurt.
 		}
+		// Send email address verification email to user
+		userService.sendRegistrationEmail(user.getEmailAddress());
         
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
@@ -125,8 +116,7 @@ public class RegisterRestController extends Universal{
 
 		businessInfo = userService.getBusinessInfo(businessNumber);
 		if(businessInfo.isEmpty()){
-			log().debug("No business Details found for entered businessNumber[" + businessNumber +"]");
-			log().fatal("No business Details found for entered businessNumber[" + businessNumber +"]");
+			logInternalError().fatal("No business Details found for entered businessNumber[" + businessNumber +"]");
 			return new ResponseEntity<Business>(businessDetails, HttpStatus.NOT_FOUND);
 		}
 		
@@ -184,7 +174,6 @@ public class RegisterRestController extends Universal{
 		//** Checking whether email Address already exist **/
 		boolean isNewUser = userService.checkUser(user.getEmailAddress());
 		
-		
 		if(isNewUser){
 			log().debug("Email address found stage");
 			user.setStatus(UserStatusEnum.DISABLED);
@@ -195,18 +184,14 @@ public class RegisterRestController extends Universal{
 			business = preSession.getBusiness();   //getting business Info from session; ignoring user manipulations
 			user.setBusiness(business);
 			userService.createSubUser(user);
-			
-			/**
-			 * Sending email address verification email to user comes here
-			 */
-			new P3sEmailFactory().create(EmailTemplates.email_register_combined, user.getEmailAddress(), null, null, null, null, null, null);
-			
 		}
 		else{
-			//logging
-			
+			log().warn("User requested register, but already has an account (albeit maybe not verified)");
+			// Here, send email anyway. User will be expecting it (maybe NEEDS it). & cannot hurt.
 		}
-        
+		// Send email address verification email to user
+		userService.sendRegistrationEmail(user.getEmailAddress());
+		
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
@@ -224,7 +209,7 @@ public class RegisterRestController extends Universal{
 		P3SUser user = null;
 		
 		if (emailAddress == null || emailAddress.length() == 0){
-			logM().debug("Email address argument missing");
+			logInternalError().fatal("Email address argument missing");
 			throw new IllegalArgumentException("The emailAddress argument is required");
 		}
 		
@@ -233,7 +218,7 @@ public class RegisterRestController extends Universal{
 		//CHECKING user send {verifyLink} against what generated from user object
 		String hashLink = genEngine.generateUrlVerificationCode(user);
 		if(!(hashLink.equals(verifyLink))){
-			logM().debug("User send an INVALID {verifyLink}. Preventing user from further operation");
+			logM().warn("User send an INVALID {verifyLink}. Preventing user from further operation. ["+emailAddress+" expected "+hashLink+" got "+verifyLink+"]");
 			model.setViewName("error");
 			return model;
 		}
@@ -249,8 +234,7 @@ public class RegisterRestController extends Universal{
 				log().debug("User["+ emailAddress  +"] ****VERIFIED AND ACTIVATED****.Redirecting to Login Page");
 		}	
 		else{
-			log().debug("User status is enabled. No action required now. Redirect to login page");
-			logM().debug("User status is enabled. No action required now. Redirect to login page");
+			log().info("User status is ALREADY enabled (email url clicked again). No action required now. Redirect to login page");
 		}
 		
 		//return to login page
@@ -259,5 +243,10 @@ public class RegisterRestController extends Universal{
 		return model;
 	
 	}
+	
+	
+	
+	
+	// support methods
 
 }

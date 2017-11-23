@@ -26,5 +26,7 @@ public interface UserService {
 	
 	List<Business> getBusinessInfo(String businessNumber);
 	
+	public void sendRegistrationEmail(String emailAddress);
+	
 
 }
