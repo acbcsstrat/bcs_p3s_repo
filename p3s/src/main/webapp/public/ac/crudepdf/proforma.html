@@ -2,32 +2,33 @@
 <head></head>
 <body>
 
-Hello2
-<table border=4>
+
+<table border="0" width="100%">
 <tr>
   <td>
   <!-- Top Header -->
-  <table border=4>
+  <table border="0" width="100%">
     <tr>
-      <td>
+      <td width="50%">
         <img src="/p3sweb/public/ac/crudepdf/logo-withname-ruf.png">
       </td>
 	  <td>
 	  </td>
-	  <td>
+	  <td width="50%" align="left">
 	    <h1>PRO-FORMA INVOICE</h1>
 	  </td>
 	  <td>
 	  </td>
     </tr>
   </table>
+  </td>
 </tr>
 <tr>
   <td>
   <!-- Address bar -->
-  <table border=4>
+  <table border="0" width="100%">
     <tr>
-      <td>
+      <td width="33%">
         <b>PATENT PLACE</b>
         <br/>25 Meer Street
         <br/>Stratford-upon-Avon
@@ -36,7 +37,7 @@ Hello2
         <br/>United Kingdom
         <br/><a href="www.thepatent.place">www.thepatent.place</a>
       </td>
-      <td>
+      <td width="33%">
         <b>BILL TO:</b>
         <br/>Dominic Inc
         <br/>2460 North Mango Av.
@@ -46,13 +47,13 @@ Hello2
         <br/>USA
         <br/><a href="mailto:dominic@dimucci.com">dominic@dimucci.com</a>
       </td>
-      <td>
+      <td width="300" align="left">
         <b>DATE:</b> October 26, 2017
         <br/><b>INVOICE NO:</b> IP0001000001PF
         <br/><b>EXCHANGE RATE:</b>
         <br/>1.1738 USD = 1 EUR
         <p/>
-        <br/>IMPORTANT:
+        <br/><font color="red"><b>IMPORTANT:</b></font>
         <br/>Our service is conditional on funds
         <br/>reaching our account by the due
         <br/>date and time shown below.
@@ -68,20 +69,21 @@ Hello2
 
 <tr>
   <!-- References bar -->
-  <table border=0>
+  <td>
+  <table border="1" width="100%">
     <tr>
-      <td>
+      <th align="left">
         <b>ORDERED BY:</b>
-      </td>
-      <td>
+      </th>
+      <th align="left">
         <b>TRANSACTION TYPE:</b>
-      </td>
-      <td>
+      </th>
+      <th align="left">
         <b>TRANSACTION ID:</b>
-      </td>
-      <td>
-        <b>DUE DATE & TIME:</b>
-      </td>
+      </th>
+      <th align="left">
+        <b>DUE DATE &amp; TIME:</b>
+      </th>
 	</tr>
     <tr>
       <td>
@@ -103,14 +105,18 @@ Hello2
 <tr>
   <td>&nbsp;</td>
 </tr>
+<tr>
+  <td>&nbsp;</td>
+</tr>
 
 <tr>
+  <td>
   <!-- Repeating Patent details-->
-  <table border=0 width="100%">
+  <table border="0" width="100%">
     <tr>
       <td>
 	    <!-- Start of a patent - summary row-->
-  		<table border=0>
+  		<table border="0">
           <tr>
             <td>
               <b>PATENT:</b>
@@ -166,7 +172,7 @@ Hello2
               Official Fee
             </td>
             <td width="20%" align="right">
-              $0.00
+              $1.00
             </td>
           </tr>
           <tr>
@@ -202,11 +208,11 @@ Hello2
             </td>
           </tr>
           <tr>
-            <td>
+            <td align="right">
               Total for Patent
             </td>
             <td align="right">
-              <b>$0.00</b>
+              <b>$1.00</b>
             </td>
           </tr>
         </table>
@@ -214,16 +220,17 @@ Hello2
     </tr>
 
 
-    <tr>
-      <td>
-        &nbsp;
-      </td>
-    </tr>
+	<tr>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>&nbsp;</td>
+	</tr>
 
     <tr>
       <td>
 	    <!-- Start of a patent - summary row-->
-  		<table border=0>
+  		<table border="0">
           <tr>
             <td>
               <b>PATENT:</b>
@@ -318,7 +325,7 @@ Hello2
             </td>
           </tr>
           <tr>
-            <td>
+            <td align="right">
               Total for Patent
             </td>
             <td align="right">
@@ -332,7 +339,6 @@ Hello2
 
   </table>
 </tr>
-</table>
 
 <tr>
   <td>&nbsp;</td>
@@ -341,7 +347,7 @@ Hello2
 <tr>
   <!-- Grand Total line -->
       <td>
-  		<div align="left">TOTAL PAYABLE (Rounded) :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>$632.32</b></div>
+  		<div align="right">TOTAL PAYABLE (Rounded) :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>$634.00</b></div>
       </td>
 </tr>
 
@@ -352,7 +358,7 @@ Hello2
 
 <tr>
   <!-- Footer -->
-  <table border=4 align="center">
+  <table border=0 align="center">
     <tr>
       <td>
         <h1 align="center">NO SERVICES PROVIDED IN THE US</h1>
@@ -414,38 +420,18 @@ Hello2
       </td>
     </tr>
     <tr>
-      <td>
+      <td> <font color="blue">
         <div align="center">
           Please ensure you use our Transaction ID as your payment reference.
           <br/>
           Patents cannot be renewed by our service if the Transaction ID is missing or incorrectly quoted.
         </div>
-      </td>
+      </font></td>
     </tr>
   </table>
+
 </tr>
 </table>
-
-
-<tr>
-  <td>&nbsp;</td>
-</tr>
-
-<tr>
-  <!-- xx -->
-  <table border=4>
-    <tr>
-      <td>
-        X
-      </td>
-      <td>
-        X
-      </td>
-    </tr>
-  </table>
-</tr>
-</table>
-
 
 </body>
 </html>
