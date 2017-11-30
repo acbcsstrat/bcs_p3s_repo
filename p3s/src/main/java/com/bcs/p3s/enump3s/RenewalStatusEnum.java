@@ -4,7 +4,7 @@ package com.bcs.p3s.enump3s;
 /**
  * This is the Higher-level Status. i.e. has In-Progress value
  * 
- * Note: SHOW_PRICE would never be displayed to the user
+ * Note: SHOW_PRICE & TOO_LATE would never be displayed to the user
  */
 public class RenewalStatusEnum extends P3SAbstractEnum {
 
@@ -13,7 +13,12 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
     public static final String IN_PROGRESS				= "Payment in progress";
     public static final String EPO_INSTRUCTED           = "EPO Instructed";
     //public static final String ABANDONED				= "Abandoned"; // No longer supported
+    /**
+     * TOO_LATE means customer CAN RENEW for the current patent year. But not online; they will be provided with a contact of our partner company
+     * WAY_TOO_LATE means customer CANNOT RENEW for the current patent year
+     */
     public static final String TOO_LATE					= "Too late to renew";
+    public static final String WAY_TOO_LATE					= "Way Too late to renew";
     public static final String NO_RENEWAL_NEEDED= "No renewal needed";
 
 
@@ -48,6 +53,10 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
         if (status.equalsIgnoreCase(RenewalStatusEnum.TOO_LATE) 
             || status.equalsIgnoreCase("TOO_LATE")) 
         			sofar = RenewalStatusEnum.TOO_LATE;  
+        
+        if (status.equalsIgnoreCase(RenewalStatusEnum.WAY_TOO_LATE) 
+                || status.equalsIgnoreCase("WAY_TOO_LATE")) 
+            			sofar = RenewalStatusEnum.WAY_TOO_LATE;  
 
         if (status.equalsIgnoreCase(RenewalStatusEnum.NO_RENEWAL_NEEDED) 
             || status.equalsIgnoreCase("NO_RENEWAL_NEEDED")) 

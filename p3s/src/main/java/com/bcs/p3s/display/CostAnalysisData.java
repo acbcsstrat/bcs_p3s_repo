@@ -14,14 +14,16 @@ public class CostAnalysisData {
 	private Date redStartDate;
 	private Date blueStartDate;
 	private Date blackStartDate;
-	private Date blackEndDate;
+	private Date blackPhoneUpStart;
+	private Date blackAllEnd;
 	
 	private String greenStartDateUI;
 	private String amberStartDateUI;
 	private String redStartDateUI;
 	private String blueStartDateUI;
 	private String blackStartDateUI;
-	private String blackEndDateUI;
+	private String blackPhoneUpStartUI;
+	private String blackAllEndUI;
 	
 	private BigDecimal greenStageCost;
 	private BigDecimal amberStageCost;
@@ -90,12 +92,20 @@ public class CostAnalysisData {
 		this.blackStartDate = blackStartDate;
 	}
 
-	public Date getBlackEndDate() {
-		return blackEndDate;
+	public Date getBlackPhoneUpStart() {
+		return blackPhoneUpStart;
 	}
 
-	public void setBlackEndDate(Date blackEndDate) {
-		this.blackEndDate = blackEndDate;
+	public void setBlackPhoneUpStart(Date blackPhoneUpStart) {
+		this.blackPhoneUpStart = blackPhoneUpStart;
+	}
+
+	public Date getBlackAllEnd() {
+		return blackAllEnd;
+	}
+
+	public void setBlackAllEnd(Date blackAllEnd) {
+		this.blackAllEnd = blackAllEnd;
 	}
 
 	public String getGreenStartDateUI() {
@@ -138,12 +148,20 @@ public class CostAnalysisData {
 		this.blackStartDateUI = blackStartDateUI;
 	}
 
-	public String getBlackEndDateUI() {
-		return blackEndDateUI;
+	public String getBlackPhoneUpStartUI() {
+		return blackPhoneUpStartUI;
 	}
 
-	public void setBlackEndDateUI(String blackEndDateUI) {
-		this.blackEndDateUI = blackEndDateUI;
+	public void setBlackPhoneUpStartUI(String blackPhoneUpStartUI) {
+		this.blackPhoneUpStartUI = blackPhoneUpStartUI;
+	}
+
+	public String getBlackAllEndUI() {
+		return blackAllEndUI;
+	}
+
+	public void setBlackAllEndUI(String blackAllEndUI) {
+		this.blackAllEndUI = blackAllEndUI;
 	}
 
 	public BigDecimal getGreenStageCost() {

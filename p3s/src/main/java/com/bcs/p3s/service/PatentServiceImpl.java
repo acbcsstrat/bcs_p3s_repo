@@ -149,13 +149,14 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		/**
 		 * CALL TO PatentStatusEngine PROCESSING ENGINE
 		 * CALCULATES THE RENEWAL YEAR AND RENEWAL STATUS FOR THE NEWLY ADDED PATENT
-		 */
+		 *//*
 		PatentStatus renewalInfo = new PatentStatus();
 		renewalInfo = new PatentStatusEngine().getRenewalInfo(patent);
 
+		
 		patent.setRenewalStatus(renewalInfo.getCurrentRenewalStatus());
 		patent.setRenewalYear(renewalInfo.getActiveRenewalYear());
-		
+		*/
 		
 		
 		// Create default notifications
@@ -169,8 +170,25 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		 * CALL TO Cost Calculation Engine
 		 * 
 		 */
-		postSession = new PatentStatusEngine().getExtendedDataForNewPatent(patent, postSession);
+		PatentExtendedData extendedData = new PatentExtendedData();
+		extendedData = new PatentStatusEngine().getExtendedDataForNewPatent(patent);
+		
+		patent.setRenewalYear(extendedData.getActiveRenewalYear());
+		patent.setRenewalStatus(extendedData.getCurrentRenewalStatus());
+		
+		if(postSession.getExtendedPatentUI() == null){
+			List<PatentExtendedData> firstData = new ArrayList<PatentExtendedData>();
+			firstData.add(extendedData);
+			postSession.setExtendedPatentUI(firstData);
+		}
+		else{
+			
+			List<PatentExtendedData> allData = postSession.getExtendedPatentUI();
+			allData.add(extendedData);
+			postSession.setExtendedPatentUI(allData);
+		}
 		session.setAttribute("postSession", postSession);
+		
 		patentUI = populateDataToPatentUI(patent);
 		return patentUI;
 	}
@@ -831,8 +849,6 @@ public PatentUI populateDataToPatentUI(Patent patent){
 					return patentUI;
 				}
 			}
-		
-		
 		
 		
 		return patentUI;
