@@ -1,22 +1,20 @@
 <transactionnav></transactionnav>
 
 <div class="row m-b-md">
-	<div class="col-md-2 offset-md-10">
+	<div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9 col-xl-3 offset-xl-9">
 		<form class="form-inline">
-			<div class="col-md-12">
-				<div class="input-group">
-					<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="$ctrl.tableParams.filter()['p3S_TransRef']" placeholder="Transaction ID">
-					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
-				</div>					
+			<div class="input-group w-100">
+				<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="$ctrl.tableParams.filter()['p3S_TransRef']" placeholder="Transaction ID">
+				<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>				
 			</div>
 		</form>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-md-12">
-		<div class="row m-b-xl">
-			<div class="col-md-12" id="scrollable-area" class="table-scroll">
+	<div class="col-md-12 col-lg-12 col-xl-12">
+		<div class="row m-b-md">
+			<div class="col-md-12 table-scroll p-r-none" id="scrollable-area">
 				<table ng-table="$ctrl.tableParams" class="table font-body t-list" show-filter="false" fixed-table-headers="scrollable-area">
 				    <tr ng-repeat="row in $data" ng-click="$ctrl.rowSelect($event); $ctrl.colourPhase(patent)" ui-sref-active="active">
 				        <td width="15%" title="'Transaction ID'" filter="{ transId: 'text'}" sortable="'transId'" >

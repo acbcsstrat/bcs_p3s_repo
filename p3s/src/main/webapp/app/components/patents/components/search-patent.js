@@ -1,6 +1,6 @@
 app.component('searchpatent', {
 	templateUrl: 'p3sweb/app/components/patents/views/search-patent.htm',
-	controller: ['searchPatentService', '$state', '$stateParams', '$timeout', '$rootScope', 'patentsRestService', '$timeout', function(searchPatentService, $state, $stateParams, $timeout, $rootScope, patentsRestService, $timeout) {
+	controller: ['searchPatentService', '$state', '$stateParams', '$rootScope', 'patentsRestService', '$timeout', '$uibModal', '$scope', function(searchPatentService, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, $scope) {
 
 		var vm = this;
 	 	vm.queriedPatent = {};
@@ -20,43 +20,105 @@ app.component('searchpatent', {
 				case 0:
 					vm.colourPhaseTitle = {
 						title: 'Green',
-						descrip: 'lorem',
 						color: '#53ab58'
 					}
 				break;
 				case 1:
 					vm.colourPhaseTitle = {
 						title: 'Amber',
-						descrip: 'loremmm',
 						color: '#f9b233'						
 					}
 				break;
 				case 2:
 					vm.colourPhaseTitle = {
 						title: 'Red',
-						descrip: 'lorem ipsum',
 						color: '#e30613'
 					}
 				break;
 				case 3:
 					vm.colourPhaseTitle = {
 						title: 'Blue',
-						descrip: '24 Week Extension',
 						color: '#0097ce'					
 					}
 				break;
 				case 4:
 					vm.colourPhaseTitle = {
 						title: 'Black',
-						descrip: 'herisuhimas',
 						color: '#3c3c3b'
 					}
 			}
 		}
 
-		vm.displayNotifications = function(phase) {
+		vm.returnedAppNo = '';
 
-			console.log(phase)
+		vm.openConfirmModal = function(patent) {
+
+			var modalInstance = $uibModal.open({
+				templateUrl: 'p3sweb/app/components/patents/views/modals/modal-confirm-found-patent.htm',
+				scope: $scope,
+				appendTo: undefined,
+				controller: function($uibModalInstance ,$scope) {
+				  	$scope.addPatent = function () {
+				 		$timeout(function(){
+							patentsRestService.savePatent(patent)
+					            .then(
+					            	function(response){
+			        			 		var patent = response[0];
+						             	$state.go('patents.patent', {patentId: patent.id}, {reload: true});
+					             	},
+						            function(errResponse){
+						                console.error('Error while saving Patent');
+						            }
+				    		)
+				 		}, 300);
+			  			$timeout(function() {
+							$uibModalInstance.close()
+			  			}, 100);
+				  	};
+
+				  	$scope.cancelAdd = function() {
+			  			$state.go('search-patent', {}, {reload: true});
+				  		$uibModalInstance.dismiss('cancel');
+				  	}
+				}
+			})
+
+		    modalInstance.result.then(function() {
+	     		console.log('good')
+		    }, function() {
+		       console.log('bad')
+		    })
+		}
+
+		vm.openCancelModal = function(id) {
+			var modalInstance = $uibModal.open({
+				templateUrl: 'p3sweb/app/components/app/views/modalRemovePatentTemplate.html',
+				appendTo: undefined,
+				controller: function($uibModalInstance ,$scope){
+
+				  	$scope.addPatent = function () {
+			  			vm.deletePatent(id)
+			  			$timeout(function() {
+							$uibModalInstance.close()
+			  			}, 300);
+						
+				  	};
+
+				  	$scope.cancelAdd = function() {
+				  		$uibModalInstance.dismiss('cancel');
+				  	}
+
+				}
+			})
+
+		    modalInstance.result.then(function() {
+		     	console.log('good')
+		    }, function(errResponse) {
+		       console.log(errResponse)
+		    })
+		}
+
+		vm.displayNotifications = function(phase) {
 
 			function phaseNotifications(phase) {
 				
@@ -83,7 +145,7 @@ app.component('searchpatent', {
         	}  	
         	
         	$timeout(function() {
-    			vm.chunkedData = chunk(phaseNotifications(phase), 4);
+    			vm.chunkedData = chunk(phaseNotifications(phase), 5);
     			vm.colourPhase = phase;
     		}, 100)
 		}
@@ -95,7 +157,7 @@ app.component('searchpatent', {
 			.then(
 				function(data) {
 					vm.queriedPatent = data;
-					console.log()
+					vm.returnedAppNo = data.patentApplicationNumber;
 					vm.displayNotifications(vm.patentNotifications.green)
 				},
 				function(errResponse) {
@@ -103,29 +165,31 @@ app.component('searchpatent', {
 				}
 			);
         }
-
-	 	vm.submit = function(patent) {
-	 		$timeout(function(){
-				patentsRestService.savePatent(patent)
-		            .then(function(){
-		             	$state.go('patents', {}, {reload: true})
-		             	.then(function(){
-			             		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
-			             	})
-			             },
-			            function(errResponse){
-			                console.error('Error while saving Patent');
-			            }
-	    		)
-	 		}, 500);
-		};
-             	
-        vm.cancelSearch = function() {
-        	$state.go('search-patent', {}, {reload: true});
-        }
 	}
+]})
+.directive('validatePatent', function(){
 
-]});
+	return {
+
+		require: 'ngModel',
+		link: function(scope, elem, attr, ctrl) {
+
+			var regExp = /^[a-zA-Z0-9.\s]*$/
+
+			function checkValidation(value) {
+
+				if(regExp.test(value)) {
+					ctrl.$setValidity('validPatent', true) 
+				} else {
+					ctrl.$setValidity('validPatent', false) 
+				}
+				return value
+			}
+			ctrl.$parsers.push(checkValidation)
+		}
+
+	}
+})
 
 
 

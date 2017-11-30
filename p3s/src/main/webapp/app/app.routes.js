@@ -18,9 +18,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
 
 
     IdleProvider.idle(520);
-    IdleProvider.timeout(20);
-    KeepaliveProvider.http(domain+'keep-session-alive/');
-    KeepaliveProvider.interval(30)
+    IdleProvider.timeout(30);
+    // KeepaliveProvider.http(domain+'keep-session-alive/');
+    // KeepaliveProvider.interval(20)
 
     $qProvider.errorOnUnhandledRejections(false);
 
@@ -74,6 +74,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
                 return patentsRestService.fetchAllPatents();
             }]
         },
+        data: {
+            customPatents:'patentsRestService'
+        },
         params: {
             navigation: 'patentnav'
         }
@@ -124,7 +127,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         }
     })
     .state('current-transactions.current-transaction-item', {
-        url: '/{transId}',
+        url: '/{transId}/:transHref',
         component: 'currentTransaction',
         resolve: {
             transaction: ['transactions', '$stateParams', function(transactions, $stateParams) {
@@ -132,6 +135,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
                     return transaction.id == $stateParams.transId;
                 })
             }]
+        },
+        params: {
+            transHref: null
         }
     })
     .state('transaction-history', {

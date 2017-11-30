@@ -1,0 +1,68 @@
+<div class="row">
+	<div class="col-md-12">
+		<div id="scrollable-area">
+			<table class="t-list table-scroll">
+				<thead>
+					<tr>
+						<th>App No.</th>
+						<th>Client Ref</th>
+						<th>Short Title</th>
+						<th colspan="3">Renewal Status</th>
+						<th>Due Date</th>					
+						<th></th>					
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in $ctrl.patents">
+						<td>{{patentApplicationNumber}}</td>
+						<td>{{clientRef}}</td>
+						<td>{{title}}</td>
+						<td>
+							<div ng-if="row.renewalStatus == 'Show price'" ng-class="(row.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (row.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (row.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (row.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Black' ? 'txt-phase-white': '')">
+								<span class="font-weight-bold">$ {{row.currentRenewalCost}}</span><br>
+								<span>{{$ctrl.date | date:'MM/dd/yy'}}</span>
+							</div>		   
+						</td>
+						<td>
+							<div ng-if="row.renewalStatus !== 'Show price'" class="d-flex justify-content-start align-items-center">
+								<div class="m-r-xs">
+									<img ng-if="row.renewalStatus == 'Payment in progress'" src="p3sweb/assets/imgs/icons/progress_icon.png">
+									<img ng-if="row.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed_icon.png">
+									<img ng-if="row.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon.png">
+									<img ng-if="row.renewalStatus == 'Too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png">
+									<img ng-if="row.renewalStatus == ('No renewal needed' || 'Show price')" src="p3sweb/assets/imgs/icons/renewal_na_icon.png">
+								</div>
+						    	<p class="font-weight-medium font-body d-flex justify-content-end align-items-center">{{row.renewalStatus}}</p>
+							</div>
+							
+							<div class="hidden-lg-down" class="progress-phase" ng-if="row.renewalStatus == 'Show price'">
+								<uib-progress class="pill-radius font-body font-body--component" ng-class="(row.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (row.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (row.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (row.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (row.costBandColour == 'Black' ? 'bg-phase-white': '')">
+									<uib-bar class="pill-radius d-flex align-items-center justify-content-center progress-15" value="row.progressBar"></uib-bar>
+								</uib-progress>
+							</div>
+						</td>
+						<td>
+							<div ng-if="row.renewalStatus == 'Show price'" ng-class="(row.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + (row.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + (row.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + (row.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + (row.costBandColour == 'Black' ? 'txt-phase-white': '')">
+								<span class="font-weight-bold">$ {{row.renewalCostNextStage}}</span><br>
+								<span>{{row.costBandEndDate | date:'MM/dd/yy'}}</span>
+							</div>
+						</td>
+						<td>
+				        	<div ng-if="row.renewalStatus == 'Show price'" class="d-flex justify-content-center btn-default">
+						 		<ngcart-addtocart id="{{row.id}}" class="cartbtn" name="patent_{{row.id}}" price="{{row.currentRenewalCost}}" quantity="1" quantity-max="10" data="row" >
+						 		</ngcart-addtocart>
+						 	</div>
+				        	<div ng-if="row.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex justify-content-center btn-default">
+						 		<a class="btn btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction(row.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+						 	</div>
+				        	<div ng-if="row.renewalStatus == 'Renewal in place'" class="d-flex justify-content-center btn-default">
+						 		<a class="btn btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white d-flex align-items-center justify-content-center" ui-sref="patents.patent({patentId: row.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs"></a>
+						 	</div>						 			 	
+				        </td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

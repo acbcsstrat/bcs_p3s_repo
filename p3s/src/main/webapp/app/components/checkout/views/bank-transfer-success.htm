@@ -6,22 +6,22 @@
             </div>
             <div class="content-panel__body">
                 <div class="m-b-md">
-                    <p class="font-body m-b-md">Thank you for your instruction.You may want to print this page for you records. This data can also be accessed via 'Transactions' should you lose this page. Please double-check the Reference you transfer. We may be unable to process your renewal if it is wrong (spaces don’t matter). Once you have made the transfer, you can check the status of your transaction via the transaction tab in the menu</p>                    
+                    <p class="font-body m-b-md">Thank you for your instruction.  This data can be accessed via the "Transactions" should you need it again.  Please double check the reference you use when you make the transfer, as we rely on it to process your transaction.  We may not be able to process your annuity if it's wrong.  Once you've made the transfer you can follow the prorgess though the transaction monitor</p>                    
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <p class="font-weight-bold">Transaction ID: </p>     
+                        <p class="font-weight-bold font-body">Transaction ID: </p>     
                     </div>
                    <div class="col-md-8">                   
-                        <p>{{orderObj.p3sTransRef}}</p>
+                        <p class="font-weight-bold font-body">{{orderObj.p3sTransRef}}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <p class="font-weight-bold">Date</p>
+                        <p class="font-weight-bold font-body">Date: </p>
                     </div>
                     <div class="col-md-8">
-                        <p>{{orderObj.dateNowLocalTimeUI}}</p> <!--dummy date-->
+                        <p class="font-weight-bold font-body">{{orderObj.dateNowLocalTimeUI}}</p> <!--dummy date-->
                     </div>              
                 </div>
             </div>
@@ -29,13 +29,13 @@
 
         <div class="content-panel col-md-6 p-l-none">
             <div class="content-panel__head border-grey-xs--btm">
-                <div class="content-panel__head border-grey-xs--btm">
                     <p class="font-h4 font-weight-medium">Account Details</p>
-                </div>
+              
+            </div>
                 <div class="content-panel__body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="border-grey-xs--btm  m-b-xs">
+                            <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-6">
                                         <p class="font-weight-medium font-body">Account Holder's Name: </p>                        
@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-grey-xs--btm  m-b-xs">
+                            <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-6">
                                         <p class="font-weight-medium font-body">Account number: </p>                        
@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-grey-xs--btm  m-b-xs">
+                            <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-6">
                                         <p class="font-weight-medium font-body">ABA Number: </p>                        
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-grey-xs--btm  m-b-xs">
+                            <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-6">
                                         <p class="font-weight-medium font-body">Bank Name: </p>                        
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-grey-xs--btm  m-b-xs">
+                            <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-6">
                                         <p class="font-weight-medium font-body">Bank address: </p>                        
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-grey-xs--btm  m-b-xs">
+                            <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-6">
                                         <p class="font-weight-medium font-body">Reference: </p>                        
@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-grey-xs--btm  m-b-xs">
+                            <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-6">
                                         <p class="font-weight-medium font-body">Amount: </p>                        
@@ -110,9 +110,9 @@
     			</div>
                 <div class="content-panel__body">
                     <div class="row">
-                        <div class="col-md-12 d-flex justify-content-end">
-                            <a class="btn bg-phase-green btn-block btn--lg txt-white font-weight-medium pill-radius" href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" download>Download Invoice</a>
-                            <a class="btn bg-phase-green btn-block btn-lg txt-white font-weight-medium pill-radius" ui-sref="dashboard">Return to dashboard</a>
+                        <div class="col-md-12 d-flex justify-content-end btn-default">
+                            <a class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center m-r-sm" href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" download>Download Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+                            <a class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center" ui-sref="dashboard">Return to dashboard <img src="p3sweb/assets/imgs/icons/dashboard_icon_sm.png" alt="dashboard icon" class="m-l-xs"></a>
                         </div>
                     </div>        
                 </div>

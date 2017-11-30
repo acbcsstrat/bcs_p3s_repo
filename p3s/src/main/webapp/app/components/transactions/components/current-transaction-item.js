@@ -10,16 +10,16 @@ app.component('currentTransaction', {
 		$scope.$watch('$parent.filter', function(n, o){
 			if(n !== undefined ) {
 				if(n !== null) {
+					console.log('should change data')
 					$scope.transactionsFilter = n.patentUI.patentApplicationNumber;
 				} else {
+					console.log('null')
 					$scope.transactionsFilter = null;
 				}
 			}
 		})
 
 	    vm.$onChanges = function(changeObj){
-
-	    	console.log(vm.transaction)
 
 	    	var currTransStatus = vm.transaction.latestTransStatus;	
 

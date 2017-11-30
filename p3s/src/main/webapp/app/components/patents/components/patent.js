@@ -5,7 +5,7 @@ app.component('patent', {
 		renewal: '<'
 	},
 	templateUrl: 'p3sweb/app/components/patents/views/patent-item.htm',
-	controller: ['patentsRestService', '$state', '$timeout','$scope', 'fxService', '$stateParams', 'patentsService', 'currentTransactionsService', function(patentsRestService, $state, $timeout, $scope, fxService, $stateParams, patentsService, currentTransactionsService) {
+	controller: ['patentsRestService', '$state', '$timeout','$scope', 'fxService', '$stateParams', 'patentsService', 'currentTransactionsService', '$uibModal', function(patentsRestService, $state, $timeout, $scope, fxService, $stateParams, patentsService, currentTransactionsService, $uibModal) {
 
 		var vm = this;
 
@@ -85,6 +85,60 @@ app.component('patent', {
 			}
 		}
 
+		vm.openUpdateConfirmModal = function(id) {
+
+			var update = vm.updatePatent(id);
+
+			var modalInstance = $uibModal.open({
+				templateUrl: 'p3sweb/app/components/patents/views/modals/modal-update-patent-template.htm',
+				appendTo: undefined,
+				controller: function($uibModalInstance ,$scope) {
+				  	$scope.dismissUpdateModal = function () {
+				    	$uibModalInstance.close();
+				  	};
+				}
+			})
+
+		    modalInstance.result.then(function() {
+	     		console.log('good')
+		    }, function() {
+		       console.log('bad')
+		    })
+		}
+
+		vm.openDeleteConfirmModal = function(id) {
+			var modalInstance = $uibModal.open({
+				templateUrl: 'p3sweb/app/components/patents/views/modals/modal-remove-patent-template.htm',
+				appendTo: undefined,
+				controller: function($uibModalInstance ,$scope){
+
+				  	$scope.deletePatent = function () {
+			  			vm.deletePatent(id)
+			  			$timeout(function() {
+							$uibModalInstance.close()
+			  			}, 300);
+						
+				  	};
+
+				  	$scope.cancelDeletion = function() {
+				  		$uibModalInstance.dismiss('cancel');
+				  	}
+
+				}
+			})
+
+		    modalInstance.result.then(function() {
+		     	console.log('good')
+		    }, function(errResponse) {
+		       console.log(errResponse)
+		    })
+		}
+
+
+
+
+	
+		
      	vm.$onChanges = function(changeObj){
 
 	            if(changeObj.patent){
@@ -163,10 +217,6 @@ app.component('patent', {
 
 					vm.lineLabels = lineLabelArr;
 
-	             	$timeout(function(){
-	             		vm.lineData = lineDataArr;
-	             	}, 1000);
-
 	     		  	vm.lineSeries = ['Series A', 'Series B'];
 				  	vm.lineDatasetOverride = [
 				  		{ yAxisID: 'y-axis-1' }, 
@@ -215,6 +265,8 @@ app.component('patent', {
 				        }
 
 				  	};
+
+         			vm.lineData = lineDataArr;	
 
 
 					const caBar = vm.costAnalysis;
@@ -446,7 +498,8 @@ app.component('patent', {
 	        patentsRestService.deletePatent(id)
 	            .then(function(){
 	             	$state.go('patents', {}, {reload: true})
-             	.then(function(){
+             		.then(function(){
+
 	             		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
 	             	})
 	             },
@@ -457,7 +510,6 @@ app.component('patent', {
 	    }
 
         vm.updatePatent = function(patent) {
-        	console.log(patent)
         	var id = patent.id;
         	patentsRestService.updatePatent(patent, id);
         }

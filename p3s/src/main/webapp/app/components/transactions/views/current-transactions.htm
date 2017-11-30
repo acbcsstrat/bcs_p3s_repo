@@ -1,12 +1,21 @@
 <transactionnav></transactionnav>
 
 <div class="row m-b-md">
-	<div class="col-md-3 offset-md-9">
+	<div class="col-md-12 col-lg-9 offset-lg-3 col-xl-6 offset-xl-6 p-none">
 		<form class="form-inline">
-			<div class="input-group w-100">
+			<div class="input-group col-md-4 col-lg-4 col-xl-4">
 				<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="$ctrl.tableParams.filter()['p3S_TransRef']" placeholder="Transaction ID">
-				<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+				<div class="input-group-addon pill-radius m-r"><i class="fa fa-search"></i></div>
 			</div>					
+			<div class="input-group col-md-4 col-lg-4 col-xl-4">
+			<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="$ctrl.tableParams.filter()['patentApplicationNumber']" placeholder="App No.">
+				<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>	
+			</div>
+
+			<div class="input-group col-md-4 col-lg-4 col-xl-4">
+				<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="$ctrl.tableParams.filter()['clientRef']" placeholder="Client Ref">
+				<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>	
+			</div>
 		</form>
 	</div>
 </div>
@@ -28,21 +37,21 @@
 									{{item.patentUI.patentApplicationNumber}}
 								</span>
 							</span>
-							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in row.renewalUIs" ng-model="selectedAppOption" ng-change="transactionFilter(selectedAppOption, 'patentAppFilter')" class="pill-radius form-control font-body">
-									<option value="">Multiple</option>
+							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in row.renewalUIs" ng-model="patentAppData.defaultSelect" ng-change="transactionListFilter(patentAppData.defaultSelect, 'patentAppFilter', row.id)" class="pill-radius form-control font-body">
+								<option value="">Multiple</option>
 							</select>
 				        </td>
 				        <td width="15%" data-title="'Client Ref'" filter="{ 'clientRef': 'text'}" sortable="'clientRef'">
 							<span ng-if="row.renewalUIs.length == 1" ng-repeat="item in row.renewalUIs">
 								<span ng-if="item.patentUI.clientRef.length">
-									{{item.patentUI.clientRef}}<br>
+									{{item.patentUI.clientRef}}
 								</span>								
 							</span>
-							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.clientRef for item in row.renewalUIs" ng-model="selectedRefOption" class="pill-radius form-control font-body" ng-change="$ctrl.transactionFilter(selectedRefOption, 'clientRefFilter')">
+							<select ng-if="row.renewalUIs.length > 1" ng-options="item.patentUI.clientRef for item in row.renewalUIs" ng-model="clientRefData.defaultSelect" class="pill-radius form-control font-body" ng-change="transactionListFilter(clientRefData.defaultSelect, 'clientRefFilter', row.id)">
 								<option value="">Multiple</option>
 							</select>			        	
 				        </td>
-				        <td width="15%" data-title="'Transaction Initiated'" filter="{ 'transStartDateUI': 'text'}" sortable="'valueOf()[0]'">
+				        <td width="15%" data-title="'Transaction Initiated'" filter="{ 'transStartDate': 'text'}" sortable="'transStartDate'">
 				        	{{row.transStartDate | date: 'MM/dd/yy'}}
 				        </td>				        
 				        <td width="10%" data-title="'Cost'" filter="{ 'transAmount_USD': 'text'}" sortable="'transAmount_USD'">

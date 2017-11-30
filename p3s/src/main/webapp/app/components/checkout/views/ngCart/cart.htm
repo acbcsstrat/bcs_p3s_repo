@@ -22,7 +22,10 @@
                         <td>{{item.getData().shortTitle}}</td>
                         <td>{{item.getPrice() | currency}}</td>
                         <td>
-                            <button class="btn btn--lg pill-radius font-body bg-phase-red txt-white font-weight-medium d-flex align-items-center" ng-click="ngCart.removeItemById(item.getId())">Remove<img src="p3sweb/assets/imgs/icons/cross_white_icon.png" class="m-l-xs"></button>
+                            <div class="btn-error">
+                                <button class="btn btn--cross btn--lg pill-radius font-body font-body--component bg-phase-red txt-white font-weight-medium d-flex align-items-center" ng-click="ngCart.removeItemById(item.getId())">Remove </button>                                
+                            </div>
+
                         </td>
                     </tr>
                 </tbody>
@@ -32,7 +35,7 @@
 </div>
 
 <div class="row m-b-lg">
-    <div class="col-md-12">
-        <a class="btn btn--lg bg-phase-green txt-white pill-radius font-body font-weight-medium" ui-sref="patents">Add More Patents</a>
+    <div class="col-md-12 d-flex btn-default">
+        <a class="btn btn--lg bg-phase-green txt-white pill-radius font-body font-weight-medium d-flex align-items-center" ui-sref="patents">Add More Patents <img src="p3sweb/assets/imgs/icons/patent_icon_small.png" alt="patent icon" class="m-l-sm"></a>
     </div>
 </div>

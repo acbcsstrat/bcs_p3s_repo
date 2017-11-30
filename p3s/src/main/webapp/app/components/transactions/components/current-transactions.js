@@ -4,7 +4,7 @@ app.component('currentTransactions', {
 		ngModel: '='
 	},
 	templateUrl: 'p3sweb/app/components/transactions/views/current-transactions.htm',
-	controller: function(currentTransactionsService, $rootScope, NgTableParams, $scope) {
+	controller: function(currentTransactionsService, $rootScope, NgTableParams, $scope, $filter) {
 
 		var vm = this;
 
@@ -13,40 +13,35 @@ app.component('currentTransactions', {
 	   	vm.sortType     = 'transId'; // set the default sort type
 	  	vm.sortReverse  = false;  // set the default sort order	
 
-	  	$scope.transactionFilter = function(data, filter) {
-		  			
-			  		// if(filter == 'clientRefFilter') {
-			  		// 	$scope.selectedAppOption = data;
-			  		// 	$scope.filter = data;
-			  		// 	 if(angular.isDefined($scope.selectedAppOption)){
-			  		// 	 	console.log(data)
-				   //          delete $scope.selectedAppOption;
-				   //      }
-			  		// 	console.log('want to reset application')
-			  		// } else {
-			  		// 	$scope.filter = data;
-			  		// 	$scope.selectedRefOption = data;
-			  		// 	 if(angular.isDefined($scope.selectedRefOption)){
-			  		// 	 	console.log(data)
-				   //          delete $scope.selectedRefOption;
-				   //      }
-			  		// 	console.log('want to reset client')
-			  		// }
-				    if(filter == 'clientRefFilter') {
-				        // $scope.selectedAppOption = '';
-				        $scope.filter = data;
-				        console.log('want to reset applcation')
-				    } else {
-				        // $scope.selectedRefOption = '';
-				        $scope.filter = data;
-				        console.log('want to reset clent')
-				    }			  		
+	  	$scope.patentAppData = {
+		  	defaultSelect: null
+	  	}
 
-		  	}
+	  	$scope.clientRefData = {
+		  	defaultSelect: null
+	  	}
 
+	  	$scope.transactionListFilter = function(data, filter, i) {
+	     	
+		    if(filter == 'clientRefFilter') {
+		        $scope.filter = data;
+	    		$scope.patentAppData.defaultSelect = null;
+	    		
+	    		// if(this.$parent.row.id !== i) {
+	    		// 	console.log('hello')
+	    		// 	$scope.clientRefData.defaultSelect = null;
+	    		// }
+		    } else {
+		        $scope.filter = data;
+		        $scope.clientRefData.defaultSelect = null;
+	    		// if(this.$parent.row.id !== i) {
+	    		// 	        			console.log('hello')
+	    		// 	$scope.patentAppData.defaultSelect = null;
+	    		// }			        
+		    }		  			
+		}
+		  		
 		vm.$onInit = function() {
-
-
 
 			var transactions = vm.transactions;
 
@@ -54,13 +49,116 @@ app.component('currentTransactions', {
 				data.renewalProgress = currentTransactionsService.renewalProgress(data.latestTransStatus);
 			})
 
+			$scope.contents = transactions;
+
+			$scope.contents.sort(function(a, b){
+				var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+				return dateB - dateA;
+			})
+
+			var tableData = $scope.contents;
+			console.log(tableData)
+			var secondData = $scope.contents;
+
 			vm.tableParams = new NgTableParams({
-				sorting: { p3S_TransRef: "desc" },
-		        page: 1,            // show first page
-		        count: 10000           // count per page
+					sorting: { transStartDate: "desc" },
+			        page: 1,            // show first page
+			        count: 10000           // count per page
 			    }, {
 			        counts: [],
-			        dataset: transactions
+			        total: tableData.length,
+			        getData: function(params) {
+
+			        	var orderedData;
+
+			        	if (params.sorting().transStartDate === 'asc') {
+			        		tableData.sort(function(a, b){
+			        			console.log('ASC')
+			        			var dateA = new Date(a.transStartDate), dateB = new Date(b.transStartDate);
+			        			return dateA - dateB;
+			        		})
+
+			        		orderedData = tableData;
+			        		console.log(orderedData)
+			        	} else if (params.sorting().transStartDate === 'desc') {
+			        		tableData.sort(function(a, b) {
+			        			var dateA = new Date(a.transStartDate), dateB = new Date(b.transStartDate);
+			        			console.log('desc')
+			        			return dateB - dateA;
+			        		})
+			        		orderedData = tableData;
+			        	} else if(!params.sorting().transStartDate) {
+		        			orderedData = params.sorting() ? $filter('orderBy')(tableData, params.orderBy()) : tableData;		        		
+			        	}
+
+						if(params.sorting().clientRef === 'asc') {
+
+							tableData.sort(compare)
+
+							var clientUIs = [];
+							for (var i = 0; i < tableData.length; i++){
+								console.log(tableData[i]["renewalUIs"].length)
+							  for (var j = 0 ; j < tableData[i]["renewalUIs"].length; j++){
+							     // add each UI to your list individually.
+							     clientUIs.push(tableData[i]["renewalUIs"][j]["patentUI"]);
+							  }
+							}
+
+							// clientUIs.sort(compare)
+
+							function compare(a,b) {
+							  if (a.clientRef < b.clientRef)
+							    return -1;
+							  if (a.clientRef > b.clientRef)
+							    return 1;
+							  return 0;
+							}
+
+							orderedData = tableData.sort(function(a, b){
+								return clientUIs.indexOf(a) - clientUIs.indexOf(b);
+							})
+
+							console.log(orderedData)
+
+
+						} else if(params.sorting().clientRef === 'desc') {
+
+							tableData.sort(compare)
+
+							var clientUIs = [];
+							for (var i = 0; i < tableData.length; i++){
+							  for (var j = 0 ; j < tableData[i]["renewalUIs"].length; j++){
+							     // add each UI to your list individually.
+							     clientUIs.push(tableData[i]["renewalUIs"][j]["patentUI"]["clientRef"]);
+							  }
+							}
+
+							// clientUIs.sort(compare)
+
+							// function compare(a,b) {
+							//   if (a.clientRef < b.clientRef)
+							//     return -1;
+							//   if (a.clientRef > b.clientRef)
+							//     return 1;
+							//   return 0;
+							// }
+
+							
+
+							orderedData = tableData.sort(function(a, b){
+								return clientUIs.indexOf(b) - clientUIs.indexOf(a);
+							})
+
+							console.log(orderedData)
+
+						} else if(!params.sorting().clientRef) {
+							console.log('not')
+		        			orderedData = params.sorting() ? $filter('orderBy')(tableData, params.orderBy()) : tableData;		        		
+			        	} 
+
+			        	return orderedData;
+
+			        }
 			    }
 	    	);
 		}

@@ -4,7 +4,7 @@ app.component('user', {
         timezones: '<'
     },
 	templateUrl: 'p3sweb/app/components/user/views/user-profile.htm',
-	controller: ['userService', 'timezoneService', '$q', '$rootScope', '$scope', '$timeout', function(userService, timezoneService, $q, $rootScope, $scope, $timeout) {
+	controller: ['userService', 'timezoneService', '$q', '$rootScope', '$scope', '$timeout', '$uibModal', function(userService, timezoneService, $q, $rootScope, $scope, $timeout, $uibModal) {
 		
 		var vm = this;
 
@@ -17,14 +17,32 @@ app.component('user', {
         }
 
         vm.updateUser = function(user, p) {
-            if (p !== '') {
-                user.newPassword = p;
-            }
-            $timeout(function() {
-                
-                userService.updateUser(user);
-            }, 100);
+           
             
+        }
+
+        vm.confirmUpdate = function(user, p) {
+
+            var modalInstance = $uibModal.open({
+                templateUrl: 'p3sweb/app/components/user/views/modals/modal-successfully-updated-profile.htm',
+                appendTo: undefined,
+                controller: function($uibModalInstance, $scope) {
+
+                    if (p !== '') {
+                        user.newPassword = p;
+                    }
+
+                    $timeout(function() {
+                        userService.updateUser(user);
+                    }, 200);
+
+                    $scope.dismissModal = function() {
+                        $uibModalInstance.close();
+                    }
+                    
+                }
+            })
+
         }
 
         userService.listUsers()
@@ -50,7 +68,106 @@ app.component('user', {
         )
         
 	}]
-});
+})
+
+app.directive('validateName', function(){
+
+    var regExp = /^[a-zA-z0-9\s\w'-]*$/;
+
+    return {
+
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+
+            
+
+            function myValidation(value) {
+                if (regExp.test(value)) {
+                    console.log('EARYAAAAAA')
+                    ctrl.$setValidity('validName', true);
+                } else {
+                    console.log('ERNNOOOOOO')
+                    ctrl.$setValidity('validName', false);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+
+        }
+
+    }
+
+})
+.directive('validatePhone', function(){
+
+    var regExp = /^[0-9\s\+\-\(\)\']*$/;
+
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+
+            function myValidation(value) {
+                if (regExp.test(value)) {
+                    ctrl.$setValidity('validPhone', true);
+                } else {
+                    ctrl.$setValidity('validPhone', false);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+        }        
+    }
+
+})
+.directive('validateAddress', function(){
+
+    var regExp = /^[a-zA-z0-9\s\-\(\).,]*$/;
+
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+            
+            var modelController = elem.controller('ngModel');
+
+            function myValidation(value) {
+                if (regExp.test(value)) {
+
+                    modelController.$setValidity('validAddress', true);
+                } else {
+                    modelController.$setValidity('validAddress', false);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+        }        
+    }    
+
+})
+.directive('validateZip', function(){
+
+    var regExp = /^[0-9\-]*$/;
+
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+            
+            var modelController = elem.controller('ngModel');
+
+            function myValidation(value) {
+                if (regExp.test(value)) {
+
+                    modelController.$setValidity('validZip', true);
+                } else {
+                    modelController.$setValidity('validZip', false);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+        }        
+    }    
+
+})
+
 
 app.directive('checkStrength', function () {
 
@@ -60,7 +177,7 @@ app.directive('checkStrength', function () {
         link: function (scope, iElement, iAttrs) {
 
             var strength = {
-                colors: ['#F00', '#F90', '#FF0', '#9F0', '#0F0'],
+                colors: ['#e30613', '#e30613', '#f9b233', '#f9b233', '#53ab58'],
                 mesureStrength: function (p) {
                     var _force = 0;                    
                     var _regex = /[$-/:-?{-~!"^_`\[\]]/g;
@@ -95,7 +212,6 @@ app.directive('checkStrength', function () {
                     else if (s <= 30) { idx = 2; }
                     else if (s <= 40) { idx = 3; }
                     else { idx = 4; }
-                    console.log(idx)
                     return { idx: idx + 1, col: this.colors[idx] };
 
                 }
@@ -112,10 +228,11 @@ app.directive('checkStrength', function () {
                         .css({ "background": "#DDD" })
                         .slice(0, c.idx)
                         .css({ "background": c.col });
+                         console.log(c.col)
                 }
             });
         },
-        template: '<li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li>'
+        template: '<li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li>'
     };
 });
 

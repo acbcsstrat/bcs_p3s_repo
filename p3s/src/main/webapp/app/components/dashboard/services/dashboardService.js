@@ -1,26 +1,41 @@
-app.factory('dashboardService', function(){
+app.factory('dashboardService', function($http, $q){
 
 	var factory = {};
 
-		// var REST_SERVICE_URI = 'http://localhost:8080/p3sweb/rest-current-transactions/';
+		 factory.getMessages = function() {
+        
+            var deferred = $q.defer();
+             $http.get(domain+'login-messages/')
+                .then(
+                function (response) {
+                	console.log(response.data)
+                    deferred.resolve(response.data);
+                },
+                function(errResponse){
+                    console.error('Error while fetching messages');
+                    deferred.reject(errResponse);
+                }
+            );
 
-		// factory.fetchCurrentTransactions = function() {
+            return deferred.promise;
+        }
 
-		// 	var deferred = $q.defer();
-		// 	$http.get(REST_SERVICE_URI)
-		// 	.then(
-		// 		function(response){
-		// 			console.log(response)
-		// 			deferred.resolve(response.data)
-		// 		},
-		// 		function(errResponse){
-		// 			deferred.resolve(errResponse)
-		// 		}
-		// 	)
+        factory.fetchCostAnalysis = function(id) {
+            
+            var deferred = $q.defer();
+             $http.get(domain+'rest-cost-analysis/'+id)
+                .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                },
+                function(errResponse){
+                    console.error('Error while fetching cost analysis');
+                    deferred.reject(errResponse);
+                }
+            );
 
-		// 	return deferred.promise;
-
-		// }
+            return deferred.promise;
+        }        
 
 	return factory;
 

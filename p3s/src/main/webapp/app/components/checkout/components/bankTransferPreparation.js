@@ -8,10 +8,10 @@ app.component('bankTransferPreparation', {
 
 		vm.patentObj = $stateParams.patentObj;
 
-		vm.tester = function() {
-			vm.commitTransferBtn = true;
-			console.log("button clicked");
-		}
+		// vm.tester = function() {
+		// 	vm.commitTransferBtn = true;
+		// 	console.log("button clicked");
+		// }
 
 		vm.commitTransfer = function() {
 			

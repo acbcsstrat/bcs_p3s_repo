@@ -1,12 +1,12 @@
-<div class="row m-b-xl widget-row-top">
-	<div class="col-md-7">
+<div class="row m-b-xl lg-m-b-md widget-row-top">
+	<div class="col-md-12 col-lg-12 col-xl-7 md-m-b-md lg-m-b-md">
 		<div class="widget-panel bg-white">
 			<div class="widget-panel__head border-grey-xs--btm">
 				<div class="row d-flex align-items-center">
-					<div class="col-md-9">
+					<div class="col-md-9 col-lg-9 col-xl-9">
 						<h3 class="font-h3 font-weight-bold">Colour Key</h3>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 col-lg-3 col-xl-3">
 						<div class="d-flex justify-content-center align-items-center flex-column" >
 							<div class="pill-radius btn btn--lg" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
 								<p class="txt-white widget-pill-title font-weight-medium font-h4">{{$ctrl.colourPhaseTitle.title}} Phase</p>
@@ -17,40 +17,34 @@
 			</div>
 			<div class="widget-panel__body">
 				<div class="row m-b-md">
-					<div class="col-md-12">
+					<div class="col-md-12 col-lg-12 col-xl-12">
 						<p class="font-weight-medium font-h4"><span class="font-weight-bold">Timeframe:</span> {{$ctrl.colourPhaseTitle.descrip}}</p>
 					</div>
 				</div>
 				<div class="m-b-md">
 					<uib-tabset active="activeTab" type="pills">
 					    <uib-tab heading="Green" index="0" class="bg-phase-green font-body" ng-hide="true">
-							<p class="font-body"><span class="font-weight-bold">Des:</span> The Green Phase is the first phase in the annuity cycle and starts when the renewal window opens 3 months before the renewal date, and closes when only 6 working days remain before the end of the period.  This is the most cost-effective time to renew.</p>
-							<p class="font-body"><span class="font-weight-bold">Rate:</span>  50% Surcharge</p>
+							<p class="font-body">The Green Phase is the first phase in the annuity cycle and starts when the renewal window opens 3 months before the renewal date, and closes when only 6 working days remain before the end of the period.  This is the most cost-effective time to renew.</p>
 						</uib-tab>
 					    <uib-tab heading="Amber" index="1" ng-hide="true">
-							<p class="font-body"><span class="font-weight-bold">Des:</span> The Amber Phase start on day 6 before the renewal date and closes on day 4.  We use priority exchange and payments methods during this time which attract a small premium.</p>
-							<p class="font-body"><span class="font-weight-bold">Rate:</span>  50% Surcharge</p>			
+							<p class="font-body">The Amber Phase start on day 6 before the renewal date and closes on day 4.  We use priority exchange and payments methods during this time which attract a small premium.</p>
 						</uib-tab>
 					    <uib-tab heading="Red" index="2" ng-hide="true">
-							<p class="font-body"><span class="font-weight-bold">Des:</span> The Red Phase is the final 3 working days before the renewal date.  We’re not currently able to accept renewals through our web service at this time, but we can certainly help – you just need to give us a call.</p>
-							<p class="font-body"><span class="font-weight-bold">Rate:</span>  50% Surcharge</p>				
+							<p class="font-body">The Red Phase is the final 3 working days before the renewal date.  We’re not currently able to accept renewals through our web service at this time, but we can certainly help – you just need to give us a call.</p>				
 						</uib-tab>
 					    <uib-tab heading="Blue" index="3" ng-hide="true">
-							<p class="font-body"><span class="font-weight-bold">Des:</span> The Blue Phase starts on the day after the renewal date and runs until the end of the 11th working days before the end of the 6 month extension period.</p>
-							<p class="font-body"><span class="font-weight-bold">Rate:</span>  50% Surcharge</p>
+							<p class="font-body">The Blue Phase starts on the day after the renewal date and runs until the end of the 11th working days before the end of the 6 month extension period.</p>
 						</uib-tab>
 					    <uib-tab heading="Black" index="4" ng-hide="true">
-							<p class="font-body"><span class="font-weight-bold">Des:</span> Black from 4 hours before end of UK day on Renewal Due day to 10 days before the expiry of the extension at 6 months.  During this period the renewal takes place without additional fees from PP but is subject to a 50% surcharge from the EPO. Buy ahead options also available for this period.</p>
-							<p class="font-body"><span class="font-weight-bold">Rate:</span>  50% Surcharge</p>
+							<p class="font-body">Black from 4 hours before end of UK day on Renewal Due day to 10 days before the expiry of the extension at 6 months.  During this period the renewal takes place without additional fees from PP but is subject to a 50% surcharge from the EPO. Buy ahead options also available for this period.</p>
 						</uib-tab>
 					    <uib-tab heading="Grey" index="5" ng-hide="true">
-							<p class="font-body"><span class="font-weight-bold">Des:</span> Grey from 4 hours before end of UK day on Renewal Due day to 10 days before the expiry of the extension at 6 months.  During this period the renewal takes place without additional fees from PP but is subject to a 50% surcharge from the EPO. Buy ahead options also available for this period.</p>
-							<p class="font-body"><span class="font-weight-bold">Rate:</span>  50% Surcharge</p>
+							<p class="font-body">Grey from 4 hours before end of UK day on Renewal Due day to 10 days before the expiry of the extension at 6 months.  During this period the renewal takes place without additional fees from PP but is subject to a 50% surcharge from the EPO. Buy ahead options also available for this period.</p>
 						</uib-tab>								
 					</uib-tabset>
 				</div>
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-12 col-lg-12 col-xl-12">
 						<div class="phase-tabs">
 							<ul class="nav phase-pills">
 								<li class="bg-phase-green pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" ng-init="$ctrl.colourKey(0); $ctrl.phaseSliderInfo(0);" ng-click="activeTab = 0; $ctrl.phaseSliderInfo(0); $ctrl.colourKey(0);" ng-hide="activeTab == 0">Green</li>
@@ -66,42 +60,182 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-5">
-		<div class="bg-white widget-panel">
+
+	<div class="col-md-6 col-lg-6 col-xl-5">
+		<div class="bg-white widget-panel widget-panel-sq">
 			<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center">
-				<h3 class="font-h3 font-weight-bold">Total Renewals: {{$ctrl.totalPatents}}</h3>
+				<h3 class="font-h3 font-weight-bold">Total Renewals</h3>
 			</div>
 			<div class="widget-panel__body">
-				<div class="row">
-					<div class="col-md-6">
-						<canvas id="doughnut" class="chart chart-doughnut"
-						  chart-data="$ctrl.doughnutData" chart-labels="$ctrl.doughnutLabels" chart-colors="$ctrl.doughnutColours" chart-options="$ctrl.doughnutOptions" chart-dataset-override="$ctrl.doughnutDatasetOverride" height="225">
-						</canvas> 						
+				<div class="row" ng-if="$ctrl.patents">
+					<div class="col-md-12 col-lg-8 col-xl-8 d-flex align-items-center">
+						<canvas id="doughnut" class="chart chart-doughnut" chart-data="$ctrl.doughnutData" chart-labels="$ctrl.doughnutLabels" chart-colors="$ctrl.doughnutColours" chart-options="$ctrl.doughnutOptions" chart-dataset-override="$ctrl.doughnutDatasetOverride" height="225">
+						</canvas>
+						<div class="donut-inner">
+							<h4 class="font-h4 font-weight-bold">Total</h4>
+							<span class="font-h2 font-weight-bold">{{$ctrl.totalPatents}}</span>							
+						</div>
+						<!--check whether it works when its back online-->
 					</div>
-					<div class="col-md-6 d-flex align-items-center">
+					<div class="col-md-6 col-lg-4 col-xl-4 d-flex align-items-center hidden-md-down">
 						<ul class="nav flex-column font-h4">
 							<li class="li-green m-b-sm"><span>Green: <span ng-bind="$ctrl.greenRenewals.length"></span></span></li>
-							<li class="li-red m-b-sm"><span>Red: <span ng-bind="$ctrl.amberRenewals.length"></span></span></li>
-							<li class="li-amber m-b-sm"><span>Amber: <span ng-bind="$ctrl.redRenewals.length"></span></span></li>
+							<li class="li-amber m-b-sm"><span>Amber: <span ng-bind="$ctrl.amberRenewals.length"></span></span></li>
+							<li class="li-red m-b-sm"><span>Red: <span ng-bind="$ctrl.redRenewals.length"></span></span></li>
 							<li class="li-blue m-b-sm"><span>Blue: <span ng-bind="$ctrl.blueRenewals.length"></span></span></li>
 							<li class="li-black m-b-sm"><span>Black: <span ng-bind="$ctrl.blackRenewals.length"></span></span></li>
 							<li class="li-grey m-b-sm"><span>Grey: <span ng-bind="$ctrl.greyRenewals.length"></span></span></li>
 						</ul>
+					</div>			
+				</div>
+				<div ng-if="!$ctrl.patents" class="h-100 bg-no-data d-flex">
+	            	<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
+	            		<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
+	            	</div>		
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-6 hidden-xl-up">
+		<div class="bg-white widget-panel widget-panel-sq">
+			<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
+				<h3 class="font-h3 font-weight-bold">Renewal Cost</h3>
+				<div ng-if="$ctrl.renewalfxTimeframe" class="pill-radius d-flex justify-content-center align-items-center flex-column bg-phase-green">	
+					<p class="txt-white font-body font-body--component btn--lg">{{$ctrl.renewalfxTimeframe}}</p>
+				</div>
+			</div>
+			<div class="widget-panel__body">
+				<div class="row bg-no-data" ng-if="!$ctrl.phaseArr.length">
+					<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
+						<p class="font-body font-weight-bold">No patents currently in this Stage</p>
+					</div>
+				</div>
+				<div ng-if="$ctrl.phaseArr.length">
+					<uib-tabset type="pills" active="fxPeriodActive" class="m-b-sm">
+						<uib-tab heading="Today" class="font-body" index="0" ng-hide="true">
+							<div class="row">
+								<div class="col-md-5 col-lg-5 text-center">
+									<p class="font-h3 m-b-xs">USD</p>
+									<p class="font-h2">$ {{$ctrl.todaysPriceUSD}}</p>
+								</div>
+								<div class="col-md-2 col-lg-2 d-flex align-items-center justify-content-center">
+									<img src="p3sweb/assets/imgs/icons/arrows_icons_sm.png">
+								</div>
+								<div class="col-md-5 col-lg-5 text-center">
+									<p class="font-h3 m-b-xs">EUR</p>
+									<p class="font-h2">€ {{$ctrl.todaysPriceEUR}}</p>
+								</div>
+							</div>
+						</uib-tab>			
+						<uib-tab heading="Yesterday" class="font-body" ng-hide="true">
+							<div class="row">
+								<div class="col-md-5 col-lg-5 text-center">
+									<p class="font-h3 m-b-xs">USD</p>
+									<p class="font-h2">$ {{$ctrl.yesterdaysPriceUSD}}</p>
+								</div>
+								<div class="col-md-2 col-lg-2 text-center">
+									<i class="txt-grey fa fa-exchange fa-4x"></i>
+								</div>
+								<div class="col-md-5 col-lg-5 text-center">
+									<p class="font-h3 m-b-xs">EUR</p>
+									<p class="font-h2">€ {{$ctrl.yesterdaysPriceEUR}}</p>
+								</div>
+							</div>
+						</uib-tab>
+						<uib-tab heading="Last week" class="font-body" ng-hide="true">
+							<div class="row">
+								<div class="col-md-5 col-lg-5 text-center">
+									<p class="font-h3 m-b-xs">USD</p>
+									<p class="font-h2">$ {{$ctrl.lastWeeksPriceUSD}}</p>
+								</div>
+								<div class="col-md-2 col-lg-2 text-center">
+									<i class="txt-grey fa fa-exchange fa-4x"></i>
+								</div>
+								<div class="col-md-5 col-lg-5 text-center">
+									<p class="font-h3 m-b-xs">EUR</p>
+									<p class="font-h2">€ {{$ctrl.lastWeeksPriceEUR}}</p>
+								</div>
+							</div>
+						</uib-tab>
+						<uib-tab heading="Last Mth" class="font-body" ng-hide="true">
+							<div class="row">
+								<div class="col-md-5 col-lg-5 text-center">
+									<p class="font-h3 m-b-xs">USD</p>
+									<p class="font-h2">$ {{$ctrl.lastMonthsPriceUSD}}</p>
+								</div>
+								<div class="col-md-2 col-lg-2 text-center">
+									<i class="txt-grey fa fa-exchange fa-4x"></i>
+								</div>
+								<div class="col-md-5 col-lg-5 text-center"">
+									<p class="font-h3 m-b-xs">EUR</p>
+									<p class="font-h2">€ {{$ctrl.lastMonthsPriceEUR}}</p>
+								</div>
+							</div>
+						</uib-tab>									
+					</uib-tabset>
+					<div class="row m-b-sm">
+						<div class="col-md-12 col-lg-12">
+							<div class="view-tabs">
+								<ul class="nav view-pills d-flex justify-content-between">
+									<li class="pill-radius btn--lg pill-tabs font-body font-body--component bg-white border-grey-xs font-weight-medium md-btn--lg" ng-init="$ctrl.renewalfxTimeframe = 'Today'" ng-click="$ctrl.fxPeriodActive(0);" ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
+									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" ng-click="$ctrl.fxPeriodActive(1);" ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
+									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" ng-click="$ctrl.fxPeriodActive(2); "  ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
+									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" ng-click="$ctrl.fxPeriodActive(3); " ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
+								</ul>								
+							</div>
+						</div>	
+					</div>
+					<div class="row m-b-sm">
+						<div class="col-md-8 col-lg-8 text-left">
+							<p class="font-h4 font-weight-bold">Four week variation:</p> 
+						</div>
+						<div class="col-md-4 col-lg-4 text-right">
+							<p class="font-h4 font-weight-bold txt-phase-green">$ {{$ctrl.lastMonthsPriceUSD - $ctrl.yesterdaysPriceUSD}}</p>
+						</div>
+					</div>
+					<div class="row m-b-xs">
+						<div class="col-md-12 col-lg-12 d-flex justify-content-center align-items-center">						
+							<div class="d-flex justify-content-between align-items-center">
+								<div class="m-r-xs">
+									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Payment in progress'" src="p3sweb/assets/imgs/icons/progress_icon.png">
+									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed_icon.png">
+									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon.png">
+									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png">
+									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'No renewal needed' || $ctrl.selectedPatent.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/complete_icon.png">
+								</div>
+								<p class="font-body font-weight-bold">{{$ctrl.selectedPatent.renewalStatus}}</p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 col-lg-12">
+							<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Show price'" class=" btn-default">
+						 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+					 			</ngcart-addtocart>										
+							</div>
+				        	<div ng-if="$ctrl.selectedPatent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex btn-default">
+						 		<a class="btn btn-block btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.selectedPatent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+						 	</div>
+				        	<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Renewal in place'" class="d-flex btn-default">
+						 		<a class="btn btn-block btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" ui-sref="patents.patent({patentId: $ctrl.selectedPatent.id})" ng-click="$ctrl.fetchItemRenewal()">View Patent <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs"></a>
+						 	</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="row m-b-xl widget-row-middle">
-	<div class="col-md-7">
+
+<div class="row m-b-xl lg-m-b-md widget-row-middle">
+	<div class="col-md-12 col-lg-12 col-xl-7">
 		<div class="bg-white widget-panel">
 			<div class="widget-panel__head border-grey-xs--btm d-flex flex-column justify-content-center">
 				<div class="row d-flex align-items-center">
-					<div class="col-md-3">
+					<div class="col-md-3 col-lg-3 col-xl-3">
 						<h3 class="font-h3 m-r-sm font-weight-bold">Renewals</h3>
-					</div>	
-					<div class="col-md-9">
+					</div>
+					<div class="col-md-9 col-lg-9 col-lg-9">
 						<div class="phase-tabs">
 							<ul class="nav phase-pills font-body font-body--component d-flex justify-content-end">
 								<li class="bg-phase-green pill-radius btn--reg pill-tabs-num font-weight-medium" ng-init="$ctrl.colourKey(0);" ng-click="activeTab = 0; $ctrl.phaseSliderInfo(0); $ctrl.colourKey(0);" ng-hide="activeTab == 0">({{$ctrl.greenRenewals.length}})</li>
@@ -123,11 +257,11 @@
 						        <div ng-repeat="item in $ctrl.phaseArr">
 						        	<table class="t-data slider-table">
 						        		<thead>
-						        			<tr class="m-b-md txt-white font-h3 tr-border" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
-						        				<th class="btn--reg-table font-weight-medium text-center" colspan="3">Green Renewal {{$index + 1}} of {{$ctrl.greenRenewals.length}}</th>
+						        			<tr class="m-b-md txt-white font-h4 tr-border " ng-style="{'background': $ctrl.colourPhaseTitle.color}">
+						        				<th class="btn--reg-table font-weight-medium text-center txt-white" colspan="3">Green Renewal {{$index + 1}} of {{$ctrl.greenRenewals.length}}</th>
 						        			</tr>
 						        		</thead>
-						        		<tbody class="font-h4">
+						        		<tbody class="font-body">
 							            	<tr>
 							            		<td colspan="2" class="td-50 td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 							            		<td class="td-50 td-border-nb">
@@ -160,7 +294,7 @@
 						    </slick>      	
 		            	</div>	
 			            <div ng-show="$ctrl.greenRenewals.length == 0">
-	                    	<p class="font-body font-weight-bold">No patents in green stage</p>
+	                    	<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 	                    </div>
 					</uib-tab>
 				    <uib-tab heading="Amber" index="1" class="bg-phase-amber pill-radius p-pill-tabs pill-tabs font-body" ng-hide="true">
@@ -169,13 +303,13 @@
 						        <div ng-repeat="item in $ctrl.phaseArr">
 						            <table class="t-data">
 						        		<thead>
-						        			<tr class="m-b-md txt-white font-h3" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-						        				<th class="btn--reg font-weight-medium text-center" colspan="3">Amber Renewal {{$index + 1}} of {{$ctrl.amberRenewals.length}}</th>
+						        			<tr class="m-b-md txt-white font-h4" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
+						        				<th class="btn--reg font-weight-medium text-center txt-white" colspan="3">Amber Renewal {{$index + 1}} of {{$ctrl.amberRenewals.length}}</th>
 						        			</tr>
 						        		</thead>
-						        		<tbody class="font-h4">
+						        		<tbody class="font-body">
 							            	<tr>
-							            		<td colspan="2" class="td-20 td-border td-border">App No: </td><span class="font-weight-medium">{{item.patentApplicationNumber}}</span>
+							            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 							            		<td class="td-50 td-border-nb">
 							            			<div class="d-flex justify-content-between">
 									            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{date | date:'dd-MM-yy'}}</p>
@@ -184,7 +318,7 @@
 							            		</td>
 							            	</tr>
 							            	<tr>
-							            		<td colspan="2" class="td-20 td-border td-ellipsis"><span class="font-weight-medium">Description: </td>{{item.title}}
+							            		<td colspan="2" class="td-20 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
 							            		<td class="td-50 no-border-er">
 							            			<div class="d-flex justify-content-between">
 							            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'dd-MM-yy'}}</p>
@@ -206,7 +340,7 @@
 						    </slick>      	
 		            	</div>		
 			            <div ng-show="$ctrl.amberRenewals.length == 0">
-	                    	<p class="font-body font-weight-bold">No patents in Amber stage</p>
+	                    	<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 	                    </div>
  					</uib-tab>
 				    <uib-tab heading="Red" index="2" class="bg-phase-red pill-radius p-pill-tabs pill-tabs" ng-hide="true">
@@ -215,11 +349,11 @@
 						        <div ng-repeat="item in $ctrl.phaseArr">
 						        	<table class="t-data">
 						        		<thead>
-						        			<tr class="m-b-md txt-white font-h3" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-						        				<th class="btn--reg font-weight-medium text-center" colspan="3">Red Renewal {{$index + 1}} of {{$ctrl.redRenewals.length}}</th>
+						        			<tr class="m-b-md txt-white font-h4" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
+						        				<th class="btn--reg font-weight-medium text-center txt-white" colspan="3">Red Renewal {{$index + 1}} of {{$ctrl.redRenewals.length}}</th>
 						        			</tr>
 						        		</thead>
-						        		<tbody class="font-h4">
+						        		<tbody class="font-body">
 							            	<tr>
 							            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 							            		<td class="td-50 td-border-nb">
@@ -251,8 +385,10 @@
 					            </div>
 						    </slick>
 		            	</div>			            
-			            <div ng-show="$ctrl.redRenewals.length == 0">
-	                    	<p class="font-body font-weight-bold">No patents in red stage</p>
+			            <div ng-show="$ctrl.redRenewals.length == 0" class="row h-100 bg-no-data">
+			            	<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
+	                    		<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
+	                    	</div>
 	                    </div>
 					</uib-tab>
 				    <uib-tab heading="Blue" index="3" class="bg-phase-blue pill-radius p-pill-tabs pill-tabs" ng-hide="true">
@@ -261,11 +397,11 @@
 						        <div ng-repeat="item in $ctrl.phaseArr">
 					        		<table class="t-data">
 						        		<thead>
-						        			<tr class="m-b-md txt-white font-h3" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-						        				<th class="btn--reg font-weight-medium text-center" colspan="3">Blue Renewal {{$index + 1}} of {{$ctrl.blueRenewals.length}}</th>
+						        			<tr class="m-b-md txt-white font-h4" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
+						        				<th class="btn--reg font-weight-medium text-center txt-white" colspan="3">Blue Renewal {{$index + 1}} of {{$ctrl.blueRenewals.length}}</th>
 						        			</tr>
 						        		</thead>
-						        		<tbody class="font-h4">
+						        		<tbody class="font-body">
 							            	<tr>
 							            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 							            		<td  class="td-50 td-border-nb">
@@ -298,7 +434,7 @@
 						    </slick>
 		            	</div>
 			            <div ng-show="$ctrl.blueRenewals.length == 0">
-	                    	<p class="font-body font-weight-bold">No patents in blue stage</p>
+	                    	<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 	                    </div>					            
 					</uib-tab>
 				    <uib-tab heading="Black" index="4" class="bg-phase-black pill-radius p-pill-tabs pill-tabs" ng-hide="true">
@@ -307,11 +443,11 @@
 						        <div ng-repeat="item in $ctrl.phaseArr">
 						        	<table class="t-data">
 						        		<thead>
-						        			<tr class="m-b-md txt-white font-h3" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-						        				<th class="btn--reg font-weight-medium text-center" colspan="3">Black Renewal {{$index + 1}} of {{$ctrl.blackRenewals.length}}</th>
+						        			<tr class="m-b-md txt-white font-h4" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
+						        				<th class="btn--reg font-weight-medium text-center txt-white" colspan="3">Black Renewal {{$index + 1}} of {{$ctrl.blackRenewals.length}}</th>
 						        			</tr>
 						        		</thead>
-						        		<tbody class="font-h4">
+						        		<tbody class="font-body">
 							            	<tr>
 							            		<td colspan="2" class="td-20 td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 							            		<td class="td-50 td-border-nb">
@@ -335,31 +471,31 @@
 							            		<td class="td-50 td-border-nt">
 							            			<div class="progress-phase">
 									            		<uib-progress class="pill-radius"><uib-bar class="bg-phase-black pill-radius"  value="item.progressBar"></uib-bar></uib-progress>
-									            	</div>							            			
+									            	</div>
 							            		</td>
 							            	</tr>
 						        		</tbody>
 						        	</table>
 						        </div>
-						    </slick>      	
+						    </slick>
 		            	</div>
 		            	<div ng-show="$ctrl.blackRenewals.length == 0">
-                    		<p class="font-body font-weight-bold">No patents in black stage</p>
+                    		<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
                     	</div>
 					</uib-tab>
-					<uib-tab heading="Grey" index="5" class="bg-phase-black pill-radius p-pill-tabs pill-tabs" ng-hide="true">							   
+					<uib-tab heading="Grey" index="5" class="bg-phase-black pill-radius p-pill-tabs pill-tabs" ng-hide="true">
 		            	<div class="row">
-		            		<div class="col-md-12">
+		            		<div class="col-md-12 col-lg-12 col-xl-12">
 		            			<p class="font-body font-weight-bold">No renewal possible for patents within the Grey Phase. Please refer to the information provided in the colour key.</p>
 		            		</div>
                     	</div>
-					</uib-tab>									
+					</uib-tab>
 				</uib-tabset>
 			</div>
 		</div>				
 	</div>
 	
-	<div class="col-md-5">
+	<div class="col-xl-5 hidden-lg-down">
 		<div class="bg-white widget-panel">
 			<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
 				<h3 class="font-h3 font-weight-bold">Renewal Cost</h3>
@@ -369,22 +505,22 @@
 			</div>
 			<div class="widget-panel__body">
 				<div class="row" ng-if="!$ctrl.phaseArr.length">
-					<div class="col-md-12">
-						<p class="font-body font-weight-bold">No patents currently in this Stage</p>
+					<div class="col-md-12 col-lg-12 col-xl-12">
+						<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 					</div>
 				</div>
 				<div ng-if="$ctrl.phaseArr.length">
 					<uib-tabset type="pills" active="fxPeriodActive" class="m-b-md">
 						<uib-tab heading="Today" class="font-body" index="0" ng-hide="true">
 							<div class="row">
-								<div class="col-md-5 text-center">
+								<div class="col-xl-5 text-center">
 									<p class="font-h3 m-b-xs">USD</p>
 									<p class="font-h2">$ {{$ctrl.todaysPriceUSD}}</p>
 								</div>
-								<div class="col-md-2 text-center">
+								<div class="col-xl-2 text-center">
 									<img src="p3sweb/assets/imgs/icons/arrows.png">
 								</div>
-								<div class="col-md-5 text-center">
+								<div class="col-xl-5 text-center">
 									<p class="font-h3 m-b-xs">EUR</p>
 									<p class="font-h2">€ {{$ctrl.todaysPriceEUR}}</p>
 								</div>
@@ -392,14 +528,14 @@
 						</uib-tab>			
 						<uib-tab heading="Yesterday" class="font-body" ng-hide="true">
 							<div class="row">
-								<div class="col-md-5 text-center">
+								<div class="col-xl-5 text-center">
 									<p class="font-h3 m-b-xs">USD</p>
 									<p class="font-h2">$ {{$ctrl.yesterdaysPriceUSD}}</p>
 								</div>
-								<div class="col-md-2 text-center">
+								<div class="col-xl-2 text-center">
 									<i class="txt-grey fa fa-exchange fa-4x"></i>
 								</div>
-								<div class="col-md-5 text-center">
+								<div class="col-xl-5 text-center">
 									<p class="font-h3 m-b-xs">EUR</p>
 									<p class="font-h2">€ {{$ctrl.yesterdaysPriceEUR}}</p>
 								</div>
@@ -407,14 +543,14 @@
 						</uib-tab>
 						<uib-tab heading="Last week" class="font-body" ng-hide="true">
 							<div class="row">
-								<div class="col-md-5 text-center">
+								<div class="col-xl-5 text-center">
 									<p class="font-h3 m-b-xs">USD</p>
 									<p class="font-h2">$ {{$ctrl.lastWeeksPriceUSD}}</p>
 								</div>
-								<div class="col-md-2 text-center">
+								<div class="col-xl-2 text-center">
 									<i class="txt-grey fa fa-exchange fa-4x"></i>
 								</div>
-								<div class="col-md-5 text-center">
+								<div class="col-xl-5 text-center">
 									<p class="font-h3 m-b-xs">EUR</p>
 									<p class="font-h2">€ {{$ctrl.lastWeeksPriceEUR}}</p>
 								</div>
@@ -422,14 +558,14 @@
 						</uib-tab>	
 						<uib-tab heading="Last Mth" class="font-body" ng-hide="true">
 							<div class="row">
-								<div class="col-md-5 text-center">
+								<div class="col-xl-5 text-center">
 									<p class="font-h3 m-b-xs">USD</p>
 									<p class="font-h2">$ {{$ctrl.lastMonthsPriceUSD}}</p>
 								</div>
-								<div class="col-md-2 text-center">
+								<div class="col-xl-2 text-center">
 									<i class="txt-grey fa fa-exchange fa-4x"></i>
 								</div>
-								<div class="col-md-5 text-center"">
+								<div class="col-xl-5 text-center"">
 									<p class="font-h3 m-b-xs">EUR</p>
 									<p class="font-h2">€ {{$ctrl.lastMonthsPriceEUR}}</p>
 								</div>
@@ -437,46 +573,46 @@
 						</uib-tab>									
 					</uib-tabset>
 					<div class="row m-b-md">
-						<div class="col-md-12">
+						<div class="col-md-12 col-lg-12 col-xl-12">
 							<div class="view-tabs">
-								<ul class="nav view-pills d-flex justify-content-center">
-									<li class="pill-radius btn--lg pill-tabs font-body font-body--component bg-white border-grey-xs m-r-sm font-weight-medium" ng-init="$ctrl.renewalfxTimeframe = 'Today'" ng-click="fxPeriodActive = 0; $ctrl.renewalfxTimeframe = 'Today'" ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
-									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs m-r-sm font-weight-medium" ng-click="fxPeriodActive = 1; $ctrl.renewalfxTimeframe = 'Yesterday'" ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
-									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs m-r-sm font-weight-medium" ng-click="fxPeriodActive = 2; $ctrl.renewalfxTimeframe = 'Last Week'"  ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
-									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs m-r-sm font-weight-medium" ng-click="fxPeriodActive = 3; $ctrl.renewalfxTimeframe = 'Last Mth'" ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
-								</ul>								
+								<ul class="nav view-pills d-flex justify-content-between">
+									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-init="$ctrl.renewalfxTimeframe = 'Today'" ng-click="$ctrl.fxPeriodActive(0);" ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
+									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-click="$ctrl.fxPeriodActive(1);" ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
+									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-click="$ctrl.fxPeriodActive(2); "  ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
+									<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-click="$ctrl.fxPeriodActive(3); " ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
+								</ul>
 							</div>
 						</div>	
 					</div>
 					<div class="row m-b-md">
-						<div class="col-md-8 text-left">
+						<div class="col-xl-8 text-left">
 							<p class="font-h4 font-weight-bold">Four week variation:</p> 
 						</div>
-						<div class="col-md-4 text-right">
+						<div class="col-xl-4 text-right">
 							<p class="font-h4 font-weight-bold txt-phase-green">$ {{$ctrl.lastMonthsPriceUSD - $ctrl.yesterdaysPriceUSD}}</p>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12 d-flex justify-content-between align-items-center">
+						<div class="col-xl-12 d-flex justify-content-between align-items-center">						
 							<div class="d-flex justify-content-between align-items-center">
 								<div class="m-r-xs">
 									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Payment in progress'" src="p3sweb/assets/imgs/icons/progress_icon.png">
 									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed_icon.png">
 									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon.png">
 									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png">
-									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'No renewal needed' || $ctrl.selectedPatent.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/renewal_icon_lg.png">									
+									<img ng-if="$ctrl.selectedPatent.renewalStatus == 'No renewal needed' || $ctrl.selectedPatent.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/complete_icon.png">									
 								</div>
 								<p class="font-body font-weight-bold">{{$ctrl.selectedPatent.renewalStatus}}</p>
 							</div>
-							<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Show price'">
-						 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold " name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+							<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Show price'" class=" btn-default">
+						 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
 					 			</ngcart-addtocart>										
 							</div>
-				        	<div ng-if="$ctrl.selectedPatent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
-						 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer" ng-click="$ctrl.fetchItemTransaction($ctrl.selectedPatent.id)">View Transaction<i class="fa fa-credit-card fa-1x m-l-xs"></i></a>
+				        	<div ng-if="$ctrl.selectedPatent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex btn-default">
+						 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center" ng-click="$ctrl.fetchItemTransaction($ctrl.selectedPatent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 						 	</div>
-				        	<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Renewal in place'">
-						 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer" ui-sref="patents.patent({patentId: $ctrl.selectedPatent.id})" ng-click="$ctrl.fetchItemRenewal()">View Patent<i class="fa fa-refresh fa-1x m-l-xs"></i></a>
+				        	<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Renewal in place'" class="d-flex btn-default">
+						 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer d-flex align-items-center" ui-sref="patents.patent({patentId: $ctrl.selectedPatent.id})" ng-click="$ctrl.fetchItemRenewal()">View Patent <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs"></a>
 						 	</div>								
 						</div>
 					</div>
@@ -485,81 +621,203 @@
 		</div>	
 	</div>
 </div>
+			
 <div class="row">
-	<div class="col-md-7">
+	<div class="col-md-12 col-lg-12 col-xl-7 lg-m-b-md">
 		<div class="widget-panel bg-white">
-			<div class="widget-panel__head border-grey-xs--btm">
-				<div class="row">
-					<div class="col-md-9">
-						<h3 class="font-xl font-weight-bold">Live FX Chart</h3>
-					</div>
-					<div class="col-md-3">
-						<h3 class="font-xl">24hr High</h3>
-					</div>
-					<div>
-						<img src="p3sweb/assets/imgs/imgs/mc-fx.jpg" class="img-fluid">
+			<div class="widget-panel__head border-grey-xs--btm d-flex justify-content-between align-items-center">
+				<div class="row w-100">
+					<div class="col-md-12 d-flex justify-content-between align-items-center p-r-none">
+						<h3 class="font-h3 font-weight-bold">Live FX Chart</h3>
+						<p class="font-h3">24hr High</p>
 					</div>
 				</div>
+			</div>					
+			<div class="widget-panel__body">
+				<img src="p3sweb/assets/imgs/imgs/mc-fx.jpg" class="img-fluid">
 			</div>
 		</div>
 	</div>
-	<div class="col-md-5">
+	<div class="col-md-12 col-lg-12 col-xl-5">
 		<div class="bg-white widget-panel">
-			<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center">
-				<h3 class="font-xl font-weight-bold">Recent Activity</h3>
+			<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
+				<h3 class="font-h3 font-weight-bold">Recent Activity</h3>
+				<div class="hidden-xl-up">
+					<ul class="nav btn-default view-pills">
+						<li ng-repeat="item in $ctrl.activityNotifications track by $index" ng-init="activeActivityTabResp = item.index" class="pill-radius pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black m-r-md" ng-click="$ctrl.setActivityActiveTab(item.activity, activeActivityTabResp); activeActivityTabResp = item.index " ng-class="{active : $ctrl.activeMenu == item.activity}"><a class="nav-link">{{item.activity}}</a></li>
+					</ul>
+				</div>
 			</div>
-			<div class="widget-panel__body">
+			<div class="widget-panel__body hidden-xl-up">
 				<div class="view-tabs justify-content-between">
-					<uib-tabset type="pills">
-						<uib-tab heading="Stage Change" class="pill-radius pill-tabs font-body font-body--component btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
+					<uib-tabset type="pills view-pills" active="activeActivityTabResp">
+						<uib-tab heading="Stage Change" class="pill-radius pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="0" ng-hide="true">
 							<div class="widget-panel--max">
-								<div class="row" ng-if="$ctrl.recentStageArr == 0">
-									<div class="col-md-12 m-t-md">
-										<p class="font-body">No recent activity in phase transitions</p>
-									</div>								
+								<div class="row bg-no-data" ng-if="$ctrl.recentStageArr.length === 0">
+									<div class="col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center z-index-1">
+										<p class="font-body font-weight-bold">There is no recent activity to report</p>
+									</div>
 								</div>
-								
-									<div class="row m-t-md" ng-repeat="stage in $ctrl.recentStageArr" ng-if="stage">
-										<div class="col-md-12">
-											<table class="table font-body m-b-md">
-												<tr>
-													<td>Patent No.</td>
-													<td>{{}}</td>
-												</tr>
-												<tr>
-													<td>Description</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>Amount</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>Current Stage</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>Next Stage</td>
-													<td></td>
-												</tr>			
-											</table>
-										</div>								
+
+								<div class="row" ng-repeat="item in $ctrl.recentStageArr" ng-if="$ctrl.recentStageArr.length !== 0">
+									<div class="col-md-12 col-lg-6">
+										<table class="table font-body m-b-md">
+											<tr>
+												<td class="font-weight-bold">Patent No.</td>
+												<td>{{item.patentApplicationNumber}}</td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Description</td>
+												<td>{{item.shortTitle}}</td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Amount</td>
+												<td>$ {{item.currentRenewalCostUSD}}</td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Current Stage</td>
+												<td>{{item.costBandColour}}</td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Next Stage</td>
+												<td>{{item.nextCostBandColor}}</td>
+											</tr>					
+										</table>
 									</div>								
-								</div>
-							</uib-tab>
+								</div>									
+							</div>
 						</uib-tab>
 
-
-					    <uib-tab heading="Transactions" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
+					    <uib-tab heading="Transactions" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="1" ng-hide="true">
 					    	<div class="widget-panel--max">	
-								<div class="row" ng-if="$ctrl.recentTransArr == 0">
-									<div class="col-md-12 m-t-md">
-										<p class="font-body">No recent activity in transactions</p>
+								<div class="row bg-no-data" ng-if="$ctrl.recentTransArr.length === 0">
+									<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
+										<p class="font-body font-weight-bold">There is no recent activity to report</p>
 									</div>								
 								</div>
-							    <div class="row m-t-md border-grey-xs--btm" ng-repeat="trans in $ctrl.recentTransArr" ng-if="trans">
-									<div class="col-md-12">
-										<table class="table font-body  ">
+							    <div class="row m-t-md border-grey-xs--btm" ng-repeat="trans in $ctrl.recentTransArr" ng-if="$ctrl.recentTransArr.length !== 0">
+									<div class="col-md-12 col-lg-6">
+										<table class="table font-body">
+											<tr>
+												<td class="font-weight-bold">Transaction ID</td>
+												<td>{{trans.p3S_TransRef}}</td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Transaction Date</td>
+												<td>{{trans.transStartDate | date:'dd-mm-yy'}}</td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Patents</td>
+												<td>
+													<span ng-repeat="item in trans.renewalUIs" ng-if="trans.renewalUIs.length == 1" >
+															{{item.patentUI.patentApplicationNumber}}<br>
+													</span>
+													<select ng-if="trans.renewalUIs.length > 1" ng-options="item.patentUI.patentApplicationNumber for item in trans.renewalUIs" ng-model="data.selectedOption" class="pill-radius form-control font-body">
+														<option value="" disabled selected>Multiple</option>									
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Total</td>
+												<td>$ {{trans.transAmount_USD}}</td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Transaction status</td>
+												<td>{{trans.latestTransStatus}}</td>
+											</tr>
+<!-- 										<tr>
+												<td class="col-md-5">
+												 	<ngcart-addtocart id="{{trans.id}}" class="cartbtn" name="trans_{{trans.id}}" price="{{trans.transAmount_USD}}" quantity="1" quantity-max="10" data="trans" >
+												 	</ngcart-addtocart>
+												</td>
+											</tr> -->
+										</table>
+									</div>
+								</div>
+							</div>
+						</uib-tab>
+
+					    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="2" ng-hide="true">
+					    	<div class="widget-panel--max">	
+								<div class="row bg-no-data" ng-if="$ctrl.recentRenewalArr.length === 0">
+									<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
+										<p class="font-body font-weight-bold">There is no recent activity to report</p>
+									</div>								
+								</div>				    
+						    	<div class="row" ng-repeat="renewals in $ctrl.recentRenewalArr" ng-if="$ctrl.recentRenewalArr.length !== 0">
+									<div class="col-md-12 col-lg-12 col-xl-12 m-t-md">
+										<table class="table font-body m-b-md">
+											<tr>
+												<td class="font-weight-bold">Patent No.</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Description</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Amount</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Current Stage</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td class="font-weight-bold">Next Stage</td>
+												<td></td>
+											</tr>			
+										</table>
+									</div>
+								</div>
+							</div>
+						</uib-tab>						
+					</uib-tabset>
+				</div>	
+			</div>			
+			<div class="widget-panel__body hidden-lg-down">
+				<div class="view-tabs justify-content-between">
+					<uib-tabset type="pills view-pills">
+						<uib-tab heading="Stage Change" class="pill-radius pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
+							<div class="widget-panel--max">
+								<div class="row" ng-if="$ctrl.recentStageArr.length === 0">
+									<div class="col-md-12 col-lg-12 col-xl-12 m-t-md">
+										<p class="font-body">There is no recent activity to report</p>
+									</div>								
+								</div>
+								<div class="row m-t-md" ng-repeat="item in $ctrl.recentStageArr" ng-if="$ctrl.recentStageArr.length !== 0">
+									<div class="col-md-12 col-lg-12 col-xl-12">
+										<table class="table font-body m-b-md">
+											<td class="font-weight-bold">Patent No.</td>
+												<td>{{item.patentApplicationNumber}}</td>
+											</tr>
+											<td class="font-weight-bold">Description</td>
+												<td>{{item.shortTitle}}</td>
+											</tr>
+											<td class="font-weight-bold">Amount</td>
+												<td>$ {{item.currentRenewalCostUSD}}</td>
+											</tr>
+											<td class="font-weight-bold">Current Stage</td>
+												<td>{{item.costBandColour}}</td>
+											</tr>
+											<td class="font-weight-bold">Next Stage</td>
+												<td>{{item.nextCostBandColor}}</td>
+											</tr>					
+										</table>
+									</div>								
+								</div>								
+							</div>
+						</uib-tab>
+					    <uib-tab heading="Transactions" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
+					    	<div class="widget-panel--max">	
+								<div class="row" ng-if="$ctrl.recentTransArr.length === 0">
+									<div class="col-md-12 col-lg-12 col-xl-12 m-t-md">
+										<p class="font-body">There is no recent activity to report</p>
+									</div>								
+								</div>
+							    <div class="row m-t-md border-grey-xs--btm" ng-repeat="trans in $ctrl.recentTransArr" ng-if="$ctrl.recentTransArr.length !== 0">
+									<div class="col-md-12 col-lg-12 col-xl-12">
+										<table class="table font-body">
 											<tr>
 												<td class="font-weight-bold">Transaction ID</td>
 												<td>{{trans.p3S_TransRef}}</td>
@@ -598,36 +856,39 @@
 								</div>
 							</div>
 						</uib-tab>
-
-					    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
+					    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
 					    	<div class="widget-panel--max">	
-								<div class="row" ng-if="$ctrl.recentRenewalArr == 0">
-									<div class="col-md-12 m-t-md">
-										<p class="font-body">No recent activity in renewals</p>
+								<div class="row" ng-if="$ctrl.recentRenewalArr.length === 0">
+									<div class="col-md-12 col-lg-12 col-xl-12 m-t-md">
+										<p class="font-body">There is no recent activity to report</p>
 									</div>								
 								</div>						    
-						    	<div class="row"  ng-repeat="renewals in $ctrl.recentRenewalArr" ng-if="renewals">
-									<div class="col-md-12 m-t-md">
+						    	<div class="row"  ng-repeat="item in $ctrl.recentRenewalArr" ng-if="$ctrl.recentRenewalArr.length !== 0">
+									<div class="col-md-12 col-lg-12 col-xl-12 m-t-md">
 										<table class="table font-body m-b-md">
 											<tr>
-												<td class="font-weight-bold">Patent No.</td>
-												<td>{{}}</td>
+												<td class="font-weight-bold">Status</td>
+												<td>Renewal {{item.latestTransStatus}}</td>
 											</tr>
 											<tr>
-												<td class="font-weight-bold">Description</td>
-												<td></td>
+												<td class="font-weight-bold">Date Renewed</td>
+												<td>
+													<span ng-repeat="renewals in item.renewalUIs">
+														{{renewals.patentUI.lastRenewedDateExEpo | date:'MM/dd/yyyy'}}<br>
+													</span>
+												</td>
+											</tr>																			
+											<tr>
+												<td class="font-weight-bold">Patents</td>
+												<td>
+													<span ng-repeat="renewals in item.renewalUIs">
+														{{renewals.patentUI.patentApplicationNumber}}<br>
+													</span>
+												</td>
 											</tr>
 											<tr>
 												<td class="font-weight-bold">Amount</td>
-												<td></td>
-											</tr>
-											<tr>
-												<td class="font-weight-bold">Current Stage</td>
-												<td></td>
-											</tr>
-											<tr>
-												<td class="font-weight-bold">Next Stage</td>
-												<td></td>
+												<td>$ {{item.transAmount_USD}}</td>
 											</tr>			
 										</table>
 									</div>

@@ -30,6 +30,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 
+
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular-aria.min.js"></script>
@@ -87,6 +88,8 @@
 		<script src="p3sweb/app/components/checkout/services/bankTransferCommitService.js"></script>
 		<script src="p3sweb/app/components/user/services/userService.js"></script>
 
+		<script src="p3sweb/app/components/app/controllers/mainCtrl.js"></script>
+
 		<!--components-->
 
 		<script src="p3sweb/app/components/register/authenticationService.js"></script>
@@ -124,11 +127,11 @@
 
 	</head>
 
-	<body ng-app="myApp" ng-controller="coreCtrl" class="bg-light-grey" ng-cloak>
+	<body ng-app="myApp" class="bg-light-grey">
 		
 		<mainnav></mainnav>
 
-		<main class="container m-tb-xl">
+		<main class="container md-container lg-container m-tb-xl">
 			<basketnav></basketnav>
 			<ui-view></ui-view>
 			<idle></idle>

@@ -19,7 +19,7 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 
     function timeZoneClocks() {
 
-        var cet = moment.tz("Europe/London").format('HH:mm MM/D/YY');
+        var cet = moment.tz("Europe/Berlin").format('HH:mm MM/D/YY');
         var est = moment.tz("America/New_York").format('HH:mm MM/D/YY');
     
         var t = $timeout(function() {

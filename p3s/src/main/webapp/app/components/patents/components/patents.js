@@ -1,7 +1,7 @@
 app.component('patents', {
   	bindings: { patents: '<' },
 	templateUrl: 'p3sweb/app/components/patents/views/list-patents.htm',
-	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', '$state', '$stateParams', 'currentTransactionsService', 'patentsService', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams, $state, $stateParams, currentTransactionsService, patentsService) {
+	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', '$state', '$stateParams', 'currentTransactionsService', 'patentsService', '$filter', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams, $state, $stateParams, currentTransactionsService, patentsService, $filter) {
 
 		var vm = this;
 
@@ -16,7 +16,6 @@ app.component('patents', {
 		}
 
 		vm.fetchItemTransaction = function(id) {
-			// console.log(id)
 			currentTransactionsService.fetchCurrentTransactions()
 			.then(
 				function(response) {
@@ -26,8 +25,15 @@ app.component('patents', {
 						
 						data.renewalUIs.forEach(function(data, i) {
 							if(data.patentUI.id == id) {
-								console.log(transId)
 								$state.go('current-transactions.current-transaction-item',{transId: transId})
+								.then(
+									function(){
+
+									},
+									function(){
+
+									}
+								)
 							}
 						})
 
@@ -43,6 +49,8 @@ app.component('patents', {
 
 			vm.date = new Date()
 
+			vm.tableData = vm.patents;
+
 			var patents = vm.patents;
 			var allPatents = [];
 			var greenPatents = [];
@@ -52,95 +60,75 @@ app.component('patents', {
 			var blackPatents = [];
 			var greyPatents = [];
 
-		   	vm.tableParams = new NgTableParams({
-		   		sorting: { patentApplicationNumber: "asc" },
-		        page: 1,            // show first page
-		        count: 10000,           // count per page
-		    }, {
-		        counts: [],
-		        dataset: vm.patents
-		    });
+			vm.sortData = function(patents) {
+				
+				var tableData;
+
+				$scope.contents = patents;
+
+				$scope.contents.sort(function(a, b){
+					var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+					return dateB - dateA;
+				})
+
+				tableData = $scope.contents;
+
+			   	vm.tableParams = new NgTableParams({
+			   		sorting: { renewalDueDate: "desc" },
+			        page: 1,            // show first page
+			        count: 10000      // count per page
+			    }, {
+			        counts: [],
+			        total: tableData.length,
+			        getData: function(params) {
+
+			        	var orderedData;
+
+			        	if (params.sorting().renewalDueDate === 'asc') {
+			        		tableData.sort(function(a, b){
+			        			var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+			        			return dateA - dateB;
+			        		})
+			        		orderedData = tableData;
+			        	} else if (params.sorting().renewalDueDate === 'desc') {
+			        		tableData.sort(function(a, b) {
+			        			var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+			        			return dateB - dateA;
+			        		})
+			        		orderedData = tableData;
+			        	} else if(!params.sorting().renewalDueDate) {
+
+			    			orderedData = params.sorting() ? $filter('orderBy')(tableData, params.orderBy()) : tableData;		        		
+			        	}
+			        	return orderedData;
+			        }
+			    });
+			}
 
 	  		vm.displayPhase = function(id) {
 				switch (id) {
 				    case 1:
-				     	vm.patents = allPatents;
-					   	vm.tableParams = new NgTableParams({
-					   		sorting: { patentApplicationNumber: "asc" },
-					        page: 1,            // show first page
-					        count: 10000,           // count per page
-					    }, {
-					        counts: [],
-					        dataset: vm.patents
-					    });
+				     	vm.tableData = allPatents;
 			        break;
 				    case 2:
-				     	vm.patents = greenPatents;
-					   	vm.tableParams = new NgTableParams({
-					   		sorting: { patentApplicationNumber: "asc" },
-					        page: 1,            // show first page
-					        count: 10000,           // count per page
-					    }, {
-					        counts: [],
-					        dataset: vm.patents
-					    });
+				     	vm.tableData = greenPatents;
 			        break;
 				    case 3:
-				     	vm.patents = amberPatents;
-					   	vm.tableParams = new NgTableParams({
-					   		sorting: { patentApplicationNumber: "asc" },
-					        page: 1,            // show first page
-					        count: 10000,           // count per page
-					    }, {
-					        counts: [],
-					        dataset: vm.patents
-					    });
+				     	vm.tableData = amberPatents;
 			        break;
 				    case 4:
-				     	vm.patents = redPatents;
-					   	vm.tableParams = new NgTableParams({
-					   		sorting: { patentApplicationNumber: "asc" },
-					        page: 1,            // show first page
-					        count: 10000,           // count per page
-					    }, {
-					        counts: [],
-					        dataset: vm.patents
-					    });
+				     	vm.tableData = redPatents;
 			        break;
 				    case 5:
-				     	vm.patents = bluePatents;
-					   	vm.tableParams = new NgTableParams({
-					   		sorting: { patentApplicationNumber: "asc" },
-					        page: 1,            // show first page
-					        count: 10000,           // count per page
-					    }, {
-					        counts: [],
-					        dataset: vm.patents
-					    });		     	
+				     	vm.tableData = bluePatents;
 				     	break;
 			     	case 6:
-				    	vm.patents = blackPatents;
-					   	vm.tableParams = new NgTableParams({
-					   		sorting: { patentApplicationNumber: "asc" },
-					        page: 1,            // show first page
-					        count: 10000,           // count per page
-					    }, {
-					        counts: [],
-					        dataset: vm.patents
-					    });
+				    	vm.tableData = blackPatents;
 				    break;
 			     	case 7:
-				    	vm.patents = greyPatents;
-					   	vm.tableParams = new NgTableParams({
-					   		sorting: { patentApplicationNumber: "asc" },
-					        page: 1,            // show first page
-					        count: 10000,           // count per page
-					    }, {
-					        counts: [],
-					        dataset: vm.patents
-					    });
+				    	vm.tableData = greyPatents;
+					}
 				}
-			}
 
 			$timeout(function() {
 				vm.displayPhase(1)
@@ -160,7 +148,7 @@ app.component('patents', {
 	     			vm.patents = null;
 	     		}
 
-	     		if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
+	     		if(item.renewalStatus !== 'Renewal in place' && item.renewalStatus !== 'Too late to renew' &&  item.renewalStatus !== 'No renewal needed') {
 					switch(item.costBandColour) {
 						case 'Green':
 							greenPatents.push(item);
@@ -176,7 +164,6 @@ app.component('patents', {
 						break;
 						case 'Black':
 							blackPatents.push(item)
-						break;		
 						default: vm.patents = null;																								
 					}
      			} else {
@@ -284,14 +271,55 @@ app.component('patents', {
       	vm.rowSelect = function(event){
       		if(!$(event.target).hasClass('cartbtn')) {
 	      		var id = ($($(event.currentTarget).find('a')));
-	      		var patentId = id[0].hash;
+	      		var patentId = id[0].hash; //gets data from ui-sref
 	      		window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
       		}
       	}
 
-	   // 	vm.sortType     = 'patentApplicationNumber'; // set the default sort type
-	  	// vm.sortReverse  = false;  // set the default sort order		
-   
+      	// if (params.sorting().renewalDueDate === 'asc') {
+			    //     		tableData.sort(function(a, b){
+			    //     			var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+			    //     			return dateA - dateB;
+			    //     		})
+			    //     		orderedData = tableData;
+			    //     	} else if (params.sorting().renewalDueDate === 'desc') {
+			    //     		tableData.sort(function(a, b) {
+			    //     			var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+			    //     			return dateB - dateA;
+			    //     		})
+			    //     		orderedData = tableData;
+			    //     	} else if(!params.sorting().renewalDueDate) {
+
+			    // 			orderedData = params.sorting() ? $filter('orderBy')(tableData, params.orderBy()) : tableData;		        		
+			    //     	}
+
+	   	vm.sortType = function(column) {
+	   		if(column !== 'dueDate') {
+	   			vm.sortDate = false;
+	   			vm.selectedSortType = column;
+	   		} else {
+	   			vm.selectedSortType = (function() {
+
+	   				vm.sortDate = true;
+
+	   				if (vm.sortReverse == false) {
+	   					vm.tableData.sort(function(a, b){
+	   						var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+	   						return dateB - dateA;
+	   					})
+	   				} else {
+	   					vm.tableData.sort(function(a, b){
+	   						var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+	   						return dateB - dateA
+	   					})
+	   				}
+	   				
+	   			}())
+	   		}
+	   	}
+
+   		vm.selectedSortType = 'patentApplicationNumber'
+	  	vm.sortReverse  =  false;
 	}
 ]});
 

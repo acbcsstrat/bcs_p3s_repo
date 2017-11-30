@@ -6,10 +6,6 @@ app.component('checkout', {
 
 		$rootScope.page = 'Basket';
 
-		$scope.test = function() {
-			console.log('hee')
-		}
-
 	}
 ]})
 

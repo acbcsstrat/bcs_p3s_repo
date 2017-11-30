@@ -4,7 +4,6 @@
 angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
     .controller('CartController',['$scope', 'ngCart', '$state', function($scope, ngCart, $state) {
-        console.log('state')
         $scope.ngCart = ngCart;
     }])
 
@@ -220,6 +219,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                             var patentArr = response.orderedPatentUIs;
 
                             scope.billingDetails = response;
+                            console.log(billingDetails)
                             scope.summary = {
                                 date: response.dateNowLocalTimeUI,
                                 patents: (function(){

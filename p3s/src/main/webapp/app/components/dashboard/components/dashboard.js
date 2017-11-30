@@ -1,22 +1,10 @@
-// app.config(['ChartJsProvider', function (ChartJsProvider) {
-// 	console.log(ChartJsProvider)
-//     // Configure all charts
-//     // ChartJsProvider.setOptions({
-//     //   chartColors: ['#FF5252', '#FF8A80'],
-//     //   responsive: false
-//     // });
-//     // // Configure all line charts
-//     // ChartJsProvider.setOptions('line', {
-//     //   showLines: false
-//     // });
-//  }])
 app.component('dashboard', {
 	bindings: { 
 		patents: '<',
 		transactions: '<' 
 	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, dashboardService, fxService, patentsRestService, $mdSidenav, patentsService, currentTransactionsService) {
+	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, fxService, patentsRestService, $mdSidenav, patentsService, currentTransactionsService, dashboardService) {
 
 		var vm = this;
 		
@@ -49,6 +37,63 @@ app.component('dashboard', {
 			)
 		}
 
+		vm.activityNotifications = [
+			{
+				activity: 'Stage Change',
+				index: 0
+			},
+			{
+				activity: 'Transactions',
+				index: 1
+			},
+			{
+				activity: 'Renewals',
+				index: 2
+			}
+		]
+
+		// console.log($scope.activeActivityTab)
+
+		vm.activeMenu = vm.activityNotifications[0].activity;
+
+		vm.setActivityActiveTab = function(menuItem, index) {
+			console.log(menuItem)
+			$scope.activeActivityTabResp = index;
+			vm.activeMenu = menuItem
+		}
+
+		vm.fxPeriodActive = function(fxActive) {
+			switch(fxActive) {
+				case 0:
+					vm.renewalfxTimeframe = 'Today';
+				break;
+				case 1:
+					vm.renewalfxTimeframe = 'Yesterday'
+				break;
+				case 2:
+					vm.renewalfxTimeframe = 'Last Week'
+				break;
+				case 3:
+					vm.renewalfxTimeframe = 'Last Mth'													
+			}				
+		}
+
+		// vm.getMessages = function() {
+			
+		// 	dashboardService.getMessages()
+		// 	.then(
+		// 		function(response){
+		// 			// console.log(response)
+		// 		},
+		// 		function(errResponse){
+		// 			// console.log(errResponse)
+		// 		}
+		// 	)
+
+		// }
+
+		// vm.getMessages()
+
 		vm.$onInit = () => {
 
 		 	$scope.toggleLeft = buildToggler('left');
@@ -65,16 +110,72 @@ app.component('dashboard', {
 			var transactions = vm.transactions;
 			var patents = vm.patents;
 
+			function millsToHours(data, millisec) {
+
+		        var seconds = (millisec / 1000).toFixed(0);
+		        var minutes = Math.floor(seconds / 60);
+		        var hours = "";
+
+		        if (minutes > 59) {
+		            hours = Math.floor(minutes / 60);
+		            hours = (hours >= 10) ? hours : "0" + hours;
+		            minutes = minutes - (hours * 60);
+		            minutes = (minutes >= 10) ? minutes : "0" + minutes;
+		        }
+
+		        seconds = Math.floor(seconds % 60);
+		        seconds = (seconds >= 10) ? seconds : "0" + seconds;
+
+		        if (hours < 48) {
+		            return data
+		        }
+
+		    }
+
+			vm.recentTransArr = [];
+			vm.recentStageArr = [];
+			vm.recentRenewalArr = [];
+
+			transactions.forEach(function(data){
+				var d = new Date().getTime();
+				var hours =  d - data.lastUpdatedDate;
+				var recentTrans  = millsToHours(data, hours);
+
+				if(recentTrans !== undefined) {
+					vm.recentTransArr.push(recentTrans)
+				}
+
+				if(data.latestTransStatus === 'Completed') {
+					console.log(data)
+					vm.recentRenewalArr.push(data)
+				}
+			})
+
 			patentsRestService.fetchAllPatents()
 				.then(
-					function(response){
-						response.forEach(function(item){
+					function(patents){
+
+						var d = new Date().getTime();
+
+						patents.forEach(function(item){
 							patentsRestService.fetchCostAnalysis(item.id)
 			                .then(
 			                    function(response){
 
+
 			                        switch(item.costBandColour) {
 			                            case 'Green':
+
+			                            //stage change
+
+				                    	var hours =  d - response.greenStartDate;
+
+				                    	if(millsToHours(response, hours) !== undefined){
+				                    		vm.recentStageArr.push(response)
+				                    		item.nextCostBandColor = 'Amber';
+				                    	}
+
+				                    	//progress
 
 										var today = new Date().getTime();
 										var start = new Date(response.greenStartDate);
@@ -90,6 +191,17 @@ app.component('dashboard', {
 			                                break;
 			                            case 'Amber':
 
+			                            //stage change
+
+				                    	var hours =  d - response.amberStartDate;
+
+				                    	if(millsToHours(response, hours) !== undefined){
+				                    		vm.recentStageArr.push(response);
+				                    		item.nextCostBandColor = 'Red';
+				                    	}
+
+				                    	//progress
+
 										var today = new Date().getTime();
 										var start = new Date(response.amberStartDate);
 										var end = new Date(response.redStartDate);
@@ -103,6 +215,17 @@ app.component('dashboard', {
 
 			                                break;
 			                            case 'Red':
+
+			                            //recent stage
+
+				                    	var hours =  d - response.redStartDate;
+
+				                    	if(millsToHours(item, hours) !== undefined){
+				                    		vm.recentStageArr.push(item)
+				                    		item.nextCostBandColor = 'Blue';
+				                    	}
+
+				                    	//progress
 
 										var today = new Date().getTime();
 										var start = new Date(response.redStartDate);
@@ -118,6 +241,15 @@ app.component('dashboard', {
 			                                break;
 			                            case 'Blue':
 
+				                    	var hours =  d - response.blueStartDate;
+
+				                    	if(millsToHours(response, hours) !== undefined){
+				                    		vm.recentStageArr.push(response)
+				                    		item.nextCostBandColor = 'Black';
+				                    	}
+
+			                            //progress
+
 										var today = new Date().getTime();
 										var start = response.blueStartDate;
 										var end = response.blackStartDate;
@@ -131,6 +263,15 @@ app.component('dashboard', {
 
 			                                break;
 			                            case 'Black':
+
+			                            //progress
+
+				                    	var hours =  d - response.blackStartDate;
+
+				                    	if(millsToHours(response, hours) !== undefined) {
+				                    		vm.recentStageArr.push(response);
+											item.nextCostBandColor = 'Grey';				                    		
+				                    	}
 
 										var today = new Date().getTime();
 										var start = response.blackStartDate;
@@ -160,50 +301,6 @@ app.component('dashboard', {
 					}
 			)//patents request end
 
-			//RECENT TRANSACTIONS
-
-			vm.recentTransArr = [];
-
-			transactions.forEach(function(data){
-				var d = new Date().getTime();
-				var hours =  d - data.lastUpdatedDate;
-				var recentTrans  = millsToHours(data, hours);
-				if(recentTrans !== undefined) {
-					vm.recentTransArr.push(recentTrans)
-				}
-			})
-
-			function millsToHours(data, millisec) {
-
-		        var seconds = (millisec / 1000).toFixed(0);
-		        var minutes = Math.floor(seconds / 60);
-		        var hours = "";
-
-		        if (minutes > 59) {
-		            hours = Math.floor(minutes / 60);
-		            hours = (hours >= 10) ? hours : "0" + hours;
-		            minutes = minutes - (hours * 60);
-		            minutes = (minutes >= 10) ? minutes : "0" + minutes;
-		        }
-
-		        seconds = Math.floor(seconds % 60);
-		        seconds = (seconds >= 10) ? seconds : "0" + seconds;
-
-		        if (hours < 48) {
-		            return data
-		        }
-
-		    }
-
-		    //RECENT STAGE CHANGES
-
-		    vm.recentStageArr = [];
-
-		    //RECENT STAGE CHANGES
-
-		    vm.recentRenewalArr = [];
-
-			// vm.color = 0;
 
 			vm.greenRenewals = [];
 			vm.amberRenewals = [];
@@ -211,6 +308,8 @@ app.component('dashboard', {
 			vm.blueRenewals = [];
 			vm.blackRenewals = [];
 			vm.greyRenewals = [];
+
+
 
 			//COLOUR KEY
 
