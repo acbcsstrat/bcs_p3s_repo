@@ -2,27 +2,25 @@ package com.bcs.p3s.display;
 
 import java.util.Date;
 
+import com.bcs.p3s.model.CalendarColour;
+
 public class RenewalDates {
 	
-	private Date currentWindowOpenDate;
-	private Date currentWindowCloseDate;
+	protected Date currentWindowOpenDate;
+	protected Date currentWindowCloseDate;
 	
-	private Date currentRenewalDueDate;
+	protected Date currentRenewalDueDate;
 	
-	private Date nextWindowOpenDate;
-	private Date nexttWindowCloseDate;
+	protected Date nextWindowOpenDate;
+	protected Date nextWindowCloseDate;
 	
-	private Date nextRenewalDueDate;
+	protected Date nextRenewalDueDate;
 	
-	private Date previousWindowOpenDate;
-	private Date previousWindowCloseDate;
+	protected boolean renewalWindowOpened;
 	
-	private Date previousRenewalDueDate;
+	protected Integer renewalYear;
 	
-	private boolean renewalWindowStillOpened;
-	
-	private Integer renewalYear;
-
+	protected CalendarColour currentColorDates;
 	
 	public Date getCurrentWindowOpenDate() {
 		return currentWindowOpenDate;
@@ -58,12 +56,12 @@ public class RenewalDates {
 		this.nextWindowOpenDate = nextWindowOpenDate;
 	}
 
-	public Date getNexttWindowCloseDate() {
-		return nexttWindowCloseDate;
+	public Date getNextWindowCloseDate() {
+		return nextWindowCloseDate;
 	}
 
-	public void setNexttWindowCloseDate(Date nexttWindowCloseDate) {
-		this.nexttWindowCloseDate = nexttWindowCloseDate;
+	public void setNextWindowCloseDate(Date nextWindowCloseDate) {
+		this.nextWindowCloseDate = nextWindowCloseDate;
 	}
 
 	public Date getNextRenewalDueDate() {
@@ -74,36 +72,12 @@ public class RenewalDates {
 		this.nextRenewalDueDate = nextFilingDate;
 	}
 
-	public boolean isRenewalWindowStillOpened() {
-		return renewalWindowStillOpened;
+	public boolean isRenewalWindowOpened() {
+		return renewalWindowOpened;
 	}
 
-	public void setRenewalWindowStillOpened(boolean renewalWindowStillOpened) {
-		this.renewalWindowStillOpened = renewalWindowStillOpened;
-	}
-
-	public Date getPreviousWindowOpenDate() {
-		return previousWindowOpenDate;
-	}
-
-	public void setPreviousWindowOpenDate(Date previousWindowOpenDate) {
-		this.previousWindowOpenDate = previousWindowOpenDate;
-	}
-
-	public Date getPreviousWindowCloseDate() {
-		return previousWindowCloseDate;
-	}
-
-	public void setPreviousWindowCloseDate(Date previousWindowCloseDate) {
-		this.previousWindowCloseDate = previousWindowCloseDate;
-	}
-
-	public Date getPreviousRenewalDueDate() {
-		return previousRenewalDueDate;
-	}
-
-	public void setPreviousRenewalDueDate(Date previousRenewalDueDate) {
-		this.previousRenewalDueDate = previousRenewalDueDate;
+	public void setRenewalWindowOpened(boolean renewalWindowOpened) {
+		this.renewalWindowOpened = renewalWindowOpened;
 	}
 
 	public Integer getRenewalYear() {
@@ -112,6 +86,14 @@ public class RenewalDates {
 
 	public void setRenewalYear(Integer renewalYear) {
 		this.renewalYear = renewalYear;
+	}
+
+	public CalendarColour getCurrentColorDates() {
+		return currentColorDates;
+	}
+
+	public void setCurrentColorDates(CalendarColour currentColorDates) {
+		this.currentColorDates = currentColorDates;
 	}
 
 	

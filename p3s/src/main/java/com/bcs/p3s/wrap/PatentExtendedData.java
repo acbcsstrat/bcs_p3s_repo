@@ -37,6 +37,10 @@ public class PatentExtendedData {
     private Date renewalDueDate;
     
     private String currentCostBand;
+    
+    private Integer activeRenewalYear;
+    
+    private String currentRenewalStatus;
 
     
 	public Long getPatentId() {
@@ -104,6 +108,22 @@ public class PatentExtendedData {
 
 	public void setCurrentCostBand(String currentCostBand) {
 		this.currentCostBand = currentCostBand;
+	}
+
+	public Integer getActiveRenewalYear() {
+		return activeRenewalYear;
+	}
+
+	public void setActiveRenewalYear(Integer activeRenewalYear) {
+		this.activeRenewalYear = activeRenewalYear;
+	}
+
+	public String getCurrentRenewalStatus() {
+		return currentRenewalStatus;
+	}
+
+	public void setCurrentRenewalStatus(String currentRenewalStatus) {
+		this.currentRenewalStatus = currentRenewalStatus;
 	}
     
     

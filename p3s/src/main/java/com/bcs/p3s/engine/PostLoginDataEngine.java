@@ -53,8 +53,6 @@ public class PostLoginDataEngine extends Universal{
 		
 		List<PatentExtendedData> allData = new ArrayList<PatentExtendedData>();
 		List<Patent> patents = null;
-		
-		//PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
 		/** Clear the session data for PatentExtendedData**/
 		pLoginSession.setExtendedPatentUI(null);
 		
@@ -62,7 +60,6 @@ public class PostLoginDataEngine extends Universal{
 			//MP to add logs
 			return pLoginSession;
 		}
-		
 		TypedQuery<Patent> tq_patents = Patent.findPatentsByBusiness(pLoginSession.getBusiness());
     	patents = tq_patents.getResultList();
 		
@@ -72,30 +69,19 @@ public class PostLoginDataEngine extends Universal{
     		
 	    	for(Patent patent : patents){
 	    		PatentExtendedData extendedData = new PatentExtendedData();
-				RenewalDates renewalDates = datesEngineObj.getRenewalDates(patent);
+	    		RenewalDates renewalDates = new RenewalDates();
+				renewalDates = datesEngineObj.getRenewalDates(patent);
 				
-				/* Commenting from below as trial to change the patent price if in doldrum **/ //till line 87
-				//PatentStatus renewalInfo = patentStatus.getRenewalInfo(patent);
-				
-				/**
-				 * below methods in CAEngine Class
-				 * So setting the calculated value to renewaldates
+				/** We are displaying 
+				 * 	- RATE & RESPECTIVE COLOUR details to customer if the status is SHOW_PRICE or IN_PROGRESS or EPO_INSTRUCTED.
+				 * 	- NO RATE BUT RESPECTIVE COLOUR DETAILS if status is TOO_LATE
+				 * 	- NO RATE & COLOUR as GREY else other values
+				 * 
 				 */
-				
-				/*RenewalDates renewalDates = new RenewalDates();
-				renewalDates.setCurrentRenewalDueDate(renewalInfo.getRenewalDueDate());
-				renewalDates.setCurrentWindowOpenDate(renewalInfo.getNineMonthStart());
-				renewalDates.setCurrentWindowCloseDate(renewalInfo.getNineMonthEnd());
-*/
-				//This may change - pending Dan's decision
-				/**
-				 * We are displaying a rate to customer if Renewal window being opened, irrespective of the fact that they have been paid or not.
-				 * CHANCES ARE THE CONDITION MAY CHANGE TO SHOW PRICES ONLY IF THE STATUS IS SHOW_PRICE
-				 * ie, if(RenewalStatusEnum.SHOW_PRICE.equals(patent.getRenewalStatus())){
-				 */
-				//if(!renewalInfo.getDoldrums()){
-				if(RenewalStatusEnum.SHOW_PRICE.equals(patent.getRenewalStatus())){
-					log().debug("Patent open for renewal and not paid yet. So calculate price and respective phase info");
+				if(RenewalStatusEnum.SHOW_PRICE.equals(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS.equals(patent.getRenewalStatus()) 
+						|| RenewalStatusEnum.EPO_INSTRUCTED.equals(patent.getRenewalStatus())){
+					log().debug("Patent holds a renewal status of SHOW_PRICE.");
+					renewalDates.setRenewalWindowOpened(true);
 					caData = caEngine.getAllPhasesInfo(renewalDates);
 					String currentPhase = caEngine.getCurrentPhase(caData);
 					CombinedFee fee = caEngine.getFeeObj(patent);
@@ -111,11 +97,35 @@ public class PostLoginDataEngine extends Universal{
 					extendedData.setCostBandEndDate(getCostBandEnddate(caData).getTime());
 					//extendedData.setFeeUI(currentFeeUI);
 					extendedData.setFee(currentfee);
+					
+					extendedData.setActiveRenewalYear(patent.getRenewalYear());
+					extendedData.setCurrentRenewalStatus(patent.getRenewalStatus());
+				}
+				else if(RenewalStatusEnum.TOO_LATE.equals(patent.getRenewalStatus())){
+					log().debug("Patent holds a renewal status of TOO_Late.");
+					renewalDates.setRenewalWindowOpened(true);
+					caData = caEngine.getAllPhasesInfo(renewalDates);
+					String currentPhase = caEngine.getCurrentPhase(caData);
+					//No fee details to be send to FE
+					/*CombinedFee fee = caEngine.getFeeObj(patent);
+					Fee currentfee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+					FeeUI currentFeeUI = new FeeUI(currentfee);
+					Fee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+					FeeUI nextStageFeeUI = new FeeUI(nextStageFee);*/
+					extendedData.setPatentId(patent.getId());
+					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
+					extendedData.setCurrentCostBand(caData.getCurrentcostBand());
+					extendedData.setCostBandEndDate(getCostBandEnddate(caData).getTime());
+					extendedData.setActiveRenewalYear(patent.getRenewalYear());
+					extendedData.setCurrentRenewalStatus(patent.getRenewalStatus());
 				}
 				else{
+					log().debug("Patent holds a renewal status of " + patent.getRenewalStatus());
 					extendedData.setPatentId(patent.getId());
 					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
 					extendedData.setCurrentCostBand(RenewalColourEnum.GREY);
+					extendedData.setActiveRenewalYear(patent.getRenewalYear());
+					extendedData.setCurrentRenewalStatus(patent.getRenewalStatus());
 				}
 				
 				allData.add(extendedData);
@@ -146,7 +156,7 @@ public class PostLoginDataEngine extends Universal{
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLUE))
 			nextPhase = RenewalColourEnum.BLACK;
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLACK))
-			nextPhase = RenewalColourEnum.GREEN;
+			nextPhase = RenewalColourEnum.GREY;
 		return nextPhase;
 	}
 	
@@ -164,7 +174,7 @@ public class PostLoginDataEngine extends Universal{
 		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.BLUE))
 			cal.setTime(caData.getBlackStartDate());
 		else if(caData.getCurrentcostBand().equalsIgnoreCase(RenewalColourEnum.BLACK))
-			cal.setTime(caData.getBlackEndDate());
+			cal.setTime(caData.getBlackAllEnd());
 		
 		return cal;
 	}

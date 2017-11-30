@@ -23,7 +23,9 @@ import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
+import com.bcs.p3s.model.CalendarColour;
 import com.bcs.p3s.model.DiscountPercent;
 import com.bcs.p3s.model.EpoFee;
 import com.bcs.p3s.model.Fee;
@@ -94,39 +96,45 @@ public class CostAnalysisDataEngine extends Universal{
 		log().debug(msg + " invoked");
 		
 		CostAnalysisData caData = new CostAnalysisData();
-		Date greenStart = allDates.getCurrentWindowOpenDate();
+		//Commenting below as we are getting data from table calendar_colour
+		/*Date greenStart = allDates.getCurrentWindowOpenDate();
 		Date amberStart = utils.getMidnight(utils.addDays(allDates.getCurrentRenewalDueDate(), -15));
 		Date redStart = utils.getMidnight(utils.addHours(allDates.getCurrentRenewalDueDate(), -48));
 		Date blueStart = utils.get8PM(utils.addHours(allDates.getCurrentRenewalDueDate(), -4));
-		Date blackStart = utils.getMidnight(utils.addDays(allDates.getCurrentWindowCloseDate(), -10));
+		Date blackStart = utils.getMidnight(utils.addDays(allDates.getCurrentWindowCloseDate(), -10));*/
 		
-		caData.setGreenStartDate(greenStart);
-		caData.setAmberStartDate(amberStart);
-		caData.setRedStartDate(redStart);
-		caData.setBlueStartDate(blueStart);
-		caData.setBlackStartDate(blackStart);
+		CalendarColour colourDates = new CalendarColour();
+    	TypedQuery<CalendarColour> allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(allDates.getCurrentRenewalDueDate());
+    	colourDates = allColourDates.getSingleResult();
+		caData.setGreenStartDate(colourDates.getGreenStart());
+		caData.setAmberStartDate(colourDates.getAmberStart());
+		caData.setRedStartDate(colourDates.getRedStart());
+		caData.setBlueStartDate(colourDates.getBlueStart());
+		caData.setBlackStartDate(colourDates.getBlackStart());
 		//caData.setBrownEndDate(utils.addDays(allDates.getCurrentWindowCloseDate(), -2));
-		caData.setBlackEndDate(allDates.getCurrentWindowCloseDate());
+		caData.setBlackPhoneUpStart(colourDates.getBlackPhoneUpStart());
+		caData.setBlackAllEnd(colourDates.getBlackAllEnd());
 		System.out.println("Calculated Dates \n");
 		System.out.println(caData.getGreenStartDate() +" " + caData.getAmberStartDate() +" " + caData.getRedStartDate() +
-				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackEndDate());
+				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackPhoneUpStart() + " " + caData.getBlackAllEnd());
 		
 		log().debug("Calculated Dates in the order as ::: " + caData.getGreenStartDate() +" " + caData.getAmberStartDate() +" " + caData.getRedStartDate() +
-				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackEndDate());
+				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackPhoneUpStart() + " " + caData.getBlackAllEnd());
 		/**
 		 * SETTING ALL RESPECTIVE DATES TO STRING FORMAT 
 		 */
-		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(greenStart));
-		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(amberStart));
-		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(redStart));
-		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blueStart));
-		caData.setBlackStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blackStart));
-		caData.setBlackEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackEndDate()));
+		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getGreenStartDate()));
+		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getAmberStartDate()));
+		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getRedStartDate()));
+		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlueStartDate()));
+		caData.setBlackStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackStartDate()));
+		caData.setBlackPhoneUpStartUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackPhoneUpStart()));
+		caData.setBlackAllEndUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackAllEnd()));
 		
-		if(allDates.isRenewalWindowStillOpened())
+		if(allDates.isRenewalWindowOpened())
 			caData.setCurrentcostBand(getCurrentPhase(caData));
 		else
-			caData.setCurrentcostBand(RenewalColourEnum.GREEN);
+			caData.setCurrentcostBand(RenewalColourEnum.GREY);
 		
 		
 		return caData;
@@ -139,22 +147,62 @@ public class CostAnalysisDataEngine extends Universal{
 	 */
 	public String getCurrentPhase(CostAnalysisData caData){
 		
-		//Calendar todays = Calendar.getInstance();
+		Calendar todaysDate = Calendar.getInstance();
 		String msg = "getCurrentPhase()";
 		log().debug( msg + " invoked for getting current phase");
-    	Date todaysDate = new DateUtil().getTodaysDate();
-		if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getBlackEndDate())){
+    	//Date todaysDate = new DateUtil().getTodaysDate();
+		
+		if(todaysDate.getTime().equals(caData.getGreenStartDate()) || (todaysDate.getTime().after(caData.getGreenStartDate())
+				&& todaysDate.getTime().before(caData.getBlackAllEnd()))){
 			
-			if(todaysDate.after(caData.getGreenStartDate()) && todaysDate.before(caData.getAmberStartDate()))
+			if(todaysDate.getTime().equals(caData.getGreenStartDate())){
 				caData.setCurrentcostBand(RenewalColourEnum.GREEN);
-			else if (todaysDate.after(caData.getAmberStartDate()) && todaysDate.before(caData.getRedStartDate())) 
+			}
+			
+			else if(todaysDate.getTime().after(caData.getGreenStartDate()) && todaysDate.getTime().before(caData.getAmberStartDate())){
+				caData.setCurrentcostBand(RenewalColourEnum.GREEN);
+			}
+			
+			else if(todaysDate.getTime().equals(caData.getAmberStartDate())){
 				caData.setCurrentcostBand(RenewalColourEnum.AMBER);
-			else if (todaysDate.after(caData.getRedStartDate()) && todaysDate.before(caData.getBlueStartDate())) 
+			}
+			
+			else if (todaysDate.getTime().after(caData.getAmberStartDate()) && todaysDate.getTime().before(caData.getRedStartDate())) {
+				caData.setCurrentcostBand(RenewalColourEnum.AMBER);
+			}
+			
+			else if(todaysDate.getTime().equals(caData.getRedStartDate())){
 				caData.setCurrentcostBand(RenewalColourEnum.RED);
-			else if (todaysDate.after(caData.getBlueStartDate()) && todaysDate.before(caData.getBlackStartDate())) 
+			}
+			
+			else if (todaysDate.getTime().after(caData.getRedStartDate()) && todaysDate.getTime().before(caData.getBlueStartDate())) {
+				caData.setCurrentcostBand(RenewalColourEnum.RED);
+			}
+			
+			else if(todaysDate.getTime().equals(caData.getBlueStartDate())){
 				caData.setCurrentcostBand(RenewalColourEnum.BLUE);
-			else if (todaysDate.after(caData.getBlackStartDate()) && todaysDate.before(caData.getBlackEndDate())) 
+			}
+			
+			else if (todaysDate.getTime().after(caData.getBlueStartDate()) && todaysDate.getTime().before(caData.getBlackStartDate())) {
+				caData.setCurrentcostBand(RenewalColourEnum.BLUE);
+			}
+			
+			else if(todaysDate.getTime().equals(caData.getBlackStartDate())){
 				caData.setCurrentcostBand(RenewalColourEnum.BLACK);
+			}
+			
+			else if (todaysDate.getTime().after(caData.getBlackStartDate()) && todaysDate.getTime().before(caData.getBlackPhoneUpStart())) {
+				caData.setCurrentcostBand(RenewalColourEnum.BLACK);
+			}
+			
+			else if (todaysDate.getTime().equals(caData.getBlackPhoneUpStart()) || (todaysDate.getTime().after(caData.getBlackPhoneUpStart()) && todaysDate.getTime().before(caData.getBlackAllEnd()))) {
+				caData.setCurrentcostBand(RenewalColourEnum.BLACK);
+			}
+			
+			
+			else if (todaysDate.getTime().after(caData.getBlackAllEnd())) {
+				caData.setCurrentcostBand(RenewalColourEnum.GREY);
+			}
 			
 		}
 		else{//CAN BE DOLDRUM OR TOO LATE TO RENEW
@@ -326,35 +374,42 @@ public class CostAnalysisDataEngine extends Universal{
 	public CostAnalysisData getNextPhasesInfo(RenewalDates allDates){
 		
 		CostAnalysisData caData = new CostAnalysisData();
-		Date greenStart = allDates.getNextWindowOpenDate();
+		/*Date greenStart = allDates.getNextWindowOpenDate();
 		Date amberStart = utils.getMidnight(utils.addDays(allDates.getNextRenewalDueDate(), -15));
 		Date redStart = utils.getMidnight(utils.addHours(allDates.getNextRenewalDueDate(), -48));
 		Date blueStart = utils.get8PM(utils.addHours(allDates.getNextRenewalDueDate(), -4));
-		Date blackStart = utils.getMidnight(utils.addDays(allDates.getNexttWindowCloseDate(), -10));
+		Date blackStart = utils.getMidnight(utils.addDays(allDates.getNexttWindowCloseDate(), -10));*/
 		
-		caData.setGreenStartDate(greenStart);
-		caData.setAmberStartDate(amberStart);
-		caData.setRedStartDate(redStart);
-		caData.setBlueStartDate(blueStart);
-		caData.setBlackStartDate(blackStart);
-		//caData.setBrownEndDate(utils.addDays(allDates.getNexttWindowCloseDate(), -2));
-		caData.setBlackEndDate(allDates.getNexttWindowCloseDate());
-		System.out.println("Calculated Dates \n");
+		CalendarColour colourDates = new CalendarColour();
+    	TypedQuery<CalendarColour> allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(allDates.getNextRenewalDueDate());
+    	colourDates = allColourDates.getSingleResult();
+		caData.setGreenStartDate(colourDates.getGreenStart());
+		caData.setAmberStartDate(colourDates.getAmberStart());
+		caData.setRedStartDate(colourDates.getRedStart());
+		caData.setBlueStartDate(colourDates.getBlueStart());
+		caData.setBlackStartDate(colourDates.getBlackStart());
+		//caData.setBrownEndDate(utils.addDays(allDates.getCurrentWindowCloseDate(), -2));
+		caData.setBlackPhoneUpStart(colourDates.getBlackPhoneUpStart());
+		caData.setBlackAllEnd(colourDates.getBlackAllEnd());
+		System.out.println("Calculated Next Year Dates \n");
 		System.out.println(caData.getGreenStartDate() +" " + caData.getAmberStartDate() +" " + caData.getRedStartDate() +
-				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackEndDate());
+				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackPhoneUpStart() + " " + caData.getBlackAllEnd());
+		
+		log().debug("Calculated Next Year Dates in the order as ::: " + caData.getGreenStartDate() +" " + caData.getAmberStartDate() +" " + caData.getRedStartDate() +
+				" " + caData.getBlueStartDate() + " " + caData.getBlackStartDate() + " " + caData.getBlackPhoneUpStart() + " " + caData.getBlackAllEnd());
 		
 		/**
 		 * SETTING ALL RESPECTIVE DATES TO STRING FORMAT 
 		 */
-		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(greenStart));
-		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(amberStart));
-		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(redStart));
-		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blueStart));
-		caData.setBlackStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(blackStart));
-		caData.setBlackEndDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackEndDate()));
+		caData.setGreenStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getGreenStartDate()));
+		caData.setAmberStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getAmberStartDate()));
+		caData.setRedStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getRedStartDate()));
+		caData.setBlueStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlueStartDate()));
+		caData.setBlackStartDateUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackStartDate()));
+		caData.setBlackPhoneUpStartUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackPhoneUpStart()));
+		caData.setBlackAllEndUI(utils.dateToUSStringWithDayOfWeekandTimeandZone(caData.getBlackAllEnd()));
 		
-		
-		caData.setCurrentcostBand(RenewalColourEnum.GREEN);
+		//caData.setCurrentcostBand(RenewalColourEnum.GREEN);
 		
 		return caData;
 	
