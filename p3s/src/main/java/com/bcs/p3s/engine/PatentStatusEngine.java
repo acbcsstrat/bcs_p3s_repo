@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import com.bcs.p3s.display.CalendarColourDateUTC;
 import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.RenewalDates;
