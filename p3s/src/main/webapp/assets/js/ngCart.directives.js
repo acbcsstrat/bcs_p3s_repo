@@ -29,7 +29,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             },
             link:function(scope, element, attrs){
                 scope.attrs = attrs;
-
                 scope.inCart = function(){
                     return  ngCart.getItemById(attrs.id);
                 };
@@ -118,7 +117,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                     $scope.extensionFee = 0;
                     $scope.urgentFee = 0;
                     $scope.totalCost = 0;
-                    
+
                     productData.forEach(function(data, i){
                         processingFeeArr.push(data._data.feeUI.processingFeeUSD)
                         renewalFeeArr.push(data._data.feeUI.renewalFeeUSD)

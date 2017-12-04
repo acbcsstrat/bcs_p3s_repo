@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-12 col-xl-6 md-m-b-md">
+    <div class="col-md-12 col-xl-6 lg-m-b-md">
         <div class="content-panel bg-white">
             <div class="content-panel__head border-grey-xs--btm">
                 <p class="font-h4 font-weight-medium">Summary</p>
@@ -10,23 +10,29 @@
             </div>
             <div class="content-panel__head border-grey-xs--btm">
                 <div class="row">
-                    <div class="col-md-8 col-lg-8 col-xl-8">
+                    <div class="col-md-3 col-lg-8 col-xl-8">
                         <p class="font-weight-medium font-body">Fee</p>
                     </div>
-                    <div class="col-md-4 col-lg-8 col-xl-4">
-                        <p class="font-weight-medium font-body">Amount</p>
+                    <div class="col-md-3 col-lg-8 col-xl-4">
+                        <p class="font-weight-medium font-body text-right">Amount</p>
+                    </div>
+                    <div class="col-md-3 col-lg-8 hidden-xl-up">
+                        <p class="font-weight-medium font-body">Fee</p>
+                    </div>
+                    <div class="col-md-3 col-lg-8 hidden-xl-up">
+                        <p class="font-weight-medium font-body text-right">Amount</p>
                     </div>
                 </div>
             </div>
             <div class="content-panel__head border-grey-xs--btm">
                 <div class="row">
-                    <div class="col-md-6 hidden-lg-up">
+                    <div class="col-md-6 hidden-xl-up">
                         <div class="row m-b-md">
                             <div class="col-md-6">
                                 <p class="font-weight-medium font-body">Official Fees</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body">$ {{renewalFee | number:2}}</p>
+                                <p class="font-body text-right">$ {{renewalFee | number:2}}</p>
                             </div>                               
                         </div>
                         <div class="row">
@@ -34,66 +40,66 @@
                                 <p class="font-weight-medium font-body">Processing Fees</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body">$ {{processingFee | number:2}}</p>
+                                <p class="font-body text-right">$ {{processingFee | number:2}}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 hidden-lg-up">
+                    <div class="col-md-6 hidden-xl-up">
                         <div class="row m-b-md">
                             <div class="col-md-6">
                                 <p class="font-weight-medium font-body">EPO Surcharges</p>                        
                             </div>                  
                             <div class="col-md-6">
-                                <p class="font-body">$ {{extensionFee | number:2}}</p>
+                                <p class="font-body text-right">$ {{extensionFee | number:2}}</p>
                             </div>
                         </div>
-                        <div class="row m-b-md">                         
+                        <div class="row">                         
                             <div class="col-md-6">
                                 <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body">$ {{urgentFee | number:2}}</p>
+                                <p class="font-body text-right">$ {{urgentFee | number:2}}</p>
                             </div> 
                         </div>
                     </div>  
 
-                    <div class="col-lg-12 col-xl-12 hidden-md-down">
+                    <div class="col-xl-12 hidden-lg-down">
                         <div class="m-b-md">
                             <div class="row">
-                                <div class="col-lg-8 col-xl-8">
+                                <div class="col-xl-8">
                                     <p class="font-weight-medium font-body">Official Fees</p>                        
                                 </div>
-                                <div class="col-lg-4 col-xl-4">
+                                <div class="col-xl-4">
                                     <p class="font-body">$ {{renewalFee | number:2}}</p>
                                 </div>                               
                             </div>
                         </div>
                         <div class="m-b-md">
                             <div class="row">
-                                <div class="col-lg-8 col-xl-8">
+                                <div class="col-xl-8">
                                     <p class="font-weight-medium font-body">Processing Fees</p>
                                 </div>
-                                <div class="col-lg-8 col-xl-4">
+                                <div class="col-xl-4">
                                     <p class="font-body">$ {{processingFee | number:2}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="m-b-md">
                             <div class="row">
-                                <div class="col-lg-8 col-xl-8">
+                                <div class="col-xl-8">
                                     <p class="font-weight-medium font-body">EPO Surcharges</p>                        
                                 </div>                  
-                                <div class="col-lg-4 col-xl-4">
+                                <div class="col-xl-4">
                                     <p class="font-body">$ {{extensionFee | number:2}}</p>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="row">                         
-                                <div class="col-lg-8 col-xl-8">
+                                <div class="col-xl-8">
                                     <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
                                 </div>
-                                <div class="col-lg-4 col-xl-4">
+                                <div class="col-xl-4">
                                     <p class="font-body">$ {{urgentFee | number:2}}</p>
                                 </div> 
                             </div>
@@ -102,14 +108,21 @@
                 </div>
             </div>
             <div class="content-panel__head">
-                <div class="row">
-                    <div class="col-md-8 col-lg-8 col-xl-8">
+                <div class="row hidden-lg-down">
+                    <div class="col-xl-8">
                         <p class="font-weight-medium font-h4">Total:</p> 
                     </div>
-                    <div class="col-md-4 col-lg-4 col-xl-4">
+                    <div class="col-xl-4">
                         <p class="font-weight-medium font-h4">{{ totalCost | currency }}</p>
                     </div>
                 </div>
+                <div class="row hidden-xl-up">
+                    <div class="col-md-12 d-flex">
+                        <p class="font-weight-medium font-h4 m-r-sm">Total:</p> 
+                        <p class="font-weight-medium font-h4">{{ totalCost | currency }}</p>                       
+                    </div>
+
+                </div>                
             </div>            
         </div>
     </div>
@@ -125,12 +138,6 @@
                         <div class="col-md-12">
                             <div class="m-b-sm">
                                 <p class="font-h4 font-weight-medium">Your Information</p>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="email" readonly>Email</label>
-                                <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="lastName" ng-model="billingDetails.email">
-                                </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="firstName">First Name</label>
@@ -171,11 +178,11 @@
                             </div>                    
                         </div>
                     </div>
-                    <div class="form-group row d-flex align-items-center">
-                        <label class="form-check-label font-body col-md-6">
+                    <div class="form-group row d-flex align-items-center justify-content-end">
+                        <label class="form-check-label font-body m-r-md">
                             I accept the <span class="font-weight-medium m-r-xs">Terms and Conditions</span> <input type="checkbox" name="terms-checkout" ng-model="tcChecked">
                         </label>
-                        <div class="col-md-6 text-right">
+                        <div class="text-right">
                             <div ng-if="service=='http' || service == 'log'" class="d-flex justify-content-end btn-default">
                                 <button class="btn btn--lg pill-radius bg-phase-green txt-white font-body font-weight-medium d-flex align-items-center" ng-click="checkout()" ng-disabled="!tcChecked || ngCart.getItems() == 0">Continue <img src="p3sweb/assets/imgs/icons/transaction_icon_small.png" alt="transaction icon" class="m-l-sm"></button>
                             </div>                    

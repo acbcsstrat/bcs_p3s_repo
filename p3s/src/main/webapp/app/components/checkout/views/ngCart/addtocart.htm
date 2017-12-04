@@ -1,5 +1,8 @@
-<button ng-hide="inCart()" class="btn btn--lg btn-block btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white d-flex align-items-center justify-content-center" ng-click="ngCart.addItem(id, name, price, q, data)">Add <img class="m-l-xs" src="p3sweb/assets/imgs/icons/cart_icon_white_sm.png"></button>
-<a ng-show="inCart()" class="btn btn--lg btn-block btn-portal pill-radius bg-phase-red font-body font-body--component font-weight-medium cartbtn txt-white d-flex align-items-center justify-content-center cursor-pointer" ng-click="ngCart.removeItemById(id)">
-	<span class="d-flex align-items-center">Remove <img class="m-l-xs" src="p3sweb/assets/imgs/icons/cart_icon_white_sm.png"></span>
-</a>
+<button ng-hide="inCart()" class="btn btn--lg btn-block btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white d-flex align-items-center justify-content-center" ng-click="ngCart.addItem(id, name, price, q, data)">Add <img class="m-l-xs hidden-md-down" src="p3sweb/assets/imgs/icons/cart_icon_white_sm.png"></button>
+<div class="btn-remove">
+	<a ng-show="inCart()" class="btn btn--lg btn-block btn-portal pill-radius bg-phase-red font-body font-body--component font-weight-medium cartbtn txt-white d-flex align-items-center justify-content-center cursor-pointer" ng-click="ngCart.removeItemById(id)">
+		<span class="d-flex align-items-center">Remove <img class="m-l-xs hidden-md-down" src="p3sweb/assets/imgs/icons/cart_icon_white_sm.png"></span>
+	</a>	
+</div>
+
 

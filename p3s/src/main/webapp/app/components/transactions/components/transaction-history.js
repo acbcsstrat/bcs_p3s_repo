@@ -1,11 +1,19 @@
 app.component('transactionHistory', {
 	bindings: { transactionHistory: '<'},
 	templateUrl: 'p3sweb/app/components/transactions/views/transaction-history.htm',
-	controller: function ($rootScope, NgTableParams) {
+	controller: function ($rootScope, NgTableParams, $timeout) {
 
 		var vm = this;
 
 		$rootScope.page = 'Transaction History';
+
+		vm.animate = false;
+
+		vm.transInfoContent = false;
+
+	    $timeout(function() {
+	      vm.animate = true;
+	    }, 300);    		
 
 		vm.$onInit = () => {
 

@@ -1,6 +1,6 @@
 app.component('searchpatent', {
 	templateUrl: 'p3sweb/app/components/patents/views/search-patent.htm',
-	controller: ['searchPatentService', '$state', '$stateParams', '$rootScope', 'patentsRestService', '$timeout', '$uibModal', '$scope', function(searchPatentService, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, $scope) {
+	controller: ['searchPatentService', '$state', '$stateParams', '$rootScope', 'patentsRestService', '$timeout', '$uibModal', '$scope', '$anchorScroll', function(searchPatentService, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, $scope, $anchorScroll) {
 
 		var vm = this;
 	 	vm.queriedPatent = {};
@@ -64,7 +64,11 @@ app.component('searchpatent', {
 					            .then(
 					            	function(response){
 			        			 		var patent = response[0];
-						             	$state.go('patents.patent', {patentId: patent.id}, {reload: true});
+						             	$state.go('patents.patent', {patentId: patent.id}, {reload: false});
+										$timeout(function() {
+										  $anchorScroll('patentItemAnchor')
+										  console.log('say what')
+										}, 100);
 					             	},
 						            function(errResponse){
 						                console.error('Error while saving Patent');

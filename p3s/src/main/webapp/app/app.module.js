@@ -6,6 +6,8 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 
     $rootScope.color = 'green';
 
+
+    
     userService.fetchUser()
     .then(
         function(response){

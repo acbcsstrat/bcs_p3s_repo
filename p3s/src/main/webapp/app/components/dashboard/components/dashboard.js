@@ -10,6 +10,12 @@ app.component('dashboard', {
 		
 		$rootScope.page = 'Dashboard';
 
+	    vm.animate = false;
+
+	    $timeout(function() {
+	      vm.animate = true;
+	    }, 300);    		
+
 		vm.fetchItemRenewal = function() {
 			patentsService.activePatentItemMenu();
 		}
@@ -24,7 +30,6 @@ app.component('dashboard', {
 						
 						data.renewalUIs.forEach(function(data, i) {
 							if(data.patentUI.id == id) {
-								console.log(transId)
 								$state.go('current-transactions.current-transaction-item',{transId: transId})
 							}
 						})
@@ -57,7 +62,6 @@ app.component('dashboard', {
 		vm.activeMenu = vm.activityNotifications[0].activity;
 
 		vm.setActivityActiveTab = function(menuItem, index) {
-			console.log(menuItem)
 			$scope.activeActivityTabResp = index;
 			vm.activeMenu = menuItem
 		}
@@ -77,20 +81,6 @@ app.component('dashboard', {
 					vm.renewalfxTimeframe = 'Last Mth'													
 			}				
 		}
-
-		// vm.getMessages = function() {
-			
-		// 	dashboardService.getMessages()
-		// 	.then(
-		// 		function(response){
-		// 			// console.log(response)
-		// 		},
-		// 		function(errResponse){
-		// 			// console.log(errResponse)
-		// 		}
-		// 	)
-
-		// }
 
 		// vm.getMessages()
 
@@ -146,7 +136,6 @@ app.component('dashboard', {
 				}
 
 				if(data.latestTransStatus === 'Completed') {
-					console.log(data)
 					vm.recentRenewalArr.push(data)
 				}
 			})
@@ -171,7 +160,7 @@ app.component('dashboard', {
 				                    	var hours =  d - response.greenStartDate;
 
 				                    	if(millsToHours(response, hours) !== undefined){
-				                    		vm.recentStageArr.push(response)
+				                    		vm.recentStageArr.push(item)
 				                    		item.nextCostBandColor = 'Amber';
 				                    	}
 
@@ -196,7 +185,7 @@ app.component('dashboard', {
 				                    	var hours =  d - response.amberStartDate;
 
 				                    	if(millsToHours(response, hours) !== undefined){
-				                    		vm.recentStageArr.push(response);
+				                    		vm.recentStageArr.push(item);
 				                    		item.nextCostBandColor = 'Red';
 				                    	}
 
@@ -244,7 +233,7 @@ app.component('dashboard', {
 				                    	var hours =  d - response.blueStartDate;
 
 				                    	if(millsToHours(response, hours) !== undefined){
-				                    		vm.recentStageArr.push(response)
+				                    		vm.recentStageArr.push(item)
 				                    		item.nextCostBandColor = 'Black';
 				                    	}
 
@@ -269,7 +258,7 @@ app.component('dashboard', {
 				                    	var hours =  d - response.blackStartDate;
 
 				                    	if(millsToHours(response, hours) !== undefined) {
-				                    		vm.recentStageArr.push(response);
+				                    		vm.recentStageArr.push(item);
 											item.nextCostBandColor = 'Grey';				                    		
 				                    	}
 
@@ -284,8 +273,7 @@ app.component('dashboard', {
 											data.progressBar =  Math.round(((progress) / (total)) * 100);
 										})
 
-			                        } //switch end
-		                    
+			                        } //switch end	                    
 			        	
 			                    }, 
 			                    function(errResponse){
@@ -308,8 +296,6 @@ app.component('dashboard', {
 			vm.blueRenewals = [];
 			vm.blackRenewals = [];
 			vm.greyRenewals = [];
-
-
 
 			//COLOUR KEY
 
@@ -395,53 +381,21 @@ app.component('dashboard', {
 			 	}, 500)
 				
 				vm.doughnutOptions = {
-					borderWidth: [100, 10],
+					elements: {
+						arc: {
+							borderWidth: 10		
+						}
+					},
 					responsive: true,
 					cutoutPercentage: 70,
+					animation: {
+						duration: 1500,
+						easing: 'linear'
+					},
 				    hover: {
-				      mode: false
-				    }	
-			 //  		animation: {
-			 //  			easing: 'easeInSine',
-			 //  			duration: 2000,
-			 //  			onComplete: function() {
-    // // WHY ALWAYS ME???
-				// 	        console.log("completed animation");
-				// 	        var chartInstance = this.chart;
-				// 	        var ctx = chartInstance.ctx;
-				// 	        ctx.textAlign = "center";
-				// 	        console.log(chartInstance)
-				// 	        Chart.helpers.each(this.data.datasets.forEach(function(dataset, i) {
-				// 	          var meta = chartInstance.controller.getDatasetMeta(i);
-				// 	          Chart.helpers.each(meta.data.forEach(function(bar, index) {
+				      	mode: true
+				    }
 
-				// 	            let offsetY = 0;
-				// 	            switch (bar._datasetIndex) {
-				// 	              case 1:
-				// 	              case 2:
-				// 	                // official or pending
-				// 	                if (bar._datasetIndex === 1) {
-				// 	                  // official offset
-				// 	                  offsetY = 14;
-				// 	                } else {
-				// 	                  // pending offset
-				// 	                  offsetY = -5;
-				// 	                }
-				// 	                // to change color
-				// 	                // ctx.fillStyle = "#ff00ff";
-				// 	                ctx.font = "15px";
-				// 	                // Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
-				// 	                /*ctx.shadowColor = "black";// string
-				// 									ctx.shadowOffsetX = 0; // integer
-				// 	                ctx.shadowOffsetY = 0; // integer
-				// 	                ctx.shadowBlur = 5; // integer*/
-				// 	                ctx.fillText(dataset.data[index], bar._model.x, bar._model.y + offsetY);
-				// 	            }
-
-				// 	          }), this)
-				// 	        }), this);
-				// 	      }
-			 //  		},
 			  	};
 
 			})

@@ -1,11 +1,19 @@
 app.component('patents', {
   	bindings: { patents: '<' },
 	templateUrl: 'p3sweb/app/components/patents/views/list-patents.htm',
-	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', '$state', '$stateParams', 'currentTransactionsService', 'patentsService', '$filter', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams, $state, $stateParams, currentTransactionsService, patentsService, $filter) {
+	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', '$state', '$stateParams', 'currentTransactionsService', 'patentsService', '$filter', '$anchorScroll', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams, $state, $stateParams, currentTransactionsService, patentsService, $filter, $anchorScroll) {
 
 		var vm = this;
 
 		$rootScope.page = 'List Patents';
+
+		vm.animate = false;
+
+		vm.patentInfoContent = false;
+
+	    $timeout(function() {
+	      vm.animate = true;
+	    }, 300);    		
 
 		vm.displayPatents = function() {
 			$state.go('patents')
@@ -27,10 +35,12 @@ app.component('patents', {
 							if(data.patentUI.id == id) {
 								$state.go('current-transactions.current-transaction-item',{transId: transId})
 								.then(
-									function(){
-
+									function(response){
+										$timeout(function() {
+										  $anchorScroll('currTransAnchor');
+										}, 100);
 									},
-									function(){
+									function(errResponse){
 
 									}
 								)
@@ -59,51 +69,6 @@ app.component('patents', {
 			var bluePatents = [];
 			var blackPatents = [];
 			var greyPatents = [];
-
-			vm.sortData = function(patents) {
-				
-				var tableData;
-
-				$scope.contents = patents;
-
-				$scope.contents.sort(function(a, b){
-					var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-					return dateB - dateA;
-				})
-
-				tableData = $scope.contents;
-
-			   	vm.tableParams = new NgTableParams({
-			   		sorting: { renewalDueDate: "desc" },
-			        page: 1,            // show first page
-			        count: 10000      // count per page
-			    }, {
-			        counts: [],
-			        total: tableData.length,
-			        getData: function(params) {
-
-			        	var orderedData;
-
-			        	if (params.sorting().renewalDueDate === 'asc') {
-			        		tableData.sort(function(a, b){
-			        			var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-			        			return dateA - dateB;
-			        		})
-			        		orderedData = tableData;
-			        	} else if (params.sorting().renewalDueDate === 'desc') {
-			        		tableData.sort(function(a, b) {
-			        			var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-			        			return dateB - dateA;
-			        		})
-			        		orderedData = tableData;
-			        	} else if(!params.sorting().renewalDueDate) {
-
-			    			orderedData = params.sorting() ? $filter('orderBy')(tableData, params.orderBy()) : tableData;		        		
-			        	}
-			        	return orderedData;
-			        }
-			    });
-			}
 
 	  		vm.displayPhase = function(id) {
 				switch (id) {
@@ -269,6 +234,7 @@ app.component('patents', {
 		}
 
       	vm.rowSelect = function(event){
+      		vm.patentInfoContent = true;
       		if(!$(event.target).hasClass('cartbtn')) {
 	      		var id = ($($(event.currentTarget).find('a')));
 	      		var patentId = id[0].hash; //gets data from ui-sref
