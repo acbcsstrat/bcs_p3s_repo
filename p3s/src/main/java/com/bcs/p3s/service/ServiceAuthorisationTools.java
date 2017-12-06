@@ -77,24 +77,24 @@ public class ServiceAuthorisationTools extends Universal {
 	
 	// Start of : Lower Level tools
 
-	// Singleton for session info
-	protected PostLoginSessionBean me = null;
-	protected PostLoginSessionBean checkThisIsMy() {
-		if (me==null) {
-			log().debug("ServiceAuthorisationTools me singleton being instantiated."); // Use this to monitor destructions
-			me = (PostLoginSessionBean) session.getAttribute("postSession");
-			if ((me==null) || (me.getUser()==null) || (me.getBusiness()==null) ) {
-				String msg = "***  ServiceAuthorisationTools checkThisIsMy() failed to retreive good session info *** (Possibly not logged in?)";
-				System.out.println(msg);
-				logInternalError().fatal(msg);
-				System.out.println("(me==null) is "+(me==null));
-				if (me!=null) System.out.println("me.getUser() is "+me.getUser());
-				if (me!=null) System.out.println("me.getBusiness() is "+me.getBusiness());
-				assert false : "4768";
-			}
-		}
-		return me;
-	}	
+	// Singleton for session info - not Singleton anymore
+	//protected PostLoginSessionBean me = null;
+		protected PostLoginSessionBean checkThisIsMy() {
+			//if (me==null) {
+				//log().debug("ServiceAuthorisationTools me singleton being instantiated."); // Use this to monitor destructions
+				PostLoginSessionBean me = (PostLoginSessionBean) session.getAttribute("postSession");
+				if ((me==null) || (me.getUser()==null) || (me.getBusiness()==null) ) {
+					String msg = "***  ServiceAuthorisationTools checkThisIsMy() failed to retreive good session info *** (Possibly not logged in?)";
+					System.out.println(msg);
+					logInternalError().fatal(msg);
+					System.out.println("(me==null) is "+(me==null));
+					if (me!=null) System.out.println("me.getUser() is "+me.getUser());
+					if (me!=null) System.out.println("me.getBusiness() is "+me.getBusiness());
+					assert false : "4768";
+				}
+			//}
+			return me;
+		}	
 
 	protected void checkThisIsMyUser(Long id, String err) {
 		err += "  [on checkThisIsMyUser]";
