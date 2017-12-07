@@ -95,11 +95,27 @@ public class PatentRestController extends Universal {
 	public ResponseEntity<PatentUI> searchEpoForPatent(@PathVariable("patentApplicationNumber") String patentApplicationNumber) {
 		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
 		PatentUI patentUI = null;
+		boolean isFound = false;
 		
 		try{
 			System.out.println("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
 			
+			/** PRECHECK 1::TO CHECK THE FORMAT OF PATENT APPLICATION NUMBER **/
+			patentApplicationNumber = patentService.validateAndFormatApplicationNumber(patentApplicationNumber);
+			if(patentApplicationNumber == null){
+				log().error("Format error for Patent Applicatioon Number ");
+				return new ResponseEntity<PatentUI>(HttpStatus.BAD_REQUEST); 
+			}
+			
 			PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+			/** PRECHECK 2:: TO CHECK WHETHER PATENT APPLICATION NUMBER IS DUPLICATE **/
+			isFound = patentService.isPatentFoundForBusiness(patentApplicationNumber,postSession);
+			if(isFound){
+				log().error("Duplicate patent for business " + patentApplicationNumber);
+				return new ResponseEntity<PatentUI>(HttpStatus.NO_CONTENT); 
+			}
+			
+			
 		  	patentUI = patentService.searchEpoForPatent(patentApplicationNumber,postSession);
 		  	
 		}

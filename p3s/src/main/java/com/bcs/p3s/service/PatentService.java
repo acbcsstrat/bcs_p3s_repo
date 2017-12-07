@@ -99,6 +99,10 @@ public interface PatentService {
 	
 	public PostLoginSessionBean populateSessionBean();
 	
+	public String validateAndFormatApplicationNumber(String patentApplicationNumber);
+	
+	public boolean isPatentFoundForBusiness(String patentApplicationNumber, PostLoginSessionBean postSession);
+	
 //	Patent findById(long id);
 //	
 //	Patent findByName(String name);
