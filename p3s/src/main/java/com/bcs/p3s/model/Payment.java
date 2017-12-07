@@ -70,6 +70,14 @@ public class Payment {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date transTargetEndDate;
+    
+    /**
+     */
+    @NotNull
+    //@Future
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date fxTarget;
 
     /**
      */

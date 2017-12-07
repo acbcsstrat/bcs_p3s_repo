@@ -75,18 +75,6 @@ public class PaymentRestController extends Universal {
     }
 
     
-   /* // Below is a temporary GET variant of the above POSt method: for development and testing purposes only // acToDo 
-    @RequestMapping(value = "/rest-basket/{api41cmd}", method = RequestMethod.GET)
-    public ResponseEntity<BasketContents> showBasketContentsAsGET(@PathVariable("api41cmd") String api41cmd) {
-
-    	log().debug("PaymentRestController : /rest-basket/ showBasketContentsAsGET() invoked.   Param="+api41cmd);
-
-    	
-    	return showBasketContents(api41cmd);
-    }*/
-
-    
-
     //------------------- Checkout – Bank Transfer prior to Commit --------------------------------------------------
 
     // Implements API section 4.2
@@ -123,23 +111,20 @@ public class PaymentRestController extends Universal {
 
   	
 		log().debug("PaymentRestController : /rest-prepare-banktransfer/ showBankTransferPreCommitDetails() returning. Content follows (unless null)");
-		if (bankTransferPreCommitDetails!=null) log().debug(bankTransferPreCommitDetails.toString());
-		return new ResponseEntity<BankTransferPreCommitDetails>(bankTransferPreCommitDetails, HttpStatus.OK);
+		if (bankTransferPreCommitDetails!=null){
+			log().debug(bankTransferPreCommitDetails.toString());
+			return new ResponseEntity<BankTransferPreCommitDetails>(bankTransferPreCommitDetails, HttpStatus.OK);
+		}
+		
+		else{
+			log().debug("Error retrieving Pre Commit details.");
+			log().error("Error retrieving Pre Commit details.");
+			return new ResponseEntity<BankTransferPreCommitDetails>(bankTransferPreCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+			
     }
 
-    
-    // Below is a temporary GET variant of the above POSt method: for development and testing purposes only // acToDo 
-    @RequestMapping(value = "/rest-prepare-banktransfer/{api42cmd}", method = RequestMethod.GET)
-    public ResponseEntity<BankTransferPreCommitDetails> showBankTransferPreCommitDetailsAsGET(@PathVariable("api42cmd") String api42cmd) {
-
-    	log().debug("PaymentRestController : /rest-prepare-banktransfer/ showBankTransferPreCommitDetailsAsGET() invoked.   Param="+api42cmd);
-
-    	return showBankTransferPreCommitDetails(api42cmd);
-    }
-
-    
-    
-    
+       
     //------------------- Checkout – Bank Transfer prior to Commit --------------------------------------------------
 
     // Implements API section 4.3
@@ -170,20 +155,18 @@ public class PaymentRestController extends Universal {
 
   	
 		log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() returning. Content follows (unless null)");
-		if (bankTransferPostCommitDetails!=null) log().debug(bankTransferPostCommitDetails.toString());
-		return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);
+		if (bankTransferPostCommitDetails!=null){
+			log().debug(bankTransferPostCommitDetails.toString());
+			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);
+		}
+		else{
+			log().debug("Error retrieving Post Commit Deatails.");
+			log().error("Error retrieving details.");
+			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
     }
-
-    
-    // Below is a temporary GET variant of the above POSt method: for development and testing purposes only // acToDo 
-    @RequestMapping(value = "/rest-committed-banktransfer/{api43cmd}", method = RequestMethod.GET)
-    public ResponseEntity<BankTransferPostCommitDetails> showBankTransferPostCommitDetailsAsGET(@PathVariable("api43cmd") String api43cmd) {
-
-    	log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetailsAsGET() invoked.   Param="+api43cmd);
-
-    	return showBankTransferPostCommitDetails(api43cmd);
-    }
-
+   
     @RequestMapping(value = "/rest-create-csv", method = RequestMethod.GET)
     public void createCSV(){
     	
@@ -192,7 +175,5 @@ public class PaymentRestController extends Universal {
 		test.createOrderCsv(payment);
     }
     
-	//---------------------------------------------------------------------------
-
 
 }

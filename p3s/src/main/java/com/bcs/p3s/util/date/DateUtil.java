@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.SimpleTimeZone;
 
 public class DateUtil implements Comparable<String>{
 
@@ -145,6 +146,20 @@ public class DateUtil implements Comparable<String>{
 
 	public int daysBetween(Date d1, Date d2){
         return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+	}
+	
+	public Date getUTCTime(Date originalDate) throws ParseException{
+		
+		Date yourUtcDate = new Date();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d, yyyy  HH:mm z"); // Tue Aug 1, 2017  15:11 BST
+		String result = sdf.format(originalDate);
+		SimpleDateFormat sdfUTC = new SimpleDateFormat();
+		sdfUTC.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
+		yourUtcDate = sdf.parse(result);
+		//remove later
+		System.out.println("UTC Date is "+yourUtcDate);
+		return yourUtcDate;
 	}
 	
 }

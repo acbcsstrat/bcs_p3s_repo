@@ -299,8 +299,11 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				patents.add(thisPatent);
 			}
 
-			PaymentTimingEngine timing = new PaymentTimingEngine();
-		    Date endDate = timing.whenCustomerFundsMustHaveReachedOurUsAccount(new Date());
+			//PaymentTimingEngine timing = new PaymentTimingEngine();
+		   // Date endDate = timing.whenCustomerFundsMustHaveReachedOurUsAccount(new Date());
+			//Getting target End Date from DB value transTargetEndDate - MP 06/12/2017 
+			//Date endDate = timing.getBothPayDates(commitTransaction);
+			Date endDate = thisTransaction.getTransTargetEndDate();
 		    String endDateUI = new DateUtil().dateToUSStringWithDayOfWeekandTimeandZone(endDate);
 			
 		    String recipient = me.getEmailAddress();
@@ -417,11 +420,22 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	    bankTransferPreCommitDetails.setDateNowLocalTimeUI(nowUI);
 
 	    PaymentTimingEngine timing = new PaymentTimingEngine();
-	    Date endDate = timing.whenCustomerFundsMustHaveReachedOurUsAccount(now);
-	    bankTransferPreCommitDetails.setTransTargetEndDate(endDate);
-	    String endDateUI = new DateUtil().dateToUSStringWithDayOfWeekandTimeandZone(endDate);
-	    bankTransferPreCommitDetails.setTransTargetEndDateUI(endDateUI);
+	    //Date endDate = timing.whenCustomerFundsMustHaveReachedOurUsAccount(now);
+	    //Date endDate = timing.getPayByDateForUser(bankTransferPreCommitDetails.getOrderedPatentUIs());
 	    
+	    /*if(endDate == null){
+	    	log().error("Error calculating transaction target end date. So returning error");
+	    	return null;
+	    }*/
+	    
+	    bankTransferPreCommitDetails = timing.getBothPayDates(bankTransferPreCommitDetails);
+	    if(bankTransferPreCommitDetails == null){
+	    	log().error("Error calculating transaction target end dates. So returning error");
+	    	return null;
+	    }
+	    //bankTransferPreCommitDetails.setTransTargetEndDate(endDate);
+	    String endDateUI = new DateUtil().dateToUSStringWithDayOfWeekandTimeandZone(bankTransferPreCommitDetails.getTransTargetEndDate());
+	    bankTransferPreCommitDetails.setTransTargetEndDateUI(endDateUI);
 	    
 	    return bankTransferPreCommitDetails;
 
@@ -629,6 +643,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		payment.setInitiatedByUserId(user);
 		payment.setTransStartDate(bankTransferPostCommitDetails.getDateNowLocalTime());
 		payment.setTransTargetEndDate(bankTransferPostCommitDetails.getTransTargetEndDate());
+		payment.setFxTarget(bankTransferPostCommitDetails.getFxTarget());
 		payment.setLatestTransStatus(PaymentStatusEnum.INITIATED);
 		payment.setLastUpdatedDate(Calendar.getInstance().getTime());
 		payment.setHasFailed(false); //when insert to payments initially
