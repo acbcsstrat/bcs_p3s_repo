@@ -90,6 +90,11 @@ public class RenewalDatesEngine extends Universal{
 	        	CalendarColour colourDates = new CalendarColour();
 	        	TypedQuery<CalendarColour> allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 	        	colourDates = allColourDates.getSingleResult();
+	        	if(colourDates == null){
+	        		log().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table");
+	        		//any other logging
+	        		return null;
+	        	}
 	        	renewalStart.setTime(colourDates.getGreenStart());
 	        	renewalEnd.setTime(colourDates.getBlackAllEnd());
 		        System.out.println("Calculated Window for this year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());

@@ -121,17 +121,17 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		checkNotNull(patentApplicationNumber, err);
 		//checkEPNumberFormat(patentApplicationNumber, err);
 		
-		patentApplicationNumber = validateAndFormatApplicationNumber(patentApplicationNumber);
+		//patentApplicationNumber = validateAndFormatApplicationNumber(patentApplicationNumber);  - this method being called as part of PRECHECK1
 		
-		//checking whether patent being added for the business
-		TypedQuery<Patent> patents = Patent.findPatentsByBusiness(postSession.getBusiness());
+		//checking whether patent being added for the business  - this method being called as part of PRECHECK2
+		/*TypedQuery<Patent> patents = Patent.findPatentsByBusiness(postSession.getBusiness());
 		for(Patent patent : patents.getResultList()){
 			if(patentApplicationNumber.equals(patent.getPatentApplicationNumber())){
 				log().debug("Duplicate for the patent for the business. Patent Number[" + patentApplicationNumber + "] already exist for the business. "
 						+ "		Patent id[" +patent.getId() +"] and application number[" + patent.getPatentApplicationNumber() +"]" );
 				return patentUI;
 			}
-		}
+		}*/
 		
 		Patent patent = new Patent();
 		
@@ -899,12 +899,15 @@ public PatentUI populateDataToPatentUI(Patent patent){
 	 * 
 	 * This formatted string being stored in the DB
 	 */
-	protected String validateAndFormatApplicationNumber(String patentApplicationNumber){
+	@Override
+	public String validateAndFormatApplicationNumber(String patentApplicationNumber){
 		
+		String msg = PREFIX+" validateAndFormatApplicationNumber("+ patentApplicationNumber +") ";
 		int length = patentApplicationNumber.length();
 		int newlength = patentApplicationNumber.length();
 		boolean isFormatted = false;
 		
+		log().debug(msg +" invoked ");
 		//truncating check digit from the EP number
 		if(patentApplicationNumber.contains(".")){
 			int index = patentApplicationNumber.indexOf(".");
@@ -931,11 +934,40 @@ public PatentUI populateDataToPatentUI(Patent patent){
 		
 		if(! ( newlength == 10 ) ){
 			String error = "Invalid length for patent Application Number";
+			log().debug("EP number entered/formatted is invalid [" + patentApplicationNumber + "] :: " + error +" : " + length );
 			logM().fatal("EP number entered/formatted is invalid [" + patentApplicationNumber + "] :: " + error +" : " + length );
 			return null;
 		}
 		
+		if(!(isFormatted) && newlength == 10){
+			log().debug("No formatting required as Application Number format is correct");
+		}
+		
+		log().debug("Application Number Format check completed. Returning " + patentApplicationNumber);
 		return patentApplicationNumber;
+	}
+
+	@Override
+	public boolean isPatentFoundForBusiness(String patentApplicationNumber, PostLoginSessionBean postSession) {
+		// TODO Auto-generated method stub
+		String msg = PREFIX+" isPatentFoundForBusiness("+ patentApplicationNumber +") ";
+		boolean isFound = false;
+		log().debug(msg + " invoked ");
+		TypedQuery<Patent> patents = Patent.findPatentsByBusiness(postSession.getBusiness());
+		for(Patent patent : patents.getResultList()){
+			if(patentApplicationNumber.equals(patent.getPatentApplicationNumber())){
+				log().debug("Duplicate for the patent for the business. Patent Number[" + patentApplicationNumber + "] already exist for the business. "
+						+ "		Patent id[" +patent.getId() +"] and application number[" + patent.getPatentApplicationNumber() +"]" );
+				isFound = true;
+			}
+		}
+		
+		if(!isFound){
+			log().debug("Not dupliacte patent for business.");
+		}
+		
+		log().debug("Is Duplicate patent check completed. Returning isFound = " + isFound);
+		return isFound;
 	}
 
 

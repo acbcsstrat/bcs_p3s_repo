@@ -209,11 +209,11 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   	if ("primaryApplicantName".equals(key.trim())) patent.setPrimaryApplicantName(value);
 			   	if ("clientRef".equals(key.trim())) {
 			   		patent.setClientRef(value);
-			   		if (ob==null || "FAILED".equals(value)) patent.setClientRef(null);
+			   		if (ob==null || "FAILED".equals(value)) patent.setClientRef("");
 			   	}
 			   	if ("shortTitle".equals(key.trim())) {
 			   		patent.setShortTitle(value);
-			   		if (ob==null || "FAILED".equals(value)) patent.setShortTitle(null);
+			   		if (ob==null || "FAILED".equals(value)) patent.setShortTitle("");
 			   	}
 			   	if ("patentPublicationNumber".equals(key.trim())) patent.setPatentPublicationNumber(value);
 			   	
