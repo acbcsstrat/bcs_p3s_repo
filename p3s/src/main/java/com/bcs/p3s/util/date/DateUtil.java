@@ -9,11 +9,25 @@ import java.util.SimpleTimeZone;
 
 public class DateUtil implements Comparable<String>{
 
+	public String dateToUSStringWithoutDayOfWeek(Date date) {
+		if (date==null) return "";
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy"); // Oct 31, 2017
+		String result = sdf.format(date);
+		return result;
+	}
+	
 	public String dateToUSStringWithDayOfWeek(Date date) {
 		if (date==null) return "";
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d, yyyy"); // Tue Oct 31, 2017
 		String result = sdf.format(date);
 		return result;
+	}
+	
+	public String dateToUSformatWithDayOfWeek2200UTC(Date date) { // Tue Oct 31, 2017 22:00 UTC
+		if (date==null) return "";
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d, yyyy"); 
+		String result = sdf.format(date);
+		return result + " 22:00 UTC";
 	}
 	
 	public String dateToUSStringWithDayOfWeekandTimeandZone(Date date) {
