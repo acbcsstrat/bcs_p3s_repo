@@ -119,7 +119,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 			path = "C:/MERIN/Documents/PatentPlace/P3S local repo/bcs_p3s_repo_final_final/p3s/src/main/resources/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
-			path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
+			//path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
+			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sweb/WEB-INF/classes/";
 		}
 		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";
