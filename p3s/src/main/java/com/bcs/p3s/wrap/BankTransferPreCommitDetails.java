@@ -22,6 +22,7 @@ public class BankTransferPreCommitDetails {
 	protected Date transTargetEndDate;
 	protected String transTargetEndDateUI;
 
+	protected Date fxTarget;
 	protected String warningMessage;
 
 
@@ -86,6 +87,16 @@ public class BankTransferPreCommitDetails {
 		this.warningMessage = warningMessage;
 	}
 	
+	
+	
+	public Date getFxTarget() {
+		return fxTarget;
+	}
+
+	public void setFxTarget(Date fxTarget) {
+		this.fxTarget = fxTarget;
+	}
+
 	// convenience, for debugging & logging
 	public String toString() {
 		String CRLF = "\n";
@@ -100,6 +111,7 @@ public class BankTransferPreCommitDetails {
 		tos += dateNowLocalTimeUI+CRLF;
 		tos += "transTargetEndDate="+transTargetEndDate+CRLF;
 		tos += transTargetEndDateUI+CRLF;
+		tos += fxTarget+CRLF;
 		return tos;
 	}
 

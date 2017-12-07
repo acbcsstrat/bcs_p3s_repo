@@ -57,6 +57,14 @@ privileged aspect Payment_Roo_JavaBean {
         this.transTargetEndDate = transTargetEndDate;
     }
     
+    public Date Payment.getFxTarget() {
+        return this.fxTarget;
+    }
+    
+    public void Payment.setFxTarget(Date fxTarget) {
+        this.fxTarget = fxTarget;
+    }
+    
     public Date Payment.getLastUpdatedDate() {
         return this.lastUpdatedDate;
     }

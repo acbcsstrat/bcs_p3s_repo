@@ -90,10 +90,10 @@ public class PaymentUI extends Payment {
 		this.setBillingAddressState(payment.getBillingAddressState());
 		this.setBillingAddressZip(payment.getBillingAddressZip());
 		this.setRenewals(null);   // Don't need Renewals, Just RenewalUIs
-		
+		//everytime when sending paymentUI to FE make fx_target to null -- hide the value from user
+		this.setFxTarget(null);
 		
 		// Now the additional fields - WHICH ARE
-
 		this.setTransStartDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getTransStartDate()));
 		this.setTransTargetEndDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getTransTargetEndDate()));
 		this.setLastUpdatedDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getLastUpdatedDate()));
