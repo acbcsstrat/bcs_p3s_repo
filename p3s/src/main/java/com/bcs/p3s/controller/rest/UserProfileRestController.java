@@ -3,14 +3,11 @@ package com.bcs.p3s.controller.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,21 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.bcs.p3s.display.UserProfileUI;
-import com.bcs.p3s.docs.email.P3sEmail;
-import com.bcs.p3s.docs.email.P3sEmailFactory;
-import com.bcs.p3s.docs.email.template.EmailTemplates;
-import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
-import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PostLoginSessionBean;
-import com.bcs.p3s.util.email.EmailSender;
-import com.bcs.p3s.util.email.TmpEmailerDummy;
 import com.bcs.p3s.util.lang.Universal;
-import com.bcs.p3s.wrap.BankTransferPaymentDetails;
  
 @RestController
 public class UserProfileRestController extends Universal {

@@ -1,6 +1,5 @@
 package com.bcs.p3s.docs.htmldoc.model;
 
-import com.bcs.p3s.docs.htmldoc.HtmlDocInvoiceTypeEnum;
 import com.bcs.p3s.enump3s.InvoiceTypeEnum;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.P3SUser;
