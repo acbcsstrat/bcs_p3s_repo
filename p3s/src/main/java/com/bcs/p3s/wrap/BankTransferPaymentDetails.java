@@ -1,6 +1,5 @@
 package com.bcs.p3s.wrap;
 
-import com.bcs.p3s.display.PatentUI;
 
 /**
  * Were these details to come from a configuration file (or any other variable source) this would be, by far,
@@ -58,6 +57,14 @@ public final class BankTransferPaymentDetails {
 
 	
 	
+	// 171208 - short term bodges until frontend removes obsolete refs to these obsolete fields
+	protected final String obs = "OBSOLETE_FIELD";
+	public String getAccountHoldersName() { return obs; }
+	public String getAccountNumber() { return obs; }
+	public String getItem1() { return obs; }
+	public String getItem2() { return obs; }
+	
+	
 	
 	// Getters. No setters
 	
@@ -97,10 +104,10 @@ public final class BankTransferPaymentDetails {
 	
 	// Below TMP retained for backward compatibility purposes - acTidy
 
-	protected String accountNumber;
-	protected String item1;
-	protected String item2;
-	protected String item3;
+//	protected String accountNumber;
+//	protected String item1;
+//	protected String item2;
+//	protected String item3;
 
 //	public BankTransferPaymentDetails() {
 //		accountNumber = "12345679";
@@ -113,18 +120,18 @@ public final class BankTransferPaymentDetails {
 	
 	// Setters commented out for safety
 	
-	public String getAccountNumber() {
-		return accountNumber;
-	}
-	public String getItem1() {
-		return item1;
-	}
-	public String getItem2() {
-	return item2;
-}
-	public String getItem3() {
-		return item3;
-	}
+//	public String getAccountNumber() {
+//		return accountNumber;
+//	}
+//	public String getItem1() {
+//		return item1;
+//	}
+//	public String getItem2() {
+//	return item2;
+//}
+//	public String getItem3() {
+//		return item3;
+//	}
 
 	
 	

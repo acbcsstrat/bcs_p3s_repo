@@ -10,15 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import com.bcs.p3s.util.random.RandomGenerator;
-import com.bcs.p3s.wrap.BankTransferPaymentDetails;
-
 import com.bcs.p3s.display.FxRateUI;
-import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.P3SUser;
-import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.security.SecurityUtil;
-import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
