@@ -40,7 +40,8 @@ public class DocRestController extends Universal {
 
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("htmldocs/proformainvoice");
+		modelAndView.addObject("jerry","tom");
+		modelAndView.setViewName("htmldocs/proformainvoiceXX");
 		return modelAndView;
 	
 	}
