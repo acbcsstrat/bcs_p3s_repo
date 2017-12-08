@@ -617,23 +617,23 @@
 									</tr>
 								</thead>
 								<tbody class="border-grey-xs--btm">
-									<tr ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+									<tr ng-repeat="renewal in $ctrl.renewalHistory | orderBy:$ctrl.sortType:$ctrl.sortReverse">
 										<td class="font-body td-panel-p-l" width="20%">Year <span ng-bind="renewal.renewalYear"></span></td>
-										<td class="font-body" width="20%">{{renewal.renewalDueDate | date: 'MM/dd/yy'}}</td>
+										<td class="font-body" width="20%">{{renewal.patentUI.lastRenewedDateExEpo | date: 'MM/dd/yy'}}</td>
 										<td class="font-body" width="30%">
 											<table class="table-borderless">
 												<tr>
 													<td class="font-body p-t-none">Official Fee:</td>
-													<td class="font-body p-t-none">$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
+													<td class="font-body p-t-none">$ {{renewal.feeUI.renewalFeeUSD}}</td>
 												</tr>
 												<tr class="border-grey-xs--btm">
 													<td class="font-body">Processing Fee:</td>
-													<td class="font-body">$ {{$ctrl.feeBreakDown.processingFeeEUR}}</td>
+													<td class="font-body">$ {{renewal.feeUI.processingFeeEUR}}</td>
 												</tr>														
 
 												<tr>
 													<td class="font-body font-weight-bold">Total: </td>
-													<td class="font-body font-weight-bold">$ {{$ctrl.feeBreakDown.subTotalUSD}}</td>
+													<td class="font-body font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
 												</tr>													
 											</table>
 										</td>
@@ -1359,23 +1359,23 @@
 											</tr>
 										</thead>
 										<tbody class="border-grey-xs--btm">
-											<tr ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+											<tr ng-repeat="renewal in $ctrl.renewalHistory | orderBy:$ctrl.sortType:$ctrl.sortReverse">
 												<td class="font-body td-panel-p-l">Year <span ng-bind="renewal.renewalYear"></span></td>
-												<td class="font-body">{{renewal.renewalDueDate | date: 'MM/dd/yy'}}</td>
+												<td class="font-body">{{renewal.patentUI.lastRenewedDateExEpo | date: 'MM/dd/yy'}}</td>
 												<td class="font-body">
 													<table class="table-borderless">
 														<tr>
 															<td class="font-body p-t-none">Official Fee:</td>
-															<td class="font-body p-t-none">$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
+															<td class="font-body p-t-none">$ {{renewal.feeUI.renewalFeeUSD}}</td>
 														</tr>
 														<tr class="border-grey-xs--btm">
 															<td class="font-body">Processing Fee:</td>
-															<td class="font-body">$ {{$ctrl.feeBreakDown.processingFeeEUR}}</td>
+															<td class="font-body">$ {{renewal.feeUI.processingFeeEUR}}</td>
 														</tr>														
 
 														<tr>
 															<td class="font-body font-weight-bold">Total: </td>
-															<td class="font-body font-weight-bold">$ {{$ctrl.feeBreakDown.subTotalUSD}}</td>
+															<td class="font-body font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
 														</tr>													
 													</table>
 												</td>

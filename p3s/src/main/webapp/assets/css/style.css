@@ -961,11 +961,18 @@ display: none !important;
 #listCurrTransactionsTable tr td:nth-child(3),
 #listCurrTransactionsTable tr td:nth-child(4),
 #listCurrTransactionsTable tr td:nth-child(5),
-#listCurrTransactionsTable tr td:nth-child(6) {
+#listCurrTransactionsTable tr td:nth-child(6),
+#listTransHistoryTable tr td:nth-child(1),
+#listTransHistoryTable tr td:nth-child(2),
+#listTransHistoryTable tr td:nth-child(3),
+#listTransHistoryTable tr td:nth-child(4),
+#listTransHistoryTable tr td:nth-child(5),
+#listTransHistoryTable tr td:nth-child(6)  {
   width: 14%;
 }
 
-#listCurrTransactionsTable tr td:nth-child(7) {
+#listCurrTransactionsTable tr td:nth-child(7),
+#listTransHistoryTable tr td:nth-child(7) {
   width: 16%;
 }
 
@@ -988,11 +995,11 @@ display: none !important;
 
 
 .animate-show {
-  -webkit-transition:all linear 1.5s;
-  -moz-transition:all linear 1.5s;
-  -ms-transition:all linear 1.5s;
-  -o-transition:all linear 1.5s;
-  transition:all linear 1.5s;
+  -webkit-transition:all linear 0.5s;
+  -moz-transition:all linear 0.5s;
+  -ms-transition:all linear 0.5s;
+  -o-transition:all linear 0.5s;
+  transition:all linear 0.5s;
 }
 
 .animate-show.ng-hide-remove,
@@ -1281,6 +1288,8 @@ select.form-control:not([size]):not([multiple]) {
   padding-right: 5rem;
 }
 
+
+
 .modal-header {
   border-bottom: 0;
   padding-top: 2rem;
@@ -1299,6 +1308,29 @@ select.form-control:not([size]):not([multiple]) {
 
 .modal-footer>:not(:last-child) {
   margin-right: 1.5rem;
+}
+
+.modal-body--multiple {
+  padding-left: 5rem;
+  padding-right: 5rem;  
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;  
+}
+
+.modal-header--multiple {
+  padding-left: 5rem;
+  padding-right: 5rem;  
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;  
+}
+
+.modal-content--multiple {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.modal-content--table {
+  width: 500px;
 }
 
 .btn-block+.btn-block { margin-top: 0px; }

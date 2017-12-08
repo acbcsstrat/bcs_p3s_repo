@@ -8,7 +8,6 @@ app.factory('dashboardService', function($http, $q){
              $http.get(domain+'login-messages/')
                 .then(
                 function (response) {
-                	console.log(response.data)
                     deferred.resolve(response.data);
                 },
                 function(errResponse){

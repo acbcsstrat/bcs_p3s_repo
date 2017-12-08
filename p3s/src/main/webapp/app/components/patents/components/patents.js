@@ -242,28 +242,8 @@ app.component('patents', {
       		}
       	}
 
-      	// if (params.sorting().renewalDueDate === 'asc') {
-			    //     		tableData.sort(function(a, b){
-			    //     			var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-			    //     			return dateA - dateB;
-			    //     		})
-			    //     		orderedData = tableData;
-			    //     	} else if (params.sorting().renewalDueDate === 'desc') {
-			    //     		tableData.sort(function(a, b) {
-			    //     			var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-			    //     			return dateB - dateA;
-			    //     		})
-			    //     		orderedData = tableData;
-			    //     	} else if(!params.sorting().renewalDueDate) {
-
-			    // 			orderedData = params.sorting() ? $filter('orderBy')(tableData, params.orderBy()) : tableData;		        		
-			    //     	}
-
 	   	vm.sortType = function(column) {
-	   		if(column !== 'dueDate') {
-	   			vm.sortDate = false;
-	   			vm.selectedSortType = column;
-	   		} else {
+	   		if(column == 'dueDate') {
 	   			vm.selectedSortType = (function() {
 
 	   				vm.sortDate = true;
@@ -281,6 +261,21 @@ app.component('patents', {
 	   				}
 	   				
 	   			}())
+
+	   		} else if(column == 'shortTitle') {
+	   			if (vm.sortReverse == false) {
+   					vm.tableData.sort(function(a, b){
+   						console.log(a)
+   					})
+   				} else {
+   					vm.tableData.sort(function(a, b){
+   						console.log(a)
+   					})
+   				}
+
+	   		} else {
+	   			vm.sortDate = false;
+	   			vm.selectedSortType = column;
 	   		}
 	   	}
 

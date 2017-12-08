@@ -4,7 +4,7 @@ app.component('dashboard', {
 		transactions: '<' 
 	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, fxService, patentsRestService, $mdSidenav, patentsService, currentTransactionsService, dashboardService) {
+	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, fxService, patentsRestService, $mdSidenav, patentsService, currentTransactionsService, dashboardService, localStorageService) {
 
 		var vm = this;
 		
@@ -14,7 +14,7 @@ app.component('dashboard', {
 
 	    $timeout(function() {
 	      vm.animate = true;
-	    }, 300);    		
+	    }, 300);
 
 		vm.fetchItemRenewal = function() {
 			patentsService.activePatentItemMenu();
@@ -57,8 +57,6 @@ app.component('dashboard', {
 			}
 		]
 
-		// console.log($scope.activeActivityTab)
-
 		vm.activeMenu = vm.activityNotifications[0].activity;
 
 		vm.setActivityActiveTab = function(menuItem, index) {
@@ -82,9 +80,9 @@ app.component('dashboard', {
 			}				
 		}
 
-		// vm.getMessages()
-
 		vm.$onInit = () => {
+
+			var loginCounter;
 
 		 	$scope.toggleLeft = buildToggler('left');
     		$scope.toggleRight = buildToggler('right');
@@ -94,6 +92,131 @@ app.component('dashboard', {
 		        	$mdSidenav(componentId).toggle();
 		      	};
 		    }
+		    console.log(loginCounter)
+		    if(loginCounter !== 1) {
+		    	dashboardService.getMessages()
+			    .then(
+			    	function(response){
+			    		console.log(response)
+			    		var systemResponse = [];
+			    		var urgetResponse = [];
+			    		
+			    		var date = new Date().getTime();
+
+			    		if(response.systemMessages.length > 0) {
+
+			    			response.systemMessages.forEach(function(data){
+			    				var dateFrom = data.displayFromDate; dateTo = data.displayToDate;
+			    				if(date > dateFrom && date < dateTo) { 
+			    					systemResponse.push(data)
+			    				}
+			    			})
+
+							function systemMessageModal() {
+
+								var modalInstance = $uibModal.open({
+									templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
+									scope: $scope,
+									appendTo: undefined,
+									controllerAs: vm,
+									controller: function($uibModalInstance, message) {
+
+										open = true;
+
+										vm.systemMessage = message;
+
+								 	  	vm.ok = function () {
+									    	$uibModalInstance.close();
+									  	};
+
+									},
+									resolve: {
+										message: function() {
+											return systemResponse;
+										}
+									}
+								});
+
+							 	modalInstance.result.finally(function () {
+							     	
+							     	if(response.urgentPatents.length == 0) {
+							     		return;
+							     	} else {
+
+							     		
+
+							     		loginCounter = 0;
+							     		localStorageService.set(loginCounter++);
+							     		console.log(loginCounter)
+
+										$scope.localStorageDemo = localStorageService.get('localStorageDemo');
+
+									    $scope.$watch('localStorageDemo', function(value){
+									      localStorageService.set('localStorageDemo',value);
+									      $scope.localStorageDemoValue = localStorageService.get('localStorageDemo');
+									    });
+
+									    // $scope.storageType = 'Local storage';
+
+									    // if (localStorageService.getStorageType().indexOf('session') >= 0) {
+									    //   $scope.storageType = 'Session storage';
+									    // }
+
+									    // if (!localStorageService.isSupported) {
+									    //   $scope.storageType = 'Cookie';
+									    // }
+
+									    $scope.$watch(function(){
+									      return localStorageService.get('localStorageDemo');
+									    }, function(value){
+									      $scope.localStorageDemo = value;
+									    });
+
+							     		open = false;
+
+							     		response.urgentPatents.forEach(function(data){
+					    					urgetResponse.push(data)
+						    			})
+							     		
+							     		$timeout(function() {
+											var modalInstance = $uibModal.open({
+												templateUrl: 'p3sweb/app/components/dashboard/views/modals/urgent-message-modal.htm',
+												scope: $scope,
+												appendTo: undefined,
+												controllerAs: vm,
+												controller: function($uibModalInstance, message) {
+
+													vm.urgetMessage = message;
+
+											 	  	vm.ok = function () {
+												    	$uibModalInstance.close();
+												  	};
+
+												},
+												resolve: {
+													message: function() {
+														return urgetResponse;
+													}
+												}
+											});
+							     		}, 200);
+							     	}
+							     		
+						     	})
+							}; //function end
+
+							$timeout(function() {
+								systemMessageModal()	
+							}, 1000);
+
+			    		} //if end
+
+			    	},
+			    	function(){
+
+			    	}
+		    	)
+	    	}
 
       		$scope.date = new Date()
 	      	

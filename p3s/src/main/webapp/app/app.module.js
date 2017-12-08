@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment', 'ngTable']);
+var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment', 'ngTable', 'LocalStorageModule']);
 
 app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(Idle, userService, $rootScope, amMoment, $timeout, $uibModal) {
 
@@ -6,8 +6,6 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 
     $rootScope.color = 'green';
 
-
-    
     userService.fetchUser()
     .then(
         function(response){
@@ -21,11 +19,11 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 
     function timeZoneClocks() {
 
-        var cet = moment.tz("Europe/Berlin").format('HH:mm MM/D/YY');
+        var utc = moment.tz("Etc/UTC").format('HH:mm MM/D/YY');
         var est = moment.tz("America/New_York").format('HH:mm MM/D/YY');
     
         var t = $timeout(function() {
-            $rootScope.cetTime = cet;
+            $rootScope.utcTime = utc;
             $rootScope.estTime =  est;
             timeZoneClocks()
         }, 500);
@@ -48,52 +46,54 @@ app.controller('mainNavCtrl', ['$scope', '$mdSidenav', 'ngCart', '$timeout', fun
     } 
 }]);
 
-app.controller('coreCtrl', ['$scope', 'Idle', 'Keepalive', '$uibModal', '$http', 'ngCart', function($scope, Idle, Keepalive, $uibModal, $http, ngCart){
-         
-      	function closeModals() {
-	        if ($scope.warning) {
-	          $scope.warning.close();
-	          $scope.warning = null;
-	        }
+app.controller('coreCtrl', ['$scope', 'Idle', 'Keepalive', '$uibModal', '$http', 'ngCart', 'localStorageService', function($scope, Idle, Keepalive, $uibModal, $http, ngCart, localStorageService){
 
-	        if ($scope.timedout) {
-	          $scope.timedout.close();
-	          $scope.timedout = null;
-	        }
-      	}
+	function closeModals() {
+    if ($scope.warning) {
+      $scope.warning.close();
+      $scope.warning = null;
+    }
 
-      	$scope.$on('IdleStart', function() {
+    if ($scope.timedout) {
+      $scope.timedout.close();
+      $scope.timedout = null;
+    }
+	}
 
-        	closeModals();
+	$scope.$on('IdleStart', function() {
 
-        	$scope.warning = $uibModal.open({
-          		templateUrl: 'warning-dialog.html',
-          		windowClass: 'modal-danger'
-    		});
-      	});
+  	closeModals();
 
-	  	$scope.$on('IdleEnd', function() {
-	    	closeModals();
-	  	});
+  	$scope.warning = $uibModal.open({
+		  templateUrl: 'warning-dialog.html',
+  		windowClass: 'modal-danger'
+    });
+	});
 
-  		var userTimedOut = false;
+  $scope.$on('IdleEnd', function() {
+  	closeModals();
+	});
 
-      	$scope.$on('IdleTimeout', function() {
-        	closeModals();
+	var userTimedOut = false;
 
-     		userTimedOut = true;  
+	$scope.$on('IdleTimeout', function() {
 
-	        if (userTimedOut) {
-                ngCart.empty()
-	        	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
-	        	.then(
-	        		function(){
-		        		window.location.reload('http://localhost:8080/p3sweb/login');
-	        		}    
-	    		)    	
-	        }
+  	closeModals();
 
-      	});
+    userTimedOut = true;  
+
+    if (userTimedOut) {
+      ngCart.empty()
+    	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
+      	.then(
+      		function(){
+        		window.location.reload('http://localhost:8080/p3sweb/login');
+      		}    
+    		)    	
+      }
+
+	});
+
 }])
 
 

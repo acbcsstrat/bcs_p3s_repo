@@ -4,7 +4,7 @@ app.component('currentTransactions', {
 		ngModel: '='
 	},
 	templateUrl: 'p3sweb/app/components/transactions/views/current-transactions.htm',
-	controller: function(currentTransactionsService, $rootScope, NgTableParams, $scope, $filter, $timeout) {
+	controller: function(currentTransactionsService, $rootScope, NgTableParams, $scope, $filter, $timeout, $state) {
 
 		var vm = this;
 
@@ -28,7 +28,7 @@ app.component('currentTransactions', {
 
 	  	$scope.transactionListFilter = function(data, filter, i) {
 	     	
-		    if(filter == 'clientRefFilter') {
+		    if(filter == 'clientRefFilter') { //reset altenrate select option
 		        $scope.filter = data;
 	    		$scope.patentAppData.defaultSelect = null;
 		    } else {
@@ -38,15 +38,16 @@ app.component('currentTransactions', {
 
 		}
 
+		vm.displayTrans = function() {
+			$state.go('current-transactions');
+		} 
+
 		vm.$onInit = function() {
 
 			var transactions = vm.transactions;
-
-			vm.transactions.forEach(function(data){
+			console.log(transactions)
+			transactions.forEach(function(data){
 				data.renewalProgress = currentTransactionsService.renewalProgress(data.latestTransStatus);
-				data.renewalUIs.forEach(function(childData){
-					vm.clientRefFilter = childData.patentUI;
-				})
 			})
 
 			vm.tableData = transactions;
@@ -55,7 +56,8 @@ app.component('currentTransactions', {
 		  	vm.sortReverse  = false;  // set the default sort order			
 
   		   	vm.sortType = function(column) {
-		   		if(column == 'transInitiated') {
+		   		if(column == 'transStartDate') {
+		   			vm.sortTransDate = true;
 		   			vm.selectedSortType = (function() {
 
 		   				if (vm.sortReverse == false) {
@@ -73,44 +75,43 @@ app.component('currentTransactions', {
 	   				
 	   				}())
 
-		   		} else if (column == 'cost') {
+		   		} else if (column == 'transAmount_USD') {
+		   			vm.sortTransCost = true;
 		   			vm.selectedSortType = (function() {
-
 		   				if (vm.sortReverse == false) {
 		   					vm.tableData.sort(function(a, b){
-		   						console.log(a)
-		   						var dateA = new Date(a.transAmount_USD), dateB = new Date(b.transAmount_USD);
-		   						return dateB - dateA;
+		   						var costA = a.transAmount_USD, costB = b.transAmount_USD;
+		   						return costB - costA;
 		   					})
 		   				} else {
 		   					vm.tableData.sort(function(a, b){
-		   						var dateA = new Date(a.transAmount_USD), dateB = new Date(b.transAmount_USD);
-		   						return dateB - dateA
+		   						var costA = a.transAmount_USD, costB = b.transAmount_USD;
+		   						return costB - costA;
 		   					})
 		   				}
-	   				
-	   				}())
+   				
+   					}())
 
-		   		} else if(column == 'clientRef') {
-		   			console.log('hello')
+		   		} else if (column == 'transLength') {
+		   			vm.sortTransItems = true;
 		   			vm.selectedSortType = (function() {
-
-		   				if (vm.sortReverse == false) {
+						if (vm.sortReverse == false) {
 		   					vm.tableData.sort(function(a, b){
-		   						
-		   						var dateA = new Date(a.clientRef), dateB = new Date(b.clientRef);
-		   						return dateB - dateA;
+		   						var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
+		   						return renewalsB - renewalsA;
 		   					})
 		   				} else {
 		   					vm.tableData.sort(function(a, b){
-		   						var dateA = new Date(a.clientRef), dateB = new Date(b.clientRef);
-		   						return dateB - dateA
+		   						var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
+		   						return renewalsB - renewalsA;
 		   					})
 		   				}
-	   				
 	   				}())
+	   				
 		   		} else {
-		   			vm.sortDate = false;
+		   			vm.sortTransCost = false;
+		   			vm.sortTransDate = false;
+		   			vm.sortTransItems = false
 		   			vm.selectedSortType = column;
 		   		}
 		   	}	

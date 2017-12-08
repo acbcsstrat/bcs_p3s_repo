@@ -19,8 +19,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
 
     IdleProvider.idle(520);
     IdleProvider.timeout(30);
-    // KeepaliveProvider.http(domain+'keep-session-alive/');
-    // KeepaliveProvider.interval(20)
+    KeepaliveProvider.http(domain+'keep-session-alive/');
+    KeepaliveProvider.interval(20)
 
     $qProvider.errorOnUnhandledRejections(false);
 
@@ -31,7 +31,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
 
     slickCarouselConfig.dots = true;
     slickCarouselConfig.autoplay = false;
-
 
     $stateProvider
     .state('login', {
@@ -186,4 +185,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
             orderObj: null
         }
     })
-}]);
+}])
+
+.config(function(localStorageServiceProvider) {
+
+    localStorageServiceProvider
+        .setStorageType('sessionStorage')
+        .setDefaultToCookie(false)
+        .setNotify(true, true)
+
+})

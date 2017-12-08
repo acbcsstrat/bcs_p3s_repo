@@ -156,53 +156,59 @@ app.component('patent', {
 		            	vm.displayCost = false;
 		            	vm.hideCost = true;
 		            }
+		            var costBand = vm.costAnalysis;
+		            var caFee = costBand.fee;
+		            vm.renewalHistory = vm.renewal;
+		            console.log(vm.renewalHistory)            
+	            	
+	            	if(caFee !== null) {
+		            	vm.feeBreakDown = {
+		            		renewalFeeEUR: caFee.renewalFeeEUR,
+		            		renewalFeeUSD: caFee.renewalFeeUSD,
+		            		extensionFee: caFee.extensionFeeEUR,
+		            		renewalFeeUSD: caFee.renewalFeeUSD,
+		            		extensionFeeEur: caFee.extensionFeeEUR,
+		            		extensionFeeUSD: caFee.extensionFeeUSD,
+		            		processingFeeEUR: caFee.processingFeeEUR,
+		            		processingFeeUSD: caFee.processingFeeUSD,
+		            		expressFeeUSD: caFee.expressFeeUSD,
+		            		urgentFeeUSD: caFee.urgentFeeUSD,
+		            		latePayPenaltyUSD: caFee.latePayPenaltyUSD,
+		            		fxRate: caFee.fxRate,
+		            		subTotalEUR: caFee.subTotalEUR,
+		            		subTotalUSD: caFee.subTotalUSD,
+		            		bandSaving: function() {
+		            			var item = {};
+		            			switch(patent.costBandColour) {
+		            				case 'Green':
+		            					item.savings =  Math.round(costBand.amberStageCost - costBand.greenStageCost);
+		            					item.renewBefore = patent.costBandEndDate;
+		            				break;
+		            				case 'Amber':
+		            					item.savings =  Math.round(costBand.redStageCost - costBand.amberStageCost)
+		            					item.renewBefore = patent.costBandEndDate;
+		            				break;
+		            				case 'Red':
+		            					item.savings =  Math.round(costBand.blueStageCost - costBand.redStageCost);
+		            					item.renewBefore = patent.costBandEndDate;
+		            				break;
+		            				case 'Blue':
+		            					item.savings =  Math.round(costBand.blackStageCost - costBand.blueStageCost);
+		            					item.renewBefore = patent.costBandEndDate;
+		            				break;
+		            				case 'Black':
+		            					item.savings =  'N/A';
+		            					item.renewBefore = 'N/A'
 
-	            	var costBand = vm.costAnalysis;
-		            var renewalHistory = vm.renewal;		            
-	            	var caFee = vm.costAnalysis.fee;
-
-	            	vm.feeBreakDown = {
-	            		renewalFeeEUR: caFee.renewalFeeEUR,
-	            		renewalFeeUSD: caFee.renewalFeeUSD,
-	            		extensionFee: caFee.extensionFeeEUR,
-	            		renewalFeeUSD: caFee.renewalFeeUSD,
-	            		extensionFeeEur: caFee.extensionFeeEUR,
-	            		extensionFeeUSD: caFee.extensionFeeUSD,
-	            		processingFeeEUR: caFee.processingFeeEUR,
-	            		processingFeeUSD: caFee.processingFeeUSD,
-	            		expressFeeUSD: caFee.expressFeeUSD,
-	            		urgentFeeUSD: caFee.urgentFeeUSD,
-	            		latePayPenaltyUSD: caFee.latePayPenaltyUSD,
-	            		fxRate: caFee.fxRate,
-	            		subTotalEUR: caFee.subTotalEUR,
-	            		subTotalUSD: caFee.subTotalUSD,
-	            		bandSaving: function() {
-	            			var item = {};
-	            			switch(patent.costBandColour) {
-	            				case 'Green':
-	            					item.savings =  Math.round(costBand.amberStageCost - costBand.greenStageCost);
-	            					item.renewBefore = patent.costBandEndDate;
-	            				break;
-	            				case 'Amber':
-	            					item.savings =  Math.round(costBand.redStageCost - costBand.amberStageCost)
-	            					item.renewBefore = patent.costBandEndDate;
-	            				break;
-	            				case 'Red':
-	            					item.savings =  Math.round(costBand.blueStageCost - costBand.redStageCost);
-	            					item.renewBefore = patent.costBandEndDate;
-	            				break;
-	            				case 'Blue':
-	            					item.savings =  Math.round(costBand.blackStageCost - costBand.blueStageCost);
-	            					item.renewBefore = patent.costBandEndDate;
-	            				break;
-	            				case 'Black':
-	            					item.savings =  'N/A';
-	            					item.renewBefore = 'N/A'
-
-	            			}
-	            			return item;
-	            		}
+		            			}
+		            			return item;
+		            		}
+		            	}	            		
 	            	}
+
+
+
+
 
 	            	const caLine = vm.costAnalysis.lineChart;
 	            	const lineDataArr = [];
@@ -485,9 +491,11 @@ app.component('patent', {
 	        	var fx = fx.toFixed(2)
 	        	vm.usd2eur = fx;
 	        }
-         	usdFxEur();
-
-        }	
+	        if(caFee !== null) {
+	        	usdFxEur();
+	        }
+          	
+        }
 
 
 

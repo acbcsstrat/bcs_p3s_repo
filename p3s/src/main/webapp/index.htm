@@ -37,7 +37,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.7.1/angular-local-storage.min.js"></script>	
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-cookies.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
@@ -51,7 +52,6 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script>
 
 		<script src="p3sweb/assets/js/jquery.stickytableheader.js"></script>
-
 
 		<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>	
 
@@ -88,8 +88,8 @@
 		<script src="p3sweb/app/components/checkout/services/bankTransferCommitService.js"></script>
 		<script src="p3sweb/app/components/user/services/userService.js"></script>
 
-		<script src="p3sweb/app/components/app/controllers/mainCtrl.js"></script>
-
+	<!-- 	<script src="p3sweb/app/components/app/controllers/mainCtrl.js"></script>
+ -->
 		<!--components-->
 
 		<script src="p3sweb/app/components/register/authenticationService.js"></script>
@@ -127,7 +127,7 @@
 
 	</head>
 
-	<body ng-app="myApp" class="bg-light-grey">
+	<body ng-app="myApp" ng-controller="coreCtrl" class="bg-light-grey">
 		
 		<mainnav></mainnav>
 

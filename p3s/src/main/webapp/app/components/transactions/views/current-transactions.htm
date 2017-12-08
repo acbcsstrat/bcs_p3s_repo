@@ -1,71 +1,69 @@
 <div ng-show="$ctrl.animate" class="animate-show">
 
-
 	<transactionnav></transactionnav>
 
 	<div class="row m-b-md">
 		<div class="col-md-12 col-lg-9 offset-lg-3 col-xl-6 offset-xl-6 p-none">
 			<form class="form-inline">
 				<div class="input-group col-md-4 col-lg-4 col-xl-4">
-					<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="searchTrans.p3S_TransRef" placeholder="Transaction ID">
+					<input type="text" class="form-control pill-radius font-body" ng-change="$ctrl.displayTrans()" name="p3S_TransRefFilter" ng-model="searchTrans.p3S_TransRef" placeholder="Transaction ID">
 					<div class="input-group-addon pill-radius m-r"><i class="fa fa-search"></i></div>
 				</div>					
 				<div class="input-group col-md-4 col-lg-4 col-xl-4">
-				<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="searchTrans.patent.patentUI.patentApplicationNumber" placeholder="App No.">
+				<input type="text" class="form-control pill-radius font-body" ng-change="$ctrl.displayTrans()" name="appNoFilter" ng-model="searchTrans.patentApplicationNumber" placeholder="App No.">
 					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>	
 				</div>
-
 				<div class="input-group col-md-4 col-lg-4 col-xl-4">
-					<input type="text" class="form-control pill-radius font-body" name="filter" ng-model="searchTrans.ref.patentUI.clientRef" placeholder="Client Ref">
+					<input type="text" class="form-control pill-radius font-body" ng-change="$ctrl.displayTrans()" name="clientRefFilter" ng-model="searchTrans.clientRef" placeholder="Client Ref">
 					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>	
 				</div>
 			</form>
 		</div>
 	</div>
 	<div class="row m-b-md">
-		<div class="col-md-12" ng-show="$ctrl.tableData.length === 0">
+		<div class="col-md-12 col-lg-12 col-xl-12" ng-show="$ctrl.tableData.length === 0">
 			<div class="bg-white p-a-sm">
 				<p class="font-body font-weight-medium">There are currently know patents in this phase</p>
 			</div>
 		</div>
 
-		<div class="col-md-12" ng-if="$ctrl.tableData.length !== 0">
+		<div class="col-md-12 col-lg-12 col-xl-12" ng-if="$ctrl.tableData.length !== 0">
 			<div id="scrollable-area">
 				<table id="listCurrTransactionsTable" class="t-list table-scroll font-body" fixed-table-headers="scrollable-area">
 					<thead>
 						<tr>
-							<th ng-click="$ctrl.sortType('transId'); $ctrl.sortReverse = !$ctrl.sortReverse">Trans ID
-				            	<span ng-show="$ctrl.selectedSortType == 'transId' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span ng-show="$ctrl.selectedSortType == 'transId' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<th ng-click="$ctrl.sortType('p3S_TransRef'); $ctrl.sortReverse = !$ctrl.sortReverse">Trans ID
+				            	<span ng-show="$ctrl.selectedSortType == 'p3S_TransRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span ng-show="$ctrl.selectedSortType == 'p3S_TransRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
 							<th ng-click="$ctrl.sortType('transLength'); $ctrl.sortReverse = !$ctrl.sortReverse">No. of patents
-				            	<span ng-show="$ctrl.selectedSortType == 'transLength' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span ng-show="$ctrl.selectedSortType == 'transLength' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+				            	<span ng-show="$ctrl.sortTransItems && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span ng-show="$ctrl.sortTransItems && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
-							<th ng-click="$ctrl.sortType('appNo'); $ctrl.sortReverse = !$ctrl.sortReverse">App No.
-				            	<span ng-show="$ctrl.selectedSortType == 'appNo' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span ng-show="$ctrl.selectedSortType == 'appNo' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<th ng-click="$ctrl.sortType('patentApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">App No.
+				            	<span ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
 							<th ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">Client Ref
 				            	<span ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
 	        					<span ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
-							<th ng-click="$ctrl.sortType('transInitiated'); $ctrl.sortReverse = !$ctrl.sortReverse">Trans Initiated
-				            	<span ng-show="$ctrl.selectedSortType == 'transInitiated' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span ng-show="$ctrl.selectedSortType == 'transInitiated' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<th ng-click="$ctrl.sortType('transStartDate'); $ctrl.sortReverse = !$ctrl.sortReverse">Trans Initiated
+				            	<span ng-show="$ctrl.sortTransDate && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span ng-show="$ctrl.sortTransDate && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
-							<th ng-click="$ctrl.sortType('cost'); $ctrl.sortReverse = !$ctrl.sortReverse">Cost
-				            	<span ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<th ng-click="$ctrl.sortType('transAmount_USD'); $ctrl.sortReverse = !$ctrl.sortReverse">Cost
+				            	<span ng-show="$ctrl.sortTransCost && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span ng-show="$ctrl.sortTransCost && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
-							<th ng-click="$ctrl.sortType('status'); $ctrl.sortReverse = !$ctrl.sortReverse">Status
-				            	<span ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							<th ng-click="$ctrl.sortType('latestTransStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">Status
+				            	<span ng-show="$ctrl.selectedSortType == 'latestTransStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span ng-show="$ctrl.selectedSortType == 'latestTransStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-					    <tr ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: searchTrans" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
+					    <tr ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {renewalUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {renewalUIs: {patentUI: {clientRef: searchTrans.clientRef}}}" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
 					        <td>
 								<a class="txt-black" ui-sref="current-transactions.current-transaction-item({transId: item.id})">{{item.p3S_TransRef}}</a>
 					        </td>
@@ -86,15 +84,15 @@
 								<span ng-if="item.renewalUIs.length == 1" ng-repeat="ref in item.renewalUIs">
 									<span ng-if="ref.patentUI.clientRef.length">
 										{{ref.patentUI.clientRef}}
-									</span>								
+									</span>
 								</span>
 								<select ng-if="item.renewalUIs.length > 1" ng-options="item.patentUI.clientRef for item in item.renewalUIs" ng-model="clientRefData.defaultSelect" class="pill-radius form-control font-body" ng-change="transactionListFilter(clientRefData.defaultSelect, 'clientRefFilter', item.id)">
 									<option value="">Multiple</option>
-								</select>			        	
+								</select>
 					        </td>
 					        <td>
 					        	{{item.transStartDate | date: 'MM/dd/yy'}}
-					        </td>				        
+					        </td>
 					        <td>
 					        	$ {{item.transAmount_USD}}
 					        </td>
