@@ -9,8 +9,6 @@ app.component('patents', {
 
 		vm.animate = false;
 
-		vm.patentInfoContent = false;
-
 	    $timeout(function() {
 	      vm.animate = true;
 	    }, 300);    		

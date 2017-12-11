@@ -16,10 +16,11 @@
 
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>      
+
       <title>Patent Place</title>
       
-      
-
    </head>
 
    <body class="bg-light-grey2">
@@ -39,15 +40,15 @@
                <div class="content-panel__body">
                   <div class="row">
                      <div class="col-md-12">
-                        <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form">
+                        <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
                            <div class="form-group row m-b-sm">
                               <div class="col-md-12">
-                                 <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username">
+                                 <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username" data-parsley-validate-email="" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
                               </div>
                            </div>
                            <div class="form-group row m-b-sm">
                               <div class="col-md-12">
-                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password">
+                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
                               </div>
                            </div>
                            <div class="form-group d-flex justify-content-center flex-column m-b-sm">
@@ -76,9 +77,45 @@
          </div>         
       </div>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+
+      <script>
+         
+         var url = window.location.href
+
+         if(!url.indexOf('login_error')) {
+            console.log(url)
+         }
+
+         window.Parsley.addValidator('validateName', {
+            validateString: function(value) {
+               if(!value.match('^[a-zA-z0-9\s\w\'-]*$')) {
+                  return false;
+               }
+            },
+            messages: {
+                en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
+            }
+         })  
+
+         window.Parsley.addValidator('validateEmail', {
+
+            validateString: function(value){
+
+               var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+               if(!value.match(reg)) {
+                  return false
+               }
+            },
+            messages: {
+               en: 'Please enter a valid email address.'
+            }
+
+         })      
+
+      </script>
       
    </body>
 

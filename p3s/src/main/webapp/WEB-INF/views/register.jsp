@@ -56,23 +56,22 @@
 								<div class="form-section m-b-sm">
 									<div class="form-group row">
 										<div class="col-md-12">
-											<input name="emailAddress" class="form-control pill-radius font-body" id="emailAddress" placeholder="Email"  ata-parsley-type="email" data-parsley-required="true">
-										</div>
-									
-									</div>
-									<div class="form-group row">
-										<div class="col-md-12">
-											<input type="text" name="firstName" class="form-control pill-radius font-body" id="firstName" placeholder="First Name" data-parsley-pattern="/^[\w\s-'']*$/" data-parsley-required="true">
+											<input name="emailAddress" class="form-control pill-radius font-body" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-trigger="change" data-parsley-required="true">
 										</div>
 									</div>
 									<div class="form-group row">
 										<div class="col-md-12">
-											<input type="text" class="form-control pill-radius font-body" name="lastName"  id="lastName" placeholder="Last Name" data-parsley-pattern="/^[\w\s-'']*$/" data-parsley-required="true">
+											<input type="text" name="firstName" class="form-control pill-radius font-body" id="firstName" placeholder="First Name" data-parsley-validate-name="" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 										</div>
 									</div>
 									<div class="form-group row">
 										<div class="col-md-12">
-											<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-required="true">
+											<input type="text" class="form-control pill-radius font-body" name="lastName"  id="lastName" placeholder="Last Name" data-parsley-validate-name="" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-12">
+											<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 										</div>
 									</div>
 									<div class="form-group row">
@@ -87,44 +86,43 @@
 									</div>														
 									<div class="form-group row m-b-none">
 										<div class="col-md-12">
-											<input type="password" name="confirm_password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto="#password" data-parsley-required="true">
+											<input type="password" name="confirm_password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 										</div>
 									</div>
 								</div>										  			
-								<div class="form-section m-b-md">
+								<div class="form-section m-b-md"> <!--business details-->
 									<div class="form-group row">
 										<div class="col-md-12">
-											<input type="text" name="businessName" class="form-control pill-radius font-body" id="businessName" placeholder="Business Name" data-parsley-pattern="/^[0-9a-zA-Z\w\s-'+()]*$/" data-parsley-required="true">
-											
+											<input type="text" name="businessName" class="form-control pill-radius font-body" id="businessName" placeholder="Business Name" data-parsley-validate-company-name="" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 										</div>
 									</div>
 									<div class="form-group row">
 										<div class="col-md-12">
-											<input input="text" name="phoneNumber" class="form-control pill-radius font-body" id="phoneNumber" placeholder="Tel" data-parsley-maxlength="40" data-parsley-pattern="^[0-9\d\+\(\)\w\s]*$" data-parsley-required="true">		
+											<input input="text" name="phoneNumber" class="form-control pill-radius font-body" id="phoneNumber" data-parsley-trigger="change" data-parsley-validate-phone="" placeholder="Tel" data-parsley-minlength="10" data-parsley-minlength-message="This fields value has a minimum length of 10 characters." data-parsley-maxlength-messsage="This fields value has a maximum length of 40 characters." data-parsley-maxlength="40" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">		
 										</div>
 									</div>
 									<div id="subBusiness">
 										<div class="form-group row">
 											<div class="col-md-12">
-												<input type="text" name="street" class="form-control pill-radius font-body" id="street" placeholder="Street" data-parsley-pattern="/^[0-9a-zA-z\w\s.-_,()]*$/" data-parsley-required="true">
+												<input type="text" name="street" class="form-control pill-radius font-body" id="street" placeholder="Street" data-parsley-trigger="change" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12">
-												<input type="text" name="city" class="form-control pill-radius font-body" id="city" placeholder="City" data-parsley-required="true" data-parsley-pattern="/^[a-zA-z0-9\w\s.-_,()]*$/">
+												<input type="text" name="city" class="form-control pill-radius font-body" id="city" placeholder="City" data-parsley-trigger="change" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12">
-												<input type="text" name="USstate" class="form-control pill-radius font-body" id="USstate" placeholder="State" data-parsley-required="true" data-parsley-pattern="/^[\w\s.-_,()]*$/">
+												<input type="text" name="USstate" class="form-control pill-radius font-body" id="USstate" placeholder="State" data-parsley-trigger="change" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-6">
-												<input type="text" class="form-control pill-radius font-body" id="zip" placeholder="Zip"  data-parsley-pattern="/^[0-9-]+$/" data-parsley-required="true">
+												<input type="text" class="form-control pill-radius font-body" id="zip" placeholder="Zip" data-parsley-trigger="change" data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 											<div class="col-md-6">
-												<select class="form-control pill-radius font-body form-control" name="timezone" id="timezone" data-parsley-required="true">
+												<select class="form-control pill-radius font-body form-control" name="timezone" id="timezone" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 													<option value="" selected disabled hidden class="txt-grey">Time Zone</option>
 													<option value="et" class="form-control">ET</option>
 													<option value="ct" class="form-control">CT</option>
@@ -155,37 +153,31 @@
 									<div id="pasteBusiness">
 										<div class="form-group row">
 											<div class="col-md-12">
-												<input type="text" name="billingStreet" class="form-control pill-radius font-body" id="billing_street" placeholder="Street" data-parsley-pattern="/^[\w\s.-_,()]*$/" data-parsley-required="true">
+												<input type="text" name="billingStreet" class="form-control pill-radius font-body" id="billing_street" placeholder="Street" data-parsley-trigger="change" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12">
-												<input type="text" name="billingCity" class="form-control pill-radius font-body" id="billing_city" placeholder="City" data-parsley-pattern="/^[\w\s.-_,()]*$/" data-parsley-required="true">
+												<input type="text" name="billingCity" class="form-control pill-radius font-body" id="billing_city" placeholder="City" data-parsley-trigger="change" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12">
-												<input type="text" name="billingState" class="form-control pill-radius font-body" id="billing_state" placeholder="State" data-parsley-pattern="/^[\w\s.-_,()]*$/" data-parsley-required="true">
+												<input type="text" name="billingState" class="form-control pill-radius font-body" id="billing_state" placeholder="State" data-parsley-trigger="change" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12">
-												<input type="text" name="billingZip" class="form-control pill-radius font-body" id="billing_zip" placeholder="Zip" data-parsley-pattern="/^[0-9-]+$/" data-parsley-required="true" >
+												<input type="text" name="billingZip" class="form-control pill-radius font-body" id="billing_zip" placeholder="Zip"  data-parsley-trigger="change" data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 									</div>
 									<div class="row m-b-sm">
 				                        <label class="form-check-label font-body col-md-12 text-center">
 			                            	I accept the <span class="font-weight-bold m-r-xs">Terms and Conditions</span> 
-			                            	<input type="checkbox" name="terms-register" id="terms-register" data-parsley-required="true">
+			                            	<input type="checkbox" name="terms-register" id="terms-register" data-parsley-required-message="Please read and accept out terms and conditions" data-parsley-required="true">		
 			                       	 	</label>									
 									</div>
-									<!-- <div class="row">
-										<div class="col-md-12 d-flex justify-content-between btn-default">
-							  				<button type="button" class="btn btn--lg pill-radius bg-phase-green font-body font-body--component txt-white font-weight-medium cursor-pointer" id="prevBusinessForm">Prev Step</button>
-					                        <button class="btn btn--lg bg-phase-green pill-radius txt-white font-body font-body--component font-weight-medium" type="submit" id="register" disabled>Register</button>						                        			
-										</div>
-									</div> -->
 								</div>
 							  	<div class="row">
 							  		<div class="col-md-12">
@@ -235,12 +227,12 @@
            							<div class="m-b-md">
 	           							<div class="form-group row">
 	           								<div class="col-md-12">
-	           									<input  class="form-control pill-radius font-body" name="businessNumber" placeholder="Business Number" data-parsley-maxlength="6" data-parsley-type="alphanum" data-parsley-required="true">
+	           									<input data-parsley-type="alphanum" class="form-control pill-radius font-body" name="businessNumber" placeholder="Business Number" data-parsley-type="alphanum" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-trigger="change" data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 	           								</div>
 	           							</div>
 	           							<div class="form-group row">
 	           								<div class="col-md-12">
-	           									<input class="form-control pill-radius font-body" name="businessPin" placeholder="Business PIN" data-parsley-minlength="6" data-parsley-type="digits" data-parsley-required="true">
+	           									<input class="form-control pill-radius font-body" name="businessPin" placeholder="Business PIN" data-parsley-trigger="change" data-parsley-type="digits" data-parsley-digits-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again."" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 	           								</div>
 	           							</div>            								
            							</div>
@@ -348,17 +340,87 @@
 			  	navigateTo(0); // Start at the beginning
 			});
 
-
-			window.Parsley.addValidator('alpha', {
+			window.Parsley.addValidator('validateName', {
 				validateString: function(value) {
-					if(!value.match('[/[a-zA-Z]+/]')) {
-						return value;
+					if(!value.match('^[a-zA-z0-9\' -]*$')) {
+						return false;
 					}
 				},
 			 	messages: {
-				    en: 'Invalid input',
+				    en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
 			  	}
 			})
+
+			window.Parsley.addValidator('validateAddress', {
+				validateString: function(value) {
+					if(!value.match('^[a-zA-z0-9\'-\+\.\(\), ]*$')) {
+						return false;
+					}
+				},
+			 	messages: {
+				    en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
+			  	}
+			})			
+		
+
+			window.Parsley.addValidator('validateCompanyName', {
+				validateString: function(value) {
+					if(!value.match('^[a-zA-z0-9\'-\+\.\(\) ]*$')) {
+						return false;
+					}
+				},
+			 	messages: {
+				    en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
+			  	}
+			})			
+
+	        window.Parsley.addValidator('validateEmail', {
+
+		        validateString: function(value){
+
+		            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+               		if(!value.match(reg)) {
+	                    return false
+	                } 
+	            },
+		            messages: {
+		               en: 'Please enter a valid email address.'
+		            }
+		    })
+
+         	window.Parsley.addValidator('validatePhone', {
+	            validateString: function(value) {
+	               if(!value.match('^[0-9\-\+\(\) ]*$')) {
+	                  return false;
+	               }
+	            },
+	            messages: {
+	                en: 'Please enter a valid phone number.',
+	            }
+         	})		
+
+         	window.Parsley.addValidator('validateZip', {
+	            validateString: function(value) {
+	               if(!value.match('^[0-9\-]*$')) {
+	                  return false;
+	               }
+	            },
+	            messages: {
+	                en: 'Only numbers and - are valid charcters in this field.',
+	            }
+         	})	         			    
+
+         	window.Parsley.addValidator('validateAlpha', {
+	            validateString: function(value) {
+	               if(!value.match('^[a-zA-Z]+]*$')) {
+	                  return false;
+	               }
+	            },
+	            messages: {
+	                en: 'Only letters are valid charcters in this field.',
+	            }
+         	})		    
 
 			$('#register-success').hide();
 			$('#register-failure').hide();
@@ -395,7 +457,6 @@
 			        //Validate for each Regular Expression.
 			        for (var i = 0; i < regex.length; i++) {
 			            if (new RegExp(regex[i]).test($(this).val())) {
-			            	console.log(regex[i])
 			                passed++;
 			            }
 			        }
@@ -453,88 +514,88 @@
       	
 	      	$(document).ready(function(){
 
-	      		$(".nav-tabs a[data-toggle=tab]").on("click", function(e) {
-				  	if($(this).hasClass("disabled")) {
-				    	e.preventDefault();
-			  	  		return false;
-				  	}
-				});
+	   //    		$(".nav-tabs a[data-toggle=tab]").on("click", function(e) {
+				//   	if($(this).hasClass("disabled")) {
+				//     	e.preventDefault();
+			 //  	  		return false;
+				//   	}
+				// });
 
-	      		var tabs = $('registerTabs');
-				var userForm = $('#userForm');
-				var businessForm = $('#businessForm');
-				var prevBusinessForm = $('#prevBusinessForm');
-				var billingForm = $('#billingForm');
-				var userInput = $('#userSet input');
-				var businessInput = $('#businessSet input');
-				var billingInput = $('#billingSet input');
+	   //    		var tabs = $('registerTabs');
+				// var userForm = $('#userForm');
+				// var businessForm = $('#businessForm');
+				// var prevBusinessForm = $('#prevBusinessForm');
+				// var billingForm = $('#billingForm');
+				// var userInput = $('#userSet input');
+				// var businessInput = $('#businessSet input');
+				// var billingInput = $('#billingSet input');
 
 
-				userForm.click(function(e){
-					console.log('click')
-					e.preventDefault();
-					$('#registerTabs a[href*="userDetails"').tab('show');
-				})
+				// userForm.click(function(e){
+				// 	console.log('click')
+				// 	e.preventDefault();
+				// 	$('#registerTabs a[href*="userDetails"').tab('show');
+				// })
 
-				prevBusinessForm.click(function(e){
-					console.log('click')
-					e.preventDefault();
-					$('#registerTabs a[href*="businessDetails"').tab('show');
-				})
+				// prevBusinessForm.click(function(e){
+				// 	console.log('click')
+				// 	e.preventDefault();
+				// 	$('#registerTabs a[href*="businessDetails"').tab('show');
+				// })
 
-				businessForm.click(function(e){
-					console.log('click')
-					e.preventDefault();
-					$('#registerTabs a[href*="businessDetails"').tab('show');
-				})
+				// businessForm.click(function(e){
+				// 	console.log('click')
+				// 	e.preventDefault();
+				// 	$('#registerTabs a[href*="businessDetails"').tab('show');
+				// })
 
-				billingForm.click(function(e){
-					console.log('click')
-					e.preventDefault();
-					$('#registerTabs a[href*="billingDetails"').tab('show');
-				})				
+				// billingForm.click(function(e){
+				// 	console.log('click')
+				// 	e.preventDefault();
+				// 	$('#registerTabs a[href*="billingDetails"').tab('show');
+				// })				
 
-				userInput.on('blur', function() {
-					var input = $(this).parent().closest('fieldset').find('input')
-					var btn = $('#businessForm');
-					checkValidation(input, btn)
-				});
+				// userInput.on('blur', function() {
+				// 	var input = $(this).parent().closest('fieldset').find('input')
+				// 	var btn = $('#businessForm');
+				// 	checkValidation(input, btn)
+				// });
 
-				businessInput.on('blur', function() {
-					var input = $(this).parent().closest('fieldset').find('input')
-					var btn = $('#billingForm');
-					checkValidation(input, btn)
-				});
+				// businessInput.on('blur', function() {
+				// 	var input = $(this).parent().closest('fieldset').find('input')
+				// 	var btn = $('#billingForm');
+				// 	checkValidation(input, btn)
+				// });
 
-				billingInput.on('blur', function() {
-					var input = $(this).parent().closest('fieldset').find('input')
-					var btn = '';
-					var preBtn = $('#businsessForm');
-					checkValidation(input, btn)
-				});								
+				// billingInput.on('blur', function() {
+				// 	var input = $(this).parent().closest('fieldset').find('input')
+				// 	var btn = '';
+				// 	var preBtn = $('#businsessForm');
+				// 	checkValidation(input, btn)
+				// });								
 
-				function checkValidation(input, btn) {
-  					var valid = false;
-	  				input.each(function() {
-	  					if($(this).val() == '') {
-	  						valid = false;
-	  					} else {
-	  						valid = true;
-	  					}
-	  				});
-	  				if(valid) {
-	  					$(btn).attr('disabled', false);
-	  					if(btn) {
-		  					if(btn[0].id == 'businessForm') {
-		  						$("a[href*='#businessDetails']").removeClass('disabled');
-		  					} else {
-		  						$("a[href*='#billingDetails']").removeClass('disabled');
-		  					}
-	  					}
-	  				} else {
-	  					$(btn).attr('disabled', true)
-	  				}
-  				}
+				// function checkValidation(input, btn) {
+  		// 			var valid = false;
+	  	// 			input.each(function() {
+	  	// 				if($(this).val() == '') {
+	  	// 					valid = false;
+	  	// 				} else {
+	  	// 					valid = true;
+	  	// 				}
+	  	// 			});
+	  	// 			if(valid) {
+	  	// 				$(btn).attr('disabled', false);
+	  	// 				if(btn) {
+		  // 					if(btn[0].id == 'businessForm') {
+		  // 						$("a[href*='#businessDetails']").removeClass('disabled');
+		  // 					} else {
+		  // 						$("a[href*='#billingDetails']").removeClass('disabled');
+		  // 					}
+	  	// 				}
+	  	// 			} else {
+	  	// 				$(btn).attr('disabled', true)
+	  	// 			}
+  		// 		}
 
 	      		$('#same_as_business').change(function(){
 	      			if(this.checked) {

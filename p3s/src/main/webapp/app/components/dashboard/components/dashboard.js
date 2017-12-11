@@ -92,8 +92,15 @@ app.component('dashboard', {
 		        	$mdSidenav(componentId).toggle();
 		      	};
 		    }
-		    console.log(loginCounter)
-		    if(loginCounter !== 1) {
+
+			$scope.counter = localStorageService.get('counter');
+
+		    if($scope.counter === null) {
+
+		    	localStorageService.set('counter', 1);
+
+		    	$scope.counter = localStorageService.get('counter');
+
 		    	dashboardService.getMessages()
 			    .then(
 			    	function(response){
@@ -144,34 +151,7 @@ app.component('dashboard', {
 							     	} else {
 
 							     		
-
-							     		loginCounter = 0;
-							     		localStorageService.set(loginCounter++);
-							     		console.log(loginCounter)
-
-										$scope.localStorageDemo = localStorageService.get('localStorageDemo');
-
-									    $scope.$watch('localStorageDemo', function(value){
-									      localStorageService.set('localStorageDemo',value);
-									      $scope.localStorageDemoValue = localStorageService.get('localStorageDemo');
-									    });
-
-									    // $scope.storageType = 'Local storage';
-
-									    // if (localStorageService.getStorageType().indexOf('session') >= 0) {
-									    //   $scope.storageType = 'Session storage';
-									    // }
-
-									    // if (!localStorageService.isSupported) {
-									    //   $scope.storageType = 'Cookie';
-									    // }
-
-									    $scope.$watch(function(){
-									      return localStorageService.get('localStorageDemo');
-									    }, function(value){
-									      $scope.localStorageDemo = value;
-									    });
-
+							
 							     		open = false;
 
 							     		response.urgentPatents.forEach(function(data){
@@ -191,6 +171,8 @@ app.component('dashboard', {
 											 	  	vm.ok = function () {
 												    	$uibModalInstance.close();
 												  	};
+
+												  	
 
 												},
 												resolve: {

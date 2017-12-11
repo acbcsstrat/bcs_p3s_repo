@@ -1,6 +1,12 @@
 <script type="text/ng-template" id="warning-dialog.html">
-  <div idle-countdown="countdown" ng-init="countdown=30" class="modal-body">
-    <p>To help security, you'll be logged out in {{countdown}} second(s)</p>
-    <!-- <uib-progressbar max="10" value="countdown" animate="true" class="progress-striped active"></uib-progressbar>
-  </div> -->
+	<div class="content-panel">
+  		<div idle-countdown="countdown" ng-init="countdown=30" class="content-panel__head d-flex flex-column justify-content-center align-items-center">
+  			<div class="m-b-sm">
+  				<img src="p3sweb/assets/imgs/icons/pp_icon.png">
+  			</div>
+  			
+    		<p class="font-body font-weight-medium">To help with security, you will be logged out in {{countdown}} second(s)</p>
+		</div>		
+	</div>
+
 </script>

@@ -125,7 +125,7 @@ input[type=checkbox], input[type=radio] {
 .widget-panel, 
 .content-panel { 
   position: relative; 
-/*  border: 1px solid #bdbdbd;*/
+/*  border: 1px solid #dbdbdb;*/
 }
 
 .widget-panel .widget-panel__body { padding: 3rem 3rem ; }
@@ -168,15 +168,15 @@ input[type=checkbox], input[type=radio] {
 .bg-phase-red { background: #e30613; }
 .bg-phase-blue { background: #0097ce; }
 .bg-phase-black { background: #3c3c3b; }
-.bg-phase-grey { background: #BDBDBD; }
+.bg-phase-grey { background: #dbdbdb; }
 
-.border-grey-xs { border: 1px solid #bdbdbd; }
-.border-grey-xs--btm { border-bottom: 1px solid #bdbdbd; }
-.border-grey-xs--top { border-top: 1px solid #bdbdbd; }
-.border-grey-xs--right { border-right: 1px solid #bdbdbd; }
+.border-grey-xs { border: 1px solid #dbdbdb; }
+.border-grey-xs--btm { border-bottom: 1px solid #dbdbdb; }
+.border-grey-xs--top { border-top: 1px solid #dbdbdb; }
+.border-grey-xs--right { border-right: 1px solid #dbdbdb; }
 
 .txt-black { color: #212121; }
-.txt-grey { color: #bdbdbd; }
+.txt-grey { color: #dbdbdb; }
 .txt-white, .btn-default a.txt-white { color: #fff; }
 .txt-phase-green { color: #53ab58; }
 .txt-phase-amber { color: #f9b233 }
@@ -454,6 +454,8 @@ input[type=checkbox], input[type=radio] {
     white-space: nowrap; 
 }
 
+.t-list tbody tr { border: 1px solid #dbdbdb; }
+
 .t-list tbody tr:hover, 
 .t-list tbody tr.active { background: #f5f5f5; }
 
@@ -638,7 +640,7 @@ li.disabled { cursor: not-allowed; opacity: .65;}
 .btn-no-bg .btn-no-bg--green:focus { color: #53ab58; }
 
 .view-tabs .nav-view-list-item[disabled]:hover, 
-.view-tabs .nav-view-list-item[disabled]:active { background: #fff; border: 1px solid #bdbdbd; opacity: .65; color: #212121; }
+.view-tabs .nav-view-list-item[disabled]:active { background: #fff; border: 1px solid #dbdbdb; opacity: .65; color: #212121; }
 
 .view-tabs .nav-view-list-item .nav-view-link:hover, 
 .nav-view-link:active, 
@@ -951,7 +953,7 @@ display: none !important;
 }
 
 .form-section .parsley-errors-list, .parsley-errors-list { padding: 0; list-style: none; margin-bottom: 0; }
-.parsley-errors-list li { font-size: 1.3rem; letter-spacing: -0.1px; color: #e30613; }
+.parsley-errors-list li { font-size: 1.3rem; letter-spacing: -0.1px; color: #e30613; margin-left: 1rem; }
 
 #listPatentsTable tr td:nth-child(1), 
 #listPatentsTable tr td:nth-child(2),

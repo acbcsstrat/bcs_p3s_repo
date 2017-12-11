@@ -124,11 +124,14 @@ public class RegisterRestController extends Universal {
 		businessDetails = businessInfo.get(0);
 		
 		/** Validate pin against user entered Pin**/
-		if(!(businessPin.equals(businessDetails.getBusinessPin().toString()))){
+		if(businessPin.equals(businessDetails.getBusinessPin().toString())){
 			
 			log().debug("User entered BusinessPin[" +businessPin + "] verified against database");
-			return new ResponseEntity<Business>(businessDetails, HttpStatus.OK);
 			
+		}
+		else{
+			log().debug("User entered BusinessPin[" +businessPin + "] wrong");
+			return new ResponseEntity<Business>(businessDetails, HttpStatus.NOT_FOUND);
 		}
 		
 		user.setBusiness(businessDetails);
