@@ -1,9 +1,14 @@
 package com.bcs.p3s.docs.htmldoc.model;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import com.bcs.p3s.enump3s.InvoiceTypeEnum;
+import com.bcs.p3s.model.Fee;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Payment;
+import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.Universal;
 
@@ -24,6 +29,7 @@ public abstract class AbstractInvoice extends Universal {
 	protected String transactionReference;
 	protected String moneyToArriveBy;
 	protected String totalUsdPayable;
+	protected String fxRateUsdPerEur;
 	
 	public AbstractInvoice(Invoice invoice) {
 		if (invoice==null) fail("AbstractInvoice constructor given null");
@@ -38,6 +44,7 @@ public abstract class AbstractInvoice extends Universal {
 		totalUsdPayable = payment.getTransAmount_USD().toString();
 		ourAddress = new PostalAddressAndHyperlink(); // Default constructor defaults to our address
 		clientAddress = clientAddress(payment);
+		fxRateUsdPerEur = getRateUsdPerEur(payment);
 	}
 
 	
@@ -65,6 +72,17 @@ public abstract class AbstractInvoice extends Universal {
 		return suffix;
 	}
 	
+	protected String getRateUsdPerEur(Payment payment) {
+		// Rate stored in Fee. There may be multiple Fees per transaction, but all will have the same rate
+		String rate = "";
+		List<Renewal> renewals = payment.getRenewals();
+		Fee aFee = renewals.get(0).getFee();
+		BigDecimal fxRateBD = aFee.getFxRate().setScale(5, BigDecimal.ROUND_HALF_UP);
+		rate = fxRateBD.toString();
+		return rate;
+	}
+	
+	
 	
 	// Getters
 	public PostalAddressAndHyperlink getOurAddress() {
@@ -91,6 +109,8 @@ public abstract class AbstractInvoice extends Universal {
 	public String getTotalUsdPayable() {
 		return totalUsdPayable;
 	}
-	
+	public String getFxRateUsdPerEur() {
+		return fxRateUsdPerEur;
+	}
 	
 }

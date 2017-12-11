@@ -41,6 +41,12 @@
 
 <body>
 
+<%@ page import = "com.bcs.p3s.docs.htmldoc.model.ProformaInvoice"%>
+<%
+ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice");
+%>
+
+
 <div id="content">
 <table border="0" width="100%" >
 <tr>
@@ -56,7 +62,7 @@
 	  <td width="50%" align="left">
 	    <h1>PRO-FORMA INVOICE</h1>
 	  </td>
-	  <td>   pay=${"harry"}
+	  <td>
 	  </td>
     </tr>
   </table>
@@ -67,7 +73,7 @@
   <!-- Address bar -->
   <table border="0" width="100%">
     <tr>
-      <td width="33%">
+      <td width="33%" valign="top">
         <b>PATENT PLACE</b>
         <br/>25 Meer Street
         <br/>Stratford-upon-Avon
@@ -76,23 +82,22 @@
         <br/>United Kingdom
         <br/><a href="www.thepatent.place">www.thepatent.place</a>
       </td>
-      <td width="33%">
+      <td width="33%" valign="top">
         <b>BILL TO:</b>
-        <br/>Dominic Inc
-        <br/>2460 North Mango Av.
-        <br/>Chicago
-        <br/>Illinois
-        <br/>62455
-        <br/>USA
-        <br/><a href="mailto:dominic@dimucci.com">dominic@dimucci.com</a>
+        <br/><%=data.getClientAddress().getOrganisation() %>
+        <br/><%=data.getClientAddress().getAddressStreet() %>
+        <br/><%=data.getClientAddress().getAddressCity() %>
+        <br/><%=data.getClientAddress().getAddressUsaState() %>
+		<br/><%=data.getClientAddress().getZipcode() %>
+        <br/><a href="mailto:<%=data.getClientAddress().getHyperlink()%>"><%=data.getClientAddress().getHyperlink()%></a>
       </td>
-      <td width="300" align="left">
-        <b>DATE:</b> October 26, 2017
-        <br/><b>INVOICE NO:</b> IP0001000001PF
+      <td width="300" align="left" valign="top">
+        <b>DATE:</b> <%=data.getDocDate() %>
+        <br/><b>INVOICE NO:</b> <%=data.getInvoiceNumber()%>
         <br/><b>EXCHANGE RATE:</b>
-        <br/>1.1738 USD = 1 EUR
+        <br/><%=data.getFxRateUsdPerEur()%> USD = 1 EUR
         <p/>
-        <br/><font color="red"><b>IMPORTANT:</b></font>
+        <font color="red"><b>IMPORTANT:</b></font>
         <br/>Our service is conditional on funds
         <br/>reaching our account by the due
         <br/>date and time shown below.
@@ -126,16 +131,16 @@
 	</tr>
     <tr>
       <td>
-        Dominic Clownfish
+        <%=data.getClientAddress().getPersonName() %>
       </td>
       <td>
-        Bank Transfer
+        <%=data.getTransactionType()%>
       </td>
       <td>
-        IP0001000001
+        <%= data.getTransactionReference()%>
       </td>
       <td>
-        Oct 27, 2017 17:00 UTC
+        <%=data.getMoneyToArriveBy() %>
       </td>
     </tr>
   </table>
@@ -410,7 +415,7 @@
     </tr>
     <tr>
       <td>
-        <h2 align="center">PLEASE WIRE YOUR PAYMENT TO:</h2>
+        <h2 align="center">PLEASE WIRE YOUR PAYMENT TO EITHER OF:</h2>
       </td>
     </tr>
     <tr>
@@ -420,32 +425,77 @@
     </tr>
     <tr>
       <td>
-        <table align="center">
-          <tr>
-            <td>
-              BA Number:
-            </td>
-            <td>
-              22222222
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Account:
-            </td>
-            <td>
-            33333333
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Reference:
-            </td>
-            <td>
-              IP0001000001
-            </td>
-          </tr>
+
+		<!--  The table that holds the 2 sets of payment details -->
+        <table align="center" width="90%">  
+		  <tr>
+		    <td>
+		        <table align="center">
+		          <tr>
+		            <td>
+		              BA Number:
+		            </td>
+		            <td>
+		              22222222
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Account:
+		            </td>
+		            <td>
+		            33333333
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Reference:
+		            </td>
+		            <td>
+		              IP0001000001
+		            </td>
+		          </tr>
+		        </table>
+		    </td>
+		    <td width="20%">
+				&nbsp;
+		    </td>
+		    <td>
+		        <table align="center">
+		          <tr>
+		            <td>
+		              BA Number:
+		            </td>
+		            <td>
+		              22222222
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Account:
+		            </td>
+		            <td>
+		            33333333
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Reference:
+		            </td>
+		            <td>
+		              IP0001000001
+		            </td>
+		          </tr>
+		        </table>
+		    </td>
+		  </tr>
         </table>
+
+
+		
+
+
+
       </td>
     </tr>
     <tr>

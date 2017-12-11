@@ -54,7 +54,7 @@ public class PaymentRestController extends Universal {
     	BasketContents basketContents = null;
     	try {
 
-    		//In due course, an extractor (like below) should be used here. meanshile, use DummyDataEngine & classses from com.bcs.p3s.engine.dummyclasses
+    		//In due course, an extractor (like below) should be used here. meanwhile, use DummyDataEngine & classes from com.bcs.p3s.engine.dummyclasses
 			ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
 			List<Long> patentsInBasket = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs((LinkedHashMap<String,Object>) obby);
 

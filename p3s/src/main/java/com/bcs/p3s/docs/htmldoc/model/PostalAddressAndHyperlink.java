@@ -16,7 +16,7 @@ public class PostalAddressAndHyperlink {
 	PostalAddressAndHyperlink(String personName, String organisation, String addressStreet, String addressCity
 				, String addressUsaState, String zipcode, String hyperlink) 
 	{
-		this.personName = this.personName;
+		this.personName = personName;
 		this.organisation = organisation;
 		this.addressStreet = addressStreet;
 		this.addressCity = addressCity;
