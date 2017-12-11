@@ -41,9 +41,12 @@
 
 <body>
 
+<%@ page import = "java.util.List"%>
 <%@ page import = "com.bcs.p3s.docs.htmldoc.model.ProformaInvoice"%>
+<%@ page import = "com.bcs.p3s.docs.htmldoc.model.Patent4htmlDoc"%>
 <%
 ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice");
+List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents(); 
 %>
 
 
@@ -157,6 +160,9 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
   <td>
   <!-- Repeating Patent details-->
   <table border="0" width="100%">
+
+	<% for (Patent4htmlDoc patent : patents) {  %>
+
     <tr>
       <td>
 	    <!-- Start of a patent - summary row-->
@@ -166,7 +172,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               <b>PATENT:</b>
             </td>
             <td>
-              1 of 2
+              <%=patent.getNumberInList()%> of <%=patent.getListSize() %>
             </td>
           </tr>
           <tr>
@@ -174,7 +180,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               <b>APPLICATION NO:</b>
             </td>
             <td>
-              12345678
+              <%=patent.getApplicationNumber() %>
             </td>
           </tr>
           <tr>
@@ -182,7 +188,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               <b>YOUR CLIENT REF:</b>
             </td>
             <td>
-              ACD - 56
+              <%=patent.getClientRef() %>
             </td>
           </tr>
           <tr>
@@ -190,7 +196,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               <b>FILING DATE:</b>
             </td>
             <td>
-              10/27/2016
+              <%=patent.getFilingDate() %>
             </td>
           </tr>
           <tr>
@@ -204,6 +210,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
             </td>
           </tr>
         </table>
+
       </td>
     </tr>
 
@@ -216,7 +223,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               Official Fee
             </td>
             <td width="20%" align="right">
-              $1.00
+              <%=patent.getOfficialRenewalFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -224,7 +231,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               EPO Extension Fee
             </td>
             <td align="right">
-              $0.00
+              <%=patent.getOfficialExtensionFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -232,7 +239,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               Processing Fee
             </td>
             <td align="right">
-              $0.00
+              <%=patent.getProcessingFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -240,7 +247,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               Express Clearance Fee
             </td>
             <td align="right">
-              $0.00
+              <%=patent.getExpressClearanceFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -248,7 +255,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               Urgent Clearance Fee
             </td>
             <td align="right">
-              $0.00
+              <%=patent.getUrgentClearanceFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -256,133 +263,24 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
               Total for Patent
             </td>
             <td align="right">
-              <b>$1.00</b>
+              <b><%=patent.getTotalFeeForPatentUsd() %></b>
             </td>
           </tr>
         </table>
       </td>
     </tr>
-
 
 	<tr>
 	  <td>&nbsp;</td>
 	</tr>
-	<tr>
-	  <td>&nbsp;</td>
-	</tr>
 
-    <tr>
-      <td>
-	    <!-- Start of a patent - summary row-->
-  		<table border="0">
-          <tr>
-            <td>
-              <b>PATENT:</b>
-            </td>
-            <td>
-              2 of 2
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <b>APPLICATION NO:</b>
-            </td>
-            <td>
-              23456789
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <b>YOUR CLIENT REF:</b>
-            </td>
-            <td>
-              ALOHA643
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <b>FILING DATE:</b>
-            </td>
-            <td>
-              12/12/2016
-            </td>
-          </tr>
-          <tr>
-            <td>
-              &nbsp;
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <b>FEES</b>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-
-
-
-
-    <tr>
-      <td>
-	    <!-- Start of a patent - Cost breakdown-->
-  		<table width="100%" border=1>
-          <tr>
-            <td width="80%">
-              Official Fee
-            </td>
-            <td width="20%"  align="right">
-              $582.32
-            </td>
-          </tr>
-          <tr>
-            <td>
-              EPO Extension Fee
-            </td>
-            <td align="right">
-              $0.00
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Processing Fee
-            </td>
-            <td align="right">
-              $50.00
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Express Clearance Fee
-            </td>
-            <td align="right">
-              $0.00
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Urgent Clearance Fee
-            </td>
-            <td align="right">
-              $0.00
-            </td>
-          </tr>
-          <tr>
-            <td align="right">
-              Total for Patent
-            </td>
-            <td align="right">
-              <b>$632.32</b>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
+	<% }  /* End of : Loop for each PatentRenewal */ %>  
 
 
   </table>
+  </td>
 </tr>
+
 
 <tr>
   <td>&nbsp;</td>
@@ -402,7 +300,7 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
 
 <tr>
   <!-- Footer -->
-  <table border=0 align="center">
+  <table border=0 align="center"  width="100%">
     <tr>
       <td>
         <h1 align="center">NO SERVICES PROVIDED IN THE US</h1>
@@ -427,32 +325,41 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
       <td>
 
 		<!--  The table that holds the 2 sets of payment details -->
-        <table align="center" width="90%">  
+        <table align="center" width="60%">  
 		  <tr>
 		    <td>
 		        <table align="center">
 		          <tr>
 		            <td>
-		              BA Number:
+		              <b>For payment via:</b>  
+		              
 		            </td>
 		            <td>
-		              22222222
-		            </td>
-		          </tr>
-		          <tr>
-		            <td>
-		            Account:
-		            </td>
-		            <td>
-		            33333333
+		              <b><%=data.getBankDetails().getAccount1Type().toUpperCase() %></b>
 		            </td>
 		          </tr>
 		          <tr>
 		            <td>
-		            Reference:
+		            ABA Number:
 		            </td>
 		            <td>
-		              IP0001000001
+		            <%=data.getBankDetails().getAccount1BranchCode() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Account Number:
+		            </td>
+		            <td>
+		              <%=data.getBankDetails().getAccount1Number() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Have 2 spare fields
+		            </td>
+		            <td>
+		              if needed
 		            </td>
 		          </tr>
 		        </table>
@@ -464,36 +371,41 @@ ProformaInvoice data = (ProformaInvoice) request.getAttribute("proformaInvoice")
 		        <table align="center">
 		          <tr>
 		            <td>
-		              BA Number:
+		              <b>For payment via:</b>  
+		              
 		            </td>
 		            <td>
-		              22222222
-		            </td>
-		          </tr>
-		          <tr>
-		            <td>
-		            Account:
-		            </td>
-		            <td>
-		            33333333
+		              <b><%=data.getBankDetails().getAccount2Type().toUpperCase() %></b>
 		            </td>
 		          </tr>
 		          <tr>
 		            <td>
-		            Reference:
+		            ABA Number:
 		            </td>
 		            <td>
-		              IP0001000001
+		            <%=data.getBankDetails().getAccount2BranchCode() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Account Number:
+		            </td>
+		            <td>
+		              <%=data.getBankDetails().getAccount2Number() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            &nbsp;
+		            </td>
+		            <td>
+		            &nbsp;
 		            </td>
 		          </tr>
 		        </table>
 		    </td>
 		  </tr>
         </table>
-
-
-		
-
 
 
       </td>
