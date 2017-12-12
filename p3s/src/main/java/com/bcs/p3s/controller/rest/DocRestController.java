@@ -42,18 +42,34 @@ public class DocRestController extends Universal {
 		System.out.println(err);
 		log().debug(err + " invoked");
 		boolean ok = true;
-	
+
+		// acTodo - work out WHAT TYPE invoice
+		
+		
+		
+		
+		
+		
 		try {
 			Long paymentId = new Long(transactionId);
 			Payment payment = Payment.findPayment(paymentId);
 			if (payment==null) fail(err+" given bad paymentID");
-			ProformaInvoice proformaInvoice = htmlDocService.getDataForProformaInvoice(payment);
+			// ProformaInvoice contains all the data that the Final Invoice needs. So reuse
+			ProformaInvoice finalInvoice = htmlDocService.getDataForProformaInvoice(payment);
 
+			uiModel.addAttribute("finalInvoice",finalInvoice);
 			
 			
 			
-			//uiModel.addAttribute("harry","meghan");
-			uiModel.addAttribute("proformaInvoice",proformaInvoice);
+// this is atshed code for PROFORMA invoice			
+//			Long paymentId = new Long(transactionId);
+//			Payment payment = Payment.findPayment(paymentId);
+//			if (payment==null) fail(err+" given bad paymentID");
+//			ProformaInvoice proformaInvoice = htmlDocService.getDataForProformaInvoice(payment);
+//			//uiModel.addAttribute("harry","meghan");
+//			uiModel.addAttribute("proformaInvoice",proformaInvoice);
+			
+			
 					
 		}
 		catch (Exception e) {
@@ -68,7 +84,16 @@ public class DocRestController extends Universal {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		//modelAndView.addObject("jerry","tom");
-		String next = (ok)?"htmldocs/proformainvoice" : "htmldocs/ohdear";
+
+		
+		
+		
+// proforma		String next = (ok)?"htmldocs/proformainvoice" : "htmldocs/ohdear";
+// final		String next = (ok)?"htmldocs/finalinvoice" : "htmldocs/ohdear";
+		
+		
+		
+		String next = (ok)?"htmldocs/finalinvoice" : "htmldocs/ohdear";
 		modelAndView.setViewName(next);
 		log().debug(err+" returning next="+next);
 		return modelAndView;

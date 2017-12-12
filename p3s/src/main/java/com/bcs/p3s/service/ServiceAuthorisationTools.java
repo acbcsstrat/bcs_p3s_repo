@@ -13,6 +13,8 @@ import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.model.Payment;
+import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
@@ -62,6 +64,14 @@ public class ServiceAuthorisationTools extends Universal {
 		checkNotNull(patentIds, err);
 		for (Long patentId : patentIds) {
 			checkThisIsMyPatent(patentId, err);
+		}
+	}
+
+	protected void checkIsMyPayment(Payment payment, String err) {
+		checkNotNull(payment, err);
+		List<Renewal> renewals = payment.getRenewals();
+		for (Renewal renewal : renewals) {
+			checkThisIsMyPatent(renewal.getPatent().getId(), err);
 		}
 	}
 	
