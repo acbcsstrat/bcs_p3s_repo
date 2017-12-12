@@ -223,7 +223,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
               Official Fee
             </td>
             <td width="20%" align="right">
-              <%=patent.getOfficialRenewalFeeUsd() %>
+              $<%=patent.getOfficialRenewalFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -231,7 +231,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
               EPO Extension Fee
             </td>
             <td align="right">
-              <%=patent.getOfficialExtensionFeeUsd() %>
+              $<%=patent.getOfficialExtensionFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -239,7 +239,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
               Processing Fee
             </td>
             <td align="right">
-              <%=patent.getProcessingFeeUsd() %>
+              $<%=patent.getProcessingFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -247,7 +247,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
               Express Clearance Fee
             </td>
             <td align="right">
-              <%=patent.getExpressClearanceFeeUsd() %>
+              $<%=patent.getExpressClearanceFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -255,7 +255,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
               Urgent Clearance Fee
             </td>
             <td align="right">
-              <%=patent.getUrgentClearanceFeeUsd() %>
+              $<%=patent.getUrgentClearanceFeeUsd() %>
             </td>
           </tr>
           <tr>
@@ -263,7 +263,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
               Total for Patent
             </td>
             <td align="right">
-              <b><%=patent.getTotalFeeForPatentUsd() %></b>
+              <b>$<%=patent.getTotalFeeForPatentUsd() %></b>
             </td>
           </tr>
         </table>
@@ -289,7 +289,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 <tr>
   <!-- Grand Total line -->
       <td>
-  		<div align="right">TOTAL PAYABLE (Rounded) :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>$634.00</b></div>
+  		<div align="right">TOTAL PAYABLE (Rounded) :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>$<%=data.getTotalUsdPayable() %></b></div>
       </td>
 </tr>
 
@@ -356,6 +356,14 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
+		            Reference:
+		            </td>
+		            <td>
+		              <%=data.getTransactionReference() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
 		            Have 2 spare fields
 		            </td>
 		            <td>
@@ -392,6 +400,14 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		            </td>
 		            <td>
 		              <%=data.getBankDetails().getAccount2Number() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Reference:
+		            </td>
+		            <td>
+		              <%=data.getTransactionReference() %>
 		            </td>
 		          </tr>
 		          <tr>

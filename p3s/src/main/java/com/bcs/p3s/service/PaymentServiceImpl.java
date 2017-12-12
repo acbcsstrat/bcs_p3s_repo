@@ -369,6 +369,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 					latestCalculatedCost = latestCalculatedCost.add(eachSessionData.getCurrentRenewalCost());
 				}
 			}
+
 			basketContents.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_CEILING));
 		}
 		
