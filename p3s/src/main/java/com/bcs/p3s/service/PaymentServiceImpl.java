@@ -6,13 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.docs.InvoiceProcessingEngine;
 import com.bcs.p3s.docs.email.P3sEmail;
@@ -219,11 +217,11 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			 * All checks completed , now do the persist
 			 * 	a. Insert into Invoice table with paymentId as null
 			 * 	b. Insert into Payment table  with the current invoice Id
-			 *  c. Insert into Fee table with renewalId as null
-			 * 	d. Insert into Renewal table with the current feeId
-			 *  e. Update payment_renewals join table with renewals
-			 * 	f. Update Fee table with the current renewalId
-			 * 	g. Update Invoice table with current paymentId
+			 * 	c. Update Invoice table with current paymentId
+			 *  d. Insert into Fee table with renewalId as null
+			 * 	e. Insert into Renewal table with the current feeId
+			 *  f. Update payment_renewals join table with renewals
+			 * 	g. Update Fee table with the current renewalId
 			 * 	h. If above db operations success, then update Patent with renewal_status as Payment In Progress
 			 */ 
 			
@@ -478,6 +476,16 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	 * @param bankTransferPostCommitDetails
 	 * @param fee
 	 */
+
+// acTidy - this from above	
+//	 * 	a. Insert into Invoice table with paymentId as null
+//	 * 	b. Insert into Payment table  with the current invoice Id
+//	 * 	c. Update Invoice table with current paymentId
+//	 *  d. Insert into Fee table with renewalId as null
+//	 * 	e. Insert into Renewal table with the current feeId
+//	 *  f. Update payment_renewals join table with renewals
+//	 * 	g. Update Fee table with the current renewalId
+//	 * 	h. If above db operations success, then update Patent with renewal_status as Payment In Progress
 	
 	protected Payment commitTransaction(BankTransferPostCommitDetails commitTransaction, List<Fee> fee){
 		
@@ -485,8 +493,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		Invoice invoice = new Invoice();
 		Payment payment = new Payment();
 		Fee currentFee = null;
-		Invoice currentInvoice = new Invoice();
-		Payment currentPayment = new Payment();
+		Invoice currentInvoice = null; // new Invoice();
+		Payment currentPayment = null; // new Payment();
 		Renewal currentRenewal = new Renewal();
 		InvoiceProcessingEngine invoiceEngine = new InvoiceProcessingEngine();
 		Boolean dbSuccess = true;
@@ -494,70 +502,94 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		
 		List<Renewal> renewal_payment = new ArrayList<Renewal>();
 		List<PatentUI> orderedPatents = commitTransaction.getOrderedPatentUIs();
-//a.Insert into invoice
+//a.Insert into invoice (Temporary - some fields incomplete, but need it persisted to have it's ID)
 		invoice = invoiceEngine.populateProformaInvoiceData(commitTransaction); 
-		if(!(invoice == null)){
+//		if(!(invoice == null)){ - lot of acTidy around here - once proven
 			currentInvoice = invoice.persist();
 			if(currentInvoice == null){
 				dbSuccess = false;
-				log().debug("Invoice Table persistence failed " + msg);
 				log().error("Invoice Table persistence failed " + msg);
-				return payment;
+				fail("Invoice Table persistence failed " + msg);
+				//return payment;
 			}
 			else {
-				Invoice newInvoice = Invoice.findInvoice(invoice.getId());
-				String invoiceNumber = invoiceEngine.generateProFormaInvoiceNumber(newInvoice); 
-				newInvoice.setInvoiceNumber(invoiceNumber);
-				newInvoice.merge();
+//				Invoice newInvoice = Invoice.findInvoice(invoice.getId());
+//				newInvoice.merge();
 				
 				log().debug("Persisted Invoice Table. " + msg + "and returned invoice details with id as " + invoice.getId()
-				+ ", Invoice Number "+invoice.getInvoiceNumber());
+				+ ", Invoice Number "+invoice.getInvoiceNumber());  // at this point, InvoiceNumber will be null !!
 			}
 				//payment.setLatestInvoice(currentInvoice);
-		}
+//		}
 		
-		else{
-			dbSuccess = false;
-			log().debug("Invoice Table persistence failed " + msg);
-			log().error("Invoice Table persistence failed " + msg);
-			return payment;
-		}
+//		else{
+//			dbSuccess = false;
+//			log().debug("Invoice Table persistence failed " + msg);
+//			log().error("Invoice Table persistence failed " + msg);
+//			return payment;
+//		}
 		
 //b.Insert into Payment
 		payment = populatePaymentData(commitTransaction);
 		payment.setLatestInvoice(currentInvoice);
-		if(!(payment == null)){
+
+		// payment:P3S_TransRef cannot be sut until after the payment is persisted
+		
+		//		if(!(payment == null)){
 			currentPayment = payment.persist();
-			log().debug("Persisted Payment Table successfully " + msg + "and returned payment details with id as " + payment.getId());
-			currentInvoice.setPayment(currentPayment);
-			 
+
 			if(currentPayment == null){
 				dbSuccess = false;
-				log().debug("Payment Table persistence failed " + msg);
 				log().error("Payment Table persistence failed " + msg);
-				return payment;
+				fail("Payment Table persistence failed " + msg);
+				//return payment;
 			}
+			log().debug("Persisted Payment Table successfully " + msg + "and returned payment details with id as " + currentPayment.getId());
 			
-			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
-			String p3sTransRef = commitToRenewal.generateP3sTransRef(currentPayment);
-			currentPayment.setP3S_TransRef(p3sTransRef);
+//			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
+//			String p3sTransRef = commitToRenewal.generateP3sTransRef(currentPayment); cannot gen yet. paymentID not yet exist
+//			currentPayment.setP3S_TransRef(p3sTransRef);
 			currentPayment.merge();
-			logChangeOfStatus().debug("Transaction " + currentPayment.getP3S_TransRef() + " created with " + orderedPatents.size() +" patents ");
+			logChangeOfStatus().debug("Transaction ["+currentPayment.getId()+"] created with " + orderedPatents.size() +" patents ");
 			
 			//setting the generated p3s Ref to BankTransferPostCommitDetails - this object we are sending back to FE for displaying on final Payment page
 			commitTransaction.setP3sTransRef(currentPayment.getP3S_TransRef());
-		}
+//		}
 		
+
+//c.Update the new Invoice and Payment with details now available
+//		if(!(currentInvoice == null)){
+
+			currentPayment = Payment.findPayment(currentPayment.getId());
+			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
+			String p3sTransRef = commitToRenewal.generateP3sTransRef(currentPayment);
+//			String p3sRef = invoiceEngine.generateP3sTransactionNumber(currentPayment); - new but immediately redundant 
+			currentPayment.setP3S_TransRef(p3sTransRef);
+			currentPayment.merge();
+			logChangeOfStatus().debug("Transaction ["+currentPayment.getId()+"] " + currentPayment.getP3S_TransRef() + " updated with " + orderedPatents.size() +" patents ");
+
+			// set remaining Invoice details
+			String invoiceNumber = invoiceEngine.generateProFormaInvoiceNumber(currentPayment); 
+			Invoice newInvoice = Invoice.findInvoice(currentInvoice.getId());
+			newInvoice.setInvoiceNumber(invoiceNumber);
+			newInvoice.setPayment(currentPayment);
+			newInvoice.merge(); 
+			log().debug("Invoice table ["+newInvoice.getId()+"]updated with payment id as "+ currentPayment.getId());
+
+			// commitTransaction lacks the new P3sRef
+			commitTransaction.setP3sTransRef(p3sTransRef);
+			//		}
+
 
 		/**
 		 * Each transaction may have multiple patents. So loop through each in orderedPatentIds and get the details from session
 		 */
 		
+//d. Insert into Fee Table
 		for(PatentUI eachPatent : orderedPatents){
 			
 			Renewal renewal = new Renewal();
 			renewal = populateRenewalData(commitTransaction,eachPatent);
-			//c. Insert into Fee Table
 			if(!(fee == null)){
 				currentFee = renewal.getFee().persist();
 				if(currentFee == null){
@@ -575,7 +607,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				return payment;
 			}
 			
-			//d.Insert into Renewal
+//e.Insert into Renewal
 			
 			renewal.setActivePaymentId(currentPayment);
 			renewal.setFee(currentFee);
@@ -592,25 +624,19 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			}
 		
 		}
-//e.Update payment_renewal table
+//f.Update payment_renewal table
 		if(!(renewal_payment == null)){
 			payment.setRenewals(renewal_payment);
 			payment.merge();
 			log().debug("payment_renewals join table persisted with "+ renewal_payment.size() +" renewal(s)");
 		}
-//f.Update currentFee Table with currentRenewal
+//g.Update currentFee Table with currentRenewal
 		if(!(currentFee == null)){
 			currentFee.merge();
 			log().debug("Fee table updated with renewal id as "+ currentRenewal.getId());
 		}
 		
 		
-//g.Update currentInvoice Table with currentPayment
-		if(!(currentInvoice == null)){
-			currentInvoice.merge(); 
-			log().debug("Invoice table updated with payment id as "+ currentPayment.getId());
-		}
-
 //h. Update Patent table for all ordered Patents
 		if(dbSuccess){
 			for(PatentUI eachPatent : orderedPatents){
@@ -681,7 +707,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		return renewal;
 	}
 	
-	
+
+
 
 	// End of - Support methods - NOT exposed through the interface
 

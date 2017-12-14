@@ -35,7 +35,7 @@ public class InvoiceProcessingEngine extends Universal {
 		invoice.setInvoiceStatus(InvoiceStatusEnum.OPEN);
 		invoice.setPreceedingInvoiceId(null);
 		invoice.setInvoiceType(InvoiceTypeEnum.PROFORMA);
-		//dummy values start
+		//dummy values start - acToDo
 		invoice.setDocPath("hardcodedpdffolder/invoices/");
 		invoice.setFilename("dummyInvoiceNumber1.pdf");
 		invoice.setInvoiceTemplateId("template1");
@@ -45,14 +45,46 @@ public class InvoiceProcessingEngine extends Universal {
 	}
 
 
-	public String generateProFormaInvoiceNumber(Invoice invoice) {
-		if (invoice==null) return null;
-		String result = "IP";
-		result += String.format("%06d", invoice.getId());
-		result += "PF";
+//	public String generateProFormaInvoiceNumber(Invoice invoice) {
+//	if (invoice==null) return null;
+//	String result = "IP";
+//	result += String.format("%06d", invoice.getId());
+//	result += "PF";
+//	return result;
+//}
+// below made redundant by CommitToRenewalEngine extends Universal : public String generateP3sTransRef
+//	public String generateP3sTransactionNumber(Payment payment) {
+//		if (payment==null) return null;
+//		String result = null;
+//		Long businessPart = payment.getInitiatedByUserId().getBusiness().getId();
+//		Long txnPart = payment.getId();
+//		result = "IP"+padWithLeadingZeros(businessPart,4)+padWithLeadingZeros(txnPart,6);
+//		return result;
+//	}
+//	protected String padWithLeadingZeros(Long number, int digits) {
+//		String num = number.toString();
+//		if (num.length()>digits) fail("Unthinkable. NoPadNeeded. Already too big "+number+":"+digits);
+//		int padders = digits - num.length();
+//		String pad = "";
+//		for (int ii = num.length()+1 ; ii<digits ; ii++) { pad+="0"; }
+//		String ret = pad+num;
+//		log().debug("padWithLeadingZeros "+number+":"+digits+" yields "+ret);
+//		return ret;
+//	}
+	public String generateProFormaInvoiceNumber(Payment payment) {
+		if (payment==null) return null;
+		String result = payment.getP3S_TransRef();
+		result += getInvoiceNumberSuffix(InvoiceTypeEnum.PROFORMA);
 		return result;
 	}
+	protected String getInvoiceNumberSuffix(String invoiceType) {
+		String suffix = "";
+		if (InvoiceTypeEnum.PROFORMA.equalsIgnoreCase(invoiceType)) suffix = "PF";
+		if (InvoiceTypeEnum.PENALTY.equalsIgnoreCase(invoiceType)) suffix = "P";
+		return suffix;
+	}
 
+	
 	
 	public Invoice populateFinalInvoiceData(Payment payment) {
 		if (payment==null) fail(PREFIX+":populateFinalInvoiceData() passed null");
@@ -122,5 +154,6 @@ public class InvoiceProcessingEngine extends Universal {
 		} 
 		return finalInvoiceNumber;
 	}
+
 
 }

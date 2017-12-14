@@ -52,7 +52,7 @@ public class CommitToRenewalEngine extends Universal {
 		}
 		
 		if(!(p3sTransRef.length() == P3SPropertyNames.P3sTransRef_Length) ){
-			logmaliciousN4CU.fatal("generateP3sTransRef() failed creating 12 character reference");
+			logInternalError().fatal("generateP3sTransRef() failed creating 12 character reference:"+p3sTransRef);
 			return p3sTransRef;
 		}
 			
