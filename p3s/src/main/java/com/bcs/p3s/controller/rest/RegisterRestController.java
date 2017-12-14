@@ -43,61 +43,89 @@ public class RegisterRestController extends Universal {
 	public ResponseEntity<String> persistNewUser(@RequestBody Object object){
 		
 		String msg = "RegisterRestController : /register/rest-user/  presistNewUser(user) ";
-		log().debug(msg + "invoked");
+		log().debug(msg + "invoked with parameters ::" + object.toString());
 		
-		GenericProcessingEngine engine = new GenericProcessingEngine();
-		
-		System.out.println(object);
-		ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
-		HashMap<String, Object> contentMap = data.extractRegistrationForm(object);
-		
-		if(contentMap == null){
-			log().error("Extract data from Registration Form failed");
-			return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
-		}
+		try{
+			int iteration = 1;
 			
-		/**
-		 * Extracting business details from contentMap
-		 */
-		Business business = data.extractBusinessInfo(contentMap);
-		
-		business = engine.generatePinNumber(business);
-        
-        /** Checking whether the generated Business Number is unique **/
-        boolean isBusinessFound = true;
-        
-        while(isBusinessFound){
-        	business = engine.generatePinNumber(business);
-        	isBusinessFound = userService.checkBusinessNum(business.getBusinessNumber());
-        }	
-		//business.persist();
-		
-		
-		/**
-		 * Extracting user details from contentMap
-		 */
-		P3SUser user = data.extractUserInfo(contentMap);
-		//persist business && user
-		
-		//** Checking whether email Address already exist **//*
-		boolean isNewUser = userService.checkUser(user.getEmailAddress());
-		
-		if(isNewUser){
-			log().debug("Email address found stage");
-			user.setStatus(UserStatusEnum.DISABLED);
-			user.setUserrole("user");
-			//email notification default to OFF
-			user.setIsEmailNotification(true);
-			user.setBusiness(business);
-			userService.createNewUser(user, business);
+			GenericProcessingEngine engine = new GenericProcessingEngine();
+			
+			System.out.println(object);
+			ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
+			HashMap<String, Object> contentMap = data.extractRegistrationForm(object);
+			
+			if(contentMap == null){
+				log().error("Extract data from Registration Form failed");
+				return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+			}
+				
+			/**
+			 * Extracting business details from contentMap
+			 */
+			Business business = data.extractBusinessInfo(contentMap);
+			
+			business = engine.generateBusinessPinAndNumber(business);
+			
+			if(business == null){
+				log().error("Extract business info from Registration Form failed");
+				return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+			}
+	        
+	        /** Checking whether the generated Business Number is unique **/
+	        boolean isBusinessFound = false;
+	        
+	        isBusinessFound = userService.checkBusinessNum(business.getBusinessNumber());
+	        
+	        while(isBusinessFound && iteration < 5){
+	        	log().debug("Check found the generated Business Number not unique [iteration = "  + iteration +"]");
+	        	
+	        	iteration++;
+	        	business = engine.regenerateBusinessNumber(business);
+	        	log().debug("Checking again  whether generated Business Number is unique");
+	        	isBusinessFound = userService.checkBusinessNum(business.getBusinessNumber());
+	        }	
+			//business.persist();
+			
+	        log().debug("Check found the generated Business Number UNIQUE");
+			
+			/**
+			 * Extracting user details from contentMap
+			 */
+			P3SUser user = data.extractUserInfo(contentMap);
+			
+			if(user == null){
+				log().error("Extract User info from Registration Form failed");
+				return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+			}
+			//persist business && user
+			
+			//** Checking whether email Address already exist **//*
+			boolean isNewUser = userService.checkUser(user.getEmailAddress());
+			
+			if(isNewUser){
+				log().debug("Email address does not exist. So proceed with Registration");
+				user.setStatus(UserStatusEnum.DISABLED);
+				user.setUserrole("user");
+				//email notification default to ON
+				user.setIsEmailNotification(true);
+				user.setBusiness(business);
+				userService.createNewUser(user, business);
+			}
+			else{ //Error message :- Email address already exist
+				log().warn("User requested register, but already has an account (albeit maybe not verified)");
+				return new ResponseEntity<String>("error", HttpStatus.FOUND);
+				// Here, send email anyway. User will be expecting it (maybe NEEDS it). & cannot hurt.
+			}
+			// Send email address verification email to user
+			userService.sendRegistrationEmail(user.getEmailAddress());
 		}
-		else{
-			log().warn("User requested register, but already has an account (albeit maybe not verified)");
-			// Here, send email anyway. User will be expecting it (maybe NEEDS it). & cannot hurt.
+		
+		catch(Exception e){
+			logErrorAndContinue("Exception occured in " + msg, e);
+			return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
 		}
-		// Send email address verification email to user
-		userService.sendRegistrationEmail(user.getEmailAddress());
-        
+	        
+		log().debug("User persisted, email send and method returning successfully");
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
@@ -107,42 +135,48 @@ public class RegisterRestController extends Universal {
 		
 		String msg = "RegisterRestController : /register/rest-subsequent-user-step1/ createSubUserStep1(" + businessNumber + "," + businessPin +")";
 		log().debug(msg +" invoked");
-		
-		List<Business> businessInfo = null;
 		Business businessDetails = new Business();
-		UserProfileUI user = new UserProfileUI();
-		
-		/** Checking whether user entered business Number exists **/
-
-		businessInfo = userService.getBusinessInfo(businessNumber);
-		if(businessInfo.isEmpty()){
-			logInternalError().fatal("No business Details found for entered businessNumber[" + businessNumber +"]");
-			return new ResponseEntity<Business>(businessDetails, HttpStatus.NOT_FOUND);
-		}
-		
-		log().debug("User entered business Details authenticated for  businessNumber[" + businessNumber +"]");
-		businessDetails = businessInfo.get(0);
-		
-		/** Validate pin against user entered Pin**/
-		if(businessPin.equals(businessDetails.getBusinessPin().toString())){
+		try{
+			List<Business> businessInfo = null;
+			UserProfileUI user = new UserProfileUI();
 			
-			log().debug("User entered BusinessPin[" +businessPin + "] verified against database");
+			/** Checking whether user entered business Number exists **/
+	
+			businessInfo = userService.getBusinessInfo(businessNumber);
+			if(businessInfo.isEmpty()){
+				log().debug("No business Details found for entered businessNumber[" + businessNumber +"]");
+				return new ResponseEntity<Business>(businessDetails, HttpStatus.BAD_REQUEST);
+			}
 			
+			log().debug("User entered business Details authenticated for  businessNumber[" + businessNumber +"]");
+			businessDetails = businessInfo.get(0);
+			
+			/** Validate pin against user entered Pin**/
+			if(businessPin.equals(businessDetails.getBusinessPin().toString())){
+				
+				log().debug("User entered BusinessPin[" +businessPin + "] verified against database");
+				
+			}
+			else{
+				log().debug("User entered BusinessPin[" +businessPin + "] wrong");
+				return new ResponseEntity<Business>(businessDetails, HttpStatus.BAD_REQUEST);
+			}
+			
+			user.setBusiness(businessDetails);
+			
+			/**
+			 * setting in PreLoginSessionBean
+			 */
+			PreLoginSessionBean preSession = new PreLoginSessionBean();
+			preSession.setBusiness(user.getBusiness());
+			session.setAttribute("preSession", preSession);
+			log().debug("Business details persisted in PreLoginSession and method returning business details");
 		}
-		else{
-			log().debug("User entered BusinessPin[" +businessPin + "] wrong");
-			return new ResponseEntity<Business>(businessDetails, HttpStatus.NOT_FOUND);
+		catch(Exception e){
+			logErrorAndContinue("Exception occured in " + msg, e);
+			return new ResponseEntity<Business>(businessDetails, HttpStatus.BAD_REQUEST);
 		}
-		
-		user.setBusiness(businessDetails);
-		
-		/**
-		 * setting in PreLoginSessionBean
-		 */
-		PreLoginSessionBean preSession = new PreLoginSessionBean();
-		preSession.setBusiness(user.getBusiness());
-		session.setAttribute("preSession", preSession);
-		
+			
 		return new ResponseEntity<Business>(businessDetails, HttpStatus.OK);
 	}
 	
@@ -150,7 +184,7 @@ public class RegisterRestController extends Universal {
 	public ResponseEntity<String> persistUser(@RequestBody Object object){
 		
 		String msg = "RegisterRestController : /register/rest-subsequent-user-step2/ persistUser()";
-		log().debug(msg + "invoked");
+		log().debug(msg + "invoked with parameters "+ object.toString());
 		
 		System.out.println(object);
 		ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
@@ -165,6 +199,10 @@ public class RegisterRestController extends Universal {
 		 * Extracting business details from contentMap
 		 */
 		Business business = data.extractBusinessInfo(contentMap);
+		if(business == null){
+			log().error("Extract business info from Registration Form failed");
+			return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+		}
 		//business.persist();
 		
 		
@@ -172,13 +210,17 @@ public class RegisterRestController extends Universal {
 		 * Extracting user details from contentMap
 		 */
 		P3SUser user = data.extractUserInfo(contentMap);
+		if(user == null){
+			log().error("Extract User info from Registration Form failed");
+			return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+		}
 		//persist business && user
 		
 		//** Checking whether email Address already exist **/
 		boolean isNewUser = userService.checkUser(user.getEmailAddress());
 		
 		if(isNewUser){
-			log().debug("Email address found stage");
+			log().debug("Email address does not exist. So proceed with Registration");
 			user.setStatus(UserStatusEnum.DISABLED);
 			user.setUserrole("user");
 			//setting email notification to true by default
@@ -190,11 +232,13 @@ public class RegisterRestController extends Universal {
 		}
 		else{
 			log().warn("User requested register, but already has an account (albeit maybe not verified)");
+			return new ResponseEntity<String>("error", HttpStatus.FOUND);
 			// Here, send email anyway. User will be expecting it (maybe NEEDS it). & cannot hurt.
 		}
 		// Send email address verification email to user
 		userService.sendRegistrationEmail(user.getEmailAddress());
 		
+		log().debug("User persisted, email send and method returning successfully");
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
@@ -221,7 +265,7 @@ public class RegisterRestController extends Universal {
 		//CHECKING user send {verifyLink} against what generated from user object
 		String hashLink = genEngine.generateUrlVerificationCode(user);
 		if(!(hashLink.equals(verifyLink))){
-			logM().warn("User send an INVALID {verifyLink}. Preventing user from further operation. ["+emailAddress+" expected "+hashLink+" got "+verifyLink+"]");
+			log().error("User send an INVALID {verifyLink}. Preventing user from further operation. ["+emailAddress+" expected "+hashLink+" got "+verifyLink+"]");
 			model.setViewName("error");
 			return model;
 		}
@@ -235,9 +279,10 @@ public class RegisterRestController extends Universal {
 				user.setStatus(UserStatusEnum.ENABLED);
 				userService.updateUser(user, user.getBusiness());
 				log().debug("User["+ emailAddress  +"] ****VERIFIED AND ACTIVATED****.Redirecting to Login Page");
+				log().debug("Registration Completed for user " + emailAddress );
 		}	
 		else{
-			log().info("User status is ALREADY enabled (email url clicked again). No action required now. Redirect to login page");
+			log().warn("User status is ALREADY enabled (email url clicked again). No action required now. Redirect to login page");
 		}
 		
 		//return to login page

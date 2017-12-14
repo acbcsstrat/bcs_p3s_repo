@@ -38,6 +38,11 @@ public class Notification {
      */
     @NotNull
     private String costbandcolor;
+    
+    /**
+     */
+    @NotNull
+    private String notificationName;
 
 
 

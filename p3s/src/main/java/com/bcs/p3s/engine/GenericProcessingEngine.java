@@ -11,6 +11,8 @@ import com.bcs.p3s.util.random.RandomGenerator;
  * @author merinp
  */
 public class GenericProcessingEngine extends Universal {
+	
+	protected String PREFIX = this.getClass().getName() + " : "; 
 
 	/** verify link for user verification **/
 	
@@ -26,32 +28,62 @@ public class GenericProcessingEngine extends Universal {
 		return fragment6;
 	}
 	
-	/** PIN Number Generation **/
+	/** Business PIN & Number Generation **/
 	
-	public Business generatePinNumber(Business business){
+	public Business generateBusinessPinAndNumber(Business business){
 		
+		String msg = "generateBusinessPinAndNumber(business)";
+		log().debug(msg +" invoked for generating Business Pin and Number");
 		//business pin can be a 4 digit random generated number between 1000 and 9999
 		int ranNumber = 0;
 		do{
 			RandomGenerator rand = new RandomGenerator((int) System.currentTimeMillis());
 			ranNumber = rand.nextInt(1000,9999);
 		}while(ranNumber <= 1000 || ranNumber > 9999);
+		
 		business.setBusinessPin(ranNumber);
 		
 		
-		//business Number can be a combination of first 2 letters of bus Name and random 2 digit number(eg, Box Clever Software --> BO23)
+		//business Number can be a combination of first 2 letters of business Name in UPPERCASE and random 4 digit number(eg, Box Clever Software --> BO2317)
 		ranNumber = 0;
-		String bName1 = business.getBusinessName().replace(" ", "");
+		String bName1 = business.getBusinessName().replace(" ", ""); 
 		String bName2 = bName1.substring(0, 2).toUpperCase();
 		do{
-			RandomGenerator rand = new RandomGenerator((int) System.currentTimeMillis());
-			ranNumber = rand.nextInt(22,99);
-		}while(ranNumber < 22 || ranNumber > 99);
+			RandomGenerator rand = new RandomGenerator((int) System.nanoTime());
+			ranNumber = rand.nextInt(1000,9999);
+		}while(ranNumber <= 1000 || ranNumber > 9999);
+		
+		log().debug("Generated a random number for Business Number as " + ranNumber);
 		
 		business.setBusinessNumber(bName2+ranNumber);
 		
+		log().debug(msg + " returning with Business Pin and number respectively as " + business.getBusinessPin() +" and " + business.getBusinessNumber());
+		
 		return business;
 		
+	}
+	
+	public Business regenerateBusinessNumber(Business business){
+		
+		String msg = "regenerateBusinessNumber(business)";
+		log().debug(msg +" invoked for regenerating Business Number");
+		
+		//business Number can be a combination of first 2 letters of business Name in UPPERCASE and random 4 digit number(eg, Box Clever Software --> BO2317)
+		int ranNumber = 0;
+		String bName1 = business.getBusinessName().replace(" ", ""); 
+		String bName2 = bName1.substring(0, 2).toUpperCase();
+		do{
+			RandomGenerator rand = new RandomGenerator((int) System.currentTimeMillis());
+			ranNumber = rand.nextInt(1000,9999);
+		}while(ranNumber <= 1000 || ranNumber > 9999);
+				
+		log().debug(msg + "has generated a random number for Business Number as " + ranNumber);
+				
+		business.setBusinessNumber(bName2+ranNumber);
+				
+		log().debug(msg + " returning with Business number as "  + business.getBusinessNumber());
+				
+		return business;
 	}
 
 }

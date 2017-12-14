@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 			return "error";  //HARDCODED VALUE NEEDS REPLACEMENT
 	}
 	
-	public List getAllUsers(){
+	public List<P3SUser> getAllUsers(){
 		
 		List<P3SUser> users = null;
 		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void createNewUser(P3SUser user, Business business) {
+		
 		business.persist();
 		user.persist();
 	}

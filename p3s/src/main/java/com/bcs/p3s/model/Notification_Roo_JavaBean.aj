@@ -47,4 +47,12 @@ privileged aspect Notification_Roo_JavaBean {
         this.costbandcolor = costbandcolor;
     }
     
+    public String Notification.getNotificationName() {
+        return this.notificationName;
+    }
+    
+    public void Notification.setNotificationName(String notificationName) {
+        this.notificationName = notificationName;
+    }
+    
 }
