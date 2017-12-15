@@ -106,7 +106,13 @@ public class Payment {
     private Boolean hasFailed;
 
     /**
-     * If transaction fails store the reason. Else null. Suitable for display to customer.
+     * If transaction fails, holds 1 of the 3 codes agreed with Moneycorp
+     */
+    private String MC_failCode;
+
+    /**
+     * If transaction fails store the reason. Else null. Suitable for display to customer. 
+     * May also be null unless MC_failCode is 'other' 
      */
     private String failureReason;
 
@@ -200,4 +206,9 @@ public class Payment {
         return payment;
     }
 
+    public String getMC_failCode() {  // Here because Roo wont generate this!
+    	return this.MC_failCode;
+    }
+
+    
 }

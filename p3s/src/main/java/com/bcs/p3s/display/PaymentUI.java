@@ -12,6 +12,7 @@ import org.apache.commons.digester.ExtendedBaseRules;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.bcs.p3s.engine.DummyDataEngine;
+import com.bcs.p3s.enump3s.McFailCodeEnum;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.Patent;
@@ -76,7 +77,12 @@ public class PaymentUI extends Payment {
 		this.setLatestTransStatus(payment.getLatestTransStatus());
 
 		this.setHasFailed(payment.getHasFailed());
-		this.setFailureReason(payment.getFailureReason());
+		String failReason = payment.getFailureReason();
+		if (payment.getHasFailed() && isEmpty(failReason) ) {
+			McFailCodeEnum mcEnum = new McFailCodeEnum(payment.getMC_failCode());
+			failReason = mcEnum.toCustomerFacingString();
+		}
+		this.setFailureReason(failReason);
 
 		Invoice invoice = payment.getLatestInvoice();
 		invoice.setPayment(null);
@@ -245,5 +251,10 @@ public class PaymentUI extends Payment {
 //	public void setRenewalDueDate(Date renewalDueDate) {
 //		this.renewalDueDate = renewalDueDate;
 //	}
+
+	public boolean isEmpty(String val) {
+		if (val==null || val.trim().length()==0) return true;
+		return false;
+	}
 
 }
