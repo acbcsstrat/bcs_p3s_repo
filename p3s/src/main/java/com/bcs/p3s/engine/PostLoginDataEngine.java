@@ -78,7 +78,7 @@ public class PostLoginDataEngine extends Universal{
 				 * 	- NO RATE & COLOUR as GREY else other values
 				 * 
 				 */
-				if(RenewalStatusEnum.SHOW_PRICE.equals(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS.equals(patent.getRenewalStatus()) 
+				if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS.equals(patent.getRenewalStatus()) 
 						|| RenewalStatusEnum.EPO_INSTRUCTED.equals(patent.getRenewalStatus())){
 					log().debug("Patent holds a renewal status of SHOW_PRICE.");
 					renewalDates.setRenewalWindowOpened(true);

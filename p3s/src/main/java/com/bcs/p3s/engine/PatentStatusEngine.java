@@ -193,7 +193,7 @@ public class PatentStatusEngine extends Universal {
 			 * If colour dates null it will throw Null Pointer Exception
 			 * So this check is mandatory 
 			 */
-			if(RenewalStatusEnum.SHOW_PRICE.equals(renewalInfo.getCurrentRenewalStatus())){
+			if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(renewalInfo.getCurrentRenewalStatus())){
 				renewalInfo.setCurrentColorDates(getAllColorDates(renewalInfo.getRenewalDueDate()));
 				if(renewalInfo.getCurrentColorDates() == null){
 					log().error("Colour Dates null for due date "+ renewalInfo.getRenewalDueDate());
@@ -209,7 +209,7 @@ public class PatentStatusEngine extends Universal {
 			//good to follow and not in doldrum: so we can show the prices
 			//	either Show price or Renewal In Place
 			//if(renewalInfo.getGoodFollowOn() && !renewalInfo.getDoldrums()){
-			if(RenewalStatusEnum.SHOW_PRICE.equals(renewalInfo.getCurrentRenewalStatus())){
+			if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(renewalInfo.getCurrentRenewalStatus())){
 				log().debug("Patent holds a renewal status of SHOW_PRICE.");
 				//caData = caEngine.getAllPhasesInfo(renewalDates);
 				String currentPhase = renewalInfo.getColour().toString();
