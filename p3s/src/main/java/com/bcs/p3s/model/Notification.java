@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
+@RooJpaActiveRecord(finders = { "findNotificationsByNotificationName"})
 public class Notification {
 
     /**

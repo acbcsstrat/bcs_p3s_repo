@@ -60,6 +60,10 @@ public interface P3SPropertyNames {
 	//public static final String CERTIFICATE_DOCUMENT_PATH = "certificate_doc_path";
 	public static final String PATH_TO_PDF_DOCS = "path_to_pdf_docs";
 
-	
+	//Notification Email specific
+	public static final int TWELVE_WEEKS_IN_DAYS = 84;
+	public static final int SIX_WEEKS_IN_DAYS = 42;
+	public static final int TWO_WEEKS_IN_DAYS = 14;
+	public static final int ONE_WEEK_IN_DAYS = 7;
 	
 }

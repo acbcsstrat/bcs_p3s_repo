@@ -5,7 +5,7 @@ package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.Fee;
 import com.bcs.p3s.model.FeeDataOnDemand;
-import com.bcs.p3s.model.RenewalDataOnDemand;
+import com.bcs.p3s.model.Renewal;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect FeeDataOnDemand_Roo_DataOnDemand {
@@ -25,9 +24,6 @@ privileged aspect FeeDataOnDemand_Roo_DataOnDemand {
     
     private List<Fee> FeeDataOnDemand.data;
     
-    @Autowired
-    RenewalDataOnDemand FeeDataOnDemand.renewalDataOnDemand;
-    
     public Fee FeeDataOnDemand.getNewTransientFee(int index) {
         Fee obj = new Fee();
         setExpressFee_USD(obj, index);
@@ -35,6 +31,7 @@ privileged aspect FeeDataOnDemand_Roo_DataOnDemand {
         setFxRate(obj, index);
         setLatePayPenalty_USD(obj, index);
         setProcessingFee_USD(obj, index);
+        setRenewal(obj, index);
         setRenewalFee_EUR(obj, index);
         setSubTotal_USD(obj, index);
         setUrgentFee_USD(obj, index);
@@ -64,6 +61,11 @@ privileged aspect FeeDataOnDemand_Roo_DataOnDemand {
     public void FeeDataOnDemand.setProcessingFee_USD(Fee obj, int index) {
         BigDecimal processingFee_USD = BigDecimal.valueOf(index);
         obj.setProcessingFee_USD(processingFee_USD);
+    }
+    
+    public void FeeDataOnDemand.setRenewal(Fee obj, int index) {
+        Renewal renewal = null;
+        obj.setRenewal(renewal);
     }
     
     public void FeeDataOnDemand.setRenewalFee_EUR(Fee obj, int index) {

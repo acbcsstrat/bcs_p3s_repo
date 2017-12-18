@@ -18,7 +18,7 @@ import org.springframework.roo.addon.tostring.RooToString;
  */
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord(finders = { "findNotificationMappingsByPatent_idAndUser_id" })
+@RooJpaActiveRecord(finders = { "findNotificationMappingsByPatent_idAndUser_id" , "findNotificationMappingsByPatent_id", "findNotificationMappingsByUser_id" })
 public class NotificationMapping {
 	
 	private Long patent_id;

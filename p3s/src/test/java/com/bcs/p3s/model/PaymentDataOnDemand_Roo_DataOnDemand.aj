@@ -44,6 +44,7 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
         setBillingAddressStreet(obj, index);
         setBillingAddressZip(obj, index);
         setFailureReason(obj, index);
+        setFxTarget(obj, index);
         setHasFailed(obj, index);
         setInitiatedByUserId(obj, index);
         setIsBillingAddressSame(obj, index);
@@ -51,6 +52,7 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
         setLatestInvoice(obj, index);
         setLatestTransStatus(obj, index);
         setMC_TransRef(obj, index);
+        setMC_failCode(obj, index);
         setP3S_TransRef(obj, index);
         setSentToMc(obj, index);
         setTransAmount_USD(obj, index);
@@ -83,6 +85,11 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
     public void PaymentDataOnDemand.setFailureReason(Payment obj, int index) {
         String failureReason = "failureReason_" + index;
         obj.setFailureReason(failureReason);
+    }
+    
+    public void PaymentDataOnDemand.setFxTarget(Payment obj, int index) {
+        Date fxTarget = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        obj.setFxTarget(fxTarget);
     }
     
     public void PaymentDataOnDemand.setHasFailed(Payment obj, int index) {
@@ -118,6 +125,11 @@ privileged aspect PaymentDataOnDemand_Roo_DataOnDemand {
     public void PaymentDataOnDemand.setMC_TransRef(Payment obj, int index) {
         String MC_TransRef = "MC_TransRef_" + index;
         obj.setMC_TransRef(MC_TransRef);
+    }
+    
+    public void PaymentDataOnDemand.setMC_failCode(Payment obj, int index) {
+        String MC_failCode = "MC_failCode_" + index;
+        obj.setMC_failCode(MC_failCode);
     }
     
     public void PaymentDataOnDemand.setP3S_TransRef(Payment obj, int index) {

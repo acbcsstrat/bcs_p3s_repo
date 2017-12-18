@@ -7,6 +7,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.SimpleTimeZone;
 
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+import org.joda.time.Period;
+
 public class DateUtil implements Comparable<String>{
 
 	public String dateToUSStringWithoutDayOfWeek(Date date) {
@@ -19,6 +23,13 @@ public class DateUtil implements Comparable<String>{
 	public String dateToUSStringWithDayOfWeek(Date date) {
 		if (date==null) return "";
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d, yyyy"); // Tue Oct 31, 2017
+		String result = sdf.format(date);
+		return result;
+	}
+	
+	public String dateToUSStringWithTimeZone(Date date) {
+		if (date==null) return "";
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy  HH:mm z"); // Oct 31, 2017 21:00 UTC
 		String result = sdf.format(date);
 		return result;
 	}
@@ -159,8 +170,52 @@ public class DateUtil implements Comparable<String>{
 	}
 
 	public int daysBetween(Date d1, Date d2){
-        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+		long diff = d2.getTime() - d1.getTime();
+		int days = (int) (diff / (1000 * 60 * 60 * 24));
+        return days;
+        
+       
 	}
+	
+	public int getWeeksBetweenDates(Date d1, Date d2){
+		
+	    Calendar c1 = Calendar.getInstance();
+	    Calendar c2 = Calendar.getInstance();
+	    c1.setTime(d1);
+	    c2.setTime(d2);
+	    DateTime start = new DateTime(c1.YEAR, c1.MONTH, c1.DAY_OF_MONTH, 0, 0, 0, 0);
+	    DateTime end   = new DateTime(c2.YEAR, c2.MONTH, c2.DAY_OF_MONTH, 0, 0, 0, 0);
+	    Interval interval = new Interval(start, end);
+	    Period p = interval.toPeriod();
+	    return p.getWeeks();
+	}
+	
+	public int getNumberOfWeeks(Date d1, Date d2){
+		long diff = d2.getTime() - d1.getTime();
+		int weeks = (int) (diff / (7 * 24 * 60 * 60 * 1000 ));
+		
+		return weeks;
+	}
+	
+	public boolean isSameDay(Date d1, Date d2){
+		Calendar cal1 = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+		cal1.setTime(d1);
+		cal2.setTime(d2);
+		boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+		                  cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+		
+		return sameDay;
+	}
+	
+	public int getHoursBetweenDates(Date d1, Date d2){
+		
+		long diff = d2.getTime() - d1.getTime();
+		int hours = (int) (diff / (60 * 60 * 1000 ));
+		
+		return hours;
+	}
+	
 	
 	public Date getUTCTime(Date originalDate) throws ParseException{
 		

@@ -28,6 +28,7 @@ privileged aspect NotificationDataOnDemand_Roo_DataOnDemand {
         setDefaultOn(obj, index);
         setDisplayOrder(obj, index);
         setEmailTemplateId(obj, index);
+        setNotificationName(obj, index);
         setTitle(obj, index);
         return obj;
     }
@@ -50,6 +51,11 @@ privileged aspect NotificationDataOnDemand_Roo_DataOnDemand {
     public void NotificationDataOnDemand.setEmailTemplateId(Notification obj, int index) {
         String emailTemplateId = "foo" + index + "@bar.com";
         obj.setEmailTemplateId(emailTemplateId);
+    }
+    
+    public void NotificationDataOnDemand.setNotificationName(Notification obj, int index) {
+        String notificationName = "notificationName_" + index;
+        obj.setNotificationName(notificationName);
     }
     
     public void NotificationDataOnDemand.setTitle(Notification obj, int index) {
