@@ -58,7 +58,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
   <table border="0" width="100%">
     <tr>
       <td width="50%">
-        <img src="/p3sweb/public/ac/crudepdf/logo-withname-ruf.png">
+        <img src="/p3sweb/public/images/logo-withname-4htmldoc.png">
       </td>
 	  <td>
 	  </td>

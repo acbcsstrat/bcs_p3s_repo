@@ -4,6 +4,8 @@ package com.bcs.p3s.docs.htmldoc.model;
 import java.math.BigDecimal;
 
 import com.bcs.p3s.engine.PricingEngine;
+import com.bcs.p3s.enump3s.InvoiceTypeEnum;
+import com.bcs.p3s.enump3s.McFailCodeEnum;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.P3SFeeSole;
@@ -18,6 +20,7 @@ public class PenaltyInvoice extends AbstractInvoice {
 	protected BankTransferPaymentDetails bankDetails; 
 	protected String failReason;
 	protected String originalFailedInvoiceNumber;
+	protected String penaltyPaymentReferenceNumber;
 	
 	
 	public PenaltyInvoice(Invoice invoice) {
@@ -26,6 +29,13 @@ public class PenaltyInvoice extends AbstractInvoice {
 
 		// Now add/update certain data
 		failReason = invoice.getPayment().getFailureReason();
+		if (isEmpty(failReason)) {
+			String failCode = invoice.getPayment().getMC_failCode();
+			if (isEmpty(failCode)) fail("PenaltyInvoice constructor missing fails for inv ["+invoice.getId()+"]");
+			McFailCodeEnum mcEnum = new McFailCodeEnum(failCode);
+			failReason = mcEnum.toCustomerFacingString();
+			log().debug("PenaltyInvoice ["+invoice.getId()+"] failReason missing so used failCode");
+		}
 
 		PricingEngine pricingEngine = new PricingEngine();
 		Business business = null;
@@ -38,8 +48,13 @@ public class PenaltyInvoice extends AbstractInvoice {
 		this.totalUsdPayable = p3sFee.getLatePayPenalty_USD()
 				.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
 			
-		originalFailedInvoiceNumber = "HHHooooooOOOOOO";
-	
+		// The original failed invoice will always be a ProForma invoice
+		originalFailedInvoiceNumber = this.getTransactionReference()
+				+getInvoiceNumberSuffix(InvoiceTypeEnum.PROFORMA.toString());
+		
+		// Penalty invoice is unusual in that the BankTransfer reference DOES include the suffix
+		penaltyPaymentReferenceNumber = this.getTransactionReference()
+				+getInvoiceNumberSuffix(InvoiceTypeEnum.PENALTY.toString());
 	}
 
 	
@@ -53,4 +68,8 @@ public class PenaltyInvoice extends AbstractInvoice {
 	public String getOriginalFailedInvoiceNumber() {
 		return originalFailedInvoiceNumber;
 	}
+	public String getPenaltyPaymentReferenceNumber() {
+		return penaltyPaymentReferenceNumber;
+	}
+
 }

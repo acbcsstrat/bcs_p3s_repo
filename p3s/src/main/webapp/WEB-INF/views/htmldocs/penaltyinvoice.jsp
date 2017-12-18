@@ -56,7 +56,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
   <table border="0" width="100%">
     <tr>
       <td width="50%">
-        <img src="/p3sweb/public/ac/crudepdf/logo-withname-ruf.png">
+        <img src="/p3sweb/public/images/logo-withname-4htmldoc.png">
       </td>
 	  <td>
 	  </td>
@@ -312,7 +312,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		            Reference:
 		            </td>
 		            <td>
-		              <%=data.getTransactionReference() %>
+		              <%=data.getPenaltyPaymentReferenceNumber() %>
 		            </td>
 		          </tr>
 		          <tr>
@@ -360,7 +360,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		            Reference:
 		            </td>
 		            <td>
-		              <%=data.getTransactionReference() %>
+		              <%=data.getPenaltyPaymentReferenceNumber() %>
 		            </td>
 		          </tr>
 		          <tr>

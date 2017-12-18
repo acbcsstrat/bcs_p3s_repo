@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bcs.p3s.docs.htmldoc.HtmlDocService;
 import com.bcs.p3s.docs.htmldoc.model.PenaltyInvoice;
 import com.bcs.p3s.docs.htmldoc.model.ProformaInvoice;
+import com.bcs.p3s.enump3s.InvoiceTypeEnum;
+import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
@@ -34,6 +36,13 @@ public class DocRestController extends Universal {
 	
 	@Autowired
     HttpSession session ;
+
+	
+	protected final String SHOW_PROFORMA_INVOICE_PAGE = "htmldocs/proformainvoice";
+	protected final String SHOW_FINAL_INVOICE_PAGE = "htmldocs/finalinvoice";
+	protected final String SHOW_PENALTY_INVOICE_PAGE = "htmldocs/penaltyinvoice";
+	protected final String OHDEAR_PAGE = "htmldocs/ohdear";
+	
 	
 	/*----------- User clicked on Invoice button -----------*/
 	
@@ -43,76 +52,45 @@ public class DocRestController extends Universal {
 		String err = "DocRestController : /invoice/{transactionId="+transactionId+"}";
 		System.out.println(err);
 		log().debug(err + " invoked");
-		boolean ok = true;
+		String nextPage = null;
 
-		// acTodo - work out WHAT TYPE invoice
-		
-		
-		
-		
-		
-		
+		// Determine which Invoice TYPE to display - and display it
 		try {
 			Long paymentId = new Long(transactionId);
 			Payment payment = Payment.findPayment(paymentId);
 			if (payment==null) {
-				logM().error(err+" given bad paymentID");
-				throw new P3SRuntimeException(err+" given bad paymentID");
+				logM().error(err+" given bad paymentID of "+transactionId);
+				throw new P3SRuntimeException(err+" given bad paymentID of "+transactionId);
 			}
-			// ProformaInvoice contains all the data that the Final Invoice needs. So reuse
-			PenaltyInvoice penaltyInvoice = htmlDocService.getDataForPenaltyInvoice(payment);
-
-			uiModel.addAttribute("penaltyInvoice",penaltyInvoice);
-			
-			
-//			// this is stashed code for FINAL invoice			
-//			try {
-//				Long paymentId = new Long(transactionId);
-//				Payment payment = Payment.findPayment(paymentId);
-//				if (payment==null) fail(err+" given bad paymentID");
-//				// ProformaInvoice contains all the data that the Final Invoice needs. So reuse
-//				ProformaInvoice finalInvoice = htmlDocService.getDataForProformaInvoice(payment);
-//
-//				uiModel.addAttribute("finalInvoice",finalInvoice);
-//				
-//				
-			
-// this is atshed code for PROFORMA invoice			
-//			Long paymentId = new Long(transactionId);
-//			Payment payment = Payment.findPayment(paymentId);
-//			if (payment==null) fail(err+" given bad paymentID");
-//			ProformaInvoice proformaInvoice = htmlDocService.getDataForProformaInvoice(payment);
-//			//uiModel.addAttribute("harry","meghan");
-//			uiModel.addAttribute("proformaInvoice",proformaInvoice);
-			
-			
-					
+			Invoice latestInvoice = payment.getLatestInvoice();
+			InvoiceTypeEnum invoiceTypeEnum = new InvoiceTypeEnum(latestInvoice.getInvoiceType());
+			String invoiceTypeStr = invoiceTypeEnum.toString();
+			if (InvoiceTypeEnum.PROFORMA.equals(invoiceTypeStr)) {
+				ProformaInvoice proformaInvoice = htmlDocService.getDataForProformaInvoice(payment);
+				uiModel.addAttribute("proformaInvoice",proformaInvoice);
+				nextPage= SHOW_PROFORMA_INVOICE_PAGE;
+			} else if (InvoiceTypeEnum.FINAL.equals(invoiceTypeStr)) {
+				// ProformaInvoice contains all the data that the Final Invoice needs. So reuse
+				ProformaInvoice finalInvoice = htmlDocService.getDataForProformaInvoice(payment);
+				uiModel.addAttribute("finalInvoice",finalInvoice);
+				nextPage = SHOW_FINAL_INVOICE_PAGE;
+			} else if (InvoiceTypeEnum.PENALTY.equals(invoiceTypeStr)) {
+				PenaltyInvoice penaltyInvoice = htmlDocService.getDataForPenaltyInvoice(payment);
+				uiModel.addAttribute("penaltyInvoice",penaltyInvoice);
+				nextPage = SHOW_PENALTY_INVOICE_PAGE;
+			} else fail(err+" Bad invoiceTypeStr of "+invoiceTypeStr);
 		}
 		catch (Exception e) {
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			log().error("Stacktrace was: "+errors.toString());
-			ok = false;
+			nextPage = OHDEAR_PAGE;
 		}
 		
 		
-
-		
 		ModelAndView modelAndView = new ModelAndView();
-		//modelAndView.addObject("jerry","tom");
-
-		
-		
-		
-// proforma		String next = (ok)?"htmldocs/proformainvoice" : "htmldocs/ohdear";
-// final		String next = (ok)?"htmldocs/finalinvoice" : "htmldocs/ohdear";
-//    String next = (ok)?"htmldocs/penaltyinvoice" : "htmldocs/ohdear";
-		
-		
-		
-		String next = (ok)?"htmldocs/penaltyinvoice" : "htmldocs/ohdear";
-		modelAndView.setViewName(next);
-		log().debug(err+" returning next="+next);
+		modelAndView.setViewName(nextPage);
+		log().debug(err+" returning next="+nextPage);
 		return modelAndView;
 	}
 	

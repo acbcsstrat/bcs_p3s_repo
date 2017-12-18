@@ -66,9 +66,13 @@ public abstract class AbstractInvoice extends Universal {
 	}
 	
 	protected String getInvoiceNumberSuffix() {
+		return getInvoiceNumberSuffix(eType);
+	}
+	
+	protected String getInvoiceNumberSuffix(String invoiceTypeEnumStr) {
 		String suffix = "";
-		if (InvoiceTypeEnum.PROFORMA.equalsIgnoreCase(eType)) suffix = "PF";
-		if (InvoiceTypeEnum.PENALTY.equalsIgnoreCase(eType)) suffix = "P";
+		if (InvoiceTypeEnum.PROFORMA.equalsIgnoreCase(invoiceTypeEnumStr)) suffix = "PF";
+		if (InvoiceTypeEnum.PENALTY.equalsIgnoreCase(invoiceTypeEnumStr)) suffix = "P";
 		return suffix;
 	}
 	
