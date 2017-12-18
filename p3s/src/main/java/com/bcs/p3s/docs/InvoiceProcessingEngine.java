@@ -35,10 +35,10 @@ public class InvoiceProcessingEngine extends Universal {
 		invoice.setInvoiceStatus(InvoiceStatusEnum.OPEN);
 		invoice.setPreceedingInvoiceId(null);
 		invoice.setInvoiceType(InvoiceTypeEnum.PROFORMA);
-		//dummy values start - acToDo
-		invoice.setDocPath("hardcodedpdffolder/invoices/");
-		invoice.setFilename("dummyInvoiceNumber1.pdf");
-		invoice.setInvoiceTemplateId("template1");
+		//dummy values start - acTidy
+//		invoice.setDocPath("hardcodedpdffolder/invoices/");
+//		invoice.setFilename("dummyInvoiceNumber1.pdf");
+//		invoice.setInvoiceTemplateId("template1");
 		//dummy values end
 		
 		return invoice;

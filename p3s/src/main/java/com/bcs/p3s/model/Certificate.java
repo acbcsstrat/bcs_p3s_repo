@@ -35,18 +35,18 @@ public class Certificate {
     /**
      * TBD_acTidy abs or rel. Use forwardslashes. Ideally end with forwardslash but not mandated
      */
-    @NotNull
+    //@NotNull - AC18dec2017 - remove NotNulls as PDFs don't yet exist. (Indeed - may never?)
     private String docPath;
 
     /**
      * Include the file extension
      */
-    @NotNull
+    //@NotNull - AC18dec2017 - remove NotNulls as PDFs don't yet exist. (Indeed - may never?)
     private String filename;
 
     /**
      */
-    @NotNull
+    //@NotNull - AC18dec2017 - remove NotNulls as PDFs don't yet exist. (Indeed - may never?)
     private String certificateTemplateId;
 
 
