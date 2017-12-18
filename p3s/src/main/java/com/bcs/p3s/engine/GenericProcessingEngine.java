@@ -77,7 +77,7 @@ public class GenericProcessingEngine extends Universal {
 			ranNumber = rand.nextInt(1000,9999);
 		}while(ranNumber <= 1000 || ranNumber > 9999);
 				
-		log().debug(msg + "has generated a random number for Business Number as " + ranNumber);
+		log().debug(msg + " has generated a random number for Business Number as " + ranNumber);
 				
 		business.setBusinessNumber(bName2+ranNumber);
 				
