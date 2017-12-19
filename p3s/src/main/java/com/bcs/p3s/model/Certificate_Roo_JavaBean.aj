@@ -17,14 +17,6 @@ privileged aspect Certificate_Roo_JavaBean {
         this.renewal = renewal;
     }
     
-    public String Certificate.getCertificateName() {
-        return this.certificateName;
-    }
-    
-    public void Certificate.setCertificateName(String certificateName) {
-        this.certificateName = certificateName;
-    }
-    
     public Date Certificate.getIssueDate() {
         return this.issueDate;
     }
