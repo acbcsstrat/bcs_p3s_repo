@@ -18,7 +18,7 @@ public interface UserService {
 	
 	void createSubUser(P3SUser user);
 	
-	Boolean checkUser(String emailAddress);
+	Boolean isNewUser(String emailAddress);
 	
 	P3SUser getUserByEmailAddress(String emailAddress);
 	
@@ -26,7 +26,11 @@ public interface UserService {
 	
 	List<Business> getBusinessInfo(String businessNumber);
 	
-	public void sendRegistrationEmail(String emailAddress);
+	void sendRegistrationEmail(String emailAddress);
+	
+	void sendResetPasswordEmail(String emailAddress);
+	
+	String updatePassword(P3SUser user);
 	
 
 }

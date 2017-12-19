@@ -100,7 +100,7 @@ public class RegisterRestController extends Universal {
 			//persist business && user
 			
 			//** Checking whether email Address already exist **//*
-			boolean isNewUser = userService.checkUser(user.getEmailAddress());
+			boolean isNewUser = userService.isNewUser(user.getEmailAddress());
 			
 			if(isNewUser){
 				log().debug("Email address does not exist. So proceed with Registration");
@@ -217,7 +217,7 @@ public class RegisterRestController extends Universal {
 		//persist business && user
 		
 		//** Checking whether email Address already exist **/
-		boolean isNewUser = userService.checkUser(user.getEmailAddress());
+		boolean isNewUser = userService.isNewUser(user.getEmailAddress());
 		
 		if(isNewUser){
 			log().debug("Email address does not exist. So proceed with Registration");

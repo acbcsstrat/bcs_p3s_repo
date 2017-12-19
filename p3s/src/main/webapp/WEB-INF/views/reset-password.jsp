@@ -105,12 +105,13 @@
 
 				$(document).on('submit', '#resetPassForm', function(e){
       				e.preventDefault();
-  					var dataString = JSON.stringify($('#resetPassForm').serializeArray());
+  					//var dataString = JSON.stringify($('#resetPassForm').serializeArray());
+  					var dataString = $('#resetPassForm').serializeArray();
   					$.ajax({
-  						type: 'POST',
-  						url: domain + 'register/rest-user/',
+  						type: 'PUT',
+  						url: domain + 'prelogin/rest-forgot-password/',
   						data: dataString,
-  					    contentType: "application/json",
+  						dataType: 'json',
   						success: function(response) {
   							$('#initialResetPassForm').fadeOut(500);	
 							$('#resetPassSuccess').delay(520).fadeIn(500);		      				

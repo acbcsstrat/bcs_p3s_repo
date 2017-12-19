@@ -72,6 +72,18 @@
 	   					</div>
    					</div>
           		</div>
+          		<div id="fail_user_disabled" class="hide-before">
+   					<div class="content-panel">
+   						<div class="content-panel__body">
+	   						<div class="row">
+	   							<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+									<h3 class="font-h3 font-weight-medium m-b-sm">Unsuccessful!</h3>
+	   								<p class="font-body text-center">We were unable to send an email to reset your password. Please complete the Registration process before Reset password.</p>
+	   							</div>
+	   						</div>
+	   					</div>
+   					</div>
+          		</div>
          	</div>
       	</div>
 
@@ -88,6 +100,7 @@
 
           $('#forgotPassSuccess').hide();
           $('#forgotPassFail').hide();
+          $('#fail_user_disabled').hide();
 
           window.Parsley.addValidator('validateEmail', {
 
@@ -107,22 +120,27 @@
 
               $(document).on('submit', '#forgotPassForm', function(e){
                 e.preventDefault();
-              var dataString = JSON.stringify($('#forgotPassForm').serializeArray());
-              var dataString1 = $('#forgotPassForm').serializeArray();
-              console.log(dataString);
-              console.log(dataString1);
+              //var dataString = JSON.stringify($('#forgotPassForm').serializeArray());
+              var dataString = $('#forgotPassForm').serializeArray();
               $.ajax({
                 type: 'POST',
                 url: domain + 'prelogin/rest-forgot-password/',
-                data: dataString1,
+                data: dataString,
                 dataType: 'json',
                 success: function(response) {
-                  $('#initialForgotPass').fadeOut(500); 
-                $('#forgotPassSuccess').delay(520).fadeIn(500);                 
+                  	$('#initialForgotPass').fadeOut(500); 
+                	$('#forgotPassSuccess').delay(520).fadeIn(500);                 
                 },
                 error:function(errResponse) {
-                  $('#initialForgotPass').fadeOut(500); 
-                $('#forgotPassFail').delay(520).fadeIn(500);              
+                	console.log(errResponse.status);
+                	if(errResponse.status == 403){
+	                  	$('#initialForgotPass').fadeOut(500); 
+	               	 	$('#fail_user_disabled').delay(520).fadeIn(500); 
+                	}
+                	else{
+                		$('#initialForgotPass').fadeOut(500); 
+	               	 	$('#forgotPassFail').delay(520).fadeIn(500); 
+                	}
                 }
               })
             })

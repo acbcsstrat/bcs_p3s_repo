@@ -23,9 +23,10 @@ import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.email.EmailSender;
+import com.bcs.p3s.util.lang.Universal;
 
 @Service("UserService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends Universal implements UserService {
 
 	@Autowired
 	HttpSession session;
@@ -75,9 +76,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Boolean checkUser(String emailAddress) {
+	public Boolean isNewUser(String emailAddress) {
 		
-		List users = null;
+		List<P3SUser> users = null;
 		Boolean isNewUser = false;;
 		if(emailAddress != null){
 			TypedQuery<P3SUser> tq_p3suser = P3SUser.findP3SUsersByEmailAddress(emailAddress);
@@ -97,8 +98,15 @@ public class UserServiceImpl implements UserService {
 
 		P3SUser user = null;
 		if(emailAddress != null){
-			TypedQuery<P3SUser> tq_p3suser = P3SUser.findP3SUsersByEmailAddress(emailAddress);
-			user = tq_p3suser.getSingleResult();
+			
+			try{
+				TypedQuery<P3SUser> tq_p3suser = P3SUser.findP3SUsersByEmailAddress(emailAddress);
+				user = tq_p3suser.getSingleResult();
+			}
+			catch(Exception e){
+				logErrorAndContinue("Error occured", e);
+				return null;
+			}
 		}
 		return user;
 	}
@@ -165,6 +173,29 @@ public class UserServiceImpl implements UserService {
 		
 		return loginMessagesUI;
 		
+	}
+
+	@Override
+	public void sendResetPasswordEmail(String emailAddress) {
+		// TODO Auto-generated method stub
+		
+		//email template to be implemented
+		/*P3sEmailFactory factory = new P3sEmailFactory();
+		P3sEmail email = factory.create(EmailTemplates.email_register_combined, emailAddress, null, null, null, null, null, null);
+
+		EmailSender emailer = new EmailSender(email);
+		emailer.addRecipient(emailAddress);
+		emailer.sendEmail();*/
+		
+	}
+
+	@Override
+	public String updatePassword(P3SUser user) {
+		
+		if(user.merge() !=null )
+			return "success";  
+		else
+			return "error";  
 	}
 		
 }
