@@ -79,6 +79,7 @@ public class Patent {
 
     /**
      * updated on overnight scrape
+     * The date, reported from the EPO, when this patent was last renewed
      */
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")

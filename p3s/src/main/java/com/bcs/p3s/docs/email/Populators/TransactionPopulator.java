@@ -99,8 +99,8 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		String err = "TransactionPopulator populateUniversalFields : ";
 		
 		// Validate the parameters
-		if  ( (obP3suser==null) || (obTxnRef==null) || (obPatents==null) || (obAttachmentFilename==null)) { 
-				fail(err+"invoked with Bad Parameters : "+(obP3suser==null)+(obTxnRef==null)+(obPatents==null)+(obAttachmentFilename==null)); 
+		if  ( (obP3suser==null) || (obTxnRef==null) || (obPatents==null)) {  // formerly (obAttachmentFilename==null) 
+				fail(err+"invoked with Bad Parameters : "+(obP3suser==null)+(obTxnRef==null)+(obPatents==null)); 
 		}
 		P3SUser userRecord = null;
 		String txnRef = null;

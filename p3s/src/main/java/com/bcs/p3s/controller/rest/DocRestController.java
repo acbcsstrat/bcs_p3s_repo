@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bcs.p3s.docs.htmldoc.HtmlDocService;
+import com.bcs.p3s.docs.htmldoc.model.HtmlDocCertificate;
 import com.bcs.p3s.docs.htmldoc.model.PenaltyInvoice;
 import com.bcs.p3s.docs.htmldoc.model.ProformaInvoice;
 import com.bcs.p3s.enump3s.InvoiceTypeEnum;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.Payment;
+import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
@@ -41,13 +43,14 @@ public class DocRestController extends Universal {
 	protected final String SHOW_PROFORMA_INVOICE_PAGE = "htmldocs/proformainvoice";
 	protected final String SHOW_FINAL_INVOICE_PAGE = "htmldocs/finalinvoice";
 	protected final String SHOW_PENALTY_INVOICE_PAGE = "htmldocs/penaltyinvoice";
+	protected final String SHOW_CERTIFICATE_PAGE = "htmldocs/certificate";
 	protected final String OHDEAR_PAGE = "htmldocs/ohdear";
 	
 	
-	/*----------- User clicked on Invoice button -----------*/
+	/*----------- User clicked on show Invoice button -----------*/
 	
 	@RequestMapping(value="/invoice/{transactionId}" , method = RequestMethod.GET)
-	public ModelAndView enableUser(@PathVariable("transactionId") String transactionId, Model uiModel){
+	public ModelAndView showInvoice(@PathVariable("transactionId") String transactionId, Model uiModel){
 		
 		String err = "DocRestController : /invoice/{transactionId="+transactionId+"}";
 		System.out.println(err);
@@ -94,7 +97,47 @@ public class DocRestController extends Universal {
 		return modelAndView;
 	}
 	
+
+	/*----------- User clicked on show Certificate button -----------*/
+	
+	@RequestMapping(value="/certificate/{renewalId}" , method = RequestMethod.GET)
+	public ModelAndView showCertificate(@PathVariable("renewalId") String renewalId, Model uiModel){
+		
+		String err = "DocRestController : /certificate/{renewalId}="+renewalId+"}";
+		System.out.println(err);
+		log().debug(err + " invoked");
+		String nextPage = null;
+
+		// Access Certificate data - and display it
+		try {
+			Long renewalIdLng = new Long(renewalId);
+			Renewal renewal = Renewal.findRenewal(renewalIdLng);
+			if (renewal==null || renewal.getCertificate()==null) {
+				logM().error(err+" given bad renewalID of "+renewalId);
+				throw new P3SRuntimeException(err+" given bad renewalID of "+renewalId);
+			}
+
+			HtmlDocCertificate htmlDocCertificate = htmlDocService.getDataForCertificate(renewal);
+			uiModel.addAttribute("htmlDocCertificate",htmlDocCertificate);
+			nextPage= SHOW_CERTIFICATE_PAGE;
+
+		}
+		catch (Exception e) {
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
+			nextPage = OHDEAR_PAGE;
+		}
+		
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName(nextPage);
+		log().debug(err+" returning next="+nextPage);
+		return modelAndView;
+	}
+	
 	/*-----------  -----------*/
 	/*-----------  -----------*/
 
 }
+	

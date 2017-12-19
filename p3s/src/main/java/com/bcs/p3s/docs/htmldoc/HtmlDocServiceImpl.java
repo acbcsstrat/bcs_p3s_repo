@@ -5,10 +5,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bcs.p3s.docs.htmldoc.model.HtmlDocCertificate;
 import com.bcs.p3s.docs.htmldoc.model.PenaltyInvoice;
 import com.bcs.p3s.docs.htmldoc.model.ProformaInvoice;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.Payment;
+import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.service.ServiceAuthorisationTools;
 
 @Service("HtmlDocService")
@@ -41,6 +43,17 @@ public class HtmlDocServiceImpl extends ServiceAuthorisationTools implements Htm
 		PenaltyInvoice penaltyInvoice = new PenaltyInvoice(invoice);
 		
 		return penaltyInvoice;
+	}
+
+	public HtmlDocCertificate getDataForCertificate(Renewal renewal) {
+		
+		String err = PREFIX+"getDataForCertificate() ";
+		checkThisIsMyPatent(renewal.getPatent().getId(), err);
+		log().debug(err+" invoked ");
+
+		HtmlDocCertificate certificate = new HtmlDocCertificate(renewal);
+		
+		return certificate;
 	}
 
 }
