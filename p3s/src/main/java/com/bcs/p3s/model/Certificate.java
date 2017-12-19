@@ -9,6 +9,14 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.OneToOne;
 
+
+/**
+ * Holds certificate details
+ * As of End 2017 (MVP functionality) the ONLY field having a role here is issueDate
+ * @author andyc
+ *
+ */
+
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
@@ -20,10 +28,9 @@ public class Certificate {
     @OneToOne
     private Renewal renewal;
 
-    /**
-     */
-    @NotNull
-    private String certificateName;
+    //AC19dec2017 - remove redundant field
+    //@NotNull
+    //private String certificateName;
 
     /**
      */

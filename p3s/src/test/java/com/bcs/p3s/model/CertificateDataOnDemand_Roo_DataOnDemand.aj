@@ -33,18 +33,12 @@ privileged aspect CertificateDataOnDemand_Roo_DataOnDemand {
     
     public Certificate CertificateDataOnDemand.getNewTransientCertificate(int index) {
         Certificate obj = new Certificate();
-        setCertificateName(obj, index);
         setCertificateTemplateId(obj, index);
         setDocPath(obj, index);
         setFilename(obj, index);
         setIssueDate(obj, index);
         setRenewal(obj, index);
         return obj;
-    }
-    
-    public void CertificateDataOnDemand.setCertificateName(Certificate obj, int index) {
-        String certificateName = "certificateName_" + index;
-        obj.setCertificateName(certificateName);
     }
     
     public void CertificateDataOnDemand.setCertificateTemplateId(Certificate obj, int index) {
