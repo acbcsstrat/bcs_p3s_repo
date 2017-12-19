@@ -27,6 +27,8 @@
     <!-- Selects a static view for rendering without the need for an explicit controller -->
     <mvc:view-controller path="/login"/>
     <mvc:view-controller path="/register"/>
+    <mvc:view-controller path="/forgot-password"/>
+    <mvc:view-controller path="/reset-password"/>
     <mvc:view-controller path="/roo" view-name="index"/>
     <mvc:view-controller path="/raa" view-name="dummy"/>
     <mvc:view-controller path="/uncaughtException"/>
