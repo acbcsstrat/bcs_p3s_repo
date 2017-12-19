@@ -13,7 +13,7 @@
 		<uib-tabset type="pills" active="activeSelectedTab">
 			<uib-tab heading="Transaction Details" index="0" ng-hide="true">
 				<div class="content-panel__head border-grey-xs--btm">
-					<div class="row d-flex align-items-center">
+					<div class="row d-flex align-items-center m-b-sm">
 						<div class="col-md-6 col-lg-6 col-xl-2">
 							<p class="font-weight-bold font-h4">Transaction ID</p>
 							<p class="font-h4" ng-bind="$ctrl.transaction.p3S_TransRef"></p>
@@ -22,15 +22,21 @@
 							<p class="font-weight-bold font-h4">Transaction Initated</p>
 							<p class="font-h4">{{$ctrl.transaction.transStartDate | date: 'MM/dd/yy'}}</p>
 						</div>
-						<div class="col-md-12 col-lg-12 col-xl-8 text-right">
-							<p class="font-weight-bold font-h4 hidden-lg-down">{{$ctrl.transaction.latestTransStatus}}</p>
+						<div class="col-xl-8 hidden-lg-down text-right">
+							<p class="font-weight-bold font-h4">Trans Status</p>
+							<p class="font-h4 ">{{$ctrl.transaction.latestTransStatus}}</p>
+						</div>
+					</div>
+					<div class="row d-flex align-items-center">
+						<div class="col-md-12 col-lg-12 col-xl-6 text-right">
+							
 							<div ng-class="($ctrl.transaction.hasFailed !== true ? 'success' : 'failed')">
 								<div class="steps">
 								    <ul id="progressTracker" class="steps-container d-flex justify-content-between">
-								        <li ng-repeat="li in $ctrl.transStatus track by $index" ng-init="$ctrl.checkProgress()" ng-class="(li.complete == true ? 'complete': '') + '' + (li.active == true ? 'active': '')">
+								        <li ng-repeat="li in $ctrl.transStatus track by $index" ng-init="$ctrl.checkProgress()" ng-click="$ctrl.statusInfoFn(li.status)" ng-class="(li.complete == true ? 'complete': '') + '' + (li.active == true ? 'active': '')">
 								            <div class="step">
 								                <div class="step-image"><span></span></div>
-								                <div class="step-current"><span>{{li.status}}</span></div>
+								                <div ng-class="{'active': li.status == $ctrl.currTransStatus}" class="step-current"><span ng-class="{'font-weight-bold': li.status == $ctrl.statusInfo , 'txt-black': li.status == $ctrl.statusInfo, 'active': li.status == $ctrl.currTransStatus}">{{li.status}}</span></div>
 								            </div>
 								        </li>
 								    </ul>
@@ -38,6 +44,35 @@
 								</div>
 							</div>
 						</div>
+						<div class="col-xl-6 ">
+							<div ng-show="$ctrl.statusInfo == 'Initiated'">
+								<p class="font-body">This means that you've checked out your basket on the Patent Place, and we're now doing our work in the background.  We're now send the request over to our payment partners Moneycorp, and requesting that they book the currency exchange, and to expect a payment from you.</p>	
+							</div>
+							<div ng-show="$ctrl.statusInfo == 'Awaiting Funds'">
+								<p class="font-body">This means that MoneyCorp have booked the currency exchange, and are now waiting for your payment.  They'll expect the funds by the date and time specified, and for it to have the correct reference on it so that the payment can be matched to the transation.</p>
+								
+							</div>
+							<div ng-show="$ctrl.statusInfo == 'Funds Received'">
+								<p class="font-body">Thank you!  MoneyCorp have received your payment and they're now exchanging the Dollars in to Euros.  This happens the day after your funds were expected by MoneyCorp.</p>
+							</div>
+							<div ng-show="$ctrl.statusInfo == 'Funds Sent'">
+								<h4 class="font-h4 m-b-xs">Funds Sent</h4>
+								<p class="font-body">MoneyCorp have completed the currency exchange and the Euros have been sent to the European Patent Office.</p>
+							</div>
+							<div ng-show="$ctrl.statusInfo == 'EPO Received'">
+								<h4 class="font-h4 m-b-xs">EPO Received</h4>
+								<p class="font-body">We're had confirmation that the funds have been received by the EPO</p>
+							</div>
+							<div ng-show="$ctrl.statusInfo == 'EPO Instructed'">
+								<h4 class="font-h4 m-b-xs">EPO Instructed</h4>
+								<p class="font-body">This means that everything is in place, and we’ve instructed the EPO to renew the patent.</p>
+							</div>
+							<div ng-show="$ctrl.statusInfo == 'Completed'">
+								<h4 class="font-h4 m-b-xs">Completed</h4>
+								<p class="font-body">Great news.  We've had confirmation that your patent has been successfully renewed by the EPO.  You'll receive a renewal certificate from us via email.  You can also download copies of the renewal certificate and the invoice from the Transaction history tab under the Transactions menu.</p>
+							</div>
+						</div>
+
 					</div>
 				</div>
 				<div id="currTransAnchor"></div>
@@ -139,14 +174,13 @@
 								</div>
 							</div>							
 							<div class="col-md-12 col-lg-6 col-xl-6 text-xs-center">
-								<div class="content-panel__body bg-light-grey2 bg-info-icon">
+								<div class="content-panel__body bg-light-grey2 bg-info-icon h-100">
 									<div class="progress-trans">
 										<p class="font-h4 font-weight-bold m-b-sm" ng-bind="transaction.renewalStatus"></p>
 										<div ng-if="transaction.renewalStatus == 'Payment in progress'">
 											<div class="progress-tracker m-b-sm">
 												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="33" max="100" class="tracker-item"></uib-bar></uib-progress>
 											</div>
-											<p>ipsum</p>			
 										</div>			
 										<div ng-if="transaction.renewalStatus == 'EPO Instructed'">
 											<p>Lorem</p>

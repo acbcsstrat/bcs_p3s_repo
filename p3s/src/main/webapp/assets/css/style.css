@@ -112,7 +112,7 @@ input[type=checkbox], input[type=radio] {
 
 /*LAYOUT==================*/
 
-.container { width: 90%!important; margin: 0 auto 0 115px; }
+.container { width: 92.5%!important; margin: 0 auto 0 95px; }
 
 .container-content-40 { width: 30%; max-width: 40rem;  }
 
@@ -124,7 +124,8 @@ input[type=checkbox], input[type=radio] {
 
 .widget-panel, 
 .content-panel { 
-  position: relative; 
+  position: relative;
+  z-index: 0;
 /*  border: 1px solid #dbdbdb;*/
 }
 
@@ -223,9 +224,11 @@ input[type=checkbox], input[type=radio] {
 .p-tb-35 { padding-top: 3.5rem; padding-bottom: 3.5rem }
 
 .p-a-sm { padding: 1.5rem; }
-.p-r-none { padding-right: 0; }
+
 .t-data .p-t-none, .p-t-none { padding-top: 0;}
 .t-data .p-b-none td, .p-b-none { padding-bottom: 0;}
+.p-r-none { padding-right: 0; }
+.p-b-none, .content-panel .content-panel__head.p-b-none { padding-bottom: 0; }
 .p-l-none { padding-left: 0; }
 .p-none { padding: 0; }
 
@@ -541,8 +544,8 @@ input:checked + .slider:before {
   position: absolute;
   top: 0;
   right: 0;
-  margin-right: 5px;
-  margin-top: 2px; /*change when correct image is provided*/
+  margin-right: 10px;
+  margin-top: 5px; /*change when correct image is provided*/
 }
 
 span.valid-container { display: inline-block }
@@ -558,7 +561,7 @@ span.valid-container { display: inline-block }
 
 .pill-radius { border-radius: 2.5rem; }
 
-/*.td-inline-head { width: 30%; }*/
+.pill-radius-textarea { border-radius: 1.5rem; }
 
 .form-inline .input-h100, .form .input-h100 { height: 100%; }
 
@@ -582,31 +585,43 @@ span.valid-container { display: inline-block }
   position: relative;
   overflow: hidden;
   min-height: 20rem;
+  z-index: 1;
 }
 
 .bg-info-icon:after {
   content: url(../imgs/icons/info_icon.png);
   position: absolute;
-  bottom: 21px;
-  right: -13px;
+  bottom: -4px;
+  right: -1px;
+  z-index: -1;
 }
 
 .bg-no-data:after {
-  content: url(../imgs/icons/chart_icon.png);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -128px;
-  margin-top: -144px;
+    content:'';
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto;
+    top:0;
+    left:0;
+    right:0;
+    background: url(../imgs/icons/chart_icon.png) no-repeat center center;
+    background-size: contain;
+    width: 100%;
+    z-index: -1;
 }
 
 .bg-no-chart:after {
-  content: url(../imgs/icons/chart_icon.png);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -128px;
-  margin-top: -144px;
+    content:'';
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto;
+    top:0;
+    left:0;
+    right:0;
+    background: url(../imgs/icons/chart_icon.png) no-repeat center center;
+    background-size: contain;
+    width: 100%;
+    z-index: -1;
 }
 
 
@@ -617,16 +632,7 @@ span.valid-container { display: inline-block }
   display: inherit;
 }
 
-.donut-inner {
-    position: absolute;
-    left: 50%;
-    margin-left: -17.5px;
-    text-align: center;
-}
-.donut-inner h4 {
-   margin-bottom: 5px;
-   margin-top: 0;
-}
+
 
 
 /*STATES=================*/
@@ -800,21 +806,36 @@ a:hover {
 .modal-backdrop.fade { opacity: 0.5 !important; }
 
 ul#strength {
-    display:inline;
-    list-style:none;
-    padding:0;
-    vertical-align:2px;
+  display: inline;
+  list-style: none;
+  padding: 0;
+  vertical-align: 2px;
 }
 
 .point-reg {
-  background:#DDD;
-  border-radius:2px;
-  display:inline-block;
-  height:10px;
-  margin-right:2px;
-  width: 23.5%; 
+  background: #DDD;
+  border-radius: 2px;
+  display: inline-block;
+  height: 10px;
+  margin-right: 2px;
+  width: 23.2%;
 }
 
+.first {
+  background-color: #e30613;
+}
+
+.second {
+  background-color: #f9b233;
+}
+
+.third {
+  background-color: #53ab58;
+}
+
+.fourth {
+  background-color: #418746;
+}
 
 .point { /*password strength*/
     background:#DDD;
@@ -934,6 +955,9 @@ uib-progress.progressblue { height: 3rem; }
   font-family: 'Maven Pro', sans-serif, arial, helvetica; }
 }
 
+#doughnut { z-index: 2; }
+.donut-inner { z-index: -1; }
+
 /*ANGULAR STATES*/
 
 input.required {
@@ -955,9 +979,13 @@ display: none !important;
 .form-section .parsley-errors-list, .parsley-errors-list { padding: 0; list-style: none; margin-bottom: 0; }
 .parsley-errors-list li { font-size: 1.3rem; letter-spacing: -0.1px; color: #e30613; margin-left: 1rem; }
 
+
 #listPatentsTable tr td:nth-child(1), 
 #listPatentsTable tr td:nth-child(2),
-#listPatentsTable tr td:nth-child(3),
+#listPatentsTable tr td:nth-child(3) {
+  width: 13%;
+}
+
 #listCurrTransactionsTable tr td:nth-child(1),
 #listCurrTransactionsTable tr td:nth-child(2),
 #listCurrTransactionsTable tr td:nth-child(3),
@@ -980,7 +1008,7 @@ display: none !important;
 
 #listPatentsTable tr td:nth-child(4),
 #listPatentsTable tr td:nth-child(6) {
-  width: 5%;
+  width: 8%;
 }
 
 #listPatentsTable tr td:nth-child(5) {
@@ -995,13 +1023,12 @@ display: none !important;
   width: 20%;
 }
 
-
 .animate-show {
-  -webkit-transition:all linear 0.5s;
-  -moz-transition:all linear 0.5s;
-  -ms-transition:all linear 0.5s;
-  -o-transition:all linear 0.5s;
-  transition:all linear 0.5s;
+  -webkit-transition:all linear 0.15s;
+  -moz-transition:all linear 0.15s;
+  -ms-transition:all linear 0.15s;
+  -o-transition:all linear 0.15s;
+  transition:all linear 0.15s;
 }
 
 .animate-show.ng-hide-remove,
@@ -1016,31 +1043,16 @@ display: none !important;
   display: block !important;
 }
 
-/*.fadetest {
-    position: relative;
-    opacity: 1;
+.donut-inner {
+    position: absolute;
+    left: 50%;
+    margin-left: -17.5px;
+    text-align: center;
 }
-.fadetest.ng-enter
- {
-    -webkit-transition: all .5s ease-in-out;
+.donut-inner h4 {
+   margin-bottom: 5px;
+   margin-top: 0;
 }
-
-.fadetest.ng-leave {
-    transition: all 0s ease-in-out;
-}
-
-.fadetest.ng-enter {
-    opacity: 0;
-}
-.fadetest.ng-enter-active {
-    opacity: 1;
-}
-.fadetest.ng-leave {
-    opacity: 1;
-}
-.fadetest.ng-leave-active {
-    opacity: 0;
-}*/
 
 .md-show,
 .lg-show { display: none; }
@@ -1109,7 +1121,9 @@ display: none !important;
 
   .font-h4 { font-size: 1.2rem; }
 
-  .font-body { font-size: 1rem; }
+
+
+  .font-body, .parsley-errors-list li { font-size: 1rem; }
 
   .phase-pills .pill-tabs { min-width: 7rem; max-width: 10.5rem; color: #fff;}
 
@@ -1154,13 +1168,19 @@ display: none !important;
 
   .btn--lg { padding: 0.5rem 2rem; }
 
+  .container-pre-app__center-box-40 {
+    min-width: 32rem;
+  }
+
 }
 
 @media screen and (max-width: 992px) {
 
   .btn-default .btn-list, 
   .btn-default ngcart-addtocart.btn-list a, 
-  .btn-default ngcart-addtocart.btn-list button {
+  .btn-default ngcart-addtocart.btn-list button,
+  .btn-default ngcart-addtocart button.btn-list a,
+  .btn-default ngcart-addtocart button.btn-list button {
     background: none;
     padding: 0;
     border-radius: none;
@@ -1169,10 +1189,23 @@ display: none !important;
 
   .btn-default a.btn-list,  
   .btn-default ngcart-addtocart a.btn-list, 
-  .btn-default ngcart-addtocart button.btn-list { color:#000; }
+  .btn-default ngcart-addtocart button.btn-list  { color:#000; }
 
-  .btn-default .btn-list:hover,  .btn-default .btn-list:active { color: #000; text-decoration: underline; opacity: 1; }
+  .btn-default ngcart-addtocart.btn-list .btn-portal:active { background: none;
+    padding: 0;
+    border-radius: none; 
+    border: none;
+    color: #000; 
 
+  }
+
+  .btn-default .btn-list:hover,  .btn-default .btn-list:active, 
+  .btn-default ngcart-addtocart.btn-list button:hover, 
+  .btn-default ngcart-addtocart button.btn-list a,
+  .btn-default ngcart-addtocart button.btn-list button,
+  .btn-default ngcart-addtocart.btn-list:not([disabled]) button:hover, 
+  .btn-default ngcart-addtocart.btn-list:not([disabled]) a:hover { color: #000!important; text-decoration: underline; opacity: 1; }
+  
   #listPatentsTable tr td:nth-child(1), 
   #listPatentsTable tr td:nth-child(2),
   #listPatentsTable tr td:nth-child(3) {
@@ -1217,7 +1250,7 @@ display: none !important;
     width: 18.5%;
   }
 
-  .md-container { width: 89%!important; margin: 3.5rem auto 3.5rem 8.5rem; }
+  .md-container { width: 92%!important; margin: 3.5rem auto 3.5rem 6rem; }
 
   .t-data .td-md-20,
   .t-list .td-md-20 { width: 20%; }
@@ -1229,6 +1262,10 @@ display: none !important;
   .t-list .td-md-50 { width: 50%; }  
 
   .t-list td { padding: 0.5rem 1rem; }
+
+  .closed-sidenav { width: 60px; }
+
+
 
 } 
 

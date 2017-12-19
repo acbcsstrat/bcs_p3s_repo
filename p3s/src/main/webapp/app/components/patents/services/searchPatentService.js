@@ -11,7 +11,7 @@ app.factory('searchPatentService', ['$http', '$q', function($http, $q) {
             
             $http.get(patentItem)
                 .then(function(response){
-                	deferred.resolve(response.data)
+                	deferred.resolve(response)
                 }, function(errResponse) {
                     console.log('add patent error');
                     deferred.reject(errResponse)

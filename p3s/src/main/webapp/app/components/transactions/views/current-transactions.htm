@@ -63,7 +63,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					    <tr ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {renewalUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {renewalUIs: {patentUI: {clientRef: searchTrans.clientRef}}}" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
+					    <tr ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {renewalUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {renewalUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
 					        <td>
 								<a class="txt-black" ui-sref="current-transactions.current-transaction-item({transId: item.id})">{{item.p3S_TransRef}}</a>
 					        </td>
@@ -102,16 +102,21 @@
 									<uib-progress><uib-bar class="bg-phase-green pill-radius" value="item.renewalProgress" value="" max="100" class="tracker-item"></uib-bar></uib-progress>
 								</div>	
 					        </td>      				                 
-					    </tr>						
+					    </tr>
+					 	<tr ng-show="Result.length==0">
+					 		<td colspan="7">
+					 			No Results Found
+					 		</td>
+					 	</tr>						    						
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="animate-show" ng-show="$ctrl.transInfoContent">
+<!-- <div class="animate-show" ng-show="$ctrl.transInfoContent"> -->
 	<div ui-view></div>	
-</div>
+<!-- </div> -->
 	
 
 

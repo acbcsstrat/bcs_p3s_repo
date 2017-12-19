@@ -10,19 +10,22 @@ app.component('currentTransaction', {
 		$scope.$watch('$parent.filter', function(n, o){
 			if(n !== undefined ) {
 				if(n !== null) {
-					console.log('should change data')
 					$scope.transactionsFilter = n.patentUI.patentApplicationNumber;
 				} else {
-					console.log('null')
 					$scope.transactionsFilter = null;
 				}
 			}
 		})
 
+		vm.statusInfo = 'Initiated';
+
+		vm.statusInfoFn = function(item) {
+			vm.statusInfo = item;
+		}
+
 	    vm.$onChanges = function(changeObj){
 
-	    	var currTransStatus = vm.transaction.latestTransStatus;	
-
+	    	vm.currTransStatus = vm.transaction.latestTransStatus;	
 			vm.transStatus = [
 				{status: 'Initiated', active: false, complete: false}, 
 				{status: 'Awaiting Funds', active: false, complete: false}, 
@@ -36,22 +39,21 @@ app.component('currentTransaction', {
 			vm.checkProgress = function() {
 				var statusIndex;
 				vm.transStatus.forEach(function(data, index){
-					if(data.status == currTransStatus) {
+					if(data.status == vm.currTransStatus) {
 						statusIndex = index;
 					}
 				})
 
 				for(i=0; i <= statusIndex; i++){
 					vm.transStatus[i].complete = true;
-					if(currTransStatus == vm.transStatus[i].status) { 
+					if(vm.currTransStatus == vm.transStatus[i].status) { 
 						vm.transStatus[i].active = true;
 						vm.transStatus[i].complete = false;
 					}
 				}
-
 			}
 
-			switch(currTransStatus) {
+			switch(vm.currTransStatus) {
 	    		case 'Initiated':
 	    			vm.transactionProgress = 0;
 	    		break;
@@ -74,7 +76,7 @@ app.component('currentTransaction', {
 	    			vm.transactionProgress = 100;	    			    			    			    			    		
 	    	}
 
-	    	vm.renewalProgress = currentTransactionsService.renewalProgress(currTransStatus);		
+	    	vm.renewalProgress = currentTransactionsService.renewalProgress(vm.currTransStatus);		
 
 	    	vm.patents = [];
 

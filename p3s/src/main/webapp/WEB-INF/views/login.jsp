@@ -6,7 +6,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       
-	  <base href="/p3sweb/">
+      <base href="/p3sweb/">
 	  
       <link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700" rel="stylesheet">
 
@@ -59,7 +59,7 @@
                         </form>
                         <div class="row m-b-sm">
                            <div class="col-md-12 text-center">
-                              <a href="" class="font-body text-center">Forgot Password?</a>
+                              <a href="/p3sweb/forgot-password" class="font-body text-center txt-black inline-link">Forgot Password?</a>
                            </div>
                         </div>
                         <div class="row">

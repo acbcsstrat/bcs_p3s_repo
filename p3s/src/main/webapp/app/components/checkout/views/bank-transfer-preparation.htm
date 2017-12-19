@@ -147,7 +147,7 @@
         			<div class="row">
     					<div class="col-xl-12 d-flex justify-content-end">
                             <div class="btn-error">
-                                <button class="btn btn--cross bg-phase-red btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center" ng-click="ngCart.empty()" ui-sref="patents">Cancel transaction</button>                            
+                                <button class="btn btn--cross bg-phase-red btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center" ng-click="$ctrl.openCancelTransModal()">Cancel transaction</button>                            
                             </div>
                             <div class="btn-submit">
                                <button class="btn btn--check bg-phase-green btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center m-l-sm" ng-click="$ctrl.commitTransfer(); ngCart.empty()" ng-disabled="$ctrl.commitTransferBtn">Complete payment</button>  

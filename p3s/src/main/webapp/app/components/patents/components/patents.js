@@ -39,7 +39,7 @@ app.component('patents', {
 										}, 100);
 									},
 									function(errResponse){
-
+										console.log(errResponse)
 									}
 								)
 							}
@@ -54,6 +54,9 @@ app.component('patents', {
 		}
 
 		vm.$onInit = () => {
+
+			console.log(vm.patents)
+
 
 			vm.date = new Date()
 
@@ -90,8 +93,8 @@ app.component('patents', {
 				    break;
 			     	case 7:
 				    	vm.tableData = greyPatents;
-					}
 				}
+			}
 
 			$timeout(function() {
 				vm.displayPhase(1)

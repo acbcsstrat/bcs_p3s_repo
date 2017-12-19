@@ -133,7 +133,7 @@
                 <p class="font-h4 font-weight-medium">Details</p>
             </div>
             <div class="content-panel__head">
-                <form class="form" name="billingForm">
+                <form class="form" name="billingForm" novalidate>
                     <div class="row m-b-md">
                         <div class="col-md-12">
                             <div class="m-b-sm">
@@ -142,11 +142,11 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="firstName">First Name</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="firstName" ng-model="billingDetails.firstName">
+                                    <input class="form-control font-body pill-radius" type="text" name="firstName" ng-model="billingDetails.firstName" readonly>
                                 </div>
                                 <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="lastName">Last Name</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="lastName" ng-model="billingDetails.lastName">
+                                    <input class="form-control font-body pill-radius" type="text" name="lastName" ng-model="billingDetails.lastName" readonly>
                                 </div>                             
                             </div>                        
                         </div>
@@ -159,21 +159,29 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingStreet">Street</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="businessStreet" ng-model="billingDetails.billingStreet">
+                                    <input class="form-control font-body pill-radius" type="text" name="businessStreet" ng-model="billingDetails.billingStreet" validate-address required>
+                                    <p class="font-body txt-phase-red" ng-show="billingForm.businessStreet.$error.required && billingForm.businessStreet.$dirty">Please fill out this field</p>
+                                    <p class="font-body txt-phase-red" ng-show="billingForm.businessStreet.$error.validAddress && billingForm.businessStreet.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                
                                 </div>
                                 <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingCity">City</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="billingCity" ng-model="billingDetails.billingCity">
+                                    <input class="form-control font-body pill-radius" type="text" name="billingCity" ng-model="billingDetails.billingCity" required>
+                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingCity.$error.required && billingForm.billingCity.$dirty">Please fill out this field</p>
+                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingCity.$error.validAddress && billingForm.billingCity.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                        
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingState">State</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="billingState" ng-model="billingDetails.billingState">
+                                    <input class="form-control font-body pill-radius" type="text" name="billingState" ng-model="billingDetails.billingState" required>
+                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingState.$error.required && billingForm.billingState.$dirty">Please fill out this field</p>
+                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingState.$error.validAddress && billingForm.billingState.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                         
                                 </div>
                                 <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingZip">Zip</label>
                                 <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="billingZip" ng-model="billingDetails.billingZip">
+                                    <input class="form-control font-body pill-radius" type="text" name="billingZip" ng-model="billingDetails.billingZip" required>
+                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingZip.$error.required && billingForm.billingZip.$dirty">Please fill out this field</p>
+                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingZip.$error.validAddress && billingForm.billingZip.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                         
                                 </div>
                             </div>                    
                         </div>
@@ -184,7 +192,7 @@
                         </label>
                         <div class="text-right">
                             <div ng-if="service=='http' || service == 'log'" class="d-flex justify-content-end btn-default">
-                                <button class="btn btn--lg pill-radius bg-phase-green txt-white font-body font-weight-medium d-flex align-items-center" ng-click="checkout()" ng-disabled="!tcChecked || ngCart.getItems() == 0">Continue <img src="p3sweb/assets/imgs/icons/transaction_icon_small.png" alt="transaction icon" class="m-l-sm"></button>
+                                <button class="btn btn--lg pill-radius bg-phase-green txt-white font-body font-weight-medium d-flex align-items-center" ng-click="checkout()" ng-disabled="!tcChecked || ngCart.getItems() == 0 || billingForm.$invalid">Continue <img src="p3sweb/assets/imgs/icons/transaction_icon_small.png" alt="transaction icon" class="m-l-sm"></button>
                             </div>                    
                         </div>                
                     </div>

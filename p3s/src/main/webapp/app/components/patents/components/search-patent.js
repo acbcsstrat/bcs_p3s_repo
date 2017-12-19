@@ -68,7 +68,7 @@ app.component('searchpatent', {
 										$timeout(function() {
 										  $anchorScroll('patentItemAnchor')
 										  console.log('say what')
-										}, 100);
+										}, 200);
 					             	},
 						            function(errResponse){
 						                console.error('Error while saving Patent');
@@ -78,6 +78,10 @@ app.component('searchpatent', {
 			  			$timeout(function() {
 							$uibModalInstance.close()
 			  			}, 100);
+				  	};
+
+					$scope.dismissModal = function () {
+				    	$uibModalInstance.close();
 				  	};
 
 				  	$scope.cancelAdd = function() {
@@ -91,34 +95,6 @@ app.component('searchpatent', {
 	     		console.log('good')
 		    }, function() {
 		       console.log('bad')
-		    })
-		}
-
-		vm.openCancelModal = function(id) {
-			var modalInstance = $uibModal.open({
-				templateUrl: 'p3sweb/app/components/app/views/modalRemovePatentTemplate.html',
-				appendTo: undefined,
-				controller: function($uibModalInstance ,$scope){
-
-				  	$scope.addPatent = function () {
-			  			vm.deletePatent(id)
-			  			$timeout(function() {
-							$uibModalInstance.close()
-			  			}, 300);
-						
-				  	};
-
-				  	$scope.cancelAdd = function() {
-				  		$uibModalInstance.dismiss('cancel');
-				  	}
-
-				}
-			})
-
-		    modalInstance.result.then(function() {
-		     	console.log('good')
-		    }, function(errResponse) {
-		       console.log(errResponse)
 		    })
 		}
 
@@ -159,13 +135,30 @@ app.component('searchpatent', {
 			
 			searchPatentService.findPatent(patentNo)
 			.then(
-				function(data) {
-					vm.queriedPatent = data;
-					vm.returnedAppNo = data.patentApplicationNumber;
-					vm.displayNotifications(vm.patentNotifications.green)
+				function(response) {
+					console.log(response)
+					if(response.status == 204 || response.data == '') {
+						vm.queriedPatent = null;
+						vm.searchError = 'It looks like we’ve already added Patent Application '+patentNo+' in to the system.  You should be able to find it in the List Patents page using the search boxes.';
+					} else {
+						vm.queriedPatent = response.data;
+						vm.returnedAppNo = response.data.patentApplicationNumber;
+						vm.displayNotifications(vm.patentNotifications.green)		
+					}
 				},
 				function(errResponse) {
+					console.log(errResponse)
 					vm.queriedPatent = null;
+					switch(errResponse.status) {
+						case 400:
+							vm.searchError = 'We’ve not been able to find that patent in the European Patent Register.  Please enter an application number such as 18 123456.2';
+						break;
+						case 404:
+							vm.searchError = 'We’ve not been able to find Patent Application '+patentNo+' in the European Patent Register.  Please check the number you’re entering and try again.  ';
+						break;
+						case 204:
+							vm.searchError = 'It looks like we’ve already added Patent Application '+patentNo+' in to the system.  You should be able to find it in the List Patents page using the search boxes.';
+					}
 				}
 			);
         }

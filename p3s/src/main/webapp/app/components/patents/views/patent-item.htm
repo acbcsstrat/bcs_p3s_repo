@@ -19,7 +19,7 @@
 				<div class="content-panel__head border-grey-xs--btm">
 					<div class="row d-flex align-items-center">
 					    <div class="col-xl-4">
-					    	<div id="patentItemAnchor"></div>
+					    	
 							<p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.patentApplicationNumber}}</p>
 							<p class="font-h4"><span class="font-weight-bold">Status:</span> <span ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew'">{{$ctrl.patent.renewalStatus}}</span><span ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">The renewal window is not open at this time</span></p>
 					    </div>
@@ -129,7 +129,7 @@
 						    				<div class="m-b-md">
 												<h4 class="font-weight-medium">Notifications</h4>
 											</div>
-											<p class="font-body">Simply select the colour and time frame to receive email notifications for this patent prior to each stage. You can select as many or few as you want or click default for all predetermined notifications.</p>					    				
+											<p class="font-body">Simply select the colour and time frame to receive email notifications for this patent prior to each stage. You can select as many or few as you want.</p>					    				
 						    			</div>
 						    			<div class="row m-b-md">
 						    				<div class="col-xl-12 d-flex align-items-center justify-content-between">
@@ -474,87 +474,96 @@
 						</div>
 					</div>
 				</div>
-		    	<div class="content-panel__body" ng-if="$ctrl.hideCost">
-		    		<div class="row">
-		    			<div class="col-xl-8">
-		    				<div class="row">
-		    					<div class="col-xl-12">
-			    					<div class="view-tabs">
-										<ul class="nav chart-pills">
-											<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">Stage Cost Chart</li>
-											<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">FX Chart</li>
-										</ul>
-									</div>	
-		    					</div>
-		    				</div>
-		    				<div class="row h-100 bg-no-chart">
-								<div class="col-xl-12 d-flex align-items-center justify-content-center h-100 z-index-1">
-									<div class="d-flex justify-content-center align-items-center flex-column  container-content-40">
+				<div ng-if="$ctrl.hideCost">
+					<div class="content-panel__head p-b-none">
+						<div class="row">
+	    					<div class="col-xl-8">
+		    					<div class="view-tabs">
+									<ul class="nav chart-pills">
+										<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">Stage Cost Chart</li>
+										<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">FX Chart</li>
+									</ul>
+								</div>	
+	    					</div>
+	    					<div class="col-xl-4 d-flex flex-column justify-content-between">
+								<div class="row d-flex align-items-center">
+									<div class="col-xl-6">
+										<h4 class="font-weight-medium font-h4">Cost breakdown</h4>
+									</div>
+								</div>
+							</div>
+	    				</div>
+	    			</div>
+			    	<div class="content-panel__body">
+	    				<div class="row">
+			    			<div class="col-xl-8">
+	    						<div class="d-flex align-items-center justify-content-center h-100 z-index-1">
+	    							<div class="d-flex justify-content-center bg-no-chart align-items-center flex-column">
 										<p class="h4 font-weight-medium">Sorry</p>
-										<p class="h4 font-weight-medium text-center">No Renewal Information Available</p>
+										<p class="h4 font-weight-medium text-center">No Renewal Information Availableeee</p>
 										<p class="h4 font-weight-medium">Status: <span class="txt-phase-green" ng-bind="$ctrl.patent.renewalStatus"></span></p>			
 										<div class="m-b-sm"></div>
 										<p class="font-body text-center">Renewal information will be displayed here when the renewal window for the patent opens again</p>
 									</div>
-				    			</div>
-		    				</div>
-	    				</div>
-						<div class="col-xl-4 d-flex flex-column justify-content-between">
-							<div class="row d-flex justify-content-center align-items-center">
-								<div class="col-xl-6">
-									<h4 class="font-weight-medium font-h4">Cost breakdown</h4>
 								</div>
-							</div>
-							<div class="m-t-md">
-								<table class="t-data">
-									<thead>
-										<tr class="no-border-eb">
-											<td class="no-border-eb"></td>
-											<td class="font-h4 font-weight-medium">EUR</td>
-											<td class="font-h4 font-weight-medium">USD</td>
-										</tr>
-									</thead>
-									<div class="table-responsive">
-										<tbody>
-											<tr class="no-border">
-												<td class="font-body font-weight-medium">Official fee</td>
-												<td class="font-body">€ 0.00</td>
-												<td class="font-body">$ 0.00</td>
-											</tr>
-											<tr class="no-border">
-												<td class="font-body font-weight-medium">Processing fee</td>
-												<td class="font-body">€ 0.00</td>
-												<td class="font-body">$ 0.00</td>
-											</tr>
+	    					</div>
+							<div class="col-xl-4 d-flex flex-column justify-content-between">
+								<div class="row d-flex justify-content-center align-items-center">
+									<div class="col-xl-6">
+										<h4 class="font-weight-medium font-h4">Cost breakdown</h4>
+									</div>
+								</div>
+								<div class="m-t-md">
+									<table class="t-data">
+										<thead>
 											<tr class="no-border-eb">
-												<td class="font-body font-weight-medium">Extension Fee</td>
-												<td class="font-body">€ 0.00</td>
-												<td class="font-body">$ 0.00</td>
-											</tr>								
-											<tr>
-												<td class="font-body font-weight-medium">Total</td>
-												<td class="font-body font-weight-medium">€ 0.00</td>
-												<td class="font-body font-weight-medium">$ 0.00</td>
+												<td class="no-border-eb"></td>
+												<td class="font-h4 font-weight-medium">EUR</td>
+												<td class="font-h4 font-weight-medium">USD</td>
 											</tr>
-										</tbody>
-									</div>
-								</table>
+										</thead>
+										<div class="table-responsive">
+											<tbody>
+												<tr class="no-border">
+													<td class="font-body font-weight-medium">Official fee</td>
+													<td class="font-body">€ 0.00</td>
+													<td class="font-body">$ 0.00</td>
+												</tr>
+												<tr class="no-border">
+													<td class="font-body font-weight-medium">Processing fee</td>
+													<td class="font-body">€ 0.00</td>
+													<td class="font-body">$ 0.00</td>
+												</tr>
+												<tr class="no-border-eb">
+													<td class="font-body font-weight-medium">Extension Fee</td>
+													<td class="font-body">€ 0.00</td>
+													<td class="font-body">$ 0.00</td>
+												</tr>								
+												<tr>
+													<td class="font-body font-weight-medium">Total</td>
+													<td class="font-body font-weight-medium">€ 0.00</td>
+													<td class="font-body font-weight-medium">$ 0.00</td>
+												</tr>
+											</tbody>
+										</div>
+									</table>
+								</div>
+								
+								<div class="row m-t-md">
+									<div class="col-xl-12 d-flex justify-content-between align-items-end">
+										<div>
+											<p class="font-h3 font-weight-bold m-b-xs">Save:</p>
+											<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ 0.00</p>
+											<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
+										</div>
+										<div>
+								        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
+										 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+										 	</div>
+										</div>
+									</div>				
+								</div> <!-- row end-->
 							</div>
-							
-							<div class="row m-t-md">
-								<div class="col-xl-12 d-flex justify-content-between align-items-end">
-									<div>
-										<p class="font-h3 font-weight-bold m-b-xs">Save:</p>
-										<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ 0.00</p>
-										<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
-									</div>
-									<div>
-							        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
-									 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
-									 	</div>
-									</div>
-								</div>				
-							</div> <!-- row end-->
 						</div>
 					</div>
 				</div>
@@ -567,11 +576,11 @@
 							<h4 class="font-weight-bold font-h4 m-b-xs">App No.</h4>
 							<p class="font-h4">{{$ctrl.patent.patentApplicationNumber}}</p>
 						</div>
-						<div class="col-xl-2">
+						<div class="col-xl-3">
 							<h4 class="font-weight-bold font-h4 m-b-xs">Client Ref</h4>
 							<p class="font-h4">{{$ctrl.patent.clientRef}}</p>
 						</div>
-						<div class="col-xl-8 text-right">
+						<div class="col-xl-7 text-right">
 							<h4 class="font-weight-bold font-h4 m-b-xs">Description</h4>
 							<p class="font-h4">{{$ctrl.patent.title}}</p>				
 						</div>
@@ -1037,140 +1046,164 @@
 			</form>
 		</uib-tab>
 
-		    <uib-tab heading="Cost Analysis" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md" index="1" ng-hide="true">
-				<div class="content-panel lg-m-b-md">
-			    	<div class="content-panel__body bg-white" ng-if="$ctrl.displayCost">
-			    		<div class="row">
-			    			<div class="col-md-12 col-lg-12">
-			    				<div class="row">
-			    					<div class="col-md-12 col-lg-12">
-				    					<div class="view-tabs m-b-md">
-											<ul class="nav chart-pills">
-												<li class="nav-item sub-view-list-item pill-radius btn--lg pill-tabs font-h4 border-grey-xs" ng-click="activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
-												<li class="nav-item sub-view-list-item pill-radius btn--lg pill-tabs font-h4 border-grey-xs" ng-click="activeChart = 1; $ctrl.chartActive = 'FX Chart'" ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
-											</ul>
-										</div>	
-			    					</div>
-			    				</div>
-
-			    				<div class="row">
-									<div class="col-md-12 col-lg-12 text-xs-left">
-									  	<uib-tabset type="pills" active="activeChart">
-									    	<uib-tab heading="Stage Cost Chart" classes="btn btn-primary" index="0" ng-hide="true">
-										    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.barData" chart-labels="$ctrl.barLabels" chart-series="$ctrl.barSeries" chart-options="$ctrl.barOptions" chart-colors="$ctrl.barChartColours" chart-dataset-override="$ctrl.barDatasetOverride" height="100px"></canvas>
-										    </uib-tab>
-										    <uib-tab heading="FX Chart" classes="btn btn-primary" index="1" ng-hide="true">
-								 				<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.lineData" chart-labels="$ctrl.lineLabels" chart-series="$ctrl.lineSeries" chart-options="$ctrl.lineOptions" chart-dataset-override="$ctrl.lineDatasetOverride" height="100px"></canvas>
-								    		</uib-tab>
-							    		</uib-tabset>
-					    			</div>
-			    				</div>
-		    				</div>
-		    			</div>
-		    		</div>
-		    	</div>
-				<div class="content-panel">
-			    	<div class="content-panel__body bg-white" ng-if="$ctrl.displayCost">
-			    		<div class="row">
-							<div class="col-md-12 col-lg-12">
-								<div class="row d-flex justify-content-center align-items-center">
-									<div class="col-md-6 col-lg-6">
-										<h4 class="font-weight-medium font-h4">Cost breakdown</h4>
-									</div>
-									<div class="col-md-6 col-lg-6 text-right">
-										<p class="font-h4">1 USD = {{$ctrl.usd2eur}} EUR</p>
+	    <uib-tab heading="Cost Analysis" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md" index="1" ng-hide="true">
+			<div class="content-panel">
+		    	<div class="content-panel__body bg-white m-b-md" ng-if="$ctrl.displayCost">
+		    		<div class="row">
+		    			<div class="col-md-12 col-lg-12">
+		    				<div class="row">
+		    					<div class="col-md-12 col-lg-12">
+			    					<div class="view-tabs m-b-md">
+										<ul class="nav chart-pills">
+											<li class="nav-item sub-view-list-item pill-radius btn--lg pill-tabs font-h4 border-grey-xs" ng-click="activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
+											<li class="nav-item sub-view-list-item pill-radius btn--lg pill-tabs font-h4 border-grey-xs" ng-click="activeChart = 1; $ctrl.chartActive = 'FX Chart'" ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
+										</ul>
 									</div>	
+		    					</div>
+		    				</div>
+
+		    				<div class="row">
+								<div class="col-md-12 col-lg-12 text-xs-left">
+								  	<uib-tabset type="pills" active="activeChart">
+								    	<uib-tab heading="Stage Cost Chart" classes="btn btn-primary" index="0" ng-hide="true">
+									    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.barData" chart-labels="$ctrl.barLabels" chart-series="$ctrl.barSeries" chart-options="$ctrl.barOptions" chart-colors="$ctrl.barChartColours" chart-dataset-override="$ctrl.barDatasetOverride" height="100px"></canvas>
+									    </uib-tab>
+									    <uib-tab heading="FX Chart" classes="btn btn-primary" index="1" ng-hide="true">
+							 				<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.lineData" chart-labels="$ctrl.lineLabels" chart-series="$ctrl.lineSeries" chart-options="$ctrl.lineOptions" chart-dataset-override="$ctrl.lineDatasetOverride" height="100px"></canvas>
+							    		</uib-tab>
+						    		</uib-tabset>
+				    			</div>
+		    				</div>
+	    				</div>
+	    			</div>
+	    		</div>
+	    	</div>
+			<div class="content-panel">
+		    	<div class="content-panel__body bg-white" ng-if="$ctrl.displayCost">
+		    		<div class="row">
+						<div class="col-md-12 col-lg-12">
+							<div class="row d-flex justify-content-center align-items-center">
+								<div class="col-md-6 col-lg-6">
+									<h4 class="font-weight-medium font-h4">Cost breakdown</h4>
 								</div>
+								<div class="col-md-6 col-lg-6 text-right">
+									<p class="font-h4">1 USD = {{$ctrl.usd2eur}} EUR</p>
+								</div>	
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-8 col-lg-8">
-								<table class="t-data">
-									<thead>
-										<tr class="no-border-eb">
-											<td class="no-border-eb"></td>
-											<td class="font-h4 font-weight-medium">EUR</td>
-											<td class="font-h4 font-weight-medium">USD</td>
-										</tr>
-									</thead>
-									<div class="table-responsive">
-										<tbody>
-											<tr class="no-border">
-												<td class="font-body font-weight-medium">Official fee</td>
-												<td class="font-body">€ {{$ctrl.feeBreakDown.renewalFeeEUR}}</td>
-												<td class="font-body">$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
-											</tr>
-											<tr class="no-border">
-												<td class="font-body no-border font-weight-medium">Processing fee</td>
-												<td class="font-body no-border">€ {{$ctrl.feeBreakDown.processingFeeEUR}}</td>
-												<td class="font-body no-border">$ {{$ctrl.feeBreakDown.processingFeeUSD}}</td>
-											</tr>
-											<tr class="no-border-eb">
-												<td class="font-body no-border font-weight-medium">Extension Fee</td>
-												<td class="font-body no-border">€ {{$ctrl.feeBreakDown.extensionFeeEur}}</td>
-												<td class="font-body no-border">$ {{$ctrl.feeBreakDown.extensionFeeUSD}}</td>
-											</tr>								
-											<tr class="p-b-none">
-												<td class="font-body font-weight-medium">Total</td>
-												<td class="font-body font-weight-medium">€ {{$ctrl.feeBreakDown.subTotalEUR}}</td>
-												<td class="font-body font-weight-medium">$ {{$ctrl.feeBreakDown.subTotalUSD}}</td>
-											</tr>
-										</tbody>
-									</div>
-								</table>								
-							</div>
-							<div class="col-md-4 col-lg-4 d-flex flex-column justify-content-end">
-								<div class="m-b-xs">
-									<p class="font-h3 font-weight-bold m-b-xs">Save:</p>
-									<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ {{$ctrl.feeBreakDown.bandSaving().savings}}</p>
-									<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
-								</div>
-								<div>
-						        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn-default">
-								 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
-								 	</div>
-						        	<div ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
-								 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" ui-sref="patents.patent({patentId: $ctrl.patent.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs"></a>
-								 	</div>																		
-									<div ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="btn-default">
-								 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
-								 		</ngcart-addtocart>
-								 	</div>
-								</div>
-							</div>		
-						</div> <!-- row end-->
 					</div>
+					<div class="row">
+						<div class="col-md-8 col-lg-8">
+							<table class="t-data">
+								<thead>
+									<tr class="no-border-eb">
+										<td class="no-border-eb"></td>
+										<td class="font-h4 font-weight-medium">EUR</td>
+										<td class="font-h4 font-weight-medium">USD</td>
+									</tr>
+								</thead>
+								<div class="table-responsive">
+									<tbody>
+										<tr class="no-border">
+											<td class="font-body font-weight-medium">Official fee</td>
+											<td class="font-body">€ {{$ctrl.feeBreakDown.renewalFeeEUR}}</td>
+											<td class="font-body">$ {{$ctrl.feeBreakDown.renewalFeeUSD}}</td>
+										</tr>
+										<tr class="no-border">
+											<td class="font-body no-border font-weight-medium">Processing fee</td>
+											<td class="font-body no-border">€ {{$ctrl.feeBreakDown.processingFeeEUR}}</td>
+											<td class="font-body no-border">$ {{$ctrl.feeBreakDown.processingFeeUSD}}</td>
+										</tr>
+										<tr class="no-border-eb">
+											<td class="font-body no-border font-weight-medium">Extension Fee</td>
+											<td class="font-body no-border">€ {{$ctrl.feeBreakDown.extensionFeeEur}}</td>
+											<td class="font-body no-border">$ {{$ctrl.feeBreakDown.extensionFeeUSD}}</td>
+										</tr>								
+										<tr class="p-b-none">
+											<td class="font-body font-weight-medium">Total</td>
+											<td class="font-body font-weight-medium">€ {{$ctrl.feeBreakDown.subTotalEUR}}</td>
+											<td class="font-body font-weight-medium">$ {{$ctrl.feeBreakDown.subTotalUSD}}</td>
+										</tr>
+									</tbody>
+								</div>
+							</table>								
+						</div>
+						<div class="col-md-4 col-lg-4 d-flex flex-column justify-content-end">
+							<div class="m-b-xs">
+								<p class="font-h3 font-weight-bold m-b-xs">Save:</p>
+								<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ {{$ctrl.feeBreakDown.bandSaving().savings}}</p>
+								<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
+							</div>
+							<div>
+					        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn-default">
+							 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+							 	</div>
+					        	<div ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
+							 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" ui-sref="patents.patent({patentId: $ctrl.patent.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs"></a>
+							 	</div>																		
+								<div ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="btn-default">
+							 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+							 		</ngcart-addtocart>
+							 	</div>
+							</div>
+						</div>		
+					</div> <!-- row end-->
 				</div>
 				
-				<div class="content-panel m-b-md">
-			    	<div class="content-panel__body bg-white" ng-if="$ctrl.hideCost">
-			    		<div class="row">
-			    			<div class="col-md-12 col-lg-12">
-			    				<div class="row m-b-md">
-			    					<div class="col-md-12 col-lg-12">
-				    					<div class="view-tabs">
-											<ul class="nav chart-pills">
-												<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">Stage Cost Chart</li>
-												<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">FX Chart</li>
-											</ul>
-										</div>	
-			    					</div>
-			    				</div>
-			    				<div class="row bg-no-chart hidden-lg-up">
-									<div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3 d-flex align-items-center justify-content-center z-index-1">
-										<div class="content-panel_body">
-											<div class="d-flex justify-content-center align-items-center flex-column">
+					<div ng-if="$ctrl.hideCost">
+						<div class="bg-white m-b-md hidden-lg-up">
+				    		<div class="content-panel__head p-b-none">
+								<div class="row">
+					    			<div class="col-md-12 col-lg-12">
+					    				<div class="row">
+					    					<div class="col-md-12 col-lg-12">
+						    					<div class="view-tabs">
+													<ul class="nav chart-pills">
+														<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">Stage Cost Chart</li>
+														<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">FX Chart</li>
+													</ul>
+												</div>	
+					    					</div>
+					    				</div>
+					    			</div>
+					    		</div>
+					    	</div> 
+					    	<div class="content-panel__body">
+			    				<div class="row h-100">
+									<div class="col-lg-6 d-flex align-items-center justify-content-center z-index-1">
+										<div class="content-panel_body bg-no-chart d-flex align-items-center justify-content-center">
+											<div class="d-flex justify-content-center align-items-center flex-column z-index-1">
 												<p class="h4 font-weight-medium">Sorry</p>
-												<p class="h4 font-weight-medium text-center">No Renewal Information Available</p>
+												<p class="h4 font-weight-medium text-center">No Renewal Information Availablerrr</p>
 												<p class="h4 font-weight-medium">Status: <span class="txt-phase-green" ng-bind="$ctrl.patent.renewalStatus"></span></p>			
 												<div class="m-b-sm"></div>
 												<p class="font-body text-center">Renewal information will be displayed here when the renewal window for the patent opens again.</p>
-											</div>									
+											</div>
 										</div>
 									</div>
 				    			</div>
-			    				<div class="row hidden-md-down">
-									<div class="col-lg-6">
+				    		</div>
+				    	</div>
+				    	<div class="bg-white m-b-md hidden-md-down">
+					    	<div class="content-panel__head p-b-none">
+								<div class="row">
+					    			<div class="col-md-12 col-lg-12">
+					    				<div class="row">
+					    					<div class="col-md-12 col-lg-12">
+						    					<div class="view-tabs">
+													<ul class="nav chart-pills">
+														<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">Stage Cost Chart</li>
+														<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs disabled" ng-disabled="$ctrl.hideCost">FX Chart</li>
+													</ul>
+												</div>	
+					    					</div>
+					    				</div>
+					    			</div>
+					    		</div>
+					    	</div>
+					    	<div class="content-panel__body">
+			    				<div class="row h-100">
+									<div class="col-lg-6 d-flex align-items-center justify-content-center z-index-1">
 										<div class="content-panel_body bg-no-chart d-flex align-items-center justify-content-center">
 											<div class="d-flex justify-content-center align-items-center flex-column z-index-1">
 												<p class="h4 font-weight-medium z-index-1">Sorry</p>
@@ -1283,22 +1316,10 @@
 									</div>
 								</table>
 							</div>
-								
-							<!-- <div class="col-md-4 col-lg-4 d-flex flex-column justify-content-end">
-								<div class="m-b-md">
-									<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ 0.00</p>
-									<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
-								</div>
-								<div>
-						        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
-								 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
-								 	</div>
-							 	</div>
-							</div> -->
 						</div>
 					</div>
 				</div>
-				</uib-tab>
+			</uib-tab>
 
 		    <uib-tab heading="Renewal History" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md"  index="2" ng-hide="true">
 		    	<div class="content-panel">
@@ -1319,20 +1340,18 @@
 						</div>
 			    	</div>
 					<div ng-if="$ctrl.renewal.length == 0">
-						<div class="content-panel__body bg-white">
-							<div class="row">
-								<div class="col-md-12 col-lg-12">
-									<div class="row bg-no-chart">
-										<div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3 d-flex align-items-center justify-content-center z-index-1">
-											<div class="d-flex justify-content-center align-items-center flex-column">
-												<p class="h4 font-weight-medium text-center">This patent has not yet been renewed through Patent Place</p>
-												<p class="h4 font-weight-medium">Status: <span class="txt-phase-green" ng-bind="$ctrl.patent.renewalStatus"></span></p>			
-												<div class="m-b-sm"></div>
-												<p class="font-body text-center">When you've renewed this patent through Patent Place you'll be able to download copies of the invioce and renewal certificates from here.</p>																					
-											</div>
-						    			</div>
-				    				</div>
-								</div>
+				    	<div class="content-panel__body bg-white">
+		    				<div class="row">
+								<div class="col-lg-12 d-flex align-items-center justify-content-center z-index-1">
+									<div class="content-panel_body bg-no-chart d-flex align-items-center justify-content-center">
+										<div class="d-flex justify-content-center align-items-center flex-column z-index-1">
+											<p class="h4 font-weight-medium text-center">This patent has not yet been renewed through Patent Placeeee</p>
+											<p class="h4 font-weight-medium">Status: <span class="txt-phase-green" ng-bind="$ctrl.patent.renewalStatus"></span></p>			
+											<div class="m-b-sm"></div>
+											<p class="font-body text-center">When you've renewed this patent through Patent Place you'll be able to download copies of the invioce and renewal certificates from here.</p>																					
+										</div>
+					    			</div>
+			    				</div>
 							</div>
 						</div>
 					</div>
@@ -1398,6 +1417,7 @@
 						</div>
 					</div>
 				</div>
+				<div id="patentItemAnchor"></div>
 			</uib-tab>
 		</uib-tabset>
 	</div>

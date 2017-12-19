@@ -59,7 +59,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						 <tr ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: searchTrans" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
+						 <tr ng-hide="Result.length==0" ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: searchTrans as Result" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
 					        <td>
 								<a class="txt-black" ui-sref="transaction-history.transaction-history-item({transHistoryId: item.id})">{{item.p3S_TransRef}}</a>
 					        </td>
@@ -106,7 +106,12 @@
 									</div>
 								</div>	
 					        </td>      				                 
-					    </tr>						
+					    </tr>
+					 	<tr ng-show="Result.length==0">
+					 		<td colspan="7">
+					 			No Results Found
+					 		</td>
+					 	</tr>					
 					</tbody>
 				</table>
 			</div>

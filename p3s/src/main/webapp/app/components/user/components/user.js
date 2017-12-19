@@ -179,6 +179,7 @@ app.directive('checkStrength', function () {
             var strength = {
                 colors: ['#e30613', '#e30613', '#f9b233', '#f9b233', '#53ab58'],
                 mesureStrength: function (p) {
+                    
                     var _force = 0;                    
                     var _regex = /[$-/:-?{-~!"^_`\[\]]/g;
                                           

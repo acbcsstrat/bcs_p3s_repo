@@ -44,7 +44,7 @@
 	<div class="row m-b-md">
 		<div ng-show="$ctrl.tableData.length === 0" class="col-md-12">
 			<div class="bg-white p-a-sm">
-				<p class="font-body font-weight-medium">There are currently know patents in this phase</p>
+				<p class="font-body font-weight-medium">There aren't any patents in this phase at the moment.  You can see all the patents in all phases by clikcing on the View All  button above.</p>
 			</div>
 		</div>
 		<div ng-show="$ctrl.tableData.length !== 0" class="col-md-12">
@@ -63,7 +63,7 @@
 	            				<span ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
 							</th>
 							<th ng-click="$ctrl.sortType('title'); $ctrl.sortReverse = !$ctrl.sortReverse">
-								<span>Short Title</span>
+								<span>Client Description</span>
 					            <span ng-show="$ctrl.selectedSortType == 'title' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
 	            				<span ng-show="$ctrl.selectedSortType == 'title' && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
 							</th>
@@ -86,12 +86,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: searchPatents" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
+						<tr ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: searchPatents as Result" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
 							<td class="no-wrap">
 								<a class="txt-black" ui-sref="patents.patent({patentId: item.id})">{{item.patentApplicationNumber}}</a>
 							</td>
-							<td class="no-wrap">{{item.clientRef}}</td>
-							<td class="no-wrap">{{item.title}}</td>
+							<td class="no-wrap"><span class="txt-grey" ng-if="item.clientRef == ''">[No client reference provided]</span><span ng-if="item.clientRef !== ''">{{item.clientRef}}</span></td>
+							<td class="no-wrap"><span class="txt-grey" ng-if="item.shortTitle == ''">[No client description provided]</span><span ng-if="item.shortTitle !== ''">{{item.shortTitle}}</td>
 							<td class="hidden-lg-down">
 								<div ng-if="item.renewalStatus == 'Show price'" ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')">
 									<span class="font-weight-bold">$ {{item.currentRenewalCost}}</span><br>
@@ -107,13 +107,13 @@
 										<img ng-if="item.renewalStatus == 'Too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png">
 										<img ng-if="item.renewalStatus == ('No renewal needed' || 'Show price')" src="p3sweb/assets/imgs/icons/renewal_na_icon.png">
 									</div>
-							    	<p class="font-weight-medium font-body d-flex justify-content-end align-items-center">{{item.renewalStatus}}</p>
+							    	<span class="font-weight-medium font-body d-flex justify-content-end align-items-center"><span ng-if="item.renewalStatus !== 'Too late to renew'">{{item.renewalStatus}}</span><span ng-if="item.renewalStatus == 'Too late to renew'">Renewal window not open</span></span>
 								</div>
 								<div class="hidden-xl-up progress-phase d-flex justify-content-start align-items-center" ng-if="item.renewalStatus == 'Show price'">
 									<div class="m-r-xs">
 										<img src="p3sweb/assets/imgs/icons/complete_icon.png">
 									</div>
-									<p class="font-weight-medium font-body d-flex justify-content-end align-items-center">{{item.renewalStatus}}</p>
+									<span class="font-weight-medium font-body d-flex justify-content-end align-items-center">{{item.renewalStatus}}</span>
 								</div>
 								<div class="hidden-lg-down" class="progress-phase" ng-if="item.renewalStatus == 'Show price'">
 									<uib-progress class="pill-radius font-body font-body--component" ng-class="(item.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (item.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (item.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (item.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (item.costBandColour == 'Black' ? 'bg-phase-white': '')">
@@ -143,6 +143,16 @@
 							 	</div>						 			 	
 					        </td>
 						</tr>
+					 	<tr ng-show="$ctrl.tableData.length === 0">
+					 		<td colspan="8">
+					 			No Results Found
+					 		</td>
+					 	</tr>	
+					 	<tr ng-show="Result.length==0">
+					 		<td colspan="8">
+					 			No Results Found
+					 		</td>
+					 	</tr>							
 					</tbody>
 				</table>
 			</div>

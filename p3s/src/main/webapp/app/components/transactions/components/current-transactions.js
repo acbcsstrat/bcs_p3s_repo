@@ -20,8 +20,6 @@ app.component('currentTransactions', {
 
 		vm.animate = false;
 
-		vm.transInfoContent = false;
-
 	    $timeout(function() {
 	      vm.animate = true;
 	    }, 300);    		
@@ -40,7 +38,7 @@ app.component('currentTransactions', {
 
 		vm.displayTrans = function() {
 			$state.go('current-transactions');
-		} 
+		}
 
 		vm.$onInit = function() {
 

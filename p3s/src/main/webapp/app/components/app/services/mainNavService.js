@@ -4,7 +4,7 @@ app.factory('mainNavService', function(){
 	      		name: 'Dashboard',
 	      		type: 'link',
 	      		state: 'dashboard',
-	      		icon: 'p3sweb/assets/imgs/icons/dashboard_icon.png'
+	      		icon: 'p3sweb/assets/imgs/icons/menu/menu_dashboard_icon.png'
       		}];
 
 
@@ -25,7 +25,7 @@ app.factory('mainNavService', function(){
 
   				}
   			],
-  			icon: 'p3sweb/assets/imgs/icons/patent_icon.png'
+  			icon: 'p3sweb/assets/imgs/icons/menu/menu_patent_icon.png'
       	})
 
       	sections.push({
@@ -44,7 +44,7 @@ app.factory('mainNavService', function(){
 		            type: 'link',
 		        }
 	        ],
-          icon: 'p3sweb/assets/imgs/icons/transaction_icon.png'
+          icon: 'p3sweb/assets/imgs/icons/menu/menu_transaction_icon.png'
   		})
      
      	// console.log(sections)
