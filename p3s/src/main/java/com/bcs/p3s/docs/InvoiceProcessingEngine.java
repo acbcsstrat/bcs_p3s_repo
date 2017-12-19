@@ -100,11 +100,11 @@ public class InvoiceProcessingEngine extends Universal {
 		newInvoice.setInvoiceStatus(InvoiceStatusEnum.OPEN);
 		newInvoice.setPreceedingInvoiceId(existingInvoice);
 		newInvoice.setInvoiceType(InvoiceTypeEnum.FINAL);
-		//dummy values start
-		newInvoice.setDocPath("hardcodedpdffolder/invoices/");
-		newInvoice.setFilename("dummyInvoiceNumber1.pdf");
-		newInvoice.setInvoiceTemplateId("template1");
-		//dummy values end
+//		//dummy values start - 19/12/2017 - now leave null
+//		newInvoice.setDocPath("hardcodedpdffolder/invoices/");
+//		newInvoice.setFilename("dummyInvoiceNumber1.pdf");
+//		newInvoice.setInvoiceTemplateId("template1");
+//		//dummy values end
 
 		return newInvoice;
 	}
@@ -120,20 +120,20 @@ public class InvoiceProcessingEngine extends Universal {
 	
 	
 	
-	public String generateInvoicePDF(Invoice invoice) {
-		if (invoice==null) return null;
-		String err = PREFIX+"generateInvoicePDF("+invoice.getId()+") ";
-		log().debug("invoked "+ err);
-
-		String filename = "dummyInvoiceNumber1.pdf";
-		
-		DummyDataEngine dummy = new DummyDataEngine();  // Flag up incompleteness
-		log().warn("Generating PDFs of Invoices is NOT YET WRITTEN"); // acToDo
-		
-		
-		log().debug("Completed "+ err);
-		return filename;
-	}
+//	public String OBSgenerateInvoicePDF(Invoice invoice) {
+//		if (invoice==null) return null;
+//		String err = PREFIX+"generateInvoicePDF("+invoice.getId()+") ";
+//		log().debug("invoked "+ err);
+//
+//		String filename = "dummyInvoiceNumber1.pdf";
+//		
+//		DummyDataEngine dummy = new DummyDataEngine();  // Flag up incompleteness
+//		log().warn("Generating PDFs of Invoices is NOT YET WRITTEN"); // acToDo
+//		
+//		
+//		log().debug("Completed "+ err);
+//		return filename;
+//	}
 	
 	
 

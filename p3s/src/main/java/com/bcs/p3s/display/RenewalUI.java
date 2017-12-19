@@ -20,6 +20,9 @@ import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.service.TransactionServiceImpl;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.PatentExtendedData;
@@ -70,17 +73,41 @@ public class RenewalUI extends Renewal {
 
 		// Now the additional fields - WHICH ARE
 		this.setRenewalDueDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getRenewalDueDate()));
+
+		// For urls - read the website 
 		
+		// Read web context
+		String context = null;
+		try {
+			P3SPropertyReader reader = new P3SPropertyReader();
+			context = reader.getGenericProperty(P3SPropertyNames.P3S_WEB_CONTEXT); 
+		} catch (P3SPropertyException e) {
+			System.out.println("RenewalUI constructor : property read failed");
+			e.printStackTrace();
+		}
+
 		//Get the certificate details
 		//Certificate certificate = Certificate.
 		this.setCertificateUrl(null);
-		if (renewal.getCertificate() != null) this.setCertificateUrl(renewal.getCertificate().getUrl());
-
-		//Get the invoice url
-		if(renewal.getActivePaymentId().getLatestInvoice() != null)
-			this.setInvoiceUrl(renewal.getActivePaymentId().getLatestInvoice().getUrl());
-		//Get the FeeUI
+		//if (renewal.getCertificate() != null) this.setCertificateUrl(renewal.getCertificate().getUrl());
+		if (renewal.getCertificate() != null) {
+			this.setCertificateUrl(context + "/certificate/" + renewal.getId().toString());
+		}
 		
+		//Get the invoice url
+		// getUrl method is redundant until we create & store PDFs locally
+		//if(renewal.getActivePaymentId().getLatestInvoice() != null)
+		//	this.setInvoiceUrl(renewal.getActivePaymentId().getLatestInvoice().getUrl());
+		if(renewal.getActivePaymentId().getLatestInvoice() != null) {
+			//this.setInvoiceUrl(renewal.getActivePaymentId().getLatestInvoice().getUrl());
+			String url = "KKKKKKKKkkk";
+			if (context!=null) {
+				url = context + "/invoice/" + renewal.getActivePaymentId().getId().toString(); 
+			}
+			this.setInvoiceUrl(url);
+		}
+
+		//Get the FeeUI
 		FeeUI feeUI = new FeeUI(renewal.getFee());
 		this.setFee(null);
 		this.setFeeUI(feeUI);

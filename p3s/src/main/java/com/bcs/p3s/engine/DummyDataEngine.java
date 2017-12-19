@@ -89,9 +89,9 @@ public class DummyDataEngine extends Universal {
 
 
 	
-	public String gimmeAnyInvoiceUrl() {
-		return "hardcodedpdffolder/invoices/dummyInvoiceNumber1.pdf";
-	}
+//	public String gimmeAnyInvoiceUrl() {
+//		return "hardcodedpdffolder/invoices/dummyInvoiceNumber1.pdf";
+//	}
 	
 	public String gimmeEmptyPostPayWarningMessage() {
 		return "Nut'n gone wrong yet ...";

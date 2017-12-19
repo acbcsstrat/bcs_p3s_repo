@@ -456,11 +456,14 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		BankTransferPaymentDetails bankTransferPaymentDetails = new BankTransferPaymentDetails();
 		bankTransferPostCommitDetails.setBankTransferPaymentDetails(bankTransferPaymentDetails);
 		
-		String proformaInvoiceUrl = dummy.gimmeAnyInvoiceUrl();
-		bankTransferPostCommitDetails.setProformaInvoiceUrl(proformaInvoiceUrl);
+		//String proformaInvoiceUrl = dummy.gimmeAnyInvoiceUrl();
+		String proformaInvoiceUrl = "NotYetAvailableZaphod";
+		//bankTransferPostCommitDetails.setProformaInvoiceUrl(proformaInvoiceUrl);
+		bankTransferPostCommitDetails.setProformaInvoiceUrl(null);
 		
 		String warningMessage = dummy.gimmeEmptyPostPayWarningMessage();
-		bankTransferPostCommitDetails.setWarningMessage(warningMessage);
+		//bankTransferPostCommitDetails.setWarningMessage(warningMessage);
+		bankTransferPostCommitDetails.setWarningMessage(null);
 		
 
 	    //set the address details

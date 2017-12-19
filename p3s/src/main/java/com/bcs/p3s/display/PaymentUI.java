@@ -103,7 +103,8 @@ public class PaymentUI extends Payment {
 		this.setTransStartDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getTransStartDate()));
 		this.setTransTargetEndDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getTransTargetEndDate()));
 		this.setLastUpdatedDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getLastUpdatedDate()));
-		this.setInvoiceUrl(this.getLatestInvoice().getUrl());
+		//this.setInvoiceUrl(this.getLatestInvoice().getUrl());
+		this.setInvoiceUrl("zaphod");
 		
 		List<Renewal> rens =  payment.getRenewals();
 		for (Renewal aRenewal : rens) {

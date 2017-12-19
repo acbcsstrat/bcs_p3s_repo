@@ -15,6 +15,7 @@ public interface P3SPropertyNames {
 
 	String Smtp_Host = "smtp_host";
 	public static final String P3S_support_email_address = "p3s_support_email_address"; 
+	public static final String P3S_WEB_CONTEXT = "p3s_web_context"; 
 	
 	
 	
