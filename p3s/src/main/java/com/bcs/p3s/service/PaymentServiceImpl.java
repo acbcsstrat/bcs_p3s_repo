@@ -450,18 +450,14 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		String p3sTransRef = commitToRenewal.generateP3sTransRef(bankTransferPostCommitDetails);
 		bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);*/
 
-		DummyDataEngine dummy = new DummyDataEngine();
-		//BankTransferPaymentDetails bankTransferPaymentDetails = dummy.generateBankTransferPaymentDetails();
-		// Now superceded by: hardcoded BankTransferPaymentDetails 
 		BankTransferPaymentDetails bankTransferPaymentDetails = new BankTransferPaymentDetails();
 		bankTransferPostCommitDetails.setBankTransferPaymentDetails(bankTransferPaymentDetails);
 		
-		//String proformaInvoiceUrl = dummy.gimmeAnyInvoiceUrl();
-		String proformaInvoiceUrl = "NotYetAvailableZaphod";
-		//bankTransferPostCommitDetails.setProformaInvoiceUrl(proformaInvoiceUrl);
+		// For the htmlDoc solution (see com.bcs.p3s.docs.htmldoc package-info) invoiceUrl (below), here, is redundant. The equivalents are set in RenewalUI  & PaymentUI
 		bankTransferPostCommitDetails.setProformaInvoiceUrl(null);
 		
-		String warningMessage = dummy.gimmeEmptyPostPayWarningMessage();
+		//DummyDataEngine dummy = new DummyDataEngine(); // acTidy
+		//String warningMessage = dummy.gimmeEmptyPostPayWarningMessage();
 		//bankTransferPostCommitDetails.setWarningMessage(warningMessage);
 		bankTransferPostCommitDetails.setWarningMessage(null);
 		

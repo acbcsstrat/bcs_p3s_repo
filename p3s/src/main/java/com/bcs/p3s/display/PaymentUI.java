@@ -22,6 +22,9 @@ import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.service.TransactionServiceImpl;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.wrap.PatentExtendedData;
 
@@ -103,8 +106,7 @@ public class PaymentUI extends Payment {
 		this.setTransStartDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getTransStartDate()));
 		this.setTransTargetEndDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getTransTargetEndDate()));
 		this.setLastUpdatedDateUI((new DateUtil()).dateToUSStringWithDayOfWeek(this.getLastUpdatedDate()));
-		//this.setInvoiceUrl(this.getLatestInvoice().getUrl());
-		this.setInvoiceUrl("zaphod");
+		// setInvoiceUrl() occurs below
 		
 		List<Renewal> rens =  payment.getRenewals();
 		for (Renewal aRenewal : rens) {
@@ -119,20 +121,31 @@ public class PaymentUI extends Payment {
 			
 			this.getRenewalUIs().add(aRenUI);
 			// Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo
-			System.out.println("Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo");
+			//System.out.println("Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo");
 		}
 
-		
-//		patentUI.setCurrentRenewalCost(new BigDecimal("1.11"));
+//		patentUI.setCurrentRenewalCost(new BigDecimal("1.11")); // acTidy
 //		patentUI.setCostBandEndDate(nowPlusNdays(2));
 //		patentUI.setRenewalCostNextStage(new BigDecimal("1111111.11"));
 //		patentUI.setRenewalDueDate(dummyFilingDateToThisyearRenewDueDate(patent.getFilingDate()));
+
+		
+		// Read web context (for URLs) 0 from property file
+		String context = null;
+		try {
+			P3SPropertyReader reader = new P3SPropertyReader();
+			context = reader.getGenericProperty(P3SPropertyNames.P3S_WEB_CONTEXT); 
+		} catch (P3SPropertyException e) {
+			System.out.println("PaymentUI constructor : property read failed");
+			e.printStackTrace();
+		}
+		// Set the invoice url
+		String url = (context==null) ? "" : context;
+		url += ("/invoice/" + this.getId().toString()); 
+		this.setInvoiceUrl(url);
+		
 	}
 
-
-
-	
-	
 	
 	
 	
