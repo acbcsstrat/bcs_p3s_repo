@@ -119,7 +119,7 @@
 										</div>
 										<div class="form-group row">
 											<div class="col-md-6 col-lg-6 col-xl-6">
-												<input type="text" class="form-control pill-radius font-body" id="zip" placeholder="Zip" data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+												<input type="text" name="zip" class="form-control pill-radius font-body" id="zip" placeholder="Zip" data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 											<div class="col-md-6 col-lg-6 col-xl-6">
 												<select class="form-control pill-radius font-body form-control" name="timezone" id="timezone" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">

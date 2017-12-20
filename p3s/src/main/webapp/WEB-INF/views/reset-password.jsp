@@ -58,7 +58,7 @@
 						</div>														
 						<div class="form-group row m-b-md">
 							<div class="col-md-12">
-								<input type="password" name="confirm_password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+								<input type="password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 							</div>
 						</div>
 						<input type="Submit" value="Reset Password" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
@@ -70,7 +70,7 @@
 	   						<div class="row">
 	   							<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
 	   								<h3 class="font-h3 font-weight-medium m-b-sm">Successful!</h3>
-	   								<p class="font-body text-center">Please check your inbox and complete the process to reset your password.</p>
+	   								<p class="font-body text-center">Successfully reset your password. <a href="/p3sweb/login">Click here</a> to Login</p>
 	   							</div>
 	   						</div>   							
    						</div>
@@ -107,16 +107,21 @@
       				e.preventDefault();
   					//var dataString = JSON.stringify($('#resetPassForm').serializeArray());
   					var dataString = $('#resetPassForm').serializeArray();
+  					console.log(dataString);
   					$.ajax({
-  						type: 'PUT',
-  						url: domain + 'prelogin/rest-forgot-password/',
+  						type: 'POST',
+  						url: domain + 'prelogin/rest-reset-password/',
   						data: dataString,
-  						dataType: 'json',
+  						//dataType: 'json',
   						success: function(response) {
+  							console.log("Inside success");
+  							console.log(response);
   							$('#initialResetPassForm').fadeOut(500);	
 							$('#resetPassSuccess').delay(520).fadeIn(500);		      				
   						},
   						error:function(errResponse) {
+  							console.log("Inside error");
+  							console.log(errResponse);
   							$('#initialResetPassForm').fadeOut(500);	
 							$('#resetPassFail').delay(520).fadeIn(500);							
   						}
