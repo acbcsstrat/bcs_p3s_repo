@@ -395,10 +395,10 @@
 								<div class="col-xl-12 text-xs-left">
 								  	<uib-tabset type="pills" active="activeChart">
 								    	<uib-tab heading="Stage Cost Chart" classes="btn btn-primary" index="0" ng-hide="true">
-									    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.barData" chart-labels="$ctrl.barLabels" chart-series="$ctrl.barSeries" chart-options="$ctrl.barOptions" chart-colors="$ctrl.barChartColours" chart-dataset-override="$ctrl.barDatasetOverride" height="100px"></canvas>
+									    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.charts.bar.data" chart-labels="$ctrl.charts.bar.labels" chart-series="$ctrl.charts.bar.series" chart-options="$ctrl.charts.bar.options" chart-colors="$ctrl.charts.bar.colours" chart-dataset-override="$ctrl.charts.bar.datasetoverride" height="100px"></canvas>
 									    </uib-tab>
 									    <uib-tab heading="FX Chart" classes="btn btn-primary" index="1" ng-hide="true">
-							 				<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.lineData" chart-labels="$ctrl.lineLabels" chart-series="$ctrl.lineSeries" chart-options="$ctrl.lineOptions" chart-dataset-override="$ctrl.lineDatasetOverride" height="100px"></canvas>
+							 				<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.charts.line.data" chart-labels="$ctrl.charts.line.labels" chart-series="$ctrl.charts.line.series" chart-options="$ctrl.charts.line.options" chart-dataset-override="$ctrl.charts.line.datasetoverride" height="100px"></canvas>
 							    		</uib-tab>
 						    		</uib-tabset>
 				    			</div>
@@ -500,7 +500,7 @@
 	    						<div class="d-flex align-items-center justify-content-center h-100 z-index-1">
 	    							<div class="d-flex justify-content-center bg-no-chart align-items-center flex-column">
 										<p class="h4 font-weight-medium">Sorry</p>
-										<p class="h4 font-weight-medium text-center">No Renewal Information Availableeee</p>
+										<p class="h4 font-weight-medium text-center">No Renewal Information Available</p>
 										<p class="h4 font-weight-medium">Status: <span class="txt-phase-green" ng-bind="$ctrl.patent.renewalStatus"></span></p>			
 										<div class="m-b-sm"></div>
 										<p class="font-body text-center">Renewal information will be displayed here when the renewal window for the patent opens again</p>
@@ -650,10 +650,10 @@
 										<td width="30%">
 											<div class="row">
 												<div class="col-xl-6 d-flex align-items-center">
-													<a target="_blank" href="{{renewal.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center" >Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
+													<a href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center" download>Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
 												</div>
 												<div class="col-xl-6 d-flex align-items-center">
-													<a target="_blank" href="{{renewal.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" >Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
+													<a href="p3sweb/hardcodedpffolder/invoices/dummyInvoiceNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
 												</div>	
 											</div>
 										</td>
@@ -893,7 +893,7 @@
 								<div class="col-md-6 col-lg-6 p-l-none" ng-if="$ctrl.displayCost">
 									<div class="content-panel__body bg-white h-100">
 										<div class="m-b-md">
-											<h4 class="font-weight-medium m-b-xs">FX Rate Impact md</h4>
+											<h4 class="font-weight-medium m-b-xs">FX Rate Impact</h4>
 										</div>
 										<div class="border-grey-xs--btm m-b-md">
 											<div class="row p-b-md m-b-md">
@@ -1066,10 +1066,10 @@
 								<div class="col-md-12 col-lg-12 text-xs-left">
 								  	<uib-tabset type="pills" active="activeChart">
 								    	<uib-tab heading="Stage Cost Chart" classes="btn btn-primary" index="0" ng-hide="true">
-									    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.barData" chart-labels="$ctrl.barLabels" chart-series="$ctrl.barSeries" chart-options="$ctrl.barOptions" chart-colors="$ctrl.barChartColours" chart-dataset-override="$ctrl.barDatasetOverride" height="100px"></canvas>
+									    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.charts.bar.data" chart-labels="$ctrl.charts.labels" chart-series="$ctrl.charts.bar.series" chart-options="$ctrl.charts.bar.options" chart-colors="$ctrl.charts.bar.colours" chart-dataset-override="$ctrl.charts.bar.datasetoverride" height="100px"></canvas>
 									    </uib-tab>
 									    <uib-tab heading="FX Chart" classes="btn btn-primary" index="1" ng-hide="true">
-							 				<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.lineData" chart-labels="$ctrl.lineLabels" chart-series="$ctrl.lineSeries" chart-options="$ctrl.lineOptions" chart-dataset-override="$ctrl.lineDatasetOverride" height="100px"></canvas>
+							 				<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.charts.line.data" chart-labels="$ctrl.charts.line.labels" chart-series="$ctrl.charts.line.series" chart-options="$ctrl.charts.line.options" chart-dataset-override="$ctrl.charts.line.datasetoverride" height="100px"></canvas>
 							    		</uib-tab>
 						    		</uib-tabset>
 				    			</div>
