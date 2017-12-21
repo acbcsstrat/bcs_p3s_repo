@@ -144,7 +144,7 @@
 										<p class="font-h4 font-weight-bold m-b-sm" ng-bind="transaction.renewalStatus"></p>
 										<div class="progress-tracker m-b-sm">
 											<div ng-if="$ctrl.transactionHistoryItem.hasFailed">
-												<uib-progress><uib-bar class="bg-phase-red pill-radius" value="$ctrl.patentProgress" max="100" class="tracker-item"></uib-bar></uib-progress>													
+												<uib-progress><uib-bar class="bg-phase-red pill-radius" value="$ctrl.patentProgress" max="100" class="tracker-item"></uib-bar></uib-progress>
 											</div>
 											<div ng-if="!$ctrl.transactionHistoryItem.hasFailed">
 												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="$ctrl.patentProgress" max="100" class="tracker-item"></uib-bar></uib-progress>													
@@ -155,6 +155,22 @@
 								</div>
 							</div>
 						</div>
+						<div class="row m-t-sm">
+							<div class="col-xl-12 d-flex justify-content-end">
+								<div class="btn-default">
+									<a href="{{renewal.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>						
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="content-panel__body">
+					<div class="row">
+						<div class="col-xl-12 d-flex align-items-center justify-content-end">
+							<div class="btn-default">
+								<a href="{{renewal.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+							</div>
+						</div>						
 					</div>
 				</div>
 			</uib-tab>
