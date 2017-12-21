@@ -419,7 +419,7 @@ app.component('dashboard', {
 					case 2:
 						vm.colourPhaseTitle = {
 							title: 'Red',
-							descrip: '3 working days before renewal date - End of renewal date',
+							descrip: 'Final 3 days before renewal date',
 							color: '#e30613'
 						}
 					break;
@@ -433,14 +433,14 @@ app.component('dashboard', {
 					case 4:
 						vm.colourPhaseTitle = {
 							title: 'Black',
-							descrip: '10 working days before the expiry of the extension period, and runs until the end of the 6th day before the end of the extension period.',
+							descrip: 'The period between 10 and 6 working days before the expiry of the extension period.',
 							color: '#3c3c3b'
 						}
 					break;
 					case 5:
 						vm.colourPhaseTitle = {
 							title: 'Grey',
-							descrip: 'N/A',
+							descrip: 'During this period patents are not generally available for renewal',
 							color: '#bdbdbd'
 						}						
 				}

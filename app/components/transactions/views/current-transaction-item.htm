@@ -137,7 +137,7 @@
 										<p class="font-body">$ {{transaction.feeUI.subTotal_USD}}</p>
 									</div>	
 								</div>
-							</div>							
+							</div>					
 							<div class="col-md-12 col-lg-6 col-xl-6 text-xs-center">
 								<div class="content-panel__body bg-light-grey2 bg-info-icon">
 									<div class="progress-trans">
@@ -187,8 +187,24 @@
 										</div>						
 									</div>
 								</div>
+							</div>
+							<div class="row m-t-sm w-100">
+								<div class="col-xl-12 d-flex justify-content-end">
+									<div class="btn-default">
+										<a href="{{transaction.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>				
+									</div>
+								</div>
 							</div>		
 						</div>
+					</div>
+				</div>
+				<div class="content-panel__body">
+					<div class="row">
+						<div class="col-xl-12 d-flex align-items-center justify-content-end">
+							<div class="btn-default">
+								<a href="{{$ctrl.transactionHistoryItem.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+							</div>
+						</div>						
 					</div>
 				</div>
 			</uib-tab>
