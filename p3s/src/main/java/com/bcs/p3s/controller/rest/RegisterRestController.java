@@ -186,57 +186,63 @@ public class RegisterRestController extends Universal {
 		String msg = "RegisterRestController : /register/rest-subsequent-user-step2/ persistUser()";
 		log().debug(msg + "invoked with parameters "+ object.toString());
 		
-		System.out.println(object);
-		ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
-		HashMap<String, Object> contentMap = data.extractRegistrationForm(object);
-		
-		if(contentMap == null){
-			log().error("Extract data from Registration Form failed");
-			return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
-		}
+		try{
+			ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
+			HashMap<String, Object> contentMap = data.extractRegistrationForm(object);
 			
-		/**
-		 * Extracting business details from contentMap
-		 */
-		Business business = data.extractBusinessInfo(contentMap);
-		if(business == null){
-			log().error("Extract business info from Registration Form failed");
-			return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+			if(contentMap == null){
+				log().error("Extract data from Registration Form failed");
+				return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+			}
+				
+			/**
+			 * Extracting business details from contentMap
+			 */
+			Business business = data.extractBusinessInfo(contentMap);
+			if(business == null){
+				log().error("Extract business info from Registration Form failed");
+				return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+			}
+			//business.persist();
+			
+			
+			/**
+			 * Extracting user details from contentMap
+			 */
+			P3SUser user = data.extractUserInfo(contentMap);
+			if(user == null){
+				log().error("Extract User info from Registration Form failed");
+				return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+			}
+			//persist business && user
+			
+			//** Checking whether email Address already exist **/
+			boolean isNewUser = userService.isNewUser(user.getEmailAddress());
+			
+			if(isNewUser){
+				log().debug("Email address does not exist. So proceed with Registration");
+				user.setStatus(UserStatusEnum.DISABLED);
+				user.setUserrole("user");
+				//setting email notification to true by default
+				user.setIsEmailNotification(true);
+				PreLoginSessionBean preSession = (PreLoginSessionBean) session.getAttribute("preSession");
+				business = preSession.getBusiness();   //getting business Info from session; ignoring user manipulations
+				user.setBusiness(business);
+				userService.createSubUser(user);
+			}
+			else{
+				log().warn("User requested register, but already has an account (albeit maybe not verified)");
+				return new ResponseEntity<String>("error", HttpStatus.FOUND);
+				// Here, send email anyway. User will be expecting it (maybe NEEDS it). & cannot hurt.
+			}
+			// Send email address verification email to user
+			userService.sendRegistrationEmail(user.getEmailAddress());
 		}
-		//business.persist();
 		
-		
-		/**
-		 * Extracting user details from contentMap
-		 */
-		P3SUser user = data.extractUserInfo(contentMap);
-		if(user == null){
-			log().error("Extract User info from Registration Form failed");
-			return new ResponseEntity<String>("error", HttpStatus.NO_CONTENT);
+		catch(Exception e){
+			logErrorAndContinue("Exception occured in " + msg, e);
+			return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
 		}
-		//persist business && user
-		
-		//** Checking whether email Address already exist **/
-		boolean isNewUser = userService.isNewUser(user.getEmailAddress());
-		
-		if(isNewUser){
-			log().debug("Email address does not exist. So proceed with Registration");
-			user.setStatus(UserStatusEnum.DISABLED);
-			user.setUserrole("user");
-			//setting email notification to true by default
-			user.setIsEmailNotification(true);
-			PreLoginSessionBean preSession = (PreLoginSessionBean) session.getAttribute("preSession");
-			business = preSession.getBusiness();   //getting business Info from session; ignoring user manipulations
-			user.setBusiness(business);
-			userService.createSubUser(user);
-		}
-		else{
-			log().warn("User requested register, but already has an account (albeit maybe not verified)");
-			return new ResponseEntity<String>("error", HttpStatus.FOUND);
-			// Here, send email anyway. User will be expecting it (maybe NEEDS it). & cannot hurt.
-		}
-		// Send email address verification email to user
-		userService.sendRegistrationEmail(user.getEmailAddress());
 		
 		log().debug("User persisted, email send and method returning successfully");
 		return new ResponseEntity<String>("success", HttpStatus.OK);
@@ -251,42 +257,50 @@ public class RegisterRestController extends Universal {
 		GenericProcessingEngine genEngine = new GenericProcessingEngine();
 		ModelAndView model = new ModelAndView();
 		
-		log().debug(msg + " invoked");
-		
-		P3SUser user = null;
-		
-		if (emailAddress == null || emailAddress.length() == 0){
-			logInternalError().fatal("Email address argument missing");
-			throw new IllegalArgumentException("The emailAddress argument is required");
+		try{
+			log().debug(msg + " invoked");
+			
+			P3SUser user = null;
+			
+			if (emailAddress == null || emailAddress.length() == 0){
+				logInternalError().fatal("Email address argument missing");
+				throw new IllegalArgumentException("The emailAddress argument is required");
+			}
+			
+			user = userService.getUserByEmailAddress(emailAddress);
+			
+			//CHECKING user send {verifyLink} against what generated from user object
+			String hashLink = genEngine.generateUrlVerificationCode(user);
+			if(!(hashLink.equals(verifyLink))){
+				log().error("User send an INVALID {verifyLink}. Preventing user from further operation. ["+emailAddress+" expected "+hashLink+" got "+verifyLink+"]");
+				model.setViewName("error");
+				return model;
+			}
+			
+			//create an error page 
+			if(user == null){
+				fail(msg+"Unable to retrieve userdata for "+emailAddress);
+			}
+			
+			if(UserStatusEnum.DISABLED.equals(user.getStatus())){
+					user.setStatus(UserStatusEnum.ENABLED);
+					userService.updateUser(user, user.getBusiness());
+					log().debug("User["+ emailAddress  +"] ****VERIFIED AND ACTIVATED****.Redirecting to Login Page");
+					log().debug("Registration Completed for user " + emailAddress );
+			}	
+			else{
+				log().warn("User status is ALREADY enabled (email url clicked again). No action required now. Redirect to login page");
+			}
+			
+			//return to login page
 		}
-		
-		user = userService.getUserByEmailAddress(emailAddress);
-		
-		//CHECKING user send {verifyLink} against what generated from user object
-		String hashLink = genEngine.generateUrlVerificationCode(user);
-		if(!(hashLink.equals(verifyLink))){
-			log().error("User send an INVALID {verifyLink}. Preventing user from further operation. ["+emailAddress+" expected "+hashLink+" got "+verifyLink+"]");
+		catch(Exception e){
+			
+			logErrorAndContinue("Exception occured in " + msg, e);
 			model.setViewName("error");
 			return model;
 		}
-		
-		//create an error page 
-		if(user == null){
-			fail(msg+"Unable to retrieve userdata for "+emailAddress);
-		}
-		
-		if(UserStatusEnum.DISABLED.equals(user.getStatus())){
-				user.setStatus(UserStatusEnum.ENABLED);
-				userService.updateUser(user, user.getBusiness());
-				log().debug("User["+ emailAddress  +"] ****VERIFIED AND ACTIVATED****.Redirecting to Login Page");
-				log().debug("Registration Completed for user " + emailAddress );
-		}	
-		else{
-			log().warn("User status is ALREADY enabled (email url clicked again). No action required now. Redirect to login page");
-		}
-		
-		//return to login page
-		
+			
 		model.setViewName("login");
 		return model;
 	

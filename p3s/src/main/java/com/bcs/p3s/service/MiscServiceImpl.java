@@ -3,7 +3,6 @@
  */
 package com.bcs.p3s.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,19 +11,16 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import org.joda.time.Days;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.LoginMessageUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.model.LoginMessage;
-import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.date.DateUtil;
-import com.bcs.p3s.util.lang.Universal;
 
 /**
  * @author MerinP
@@ -72,7 +68,7 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 		}
 			
 		loginMessages.setSystemMessages(systemMessages);
-		
+		log().debug(msg +" found [" + systemMessages +"] to be displyed to user[" +pLoginBean.getUser().getId());
 		//find urgent Patents info
 		TypedQuery<Patent> patents = Patent.findPatentsByBusiness(pLoginBean.getBusiness());
 		if(!(patents.getResultList() == null))
@@ -87,10 +83,10 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 	public void suppressLoginMessages(List<Long> ids){
 		
 		String msg = "suppressLoginMessages()";
-		log().debug(msg + " invoked ");
+		log().debug(msg + " invoked for messages ids :: " + ids.toString());
 		boolean isAnyMaliciousData = false;
 		
-		if(ids == null){
+		if(ids.isEmpty()){
 			log().debug(msg + " invoked with no messages being selected. No processing required this time");
 			return;
 		 }
@@ -108,11 +104,14 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 			message.remove();
 		}
 		
-		log().debug("Suppressed messages from user " + ids);
+		log().debug("Suppressed messages from user " + ids.toString());
 		return;
 	}
 	
 	protected List<PatentUI> getUrgentPatentsForModalDisplay(List<Patent> patents,PostLoginSessionBean pLoginBean){
+		
+		String msg = "getUrgentPatentsForModalDisplay()";
+		log().debug(msg + " invoked for finding List of urgent Patents");
 		
 		List<PatentUI> urgentPatents = new ArrayList<PatentUI>();
 		
@@ -121,14 +120,19 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 			int days = 0;
 			
 			if(Arrays.asList(urgentColors).contains(patentUI.getCostBandColour())){
+				log().debug("Patent[" +patentUI.getId() +"] is in URGENT COLOUR. Added to urgent message list");
 				urgentPatents.add(patentUI);
 			}
 			else if(!RenewalColourEnum.GREY.equals(patentUI.getCostBandColour())){
 				days = new DateUtil().daysBetween(Calendar.getInstance().getTime(), patentUI.getCostBandEndDate());
-				if(days <= P3SPropertyNames.GREE_BLUE_ENDS_IN)
+				if(days <= P3SPropertyNames.GREE_BLUE_ENDS_IN){
 					urgentPatents.add(patentUI);
+					log().debug("Patent[" +patentUI.getId() +"] has reached GREEN/BLUE end. Added to urgent message list");
+				}
 			}
 		}
+		
+		log().debug(msg + " returning ["+  urgentPatents.size() + "] urgent patents");
 		return urgentPatents;
 	}
 	

@@ -124,9 +124,13 @@ public class UserProfileRestController extends Universal {
     	System.out.println("Inside listUsers");
     	System.out.println("####here comes the session in Controller "+session.getCreationTime() + "id ::" + session.getId());
     	   	
+    	List<UserProfileUI> userProfileUI = new ArrayList<UserProfileUI>();
     	List<P3SUser> p3sUser = userService.getAllUsers();
     	
-    	List<UserProfileUI> userProfileUI = new ArrayList<UserProfileUI>();
+    	if(p3sUser.isEmpty()){
+    		log().debug("User object null");
+    		return new ResponseEntity<List<UserProfileUI>>(userProfileUI, HttpStatus.BAD_REQUEST);
+    	}
     	
     	for(P3SUser user  : p3sUser){
     		UserProfileUI userUI = new UserProfileUI();
