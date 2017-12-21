@@ -1,0 +1,165 @@
+<div ng-show="$ctrl.animate" class="animate-show">
+	<patentnav></patentnav>
+	<div class="row m-b-md">
+		<div class="col-md-12 col-lg-12 col-xl-8 d-flex align-items-center lg-m-b-md">
+			<div class="phase-tabs">
+				<uib-tabset type="pills" active="activePhaseTab" class="phase-pills">
+					<uib-tab index="0" class="tab tab--reg bg-white pill-radius btn--reg pill-tabs font-body font-body--component txt-black border-grey-xs" heading="View All({{$ctrl.allPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.all" ng-click="$ctrl.displayPhase(1)" ui-sref="patents">
+				    </uib-tab>
+				    <uib-tab index="1" class="tab tab--reg bg-phase-green pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Green({{$ctrl.greenPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.green" ng-click="$ctrl.displayPhase(2)" ui-sref="patents">
+					</uib-tab>
+				    <uib-tab index="2" class="tab tab--reg bg-phase-amber pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Yellow({{$ctrl.amberPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.amber" ng-click="$ctrl.displayPhase(3)" ui-sref="patents">
+					</uib-tab>
+				    <uib-tab index="3" class="tab tab--reg bg-phase-red pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Red({{$ctrl.redPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.red" ng-click="$ctrl.displayPhase(4)" ui-sref="patents">
+					</uib-tab>
+				    <uib-tab index="4" class="tab tab--reg bg-phase-blue pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Blue({{$ctrl.bluePatentsLength}})" ng-attr-id="$ctrl.patentsTabs.blue" ng-click="$ctrl.displayPhase(5)" ui-sref="patents">
+					</uib-tab>
+				    <uib-tab index="5" class="tab tab--reg bg-phase-black pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Black({{$ctrl.blackPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.black" ng-click="$ctrl.displayPhase(6)" ui-sref="patents">
+					</uib-tab>
+				    <uib-tab index="6" class="tab tab--reg bg-phase-grey pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Grey({{$ctrl.greyPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.grey" ng-click="$ctrl.displayPhase(7)" ui-sref="patents">
+					</uib-tab>				
+				</uib-tabset>
+			</div>	
+		</div>
+		<div class="col-md-12 col-xl-4">
+			<form class="form">
+				<div class="row">
+					<div class="col-md-4 col-lg-4 col-xl-6">
+						<div class="input-group">
+							<input type="text" class="form-control pill-radius font-body" name="appNoFilter" ng-model="searchPatents.patentApplicationNumber" ng-change="$ctrl.displayPatents()" placeholder="App No.">
+							<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+						</div>					
+					</div>
+					<div class="col-md-4 col-lg-4 col-xl-6">
+						<div class="input-group">
+							<input type="text" class="form-control pill-radius font-body" name="clientRefFilter" ng-model="searchPatents.clientRef" ng-change="$ctrl.displayPatents()" placeholder="Client Ref">
+							<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="row m-b-md">
+		<div ng-show="$ctrl.tableData.length === 0" class="col-md-12">
+			<div class="bg-white p-a-sm">
+				<p class="font-body font-weight-medium">There aren't any patents in this phase at the moment.  You can see all the patents in all phases by clicking on the View All  button above.</p>
+			</div>
+		</div>
+		<div ng-show="$ctrl.tableData.length !== 0" class="col-md-12">
+			<div id="scrollable-area">
+				<table id="listPatentsTable" class="t-list table-scroll font-body" fixed-table-headers="scrollable-area">
+					<thead>
+						<tr>
+							<th ng-click="$ctrl.sortType('patentApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
+								<span>App No.</span>
+					            <span ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	            				<span ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							</th>
+							<th ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">
+								<span>Client Ref</span>
+					            <span ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	            				<span ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
+							</th>
+							<th ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse">
+								<span>Client Desc</span>
+					            <span ng-show="$ctrl.selectedSortType == 'shortTitle' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	            				<span ng-show="$ctrl.selectedSortType == 'shortTitle' && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
+							</th>
+							<th class="hidden-xl-up" ng-click="$ctrl.sortType('renewalStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+								<span>Renewal Status</span>
+					            <span ng-show="$ctrl.selectedSortType == 'renewalStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	            				<span ng-show="$ctrl.selectedSortType == 'renewalStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
+							</th>
+							<th colspan="3" class="hidden-lg-down" ng-click="$ctrl.sortType('renewalStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+								<span>Renewal Status</span>
+					            <span ng-show="$ctrl.selectedSortType == 'renewalStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	            				<span ng-show="$ctrl.selectedSortType == 'renewalStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
+							</th>						
+							<th ng-click="$ctrl.sortType('dueDate'); $ctrl.sortReverse = !$ctrl.sortReverse">
+								<span>Due Date</span>
+					            <span ng-show="$ctrl.sortDate && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	            				<span ng-show="$ctrl.sortDate && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
+							</th>					
+							<th></th>					
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: searchPatents as Result" ng-click="$ctrl.rowSelect($event)" ui-sref-active="active">
+							<td class="no-wrap">
+								<a class="txt-black" ui-sref="patents.patent({patentId: item.id})">{{item.patentApplicationNumber}}</a>
+							</td>
+							<td class="no-wrap"><span class="txt-grey" ng-if="item.clientRef == ''">[No client reference provided]</span><span ng-if="item.clientRef !== ''">{{item.clientRef}}</span></td>
+							<td class="no-wrap"><span class="txt-grey" ng-if="item.shortTitle == ''">[No client description provided]</span><span ng-if="item.shortTitle !== ''">{{item.shortTitle}}</td>
+							<td class="hidden-lg-down">
+								<div ng-if="item.renewalStatus == 'Show price'" ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')">
+									<span class="font-weight-bold">$ {{item.currentRenewalCost}}</span><br>
+									<span>{{$ctrl.date | date:'MM/dd/yy'}}</span>
+								</div>
+							</td>
+							<td>
+								<div ng-if="item.renewalStatus !== 'Show price'" class="d-flex justify-content-start align-items-center">
+									<div class="m-r-xs">
+										<img ng-if="item.renewalStatus == 'Payment in progress'" src="p3sweb/assets/imgs/icons/progress_icon.png">
+										<img ng-if="item.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed_icon.png">
+										<img ng-if="item.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon.png">
+										<img ng-if="item.renewalStatus == 'Too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png">
+										<img ng-if="item.renewalStatus == ('No renewal needed' || 'Show price')" src="p3sweb/assets/imgs/icons/renewal_na_icon.png">
+									</div>
+							    	<span class="font-weight-medium font-body d-flex justify-content-end align-items-center"><span ng-if="item.renewalStatus !== 'Too late to renew'">{{item.renewalStatus}}</span><span ng-if="item.renewalStatus == 'Too late to renew'">Renewal window not open</span></span>
+								</div>
+								<div class="hidden-xl-up progress-phase d-flex justify-content-start align-items-center" ng-if="item.renewalStatus == 'Show price'">
+									<div class="m-r-xs">
+										<img src="p3sweb/assets/imgs/icons/complete_icon.png">
+									</div>
+									<span class="font-weight-medium font-body d-flex justify-content-end align-items-center">{{item.renewalStatus}}</span>
+								</div>
+								<div class="hidden-lg-down" class="progress-phase" ng-if="item.renewalStatus == 'Show price'">
+									<uib-progress class="pill-radius font-body font-body--component" ng-class="(item.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (item.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (item.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (item.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (item.costBandColour == 'Black' ? 'bg-phase-white': '')">
+										<uib-bar class="pill-radius d-flex align-items-center justify-content-center progress-15" value="item.progressBar"></uib-bar>
+									</uib-progress>
+								</div>
+							</td>
+							<td class="hidden-lg-down">
+								<div ng-if="item.renewalStatus == 'Show price'" ng-class="(item.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')">
+									<span class="font-weight-bold">$ {{item.renewalCostNextStage}}</span><br>
+									<span>{{item.costBandEndDate | date:'MM/dd/yy'}}</span>
+								</div>
+							</td>
+					        <td>
+					        	{{item.renewalDueDate | date:'MM/dd/yy'}}
+					        </td>
+							<td>
+					        	<div ng-if="item.renewalStatus == 'Show price'" class="d-flex justify-content-center btn-default">
+							 		<ngcart-addtocart id="{{item.id}}" class="cartbtn btn-list" name="patent_{{item.id}}" price="{{item.currentRenewalCost}}" quantity="1" quantity-max="10" data="item">
+							 		</ngcart-addtocart>						 		
+							 	</div>
+					        	<div ng-if="item.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex justify-content-center btn-default">
+							 		<a href="" class="btn btn-list btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction(item.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs hidden-md-down"></a>
+							 	</div>
+					        	<div ng-if="item.renewalStatus == 'Renewal in place'" class="d-flex justify-content-center btn-default">
+							 		<a href="" class="btn btn-list btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white d-flex align-items-center justify-content-center" ui-sref="patents.patent({patentId: item.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs hidden-md-down"></a>
+							 	</div>						 			 	
+					        </td>
+						</tr>
+					 	<tr ng-show="$ctrl.tableData.length === 0">
+					 		<td colspan="8">
+					 			No Results Found
+					 		</td>
+					 	</tr>	
+					 	<tr ng-show="Result.length==0">
+					 		<td colspan="8">
+					 			No Results Found
+					 		</td>
+					 	</tr>							
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="animate-show">
+	<ui-view></ui-view>
+</div>
+	

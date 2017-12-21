@@ -1,0 +1,34 @@
+thePatent.Place : Your ProForma Invoice for Transaction [TRANSACTION_REFERENCE]
+PROFORMA INVOICE<br/>
+ <table class="tblEmailBodyHeader"><tr><td>
+To:</td><td>[FIRSTNAME] [LASTNAME]</td></tr>
+<td></td><td>[COMPANY_NAME]</td></tr>
+</table>
+<p/>
+
+Thank you for creating transaction [TRANSACTION_REFERENCE] for renewing patent[PATENT_PLURALITY_S] :
+<table class="tblpatents3colinvemail">
+[THREECOL_TABLE_OF_PATENTS]<tr><td></td><td>[PATENT_APPLICATION_NUMBER]</td><td>[SHORT_TITLE]</td></tr>
+</table>
+<p/>
+
+As you know, your payment of $[PRICE] must reach our US bank account by 
+<br/>
+[TIMESTAMP_TARGET_FUNDS_ARRIVAL]
+
+<p/>
+Our ProForma Invoice for this is attached.
+
+<p/>
+For your convenience, the payment details are:
+<table class="tblpayment3colinvemail">
+[THREECOL_TABLE_OF_PAYMENT_DETAILS]<tr><td></td><td>[FIELDB]:</td><td>[FIELDC]</td></tr>
+</table>
+
+<p/>
+Please ensure you enter the reference correctly, or we will be unable to credit your funds to this transaction.
+
+<p/>
+Kind regards,
+<br/>
+The Patent Place team

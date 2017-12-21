@@ -1,0 +1,60 @@
+URGENT Renewal reminder from thePatent.Place : [TIME_BEFORE_CHANGE_PHRASE] before patent [PATENT_APPLICATION_NUMBER] cannot be renewed
+{email_reminder_black_5day}
+<br/>
+<table class="tblEmailBodyHeader"><tr><td>
+To:</td><td>[FIRSTNAME] [LASTNAME]</td></tr>
+<td></td><td>[COMPANY_NAME]</td></tr>
+</table>
+<p/>
+
+
+Patent [PATENT_APPLICATION_NUMBER] is at the end of its On Extension period at the EPO and will lapse soon.
+<p/>
+
+This is very late in the renewal cycle to be renewing a patent.
+<p/>
+
+
+You can renew this patent now via <a href="[LOGIN_URL]">[LOGIN_URL]</a> 
+provided you:
+<br/>
+- create a renewal instruction via thepatent.place prior to [TIMESTAMP_OF_NEXT_COLOUR_CHANGE];
+<br/>
+- your wire payment MUST reach our U.S. bank account by the specified time
+<p/>
+
+After [TIMESTAMP_OF_NEXT_COLOUR_CHANGE] you cannot renew the patent, at all, online via thepatent.place
+<br/>
+However, if you contact our partner company prior to the patent lapsing, they may be able to assist. 
+<p/>
+
+{For BoxCleverDigital consideration} PARTNER DETAILS HERE ....
+
+<p/>
+Patent details:
+<table class="tblpatentDetailss3colemail">
+[THREECOL_TABLE_OF_PATENT_DETAILS]<tr><td></td><td>[FIELDB]</td><td>[FIELDC]</td></tr>
+</table>
+<p/>
+
+thepatent.place online renewal price, available until [TIMESTAMP_OF_NEXT_COLOUR_CHANGE] is:
+<br/>
+$[PRICE]
+<p/>
+
+You can renew this patent now via <a href="[LOGIN_URL]">[LOGIN_URL]</a>
+<p/>
+
+
+Hereafter - {For BoxCleverDigital consideration}
+<br/>
+You&#39;ll be aware that this patent is already on extension, and will lapse soon. Don&#39;t leave renewing it too late
+<p/>
+
+
+
+
+<p/>
+Kind regards,
+<br/>
+The Patent Place team
