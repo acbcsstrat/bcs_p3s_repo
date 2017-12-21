@@ -82,6 +82,10 @@ app.component('dashboard', {
 			}				
 		}
 
+		vm.suppressMessages = function(id) {
+			dashboardService.supressMessages(id);
+		}
+
 		vm.$onInit = () => {
 
 			var loginCounter;
