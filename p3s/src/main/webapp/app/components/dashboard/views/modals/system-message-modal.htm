@@ -1,14 +1,36 @@
-<div class="modal-content--multiple">
-	<div class="modal-header--multiple d-flex flex-column align-items-center justify-content-center border-grey-xs--btm">
-		<div class="m-b-sm">
-			<img src="p3sweb/assets/imgs/icons/complete_icon_lg.png" alt="updated icon">	
+
+<div class="content-panel">
+	<span class="modal-cross cursor-pointer" ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+	<div class="modal-content--table">
+		<div class=" d-flex flex-column align-items-center justify-content-center content-panel__head">
+			<div class="m-b-sm">
+				<img src="p3sweb/assets/imgs/icons/alert_icon.png" alt="alert icon">	
+			</div>
+			<p class="font-h3 font-weight-bold m-b-xs">System Message </p>
+			<p class="font-h4 font-weight-medium text-center">We have the following system messages for you.</p>
 		</div>
-		<p class="font-h3 txt-phase-green font-weight-medium">System Message </p>
+		<div class="content-panel__body" ng-repeat="item in $ctrl.systemMessage">
+			<div class="d-flex flex-column align-items-center justify-content-center">
+				<div class="row w-100 m-b-xs">
+					<div class="col-md-12">
+						<p class="font-h4"> {{item.messageText}}</p>
+					</div>
+				</div>
+				<div class="row w-100">
+					<div class="col-md-12 d-flex justify-content-end">
+						<form class="form">
+							<div class="form-group">
+								<label for="seeMessage" class="font-body">Don't display this message again</label>
+								<input type="checkbox" name="seeMessage">
+							</div>
+						</form>
+					</div>
+				</div>				
+				
+			</div>
+		</div>
+		<div class="modal-footer d-flex align-items-center justify-content-center">
+			<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white d-flex align-items-center justify-content-center" ng-click="$ctrl.ok()">Dismiss</button><!-- <img src="p3sweb/assets/imgs/icons/tick_white_icon.png" alt="submit icon" class="m-l-xs"> -->
+		</div>
 	</div>
-	<div ng-repeat="item in $ctrl.systemMessage" class="modal-body--multiple d-flex border-grey-xs--btm flex-column align-items-center justify-content-center">
-		<p class="font-body"><span class="font-weight-bold">{{$index + 1}}.</span> {{item.messageText}}</p>
-	</div>
-	<div class="modal-footer d-flex align-items-center justify-content-center">
-		<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white d-flex align-items-center justify-content-center" ng-click="$ctrl.ok()">Dismiss</button><!-- <img src="p3sweb/assets/imgs/icons/tick_white_icon.png" alt="submit icon" class="m-l-xs"> -->
-	</div>
-</div>
+</div> 

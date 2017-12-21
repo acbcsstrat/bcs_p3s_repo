@@ -71,7 +71,7 @@
 				<div class="widget-panel__body">
 					<div class="row" ng-if="$ctrl.patents">
 						<div class="col-md-12 col-lg-8 col-xl-8 d-flex align-items-center">
-							<canvas id="doughnut" class="chart chart-doughnut" chart-data="$ctrl.doughnutData" chart-labels="$ctrl.doughnutLabels" chart-colors="$ctrl.doughnutColours" chart-options="$ctrl.doughnutOptions" chart-dataset-override="$ctrl.doughnutDatasetOverride" chart-hover="$ctrl.doughnutHover" height="225">
+							<canvas id="doughnut" class="chart chart-doughnut" chart-data="$ctrl.charts.doughnut.data" chart-labels="$ctrl.charts.doughnut.labels" chart-colors="$ctrl.charts.doughnut.colours" chart-options="$ctrl.charts.doughnut.options" height="225">
 							</canvas>
 							<div class="donut-inner">
 								<h4 class="font-h4 font-weight-bold">Total</h4>
@@ -254,21 +254,21 @@
 				<div class="widget-panel__body">	
 					<uib-tabset active="activeTab" type="pills" class="pills">
 					    <uib-tab heading="Green" index="0" class="bg-phase-green pill-radius p-pill-tabs pill-tabs font-body" ng-hide="true">
+					    	<p ng-bind=""></p>
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
+			        				<p class="font-weight-medium text-center txt-white">Green Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.greenRenewals.length}}</p>
+			        			</div>					            	
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
 							        	<table class="t-data slider-table">
-							        		<thead>
-							        			<tr class="m-b-md txt-white font-h4 tr-border " ng-style="{'background': $ctrl.colourPhaseTitle.color}">
-							        				<th class="btn--reg-table font-weight-medium text-center txt-white" colspan="3">Green Renewal {{$index + 1}} of {{$ctrl.greenRenewals.length}}</th>
-							        			</tr>
-							        		</thead>
+
 							        		<tbody class="font-body">
 								            	<tr>
 								            		<td colspan="2" class="td-50 td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-										            		<p><span class="font-weight-medium">Current Stage:</span> {{date | date:'dd/MM/yy'}}</p>
+										            		<p><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd/MM/yy'}}</p>
 															<div class="phase-rectangle bg-phase-green m-r-lg"></div>	
 									            		</div>
 								            		</td>
@@ -303,20 +303,18 @@
 						</uib-tab>
 					    <uib-tab heading="Amber" index="1" class="bg-phase-amber pill-radius p-pill-tabs pill-tabs font-body" ng-hide="true">
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
+			        				<p class="font-weight-medium text-center txt-white">Amber Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.amberRenewals.length}}</p>
+			        			</div>				            	
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
 							            <table class="t-data">
-							        		<thead>
-							        			<tr class="m-b-md txt-white font-h4" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-							        				<th class="btn--reg font-weight-medium text-center txt-white" colspan="3">Amber Renewal {{$index + 1}} of {{$ctrl.amberRenewals.length}}</th>
-							        			</tr>
-							        		</thead>
 							        		<tbody class="font-body">
 								            	<tr>
 								            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-										            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{date | date:'dd-MM-yy'}}</p>
+										            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
 										            		<div class="phase-rectangle bg-phase-amber m-r-lg"></div>
 										            	</div>
 								            		</td>
@@ -350,21 +348,19 @@
 		                    </div>
 	 					</uib-tab>
 					    <uib-tab heading="Red" index="2" class="bg-phase-red pill-radius p-pill-tabs pill-tabs" ng-hide="true">
-				            <div class="slick-container" ng-if="$ctrl.phaseArr.length" >         
-							    <slick data="$ctrl.phaseArr" settings="slickConfig">
+				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
+			        				<p class="font-weight-medium text-center txt-white">Red Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.redRenewals.length}}</p>
+			        			</div>					                     
+							    <slick data="$ctrl.phaseArr" settings="slickConfig">							    	
 							        <div ng-repeat="item in $ctrl.phaseArr">
 							        	<table class="t-data">
-							        		<thead>
-							        			<tr class="m-b-md txt-white font-h4" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-							        				<th class="btn--reg font-weight-medium text-center txt-white" colspan="3">Red Renewal {{$index + 1}} of {{$ctrl.redRenewals.length}}</th>
-							        			</tr>
-							        		</thead>
 							        		<tbody class="font-body">
 								            	<tr>
 								            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{date | date:'dd-MM-yy'}}</p>
+									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
 								            				<div class="phase-rectangle bg-phase-red m-r-lg"></div>
 								            			</div>									            		
 								            		</td>
@@ -399,20 +395,19 @@
 						</uib-tab>
 					    <uib-tab heading="Blue" index="3" class="bg-phase-blue pill-radius p-pill-tabs pill-tabs" ng-hide="true">
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
+			        				<p class="font-weight-medium text-center txt-white">Blue Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.blueRenewals.length}}</p>
+			        			</div>	
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
+
 							        <div ng-repeat="item in $ctrl.phaseArr">
 						        		<table class="t-data">
-							        		<thead>
-							        			<tr class="m-b-md txt-white font-h4" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-							        				<th class="btn--reg font-weight-medium text-center txt-white" colspan="3">Blue Renewal {{$index + 1}} of {{$ctrl.blueRenewals.length}}</th>
-							        			</tr>
-							        		</thead>
 							        		<tbody class="font-body">
 								            	<tr>
 								            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td  class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{date | date:'dd-MM-yy'}}</p>
+									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
 									            			<div class="phase-rectangle bg-phase-blue m-r-lg"></div>
 									            		</div>
 								            		</td>
@@ -447,20 +442,18 @@
 						</uib-tab>
 					    <uib-tab heading="Black" index="4" class="bg-phase-black pill-radius p-pill-tabs pill-tabs" ng-hide="true">
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
+				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
+			        				<p class="font-weight-medium text-center txt-white">Black Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.blackRenewals.length}}</p>
+			        			</div>								            	
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
 							        	<table class="t-data">
-							        		<thead>
-							        			<tr class="m-b-md txt-white font-h4" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-							        				<th class="btn--reg font-weight-medium text-center txt-white" colspan="3">Black Renewal {{$index + 1}} of {{$ctrl.blackRenewals.length}}</th>
-							        			</tr>
-							        		</thead>
 							        		<tbody class="font-body">
 								            	<tr>
 								            		<td colspan="2" class="td-20 td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-										            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage: </span> {{date | date:'dd-MM-yy'}}</p>
+										            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage: </span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
 										            		<div class="phase-rectangle bg-phase-black m-r-lg"></div>
 										            	</div>
 								            		</td>
@@ -654,13 +647,13 @@
 					<h3 class="font-h3 font-weight-bold">Recent Activity</h3>
 					<div class="hidden-xl-up">
 						<ul class="nav btn-default view-pills">
-							<li ng-repeat="item in $ctrl.activityNotifications track by $index" ng-init="activeActivityTabResp = item.index" class="pill-radius pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black m-r-md" ng-click="$ctrl.setActivityActiveTab(item.activity, activeActivityTabResp); activeActivityTabResp = item.index " ng-class="{active : $ctrl.activeMenu == item.activity}"><a class="nav-link">{{item.activity}}</a></li>
+							<li ng-repeat="item in $ctrl.activityNotifications track by $index" ng-init="$ctrl.activeActivityTabResp = item.index" class="pill-radius pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black m-r-md" ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTabResp); $ctrl.activeActivityTabResp = item.index " ng-class="{active : $ctrl.activeMenu == item.activity}"><a class="nav-link">{{item.activity}}</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="widget-panel__body hidden-xl-up">
 					<div class="view-tabs justify-content-between">
-						<uib-tabset type="pills view-pills" active="activeActivityTabResp">
+						<uib-tabset type="pills view-pills" active="$ctrl.activeActivityTabResp">
 							<uib-tab heading="Stage Change" class="pill-radius pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="0" ng-hide="true">
 								<div class="widget-panel--max">
 									<div class="row bg-no-data" ng-if="$ctrl.recentStageArr.length === 0">

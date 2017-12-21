@@ -5,7 +5,7 @@ app.component('patent', {
 		renewal: '<'
 	},
 	templateUrl: 'p3sweb/app/components/patents/views/patent-item.htm',
-	controller: ['patentsRestService', '$state', '$timeout','$scope', 'fxService', '$stateParams', 'patentsService', 'currentTransactionsService', '$uibModal', function(patentsRestService, $state, $timeout, $scope, fxService, $stateParams, patentsService, currentTransactionsService, $uibModal) {
+	controller: ['patentsRestService', '$state', '$timeout','$scope', 'fxService', 'patentsService', 'currentTransactionsService', '$uibModal', function(patentsRestService, $state, $timeout, $scope, fxService, patentsService, currentTransactionsService, $uibModal) {
 
 		var vm = this;
 
@@ -92,6 +92,7 @@ app.component('patent', {
 			var modalInstance = $uibModal.open({
 				templateUrl: 'p3sweb/app/components/patents/views/modals/modal-update-patent-template.htm',
 				appendTo: undefined,
+				scope: $scope,
 				controller: function($uibModalInstance ,$scope) {
 				  	$scope.dismissModal = function () {
 				    	$uibModalInstance.close();
@@ -110,6 +111,7 @@ app.component('patent', {
 			var modalInstance = $uibModal.open({
 				templateUrl: 'p3sweb/app/components/patents/views/modals/modal-remove-patent-template.htm',
 				appendTo: undefined,
+				scope: $scope,
 				controller: function($uibModalInstance ,$scope){
 
 					$scope.dismissModal = function () {
@@ -131,8 +133,8 @@ app.component('patent', {
 				}
 			})
 
-		    modalInstance.result.then(function() {
-		     	console.log('good')
+		    modalInstance.result.then(function(response) {
+		     	console.log(response)
 		    }, function(errResponse) {
 		       console.log(errResponse)
 		    })
@@ -273,9 +275,12 @@ app.component('patent', {
 
 	            	vm.selectedPatent =  changeObj.patent.currentValue;
 
-					var patent = vm.patent;
-
+		            var patent = vm.patent;
+		            var costBand = vm.costAnalysis;
+		            var caFee = costBand.fee;
 		            var status = patent.renewalStatus;
+
+		            vm.renewalHistory = vm.renewal;         
 
 		            if((status == 'Show price') || (status == 'Payment in progress') || (status == 'EPO Instructed')) {
 		            	vm.displayCost = true;
@@ -284,10 +289,6 @@ app.component('patent', {
 		            	vm.displayCost = false;
 		            	vm.hideCost = true;
 		            }
-		            var costBand = vm.costAnalysis;
-		            var caFee = costBand.fee;
-		            vm.renewalHistory = vm.renewal;
-		            console.log(vm.renewalHistory)            
 	            	
 	            	if(caFee !== null) {
 		            	vm.feeBreakDown = {
@@ -334,11 +335,7 @@ app.component('patent', {
 		            	}	            		
 	            	}
 
-
-
-
-
-	            	var caLine = vm.costAnalysis.lineChart;
+					var caLine = vm.costAnalysis.lineChart;
 	            	var lineDataArr = [];
 	            	var lineLabelArr = [];
 
@@ -348,58 +345,6 @@ app.component('patent', {
 						lineDataArr.push(dayData.subTotal_USD)
 					})
 
-					vm.lineData = lineDataArr;
-
-					vm.lineLabels = lineLabelArr;
-	     		  	vm.lineSeries = ['Series A', 'Series B'];
-				  	vm.lineDatasetOverride = [
-				  		{ yAxisID: 'y-axis-1' }, 
-				  		{ yAxisID: 'y-axis-2' },
-				  		];
-				  	vm.lineOptions = {
-				  		tooltips: {
-							titleFontSize: 12,
-							bodyFontSize: 14,
-							bodyFontStyle: 'bold',
-							xPadding: 15,
-							yPadding: 15,
-							enabled: true,
-							position: 'nearest',
-							custom: function(tooltip) {
-								tooltip.displayColors = false;
-							},
-							callbacks: {
-								label: function(x, y) {
-									return '$ ' + x.yLabel
-								},
-								title: function(tooltipItem, data) {
-						          return;
-						        }
-							}
-						},
-				    	scales: {
-				      		yAxes: [
-					        	{
-						          id: 'y-axis-1',
-						          type: 'linear',
-						          display: true,
-						          position: 'left'
-						        }
-					      	]
-					    },
-			     		elements: {
-				            line: {
-				            	borderColor: '#c6c6c6',
-				            	borderWidth: 2,
-				            	width: '10',
-				            	fill: null,
-				                tension: 0, // disables bezier curves
-				                pointStyle: 'cross'
-				            }
-				        }
-
-				  	};
-					
 					const caBar = vm.costAnalysis;
 					const barDataArr = [];
 					const barLabelArr = [];
@@ -409,17 +354,13 @@ app.component('patent', {
 						const dayData = caBar[data];
 						
 						if ((data.includes('StartDate')) && (!data.includes ('UI'))) {
-							// dayData.forEach(function(data){
-							// 	var date 
-							// })
-							barLabelArr.push((function(){
+
 								var d = new Date(dayData);
 								var date = d.getDate();
-								var month = d.getMonth();
+								var month = d.getMonth() + 1;
 								var year = d.getFullYear();
-								var date =  date +'/'+month+'/'+year;
-								return date;
-							}()))
+								var date = month  +'/'+ date +'/'+year;
+								barLabelArr.push(date)
 						}
 
 						if (data.includes('StageCost')) {
@@ -427,52 +368,103 @@ app.component('patent', {
 						}
 					})
 
-					vm.barChartColours = ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
-				  	vm.barLabels = barLabelArr.slice(0, 5).sort(function(a, b){return b-a});
-				  	vm.barData = barDataArr.slice(0, 5).sort(function(a, b){return b-a});
-					vm.barSeries = ['Series A', 'Series B'];
-					vm.barOptions = {
-						tooltips: {
-							titleFontSize: 12,
-							bodyFontSize: 14,
-							bodyFontStyle: 'bold',
-							xPadding: 15,
-							yPadding: 15,
-							enabled: true,
-							position: 'nearest',
-							custom: function(tooltip) {
-								tooltip.displayColors = false;
-							},
-							callbacks: {
-								label: function(x, y) {
-									return '$ ' + x.xLabel
-									
+	            	vm.charts = {
+	            		line: {
+							data: lineDataArr,
+							labels: lineLabelArr,
+			     		  	series: ['Series A', 'Series B'],
+						  	datasetoverride: [
+						  		{ yAxisID: 'y-axis-1' }, 
+						  		{ yAxisID: 'y-axis-2' },
+					  		],
+						  	options: {
+						  		tooltips: {
+									titleFontSize: 12,
+									bodyFontSize: 14,
+									bodyFontStyle: 'bold',
+									xPadding: 15,
+									yPadding: 15,
+									enabled: true,
+									position: 'nearest',
+									custom: function(tooltip) {
+										tooltip.displayColors = false;
+									},
+									callbacks: {
+										label: function(x, y) {
+											return '$ ' + x.yLabel
+										},
+										title: function(tooltipItem, data) {
+								          return;
+								        }
+									}
 								},
-								title: function(tooltipItem, data) {
-						          return;
+						    	scales: {
+						      		yAxes: [
+							        	{
+								          id: 'y-axis-1',
+								          type: 'linear',
+								          display: true,
+								          position: 'left'
+								        }
+							      	]
+							    },
+					     		elements: {
+						            line: {
+						            	borderColor: '#c6c6c6',
+						            	borderWidth: 2,
+						            	width: '10',
+						            	fill: null,
+						                tension: 0, // disables bezier curves
+						                pointStyle: 'cross'
+						            }
 						        }
-							}
-						},
-		                scaleShowGridLines: false,
-			            barShowStroke : false,
-			            barDatasetSpacing : 0,
-			            animation: {
-			            	onComplete: function(c) {
-			            		// console.log(c.chart)
-			            	}
-			            }
-				  	};
 
-	            }
+						  	}
+	            		},
+	            		bar: {
+							colours: ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'],
+						  	labels: barLabelArr.slice(0, 5).sort(function(a, b){return b-a}),
+						  	data: barDataArr.slice(0, 5).sort(function(a, b){return b-a}),
+							series: ['Series A', 'Series B'],
+							options: {
+								tooltips: {
+									titleFontSize: 12,
+									bodyFontSize: 14,
+									bodyFontStyle: 'bold',
+									xPadding: 15,
+									yPadding: 15,
+									enabled: true,
+									position: 'nearest',
+									custom: function(tooltip) {
+										tooltip.displayColors = false;
+									},
+									callbacks: {
+										label: function(x, y) {
+											return '$ ' + x.xLabel;
+										},
+										title: function(tooltipItem, data) {
+								          return;
+								        }
+									}
+								},
+				                scaleShowGridLines: false,
+					            barShowStroke : false,
+					            barDatasetSpacing : 0,
+					            animation: {
+					            	onComplete: function(c) {
+					            		console.log(c.chart)
+					            	}
+					            }
+						  	}
+	            		}
+	            	}
 
-
-
+	            	console.log(vm.charts.line)
             //PROGRESS BAR
             $timeout(function() {
             	vm.progressBar = vm.patent.progressBar
             }, 200);
  			
-
 	        vm.nextStage = function() {
         		var nextStage;
         		switch(vm.patent.costBandColour) {
@@ -507,7 +499,7 @@ app.component('patent', {
 				black: 'Black'
 			}
 
-			vm.colourPhase = 'Green';
+			// vm.colourPhase = 'Green';
 
 			vm.displayNotifications = function(phase) {
 
@@ -622,6 +614,7 @@ app.component('patent', {
 	        }
           	
         }
+    }
 
 
 

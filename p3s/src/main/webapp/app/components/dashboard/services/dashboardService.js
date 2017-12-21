@@ -1,4 +1,4 @@
-app.factory('dashboardService', function($http, $q){
+app.factory('dashboardService', ['$http', '$q', function($http, $q){
 
 	var factory = {};
 
@@ -34,8 +34,9 @@ app.factory('dashboardService', function($http, $q){
             );
 
             return deferred.promise;
+            
         }        
 
 	return factory;
 
-})
+}])

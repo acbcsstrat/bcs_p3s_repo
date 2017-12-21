@@ -44,7 +44,7 @@
 	<div class="row m-b-md">
 		<div ng-show="$ctrl.tableData.length === 0" class="col-md-12">
 			<div class="bg-white p-a-sm">
-				<p class="font-body font-weight-medium">There aren't any patents in this phase at the moment.  You can see all the patents in all phases by clikcing on the View All  button above.</p>
+				<p class="font-body font-weight-medium">There aren't any patents in this phase at the moment.  You can see all the patents in all phases by clicking on the View All  button above.</p>
 			</div>
 		</div>
 		<div ng-show="$ctrl.tableData.length !== 0" class="col-md-12">
@@ -62,10 +62,10 @@
 					            <span ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
 	            				<span ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
 							</th>
-							<th ng-click="$ctrl.sortType('title'); $ctrl.sortReverse = !$ctrl.sortReverse">
-								<span>Client Description</span>
-					            <span ng-show="$ctrl.selectedSortType == 'title' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	            				<span ng-show="$ctrl.selectedSortType == 'title' && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
+							<th ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse">
+								<span>Client Desc</span>
+					            <span ng-show="$ctrl.selectedSortType == 'shortTitle' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	            				<span ng-show="$ctrl.selectedSortType == 'shortTitle' && $ctrl.sortReverse" class="fa fa-caret-up"></span>							
 							</th>
 							<th class="hidden-xl-up" ng-click="$ctrl.sortType('renewalStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
 								<span>Renewal Status</span>

@@ -4,7 +4,7 @@ app.component('dashboard', {
 		transactions: '<' 
 	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: function($stateParams, $state, $scope, Idle, Keepalive, $uibModal, $timeout, $location, $http, $rootScope, fxService, patentsRestService, $mdSidenav, patentsService, currentTransactionsService, dashboardService, localStorageService) {
+	controller: ['$state', '$scope', '$uibModal', '$timeout', '$http', '$rootScope', 'fxService', 'patentsRestService', 'patentsService', 'currentTransactionsService', 'dashboardService', 'localStorageService', function($state, $scope, $uibModal, $timeout, $http, $rootScope, fxService, patentsRestService, patentsService, currentTransactionsService, dashboardService, localStorageService) {
 
 		var vm = this;
 		
@@ -12,14 +12,7 @@ app.component('dashboard', {
 
 	    vm.animate = false;
 
-
-		 //    $state.transitionTo($state.current, $stateParams, {
-			//     reload: true,
-			//     inherit: false,
-			//     notify: true
-			// });	    	
-
-
+	    vm.date = new Date().getTime();
 
 	    $timeout(function() {
 	      vm.animate = true;
@@ -69,7 +62,7 @@ app.component('dashboard', {
 		vm.activeMenu = vm.activityNotifications[0].activity;
 
 		vm.setActivityActiveTab = function(menuItem, index) {
-			$scope.activeActivityTabResp = index;
+			vm.activeActivityTabResp = index;
 			vm.activeMenu = menuItem
 		}
 
@@ -93,27 +86,18 @@ app.component('dashboard', {
 
 			var loginCounter;
 
-		 	$scope.toggleLeft = buildToggler('left');
-    		$scope.toggleRight = buildToggler('right');
+			var counter = localStorageService.get('counter');
 
-		    function buildToggler(componentId) {
-		      	return function() {
-		        	$mdSidenav(componentId).toggle();
-		      	};
-		    }
-
-			$scope.counter = localStorageService.get('counter');
-
-		    if($scope.counter === null) {
+		    if(counter == null) {
 
 		    	localStorageService.set('counter', 1);
 
-		    	$scope.counter = localStorageService.get('counter');
+		    	counter = localStorageService.get('counter');
 
 		    	dashboardService.getMessages()
 			    .then(
 			    	function(response){
-			    		console.log(response)
+
 			    		var systemResponse = [];
 			    		var urgetResponse = [];
 			    		
@@ -159,8 +143,6 @@ app.component('dashboard', {
 							     		return;
 							     	} else {
 
-							     		
-							
 							     		open = false;
 
 							     		response.urgentPatents.forEach(function(data){
@@ -181,8 +163,9 @@ app.component('dashboard', {
 												    	$uibModalInstance.close();
 												  	};
 
-												  	
-
+												  	vm.dismissModal = function() {
+												  		$uibModalInstance.dismiss('cancel');
+												  	}
 												},
 												resolve: {
 													message: function() {
@@ -208,8 +191,6 @@ app.component('dashboard', {
 			    	}
 		    	)
 	    	}
-
-      		$scope.date = new Date()
 	      	
 			var transactions = vm.transactions;
 			var patents = vm.patents;
@@ -264,7 +245,7 @@ app.component('dashboard', {
 
 						var d = new Date().getTime();
 
-						patents.forEach(function(item){
+						patents.forEach(function(item){ 	
 							patentsRestService.fetchCostAnalysis(item.id)
 			                .then(
 			                    function(response){
@@ -395,7 +376,7 @@ app.component('dashboard', {
 			        	
 			                    }, 
 			                    function(errResponse){
-			                        console.log('no')
+			                        console.log(errResponse)
 			                    }
 		                    )
 		            	})
@@ -468,79 +449,99 @@ app.component('dashboard', {
 			//TOTAL RENEWALS PIE CHART
 
 			vm.totalPatents = patents.length;
-
-			patents.forEach(function(item){
-				if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
-					switch(item.costBandColour) {
-						case 'Green':
-							vm.greenRenewals.push(item)
-						break;
-						case 'Amber':
-							vm.amberRenewals.push(item)
-						break;
-						case 'Red':
-							vm.redRenewals.push(item)
-						break;
-						case 'Blue':
-							vm.blueRenewals.push(item)
-						break;
-						case 'Black':
-							vm.blackRenewals.push(item)
-						break;
-					}
-				} else {
-					vm.greyRenewals.push(item)
-				}
-
-				vm.doughnutLabels = ["No action required", "Black", "Blue", "Red", "Yellow", "Green"];
-				vm.doughnutColours = ['#bdbdbd', '#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'];
-			 	$timeout(function () {
-			 		vm.doughnutData = [vm.greyRenewals.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length];
-			 	}, 500)
-				
-				vm.doughnutOptions = {
-					elements: {
-						arc: {
-							borderWidth: 2	
+			if(patents) {
+				patents.forEach(function(item){
+					if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
+						switch(item.costBandColour) {
+							case 'Green':
+								vm.greenRenewals.push(item)
+							break;
+							case 'Amber':
+								vm.amberRenewals.push(item)
+							break;
+							case 'Red':
+								vm.redRenewals.push(item)
+							break;
+							case 'Blue':
+								vm.blueRenewals.push(item)
+							break;
+							case 'Black':
+								vm.blackRenewals.push(item)
+							break;
 						}
-					},
-					responsive: true,
-					cutoutPercentage: 70,
-					animation: {
-						duration: 1500,
-						easing: 'linear'
+					} else {
+						vm.greyRenewals.push(item)
 					}
-			  	};
-
-			  	vm.doughnutHover = function(chartArr, mouseEvent, chart) {
-			  		
-			  		
-			  		
-			  		// if(chartArr.length !== 0) {
-			  		// 	console.log(chartArr[0])
-			  		// }
-
-			  		if(chart !== undefined) {
-			  			ctx = chart._chart.ctx;
-			  			console.log(ctx)
-			  			ctx.canvas.onmouseenter = function(evt) {
-			  				console.log(window);
-			  			}
-			  			ctx.canvasshadowColor = 'red';
-			  			// console.log(ctx)
-			  		}
-
-			  		if(mouseEvent && chart !== undefined) {
-			  			console.log('mouseEvent:', mouseEvent)
-			  		}
+				})				
+			}
 
 
-			  		
-			  	}
+				vm.charts = {
 
-			  	// console.log(Chart.defaults.doughnut.hover)
+					doughnut: {
+						labels: ["No action required", "Black", "Blue", "Red", "Yellow", "Green"],
+						data: [vm.greyRenewals.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length],
+						options: {
+							elements: {
+								arc: {
+									borderWidth: 3	
+								}
+							},
+							responsive: true,
+							cutoutPercentage: 70,
+							animation: {
+								duration: 1500,
+								easing: 'linear'
+							}
 
-			})
+					  	},
+					  	colours: [{
+						      	backgroundColor: '#bdbdbd',
+						      	pointBackgroundColor: '#bdbdbd',
+						      	pointHoverBackgroundColor: '#bdbdbd',
+						     	borderColor: '#bdbdbd',
+					      		pointBorderColor: '#bdbdbd',
+				      			pointHoverBorderColor: '#bdbdbd'
+						    },{
+					      		backgroundColor: '#3c3c3b',
+					      		pointBackgroundColor: '#3c3c3b',
+					      		pointHoverBackgroundColor: '#3c3c3b',
+					      		borderColor: '#3c3c3b',
+					      		pointBorderColor: '#fff',
+					      		pointHoverBorderColor: '#3c3c3b'
+						    },{
+				      			backgroundColor: '#0097ce',
+					      		pointBackgroundColor: '#0097ce',
+					      		pointHoverBackgroundColor: '#0097ce',
+					      		borderColor: '#0097ce',
+					      		pointBorderColor: '#0097ce',
+					      		pointHoverBorderColor: '#0097ce'
+						    },{
+						      	backgroundColor: '#e30613',
+						      	pointBackgroundColor: '#e30613',
+						      	pointHoverBackgroundColor: '#e30613',
+						      	borderColor: '#e30613',
+						      	pointBorderColor: '#e30613',
+						      	pointHoverBorderColor: '#e30613'
+						    },{
+						      	backgroundColor: '#f9b233',
+						      	pointBackgroundColor: '#f9b233',
+						      	pointHoverBackgroundColor: '#f9b233',
+						      	borderColor: '#f9b233',
+						      	pointBorderColor: '#f9b233',
+						      	pointHoverBorderColor: '#f9b233'
+						    },{
+						      	backgroundColor: '#53ab58',
+						      	pointBackgroundColor: '#53ab58',
+						      	pointHoverBackgroundColor: '#53ab58',
+						      	borderColor: '#53ab58',
+						      	pointBorderColor: '#53ab58',
+						      	pointHoverBorderColor: '#53ab58'
+						    }
+						  ]
+					} //donught end
+				} //charts end
+			
 
 			vm.phaseSliderInfo = function(id) {
 
@@ -569,10 +570,9 @@ app.component('dashboard', {
 
 				function loadPhase(i) {
 					vm.phaseArr.length = 0;
-						$timeout(function() {
-							vm.phaseArr = i;
-						}, 100);
-
+					$timeout(function() {
+						vm.phaseArr = i;
+					}, 100);
 				}
 
 				loadPhase(phase)
@@ -593,7 +593,10 @@ app.component('dashboard', {
 		    method: {},
 		    event: {
 		    	afterChange: function (event, slick, currentSlide, nextSlide) {
+
 	        		$scope.currentIndex = currentSlide;
+	        		vm.currIndexForTitle = (currentSlide + 1);
+
 	        		function patentFx(i) {
 
 	        			vm.selectedPatent = vm.phaseArr[i];
@@ -623,7 +626,7 @@ app.component('dashboard', {
 					        			var lwD = tD - 604800000; //subtract a week in milliseconds
 					        			var lastWeekD = new Date(lwD).getDay();
 					        			var lastWeekDt = new Date(lwD).getDate();
-					        			// console.log(lastWeekD, lastWeekDt)
+
 					        			dateArr.forEach(function(item, index){
 					        				//yesterday
 					        				if(item == dateArr[0]) {
@@ -691,4 +694,4 @@ app.component('dashboard', {
 		
 
 	}
-})
+]})

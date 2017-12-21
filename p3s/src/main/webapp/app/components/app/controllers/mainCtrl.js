@@ -32,9 +32,3 @@ app.controller('coreCtrl', ['$uibModal', '$scope', function($uibModal, $scope){
 
 }])
 
-// app.controller('myModalCtrl', function($uibModalInstance){
-
-//  	var vm = this;
-
-
-// })

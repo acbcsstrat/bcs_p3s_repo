@@ -1,7 +1,7 @@
 app.component('patents', {
   	bindings: { patents: '<' },
 	templateUrl: 'p3sweb/app/components/patents/views/list-patents.htm',
-	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', 'NgTableParams', '$state', '$stateParams', 'currentTransactionsService', 'patentsService', '$filter', '$anchorScroll', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, NgTableParams, $state, $stateParams, currentTransactionsService, patentsService, $filter, $anchorScroll) {
+	controller: ['$scope', 'Idle', 'Keepalive', '$uibModal', '$timeout', '$http', '$rootScope', 'patentsRestService', '$state', 'currentTransactionsService', 'patentsService', '$anchorScroll', '$location', function($scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, $state, currentTransactionsService, patentsService, $anchorScroll, $location) {
 
 		var vm = this;
 
@@ -35,8 +35,9 @@ app.component('patents', {
 								.then(
 									function(response){
 										$timeout(function() {
-										  $anchorScroll('currTransAnchor');
-										}, 100);
+											$location.hash('currTransAnchor');
+										  	$anchorScroll();
+										}, 300);
 									},
 									function(errResponse){
 										console.log(errResponse)
@@ -54,11 +55,6 @@ app.component('patents', {
 		}
 
 		vm.$onInit = () => {
-
-			console.log(vm.patents)
-
-
-			vm.date = new Date()
 
 			vm.tableData = vm.patents;
 
@@ -182,49 +178,32 @@ app.component('patents', {
 				patentsRestService.fetchCostAnalysis(item.id)
                 .then(
                     function(response){
-
                         switch(item.costBandColour) {
                             case 'Green':
-
 							var start = new Date(response.greenStartDate);
 							var end = new Date(response.amberStartDate);
-
 							item.progressBar = calcProgress(start, end);						                                  
-
                                 break;
                             case 'Amber':
-
 							var start = new Date(response.amberStartDate);
 							var end = new Date(response.redStartDate);
-
 							item.progressBar = calcProgress(start, end);                          
-
                                 break;
                             case 'Red':
-
 							var start = new Date(response.redStartDate);
 							var end = new Date(response.blueStartDate);
-
 							item.progressBar = calcProgress(start, end);
-
                                 break;
                             case 'Blue':
-
 							var start = response.blueStartDate;
 							var end = response.blackStartDate;
-
 							item.progressBar = calcProgress(start, end);
-
                                 break;
                             case 'Black':
-
 							var start = response.blackStartDate;
 							var end = response.blackEndDate;
-
 							item.progressBar = calcProgress(start, end);
-
                         }
-        
                     }, 
                     function(errResponse){
                         console.log(errResponse)
@@ -262,18 +241,6 @@ app.component('patents', {
 	   				}
 	   				
 	   			}())
-
-	   		} else if(column == 'shortTitle') {
-	   			if (vm.sortReverse == false) {
-   					vm.tableData.sort(function(a, b){
-   						console.log(a)
-   					})
-   				} else {
-   					vm.tableData.sort(function(a, b){
-   						console.log(a)
-   					})
-   				}
-
 	   		} else {
 	   			vm.sortDate = false;
 	   			vm.selectedSortType = column;

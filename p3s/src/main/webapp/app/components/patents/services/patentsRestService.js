@@ -39,7 +39,6 @@ app.factory('patentsRestService', function($http, $q) {
 
         factory.savePatent = function(patent) {
             var deferred= $q.defer();
-            console.log(REST_SERVICE_URI, patent)
             $http.post(REST_SERVICE_URI, patent)
                 .then(function(response){
                     deferred.resolve(response.data)
@@ -56,7 +55,6 @@ app.factory('patentsRestService', function($http, $q) {
             $http.get(domain+'rest-cost-analysis/'+id)
                 .then(
                 function (response) {
-                    // console.log(response.data)
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
