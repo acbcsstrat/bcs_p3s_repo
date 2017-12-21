@@ -650,10 +650,10 @@
 										<td width="30%">
 											<div class="row">
 												<div class="col-xl-6 d-flex align-items-center">
-													<a href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center" download>Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
+													<a href="{{renewal.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
 												</div>
 												<div class="col-xl-6 d-flex align-items-center">
-													<a href="p3sweb/hardcodedpffolder/invoices/dummyInvoiceNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
+													<a href="{{renewal.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
 												</div>	
 											</div>
 										</td>
@@ -1066,7 +1066,7 @@
 								<div class="col-md-12 col-lg-12 text-xs-left">
 								  	<uib-tabset type="pills" active="activeChart">
 								    	<uib-tab heading="Stage Cost Chart" classes="btn btn-primary" index="0" ng-hide="true">
-									    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.charts.bar.data" chart-labels="$ctrl.charts.labels" chart-series="$ctrl.charts.bar.series" chart-options="$ctrl.charts.bar.options" chart-colors="$ctrl.charts.bar.colours" chart-dataset-override="$ctrl.charts.bar.datasetoverride" height="100px"></canvas>
+									    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.charts.bar.data" chart-labels="$ctrl.charts.bar.labels" chart-series="$ctrl.charts.bar.series" chart-options="$ctrl.charts.bar.options" chart-colors="$ctrl.charts.bar.colours" chart-dataset-override="$ctrl.charts.bar.datasetoverride" height="100px"></canvas>
 									    </uib-tab>
 									    <uib-tab heading="FX Chart" classes="btn btn-primary" index="1" ng-hide="true">
 							 				<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.charts.line.data" chart-labels="$ctrl.charts.line.labels" chart-series="$ctrl.charts.line.series" chart-options="$ctrl.charts.line.options" chart-dataset-override="$ctrl.charts.line.datasetoverride" height="100px"></canvas>

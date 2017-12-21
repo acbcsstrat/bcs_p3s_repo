@@ -26,6 +26,7 @@ app.component('currentTransaction', {
 	    vm.$onChanges = function(changeObj){
 
 	    	vm.currTransStatus = vm.transaction.latestTransStatus;	
+	    	console.log(vm.transaction)
 			vm.transStatus = [
 				{status: 'Initiated', active: false, complete: false}, 
 				{status: 'Awaiting Funds', active: false, complete: false}, 
