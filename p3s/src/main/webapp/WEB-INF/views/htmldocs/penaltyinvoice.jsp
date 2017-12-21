@@ -246,6 +246,17 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
       </td>
 </tr>
 
+<tr>
+  <td>&nbsp;</td>
+</tr>
+
+<tr>
+  <!-- Have this Invoice been paid yet ? -->
+      <td>
+  		<div align="right">Invoice Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=data.getInvoiceStatusMessage() %></div>
+      </td>
+</tr>
+
 
 <tr>
   <td>&nbsp;</td>

@@ -4,6 +4,7 @@ package com.bcs.p3s.docs.htmldoc.model;
 import java.math.BigDecimal;
 
 import com.bcs.p3s.engine.PricingEngine;
+import com.bcs.p3s.enump3s.InvoiceStatusEnum;
 import com.bcs.p3s.enump3s.InvoiceTypeEnum;
 import com.bcs.p3s.enump3s.McFailCodeEnum;
 import com.bcs.p3s.model.Business;
@@ -21,7 +22,12 @@ public class PenaltyInvoice extends AbstractInvoice {
 	protected String failReason;
 	protected String originalFailedInvoiceNumber;
 	protected String penaltyPaymentReferenceNumber;
+	protected String invoiceStatusMessage;
 	
+
+	protected final String PAID = "PAID";
+	protected final String UNPAID = "Awaiting Payment";
+
 	
 	public PenaltyInvoice(Invoice invoice) {
 		super(invoice); // provides more than needed
@@ -55,6 +61,15 @@ public class PenaltyInvoice extends AbstractInvoice {
 		// Penalty invoice is unusual in that the BankTransfer reference DOES include the suffix
 		penaltyPaymentReferenceNumber = this.getTransactionReference()
 				+getInvoiceNumberSuffix(InvoiceTypeEnum.PENALTY.toString());
+
+		InvoiceStatusEnum invoiceStatusEnum = new InvoiceStatusEnum(invoice.getInvoiceStatus());
+		if (InvoiceStatusEnum.OPEN.equalsIgnoreCase(invoiceStatusEnum.toString())) {
+			invoiceStatusMessage = UNPAID;
+		}
+		else 			invoiceStatusMessage = PAID;
+
+			
+
 	}
 
 	
@@ -70,6 +85,9 @@ public class PenaltyInvoice extends AbstractInvoice {
 	}
 	public String getPenaltyPaymentReferenceNumber() {
 		return penaltyPaymentReferenceNumber;
+	}
+	public String getInvoiceStatusMessage() {
+		return invoiceStatusMessage;
 	}
 
 }
