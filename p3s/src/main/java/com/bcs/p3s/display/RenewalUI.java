@@ -126,9 +126,9 @@ public class RenewalUI extends Renewal {
 		//pui.setNotifications(null);
 		pui.setNotificationUIs(null);
 		
-		// acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine
-		System.out.println("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
-		(new Universal()).log().debug("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
+		// NOte: - at 170726, devt is not able to set following fields - so use DummyDataEngine - acTidy
+		//System.out.println("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
+		//(new Universal()).log().debug("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
 /*		 * 	CurrentRenewalCost
 		 * 	CostBandEndDate
 		 * 	RenewalCostNextStage

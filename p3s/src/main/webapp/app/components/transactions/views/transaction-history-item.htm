@@ -3,6 +3,7 @@
 		<div class="view-tabs">
 			<ul class="nav view-pills">
 				<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs active" ng-click="activeSelectedTab = 0">Transaction Details</li>
+					&nbsp;&nbsp;&nbsp;<a target="_blank" href="{{$ctrl.transactionHistoryItem.invoiceUrl}}" >Show Invoice </a>
 			</ul>
 		</div>
 	</div>
@@ -151,6 +152,7 @@
 											</div>
 										</div>
 										<p class="font-body">{{$ctrl.transactionHistoryItem.failureReason}}</p>							
+										<a target="_blank" href="{{transaction.certificateUrl}}" >Show Certificate if not null</a>
 									</div>
 								</div>
 							</div>
