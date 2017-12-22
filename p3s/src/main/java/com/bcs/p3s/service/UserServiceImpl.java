@@ -131,9 +131,13 @@ public class UserServiceImpl extends Universal implements UserService {
 		
 	}
 
+	/**
+	 * Intended where emailAddress is provided by an unreliable source - e.g. User.
+	 * Hence does not log stackdumps if no-match found
+	 */
 	@Override
 	public P3SUser getUserByEmailAddress(String emailAddress) {
-
+		String err = "UserServiceImpl getUserByEmailAddress("+emailAddress+")";
 		String msg =PREFIX + "getUserByEmailAddress("+ emailAddress +")";
 		log().debug(msg +" invoked to retrieve the user details");
 		
@@ -145,7 +149,8 @@ public class UserServiceImpl extends Universal implements UserService {
 				user = tq_p3suser.getSingleResult();
 			}
 			catch(Exception e){
-				logErrorAndContinue("Error occured", e);
+				//logErrorAndContinue("User lookup failed: "+err, e); - don't want user-created stackdumps in our logs, so - acTidy
+				log().debug("User lookup failed: "+err);
 				return null;
 			}
 		}
@@ -251,17 +256,15 @@ public class UserServiceImpl extends Universal implements UserService {
 	}
 
 	@Override
-	public void sendResetPasswordEmail(String emailAddress) {
-		// TODO Auto-generated method stub
-		
-		//email template to be implemented
-		/*P3sEmailFactory factory = new P3sEmailFactory();
-		P3sEmail email = factory.create(EmailTemplates.email_register_combined, emailAddress, null, null, null, null, null, null);
+	public void sendResetPasswordEmail(String emailAddress, String verifyCode) {
+
+		P3sEmailFactory factory = new P3sEmailFactory();
+		P3sEmail email = factory.create(EmailTemplates.email_password_reset, emailAddress, verifyCode, null, null, null, null, null);
 
 		EmailSender emailer = new EmailSender(email);
 		emailer.addRecipient(emailAddress);
-		emailer.sendEmail();*/
-		
+		emailer.sendEmail();
+
 	}
 
 	@Override
