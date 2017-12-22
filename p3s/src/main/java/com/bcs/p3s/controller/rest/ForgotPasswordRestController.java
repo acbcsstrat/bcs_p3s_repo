@@ -23,6 +23,9 @@ import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PreLoginSessionBean;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -32,7 +35,7 @@ import com.bcs.p3s.util.lang.Universal;
  */
 
 @RestController
-public class ForgotPasswordRestController extends Universal{
+public class ForgotPasswordRestController extends Universal {
 	
 	@Autowired
     UserService userService;
@@ -55,7 +58,7 @@ public class ForgotPasswordRestController extends Universal{
 		P3SUser user = new P3SUser();
 		try{
 			
-			if (emailAddress == null || emailAddress.length() == 0){
+			if (isEmpty(emailAddress)){
 				log().error("Email address argument missing");
 				return new ResponseEntity<ResetPasswordUI>(pwdUI, HttpStatus.BAD_REQUEST);
 			}
@@ -63,7 +66,7 @@ public class ForgotPasswordRestController extends Universal{
 			user = userService.getUserByEmailAddress(emailAddress);
 			
 			if(user == null){
-				log().debug("User "+ emailAddress +" not found");
+				log().debug("Forgot Passowrd: User "+ emailAddress +" not found  - from "+msg);
 				return new ResponseEntity<ResetPasswordUI>(pwdUI, HttpStatus.BAD_REQUEST);
 			}
 			
@@ -74,18 +77,27 @@ public class ForgotPasswordRestController extends Universal{
 			
 			log().debug("User[" +emailAddress +"] found with status as ENABLED. Proceed sending email");
 			
-			userService.sendResetPasswordEmail(emailAddress);
+			// Assemble url to build into the email
+//			String context = null;
+//			try {
+//				P3SPropertyReader reader = new P3SPropertyReader();
+//				context = reader.getGenericProperty(P3SPropertyNames.P3S_WEB_CONTEXT); 
+//			} catch (P3SPropertyException e) {
+//				System.out.println("ForgotPasswordRestController confirmUser : property read failed");
+//				e.printStackTrace();
+//			}
+			GenericProcessingEngine genEngine = new GenericProcessingEngine();
+			hashLink = genEngine.generateUrlVerificationCode(user);
+			//fullLink = context+"/prelogin/rest-forgot-password/"+hashLink+"?emailAddress="+emailAddress;
+
+			userService.sendResetPasswordEmail(emailAddress, hashLink);
 			
 			/**
 			 * Temporary code to be removed once email in place
 			 */
 			
-			GenericProcessingEngine genEngine = new GenericProcessingEngine();
-			hashLink = genEngine.generateUrlVerificationCode(user);
-			
-			fullLink = "/p3sweb/prelogin/rest-forgot-password/"+hashLink+"?emailAddress="+emailAddress;
 			pwdUI.setSampleLinkInEmail(fullLink);
-			log().debug("Sending full link "+ fullLink);
+			log().debug("Sending full link (for forgot password) : "+ fullLink);
 			return new ResponseEntity<ResetPasswordUI>(pwdUI, HttpStatus.OK);
 			
 			/**
@@ -125,9 +137,9 @@ public class ForgotPasswordRestController extends Universal{
 		
 		P3SUser user = null;
 		
-		if (emailAddress == null || emailAddress.length() == 0){
-			logInternalError().fatal("Email address argument missing");
-			throw new IllegalArgumentException("The emailAddress argument is required");
+		if (isEmpty(emailAddress)){
+			logM().warn("Email address argument missing");
+			throw new IllegalArgumentException("The emailAddress argument (from the forgot password email) is required");
 		}
 		
 		user = userService.getUserByEmailAddress(emailAddress);
