@@ -80,6 +80,7 @@ public class ForgotPasswordPopulator extends AbstractPopulator implements Inject
 		}
 		data.setFirstname(userRecord.getFirstName());
 
+		
 		// 3of3: Assemble any values requiring work here
 		String url2verifyEmail = generateUrlToVerifyEmail(userEmailAddress, verifyCode, siteTomcatUrl);
 		data.setUrlToVerifyEmail(url2verifyEmail);
@@ -116,20 +117,12 @@ public class ForgotPasswordPopulator extends AbstractPopulator implements Inject
 	protected String injectIntoSubjectLine(List<String> wholeTemplate) {
 		String subjectLinePREinject = wholeTemplate.get(0);
 		// Only injectable is FIRSTNAME
-//		String target = "["+Injectables.FIRSTNAME+"]";
-//		String newval = data.getFirstname();
-//		
-//		String newSubject = subjectLinePREinject.replace(target,newval);
-//
 		currentLine = subjectLinePREinject;
 		boolean ignore = injectFIRSTNAME();		
-		
-		
 		
 		zz("ForgotPasswordPopulator prepareEmailContent : PREinject Subject WAS "+subjectLinePREinject);
 		zz("ForgotPasswordPopulator prepareEmailContent : injectIntoSubject has created "+currentLine);
 		
-
 		return currentLine;
 	}
 	

@@ -159,6 +159,7 @@ public class PatentRestController extends Universal {
 			Patent patent = data.extractPatentFromAddPatentForm(obby); 
 			//calculate the extended data again
 			
+			log().info("A patent with application number[" + patent.getPatentApplicationNumber() +"] having a status as " + patent.getEpoPatentStatus() + " being added");
 		   	//patent.persist();
 			newPatent = patent.persist();
 			

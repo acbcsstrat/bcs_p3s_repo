@@ -1,29 +1,20 @@
 package com.bcs.p3s.engine;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import javax.persistence.TypedQuery;
 
-import org.apache.commons.lang3.concurrent.CallableBackgroundInitializer;
-
 import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.FeeUI;
-import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
-import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.CalendarColour;
 import com.bcs.p3s.model.DiscountPercent;
@@ -93,7 +84,7 @@ public class CostAnalysisDataEngine extends Universal{
 	public CostAnalysisData getAllPhasesInfo(RenewalDates allDates){
 		
 		String msg = "getAllPhasesInfo(allDates)";
-		log().debug(msg + " invoked");
+		log().debug(msg + " invoked for retrieving all colour dates for Renewal Due Date "+ allDates.getCurrentRenewalDueDate());
 		
 		CostAnalysisData caData = new CostAnalysisData();
 		//Commenting below as we are getting data from table calendar_colour
@@ -149,7 +140,7 @@ public class CostAnalysisDataEngine extends Universal{
 		
 		Calendar todaysDate = Calendar.getInstance();
 		String msg = "getCurrentPhase()";
-		log().debug( msg + " invoked for getting current phase");
+		log().debug( msg + " invoked for getting current Renewal colour");
     	//Date todaysDate = new DateUtil().getTodaysDate();
 		
 		if(todaysDate.getTime().equals(caData.getGreenStartDate()) || (todaysDate.getTime().after(caData.getGreenStartDate())
@@ -209,7 +200,7 @@ public class CostAnalysisDataEngine extends Universal{
 			caData.setCurrentcostBand(RenewalColourEnum.GREY);
 		}
 		
-		log().debug( msg + " returning Current cost band is " + caData.getCurrentcostBand());
+		log().debug( msg + " returning Current Renewal Colour " + caData.getCurrentcostBand());
 		return caData.getCurrentcostBand();
 	}
 	
@@ -224,6 +215,7 @@ public class CostAnalysisDataEngine extends Universal{
 		CostAnalysisData caMoreData = caData;
 		
 		String msg = PREFIX + "getAllCosts()";
+		log().debug(msg +" invoked for calculating individual Renewal Colour fees");
 		BigDecimal greenCost = new BigDecimal(0);
 		BigDecimal amberCost = new BigDecimal(0);
 		BigDecimal redCost = new BigDecimal(0);
@@ -265,6 +257,9 @@ public class CostAnalysisDataEngine extends Universal{
 	 */
 	
 	public Fee getCurrentPhaseCost(String currentPhase, P3SFeeSole p3sFee , EpoFee epoFee, BigDecimal fxRate){
+		
+		String msg = PREFIX + "getCurrentPhaseCost()";
+		log().debug(msg +" invoked for calculating current Renewal colour fee breakdown");
 		
 		Fee fee = new Fee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
 					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
@@ -338,11 +333,15 @@ public class CostAnalysisDataEngine extends Universal{
 			fee.setSubTotal_USD(subTotalUSD.setScale(2, BigDecimal.ROUND_CEILING));
 		}
 		
+		log().debug(msg +" returning fee object");
 		
 		return fee;
 	}
 
 	public P3SFeeSole findDiscountedFees(DiscountPercent discount){
+		
+		String msg = PREFIX + "findDiscountedFees()";
+		log().debug(msg +" invoked for calculating discounted fees for business[" + discount.getBusiness().getId() +"]");
 		
 		P3SFeeSole p3sFee = new P3SFeeSole();
 		P3SFeeSole qSoleFee = P3SFeeSole.findP3SFeeSole((long) 1); //assuming P3SSole having single entry every time
@@ -367,11 +366,15 @@ public class CostAnalysisDataEngine extends Universal{
 		p3sFee.setUrgentFee_Percent(urgentFee);
 		p3sFee.setLatePayPenalty_USD(latePayPenalty);
 		
+		log().debug(msg +" returning discounted fee breakdown");
 		return p3sFee;
 	}
 	
 	
 	public CostAnalysisData getNextPhasesInfo(RenewalDates allDates){
+		
+		String msg ="getNextPhasesInfo(allDates)";
+		log().debug(msg +" invoked for getting next year due date info");
 		
 		CostAnalysisData caData = new CostAnalysisData();
 		/*Date greenStart = allDates.getNextWindowOpenDate();
@@ -525,7 +528,6 @@ public class CostAnalysisDataEngine extends Universal{
 		CombinedFee combinedFee = new CombinedFee();
 		P3SFeeSole p3sFee = new P3SFeeSole();
 		EpoFee epoFee = new EpoFee();
-		CostAnalysisDataEngine costEngines = new CostAnalysisDataEngine();
 		
 		boolean isDiscountedRate = false; //a boolean value to check whether the business has got any discount rates
 		//boolean renewalWindowOpened = false;  // a boolean value to determine whether we are still in doldrums
@@ -542,7 +544,7 @@ public class CostAnalysisDataEngine extends Universal{
 			log().debug("Current patent [id = " + patent.getId() + "] is ELIGIBLE for DISCOUNTED FEES");
 			isDiscountedRate = true;
 			DiscountPercent discountRate = query.getSingleResult();
-			p3sFee = costEngines.findDiscountedFees(discountRate);
+			p3sFee = findDiscountedFees(discountRate);
 		}
 		else{
 			log().debug("Current patent [id = " + patent.getId() + "] is NOT ELIGIBLE for DISCOUNTED FEES");
