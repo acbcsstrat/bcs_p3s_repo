@@ -116,6 +116,11 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 		currentLine = newString;
 		return (currentLine.indexOf(SQUAREOPEN)!=-1);
 	}
+	protected boolean injectWEBSITE_URL() {
+		String newString = currentLine.replace(assembleTag(Injectables.WEBSITE_URL), data.getWebsiteUrl());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
 	protected boolean injectTIME_BEFORE_CHANGE_PHRASE() {
 		String newString = currentLine.replace(assembleTag(Injectables.TIME_BEFORE_CHANGE_PHRASE), data.getTimeBeforeChangePhrase());
 		currentLine = newString;

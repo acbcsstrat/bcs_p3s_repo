@@ -28,7 +28,7 @@ public interface UserService {
 	
 	void sendRegistrationEmail(String emailAddress);
 	
-	void sendResetPasswordEmail(String emailAddress);
+	void sendResetPasswordEmail(String emailAddress, String verifyCode);
 	
 	String updatePassword(P3SUser user);
 	

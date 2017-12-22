@@ -2,6 +2,7 @@ package com.bcs.p3s.docs.email;
 
 import com.bcs.p3s.docs.email.Populators.AbstractPopulator;
 import com.bcs.p3s.docs.email.Populators.CertificatePopulator;
+import com.bcs.p3s.docs.email.Populators.ForgotPasswordPopulator;
 import com.bcs.p3s.docs.email.Populators.RegisterPopulator;
 import com.bcs.p3s.docs.email.Populators.ReminderBasicDetailsPopulator;
 import com.bcs.p3s.docs.email.Populators.ReminderColourOpenPopulator;
@@ -31,9 +32,15 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 			boolean noBuild = true;
 			AbstractPopulator pop = null;
 			
-			// Email(s) supporting customer Registrations with P3S
+			// Email supporting customer Registrations with P3S
 			if (EmailTemplates.email_register_combined.equals(template)) {
 				pop = new RegisterPopulator(template, param1);
+				noBuild = false;
+			}
+
+			// Email supporting customer password reset
+			if (EmailTemplates.email_password_reset.equals(template)) {
+				pop = new ForgotPasswordPopulator(template, param1, param2);
 				noBuild = false;
 			}
 

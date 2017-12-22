@@ -6,8 +6,9 @@ package com.bcs.p3s.docs.email.template;
  */
 public interface EmailTemplates {
 	
-	// Email(s) supporting customer Registrations with P3S
+	// Email(s) supporting customer Registration with P3S & password reset
 	String email_register_combined	= "email_register_combined";
+	String email_password_reset	= "email_password_reset";
 
 	// 'Notification' Emails : Reminding custoers that a patent can be renewed
 	String email_reminder_standard	= "email_reminder_standard"; 

@@ -25,7 +25,7 @@ Should you want to register a support request, contact : [SUPPORT_EMAIL_ADDRESS]
 
 Should your colleagues also wish to register with this same [COMPANY_NAME] account, 
 <br/>
-they should register, indicating ‘firm already registered’ (or click <a href="[LOGIN_URL]">here</a>), 
+they should register, indicating 'firm already registered' (or click <a href="[LOGIN_URL]">here</a>), 
 <br/>
 and enter the following identifying credentials for your company:
 <p/>

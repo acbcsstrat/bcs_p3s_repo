@@ -20,6 +20,7 @@ public interface Injectables {
 	
 	String SUPPORT_EMAIL_ADDRESS = "SUPPORT_EMAIL_ADDRESS";
 	String LOGIN_URL = "LOGIN_URL";
+	String WEBSITE_URL = "WEBSITE_URL";
 	String URL_TO_VERIFY_EMAIL = "URL_TO_VERIFY_EMAIL";
 	String URL_TO_FAQ = "URL_TO_FAQ";
 	

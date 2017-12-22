@@ -15,6 +15,7 @@ public class P3sEmailData {
 
 	String supportEmailAddress;
 	String loginUrl;
+	String websiteUrl;
 	String urlToVerifyEmail;
 	String urlToFaq;
 	
@@ -65,6 +66,12 @@ public class P3sEmailData {
 	}
 	public void setLoginUrl(String loginUrl) {
 		this.loginUrl = loginUrl;
+	}
+	public String getWebsiteUrl() {
+		return websiteUrl;
+	}
+	public void setWebsiteUrl(String websiteUrl) {
+		this.websiteUrl = websiteUrl;
 	}
 	public String getUrlToVerifyEmail() {
 		return urlToVerifyEmail;
