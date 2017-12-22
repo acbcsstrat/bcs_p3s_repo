@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bcs.p3s.display.ResetPasswordUI;
 import com.bcs.p3s.engine.GenericProcessingEngine;
 import com.bcs.p3s.enump3s.UserStatusEnum;
 import com.bcs.p3s.model.P3SUser;
@@ -42,7 +41,6 @@ public class ForgotPasswordRestController extends Universal {
 		
 		String msg = "ForgotPasswordRestController : /prelogin/rest-forgot-password/  confirmUser(emailAddress) ";
 		log().debug(msg + "invoked with parameters ::" + emailAddress);
-		ResetPasswordUI pwdUI = new ResetPasswordUI();
 		
 		String hashLink = "";
 		String fullLink = "";

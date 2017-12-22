@@ -31,7 +31,7 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 		this.templateName = templateName;
 	}
 	
-	// why abstract - they all the same :  acTidy : public abstract P3sEmail generateEmail(); // Read template, instantiate p3sEmail, do inject
+	// why abstract? - Because they all the same :  acTidy : public abstract P3sEmail generateEmail(); // Read template, instantiate p3sEmail, do inject
 	public P3sEmail generateEmail() {
 		P3sEmail email = new P3sEmail(this.templateName, this.templatetype
 				, this.subject, this.htmlBody, this.attachmentPath, this.attachmentFilename);
@@ -217,24 +217,6 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 	}
 	
 
-	
-	
-//	public void addRecipient(String another) {
-//	internalAddRecipient(another);
-//	setRecip = true;
-//}
-///** replace recipient with PanicDevs **/
-//public void setRecipientsToDevs() {
-//	internalAddRecipient("andychapman1977@gmail.com");
-//	internalAddRecipient("andy.chapman@boxcleversoftware.com");
-//	setRecip = true;
-//}
-
-	
-	
-	
-	
-	
 	
 	// Regular getters & setters
 	
