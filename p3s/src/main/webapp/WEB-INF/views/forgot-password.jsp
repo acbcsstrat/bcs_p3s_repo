@@ -55,10 +55,6 @@
 	   							<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
 	   								<h3 class="font-h3 font-weight-medium m-b-sm">Successful!</h3>
 	   								<p class="font-body text-center">Please check your inbox and complete the process to reset your password.</p>
-	   								<p class="font-body text-center">
-	   									{{{{{TEMP :: As no email being send}}}}}<br/>
-	   									<a id="clickme" href="">Click here</a> to reset password
-	   								</p>
 	   							</div>
 	   						</div>   							
    						</div>
@@ -135,7 +131,6 @@
                 	console.log(response);
                   	$('#initialForgotPass').fadeOut(500); 
                 	$('#forgotPassSuccess').delay(520).fadeIn(500);   
-                	$("a#clickme").attr('href', response.sampleLinkInEmail);
                 },
                 error:function(errResponse) {
                 	console.log(errResponse.status);

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.bcs.p3s.controller.rest;
 
 import javax.servlet.http.HttpSession;
@@ -9,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,13 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bcs.p3s.display.ResetPasswordUI;
 import com.bcs.p3s.engine.GenericProcessingEngine;
 import com.bcs.p3s.enump3s.UserStatusEnum;
-import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PreLoginSessionBean;
-import com.bcs.p3s.util.config.P3SPropertyException;
-import com.bcs.p3s.util.config.P3SPropertyNames;
-import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -46,7 +38,7 @@ public class ForgotPasswordRestController extends Universal {
 	//----------------------API 1.12 Forgot Password – step 1 – Enter email address ----------------
 	
 	@RequestMapping(value="/prelogin/rest-forgot-password/" , method = RequestMethod.POST)
-	public ResponseEntity<ResetPasswordUI> confirmUser(@RequestParam String emailAddress){
+	public ResponseEntity<String> confirmUser(@RequestParam String emailAddress){
 		
 		String msg = "ForgotPasswordRestController : /prelogin/rest-forgot-password/  confirmUser(emailAddress) ";
 		log().debug(msg + "invoked with parameters ::" + emailAddress);
@@ -60,60 +52,38 @@ public class ForgotPasswordRestController extends Universal {
 			
 			if (isEmpty(emailAddress)){
 				log().error("Email address argument missing");
-				return new ResponseEntity<ResetPasswordUI>(pwdUI, HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
 			}
 			
 			user = userService.getUserByEmailAddress(emailAddress);
 			
 			if(user == null){
 				log().debug("Forgot Passowrd: User "+ emailAddress +" not found  - from "+msg);
-				return new ResponseEntity<ResetPasswordUI>(pwdUI, HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
 			}
 			
 			if(UserStatusEnum.DISABLED.equalsIgnoreCase(user.getStatus())){
 				log().debug("User "+ emailAddress +" has status DISABLED. Registration process not yet completed");
-				return new ResponseEntity<ResetPasswordUI>(pwdUI, HttpStatus.FORBIDDEN);  //Please verify your email address before proceeding with Forgot Password
+				return new ResponseEntity<String>("error", HttpStatus.FORBIDDEN);  //Please verify your email address before proceeding with Forgot Password
 			}
 			
 			log().debug("User[" +emailAddress +"] found with status as ENABLED. Proceed sending email");
 			
-			// Assemble url to build into the email
-//			String context = null;
-//			try {
-//				P3SPropertyReader reader = new P3SPropertyReader();
-//				context = reader.getGenericProperty(P3SPropertyNames.P3S_WEB_CONTEXT); 
-//			} catch (P3SPropertyException e) {
-//				System.out.println("ForgotPasswordRestController confirmUser : property read failed");
-//				e.printStackTrace();
-//			}
+			// Cread code used to verify the eventual request
 			GenericProcessingEngine genEngine = new GenericProcessingEngine();
 			hashLink = genEngine.generateUrlVerificationCode(user);
 			//fullLink = context+"/prelogin/rest-forgot-password/"+hashLink+"?emailAddress="+emailAddress;
 
 			userService.sendResetPasswordEmail(emailAddress, hashLink);
 			
-			/**
-			 * Temporary code to be removed once email in place
-			 */
-			
-			pwdUI.setSampleLinkInEmail(fullLink);
-			log().debug("Sending full link (for forgot password) : "+ fullLink);
-			return new ResponseEntity<ResetPasswordUI>(pwdUI, HttpStatus.OK);
-			
-			/**
-			 * Temporary code to be removed once email in place ends
-			 */
-			//return new ResponseEntity<String>("success", HttpStatus.OK); //uncomment this line later
-			
 		}
 		catch(Exception e){
 			
 			logErrorAndContinue("Exception occured in "+msg, e);
-			return new ResponseEntity<ResetPasswordUI>(pwdUI, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Error", HttpStatus.BAD_REQUEST);
 		}
 		
-		
-		
+		return new ResponseEntity<String>("success", HttpStatus.OK); 
 	}
 	
 	
