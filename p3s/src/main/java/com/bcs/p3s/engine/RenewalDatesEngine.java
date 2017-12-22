@@ -60,9 +60,8 @@ public class RenewalDatesEngine extends Universal{
 		        monthEndFilingDate.set(filing_year, filing_month, filing_day , 23,59,59);
 		        Calendar nextRenewalDate = Calendar.getInstance();
 		        nextRenewalDate.set(yearNow, filing_month, filing_day , 23,59,59);  
-		        System.out.println("Anniversary Date is "+ nextRenewalDate.getTime());
 		        Calendar actualCurrentRenewalDate = new DateUtil().getLastDayOfMonth(nextRenewalDate.getTime());
-		        System.out.println("Calculated renewal due for this year"+ actualCurrentRenewalDate.getTime());
+		        log().debug("Calculated renewal due for this year"+ actualCurrentRenewalDate.getTime());
 		        
 		        /**
 		         * STEP 1.3 :-Get the boundary dates for the above filing due date - 3 months prior and 6 months after
@@ -97,8 +96,7 @@ public class RenewalDatesEngine extends Universal{
 	        	}
 	        	renewalStart.setTime(colourDates.getGreenStart());
 	        	renewalEnd.setTime(colourDates.getBlackAllEnd());
-		        System.out.println("Calculated Window for this year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
-		        
+		        log().debug("Calculated Window for this year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
 		        /*Calendar tempRenYearStart = Calendar.getInstance();
 		        tempRenYearStart.setTime(actualCurrentRenewalDate.getTime());
 		        tempRenYearStart.add(Calendar.MONTH, -6);    //due date - 6 months or renewalStart -6
@@ -123,6 +121,7 @@ public class RenewalDatesEngine extends Universal{
 		         */
 		        if(renewalYear < 3){
 		        	
+		        	log().debug("Current renewal year < 3.");
 		        	Calendar cal = Calendar.getInstance();
 		        	cal.setTime(patent.getFilingDate());
 		        	yearNow = cal.get(Calendar.YEAR);
@@ -161,14 +160,12 @@ public class RenewalDatesEngine extends Universal{
 		        	renewalStart.setTime(colourDates.getGreenStart());
 		        	renewalEnd.setTime(colourDates.getBlackAllEnd());
 			        
-			        System.out.println("Calculated Window for this year[YEAR 3] are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
-			        
 		        	log().debug("Patent year 3 starts on " + actualYear3RenDue.getTime() + " and window opens on " + renewalStart.getTime());
 		        	
 		        	
 		        	if(todays.after(renewalStart.getTime()) || todays.equals(renewalStart.getTime())){
+		        		log().debug("Renewal window opened for PATENT YEAR 3");
 		        		renewalYear = 3;
-		        		log().debug("Renewal WINDOW OPENED for patent year 3 " );
 		        		allDates.setRenewalWindowOpened(true);
 		        		allDates.setCurrentRenewalDueDate(actualYear3RenDue.getTime());
 			        	allDates.setCurrentWindowOpenDate(renewalStart.getTime());
@@ -258,6 +255,7 @@ public class RenewalDatesEngine extends Universal{
 		     /************************************************************************************************************************************************/
 		        
 		        if(todays.before(renewalStart.getTime())){
+		        	log().debug("Patent is in last years renewal window.");
 		        	renewalYear = renewalYear-1;
 		        	
 		        	//SET THE CURRENT TO DATES TO NEXT WINDOW DATES
@@ -270,9 +268,10 @@ public class RenewalDatesEngine extends Universal{
 		            
 		            Calendar prevRenewalDate = Calendar.getInstance();
 		    	    prevRenewalDate.set(yearNow-1, filing_month, filing_day , 23,59,59);  
-		    	    System.out.println("Renewal date 1 year before " + prevRenewalDate.getTime());
+		    	    
 		    	    Calendar actualPrevRenewalDate = new DateUtil().getLastDayOfMonth(prevRenewalDate.getTime());
-		    	    System.out.println("This year renewal due "+ actualPrevRenewalDate.getTime());
+		    	    
+		    	    log().debug("Renewal Due for last year :: " + actualPrevRenewalDate.getTime());
 		    	    
 		    	    /*renewalStart = Calendar.getInstance();
 		    	    renewalStart.setTime(actualPrevRenewalDate.getTime());
@@ -302,7 +301,6 @@ public class RenewalDatesEngine extends Universal{
 		    	    /** P3S WIndow close date is 2 days before the actual closing date **/  
 		        	//below not needed anymore. Logic changed 27/11/2017
 		            //renewalEnd.add(Calendar.DATE, -2);
-		    	    System.out.println("Doldrums for previous year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
 		    	    
 		    	    allDates.setCurrentRenewalDueDate(actualPrevRenewalDate.getTime());
 		    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
