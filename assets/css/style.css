@@ -112,7 +112,7 @@ input[type=checkbox], input[type=radio] {
 
 /*LAYOUT==================*/
 
-.container { width: 92.5%!important; margin: 0 auto 0 95px; }
+.app-container { width: 92.5%!important; margin: 0 auto 0 9.5rem; }
 
 .container-content-40 { width: 30%; max-width: 40rem;  }
 
@@ -1150,9 +1150,11 @@ display: none !important;
     width: 19%;
   }
 
-  .lg-container {
-    width: 90%!important;
-    margin: 3.5rem auto 3.5rem 9rem;
+  .app-container {
+    padding: 0 1%;
+    width: calc(100% - 75px)!important;
+    left: 75px;
+    position: absolute;
   }
 
   .t-data .td-lg-20,
@@ -1252,7 +1254,12 @@ display: none !important;
     width: 18.5%;
   }
 
-  .md-container { width: 92%!important; margin: 3.5rem auto 3.5rem 6rem; }
+  .app-container {
+    padding: 0 1%;
+    width: calc(100% - 75px)!important;
+    left: 75px;
+    position: absolute;
+  }
 
   .t-data .td-md-20,
   .t-list .td-md-20 { width: 20%; }
