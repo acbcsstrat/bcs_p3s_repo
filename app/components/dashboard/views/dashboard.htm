@@ -344,8 +344,8 @@
 							        		</tbody>
 							        	</table>
 							        </div>
-							    </slick>      	
-			            	</div>		
+							    </slick>
+			            	</div>
 				            <div ng-show="$ctrl.amberRenewals.length == 0" class="row h-100 bg-no-data">
 				            	<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
 		                    		<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
@@ -356,22 +356,22 @@
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
 				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
 			        				<p class="font-weight-medium text-center txt-white">Red Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.redRenewals.length}}</p>
-			        			</div>					                     
-							    <slick data="$ctrl.phaseArr" settings="slickConfig">							    	
+			        			</div>
+							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
 							        	<table class="t-data">
 							        		<tbody class="font-body">
 								            	<tr>
-								            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
+								            		<td colspan="2" class="td-50 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
 									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
 								            				<div class="phase-rectangle bg-phase-red m-r-lg"></div>
-								            			</div>									            		
+								            			</div>
 								            		</td>
 								            	</tr>
 								            	<tr>
-								            		<td colspan="2" class="td-20 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
+								            		<td colspan="2" class="td-50 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
 								            		<td class="td-50 no-border-er">
 								            			<div class="d-flex justify-content-between">
 								            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'dd-MM-yy'}}</p>
@@ -380,12 +380,16 @@
 								            		</td>
 								            	</tr>
 								            	<tr>
-								            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">Due Date: </span>{{item.renewalDueDateUI}}</td>
-								            		<td class="td-50 td-border-nt">
+								            		<td colspan="2" class="td-50 td-border td-border"><span class="font-weight-medium">Due Date: </span>{{item.renewalDueDateUI}}</td>
+								            		<td ng-if="item.renewalStatus !== 'Way too late to renew'" class="td-50 td-border-nt">
 								            			<div class="progress-phase">
 										            		<uib-progress class="bg-phase-blue pill-radius"><uib-bar class="bg-phase-red pill-radius"  value="item.progressBar"></uib-bar></uib-progress>
-										            	</div>									            			
+										            	</div>
+
 								            		</td>
+								            		<td ng-if="item.renewalStatus == 'Way too late to renew'" class="td-50 td-border-nt">
+								            			<p class="font-h4 font-weight-medium d-flex"><i class="fa fa-phone fa-1x txt-phase-red m-r-xs"></i>Call us to Renew (+44)1789-000-000</p>
+								            		</td>								            		
 								            	</tr>
 							        		</tbody>
 							        	</table>
@@ -404,12 +408,11 @@
 			        				<p class="font-weight-medium text-center txt-white">Blue Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.blueRenewals.length}}</p>
 			        			</div>	
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
-
 							        <div ng-repeat="item in $ctrl.phaseArr">
 						        		<table class="t-data">
 							        		<tbody class="font-body">
 								            	<tr>
-								            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
+								            		<td colspan="2" class="td-50 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td  class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
 									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
@@ -418,7 +421,7 @@
 								            		</td>
 								            	</tr>
 								            	<tr>
-								            		<td colspan="2" class="td-20 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
+								            		<td colspan="2" class="td-50 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
 								            		<td class="td-50 no-border-er">
 								            			<div class="d-flex justify-content-between">
 								            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'dd-MM-yy'}}</p>
@@ -427,7 +430,7 @@
 								            		</td>
 								            	</tr>
 								            	<tr>
-								            		<td colspan="2" class="td-20 td-border td-border"><span class="font-weight-medium">Due Date: </span>{{item.renewalDueDateUI}}</td>
+								            		<td colspan="2" class="td-50 td-border td-border"><span class="font-weight-medium">Due Date: </span>{{item.renewalDueDateUI}}</td>
 								            		<td class="td-50 td-border-nt">
 								            			<div class="progress-phase">
 										            		<uib-progress class="bg-phase-black pill-radius"><uib-bar class="bg-phase-blue pill-radius"  value="item.progressBar"></uib-bar></uib-progress>
@@ -474,11 +477,14 @@
 								            	</tr>
 								            	<tr>
 								            		<td colspan="2" class="td-20 td-border td-border">Due Date: {{item.renewalDueDateUI}}</td>
-								            		<td class="td-50 td-border-nt">
+								            		<td ng-if="item.renewalStatus !== 'Way too late to renew'" class="td-50 td-border-nt">
 								            			<div class="progress-phase">
 										            		<uib-progress class="pill-radius"><uib-bar class="bg-phase-black pill-radius"  value="item.progressBar"></uib-bar></uib-progress>
 										            	</div>
 								            		</td>
+								            		<td ng-if="item.renewalStatus == 'Way too late to renew'" class="td-50 td-border-nt">
+								            			<p class="font-h4 font-weight-medium d-flex"><i class="fa fa-phone fa-1x txt-phase-red m-r-xs"></i>Call us to Renew (+44)1789-000-000</p>
+								            		</td>												            		
 								            	</tr>
 							        		</tbody>
 							        	</table>
