@@ -82,8 +82,27 @@ app.component('dashboard', {
 			}				
 		}
 
-		vm.suppressMessages = function(id) {
-			dashboardService.supressMessages(id);
+		//suppresing system messages
+
+		var messageArr = [];
+
+		vm.checkedMessages = function(id, checked) {
+
+			if(checked) {
+				messageArr.push(id)
+				vm.message = true;
+			} else {
+				messageArr.splice(-1, 1)
+			}
+
+			if(messageArr.length == 0) {
+				vm.message = false;				
+			}
+
+		}
+
+		vm.supresssMessages = function() {
+			dashboardService.supressMessages(messageArr)
 		}
 
 		vm.$onInit = () => {
@@ -91,7 +110,7 @@ app.component('dashboard', {
 			var loginCounter;
 
 			var counter = localStorageService.get('counter');
-
+			console.log(counter)
 		    if(counter == null) {
 
 		    	localStorageService.set('counter', 1);
@@ -104,7 +123,6 @@ app.component('dashboard', {
 
 			    		var systemResponse = [];
 			    		var urgetResponse = [];
-			    		
 			    		var date = new Date().getTime();
 
 			    		if(response.systemMessages.length > 0) {

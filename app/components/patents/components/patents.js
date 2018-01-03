@@ -13,6 +13,8 @@ app.component('patents', {
 	      vm.animate = true;
 	    }, 300);    		
 
+	    vm.date = new Date().getTime();
+
 		vm.displayPatents = function() {
 			$state.go('patents')
 		}
@@ -45,7 +47,6 @@ app.component('patents', {
 								)
 							}
 						})
-
 					})
 				},
 				function(errResponse) {
@@ -57,7 +58,7 @@ app.component('patents', {
 		vm.$onInit = () => {
 
 			vm.tableData = vm.patents;
-
+			console.log(vm.tableData)
 			var patents = vm.patents;
 			var allPatents = [];
 			var greenPatents = [];

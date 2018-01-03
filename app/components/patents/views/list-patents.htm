@@ -90,7 +90,7 @@
 							<td class="no-wrap">
 								<a class="txt-black" ui-sref="patents.patent({patentId: item.id})">{{item.patentApplicationNumber}}</a>
 							</td>
-							<td class="no-wrap"><span class="txt-grey" ng-if="item.clientRef == ''">[No client reference provided]</span><span ng-if="item.clientRef !== ''">{{item.clientRef}}</span></td>
+							<td class="no-wrap" ng-class="(item.clientRef == '' : 'ellipsis-remove') ? ''">{{item.clientRef}}</span><span class="txt-grey" ng-if="item.clientRef == ''">[No client reference provided]</span><span ng-if="item.clientRef !== ''">{{item.clientRef}}</span></td>
 							<td class="no-wrap"><span class="txt-grey" ng-if="item.shortTitle == ''">[No client description provided]</span><span ng-if="item.shortTitle !== ''">{{item.shortTitle}}</td>
 							<td class="hidden-lg-down">
 								<div ng-if="item.renewalStatus == 'Show price'" ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')">

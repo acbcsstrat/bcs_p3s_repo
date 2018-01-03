@@ -8,6 +8,7 @@ html, body {
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
   overflow-x: hidden;
+  background: #f1f2f2;
 }
 
 html { font-size: 62.5%; }
@@ -112,7 +113,12 @@ input[type=checkbox], input[type=radio] {
 
 /*LAYOUT==================*/
 
-.app-container { width: 92.5%!important; margin: 0 auto 0 9.5rem; }
+.app-container {     
+  padding: 0 0;
+  width: calc(100% - 125px)!important;
+  left: 100px;
+  position: absolute;
+}
 
 .container-content-40 { width: 30%; max-width: 40rem;  }
 
@@ -680,6 +686,8 @@ li.disabled { cursor: not-allowed; opacity: .65;}
   transition: background .2s ease-in-out;
 }
 
+.t-list .ellipsis-remove:hover { text-overflow: inherit; overflow: visible; }
+
 .btn-default .btn a { color: #fff; }
 
 .phase-pills .pill-tabs, 
@@ -1151,9 +1159,9 @@ display: none !important;
   }
 
   .app-container {
-    padding: 0 1%;
-    width: calc(100% - 75px)!important;
-    left: 75px;
+    padding: 0 0;
+    width: calc(100% - 105px)!important;
+    left: 90px;
     position: absolute;
   }
 
@@ -1255,8 +1263,8 @@ display: none !important;
   }
 
   .app-container {
-    padding: 0 1%;
-    width: calc(100% - 75px)!important;
+    padding: 0 0;
+    width: calc(100% - 90px)!important;
     left: 75px;
     position: absolute;
   }
