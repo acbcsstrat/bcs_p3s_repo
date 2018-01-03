@@ -84,6 +84,7 @@ app.component('dashboard', {
 
 		//suppresing system messages
 
+		var messageObj = {};
 		var messageArr = [];
 
 		vm.checkedMessages = function(id, checked) {
@@ -101,8 +102,10 @@ app.component('dashboard', {
 
 		}
 
+		messageObj.messageArr = messageArr;
+
 		vm.supresssMessages = function() {
-			dashboardService.supressMessages(messageArr)
+			dashboardService.supressMessages(messageObj)
 		}
 
 		vm.$onInit = () => {
