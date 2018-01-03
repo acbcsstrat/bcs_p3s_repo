@@ -84,7 +84,7 @@ app.component('dashboard', {
 
 		//suppresing system messages
 
-		var messageObj = {};
+		var messageArr = [];
 
 		vm.checkedMessages = function(id, checked) {
 
