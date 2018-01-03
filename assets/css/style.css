@@ -686,7 +686,9 @@ li.disabled { cursor: not-allowed; opacity: .65;}
   transition: background .2s ease-in-out;
 }
 
+.t-list td:not(.ellipsis-remove) { z-index: 0; }
 .t-list .ellipsis-remove:hover { text-overflow: inherit; overflow: visible; }
+.t-list .ellipsis-remove:hover span { background: white; z-index: 999; padding: .2rem; }
 
 .btn-default .btn a { color: #fff; }
 
