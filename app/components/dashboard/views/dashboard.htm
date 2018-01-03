@@ -203,9 +203,13 @@
 										<img ng-if="$ctrl.selectedPatent.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed_icon.png">
 										<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon.png">
 										<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png">
-										<img ng-if="$ctrl.selectedPatent.renewalStatus == 'No renewal needed' || $ctrl.selectedPatent.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/complete_icon.png">
+										<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Way too late to renew'">
+											<i class="fa fa-phone fa-2x txt-phase-red"></i>
+										</div>
+										<img ng-if="$ctrl.selectedPatent.renewalStatus == 'No renewal needed' || $ctrl.selectedPatent.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/complete_icon.png">									
 									</div>
-									<p class="font-body font-weight-bold">{{$ctrl.selectedPatent.renewalStatus}}</p>
+									<p ng-if="$ctrl.selectedPatent.renewalStatus !== 'Way too late to renew'" class="font-body font-weight-bold">{{$ctrl.selectedPatent.renewalStatus}}</p>
+									<p ng-if="$ctrl.selectedPatent.renewalStatus == 'Way too late to renew'" class="font-h4 font-weight-medium">Call us to Renew (+44)1789-000-000</p>
 								</div>
 							</div>
 						</div>
@@ -215,6 +219,9 @@
 							 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
 						 			</ngcart-addtocart>										
 								</div>
+								<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Way too late to renew'" class=" btn-default">
+							 		<!--blank-->					
+								</div>	
 					        	<div ng-if="$ctrl.selectedPatent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex btn-default">
 							 		<a class="btn btn-block btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.selectedPatent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 							 	</div>
@@ -254,7 +261,6 @@
 				<div class="widget-panel__body">	
 					<uib-tabset active="activeTab" type="pills" class="pills">
 					    <uib-tab heading="Green" index="0" class="bg-phase-green pill-radius p-pill-tabs pill-tabs font-body" ng-hide="true">
-					    	<p ng-bind=""></p>
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
 				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
 			        				<p class="font-weight-medium text-center txt-white">Green Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.greenRenewals.length}}</p>
@@ -262,7 +268,6 @@
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
 							        	<table class="t-data slider-table">
-
 							        		<tbody class="font-body">
 								            	<tr>
 								            		<td colspan="2" class="td-50 td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
@@ -589,7 +594,7 @@
 						</div>
 						<div class="row m-b-md">
 							<div class="col-xl-8 text-left">
-								<p class="font-h4 font-weight-bold">Four week variation:</p> 
+								<p class="font-h4 font-weight-bold">Four week variation:</p> <!--lg-->
 							</div>
 							<div class="col-xl-4 text-right">
 								<p class="font-h4 font-weight-bold txt-phase-green">$ {{$ctrl.lastMonthsPriceUSD - $ctrl.yesterdaysPriceUSD}}</p>
@@ -603,14 +608,21 @@
 										<img ng-if="$ctrl.selectedPatent.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed_icon.png">
 										<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon.png">
 										<img ng-if="$ctrl.selectedPatent.renewalStatus == 'Too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png">
+										<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Way too late to renew'">
+											<i class="fa fa-phone fa-2x txt-phase-red"></i>
+										</div>
 										<img ng-if="$ctrl.selectedPatent.renewalStatus == 'No renewal needed' || $ctrl.selectedPatent.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/complete_icon.png">									
 									</div>
-									<p class="font-body font-weight-bold">{{$ctrl.selectedPatent.renewalStatus}}</p>
+									<p ng-if="$ctrl.selectedPatent.renewalStatus !== 'Way too late to renew'" class="font-body font-weight-bold">{{$ctrl.selectedPatent.renewalStatus}}</p>
+									<p ng-if="$ctrl.selectedPatent.renewalStatus == 'Way too late to renew'" class="font-h4 font-weight-medium">Call us to Renew (+44)1789-000-000</p>
 								</div>
 								<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Show price'" class=" btn-default">
 							 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
 						 			</ngcart-addtocart>										
 								</div>
+								<div ng-if="$ctrl.selectedPatent.renewalStatus == 'Way too late to renew'" class=" btn-default">
+							 		<!--blank-->					
+								</div>								
 					        	<div ng-if="$ctrl.selectedPatent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex btn-default">
 							 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center" ng-click="$ctrl.fetchItemTransaction($ctrl.selectedPatent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 							 	</div>

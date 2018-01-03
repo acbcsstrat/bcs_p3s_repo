@@ -125,7 +125,7 @@ app.component('dashboard', {
 			    	function(response){
 
 			    		var systemResponse = [];
-			    		var urgetResponse = [];
+			    		var urgentResponse = [];
 			    		var date = new Date().getTime();
 
 			    		if(response.systemMessages.length > 0) {
@@ -171,7 +171,7 @@ app.component('dashboard', {
 							     		open = false;
 
 							     		response.urgentPatents.forEach(function(data){
-					    					urgetResponse.push(data)
+					    					urgentResponse.push(data)
 						    			})
 							     		
 							     		$timeout(function() {
@@ -182,7 +182,7 @@ app.component('dashboard', {
 												controllerAs: vm,
 												controller: function($uibModalInstance, message) {
 
-													vm.urgetMessage = message;
+													vm.urgentMessage = message;
 
 											 	  	vm.ok = function () {
 												    	$uibModalInstance.close();
@@ -194,7 +194,7 @@ app.component('dashboard', {
 												},
 												resolve: {
 													message: function() {
-														return urgetResponse;
+														return urgentResponse;
 													}
 												}
 											});
