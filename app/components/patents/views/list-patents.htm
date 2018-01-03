@@ -140,14 +140,12 @@
 							 	</div>
 					        	<div ng-if="item.renewalStatus == 'Renewal in place'" class="d-flex justify-content-center btn-default">
 							 		<a href="" class="btn btn-list btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white d-flex align-items-center justify-content-center" ui-sref="patents.patent({patentId: item.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs hidden-md-down"></a>
-							 	</div>						 			 	
+							 	</div>
+					        	<div ng-if="item.renewalStatus == 'Way too late to renew'" class="d-flex justify-content-center align-items-center btn-default">
+							 		<p><i class="fa fa-phone fa-1x m-r-xs txt-phase-red font-weight-medium"></i>Call Now</p>
+							 	</div>							 					 			 	
 					        </td>
 						</tr>
-					 	<tr ng-show="$ctrl.tableData.length === 0">
-					 		<td colspan="8">
-					 			No Results Found
-					 		</td>
-					 	</tr>	
 					 	<tr ng-show="Result.length==0">
 					 		<td colspan="8">
 					 			No Results Found

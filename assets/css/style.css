@@ -1083,7 +1083,7 @@ display: none !important;
   #listPatentsTable tr td:nth-child(1), 
   #listPatentsTable tr td:nth-child(2),
   #listPatentsTable tr td:nth-child(3) {
-    width: 15%;
+    width: 13%;
   } 
 
   #listPatentsTable tr td:nth-child(4),
@@ -1092,7 +1092,7 @@ display: none !important;
   }
 
   #listPatentsTable tr td:nth-child(5) {
-    width: 15%;
+    width: 21%;
   }
 
   #listPatentsTable tr td:nth-child(7) {
@@ -1102,6 +1102,12 @@ display: none !important;
   #listPatentsTable tr td:nth-child(8) {
     width: 20%;
   }
+
+  .btn--lg, .uib-btn--lg a { padding: 0.5rem 1.5rem }
+
+  .phase-pills .pill-tabs { min-width: 7.5rem; }
+
+  .t-list td { padding: 1rem 1.5rem; }
 
 }
 
