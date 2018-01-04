@@ -59,8 +59,8 @@
 				    </div>
 			    </div>
 		    	<div class="row">
-		    		<div class="col-xl-9 col-cxl-12 border-grey-xs--right p-r-none">
-		    			<div class="content-panel__body">
+		    		<div class="col-xl-9 col-cxl-12 p-r-none">
+		    			<div class="content-panel__body border-grey-xs--right">
 			    			<form class="form">
 			    				<div class="row">
 				    				<div class="col-xl-6 col-cxl-6">
@@ -225,10 +225,10 @@
 						</div>
 					</div>
 
-					<div class="col-xl-3 p-l-none" ng-if="$ctrl.displayCost">
+					<div class="col-xl-3 hidden-cxl p-l-none" ng-if="$ctrl.displayCost">
 						<div class="content-panel__body">
 							<div class="m-b-md">
-								<h4 class="font-weight-medium m-b-xs">FX Rate Impact</h4>
+								<h4 class="font-weight-medium m-b-xs">FX Rate Impactttt</h4>
 							</div>
 							<div class="border-grey-xs--btm m-b-md">
 								<div class="row p-b-md m-b-md">
@@ -296,12 +296,12 @@
 								</div>
 							</div>	
 						</div>
-					</div>	
+					</div>	<!-- DISPLAY COST XL -->
 				
-					<div class="col-xl-3 p-l-none" ng-if="$ctrl.hideCost">
+					<div class="col-xl-3 hidden-cxl p-l-none" ng-if="$ctrl.hideCost">
 						<div class="content-panel__body">
 							<div class="m-b-md">
-								<h4 class="font-weight-medium m-b-xs">FX Rate Impactttt</h4>
+								<h4 class="font-weight-medium m-b-xs">FX Rate Impact</h4>
 							</div>
 							<div class="border-grey-xs--btm m-b-md">
 								<div class="row p-b-md m-b-md">
@@ -357,10 +357,8 @@
 							<div class="row">
 								<div class="col-xl-12 d-flex align-items-center flex-column">
 									<div ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-										<div class="row">
-									 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
-				 							</ngcart-addtocart>		
-										</div>
+								 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+				 						</ngcart-addtocart>		
 									</div>
 						        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="w-100 btn-default"">
 								 		<a class="btn btn-block pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
@@ -371,8 +369,136 @@
 								</div>
 							</div>	
 						</div>	
-				    </div><!-- col-xl-3-->					    
+				    </div><!-- col-xl-3-->
 			    </div>
+			    <div class="row hidden-lg-down hidden-cxl-up">
+			    	<div class="col-cxl-12" ng-if="$ctrl.displayCost">
+						<div class="content-panel__body border-grey-xs--top">
+							<div class="row">
+								<div class="col-cxl-12">
+									<h4 class="font-weight-medium m-b-sm">FX Rate Impact</h4>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-cxl-2 d-flex flex-column justify-content-center align-items-center">
+									<p class="font-h4 font-weight-medium m-b-xs">USD</p>
+									<p class="font-h3">$ {{$ctrl.patent.feeUI.subTotalUSD}}</p>
+								</div>							
+								<div class="col-cxl-1 d-flex justify-content-center align-items-center">
+									<img src="p3sweb/assets/imgs/icons/arrows_icons_sm.png">
+								</div>
+								<div class="col-cxl-2 d-flex flex-column justify-content-center align-items-center">
+									<p class="font-h4 font-weight-medium m-b-xs">EUR</p>
+									<p class="font-h3">€ {{$ctrl.patent.feeUI.subTotalEUR}}</p>
+								</div>
+								<div class="col-cxl-7">
+									<div class="row">
+										<div class="col-cxl-3">
+											<p class="font-body font-weight-medium">Yesterday's price:</p>
+										</div>
+										<div class="col-cxl-3">
+											<p class="font-body text-center">$ {{$ctrl.yesterdaysPrice}}</p>
+										</div>																								
+										<div class="col-cxl-3">
+											<p class="font-body font-weight-medium">Price last week:</p>			
+										</div>
+										<div class="col-cxl-3">
+											<p class="font-body text-center">$ {{$ctrl.lastWeeksPrice}}</p>
+										</div>												
+										<div class="col-cxl-3">
+											<p class="font-body font-weight-medium">Price last month:</p>
+										</div>
+										<div class="col-cxl-3">
+											<p class="font-body text-center">$ {{$ctrl.lastMonthsPrice}}</p>
+										</div>												
+										<div class="col-cxl-3">
+											<p class="font-body font-weight-bold">4 week variation:</p>	
+										</div>
+										<div class="col-cxl-3">
+											<p class="font-body text-center">$ {{$ctrl.lastMonthsPrice - $ctrl.yesterdaysPrice}}</p>
+										</div>												
+									</div>
+								</div>	
+							</div> <!-- row end -->
+							<div class="row m-t-sm">
+								<div class="col-cxl-12 d-flex align-items-center justify-content-end">
+									<div ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="btn-default">
+								 		<ngcart-addtocart id="{{$ctrl.selectedPatent.id}}" class="cartbtn font-weight-bold btn-block" name="patent_{{$ctrl.selectedPatent.id}}" price="{{$ctrl.selectedPatent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+			 							</ngcart-addtocart>		
+									</div>
+						        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn-default"">
+								 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+								 	</div>
+						        	<div ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
+								 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" ui-sref="patents.patent({patentId: $ctrl.patent.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="transaction icon" class="m-l-xs"></a>
+								 	</div>											
+								</div>
+							</div>	
+						</div>	
+				    </div>
+			    </div>	<!-- CXL DISPLAY COST END-->	    
+			    <div class="row hidden-lg-down hidden-cxl-up">
+			    	<div class="col-cxl-12" ng-if="$ctrl.hideCost">
+						<div class="content-panel__body border-grey-xs--top">
+							<div class="row">
+								<div class="col-cxl-12">
+									<h4 class="font-weight-medium m-b-sm">FX Rate Impact</h4>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-cxl-2 d-flex flex-column justify-content-center align-items-center">
+									<p class="font-h4 font-weight-medium m-b-xs">USD</p>
+									<p class="font-h3">$ 0.00</p>
+								</div>							
+								<div class="col-cxl-1 d-flex justify-content-center align-items-center">
+									<img src="p3sweb/assets/imgs/icons/arrows_icons_sm.png">
+								</div>
+								<div class="col-cxl-2 d-flex flex-column justify-content-center align-items-center">
+									<p class="font-h4 font-weight-medium m-b-xs">EUR</p>
+									<p class="font-h3">€ 0.00</p>
+								</div>
+								<div class="col-cxl-7">
+									<div class="row">
+										<div class="col-cxl-3">
+											<p class="font-body font-weight-medium">Yesterday's price:</p>
+										</div>
+										<div class="col-cxl-3">
+											<p class="font-body text-center">$ 0.00</p>
+										</div>																								
+										<div class="col-cxl-3">
+											<p class="font-body font-weight-medium">Price last week:</p>			
+										</div>
+										<div class="col-cxl-3">
+											<p class="font-body text-center">$ 0.00</p>
+										</div>												
+										<div class="col-cxl-3">
+											<p class="font-body font-weight-medium">Price last month:</p>
+										</div>
+										<div class="col-cxl-3">
+											<p class="font-body text-center">$ 0.00</p>
+										</div>												
+										<div class="col-cxl-3">
+											<p class="font-body font-weight-bold">4 week variation:</p>	
+										</div>
+										<div class="col-cxl-3">
+											<p class="font-body text-center">$ 0.00</p>
+										</div>												
+									</div>
+								</div>	
+							</div> <!-- row end -->
+							<div class="row m-t-sm">
+								<div class="col-cxl-12 d-flex align-items-center justify-content-end">
+						        	<div ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn-default"">
+								 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+								 	</div>
+						        	<div ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
+								 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" ui-sref="patents.patent({patentId: $ctrl.patent.id})" ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="transaction icon" class="m-l-xs"></a>
+								 	</div>											
+								</div>
+							</div>	
+						</div>	
+				    </div>
+			    </div> <!-- CXL HIDECOST END-->
 		    </uib-tab>
 		    <uib-tab heading="Cost Analysis" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md" index="1" ng-hide="true">
 		    	<div class="content-panel__body" ng-if="$ctrl.displayCost">
@@ -388,7 +514,6 @@
 									</div>	
 		    					</div>
 		    				</div>
-
 		    				<div class="row">
 								<div class="col-xl-12 text-xs-left">
 								  	<uib-tabset type="pills" active="activeChart">
@@ -402,7 +527,6 @@
 				    			</div>
 		    				</div>
 	    				</div>
-
 						<div class="col-xl-4 d-flex flex-column justify-content-between">
 							<div class="row d-flex justify-content-center align-items-center">
 								<div class="col-xl-6">
