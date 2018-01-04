@@ -1088,6 +1088,8 @@ display: none !important;
  
   .hidden-cxl { display: none; }
 
+  .cxl-m-b-sm { margin-bottom: 1.5rem; }
+
   #listPatentsTable tr td:nth-child(1), 
   #listPatentsTable tr td:nth-child(2),
   #listPatentsTable tr td:nth-child(3) {
@@ -1117,7 +1119,7 @@ display: none !important;
 
   .t-list td { padding: 1rem 1.5rem; }
 
-  .col-cxl-1, .col-cxl-2, .col-cxl-3, .col-cxl-4, .col-cxl-5, .col-cxl-6, .col-cxl-6, .col-cxl-12 {
+  .col-cxl-1, .col-cxl-2, .col-cxl-3, .col-cxl-4, .col-cxl-5, .col-cxl-6, .col-cxl-7, .col-cxl-8, .col-cxl-12 {
     padding-left: 15px;
     padding-right: 15px;
   }
@@ -1148,18 +1150,19 @@ display: none !important;
 
   .col-cxl-4 {
     -webkit-box-flex:0;
-    -webkit-flex:0 0 41.666667%;
-    -ms-flex:0 0 41.666667%;
-    flex:0 0 41.666667%;
-    max-width:41.666667%
-  }      
-
-  .col-cxl-5 {
-    -webkit-box-flex:0;
     -webkit-flex:0 0 33.333333%;
     -ms-flex:0 0 33.333333%;
     flex:0 0 33.333333%;
     max-width:33.333333%
+
+  }      
+
+  .col-cxl-5 {
+    -webkit-box-flex:0;
+    -webkit-flex:0 0 41.666667%;
+    -ms-flex:0 0 41.666667%;
+    flex:0 0 41.666667%;
+    max-width:41.666667%
   }        
 
   .col-cxl-6 {
@@ -1177,6 +1180,14 @@ display: none !important;
     flex:0 0 58.333333%;
     max-width:58.333333%
   }  
+
+  .col-cxl-8 {
+    -webkit-box-flex:0;
+    -webkit-flex:0 0 66.666667%;
+    -ms-flex:0 0 66.666667%;
+    flex:0 0 66.666667%;
+    max-width:66.666667%    
+  }
 
   .col-cxl-12 {
     -webkit-box-flex: 0;

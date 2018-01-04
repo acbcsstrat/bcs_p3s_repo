@@ -6,6 +6,8 @@ app.component('basket', {
 
 		$rootScope.page = 'Basket';
 
+        
+
 	}
 ]})
 

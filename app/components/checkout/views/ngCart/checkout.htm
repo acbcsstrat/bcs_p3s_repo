@@ -121,7 +121,6 @@
                         <p class="font-weight-medium font-h4 m-r-sm">Total:</p> 
                         <p class="font-weight-medium font-h4">{{ totalCost | currency }}</p>                       
                     </div>
-
                 </div>                
             </div>            
         </div>
@@ -135,17 +134,32 @@
             <div class="content-panel__head">
                 <form class="form" name="billingForm" novalidate>
                     <div class="row m-b-md">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <div class="m-b-sm">
                                 <p class="font-h4 font-weight-medium">Your Information</p>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="firstName">First Name</label>
-                                <div class="col-md-4">
+                            <div class="hidden-lg-down hidden-cxl-up">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="firstName">First Name</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="firstName" ng-model="billingDetails.firstName" readonly>
+                                    </div>
+                                </div>
+                                 <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="lastName">Last Name</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="lastName" ng-model="billingDetails.lastName" readonly>
+                                    </div>                             
+                                </div>                                     
+                            </div>
+                          
+                            <div class="form-group row hidden-cxl">
+                                <label class="col-form-label col-2 text-left font-body font-weight-medium" for="firstName">First Name</label>
+                                <div class="col-4">
                                     <input class="form-control font-body pill-radius" type="text" name="firstName" ng-model="billingDetails.firstName" readonly>
                                 </div>
-                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="lastName">Last Name</label>
-                                <div class="col-md-4">
+                                <label class="col-form-label col-2 text-left font-body font-weight-medium" for="lastName">Last Name</label>
+                                <div class="col-4">
                                     <input class="form-control font-body pill-radius" type="text" name="lastName" ng-model="billingDetails.lastName" readonly>
                                 </div>                             
                             </div>                        
@@ -156,34 +170,70 @@
                             <div class="m-b-sm">    
                                 <p class="font-h4 font-weight-medium">Billing Address</p>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingStreet">Street</label>
-                                <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="businessStreet" ng-model="billingDetails.billingStreet" validate-address required>
-                                    <p class="font-body txt-phase-red" ng-show="billingForm.businessStreet.$error.required && billingForm.businessStreet.$dirty">Please fill out this field</p>
-                                    <p class="font-body txt-phase-red" ng-show="billingForm.businessStreet.$error.validAddress && billingForm.businessStreet.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                
+                            <div class="hidden-lg-down hidden-cxl-up">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingStreet">Street</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="businessStreet" ng-model="billingDetails.billingStreet" validate-address required>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.businessStreet.$error.required && billingForm.businessStreet.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.businessStreet.$error.validAddress && billingForm.businessStreet.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                
+                                    </div>
                                 </div>
-                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingCity">City</label>
-                                <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="billingCity" ng-model="billingDetails.billingCity" required>
-                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingCity.$error.required && billingForm.billingCity.$dirty">Please fill out this field</p>
-                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingCity.$error.validAddress && billingForm.billingCity.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                        
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingCity">City</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingCity" ng-model="billingDetails.billingCity" required>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingCity.$error.required && billingForm.billingCity.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingCity.$error.validAddress && billingForm.billingCity.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                        
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingState">State</label>
-                                <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="billingState" ng-model="billingDetails.billingState" required>
-                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingState.$error.required && billingForm.billingState.$dirty">Please fill out this field</p>
-                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingState.$error.validAddress && billingForm.billingState.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                         
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingState">State</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingState" ng-model="billingDetails.billingState" required>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingState.$error.required && billingForm.billingState.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingState.$error.validAddress && billingForm.billingState.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                         
+                                    </div>
                                 </div>
-                                <label class="col-form-label col-md-2 text-left font-body font-weight-medium" for="billingZip">Zip</label>
-                                <div class="col-md-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="billingZip" ng-model="billingDetails.billingZip" required>
-                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingZip.$error.required && billingForm.billingZip.$dirty">Please fill out this field</p>
-                                    <p class="font-body txt-phase-red" ng-show="billingForm.billingZip.$error.validAddress && billingForm.billingZip.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                         
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingZip">Zip</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingZip" ng-model="billingDetails.billingZip" required>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingZip.$error.required && billingForm.billingZip.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingZip.$error.validAddress && billingForm.billingZip.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                         
+                                    </div>
                                 </div>
-                            </div>                    
+                            </div>                                   
+                            <div class="hidden-cxl">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingStreet">Street</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="businessStreet" ng-model="billingDetails.billingStreet" validate-address required>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.businessStreet.$error.required && billingForm.businessStreet.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.businessStreet.$error.validAddress && billingForm.businessStreet.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                
+                                    </div>
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingCity">City</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingCity" ng-model="billingDetails.billingCity" required>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingCity.$error.required && billingForm.billingCity.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingCity.$error.validAddress && billingForm.billingCity.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingState">State</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingState" ng-model="billingDetails.billingState" required>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingState.$error.required && billingForm.billingState.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingState.$error.validAddress && billingForm.billingState.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                         
+                                    </div>
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingZip">Zip</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingZip" ng-model="billingDetails.billingZip" required>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingZip.$error.required && billingForm.billingZip.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" ng-show="billingForm.billingZip.$error.validAddress && billingForm.billingZip.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>                                         
+                                    </div>
+                                </div>
+                            </div>                  
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center justify-content-end">
