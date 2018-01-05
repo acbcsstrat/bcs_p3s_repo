@@ -19,7 +19,7 @@
 				    <uib-tab index="6" class="tab tab--reg bg-phase-grey pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Grey({{$ctrl.greyPatentsLength}})" ng-attr-id="$ctrl.patentsTabs.grey" ng-click="$ctrl.displayPhase(7)" ui-sref="patents">
 					</uib-tab>				
 				</uib-tabset>
-			</div>	
+			</div>
 		</div>
 		<div class="col-md-12 col-xl-4">
 			<form class="form">
@@ -104,10 +104,11 @@
 										<img ng-if="item.renewalStatus == 'Payment in progress'" src="p3sweb/assets/imgs/icons/progress_icon.png">
 										<img ng-if="item.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed_icon.png">
 										<img ng-if="item.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon.png">
-										<img ng-if="item.renewalStatus == 'Too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png">
+										<i ng-if="item.renewalStatus == 'Too late to renew'" class="fa fa-phone fa-2x txt-phase-red"></i>
+										<img ng-if="item.renewalStatus == 'Way too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png">
 										<img ng-if="item.renewalStatus == ('No renewal needed' || 'Show price')" src="p3sweb/assets/imgs/icons/renewal_na_icon.png">
 									</div>
-							    	<span class="font-weight-medium font-body d-flex justify-content-end align-items-center"><span ng-if="item.renewalStatus !== 'Too late to renew'">{{item.renewalStatus}}</span><span ng-if="item.renewalStatus == 'Too late to renew'">Renewal window not open</span></span>
+							    	<span class="font-weight-medium font-body d-flex justify-content-end align-items-center"><span ng-if="item.renewalStatus !== 'Way too late to renew'">{{item.renewalStatus}}</span><span ng-if="item.renewalStatus == 'Way too late to renew'">Renewal window not open</span></span>
 								</div>
 								<div class="hidden-xl-up progress-phase d-flex justify-content-start align-items-center" ng-if="item.renewalStatus == 'Show price'">
 									<div class="m-r-xs">
