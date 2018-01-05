@@ -826,16 +826,21 @@
 						<div class="row d-flex align-items-center">
 						    <div class="col-md-6 col-lg-6">
 								<p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.patentApplicationNumber}}</p>
-								<p class="font-h4"><span class="font-weight-bold">Status:</span> {{$ctrl.patent.renewalStatus}}</p>				
+								<p class="font-h4"><span class="font-weight-bold">Status:</span> <span ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew'">{{$ctrl.patent.renewalStatus}}</span><span ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to renew</span><span ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">The renewal window is not open at this time</span></p>			
 						    </div>
 							<div ng-class="($ctrl.patent.renewalStatus == 'Show price' ? 'col-md-6 col-lg-6 col-xl-3 push-xl-5' : 'col-md-6 col-lg-6 col-xl-8')">
 								<div ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="d-flex justify-content-end align-items-center">
-									<p class="font-weight-medium font-h4 d-flex justify-content-end align-items-center m-r-sm"><span ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew'">{{$ctrl.patent.renewalStatus}}</span><span ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">The renewal window is not open at this time</span></p>
+									<p class="font-weight-medium font-h4 d-flex justify-content-end align-items-center m-r-sm">
+										<span ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew'">{{$ctrl.patent.renewalStatus}}</span>
+										<span ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">The renewal window is not open at this time</span>
+										<span ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call  to Renew (+44)1789-000-000</span>
+									</p>
 									<div>
 										<img ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" src="p3sweb/assets/imgs/icons/progress_icon_lg.png">
 										<img ng-if="$ctrl.patent.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed__icon_lg.png">
 										<img ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon_lg.png">
-										<img ng-if="$ctrl.patent.renewalStatus == 'Too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon_lg.png">
+										<i ng-if="$ctrl.patent.renewalStatus == 'Too late to renew'" class="fa fa-phone fa-3x txt-phase-red m-r-xs"></i>
+										<img ng-if="$ctrl.patent.renewalStatus == 'Way too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon_lg.png">
 										<img ng-if="$ctrl.patent.renewalStatus == ('No renewal needed' || 'Show price')" src="p3sweb/assets/imgs/icons/renewal_na_icon_lg.png">
 									</div>
 						    	</div>						    			    	
