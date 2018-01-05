@@ -113,7 +113,7 @@
 						</div>
 					</div>
 					<div ng-if="$ctrl.phaseArr.length">
-						<uib-tabset type="pills" active="fxPeriodActive" class="m-b-sm">
+						<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-sm">
 							<uib-tab heading="Today" class="font-body" index="0" ng-hide="true">
 								<div class="row">
 									<div class="col-md-5 col-lg-5 text-center">
@@ -129,14 +129,14 @@
 									</div>
 								</div>
 							</uib-tab>			
-							<uib-tab heading="Yesterday" class="font-body" ng-hide="true">
+							<uib-tab heading="Yesterday" class="font-body" index="1" ng-hide="true">
 								<div class="row">
 									<div class="col-md-5 col-lg-5 text-center">
 										<p class="font-h3 m-b-xs">USD</p>
 										<p class="font-h2">$ {{$ctrl.yesterdaysPriceUSD}}</p>
 									</div>
 									<div class="col-md-2 col-lg-2 text-center">
-										<i class="txt-grey fa fa-exchange fa-4x"></i>
+										<img src="p3sweb/assets/imgs/icons/arrows.png">
 									</div>
 									<div class="col-md-5 col-lg-5 text-center">
 										<p class="font-h3 m-b-xs">EUR</p>
@@ -144,14 +144,14 @@
 									</div>
 								</div>
 							</uib-tab>
-							<uib-tab heading="Last week" class="font-body" ng-hide="true">
+							<uib-tab heading="Last week" class="font-body" index="2" ng-hide="true">
 								<div class="row">
 									<div class="col-md-5 col-lg-5 text-center">
 										<p class="font-h3 m-b-xs">USD</p>
 										<p class="font-h2">$ {{$ctrl.lastWeeksPriceUSD}}</p>
 									</div>
 									<div class="col-md-2 col-lg-2 text-center">
-										<i class="txt-grey fa fa-exchange fa-4x"></i>
+										<img src="p3sweb/assets/imgs/icons/arrows.png">
 									</div>
 									<div class="col-md-5 col-lg-5 text-center">
 										<p class="font-h3 m-b-xs">EUR</p>
@@ -159,14 +159,14 @@
 									</div>
 								</div>
 							</uib-tab>
-							<uib-tab heading="Last Mth" class="font-body" ng-hide="true">
+							<uib-tab heading="Last Mth" class="font-body" index="3" ng-hide="true">
 								<div class="row">
 									<div class="col-md-5 col-lg-5 text-center">
 										<p class="font-h3 m-b-xs">USD</p>
 										<p class="font-h2">$ {{$ctrl.lastMonthsPriceUSD}}</p>
 									</div>
 									<div class="col-md-2 col-lg-2 text-center">
-										<i class="txt-grey fa fa-exchange fa-4x"></i>
+										<img src="p3sweb/assets/imgs/icons/arrows.png">
 									</div>
 									<div class="col-md-5 col-lg-5 text-center"">
 										<p class="font-h3 m-b-xs">EUR</p>
@@ -179,10 +179,10 @@
 							<div class="col-md-12 col-lg-12">
 								<div class="view-tabs">
 									<ul class="nav view-pills d-flex justify-content-between">
-										<li class="pill-radius btn--lg pill-tabs font-body font-body--component bg-white border-grey-xs font-weight-medium md-btn--lg" ng-init="$ctrl.renewalfxTimeframe = 'Today'" ng-click="$ctrl.fxPeriodActive(0);" ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
-										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" ng-click="$ctrl.fxPeriodActive(1);" ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
-										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" ng-click="$ctrl.fxPeriodActive(2); "  ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
-										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" ng-click="$ctrl.fxPeriodActive(3); " ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
+										<li class="pill-radius btn--lg pill-tabs font-body font-body--component bg-white border-grey-xs font-weight-medium md-btn--lg" ng-init="$ctrl.renewalfxTimeframe = 'Today'" ng-click="$ctrl.fxPeriodActive(0); fxPeriodActiveTabs = 0" ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
+										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" ng-click="$ctrl.fxPeriodActive(1); fxPeriodActiveTabs = 1" ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
+										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" ng-click="$ctrl.fxPeriodActive(2); fxPeriodActiveTabs = 2"  ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
+										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" ng-click="$ctrl.fxPeriodActive(3); fxPeriodActiveTabs = 3" ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
 									</ul>								
 								</div>
 							</div>	
@@ -192,7 +192,7 @@
 								<p class="font-h4 font-weight-bold">Four week variation:</p> 
 							</div>
 							<div class="col-md-4 col-lg-4 text-right">
-								<p class="font-h4 font-weight-bold txt-phase-green">$ {{$ctrl.lastMonthsPriceUSD - $ctrl.yesterdaysPriceUSD}}</p>
+								<p class="font-h4 font-weight-bold txt-phase-green">$ {{$ctrl.fourWeekVariation}}</p>
 							</div>
 						</div>
 						<div class="row m-b-xs">
@@ -524,7 +524,7 @@
 					</div>
 
 					<div ng-if="$ctrl.phaseArr.length">
-						<uib-tabset type="pills" active="fxPeriodActive" class="m-b-md">
+						<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-md">
 							<uib-tab heading="Today" class="font-body" index="0" ng-hide="true">
 								<div class="row">
 									<div class="col-xl-5 text-center">
@@ -547,7 +547,7 @@
 										<p class="font-h2">$ {{$ctrl.yesterdaysPriceUSD}}</p>
 									</div>
 									<div class="col-xl-2 text-center">
-										<i class="txt-grey fa fa-exchange fa-4x"></i>
+										<img src="p3sweb/assets/imgs/icons/arrows.png">
 									</div>
 									<div class="col-xl-5 text-center">
 										<p class="font-h3 m-b-xs">EUR</p>
@@ -562,7 +562,7 @@
 										<p class="font-h2">$ {{$ctrl.lastWeeksPriceUSD}}</p>
 									</div>
 									<div class="col-xl-2 text-center">
-										<i class="txt-grey fa fa-exchange fa-4x"></i>
+										<img src="p3sweb/assets/imgs/icons/arrows.png">
 									</div>
 									<div class="col-xl-5 text-center">
 										<p class="font-h3 m-b-xs">EUR</p>
@@ -577,7 +577,7 @@
 										<p class="font-h2">$ {{$ctrl.lastMonthsPriceUSD}}</p>
 									</div>
 									<div class="col-xl-2 text-center">
-										<i class="txt-grey fa fa-exchange fa-4x"></i>
+										<img src="p3sweb/assets/imgs/icons/arrows.png">
 									</div>
 									<div class="col-xl-5 text-center"">
 										<p class="font-h3 m-b-xs">EUR</p>
@@ -590,10 +590,10 @@
 							<div class="col-md-12 col-lg-12 col-xl-12">
 								<div class="view-tabs">
 									<ul class="nav view-pills d-flex justify-content-between">
-										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-init="$ctrl.renewalfxTimeframe = 'Today'" ng-click="$ctrl.fxPeriodActive(0);" ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
-										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-click="$ctrl.fxPeriodActive(1);" ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
-										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-click="$ctrl.fxPeriodActive(2); "  ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
-										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-click="$ctrl.fxPeriodActive(3); " ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
+										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-init="$ctrl.renewalfxTimeframe = 'Today'" ng-click="$ctrl.fxPeriodActive(0); fxPeriodActiveTabs = 0" ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
+										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-click="$ctrl.fxPeriodActive(1); fxPeriodActiveTabs = 1" ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
+										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-click="$ctrl.fxPeriodActive(2); fxPeriodActiveTabs = 2"  ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
+										<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" ng-click="$ctrl.fxPeriodActive(3); fxPeriodActiveTabs = 3" ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
 									</ul>
 								</div>
 							</div>	
@@ -603,7 +603,7 @@
 								<p class="font-h4 font-weight-bold">Four week variation:</p> <!--lg-->
 							</div>
 							<div class="col-xl-4 text-right">
-								<p class="font-h4 font-weight-bold txt-phase-green">$ {{$ctrl.lastMonthsPriceUSD - $ctrl.yesterdaysPriceUSD}}</p>
+								<p class="font-h4 font-weight-bold txt-phase-green">$ {{$ctrl.fourWeekVariation}}</p>
 							</div>
 						</div>
 						<div class="row">

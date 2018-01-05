@@ -627,8 +627,8 @@ app.component('dashboard', {
 	        			vm.selectedPatent = vm.phaseArr[i];
 						var fees = vm.phaseArr[i].feeUI;
 						if(fees !== null) {
-		        			vm.todaysPriceUSD = fees.subTotalUSD;
-		        			vm.todaysPriceEUR = fees.subTotalEUR;
+		        			// vm.todaysPriceUSD = Math.floor(fees.subTotalUSD);
+		        			vm.todaysPriceEUR = Math.floor(fees.subTotalEUR);
 		        			vm.selecetedPatent = i;
 		        			vm.totalCostUSD = fees.subTotalUSD;
 		        			$timeout(function() {
@@ -638,30 +638,41 @@ app.component('dashboard', {
 
 					        			var dateArr = [];
 					        			//weekly
-
 					        			data.forEach(function(item){
 					        				dateArr.push(item.rateActiveDate)
 					        			});
 
 					        			dateArr.sort(function(a, b){
 					        				return a - b
-					        			});        			
+					        			});
 
-					        			var tD = new Date().getTime();
-					        			var lwD = tD - 604800000; //subtract a week in milliseconds
+					        			var week = 2;
+					        			var date = new Date()
+					        			var lwD = new Date(date.getTime() - (week * 24 * 60 * 60 * 1000))
 					        			var lastWeekD = new Date(lwD).getDay();
 					        			var lastWeekDt = new Date(lwD).getDate();
 
 					        			dateArr.forEach(function(item, index){
-					        				//yesterday
 					        				if(item == dateArr[0]) {
+					        					var todaysFx = data[index].rate;
+					        					vm.todaysPriceUSD = Math.floor(fees.subTotalEUR * todaysFx);
+					        					vm.todaysPriceEUR = Math.floor(fees.subTotalEUR);
+					        				}
+					        				// console.log(vm.todaysPriceUSD, dateArr, data)
+					        				//yesterday
+					        				// if(item == dateArr[1]) {
+					        				 if(item == dateArr[1]) {	
 					        					var yesterdayFx = data[index].rate;
 					        					vm.yesterdaysPriceUSD = Math.floor(fees.subTotalEUR * yesterdayFx);
 					        					vm.yesterdaysPriceEUR = Math.floor(fees.subTotalEUR);
 					        				}
 					        				//weekly
-
-					        				if((new Date(item).getDay() == lastWeekD)) { //NEEDS TO BE FIXED
+					        				// if((new Date(item).getDay() == lastWeekD) && (new Date(item).getDate() == lastWeekDt)) { //NEEDS TO BE FIXED
+					        				// 	var lastWeekFx = data[index].rate;
+					        				// 	vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
+					        				// 	vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);
+					        				// }
+					        				if(item == dateArr[7]) { 
 					        					var lastWeekFx = data[index].rate;
 					        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
 					        					vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);
@@ -687,8 +698,8 @@ app.component('dashboard', {
 					        				return a - b
 					        			});
 
-					        			var tD = new Date().getTime();
-					        			var lmD = tD - 2629746000; //subtract a month in milliseconds
+					        			var tD = new Date();
+					        			var lmD = tD.setMonth(tD.getMonth() - 1);
 					        			var lastMonthD = new Date(lmD).getDay();
 					        			var lastMonthDt = new Date(lmD).getDate();
 
@@ -703,8 +714,10 @@ app.component('dashboard', {
 					        		function(error){
 
 					        		}
-					    		)	
+					    		)
+					    		vm.fourWeekVariation =  Math.floor(vm.lastMonthsPriceUSD - vm.yesterdaysPriceUSD);
 		        			}, 100);
+
 						} //if
 
 					} //function end
