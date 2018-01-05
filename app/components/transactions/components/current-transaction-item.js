@@ -83,11 +83,7 @@ app.component('currentTransaction', {
 
 	 		vm.transaction.renewalUIs.forEach(function(value, index, array){
 	 			vm.patents.push(value)			
-		 	})
-
-		 	console.log(vm.patents)
-
-	
+		 	})	
     	}
 	}]
 });
