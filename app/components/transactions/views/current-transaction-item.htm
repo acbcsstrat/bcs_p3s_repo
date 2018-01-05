@@ -188,10 +188,10 @@
 									</div>
 								</div>
 							</div>
-							<div ng-if="transaction" class="m-t-sm w-100">
+							<div ng-if="transaction.certificateUrl" class="m-t-sm w-100">
 								<div class="col-xl-12 d-flex justify-content-end">
 									<div class="btn-default">
-										<a href="{{transaction.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>				
+										<a href="{{transaction.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white" target="_blank">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>				
 									</div>
 								</div>
 							</div>		
