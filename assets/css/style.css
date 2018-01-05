@@ -1197,6 +1197,8 @@ display: none !important;
     max-width: 100%;
   }
 
+  .phase-pills .pill-tabs-num { min-width: 6.5rem; }
+
 }
 
 @media screen and (max-width: 1200px) {
