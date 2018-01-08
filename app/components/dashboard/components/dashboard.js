@@ -702,7 +702,12 @@ app.component('dashboard', {
 					        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
 					        				}
 					        			})
-					        			vm.fourWeekVariation =  Math.floor(vm.lastMonthsPriceUSD - vm.todaysPriceUSD);
+					        			$timeout(function(){
+					        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
+					        				console.log(vm.fourWeekVariation)
+					        			}, 100);
+					        			
+					        			
 					        		},
 					        		function(error){
 
