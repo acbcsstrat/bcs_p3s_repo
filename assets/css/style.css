@@ -979,7 +979,7 @@ input.required {
   outline: none!important;
 }
 
-input.ng-invalid {
+input.ng-dirty.ng-invalid {
   border: 1px solid #e30613;
 }
 
