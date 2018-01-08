@@ -18,8 +18,8 @@
                 <tbody>
                     <tr ng-repeat="item in ngCart.getCart().items track by $index" class="font-body">
                         <td>{{item.getData().patentApplicationNumber}}</td>
-                        <td>{{item.getData().clientRef}}</td>
-                        <td>{{item.getData().shortTitle}}</td>
+                        <td><span ng-if="item.getData().clientRef == ''">[No client reference provided]</span><span ng-if="item.getData().clientRef !== ''">{{item.getData().clientRef}}</span></td>
+                        <td><span ng-if="item.getData().clientRef == ''">[No client description provided]</span><span ng-if="item.getData().clientRef !== ''">{{item.getData().shortTitle}}</span></td>
                         <td>{{item.getPrice() | currency}}</td>
                         <td>
                             <div class="btn-error">

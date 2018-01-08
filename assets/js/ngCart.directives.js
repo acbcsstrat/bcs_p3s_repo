@@ -103,6 +103,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
                 $rootScope.$on('ngCart:itemRemoved', function() {
                     calcSummary()
+                    $scope.summary.totalPatents = $scope.summary.totalPatents - 1; //a quick fix
                 })
 
                 function calcSummary() {
@@ -164,7 +165,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                     }
      
                     var billingDetails = $scope.billingDetails;
-                    console.log(billingDetails)
+
                     var orderObj =  {
                         billingCity: billingDetails.billingCity,
                         billingStreet: billingDetails.billingStreet,
@@ -218,7 +219,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                             var patentArr = response.orderedPatentUIs;
 
                             scope.billingDetails = response;
-                            console.log(billingDetails)
                             scope.summary = {
                                 date: response.dateNowLocalTimeUI,
                                 patents: (function(){
