@@ -18,6 +18,8 @@ app.component('patent', {
 
 		vm.chartActive = 'Stage Cost Chart';
 
+		console.log($scope.$parent)
+
 		vm.fetchItemRenewal = function() {
 			patentsService.activePatentItemMenu();
 		}
@@ -101,9 +103,9 @@ app.component('patent', {
 			})
 
 		    modalInstance.result.then(function() {
-	     		console.log('good')
+     			console.log('good')
 		    }, function() {
-		       console.log('bad')
+	       		console.log('bad')
 		    })
 		}
 
@@ -458,8 +460,6 @@ app.component('patent', {
 						  	}
 	            		}
 	            	}
-
-	            	console.log(vm.charts.line)
             //PROGRESS BAR
             $timeout(function() {
             	vm.progressBar = vm.patent.progressBar

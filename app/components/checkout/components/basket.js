@@ -6,7 +6,7 @@ app.component('basket', {
 
 		$rootScope.page = 'Basket';
 
-        
+        console.log($scope.$parent.$parent)
 
 	}
 ]})

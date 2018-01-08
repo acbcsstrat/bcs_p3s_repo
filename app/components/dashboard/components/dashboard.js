@@ -27,15 +27,12 @@ app.component('dashboard', {
 			.then(
 				function(response) {
 					response.forEach(function(data) {
-
 						const transId = data.id;
-						
 						data.renewalUIs.forEach(function(data, i) {
 							if(data.patentUI.id == id) {
 								$state.go('current-transactions.current-transaction-item',{transId: transId})
 							}
 						})
-
 					})
 				},
 				function(errResponse) {
@@ -263,7 +260,6 @@ app.component('dashboard', {
 				})				
 			}
 
-
 			patentsRestService.fetchAllPatents()
 				.then(
 					function(patents){
@@ -274,7 +270,6 @@ app.component('dashboard', {
 							patentsRestService.fetchCostAnalysis(item.id)
 			                .then(
 			                    function(response){
-
 
 			                        switch(item.costBandColour) {
 			                            case 'Green':
@@ -704,10 +699,7 @@ app.component('dashboard', {
 					        			})
 					        			$timeout(function(){
 					        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
-					        				console.log(vm.fourWeekVariation)
 					        			}, 100);
-					        			
-					        			
 					        		},
 					        		function(error){
 
