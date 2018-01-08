@@ -69,7 +69,7 @@ app.component('searchpatent', {
 										$timeout(function() {
 											$location.hash('patentItemAnchor')
 										  	$anchorScroll()
-										}, 300);
+										}, 100);
 					             	},
 						            function(errResponse){
 						                console.error('Error while saving Patent');
