@@ -113,7 +113,7 @@ app.component('dashboard', {
 			var loginCounter;
 
 			var counter = localStorageService.get('counter');
-			console.log(counter)
+	
 		    if(counter == null) {
 
 		    	localStorageService.set('counter', 1);
@@ -219,7 +219,7 @@ app.component('dashboard', {
 	      	
 			var transactions = vm.transactions;
 			var patents = vm.patents;
-
+					console.log(patents)
 			function millsToHours(data, millisec) {
 
 		        var seconds = (millisec / 1000).toFixed(0);
@@ -623,14 +623,12 @@ app.component('dashboard', {
 	        		vm.currIndexForTitle = (currentSlide + 1);
 
 	        		function patentFx(i) {
-
 	        			vm.selectedPatent = vm.phaseArr[i];
+	        			
+	        				
+	        			
 						var fees = vm.phaseArr[i].feeUI;
 						if(fees !== null) {
-		        			// vm.todaysPriceUSD = Math.floor(fees.subTotalUSD);
-		        			vm.todaysPriceEUR = Math.floor(fees.subTotalEUR);
-		        			vm.selecetedPatent = i;
-		        			vm.totalCostUSD = fees.subTotalUSD;
 		        			$timeout(function() {
 		        				fxService.fetchFxWeek()
 					        	.then(
@@ -646,7 +644,7 @@ app.component('dashboard', {
 					        				return a - b
 					        			});
 
-					        			var week = 2;
+					        			var week = 7;
 					        			var date = new Date()
 					        			var lwD = new Date(date.getTime() - (week * 24 * 60 * 60 * 1000))
 					        			var lastWeekD = new Date(lwD).getDay();
@@ -667,11 +665,6 @@ app.component('dashboard', {
 					        					vm.yesterdaysPriceEUR = Math.floor(fees.subTotalEUR);
 					        				}
 					        				//weekly
-					        				// if((new Date(item).getDay() == lastWeekD) && (new Date(item).getDate() == lastWeekDt)) { //NEEDS TO BE FIXED
-					        				// 	var lastWeekFx = data[index].rate;
-					        				// 	vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
-					        				// 	vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);
-					        				// }
 					        				if(item == dateArr[7]) { 
 					        					var lastWeekFx = data[index].rate;
 					        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
@@ -702,7 +695,6 @@ app.component('dashboard', {
 					        			var lmD = tD.setMonth(tD.getMonth() - 1);
 					        			var lastMonthD = new Date(lmD).getDay();
 					        			var lastMonthDt = new Date(lmD).getDate();
-
 					        			dateArr.forEach(function(item, index){
 					        				if((new Date(item).getDay() == lastMonthD) && (new Date(item).getDate() == lastMonthDt)) {
 					        					var lastMonthFx = data[index].rate;
@@ -710,21 +702,25 @@ app.component('dashboard', {
 					        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
 					        				}
 					        			})
+					        			vm.fourWeekVariation =  Math.floor(vm.lastMonthsPriceUSD - vm.todaysPriceUSD);
 					        		},
 					        		function(error){
 
 					        		}
 					    		)
-					    		vm.fourWeekVariation =  Math.floor(vm.lastMonthsPriceUSD - vm.yesterdaysPriceUSD);
+					    		
 		        			}, 100);
+		        			
 
 						} //if
 
 					} //function end
+
 	        		patentFx($scope.currentIndex)
 		        },
 		    	init: function(event, slick, currentSlide, nextSlide) {
 		    		slick.slickGoTo($scope.currentIndex);
+		    		console.log(slick)
 		    	}
 		    }
 		};
