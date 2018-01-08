@@ -1,7 +1,7 @@
 app.component('dashboard', {
 	bindings: { 
 		patents: '<',
-		transactions: '<' 
+		transactions: '<'
 	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
 	controller: ['$state', '$scope', '$uibModal', '$timeout', '$http', '$rootScope', 'fxService', 'patentsRestService', 'patentsService', 'currentTransactionsService', 'dashboardService', 'localStorageService', function($state, $scope, $uibModal, $timeout, $http, $rootScope, fxService, patentsRestService, patentsService, currentTransactionsService, dashboardService, localStorageService) {
