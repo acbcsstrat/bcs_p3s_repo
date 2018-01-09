@@ -151,6 +151,10 @@ app.component('dashboard', {
 									    	$uibModalInstance.close();
 									  	};
 
+									  	vm.dismissModal = function() {
+									  		$uibModalInstance.dismiss();
+									  	}									  	
+
 									},
 									resolve: {
 										message: function() {
@@ -186,7 +190,8 @@ app.component('dashboard', {
 												  	};
 
 												  	vm.dismissModal = function() {
-												  		$uibModalInstance.dismiss('cancel');
+												  		console.log('dismiss')
+												  		$uibModalInstance.dismiss();
 												  	}
 												},
 												resolve: {
@@ -208,15 +213,15 @@ app.component('dashboard', {
 			    		} //if end
 
 			    	},
-			    	function(){
-
+			    	function(errResponse){
+			    		console.log(errResponse)
 			    	}
 		    	)
 	    	}
 	      	
 			var transactions = vm.transactions;
 			var patents = vm.patents;
-					console.log(patents)
+
 			function millsToHours(data, millisec) {
 
 		        var seconds = (millisec / 1000).toFixed(0);
@@ -717,7 +722,6 @@ app.component('dashboard', {
 		        },
 		    	init: function(event, slick, currentSlide, nextSlide) {
 		    		slick.slickGoTo($scope.currentIndex);
-		    		console.log(slick)
 		    	}
 		    }
 		};
