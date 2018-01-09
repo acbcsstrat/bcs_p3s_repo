@@ -81,7 +81,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
         }
     })
     .state('patents.patent', {
-        url: '/{patentId}',
+        url: '/{patentId}/:patentHref',
         component: 'patent',
         resolve: {
             patent: ['patents', '$stateParams', function(patents, $stateParams) {
@@ -95,6 +95,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
             renewal: ['patentsRestService','$stateParams', function(patentsRestService, $stateParams){
                 return  patentsRestService.fetchRenewalHistory($stateParams.patentId);  
             }]
+        },
+        params: {
+            patentHref: null
         }
     })
     .state('search-patent', {
