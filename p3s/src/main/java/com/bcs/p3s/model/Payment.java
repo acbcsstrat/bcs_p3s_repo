@@ -5,6 +5,7 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bcs.p3s.enump3s.McFailCodeEnum;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
 import javax.validation.constraints.NotNull;
@@ -187,6 +188,13 @@ public class Payment {
         return (List<Payment>) q.getResultList();
     }
 
+    public static List<Payment> findPaymentsAtStatus(String status) {
+        EntityManager em = Payment.entityManager();
+        TypedQuery q = em.createQuery("SELECT o FROM Payment AS o WHERE o.latestTransStatus = '"+status+"'", Payment.class);
+        return (List<Payment>) q.getResultList();
+    }
+
+    
     // Setters pushed to support P3S 'Enums'
     public void setTransType(String transType) {
         this.transType = (new PaymentTypeEnum(transType)).toString();
@@ -196,6 +204,10 @@ public class Payment {
         this.latestTransStatus = (new PaymentStatusEnum(latestTransStatus)).toString();
     }
     
+    public void setMC_failCode(String MC_failCode) {
+    	this.MC_failCode = (new McFailCodeEnum(MC_failCode)).toString();
+    }
+
     
     @Transactional
     public Payment persist() {  
