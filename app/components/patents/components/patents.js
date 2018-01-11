@@ -58,7 +58,6 @@ app.component('patents', {
 		vm.$onInit = () => {
 
 			vm.tableData = vm.patents;
-			console.log(vm.tableData)
 			var patents = vm.patents;
 			var allPatents = [];
 			var greenPatents = [];
