@@ -704,6 +704,12 @@ app.component('dashboard', {
 					        			})
 					        			$timeout(function(){
 					        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
+					        				console.log(vm.fourWeekVariation)
+					        				if(vm.fourWeekVariation < 0) {
+					        					vm.variationSave = false;
+					        				} else {
+					        					vm.variationSave = true;
+					        				}
 					        			}, 100);
 					        		},
 					        		function(error){

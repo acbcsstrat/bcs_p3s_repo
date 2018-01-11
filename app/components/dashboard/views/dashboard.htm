@@ -192,7 +192,7 @@
 								<p class="font-h4 font-weight-bold">Four week variation:</p> 
 							</div>
 							<div class="col-md-4 col-lg-4 text-right">
-								<p class="font-h4 font-weight-bold txt-phase-green">$ {{$ctrl.fourWeekVariation}}</p>
+								<p class="font-h4 font-weight-bold" ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span ng-if="$ctrl.variationSave">-</span><span ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
 							</div>
 						</div>
 						<div class="row m-b-xs">
@@ -599,7 +599,7 @@
 								<p class="font-h4 font-weight-bold">Four week variation:</p> <!--lg-->
 							</div>
 							<div class="col-xl-4 text-right">
-								<p class="font-h4 font-weight-bold txt-phase-green">$ {{$ctrl.fourWeekVariation}}</p>
+								<p class="font-h4 font-weight-bold" ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'"><span ng-if="$ctrl.variationSave">-</span><span ng-if="!$ctrl.variationSave">+</span> $ {{$ctrl.fourWeekVariation}}</p>
 							</div>
 						</div>
 						<div class="row">
