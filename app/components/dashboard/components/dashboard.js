@@ -698,7 +698,7 @@ app.component('dashboard', {
 					        			dateArr.forEach(function(item, index){
 					        				if((new Date(item).getDay() == lastMonthD) && (new Date(item).getDate() == lastMonthDt)) {
 					        					var lastMonthFx = data[index].rate;
-					        					vm.lastMonthsPriceUSD = Math.floor(fees.subTotalEURsubTotalEUR * lastMonthFx);
+					        					vm.lastMonthsPriceUSD = Math.floor(fees.subTotalEUR * lastMonthFx);
 					        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
 					        				}
 					        			})
