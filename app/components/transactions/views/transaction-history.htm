@@ -79,7 +79,8 @@
 					        <td>
 								<span ng-if="item.renewalUIs.length == 1" ng-repeat="ref in item.renewalUIs">
 									<span ng-if="ref.patentUI.clientRef.length">
-										{{ref.patentUI.clientRef}}
+										<span class="txt-grey" ng-if="ref.patentUI.clientRef == ''">[No client reference provided]</span>
+										<span ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>
 									</span>								
 								</span>
 								<select ng-if="item.renewalUIs.length > 1" ng-options="item.patentUI.clientRef for item in item.renewalUIs" ng-model="clientRefData.defaultSelect" class="pill-radius form-control font-body" ng-change="transactionListFilter(clientRefData.defaultSelect, 'clientRefFilter', item.id)">
