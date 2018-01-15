@@ -143,9 +143,11 @@ app.component('dashboard', {
 			var loginCounter;
 
 			var counter = localStorageService.get('counter');
-			
+
 			var transactions = vm.transactions;
 			var patents = vm.patents;
+
+			var patentsArr = [];
 
 			vm.recentTransArr = [];
 			vm.recentStageArr = [];
@@ -283,8 +285,6 @@ app.component('dashboard', {
 				})				
 			}
 
- 			var patentsArr = [];
-
 			patentsRestService.fetchAllPatents()
 			.then(
 				function(response){
@@ -297,11 +297,7 @@ app.component('dashboard', {
 				}
 			)
 						
-
-
 			//COLOUR KEY
-
-			vm.selectedPhase;
 
 			vm.colourKey = function(colour) {
 				switch(colour) {
@@ -352,6 +348,7 @@ app.component('dashboard', {
 			//TOTAL RENEWALS PIE CHART
 
 			vm.totalPatents = patents.length;
+
 			if(patents) {
 				patents.forEach(function(item){
 					if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
