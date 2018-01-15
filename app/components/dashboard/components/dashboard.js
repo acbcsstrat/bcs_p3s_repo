@@ -132,7 +132,6 @@ app.component('dashboard', {
 
 		}
 
-
 		messageObj.messageArr = messageArr;
 
 		vm.supresssMessages = function() {
@@ -144,6 +143,20 @@ app.component('dashboard', {
 			var loginCounter;
 
 			var counter = localStorageService.get('counter');
+			
+			var transactions = vm.transactions;
+			var patents = vm.patents;
+
+			vm.recentTransArr = [];
+			vm.recentStageArr = [];
+			vm.recentRenewalArr = [];
+
+			vm.greenRenewals = [];
+			vm.amberRenewals = [];
+			vm.redRenewals = [];
+			vm.blueRenewals = [];
+			vm.blackRenewals = [];
+			vm.greyRenewals = [];
 	
 		    if(counter == null) {
 
@@ -253,14 +266,7 @@ app.component('dashboard', {
 		    	)
 	    	}
 	      	
-			var transactions = vm.transactions;
-			var patents = vm.patents;
 
-
-
-			vm.recentTransArr = [];
-			vm.recentStageArr = [];
-			vm.recentRenewalArr = [];
 
 			if(transactions !== undefined && transactions.length > 0) {
 				transactions.forEach(function(data){
@@ -291,12 +297,7 @@ app.component('dashboard', {
 				}
 			)
 						
-			vm.greenRenewals = [];
-			vm.amberRenewals = [];
-			vm.redRenewals = [];
-			vm.blueRenewals = [];
-			vm.blackRenewals = [];
-			vm.greyRenewals = [];
+
 
 			//COLOUR KEY
 
@@ -481,10 +482,6 @@ app.component('dashboard', {
 		  	} //phaseSliderInfoEnd
 
 		} //$onInit end	
-
-
-
-		console.log(millsToHours())
 
 		function patentCostAnalysisFn(id) {
 			patentsRestService.fetchCostAnalysis(id)
