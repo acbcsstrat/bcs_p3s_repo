@@ -62,8 +62,7 @@ public class P3SUser {
     /**
      */
     @NotNull
-    //Previously was FetchType.EAGER :: Changed to LAZY as it returns children multiple times
-    @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.EAGER)
     private List<LoginMessage> loginMessagesToDisplay = new ArrayList<LoginMessage>();
     
     
