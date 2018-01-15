@@ -292,7 +292,6 @@ app.component('dashboard', {
 					    		)
 					    		
 		        			}, 100);
-		        			
 
 						} //if
 

@@ -1,5 +1,5 @@
 
-<div class="content-panel">
+<div class="content-panel p-a-sm bg-light-grey">
 	<span class="modal-cross cursor-pointer" ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
 	<div class="modal-content--table">
 		<div class=" d-flex flex-column align-items-center justify-content-center content-panel__head">
@@ -10,17 +10,17 @@
 			<p class="font-h4 font-weight-medium text-center">We have the following system messages for you.</p>
 		</div>
 		<form class="form" name="systemMessageForm">
-			<div class="content-panel__body border-grey-xs--btm" ng-repeat="item in $ctrl.systemMessage">
+			<div class="p-a-sm bg-white m-b-sm" ng-repeat="item in $ctrl.systemMessage">
 				<div class="d-flex flex-column align-items-center justify-content-center">
 					<div class="row w-100 m-b-xs">
 						<div class="col-md-12">
-							<p class="font-h4"> {{item.messageText}}</p>
+							<p class="font-body font-weight-medium"> {{item.messageText}}</p>
 						</div>
 					</div>
 					<div class="row w-100">
 						<div class="col-md-12 d-flex justify-content-end">
-							<div>
-								<label for="message_[item.id]" class="font-body">Don't display this message again</label>
+							<div class="d-flex align-items-center">
+								<label for="message_[item.id]" class="font-body m-r-xs">Don't show again</label>
 								<input type="checkbox" name="message_[item.id]" ng-model="$ctrl.message_[item.id]" ng-change="$ctrl.checkedMessages(item.id, $ctrl.message_[item.id])">
 							</div>
 						</div>
