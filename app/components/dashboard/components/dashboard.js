@@ -18,6 +18,39 @@ app.component('dashboard', {
 	      vm.animate = true;
 	    }, 100);
 
+		function millsToHours(data, millisec) {
+
+	        var seconds = (millisec / 1000).toFixed(0);
+	        var minutes = Math.floor(seconds / 60);
+	        var hours = "";
+
+	        if (minutes > 59) {
+	            hours = Math.floor(minutes / 60);
+	            hours = (hours >= 10) ? hours : "0" + hours;
+	            minutes = minutes - (hours * 60);
+	            minutes = (minutes >= 10) ? minutes : "0" + minutes;
+	        }
+
+	        seconds = Math.floor(seconds % 60);
+	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
+
+	        if (hours < 48) {
+	            return data
+	        }
+
+	    }
+
+		function calcProgress(start, end) {
+
+			var today = new Date().getTime();
+
+			var total = end - start;
+			var progress = today - start;
+			
+			return Math.round(((progress) / (total)) * 100);
+
+		}	
+
 		vm.fetchItemRenewal = function() {
 			patentsService.activePatentItemMenu();
 		}
@@ -98,6 +131,7 @@ app.component('dashboard', {
 			}
 
 		}
+
 
 		messageObj.messageArr = messageArr;
 
@@ -222,27 +256,7 @@ app.component('dashboard', {
 			var transactions = vm.transactions;
 			var patents = vm.patents;
 
-			function millsToHours(data, millisec) {
 
-		        var seconds = (millisec / 1000).toFixed(0);
-		        var minutes = Math.floor(seconds / 60);
-		        var hours = "";
-
-		        if (minutes > 59) {
-		            hours = Math.floor(minutes / 60);
-		            hours = (hours >= 10) ? hours : "0" + hours;
-		            minutes = minutes - (hours * 60);
-		            minutes = (minutes >= 10) ? minutes : "0" + minutes;
-		        }
-
-		        seconds = Math.floor(seconds % 60);
-		        seconds = (seconds >= 10) ? seconds : "0" + seconds;
-
-		        if (hours < 48) {
-		            return data
-		        }
-
-		    }
 
 			vm.recentTransArr = [];
 			vm.recentStageArr = [];
@@ -250,9 +264,7 @@ app.component('dashboard', {
 
 			if(transactions !== undefined && transactions.length > 0) {
 				transactions.forEach(function(data){
-					
-					var d = new Date().getTime();
-					var hours =  d - data.lastUpdatedDate;
+					var hours =  vm.date - data.lastUpdatedDate;
 					var recentTrans  = millsToHours(data, hours);
 
 					if(recentTrans !== undefined) {
@@ -265,155 +277,20 @@ app.component('dashboard', {
 				})				
 			}
 
+ 			var patentsArr = [];
+
 			patentsRestService.fetchAllPatents()
-				.then(
-					function(patents){
-
-						var d = new Date().getTime();
-
-						patents.forEach(function(item){ 	
-							patentsRestService.fetchCostAnalysis(item.id)
-			                .then(
-			                    function(response){
-
-			                        switch(item.costBandColour) {
-			                            case 'Green':
-
-			                            //stage change
-
-				                    	var hours =  d - response.greenStartDate;
-
-				                    	if(millsToHours(response, hours) !== undefined){
-				                    		vm.recentStageArr.push(item)
-				                    		item.nextCostBandColor = 'Amber';
-				                    	}
-
-				                    	//progress
-
-										var today = new Date().getTime();
-										var start = new Date(response.greenStartDate);
-										var end = new Date(response.amberStartDate);
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.greenRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})					                                
-
-			                                break;
-			                            case 'Amber':
-
-			                            //stage change
-
-				                    	var hours =  d - response.amberStartDate;
-
-				                    	if(millsToHours(response, hours) !== undefined){
-				                    		vm.recentStageArr.push(item);
-				                    		item.nextCostBandColor = 'Red';
-				                    	}
-
-				                    	//progress
-
-										var today = new Date().getTime();
-										var start = new Date(response.amberStartDate);
-										var end = new Date(response.redStartDate);
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.amberRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})					                         
-
-			                                break;
-			                            case 'Red':
-
-			                            //recent stage
-
-				                    	var hours =  d - response.redStartDate;
-
-				                    	if(millsToHours(item, hours) !== undefined){
-				                    		vm.recentStageArr.push(item)
-				                    		item.nextCostBandColor = 'Blue';
-				                    	}
-
-				                    	//progress
-
-										var today = new Date().getTime();
-										var start = new Date(response.redStartDate);
-										var end = new Date(response.blueStartDate);
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.redRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})								
-
-			                                break;
-			                            case 'Blue':
-
-				                    	var hours =  d - response.blueStartDate;
-
-				                    	if(millsToHours(response, hours) !== undefined){
-				                    		vm.recentStageArr.push(item)
-				                    		item.nextCostBandColor = 'Black';
-				                    	}
-
-			                            //progress
-
-										var today = new Date().getTime();
-										var start = response.blueStartDate;
-										var end = response.blackStartDate;
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.blueRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})
-
-			                                break;
-			                            case 'Black':
-
-			                            //progress
-
-				                    	var hours =  d - response.blackStartDate;
-
-				                    	if(millsToHours(response, hours) !== undefined) {
-				                    		vm.recentStageArr.push(item);
-											item.nextCostBandColor = 'Grey';				                    		
-				                    	}
-
-										var today = new Date().getTime();
-										var start = response.blackStartDate;
-										var end = response.blackEndDate;
-
-										var total = end - start;
-										var progress = today - start;
-
-										vm.blackRenewals.forEach(function(data){
-											data.progressBar =  Math.round(((progress) / (total)) * 100);
-										})
-
-			                        } //switch end	                    
-			        	
-			                    }, 
-			                    function(errResponse){
-			                        console.log(errResponse)
-			                    }
-		                    )
-		            	})
-			        
-		                
-					},
-					function(errResponse){
-
-					}
-			)//patents request end
-
-
+			.then(
+				function(response){
+					response.forEach(function(item){
+						patentsArr.push(item)
+					})
+				},
+				function(errResponse) {
+					console.log(errResponse)
+				}
+			)
+						
 			vm.greenRenewals = [];
 			vm.amberRenewals = [];
 			vm.redRenewals = [];
@@ -501,73 +378,72 @@ app.component('dashboard', {
 			}
 
 
-				vm.charts = {
+			vm.charts = {
 
-					doughnut: {
-						labels: ["No action required", "Black", "Blue", "Red", "Yellow", "Green"],
-						data: [vm.greyRenewals.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length],
-						options: {
-							elements: {
-								arc: {
-									borderWidth: 3	
-								}
-							},
-							responsive: true,
-							cutoutPercentage: 70,
-							animation: {
-								duration: 1500,
-								easing: 'linear'
+				doughnut: {
+					labels: ["No action required", "Black", "Blue", "Red", "Yellow", "Green"],
+					data: [vm.greyRenewals.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length],
+					options: {
+						elements: {
+							arc: {
+								borderWidth: 3	
 							}
+						},
+						responsive: true,
+						cutoutPercentage: 70,
+						animation: {
+							duration: 1500,
+							easing: 'linear'
+						}
 
-					  	},
-					  	colours: [{
-						      	backgroundColor: '#bdbdbd',
-						      	pointBackgroundColor: '#bdbdbd',
-						      	pointHoverBackgroundColor: '#bdbdbd',
-						     	borderColor: '#bdbdbd',
-					      		pointBorderColor: '#bdbdbd',
-				      			pointHoverBorderColor: '#bdbdbd'
-						    },{
-					      		backgroundColor: '#3c3c3b',
-					      		pointBackgroundColor: '#3c3c3b',
-					      		pointHoverBackgroundColor: '#3c3c3b',
-					      		borderColor: '#3c3c3b',
-					      		pointBorderColor: '#fff',
-					      		pointHoverBorderColor: '#3c3c3b'
-						    },{
-				      			backgroundColor: '#0097ce',
-					      		pointBackgroundColor: '#0097ce',
-					      		pointHoverBackgroundColor: '#0097ce',
-					      		borderColor: '#0097ce',
-					      		pointBorderColor: '#0097ce',
-					      		pointHoverBorderColor: '#0097ce'
-						    },{
-						      	backgroundColor: '#e30613',
-						      	pointBackgroundColor: '#e30613',
-						      	pointHoverBackgroundColor: '#e30613',
-						      	borderColor: '#e30613',
-						      	pointBorderColor: '#e30613',
-						      	pointHoverBorderColor: '#e30613'
-						    },{
-						      	backgroundColor: '#f9b233',
-						      	pointBackgroundColor: '#f9b233',
-						      	pointHoverBackgroundColor: '#f9b233',
-						      	borderColor: '#f9b233',
-						      	pointBorderColor: '#f9b233',
-						      	pointHoverBorderColor: '#f9b233'
-						    },{
-						      	backgroundColor: '#53ab58',
-						      	pointBackgroundColor: '#53ab58',
-						      	pointHoverBackgroundColor: '#53ab58',
-						      	borderColor: '#53ab58',
-						      	pointBorderColor: '#53ab58',
-						      	pointHoverBorderColor: '#53ab58'
-						    }
-						  ]
-					} //donught end
-				} //charts end
+				  	},
+				  	colours: [{
+					      	backgroundColor: '#bdbdbd',
+					      	pointBackgroundColor: '#bdbdbd',
+					      	pointHoverBackgroundColor: '#bdbdbd',
+					     	borderColor: '#bdbdbd',
+				      		pointBorderColor: '#bdbdbd',
+			      			pointHoverBorderColor: '#bdbdbd'
+					    },{
+				      		backgroundColor: '#3c3c3b',
+				      		pointBackgroundColor: '#3c3c3b',
+				      		pointHoverBackgroundColor: '#3c3c3b',
+				      		borderColor: '#3c3c3b',
+				      		pointBorderColor: '#fff',
+				      		pointHoverBorderColor: '#3c3c3b'
+					    },{
+			      			backgroundColor: '#0097ce',
+				      		pointBackgroundColor: '#0097ce',
+				      		pointHoverBackgroundColor: '#0097ce',
+				      		borderColor: '#0097ce',
+				      		pointBorderColor: '#0097ce',
+				      		pointHoverBorderColor: '#0097ce'
+					    },{
+					      	backgroundColor: '#e30613',
+					      	pointBackgroundColor: '#e30613',
+					      	pointHoverBackgroundColor: '#e30613',
+					      	borderColor: '#e30613',
+					      	pointBorderColor: '#e30613',
+					      	pointHoverBorderColor: '#e30613'
+					    },{
+					      	backgroundColor: '#f9b233',
+					      	pointBackgroundColor: '#f9b233',
+					      	pointHoverBackgroundColor: '#f9b233',
+					      	borderColor: '#f9b233',
+					      	pointBorderColor: '#f9b233',
+					      	pointHoverBorderColor: '#f9b233'
+					    },{
+					      	backgroundColor: '#53ab58',
+					      	pointBackgroundColor: '#53ab58',
+					      	pointHoverBackgroundColor: '#53ab58',
+					      	borderColor: '#53ab58',
+					      	pointBorderColor: '#53ab58',
+					      	pointHoverBorderColor: '#53ab58'
+					    }
+					  ]
+				} //donught end
+			} //charts end
 			
-
 			vm.phaseSliderInfo = function(id) {
 
 				vm.phaseArr = [];
@@ -607,6 +483,50 @@ app.component('dashboard', {
 		} //$onInit end	
 
 
+
+		console.log(millsToHours())
+
+		function patentCostAnalysisFn(id) {
+			patentsRestService.fetchCostAnalysis(id)
+			.then(
+				function(response){
+                    switch(response.currentcostBand) {
+                        case 'Green':
+                        
+                    	var hours =  vm.date - response.greenStartDate;
+
+                    	if(millsToHours(response, hours) !== undefined){
+                    		vm.recentStageArr.push(item)
+                    		item.nextCostBandColor = 'Amber';
+                    	}
+
+						vm.greenRenewals.forEach(function(data){
+							data.progressBar = calcProgress(response.greenStartDate, response.amberStartDate);
+						})
+
+						break;
+						case 'Amber':
+
+                    	var hours =  vm.date - response.amberStartDate;
+
+                    	if(millsToHours(response, hours) !== undefined){
+                    		vm.recentStageArr.push(item)
+                    		item.nextCostBandColor = 'Red';
+                    	}
+
+                    	//progress
+						vm.greenRenewals.forEach(function(data){
+							data.progressBar = calcProgress(response.amberStartDate, response.redStartDate);
+						})						
+
+					}
+				},
+				function(errResponse) {
+					// body...
+				}
+			)
+		}
+
 		$scope.currentIndex = 0;
 
 	    $scope.slickConfig = {
@@ -623,10 +543,11 @@ app.component('dashboard', {
 	        		vm.currIndexForTitle = (currentSlide + 1);
 
 	        		function patentFx(i) {
+
 	        			vm.selectedPatent = vm.phaseArr[i];
-	        			
-	        				
-	        			
+
+	        			patentCostAnalysisFn(vm.selectedPatent.id) 
+
 						var fees = vm.phaseArr[i].feeUI;
 						if(fees !== null) {
 		        			$timeout(function() {
@@ -702,6 +623,7 @@ app.component('dashboard', {
 					        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
 					        				}
 					        			})
+
 					        			$timeout(function(){
 					        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
 					        				if(vm.fourWeekVariation < 0) {
@@ -710,6 +632,7 @@ app.component('dashboard', {
 					        					vm.variationSave = true;
 					        				}
 					        			}, 100);
+
 					        		},
 					        		function(error){
 
