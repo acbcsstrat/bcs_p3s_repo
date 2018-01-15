@@ -10,7 +10,7 @@
 						<div class="col-md-3 col-lg-3 col-xl-3">
 							<div class="d-flex justify-content-center align-items-center flex-column" >
 								<div class="pill-radius btn btn--lg" ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-									<p class="txt-white widget-pill-title font-weight-medium font-h4">{{$ctrl.colourPhaseTitle.title}} Phase</p>
+									<h3 class="txt-white widget-pill-title font-weight-medium font-h4">{{$ctrl.colourPhaseTitle.title}} Phase</h3>
 								</div>
 							</div>
 						</div>						
@@ -104,7 +104,7 @@
 				<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
 					<h3 class="font-h3 font-weight-bold">Renewal Cost</h3>
 					<div ng-if="$ctrl.renewalfxTimeframe" class="pill-radius d-flex justify-content-center align-items-center flex-column bg-phase-green">	
-						<p class="txt-white font-body font-body--component btn--lg">{{$ctrl.renewalfxTimeframe}}</p>
+						<h4 class="txt-white font-body font-body--component btn--lg">{{$ctrl.renewalfxTimeframe}}</h4>
 					</div>
 				</div>
 				<div class="widget-panel__body">
@@ -262,7 +262,7 @@
 					    <uib-tab heading="Green" index="0" class="bg-phase-green pill-radius p-pill-tabs pill-tabs font-body" ng-hide="true">
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
 				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
-			        				<p class="font-weight-medium text-center txt-white">Green Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.greenRenewals.length}}</p>
+			        				<h4 class="font-weight-medium text-center txt-white">Green Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.greenRenewals.length}}</h4>
 			        			</div>					            	
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
@@ -308,7 +308,7 @@
 					    <uib-tab heading="Amber" index="1" class="bg-phase-amber pill-radius p-pill-tabs pill-tabs font-body" ng-hide="true">
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
 				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
-			        				<p class="font-weight-medium text-center txt-white">Amber Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.amberRenewals.length}}</p>
+			        				<h4 class="font-weight-medium text-center txt-white">Amber Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.amberRenewals.length}}</h4>
 			        			</div>				            	
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
@@ -354,7 +354,7 @@
 					    <uib-tab heading="Red" index="2" class="bg-phase-red pill-radius p-pill-tabs pill-tabs" ng-hide="true">
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
 				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
-			        				<p class="font-weight-medium text-center txt-white">Red Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.redRenewals.length}}</p>
+			        				<h4 class="font-weight-medium text-center txt-white">Red Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.redRenewals.length}}</h4>
 			        			</div>
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
@@ -403,7 +403,7 @@
 					    <uib-tab heading="Blue" index="3" class="bg-phase-blue pill-radius p-pill-tabs pill-tabs" ng-hide="true">
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
 				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
-			        				<p class="font-weight-medium text-center txt-white">Blue Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.blueRenewals.length}}</p>
+			        				<h4 class="font-weight-medium text-center txt-white">Blue Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.blueRenewals.length}}</h4>
 			        			</div>	
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
@@ -449,7 +449,7 @@
 					    <uib-tab heading="Black" index="4" class="bg-phase-black pill-radius p-pill-tabs pill-tabs" ng-hide="true">
 				            <div class="slick-container" ng-if="$ctrl.phaseArr.length">
 				            	<div class="txt-white font-h4 tr-border slick-header" ng-style="{'background': $ctrl.colourPhaseTitle.color}">
-			        				<p class="font-weight-medium text-center txt-white">Black Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.blackRenewals.length}}</p>
+			        				<h4 class="font-weight-medium text-center txt-white">Black Renewal <span ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.blackRenewals.length}}</h4>
 			        			</div>								            	
 							    <slick data="$ctrl.phaseArr" settings="slickConfig">
 							        <div ng-repeat="item in $ctrl.phaseArr">
@@ -511,7 +511,7 @@
 				<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
 					<h3 class="font-h3 font-weight-bold">Renewal Cost</h3>
 					<div ng-if="$ctrl.renewalfxTimeframe" class="pill-radius d-flex justify-content-center align-items-center flex-column bg-phase-green">	
-						<p class="txt-white font-body font-body--component btn--lg">{{$ctrl.renewalfxTimeframe}}</p>
+						<h4 class="txt-white font-body font-body--component btn--lg">{{$ctrl.renewalfxTimeframe}}</h4>
 					</div>
 				</div>
 				<div class="widget-panel__body">
