@@ -8,6 +8,12 @@ app.component('searchpatent', {
 
 	 	$rootScope.page = 'Add Patent';
 
+		vm.animate = false;
+
+	    $timeout(function() {
+	      vm.animate = true;
+	    }, 300);    	 	
+
 		vm.patentNotifications = {
 			green: 'Green',
 			amber: 'Amber',
