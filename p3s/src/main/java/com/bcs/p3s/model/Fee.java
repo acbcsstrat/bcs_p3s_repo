@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.OneToOne;
 
@@ -53,6 +54,7 @@ public class Fee {
     /**
      */
     @NotNull
+    @Column(precision = 12, scale = 6)
     private BigDecimal fxRate;
 
     /**

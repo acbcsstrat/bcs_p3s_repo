@@ -39,7 +39,7 @@ public class ArchivedRate {
     
     public static ArchivedRate findLatestArchivedRate() {
     	// Would like to use "SELECT o FROM ArchivedRate o order by o.activeFromDate desc limit 1";
-        String jpaQuery = "SELECT o FROM ArchivedRate o order by o.activeFromDate desc";
+        String jpaQuery = "SELECT o FROM ArchivedRate o order by o.archivedDate desc";
 
         TypedQuery<ArchivedRate> query  = entityManager().createQuery(jpaQuery, ArchivedRate.class);
         query.setMaxResults(1);
