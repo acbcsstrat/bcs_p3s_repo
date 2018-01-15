@@ -138,348 +138,6 @@ app.component('dashboard', {
 			dashboardService.supressMessages(messageObj)
 		}
 
-		vm.$onInit = () => {
-
-			var loginCounter;
-
-			var counter = localStorageService.get('counter');
-
-			var transactions = vm.transactions;
-			var patents = vm.patents;
-
-			var patentsArr = [];
-
-			vm.recentTransArr = [];
-			vm.recentStageArr = [];
-			vm.recentRenewalArr = [];
-
-			vm.greenRenewals = [];
-			vm.amberRenewals = [];
-			vm.redRenewals = [];
-			vm.blueRenewals = [];
-			vm.blackRenewals = [];
-			vm.greyRenewals = [];
-	
-		    if(counter == null) {
-
-		    	localStorageService.set('counter', 1);
-
-		    	counter = localStorageService.get('counter');
-
-		    	dashboardService.getMessages()
-			    .then(
-			    	function(response){
-
-			    		var systemResponse = [];
-			    		var urgentResponse = [];
-			    		var date = new Date().getTime();
-
-			    		if(response.systemMessages.length > 0) {
-
-			    			response.systemMessages.forEach(function(data){
-			    				var dateFrom = data.displayFromDate; dateTo = data.displayToDate;
-			    				if(date > dateFrom && date < dateTo) { 
-			    					systemResponse.push(data)
-			    				}
-			    			})
-
-							function systemMessageModal() {
-
-								var modalInstance = $uibModal.open({
-									templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
-									scope: $scope,
-									appendTo: undefined,
-									controllerAs: vm,
-									controller: function($uibModalInstance, message) {
-
-										open = true;
-
-										vm.systemMessage = message;
-
-								 	  	vm.ok = function () {
-									    	$uibModalInstance.close();
-									  	};
-
-									  	vm.dismissModal = function() {
-									  		$uibModalInstance.dismiss();
-									  	}									  	
-
-									},
-									resolve: {
-										message: function() {
-											return systemResponse;
-										}
-									}
-								});
-
-							 	modalInstance.result.finally(function () {
-							     	
-							     	if(response.urgentPatents.length == 0) {
-							     		return;
-							     	} else {
-
-							     		open = false;
-
-							     		response.urgentPatents.forEach(function(data){
-					    					urgentResponse.push(data)
-						    			})
-							     		
-							     		$timeout(function() {
-											var modalInstance = $uibModal.open({
-												templateUrl: 'p3sweb/app/components/dashboard/views/modals/urgent-message-modal.htm',
-												scope: $scope,
-												appendTo: undefined,
-												controllerAs: vm,
-												controller: function($uibModalInstance, message) {
-
-													vm.urgentMessage = message;
-
-											 	  	vm.ok = function () {
-												    	$uibModalInstance.close();
-												  	};
-
-												  	vm.dismissModal = function() {
-												  		console.log('dismiss')
-												  		$uibModalInstance.dismiss();
-												  	}
-												},
-												resolve: {
-													message: function() {
-														return urgentResponse;
-													}
-												}
-											});
-							     		}, 200);
-							     	}
-							     		
-						     	})
-							}; //function end
-
-							$timeout(function() {
-								systemMessageModal()	
-							}, 1000);
-
-			    		} //if end
-
-			    	},
-			    	function(errResponse){
-			    		console.log(errResponse)
-			    	}
-		    	)
-	    	}
-	      	
-
-
-			if(transactions !== undefined && transactions.length > 0) {
-				transactions.forEach(function(data){
-					var hours =  vm.date - data.lastUpdatedDate;
-					var recentTrans  = millsToHours(data, hours);
-
-					if(recentTrans !== undefined) {
-						vm.recentTransArr.push(recentTrans)
-					}
-
-					if(data.latestTransStatus === 'Completed') {
-						vm.recentRenewalArr.push(data)
-					}
-				})				
-			}
-
-			patentsRestService.fetchAllPatents()
-			.then(
-				function(response){
-					response.forEach(function(item){
-						patentsArr.push(item)
-					})
-				},
-				function(errResponse) {
-					console.log(errResponse)
-				}
-			)
-						
-			//COLOUR KEY
-
-			vm.colourKey = function(colour) {
-				switch(colour) {
-					case 0:
-						vm.colourPhaseTitle = {
-							title: 'Green',
-							descrip: '3 months before renewal date - 6 working days before renewal date',
-							color: '#53ab58'
-						}
-					break;
-					case 1:
-						vm.colourPhaseTitle = {
-							title: 'Amber',
-							descrip: '6 working days before renewal date - 3 working days before renewal date',
-							color: '#f9b233'						
-						}
-					break;
-					case 2:
-						vm.colourPhaseTitle = {
-							title: 'Red',
-							descrip: 'Final 3 days before renewal date',
-							color: '#e30613'
-						}
-					break;
-					case 3:
-						vm.colourPhaseTitle = {
-							title: 'Blue',
-							descrip: 'Day after renewal date - 10 working days before end of extension',
-							color: '#0097ce'					
-						}
-					break;
-					case 4:
-						vm.colourPhaseTitle = {
-							title: 'Black',
-							descrip: 'The period between 10 and 6 working days before the expiry of the extension period.',
-							color: '#3c3c3b'
-						}
-					break;
-					case 5:
-						vm.colourPhaseTitle = {
-							title: 'Grey',
-							descrip: 'During this period patents are not generally available for renewal',
-							color: '#bdbdbd'
-						}						
-				}
-			}
-
-			//TOTAL RENEWALS PIE CHART
-
-			vm.totalPatents = patents.length;
-
-			if(patents) {
-				patents.forEach(function(item){
-					if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
-						switch(item.costBandColour) {
-							case 'Green':
-								vm.greenRenewals.push(item)
-							break;
-							case 'Amber':
-								vm.amberRenewals.push(item)
-							break;
-							case 'Red':
-								vm.redRenewals.push(item)
-							break;
-							case 'Blue':
-								vm.blueRenewals.push(item)
-							break;
-							case 'Black':
-								vm.blackRenewals.push(item)
-							break;
-						}
-					} else {
-						vm.greyRenewals.push(item)
-					}
-				})				
-			}
-
-
-			vm.charts = {
-
-				doughnut: {
-					labels: ["No action required", "Black", "Blue", "Red", "Yellow", "Green"],
-					data: [vm.greyRenewals.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length],
-					options: {
-						elements: {
-							arc: {
-								borderWidth: 3	
-							}
-						},
-						responsive: true,
-						cutoutPercentage: 70,
-						animation: {
-							duration: 1500,
-							easing: 'linear'
-						}
-
-				  	},
-				  	colours: [{
-					      	backgroundColor: '#bdbdbd',
-					      	pointBackgroundColor: '#bdbdbd',
-					      	pointHoverBackgroundColor: '#bdbdbd',
-					     	borderColor: '#bdbdbd',
-				      		pointBorderColor: '#bdbdbd',
-			      			pointHoverBorderColor: '#bdbdbd'
-					    },{
-				      		backgroundColor: '#3c3c3b',
-				      		pointBackgroundColor: '#3c3c3b',
-				      		pointHoverBackgroundColor: '#3c3c3b',
-				      		borderColor: '#3c3c3b',
-				      		pointBorderColor: '#fff',
-				      		pointHoverBorderColor: '#3c3c3b'
-					    },{
-			      			backgroundColor: '#0097ce',
-				      		pointBackgroundColor: '#0097ce',
-				      		pointHoverBackgroundColor: '#0097ce',
-				      		borderColor: '#0097ce',
-				      		pointBorderColor: '#0097ce',
-				      		pointHoverBorderColor: '#0097ce'
-					    },{
-					      	backgroundColor: '#e30613',
-					      	pointBackgroundColor: '#e30613',
-					      	pointHoverBackgroundColor: '#e30613',
-					      	borderColor: '#e30613',
-					      	pointBorderColor: '#e30613',
-					      	pointHoverBorderColor: '#e30613'
-					    },{
-					      	backgroundColor: '#f9b233',
-					      	pointBackgroundColor: '#f9b233',
-					      	pointHoverBackgroundColor: '#f9b233',
-					      	borderColor: '#f9b233',
-					      	pointBorderColor: '#f9b233',
-					      	pointHoverBorderColor: '#f9b233'
-					    },{
-					      	backgroundColor: '#53ab58',
-					      	pointBackgroundColor: '#53ab58',
-					      	pointHoverBackgroundColor: '#53ab58',
-					      	borderColor: '#53ab58',
-					      	pointBorderColor: '#53ab58',
-					      	pointHoverBorderColor: '#53ab58'
-					    }
-					  ]
-				} //donught end
-			} //charts end
-			
-			vm.phaseSliderInfo = function(id) {
-
-				vm.phaseArr = [];
-
-				var phase;
-
-				switch(id) {
-					case 0:
-						phase = vm.greenRenewals;
-					break;
-					case 1:
-						phase = vm.amberRenewals;
-					break;
-					case 2:
-						phase = vm.redRenewals;
-					break;
-					case 3:
-						phase = vm.blueRenewals;
-					break;
-					case 4:
-						phase = vm.blackRenewals;
-					break;			
-
-				}
-
-				function loadPhase(i) {
-					vm.phaseArr.length = 0;
-					$timeout(function() {
-						vm.phaseArr = i;
-					}, 100);
-				}
-
-				loadPhase(phase)
-
-		  	} //phaseSliderInfoEnd
-
-		} //$onInit end	
-
 		function patentCostAnalysisFn(id) {
 			patentsRestService.fetchCostAnalysis(id)
 			.then(
@@ -646,9 +304,343 @@ app.component('dashboard', {
 		    		slick.slickGoTo($scope.currentIndex);
 		    	}
 		    }
-		};
+		};		
 
-		
+		vm.$onInit = () => {
+
+			var loginCounter;
+
+			var counter = localStorageService.get('counter');
+
+			var transactions = vm.transactions;
+			var patents = vm.patents;
+
+			var patentsArr = [];
+
+			vm.recentTransArr = [];
+			vm.recentStageArr = [];
+			vm.recentRenewalArr = [];
+
+			vm.greenRenewals = [];
+			vm.amberRenewals = [];
+			vm.redRenewals = [];
+			vm.blueRenewals = [];
+			vm.blackRenewals = [];
+			vm.greyRenewals = [];
+	
+		    if(counter == null) {
+
+		    	localStorageService.set('counter', 1);
+
+		    	counter = localStorageService.get('counter');
+
+		    	dashboardService.getMessages()
+			    .then(
+			    	function(response){
+
+			    		var systemResponse = [];
+			    		var urgentResponse = [];
+			    		var date = new Date().getTime();
+
+			    		if(response.systemMessages.length > 0) {
+
+			    			response.systemMessages.forEach(function(data){
+			    				var dateFrom = data.displayFromDate; dateTo = data.displayToDate;
+			    				if(date > dateFrom && date < dateTo) { 
+			    					systemResponse.push(data)
+			    				}
+			    			})
+
+							function systemMessageModal() {
+
+								var modalInstance = $uibModal.open({
+									templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
+									scope: $scope,
+									appendTo: undefined,
+									controllerAs: vm,
+									controller: function($uibModalInstance, message) {
+
+										open = true;
+
+										vm.systemMessage = message;
+
+								 	  	vm.ok = function () {
+									    	$uibModalInstance.close();
+									  	};
+
+									  	vm.dismissModal = function() {
+									  		$uibModalInstance.dismiss();
+									  	}									  	
+
+									},
+									resolve: {
+										message: function() {
+											return systemResponse;
+										}
+									}
+								});
+
+							 	modalInstance.result.finally(function () {
+							     	
+							     	if(response.urgentPatents.length == 0) {
+							     		return;
+							     	} else {
+
+							     		open = false;
+
+							     		response.urgentPatents.forEach(function(data){
+					    					urgentResponse.push(data)
+						    			})
+							     		
+							     		$timeout(function() {
+											var modalInstance = $uibModal.open({
+												templateUrl: 'p3sweb/app/components/dashboard/views/modals/urgent-message-modal.htm',
+												scope: $scope,
+												appendTo: undefined,
+												controllerAs: vm,
+												controller: function($uibModalInstance, message) {
+
+													vm.urgentMessage = message;
+
+											 	  	vm.ok = function () {
+												    	$uibModalInstance.close();
+												  	};
+
+												  	vm.dismissModal = function() {
+												  		console.log('dismiss')
+												  		$uibModalInstance.dismiss();
+												  	}
+												},
+												resolve: {
+													message: function() {
+														return urgentResponse;
+													}
+												}
+											});
+							     		}, 200);
+							     	}
+							     		
+						     	})
+							}; //function end
+
+							$timeout(function() {
+								systemMessageModal()	
+							}, 1000);
+
+			    		} //if end
+
+			    	},
+			    	function(errResponse){
+			    		console.log(errResponse)
+			    	}
+		    	)
+	    	}
+	      	
+
+
+			if(transactions !== undefined && transactions.length > 0) {
+				transactions.forEach(function(data){
+					var hours =  vm.date - data.lastUpdatedDate;
+					var recentTrans  = millsToHours(data, hours);
+
+					if(recentTrans !== undefined) {
+						vm.recentTransArr.push(recentTrans)
+					}
+
+					if(data.latestTransStatus === 'Completed') {
+						vm.recentRenewalArr.push(data)
+					}
+				})				
+			}
+
+			patentsRestService.fetchAllPatents()
+			.then(
+				function(response){
+					response.forEach(function(item){
+						patentsArr.push(item)
+					})
+				},
+				function(errResponse) {
+					console.log(errResponse)
+				}
+			)
+						
+			//COLOUR KEY
+
+			vm.colourKey = function(colour) {
+				switch(colour) {
+					case 0:
+						vm.colourPhaseTitle = {
+							title: 'Green',
+							color: '#53ab58'
+						}
+					break;
+					case 1:
+						vm.colourPhaseTitle = {
+							title: 'Amber',
+							color: '#f9b233'						
+						}
+					break;
+					case 2:
+						vm.colourPhaseTitle = {
+							title: 'Red',
+							color: '#e30613'
+						}
+					break;
+					case 3:
+						vm.colourPhaseTitle = {
+							title: 'Blue',
+							color: '#0097ce'					
+						}
+					break;
+					case 4:
+						vm.colourPhaseTitle = {
+							title: 'Black',
+							color: '#3c3c3b'
+						}
+					break;
+					case 5:
+						vm.colourPhaseTitle = {
+							title: 'Grey',
+							color: '#bdbdbd'
+						}						
+				}
+			}
+
+			//TOTAL RENEWALS PIE CHART
+
+			vm.totalPatents = patents.length;
+
+			if(patents) {
+				patents.forEach(function(item){
+					if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
+						switch(item.costBandColour) {
+							case 'Green':
+								vm.greenRenewals.push(item)
+							break;
+							case 'Amber':
+								vm.amberRenewals.push(item)
+							break;
+							case 'Red':
+								vm.redRenewals.push(item)
+							break;
+							case 'Blue':
+								vm.blueRenewals.push(item)
+							break;
+							case 'Black':
+								vm.blackRenewals.push(item)
+							break;
+						}
+					} else {
+						vm.greyRenewals.push(item)
+					}
+				})				
+			}
+
+
+			vm.charts = {
+
+				doughnut: {
+					labels: ["No action required", "Black", "Blue", "Red", "Yellow", "Green"],
+					data: [vm.greyRenewals.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length],
+					options: {
+						elements: {
+							arc: {
+								borderWidth: 3	
+							}
+						},
+						responsive: true,
+						cutoutPercentage: 70,
+						animation: {
+							duration: 1500,
+							easing: 'linear'
+						}
+
+				  	},
+				  	colours: [{
+					      	backgroundColor: '#bdbdbd',
+					      	pointBackgroundColor: '#bdbdbd',
+					      	pointHoverBackgroundColor: '#bdbdbd',
+					     	borderColor: '#bdbdbd',
+				      		pointBorderColor: '#bdbdbd',
+			      			pointHoverBorderColor: '#bdbdbd'
+					    },{
+				      		backgroundColor: '#3c3c3b',
+				      		pointBackgroundColor: '#3c3c3b',
+				      		pointHoverBackgroundColor: '#3c3c3b',
+				      		borderColor: '#3c3c3b',
+				      		pointBorderColor: '#fff',
+				      		pointHoverBorderColor: '#3c3c3b'
+					    },{
+			      			backgroundColor: '#0097ce',
+				      		pointBackgroundColor: '#0097ce',
+				      		pointHoverBackgroundColor: '#0097ce',
+				      		borderColor: '#0097ce',
+				      		pointBorderColor: '#0097ce',
+				      		pointHoverBorderColor: '#0097ce'
+					    },{
+					      	backgroundColor: '#e30613',
+					      	pointBackgroundColor: '#e30613',
+					      	pointHoverBackgroundColor: '#e30613',
+					      	borderColor: '#e30613',
+					      	pointBorderColor: '#e30613',
+					      	pointHoverBorderColor: '#e30613'
+					    },{
+					      	backgroundColor: '#f9b233',
+					      	pointBackgroundColor: '#f9b233',
+					      	pointHoverBackgroundColor: '#f9b233',
+					      	borderColor: '#f9b233',
+					      	pointBorderColor: '#f9b233',
+					      	pointHoverBorderColor: '#f9b233'
+					    },{
+					      	backgroundColor: '#53ab58',
+					      	pointBackgroundColor: '#53ab58',
+					      	pointHoverBackgroundColor: '#53ab58',
+					      	borderColor: '#53ab58',
+					      	pointBorderColor: '#53ab58',
+					      	pointHoverBorderColor: '#53ab58'
+					    }
+					  ]
+				} //donught end
+			} //charts end
+			
+			vm.phaseSliderInfo = function(id) {
+
+				vm.phaseArr = [];
+
+				var phase;
+
+				switch(id) {
+					case 0:
+						phase = vm.greenRenewals;
+					break;
+					case 1:
+						phase = vm.amberRenewals;
+					break;
+					case 2:
+						phase = vm.redRenewals;
+					break;
+					case 3:
+						phase = vm.blueRenewals;
+					break;
+					case 4:
+						phase = vm.blackRenewals;
+					break;			
+
+				}
+
+				function loadPhase(i) {
+					vm.phaseArr.length = 0;
+					$timeout(function() {
+						vm.phaseArr = i;
+					}, 100);
+				}
+
+				loadPhase(phase)
+
+		  	} //phaseSliderInfoEnd
+
+		} //$onInit end		
 
 	}
 ]})
