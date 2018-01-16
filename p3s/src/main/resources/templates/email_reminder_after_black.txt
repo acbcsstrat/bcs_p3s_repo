@@ -14,7 +14,7 @@ EPO patent [PATENT_APPLICATION_NUMBER] is at the end of its On Extension period 
 It is now too late to renew this patent via thepatent.place
 <p/>
 
-However, if you contact our partner company prior to the patent lapsing, they may be able to assist. 
+However, if you contact our partner company, [PARTNER_COMPANY_NAME], on [PARTNER_COMPANY_PHONE] prior to the patent lapsing, they may be able to assist. 
 <p/>
 
 <For BoxCleverDigital consideration> PARTNER DETAILS HERE ....

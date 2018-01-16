@@ -9,7 +9,7 @@ To:</td><td>[FIRSTNAME] [LASTNAME]</td></tr>
 
 As of today, patent [PATENT_APPLICATION_NUMBER] is On Extension at the EPO.
 
-You can now renew this patent again, online, 
+You can now, again, renew this patent online, 
 via <a href="[LOGIN_URL]">[LOGIN_URL]</a>
 <br/>
  for $[PRICE]
