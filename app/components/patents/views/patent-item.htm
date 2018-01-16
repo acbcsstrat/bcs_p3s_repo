@@ -747,61 +747,62 @@
 					</div>
 				</div>
 				<div data-ng-if="$ctrl.renewal.length !== 0">
-					<div class="content-panel__body bg-white">
+					<div class="bg-white">
 						<div class="row">
-							<table class="t-data">
-								<thead class="border-grey-xs--top">
-									<tr>
-										<td class="font-h4 font-weight-bold td-panel-p-l" width="20%" data-ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
-											<span data-ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-											<span data-ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-										</td>
-										<td class="font-h4 font-weight-bold"  width="20%" data-ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
-											<span data-ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-											<span data-ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-										</td>
-										<td class="font-h4 font-weight-bold"  width="30%" data-ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
-											<span data-ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
-											<span data-ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-										</td>
-										<td class="font-h4 font-weight-bold" width="30%">Downloads</td>
-									</tr>
-								</thead>
-								<tbody class="border-grey-xs--btm">
-									<tr data-ng-repeat="renewal in $ctrl.renewalHistory | orderBy:$ctrl.sortType:$ctrl.sortReverse">
-										<td class="font-body td-panel-p-l" width="20%">Year <span data-ng-bind="renewal.renewalYear"></span></td>
-										<td class="font-body" width="20%">{{renewal.patentUI.lastRenewedDateExEpo | date: 'MM/dd/yy'}}</td>
-										<td class="font-body" width="30%">
-											<table class="table-borderless">
-												<tr>
-													<td class="font-body p-t-none">Official Fee:</td>
-													<td class="font-body p-t-none">$ {{renewal.feeUI.renewalFeeUSD}}</td>
-												</tr>
-												<tr class="border-grey-xs--btm">
-													<td class="font-body">Processing Fee:</td>
-													<td class="font-body">$ {{renewal.feeUI.processingFeeEUR}}</td>
-												</tr>														
+							<div class="col-xl-12">
+								<table class="t-data">
+									<thead class="border-grey-xs--top">
+										<tr>
+											<td class="font-h4 font-weight-bold td-panel-p-l td-20" data-ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
+												<span data-ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+												<span data-ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+											</td>
+											<td class="font-h4 font-weight-bold td-20" data-ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
+												<span data-ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+												<span data-ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+											</td>
+											<td class="font-h4 font-weight-bold td-30" data-ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
+												<span data-ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
+												<span data-ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+											</td>
+											<td class="font-h4 font-weight-bold td-30">Downloads</td>
+										</tr>
+									</thead>
+									<tbody class="border-grey-xs--btm">
+										<tr data-ng-repeat="renewal in $ctrl.renewalHistory | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+											<td class="font-body td-panel-p-l td-20">Year <span data-ng-bind="renewal.renewalYear"></span></td>
+											<td class="font-body td-20">{{renewal.patentUI.lastRenewedDateExEpo | date: 'MM/dd/yy'}}</td>
+											<td class="font-body td-30">
+												<table class="table-borderless">
+													<tr>
+														<td class="font-body p-t-none">Official Fee:</td>
+														<td class="font-body p-t-none">$ {{renewal.feeUI.renewalFeeUSD}}</td>
+													</tr>
+													<tr class="border-grey-xs--btm">
+														<td class="font-body">Processing Fee:</td>
+														<td class="font-body">$ {{renewal.feeUI.processingFeeEUR}}</td>
+													</tr>														
 
-												<tr>
-													<td class="font-body font-weight-bold">Total: </td>
-													<td class="font-body font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
-												</tr>													
-											</table>
-										</td>
-
-										<td width="30%">
-											<div class="row">
-												<div class="col-xl-6 d-flex align-items-center">
-													<a href="{{renewal.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
+													<tr>
+														<td class="font-body font-weight-bold">Total: </td>
+														<td class="font-body font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
+													</tr>													
+												</table>
+											</td>
+											<td class="td-30">
+												<div class="row">
+													<div class="col-xl-6 d-flex align-items-center">
+														<a data-ng-href="{{renewal.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+													</div>
+													<div class="col-xl-6 d-flex align-items-center">
+														<a data-ng-href="{{renewal.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+													</div>	
 												</div>
-												<div class="col-xl-6 d-flex align-items-center">
-													<a href="{{renewal.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a></span>
-												</div>	
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -1164,8 +1165,8 @@
 													</div>
 													<div class="col-md-6 col-lg-6">
 														<p class="font-body text-center">$ 0.00</p>
-													</div>												
-												</div>		
+													</div>
+												</div>
 											</div>
 										</div> <!-- row end -->
 										<div class="row">
@@ -1176,7 +1177,7 @@
 							 							</ngcart-addtocart>		
 													</div>
 												</div>
-									        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="w-100 btn-default"">
+									        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="w-100 btn-default">
 											 		<a class="btn btn-block pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 											 	</div>
 									        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="w-100 btn-default">
@@ -1213,10 +1214,10 @@
 								<div class="col-md-12 col-lg-12 text-xs-left">
 								  	<uib-tabset type="pills" active="activeChart">
 								    	<uib-tab heading="Stage Cost Chart" classes="btn btn-primary" index="0" data-ng-hide="true">
-									    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" chart-data="$ctrl.charts.bar.data" chart-labels="$ctrl.charts.bar.labels" chart-series="$ctrl.charts.bar.series" chart-options="$ctrl.charts.bar.options" chart-colors="$ctrl.charts.bar.colours" chart-dataset-override="$ctrl.charts.bar.datasetoverride" height="100px"></canvas>
+									    	<canvas id="patentBarChart" class="chart chart-horizontal-bar" data-chart-data="$ctrl.charts.bar.data" data-chart-labels="$ctrl.charts.bar.labels" data-chart-series="$ctrl.charts.bar.series" data-chart-options="$ctrl.charts.bar.options" data-chart-colors="$ctrl.charts.bar.colours" data-chart-dataset-override="$ctrl.charts.bar.datasetoverride" height="100"></canvas>
 									    </uib-tab>
 									    <uib-tab heading="FX Chart" classes="btn btn-primary" index="1" data-ng-hide="true">
-							 				<canvas id="patentLineChart" class="chart chart-line" chart-data="$ctrl.charts.line.data" chart-labels="$ctrl.charts.line.labels" chart-series="$ctrl.charts.line.series" chart-options="$ctrl.charts.line.options" chart-dataset-override="$ctrl.charts.line.datasetoverride" height="100px"></canvas>
+							 				<canvas id="patentLineChart" class="chart chart-line" data-chart-data="$ctrl.charts.line.data" data-chart-labels="$ctrl.charts.line.labels" data-chart-series="$ctrl.charts.line.series" data-chart-options="$ctrl.charts.line.options" data-chart-dataset-override="$ctrl.charts.line.datasetoverride" height="100"></canvas>
 							    		</uib-tab>
 						    		</uib-tabset>
 				    			</div>
