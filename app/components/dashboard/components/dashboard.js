@@ -488,16 +488,14 @@ app.component('dashboard', {
 							$timeout(function() {
 								systemMessageModal(response);
 							}, 1000);
-
 			    		} //if end
-
 			    	},
 			    	function(errResponse){
 			    		console.log(errResponse);
 			    	}
 		    	);
 	    	}
-	      	
+
 			if(transactions !== undefined && transactions.length > 0) {
 				transactions.forEach(function(data){
 					var hours =  vm.date - data.lastUpdatedDate;
@@ -512,7 +510,7 @@ app.component('dashboard', {
 					}
 				});	
 			}
-      
+
 			//COLOUR KEY
 
 			vm.colourKey = function(colour) {
@@ -551,7 +549,7 @@ app.component('dashboard', {
 						vm.colourPhaseTitle = {
 							title: 'Grey',
 							color: '#bdbdbd'
-						};				
+						};
 				}
 			};
 
