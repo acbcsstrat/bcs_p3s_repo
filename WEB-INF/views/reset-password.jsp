@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -193,7 +192,6 @@
 
 				})
 
-
 				//validate confirm password
 
 				$('#confirm_password').on('blur', function(){
@@ -206,8 +204,5 @@
 			})
 
      	</script>
-
-
-      
    </body>
 </html>
