@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -28,7 +27,7 @@
           		<div class="row m-b-sm">
                      <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-sm">
-                           <img src="assets/imgs/logos/PP_icon_lg.png">
+                           <img src="assets/imgs/logos/PP_icon_lg.png" alt="patent place logo">
                         </div>
                         <h1 class="font-weight-bold font-h1">Register</h1>
                      </div>
@@ -98,7 +97,7 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-md-12 col-lg-12 col-xl-12">
-											<input input="text" name="phoneNumber" class="form-control pill-radius font-body" id="phoneNumber" data-parsley-validate-phone="" placeholder="Tel" data-parsley-minlength="10" data-parsley-minlength-message="This fields value has a minimum length of 10 characters." data-parsley-maxlength-messsage="This fields value has a maximum length of 40 characters." data-parsley-maxlength="40" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">		
+											<input type="text" name="phoneNumber" class="form-control pill-radius font-body" id="phoneNumber" data-parsley-validate-phone="" placeholder="Tel" data-parsley-minlength="10" data-parsley-minlength-message="This fields value has a minimum length of 10 characters." data-parsley-maxlength-messsage="This fields value has a maximum length of 40 characters." data-parsley-maxlength="40" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">		
 										</div>
 									</div>
 									<div id="subBusiness">
@@ -114,7 +113,7 @@
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-												<input type="text" name="USstate" class="form-control pill-radius font-body" id="USstate" placeholder="State" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
+												<input type="text" name="USstate" class="form-control pill-radius font-body" id="USstate" placeholder="State" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
@@ -163,7 +162,7 @@
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-												<input type="text" name="billingState" class="form-control pill-radius font-body" id="billing_state" placeholder="State" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
+												<input type="text" name="billingState" class="form-control pill-radius font-body" id="billing_state" placeholder="State" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
@@ -227,12 +226,12 @@
            							<div class="m-b-md">
 	           							<div class="form-group row">
 	           								<div class="col-md-12 col-lg-12 col-xl-12">
-	           									<input data-parsley-type="alphanum" class="form-control pill-radius font-body" name="businessNumber" placeholder="Business Number" data-parsley-type="alphanum" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+	           									<input data-parsley-type="alphanum" class="form-control pill-radius font-body" name="businessNumber" placeholder="Business Number" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 	           								</div>
 	           							</div>
 	           							<div class="form-group row">
 	           								<div class="col-md-12 col-lg-12 col-xl-12">
-	           									<input class="form-control pill-radius font-body" name="businessPin" placeholder="Business PIN" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again."" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+	           									<input class="form-control pill-radius font-body" name="businessPin" placeholder="Business PIN" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 	           								</div>
 	           							</div>
 	           							<div id="businessValidation">
@@ -282,7 +281,7 @@
 	       									<input type="button" id="businessConfirmSubmit" name="businessConfirmSubmit" class="btn btn--check bg-phase-green pill-radius txt-white font-body font-body--component font-weight-medium btn--lg m-r-xs cursor-pointer" value="Yes">
 	   									</div>
 	   									<div class="btn-error">      									
-	       									<input type="button" id="businessConfirmSubmit" name="businessCancel" class="btn btn--cross bg-phase-red pill-radius txt-white font-body font-body--component font-weight-medium btn--lg cursor-pointer" value="No">       										
+	       									<input type="button" id="businessCancel" name="businessCancel" class="btn btn--cross bg-phase-red pill-radius txt-white font-body font-body--component font-weight-medium btn--lg cursor-pointer" value="No">       										
 	   									</div>   										
 	   								</div>
 	   							</div>
@@ -292,7 +291,6 @@
    				</div>
 			</div>			       				
      	</div>         
-  	</div>
 
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
@@ -641,7 +639,7 @@
   					})
   				})
 
-  				$('#businessConfirmSubmit').click(function(e){
+  				$('#businessConfirmSubmit, #businessCancel').click(function(e){
   					e.preventDefault()
 					$('#businessConfirm').hide();
 					$('#initialRegistration').show();
@@ -656,8 +654,5 @@
 	      	})
 
      	</script>
-
-
-      
    </body>
 </html>
