@@ -31,7 +31,7 @@
                   <div class="row">
                      <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-md">
-                           <img src="assets/imgs/logos/PP_icon_lg.png">
+                           <img src="assets/imgs/logos/PP_icon_lg.png" alt="patent place logo">
                         </div>
                         <h1 class="font-weight-bold font-h1">Login</h1>
                      </div>
