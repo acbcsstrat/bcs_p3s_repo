@@ -14,9 +14,41 @@ app.component('dashboard', {
 
 	    vm.date = new Date().getTime();
 
+		var patentsArr = [];
+
+		var systemResponse = [];
+		var urgentResponse = [];
+
+		vm.recentTransArr = [];
+		vm.recentStageArr = [];
+		vm.recentRenewalArr = [];
+
+		vm.greenRenewals = [];
+		vm.amberRenewals = [];
+		vm.redRenewals = [];
+		vm.blueRenewals = [];
+		vm.blackRenewals = [];
+		vm.greyRenewals = [];
+
+		var messageObj = {};
+		var messageArr = [];
+
+
 	    $timeout(function() {
 	      vm.animate = true;
 	    }, 100);
+
+		patentsRestService.fetchAllPatents()
+		.then(
+			function(response){
+				response.forEach(function(item){
+					patentsArr.push(item);
+				});
+			},
+			function(errResponse) {
+				console.log(errResponse);
+			}
+		);
 
 		function millsToHours(data, millisec) {
 
@@ -35,7 +67,7 @@ app.component('dashboard', {
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
 	        if (hours < 48) {
-	            return data
+	            return data;
 	        }
 
 	    }
@@ -53,7 +85,7 @@ app.component('dashboard', {
 
 		vm.fetchItemRenewal = function() {
 			patentsService.activePatentItemMenu();
-		}
+		};
 
 		vm.fetchItemTransaction = function(id) {
 			currentTransactionsService.fetchCurrentTransactions()
@@ -63,16 +95,16 @@ app.component('dashboard', {
 						const transId = data.id;
 						data.renewalUIs.forEach(function(data, i) {
 							if(data.patentUI.id == id) {
-								$state.go('current-transactions.current-transaction-item',{transId: transId})
+								$state.go('current-transactions.current-transaction-item',{transId: transId});
 							}
-						})
-					})
+						});
+					});
 				},
 				function(errResponse) {
-					console.log(errResponse)
+					console.log(errResponse);
 				}
-			)
-		}
+			);
+		};
 
 		vm.activityNotifications = [
 			{
@@ -87,14 +119,14 @@ app.component('dashboard', {
 				activity: 'Renewals',
 				index: 2
 			}
-		]
+		];
 
 		vm.activeMenu = vm.activityNotifications[0].activity;
 
 		vm.setActivityActiveTab = function(menuItem, index) {
 			vm.activeActivityTabResp = index;
-			vm.activeMenu = menuItem
-		}
+			vm.activeMenu = menuItem;
+		};
 
 		vm.fxPeriodActive = function(fxActive) {
 			switch(fxActive) {
@@ -102,81 +134,142 @@ app.component('dashboard', {
 					vm.renewalfxTimeframe = 'Today';
 				break;
 				case 1:
-					vm.renewalfxTimeframe = 'Yesterday'
+					vm.renewalfxTimeframe = 'Yesterday';
 				break;
 				case 2:
-					vm.renewalfxTimeframe = 'Last Week'
+					vm.renewalfxTimeframe = 'Last Week';
 				break;
 				case 3:
-					vm.renewalfxTimeframe = 'Last Mth'													
+					vm.renewalfxTimeframe = 'Last Mth';											
 			}				
-		}
+		};
 
 		//suppresing system messages
-
-		var messageObj = {};
-		var messageArr = [];
 
 		vm.checkedMessages = function(id, checked) {
 
 			if(checked) {
-				messageArr.push(id)
+				messageArr.push(id);
 				vm.message = true;
 			} else {
-				messageArr.splice(-1, 1)
+				messageArr.splice(-1, 1);
 			}
 
-			if(messageArr.length == 0) {
+			if(messageArr.length === 0) {
 				vm.message = false;				
 			}
 
-		}
+		};
 
 		messageObj.messageArr = messageArr;
 
 		vm.supresssMessages = function() {
-			dashboardService.supressMessages(messageObj)
-		}
+			dashboardService.supressMessages(messageObj);
+		};
 
 		function patentCostAnalysisFn(id) {
+
+			var hours;
+
 			patentsRestService.fetchCostAnalysis(id)
 			.then(
 				function(response){
                     switch(response.currentcostBand) {
                         case 'Green':
-                        
-                    	var hours =  vm.date - response.greenStartDate;
 
-                    	if(millsToHours(response, hours) !== undefined){
-                    		vm.recentStageArr.push(item)
-                    		item.nextCostBandColor = 'Amber';
-                    	}
+	                    	hours =  vm.date - response.greenStartDate;
 
-						vm.greenRenewals.forEach(function(data){
-							data.progressBar = calcProgress(response.greenStartDate, response.amberStartDate);
-						})
+	                    	if(millsToHours(response, hours) !== undefined){
+	                    		patentsArr.forEach(function(item) {
+	                    			if(item.costBandColour == 'Green') {
+	                    				vm.recentStageArr.push(item);
+                              item.nextCostBandColor = 'Amber';
+	                    			}
+	                    		});
+	                    	}
+
+							vm.greenRenewals.forEach(function(data){
+								data.progressBar = calcProgress(response.greenStartDate, response.amberStartDate);
+							});
 
 						break;
 						case 'Amber':
 
-                    	var hours =  vm.date - response.amberStartDate;
+	                    	hours =  vm.date - response.amberStartDate;
 
-                    	if(millsToHours(response, hours) !== undefined){
-                    		vm.recentStageArr.push(item)
-                    		item.nextCostBandColor = 'Red';
-                    	}
+	                    	if(millsToHours(response, hours) !== undefined){
+	                    		patentsArr.forEach(function(item) {
+	                    			if(item.costBandColour == 'Amber') {	                    		
+	                    				vm.recentStageArr.push(item);
+	                    				item.nextCostBandColor = 'Red';                              
+	                    			}
+	                    		});
+	                    	}
 
-                    	//progress
-						vm.greenRenewals.forEach(function(data){
-							data.progressBar = calcProgress(response.amberStartDate, response.redStartDate);
-						})						
+							vm.amberRenewals.forEach(function(data){
+								data.progressBar = calcProgress(response.amberStartDate, response.redStartDate);
+							});
+
+						break;
+						case 'Red':
+
+							hours =  vm.date - response.amberStartDate;
+
+	                    	if(millsToHours(response, hours) !== undefined){
+	                    		patentsArr.forEach(function(item) {
+	                    			if(item.costBandColour == 'Red') {	                    		
+	                    				vm.recentStageArr.push(item);
+	                    				item.nextCostBandColor = 'Blue';                              
+	                    			}
+	                    		});
+	                    	}
+
+							vm.redRenewals.forEach(function(data){
+								data.progressBar = calcProgress(response.redStartDate, response.blueStartDate);
+							});
+
+						break;
+						case 'Blue':
+
+							hours =  vm.date - response.amberStartDate;
+
+	                    	if(millsToHours(response, hours) !== undefined){
+	                    		patentsArr.forEach(function(item) {
+	                    			if(item.costBandColour == 'Blue') {	                    		
+	                    				vm.recentStageArr.push(item);
+	                    				item.nextCostBandColor = 'Black';                              
+	                    			}
+	                    		});
+	                    	}
+
+							vm.blueRenewals.forEach(function(data){
+								data.progressBar = calcProgress(response.blueStartDate, response.blackStartDate);
+							});
+
+						break;
+						case 'Black':
+
+							hours =  vm.date - response.amberStartDate;
+
+	                    	if(millsToHours(response, hours) !== undefined){
+	                    		patentsArr.forEach(function(item) {
+	                    			if(item.costBandColour == 'Black') {	                    		
+	                    				vm.recentStageArr.push(item);
+	                    				item.nextCostBandColor = 'Grey';                              
+	                    			}
+	                    		});
+	                    	}
+
+							vm.blackRenewals.forEach(function(data){
+								data.progressBar = calcProgress(response.blackStartDate, response.blackEndDate);
+							});
 
 					}
 				},
 				function(errResponse) {
 					// body...
 				}
-			)
+			);
 		}
 
 		$scope.currentIndex = 0;
@@ -198,7 +291,7 @@ app.component('dashboard', {
 
 	        			vm.selectedPatent = vm.phaseArr[i];
 
-	        			patentCostAnalysisFn(vm.selectedPatent.id) 
+	        			patentCostAnalysisFn(vm.selectedPatent.id) ;
 
 						var fees = vm.phaseArr[i].feeUI;
 						if(fees !== null) {
@@ -210,18 +303,12 @@ app.component('dashboard', {
 					        			var dateArr = [];
 					        			//weekly
 					        			data.forEach(function(item){
-					        				dateArr.push(item.rateActiveDate)
+					        				dateArr.push(item.rateActiveDate);
 					        			});
 
 					        			dateArr.sort(function(a, b){
-					        				return a - b
+					        				return a - b;
 					        			});
-
-					        			var week = 7;
-					        			var date = new Date()
-					        			var lwD = new Date(date.getTime() - (week * 24 * 60 * 60 * 1000))
-					        			var lastWeekD = new Date(lwD).getDay();
-					        			var lastWeekDt = new Date(lwD).getDate();
 
 					        			dateArr.forEach(function(item, index){
 					        				if(item == dateArr[0]) {
@@ -243,12 +330,12 @@ app.component('dashboard', {
 					        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
 					        					vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);
 					        				}
-					        			})
+					        			});
 					        		},
 					        		function(error){
 
 					        		}
-					    		)
+					    		);
 
 					    		fxService.fetchFxMonth()
 					        	.then(
@@ -257,11 +344,11 @@ app.component('dashboard', {
 					        			var dateArr = [];
 
 					        			data.forEach(function(item){
-					        				dateArr.push(item.rateActiveDate)
+					        				dateArr.push(item.rateActiveDate);
 					        			});
 
 					        			dateArr.sort(function(a, b){
-					        				return a - b
+					        				return a - b;
 					        			});
 
 					        			var tD = new Date();
@@ -274,7 +361,7 @@ app.component('dashboard', {
 					        					vm.lastMonthsPriceUSD = Math.floor(fees.subTotalEUR * lastMonthFx);
 					        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
 					        				}
-					        			})
+					        			});
 
 					        			$timeout(function(){
 					        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
@@ -289,7 +376,7 @@ app.component('dashboard', {
 					        		function(error){
 
 					        		}
-					    		)
+					    		);
 					    		
 		        			}, 100);
 
@@ -297,37 +384,88 @@ app.component('dashboard', {
 
 					} //function end
 
-	        		patentFx($scope.currentIndex)
+	        		patentFx($scope.currentIndex);
 		        },
 		    	init: function(event, slick, currentSlide, nextSlide) {
 		    		slick.slickGoTo($scope.currentIndex);
 		    	}
 		    }
-		};		
+		};
+
+		function systemMessageModal(response) {
+      
+			var modalInstance = $uibModal.open({
+				templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
+				scope: $scope,
+				appendTo: undefined,
+				controllerAs: vm,
+				controller: function($uibModalInstance, message) {
+
+					vm.systemMessage = message;
+
+			 	  	vm.ok = function () {
+				    	$uibModalInstance.close();
+				  	};
+
+				  	vm.dismissModal = function() {
+				  		$uibModalInstance.dismiss();
+				  	};							  	
+
+				},
+				resolve: {
+					message: function() {
+						return systemResponse;
+					}
+				}
+			});
+
+		 	modalInstance.result.finally(function () {
+		     	
+		     	if(response.urgentPatents.length === 0) {
+		     		return;
+		     	} else {
+
+		     		response.urgentPatents.forEach(function(data){
+    					urgentResponse.push(data);
+	    			});
+		     		
+		     		$timeout(function() {
+						var modalInstance = $uibModal.open({
+							templateUrl: 'p3sweb/app/components/dashboard/views/modals/urgent-message-modal.htm',
+							scope: $scope,
+							appendTo: undefined,
+							controllerAs: vm,
+							controller: function($uibModalInstance, message) {
+
+								vm.urgentMessage = message;
+
+						 	  	vm.ok = function () {
+							    	$uibModalInstance.close();
+							  	};
+
+							  	vm.dismissModal = function() {
+							  		$uibModalInstance.dismiss();
+							  	};
+							},
+							resolve: {
+								message: function() {
+									return urgentResponse;
+								}
+							}
+						});
+		     		}, 200);
+		     	}
+        	});
+		} //function end
 
 		vm.$onInit = () => {
-
-			var loginCounter;
 
 			var counter = localStorageService.get('counter');
 
 			var transactions = vm.transactions;
 			var patents = vm.patents;
-
-			var patentsArr = [];
-
-			vm.recentTransArr = [];
-			vm.recentStageArr = [];
-			vm.recentRenewalArr = [];
-
-			vm.greenRenewals = [];
-			vm.amberRenewals = [];
-			vm.redRenewals = [];
-			vm.blueRenewals = [];
-			vm.blackRenewals = [];
-			vm.greyRenewals = [];
 	
-		    if(counter == null) {
+		    if(counter === null) {
 
 		    	localStorageService.set('counter', 1);
 
@@ -337,133 +475,44 @@ app.component('dashboard', {
 			    .then(
 			    	function(response){
 
-			    		var systemResponse = [];
-			    		var urgentResponse = [];
 			    		var date = new Date().getTime();
 
 			    		if(response.systemMessages.length > 0) {
-
 			    			response.systemMessages.forEach(function(data){
-			    				var dateFrom = data.displayFromDate; dateTo = data.displayToDate;
+			    				var dateFrom = data.displayFromDate, dateTo = data.displayToDate;
 			    				if(date > dateFrom && date < dateTo) { 
-			    					systemResponse.push(data)
+			    					systemResponse.push(data);
 			    				}
-			    			})
-
-							function systemMessageModal() {
-
-								var modalInstance = $uibModal.open({
-									templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
-									scope: $scope,
-									appendTo: undefined,
-									controllerAs: vm,
-									controller: function($uibModalInstance, message) {
-
-										open = true;
-
-										vm.systemMessage = message;
-
-								 	  	vm.ok = function () {
-									    	$uibModalInstance.close();
-									  	};
-
-									  	vm.dismissModal = function() {
-									  		$uibModalInstance.dismiss();
-									  	}									  	
-
-									},
-									resolve: {
-										message: function() {
-											return systemResponse;
-										}
-									}
-								});
-
-							 	modalInstance.result.finally(function () {
-							     	
-							     	if(response.urgentPatents.length == 0) {
-							     		return;
-							     	} else {
-
-							     		open = false;
-
-							     		response.urgentPatents.forEach(function(data){
-					    					urgentResponse.push(data)
-						    			})
-							     		
-							     		$timeout(function() {
-											var modalInstance = $uibModal.open({
-												templateUrl: 'p3sweb/app/components/dashboard/views/modals/urgent-message-modal.htm',
-												scope: $scope,
-												appendTo: undefined,
-												controllerAs: vm,
-												controller: function($uibModalInstance, message) {
-
-													vm.urgentMessage = message;
-
-											 	  	vm.ok = function () {
-												    	$uibModalInstance.close();
-												  	};
-
-												  	vm.dismissModal = function() {
-												  		console.log('dismiss')
-												  		$uibModalInstance.dismiss();
-												  	}
-												},
-												resolve: {
-													message: function() {
-														return urgentResponse;
-													}
-												}
-											});
-							     		}, 200);
-							     	}
-							     		
-						     	})
-							}; //function end
-
+			    			});
+                
 							$timeout(function() {
-								systemMessageModal()	
+								systemMessageModal(response);
 							}, 1000);
 
 			    		} //if end
 
 			    	},
 			    	function(errResponse){
-			    		console.log(errResponse)
+			    		console.log(errResponse);
 			    	}
-		    	)
+		    	);
 	    	}
 	      	
-
-
 			if(transactions !== undefined && transactions.length > 0) {
 				transactions.forEach(function(data){
 					var hours =  vm.date - data.lastUpdatedDate;
 					var recentTrans  = millsToHours(data, hours);
 
 					if(recentTrans !== undefined) {
-						vm.recentTransArr.push(recentTrans)
+						vm.recentTransArr.push(recentTrans);
 					}
 
 					if(data.latestTransStatus === 'Completed') {
-						vm.recentRenewalArr.push(data)
+						vm.recentRenewalArr.push(data);
 					}
-				})				
+				});	
 			}
-
-			patentsRestService.fetchAllPatents()
-			.then(
-				function(response){
-					response.forEach(function(item){
-						patentsArr.push(item)
-					})
-				},
-				function(errResponse) {
-					console.log(errResponse)
-				}
-			)
-						
+      
 			//COLOUR KEY
 
 			vm.colourKey = function(colour) {
@@ -472,39 +521,39 @@ app.component('dashboard', {
 						vm.colourPhaseTitle = {
 							title: 'Green',
 							color: '#53ab58'
-						}
+						};
 					break;
 					case 1:
 						vm.colourPhaseTitle = {
 							title: 'Amber',
 							color: '#f9b233'						
-						}
+						};
 					break;
 					case 2:
 						vm.colourPhaseTitle = {
 							title: 'Red',
 							color: '#e30613'
-						}
+						};
 					break;
 					case 3:
 						vm.colourPhaseTitle = {
 							title: 'Blue',
 							color: '#0097ce'					
-						}
+						};
 					break;
 					case 4:
 						vm.colourPhaseTitle = {
 							title: 'Black',
 							color: '#3c3c3b'
-						}
+						};
 					break;
 					case 5:
 						vm.colourPhaseTitle = {
 							title: 'Grey',
 							color: '#bdbdbd'
-						}						
+						};				
 				}
-			}
+			};
 
 			//TOTAL RENEWALS PIE CHART
 
@@ -515,25 +564,25 @@ app.component('dashboard', {
 					if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
 						switch(item.costBandColour) {
 							case 'Green':
-								vm.greenRenewals.push(item)
+								vm.greenRenewals.push(item);
 							break;
 							case 'Amber':
-								vm.amberRenewals.push(item)
+								vm.amberRenewals.push(item);
 							break;
 							case 'Red':
-								vm.redRenewals.push(item)
+								vm.redRenewals.push(item);
 							break;
 							case 'Blue':
-								vm.blueRenewals.push(item)
+								vm.blueRenewals.push(item);
 							break;
 							case 'Black':
-								vm.blackRenewals.push(item)
+								vm.blackRenewals.push(item);
 							break;
 						}
 					} else {
-						vm.greyRenewals.push(item)
+						vm.greyRenewals.push(item);
 					}
-				})				
+				});			
 			}
 
 
@@ -601,7 +650,7 @@ app.component('dashboard', {
 					    }
 					  ]
 				} //donught end
-			} //charts end
+			}; //charts end
 			
 			vm.phaseSliderInfo = function(id) {
 
@@ -635,11 +684,11 @@ app.component('dashboard', {
 					}, 100);
 				}
 
-				loadPhase(phase)
+				loadPhase(phase);
 
-		  	} //phaseSliderInfoEnd
+		  	}; //phaseSliderInfoEnd
 
-		} //$onInit end		
+		}; //$onInit end		
 
 	}
-]})
+]});
