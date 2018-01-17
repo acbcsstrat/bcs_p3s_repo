@@ -28,7 +28,7 @@
           		<div class="row m-b-sm">
                      <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-sm">
-                           <img src="assets/imgs/logos/PP_icon_lg.png">
+                           <img src="assets/imgs/logos/PP_icon_lg.png" alt="patent place logo">
                         </div>
                         <h1 class="font-weight-bold font-h1">Forgot Password</h1>
                      </div>
