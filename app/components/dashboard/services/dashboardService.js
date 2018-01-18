@@ -40,8 +40,7 @@ app.factory('dashboardService', ['$http', '$q', function($http, $q){
         factory.supressMessages = function(id) {
             var deferred = $q.defer();
             var ids = JSON.stringify(id)
-            console.log(ids)
-            $http.delete(domain+'/login-messages/'+ ids)
+            $http.post(domain+'suppress-login-messages/' , id)
             .then(
                 function(response){
                     deferred.resolve(response)
