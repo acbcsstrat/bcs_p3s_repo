@@ -1,4 +1,4 @@
-app.factory('transactionHistoryService', function($http, $q) {
+app.factory('transactionHistoryService', ['$http', '$q', function($http, $q) {
 
 	var factory = {};
 
@@ -24,7 +24,7 @@ app.factory('transactionHistoryService', function($http, $q) {
 		factory.renewalProgress = function(currTransStatus) {
 
 			var renewalProgress = 0;
-			
+
 			switch(currTransStatus) {
 	    		case 'Initiated':
 	    			renewalProgress = 14;
@@ -46,15 +46,13 @@ app.factory('transactionHistoryService', function($http, $q) {
     			break;
 	    		case 'Completed':
 	    			renewalProgress = 100;
-    			break;	       					    			    			    			
-
+    			break;
     		}
 
     		return renewalProgress;
-		    			    			    			
 
     	};
 
 	return factory;
 
-});
+}]);
