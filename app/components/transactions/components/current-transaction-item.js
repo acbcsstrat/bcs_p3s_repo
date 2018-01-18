@@ -3,7 +3,7 @@ app.component('currentTransaction', {
 		transaction: '<' 
 	},
 	templateUrl: 'p3sweb/app/components/transactions/views/current-transaction-item.htm',
-	controller: ['currentTransactionsService', 'currentTransactionTabService', '$scope', function(currentTransactionsService, currentTransactionTabService, $scope) {
+	controller: ['currentTransactionsService', '$scope', function(currentTransactionsService, $scope) {
 
 		var vm = this;
 
