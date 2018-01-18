@@ -8,6 +8,7 @@ html, body {
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
   overflow-x: hidden;
+  background: #f1f2f2;
 }
 
 html { font-size: 62.5%; }
@@ -112,7 +113,12 @@ input[type=checkbox], input[type=radio] {
 
 /*LAYOUT==================*/
 
-.container { width: 92.5%!important; margin: 0 auto 0 95px; }
+.app-container {     
+  padding: 0 0;
+  width: calc(100% - 125px)!important;
+  left: 100px;
+  position: absolute;
+}
 
 .container-content-40 { width: 30%; max-width: 40rem;  }
 
@@ -680,6 +686,10 @@ li.disabled { cursor: not-allowed; opacity: .65;}
   transition: background .2s ease-in-out;
 }
 
+.t-list td:not(.ellipsis-remove) { z-index: 0; }
+.t-list .ellipsis-remove:hover { text-overflow: inherit; overflow: visible; }
+.t-list .ellipsis-remove:hover span { background: white; z-index: 999; padding: .2rem; position: relative; color: #212121;}
+
 .btn-default .btn a { color: #fff; }
 
 .phase-pills .pill-tabs, 
@@ -969,7 +979,7 @@ input.required {
   outline: none!important;
 }
 
-input.ng-invalid {
+input.ng-dirty.ng-invalid {
   border: 1px solid #e30613;
 }
 
@@ -1068,21 +1078,31 @@ display: none !important;
 
 }
 
-@media screen and (min-width: 1200px) and (max-width: 1400px) {
+@media screen and (min-width: 1401px) {
+
+  .hidden-cxl-up { display: none; }
+
+}
+
+@media screen and (max-width: 1400px) and (min-width: 1200px)   {
  
+  .hidden-cxl { display: none; }
+
+  .cxl-m-b-sm { margin-bottom: 1.5rem; }
+
   #listPatentsTable tr td:nth-child(1), 
   #listPatentsTable tr td:nth-child(2),
   #listPatentsTable tr td:nth-child(3) {
-    width: 15%;
+    width: 13%;
   } 
 
   #listPatentsTable tr td:nth-child(4),
   #listPatentsTable tr td:nth-child(6) {
-    width: 5%;
+    width: 7%;
   }
 
   #listPatentsTable tr td:nth-child(5) {
-    width: 15%;
+    width: 21%;
   }
 
   #listPatentsTable tr td:nth-child(7) {
@@ -1090,8 +1110,94 @@ display: none !important;
   }
 
   #listPatentsTable tr td:nth-child(8) {
-    width: 20%;
+    width: 16%;
   }
+
+  .btn--lg, .uib-btn--lg a { padding: 0.5rem 1.5rem }
+
+  .phase-pills .pill-tabs { min-width: 7.5rem; }
+
+  .t-list td { padding: 1rem 1.5rem; }
+
+  .col-cxl-1, .col-cxl-2, .col-cxl-3, .col-cxl-4, .col-cxl-5, .col-cxl-6, .col-cxl-7, .col-cxl-8, .col-cxl-12 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .col-cxl-1 {
+    -webkit-box-flex:0;
+    -webkit-flex:0 0 8.333333%;
+    -ms-flex:0 0 8.333333%;
+    flex:0 0 8.333333%;
+    max-width:8.333333%
+  }  
+
+  .col-cxl-2 {
+    -webkit-box-flex:0;
+    -webkit-flex:0 0 16.666667%;
+    -ms-flex:0 0 16.666667%;
+    flex:0 0 16.666667%;
+    max-width:16.666667%
+  }
+
+  .col-cxl-3 {
+    -webkit-box-flex:0;
+    -webkit-flex:0 0 25%;
+    -ms-flex:0 0 25%;
+    flex:0 0 25%;
+    max-width:25%
+  }
+
+  .col-cxl-4 {
+    -webkit-box-flex:0;
+    -webkit-flex:0 0 33.333333%;
+    -ms-flex:0 0 33.333333%;
+    flex:0 0 33.333333%;
+    max-width:33.333333%
+
+  }      
+
+  .col-cxl-5 {
+    -webkit-box-flex:0;
+    -webkit-flex:0 0 41.666667%;
+    -ms-flex:0 0 41.666667%;
+    flex:0 0 41.666667%;
+    max-width:41.666667%
+  }        
+
+  .col-cxl-6 {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-cxl-7 {
+    -webkit-box-flex:0;
+    -webkit-flex:0 0 58.333333%;
+    -ms-flex:0 0 58.333333%;
+    flex:0 0 58.333333%;
+    max-width:58.333333%
+  }  
+
+  .col-cxl-8 {
+    -webkit-box-flex:0;
+    -webkit-flex:0 0 66.666667%;
+    -ms-flex:0 0 66.666667%;
+    flex:0 0 66.666667%;
+    max-width:66.666667%    
+  }
+
+  .col-cxl-12 {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .phase-pills .pill-tabs-num { min-width: 6.5rem; }
 
 }
 
@@ -1150,9 +1256,11 @@ display: none !important;
     width: 19%;
   }
 
-  .lg-container {
-    width: 90%!important;
-    margin: 3.5rem auto 3.5rem 9rem;
+  .app-container {
+    padding: 0 0;
+    width: calc(100% - 105px)!important;
+    left: 90px;
+    position: absolute;
   }
 
   .t-data .td-lg-20,
@@ -1252,7 +1360,12 @@ display: none !important;
     width: 18.5%;
   }
 
-  .md-container { width: 92%!important; margin: 3.5rem auto 3.5rem 6rem; }
+  .app-container {
+    padding: 0 0;
+    width: calc(100% - 90px)!important;
+    left: 75px;
+    position: absolute;
+  }
 
   .t-data .td-md-20,
   .t-list .td-md-20 { width: 20%; }

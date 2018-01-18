@@ -8,6 +8,12 @@ app.component('searchpatent', {
 
 	 	$rootScope.page = 'Add Patent';
 
+		vm.animate = false;
+
+	    $timeout(function() {
+	      vm.animate = true;
+	    }, 300);    	 	
+
 		vm.patentNotifications = {
 			green: 'Green',
 			amber: 'Amber',
@@ -65,17 +71,26 @@ app.component('searchpatent', {
 					            .then(
 					            	function(response){
 			        			 		var patent = response[0];
-						             	$state.go('patents.patent', {patentId: patent.id}, {reload: false});
-										$timeout(function() {
-											$location.hash('patentItemAnchor')
-										  	$anchorScroll()
-										}, 300);
+						             	$state.go('patents.patent', {patentId: patent.id})
+						             	.then(
+											function(response){
+												$timeout(function() {
+													$location.hash('patentAnchor');
+												  	$anchorScroll();
+												}, 300);
+											},
+											function(errResponse){
+												console.log(errResponse)
+											}
+										);
+
 					             	},
 						            function(errResponse){
 						                console.error('Error while saving Patent');
 						            }
 				    		)
-				 		}, 300);
+				 		}, 100);
+
 			  			$timeout(function() {
 							$uibModalInstance.close()
 			  			}, 100);
@@ -95,7 +110,7 @@ app.component('searchpatent', {
 		    modalInstance.result.then(function() {
 	     		console.log('good')
 		    }, function() {
-		       console.log('bad')
+	       		console.log('bad')
 		    })
 		}
 
@@ -168,24 +183,22 @@ app.component('searchpatent', {
 .directive('validatePatent', function(){
 
 	return {
-
 		require: 'ngModel',
 		link: function(scope, elem, attr, ctrl) {
-
 			var regExp = /^[a-zA-Z0-9.\s]*$/
-
-			function checkValidation(value) {
-
-				if(regExp.test(value)) {
-					ctrl.$setValidity('validPatent', true) 
-				} else {
-					ctrl.$setValidity('validPatent', false) 
+			elem.bind('blur', function(){
+				console.log('blur')
+				function checkValidation(value) {
+					if(regExp.test(value) ) {
+						ctrl.$setValidity('validPatent', true) 
+					} else {
+						ctrl.$setValidity('validPatent', false) 
+					}
+					return value
 				}
-				return value
-			}
-			ctrl.$parsers.push(checkValidation)
+				ctrl.$parsers.push(checkValidation)
+			})
 		}
-
 	}
 })
 

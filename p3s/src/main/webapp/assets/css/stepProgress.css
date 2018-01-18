@@ -86,7 +86,7 @@
     -ms-border-radius: 15px
 }
 
-.steps .steps-container li .step .step-current:not(.active) {
+.steps .steps-container li:not(.active):not(.complete) .step .step-current {
      margin: 17px 0 0 0
 }
 

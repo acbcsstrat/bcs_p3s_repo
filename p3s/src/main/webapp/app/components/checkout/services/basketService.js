@@ -6,7 +6,7 @@ app.factory('basketService', ['$http', '$q', function($http, $q){
 		factory.fetchBasketPatents = function(ids) {
 
 			var deferred = $q.defer();
-
+			console.log(ids);
 			$http.post(REST_SERVICE_URI, ids)
 			.then(
 				function(response){

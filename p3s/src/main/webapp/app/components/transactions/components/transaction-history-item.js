@@ -9,8 +9,6 @@ app.component('transactionHistoryItem', {
 
 	    vm.$onChanges = function(changeObj){
 
-	    	console.log(vm.transactionHistoryItem)
-
 	    	var currTransStatus = vm.transactionHistoryItem.latestTransStatus;	
 
 			vm.transStatus = [
@@ -22,8 +20,6 @@ app.component('transactionHistoryItem', {
 				{status: 'EPO Instructed', active: false, complete: false},
 				{status: 'Completed', active: false, complete: false}
 			];
-
-			console.log(vm.transStatus)
 
 			vm.checkProgress = function() {
 
@@ -96,12 +92,6 @@ app.component('transactionHistoryItem', {
 	    		case 'Completed':
 	    			vm.transactionProgress = 100;	    			    			    			    			    		
 	    	}
-			
-
-
-			
-
-	    	
 
 	    	vm.renewalProgress = transactionHistoryService.renewalProgress(currTransStatus);		
 
@@ -110,8 +100,6 @@ app.component('transactionHistoryItem', {
 	 		vm.transactionHistoryItem.renewalUIs.forEach(function(value, index, array){
 
 	 			vm.patents.push(value)
-
-
 
 				switch(value.renewalStatus) {
 		    		case 'Payment in progress':
@@ -134,6 +122,8 @@ app.component('transactionHistoryItem', {
 
 		    	}	
 		 	})
+
+		 	console.log(vm.patents)
     	}
 
 	   

@@ -2,7 +2,7 @@
 	<div class="col-md-12 col-lg-12 col-xl-12">
 		<div class="view-tabs">
 			<ul class="nav view-pills">
-				<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs active" ng-click="activeSelectedTab = 0">Transaction Details</li>
+				<li class="nav-item nav-view-list-item pill-radius btn--lg pill-tabs font-h4 bg-white border-grey-xs active" data-ng-click="activeSelectedTab = 0">Transaction Details</li>
 			</ul>
 		</div>
 	</div>
@@ -11,12 +11,12 @@
 <div class="content-panel">
 	<div class="bg-white">
 		<uib-tabset type="pills" active="activeSelectedTab">
-			<uib-tab heading="Transaction Details" index="0" ng-hide="true">
+			<uib-tab heading="Transaction Details" index="0" data-ng-hide="true">
 				<div class="content-panel__head border-grey-xs--btm">
 					<div class="row d-flex align-items-center m-b-sm">
 						<div class="col-md-6 col-lg-6 col-xl-2">
 							<p class="font-weight-bold font-h4">Transaction ID</p>
-							<p class="font-h4" ng-bind="$ctrl.transaction.p3S_TransRef"></p>
+							<p class="font-h4" data-ng-bind="$ctrl.transaction.p3S_TransRef"></p>
 						</div>
 						<div class="col-md-6 col-lg-6 col-xl-2 text-md-right text-lg-right text-xl-left">
 							<p class="font-weight-bold font-h4">Transaction Initated</p>
@@ -24,43 +24,43 @@
 						</div>
 						<div class="col-md-12 col-lg-12 col-xl-8 text-right">
 							<p class="font-weight-bold font-h4 hidden-lg-down">{{$ctrl.transaction.latestTransStatus}}</p>
-							<div ng-class="($ctrl.transaction.hasFailed !== true ? 'success' : 'failed')">
+							<div data-ng-class="($ctrl.transaction.hasFailed !== true ? 'success' : 'failed')">
 								<div class="steps">
 								    <ul id="progressTracker" class="steps-container d-flex justify-content-between">
-								        <li ng-repeat="li in $ctrl.transStatus track by $index" ng-init="$ctrl.checkProgress()" ng-class="(li.complete == true ? 'complete': '') + '' + (li.active == true ? 'active': '')">
+								        <li data-ng-repeat="li in $ctrl.transStatus track by $index" data-ng-init="$ctrl.checkProgress()" data-ng-class="(li.complete == true ? 'complete': '') + '' + (li.active == true ? 'active': '')">
 								            <div class="step">
 								                <div class="step-image"><span></span></div>
 								                <div class="step-current"><span>{{li.status}}</span></div>
 								            </div>
 								        </li>
 								    </ul>
-								    <div class="step-bar" ng-style="{ 'width': $ctrl.transactionProgress + '%' }"></div>
+								    <div class="step-bar" data-ng-style="{ 'width': $ctrl.transactionProgress + '%' }"></div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-								<div id="currTransAnchor"></div>
-				<div ng-repeat="transaction in $ctrl.patents | filter: transactionsFilter" class="border-grey-xs--btm">
+				<div id="currTransAnchor"></div>
+				<div data-ng-repeat="transaction in $ctrl.patents | filter: transactionsFilter" class="border-grey-xs--btm">
 					<div class="content-panel__body">
 						<div class="row">
 							<div class="col-md-12 col-lg-6 col-xl-6 md-m-b-md">
 								<div class="hidden-md-down m-b-sm">
-									<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
-									<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span class="font-weight-normal" ng-bind="transaction.patentUI.clientRef"></span></p>
-									<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" ng-bind="transaction.patentUI.title"></span></p>					
+									<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
+									<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span></p>
+									<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>					
 								</div>
 								<div class="hidden-sm-down hidden-lg-up">
 									<div class="p-b-sm">
 										<div class="row">
 											<div class="col-md-6">
-												<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
+												<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
 											</div>
 											<div class="col-md-6 text-right">
-												<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span class="font-weight-normal" ng-bind="transaction.patentUI.clientRef"></span></p>
+												<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span><span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal" >[No client description provided]</span></p>
 											</div>
 											<div class="col-md-12">
-												<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" ng-bind="transaction.patentUI.title"></span></p>			
+												<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>			
 											</div>
 										</div>
 									</div>									
@@ -141,10 +141,10 @@
 							<div class="col-md-12 col-lg-6 col-xl-6 text-xs-center">
 								<div class="content-panel__body bg-light-grey2 bg-info-icon">
 									<div class="progress-trans">
-										<p class="font-h4 font-weight-bold m-b-sm" ng-bind="transaction.renewalStatus"></p>
-										<div ng-if="transaction.renewalStatus == 'Payment in progress'">
+										<p class="font-h4 font-weight-bold m-b-sm" data-ng-bind="transaction.renewalStatus"></p>
+										<div data-ng-if="transaction.renewalStatus == 'Payment in progress'">
 											<div class="progress-tracker m-b-sm">
-												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="33" max="100" class="tracker-item"></uib-bar></uib-progress>
+												<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="33" max="100"></uib-bar></uib-progress>
 											</div>
 											<div class="m-b-sm">
 												<h4 class="font-h4 font-weight-medium m-b-xs">Initiated</h4>
@@ -167,18 +167,18 @@
 												<p class="font-body">We’re had confirmation that the funds have been received by the EPO.</p>
 											</div>	
 										</div>			
-										<div ng-if="transaction.renewalStatus == 'EPO Instructed'">
+										<div data-ng-if="transaction.renewalStatus == 'EPO Instructed'">
 											<div class="progress-tracker m-b-sm">
-												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="66" max="100" class="tracker-item"></uib-bar></uib-progress>
+												<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="66" max="100"></uib-bar></uib-progress>
 											</div>											
 											<div class="m-b-sm">
 												<h4 class="font-h4 font-weight-medium m-b-xs">EPO Instructed</h4>
 												<p class="font-body">This means that everything is in place, and we've instructed the EPO to renew the patent.</p>
 											</div>
 										</div>
-										<div ng-if="transaction.renewalStatus == 'Renewal in place'">
+										<div data-ng-if="transaction.renewalStatus == 'Renewal in place'">
 											<div class="progress-tracker m-b-sm">
-												<uib-progress><uib-bar class="bg-phase-green pill-radius" value="100" max="100" class="tracker-item"></uib-bar></uib-progress>
+												<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="100" max="100"></uib-bar></uib-progress>
 											</div>											
 											<div class="m-b-sm">
 												<h4 class="font-h4 font-weight-medium m-b-xs">Completed</h4>
@@ -188,10 +188,10 @@
 									</div>
 								</div>
 							</div>
-							<div ng-if="transaction.certificateUrl" class="row m-t-sm w-100">
+							<div data-ng-if="transaction.certificateUrl" class="m-t-sm w-100">
 								<div class="col-xl-12 d-flex justify-content-end">
 									<div class="btn-default">
-										<a target="_blank" href="{{transaction.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>				
+										<a data-ng-href="{{transaction.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white" target="_blank">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>				
 									</div>
 								</div>
 							</div>		
@@ -202,7 +202,7 @@
 					<div class="row">
 						<div class="col-xl-12 d-flex align-items-center justify-content-end">
 							<div class="btn-default">
-								<a target="_blank" href="{{$ctrl.transaction.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+								<a data-ng-href="{{$ctrl.transactionHistoryItem.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" target="_blank">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
 							</div>
 						</div>						
 					</div>
@@ -211,13 +211,3 @@
 		</uib-tabset>
 	</div>
 </div>
-
-   
-    
-
-	
-
-
-
-
-

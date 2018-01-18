@@ -1,6 +1,6 @@
-<div ng-controller="CartController">
+<div data-ng-controller="CartController">
     <div class="row hidden-lg-up m-b-md">
-        <div class="content-panel col-md-12 p-r-none">
+        <div class="content-panel col-md-12">
             <div class="bg-white">
                 <div class="content-panel__head border-grey-xs--btm">
                     <p class="font-h4 font-weight-medium">Important notice</p>
@@ -41,7 +41,7 @@
                                         <p class="font-weight-medium font-body">App No/s: </p>                        
                                     </div>                    
                                     <div class="col-md-7">
-                                        <span class="font-body" ng-repeat="p in $ctrl.patentObj.patents">{{p}}<br></span>
+                                        <span class="font-body" data-ng-repeat="p in $ctrl.patentObj.patents">{{p}}<br></span>
                                     </div>  
                                 </div>
                             </div>
@@ -68,10 +68,10 @@
                         </div>                       
                         <div class="col-md-7 d-flex justify-content-end align-items-end">
                             <div class="btn-error">
-                                <button class="btn btn--cross bg-phase-red btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center" ng-click="ngCart.empty()" ui-sref="patents">Cancel transaction</button>                            
+                                <button class="btn btn--cross bg-phase-red btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center" data-ng-click="ngCart.empty()" data-ui-sref="patents">Cancel transaction</button>                            
                             </div>
                             <div class="btn-submit">
-                               <button class="btn btn--check bg-phase-green btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center m-l-sm" ng-click="$ctrl.commitTransfer(); ngCart.empty()" ng-disabled="$ctrl.commitTransferBtn">Complete payment</button>  
+                               <button class="btn btn--check bg-phase-green btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center m-l-sm" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">Complete payment</button>  
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                     <p class="font-body">The transaction will be progressed at the time shown provided funds have been receieved.  After this point the transaction will be cancelled and penalty charges will apply.  The cost of renewal may also change.</p>
                 </div>
             </div>
-        	<div class="content-panel col-xl-6 p-l-none">
+        	<div class="content-panel col-lg-6 col-xl-6 p-l-none">
                 <div class="content-panel__head border-grey-xs--btm">
                     <p class="font-h4 font-weight-medium">Order Summary</p>
                 </div>
@@ -116,7 +116,7 @@
                                         <p class="font-weight-medium font-body">App No/s: </p>                        
                                     </div>                    
                                     <div class="col-xl-4">
-                                        <span class="font-body" ng-repeat="p in $ctrl.patentObj.patents">{{p}}<br></span>
+                                        <span class="font-body" data-ng-repeat="p in $ctrl.patentObj.patents">{{p}}<br></span>
                                     </div>  
                                 </div>
                             </div>
@@ -147,10 +147,10 @@
         			<div class="row">
     					<div class="col-xl-12 d-flex justify-content-end">
                             <div class="btn-error">
-                                <button class="btn btn--cross bg-phase-red btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center" ng-click="$ctrl.openCancelTransModal()">Cancel transaction</button>                            
+                                <button class="btn btn--cross bg-phase-red btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center" data-ng-click="$ctrl.openCancelTransModal()">Cancel transaction</button>                            
                             </div>
                             <div class="btn-submit">
-                               <button class="btn btn--check bg-phase-green btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center m-l-sm" ng-click="$ctrl.commitTransfer(); ngCart.empty()" ng-disabled="$ctrl.commitTransferBtn">Complete payment</button>  
+                               <button class="btn btn--check bg-phase-green btn--lg font-weight-medium txt-white pill-radius font-body font-body--component d-flex align-items-center m-l-sm" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">Complete payment</button>  
                             </div>
     					</div>						
         			</div>
