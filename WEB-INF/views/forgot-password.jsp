@@ -98,60 +98,58 @@
 
       	<script>
 
-      		var domain = 'http://localhost:8080/p3sweb/';
+          var domain = 'http://localhost:8080/p3sweb/';
 
-          $(function () {
+            $(function () {
 
-          $('#forgotPassSuccess').hide();
-          $('#forgotPassFail').hide();
-          $('#fail_user_disabled').hide();
+              $('#forgotPassSuccess').hide();
+              $('#forgotPassFail').hide();
+              $('#fail_user_disabled').hide();
 
-          window.Parsley.addValidator('validateEmail', {
+              window.Parsley.addValidator('validateEmail', {
 
-                  validateString: function(value){
+                      validateString: function(value){
 
-                     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-                     if(!value.match(reg)) {
-                        return false
-                     }
-                  },
-                  messages: {
-                     en: 'Please enter a valid email address.'
-                  }
+                         if(!value.match(reg)) {
+                            return false;
+                         }
+                      },
+                      messages: {
+                         en: 'Please enter a valid email address.'
+                      }
+                  });
 
-              })
-
-              $(document).on('submit', '#forgotPassForm', function(e){
-                e.preventDefault();
-              //var dataString = JSON.stringify($('#forgotPassForm').serializeArray());
-              var dataString = $('#forgotPassForm').serializeArray();
-              $.ajax({
-                type: 'POST',
-                url: domain + 'prelogin/rest-forgot-password/',
-                data: dataString,
-                dataType: 'json',
-                success: function(response) {
-                	console.log(response);
-                  	$('#initialForgotPass').fadeOut(500); 
-                	$('#forgotPassSuccess').delay(520).fadeIn(500);   
-                	$("a#clickme").attr('href', response.sampleLinkInEmail);
-                },
-                error:function(errResponse) {
-                	console.log(errResponse.status);
-                	if(errResponse.status == 403){
-	                  	$('#initialForgotPass').fadeOut(500); 
-	               	 	$('#fail_user_disabled').delay(520).fadeIn(500); 
-                	}
-                	else{
-                		$('#initialForgotPass').fadeOut(500); 
-	               	 	$('#forgotPassFail').delay(520).fadeIn(500); 
-                	}
-                }
-              })
-            })
-
-      })
+                  $(document).on('submit', '#forgotPassForm', function(e){
+                    e.preventDefault();
+                  //var dataString = JSON.stringify($('#forgotPassForm').serializeArray());
+                  var dataString = $('#forgotPassForm').serializeArray();
+                  $.ajax({
+                    type: 'POST',
+                    url: domain + 'prelogin/rest-forgot-password/',
+                    data: dataString,
+                    dataType: 'json',
+                    success: function(response) {
+                      console.log(response);
+                        $('#initialForgotPass').fadeOut(500); 
+                      $('#forgotPassSuccess').delay(520).fadeIn(500);   
+                      $("a#clickme").attr('href', response.sampleLinkInEmail);
+                    },
+                    error:function(errResponse) {
+                      console.log(errResponse.status);
+                      if(errResponse.status == 403){
+                          $('#initialForgotPass').fadeOut(500); 
+                        $('#fail_user_disabled').delay(520).fadeIn(500); 
+                      }
+                      else{
+                        $('#initialForgotPass').fadeOut(500); 
+                        $('#forgotPassFail').delay(520).fadeIn(500); 
+                      }
+                    }
+                  });
+                });
+            });
 
      	</script>
    </body>
