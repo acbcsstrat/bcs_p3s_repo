@@ -1,8 +1,8 @@
-app.factory('userService', function($http, $q) {
+app.factory('userService', ['$http', '$q', function($http, $q) {
 
     var factory = {};
 
-		var REST_SERVICE_URI = domain+'rest-user/';
+        var REST_SERVICE_URI = domain+'rest-user/';
 
         factory.fetchUser = function() {
         
@@ -19,7 +19,7 @@ app.factory('userService', function($http, $q) {
             );
 
             return deferred.promise;
-        }
+        };
 
         var config = {headers:  {
                 'Content-Type': 'application/json',
@@ -37,12 +37,11 @@ app.factory('userService', function($http, $q) {
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
-                    console.log(errResponse)
                     deferred.reject(errResponse);
                 }
             );
             return deferred.promise;
-        }
+        };
 
         factory.listUsers = function() {
 
@@ -54,14 +53,13 @@ app.factory('userService', function($http, $q) {
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
-                    console.log(errResponse)
                     deferred.reject(errResponse);
                 }
             );
             return deferred.promise;
-        }
+        };
 
     return factory;
 
-});
+}]);
 
