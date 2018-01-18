@@ -22,22 +22,15 @@ app.component('bankTransferPreparation', {
 				  	$scope.cancelTrans = function () {
 				  		ngCart.empty();
 				    	$uibModalInstance.close();
-				    	$state.go('patents')
+				    	$state.go('patents');
 				  	};
 
 				  	$scope.cancel = function() {
 				  		$uibModalInstance.dismiss('cancel');
-				  	}
+				  	};
 				}
-			})
-
-		    modalInstance.result.then(function() {
-	     		console.log('good')
-		    }, function() {
-		       	console.log('bad')
-		    })
-
-		}
+			});
+		};
 
 		vm.commitTransfer = function() {
 			
@@ -49,14 +42,12 @@ app.component('bankTransferPreparation', {
 				.then(
 	                function(response){
 	                	order = response.data;
-	                	console.log(order)
 	                },
 	                function(errResponse){
-	                	console.log("error response in prepa.js")
-	                    console.log(errResponse)
+
 	                }
 	            );	            
-		}
+		};
 
 	}
-]})
+]});
