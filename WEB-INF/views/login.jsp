@@ -82,11 +82,7 @@
 
       <script>
          
-         var url = window.location.href
-
-         if(!url.indexOf('login_error')) {
-            console.log(url)
-         }
+         var url = window.location.href;
 
          window.Parsley.addValidator('validateName', {
             validateString: function(value) {
@@ -97,7 +93,7 @@
             messages: {
                 en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
             }
-         })  
+         });
 
          window.Parsley.addValidator('validateEmail', {
 
@@ -106,15 +102,15 @@
                var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
                if(!value.match(reg)) {
-                  return false
+                  return false;
                }
             },
             messages: {
                en: 'Please enter a valid email address.'
             }
 
-         })      
-
+         });
+         
       </script>
       
    </body>
