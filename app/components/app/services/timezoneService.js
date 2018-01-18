@@ -9,7 +9,6 @@ app.factory('timezoneService', ['$http', '$q', function($http, $q){
 		$http.get('../../p3sweb/assets/json/ustimezones.json')
 		.then(
 			function(response){
-				console.log(response.data.ustimezones)
 				deferred.resolve(response.data.ustimezones)
 			},
 			function(errResponse){

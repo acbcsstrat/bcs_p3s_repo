@@ -1,25 +1,20 @@
 app.component('user', {
-  	bindings: { 
+    bindings: { 
         user: '<',
         timezones: '<'
     },
-	templateUrl: 'p3sweb/app/components/user/views/user-profile.htm',
-	controller: ['userService', 'timezoneService', '$q', '$rootScope', '$scope', '$timeout', '$uibModal', function(userService, timezoneService, $q, $rootScope, $scope, $timeout, $uibModal) {
-		
-		var vm = this;
+    templateUrl: 'p3sweb/app/components/user/views/user-profile.htm',
+    controller: ['userService', 'timezoneService', '$q', '$rootScope', '$scope', '$timeout', '$uibModal', function(userService, timezoneService, $q, $rootScope, $scope, $timeout, $uibModal) {
+        
+        var vm = this;
 
-        $rootScope.page = 'Profile'
+        $rootScope.page = 'Profile';
 
         $scope.newPassword = '';
 
         vm.$onInit = function() {
             $scope.user = vm.user;
-        }
-
-        vm.updateUser = function(user, p) {
-           
-            
-        }
+        };
 
         vm.confirmUpdate = function(user, p) {
 
@@ -38,12 +33,10 @@ app.component('user', {
 
                     $scope.dismissModal = function() {
                         $uibModalInstance.close();
-                    }
-                    
+                    };
                 }
-            })
-
-        }
+            });
+        };
 
         userService.listUsers()
         .then(
@@ -54,21 +47,21 @@ app.component('user', {
                 var newArr = [];
 
                 function chunk(arr, size) {
-                    for (i=0; i < arr.length; i+=size) {
+                    for (var i=0; i < arr.length; i+=size) {
                         newArr.push(arr.slice(i, i+size));
                     }
                     return newArr;
-                }           
+                }         
 
                 vm.chunkedData = chunk(vm.companyUsers, userCol);
             },
             function(errResponse){
-                console.log(errResponse)
+                console.log(errResponse);
             }
-        )
+        );
         
-	}]
-})
+    }]
+});
 
 app.directive('validateName', function(){
 
@@ -79,23 +72,18 @@ app.directive('validateName', function(){
         require: 'ngModel',
         link: function(scope, elem, attr, ctrl) {
 
-            
-
             function myValidation(value) {
                 if (regExp.test(value)) {
-                    console.log('EARYAAAAAA')
                     ctrl.$setValidity('validName', true);
                 } else {
-                    console.log('ERNNOOOOOO')
                     ctrl.$setValidity('validName', false);
                 }
                 return value;
             }
             ctrl.$parsers.push(myValidation);
-
         }
 
-    }
+    };
 
 })
 .directive('validatePhone', function(){
@@ -116,7 +104,7 @@ app.directive('validateName', function(){
             }
             ctrl.$parsers.push(myValidation);
         }        
-    }
+    };
 
 })
 .directive('validateAddress', function(){
@@ -139,8 +127,8 @@ app.directive('validateName', function(){
                 return value;
             }
             ctrl.$parsers.push(myValidation);
-        }        
-    }    
+        }
+    };
 
 })
 .directive('validateZip', function(){
@@ -164,9 +152,8 @@ app.directive('validateName', function(){
             }
             ctrl.$parsers.push(myValidation);
         }        
-    }    
-
-})
+    };
+});
 
 
 app.directive('checkStrength', function () {
@@ -221,7 +208,7 @@ app.directive('checkStrength', function () {
             scope.$watch(iAttrs.checkStrength, function () {
                 if (scope.newPassword === '') {
                     iElement.children('li')
-                        .css({ "background": "#DDD" })
+                        .css({ "background": "#DDD" });
                 } else {
                     var c = strength.getColor(strength.mesureStrength(scope.newPassword));
                     iElement.css({ "display": "inline" });
@@ -229,7 +216,6 @@ app.directive('checkStrength', function () {
                         .css({ "background": "#DDD" })
                         .slice(0, c.idx)
                         .css({ "background": c.col });
-                         console.log(c.col)
                 }
             });
         },
@@ -249,5 +235,5 @@ app.directive('pwCheck', [function () {
                 });
             });
         }
-    }
+    };
 }]);
