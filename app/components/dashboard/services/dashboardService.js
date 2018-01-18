@@ -1,8 +1,8 @@
 app.factory('dashboardService', ['$http', '$q', function($http, $q){
 
-	var factory = {};
+    var factory = {};
 
-		 factory.getMessages = function() {
+         factory.getMessages = function() {
         
             var deferred = $q.defer();
              $http.get(domain+'login-messages/')
@@ -17,7 +17,7 @@ app.factory('dashboardService', ['$http', '$q', function($http, $q){
             );
 
             return deferred.promise;
-        }
+        };
 
         factory.fetchCostAnalysis = function(id) {
             
@@ -35,23 +35,22 @@ app.factory('dashboardService', ['$http', '$q', function($http, $q){
 
             return deferred.promise;
             
-        }
+        };
 
         factory.supressMessages = function(id) {
             var deferred = $q.defer();
-            var ids = JSON.stringify(id)
             $http.post(domain+'suppress-login-messages/' , id)
             .then(
                 function(response){
-                    deferred.resolve(response)
+                    deferred.resolve(response);
                 }, 
                 function(errResponse){
-                    deferred.reject(response)
+                    deferred.reject(errResponse);
                 }
-            )
+            );
             return deferred.promise;
-        }
+        };
 
-	return factory;
+    return factory;
 
-}])
+}]);

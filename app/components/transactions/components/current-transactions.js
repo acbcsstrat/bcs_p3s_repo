@@ -4,7 +4,7 @@ app.component('currentTransactions', {
 		ngModel: '='
 	},
 	templateUrl: 'p3sweb/app/components/transactions/views/current-transactions.htm',
-	controller: function(currentTransactionsService, $rootScope, NgTableParams, $scope, $filter, $timeout, $state) {
+	controller: ['currentTransactionsService', '$rootScope', 'NgTableParams', '$scope', '$filter', '$timeout', '$state', function(currentTransactionsService, $rootScope, NgTableParams, $scope, $filter, $timeout, $state) {
 
 		var vm = this;
 
@@ -120,7 +120,7 @@ app.component('currentTransactions', {
       		}
       	};
 	}
-});
+]});
 
 app.directive('fixedTableHeaders', ['$timeout', function($timeout) {
   	return {
