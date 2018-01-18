@@ -15,13 +15,13 @@ app.component('currentTransaction', {
 					$scope.transactionsFilter = null;
 				}
 			}
-		})
+		});
 
 		vm.statusInfo = 'Initiated';
 
 		vm.statusInfoFn = function(item) {
 			vm.statusInfo = item;
-		}
+		};
 
 	    vm.$onChanges = function(changeObj){
 
@@ -33,7 +33,7 @@ app.component('currentTransaction', {
 				{status: 'Funds Received', active: false, complete: false},
 				{status: 'Funds Sent', active: false, complete: false},
 				{status: 'EPO Received', active: false, complete: false}, 
-				{status: 'EPO Instructed', active: false, complete: false, complete: false},
+				{status: 'EPO Instructed', active: false, complete: false},
 				{status: 'Completed', active: false, complete: false}
 			];
 
@@ -43,16 +43,16 @@ app.component('currentTransaction', {
 					if(data.status == vm.currTransStatus) {
 						statusIndex = index;
 					}
-				})
+				});
 
-				for(i=0; i <= statusIndex; i++){
+				for(var i=0; i <= statusIndex; i++){
 					vm.transStatus[i].complete = true;
 					if(vm.currTransStatus == vm.transStatus[i].status) { 
 						vm.transStatus[i].active = true;
 						vm.transStatus[i].complete = false;
 					}
 				}
-			}
+			};
 
 			switch(vm.currTransStatus) {
 	    		case 'Initiated':
@@ -82,8 +82,8 @@ app.component('currentTransaction', {
 	    	vm.patents = [];
 
 	 		vm.transaction.renewalUIs.forEach(function(value, index, array){
-	 			vm.patents.push(value)			
-		 	})	
-    	}
+	 			vm.patents.push(value)			;
+		 	});
+    	};
 	}]
 });
