@@ -17,6 +17,6 @@ public interface MiscService {
 
 	public LoginMessageUI findAllLoginMessagesForUser(PostLoginSessionBean pLoginBean);
 	
-	public void suppressLoginMessages(List<Long> id);
+	public void suppressLoginMessages(List<Long> id, P3SUser user);
 
 }

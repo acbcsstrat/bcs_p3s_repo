@@ -17,6 +17,7 @@ import com.bcs.p3s.display.LoginMessageUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.model.LoginMessage;
+import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.config.P3SPropertyNames;
@@ -80,7 +81,7 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 	
 	//Note :- Code not being TESTED
 	@Override
-	public void suppressLoginMessages(List<Long> ids){
+	public void suppressLoginMessages(List<Long> ids, P3SUser user){
 		
 		String msg = "suppressLoginMessages()";
 		log().debug(msg + " invoked for messages ids :: " + ids.toString());
@@ -98,12 +99,21 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 			log().debug(msg + " invoked with MALICIOUS DATA");
 			return;
 		}
-		   
+		  
+		List<LoginMessage> allMessages = user.getLoginMessagesToDisplay();
+		
 		for(Long id : ids){
-			LoginMessage message = LoginMessage.findLoginMessage(id);
-			message.remove();
+			for(LoginMessage eachMsg : allMessages){
+				if(id.equals(eachMsg.getId())){
+					allMessages.remove(eachMsg);
+					log().debug("Suppressed message from user of message id :: " + eachMsg.getId());
+					break;
+				}
+			}
 		}
 		
+		user.setLoginMessagesToDisplay(allMessages);
+		user.merge();
 		log().debug("Suppressed messages from user " + ids.toString());
 		return;
 	}

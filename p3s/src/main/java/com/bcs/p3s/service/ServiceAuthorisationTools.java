@@ -182,17 +182,20 @@ public class ServiceAuthorisationTools extends Universal {
 	
 	public boolean checkMessageForThisUser(List<Long> messagesID){
 		
-		boolean isMyMessage = true;
+		boolean isAnyMaliciousData = false;
 		List<LoginMessage> messages = SecurityUtil.getMyUser().getLoginMessagesToDisplay();
+		List<Long> msgIds = new ArrayList<Long>();
+		for(LoginMessage msg : messages){
+			msgIds.add(msg.getId());
+		}
 		
 		for (Long id : messagesID){
-			LoginMessage message = LoginMessage.findLoginMessage(id);
-			if(!(Arrays.asList(messages).contains(message))){
-				isMyMessage = false;
+			if(!(msgIds.contains(id))){
+				isAnyMaliciousData = true;
 				failMalicious("checkMessageForThisUser() found a malicious message Id being passed");
 			}
 		}
-		return isMyMessage;
+		return isAnyMaliciousData;
 	}
 
 	

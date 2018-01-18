@@ -401,9 +401,13 @@ public List<NotificationMapping> extractNotificationsFromAddPatentForm(Patent pa
 		}*/
 		
 		if(! (elements.isEmpty())){
-			for (String element : elements){
+			for (Object element : elements){
 				if(element instanceof String){
-					Long longy = new Long(element.trim());
+					Long longy = new Long(((String) element).trim());
+					result.add(longy);
+				}
+				if(element instanceof Integer){
+					Long longy = new Long(((Integer) element));
 					result.add(longy);
 				}
 			}
@@ -586,5 +590,32 @@ public List<NotificationMapping> extractNotificationsFromAddPatentForm(Patent pa
 		
 		
 		return basket;
+	}
+	
+	/**
+	 * This method has been created for DELETE :: loginMessages/{ids} :- as FE sending anonymous array of ids
+	 * @param ids
+	 * @return
+	 */
+	public List<Long> commaSeparatedListOfStringToListLongs(List<String> ids) {
+		
+		String msg = "commaSeparatedListOfStringToListLongs(" + ids +")";
+		List<Long> longIds = new ArrayList<Long>();
+		
+		for (String element : ids ) {
+			if (notEmpty(element)) {
+				try {
+					Long longy = new Long(element.trim());
+					longIds.add(longy);
+				}
+				catch (NumberFormatException nfe) {
+					// Either malicious or code error. To abort or ignore? Abort safest.
+					logInternalError().fatal(msg+"BadElement:"+element);
+					throw new P3SRuntimeException(msg+"BadElement:"+element, nfe);
+				}
+			}
+		}
+		return longIds;
+		
 	}
 }

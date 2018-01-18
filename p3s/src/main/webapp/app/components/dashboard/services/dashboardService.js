@@ -35,7 +35,24 @@ app.factory('dashboardService', ['$http', '$q', function($http, $q){
 
             return deferred.promise;
             
-        }        
+        }
+
+        factory.supressMessages = function(id) {
+            var deferred = $q.defer();
+            //var ids = JSON.stringify(id)
+            //console.log(ids)
+            console.log(id)
+            $http.post(domain+'suppress-login-messages/' , id)
+            .then(
+                function(response){
+                    deferred.resolve(response)
+                }, 
+                function(errResponse){
+                    deferred.reject(response)
+                }
+            )
+            return deferred.promise;
+        }
 
 	return factory;
 
