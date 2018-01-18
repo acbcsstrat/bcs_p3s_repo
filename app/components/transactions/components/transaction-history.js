@@ -1,7 +1,7 @@
 app.component('transactionHistory', {
 	bindings: { transactionHistory: '<'},
 	templateUrl: 'p3sweb/app/components/transactions/views/transaction-history.htm',
-	controller: function ($rootScope, NgTableParams, $timeout) {
+	controller: ['$rootScope', 'NgTableParams', '$timeout', function ($rootScope, NgTableParams, $timeout) {
 
 		var vm = this;
 
@@ -92,7 +92,7 @@ app.component('transactionHistory', {
 	      	};
 		};	
 	}
-});
+]});
 
 app.directive('fixedTableHeaders', ['$timeout', function($timeout) {
   return {
