@@ -107,8 +107,6 @@
       		var domain = 'http://localhost:8080/p3sweb/';
 
 			$(document).ready(function() {
-
-
 				$(document).on('submit', '#resetPassForm', function(e){
       				e.preventDefault();
   					//var dataString = JSON.stringify($('#resetPassForm').serializeArray());
@@ -120,30 +118,25 @@
   						data: dataString,
   						//dataType: 'json',
   						success: function(response) {
-  							console.log("Inside success");
-  							console.log(response);
   							$('#initialResetPassForm').fadeOut(500);	
 							$('#resetPassSuccess').delay(520).fadeIn(500);		      				
   						},
   						error:function(errResponse) {
-  							console.log("Inside error");
-  							console.log(errResponse);
   							$('#initialResetPassForm').fadeOut(500);	
 							$('#resetPassFail').delay(520).fadeIn(500);							
   						}
-  					})
-  				})
-
+  					});
+  				});
 
 				var password_li = $('#passwordStrength').find('li');
 				$('#password').bind('keyup', function(){
 
-					if($(this).val().length == 0) {
+					if($(this).val().length === 0) {
 						password_li.css('background', '#DDD');
 						return;
 					}
 					
-					var regex = new Array();
+					var regex = [];
 			        regex.push("[A-Z]"); //Uppercase Alphabet.
 			        regex.push("[a-z]"); //Lowercase Alphabet.
 			        regex.push("[0-9]"); //Digit.
@@ -158,14 +151,10 @@
 			            }
 			        }
 
-
 			        //Validate for length of Password.
 			        if (passed > 2 && $(this).val().length > 8) {
 			            passed++;
 			        }
-
-					var color = '';
-					var strength = '';
 
 					switch(passed) {
 						case 0:
@@ -190,18 +179,18 @@
 
 					}
 
-				})
+				});
 
 				//validate confirm password
 
 				$('#confirm_password').on('blur', function(){
 					if($(this).val() !== $('#password').val()) {
-						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>')
+						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>');
 					} else {
 						$('#valid_confirm_password').text('');
 					}
-				})
-			})
+				});
+			});
 
      	</script>
    </body>
