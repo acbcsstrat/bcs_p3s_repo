@@ -246,6 +246,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
       </td>
 </tr>
 
+<<<<<<< HEAD
 <tr>
   <td>&nbsp;</td>
 </tr>
@@ -257,6 +258,8 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
       </td>
 </tr>
 
+=======
+>>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
 <tr>
   <td>&nbsp;</td>

@@ -15,7 +15,11 @@ This is very late in the renewal cycle to be renewing a patent.
 <p/>
 
 
+<<<<<<< HEAD
 You can renew this patent now, online, via <a href="[LOGIN_URL]">[LOGIN_URL]</a> 
+=======
+You can renew this patent now via <a href="[LOGIN_URL]">[LOGIN_URL]</a> 
+>>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 provided you:
 <br/>
 - create a renewal instruction via thepatent.place prior to [TIMESTAMP_OF_NEXT_COLOUR_CHANGE];

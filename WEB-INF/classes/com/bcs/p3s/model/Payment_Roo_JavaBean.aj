@@ -93,6 +93,13 @@ privileged aspect Payment_Roo_JavaBean {
         this.hasFailed = hasFailed;
     }
     
+<<<<<<< HEAD
+=======
+    public void Payment.setMC_failCode(String MC_failCode) {
+        this.MC_failCode = MC_failCode;
+    }
+    
+>>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
     public String Payment.getFailureReason() {
         return this.failureReason;
     }
