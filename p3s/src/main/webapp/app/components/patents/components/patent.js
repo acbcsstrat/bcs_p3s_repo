@@ -14,15 +14,13 @@ app.component('patent', {
 		$scope.$on('renewalHistory', function() {		
 			vm.activePatentItemMenu = 'Renewal History';
 			vm.activeSelectedTab = 2;
-		})
+		});
 
 		vm.chartActive = 'Stage Cost Chart';
 
-		console.log($scope.$parent)
-
 		vm.fetchItemRenewal = function() {
 			patentsService.activePatentItemMenu();
-		}
+		};
 
 		vm.fetchItemTransaction = function(id) {
 			currentTransactionsService.fetchCurrentTransactions()
@@ -34,18 +32,16 @@ app.component('patent', {
 						
 						data.renewalUIs.forEach(function(data, i) {
 							if(data.patentUI.id == id) {
-								console.log(transId)
-								$state.go('current-transactions.current-transaction-item',{transId: transId})
+								$state.go('current-transactions.current-transaction-item',{transId: transId});
 							}
-						})
-
-					})
+						});
+					});
 				},
 				function(errResponse) {
-					console.log(errResponse)
+					console.log(errResponse);
 				}
-			)
-		}
+			);
+		};
 
 		vm.colourKey = function(colour) {
 
@@ -55,41 +51,39 @@ app.component('patent', {
 						title: 'Green',
 						descrip: 'lorem',
 						color: '#53ab58'
-					}
+					};
 				break;
 				case 1:
 					vm.colourPhaseTitle = {
 						title: 'Amber',
 						descrip: 'loremmm',
 						color: '#f9b233'						
-					}
+					};
 				break;
 				case 2:
 					vm.colourPhaseTitle = {
 						title: 'Red',
 						descrip: 'lorem ipsum',
 						color: '#e30613'
-					}
+					};
 				break;
 				case 3:
 					vm.colourPhaseTitle = {
 						title: 'Blue',
 						descrip: '24 Week Extension',
 						color: '#0097ce'					
-					}
+					};
 				break;
 				case 4:
 					vm.colourPhaseTitle = {
 						title: 'Black',
 						descrip: 'herisuhimas',
 						color: '#3c3c3b'
-					}
+					};
 			}
-		}
+		};
 
 		vm.openUpdateConfirmModal = function(id) {
-
-			var update = vm.updatePatent(id);
 
 			var modalInstance = $uibModal.open({
 				templateUrl: 'p3sweb/app/components/patents/views/modals/modal-update-patent-template.htm',
@@ -100,14 +94,14 @@ app.component('patent', {
 				    	$uibModalInstance.close();
 				  	};
 				}
-			})
+			});
 
 		    modalInstance.result.then(function() {
-     			console.log('good')
+     			console.log('good');
 		    }, function() {
-	       		console.log('bad')
-		    })
-		}
+	       		console.log('bad');
+		    });
+		};
 
 		vm.openDeleteConfirmModal = function(id) {
 			var modalInstance = $uibModal.open({
@@ -121,38 +115,34 @@ app.component('patent', {
 				  	};
 
 				  	$scope.deletePatent = function () {
-			  			vm.deletePatent(id)
+			  			vm.deletePatent(id);
 			  			$timeout(function() {
-							$uibModalInstance.close()
+							$uibModalInstance.close();
 			  			}, 300);
-						
 				  	};
 
 				  	$scope.cancelDeletion = function() {
 				  		$uibModalInstance.dismiss('cancel');
-				  	}
-
+				  	};
 				}
-			})
+			});
 
 		    modalInstance.result.then(function(response) {
-		     	console.log(response)
+		     	console.log(response);
 		    }, function(errResponse) {
-		       console.log(errResponse)
-		    })
-		}
+		       console.log(errResponse);
+		    });
+		};
 
 		Chart.elements.Rectangle.prototype.draw = function() {
 	    
 		    var ctx = this._chart.ctx;
 		    var vm = this._view;
-		    var left, right, top, bottom, signX, signY, borderSkipped, radius;
+		    var left, right, top, bottom, signX, signY, borderSkipped, radius, width, nextCornerId, height, x, y, nextCorner;
 		    var borderWidth = vm.borderWidth;
 		    // Set Radius Here
 		    // If radius is large enough to cause drawing errors a max radius is imposed
 		    var cornerRadius = 40;
-
-		    
 
 		    vm.height = 25;
 
@@ -234,7 +224,7 @@ app.component('patent', {
 		        corner = cornerAt(i);
 		        nextCornerId = i+1;
 		        if(nextCornerId == 4){
-		            nextCornerId = 0
+		            nextCornerId = 0;
 		        }
 
 		        nextCorner = cornerAt(nextCornerId);
@@ -244,7 +234,7 @@ app.component('patent', {
 		        x = corners[1][0];
 		        y = corners[1][1];
 		        
-		        var radius = cornerRadius;
+		        radius = cornerRadius;
 		        
 		        // Fix radius being too large
 		        if(radius > height/2){
@@ -270,325 +260,315 @@ app.component('patent', {
 		        ctx.stroke();
 		    }
 		}; 
+
+        function usdFxEur() {
+        	var fx = eval(1 / vm.costAnalysis.fee.fxRate);
+        	fx = fx.toFixed(2);
+        	vm.usd2eur = fx;
+        }
 		
-     	vm.$onChanges = function(changeObj){
+     	vm.$onChanges = function(changeObj) {
 
-	            if(changeObj.patent){
+            if(changeObj.patent) {
 
-	            	vm.selectedPatent =  changeObj.patent.currentValue;
+            	vm.selectedPatent =  changeObj.patent.currentValue;
 
-		            var patent = vm.patent;
-		            var costBand = vm.costAnalysis;
-		            var caFee = costBand.fee;
-		            var status = patent.renewalStatus;
+	            var patent = vm.patent;
+	            var costBand = vm.costAnalysis;
+	            var caFee = costBand.fee;
+	            var status = patent.renewalStatus;
+				var caLine = vm.costAnalysis.lineChart;
+            	var lineDataArr = [];
+            	var lineLabelArr = [];	            
 
-		            vm.renewalHistory = vm.renewal;         
+	            vm.renewalHistory = vm.renewal;         
 
-		            if((status == 'Show price') || (status == 'Payment in progress') || (status == 'EPO Instructed')) {
-		            	vm.displayCost = true;
-		            	vm.hideCost = false;
-		            } else {
-		            	vm.displayCost = false;
-		            	vm.hideCost = true;
-		            }
-	            	
-	            	if(caFee !== null) {
-		            	vm.feeBreakDown = {
-		            		renewalFeeEUR: caFee.renewalFeeEUR,
-		            		renewalFeeUSD: caFee.renewalFeeUSD,
-		            		extensionFee: caFee.extensionFeeEUR,
-		            		renewalFeeUSD: caFee.renewalFeeUSD,
-		            		extensionFeeEur: caFee.extensionFeeEUR,
-		            		extensionFeeUSD: caFee.extensionFeeUSD,
-		            		processingFeeEUR: caFee.processingFeeEUR,
-		            		processingFeeUSD: caFee.processingFeeUSD,
-		            		expressFeeUSD: caFee.expressFeeUSD,
-		            		urgentFeeUSD: caFee.urgentFeeUSD,
-		            		latePayPenaltyUSD: caFee.latePayPenaltyUSD,
-		            		fxRate: caFee.fxRate,
-		            		subTotalEUR: caFee.subTotalEUR,
-		            		subTotalUSD: caFee.subTotalUSD,
-		            		bandSaving: function() {
-		            			var item = {};
-		            			switch(patent.costBandColour) {
-		            				case 'Green':
-		            					item.savings =  Math.round(costBand.amberStageCost - costBand.greenStageCost);
-		            					item.renewBefore = patent.costBandEndDate;
-		            				break;
-		            				case 'Amber':
-		            					item.savings =  Math.round(costBand.redStageCost - costBand.amberStageCost)
-		            					item.renewBefore = patent.costBandEndDate;
-		            				break;
-		            				case 'Red':
-		            					item.savings =  Math.round(costBand.blueStageCost - costBand.redStageCost);
-		            					item.renewBefore = patent.costBandEndDate;
-		            				break;
-		            				case 'Blue':
-		            					item.savings =  Math.round(costBand.blackStageCost - costBand.blueStageCost);
-		            					item.renewBefore = patent.costBandEndDate;
-		            				break;
-		            				case 'Black':
-		            					item.savings =  'N/A';
-		            					item.renewBefore = 'N/A'
+	            if((status == 'Show price') || (status == 'Payment in progress') || (status == 'EPO Instructed')) {
+	            	vm.displayCost = true;
+	            	vm.hideCost = false;
+	            } else {
+	            	vm.displayCost = false;
+	            	vm.hideCost = true;
+	            }
+            	
+            	if(caFee !== null) {
+            		usdFxEur();
+	            	vm.feeBreakDown = {
+	            		renewalFeeEUR: caFee.renewalFeeEUR,
+	            		renewalFeeUSD: caFee.renewalFeeUSD,
+	            		extensionFee: caFee.extensionFeeEUR,
+	            		extensionFeeEur: caFee.extensionFeeEUR,
+	            		extensionFeeUSD: caFee.extensionFeeUSD,
+	            		processingFeeEUR: caFee.processingFeeEUR,
+	            		processingFeeUSD: caFee.processingFeeUSD,
+	            		expressFeeUSD: caFee.expressFeeUSD,
+	            		urgentFeeUSD: caFee.urgentFeeUSD,
+	            		latePayPenaltyUSD: caFee.latePayPenaltyUSD,
+	            		fxRate: caFee.fxRate,
+	            		subTotalEUR: caFee.subTotalEUR,
+	            		subTotalUSD: caFee.subTotalUSD,
+	            		bandSaving: function() {
+	            			var item = {};
+	            			switch(patent.costBandColour) {
+	            				case 'Green':
+	            					item.savings =  Math.round(costBand.amberStageCost - costBand.greenStageCost);
+	            					item.renewBefore = patent.costBandEndDate;
+	            				break;
+	            				case 'Amber':
+	            					item.savings =  Math.round(costBand.redStageCost - costBand.amberStageCost);
+	            					item.renewBefore = patent.costBandEndDate;
+	            				break;
+	            				case 'Red':
+	            					item.savings =  Math.round(costBand.blueStageCost - costBand.redStageCost);
+	            					item.renewBefore = patent.costBandEndDate;
+	            				break;
+	            				case 'Blue':
+	            					item.savings =  Math.round(costBand.blackStageCost - costBand.blueStageCost);
+	            					item.renewBefore = patent.costBandEndDate;
+	            				break;
+	            				case 'Black':
+	            					item.savings =  'N/A';
+	            					item.renewBefore = 'N/A';
 
-		            			}
-		            			return item;
-		            		}
-		            	}	            		
-	            	}
-
-					var caLine = vm.costAnalysis.lineChart;
-	            	var lineDataArr = [];
-	            	var lineLabelArr = [];
-
-					Object.keys(caLine).forEach(day => {
-						const dayData = caLine[day];
-						lineLabelArr.push(dayData.feeActiveDate.slice(0, -5));
-						lineDataArr.push(dayData.subTotal_USD)
-					})
-
-					const caBar = vm.costAnalysis;
-					const barDataArr = [];
-					const barLabelArr = [];
-
-					Object.keys(caBar).forEach(data => {
-						
-						const dayData = caBar[data];
-						
-						if ((data.includes('StartDate')) && (!data.includes ('UI'))) {
-
-								var d = new Date(dayData);
-								var date = d.getDate();
-								var month = d.getMonth() + 1;
-								var year = d.getFullYear();
-								var date = month  +'/'+ date +'/'+year;
-								barLabelArr.push(date)
-						}
-
-						if (data.includes('StageCost')) {
-							barDataArr.push(dayData);
-						}
-					})
-
-	            	vm.charts = {
-	            		line: {
-							data: lineDataArr,
-							labels: lineLabelArr,
-			     		  	series: ['Series A', 'Series B'],
-						  	datasetoverride: [
-						  		{ yAxisID: 'y-axis-1' }, 
-						  		{ yAxisID: 'y-axis-2' },
-					  		],
-						  	options: {
-						  		tooltips: {
-									titleFontSize: 12,
-									bodyFontSize: 14,
-									bodyFontStyle: 'bold',
-									xPadding: 15,
-									yPadding: 15,
-									enabled: true,
-									position: 'nearest',
-									custom: function(tooltip) {
-										tooltip.displayColors = false;
-									},
-									callbacks: {
-										label: function(x, y) {
-											return '$ ' + x.yLabel
-										},
-										title: function(tooltipItem, data) {
-								          return;
-								        }
-									}
-								},
-						    	scales: {
-						      		yAxes: [
-							        	{
-								          id: 'y-axis-1',
-								          type: 'linear',
-								          display: true,
-								          position: 'left'
-								        }
-							      	]
-							    },
-					     		elements: {
-						            line: {
-						            	borderColor: '#c6c6c6',
-						            	borderWidth: 2,
-						            	width: '10',
-						            	fill: null,
-						                tension: 0, // disables bezier curves
-						                pointStyle: 'cross'
-						            }
-						        }
-
-						  	}
-	            		},
-	            		bar: {
-							colours: ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'],
-						  	labels: barLabelArr.slice(0, 5).sort(function(a, b){return b-a}),
-						  	data: barDataArr.slice(0, 5).sort(function(a, b){return b-a}),
-							series: ['Series A', 'Series B'],
-							options: {
-								tooltips: {
-									titleFontSize: 12,
-									bodyFontSize: 14,
-									bodyFontStyle: 'bold',
-									xPadding: 15,
-									yPadding: 15,
-									enabled: true,
-									position: 'nearest',
-									custom: function(tooltip) {
-										tooltip.displayColors = false;
-									},
-									callbacks: {
-										label: function(x, y) {
-											return '$ ' + x.xLabel;
-										},
-										title: function(tooltipItem, data) {
-								          return;
-								        }
-									}
-								},
-				                scaleShowGridLines: false,
-					            barShowStroke : false,
-					            barDatasetSpacing : 0,
-					            animation: {
-					            	onComplete: function(c) {
-					            		console.log(c.chart)
-					            	}
-					            }
-						  	}
+	            			}
+	            			return item;
 	            		}
-	            	}
-            //PROGRESS BAR
-            $timeout(function() {
-            	vm.progressBar = vm.patent.progressBar
-            }, 200);
+	            	};      		
+            	}
+
+				Object.keys(caLine).forEach(day => {
+					const dayData = caLine[day];
+					lineLabelArr.push(dayData.feeActiveDate.slice(0, -5));
+					lineDataArr.push(dayData.subTotal_USD);
+				});
+
+				const caBar = vm.costAnalysis;
+				const barDataArr = [];
+				const barLabelArr = [];
+
+				Object.keys(caBar).forEach(data => {
+					
+					const dayData = caBar[data];
+					
+					if ((data.includes('StartDate')) && (!data.includes ('UI'))) {
+
+							var d = new Date(dayData);
+							var date = d.getDate();
+							var month = d.getMonth() + 1;
+							var year = d.getFullYear();
+							var dates = month  +'/'+ date +'/'+year;
+							barLabelArr.push(dates);
+					}
+
+					if (data.includes('StageCost')) {
+						barDataArr.push(dayData);
+					}
+				});
+
+            	vm.charts = {
+            		line: {
+						data: lineDataArr,
+						labels: lineLabelArr,
+		     		  	series: ['Series A', 'Series B'],
+					  	datasetoverride: [
+					  		{ yAxisID: 'y-axis-1' }, 
+					  		{ yAxisID: 'y-axis-2' },
+				  		],
+					  	options: {
+					  		tooltips: {
+								titleFontSize: 12,
+								bodyFontSize: 14,
+								bodyFontStyle: 'bold',
+								xPadding: 15,
+								yPadding: 15,
+								enabled: true,
+								position: 'nearest',
+								custom: function(tooltip) {
+									tooltip.displayColors = false;
+								},
+								callbacks: {
+									label: function(x, y) {
+										return '$ ' + x.yLabel;
+									},
+									title: function(tooltipItem, data) {
+							          return;
+							        }
+								}
+							},
+					    	scales: {
+					      		yAxes: [
+						        	{
+							          id: 'y-axis-1',
+							          type: 'linear',
+							          display: true,
+							          position: 'left'
+							        }
+						      	]
+						    },
+				     		elements: {
+					            line: {
+					            	borderColor: '#c6c6c6',
+					            	borderWidth: 2,
+					            	width: '10',
+					            	fill: null,
+					                tension: 0, // disables bezier curves
+					                pointStyle: 'cross'
+					            }
+					        }
+
+					  	}
+            		},
+            		bar: {
+						colours: ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'],
+					  	labels: barLabelArr.slice(0, 5).sort(function(a, b){return b-a;}),
+					  	data: barDataArr.slice(0, 5).sort(function(a, b){return b-a;}),
+						series: ['Series A', 'Series B'],
+						options: {
+							tooltips: {
+								titleFontSize: 12,
+								bodyFontSize: 14,
+								bodyFontStyle: 'bold',
+								xPadding: 15,
+								yPadding: 15,
+								enabled: true,
+								position: 'nearest',
+								custom: function(tooltip) {
+									tooltip.displayColors = false;
+								},
+								callbacks: {
+									label: function(x, y) {
+										return '$ ' + x.xLabel;
+									},
+									title: function(tooltipItem, data) {
+							          return;
+							        }
+								}
+							},
+			                scaleShowGridLines: false,
+				            barShowStroke : false,
+				            barDatasetSpacing : 0
+					  	}
+            		}
+            	}; //charts end
+
+            	//PROGRESS BAR
+
+	            $timeout(function() {
+	            	vm.progressBar = vm.patent.progressBar;
+	            }, 200);
  			
-	        vm.nextStage = function() {
-        		var nextStage;
-        		switch(vm.patent.costBandColour) {
-        			case 'Green':
-        				nextStage = 'Amber'
-        			break;
-        			case 'Amber':
-        				nextStage = 'Red'
-        			break;
-        			case 'Red':
-        				nextStage = 'Blue'
-        			break;
-        			case 'Blue':
-        				nextStage = 'Black'
-        			break;
-        			case 'Black':
-        				nextStage = 'End'   			
-        		}
-        		return nextStage;
-        	}
+		        vm.nextStage = function() {
+	        		var nextStage;
+	        		switch(vm.patent.costBandColour) {
+	        			case 'Green':
+	        				nextStage = 'Amber';
+	        			break;
+	        			case 'Amber':
+	        				nextStage = 'Red';
+	        			break;
+	        			case 'Red':
+	        				nextStage = 'Blue';
+	        			break;
+	        			case 'Blue':
+	        				nextStage = 'Black';
+	        			break;
+	        			case 'Black':
+	        				nextStage = 'End';		
+	        		}
+	        		return nextStage;
+	        	};
+
+	        	//NOTIFICATIONS//////////////////
+
+				vm.patentNotifications = {
+					green: 'Green',
+					amber: 'Amber',
+					red: 'Red',
+					blue: 'Blue',
+					black: 'Black'
+				};
+
+				// vm.colourPhase = 'Green';
+
+				vm.displayNotifications = function(phase) {
+
+					function phaseNotifications(phase) {
+				  		var notificationsArr = changeObj.patent.currentValue.notificationUIs;
+				  		var notifications = [];
+			  			
+				  		notificationsArr.forEach(function(data){
+				  			if(data.costbandcolor == phase) {
+				  				notifications.push(data);
+				  			}
+				  		});
+
+				  		return notifications;
+
+			  		}
+
+		        	var chunkArr = [];
+
+		        	function chunk(arr, size) {
+		        		for (var i=0; i < arr.length; i+=size) {
+			        		chunkArr.push(arr.slice(i, i+size));
+			        	}
+			        	return chunkArr;
+		        	}       	
+
+		        	vm.chunkedData = chunk(phaseNotifications(phase), 8);
+
+				};
 
 
+	        	fxService.fetchFxWeek()
+	        	.then(
+	        		function(data){
+	        			var dateArr = [];
+	        			//weekly
 
+	        			data.forEach(function(item){
+	        				dateArr.push(item.rateActiveDate);
+	        			});
 
-	        //NOTIFICATIONS//////////////////
+	        			dateArr.sort(function(a, b){
+	        				return a - b;
+	        			});        			
 
-			vm.patentNotifications = {
-				green: 'Green',
-				amber: 'Amber',
-				red: 'Red',
-				blue: 'Blue',
-				black: 'Black'
-			}
+                dateArr.forEach(function(item, index){
+	        				if(item == dateArr[0]) {
+	        					var todaysFx = data[index].rate;
+	        					vm.todaysPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * todaysFx);
+	        				}        				
+	        				//yesterday
+	        				if(item == dateArr[1]) {
+	        					var yesterdayFx = data[index].rate;
+	        					vm.yesterdaysPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * yesterdayFx);
+	        				}
+	        				//weekly
+	        				if(item == dateArr[7]) { 
+	        					var lastWeekFx = data[index].rate;
+	        					vm.lastWeeksPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastWeekFx);
+	        					vm.lastWeeksPriceEUR = Math.floor(vm.costAnalysis.fee.subTotalEUR);
+	        				}
+	        			});
+	        		},
+	        		function(error){
 
-			// vm.colourPhase = 'Green';
+	        		}
+	    		); //fxService end
 
-			vm.displayNotifications = function(phase) {
-
-				function phaseNotifications(phase) {
-			  		var notificationsArr = changeObj.patent.currentValue.notificationUIs;
-			  		var notifications = [];
-		  			
-			  		notificationsArr.forEach(function(data){
-			  			if(data.costbandcolor == phase) {
-			  				notifications.push(data)
-			  			}
-			  		})
-
-			  		return notifications;
-
-			  	}
-
-	        	var newArr = [];
-
-	        	function chunk(arr, size) {
-	        		for (i=0; i < arr.length; i+=size) {
-		        		newArr.push(arr.slice(i, i+size));
-		        	}
-		        	return newArr;
-	        	}       	
-
-	        	vm.chunkedData = chunk(phaseNotifications(phase), 8);
-
-			}
-
-        	var cad =  vm.costAnalysis;
-        	var greenCost = cad.greenStageCost, amberCost = cad.amberStageCost, redCost = cad.redStageCost, blueCost = cad.blueStageCost, brownCost = cad.brownStageCost;
-
-        	var fxHistory = {}
-
-        	fxService.fetchFxWeek()
-        	.then(
-        		function(data){
-        			var dateArr = [];
-        			//weekly
-
-        			data.forEach(function(item){
-        				dateArr.push(item.rateActiveDate)
-        			});
-
-        			dateArr.sort(function(a, b){
-        				return a - b
-        			});        			
-
-        			var tD = new Date().getTime();
-        			var lwD = tD - 604800000; //subtract a week in milliseconds
-        			var lastWeekD = new Date(lwD).getDay();
-        			var lastWeekDt = new Date(lwD).getDate();
-
-        			dateArr.forEach(function(item, index){
-        				if(item == dateArr[0]) {
-        					var todaysFx = data[index].rate;
-        					vm.todaysPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * todaysFx);
-        				}        				
-        				//yesterday
-        				if(item == dateArr[1]) {
-        					var yesterdayFx = data[index].rate;
-        					vm.yesterdaysPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * yesterdayFx);
-        				}
-        				//weekly
-        				if(item == dateArr[7]) { 
-        					var lastWeekFx = data[index].rate;
-        					vm.lastWeeksPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastWeekFx);
-        					vm.lastWeeksPriceEUR = Math.floor(vm.costAnalysis.fee.subTotalEUR);
-        				}
-        			})
-        		},
-        		function(error){
-
-        		}
-    		)
-
-    		fxService.fetchFxMonth()
+	    		fxService.fetchFxMonth()
 	        	.then(
 	        		function(data){
 
 	        			var dateArr = [];
 
 	        			data.forEach(function(item){
-	        				dateArr.push(item.rateActiveDate)
+	        				dateArr.push(item.rateActiveDate);
 	        			});
 
 	        			dateArr.sort(function(a, b){
-	        				return a - b
+	        				return a - b;
 	        			});
 
 	        			var tD = new Date();
@@ -601,7 +581,7 @@ app.component('patent', {
 	        					vm.lastMonthsPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastMonthFx);
 	        					vm.lastMonthsPriceEUR = Math.floor(vm.costAnalysis.fee.subTotalEUR);
 	        				}
-	        			})
+	        			});
 	        			$timeout(function(){
 	        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
 	        				if(vm.fourWeekVariation < 0) {
@@ -614,19 +594,10 @@ app.component('patent', {
 	        		function(error){
 
 	        		}
-	    		)
-
-	        function usdFxEur() {
-	        	var fx = eval(1 / vm.costAnalysis.fee.fxRate);
-	        	var fx = fx.toFixed(2)
-	        	vm.usd2eur = fx;
-	        }
-	        if(caFee !== null) {
-	        	usdFxEur();
-	        }
+	    		); //fxService end
           	
-        }
-    }
+        	} //if end
+    	}; //onchanges end
 
 
 
@@ -638,26 +609,25 @@ app.component('patent', {
 	            .then(function(){
 	             	$state.go('patents', {}, {reload: true})
              		.then(function(){
-
 	             		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
-	             	})
+	             	});
 	             },
 	            function(errResponse){
 	                console.error('Error while deleting Patent');
 	            }
 	        );
-	    }
+	    };
 
         vm.updatePatent = function(patent) {
         	var id = patent.id;
         	patentsRestService.updatePatent(patent, id);
-        }
+        };
 
 	    vm.editing=[];
 
 	    vm.editItem = function (index) {
 	        vm.editing[index] = true;
-	    }
+	    };
 
 	    vm.doneEditing = function (index) {
 	        vm.editing[index] = false;
@@ -665,7 +635,7 @@ app.component('patent', {
 
 		$timeout(function() {
 			vm.colourKey(0);
-			vm.displayNotifications(vm.patentNotifications.green)
+			vm.displayNotifications(vm.patentNotifications.green);
 		}, 100);
 
 	  	

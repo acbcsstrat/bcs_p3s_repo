@@ -19,7 +19,7 @@ app.factory('patentsRestService', function($http, $q) {
             );
 
             return deferred.promise;
-        }
+        };
 
         factory.updatePatent = function(patent, id) {
             
@@ -30,25 +30,23 @@ app.factory('patentsRestService', function($http, $q) {
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
-                    console.error('Error while updating patent');
                     deferred.reject(errResponse);
                 }
             );
             return deferred.promise;
-        }
+        };
 
         factory.savePatent = function(patent) {
             var deferred= $q.defer();
             $http.post(REST_SERVICE_URI, patent)
                 .then(function(response){
-                    deferred.resolve(response.data)
+                    deferred.resolve(response.data);
                 }, function(errResponse) {
-                    console.log('save patent error');
-                    deferred.reject(errResponse)
+                    deferred.reject(errResponse);
                 }
             );
             return deferred.promise;
-        }
+        };
 
         factory.fetchCostAnalysis = function(id) {
             var deferred = $q.defer();
@@ -58,16 +56,14 @@ app.factory('patentsRestService', function($http, $q) {
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
-                    console.error('Error while fetching graph data');
                     deferred.reject(errResponse);
                 }
             );
 
             return deferred.promise;
-        }
+        };
 
         factory.deletePatent = function(id) {
-            console.log(id)
             var deferred = $q.defer();
             $http.delete(REST_SERVICE_URI+id)
                 .then(
@@ -75,12 +71,11 @@ app.factory('patentsRestService', function($http, $q) {
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
-                    console.error('Error while deleting User');
                     deferred.reject(errResponse);
                 }
             );
             return deferred.promise;
-        }
+        };
 
         factory.fetchRenewalHistory = function(id) {
 
@@ -96,7 +91,7 @@ app.factory('patentsRestService', function($http, $q) {
                 }
             );
             return deferred.promise;
-        }
+        };
 
 
 

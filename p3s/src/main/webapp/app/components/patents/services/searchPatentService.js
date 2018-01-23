@@ -11,15 +11,14 @@ app.factory('searchPatentService', ['$http', '$q', function($http, $q) {
             
             $http.get(patentItem)
                 .then(function(response){
-                	deferred.resolve(response)
+                    deferred.resolve(response);
                 }, function(errResponse) {
-                    console.log('add patent error');
-                    deferred.reject(errResponse)
+                    deferred.reject(errResponse);
                 }
             );
             return deferred.promise;
-        }
+        };
 
     return factory;
 
-}])
+}]);

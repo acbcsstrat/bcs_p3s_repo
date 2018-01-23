@@ -1,4 +1,4 @@
-app.factory('currentTransactionsService', function($http, $q) {
+app.factory('currentTransactionsService', ['$http', '$q', function($http, $q) {
 
 	var factory = {};
 
@@ -10,16 +10,16 @@ app.factory('currentTransactionsService', function($http, $q) {
 			$http.get(REST_SERVICE_URI)
 			.then(
 				function(response){
-					deferred.resolve(response.data)
+					deferred.resolve(response.data);
 				},
 				function(errResponse){
-					deferred.resolve(errResponse)
+					deferred.resolve(errResponse);
 				}
-			)
+			);
 
 			return deferred.promise;
 
-		}
+		};
 
 		factory.renewalProgress = function(currTransStatus) {
 
@@ -27,33 +27,33 @@ app.factory('currentTransactionsService', function($http, $q) {
 			
 			switch(currTransStatus) {
 	    		case 'Initiated':
-	    			renewalProgress = 14
+	    			renewalProgress = 14;
 	    		break;
 	    		case 'Pending':
-	    			renewalProgress = 28
+	    			renewalProgress = 28;
     			break;
 	    		case 'Funds Received':
-	    			renewalProgress = 42
+	    			renewalProgress = 42;
     			break;	
 	    		case 'Funds Sent':
-	    			renewalProgress = 56
+	    			renewalProgress = 56;
     			break;	
 	    		case 'EPO Received':
-	    			renewalProgress = 70
+	    			renewalProgress = 70;
     			break;	
 	    		case 'EPO Instructed':
-	    			renewalProgress = 84
+	    			renewalProgress = 84;
     			break;
 	    		case 'Completed':
-	    			renewalProgress = 100
+	    			renewalProgress = 100;
     			break;	       					    			    			    			
 
     		}
 
     		return renewalProgress;
 
-    	}	
+    	};	
 
 	return factory;
 
-})
+}]);

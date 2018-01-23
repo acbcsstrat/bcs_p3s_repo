@@ -29,9 +29,9 @@ app.component('transactionHistoryItem', {
 					if(data.status == currTransStatus) {
 						statusIndex = index;
 					}
-				})
+				});
 
-				for(i=0; i <= statusIndex; i++){
+				for(var i=0; i <= statusIndex; i++){
 					if(vm.transactionHistoryItem.hasFailed) {
 						vm.transStatus[i].complete = true;
 						if(currTransStatus == vm.transStatus[i].status) {
@@ -40,11 +40,10 @@ app.component('transactionHistoryItem', {
 							vm.transStatus[i].active = true;
 						}
 					} else {
-						// vm.transStatus[i].active = true;
 						vm.transStatus[i].complete = true;						
 					}
 				}
-			}
+			};
 
 			if(vm.transactionHistoryItem.hasFailed) {
 				vm.hasFailed = true;
@@ -99,7 +98,7 @@ app.component('transactionHistoryItem', {
 
 	 		vm.transactionHistoryItem.renewalUIs.forEach(function(value, index, array){
 
-	 			vm.patents.push(value)
+	 			vm.patents.push(value);
 
 				switch(value.renewalStatus) {
 		    		case 'Payment in progress':
@@ -121,13 +120,7 @@ app.component('transactionHistoryItem', {
 		    			vm.patentProgress = 100;		
 
 		    	}	
-		 	})
-
-		 	console.log(vm.patents)
-    	}
-
-	   
-
-
+		 	});
+    	};
 	}]
 });

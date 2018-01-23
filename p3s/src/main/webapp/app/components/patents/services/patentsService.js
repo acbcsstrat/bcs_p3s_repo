@@ -1,4 +1,4 @@
-app.factory('patentsService', function($rootScope, $timeout){
+app.factory('patentsService', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	
 	return {
 		activePatentItemMenu: 	function () {
@@ -7,5 +7,5 @@ app.factory('patentsService', function($rootScope, $timeout){
 			}, 100);
 			
 		}
-	}
-})
+	};
+}]);

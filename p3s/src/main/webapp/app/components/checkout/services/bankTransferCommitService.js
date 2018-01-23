@@ -1,21 +1,21 @@
 app.factory('bankTransferCommitService', ['$http', '$q', '$state' ,function($http, $q, $state){
 
-	var factory = {}
+	var factory = {};
 
 		factory.commitTransfer = function(order) {
-			var deferred = $q.defer()
+			var deferred = $q.defer();
 			$http.post(domain+'rest-committed-banktransfer/', order)
 			.then(
 				function(response){
-					$state.go('bank-transfer-success', {orderObj: response.data})
+					$state.go('bank-transfer-success', {orderObj: response.data});
 				},
 				function(errResponse){
-					console.log(errResponse)
-				})
+				});
 				
 				return deferred.promise;
 
-		}
+		};
+  
 	return factory;
 
-}])
+}]);

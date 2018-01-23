@@ -16,12 +16,12 @@ app.component('patents', {
 	    vm.date = new Date().getTime();
 
 		vm.displayPatents = function() {
-			$state.go('patents')
-		}
+			$state.go('patents');
+		};
 
 		vm.fetchItemRenewal = function() {
 			patentsService.activePatentItemMenu();
-		}
+		};
 
 		vm.fetchItemTransaction = function(id) {
 			currentTransactionsService.fetchCurrentTransactions()
@@ -42,18 +42,18 @@ app.component('patents', {
 										}, 300);
 									},
 									function(errResponse){
-										console.log(errResponse)
+										console.log(errResponse);
 									}
-								)
+								);
 							}
-						})
-					})
+						});
+					});
 				},
 				function(errResponse) {
-					console.log(errResponse)
+					console.log(errResponse);
 				}
-			)
-		}
+			);
+		};
 
 		vm.$onInit = () => {
 
@@ -90,21 +90,21 @@ app.component('patents', {
 			     	case 7:
 				    	vm.tableData = greyPatents;
 				}
-			}
+			};
 
 			$timeout(function() {
-				vm.displayPhase(1)
+				vm.displayPhase(1);
 			}, 100);
 			
 
 			patents.forEach(function(item){
 
 				if(item.costBandColour) {
-	     			allPatents.push(item)
+	     			allPatents.push(item);
 			     	if(allPatents.length === 0) {
 						vm.allPatentsLength = 0;
 					} else {
-						vm.allPatentsLength = allPatents.length
+						vm.allPatentsLength = allPatents.length;
 					}
 	     		} else {
 	     			vm.patents = null;
@@ -116,31 +116,32 @@ app.component('patents', {
 							greenPatents.push(item);
 						break;
 						case 'Amber':
-							amberPatents.push(item)
+							amberPatents.push(item);
 						break;
 						case 'Red':
-							redPatents.push(item)
+							redPatents.push(item);
 						break;
 						case 'Blue':
-							bluePatents.push(item)
+							bluePatents.push(item);
 						break;
 						case 'Black':
-							blackPatents.push(item)
+							blackPatents.push(item);
+            break;
 						default: vm.patents = null;																								
 					}
      			} else {
-					greyPatents.push(item)
+					greyPatents.push(item);
      			}
 
 		     	if(greenPatents.length === 0) { 
 	 				vm.greenPatentsLength = 0;
 	 			} else {
-	 				vm.greenPatentsLength = greenPatents.length
+	 				vm.greenPatentsLength = greenPatents.length;
 	 			}
 		     	if (amberPatents.length === 0) {
 	 				vm.amberPatentsLength = 0;
 	 			} else {
-	 				vm.amberPatentsLength = amberPatents.length
+	 				vm.amberPatentsLength = amberPatents.length;
 	 			}
 	 			if(redPatents.length === 0) {
 	 				vm.redPatentsLength = 0;
@@ -150,18 +151,18 @@ app.component('patents', {
 	 			if(bluePatents.length === 0) {
 	 				vm.bluePatentsLength = 0;
 	 			} else {
-	 				vm.bluePatentsLength = bluePatents.length
+	 				vm.bluePatentsLength = bluePatents.length;
 	 			}
-	 			if(blackPatents.length == 0) {
+	 			if(blackPatents.length === 0) {
 	 				vm.blackPatentsLength = 0;
 	 			} else {
-	 				vm.blackPatentsLength = blackPatents.length
+	 				vm.blackPatentsLength = blackPatents.length;
 	 			}
 
-	 			if(greyPatents.length == 0) {
+	 			if(greyPatents.length === 0) {
 	 				vm.greyPatentsLength = 0;
 	 			} else {
-	 				vm.greyPatentsLength = greyPatents.length
+	 				vm.greyPatentsLength = greyPatents.length;
 	 			}	 			
 
 	 			function calcProgress(start, end) {
@@ -174,44 +175,48 @@ app.component('patents', {
 					return Math.round(((progress) / (total)) * 100);
 
 	 			}
+               
+               
 	 			
 				patentsRestService.fetchCostAnalysis(item.id)
                 .then(
                     function(response){
+               var start;
+               var end;
                         switch(item.costBandColour) {
                             case 'Green':
-							var start = new Date(response.greenStartDate);
-							var end = new Date(response.amberStartDate);
+							start = new Date(response.greenStartDate);
+							end = new Date(response.amberStartDate);
 							item.progressBar = calcProgress(start, end);						                                  
                                 break;
                             case 'Amber':
-							var start = new Date(response.amberStartDate);
-							var end = new Date(response.redStartDate);
+							start = new Date(response.amberStartDate);
+							end = new Date(response.redStartDate);
 							item.progressBar = calcProgress(start, end);                          
                                 break;
                             case 'Red':
-							var start = new Date(response.redStartDate);
-							var end = new Date(response.blueStartDate);
+							start = new Date(response.redStartDate);
+							end = new Date(response.blueStartDate);
 							item.progressBar = calcProgress(start, end);
                                 break;
                             case 'Blue':
-							var start = response.blueStartDate;
-							var end = response.blackStartDate;
+							start = response.blueStartDate;
+							end = response.blackStartDate;
 							item.progressBar = calcProgress(start, end);
                                 break;
                             case 'Black':
-							var start = response.blackStartDate;
-							var end = response.blackEndDate;
+							start = response.blackStartDate;
+							end = response.blackEndDate;
 							item.progressBar = calcProgress(start, end);
                         }
                     }, 
                     function(errResponse){
-                        console.log(errResponse)
+                        console.log(errResponse);
                     }
-                )
-			})
+                );
+			});
 
-		}
+		};
 
       	vm.rowSelect = function(event){
       		vm.patentInfoContent = true;
@@ -220,7 +225,7 @@ app.component('patents', {
 	      		var patentId = id[0].hash; //gets data from ui-sref
 	      		window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
       		}
-      	}
+      	};
 
 	   	vm.sortType = function(column) {
 	   		if(column == 'dueDate') {
@@ -228,26 +233,26 @@ app.component('patents', {
 
 	   				vm.sortDate = true;
 
-	   				if (vm.sortReverse == false) {
+	   				if (vm.sortReverse === false) {
 	   					vm.tableData.sort(function(a, b){
 	   						var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
 	   						return dateB - dateA;
-	   					})
+	   					});
 	   				} else {
 	   					vm.tableData.sort(function(a, b){
 	   						var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-	   						return dateB - dateA
-	   					})
+	   						return dateB - dateA;
+	   					});
 	   				}
 	   				
-	   			}())
+	   			}());
 	   		} else {
 	   			vm.sortDate = false;
 	   			vm.selectedSortType = column;
 	   		}
-	   	}
+	   	};
 
-   		vm.selectedSortType = 'patentApplicationNumber'
+   		vm.selectedSortType = 'patentApplicationNumber';
 	  	vm.sortReverse  =  false;
 	}
 ]});
@@ -258,10 +263,10 @@ app.directive('fixedTableHeaders', ['$timeout', function($timeout) {
     link: function(scope, element, attrs) {
       $timeout(function () {
         
-          container = element.parentsUntil(attrs.fixedTableHeaders);
+          var container = element.parentsUntil(attrs.fixedTableHeaders);
 	        element.stickyTableHeaders({ scrollableArea: container, "fixedOffset": 0 });
 
       }, 0);
     }
-  }
+  };
 }]);
