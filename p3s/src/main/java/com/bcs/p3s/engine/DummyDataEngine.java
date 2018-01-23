@@ -49,7 +49,7 @@ public class DummyDataEngine extends Universal {
 	}*/
 	
 
-	public List<FxRateUI> makeDummyFxRateHistory(BigDecimal seedRate, Date endsBefore, int numdays) { 
+	/*public List<FxRateUI> makeDummyFxRateHistory(BigDecimal seedRate, Date endsBefore, int numdays) { 
 		// Ends before is Todays timestamp. So generated list should stop 1 day before this
 		
 		final long DAY = 24 * 60 * 60 * 1000;
@@ -85,6 +85,7 @@ public class DummyDataEngine extends Universal {
 		return shallowCopy;
 	}
 
+*/
 	
 
 

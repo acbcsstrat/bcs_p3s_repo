@@ -56,6 +56,7 @@ import com.bcs.p3s.scrape.service.EPOAccess;
 import com.bcs.p3s.scrape.service.EPOAccessImpl;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.BasketContents;
@@ -465,6 +466,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		String err = PREFIX+"getFxRateHistory("+timeperiod+") ";
 		checkNoActionRequired(err);
 
+		//List<ArchivedRate> archivedRateForPeriod = new ArrayList<ArchivedRate>();
+		
 		log().debug(err+" invoked ");
     	
 		List<FxRateUI> history = new ArrayList<FxRateUI>();
@@ -473,12 +476,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		
 		GlobalVariableSole tmp1 = GlobalVariableSole.findOnlyGlobalVariableSole();
-		DummyDataEngine dummy = new DummyDataEngine();
-		List<FxRateUI> badData = dummy.makeDummyFxRateHistory(tmp1.getCurrent_P3S_rate(), tmp1.getCurrentRateActiveDate(), numdays); 
-		
-		for (FxRateUI r : badData) {
-			history.add(r);
-		}
+		/*DummyDataEngine dummy = new DummyDataEngine();
+		List<FxRateUI> badData = dummy.makeDummyFxRateHistory(tmp1.getCurrent_P3S_rate(), tmp1.getCurrentRateActiveDate(), numdays); */
 		
 		
 		// Todays rate
@@ -489,11 +488,28 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		todaysRate.setRate(formatted);
 		todaysRate.setRateActiveDate(current.getCurrentRateActiveDate());
 		history.add(todaysRate);
+		
+		List<ArchivedRate> archivedRateList = ArchivedRate.findAllArchivedRates();
+		Collections.reverse(archivedRateList);
+		
+		for(ArchivedRate eachDay : archivedRateList){
+			if(history.size() >= numdays){
+				log().debug(err + " returning fx rate history with size "+ history.size());
 
-	    System.out.println(err+" returning following rate history:");
-	    for (FxRateUI r : history) { System.out.println("   "+r.toString()); }
+				return history;
+				//break;
+			}
+			FxRateUI rateUI = new FxRateUI();
+			rateUI.setRate(eachDay.getFxRate_P3s());
+			rateUI.setRateActiveDate(new DateUtil().addDays(eachDay.getArchivedDate(), -1));
+			//archivedRateForPeriod.add(eachDay);
+			history.add(rateUI);
+		}
+		
+		log().debug(err + " returning fx rate history with size "+ history.size());
 
 		return history;
+	    
 	}
 
 
@@ -569,9 +585,12 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	
 	protected int period2days(String timeperiod) {
 		int numdays = -1;
-		if ("week".equalsIgnoreCase(timeperiod)) return 7;
+		//week means 8 days and month means 35 days inorder to support FE's logic of fetching data - MP changed on 23/01/2018
+		//if ("week".equalsIgnoreCase(timeperiod)) return 7;
+		if ("week".equalsIgnoreCase(timeperiod)) return 8;
 		if ("fortnight".equalsIgnoreCase(timeperiod)) return 14;
-		if ("month".equalsIgnoreCase(timeperiod)) return 30;
+		//if ("month".equalsIgnoreCase(timeperiod)) return 30;
+		if ("month".equalsIgnoreCase(timeperiod)) return 35;
 		if ("quarter".equalsIgnoreCase(timeperiod)) return 91;
 		if ("halfyear".equalsIgnoreCase(timeperiod)) return 182;
 		if ("year".equalsIgnoreCase(timeperiod)) return 365;
