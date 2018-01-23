@@ -1,0 +1,41 @@
+<div class="alert alert-warning m-b-lg" role="alert" data-ng-show="ngCart.getTotalItems() === 0">
+    <span class="font-body">Your cart is empty</span>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="t-list table table-responsive m-b-lg" data-ng-show="ngCart.getTotalItems() > 0">
+            <table class="table table-striped ngCart cart text-md-center">
+                <thead>
+                    <tr class="font-body font-weight-bold">
+                        <th class="text-md-center">Application No.</th>
+                        <th class="text-md-center">Client Reference</th>
+                        <th class="text-md-center">Short Description</th>
+                        <th class="text-md-center">Amount</th>
+                        <th class="text-md-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="item in ngCart.getCart().items track by $index" class="font-body">
+                        <td>{{item.getData().patentApplicationNumber}}</td>
+                        <td><span data-ng-if="item.getData().clientRef == ''">[No client reference provided]</span><span data-ng-if="item.getData().clientRef !== ''">{{item.getData().clientRef}}</span></td>
+                        <td><span data-ng-if="item.getData().clientRef == ''">[No client description provided]</span><span data-ng-if="item.getData().clientRef !== ''">{{item.getData().shortTitle}}</span></td>
+                        <td>{{item.getPrice() | currency}}</td>
+                        <td>
+                            <div class="btn-error">
+                                <button class="btn btn--cross btn--lg pill-radius font-body font-body--component bg-phase-red txt-white font-weight-medium d-flex align-items-center" data-ng-click="ngCart.removeItemById(item.getId())">Remove </button>                                
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>        
+    </div>
+</div>
+
+<div class="row m-b-lg">
+    <div class="col-md-12 d-flex btn-default">
+        <a class="btn btn--lg bg-phase-green txt-white pill-radius font-body font-weight-medium d-flex align-items-center" data-ui-sref="patents">Add More Patents <img src="p3sweb/assets/imgs/icons/patent_icon_sm.png" alt="patent icon" class="m-l-sm"></a>
+    </div>
+</div>

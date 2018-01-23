@@ -1,0 +1,165 @@
+<html>
+<head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+<script>
+    function demoFromHTML() {
+    	
+        var pdf = new jsPDF('p', 'pt', 'A4');
+        
+        source = $('#content')[0];
+
+        specialElementHandlers = {
+            // element with id of "bypass" - jQuery style selector
+            '#bypass': function (element, renderer) {
+                // true = "handled elsewhere, bypass text extraction"
+                return true;
+            }
+        };
+         
+        pdf.addHTML(source, function () {
+            pdf.save('proforma.pdf');
+    }); 
+    }
+    
+</script>
+</head>
+
+<style>
+	#content{
+	    	background-color:#FFFFFF;
+	    	font-family: serif;
+	    }
+	    .heading_address{
+	    	text-align: right;
+	    }
+	  .table_header{
+   		border: none;
+   		width: 100%;
+		}
+		
+	  .table_content_main{
+   		border: 1px solid black;
+   		width: 100%;
+		}
+		
+		table, td, th {
+    		border: 1px solid black;
+		}
+		td{
+			width: 50%;
+		}
+		
+		table {
+		    border-collapse: collapse;
+		    width: 100%;
+		}
+		.link_class {
+			color: green;
+		}
+		
+		.watermark {
+		    position: relative;
+		    width: 100%;
+		    height: 100%;
+		    z-index: 99999;
+		    background: url('/p3sweb/public/ac/crudepdf/watermark.png') center center no-repeat;
+		    pointer-events: none;
+		}
+	    
+	    
+</style>
+
+<body>
+
+<div id="content" class="watermark">
+
+<!-- Top Header -->
+
+	<div class="table_header">
+		<div > <img src="/p3sweb/public/ac/crudepdf/logo-withname-ruf.png"> </div>
+		
+	  	<div class="heading_address" >
+	    	<b>PATENT PLACE</b>
+        	<br/>25 Meer Street
+        	<br/>Stratford-upon-Avon
+        	<br/>Warwickshire
+        	<br/>CV37 6QB
+        	<br/>United Kingdom
+        	<br/><a class="link_class" href="www.thepatent.place">www.thepatent.place</a>
+	  	</div>
+ 	 </div>
+ 
+ 	<div>
+	<div align="center">
+		<h1>PATENT RENEWAL CERTIFICATE <br/>for patent renewed at the EPO</h1> 
+	</div>
+	<br/>
+	<br/>
+	      	
+  <!-- Content table -->
+  <!-- below onwards replace with DB data later -->
+  	<table>
+		<tr>
+			<td><b>ORGANISATION</b></td>
+			<td>Bodget and Scarper Patent Lawyers Inc</td>
+		</tr>
+		<tr>
+			<td><b>APPLICATION NO.</b></td>
+			<td>EP17178072</td>
+		</tr>
+		<tr>
+			<td><b>DESCRIPTION</b></td>
+			<td>INKJET PRINTING MACHINE</td>
+		</tr>
+		<tr>
+			<td><b>SHORT TITLE</b></td>
+			<td>INKJET</td>
+		</tr>
+		<tr>
+			<td><b>CLIENT REF</b></td>
+			<td>EP1100985678EP26</td>
+		</tr>
+		<tr>
+			<td><b>PUBLICATION NO.</b></td>
+			<td>EP3243665</td>
+		</tr>
+		<tr>
+			<td><b>APPLICANT NAME</b></td>
+			<td>Riso Kagaku Corporation</td>
+		</tr>
+		<tr>
+			<td><b>FILING DATE</b></td>
+			<td>02/09/2016</td>
+		</tr>
+ 	</table>
+ 	
+ 	<br/>
+ 	<br/>
+ 	<br/>
+ 	<div>The EPO Record shows</div>
+ 	<table>
+ 		<tr>
+ 			<td><b>PATENT YEAR</b></td>
+ 			<td>8</td>
+ 		</tr>
+ 		<tr>
+ 			<td><b>RENEWED ON</b></td>
+ 			<td>12/06/2017</td>
+ 		</tr>
+ 	</table>
+
+</div>
+</div>
+
+<div class="btn-no-bg">
+	<a href="javascript:demoFromHTML()">Save as PDF</a>
+</div>  
+
+</body>
+</html>

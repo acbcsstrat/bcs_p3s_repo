@@ -1,0 +1,21 @@
+{
+	"userInfo": [
+		{
+			"emailAddress": "merin.paul@boxcleversoftware.com",
+			"firstName": "merin",
+			"lastName": "paul",
+			"businessName": "My Business",
+			"phoneNumber": "07857233179",
+			"street": "New Street",
+			"city": "Stratford",
+			"USstate": "Warwickshire",
+			"zip": "234919232",
+			"timezone": "UTC",
+			"businessNumber": "134568",
+			"billingStreet": "Meer Street",
+			"billingCity": "Stratford",
+			"billingState": "Warwickshire",
+			"billingZip": "234919232"
+		}
+	]
+}
