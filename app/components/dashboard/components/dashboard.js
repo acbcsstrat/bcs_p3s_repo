@@ -183,7 +183,7 @@ app.component('dashboard', {
 	                    		patentsArr.forEach(function(item) {
 	                    			if(item.costBandColour == 'Green') {
 	                    				vm.recentStageArr.push(item);
-                              item.nextCostBandColor = 'Amber';
+                              			item.nextCostBandColor = 'Amber';
 	                    			}
 	                    		});
 	                    	}
@@ -420,11 +420,11 @@ app.component('dashboard', {
 			});
 
 		 	modalInstance.result.finally(function () {
-		     	
+		     	console.log(response)
 		     	if(response.urgentPatents.length === 0) {
 		     		return;
 		     	} else {
-
+		     		console.log('entered')
 		     		response.urgentPatents.forEach(function(data){
     					urgentResponse.push(data);
 	    			});
