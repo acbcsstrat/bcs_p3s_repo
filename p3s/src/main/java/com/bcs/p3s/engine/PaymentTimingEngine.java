@@ -28,10 +28,6 @@ public class PaymentTimingEngine extends Universal{
 	
 	public BankTransferPreCommitDetails getBothPayDates(BankTransferPreCommitDetails preCommitDetails) { 
 		
-		// This engine will perform proper processing here, once the rules are known
-		/*DummyDataEngine dummy = new DummyDataEngine();
-		Date targetDate = dummy.add48hours(from);*/
-		
 		String msg = "getPayByDateForUser(List<PatentUI> patentUIs)";
 		log().debug(msg + " invoked for getting transaction target end date");
 		boolean urgentRenewalPresent = false;
