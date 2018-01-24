@@ -199,7 +199,8 @@ app.component('dashboard', {
 
 	                    	if(millsToHours(response, hours) !== undefined){
 	                    		patentsArr.forEach(function(item) {
-	                    			if(item.costBandColour == 'Amber') {	                    		
+
+	                    			if(item.costBandColour == 'Amber') {
 	                    				vm.recentStageArr.push(item);
 	                    				item.nextCostBandColor = 'Red';                              
 	                    			}
@@ -219,7 +220,7 @@ app.component('dashboard', {
 	                    		patentsArr.forEach(function(item) {
 	                    			if(item.costBandColour == 'Red') {	                    		
 	                    				vm.recentStageArr.push(item);
-	                    				item.nextCostBandColor = 'Blue';                              
+	                    				item.nextCostBandColor = 'Blue';                  
 	                    			}
 	                    		});
 	                    	}
@@ -272,7 +273,95 @@ app.component('dashboard', {
 			);
 		}
 
+		
 		$scope.currentIndex = 0;
+
+		function patentFx(i) {
+
+			vm.selectedPatent = vm.phaseArr[i];
+			patentCostAnalysisFn(vm.selectedPatent.id);
+
+			var fees = vm.phaseArr[i].feeUI;
+			if(fees !== null) {
+    			$timeout(function() {
+    				fxService.fetchFxWeek()
+		        	.then(
+		        		function(data){
+
+		        			var dateArr = [];
+		        			//weekly
+		        			data.forEach(function(item){
+		        				dateArr.push(item.rateActiveDate);
+		        			});
+
+		        			dateArr.sort(function(a, b){
+		        				return a - b;
+		        			});
+
+		        			dateArr.forEach(function(item, index){
+		        				if(item == dateArr[0]) {
+		        					var todaysFx = data[index].rate;
+		        					vm.todaysPriceUSD = Math.floor(fees.subTotalEUR * todaysFx);
+		        					vm.todaysPriceEUR = Math.floor(fees.subTotalEUR);
+		        				}
+		        				// console.log(vm.todaysPriceUSD, dateArr, data)
+		        				//yesterday
+		        				// if(item == dateArr[1]) {
+		        				 if(item == dateArr[1]) {	
+		        					var yesterdayFx = data[index].rate;
+		        					vm.yesterdaysPriceUSD = Math.floor(fees.subTotalEUR * yesterdayFx);
+		        					vm.yesterdaysPriceEUR = Math.floor(fees.subTotalEUR);
+		        				}
+		        				//weekly
+		        				if(item == dateArr[7]) { 
+		        					var lastWeekFx = data[index].rate;
+		        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
+		        					vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);
+		        				}
+		        			});
+		        		},
+		        		function(error){
+
+		        		}
+		    		);
+
+		    		fxService.fetchFxMonth()
+		        	.then(
+		        		function(data){
+
+		        			var tD = new Date();
+		        			var lmD = tD.setMonth(tD.getMonth() - 1);
+		        			var lastMonthD = new Date(lmD).getDay();
+		        			var lastMonthDt = new Date(lmD).getDate();
+		        			data.forEach(function(item, index){
+		        				if((new Date(item.rateActiveDate).getDay() == lastMonthD) && (new Date(item.rateActiveDate).getDate() == lastMonthDt)) {
+		        					var lastMonthFx = item.rate;
+		        					console.log(item.rate)
+		        					vm.lastMonthsPriceUSD = Math.floor(fees.subTotalEUR * lastMonthFx);
+		        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
+		        				}
+		        			});
+
+		        			$timeout(function(){
+		        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
+		        				if(vm.fourWeekVariation < 0) {
+		        					vm.variationSave = false;
+		        				} else {
+		        					vm.variationSave = true;
+		        				}
+		        			}, 100);
+
+		        		},
+		        		function(error){
+
+		        		}
+		    		);
+		    		
+    			}, 100);
+
+			} //if
+
+		} //function end
 
 	    $scope.slickConfig = {
 	    	arrows: true,
@@ -282,111 +371,15 @@ app.component('dashboard', {
 		    autoplaySpeed: 3000,
 		    method: {},
 		    event: {
+
 		    	afterChange: function (event, slick, currentSlide, nextSlide) {
 
 	        		$scope.currentIndex = currentSlide;
 	        		vm.currIndexForTitle = (currentSlide + 1);
-
-	        		function patentFx(i) {
-
-	        			vm.selectedPatent = vm.phaseArr[i];
-
-	        			patentCostAnalysisFn(vm.selectedPatent.id) ;
-
-						var fees = vm.phaseArr[i].feeUI;
-						if(fees !== null) {
-		        			$timeout(function() {
-		        				fxService.fetchFxWeek()
-					        	.then(
-					        		function(data){
-
-					        			var dateArr = [];
-					        			//weekly
-					        			data.forEach(function(item){
-					        				dateArr.push(item.rateActiveDate);
-					        			});
-
-					        			dateArr.sort(function(a, b){
-					        				return a - b;
-					        			});
-
-					        			dateArr.forEach(function(item, index){
-					        				if(item == dateArr[0]) {
-					        					var todaysFx = data[index].rate;
-					        					vm.todaysPriceUSD = Math.floor(fees.subTotalEUR * todaysFx);
-					        					vm.todaysPriceEUR = Math.floor(fees.subTotalEUR);
-					        				}
-					        				// console.log(vm.todaysPriceUSD, dateArr, data)
-					        				//yesterday
-					        				// if(item == dateArr[1]) {
-					        				 if(item == dateArr[1]) {	
-					        					var yesterdayFx = data[index].rate;
-					        					vm.yesterdaysPriceUSD = Math.floor(fees.subTotalEUR * yesterdayFx);
-					        					vm.yesterdaysPriceEUR = Math.floor(fees.subTotalEUR);
-					        				}
-					        				//weekly
-					        				if(item == dateArr[7]) { 
-					        					var lastWeekFx = data[index].rate;
-					        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
-					        					vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);
-					        				}
-					        			});
-					        		},
-					        		function(error){
-
-					        		}
-					    		);
-
-					    		fxService.fetchFxMonth()
-					        	.then(
-					        		function(data){
-
-					        			var dateArr = [];
-
-					        			data.forEach(function(item){
-					        				dateArr.push(item.rateActiveDate);
-					        			});
-
-					        			dateArr.sort(function(a, b){
-					        				return a - b;
-					        			});
-
-					        			var tD = new Date();
-					        			var lmD = tD.setMonth(tD.getMonth() - 1);
-					        			var lastMonthD = new Date(lmD).getDay();
-					        			var lastMonthDt = new Date(lmD).getDate();
-					        			dateArr.forEach(function(item, index){
-					        				if((new Date(item).getDay() == lastMonthD) && (new Date(item).getDate() == lastMonthDt)) {
-					        					var lastMonthFx = data[index].rate;
-					        					vm.lastMonthsPriceUSD = Math.floor(fees.subTotalEUR * lastMonthFx);
-					        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
-					        				}
-					        			});
-
-					        			$timeout(function(){
-					        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
-					        				if(vm.fourWeekVariation < 0) {
-					        					vm.variationSave = false;
-					        				} else {
-					        					vm.variationSave = true;
-					        				}
-					        			}, 100);
-
-					        		},
-					        		function(error){
-
-					        		}
-					    		);
-					    		
-		        			}, 100);
-
-						} //if
-
-					} //function end
-
+	        		console.log($scope.currentIndex, currentSlide, nextSlide)
 	        		patentFx($scope.currentIndex);
-		        },
-		    	init: function(event, slick, currentSlide, nextSlide) {
+		        }, //afterchange end
+		    	init: function(event, slick) {
 		    		slick.slickGoTo($scope.currentIndex);
 		    	}
 		    }
