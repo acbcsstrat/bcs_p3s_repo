@@ -85,14 +85,15 @@ public class NotificationFinder extends Universal{
 	}
 	
 	//is actually when Amber starts
-	public String isAmber3DaysToGo(CalendarColour currentColorDates){
+	//Decision made and changed the method :- MP 23/01/2018
+	public String isAmberStarts(CalendarColour currentColorDates){
 		
 		//Date green = currentColorDates.getGreenStart();
 		Date amber = currentColorDates.getAmberStart();
 		
 		if(new DateUtil().isSameDay(amber, cal.getTime())){
-			log().debug("NotificationFinder found condition isAmber3DaysToGo as true");
-			return NotificationNameEnum.AMBER_3DAYS_TO_GO;
+			log().debug("NotificationFinder found condition isAmberStarts as true");
+			return NotificationNameEnum.AMBER_STARTS;
 		}
 		return "";
 		
@@ -115,7 +116,14 @@ public class NotificationFinder extends Universal{
 	public String isRedStarts(CalendarColour currentColorDates){
 		
 		Date red = currentColorDates.getRedStart();
-		if(new DateUtil().getHoursBetweenDates(red, cal.getTime()) < 24 && new DateUtil().getHoursBetweenDates(red, cal.getTime()) > 0 ){
+
+		/*if(red.equals(cal.getTime())){
+			log().debug("NotificationFinder found condition isRedStarts as true");
+			return NotificationNameEnum.RED_3DAYS_TO_GO;
+		}
+		return "";*/
+
+		if(new DateUtil().getHoursBetweenDates(red, cal.getTime()) < 24 && new DateUtil().getHoursBetweenDates(red, cal.getTime()) >= 0 ){
 			log().debug("NotificationFinder found condition isRedStarts as true");
 			return NotificationNameEnum.RED_3DAYS_TO_GO;
 		}
@@ -125,7 +133,7 @@ public class NotificationFinder extends Universal{
 	public String isBlueStarts(CalendarColour currentColorDates){
 		
 		Date blue = currentColorDates.getBlueStart();
-		if(blue.equals(cal.getTime())){
+		if(new DateUtil().isSameDay(blue, cal.getTime())){
 			log().debug("NotificationFinder found condition isBlueStarts as true");
 			return NotificationNameEnum.BLUE_STARTS;
 		}

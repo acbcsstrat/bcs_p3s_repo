@@ -13,7 +13,9 @@ public class NotificationNameEnum extends P3SAbstractEnum {
     public static final String GREEN_1WEEK_TO_GO    = "Green 1 week";
     public static final String GREEN_2DAYS_TO_GO    = "Green 2 days";
     
-    public static final String AMBER_3DAYS_TO_GO    = "Amber 3 days";
+    //AMBER 3 DAYS CHANGED TO AMBER STARTS
+    //public static final String AMBER_3DAYS_TO_GO    = "Amber 3 days";
+    public static final String AMBER_STARTS     = "Amber starts";
     public static final String AMBER_1DAY_TO_GO     = "Amber 1 day";
    
     //CHANCES ARE BELOW TO CHANGE TO RED_STARTS
@@ -56,9 +58,9 @@ public class NotificationNameEnum extends P3SAbstractEnum {
             || status.equalsIgnoreCase("GREEN_2DAYS_TO_GO")) 
         			sofar = NotificationNameEnum.GREEN_2DAYS_TO_GO;  
         
-        if (status.equalsIgnoreCase(NotificationNameEnum.AMBER_3DAYS_TO_GO) 
-                || status.equalsIgnoreCase("AMBER_3DAYS_TO_GO")) 
-            			sofar = NotificationNameEnum.AMBER_3DAYS_TO_GO;  
+        if (status.equalsIgnoreCase(NotificationNameEnum.AMBER_STARTS) 
+                || status.equalsIgnoreCase("AMBER_STARTS")) 
+            			sofar = NotificationNameEnum.AMBER_STARTS;  
 
         if (status.equalsIgnoreCase(NotificationNameEnum.AMBER_1DAY_TO_GO) 
             || status.equalsIgnoreCase("AMBER_1DAY_TO_GO")) 
