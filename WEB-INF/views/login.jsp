@@ -31,11 +31,7 @@
                   <div class="row">
                      <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-md">
-<<<<<<< HEAD
-                           <img src="assets/imgs/logos/PP_icon_lg.png">
-=======
                            <img src="assets/imgs/logos/PP_icon_lg.png" alt="patent place logo">
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
                         </div>
                         <h1 class="font-weight-bold font-h1">Login</h1>
                      </div>
@@ -86,15 +82,7 @@
 
       <script>
          
-<<<<<<< HEAD
-         var url = window.location.href
-
-         if(!url.indexOf('login_error')) {
-            console.log(url)
-         }
-=======
          var url = window.location.href;
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
          window.Parsley.addValidator('validateName', {
             validateString: function(value) {
@@ -105,11 +93,8 @@
             messages: {
                 en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
             }
-<<<<<<< HEAD
-         })  
-=======
+
          });
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
          window.Parsley.addValidator('validateEmail', {
 
@@ -118,33 +103,16 @@
                var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
                if(!value.match(reg)) {
-<<<<<<< HEAD
-                  return false
-=======
+
                   return false;
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
                }
             },
             messages: {
                en: 'Please enter a valid email address.'
             }
 
-<<<<<<< HEAD
-         })      
-
-=======
          });
          
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
       </script>
-      
    </body>
-
-
-
-
-
-
 </html>
-
-
