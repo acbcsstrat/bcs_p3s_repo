@@ -652,7 +652,7 @@ app.component('dashboard', {
 
 			//TOTAL RENEWALS PIE CHART
 
-			vm.totalPatents = patents.length;
+			vm.totalPatents = patents.length - 1;
 
 			if(patents) {
 				patents.forEach(function(item){
