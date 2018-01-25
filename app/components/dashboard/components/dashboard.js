@@ -20,8 +20,7 @@ app.component('dashboard', {
 		var urgentResponse = [];
 
 		vm.recentTransArr = [];
-		vm.recentStageArr = [];
-		vm.recentRenewalArr = [];
+		vm.recentRenewalArr = [];	
 
 		vm.greenRenewals = [];
 		vm.amberRenewals = [];
@@ -167,7 +166,6 @@ app.component('dashboard', {
 
 		function patentFx(i) {
 			vm.selectedPatent = vm.phaseArr[i];
-			patentCostAnalysisFn(vm.selectedPatent.id);
 
 			var fees = vm.phaseArr[i].feeUI;
 			if(fees !== null) {
@@ -407,7 +405,6 @@ app.component('dashboard', {
 		}
 		
 
-
 		function patentCostAnalysisFn(id) {
 
 			var hours;
@@ -415,6 +412,8 @@ app.component('dashboard', {
 			patentsRestService.fetchCostAnalysis(id)
 			.then(
 				function(response){
+
+					vm.recentStageArr = [];
 
                     switch(response.currentcostBand) {
                         case 'Green':
@@ -441,20 +440,41 @@ app.component('dashboard', {
 						case 'Amber':
 
 	                    	hours =  vm.date - response.amberStartDate;
-	                    	console.log(response)
-	                    	patentsArr.forEach(function(item) {
-                    			if(item.costBandColour) {
-                    				if(millsToHours(response, hours) !== undefined){
+
+	                    	if(millsToHours(response, hours) !== undefined){
+	                    		patentsArr.forEach(function(item) {
+	                    			if(item.costBandColour == 'Amber') {	                    		
 	                    				vm.recentStageArr.push(item);
 	                    				item.nextCostBandColor = 'Red';
 	                    			}
-	                    		
-	                    		}
-	                    	});
+	                    		});
+	                    	}
 
 							vm.amberRenewals.forEach(function(data){
 								data.progressBar = calcProgress(response.amberStartDate, response.redStartDate);
 							});
+
+
+	      //               	amberArr = [];
+	      //               	// console.log(response)
+							// patentsArr.forEach(function(item) {
+       // 							if(response.currentcostBand == item.costBandColour) {
+       // 								amberArr.push(item)
+       // 							}
+	      //               	});
+
+							// if(millsToHours(response, hours) !== undefined){
+	      //               		for(var i = 0; i < amberArr.length; i++) {
+	      //               			console.log(i)
+       //          					vm.recentStageArr.push(amberArr[i]);       						
+       //      					}
+       //          			}
+
+	      //               	item.nextCostBandColor = 'Red';
+
+							// vm.amberRenewals.forEach(function(data){
+							// 	data.progressBar = calcProgress(response.amberStartDate, response.redStartDate);
+							// });
 
 						break;
 						case 'Red':
@@ -654,7 +674,12 @@ app.component('dashboard', {
 
 			//TOTAL RENEWALS PIE CHART
 
-			vm.totalPatents = patents.length - 1;
+			if(patents.length === 0) {
+				vm.totalPatents = 0;
+			} else {
+				vm.totalPatents = patents.length - 1;
+			}
+			
 
 			if(patents) {
 				patents.forEach(function(item){
