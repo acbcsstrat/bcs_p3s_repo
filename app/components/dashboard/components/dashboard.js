@@ -167,6 +167,73 @@ app.component('dashboard', {
 			dashboardService.supressMessages(messageObj);
 		};
 
+		vm.phaseObj = {
+			colourKey: function(colour) {
+				console.log('colourkey: ', colour)
+				vm.phaseArr = [];
+				vm.sliderPhase;
+				var phase;
+
+				switch(colour) {
+					case 0:
+						vm.sliderPhase = 'green';
+						phase = vm.greenRenewals;
+						vm.colourPhaseTitle = {
+							title: 'Green',
+							color: '#53ab58'
+						};
+					break;
+					case 1:
+						vm.sliderPhase = 'amber';
+						phase = vm.amberRenewals;					
+						vm.colourPhaseTitle = {
+							title: 'Amber',
+							color: '#f9b233'						
+						};
+					break;
+					case 2:
+						vm.sliderPhase = 'red';
+						phase = vm.redRenewals;					
+						vm.colourPhaseTitle = {
+							title: 'Red',
+							color: '#e30613'
+						};
+					break;
+					case 3:
+						vm.sliderPhase = 'blue';
+						phase = vm.blueRenewals;					
+						vm.colourPhaseTitle = {
+							title: 'Blue',
+							color: '#0097ce'					
+						};
+					break;
+					case 4:
+						vm.sliderPhase = 'black';
+						phase = vm.blackRenewals;					
+						vm.colourPhaseTitle = {
+							title: 'Black',
+							color: '#3c3c3b'
+						};
+					break;
+					case 5:
+						vm.colourPhaseTitle = {
+							title: 'Grey',
+							color: '#bdbdbd'
+						};
+				}
+
+				function loadPhase(i) {
+					vm.phaseArr.length = 0;
+					$timeout(function() {
+						vm.phaseArr = i;
+					}, 100);
+				}
+
+				loadPhase(phase);
+
+			}	
+		}
+
 		function patentCostAnalysisFn(id) {
 
 			var hours;
@@ -364,89 +431,7 @@ app.component('dashboard', {
 
 		} //function end
 
-		vm.phaseSliderInfo = function(id) {
-			console.log('phaseSliderInfo: ', id)
-			vm.phaseArr = [];
-			vm.sliderPhase;
-			var phase;
-
-			switch(id) {
-				case 0:
-					vm.sliderPhase = 'green';
-					phase = vm.greenRenewals;
-				break;
-				case 1:
-					vm.sliderPhase = 'amber';
-					phase = vm.amberRenewals;
-				break;
-				case 2:
-					vm.sliderPhase = 'red';
-					phase = vm.redRenewals;
-				break;
-				case 3:
-					vm.sliderPhase = 'blue';
-					phase = vm.blueRenewals;
-				break;
-				case 4:
-					vm.sliderPhase = 'black';
-					phase = vm.blackRenewals;
-				break;			
-
-			}
-
-			function loadPhase(i) {
-				vm.phaseArr.length = 0;
-				$timeout(function() {
-					vm.phaseArr = i;
-				}, 100);
-			}
-
-			loadPhase(phase);
-
-	  	}; //phaseSliderInfoEnd
-
 		//COLOUR KEY
-
-		vm.colourKey = function(colour) {
-			console.log('colourkey: ', colour)
-			switch(colour) {
-				case 0:
-					vm.colourPhaseTitle = {
-						title: 'Green',
-						color: '#53ab58'
-					};
-				break;
-				case 1:
-					vm.colourPhaseTitle = {
-						title: 'Amber',
-						color: '#f9b233'						
-					};
-				break;
-				case 2:
-					vm.colourPhaseTitle = {
-						title: 'Red',
-						color: '#e30613'
-					};
-				break;
-				case 3:
-					vm.colourPhaseTitle = {
-						title: 'Blue',
-						color: '#0097ce'					
-					};
-				break;
-				case 4:
-					vm.colourPhaseTitle = {
-						title: 'Black',
-						color: '#3c3c3b'
-					};
-				break;
-				case 5:
-					vm.colourPhaseTitle = {
-						title: 'Grey',
-						color: '#bdbdbd'
-					};
-			}
-		};
 
 	    $scope.slickConfigGreen = {
 	    	arrows: true,
