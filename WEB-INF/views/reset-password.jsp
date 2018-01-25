@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 <!doctype html>
 <html lang="en">
 
@@ -73,13 +69,6 @@
 	   						<div class="row">
 	   							<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
 	   								<h3 class="font-h3 font-weight-medium m-b-sm">Successful!</h3>
-<<<<<<< HEAD
-	   								<p class="font-body text-center">Successfully reset your password. <a href="/p3sweb/login">Click here</a> to Login</p>
-	   							</div>
-	   						</div>   							
-   						</div>
-   					</div>      			
-=======
 	   								<p class="font-body text-center">Successfully reset your password.</p>
 	   							</div>
 	   						</div>
@@ -92,7 +81,6 @@
 	   						</div>
    						</div>
    					</div>
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
           		</div>
 				<div id="resetPassFail" class="hide-before">
    					<div class="content-panel">
@@ -119,11 +107,6 @@
       		var domain = 'http://localhost:8080/p3sweb/';
 
 			$(document).ready(function() {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 				$(document).on('submit', '#resetPassForm', function(e){
       				e.preventDefault();
   					//var dataString = JSON.stringify($('#resetPassForm').serializeArray());
@@ -135,49 +118,27 @@
   						data: dataString,
   						//dataType: 'json',
   						success: function(response) {
-<<<<<<< HEAD
-  							console.log("Inside success");
-  							console.log(response);
-=======
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
+
   							$('#initialResetPassForm').fadeOut(500);	
 							$('#resetPassSuccess').delay(520).fadeIn(500);		      				
   						},
   						error:function(errResponse) {
-<<<<<<< HEAD
-  							console.log("Inside error");
-  							console.log(errResponse);
-  							$('#initialResetPassForm').fadeOut(500);	
-							$('#resetPassFail').delay(520).fadeIn(500);							
-  						}
-  					})
-  				})
-
-=======
   							$('#initialResetPassForm').fadeOut(500);	
 							$('#resetPassFail').delay(520).fadeIn(500);							
   						}
   					});
   				});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
 				var password_li = $('#passwordStrength').find('li');
 				$('#password').bind('keyup', function(){
 
-<<<<<<< HEAD
-					if($(this).val().length == 0) {
-=======
 					if($(this).val().length === 0) {
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 						password_li.css('background', '#DDD');
 						return;
 					}
 					
-<<<<<<< HEAD
-					var regex = new Array();
-=======
 					var regex = [];
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
+
 			        regex.push("[A-Z]"); //Uppercase Alphabet.
 			        regex.push("[a-z]"); //Lowercase Alphabet.
 			        regex.push("[0-9]"); //Digit.
@@ -192,21 +153,11 @@
 			            }
 			        }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 			        //Validate for length of Password.
 			        if (passed > 2 && $(this).val().length > 8) {
 			            passed++;
 			        }
 
-<<<<<<< HEAD
-					var color = '';
-					var strength = '';
-
-=======
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 					switch(passed) {
 						case 0:
 						break;
@@ -229,33 +180,12 @@
 							$(password_li[3]).css('background', 'black');						
 
 					}
-
-<<<<<<< HEAD
-				})
-
-=======
 				});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
 				//validate confirm password
 
 				$('#confirm_password').on('blur', function(){
 					if($(this).val() !== $('#password').val()) {
-<<<<<<< HEAD
-						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>')
-					} else {
-						$('#valid_confirm_password').text('');
-					}
-				})
-			})
-
-     	</script>
-
-
-      
-   </body>
-</html>
-=======
 						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>');
 					} else {
 						$('#valid_confirm_password').text('');
@@ -266,4 +196,3 @@
      	</script>
    </body>
 </html>
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
