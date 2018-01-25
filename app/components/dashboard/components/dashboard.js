@@ -51,7 +51,6 @@ app.component('dashboard', {
 		);
 
 		function millsToHours(data, millisec) {
-
 	        var seconds = (millisec / 1000).toFixed(0);
 	        var minutes = Math.floor(seconds / 60);
 	        var hours = "";
@@ -69,7 +68,6 @@ app.component('dashboard', {
 	        if (hours < 48) {
 	            return data;
 	        }
-
 	    }
 
 		function calcProgress(start, end) {
@@ -424,8 +422,11 @@ app.component('dashboard', {
 	                    	hours =  vm.date - response.greenStartDate;
 
 	                    	if(millsToHours(response, hours) !== undefined){
+
 	                    		patentsArr.forEach(function(item) {
+
 	                    			if(item.costBandColour == 'Green') {
+	                    				
 	                    				vm.recentStageArr.push(item);
                               			item.nextCostBandColor = 'Amber';
 	                    			}
@@ -440,15 +441,16 @@ app.component('dashboard', {
 						case 'Amber':
 
 	                    	hours =  vm.date - response.amberStartDate;
-
-	                    	if(millsToHours(response, hours) !== undefined){
-	                    		patentsArr.forEach(function(item) {
-	                    			if(item.costBandColour == 'Amber') {
+	                    	console.log(response)
+	                    	patentsArr.forEach(function(item) {
+                    			if(item.costBandColour) {
+                    				if(millsToHours(response, hours) !== undefined){
 	                    				vm.recentStageArr.push(item);
 	                    				item.nextCostBandColor = 'Red';
 	                    			}
-	                    		});
-	                    	}
+	                    		
+	                    		}
+	                    	});
 
 							vm.amberRenewals.forEach(function(data){
 								data.progressBar = calcProgress(response.amberStartDate, response.redStartDate);
