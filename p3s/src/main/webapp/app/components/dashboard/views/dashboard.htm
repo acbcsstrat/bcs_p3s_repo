@@ -49,12 +49,12 @@
 						<div class="col-md-12 col-lg-12 col-xl-12">
 							<div class="phase-tabs">
 								<ul class="nav phase-pills">
-									<li class="bg-phase-green pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-init="$ctrl.colourKey(0); $ctrl.phaseSliderInfo(0);" data-ng-click="activeTab = 0; $ctrl.phaseSliderInfo(0); $ctrl.colourKey(0);" data-ng-hide="activeTab == 0">Green</li>
-									<li class="bg-phase-amber pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 1; $ctrl.phaseSliderInfo(1); $ctrl.colourKey(1)" data-ng-hide="activeTab == 1">Amber</li>
-									<li class="bg-phase-red pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 2; $ctrl.phaseSliderInfo(2); $ctrl.colourKey(2)" data-ng-hide="activeTab == 2">Red</li>
-									<li class="bg-phase-blue pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 3; $ctrl.phaseSliderInfo(3); $ctrl.colourKey(3)" data-ng-hide="activeTab == 3">Blue</li>
-									<li class="bg-phase-black pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 4; $ctrl.phaseSliderInfo(4); $ctrl.colourKey(4);" data-ng-hide="activeTab == 4">Black</li>
-									<li class="bg-phase-grey pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 5; $ctrl.phaseSliderInfo(5); $ctrl.colourKey(5);" data-ng-hide="activeTab == 5">Grey</li>
+									<li class="bg-phase-green pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-init="$ctrl.phaseObj.colourKey(0); " data-ng-click="activeTab = 0;  $ctrl.phaseObj.colourKey(0);" data-ng-hide="activeTab == 0">Green</li>
+									<li class="bg-phase-amber pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 1;  $ctrl.phaseObj.colourKey(1)" data-ng-hide="activeTab == 1">Amber</li>
+									<li class="bg-phase-red pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 2;  $ctrl.phaseObj.colourKey(2)" data-ng-hide="activeTab == 2">Red</li>
+									<li class="bg-phase-blue pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 3;  $ctrl.phaseObj.colourKey(3)" data-ng-hide="activeTab == 3">Blue</li>
+									<li class="bg-phase-black pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 4;  $ctrl.phaseObj.colourKey(4);" data-ng-hide="activeTab == 4">Black</li>
+									<li class="bg-phase-grey pill-radius btn--reg pill-tabs font-body font-body--component font-weight-medium" data-ng-click="activeTab = 5;  $ctrl.phaseObj.colourKey(5);" data-ng-hide="activeTab == 5">Grey</li>
 								</ul>
 							</div>
 						</div>
@@ -246,12 +246,12 @@
 						<div class="col-md-9 col-lg-9 col-lg-9">
 							<div class="phase-tabs">
 								<ul class="nav phase-pills font-body font-body--component d-flex justify-content-end">
-									<li class="bg-phase-green pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-init="$ctrl.colourKey(0);" data-ng-click="activeTab = 0; $ctrl.phaseSliderInfo(0); $ctrl.colourKey(0);" data-ng-hide="activeTab == 0">({{$ctrl.greenRenewals.length}})</li>
-									<li class="bg-phase-amber pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 1; $ctrl.phaseSliderInfo(1); $ctrl.colourKey(1)" data-ng-hide="activeTab == 1">({{$ctrl.amberRenewals.length}})</li>
-									<li class="bg-phase-red pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 2; $ctrl.phaseSliderInfo(2); $ctrl.colourKey(2)" data-ng-hide="activeTab == 2">({{$ctrl.redRenewals.length}})</li>
-									<li class="bg-phase-blue pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 3; $ctrl.phaseSliderInfo(3); $ctrl.colourKey(3)" data-ng-hide="activeTab == 3">({{$ctrl.blueRenewals.length}})</li>
-									<li class="bg-phase-black pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 4; $ctrl.phaseSliderInfo(4); $ctrl.colourKey(4);" data-ng-hide="activeTab == 4">({{$ctrl.blackRenewals.length}})</li>	
-									<li class="bg-phase-grey pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 5; $ctrl.phaseSliderInfo(5); $ctrl.colourKey(5);" data-ng-hide="true">({{$ctrl.greyRenewals.length}})</li>															
+									<li class="bg-phase-green pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 0;  $ctrl.phaseObj.colourKey(0);" data-ng-hide="activeTab == 0">({{$ctrl.greenRenewals.length}})</li>
+									<li class="bg-phase-amber pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 1;  $ctrl.phaseObj.colourKey(1)" data-ng-hide="activeTab == 1">({{$ctrl.amberRenewals.length}})</li>
+									<li class="bg-phase-red pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 2;  $ctrl.phaseObj.colourKey(2)" data-ng-hide="activeTab == 2">({{$ctrl.redRenewals.length}})</li>
+									<li class="bg-phase-blue pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 3;  $ctrl.phaseObj.colourKey(3)" data-ng-hide="activeTab == 3">({{$ctrl.blueRenewals.length}})</li>
+									<li class="bg-phase-black pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 4;  $ctrl.phaseObj.colourKey(4);" data-ng-hide="activeTab == 4">({{$ctrl.blackRenewals.length}})</li>	
+									<li class="bg-phase-grey pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 5;  $ctrl.phaseObj.colourKey(5);" data-ng-hide="true">({{$ctrl.greyRenewals.length}})</li>															
 								</ul>
 							</div>							
 						</div>
@@ -264,7 +264,7 @@
 				            	<div class="txt-white font-h4 tr-border slick-header" data-ng-style="{'background': $ctrl.colourPhaseTitle.color}">
 			        				<h4 class="font-weight-medium text-center txt-white">Green Renewal <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.greenRenewals.length}}</h4>
 			        			</div>					            	
-							    <slick data="$ctrl.phaseArr" settings="slickConfig">
+							    <slick data="$ctrl.phaseArr" settings="slickConfigGreen" ng-if="$ctrl.sliderPhase == 'green'">
 							        <div data-ng-repeat="item in $ctrl.phaseArr">
 							        	<table class="t-data slider-table">
 							        		<tbody class="font-body">
@@ -310,7 +310,7 @@
 				            	<div class="txt-white font-h4 tr-border slick-header" data-ng-style="{'background': $ctrl.colourPhaseTitle.color}">
 			        				<h4 class="font-weight-medium text-center txt-white">Amber Renewal <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.amberRenewals.length}}</h4>
 			        			</div>				            	
-							    <slick data="$ctrl.phaseArr" settings="slickConfig">
+							    <slick data="$ctrl.phaseArr" settings="slickConfigAmber" ng-if="$ctrl.sliderPhase == 'amber'">
 							        <div data-ng-repeat="item in $ctrl.phaseArr">
 							            <table class="t-data">
 							        		<tbody class="font -body">
@@ -356,7 +356,7 @@
 				            	<div class="txt-white font-h4 tr-border slick-header" data-ng-style="{'background': $ctrl.colourPhaseTitle.color}">
 			        				<h4 class="font-weight-medium text-center txt-white">Red Renewal <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.redRenewals.length}}</h4>
 			        			</div>
-							    <slick data="$ctrl.phaseArr" settings="slickConfig">
+							    <slick data="$ctrl.phaseArr" settings="slickConfigRed" ng-if="$ctrl.sliderPhase == 'red'">
 							        <div data-ng-repeat="item in $ctrl.phaseArr">
 							        	<table class="t-data">
 							        		<tbody class="font-body">
@@ -405,7 +405,7 @@
 				            	<div class="txt-white font-h4 tr-border slick-header" data-ng-style="{'background': $ctrl.colourPhaseTitle.color}">
 			        				<h4 class="font-weight-medium text-center txt-white">Blue Renewal <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.blueRenewals.length}}</h4>
 			        			</div>	
-							    <slick data="$ctrl.phaseArr" settings="slickConfig">
+							    <slick data="$ctrl.phaseArr" settings="slickConfigBlue" ng-if="$ctrl.sliderPhase == 'blue'">
 							        <div data-ng-repeat="item in $ctrl.phaseArr">
 						        		<table class="t-data">
 							        		<tbody class="font-body">
@@ -451,7 +451,7 @@
 				            	<div class="txt-white font-h4 tr-border slick-header" data-ng-style="{'background': $ctrl.colourPhaseTitle.color}">
 			        				<h4 class="font-weight-medium text-center txt-white">Black Renewal <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.blackRenewals.length}}</h4>
 			        			</div>								            	
-							    <slick data="$ctrl.phaseArr" settings="slickConfig">
+							    <slick data="$ctrl.phaseArr" settings="slickConfigBlack" ng-if="$ctrl.sliderPhase == 'black'">
 							        <div data-ng-repeat="item in $ctrl.phaseArr">
 							        	<table class="t-data">
 							        		<tbody class="font-body">

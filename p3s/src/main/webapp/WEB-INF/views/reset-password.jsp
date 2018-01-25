@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -70,11 +69,18 @@
 	   						<div class="row">
 	   							<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
 	   								<h3 class="font-h3 font-weight-medium m-b-sm">Successful!</h3>
-	   								<p class="font-body text-center">Successfully reset your password. <a href="/p3sweb/login">Click here</a> to Login</p>
+	   								<p class="font-body text-center">Successfully reset your password.</p>
 	   							</div>
-	   						</div>   							
+	   						</div>
+	   						<div class="row">
+	   							<div class="col-md-8 offset-md-2">
+   									<div class="btn-default m-t-sm">
+	   									<a class="btn btn-block btn-success btn--lg pill-radius font-body font-weight-medium txt-white" href="/p3sweb/login">Login</a>
+	   								</div>
+	   							</div>
+	   						</div>
    						</div>
-   					</div>      			
+   					</div>
           		</div>
 				<div id="resetPassFail" class="hide-before">
    					<div class="content-panel">
@@ -101,8 +107,6 @@
       		var domain = 'http://localhost:8080/p3sweb/';
 
 			$(document).ready(function() {
-
-
 				$(document).on('submit', '#resetPassForm', function(e){
       				e.preventDefault();
   					//var dataString = JSON.stringify($('#resetPassForm').serializeArray());
@@ -114,30 +118,27 @@
   						data: dataString,
   						//dataType: 'json',
   						success: function(response) {
-  							console.log("Inside success");
-  							console.log(response);
+
   							$('#initialResetPassForm').fadeOut(500);	
 							$('#resetPassSuccess').delay(520).fadeIn(500);		      				
   						},
   						error:function(errResponse) {
-  							console.log("Inside error");
-  							console.log(errResponse);
   							$('#initialResetPassForm').fadeOut(500);	
 							$('#resetPassFail').delay(520).fadeIn(500);							
   						}
-  					})
-  				})
-
+  					});
+  				});
 
 				var password_li = $('#passwordStrength').find('li');
 				$('#password').bind('keyup', function(){
 
-					if($(this).val().length == 0) {
+					if($(this).val().length === 0) {
 						password_li.css('background', '#DDD');
 						return;
 					}
 					
-					var regex = new Array();
+					var regex = [];
+
 			        regex.push("[A-Z]"); //Uppercase Alphabet.
 			        regex.push("[a-z]"); //Lowercase Alphabet.
 			        regex.push("[0-9]"); //Digit.
@@ -152,14 +153,10 @@
 			            }
 			        }
 
-
 			        //Validate for length of Password.
 			        if (passed > 2 && $(this).val().length > 8) {
 			            passed++;
 			        }
-
-					var color = '';
-					var strength = '';
 
 					switch(passed) {
 						case 0:
@@ -183,24 +180,19 @@
 							$(password_li[3]).css('background', 'black');						
 
 					}
-
-				})
-
+				});
 
 				//validate confirm password
 
 				$('#confirm_password').on('blur', function(){
 					if($(this).val() !== $('#password').val()) {
-						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>')
+						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>');
 					} else {
 						$('#valid_confirm_password').text('');
 					}
-				})
-			})
+				});
+			});
 
      	</script>
-
-
-      
    </body>
 </html>

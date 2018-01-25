@@ -31,7 +31,7 @@
                   <div class="row">
                      <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-md">
-                           <img src="assets/imgs/logos/PP_icon_lg.png">
+                           <img src="assets/imgs/logos/PP_icon_lg.png" alt="patent place logo">
                         </div>
                         <h1 class="font-weight-bold font-h1">Login</h1>
                      </div>
@@ -82,11 +82,7 @@
 
       <script>
          
-         var url = window.location.href
-
-         if(!url.indexOf('login_error')) {
-            console.log(url)
-         }
+         var url = window.location.href;
 
          window.Parsley.addValidator('validateName', {
             validateString: function(value) {
@@ -97,33 +93,26 @@
             messages: {
                 en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
             }
-         })  
+
+         });
 
          window.Parsley.addValidator('validateEmail', {
 
             validateString: function(value){
 
-               var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+               var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
 
                if(!value.match(reg)) {
-                  return false
+
+                  return false;
                }
             },
             messages: {
                en: 'Please enter a valid email address.'
             }
 
-         })      
-
+         });
+         
       </script>
-      
    </body>
-
-
-
-
-
-
 </html>
-
-
