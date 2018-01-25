@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 <!doctype html>
 <html lang="en">
 
@@ -31,11 +27,7 @@
           		<div class="row m-b-sm">
                      <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-sm">
-<<<<<<< HEAD
-                           <img src="assets/imgs/logos/PP_icon_lg.png">
-=======
                            <img src="assets/imgs/logos/PP_icon_lg.png" alt="patent place logo">
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
                         </div>
                         <h1 class="font-weight-bold font-h1">Register</h1>
                      </div>
@@ -105,11 +97,7 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-md-12 col-lg-12 col-xl-12">
-<<<<<<< HEAD
-											<input input="text" name="phoneNumber" class="form-control pill-radius font-body" id="phoneNumber" data-parsley-validate-phone="" placeholder="Tel" data-parsley-minlength="10" data-parsley-minlength-message="This fields value has a minimum length of 10 characters." data-parsley-maxlength-messsage="This fields value has a maximum length of 40 characters." data-parsley-maxlength="40" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">		
-=======
 											<input type="text" name="phoneNumber" class="form-control pill-radius font-body" id="phoneNumber" data-parsley-validate-phone="" placeholder="Tel" data-parsley-minlength="10" data-parsley-minlength-message="This fields value has a minimum length of 10 characters." data-parsley-maxlength-messsage="This fields value has a maximum length of 40 characters." data-parsley-maxlength="40" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">		
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 										</div>
 									</div>
 									<div id="subBusiness">
@@ -125,11 +113,7 @@
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-<<<<<<< HEAD
-												<input type="text" name="USstate" class="form-control pill-radius font-body" id="USstate" placeholder="State" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
-=======
 												<input type="text" name="USstate" class="form-control pill-radius font-body" id="USstate" placeholder="State" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 											</div>
 										</div>
 										<div class="form-group row">
@@ -178,11 +162,7 @@
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-<<<<<<< HEAD
-												<input type="text" name="billingState" class="form-control pill-radius font-body" id="billing_state" placeholder="State" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
-=======
 												<input type="text" name="billingState" class="form-control pill-radius font-body" id="billing_state" placeholder="State" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 											</div>
 										</div>
 										<div class="form-group row">
@@ -246,20 +226,12 @@
            							<div class="m-b-md">
 	           							<div class="form-group row">
 	           								<div class="col-md-12 col-lg-12 col-xl-12">
-<<<<<<< HEAD
-	           									<input data-parsley-type="alphanum" class="form-control pill-radius font-body" name="businessNumber" placeholder="Business Number" data-parsley-type="alphanum" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
-=======
 	           									<input data-parsley-type="alphanum" class="form-control pill-radius font-body" name="businessNumber" placeholder="Business Number" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 	           								</div>
 	           							</div>
 	           							<div class="form-group row">
 	           								<div class="col-md-12 col-lg-12 col-xl-12">
-<<<<<<< HEAD
-	           									<input class="form-control pill-radius font-body" name="businessPin" placeholder="Business PIN" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again."" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
-=======
 	           									<input class="form-control pill-radius font-body" name="businessPin" placeholder="Business PIN" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 	           								</div>
 	           							</div>
 	           							<div id="businessValidation">
@@ -309,11 +281,7 @@
 	       									<input type="button" id="businessConfirmSubmit" name="businessConfirmSubmit" class="btn btn--check bg-phase-green pill-radius txt-white font-body font-body--component font-weight-medium btn--lg m-r-xs cursor-pointer" value="Yes">
 	   									</div>
 	   									<div class="btn-error">      									
-<<<<<<< HEAD
-	       									<input type="button" id="businessConfirmSubmit" name="businessCancel" class="btn btn--cross bg-phase-red pill-radius txt-white font-body font-body--component font-weight-medium btn--lg cursor-pointer" value="No">       										
-=======
 	       									<input type="button" id="businessCancel" name="businessCancel" class="btn btn--cross bg-phase-red pill-radius txt-white font-body font-body--component font-weight-medium btn--lg cursor-pointer" value="No">       										
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 	   									</div>   										
 	   								</div>
 	   							</div>
@@ -323,10 +291,6 @@
    				</div>
 			</div>			       				
      	</div>         
-<<<<<<< HEAD
-  	</div>
-=======
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
@@ -335,11 +299,7 @@
 
       	<script>
 
-<<<<<<< HEAD
-      		var domain = 'http://localhost:8080/p3sweb/';
-=======
 			var domain = 'http://localhost:8080/p3sweb/';
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
 			$(function () {
 			  	var $sections = $('.form-section');
@@ -392,11 +352,7 @@
 			 	messages: {
 				    en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
 			  	}
-<<<<<<< HEAD
-			})
-=======
 			});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
 			window.Parsley.addValidator('validateAddress', {
 				validateString: function(value) {
@@ -407,11 +363,7 @@
 			 	messages: {
 				    en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
 			  	}
-<<<<<<< HEAD
-			})			
-=======
 			});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 		
 			window.Parsley.addValidator('validateCompanyName', {
 				validateString: function(value) {
@@ -422,34 +374,22 @@
 			 	messages: {
 				    en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
 			  	}
-<<<<<<< HEAD
-			})			
-=======
 			});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
 	        window.Parsley.addValidator('validateEmail', {
 
 		        validateString: function(value){
 
-		            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+		            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
 
                		if(!value.match(reg)) {
-<<<<<<< HEAD
-	                    return false
-=======
 	                    return false;
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 	                } 
 	            },
 		            messages: {
 		               en: 'Please enter a valid email address.'
 		            }
-<<<<<<< HEAD
-		    })
-=======
 		    });
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
          	window.Parsley.addValidator('validatePhone', {
 	            validateString: function(value) {
@@ -460,11 +400,7 @@
 	            messages: {
 	                en: 'Please enter a valid phone number.',
 	            }
-<<<<<<< HEAD
-         	})		
-=======
          	});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
          	window.Parsley.addValidator('validateZip', {
 	            validateString: function(value) {
@@ -475,11 +411,7 @@
 	            messages: {
 	                en: 'Only numbers and - are valid charcters in this field.',
 	            }
-<<<<<<< HEAD
-         	})	         			    
-=======
          	}); 			    
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
          	window.Parsley.addValidator('validateAlpha', {
 	            validateString: function(value) {
@@ -490,11 +422,7 @@
 	            messages: {
 	                en: 'Only letters are valid charcters in this field.',
 	            }
-<<<<<<< HEAD
-         	})		    
-=======
          	}); 
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
 			$('#register-success').hide();
 			$('#register-failure').hide();
@@ -507,13 +435,8 @@
 			});
 
 			$(document).ready(function(){
-<<<<<<< HEAD
-				$('#companyCodeForm').parsley()
-			})
-=======
 				$('#companyCodeForm').parsley();
 			});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
 			$(document).ready(function(){
 
@@ -555,15 +478,6 @@
 
 				$('#confirm_password').on('blur', function(){
 					if($(this).val() !== $('#password').val()) {
-<<<<<<< HEAD
-						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>')
-					} else {
-						$('#valid_confirm_password').text('');
-					}
-				})
-			})
-	  	})
-=======
 						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>');
 					} else {
 						$('#valid_confirm_password').text('');
@@ -571,24 +485,16 @@
 				});
 			});
 	  	});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
       	
       	$(document).ready(function(){
 
       		$('#same_as_business').change(function(){
       			if(this.checked) {
 
-<<<<<<< HEAD
-      				var addObj = {}
-      				var business = $('#subBusiness input');
-
-      				for(i=0;i < business.length; i++) {
-=======
       				var addObj = {};
       				var business = $('#subBusiness input');
 
       				for(var i = 0;i < business.length; i++) {
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
       					switch(business[i].id) {
       						case 'street':
@@ -606,17 +512,6 @@
       					}
       				}
 
-<<<<<<< HEAD
-      				$('#pasteBusiness input[id=billing_street').val(addObj.street)
-      				$('#pasteBusiness input[id=billing_city').val(addObj.city)
-      				$('#pasteBusiness input[id=billing_state').val(addObj.USstate)
-      				$('#pasteBusiness input[id=billing_zip').val(addObj.zip)
-
-      			} else {
-      				$('#pasteBusiness input').val('')
-      			}
-      		})
-=======
       				$('#pasteBusiness input[id=billing_street').val(addObj.street);
       				$('#pasteBusiness input[id=billing_city').val(addObj.city);
       				$('#pasteBusiness input[id=billing_state').val(addObj.USstate);
@@ -626,7 +521,6 @@
       				$('#pasteBusiness input').val('');
       			}
       		});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
       		$('#terms-register').change(function(){
       			if(this.checked) {
@@ -634,49 +528,28 @@
       			} else {
       				$('#register').prop('disabled', true);
       			}
-<<<<<<< HEAD
-      		})
-=======
       		});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
       		$('#subRegister').change(function(){
       			if(this.checked) {
       				$('#registerForm').attr('name', 'subUserForm').attr('id', 'subUserForm');
-<<<<<<< HEAD
-      				$('#initialRegistration').hide()
-      				$('#initialRegistrationSubmit').hide()
-=======
+
       				$('#initialRegistration').hide();
       				$('#initialRegistrationSubmit').hide();
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
+
       				$('#subRegistrationSubmit').show();
       				$('#companyCode').show();
       			} else {
       				$('#registerForm').attr('name', 'registerForm').attr('id', 'registerForm');
       			}
-<<<<<<< HEAD
-      		})
-=======
       		});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
       		$('#initalRegister').change(function(){
       			if(this.checked) {
       				$('#registerForm').attr('name', 'registerForm').attr('id', 'registerForm');
       				$('#initialRegistration').show();
       				$('#initialRegistrationSubmit').show();
-<<<<<<< HEAD
-      				$('#subRegistrationSubmit').hide()
-      				$('#companyCode').hide()
-      				$('#businessConfirm').hide()
-      			} else {
-      				$('#registerForm').attr('name', 'subUserForm').attr('id', 'subUserForm');
-      			}
-      		})
 
-
-=======
       				$('#subRegistrationSubmit').hide();
       				$('#companyCode').hide();
       				$('#businessConfirm').hide();
@@ -684,7 +557,6 @@
       				$('#registerForm').attr('name', 'subUserForm').attr('id', 'subUserForm');
       			}
       		});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
       		$(document).on('submit', '#registerForm', function(e){
   				e.preventDefault();
@@ -696,24 +568,17 @@
 				    contentType: "application/json",
 					success: function(response) {
 						$('#initialRegistration').fadeOut(500);	
-<<<<<<< HEAD
-						$('#register-intro').fadeOut(500)
-=======
+
 						$('#register-intro').fadeOut(500);
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
-					$('#register-success').delay(520).fadeIn(500);		      				
+
+						$('#register-success').delay(520).fadeIn(500);		      				
 					},
 					error:function(errResponse) {
 						$('#initialRegistration').fadeOut(500);	
 					$('#register-failure').delay(520).fadeIn(500);							
 					}
-<<<<<<< HEAD
-				})
-			})
-=======
 				});
 			});
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
 
 			$(document).on('submit', '#subUserForm', function(e){
 				e.preventDefault();
@@ -724,79 +589,6 @@
 					data: dataString,
 				    contentType: "application/json",
 					success: function(response) {
-<<<<<<< HEAD
-						console.log(response);
-					},
-					error:function(errResponse) {
-						console.log('fail')
-					}
-				})
-			})  				
-
-      			$('#companyCodeForm').submit(function(e){
-      				e.preventDefault();
-  					var dataString = $('#companyCodeForm').serializeArray();
-					console.log(dataString);
-  					$.ajax({
-  						type: 'POST',
-  						//url: 'http://localhost:8080/p3sweb/register/rest-subsequent-user-step1/'+dataString,
-  						url: domain + 'register/rest-subsequent-user-step1/',
-  						data: dataString,
-  					    dataType: 'json',
-  						success: function(response) {
-  							$('#businessValidation').hide();
-  							var patentFound = true;
-  							if(patentFound) {
-  								$('#companyCodeSubmit').attr('disabled', true);
-  								$('#companyCodeSubmit').parent().closest('div.form-group').hide();
-  							}
-  							$('#businessConfirm').show();
-  							$('#businessNameConfirm').html(response.businessName);
-  							$('#businessAddressStreetConfirm').html(response.street);
-  							$('#businessAddressCityConfirm').html(response.city);
-  							$('#businessAddressStateConfirm').html(response.USstate);
-  							$('#businessAddressZipConfirm').html(response.zip); 							
-  							$('input[id=businessName]').val(response.businessName);
-  							$('input[id=phoneNumber]').val(response.phoneNumber);
-  							$('#subBusiness input[id=street]').val(response.street);
-  							$('#subBusiness input[id=city]').val(response.city);
-  							$('#subBusiness input[id=USstate]').val(response.usstate);
-  							$('#subBusiness input[id=zip]').val(response.zip);
-  							$('#subBusiness input[id=timezone]').val(response.timezone);
-  							$('#subBilling input[id=billing_street]').val(response.billingStreet);
-  							$('#subBilling input[id=billing_city]').val(response.billingCity);
-  							$('#subBilling input[id=billing_state]').val(response.billingState);
-  							$('#subBilling input[id=billing_zip]').val(response.billingZip);
-
-  						},
-  						error: function(errResponse) {
-  							console.log(errResponse.status)
-  							if(errResponse.status == 404) {
-  								$('#businessValidation').html('<p class="font-body txt-phase-red">We were unable to find your business within our database. Please check the details and try again.</p>');
-  							}
-  						}
-  					})
-  				})
-
-  				$('#businessConfirmSubmit').click(function(e){
-  					e.preventDefault()
-					$('#businessConfirm').hide();
-					$('#initialRegistration').show();
-      				$('#subRegistration').hide()
-      				$('#companyCode').hide()
-      				$('#divQn').hide()
-
-  				})
-
-
-
-	      	})
-
-     	</script>
-
-
-      
-=======
 
 					},
 					error:function(errResponse) {
@@ -859,6 +651,5 @@
       	});
 
      	</script>
->>>>>>> 10a867af5405ffd13b56135c4c97cc4461c38ea3
    </body>
 </html>
