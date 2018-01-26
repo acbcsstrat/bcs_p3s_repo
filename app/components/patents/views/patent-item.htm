@@ -715,7 +715,6 @@
 				</div>
 			</uib-tab>
 		    <uib-tab heading="Renewal History" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md"  index="2"  data-ng-hide="true">
-
 		    	<div class="content-panel__head bg-white border-grey-xs--btm">
 		    		<div class="row">
 						<div class="col-xl-2">
@@ -725,7 +724,7 @@
 						<div class="col-xl-3">
 							<h4 class="font-weight-bold font-h4 m-b-xs">Client Ref</h4>
 							<p class="font-h4" data-ng-if="$ctrl.patent.clientRef !== ''">{{$ctrl.patent.clientRef}}</p>
-							<p class="font-h4" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
+							<p class="font-h4 txt-grey" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
 						</div>
 						<div class="col-xl-7 text-right">
 							<h4 class="font-weight-bold font-h4 m-b-xs">Description</h4>
@@ -1496,7 +1495,7 @@
 							<div class="col-md-6 col-lg-3 text-md-right text-lg-left">
 								<h4 class="font-weight-bold font-h4 m-b-xs">Client Ref</h4>
 								<p class="font-h4" data-ng-if="$ctrl.patent.clientRef !== ''">{{$ctrl.patent.clientRef}}</p>
-								<p class="font-h4" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
+								<p class="font-h4 txt-grey" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
 							</div>
 							<div class="col-md-12 col-lg-7 text-lg-right md-m-t-sm">
 								<h4 class="font-weight-bold font-h4 m-b-xs">Description</h4>
