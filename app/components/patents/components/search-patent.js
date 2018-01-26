@@ -58,6 +58,10 @@ app.component('searchpatent', {
 
 		vm.returnedAppNo = '';
 
+	  	vm.cancelSearch = function() {
+			$state.go('search-patent', {}, {reload: true});
+	  	}
+
 		vm.openConfirmModal = function(patent) {
 
 			var modalInstance = $uibModal.open({
