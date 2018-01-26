@@ -65,7 +65,7 @@ app.component('dashboard', {
 	        seconds = Math.floor(seconds % 60);
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
-	        if (hours < 48) {
+	        if (hours < 100) {
 	            return data;
 	        }
 
@@ -663,14 +663,15 @@ app.component('dashboard', {
 						vm.recentTransArr.push(recentTrans);
 					}
 
-					if(data.latestTransStatus === 'Completed') {
-						vm.recentRenewalArr.push(data);
+					if(data.latestTransStatus == 'Completed') {
+						if(recentTrans !== undefined) {
+							vm.recentRenewalArr.push(data);							
+						}
 					}
 				});	
 			}
 
 			//TOTAL RENEWALS PIE CHART
-			var hello = [1]
 
 			if(patents.length === 0) {
 				vm.totalPatents = 0;
@@ -678,11 +679,9 @@ app.component('dashboard', {
 
 				vm.totalPatents = patents.length;
 			}
-			console.log(patents)
 
 			if(patents) {
 				patents.forEach(function(item){
-					console.log(item)
 					if(item.renewalStatus !== 'Renewal in place' && item.renewalStatus !== 'Too late to renew' && item.renewalStatus !== 'No renewal needed') {
 						switch(item.costBandColour) {
 							case 'Green':

@@ -683,7 +683,8 @@
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Description</td>
-													<td>{{item.shortTitle}}</td>
+													<td ng-if="!item.shortTitle" class="txt-grey">[No client description provided]</td>
+													<td ng-if="item.shortTitle">{{item.shortTitle}}</td>
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Amount</td>
@@ -754,33 +755,37 @@
 
 						    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="2" data-ng-hide="true">
 						    	<div class="widget-panel--max">	
-									<div class="row bg-no-data" data-ng-if="$ctrl.recentRenewalArr.length === 0">
+									<div class="row bg-no-data m-t-lg" data-ng-if="$ctrl.recentRenewalArr.length === 0">
 										<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
 											<p class="font-body font-weight-bold">There is no recent activity to report</p>
 										</div>								
-									</div>				    
-							    	<div class="row" data-ng-repeat="renewals in $ctrl.recentRenewalArr" data-ng-if="$ctrl.recentRenewalArr.length !== 0">
-										<div class="col-md-12 col-lg-12 col-xl-12 m-t-md">
+									</div>						    
+							    	<div class="row"  data-ng-repeat="item in $ctrl.recentRenewalArr" data-ng-if="$ctrl.recentRenewalArr.length !== 0">
+										<div class="col-md-12 col-lg-12">
 											<table class="table font-body m-b-md">
 												<tr>
-													<td class="font-weight-bold">Patent No.</td>
-													<td></td>
+													<td class="font-weight-bold">Status</td>
+													<td>Renewal {{item.latestTransStatus}}</td>
 												</tr>
 												<tr>
-													<td class="font-weight-bold">Description</td>
-													<td></td>
+													<td class="font-weight-bold">Date Renewed</td>
+													<td>
+														<span data-ng-repeat="renewals in item.renewalUIs">
+															{{renewals.patentUI.lastRenewedDateExEpo | date:'MM/dd/yyyy'}}<br>
+														</span>
+													</td>
+												</tr>																			
+												<tr>
+													<td class="font-weight-bold">Patents</td>
+													<td>
+														<span data-ng-repeat="renewals in item.renewalUIs">
+															{{renewals.patentUI.patentApplicationNumber}}<br>
+														</span>
+													</td>
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Amount</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td class="font-weight-bold">Current Stage</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td class="font-weight-bold">Next Stage</td>
-													<td></td>
+													<td>$ {{item.transAmount_USD}}</td>
 												</tr>			
 											</table>
 										</div>
@@ -810,7 +815,8 @@
 													</tr>
 													<tr>
 														<td class="font-weight-bold">Description</td>
-														<td>{{item.shortTitle}}</td>
+														<td ng-if="!item.shortTitle" class="txt-grey">[No client description provided]</td>
+														<td ng-if="item.shortTitle">{{item.shortTitle}}</td>
 													</tr>
 													<tr>
 														<td class="font-weight-bold">Amount</td>
