@@ -534,7 +534,7 @@ app.component('patent', {
 	        				return a - b;
 	        			});        			
 
-                dateArr.forEach(function(item, index){
+            			dateArr.forEach(function(item, index){
 	        				if(item == dateArr[0]) {
 	        					var todaysFx = data[index].rate;
 	        					vm.todaysPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * todaysFx);
