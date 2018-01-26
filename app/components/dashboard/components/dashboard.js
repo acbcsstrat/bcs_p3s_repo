@@ -68,7 +68,7 @@ app.component('dashboard', {
 	        if (hours < 48) {
 	            return data;
 	        }
-	        
+
 	    }
 
 		function calcProgress(start, end) {
@@ -670,17 +670,20 @@ app.component('dashboard', {
 			}
 
 			//TOTAL RENEWALS PIE CHART
+			var hello = [1]
 
 			if(patents.length === 0) {
 				vm.totalPatents = 0;
 			} else {
-				vm.totalPatents = patents.length - 1;
+
+				vm.totalPatents = patents.length;
 			}
-			
+			console.log(patents)
 
 			if(patents) {
 				patents.forEach(function(item){
-					if(item.renewalStatus !== ('Renewal in place' || 'Too late to renew')) {
+					console.log(item)
+					if(item.renewalStatus !== 'Renewal in place' && item.renewalStatus !== 'Too late to renew' && item.renewalStatus !== 'No renewal needed') {
 						switch(item.costBandColour) {
 							case 'Green':
 								vm.greenRenewals.push(item);
