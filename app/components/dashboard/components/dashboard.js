@@ -65,7 +65,7 @@ app.component('dashboard', {
 	        seconds = Math.floor(seconds % 60);
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
-	        if (hours < 100) {
+	        if (hours < 48) {
 	            return data;
 	        }
 
@@ -451,7 +451,7 @@ app.component('dashboard', {
 			vm.blackRenewals.forEach(function(data, i){
 				data.progressBar = calculateProgress(data, i);
 			});												
-		}, 300);
+		}, 100);
 
 		function patentCostAnalysisFn(id) {
 
@@ -469,7 +469,6 @@ app.component('dashboard', {
 	                    	hours =  vm.date - response.greenStartDate;
 
 	                    	if(millsToHours(response, hours) !== undefined){
-
 	                    		patentsArr.forEach(function(item) {
 	                    			if(item.costBandColour == 'Green') {
 	                    				vm.recentStageArr.push(item);
@@ -484,7 +483,6 @@ app.component('dashboard', {
 	                    	hours =  vm.date - response.amberStartDate;
 
 	                    	if(millsToHours(response, hours) !== undefined){
-	                    		
 	                    		patentsArr.forEach(function(item) {
 	                    			if(item.costBandColour == 'Amber') {	                    		
 	                    				vm.recentStageArr.push(item);
@@ -618,10 +616,13 @@ app.component('dashboard', {
 
 			var transactions = vm.transactions;
 			var patents = vm.patents;
+ 			
+ 			$timeout(function() {
+				patents.forEach(function(item){
+					patentCostAnalysisFn(item.id);
+				})
+ 			}, 300)
 
-			patents.forEach(function(item){
-				patentCostAnalysisFn(item.id);
-			})
 	
 		    if(counter === null) {
 
