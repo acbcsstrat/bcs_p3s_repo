@@ -118,6 +118,7 @@ input[type=checkbox], input[type=radio] {
   width: calc(100% - 125px)!important;
   left: 100px;
   position: absolute;
+  max-width: 140rem;
 }
 
 .container-content-40 { width: 30%; max-width: 40rem;  }
