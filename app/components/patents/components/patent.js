@@ -574,9 +574,9 @@ app.component('patent', {
 	        			$timeout(function(){
 	        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
 	        				if(vm.fourWeekVariation < 0) {
-	        					vm.variationSave = false;
-	        				} else {
 	        					vm.variationSave = true;
+	        				} else {
+	        					vm.variationSave = false
 	        				}
 	        			}, 100);
 	        		},
