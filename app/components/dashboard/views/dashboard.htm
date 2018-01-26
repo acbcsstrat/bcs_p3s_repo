@@ -313,9 +313,9 @@
 							    <slick data="$ctrl.phaseArr" settings="slickConfigAmber" ng-if="$ctrl.sliderPhase == 'amber'">
 							        <div data-ng-repeat="item in $ctrl.phaseArr">
 							            <table class="t-data">
-							        		<tbody class="font -body">
+							        		<tbody class="font-body">
 								            	<tr>
-								            		<td class="td-20 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
+								            		<td class="td-50 td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
 										            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
@@ -324,7 +324,7 @@
 								            		</td>
 								            	</tr>
 								            	<tr>
-								            		<td class="td-20 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
+								            		<td class="td-50 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
 								            		<td class="td-50 no-border-er">
 								            			<div class="d-flex justify-content-between">
 								            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'dd-MM-yy'}}</p>
@@ -333,7 +333,7 @@
 								            		</td>
 								            	</tr>
 								            	<tr>
-								            		<td class="td-20 td-border"><span class="font-weight-medium">Due Date: </span>{{item.renewalDueDateUI}}</td>
+								            		<td class="td-50 td-border"><span class="font-weight-medium">Due Date: </span>{{item.renewalDueDateUI}}</td>
 								            		<td class="td-50 td-border-nt">
 								            			<div class="progress-phase">
 										            		<uib-progress class="bg-phase-red pill-radius"><uib-bar class="bg-phase-amber pill-radius"  value="item.progressBar"></uib-bar></uib-progress>
