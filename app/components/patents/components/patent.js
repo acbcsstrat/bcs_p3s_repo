@@ -263,7 +263,7 @@ app.component('patent', {
 
         function usdFxEur() {
         	var fx = eval(1 / vm.costAnalysis.fee.fxRate);
-        	fx = fx.toFixed(2);
+        	fx = fx.toFixed(6);
         	vm.usd2eur = fx;
         }
 		
@@ -296,12 +296,12 @@ app.component('patent', {
 	            	vm.feeBreakDown = {
 	            		renewalFeeEUR: caFee.renewalFeeEUR,
 	            		renewalFeeUSD: caFee.renewalFeeUSD,
-	            		extensionFee: caFee.extensionFeeEUR,
-	            		extensionFeeEur: caFee.extensionFeeEUR,
+	            		extensionFeeEUR: caFee.extensionFeeEUR,
 	            		extensionFeeUSD: caFee.extensionFeeUSD,
 	            		processingFeeEUR: caFee.processingFeeEUR,
 	            		processingFeeUSD: caFee.processingFeeUSD,
 	            		expressFeeUSD: caFee.expressFeeUSD,
+	            		expressFeeEUR: caFee.expressFeeEUR,
 	            		urgentFeeUSD: caFee.urgentFeeUSD,
 	            		latePayPenaltyUSD: caFee.latePayPenaltyUSD,
 	            		fxRate: caFee.fxRate,
@@ -560,24 +560,13 @@ app.component('patent', {
 	    		fxService.fetchFxMonth()
 	        	.then(
 	        		function(data){
-
-	        			var dateArr = [];
-
-	        			data.forEach(function(item){
-	        				dateArr.push(item.rateActiveDate);
-	        			});
-
-	        			dateArr.sort(function(a, b){
-	        				return a - b;
-	        			});
-
 	        			var tD = new Date();
 	        			var lmD = tD.setMonth(tD.getMonth() - 1);
 	        			var lastMonthD = new Date(lmD).getDay();
 	        			var lastMonthDt = new Date(lmD).getDate();
-	        			dateArr.forEach(function(item, index){
-	        				if((new Date(item).getDay() == lastMonthD) && (new Date(item).getDate() == lastMonthDt)) {
-	        					var lastMonthFx = data[index].rate;
+	        			data.forEach(function(item, index){
+	        				if((new Date(item.rateActiveDate).getDay() == lastMonthD) && (new Date(item.rateActiveDate).getDate() == lastMonthDt)) {
+	        					var lastMonthFx = item.rate;
 	        					vm.lastMonthsPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastMonthFx);
 	        					vm.lastMonthsPriceEUR = Math.floor(vm.costAnalysis.fee.subTotalEUR);
 	        				}
