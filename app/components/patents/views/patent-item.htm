@@ -806,11 +806,15 @@
 											</td>
 											<td class="td-30">
 												<div class="row">
-													<div class="col-xl-6 d-flex align-items-center">
-														<a data-ng-href="{{renewal.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+													<div class="col-xl-6 d-flex align-items-center" ng-if="renewal.certificateUrl">
+														<div class="btn-default">
+															<a data-ng-href="{{renewal.certificateUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+														</div>
 													</div>
 													<div class="col-xl-6 d-flex align-items-center">
-														<a data-ng-href="{{renewal.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+														<div class="btn-default">
+															<a data-ng-href="{{renewal.invoiceUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+														</div>
 													</div>	
 												</div>
 											</td>
@@ -1563,7 +1567,7 @@
 															<td class="font-body">Extension fee:</td>
 															<td class="font-body">$ {{renewal.feeUI.extensionFeeUSD}}</td>
 														</tr>
-														<tr class="border-grey-xs--btm">
+														<tr>
 															<td class="font-body">Express fee:</td>
 															<td class="font-body">$ {{renewal.feeUI.expressFeeUSD}}</td>
 														</tr>
@@ -1577,16 +1581,18 @@
 														</tr>													
 													</table>
 												</td>
-
 												<td>
-													<a href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center justify-content-center lg-m-b-sm
-													" download>Certificate
-														<i class="fa fa-file-pdf-o fa-1x m-l-xs"></i>
-													</a>
-
-													<a href="p3sweb/hardcodedpffolder/invoices/dummyInvoiceNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center justify-content-center" download>Invoice 
-														<i class="fa fa-file-pdf-o fa-1x m-l-xs"></i>
-													</a>
+													<div class="btn-default" ng-if="renewal.certificateUrl">
+														<a data-ng-href="{{renewal.certificateUrl}}" target="__blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center justify-content-center lg-m-b-sm
+														">Certificate
+															<i class="fa fa-file-pdf-o fa-1x m-l-xs"></i>
+														</a>														
+													</div>
+													<div class="btn-default">
+														<a data-ng-href="{{renewal.invoiceUrl}}" target="__blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center justify-content-center">Invoice 
+															<i class="fa fa-file-pdf-o fa-1x m-l-xs"></i>
+														</a>
+													</div>
 												</td>
 											</tr>
 										</tbody>

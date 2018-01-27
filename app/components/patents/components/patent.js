@@ -281,7 +281,8 @@ app.component('patent', {
             	var lineDataArr = [];
             	var lineLabelArr = [];	            
 
-	            vm.renewalHistory = vm.renewal;         
+	            vm.renewalHistory = vm.renewal;      
+	            console.log(vm.renewalHistory)   
 
 	            if((status == 'Show price') || (status == 'Payment in progress') || (status == 'EPO Instructed')) {
 	            	vm.displayCost = true;
