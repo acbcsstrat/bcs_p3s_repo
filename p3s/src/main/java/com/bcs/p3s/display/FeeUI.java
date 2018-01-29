@@ -54,8 +54,8 @@ public class FeeUI {
 		this.setFxRate(fee.getFxRate());
 		this.setSubTotalUSD(fee.getSubTotal_USD());
 		
-		this.setRenewalFeeUSD(fee.getRenewalFee_EUR().multiply(fee.getFxRate()));
-		this.setExtensionFeeUSD(fee.getExtensionFee_EUR().multiply(fee.getFxRate()));
+		this.setRenewalFeeUSD((fee.getRenewalFee_EUR().multiply(fee.getFxRate())).setScale(2, BigDecimal.ROUND_CEILING));
+		this.setExtensionFeeUSD((fee.getExtensionFee_EUR().multiply(fee.getFxRate())).setScale(2, BigDecimal.ROUND_CEILING));
 
 		this.setProcessingFeeEUR(dollarsToEuro(processingFeeUSD));
 		this.setExpressFeeEUR(dollarsToEuro(expressFeeUSD));
@@ -68,7 +68,7 @@ public class FeeUI {
 
 	
 	
-	public FeeUI(BigDecimal renewalFeeEUR, BigDecimal extensionFeeEUR, BigDecimal renewalFeeUSD,
+	/*public FeeUI(BigDecimal renewalFeeEUR, BigDecimal extensionFeeEUR, BigDecimal renewalFeeUSD,
 			BigDecimal extensionFeeUSD, BigDecimal processingFeeUSD, BigDecimal expressFeeUSD,
 			BigDecimal urgentFeeUSD, BigDecimal latePayPenaltyUSD, BigDecimal fxRate, BigDecimal subTotalUSD) {
 		super();
@@ -88,7 +88,7 @@ public class FeeUI {
 		this.setUrgentFeeEUR(dollarsToEuro(urgentFeeUSD));
 		this.setLatePayPenaltyEUR(dollarsToEuro(latePayPenaltyUSD));
 		this.setSubTotalEUR(dollarsToEuro(subTotalUSD));
-	}
+	}*/
 
 	
 	
@@ -97,11 +97,8 @@ public class FeeUI {
 		BigDecimal euros = dollars.divide(fxRate, 2, BigDecimal.ROUND_CEILING);
 		return euros;
 	}
+	
 
-	
-	
-	
-	
 	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // acToDo 01-sep-2017
 
 	public BigDecimal getRenewalFee_EUR() {
