@@ -43,6 +43,7 @@ app.component('currentTransactions', {
 		vm.$onInit = function() {
 
 			var transactions = vm.transactions;
+			
 			transactions.forEach(function(data){
 				data.renewalProgress = currentTransactionsService.renewalProgress(data.latestTransStatus);
 			});
