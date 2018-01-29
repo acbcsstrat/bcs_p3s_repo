@@ -65,7 +65,7 @@ app.component('dashboard', {
 	        seconds = Math.floor(seconds % 60);
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
-	        if (hours < 48) {
+	        if (hours < 200) {
 	            return data;
 	        }
 
@@ -546,69 +546,6 @@ app.component('dashboard', {
 
 		//COLOUR KEY	
 
-		function systemMessageModal(response) {
-      
-			var modalInstance = $uibModal.open({
-				templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
-				scope: $scope,
-				appendTo: undefined,
-				controllerAs: vm,
-				controller: function($uibModalInstance, message) {
-
-					vm.systemMessage = message;
-
-			 	  	vm.ok = function () {
-				    	$uibModalInstance.close();
-				  	};
-
-				  	vm.dismissModal = function() {
-				  		$uibModalInstance.dismiss();
-				  	};							  	
-
-				},
-				resolve: {
-					message: function() {
-						return systemResponse;
-					}
-				}
-			});
-
-		 	modalInstance.result.finally(function () {
-		     	if(response.urgentPatents.length === 0) {
-		     		return;
-		     	} else {
-		     		response.urgentPatents.forEach(function(data){
-    					urgentResponse.push(data);
-	    			});
-		     		
-		     		$timeout(function() {
-						var modalInstance = $uibModal.open({
-							templateUrl: 'p3sweb/app/components/dashboard/views/modals/urgent-message-modal.htm',
-							scope: $scope,
-							appendTo: undefined,
-							controllerAs: vm,
-							controller: function($uibModalInstance, message) {
-
-								vm.urgentMessage = message;
-
-						 	  	vm.ok = function () {
-							    	$uibModalInstance.close();
-							  	};
-
-							  	vm.dismissModal = function() {
-							  		$uibModalInstance.dismiss();
-							  	};
-							},
-							resolve: {
-								message: function() {
-									return urgentResponse;
-								}
-							}
-						});
-		     		}, 200);
-		     	}
-        	});
-		} //function end
 
 		vm.$onInit = () => {
 
@@ -623,7 +560,59 @@ app.component('dashboard', {
 				})
  			}, 300)
 
-	
+			function systemMessageModal(response) {
+				var modalInstance = $uibModal.open({
+					templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
+					scope: $scope,
+					controllerAs: vm,
+					controller: function($uibModalInstance, message) {
+
+						vm.systemMessage = message;
+
+				 	  	vm.systemOk = function () {
+					    	$uibModalInstance.close();
+					  	};
+
+					  	vm.systemDismissModal = function() {
+					  		$uibModalInstance.dismiss();
+					  	};							  	
+
+					},
+					resolve: {
+						message: function() {
+							return systemResponse;
+						}
+					}
+				});
+		 	} //function systemMessageModal
+
+			function urgentPatentModal(response) {
+				var modalInstance = $uibModal.open({
+					templateUrl: 'p3sweb/app/components/dashboard/views/modals/urgent-message-modal.htm',
+					scope: $scope,
+					controllerAs: vm,
+					controller: function($uibModalInstance, message) {
+
+						vm.urgentPatents = message;
+
+				 	  	vm.urgentOk = function () {
+					    	$uibModalInstance.close();
+					  	};
+
+					  	vm.urgentDismissModal = function() {
+					  		$uibModalInstance.dismiss();
+					  	};
+
+					},
+					resolve: {
+						message: function() {
+							return urgentResponse;
+						}
+					}
+				});
+		 	} //function urgentPatentModal		 	
+
+
 		    if(counter === null) {
 
 		    	localStorageService.set('counter', 1);
@@ -636,6 +625,17 @@ app.component('dashboard', {
 
 			    		var date = new Date().getTime();
 
+		    			if(response.urgentPatents.length > 0) {
+			    			response.urgentPatents.forEach(function(data){
+			    				urgentResponse.push(data);
+			    			});
+
+							$timeout(function() {
+								urgentPatentModal(response);
+							}, 500);
+		    			}
+
+
 			    		if(response.systemMessages.length > 0) {
 			    			response.systemMessages.forEach(function(data){
 			    				var dateFrom = data.displayFromDate, dateTo = data.displayToDate;
@@ -643,11 +643,13 @@ app.component('dashboard', {
 			    					systemResponse.push(data);
 			    				}
 			    			});
-                
+
 							$timeout(function() {
 								systemMessageModal(response);
-							}, 1000);
-			    		} //if end
+							}, 500);
+
+			    		}		    			
+
 			    	},
 			    	function(errResponse){
 			    		console.log(errResponse);
