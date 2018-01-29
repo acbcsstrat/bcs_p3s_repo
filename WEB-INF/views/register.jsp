@@ -183,7 +183,7 @@
 								  	  	<div class="form-navigation d-flex justify-content-between btn-default">
 									    	<button type="button" class="previous btn btn--lg pill-radius bg-phase-green font-body font-body--component txt-white font-weight-medium cursor-pointer">Previous</button>
 									    	<button type="button" class="next btn btn--lg pill-radius bg-phase-green font-body font-body--component txt-white font-weight-medium cursor-pointer">Next</button>
-									    	<input type="submit" value="Register" id="register" class="btn btn--lg bg-phase-green pill-radius txt-white font-body font-body--component font-weight-medium cursor-pointer">
+									    	<input type="submit" value="Register" id="register" class="btn btn--lg bg-phase-green pill-radius txt-white font-body font-body--component font-weight-medium cursor-pointer" disabled>
 									  	</div>								  			
 							  		</div>
 							  	</div>
