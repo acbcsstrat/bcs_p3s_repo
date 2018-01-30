@@ -263,7 +263,7 @@ app.component('patent', {
 
         function usdFxEur() {
         	var fx = eval(1 / vm.costAnalysis.fee.fxRate);
-        	fx = fx.toFixed(2);
+        	fx = fx.toFixed(6);
         	vm.usd2eur = fx;
         }
 		
@@ -281,7 +281,8 @@ app.component('patent', {
             	var lineDataArr = [];
             	var lineLabelArr = [];	            
 
-	            vm.renewalHistory = vm.renewal;         
+	            vm.renewalHistory = vm.renewal;      
+	            console.log(vm.renewalHistory)   
 
 	            if((status == 'Show price') || (status == 'Payment in progress') || (status == 'EPO Instructed')) {
 	            	vm.displayCost = true;
@@ -296,12 +297,12 @@ app.component('patent', {
 	            	vm.feeBreakDown = {
 	            		renewalFeeEUR: caFee.renewalFeeEUR,
 	            		renewalFeeUSD: caFee.renewalFeeUSD,
-	            		extensionFee: caFee.extensionFeeEUR,
-	            		extensionFeeEur: caFee.extensionFeeEUR,
+	            		extensionFeeEUR: caFee.extensionFeeEUR,
 	            		extensionFeeUSD: caFee.extensionFeeUSD,
 	            		processingFeeEUR: caFee.processingFeeEUR,
 	            		processingFeeUSD: caFee.processingFeeUSD,
 	            		expressFeeUSD: caFee.expressFeeUSD,
+	            		expressFeeEUR: caFee.expressFeeEUR,
 	            		urgentFeeUSD: caFee.urgentFeeUSD,
 	            		latePayPenaltyUSD: caFee.latePayPenaltyUSD,
 	            		fxRate: caFee.fxRate,
@@ -534,7 +535,7 @@ app.component('patent', {
 	        				return a - b;
 	        			});        			
 
-                dateArr.forEach(function(item, index){
+            			dateArr.forEach(function(item, index){
 	        				if(item == dateArr[0]) {
 	        					var todaysFx = data[index].rate;
 	        					vm.todaysPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * todaysFx);
@@ -560,24 +561,13 @@ app.component('patent', {
 	    		fxService.fetchFxMonth()
 	        	.then(
 	        		function(data){
-
-	        			var dateArr = [];
-
-	        			data.forEach(function(item){
-	        				dateArr.push(item.rateActiveDate);
-	        			});
-
-	        			dateArr.sort(function(a, b){
-	        				return a - b;
-	        			});
-
 	        			var tD = new Date();
 	        			var lmD = tD.setMonth(tD.getMonth() - 1);
 	        			var lastMonthD = new Date(lmD).getDay();
 	        			var lastMonthDt = new Date(lmD).getDate();
-	        			dateArr.forEach(function(item, index){
-	        				if((new Date(item).getDay() == lastMonthD) && (new Date(item).getDate() == lastMonthDt)) {
-	        					var lastMonthFx = data[index].rate;
+	        			data.forEach(function(item, index){
+	        				if((new Date(item.rateActiveDate).getDay() == lastMonthD) && (new Date(item.rateActiveDate).getDate() == lastMonthDt)) {
+	        					var lastMonthFx = item.rate;
 	        					vm.lastMonthsPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastMonthFx);
 	        					vm.lastMonthsPriceEUR = Math.floor(vm.costAnalysis.fee.subTotalEUR);
 	        				}
@@ -585,9 +575,9 @@ app.component('patent', {
 	        			$timeout(function(){
 	        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
 	        				if(vm.fourWeekVariation < 0) {
-	        					vm.variationSave = false;
-	        				} else {
 	        					vm.variationSave = true;
+	        				} else {
+	        					vm.variationSave = false
 	        				}
 	        			}, 100);
 	        		},

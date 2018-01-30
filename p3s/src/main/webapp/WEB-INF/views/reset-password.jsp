@@ -177,7 +177,7 @@
 							$(password_li[3]).css('background', '#53ab58');
 						break;
 						case 5:
-							$(password_li[3]).css('background', 'black');						
+							$(password_li[3]).css('background', '#418746');						
 
 					}
 				});

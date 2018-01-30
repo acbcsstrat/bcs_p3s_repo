@@ -47,7 +47,7 @@
 							<div class="col-md-12 col-lg-6 col-xl-6 md-m-b-md">
 								<div class="hidden-md-down m-b-sm">
 									<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
-									<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span></p>
+									<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span><span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey">[No client description provided]</span></p>
 									<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>					
 								</div>
 								<div class="hidden-sm-down hidden-lg-up">
@@ -91,6 +91,14 @@
 												<p class="font-body">$ {{transaction.feeUI.extensionFee_USD}}</p>
 											</div>
 										</div>
+										<div class="row m-b-sm">
+											<div class="col-md-6">
+												<p class="font-weight-bold font-body">Express fee: </p>
+											</div>
+											<div class="col-md-6">
+												<p class="font-body">$ {{transaction.feeUI.expressFee_USD}}</p>
+											</div>
+										</div>											
 										<div class="row">		
 											<div class="col-md-6">
 												<p class="font-weight-bold font-body">Urgent clearance fee: </p>
@@ -114,12 +122,18 @@
 											<div class="col-md-3">
 												<p class="font-body">$ {{transaction.feeUI.processingFee_USD}}</p>
 											</div>
-											<div class="col-md-3">
+											<div class="col-md-3 md-m-b-x">
 												<p class="font-weight-bold font-body">EPO surcharge: </p>
 											</div>
 											<div class="col-md-3">
 												<p class="font-body">$ {{transaction.feeUI.extensionFee_USD}}</p>
-											</div>	
+											</div>
+											<div class="col-md-3">
+												<p class="font-weight-bold font-body">Express fee: </p>
+											</div>
+											<div class="col-md-3">
+												<p class="font-body">$ {{transaction.feeUI.expressFee_USD}}</p>
+											</div>												
 											<div class="col-md-3">
 												<p class="font-weight-bold font-body">Urgent clearance fee: </p>
 											</div>

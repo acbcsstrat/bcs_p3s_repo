@@ -282,7 +282,7 @@
 												<p class="font-body font-weight-bold">4 week variation:</p>	
 											</div>
 											<div class="col-xl-6">
-												<p class="font-body text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="$ctrl.variationSave">-</span><span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
+												<p class="font-body text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
 											</div>
 										</div>																																						
 									</div>
@@ -434,7 +434,7 @@
 													<p class="font-body font-weight-bold">4 week variation:</p>	
 												</div>
 												<div class="col-cxl-6">
-													<p class="font-body text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="$ctrl.variationSave">-</span><span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
+													<p class="font-body text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
 												</div>												
 											</div>
 										</div>	
@@ -583,9 +583,14 @@
 											</tr>
 											<tr class="no-border-eb">
 												<td class="font-body no-border font-weight-medium">Extension Fee</td>
-												<td class="font-body no-border">€ {{$ctrl.feeBreakDown.extensionFeeEur}}</td>
+												<td class="font-body no-border">€ {{$ctrl.feeBreakDown.extensionFeeEUR}}</td>
 												<td class="font-body no-border">$ {{$ctrl.feeBreakDown.extensionFeeUSD}}</td>
-											</tr>								
+											</tr>
+											<tr class="no-border-eb">
+												<td class="font-body no-border font-weight-medium">Express Fee</td>
+												<td class="font-body no-border">€ {{$ctrl.feeBreakDown.expressFeeEUR}}</td>
+												<td class="font-body no-border">$ {{$ctrl.feeBreakDown.expressFeeUSD}}</td>
+											</tr>																										
 											<tr>
 												<td class="font-body font-weight-medium">Total</td>
 												<td class="font-body font-weight-medium">€ {{$ctrl.feeBreakDown.subTotalEUR}}</td>
@@ -676,7 +681,12 @@
 												<td class="font-body font-weight-medium">Extension Fee</td>
 												<td class="font-body">€ 0.00</td>
 												<td class="font-body">$ 0.00</td>
-											</tr>								
+											</tr>
+											<tr class="no-border-eb">
+												<td class="font-body no-border font-weight-medium">Express Fee</td>
+												<td class="font-body no-border">€ 0.00</td>
+												<td class="font-body no-border">$ 0.00</td>
+											</tr>																	
 											<tr>
 												<td class="font-body font-weight-medium">Total</td>
 												<td class="font-body font-weight-medium">€ 0.00</td>
@@ -705,7 +715,6 @@
 				</div>
 			</uib-tab>
 		    <uib-tab heading="Renewal History" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md"  index="2"  data-ng-hide="true">
-
 		    	<div class="content-panel__head bg-white border-grey-xs--btm">
 		    		<div class="row">
 						<div class="col-xl-2">
@@ -715,7 +724,7 @@
 						<div class="col-xl-3">
 							<h4 class="font-weight-bold font-h4 m-b-xs">Client Ref</h4>
 							<p class="font-h4" data-ng-if="$ctrl.patent.clientRef !== ''">{{$ctrl.patent.clientRef}}</p>
-							<p class="font-h4" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
+							<p class="font-h4 txt-grey" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
 						</div>
 						<div class="col-xl-7 text-right">
 							<h4 class="font-weight-bold font-h4 m-b-xs">Description</h4>
@@ -770,14 +779,25 @@
 											<td class="font-body td-30">
 												<table class="table-borderless">
 													<tr>
-														<td class="font-body p-t-none">Official Fee:</td>
+														<td class="font-body p-t-none">Official fee:</td>
 														<td class="font-body p-t-none">$ {{renewal.feeUI.renewalFeeUSD}}</td>
 													</tr>
+													<tr>
+														<td class="font-body">Processing fee:</td>
+														<td class="font-body">$ {{renewal.feeUI.processingFeeUSD}}</td>
+													</tr>
+													<tr>
+														<td class="font-body">Extension fee:</td>
+														<td class="font-body">$ {{renewal.feeUI.extensionFeeUSD}}</td>
+													</tr>
 													<tr class="border-grey-xs--btm">
-														<td class="font-body">Processing Fee:</td>
-														<td class="font-body">$ {{renewal.feeUI.processingFeeEUR}}</td>
-													</tr>														
-
+														<td class="font-body">Express fee:</td>
+														<td class="font-body">$ {{renewal.feeUI.expressFeeUSD}}</td>
+													</tr>
+													<tr class="border-grey-xs--btm">
+														<td class="font-body">Urgent fee:</td>
+														<td class="font-body">$ {{renewal.feeUI.urgentFeeUSD}}</td>
+													</tr>																								
 													<tr>
 														<td class="font-body font-weight-bold">Total: </td>
 														<td class="font-body font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
@@ -786,11 +806,15 @@
 											</td>
 											<td class="td-30">
 												<div class="row">
-													<div class="col-xl-6 d-flex align-items-center">
-														<a data-ng-href="{{renewal.certificateUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+													<div class="col-xl-6 d-flex align-items-center" ng-if="renewal.certificateUrl">
+														<div class="btn-default">
+															<a data-ng-href="{{renewal.certificateUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+														</div>
 													</div>
 													<div class="col-xl-6 d-flex align-items-center">
-														<a data-ng-href="{{renewal.invoiceUrl}}" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" download>Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+														<div class="btn-default">
+															<a data-ng-href="{{renewal.invoiceUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+														</div>
 													</div>	
 												</div>
 											</td>
@@ -1084,7 +1108,7 @@
 														<p class="font-body font-weight-bold">4 week variation:</p>	
 													</div>
 													<div class="col-md-6 col-lg-6">
-														<p class="font-body text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="$ctrl.variationSave">-</span><span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
+														<p class="font-body text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
 													</div>												
 												</div>																																						
 											</div>
@@ -1258,9 +1282,14 @@
 									</tr>
 									<tr class="no-border-eb">
 										<td class="font-body no-border font-weight-medium">Extension Fee</td>
-										<td class="font-body no-border">€ {{$ctrl.feeBreakDown.extensionFeeEur}}</td>
+										<td class="font-body no-border">€ {{$ctrl.feeBreakDown.extensionFeeEUR}}</td>
 										<td class="font-body no-border">$ {{$ctrl.feeBreakDown.extensionFeeUSD}}</td>
-									</tr>								
+									</tr>
+									<tr class="no-border-eb">
+										<td class="font-body no-border font-weight-medium">Express Fee</td>
+										<td class="font-body no-border">€ {{$ctrl.feeBreakDown.expressFeeEUR}}</td>
+										<td class="font-body no-border">$ {{$ctrl.feeBreakDown.expressFeeUSD}}</td>
+									</tr>																
 									<tr class="p-b-none">
 										<td class="font-body font-weight-medium">Total</td>
 										<td class="font-body font-weight-medium">€ {{$ctrl.feeBreakDown.subTotalEUR}}</td>
@@ -1315,7 +1344,7 @@
 										<div class="content-panel_body bg-no-chart d-flex align-items-center justify-content-center">
 											<div class="d-flex justify-content-center align-items-center flex-column z-index-1">
 												<p class="h4 font-weight-medium">Sorry</p>
-												<p class="h4 font-weight-medium text-center">No Renewal Information Availablerrr</p>
+												<p class="h4 font-weight-medium text-center">No Renewal Information Available</p>
 												<p class="h4 font-weight-medium">Status: <span class="txt-phase-green" data-ng-bind="$ctrl.patent.renewalStatus"></span></p>			
 												<div class="m-b-sm"></div>
 												<p class="font-body text-center">Renewal information will be displayed here when the renewal window for the patent opens again.</p>
@@ -1358,13 +1387,13 @@
 									<div class="col-lg-6">
 										<div class="row">		    	
 											<div class="col-md-12 col-lg-12 d-flex flex-column justify-content-between">
-												<div class="row m-b-xs d-flex justify-content-center align-items-center">
+												<div class="row m-b-xs d-flex  align-items-center">
 													<div class="col-md-6 col-lg-6">
 														<h4 class="font-weight-medium font-h4">Cost breakdown</h4>
 													</div>
-													<div class="col-md-6 col-lg-6 text-right">
+<!-- 													<div class="col-md-6 col-lg-6 text-right">
 														<p class="font-h4">1 USD = {{$ctrl.usd2eur}} EUR</p>
-													</div>	
+													</div>	 -->
 												</div>
 											</div>
 										</div>
@@ -1391,7 +1420,12 @@
 													<td class="font-body font-weight-medium">Extension Fee</td>
 													<td class="font-body">€ 0.00</td>
 													<td class="font-body">$ 0.00</td>
-												</tr>								
+												</tr>
+												<tr class="no-border-eb">
+													<td class="font-body no-border font-weight-medium">Express Fee</td>
+													<td class="font-body no-border">€ 0.00</td>
+													<td class="font-body no-border">$ 0.00</td>
+												</tr>														
 												<tr class="p-b-none">
 													<td class="font-body font-weight-medium">Total</td>
 													<td class="font-body font-weight-medium">€ 0.00</td>
@@ -1409,13 +1443,13 @@
 			    	<div class="content-panel__body bg-white" data-ng-if="$ctrl.hideCost">
 			    		<div class="row">		    	
 							<div class="col-md-12 col-lg-12 d-flex flex-column justify-content-between">
-								<div class="row d-flex justify-content-center align-items-center">
+								<div class="row d-flex align-items-center">
 									<div class="col-md-6 col-lg-6">
 										<h4 class="font-weight-medium font-h4">Cost breakdown</h4>
 									</div>
-									<div class="col-md-6 col-lg-6 text-right">
+<!-- 									<div class="col-md-6 col-lg-6 text-right">
 										<p class="font-h4">1 USD = {{$ctrl.usd2eur}} EUR</p>
-									</div>	
+									</div>	 -->
 								</div>
 							</div>
 						</div>
@@ -1469,7 +1503,7 @@
 							<div class="col-md-6 col-lg-3 text-md-right text-lg-left">
 								<h4 class="font-weight-bold font-h4 m-b-xs">Client Ref</h4>
 								<p class="font-h4" data-ng-if="$ctrl.patent.clientRef !== ''">{{$ctrl.patent.clientRef}}</p>
-								<p class="font-h4" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
+								<p class="font-h4 txt-grey" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
 							</div>
 							<div class="col-md-12 col-lg-7 text-lg-right md-m-t-sm">
 								<h4 class="font-weight-bold font-h4 m-b-xs">Description</h4>
@@ -1522,30 +1556,43 @@
 												<td class="font-body">
 													<table class="table-borderless">
 														<tr>
-															<td class="font-body p-t-none">Official Fee:</td>
+															<td class="font-body p-t-none">Official fee:</td>
 															<td class="font-body p-t-none">$ {{renewal.feeUI.renewalFeeUSD}}</td>
 														</tr>
+														<tr>
+															<td class="font-body">Processing fee:</td>
+															<td class="font-body">$ {{renewal.feeUI.processingFeeUSD}}</td>
+														</tr>
+														<tr>
+															<td class="font-body">Extension fee:</td>
+															<td class="font-body">$ {{renewal.feeUI.extensionFeeUSD}}</td>
+														</tr>
+														<tr>
+															<td class="font-body">Express fee:</td>
+															<td class="font-body">$ {{renewal.feeUI.expressFeeUSD}}</td>
+														</tr>
 														<tr class="border-grey-xs--btm">
-															<td class="font-body">Processing Fee:</td>
-															<td class="font-body">$ {{renewal.feeUI.processingFeeEUR}}</td>
-														</tr>														
-
+															<td class="font-body">Urgent fee:</td>
+															<td class="font-body">$ {{renewal.feeUI.urgentFeeUSD}}</td>
+														</tr>																											
 														<tr>
 															<td class="font-body font-weight-bold">Total: </td>
 															<td class="font-body font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
 														</tr>													
 													</table>
 												</td>
-
 												<td>
-													<a href="p3sweb/hardcodedpffolder/certificates/dummyCertificateNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center justify-content-center lg-m-b-sm
-													" download>Certificate
-														<i class="fa fa-file-pdf-o fa-1x m-l-xs"></i>
-													</a>
-
-													<a href="p3sweb/hardcodedpffolder/invoices/dummyInvoiceNumber1.pdf" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center justify-content-center" download>Invoice 
-														<i class="fa fa-file-pdf-o fa-1x m-l-xs"></i>
-													</a>
+													<div class="btn-default" ng-if="renewal.certificateUrl">
+														<a data-ng-href="{{renewal.certificateUrl}}" target="__blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center justify-content-center lg-m-b-sm
+														">Certificate
+															<i class="fa fa-file-pdf-o fa-1x m-l-xs"></i>
+														</a>														
+													</div>
+													<div class="btn-default">
+														<a data-ng-href="{{renewal.invoiceUrl}}" target="__blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center justify-content-center">Invoice 
+															<i class="fa fa-file-pdf-o fa-1x m-l-xs"></i>
+														</a>
+													</div>
 												</td>
 											</tr>
 										</tbody>

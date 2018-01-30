@@ -3,7 +3,7 @@ app.factory('dashboardService', ['$http', '$q', function($http, $q){
     var factory = {};
 
          factory.getMessages = function() {
-        
+            console.log('response')
             var deferred = $q.defer();
              $http.get(domain+'login-messages/')
                 .then(
