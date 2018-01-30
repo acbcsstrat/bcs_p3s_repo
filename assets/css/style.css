@@ -1443,8 +1443,13 @@ select.form-control:not([size]):not([multiple]) {
   padding-right: 5rem;
 }
 
-
-
+/*.modal-content {
+  max-height: 50rem;
+  min-height: 50rem;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+*/
 .modal-header {
   border-bottom: 0;
   padding-top: 2rem;
