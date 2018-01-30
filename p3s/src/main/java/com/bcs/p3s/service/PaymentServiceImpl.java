@@ -122,10 +122,10 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			
 			bankTransferCheckoutPreCommit = populateBankTransferPreCommitDetails(bankTransferCheckoutPreCommit, basket);
 			// Check that expected price matches calculated
-			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_CEILING);
-			//BigDecimal calculated = bankTransferCheckoutPreCommit.getTotalCostUSD().setScale(2, BigDecimal.ROUND_CEILING);
+			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_HALF_UP);
+			//BigDecimal calculated = bankTransferCheckoutPreCommit.getTotalCostUSD().setScale(2, BigDecimal.ROUND_HALF_UP);
 			
-			BigDecimal calculated = latestCalculatedCost.setScale(2, BigDecimal.ROUND_CEILING);
+			BigDecimal calculated = latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP);
 			
 			if (expected.compareTo(calculated) != 0) {
 				err += "Expected Total Price differs from calculated. Expected="+expected.toString()+"  calculated="+calculated.toString();
@@ -203,8 +203,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			bankTransferPostCommitDetails.setP3sTransRef(p3sTransRef);*/
 		
 			// Check that expected price matches calculated
-			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_CEILING);
-			BigDecimal calculated = bankTransferPostCommitDetails.getTotalCostUSD().setScale(2, BigDecimal.ROUND_CEILING);
+			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_HALF_UP);
+			BigDecimal calculated = bankTransferPostCommitDetails.getTotalCostUSD().setScale(2, BigDecimal.ROUND_HALF_UP);
 			if (expected.compareTo(calculated) != 0) {
 				err += "Expected Total Price differs from calculated. Expected="+expected.toString()+"  calculated="+calculated.toString();
 				logM().warn(err);
@@ -367,7 +367,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				}
 			}
 
-			basketContents.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_CEILING));
+			basketContents.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 		}
 		
 

@@ -483,7 +483,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		FxRateUI todaysRate = new FxRateUI(); 
 		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
 		BigDecimal formatted = current.getCurrent_P3S_rate();
-    	//formatted = formatted.setScale(4, BigDecimal.ROUND_CEILING);
+    	//formatted = formatted.setScale(4, BigDecimal.ROUND_HALF_UP);
 		todaysRate.setRate(formatted);
 		todaysRate.setRateActiveDate(current.getCurrentRateActiveDate());
 		history.add(todaysRate);

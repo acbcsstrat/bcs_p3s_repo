@@ -54,8 +54,8 @@ public class FeeUI {
 		this.setFxRate(fee.getFxRate());
 		this.setSubTotalUSD(fee.getSubTotal_USD());
 		
-		this.setRenewalFeeUSD((fee.getRenewalFee_EUR().multiply(fee.getFxRate())).setScale(2, BigDecimal.ROUND_CEILING));
-		this.setExtensionFeeUSD((fee.getExtensionFee_EUR().multiply(fee.getFxRate())).setScale(2, BigDecimal.ROUND_CEILING));
+		this.setRenewalFeeUSD((fee.getRenewalFee_EUR().multiply(fee.getFxRate())).setScale(2, BigDecimal.ROUND_HALF_UP));
+		this.setExtensionFeeUSD((fee.getExtensionFee_EUR().multiply(fee.getFxRate())).setScale(2, BigDecimal.ROUND_HALF_UP));
 
 		this.setProcessingFeeEUR(dollarsToEuro(processingFeeUSD));
 		this.setExpressFeeEUR(dollarsToEuro(expressFeeUSD));
@@ -94,7 +94,7 @@ public class FeeUI {
 	
 	public BigDecimal dollarsToEuro(BigDecimal dollars) {
 		if (dollars==null || fxRate==null || (fxRate.compareTo(BigDecimal.ZERO) == 0)) return null;
-		BigDecimal euros = dollars.divide(fxRate, 2, BigDecimal.ROUND_CEILING);
+		BigDecimal euros = dollars.divide(fxRate, 2, BigDecimal.ROUND_HALF_UP);
 		return euros;
 	}
 	
