@@ -125,7 +125,7 @@
                type: 'POST',
                url: domain + 'prelogin/rest-forgot-password/',
                data: dataString,
-               dataType: 'json',
+               //dataType: 'json',
                success: function(response) {
                    $('#initialForgotPass').fadeOut(500); 
                  $('#forgotPassSuccess').delay(520).fadeIn(500);   
