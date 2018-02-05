@@ -30,7 +30,7 @@ public final class BankTransferPaymentDetails {
 		account1field1 = "spare1-1";
 		account1field2 = "spare1-1";
 
-		account2Type = "APH";
+		account2Type = "ACH";
 		account2BranchCode = "ABA_Bk4_Brch146";
 		account2Number = "12345679";
 		account2field1 = "spare2-1";
