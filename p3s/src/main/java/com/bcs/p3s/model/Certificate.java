@@ -7,6 +7,8 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 
 
@@ -24,8 +26,9 @@ public class Certificate {
 
     /**
      */
-    @NotNull
-    @OneToOne
+	//MP05022018 Making the field Nullable to allow cascade delete of Certificate row when respective Renewal got deleted
+    //@NotNull 
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Renewal renewal;
 
     //AC19dec2017 - remove redundant field
