@@ -2,6 +2,8 @@ package com.bcs.p3s.service;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -283,8 +285,13 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 		try{
 	    	Patent patent = Patent.findPatent(id);
+	    	
+	    	/**
+	    	 * Added later 06/02/2018 Prevent user from deleting a patent when there is any COMPLETED Renewal being made via P3S.
+	    	 * 	So all the below code corresponding to cascade delete become redundant. Commenting lines below
+	    	 */
 	    	//cascade delete not working .So manually deleting all the foreign references to this patent
-	    	TypedQuery<Renewal> q = Renewal.findRenewalsByPatent(patent);
+	    	/*TypedQuery<Renewal> q = Renewal.findRenewalsByPatent(patent);
 	    	List<Renewal> renewals = q.getResultList();
 	    	log().debug("Cascade deleting all the foreign key references for patent");
 	    	
@@ -298,7 +305,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	    		}
 	    		renewal.getActivePaymentId().setRenewals(rens);
 	    		renewal.remove();
-	    	}
+	    	}*/
 	    	
 	    	
 	    	/**
@@ -318,13 +325,15 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	    	
 		}
 		catch(JpaSystemException e){
-			System.out.println(e.getMessage());
-			log().fatal("remove failed " + e.getMessage());
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 			
 		}
 		catch(Exception e){
-			System.out.println(e.getMessage());
-			log().fatal("remove failed " + e.getMessage());
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 			
 		}
 	}

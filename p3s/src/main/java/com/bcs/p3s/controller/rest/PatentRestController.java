@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 import javax.swing.event.PopupMenuListener;
 
@@ -33,6 +34,7 @@ import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.NotificationMapping;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
@@ -250,12 +252,20 @@ public class PatentRestController extends Universal {
 		try{
 			/**
 			 * EXTRA CAUTIOUS WHILE DELETING A PATENT WITH Payment In Progress or EPO Instructed
+			 * Added later 06/02/2018 Prevent user from deleting a patent when there is any COMPLETED Renewal being made via P3S
 			 */
 			Patent deletePatent = patentService.findById(id);
 			if(RenewalStatusEnum.IN_PROGRESS.equals(deletePatent.getRenewalStatus()) || RenewalStatusEnum.EPO_INSTRUCTED.equals(deletePatent.getRenewalStatus())){
 				log().debug("User tries to delete a patent with an ongoing payment. Aborted it");
 				 return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
 			}
+			
+			TypedQuery<Renewal> q = Renewal.findRenewalsByPatent(deletePatent);
+	    	List<Renewal> renewals = q.getResultList();
+	    	if(!(renewals.isEmpty())){
+	    		log().debug("User tries to delete a patent with a past Renewal being made via P3S. Aborted it");
+				 return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
+	    	}
 			
 		    patentService.deletePatentById(id);
 		}
