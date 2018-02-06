@@ -31,9 +31,9 @@ public final class BankTransferPaymentDetails {
 		account1field2 = "spare1-1";
 
 		account2Type = "ACH";
-		account2BranchCode = "ABA_Bk4_Brch146";
-		account2Number = "12345679";
-		account2field1 = "spare2-1";
+		account2BranchCode = "026073150";
+		account2Number = "2715100256";
+		account2field1 = "Community Federal Savings Bank, New York, NY";
 		account2field2 = "spare2-1";
 	}
 
