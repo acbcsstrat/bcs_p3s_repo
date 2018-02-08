@@ -18,7 +18,7 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
      * WAY_TOO_LATE means customer CANNOT RENEW for the current patent year
      */
     public static final String TOO_LATE					= "Too late to renew";
-    public static final String WAY_TOO_LATE					= "Way Too late to renew";
+    public static final String WAY_TOO_LATE					= "Way too late to renew";
     public static final String NO_RENEWAL_NEEDED= "No renewal needed";
 
 
