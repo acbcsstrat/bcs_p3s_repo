@@ -289,7 +289,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 <tr>
   <!-- Grand Total line -->
       <td>
-  		<div align="right">TOTAL PAYABLE (Rounded) :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>$<%=data.getTotalUsdPayable() %></b></div>
+  		<div align="right">TOTAL PAYABLE :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>$<%=data.getTotalUsdPayable() %></b></div>
       </td>
 </tr>
 
