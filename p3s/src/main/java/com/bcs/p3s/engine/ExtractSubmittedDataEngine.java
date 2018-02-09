@@ -181,7 +181,9 @@ public class ExtractSubmittedDataEngine extends Universal {
 		   	List<Notification> onNotifications = new ArrayList<Notification>();
 		   	
 		   	for (String key : keys) {
-		   		value = "FAILED";
+		   		//MP09022018 1351 Changing to NODATA if in case any of the values from EPO is null
+		   		//value = "FAILED";
+		   		value = "NO DATA";
 			   	Object ob = newPatentHashMap.get(key);
 			   	if (ob instanceof String) value = (String) ob;
 			   	
@@ -209,11 +211,11 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   	if ("primaryApplicantName".equals(key.trim())) patent.setPrimaryApplicantName(value);
 			   	if ("clientRef".equals(key.trim())) {
 			   		patent.setClientRef(value);
-			   		if (ob==null || "FAILED".equals(value)) patent.setClientRef("");
+			   		if (ob==null || "NO DATA".equals(value)) patent.setClientRef("");
 			   	}
 			   	if ("shortTitle".equals(key.trim())) {
 			   		patent.setShortTitle(value);
-			   		if (ob==null || "FAILED".equals(value)) patent.setShortTitle("");
+			   		if (ob==null || "NO DATA".equals(value)) patent.setShortTitle("");
 			   	}
 			   	if ("patentPublicationNumber".equals(key.trim())) patent.setPatentPublicationNumber(value);
 			   	
