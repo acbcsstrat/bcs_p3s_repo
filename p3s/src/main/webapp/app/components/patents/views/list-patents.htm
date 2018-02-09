@@ -112,12 +112,14 @@
 										<img data-ng-if="item.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon.png" alt="renewal in place icon">
 										<i data-ng-if="item.renewalStatus == 'Too late to renew'" class="fa fa-phone fa-2x txt-phase-red"></i>
 										<img data-ng-if="item.renewalStatus == 'Way too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png" alt="not open for renewal icon">
-										<img data-ng-if="item.renewalStatus == ('No renewal needed' || 'Show price')" src="p3sweb/assets/imgs/icons/renewal_na_icon.png" alt="renewal icon">
+										<img data-ng-if="item.renewalStatus == 'No renewal needed'" src="p3sweb/assets/imgs/icons/renewal_na_icon.png" alt="renewal icon">
+										<img data-ng-if="item.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/renewal_na_icon.png" alt="renewal icon">
 									</div>
 							    	<span class="font-weight-medium font-body d-flex justify-content-end align-items-center">
-								    	<span data-ng-if="item.renewalStatus !== 'Way too late to renew' && item.renewalStatus !== 'Too late to renew'">{{item.renewalStatus}}</span>
+								    	<span data-ng-if="item.renewalStatus !== 'Way too late to renew' && item.renewalStatus !== 'Too late to renew' && item.renewalStatus !== 'Show price'">{{item.renewalStatus}}</span>
 								    	<span data-ng-if="item.renewalStatus == 'Way too late to renew'">Renewal window not open</span>
 								    	<span data-ng-if="item.renewalStatus == 'Too late to renew'">Call to renew</span>
+								    	<span data-ng-if="item.renewalStatus == 'Show price'">Open for renewal</span>
 							    	</span>
 								</div>
 								<div class="hidden-xl-up progress-phase d-flex justify-content-start align-items-center" data-ng-if="item.renewalStatus == 'Show price'">

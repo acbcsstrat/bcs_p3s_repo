@@ -409,7 +409,7 @@
 	               }
 	            },
 	            messages: {
-	                en: 'Only numbers and - are valid charcters in this field.',
+	                en: 'Only numbers and - are valid characters in this field.',
 	            }
          	}); 			    
 

@@ -4,7 +4,7 @@ app.component('dashboard', {
 		transactions: '<'
 	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: ['$state', '$scope', '$uibModal', '$timeout', '$http', '$rootScope', 'fxService', 'patentsRestService', 'patentsService', 'currentTransactionsService', 'dashboardService', 'localStorageService', function($state, $scope, $uibModal, $timeout, $http, $rootScope, fxService, patentsRestService, patentsService, currentTransactionsService, dashboardService, localStorageService) {
+	controller: ['$state', '$scope', '$uibModal', '$timeout', '$http', '$rootScope', 'fxService', 'patentsRestService', 'patentsService', 'currentTransactionsService', 'dashboardService', 'localStorageService', '$filter', function($state, $scope, $uibModal, $timeout, $http, $rootScope, fxService, patentsRestService, patentsService, currentTransactionsService, dashboardService, localStorageService, $filter) {
 
 		var vm = this;
 		
@@ -32,6 +32,100 @@ app.component('dashboard', {
 		var messageObj = {};
 		var messageArr = [];
 
+		chartValueArrs = [];
+		console.log(patentsArr)
+		dashboardService.fetchFxrates()
+		.then(
+			function(response){
+				for(var i = 0; i < response.length; i++) {
+					chartValueArrs.push([response[i].rateActiveDate, response[i].rate]);
+				}
+			},
+			function(errResponse) {
+				// body...
+			}
+		)
+
+		$timeout(function() {
+
+				vm.chartOptions = {
+					chart: {
+		                type: 'lineChart',
+		                height: 450,
+		                margin : {
+		                    top: 20,
+		                    right: 20,
+		                    bottom: 55,
+		                    left: 55
+		                },
+		                showLegend: false,
+		                x: function(d, i){ 
+		                	return d[0]},
+		                y: function(d){ return d[1]; },
+		                useInteractiveGuideline: false,
+		                dispatch: {
+		                    stateChange: function(e){ console.log("stateChange"); },
+		                    changeState: function(e){ console.log("changeState"); },
+		                    tooltipShow: function(e){ console.log("tooltipShow"); },
+		                    tooltipHide: function(e){ console.log("tooltipHide"); }
+		                },
+		                xAxis: {
+				            tickFormat: function (d, i) {
+				                return d3.time.format('%x')(new Date(d));
+				            },
+
+				            showMaxMin: false,
+				            rotateLabels: -30,
+				            ticks: 8        
+		                },
+		                xScale: d3.time.scale(),
+		                yAxis: {
+		                    tickFormat: function(d){
+		                        return d3.format('.04f')(d);
+		                    },
+		                    axisLabelDistance: -10,
+		                    ticks: 8,
+		                    showMaxMin: false
+		                },
+		                tooltip: {
+		                    keyFormatter: function(d) {
+		                        return d3.time.format('%x')(new Date(d));
+		                    }
+		                },		                
+		                useVoronoi: false,
+				        lines: {
+				            interactive: true
+				        },
+				        showXAxis: true,
+				        showYAxis: true,
+				        // forceY: [0],	           
+		                callback: function(chart){
+
+		                }
+		            }
+				}
+
+				vm.chartData = chartDatafn();
+
+		            $scope.xAxisTickFormat = function(){
+		                return function(d){
+		//                    return d3.time.format('%X')(new Date(d));  //uncomment for time format
+		                    return d3.time.format('%x')(new Date(d));  //uncomment for date format
+		                }
+		            }                
+
+				 	function chartDatafn() {
+
+				   		return [
+				   			{
+				   				values: chartValueArrs,
+				   				color: '#2ca02c'
+				   			}
+				   		]			   			
+
+			      	} //function end
+
+      	}, 200);	
 
 	    $timeout(function() {
 	      vm.animate = true;
@@ -65,7 +159,7 @@ app.component('dashboard', {
 	        seconds = Math.floor(seconds % 60);
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
-	        if (hours < 200) {
+	        if (hours < 48) {
 	            return data;
 	        }
 
