@@ -33,7 +33,7 @@ app.component('dashboard', {
 		var messageArr = [];
 
 		chartValueArrs = [];
-
+		console.log(patentsArr)
 		dashboardService.fetchFxrates()
 		.then(
 			function(response){
