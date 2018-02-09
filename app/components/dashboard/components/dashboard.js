@@ -159,7 +159,7 @@ app.component('dashboard', {
 	        seconds = Math.floor(seconds % 60);
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
-	        if (hours < 200) {
+	        if (hours < 48) {
 	            return data;
 	        }
 
