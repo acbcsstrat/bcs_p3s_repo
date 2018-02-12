@@ -33,6 +33,7 @@
                         <div class="m-b-md">
                            <img src="assets/imgs/logos/PP_icon_lg.png" alt="patent place logo">
                         </div>
+                        
                         <h1 class="font-weight-bold font-h1">Login</h1>
                      </div>
                   </div>
@@ -52,6 +53,7 @@
                               </div>
                            </div>
                            <div class="form-group d-flex justify-content-center flex-column m-b-sm">
+                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red">The username and password do not match our records. Please try again.</p>
                               <div class="btn-default">
                                  <input type="submit" value="Login" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
                               </div>
@@ -84,6 +86,16 @@
          
          var url = window.location.href;
 
+         $('#loginMessage').hide();
+
+         function loginErrorFn () {
+            $('#loginMessage').show();
+         }
+
+         if(url.indexOf('login_error') >= 0) {
+            loginErrorFn();
+         }
+
          window.Parsley.addValidator('validateName', {
             validateString: function(value) {
                if(!value.match('^[a-zA-z0-9\s\w\'-]*$')) {
@@ -93,7 +105,6 @@
             messages: {
                 en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
             }
-
          });
 
          window.Parsley.addValidator('validateEmail', {
