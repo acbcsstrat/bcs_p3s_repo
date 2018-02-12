@@ -155,6 +155,8 @@ public class PatentRestController extends Universal {
 		try {
 			System.out.println("PatentRestController : /rest-patents/ [POST] invoked - i.e. ADD Patent");
 	
+			PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+			
 			Patent newPatent = new Patent();
 			ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
 	
@@ -171,8 +173,10 @@ public class PatentRestController extends Universal {
 				eachMapping.persist();
 			}
 		   	
-			if(!(newPatent == null))
+			if(!(newPatent == null)){
 				log().debug("PatentRestController : /rest-patents/ savePatent() completed.");
+				log().info("A patent with application number[" + patent.getPatentApplicationNumber() +"] being added by USER [user id:" + postSession.getUser().getId() +"]" );
+			}
 			//return ResponseEntity.ok().build();
 			else{
 				log().debug("PatentRestController : /rest-patents/ savePatent() failed.");
@@ -211,6 +215,7 @@ public class PatentRestController extends Universal {
 		PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
 		if (untypedPatentUI!=null) log().debug("  param untypedPatentUI is of type " + untypedPatentUI.getClass().getName());
 		
+		log().info("UPDATE patent[" + id +"] request from USER [id:" + postSession.getUser().getId() +"]");
 		try {
 			Patent existingPatent = patentService.findById(id);
 			if (existingPatent == null) {
@@ -250,6 +255,9 @@ public class PatentRestController extends Universal {
 		log().debug("PatentRestController : /rest-patents/ deletePatent() invoked ");
 	
 		try{
+			
+			PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+			log().info("DELETE patent[" + id +"] request from USER [id:" + postSession.getUser().getId() +"]");
 			/**
 			 * EXTRA CAUTIOUS WHILE DELETING A PATENT WITH Payment In Progress or EPO Instructed
 			 * Added later 06/02/2018 Prevent user from deleting a patent when there is any COMPLETED Renewal being made via P3S
