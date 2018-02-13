@@ -46,7 +46,8 @@ public class GenericProcessingEngine extends Universal {
 		
 		//business Number can be a combination of first 2 letters of business Name in UPPERCASE and random 4 digit number(eg, Box Clever Software --> BO2317)
 		ranNumber = 0;
-		String bName1 = business.getBusinessName().replace(" ", ""); 
+		//String bName1 = business.getBusinessName().replace(" ", "");
+		String bName1 = business.getBusinessName().replaceAll("[^a-zA-Z]+", "");
 		String bName2 = bName1.substring(0, 2).toUpperCase();
 		do{
 			RandomGenerator rand = new RandomGenerator((int) System.nanoTime());
@@ -70,7 +71,8 @@ public class GenericProcessingEngine extends Universal {
 		
 		//business Number can be a combination of first 2 letters of business Name in UPPERCASE and random 4 digit number(eg, Box Clever Software --> BO2317)
 		int ranNumber = 0;
-		String bName1 = business.getBusinessName().replace(" ", ""); 
+		//String bName1 = business.getBusinessName().replace(" ", ""); 
+		String bName1 = business.getBusinessName().replaceAll("[^a-zA-Z]+", "");
 		String bName2 = bName1.substring(0, 2).toUpperCase();
 		do{
 			RandomGenerator rand = new RandomGenerator((int) System.currentTimeMillis());
