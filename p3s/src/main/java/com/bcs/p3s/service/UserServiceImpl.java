@@ -100,7 +100,7 @@ public class UserServiceImpl extends Universal implements UserService {
 			log().debug("Successfully created New user and business");
 		}
 		catch(Exception e){
-			fail("Exception occured in" + msg);
+			fail("Exception occured in " + msg , e);
 		}
 	}
 
