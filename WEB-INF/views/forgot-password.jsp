@@ -38,10 +38,20 @@
                      <p class="font-body font-weight-medium">Please enter the email address you used to regisiter this user.</p>
                   </div>
                </div>
+               <div id="forgotPassFail" class="hide-before m-b-sm">
+                  <div class="content-panel">
+                     <div class="row">
+                        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+                           <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-red">Unsuccessful!</h3>
+                           <p class="font-body text-center"></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
                <form name="forgotPassForm" id="forgotPassForm" class="form" data-parsley-validate="">                                     
                   <div class="row m-b-sm">
                      <div class="col-md-12">
-                        <input name="emailAddress" class="form-control pill-radius font-body" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-trigger="change" data-parsley-required="true">
+                        <input name="emailAddress" class="form-control pill-radius font-body m-b-xs" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-trigger="change" data-parsley-required="true">
                      </div>
                   </div>
                   <input type="Submit" value="Reset Password" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
@@ -52,37 +62,12 @@
                   <div class="content-panel__body">
                      <div class="row">
                         <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-                           <h3 class="font-h3 font-weight-medium m-b-sm">Successful!</h3>
+                           <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-green">Successful!</h3>
                            <p class="font-body text-center">Please check your inbox and complete the process to reset your password.</p>
-                           <p class="font-body text-center">{{{{{TEMP :: As no email being send}}}}}<br/><a id="clickme" href="">Click here</a> to reset password</p>
                         </div>
                      </div>                        
                   </div>
                </div>               
-            </div>
-            <div id="forgotPassFail" class="hide-before">
-               <div class="content-panel">
-                  <div class="content-panel__body">
-                     <div class="row">
-                        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-                        <h3 class="font-h3 font-weight-medium m-b-sm">Unsuccessful!</h3>
-                           <p class="font-body text-center">We were unable to send an email to reset your password. Please try again later.</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div id="fail_user_disabled" class="hide-before">
-               <div class="content-panel">
-                  <div class="content-panel__body">
-                     <div class="row">
-                        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-                        <h3 class="font-h3 font-weight-medium m-b-sm">Unsuccessful!</h3>
-                           <p class="font-body text-center">We were unable to send an email to reset your password. Please complete the Registration process before Reset password.</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
             </div>
          </div>
       </div>
@@ -119,27 +104,26 @@
 
          $(document).on('submit', '#forgotPassForm', function(e){
             e.preventDefault();
-            //var dataString = JSON.stringify($('#forgotPassForm').serializeArray());
             var dataString = $('#forgotPassForm').serializeArray();
             $.ajax({
                type: 'POST',
                url: domain + 'prelogin/rest-forgot-password/',
                data: dataString,
-               dataType: 'json',
                success: function(response) {
-                   $('#initialForgotPass').fadeOut(500); 
-                 $('#forgotPassSuccess').delay(520).fadeIn(500);   
-                 $("a#clickme").attr('href', response.sampleLinkInEmail);
+                  console.log(response)
+                  $('#initialForgotPass').fadeOut(500);
+                  $('#forgotPassSuccess').delay(520).fadeIn(500);
                },
                error:function(errResponse) {
-                 if(errResponse.status == 403){
-                   $('#initialForgotPass').fadeOut(500); 
-                   $('#fail_user_disabled').delay(520).fadeIn(500); 
-                 }
-                 else{
-                   $('#initialForgotPass').fadeOut(500); 
-                   $('#forgotPassFail').delay(520).fadeIn(500); 
-                 }
+                  $('#forgotPassFail').delay(520).fadeIn(500);
+                  if(errResponse.status == 403){
+                     $('#forgotPassFail p').html('We were unable to send an email to reset your password. Please complete the Registration process before Reset password.');
+                  } else if(errResponse.status == 400) {
+                     $('#forgotPassFail p').html('We were unable to find the email address in our records. Please check and try again.');
+                  }
+                  else{
+                     $('#forgotPassFail p').html('There is currently an issue with our server and are unable to send an email to reset your password. Sorry for any inconvenience. Please try again later.');                     
+                  }
                }
             });
          });
