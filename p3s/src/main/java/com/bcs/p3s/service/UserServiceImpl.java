@@ -209,7 +209,7 @@ public class UserServiceImpl extends Universal implements UserService {
 			log().debug("Subordinate user created successfully");
 		}
 		catch(Exception e){
-			fail("Exception occured in" + msg);
+			fail("Exception occured in " + msg,e);
 		}
 		
 	}
