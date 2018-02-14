@@ -18,7 +18,7 @@ You will not be able to login until you have confirmed your email address.
 For more information about thepatent.place, see our FAQ <a href="[URL_TO_FAQ]">here</a>
 <p/>
 
-Should you want to register a support request, contact : [SUPPORT_EMAIL_ADDRESS]
+Should you want to register a support request, contact : <a href="mailto:[SUPPORT_EMAIL_ADDRESS]">[SUPPORT_EMAIL_ADDRESS]</a>
 <p/>
 
 

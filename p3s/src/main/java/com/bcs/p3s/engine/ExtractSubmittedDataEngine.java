@@ -135,8 +135,10 @@ public class ExtractSubmittedDataEngine extends Universal {
 		        if("password".equals(pair.getKey()))
 		        	user.setPassword(strValue);
 		        
-		        if("emailAddress".equals(pair.getKey()))
+		        if("emailAddress".equals(pair.getKey())) {
 		        	user.setEmailAddress(strValue);
+		        	if (strValue!=null) user.setEmailAddress(strValue.trim());
+		        }
 		        	
 		        if("isEmailNotification".equals(pair.getKey())){
 		        	if(value instanceof Boolean){

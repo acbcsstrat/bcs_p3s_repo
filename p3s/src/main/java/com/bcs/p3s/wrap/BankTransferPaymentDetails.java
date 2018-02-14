@@ -4,7 +4,7 @@ package com.bcs.p3s.wrap;
 /**
  * Were these details to come from a configuration file (or any other variable source) this would be, by far,
  * the MOST desirable hack target in the entire system. For now, make safe by making it immutable. Values are hardcoded here.
- * @author andyc  7th December 2017
+ * @author andyc  14th Feb 2018
  */
 public final class BankTransferPaymentDetails {
 
@@ -24,18 +24,20 @@ public final class BankTransferPaymentDetails {
 	
 
 	public BankTransferPaymentDetails() {
-		account1Type = "FedWire";
-		account1BranchCode = "ABA_Bk27_Brch1";
-		account1Number = "123123";
-		account1field1 = "spare1-1";
-		account1field2 = "spare1-1";
 
-		account2Type = "ACH";
-		account2BranchCode = "026073150";
-		account2Number = "2715100256";
-		account2field1 = "Community Federal Savings Bank, New York, NY";
-		account2field2 = "spare2-1";
-	}
+		account1Type = "ACH";
+		account1BranchCode = "026073150";
+		account1Number = "2715100256";
+		account1field1 = "Community Federal Savings Bank, New York, NY";
+		account1field2 = "";
+
+		//account2Type = "FedWire";
+		account2Type = "Alternative Payment";
+		account2BranchCode = "Not yet available";
+		account2Number = "Not yet available";
+		account2field1 = "Not yet available";
+		account2field2 = "";
+}
 
 	
 	public String toString() {
