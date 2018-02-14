@@ -90,17 +90,15 @@ app.component('patent', {
 				appendTo: undefined,
 				scope: $scope,
 				controller: function($uibModalInstance ,$scope) {
+
+					vm.updatePatent(id);
+
 				  	$scope.dismissModal = function () {
 				    	$uibModalInstance.close();
 				  	};
 				}
 			});
 
-		    modalInstance.result.then(function() {
-     			console.log('good');
-		    }, function() {
-	       		console.log('bad');
-		    });
 		};
 
 		vm.openDeleteConfirmModal = function(id) {
@@ -127,11 +125,6 @@ app.component('patent', {
 				}
 			});
 
-		    modalInstance.result.then(function(response) {
-		     	console.log(response);
-		    }, function(errResponse) {
-		       console.log(errResponse);
-		    });
 		};
 
 		Chart.elements.Rectangle.prototype.draw = function() {
@@ -282,7 +275,6 @@ app.component('patent', {
             	var lineLabelArr = [];	            
 
 	            vm.renewalHistory = vm.renewal;      
-	            console.log(vm.renewalHistory)   
 
 	            if((status == 'Show price') || (status == 'Payment in progress') || (status == 'EPO Instructed')) {
 	            	vm.displayCost = true;
@@ -335,123 +327,123 @@ app.component('patent', {
 	            			return item;
 	            		}
 	            	};      		
-            	}
+            	
 
-				Object.keys(caLine).forEach(day => {
-					const dayData = caLine[day];
-					lineLabelArr.push(dayData.feeActiveDate.slice(0, -5));
-					lineDataArr.push(dayData.subTotal_USD);
-				});
+					Object.keys(caLine).forEach(day => {
+						const dayData = caLine[day];
+						lineLabelArr.push(dayData.feeActiveDate.slice(0, -5));
+						lineDataArr.push(dayData.subTotal_USD);
+					});
 
-				const caBar = vm.costAnalysis;
-				const barDataArr = [];
-				const barLabelArr = [];
+					const caBar = vm.costAnalysis;
+					const barDataArr = [];
+					const barLabelArr = [];
 
-				Object.keys(caBar).forEach(data => {
-					
-					const dayData = caBar[data];
-					
-					if ((data.includes('StartDate')) && (!data.includes ('UI'))) {
+					Object.keys(caBar).forEach(data => {
+						
+						const dayData = caBar[data];
+						
+						if ((data.includes('StartDate')) && (!data.includes ('UI'))) {
 
-							var d = new Date(dayData);
-							var date = d.getDate();
-							var month = d.getMonth() + 1;
-							var year = d.getFullYear();
-							var dates = month  +'/'+ date +'/'+year;
-							barLabelArr.push(dates);
-					}
+								var d = new Date(dayData);
+								var date = d.getDate();
+								var month = d.getMonth() + 1;
+								var year = d.getFullYear();
+								var dates = month  +'/'+ date +'/'+year;
+								barLabelArr.push(dates);
+						}
 
-					if (data.includes('StageCost')) {
-						barDataArr.push(dayData);
-					}
-				});
+						if (data.includes('StageCost')) {
+							barDataArr.push(dayData);
+						}
+					});
 
-            	vm.charts = {
-            		line: {
-						data: lineDataArr,
-						labels: lineLabelArr,
-		     		  	series: ['Series A', 'Series B'],
-					  	datasetoverride: [
-					  		{ yAxisID: 'y-axis-1' }, 
-					  		{ yAxisID: 'y-axis-2' },
-				  		],
-					  	options: {
-					  		tooltips: {
-								titleFontSize: 12,
-								bodyFontSize: 14,
-								bodyFontStyle: 'bold',
-								xPadding: 15,
-								yPadding: 15,
-								enabled: true,
-								position: 'nearest',
-								custom: function(tooltip) {
-									tooltip.displayColors = false;
-								},
-								callbacks: {
-									label: function(x, y) {
-										return '$ ' + x.yLabel;
+	            	vm.charts = {
+	            		line: {
+							data: lineDataArr,
+							labels: lineLabelArr,
+			     		  	series: ['Series A', 'Series B'],
+						  	datasetoverride: [
+						  		{ yAxisID: 'y-axis-1' }, 
+						  		{ yAxisID: 'y-axis-2' },
+					  		],
+						  	options: {
+						  		tooltips: {
+									titleFontSize: 12,
+									bodyFontSize: 14,
+									bodyFontStyle: 'bold',
+									xPadding: 15,
+									yPadding: 15,
+									enabled: true,
+									position: 'nearest',
+									custom: function(tooltip) {
+										tooltip.displayColors = false;
 									},
-									title: function(tooltipItem, data) {
-							          return;
-							        }
-								}
-							},
-					    	scales: {
-					      		yAxes: [
-						        	{
-							          id: 'y-axis-1',
-							          type: 'linear',
-							          display: true,
-							          position: 'left'
-							        }
-						      	]
-						    },
-				     		elements: {
-					            line: {
-					            	borderColor: '#c6c6c6',
-					            	borderWidth: 2,
-					            	width: '10',
-					            	fill: null,
-					                tension: 0, // disables bezier curves
-					                pointStyle: 'cross'
-					            }
-					        }
-
-					  	}
-            		},
-            		bar: {
-						colours: ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'],
-					  	labels: barLabelArr.slice(0, 5).sort(function(a, b){return b-a;}),
-					  	data: barDataArr.slice(0, 5).sort(function(a, b){return b-a;}),
-						series: ['Series A', 'Series B'],
-						options: {
-							tooltips: {
-								titleFontSize: 12,
-								bodyFontSize: 14,
-								bodyFontStyle: 'bold',
-								xPadding: 15,
-								yPadding: 15,
-								enabled: true,
-								position: 'nearest',
-								custom: function(tooltip) {
-									tooltip.displayColors = false;
+									callbacks: {
+										label: function(x, y) {
+											return '$ ' + x.yLabel;
+										},
+										title: function(tooltipItem, data) {
+								          return;
+								        }
+									}
 								},
-								callbacks: {
-									label: function(x, y) {
-										return '$ ' + x.xLabel;
-									},
-									title: function(tooltipItem, data) {
-							          return;
-							        }
-								}
-							},
-			                scaleShowGridLines: false,
-				            barShowStroke : false,
-				            barDatasetSpacing : 0
-					  	}
-            		}
-            	}; //charts end
+						    	scales: {
+						      		yAxes: [
+							        	{
+								          id: 'y-axis-1',
+								          type: 'linear',
+								          display: true,
+								          position: 'left'
+								        }
+							      	]
+							    },
+					     		elements: {
+						            line: {
+						            	borderColor: '#c6c6c6',
+						            	borderWidth: 2,
+						            	width: '10',
+						            	fill: null,
+						                tension: 0, // disables bezier curves
+						                pointStyle: 'cross'
+						            }
+						        }
 
+						  	}
+	            		},
+	            		bar: {
+							colours: ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'],
+						  	labels: barLabelArr.slice(0, 5).sort(function(a, b){return b-a;}),
+						  	data: barDataArr.slice(0, 5).sort(function(a, b){return b-a;}),
+							series: ['Series A', 'Series B'],
+							options: {
+								tooltips: {
+									titleFontSize: 12,
+									bodyFontSize: 14,
+									bodyFontStyle: 'bold',
+									xPadding: 15,
+									yPadding: 15,
+									enabled: true,
+									position: 'nearest',
+									custom: function(tooltip) {
+										tooltip.displayColors = false;
+									},
+									callbacks: {
+										label: function(x, y) {
+											return '$ ' + x.xLabel;
+										},
+										title: function(tooltipItem, data) {
+								          return;
+								        }
+									}
+								},
+				                scaleShowGridLines: false,
+					            barShowStroke : false,
+					            barDatasetSpacing : 0
+						  	}
+	            		}
+	            	}; //charts end
+	            }
             	//PROGRESS BAR
 
 	            $timeout(function() {
@@ -538,18 +530,18 @@ app.component('patent', {
             			dateArr.forEach(function(item, index){
 	        				if(item == dateArr[0]) {
 	        					var todaysFx = data[index].rate;
-	        					vm.todaysPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * todaysFx);
+	        					vm.todaysPriceUSD = parseFloat(vm.costAnalysis.fee.subTotalEUR * todaysFx).toFixed(2);
 	        				}        				
 	        				//yesterday
 	        				if(item == dateArr[1]) {
 	        					var yesterdayFx = data[index].rate;
-	        					vm.yesterdaysPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * yesterdayFx);
+	        					vm.yesterdaysPriceUSD = parseFloat(vm.costAnalysis.fee.subTotalEUR * yesterdayFx).toFixed(2);
 	        				}
 	        				//weekly
 	        				if(item == dateArr[7]) { 
 	        					var lastWeekFx = data[index].rate;
-	        					vm.lastWeeksPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastWeekFx);
-	        					vm.lastWeeksPriceEUR = Math.floor(vm.costAnalysis.fee.subTotalEUR);
+	        					vm.lastWeeksPriceUSD = parseFloat(vm.costAnalysis.fee.subTotalEUR * lastWeekFx).toFixed(2);
+	        					vm.lastWeeksPriceEUR = parseFloat(vm.costAnalysis.fee.subTotalEUR).toFixed(2);
 	        				}
 	        			});
 	        		},
@@ -568,18 +560,22 @@ app.component('patent', {
 	        			data.forEach(function(item, index){
 	        				if((new Date(item.rateActiveDate).getDay() == lastMonthD) && (new Date(item.rateActiveDate).getDate() == lastMonthDt)) {
 	        					var lastMonthFx = item.rate;
-	        					vm.lastMonthsPriceUSD = Math.floor(vm.costAnalysis.fee.subTotalEUR * lastMonthFx);
-	        					vm.lastMonthsPriceEUR = Math.floor(vm.costAnalysis.fee.subTotalEUR);
+	        					vm.lastMonthsPriceUSD = parseFloat(vm.costAnalysis.fee.subTotalEUR * lastMonthFx).toFixed(2);
+	        					vm.lastMonthsPriceEUR = parseFloat(vm.costAnalysis.fee.subTotalEUR).toFixed(2);
 	        				}
 	        			});
-	        			$timeout(function(){
-	        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
-	        				if(vm.fourWeekVariation < 0) {
+
+	        			$timeout(function() {
+	        				var fwSaving = parseFloat(vm.todaysPriceUSD - vm.lastMonthsPriceUSD).toFixed(2);
+	        				if(fwSaving < 0) {
 	        					vm.variationSave = true;
+	        					vm.fourWeekVariation = fwSaving.toString().replace('-', '');
 	        				} else {
-	        					vm.variationSave = false
-	        				}
+	        					vm.variationSave = false;
+	        					vm.fourWeekVariation = fwSaving;
+	        				}		        				
 	        			}, 100);
+
 	        		},
 	        		function(error){
 
@@ -603,7 +599,21 @@ app.component('patent', {
 	             	});
 	             },
 	            function(errResponse){
-	                console.error('Error while deleting Patent');
+	            	if(errResponse.status === 304) {
+    					var modalInstance = $uibModal.open({
+							templateUrl: 'p3sweb/app/components/patents/views/modals/modal-delete-patent-error.htm',
+							appendTo: undefined,
+							scope: $scope,
+							controller: function($uibModalInstance ,$scope) {
+
+								vm.updatePatent(id);
+
+							  	$scope.dismissModal = function () {
+							    	$uibModalInstance.close();
+							  	};
+							}
+						});
+	            	}
 	            }
 	        );
 	    };
