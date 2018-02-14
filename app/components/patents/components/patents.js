@@ -110,7 +110,7 @@ app.component('patents', {
 	     			vm.patents = null;
 	     		}
 
-	     		if(item.renewalStatus !== 'Renewal in place' && item.renewalStatus !== 'Too late to renew' &&  item.renewalStatus !== 'No renewal needed') {
+	     		if(item.renewalStatus !== 'Renewal in place' && item.renewalStatus !== 'Way too late to renew' &&  item.renewalStatus !== 'No renewal needed') {
 					switch(item.costBandColour) {
 						case 'Green':
 							greenPatents.push(item);
@@ -126,7 +126,7 @@ app.component('patents', {
 						break;
 						case 'Black':
 							blackPatents.push(item);
-            break;
+           				break;
 						default: vm.patents = null;																								
 					}
      			} else {
@@ -172,7 +172,7 @@ app.component('patents', {
 					var total = end - start;
 					var progress = today - start;
 
-					return Math.round(((progress) / (total)) * 100);
+					return Math.floor(((progress) / (total)) * 100);
 
 	 			}
                
@@ -181,8 +181,8 @@ app.component('patents', {
 				patentsRestService.fetchCostAnalysis(item.id)
                 .then(
                     function(response){
-               var start;
-               var end;
+               			var start;
+               			var end;
                         switch(item.costBandColour) {
                             case 'Green':
 							start = new Date(response.greenStartDate);
