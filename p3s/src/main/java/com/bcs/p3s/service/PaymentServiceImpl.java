@@ -32,7 +32,9 @@ import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.email.EmailSender;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
@@ -230,11 +232,18 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			 * 	i. Create proforma invoice
 			 *  j. Send booking email & proforma invoice to customer by email 
 			 */ 
-			log().warn("**** Booking made - but p3s cannot yet create an Proform Invoice (or any PDF) to email");
+			//log().warn("**** Booking made - but p3s cannot yet create an Proform Invoice (or any PDF) to email");
 			
 
 			sendProformaInvoiceEmail(bankTransferPostCommitDetails, patentIdsInThisTransaction);
-				
+
+			// For the htmlDoc solution (see com.bcs.p3s.docs.htmldoc package-info) invoiceUrl (below), here, is not used. The equivalents are set in RenewalUI  & PaymentUI
+			// However, the front-end booking confirmation 'Show Invoice' button DOES need it 
+			bankTransferPostCommitDetails.setProformaInvoiceUrl(null);
+			
+			
+			// Provide data for the front-end 'Show Invoice' button
+			bankTransferPostCommitDetails.setProformaInvoiceUrl(deriveInvoiceUrl(currentPayment));
 			
 			
 			//create and send the orders file to MC
@@ -451,9 +460,6 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 
 		BankTransferPaymentDetails bankTransferPaymentDetails = new BankTransferPaymentDetails();
 		bankTransferPostCommitDetails.setBankTransferPaymentDetails(bankTransferPaymentDetails);
-		
-		// For the htmlDoc solution (see com.bcs.p3s.docs.htmldoc package-info) invoiceUrl (below), here, is redundant. The equivalents are set in RenewalUI  & PaymentUI
-		bankTransferPostCommitDetails.setProformaInvoiceUrl(null);
 		
 		//DummyDataEngine dummy = new DummyDataEngine(); // acTidy
 		//String warningMessage = dummy.gimmeEmptyPostPayWarningMessage();
@@ -706,7 +712,24 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	}
 	
 
-
+	protected String deriveInvoiceUrl(Payment currentPayment) {
+		if (currentPayment==null) return null;
+		String url = null;
+		
+		// Read web context
+		String context = null;
+		try {
+			P3SPropertyReader reader = new P3SPropertyReader();
+			context = reader.getGenericProperty(P3SPropertyNames.P3S_WEB_CONTEXT); 
+		} catch (P3SPropertyException e) {
+			System.out.println("RenewalUI constructor : property read failed");
+			e.printStackTrace();
+		}
+		if (context!=null) {
+			url = context + "/invoice/" + currentPayment.getId(); 
+		}
+		return url;
+	}
 
 	// End of - Support methods - NOT exposed through the interface
 
