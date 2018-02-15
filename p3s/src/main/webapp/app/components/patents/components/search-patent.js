@@ -58,8 +58,27 @@ app.component('searchpatent', {
 
 		vm.returnedAppNo = '';
 
-	  	vm.cancelSearch = function() {
-			$state.go('search-patent', {}, {reload: true});
+	  	vm.openCancelSearchModal = function() {
+
+			var modalInstance = $uibModal.open({
+				templateUrl: 'p3sweb/app/components/patents/views/modals/modal-cancel-search.htm',
+				scope: $scope,
+				appendTo: undefined,
+				controller: function($uibModalInstance ,$scope) {
+
+					$scope.cancelAdd = function() {
+						$state.go('search-patent', {}, {reload: true});
+					}
+
+					$scope.cancel = function() {
+						$uibModalInstance.close()
+					}
+
+					
+				  	
+				}
+			})	  		
+			
 	  	}
 
 		vm.openConfirmModal = function(patent) {
@@ -156,7 +175,6 @@ app.component('searchpatent', {
 			searchPatentService.findPatent(patentNo)
 			.then(
 				function(response) {
-					console.log(response)
 					if(response.status == 204 || response.data == '') {
 						vm.queriedPatent = null;
 						vm.searchError = 'It looks like we’ve already added Patent Application '+patentNo+' in to the system.  You should be able to find it in the List Patents page using the search boxes.';
@@ -167,7 +185,6 @@ app.component('searchpatent', {
 					}
 				},
 				function(errResponse) {
-					console.log(errResponse)
 					vm.queriedPatent = null;
 					switch(errResponse.status) {
 						case 400:
@@ -189,9 +206,8 @@ app.component('searchpatent', {
 	return {
 		require: 'ngModel',
 		link: function(scope, elem, attr, ctrl) {
-			var regExp = /^[a-zA-Z0-9.\s]*$/
+			var regExp = /^[a-zA-Z0-9.\s]*$/;
 			elem.bind('blur', function(){
-				console.log('blur')
 				function checkValidation(value) {
 					if(regExp.test(value) ) {
 						ctrl.$setValidity('validPatent', true) 

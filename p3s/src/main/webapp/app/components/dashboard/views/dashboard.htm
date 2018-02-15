@@ -37,7 +37,7 @@
 							</uib-tab>
 						    <uib-tab heading="Black" index="4" data-ng-hide="true">
 						    	<p class="font-weight-medium font-h4 m-b-md"><span class="font-weight-bold">Timeframe:</span> The period between 10 and 6 working days before the expiry of the extension period</p>						    	
-								<p class="font-body">Black from 4 hours before end of UK day on Renewal Due day to 10 days before the expiry of the extension at 6 months.  During this period the renewal takes place without additional fees from PP but is subject to a 50% surcharge from the EPO. Buy ahead options also available for this period.</p>
+								<p class="font-body">The Black Phase starts on the 10th day before the expiry of the extension period, and runs until the end of the 6th day before the end of the extension period.</p>
 							</uib-tab>
 						    <uib-tab heading="Grey" index="5" data-ng-hide="true">
 						    	<p class="font-weight-medium font-h4 m-b-md"><span class="font-weight-bold">Timeframe:</span> During this period patents are not generally available for renewal</p>
@@ -192,8 +192,8 @@
 							<div class="col-md-8 col-lg-8 text-left">
 								<p class="font-h4 font-weight-bold">Four week variation:</p> 
 							</div>
-							<div class="col-md-4 col-lg-4 text-right">
-								<p class="font-h4 font-weight-bold" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="$ctrl.variationSave">-</span><span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
+							<div class="col-md-4 col-lg-4 text-center">
+								<p class="font-h4 font-weight-bold text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'"><i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.variationSave"></i><i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.variationSave"></i> $ {{$ctrl.fourWeekVariation}}</p>
 							</div>
 						</div>
 						<div class="row m-b-xs">
@@ -600,7 +600,7 @@
 								<p class="font-h4 font-weight-bold">Four week variation:</p> <!--lg-->
 							</div>
 							<div class="col-xl-4 text-right">
-								<p class="font-h4 font-weight-bold" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'"><span data-ng-if="$ctrl.variationSave">-</span><span data-ng-if="!$ctrl.variationSave">+</span> $ {{$ctrl.fourWeekVariation}}</p>
+								<p class="font-h4 font-weight-bold" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'"><i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.variationSave"></i><i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.variationSave"></i> $ {{$ctrl.fourWeekVariation}}</p>
 							</div>
 						</div>
 						<div class="row">
@@ -616,8 +616,9 @@
 										</div>
 										<img data-ng-if="$ctrl.selectedPatent.renewalStatus == 'No renewal needed' || $ctrl.selectedPatent.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/complete_icon.png" alt="renewal icon">									
 									</div>
-									<p data-ng-if="$ctrl.selectedPatent.renewalStatus !== 'Too late to renew'" class="font-body font-weight-bold">{{$ctrl.selectedPatent.renewalStatus}}</p>
+									<p data-ng-if="$ctrl.selectedPatent.renewalStatus !== 'Too late to renew' && $ctrl.selectedPatent.renewalStatus !== 'Show price'" class="font-body font-weight-bold">{{$ctrl.selectedPatent.renewalStatus}}</p>
 									<p data-ng-if="$ctrl.selectedPatent.renewalStatus == 'Too late to renew'" class="font-h4 font-weight-medium">Call to Renew</p>
+									<p data-ng-if="$ctrl.selectedPatent.renewalStatus == 'Show price'" class="font-body font-weight-bold">Open for renewal</p>
 								</div>
 								<p class="font-h4 font-weight-medium" data-ng-if="$ctrl.selectedPatent.renewalStatus == 'Too late to renew'">(+44)1789-000-000</p>
 								<div data-ng-if="$ctrl.selectedPatent.renewalStatus == 'Show price'" class=" btn-default">
@@ -691,11 +692,11 @@
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Current Stage</td>
-													<td>{{item.costBandColour}}</td>
+													<td data-ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')">{{item.costBandColour}}</td>
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Next Stage</td>
-													<td>{{item.nextCostBandColor}}</td>
+													<td data-ng-class="(item.nextCostBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextCostBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.nextCostBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextCostBandColour == 'Black' ? 'txt-phase-white': '')">{{item.nextCostBandColor}}</td>
 												</tr>					
 											</table>
 										</div>								
@@ -719,7 +720,7 @@
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Transaction Date</td>
-													<td>{{trans.transStartDate | date:'dd-mm-yy'}}</td>
+													<td>{{trans.transStartDate | date:'MM-dd-yy'}}</td>
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Patents</td>
@@ -823,12 +824,12 @@
 													</tr>
 													<tr>
 														<td class="font-weight-bold">Current Stage</td>
-														<td>{{item.costBandColour}}</td>
+														<td data-ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')">{{item.costBandColour}}</td>
 													</tr>
 													<tr>
 														<td class="font-weight-bold">Next Stage</td>
-														<td>{{item.nextCostBandColor}}</td>
-													</tr>														
+														<td data-ng-class="(item.nextCostBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextCostBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.nextCostBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextCostBandColour == 'Black' ? 'txt-phase-white': '')">{{item.nextCostBandColor}}</td>
+													</tr>									
 												</tbody>
 											</table>
 										</div>								
@@ -851,7 +852,7 @@
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Transaction Date</td>
-													<td>{{trans.transStartDate | date:'dd-mm-yy'}}</td>
+													<td>{{trans.transStartDate | date:'MM-dd-yy'}}</td>
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Patents</td>

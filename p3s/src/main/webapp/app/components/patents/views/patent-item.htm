@@ -211,7 +211,7 @@
 																</div>
 															</div>								    
 														</uib-tab>
-													    <uib-tab index="4" heading="Black" data-ng-attr-id="$ctrl.patentNotifications.black" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)" data-ng-hide="true">
+													    <uib-tab index="4" heading="Black" data-ng-attr-id="$ctrl.patentNotifications.black" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.black)" data-ng-hide="true">
 															<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">	
 																<div class="col-xl-3 font-body text-center" data-ng-repeat="item in checkbox">
 																	{{item.title}}
@@ -284,7 +284,7 @@
 												<p class="font-body font-weight-bold">4 week variation:</p>	
 											</div>
 											<div class="col-xl-6">
-												<p class="font-body text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
+												<p class="font-h4 font-weight-bold text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'"><i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.variationSave"></i><i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.variationSave"></i> $ {{$ctrl.fourWeekVariation}}</p>
 											</div>
 										</div>																																						
 									</div>
@@ -436,7 +436,7 @@
 													<p class="font-body font-weight-bold">4 week variation:</p>	
 												</div>
 												<div class="col-cxl-6">
-													<p class="font-body text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
+													<p class="font-h4 font-weight-bold text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'"><i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.variationSave"></i><i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.variationSave"></i> $ {{$ctrl.fourWeekVariation}}</p>
 												</div>												
 											</div>
 										</div>	
@@ -696,20 +696,6 @@
 											</tr>
 										</tbody>
 									</table>
-									<div class="row m-t-md">
-										<div class="col-xl-12 d-flex justify-content-between align-items-end">
-											<div>
-												<p class="font-h3 font-weight-bold m-b-xs">Save:</p>
-												<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ 0.00</p>
-												<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
-											</div>
-											<div>
-									        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
-											 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
-											 	</div>
-											</div>
-										</div>				
-									</div> <!-- row end-->
 								</div>
 							</div>
 						</div>
@@ -1008,8 +994,8 @@
 																{{item.title}}
 																<div class="onoffswitch">
 																	<label class="switch font-body">
-																	  <input type="checkbox" data-ng-model="item.isOn">
-																	  <span class="slider round bg-phase-amber"></span>
+																	  	<input type="checkbox" data-ng-model="item.isOn">
+																	  	<span class="slider round bg-phase-amber"></span>
 																	</label>
 																</div>
 															</div>
@@ -1110,9 +1096,9 @@
 														<p class="font-body font-weight-bold">4 week variation:</p>	
 													</div>
 													<div class="col-md-6 col-lg-6">
-														<p class="font-body text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'">$ <span data-ng-if="!$ctrl.variationSave">+</span> {{$ctrl.fourWeekVariation}}</p>
+														<p class="font-h4 font-weight-bold text-center" data-ng-class="$ctrl.variationSave ? 'txt-phase-green': 'txt-phase-red'"><i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.variationSave"></i><i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.variationSave"></i> $ {{$ctrl.fourWeekVariation}}</p>
 													</div>												
-												</div>																																						
+												</div>
 											</div>
 										</div> <!-- row end -->
 										<div class="row">
