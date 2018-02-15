@@ -702,31 +702,20 @@ app.component('dashboard', {
 				})
  			}, 300)
 
-			// function systemMessageModal(response) {
-			// 	var modalInstance = $uibModal.open({
-			// 		templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
-			// 		scope: $scope,
-			// 		controllerAs: vm,
-			// 		controller: function($uibModalInstance, message) {
+ 			
+			function welcomeMessageModal() {
+				var modalInstance = $uibModal.open({
+					templateUrl: 'p3sweb/app/components/dashboard/views/modals/welcome-message-modal.htm',
+					scope: $scope,
+					controllerAs: vm,
+					controller: function($uibModalInstance) {
 
-			// 			vm.systemMessage = message;
-
-			// 	 	  	vm.systemOk = function () {
-			// 		    	$uibModalInstance.close();
-			// 		  	};
-
-			// 		  	vm.systemDismissModal = function() {
-			// 		  		$uibModalInstance.dismiss();
-			// 		  	};							  	
-
-			// 		},
-			// 		resolve: {
-			// 			message: function() {
-			// 				return systemResponse;
-			// 			}
-			// 		}
-			// 	});
-		 // 	} //function systemMessageModal
+				 	  	vm.dismissWelcomeModal = function () {
+					    	$uibModalInstance.close();
+					  	};
+					}
+				});
+		 	} //function systemMessageModal
 
 			function urgentPatentModal(response) {
 				var modalInstance = $uibModal.open({
@@ -756,6 +745,10 @@ app.component('dashboard', {
 
 
 		    if(counter === null) {
+
+			 	if(!patents) {
+			 		welcomeMessageModal();
+				}				        	
 
 		    	localStorageService.set('counter', 1);
 
