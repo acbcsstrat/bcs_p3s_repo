@@ -30,8 +30,8 @@ app.component('dashboard', {
 		vm.blackRenewals = [];
 		vm.greyRenewals = [];
 
-		var messageObj = {};
-		var messageArr = [];
+		// var messageObj = {};
+		// var messageArr = [];
 
 		chartValueArrs = [];
 
@@ -261,18 +261,18 @@ app.component('dashboard', {
 
 	        seconds = Math.floor(seconds % 60);
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
-	        console.log(hours)
+
 	        if (hours < 48) {
 	            return data;
 	        }
 
 	    }
 
-		messageObj.messageArr = messageArr;
+		// messageObj.messageArr = messageArr;
 
-		vm.supresssMessages = function() {
-			dashboardService.supressMessages(messageObj);
-		};
+		// vm.supresssMessages = function() {
+		// 	dashboardService.supressMessages(messageObj);
+		// };
 
 		function patentFx(i) {
 			vm.selectedPatent = vm.phaseArr[i];
@@ -586,12 +586,13 @@ app.component('dashboard', {
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
 	        if (hours < 48) {
+	        	console.log(item)
 	            vm.recentStageArr.push(item);
 	        }
 
 	    }
 
-	    console.log(vm.recentTransArr)
+	    // console.log(vm.recentTransArr)
 
 		function patentCostAnalysisFn(id) {
 
@@ -669,7 +670,7 @@ app.component('dashboard', {
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
-                    				item.nextCostBandColor = 'Black';
+                    				item.nextCostBandColor = '[Renewal Lapsed]';
                     			}
                     		})
 
@@ -701,31 +702,31 @@ app.component('dashboard', {
 				})
  			}, 300)
 
-			function systemMessageModal(response) {
-				var modalInstance = $uibModal.open({
-					templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
-					scope: $scope,
-					controllerAs: vm,
-					controller: function($uibModalInstance, message) {
+			// function systemMessageModal(response) {
+			// 	var modalInstance = $uibModal.open({
+			// 		templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
+			// 		scope: $scope,
+			// 		controllerAs: vm,
+			// 		controller: function($uibModalInstance, message) {
 
-						vm.systemMessage = message;
+			// 			vm.systemMessage = message;
 
-				 	  	vm.systemOk = function () {
-					    	$uibModalInstance.close();
-					  	};
+			// 	 	  	vm.systemOk = function () {
+			// 		    	$uibModalInstance.close();
+			// 		  	};
 
-					  	vm.systemDismissModal = function() {
-					  		$uibModalInstance.dismiss();
-					  	};							  	
+			// 		  	vm.systemDismissModal = function() {
+			// 		  		$uibModalInstance.dismiss();
+			// 		  	};							  	
 
-					},
-					resolve: {
-						message: function() {
-							return systemResponse;
-						}
-					}
-				});
-		 	} //function systemMessageModal
+			// 		},
+			// 		resolve: {
+			// 			message: function() {
+			// 				return systemResponse;
+			// 			}
+			// 		}
+			// 	});
+		 // 	} //function systemMessageModal
 
 			function urgentPatentModal(response) {
 				var modalInstance = $uibModal.open({
@@ -777,19 +778,19 @@ app.component('dashboard', {
 		    			}
 
 
-			    		if(response.systemMessages.length > 0) {
-			    			response.systemMessages.forEach(function(data){
-			    				var dateFrom = data.displayFromDate, dateTo = data.displayToDate;
-			    				if(date > dateFrom && date < dateTo) { 
-			    					systemResponse.push(data);
-			    				}
-			    			});
+			    // 		if(response.systemMessages.length > 0) {
+			    // 			response.systemMessages.forEach(function(data){
+			    // 				var dateFrom = data.displayFromDate, dateTo = data.displayToDate;
+			    // 				if(date > dateFrom && date < dateTo) { 
+			    // 					systemResponse.push(data);
+			    // 				}
+			    // 			});
 
-							$timeout(function() {
-								systemMessageModal(response);
-							}, 500);
+							// $timeout(function() {
+							// 	systemMessageModal(response);
+							// }, 500);
 
-			    		}		    			
+			    // 		}		    			
 
 			    	},
 			    	function(errResponse){
