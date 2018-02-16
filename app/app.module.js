@@ -19,8 +19,8 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 
     function timeZoneClocks() {
 
-        var utc = moment.tz("Etc/UTC").format('HH:mm MM/D/YY');
-        var est = moment.tz("America/New_York").format('HH:mm MM/D/YY');
+        var utc = moment.tz("Etc/UTC").format('HH:mm MM/D/YYYY');
+        var est = moment.tz("America/New_York").format('HH:mm MM/D/YYYY');
     
         var t = $timeout(function() {
             $rootScope.utcTime = utc;
