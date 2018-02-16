@@ -12,12 +12,9 @@ Thank you for creating transaction [TRANSACTION_REFERENCE] for renewing patent[P
 </table>
 <p/>
 
-As you know, your payment of $[PRICE] must reach our US bank account by 
+As you know, your payment of $[PRICE] must reach our Moneycorp U.S. bank account by 
 <br/>
 [TIMESTAMP_TARGET_FUNDS_ARRIVAL]
-
-<p/>
-Our ProForma Invoice for this is attached.
 
 <p/>
 For your convenience, the payment details are:
