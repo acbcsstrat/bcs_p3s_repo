@@ -89,7 +89,7 @@
 										</div>
 									</div>
 								</div>										  			
-								<div class="form-section m-b-md"> <!--business details-->
+								<div class="form-section m-b-md" id="businessDetails"> <!--business details-->
 									<div class="form-group row">
 										<div class="col-md-12 col-lg-12 col-xl-12">
 											<input type="text" name="businessName" class="form-control pill-radius font-body" id="businessName" placeholder="Business Name" data-parsley-validate-company-name="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
@@ -123,11 +123,6 @@
 											<div class="col-md-6 col-lg-6 col-xl-6">
 												<select class="form-control pill-radius font-body form-control" name="timezone" id="timezone" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 													<option value="" selected disabled hidden class="txt-grey">Time Zone</option>
-													<option value="et" class="form-control">ET</option>
-													<option value="ct" class="form-control">CT</option>
-													<option value="mt" class="form-control">MT</option>
-													<option value="pt" class="form-control">PT</option>
-													<option value="akt" class="form-control">AKT</option>
 												</select>
 											</div>
 										</div>
@@ -211,7 +206,7 @@
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
 									<h3 class="font-h4 txt-phase-red  m-b-sm">Unsuccessful!</h3>
-	   								<p class="font-body text-center">You have successfully reigstered your details. Please check your inbox to validate your account</p>
+	   								<p class="font-body text-center">We were unable to register your details. It is possible that email address has already been registered. Please check and try again, or contact our support team.</p>
 	   							</div>
 	   						</div>
 	   					</div>
@@ -356,12 +351,12 @@
 
 			window.Parsley.addValidator('validateAddress', {
 				validateString: function(value) {
-					if(!value.match('^[a-zA-z0-9\'\+\.\(\), -]*$')) {
+					if(!value.match('^[a-zA-z0-9\.\(\), -]*$')) {
 						return false;
 					}
 				},
 			 	messages: {
-				    en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
+				    en: 'Only letters, numbers, commas, ., -, () and spaces are valid charcters in this field.',
 			  	}
 			});
 		
@@ -522,6 +517,8 @@
       			}
       		});
 
+      		var registerForm = $('#registerForm');
+
       		$('#terms-register').change(function(){
       			if(this.checked) {
       				$('#register').removeAttr('disabled');
@@ -567,6 +564,7 @@
 					data: dataString,
 				    contentType: "application/json",
 					success: function(response) {
+						console.log(response)
 						$('#initialRegistration').fadeOut(500);	
 
 						$('#register-intro').fadeOut(500);
@@ -574,8 +572,9 @@
 						$('#register-success').delay(520).fadeIn(500);		      				
 					},
 					error:function(errResponse) {
+						console.log(errResponse)
 						$('#initialRegistration').fadeOut(500);	
-					$('#register-failure').delay(520).fadeIn(500);							
+						$('#register-failure').delay(520).fadeIn(500);							
 					}
 				});
 			});
@@ -589,16 +588,40 @@
 					data: dataString,
 				    contentType: "application/json",
 					success: function(response) {
+						$('#initialRegistration').fadeOut(500);	
+
+						$('#register-intro').fadeOut(500);
+
+						$('#register-success').delay(520).fadeIn(500);		 						
 
 					},
 					error:function(errResponse) {
-				
+						$('#initialRegistration').fadeOut(500);	
+						$('#register-failure').delay(520).fadeIn(500);						
 					}
 				});
 			});
 
+			var timezoneSelect = $('#timezone');
+
+			$.ajax({
+				type: 'GET',
+				url: '/p3sweb/public/ustimezones.json',
+				dataType: 'json',
+				async: false,
+				success: function(response) {
+					response.ustimezones.forEach(function(data){
+						timezoneSelect.append('<option value="'+data.abbr +'">'+data.abbr +'</option>')
+					})
+				},
+				error: function() {
+					console.log('noo')
+				}
+			})
+
   			$('#companyCodeForm').submit(function(e){
   				e.preventDefault();
+
 				var dataString = $('#companyCodeForm').serializeArray();
 				$.ajax({
 					type: 'POST',
@@ -613,11 +636,12 @@
 							$('#companyCodeSubmit').attr('disabled', true);
 							$('#companyCodeSubmit').parent().closest('div.form-group').hide();
 						}
+						console.log(response)
 						$('#businessConfirm').show();
 						$('#businessNameConfirm').html(response.businessName);
 						$('#businessAddressStreetConfirm').html(response.street);
 						$('#businessAddressCityConfirm').html(response.city);
-						$('#businessAddressStateConfirm').html(response.USstate);
+						$('#businessAddressStateConfirm').html(response.usstate);
 						$('#businessAddressZipConfirm').html(response.zip); 							
 						$('input[id=businessName]').val(response.businessName);
 						$('input[id=phoneNumber]').val(response.phoneNumber);
@@ -625,28 +649,36 @@
 						$('#subBusiness input[id=city]').val(response.city);
 						$('#subBusiness input[id=USstate]').val(response.usstate);
 						$('#subBusiness input[id=zip]').val(response.zip);
-						$('#subBusiness input[id=timezone]').val(response.timezone);
+						$('#subBusiness select[id=timezone]').val(response.timezone);
 						$('#subBilling input[id=billing_street]').val(response.billingStreet);
 						$('#subBilling input[id=billing_city]').val(response.billingCity);
 						$('#subBilling input[id=billing_state]').val(response.billingState);
 						$('#subBilling input[id=billing_zip]').val(response.billingZip);
-
+						
+						// $('#subBusiness select[id=timezone]').val(data[1]
 					},
 					error: function(errResponse) {
-						if(errResponse.status == 404) {
-							$('#businessValidation').html('<p class="font-body txt-phase-red">We were unable to find your business within our database. Please check the details and try again.</p>');
+						if(errResponse.status == 400) {
+							$('#businessValidation').html('<p class="font-body txt-phase-red">The business PIN and number do not match our records. Please try again.</p>');
 						}
 					}
 				});
 			});
 
-			$('#businessConfirmSubmit, #businessCancel').click(function(e){
+			$('#businessConfirmSubmit').click(function(e){
 				e.preventDefault();
-				$('#businessConfirm').hide();
-				$('#initialRegistration').show();
-  				$('#subRegistration').hide();
-  				$('#companyCode').hide();
-  				$('#divQn').hide();
+               	$('#businessConfirm, #subRegistration, #companyCode, #divQn').hide();
+             	$('#initialRegistration').show();
+               	$('#businessDetails input').each(function(i){
+               		$(this).prop('readonly', true);
+               	})
+               	$('#businessDetails select').prop('disabled', true);          	
+
+			})
+
+			$('#businessCancel').click(function(e){
+				e.preventDefault();
+				window.location.replace(domain+'login');
 			});
       	});
 

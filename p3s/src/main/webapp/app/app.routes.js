@@ -48,7 +48,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
             patents: ['patentsRestService', function(patentsRestService) {
                 return patentsRestService.fetchAllPatents();
             }],
-            transactions: ['transactionHistoryService', function(transactionHistoryService) {
+            currTrans: ['currentTransactionsService', function(currentTransactionsService) {
+                return currentTransactionsService.fetchCurrentTransactions();
+            }],       
+            transHistory: ['transactionHistoryService', function(transactionHistoryService) {
                 return transactionHistoryService.fetchTransactionHistory();
             }]
         }

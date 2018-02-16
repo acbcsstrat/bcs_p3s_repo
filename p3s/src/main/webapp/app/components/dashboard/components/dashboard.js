@@ -1,10 +1,11 @@
 app.component('dashboard', {
 	bindings: { 
 		patents: '<',
-		transactions: '<'
+		transHistory: '<',
+		currTrans: '<'
 	},
 	templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
-	controller: ['$state', '$scope', '$uibModal', '$timeout', '$http', '$rootScope', 'fxService', 'patentsRestService', 'patentsService', 'currentTransactionsService', 'dashboardService', 'localStorageService', '$filter', function($state, $scope, $uibModal, $timeout, $http, $rootScope, fxService, patentsRestService, patentsService, currentTransactionsService, dashboardService, localStorageService, $filter) {
+	controller: ['$state', '$scope', '$uibModal', '$timeout', '$http', '$rootScope', 'fxService', 'patentsRestService', 'patentsService', 'currentTransactionsService', 'dashboardService', 'localStorageService', '$filter', '$location', '$anchorScroll',function($state, $scope, $uibModal, $timeout, $http, $rootScope, fxService, patentsRestService, patentsService, currentTransactionsService, dashboardService, localStorageService, $filter, $location,  $anchorScroll) {
 
 		var vm = this;
 		
@@ -29,11 +30,11 @@ app.component('dashboard', {
 		vm.blackRenewals = [];
 		vm.greyRenewals = [];
 
-		var messageObj = {};
-		var messageArr = [];
+		// var messageObj = {};
+		// var messageArr = [];
 
 		chartValueArrs = [];
-		console.log(patentsArr)
+
 		dashboardService.fetchFxrates()
 		.then(
 			function(response){
@@ -76,7 +77,7 @@ app.component('dashboard', {
 
 				            showMaxMin: false,
 				            rotateLabels: -30,
-				            ticks: 8        
+				            ticks: 24        
 		                },
 		                xScale: d3.time.scale(),
 		                yAxis: {
@@ -84,7 +85,7 @@ app.component('dashboard', {
 		                        return d3.format('.04f')(d);
 		                    },
 		                    axisLabelDistance: -10,
-		                    ticks: 8,
+		                    ticks: 10,
 		                    showMaxMin: false
 		                },
 		                tooltip: {
@@ -143,27 +144,6 @@ app.component('dashboard', {
 			}
 		);
 
-		function millsToHours(data, millisec) {
-
-	        var seconds = (millisec / 1000).toFixed(0);
-	        var minutes = Math.floor(seconds / 60);
-	        var hours = "";
-
-	        if (minutes > 59) {
-	            hours = Math.floor(minutes / 60);
-	            hours = (hours >= 10) ? hours : "0" + hours;
-	            minutes = minutes - (hours * 60);
-	            minutes = (minutes >= 10) ? minutes : "0" + minutes;
-	        }
-
-	        seconds = Math.floor(seconds % 60);
-	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
-
-	        if (hours < 48) {
-	            return data;
-	        }
-
-	    }
 
 		function calcProgress(start, end) {
 
@@ -188,7 +168,18 @@ app.component('dashboard', {
 						const transId = data.id;
 						data.renewalUIs.forEach(function(data, i) {
 							if(data.patentUI.id == id) {
-								$state.go('current-transactions.current-transaction-item',{transId: transId});
+								$state.go('current-transactions.current-transaction-item',{transId: transId})
+								.then(
+									function(response){
+										$timeout(function() {
+											$location.hash('currTransAnchor');
+										  	$anchorScroll();
+										}, 300);
+									},
+									function(errResponse){
+										console.log(errResponse);
+									}
+								);								
 							}
 						});
 					});
@@ -254,11 +245,34 @@ app.component('dashboard', {
 
 		};
 
-		messageObj.messageArr = messageArr;
 
-		vm.supresssMessages = function() {
-			dashboardService.supressMessages(messageObj);
-		};
+		function millsToHours(data, millisec) {
+
+	        var seconds = (millisec / 1000).toFixed(0);
+	        var minutes = Math.floor(seconds / 60);
+	        var hours = "";
+
+	        if (minutes > 59) {
+	            hours = Math.floor(minutes / 60);
+	            hours = (hours >= 10) ? hours : "0" + hours;
+	            minutes = minutes - (hours * 60);
+	            minutes = (minutes >= 10) ? minutes : "0" + minutes;
+	        }
+
+	        seconds = Math.floor(seconds % 60);
+	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
+
+	        if (hours < 48) {
+	            return data;
+	        }
+
+	    }
+
+		// messageObj.messageArr = messageArr;
+
+		// vm.supresssMessages = function() {
+		// 	dashboardService.supressMessages(messageObj);
+		// };
 
 		function patentFx(i) {
 			vm.selectedPatent = vm.phaseArr[i];
@@ -283,22 +297,22 @@ app.component('dashboard', {
 		        			dateArr.forEach(function(item, index){
 		        				if(item == dateArr[0]) {
 		        					var todaysFx = data[index].rate;
-		        					vm.todaysPriceUSD = Math.floor(fees.subTotalEUR * todaysFx);
-		        					vm.todaysPriceEUR = Math.floor(fees.subTotalEUR);
+		        					vm.todaysPriceUSD = parseFloat(fees.subTotalEUR * todaysFx).toFixed(2);
+		        					vm.todaysPriceEUR = parseFloat(fees.subTotalEUR).toFixed(2);
 		        				}
 		        				// console.log(vm.todaysPriceUSD, dateArr, data)
 		        				//yesterday
 		        				// if(item == dateArr[1]) {
 		        				 if(item == dateArr[1]) {	
 		        					var yesterdayFx = data[index].rate;
-		        					vm.yesterdaysPriceUSD = Math.floor(fees.subTotalEUR * yesterdayFx);
-		        					vm.yesterdaysPriceEUR = Math.floor(fees.subTotalEUR);
+		        					vm.yesterdaysPriceUSD = parseFloat(fees.subTotalEUR * yesterdayFx).toFixed(2);
+		        					vm.yesterdaysPriceEUR = parseFloat(fees.subTotalEUR).toFixed(2);
 		        				}
 		        				//weekly
 		        				if(item == dateArr[7]) { 
 		        					var lastWeekFx = data[index].rate;
-		        					vm.lastWeeksPriceUSD = Math.floor(fees.subTotalEUR * lastWeekFx);
-		        					vm.lastWeeksPriceEUR = Math.floor(fees.subTotalEUR);
+		        					vm.lastWeeksPriceUSD = parseFloat(fees.subTotalEUR * lastWeekFx).toFixed(2);
+		        					vm.lastWeeksPriceEUR = parseFloat(fees.subTotalEUR).toFixed(2);
 		        				}
 		        			});
 		        		},
@@ -310,7 +324,6 @@ app.component('dashboard', {
 		    		fxService.fetchFxMonth()
 		        	.then(
 		        		function(data){
-
 		        			var tD = new Date();
 		        			var lmD = tD.setMonth(tD.getMonth() - 1);
 		        			var lastMonthD = new Date(lmD).getDay();
@@ -318,20 +331,22 @@ app.component('dashboard', {
 		        			data.forEach(function(item, index){
 		        				if((new Date(item.rateActiveDate).getDay() == lastMonthD) && (new Date(item.rateActiveDate).getDate() == lastMonthDt)) {
 		        					var lastMonthFx = item.rate;
-		        					vm.lastMonthsPriceUSD = Math.floor(fees.subTotalEUR * lastMonthFx);
-		        					vm.lastMonthsPriceEUR = Math.floor(fees.subTotalEUR);
+		        					vm.lastMonthsPriceUSD = parseFloat(fees.subTotalEUR * lastMonthFx).toFixed(2);
+		        					vm.lastMonthsPriceEUR = parseFloat(fees.subTotalEUR).toFixed(2);
 		        				}
 		        			});
 
-		        			$timeout(function(){
-		        				vm.fourWeekVariation =  Math.floor(vm.todaysPriceUSD - vm.lastMonthsPriceUSD);
-		        				if(vm.fourWeekVariation < 0) {
-		        					vm.variationSave = false;
-		        				} else {
+		        			$timeout(function() {
+		        				var fwSaving = parseFloat(vm.todaysPriceUSD - vm.lastMonthsPriceUSD).toFixed(2);
+		        				if(fwSaving < 0) {
 		        					vm.variationSave = true;
-		        				}
+		        					vm.fourWeekVariation = fwSaving.toString().replace('-', '');
+		        				} else {
+		        					vm.variationSave = false;
+		        					vm.fourWeekVariation = fwSaving;
+		        				}		        				
 		        			}, 100);
-
+		        			
 		        		},
 		        		function(error){
 
@@ -360,6 +375,7 @@ app.component('dashboard', {
 							color: '#53ab58'
 						};
 					    $scope.slickConfigGreen = {
+					    	accessibility: false,
 					    	arrows: true,
 						    enabled: true,
 						    autoplay: false,
@@ -386,6 +402,7 @@ app.component('dashboard', {
 							color: '#f9b233'						
 						};
 					    $scope.slickConfigAmber = {
+					    	accessibility: false,
 					    	arrows: true,
 						    enabled: true,
 						    autoplay: false,
@@ -412,6 +429,7 @@ app.component('dashboard', {
 							color: '#e30613'
 						};
 					    $scope.slickConfigRed = {
+					    	accessibility: false,
 					    	arrows: true,
 						    enabled: true,
 						    autoplay: false,
@@ -438,6 +456,7 @@ app.component('dashboard', {
 							color: '#0097ce'					
 						};
 						$scope.slickConfigBlue = {
+							accessibility: false,
 							arrows: true,
 						    enabled: true,
 						    autoplay: false,
@@ -464,6 +483,7 @@ app.component('dashboard', {
 							color: '#3c3c3b'
 						};
 					    $scope.slickConfigBlack = {
+					    	accessibility: false,
 					    	arrows: true,
 						    enabled: true,
 						    autoplay: false,
@@ -547,85 +567,112 @@ app.component('dashboard', {
 			});												
 		}, 100);
 
+		vm.recentStageArr = [];
+
+		function recentRenewalFn(item, millisec) {
+
+	        var seconds = (millisec / 1000).toFixed(0);
+	        var minutes = Math.floor(seconds / 60);
+	        var hours = "";
+
+	        if (minutes > 59) {
+	            hours = Math.floor(minutes / 60);
+	            hours = (hours >= 10) ? hours : "0" + hours;
+	            minutes = minutes - (hours * 60);
+	            minutes = (minutes >= 10) ? minutes : "0" + minutes;
+	        }
+
+	        seconds = Math.floor(seconds % 60);
+	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
+
+	        if (hours < 48) {
+	        	console.log(item)
+	            vm.recentStageArr.push(item);
+	        }
+
+	    }
+
+	    // console.log(vm.recentTransArr)
+
 		function patentCostAnalysisFn(id) {
 
-			var hours;
+			
 
 			patentsRestService.fetchCostAnalysis(id)
 			.then(
-				function(response){
+				function(response, i){
 
-					vm.recentStageArr = [];
+					
 
                     switch(response.currentcostBand) {
                         case 'Green':
 
 	                    	hours =  vm.date - response.greenStartDate;
 
-	                    	if(millsToHours(response, hours) !== undefined){
-	                    		patentsArr.forEach(function(item) {
-	                    			if(item.costBandColour == 'Green') {
-	                    				vm.recentStageArr.push(item);
-                              			item.nextCostBandColor = 'Amber';
-	                    			}
-	                    		});
-	                    	}
+                    		patentsArr.forEach(function(item, i) {
+                    			if(item.costBandColour == 'Green') {
+                    				if(item.id == id) {
+                    					recentRenewalFn(item, hours)
+                    				}
+                    				item.nextCostBandColor = 'Black';
+                    			}
+                    		})
 
 						break;
 						case 'Amber':
 
 	                    	hours =  vm.date - response.amberStartDate;
 
-	                    	if(millsToHours(response, hours) !== undefined){
-	                    		patentsArr.forEach(function(item) {
-	                    			if(item.costBandColour == 'Amber') {	                    		
-	                    				vm.recentStageArr.push(item);
-	                    				item.nextCostBandColor = 'Red';
-	                    			}
-	                    		});
-	                    	}
+                    		patentsArr.forEach(function(item, i) {
+                    			if(item.costBandColour == 'Amber') {
+                    				if(item.id == id) {
+                    					recentRenewalFn(item, hours)
+                    				}
+                    				item.nextCostBandColor = 'Black';
+                    			}
+                    		})
 
 						break;
 						case 'Red':
 
 							hours =  vm.date - response.redStartDate;
 
-	                    	if(millsToHours(response, hours) !== undefined){
-	                    		patentsArr.forEach(function(item) {
-	                    			if(item.costBandColour == 'Red') {	                    		
-	                    				vm.recentStageArr.push(item);
-	                    				item.nextCostBandColor = 'Blue';
-	                    			}
-	                    		});
-	                    	}
+                    		patentsArr.forEach(function(item, i) {
+                    			if(item.costBandColour == 'Red') {
+                    				if(item.id == id) {
+                    					recentRenewalFn(item, hours)
+                    				}
+                    				item.nextCostBandColor = 'Black';
+                    			}
+                    		})
 
 						break;
 						case 'Blue':
 
-							hours =  vm.date - response.blueStartDate;
+							var hours =  vm.date - response.blueStartDate;
 
-	                    	if(millsToHours(response, hours) !== undefined){
-	                    		patentsArr.forEach(function(item) {
-	                    			if(item.costBandColour == 'Blue') {	                    		
-	                    				vm.recentStageArr.push(item);
-	                    				item.nextCostBandColor = 'Black';                
-	                    			}
-	                    		});
-	                    	}
-
+                    		patentsArr.forEach(function(item, i) {
+                    			if(item.costBandColour == 'Blue') {
+                    				if(item.id == id) {
+                    					recentRenewalFn(item, hours)
+                    				}
+                    				item.nextCostBandColor = 'Black';
+                    			}
+                    		})
+	                    	
 						break;
 						case 'Black':
 
 							hours =  vm.date - response.blackStartDate;
 
-	                    	if(millsToHours(response, hours) !== undefined){
-	                    		patentsArr.forEach(function(item) {
-	                    			if(item.costBandColour == 'Black') {	                    		
-	                    				vm.recentStageArr.push(item);
-	                    				item.nextCostBandColor = 'Grey';                              
-	                    			}
-	                    		});
-	                    	}
+                    		patentsArr.forEach(function(item, i) {
+                    			if(item.costBandColour == 'Black') {
+                    				if(item.id == id) {
+                    					recentRenewalFn(item, hours)
+                    				}
+                    				item.nextCostBandColor = '[Renewal Lapsed]';
+                    			}
+                    		})
 
 					}
 				},
@@ -645,37 +692,27 @@ app.component('dashboard', {
 
 			var counter = localStorageService.get('counter');
 
-			var transactions = vm.transactions;
+			var currTrans = vm.currTrans;
+			var transHistory = vm.transHistory;
 			var patents = vm.patents;
- 			
+ 
  			$timeout(function() {
 				patents.forEach(function(item){
 					patentCostAnalysisFn(item.id);
 				})
  			}, 300)
 
-			function systemMessageModal(response) {
+ 			
+			function welcomeMessageModal() {
 				var modalInstance = $uibModal.open({
-					templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
+					templateUrl: 'p3sweb/app/components/dashboard/views/modals/welcome-message-modal.htm',
 					scope: $scope,
 					controllerAs: vm,
-					controller: function($uibModalInstance, message) {
+					controller: function($uibModalInstance) {
 
-						vm.systemMessage = message;
-
-				 	  	vm.systemOk = function () {
+				 	  	vm.dismissWelcomeModal = function () {
 					    	$uibModalInstance.close();
 					  	};
-
-					  	vm.systemDismissModal = function() {
-					  		$uibModalInstance.dismiss();
-					  	};							  	
-
-					},
-					resolve: {
-						message: function() {
-							return systemResponse;
-						}
 					}
 				});
 		 	} //function systemMessageModal
@@ -709,6 +746,10 @@ app.component('dashboard', {
 
 		    if(counter === null) {
 
+			 	if(!patents) {
+			 		welcomeMessageModal();
+				}				        	
+
 		    	localStorageService.set('counter', 1);
 
 		    	counter = localStorageService.get('counter');
@@ -730,19 +771,19 @@ app.component('dashboard', {
 		    			}
 
 
-			    		if(response.systemMessages.length > 0) {
-			    			response.systemMessages.forEach(function(data){
-			    				var dateFrom = data.displayFromDate, dateTo = data.displayToDate;
-			    				if(date > dateFrom && date < dateTo) { 
-			    					systemResponse.push(data);
-			    				}
-			    			});
+			    // 		if(response.systemMessages.length > 0) {
+			    // 			response.systemMessages.forEach(function(data){
+			    // 				var dateFrom = data.displayFromDate, dateTo = data.displayToDate;
+			    // 				if(date > dateFrom && date < dateTo) { 
+			    // 					systemResponse.push(data);
+			    // 				}
+			    // 			});
 
-							$timeout(function() {
-								systemMessageModal(response);
-							}, 500);
+							// $timeout(function() {
+							// 	systemMessageModal(response);
+							// }, 500);
 
-			    		}		    			
+			    // 		}		    			
 
 			    	},
 			    	function(errResponse){
@@ -751,22 +792,20 @@ app.component('dashboard', {
 		    	);
 	    	}
 
-			if(transactions !== undefined && transactions.length > 0) {
-				transactions.forEach(function(data){
-					var hours =  vm.date - data.lastUpdatedDate;
-					var recentTrans  = millsToHours(data, hours);
+			currTrans.forEach(function(data){
+	
+				var hours =  vm.date - data.lastUpdatedDate;
+				var recentTrans  = millsToHours(data, hours);
 
-					if(recentTrans !== undefined) {
-						vm.recentTransArr.push(recentTrans);
-					}
+				if(recentTrans) {
+					vm.recentTransArr.push(recentTrans);
+				}
 
-					if(data.latestTransStatus == 'Completed') {
-						if(recentTrans !== undefined) {
-							vm.recentRenewalArr.push(data);							
-						}
-					}
-				});	
-			}
+				if(recentTrans && data.latestTransStatus === 'Completed') {
+					vm.recentRenewalArr.push(data);
+				}
+			});	
+		
 
 			//TOTAL RENEWALS PIE CHART
 
@@ -779,7 +818,7 @@ app.component('dashboard', {
 
 			if(patents) {
 				patents.forEach(function(item){
-					if(item.renewalStatus !== 'Renewal in place' && item.renewalStatus !== 'Too late to renew' && item.renewalStatus !== 'No renewal needed') {
+					if(item.renewalStatus !== 'Renewal in place' && item.renewalStatus !== 'Too late to renew' && item.renewalStatus !== 'No renewal needed'  && item.renewalStatus !== 'Way too late to renew') {
 						switch(item.costBandColour) {
 							case 'Green':
 								vm.greenRenewals.push(item);

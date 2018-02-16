@@ -117,7 +117,7 @@
 									</div>
 							    	<span class="font-weight-medium font-body d-flex justify-content-end align-items-center">
 								    	<span data-ng-if="item.renewalStatus !== 'Way too late to renew' && item.renewalStatus !== 'Too late to renew' && item.renewalStatus !== 'Show price'">{{item.renewalStatus}}</span>
-								    	<span data-ng-if="item.renewalStatus == 'Way too late to renew'">Renewal window not open</span>
+								    	<span data-ng-if="item.renewalStatus == 'Way too late to renew'">Renewal lapsed</span>
 								    	<span data-ng-if="item.renewalStatus == 'Too late to renew'">Call to renew</span>
 								    	<span data-ng-if="item.renewalStatus == 'Show price'">Open for renewal</span>
 							    	</span>
@@ -126,7 +126,7 @@
 									<div class="m-r-xs">
 										<img src="p3sweb/assets/imgs/icons/complete_icon.png" alt="completed icon">
 									</div>
-									<span class="font-weight-medium font-body d-flex justify-content-end align-items-center">{{item.renewalStatus}}</span>
+									<span class="font-weight-medium font-body d-flex justify-content-end align-items-center">Open for renewal</span>
 								</div>
 								<div class="hidden-lg-down progress-phase" data-ng-if="item.renewalStatus == 'Show price'">
 									<uib-progress class="pill-radius font-body font-body--component" data-ng-class="(item.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (item.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (item.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (item.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (item.costBandColour == 'Black' ? 'bg-phase-white': '')">
