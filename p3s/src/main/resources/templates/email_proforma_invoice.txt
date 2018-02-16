@@ -12,9 +12,13 @@ Thank you for creating transaction [TRANSACTION_REFERENCE] for renewing patent[P
 </table>
 <p/>
 
-As you know, your payment of $[PRICE] must reach our Moneycorp U.S. bank account by 
+As you know, your payment of $[PRICE] 
 <br/>
-[TIMESTAMP_TARGET_FUNDS_ARRIVAL]
+must reach our Moneycorp U.S. bank account by [TIMESTAMP_TARGET_FUNDS_ARRIVAL]
+
+<p/>
+Your Invoice for this can be accessed by logging-in to <a href="[LOGIN_URL]">thepatent.place</a>
+ selecting Transactions, clicking on this ([TRANSACTION_REFERENCE]) transaction, then pressing the Invoice button.
 
 <p/>
 For your convenience, the payment details are:
