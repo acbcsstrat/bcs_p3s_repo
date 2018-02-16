@@ -238,11 +238,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			sendProformaInvoiceEmail(bankTransferPostCommitDetails, patentIdsInThisTransaction);
 
 			// For the htmlDoc solution (see com.bcs.p3s.docs.htmldoc package-info) invoiceUrl (below), here, is not used. The equivalents are set in RenewalUI  & PaymentUI
-			// However, the front-end booking confirmation 'Show Invoice' button DOES need it 
-			bankTransferPostCommitDetails.setProformaInvoiceUrl(null);
-			
-			
-			// Provide data for the front-end 'Show Invoice' button
+			// However, the front-end booking confirmation 'Show Invoice' button DOES need it. So set here 
 			bankTransferPostCommitDetails.setProformaInvoiceUrl(deriveInvoiceUrl(currentPayment));
 			
 			
