@@ -10,7 +10,7 @@
                     <tr class="font-body font-weight-bold">
                         <th class="text-md-center">Application No.</th>
                         <th class="text-md-center">Client Reference</th>
-                        <th class="text-md-center">Short Description</th>
+                        <th class="text-md-center">Client Description</th>
                         <th class="text-md-center">Amount</th>
                         <th class="text-md-center"></th>
                     </tr>
@@ -18,8 +18,8 @@
                 <tbody>
                     <tr data-ng-repeat="item in ngCart.getCart().items track by $index" class="font-body">
                         <td>{{item.getData().patentApplicationNumber}}</td>
-                        <td><span data-ng-if="item.getData().clientRef == ''">[No client reference provided]</span><span data-ng-if="item.getData().clientRef !== ''">{{item.getData().clientRef}}</span></td>
-                        <td><span data-ng-if="item.getData().clientRef == ''">[No client description provided]</span><span data-ng-if="item.getData().clientRef !== ''">{{item.getData().shortTitle}}</span></td>
+                        <td><span data-ng-if="item.getData().clientRef == ''" class="txt-grey">[No client reference provided]</span><span data-ng-if="item.getData().clientRef !== ''">{{item.getData().clientRef}}</span></td>
+                        <td><span data-ng-if="item.getData().clientRef == ''" class="txt-grey">[No client description provided]</span><span data-ng-if="item.getData().clientRef !== ''">{{item.getData().shortTitle}}</span></td>
                         <td>{{item.getPrice() | currency}}</td>
                         <td>
                             <div class="btn-error">
