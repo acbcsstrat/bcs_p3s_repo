@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.bcs.p3s.display.LoginMessageUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
@@ -135,7 +136,8 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 			}
 			else if(!RenewalColourEnum.GREY.equals(patentUI.getCostBandColour())){
 				days = new DateUtil().daysBetween(Calendar.getInstance().getTime(), patentUI.getCostBandEndDate());
-				if(days <= P3SPropertyNames.GREE_BLUE_ENDS_IN){
+				//do we need to display the patent as urgent patent if status is not Show price?
+				if(days <= P3SPropertyNames.GREE_BLUE_ENDS_IN && RenewalStatusEnum.SHOW_PRICE.equals(patentUI.getRenewalStatus())){
 					urgentPatents.add(patentUI);
 					log().debug("Patent[" +patentUI.getId() +"] has reached GREEN/BLUE end. Added to urgent message list");
 				}
