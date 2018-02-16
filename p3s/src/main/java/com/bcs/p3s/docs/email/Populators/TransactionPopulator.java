@@ -166,9 +166,13 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 
 		TwoColRecord a2colRecord = null;
 		List<TwoColRecord> payDets = new ArrayList<TwoColRecord>();
-		a2colRecord = new TwoColRecord("ABA Number", payeeDets.getItem1());
+		a2colRecord = new TwoColRecord("Payment channel", payeeDets.getAccount1Type());
 		payDets.add(a2colRecord);
-		a2colRecord = new TwoColRecord("Account Number", payeeDets.getAccountNumber());
+		a2colRecord = new TwoColRecord("Bank name", payeeDets.getAccount1field1());
+		payDets.add(a2colRecord);
+		a2colRecord = new TwoColRecord("ABA Routing Number", payeeDets.getAccount1BranchCode());
+		payDets.add(a2colRecord);
+		a2colRecord = new TwoColRecord("Account Number", payeeDets.getAccount1Number());
 		payDets.add(a2colRecord);
 		a2colRecord = new TwoColRecord("Reference", data.getTransactionReference()); // Which WILL have been populated by here
 		payDets.add(a2colRecord);
