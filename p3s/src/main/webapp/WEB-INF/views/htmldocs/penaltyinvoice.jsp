@@ -95,8 +95,8 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
       <td width="300" align="left" valign="top">
         <b>DATE:</b> <%=data.getDocDate() %>
         <br/><b>INVOICE NO:</b> <%=data.getInvoiceNumber()%>
-        <br/><b>EXCHANGE RATE:</b>
-        <br/><%=data.getFxRateUsdPerEur()%> USD = 1 EUR
+        <%-- <br/><b>EXCHANGE RATE:</b>
+        <br/><%=data.getFxRateUsdPerEur()%> USD = 1 EUR --%>
       </td>
     </tr>
   </table>
@@ -206,7 +206,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
   		<table border=1  width="100%">
           <tr>
             <td width="80%">
-              Mis-payment Fee
+              Penalty Fee
             </td>
             <td align="right"  width="20%">
               $<%=data.getTotalUsdPayable() %>
