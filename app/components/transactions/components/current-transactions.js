@@ -36,6 +36,10 @@ app.component('currentTransactions', {
 
 		};
 
+		vm.noClientRef = function() {
+			return true;
+		}
+
 		vm.displayTrans = function() {
 			$state.go('current-transactions');
 		};
