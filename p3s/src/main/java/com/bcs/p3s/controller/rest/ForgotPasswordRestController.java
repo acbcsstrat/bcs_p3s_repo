@@ -78,7 +78,7 @@ public class ForgotPasswordRestController extends Universal {
 		catch(Exception e){
 			
 			logErrorAndContinue("Exception occured in "+msg, e);
-			return new ResponseEntity<String>("Error", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Error", HttpStatus.NO_CONTENT);
 		}
 		
 		return new ResponseEntity<String>("success", HttpStatus.OK); 

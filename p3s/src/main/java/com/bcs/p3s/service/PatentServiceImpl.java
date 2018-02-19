@@ -786,8 +786,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		// ELSE THE STATUS WILL BE LIKE NO_RENEWAL_NEEDED :- DISABLE CA BUTTON ON THESE CASES
 		// MP 31102017 - WE ARE NOT DISBALING CA - BUT WE ARE DISPLYING THE VERY NEXT RENEWAL WINDOW OPEN TIME
 		// NO GRAPHS AND NOT LINE CHARTS
-		// ABOVE SCENARIO CAN BE FOR PATENT YEAR < 3 OR > 20
-		else if(RenewalStatusEnum.NO_RENEWAL_NEEDED .equalsIgnoreCase(patent.getRenewalStatus())){
+		// BELOW SCENARIO CAN BE FOR PATENT EXPIRED OR NEAR-EXPIRED (20 years) or GRANTED
+		else if(RenewalStatusEnum.NO_RENEWAL_NEEDED .equalsIgnoreCase(patent.getRenewalStatus()) || RenewalStatusEnum.WAY_TOO_LATE .equalsIgnoreCase(patent.getRenewalStatus()) ){
 			caData.setCurrentcostBand(RenewalColourEnum.GREY);
 			caData.setGreenStartDate(allDates.getNextWindowOpenDate());
 			return caData;
