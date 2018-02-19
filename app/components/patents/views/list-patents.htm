@@ -112,8 +112,8 @@
 										<img data-ng-if="item.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon.png" alt="renewal in place icon">
 										<i data-ng-if="item.renewalStatus == 'Too late to renew'" class="fa fa-phone fa-2x txt-phase-red"></i>
 										<img data-ng-if="item.renewalStatus == 'Way too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon.png" alt="not open for renewal icon">
-										<img data-ng-if="item.renewalStatus == 'No renewal needed'" src="p3sweb/assets/imgs/icons/renewal_na_icon.png" alt="renewal icon">
-										<img data-ng-if="item.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/renewal_na_icon.png" alt="renewal icon">
+										<img data-ng-if="item.renewalStatus == 'No renewal needed'" src="p3sweb/assets/imgs/icons/no_renewal.png" alt="renewal icon">
+										<img data-ng-if="item.renewalStatus == 'Show price'" src="p3sweb/assets/imgs/icons/show_price.png" alt="renewal icon">
 									</div>
 							    	<span class="font-weight-medium font-body d-flex justify-content-end align-items-center">
 								    	<span data-ng-if="item.renewalStatus !== 'Way too late to renew' && item.renewalStatus !== 'Too late to renew' && item.renewalStatus !== 'Show price'">{{item.renewalStatus}}</span>
@@ -124,7 +124,7 @@
 								</div>
 								<div class="hidden-xl-up progress-phase d-flex justify-content-start align-items-center" data-ng-if="item.renewalStatus == 'Show price'">
 									<div class="m-r-xs">
-										<img src="p3sweb/assets/imgs/icons/complete_icon.png" alt="completed icon">
+										<img src="p3sweb/assets/imgs/icons/show_price.png" alt="completed icon">
 									</div>
 									<span class="font-weight-medium font-body d-flex justify-content-end align-items-center">Open for renewal</span>
 								</div>
@@ -136,7 +136,8 @@
 							</td>
 							<td class="hidden-lg-down">
 								<div data-ng-if="item.renewalStatus == 'Show price'" data-ng-class="(item.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')">
-									<span class="font-weight-bold">$ {{item.renewalCostNextStage}}</span><br>
+									<span ng-if="item.costBandColour == 'Black'" class="font-weight-bold">LAPSE</span>
+									<span ng-if="item.costBandColour !== 'Black'" class="font-weight-bold">$ {{item.renewalCostNextStage}}</span><br>
 									<span>{{item.costBandEndDate | date:'MM/dd/yy'}}</span>
 								</div>
 							</td>
@@ -153,10 +154,7 @@
 							 	</div>
 					        	<div data-ng-if="item.renewalStatus == 'Renewal in place'" class="d-flex justify-content-center btn-default">
 							 		<a href="" class="btn btn-list btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: item.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs hidden-md-down"></a>
-							 	</div>
-					        	<div data-ng-if="item.renewalStatus == 'Way too late to renew'" class="d-flex justify-content-center align-items-center btn-default">
-							 		<p><i class="fa fa-phone fa-1x m-r-xs txt-phase-red font-weight-medium"></i>Call Now</p>
-							 	</div>							 					 			 	
+							 	</div>						 					 			 	
 					        </td>
 						</tr>
 					 	<tr data-ng-show="Result.length==0">
