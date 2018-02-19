@@ -1,0 +1,118 @@
+<div data-ng-show="$ctrl.animate" class="animate-show">
+
+	<transactionnav></transactionnav>
+
+	<div class="row m-b-md">
+		<div class="col-md-12 col-lg-9 offset-lg-3 col-xl-6 offset-xl-6 p-none">
+			<form class="form-inline">
+				<div class="input-group col-md-4 col-lg-4 col-xl-4">
+					<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="p3S_TransRefFilter" data-ng-model="searchTrans.p3S_TransRef" placeholder="Transaction ID">
+					<div class="input-group-addon pill-radius m-r"><i class="fa fa-search"></i></div>
+				</div>					
+				<div class="input-group col-md-4 col-lg-4 col-xl-4">
+				<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="appNoFilter" data-ng-model="searchTrans.patentApplicationNumber" placeholder="App No.">
+					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>	
+				</div>
+				<div class="input-group col-md-4 col-lg-4 col-xl-4">
+					<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="clientRefFilter" data-ng-model="searchTrans.clientRef" placeholder="Client Ref">
+					<div class="input-group-addon pill-radius"><i class="fa fa-search"></i></div>	
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row m-b-md">
+		<div class="col-md-12 col-lg-12 col-xl-12" data-ng-show="$ctrl.tableData.length === 0">
+			<div class="bg-white p-a-sm">
+				<p class="font-body font-weight-medium">There are currently know patents in this phase</p>
+			</div>
+		</div>
+
+		<div class="col-md-12 col-lg-12 col-xl-12" data-ng-if="$ctrl.tableData.length !== 0">
+			<div id="scrollable-area">
+				<table id="listCurrTransactionsTable" class="t-list table-scroll font-body" fixed-table-headers="scrollable-area">
+					<thead>
+						<tr>
+							<th data-ng-click="$ctrl.sortType('p3S_TransRef'); $ctrl.sortReverse = !$ctrl.sortReverse">Trans ID
+				            	<span data-ng-show="$ctrl.selectedSortType == 'p3S_TransRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.selectedSortType == 'p3S_TransRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							</th>
+							<th data-ng-click="$ctrl.sortType('transLength'); $ctrl.sortReverse = !$ctrl.sortReverse">No. of patents
+				            	<span data-ng-show="$ctrl.sortTransItems && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.sortTransItems && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							</th>
+							<th data-ng-click="$ctrl.sortType('patentApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">App No.
+				            	<span data-ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							</th>
+							<th data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">Client Ref
+				            	<span data-ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							</th>
+							<th data-ng-click="$ctrl.sortType('transStartDate'); $ctrl.sortReverse = !$ctrl.sortReverse">Trans Initiated
+				            	<span data-ng-show="$ctrl.sortTransDate && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.sortTransDate && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							</th>
+							<th data-ng-click="$ctrl.sortType('transAmount_USD'); $ctrl.sortReverse = !$ctrl.sortReverse">Cost
+				            	<span data-ng-show="$ctrl.sortTransCost && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.sortTransCost && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							</th>
+							<th data-ng-click="$ctrl.sortType('latestTransStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">Status
+				            	<span data-ng-show="$ctrl.selectedSortType == 'latestTransStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.selectedSortType == 'latestTransStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					    <tr data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {renewalUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {renewalUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active">
+					        <td>
+								<a class="txt-black" data-ui-sref="current-transactions.current-transaction-item({transId: item.id})">{{item.p3S_TransRef}}</a>
+					        </td>
+					        <td>
+								{{item.renewalUIs.length}}
+					        </td>
+					        <td>
+								<span data-ng-if="item.renewalUIs.length === 1" data-ng-repeat="patent in item.renewalUIs">
+									<span data-ng-if="patent.patentUI.patentApplicationNumber.length">
+										{{patent.patentUI.patentApplicationNumber}}
+									</span>
+								</span>
+								<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.renewalUIs" data-ng-model="patentAppData.defaultSelect" data-ng-change="transactionListFilter(patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
+									<option value="">Multiple</option>
+								</select>
+					        </td>
+					        <td class="no-wrap" data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
+								<span data-ng-if="item.renewalUIs.length == 1;" data-ng-repeat="ref in item.renewalUIs">
+									<span data-ng-if="ref.patentUI.clientRef === ''" class="txt-grey" data-ng-init="$ctrl.noClientRef()">[No client reference provided]</span>
+									<span data-ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>
+								</span>
+								<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.clientRef for item in item.renewalUIs" data-ng-model="clientRefData.defaultSelect" class="pill-radius form-control font-body" data-ng-change="transactionListFilter(clientRefData.defaultSelect, 'clientRefFilter', item.id)">
+									<option value="">Multiple</option>
+								</select>
+					        </td>
+					        <td>
+					        	{{item.transStartDate | date: 'MM/dd/yy'}}
+					        </td>
+					        <td>
+					        	$ {{item.transAmount_USD}}
+					        </td>
+					        <td>
+								<p class="font-weight-bold m-b-xs">{{item.latestTransStatus}}</p>
+								<div class="progress-tracker progress-trans">
+									<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="item.renewalProgress" max="100"></uib-bar></uib-progress>
+								</div>	
+					        </td>      				                 
+					    </tr>
+					 	<tr data-ng-show="Result.length==0">
+					 		<td colspan="7">
+					 			No Results Found
+					 		</td>
+					 	</tr>						    						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <div class="animate-show" data-ng-show="$ctrl.transInfoContent"> -->
+<div id="currTransAnchor" data-ui-view></div>	
+<!-- </div> -->

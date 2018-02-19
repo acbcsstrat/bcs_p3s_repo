@@ -881,6 +881,7 @@ uib-progress.progressblue { height: 3rem; }
 .bg-phase-red .progress-bar{ background: #f9b233; } /*amber stage */
 .bg-phase-blue .progress-bar{ background: #e30613; } /*red stage */
 .bg-phase-black .progress-bar{ background: #0097ce; } /*blue stage */
+.bg-phase-white .progress-bar { background: #000; }
 
 .progress-15 { min-width: 15%; }
 .progress-10 { min-width: 10%; }
@@ -1493,6 +1494,11 @@ select.form-control:not([size]):not([multiple]) {
 
 .modal-content--table {
   width: 500px;
+}
+
+.modal-max {
+  max-height: 600px;
+  overflow: scroll;
 }
 
 .btn-block+.btn-block { margin-top: 0px; }
