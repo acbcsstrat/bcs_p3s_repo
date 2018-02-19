@@ -1,5 +1,0 @@
-META-INF/
-WEB-INF/*
-!WEB-INF/*/views/forgot-password.jsp
-!WEB-INF/*/views/login.jsp
-!WEB-INF/*/views/register.jsp
