@@ -137,7 +137,7 @@
 								    data-ng-init="userTimezone._abbr = user.business.timezone"
 								    data-ng-change="user.business.timezone = userTimezone._abbr"
 								    data-ng-model="userTimezone._abbr" 
-								    data-ng-options="zone.text as zone.abbr for zone in $ctrl.timezones">
+								    data-ng-options="zone.abbr as zone.abbr for zone in $ctrl.timezones">
 								</select>
 								<!--removed track by zone.text in data-ng-options-->
 							</div>
