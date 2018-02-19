@@ -15,6 +15,10 @@ app.component('transactionHistory', {
 	      vm.animate = true;
 	    }, 300);    		
 
+		vm.noClientRef = function() {
+			return true;
+		}
+
 		vm.$onInit = () => {
 
 			var transactions = vm.transactionHistory;
