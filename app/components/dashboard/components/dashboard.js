@@ -681,7 +681,6 @@ app.component('dashboard', {
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
 	        if (hours < 48) {
-	        	console.log(item)
 	            vm.recentStageArr.push(item);
 	        }
 
