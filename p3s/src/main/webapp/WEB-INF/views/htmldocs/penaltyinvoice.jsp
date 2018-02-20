@@ -133,7 +133,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
         <%=data.getTransactionType()%>
       </td>
       <td>
-        <%= data.getTransactionReference()%>
+        <%= data.getTransactionReference()+"P" %>
       </td>
       <td>
         On Receipt
@@ -173,7 +173,9 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 </tr>
 <tr>
   <td>
-	o <%=data.getFailReason() %>
+	<ul>
+		<li> <%=data.getFailReason() %> </li>
+	</ul> 
   </td>
 </tr>
 <tr>
