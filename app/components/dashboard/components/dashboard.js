@@ -49,84 +49,178 @@ app.component('dashboard', {
 
 		$timeout(function() {
 
-				vm.chartOptions = {
-					chart: {
-		                type: 'lineChart',
-		                height: 450,
-		                margin : {
-		                    top: 20,
-		                    right: 20,
-		                    bottom: 55,
-		                    left: 55
-		                },
-		                showLegend: false,
-		                x: function(d, i){ 
-		                	return d[0]},
-		                y: function(d){ return d[1]; },
-		                useInteractiveGuideline: true,
-		                dispatch: {
-		                    stateChange: function(e){ console.log("stateChange"); },
-		                    changeState: function(e){ console.log("changeState"); },
-		                    tooltipShow: function(e){ console.log("tooltipShow"); },
-		                    tooltipHide: function(e){ console.log("tooltipHide"); }
-		                },
-		                xAxis: {
-				            tickFormat: function (d, i) {
-				                return d3.time.format('%x')(new Date(d));
-				            },
+			vm.lineOptions = {
+				chart: {
+	                type: 'lineChart',
+	                height: 450,
+	                margin : {
+	                    top: 20,
+	                    right: 20,
+	                    bottom: 55,
+	                    left: 55
+	                },
+	                showLegend: false,
+	                x: function(d, i){ 
+	                	return d[0]},
+	                y: function(d){ return d[1]; },
+	                useInteractiveGuideline: true,
+	                // dispatch: {
+	                //     stateChange: function(e){ console.log("stateChange"); },
+	                //     changeState: function(e){ console.log("changeState"); },
+	                //     tooltipShow: function(e){ console.log("tooltipShow"); },
+	                //     tooltipHide: function(e){ console.log("tooltipHide"); }
+	                // },
+	                xAxis: {
+			            tickFormat: function (d, i) {
+			                return d3.time.format('%x')(new Date(d));
+			            },
 
-				            showMaxMin: false,
-				            rotateLabels: -30,
-				            ticks: 24        
-		                },
-		                xScale: d3.time.scale(),
-		                yAxis: {
-		                    tickFormat: function(d){
-		                        return d3.format('.04f')(d);
-		                    },
-		                    axisLabelDistance: -10,
-		                    ticks: 10,
-		                    showMaxMin: false
-		                },
-		                tooltip: {
-		                    keyFormatter: function(d) {
-		                        return d3.time.format('%x')(new Date(d));
-		                    }
-		                },		                
-		                useVoronoi: false,
-				        lines: {
-				            interactive: true
-				        },
-				        showXAxis: true,
-				        showYAxis: true,
-				        // forceY: [0],	           
-		                callback: function(chart){
+			            showMaxMin: false,
+			            rotateLabels: -30,
+			            ticks: 24        
+	                },
+	                xScale: d3.time.scale(),
+	                yAxis: {
+	                    tickFormat: function(d){
+	                        return d3.format('.04f')(d);
+	                    },
+	                    axisLabelDistance: -10,
+	                    ticks: 10,
+	                    showMaxMin: false
+	                },
+	                tooltip: {
+	                    keyFormatter: function(d) {
+	                        return d3.time.format('%x')(new Date(d));
+	                    }
+	                },		                
+	                useVoronoi: false,
+			        lines: {
+			            interactive: true
+			        },
+			        showXAxis: true,
+			        showYAxis: true,
+			        // forceY: [0],	           
+	                callback: function(chart){
 
-		                }
-		            }
-				}
+	                }
+	            }
+			}
 
-				vm.chartData = chartDatafn();
+			vm.lineData = chartDatafn();
 
-		            $scope.xAxisTickFormat = function(){
-		                return function(d){
-		//                    return d3.time.format('%X')(new Date(d));  //uncomment for time format
-		                    return d3.time.format('%x')(new Date(d));  //uncomment for date format
-		                }
-		            }
+            vm.xAxisTickFormat = function(){
+                return function(d){
+//                    return d3.time.format('%X')(new Date(d));  //uncomment for time format
+                    return d3.time.format('%x')(new Date(d));  //uncomment for date format
+                }
+            }
 
-				 	function chartDatafn() {
+		 	function chartDatafn() {
 
-				   		return [
-				   			{
-				   				values: chartValueArrs.reverse(),
-				   				color: '#2ca02c'
-				   			}
-				   		]			   			
+		   		return [
+		   			{
+		   				values: chartValueArrs.reverse(),
+		   				color: '#2ca02c'
+		   			}
+		   		]
 
-			      	} //function end
+	      	} //function end
 
-      	}, 200);	
+  	   //  	$scope.$on('$viewContentLoaded', function(){
+		    //   $timeout(function(){
+		    //     $scope.pieChart.api.refresh();
+		    //   },100);
+		    // });
+
+
+	      	vm.donutOptions = {
+	            chart: {
+	                type: 'pieChart',
+	                height: 250,
+	                donut: true,
+	                margin: { top: 0, right: 0, bottom: 0, left: 0 },
+	                x: function(d){
+	                	return d.key;
+	                },
+	                y: function(d){
+	                	return d.y;
+	                },
+	                showLabels: false,
+	                pie: {
+	                  dispatch: {
+	                    elementClick: function(e) {
+	                      switch(e.data.key) {
+	                      	case 'green':
+	                      		vm.phaseObj.colourKey(0);
+	                      		$scope.activeTab = 0;
+	                      	break;
+	                      	case 'amber':
+	                      		vm.phaseObj.colourKey(1);
+	                      		$scope.activeTab = 1;
+	                      	break;
+	                      	case 'red':
+	                      		vm.phaseObj.colourKey(2);
+	                      		$scope.activeTab = 2;
+	                      	break;
+	                      	case 'blue':
+	                      		vm.phaseObj.colourKey(3);
+	                      		$scope.activeTab = 3;
+	                      	break;
+	                      	case 'black':
+	                      		vm.phaseObj.colourKey(4);
+	                      		$scope.activeTab = 4;
+	                      	break;
+	                      	case 'grey':
+	                      		vm.phaseObj.colourKey(5);
+	                      		$scope.activeTab = 5;                      	  	                      	              		                      		                      	
+	                      }
+	                    },     
+	                },
+                    startAngle: function(d) { return d.startAngle -Math.PI },
+                    endAngle: function(d) { return d.endAngle -Math.PI }
+	                },
+	                duration: 500,
+	                growOnHover: true,
+	                showLegend: false,
+	                labelFormat: function(d) {
+	                	return d;
+	                }
+	            }
+	        };
+
+	        vm.donutData = [
+	        	{
+	        		key: 'green', 
+	        		y: vm.greenRenewals.length,
+	        		color: '#53ab58'
+	        	},
+	        	{
+	        		key: 'amber', 
+	        		y: vm.amberRenewals.length,
+	        		color: '#f9b233'
+	        	},
+	        	{
+	        		key: 'red', 
+	        		y: vm.redRenewals.length,
+	        		color: '#e30613'
+	        	},
+	        	{
+	        		key: 'blue',
+	        		y: vm.blueRenewals.length,
+	        		color: '#0097ce'
+	        	},
+	        	{
+	        		key: 'black', 
+	        		y: vm.blackRenewals.length,
+	        		color: '#3c3c3b'
+	        	},
+	        	{
+	        		key: 'grey', 
+	        		y: vm.greyRenewals.length,
+	        		color: '#dbdbdb'
+	        	}
+	        ]
+      	}, 200);
 
 	    $timeout(function() {
 	      vm.animate = true;
@@ -843,71 +937,71 @@ app.component('dashboard', {
 			}
 
 
-			vm.charts = {
+			// vm.charts = {
 
-				doughnut: {
-					labels: ["No action required", "Black", "Blue", "Red", "Yellow", "Green"],
-					data: [vm.greyRenewals.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length],
-					options: {
-						elements: {
-							arc: {
-								borderWidth: 3	
-							}
-						},
-						responsive: true,
-						cutoutPercentage: 70,
-						animation: {
-							duration: 1500,
-							easing: 'linear'
-						}
+			// 	doughnut: {
+			// 		labels: ["No action required", "Black", "Blue", "Red", "Yellow", "Green"],
+			// 		data: [vm.greyRenewals.length, vm.blackRenewals.length, vm.blueRenewals.length, vm.redRenewals.length, vm.amberRenewals.length, vm.greenRenewals.length],
+			// 		options: {
+			// 			elements: {
+			// 				arc: {
+			// 					borderWidth: 3	
+			// 				}
+			// 			},
+			// 			responsive: true,
+			// 			cutoutPercentage: 70,
+			// 			animation: {
+			// 				duration: 1500,
+			// 				easing: 'linear'
+			// 			}
 
-				  	},
-				  	colours: [{
-					      	backgroundColor: '#bdbdbd',
-					      	pointBackgroundColor: '#bdbdbd',
-					      	pointHoverBackgroundColor: '#bdbdbd',
-					     	borderColor: '#bdbdbd',
-				      		pointBorderColor: '#bdbdbd',
-			      			pointHoverBorderColor: '#bdbdbd'
-					    },{
-				      		backgroundColor: '#3c3c3b',
-				      		pointBackgroundColor: '#3c3c3b',
-				      		pointHoverBackgroundColor: '#3c3c3b',
-				      		borderColor: '#3c3c3b',
-				      		pointBorderColor: '#fff',
-				      		pointHoverBorderColor: '#3c3c3b'
-					    },{
-			      			backgroundColor: '#0097ce',
-				      		pointBackgroundColor: '#0097ce',
-				      		pointHoverBackgroundColor: '#0097ce',
-				      		borderColor: '#0097ce',
-				      		pointBorderColor: '#0097ce',
-				      		pointHoverBorderColor: '#0097ce'
-					    },{
-					      	backgroundColor: '#e30613',
-					      	pointBackgroundColor: '#e30613',
-					      	pointHoverBackgroundColor: '#e30613',
-					      	borderColor: '#e30613',
-					      	pointBorderColor: '#e30613',
-					      	pointHoverBorderColor: '#e30613'
-					    },{
-					      	backgroundColor: '#f9b233',
-					      	pointBackgroundColor: '#f9b233',
-					      	pointHoverBackgroundColor: '#f9b233',
-					      	borderColor: '#f9b233',
-					      	pointBorderColor: '#f9b233',
-					      	pointHoverBorderColor: '#f9b233'
-					    },{
-					      	backgroundColor: '#53ab58',
-					      	pointBackgroundColor: '#53ab58',
-					      	pointHoverBackgroundColor: '#53ab58',
-					      	borderColor: '#53ab58',
-					      	pointBorderColor: '#53ab58',
-					      	pointHoverBorderColor: '#53ab58'
-					    }
-					  ]
-				} //donught end
-			}; //charts end
+			// 	  	},
+			// 	  	colours: [{
+			// 		      	backgroundColor: '#bdbdbd',
+			// 		      	pointBackgroundColor: '#bdbdbd',
+			// 		      	pointHoverBackgroundColor: '#bdbdbd',
+			// 		     	borderColor: '#bdbdbd',
+			// 	      		pointBorderColor: '#bdbdbd',
+			//       			pointHoverBorderColor: '#bdbdbd'
+			// 		    },{
+			// 	      		backgroundColor: '#3c3c3b',
+			// 	      		pointBackgroundColor: '#3c3c3b',
+			// 	      		pointHoverBackgroundColor: '#3c3c3b',
+			// 	      		borderColor: '#3c3c3b',
+			// 	      		pointBorderColor: '#fff',
+			// 	      		pointHoverBorderColor: '#3c3c3b'
+			// 		    },{
+			//       			backgroundColor: '#0097ce',
+			// 	      		pointBackgroundColor: '#0097ce',
+			// 	      		pointHoverBackgroundColor: '#0097ce',
+			// 	      		borderColor: '#0097ce',
+			// 	      		pointBorderColor: '#0097ce',
+			// 	      		pointHoverBorderColor: '#0097ce'
+			// 		    },{
+			// 		      	backgroundColor: '#e30613',
+			// 		      	pointBackgroundColor: '#e30613',
+			// 		      	pointHoverBackgroundColor: '#e30613',
+			// 		      	borderColor: '#e30613',
+			// 		      	pointBorderColor: '#e30613',
+			// 		      	pointHoverBorderColor: '#e30613'
+			// 		    },{
+			// 		      	backgroundColor: '#f9b233',
+			// 		      	pointBackgroundColor: '#f9b233',
+			// 		      	pointHoverBackgroundColor: '#f9b233',
+			// 		      	borderColor: '#f9b233',
+			// 		      	pointBorderColor: '#f9b233',
+			// 		      	pointHoverBorderColor: '#f9b233'
+			// 		    },{
+			// 		      	backgroundColor: '#53ab58',
+			// 		      	pointBackgroundColor: '#53ab58',
+			// 		      	pointHoverBackgroundColor: '#53ab58',
+			// 		      	borderColor: '#53ab58',
+			// 		      	pointBorderColor: '#53ab58',
+			// 		      	pointHoverBorderColor: '#53ab58'
+			// 		    }
+			// 		  ]
+			// 	} //donught end
+			// }; //charts end
 
 		}; //$onInit end		
 

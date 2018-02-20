@@ -72,8 +72,7 @@
 				<div class="widget-panel__body">
 					<div class="row" data-ng-if="$ctrl.patents">
 						<div class="col-md-12 col-lg-8 col-xl-8 d-flex align-items-center">
-							<canvas id="doughnut" class="chart chart-doughnut" data-chart-data="$ctrl.charts.doughnut.data" data-chart-labels="$ctrl.charts.doughnut.labels" data-chart-colors="$ctrl.charts.doughnut.colours" data-chart-options="$ctrl.charts.doughnut.options" height="225">
-							</canvas>
+							<nvd3 options="$ctrl.donutOptions" data="$ctrl.donutData" class="with-transitions"></nvd3>
 							<div class="donut-inner">
 								<h4 class="font-h4 font-weight-bold">Total</h4>
 								<span class="font-h2 font-weight-bold">{{$ctrl.totalPatents}}</span>							
@@ -650,7 +649,7 @@
 					</div>
 				</div>					
 				<div class="widget-panel__body">
-					<nvd3 options="$ctrl.chartOptions" data="$ctrl.chartData" xAxisTickFormat="xAxisTickFormat()" class="with-transitions"></nvd3> <!--xAxisTickFormat="xAxisTickFormatFunction()"-->
+					<nvd3 options="$ctrl.lineOptions" data="$ctrl.lineData" xAxisTickFormat="$ctrl.xAxisTickFormat()" class="with-transitions"></nvd3> <!--xAxisTickFormat="xAxisTickFormatFunction()"-->
 				</div>
 			</div>
 		</div>
