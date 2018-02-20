@@ -636,6 +636,7 @@ span.valid-container { display: inline-block }
     z-index: -1;
 }
 
+.nv-slice path:hover { cursor: pointer; }
 
 .form-section {
   display: none;
