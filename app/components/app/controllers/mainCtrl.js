@@ -4,18 +4,20 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
 
 	var urgentResponse = [];
 
-	var patents;
+	var patentsFound;
 
 	patentsRestService.fetchAllPatents()
 	.then(
 		function(response){
-			patents = response
+			if(response.length === 0) {
+				patentsFound === false;
+			}
 		},
 		function(errResponse){
 
 		}
 	)
-	
+
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'p3sweb/app/components/app/views/modals/welcome-message-modal.htm',
@@ -53,9 +55,6 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
 			}
 		});
  	} //function urgentPatentModal
-
-
- 	
 
 	var counter = localStorageService.get('counter');
 
@@ -103,7 +102,7 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
     	);
 
 		$timeout(function() {
-		 	if(!patents) {
+		 	if(!patentsFound) {
 		 		welcomeMessageModal();
 			}	
 		}, 350);

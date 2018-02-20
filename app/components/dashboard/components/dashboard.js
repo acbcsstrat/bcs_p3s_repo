@@ -620,7 +620,6 @@ app.component('dashboard', {
 			patentsRestService.fetchCostAnalysis(data.id)
 			.then(
 				function(response) {
-					console.log(response)
                     switch(response.currentcostBand) {
                         case 'Green':
 							data.progressBar = calcProgress(response.greenStartDate, response.amberStartDate);
@@ -791,58 +790,56 @@ app.component('dashboard', {
 			var patents = vm.patents;
  
  			$timeout(function() {
-				patents.forEach(function(item){
-					patentCostAnalysisFn(item.id);
-				})
+ 				if(patents) {
+					patents.forEach(function(item){
+						patentCostAnalysisFn(item.id);
+					}) 					
+ 				}
  			}, 300)
 
  			
-			function welcomeMessageModal() {
-				var modalInstance = $uibModal.open({
-					templateUrl: 'p3sweb/app/components/dashboard/views/modals/welcome-message-modal.htm',
-					scope: $scope,
-					controllerAs: vm,
-					controller: function($uibModalInstance) {
+			// function welcomeMessageModal() {
+			// 	var modalInstance = $uibModal.open({
+			// 		templateUrl: 'p3sweb/app/components/dashboard/views/modals/welcome-message-modal.htm',
+			// 		scope: $scope,
+			// 		controllerAs: vm,
+			// 		controller: function($uibModalInstance) {
 
-				 	  	vm.dismissWelcomeModal = function () {
-					    	$uibModalInstance.close();
-					  	};
-					}
-				});
-		 	} //function systemMessageModal
+			// 	 	  	vm.dismissWelcomeModal = function () {
+			// 		    	$uibModalInstance.close();
+			// 		  	};
+			// 		}
+			// 	});
+		 // 	} //function systemMessageModal
 
-			function urgentPatentModal(response) {
-				var modalInstance = $uibModal.open({
-					templateUrl: 'p3sweb/app/components/dashboard/views/modals/urgent-message-modal.htm',
-					scope: $scope,
-					controllerAs: vm,
-					controller: function($uibModalInstance, message) {
+			// function urgentPatentModal(response) {
+			// 	var modalInstance = $uibModal.open({
+			// 		templateUrl: 'p3sweb/app/components/dashboard/views/modals/urgent-message-modal.htm',
+			// 		scope: $scope,
+			// 		controllerAs: vm,
+			// 		controller: function($uibModalInstance, message) {
 
-						vm.urgentPatents = message;
+			// 			vm.urgentPatents = message;
 
-				 	  	vm.urgentOk = function () {
-					    	$uibModalInstance.close();
-					  	};
+			// 	 	  	vm.urgentOk = function () {
+			// 		    	$uibModalInstance.close();
+			// 		  	};
 
-					  	vm.urgentDismissModal = function() {
-					  		$uibModalInstance.dismiss();
-					  	};
+			// 		  	vm.urgentDismissModal = function() {
+			// 		  		$uibModalInstance.dismiss();
+			// 		  	};
 
-					},
-					resolve: {
-						message: function() {
-							return urgentResponse;
-						}
-					}
-				});
-		 	} //function urgentPatentModal		 	
+			// 		},
+			// 		resolve: {
+			// 			message: function() {
+			// 				return urgentResponse;
+			// 			}
+			// 		}
+			// 	});
+		 // 	} //function urgentPatentModal		 	
 
 
-		    if(counter === null) {
-
-			 	if(!patents) {
-			 		welcomeMessageModal();
-				}				        	
+		    if(counter === null) {	        	
 
 		    	localStorageService.set('counter', 1);
 
