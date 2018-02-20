@@ -432,7 +432,6 @@
 			 	$('.hide-before').fadeIn(500);
 			});
 
-
 			$(document).ready(function(){
 
 				$('#companyCodeForm').parsley();
