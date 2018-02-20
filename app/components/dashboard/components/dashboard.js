@@ -620,6 +620,7 @@ app.component('dashboard', {
 			patentsRestService.fetchCostAnalysis(data.id)
 			.then(
 				function(response) {
+					console.log(response)
                     switch(response.currentcostBand) {
                         case 'Green':
 							data.progressBar = calcProgress(response.greenStartDate, response.amberStartDate);
@@ -634,7 +635,7 @@ app.component('dashboard', {
 							data.progressBar = calcProgress(response.blueStartDate, response.blackStartDate);
 						break;
 						case 'Black':
-							data.progressBar = calcProgress(response.blackStartDate, response.blackEndDate);
+							data.progressBar = calcProgress(response.blackStartDate, response.blackAllEnd);
 					}
 				},
 				function(errResponse) {
