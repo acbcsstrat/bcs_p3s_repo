@@ -4,13 +4,13 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
 
 	var urgentResponse = [];
 
-	var patentsFound;
+	var patentsFound = true;
 
 	patentsRestService.fetchAllPatents()
 	.then(
 		function(response){
 			if(response.length === 0) {
-				patentsFound === false;
+				patentsFound = false;
 			}
 		},
 		function(errResponse){
@@ -102,13 +102,10 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
     	);
 
 		$timeout(function() {
-		 	if(!patentsFound) {
+		 	if(patentsFound === false) {
 		 		welcomeMessageModal();
 			}	
 		}, 350);
 	} 
 
-		
-
 }])
-
