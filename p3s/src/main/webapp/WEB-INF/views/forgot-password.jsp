@@ -42,8 +42,9 @@
                   <div class="content-panel">
                      <div class="row">
                         <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-                           <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-red">Unsuccessful!</h3>
-                           <p class="font-body text-center"></p>
+                           <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-red">Unsuccessful</h3>
+                           <p id="errorMsg" class="font-body text-center m-b-sm"></p>
+                           <p class="font-body">Do you need support? Contact us through our <a class="inline-link font-weight-medium" id="supportLink">website</a></p>
                         </div>
                      </div>
                   </div>
@@ -62,7 +63,7 @@
                   <div class="content-panel__body">
                      <div class="row">
                         <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-                           <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-green">Successful!</h3>
+                           <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-green">Successful</h3>
                            <p class="font-body text-center">Please check your inbox and complete the process to reset your password.</p>
                         </div>
                      </div>                        
@@ -110,19 +111,19 @@
                url: domain + 'prelogin/rest-forgot-password/',
                data: dataString,
                success: function(response) {
-                  console.log(response)
                   $('#initialForgotPass').fadeOut(500);
                   $('#forgotPassSuccess').delay(520).fadeIn(500);
                },
                error:function(errResponse) {
+                  $('#supportLink').attr('href', 'http://thepatent.place/contact/');
                   $('#forgotPassFail').delay(520).fadeIn(500);
                   if(errResponse.status == 403){
-                     $('#forgotPassFail p').html('We were unable to send an email to reset your password. Please complete the Registration process before Reset password.');
+                     $('#forgotPassFail p#errorMsg').html('We were unable to send an email to reset your password. Please complete the Registration process before Reset password.');
                   } else if(errResponse.status == 400) {
-                     $('#forgotPassFail p').html('We were unable to find the email address in our records. Please check and try again.');
+                     $('#forgotPassFail p#errorMsg').html('We were unable to find the email address in our records. Please check and try again.');
                   }
                   else{
-                     $('#forgotPassFail p').html('There is currently an issue with our server and are unable to send an email to reset your password. Sorry for any inconvenience. Please try again later.');                     
+                     $('#forgotPassFail p#errorMsg').html('There is currently an issue with our server and are unable to send an email to reset your password. Sorry for any inconvenience. Please try again later.');                     
                   }
                }
             });

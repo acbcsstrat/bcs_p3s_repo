@@ -90,8 +90,8 @@
 		<script src="p3sweb/app/components/checkout/services/bankTransferCommitService.js"></script>
 		<script src="p3sweb/app/components/user/services/userService.js"></script>
 
-	<!-- 	<script src="p3sweb/app/components/app/controllers/mainCtrl.js"></script>
- -->
+		<script src="p3sweb/app/components/app/controllers/mainCtrl.js"></script>
+
 		<!--components-->
 
     	<script src="p3sweb/app/components/app/components/idle.js"></script>
@@ -124,11 +124,11 @@
 
 	</head>
 
-	<body ng-app="myApp" ng-controller="coreCtrl" class="bg-light-grey">
+	<body ng-app="myApp" class="bg-light-grey">
 		
 		<mainnav></mainnav>
 
-		<main class="app-container m-tb-xl">
+		<main class="app-container m-tb-xl" ng-controller="coreCtrl">
 			<basketnav></basketnav>
 			<ui-view></ui-view>
 			<idle></idle>

@@ -5,7 +5,7 @@ app.component('patent', {
 		renewal: '<'
 	},
 	templateUrl: 'p3sweb/app/components/patents/views/patent-item.htm',
-	controller: ['patentsRestService', '$state', '$timeout','$scope', 'fxService', 'patentsService', 'currentTransactionsService', '$uibModal', function(patentsRestService, $state, $timeout, $scope, fxService, patentsService, currentTransactionsService, $uibModal) {
+	controller: ['patentsRestService', '$state', '$timeout','$scope', 'fxService', 'patentsService', 'currentTransactionsService', '$uibModal', '$location', '$anchorScroll',function(patentsRestService, $state, $timeout, $scope, fxService, patentsService, currentTransactionsService, $uibModal, $location, $anchorScroll) {
 
 		var vm = this;
 
@@ -32,7 +32,18 @@ app.component('patent', {
 						
 						data.renewalUIs.forEach(function(data, i) {
 							if(data.patentUI.id == id) {
-								$state.go('current-transactions.current-transaction-item',{transId: transId});
+								$state.go('current-transactions.current-transaction-item',{transId: transId})
+								.then(
+									function(response){
+										$timeout(function() {
+											$location.hash('currTransAnchor');
+										  	$anchorScroll();
+										}, 300);
+									},
+									function(errResponse){
+										console.log(errResponse);
+									}
+								);								
 							}
 						});
 					});

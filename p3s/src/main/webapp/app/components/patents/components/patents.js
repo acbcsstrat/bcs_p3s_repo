@@ -206,7 +206,7 @@ app.component('patents', {
                                 break;
                             case 'Black':
 							start = response.blackStartDate;
-							end = response.blackEndDate;
+							end = response.blackAllEnd;
 							item.progressBar = calcProgress(start, end);
                         }
                     }, 

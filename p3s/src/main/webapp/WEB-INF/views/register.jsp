@@ -36,7 +36,7 @@
          		<div id="register-intro">
 	       			<div class="row m-b-sm">
 	       				<div class="col-md-12 col-lg-12 col-xl-12 text-center">
-	       					<a href="/p3sweb/login" class="font-body txt-phase-green font-weight-medium">Already have user account set up?</a>
+	       					<a href="/p3sweb/login" class="font-body txt-phase-green font-weight-medium inline-link">Already have user account set up?</a>
 	       				</div>
 	       			</div>
 	       			<div class="row m-b-md" id="divQn">
@@ -168,7 +168,7 @@
 									</div>
 									<div class="row m-b-sm">
 				                        <label class="form-check-label font-body col-md-12 col-lg-12 col-xl-12 text-center">
-			                            	I accept the <span class="font-weight-bold m-r-xs">Terms and Conditions</span> 
+			                            	I accept the <a href="http://thepatent.place/terms/" target="__blank" class="font-weight-medium inline-link">Terms and Conditions</a>
 			                            	<input type="checkbox" name="terms-register" id="terms-register" data-parsley-required-message="Please read and accept out terms and conditions" data-parsley-required="true">		
 			                       	 	</label>									
 									</div>
@@ -192,7 +192,7 @@
    						<div class="content-panel__body">
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
-	   								<h3 class="font-h4 txt-phase-green m-b-sm">Successful!</h3>
+	   								<h3 class="font-h3 txt-phase-green m-b-sm">Successful</h3>
 	   								<p class="font-body text-center">You have successfully reigstered your details. Please check your inbox to validate your account</p>
 	   							</div>
 	   						</div>   							
@@ -205,8 +205,9 @@
    						<div class="content-panel__body">
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
-									<h3 class="font-h4 txt-phase-red  m-b-sm">Unsuccessful!</h3>
-	   								<p class="font-body text-center">We were unable to register your details. It is possible that email address has already been registered. Please check and try again, or contact our support team.</p>
+									<h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
+	   								<p class="font-body text-center">We were unable to register your details. It is possible that email address has already been registered. Please check and try again.</p>
+	   								<p class="font-body">Do you need support? Contact us through our <a class="inline-link font-weight-medium" id="supportLink">website</a></p>
 	   							</div>
 	   						</div>
 	   					</div>
@@ -375,9 +376,11 @@
 
 		        validateString: function(value){
 
+		        	var valueTrim = value.trim()
+
 		            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
 
-               		if(!value.match(reg)) {
+               		if(!valueTrim.match(reg)) {
 	                    return false;
 	                } 
 	            },
@@ -429,11 +432,12 @@
 			 	$('.hide-before').fadeIn(500);
 			});
 
-			$(document).ready(function(){
-				$('#companyCodeForm').parsley();
-			});
 
 			$(document).ready(function(){
+
+				$('#companyCodeForm').parsley();
+
+				$('#supportLink').attr('href', 'http://thepatent.place/contact/');
 
 				 var password_li = $('#passwordStrength').find('li');
 				  $('#password').bind('keyup', function() {

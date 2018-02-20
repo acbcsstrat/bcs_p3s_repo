@@ -74,10 +74,10 @@
 									<option value="">Multiple</option>
 								</select>
 					        </td>
-					        <td class="no-wrap">
-								<span data-ng-if="item.renewalUIs.length == 1" data-ng-repeat="ref in item.renewalUIs">
-									<span class="txt-grey" data-ng-if="ref.patentUI.clientRef == ''">[No client reference provided]</span>
-									<span data-ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>						
+					        <td class="no-wrap" data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
+								<span data-ng-if="item.renewalUIs.length == 1;" data-ng-repeat="ref in item.renewalUIs">
+									<span data-ng-if="ref.patentUI.clientRef === ''" class="txt-grey" data-ng-init="$ctrl.noClientRef()">[No client reference provided]</span>
+									<span data-ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>
 								</span>
 								<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.clientRef for item in item.renewalUIs" data-ng-model="clientRefData.defaultSelect" class="pill-radius form-control font-body" data-ng-change="transactionListFilter(clientRefData.defaultSelect, 'clientRefFilter', item.id)">
 									<option value="">Multiple</option>
