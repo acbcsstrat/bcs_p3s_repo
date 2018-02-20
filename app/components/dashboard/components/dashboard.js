@@ -63,7 +63,7 @@ app.component('dashboard', {
 		                x: function(d, i){ 
 		                	return d[0]},
 		                y: function(d){ return d[1]; },
-		                useInteractiveGuideline: false,
+		                useInteractiveGuideline: true,
 		                dispatch: {
 		                    stateChange: function(e){ console.log("stateChange"); },
 		                    changeState: function(e){ console.log("changeState"); },
@@ -113,13 +113,13 @@ app.component('dashboard', {
 		//                    return d3.time.format('%X')(new Date(d));  //uncomment for time format
 		                    return d3.time.format('%x')(new Date(d));  //uncomment for date format
 		                }
-		            }                
+		            }
 
 				 	function chartDatafn() {
 
 				   		return [
 				   			{
-				   				values: chartValueArrs,
+				   				values: chartValueArrs.reverse(),
 				   				color: '#2ca02c'
 				   			}
 				   		]			   			
