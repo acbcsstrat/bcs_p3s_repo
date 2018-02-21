@@ -340,7 +340,7 @@ app.component('dashboard', {
 		};
 
 
-		function millsToHours(data, millisec) {
+		function millsToHours(millisec) {
 
 	        var seconds = (millisec / 1000).toFixed(0);
 	        var minutes = Math.floor(seconds / 60);
@@ -357,7 +357,7 @@ app.component('dashboard', {
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
 	        if (hours < 48) {
-	            return data;
+	            return true;
 	        }
 
 	    }
@@ -887,10 +887,10 @@ app.component('dashboard', {
 			currTrans.forEach(function(data){
 	
 				var hours =  vm.date - data.lastUpdatedDate;
-				var recentTrans  = millsToHours(data, hours);
+				var recentTrans  = millsToHours(hours);
 
 				if(recentTrans) {
-					vm.recentTransArr.push(recentTrans);
+					vm.recentTransArr.push(data);
 				}
 
 				if(recentTrans && data.latestTransStatus === 'Completed') {
