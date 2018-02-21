@@ -634,7 +634,9 @@ app.component('dashboard', {
 							data.progressBar = calcProgress(response.blueStartDate, response.blackStartDate);
 						break;
 						case 'Black':
-							data.progressBar = calcProgress(response.blackStartDate, response.blackAllEnd);
+							if(data.renewalStatus == 'Show price') {
+								data.progressBar = calcProgress(response.blackStartDate, response.blackPhoneUpStart);
+							} 							
 					}
 				},
 				function(errResponse) {
@@ -694,16 +696,15 @@ app.component('dashboard', {
 			patentsRestService.fetchCostAnalysis(id)
 			.then(
 				function(response, i){
-
-					
-
+					console.log(response);
                     switch(response.currentcostBand) {
                         case 'Green':
 
 	                    	hours =  vm.date - response.greenStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Green') {
+                    			if(item.costBandColour == 'Green' && item.renewalStatus == 'Show price') {
+
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
@@ -717,7 +718,7 @@ app.component('dashboard', {
 	                    	hours =  vm.date - response.amberStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Amber') {
+                    			if(item.costBandColour == 'Amber' && item.renewalStatus == 'Show price') {
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
@@ -731,7 +732,7 @@ app.component('dashboard', {
 							hours =  vm.date - response.redStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Red') {
+                    			if(item.costBandColour == 'Red' && item.renewalStatus == 'Show price') {
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
@@ -745,7 +746,7 @@ app.component('dashboard', {
 							var hours =  vm.date - response.blueStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Blue') {
+                    			if(item.costBandColour == 'Blue' && item.renewalStatus == 'Show price') {
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
@@ -759,7 +760,7 @@ app.component('dashboard', {
 							hours =  vm.date - response.blackStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Black') {
+                    			if(item.costBandColour == 'Black' && item.renewalStatus == 'Show price') {
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
