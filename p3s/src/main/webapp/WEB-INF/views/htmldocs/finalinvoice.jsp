@@ -43,7 +43,7 @@
 		    width: 100%;
 		    #height: 100%; # Inhibit, or ends div partway down the page
 		    z-index: 99999;
-		    background: url('/p3sweb/public/paid_watermark.png') center center no-repeat;
+		    background: url('/p3sweb/public/images/paid_watermark.png') center center no-repeat;
 		    pointer-events: none;
 		}
 

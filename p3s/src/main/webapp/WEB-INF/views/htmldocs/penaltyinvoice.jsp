@@ -406,8 +406,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
       <td> <font color="blue">
         <div align="center">
           Please ensure you use our Transaction ID as your payment reference.
-          <br/>
-          Patents cannot be renewed by our service if the Transaction ID is missing or incorrectly quoted.
         </div>
       </font></td>
     </tr>
