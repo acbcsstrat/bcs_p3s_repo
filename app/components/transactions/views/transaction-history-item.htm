@@ -28,7 +28,7 @@
 								<div class="steps">
 								    <ul id="progressTracker" class="steps-container d-flex justify-content-between">
 								        <li data-ng-repeat="li in $ctrl.transStatus track by $index" data-ng-init="$ctrl.checkProgress()" data-ng-class="(li.complete == true ? 'complete': '') + ' ' + (li.active == true ? 'active': '')">
-								            <div class="step">
+								            <div class="step font-body cursor-help font-body" tooltip-placement="{{li.position}}" uib-tooltip="{{li.tip}}" tooltip-class="trackerStep">
 								                <div class="step-image"><span></span></div>
 								                <div class="step-current"><span>{{li.status}}</span></div>
 								            </div>

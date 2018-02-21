@@ -28,7 +28,7 @@
 								<div class="steps">
 								    <ul id="progressTracker" class="steps-container d-flex justify-content-between">
 								        <li data-ng-repeat="li in $ctrl.transStatus track by $index" data-ng-init="$ctrl.checkProgress()" data-ng-class="(li.complete == true ? 'complete': '') + '' + (li.active == true ? 'active': '')">
-								            <div class="step">
+								            <div class="step font-body cursor-help" tooltip-placement="{{li.position}}" uib-tooltip="{{li.tip}}" tooltip-class="trackerStep">
 								                <div class="step-image"><span></span></div>
 								                <div class="step-current"><span>{{li.status}}</span></div>
 								            </div>
@@ -48,7 +48,7 @@
 								<div class="hidden-md-down m-b-sm">
 									<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
 									<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span><span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey">[No client description provided]</span></p>
-									<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>					
+									<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>
 								</div>
 								<div class="hidden-sm-down hidden-lg-up">
 									<div class="p-b-sm">
@@ -57,7 +57,7 @@
 												<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
 											</div>
 											<div class="col-md-6 text-right">
-												<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span><span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal" >[No client description provided]</span></p>
+												<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span><span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey" >[No client description provided]</span></p>
 											</div>
 											<div class="col-md-12">
 												<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>			
@@ -161,33 +161,14 @@
 												<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="33" max="100"></uib-bar></uib-progress>
 											</div>
 											<div class="m-b-sm">
-												<h4 class="font-h4 font-weight-medium m-b-xs">Initiated</h4>
-												<p class="font-body">This status means that you've checked out your basket on the Patent Place, and we're now doing our work in the background.  We're now send the request over to our payment partners Moneycorp, requesting that they book the currency exchange, and to expect a payment from you.</p>
+												<p class="font-body"></p>
 											</div>
-											<div class="m-b-sm">
-												<h4 class="font-h4 font-weight-medium m-b-xs">Awaiting Funds</h4>
-												<p class="font-body">This status means that MoneyCorp have booked the currency exchange, and are now waiting for your payment.  They'll expect the funds by the date and time specified, and for it to have the correct reference on it so that the payment can be matched to the transation.</p>
-											</div>
-											<div class="m-b-sm">
-												<h4 class="font-h4 font-weight-medium m-b-xs">Funds Received</h4>
-												<p class="font-body">This status means that MoneyCorp have received your payment and they're now completing the foreign exchange.  This happens the day after your funds were expected by MoneyCorp.</p>
-											</div>
-											<div class="m-b-sm">
-												<h4 class="font-h4 font-weight-medium m-b-xs">Funds Sent</h4>
-												<p class="font-body">This status means that MoneyCorp have completed the currency exchange and the Euros have been sent to the European Patent Office.</p>
-											</div>	
-											<div class="m-b-sm">
-												<h4 class="font-h4 font-weight-medium m-b-xs">EPO Received</h4>
-												<p class="font-body">This status means that we’ve had confirmation that the funds have been received by the EPO.</p>
-											</div>	
-										</div>			
 										<div data-ng-if="transaction.renewalStatus == 'EPO Instructed'">
 											<div class="progress-tracker m-b-sm">
 												<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="66" max="100"></uib-bar></uib-progress>
 											</div>											
 											<div class="m-b-sm">
-												<h4 class="font-h4 font-weight-medium m-b-xs">EPO Instructed</h4>
-												<p class="font-body">This status means that everything is in place, and we’ve instructed the EPO to renew the patent.</p>
+												<p class="font-body"></p>
 											</div>
 										</div>
 										<div data-ng-if="transaction.renewalStatus == 'Renewal in place'">
@@ -195,8 +176,7 @@
 												<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="100" max="100"></uib-bar></uib-progress>
 											</div>											
 											<div class="m-b-sm">
-												<h4 class="font-h4 font-weight-medium m-b-xs">Completed</h4>
-												<p class="font-body">This status means that we've had confirmation that your patent has been successfully renewed by the EPO.  You can download copies of the renewal certificate and the invoice from the Transaction history tab under the Transactions menu.</p>
+												<p class="font-body"></p>
 											</div>
 										</div>						
 									</div>
