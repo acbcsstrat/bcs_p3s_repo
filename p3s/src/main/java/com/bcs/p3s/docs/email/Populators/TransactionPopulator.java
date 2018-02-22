@@ -115,13 +115,16 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		
 				
 		// 1of3: Retrieve data from property file
+		String siteTomcatUrl = null;
 		try {
 			P3SPropertyReader reader = new P3SPropertyReader();
 			String pathToDocs = reader.getESProperty(P3SPropertyNames.PATH_TO_PDF_DOCS); 
 			attachmentRootPath = reader.checkPathPropertyTerminated(pathToDocs);
+			siteTomcatUrl = reader.getESProperty(P3SPropertyNames.P3S_WEB_TOMCAT_URL_BASE);
 		} catch (P3SPropertyException e) {
 			fail(err+"property read failed",e);
 		}
+		data.setLoginUrl(siteTomcatUrl);
 		
 		
 		// 2of3: retrieve user & company details. 
@@ -135,6 +138,7 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		data.setTransactionReference(txnRef);
 		data.setPatents(patents);
 		data.setNumberOfPatents(""+patents.size());
+		
 	}
 
 	protected void populatePaymentDueFields(Object obFundsTargetArriveTime, Object obPayeeDets, Object obPrice) {
@@ -238,6 +242,7 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectPATENT_PLURALITY_TEXT_FRAGMENT();
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectPATENT_PLURALITY_S();
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectNUMBER_OF_PATENTS();
+		if (moreInjectionsNeeded) moreInjectionsNeeded = injectLOGIN_URL();
 		
 		// Check for Repeating sets
 		if (moreInjectionsNeeded) {
