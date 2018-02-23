@@ -55,7 +55,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             ngModel: '='
         },
         controller : 'CartController',
-        scope: {},
         templateUrl: function(element, attrs) {
             if ( typeof attrs.templateUrl == 'undefined' ) {
                 return 'p3sweb/app/components/checkout/views/ngCart/cart.htm';
@@ -232,11 +231,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                     }
                 );
             }
-        },
-        scope: {
-            service:'@',
-            settings:'=',
-            ngModel: '='
         },
         transclude: true,
         templateUrl: function(element, attrs) {

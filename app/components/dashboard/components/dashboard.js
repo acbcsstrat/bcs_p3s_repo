@@ -687,16 +687,10 @@ app.component('dashboard', {
 
 	    }
 
-	    // console.log(vm.recentTransArr)
-
 		function patentCostAnalysisFn(id) {
-
-			
-
 			patentsRestService.fetchCostAnalysis(id)
 			.then(
 				function(response, i){
-					console.log(response);
                     switch(response.currentcostBand) {
                         case 'Green':
 
@@ -782,7 +776,7 @@ app.component('dashboard', {
 		//COLOUR KEY	
 
 
-		vm.$onInit = () => {
+		vm.$onInit = function() {
 
 			var counter = localStorageService.get('counter');
 
