@@ -111,6 +111,8 @@ input[type=checkbox], input[type=radio] {
 
 .app-container {     
   padding: 0 0;
+  width: -webkit-calc(100% - 125px)!important;
+  width: -moz-calc(100% - 125px)!important;
   width: calc(100% - 125px)!important;
   left: 100px;
   position: absolute;
@@ -311,6 +313,10 @@ div.cursor-help { cursor: help; }
 .notifcation-tabs .notification-pill  {
   list-style-type: none;
   padding: 0;
+    display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap; /* nowrap if you only want one row */
@@ -352,8 +358,15 @@ div.cursor-help { cursor: help; }
 }
 
 .nav-pills .uib-tab {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-align-items: center;
   align-items: center;
+  -moz-align-items: center;
+  -webkit-align-items: center;
   justify-content: center;
 } 
 
@@ -1272,6 +1285,8 @@ display: none !important;
 
   .app-container {
     padding: 0 0;
+    width: -webkit-calc(100% - 105px)!important;
+    width: -moz-calc(100% - 105px)!important;
     width: calc(100% - 105px)!important;
     left: 90px;
     position: absolute;
@@ -1376,6 +1391,8 @@ display: none !important;
 
   .app-container {
     padding: 0 0;
+    width: -webkit-calc(100% - 90px)!important;
+    width: -moz-calc(100% - 90px)!important;  
     width: calc(100% - 90px)!important;
     left: 75px;
     position: absolute;
@@ -1402,7 +1419,10 @@ display: none !important;
 /*RESET USER-AGENT STYLES******************/
 
 .justify-content-between ul.nav-pills, 
-.justify-content-between .notification-pills { justify-content: space-between; /*for uib elements*/ }
+.justify-content-between .notification-pills { 
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between; /*for uib elements*/ }
 
 /*.ng-table th.sortable.sort-asc, 
 .ng-table th.sortable.sort-desc {}*/
@@ -1443,10 +1463,17 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .modal-dialog {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: space-between;    
+  justify-content: center;
+  min-height: 100%;  
 }
 
 .modal-header,
