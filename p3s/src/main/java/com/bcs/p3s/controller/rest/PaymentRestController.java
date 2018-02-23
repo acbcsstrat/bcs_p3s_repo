@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.engine.OrderProcessingEngine;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.engine.GenericProcessingEngine;
+import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
@@ -137,13 +139,29 @@ public class PaymentRestController extends Universal {
     	if ( ! (obby instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() NOT passed String");
     	
     	InBasket basketContents = new InBasket();
-    	BankTransferPostCommitDetails bankTransferPostCommitDetails;
+    	BankTransferPostCommitDetails bankTransferPostCommitDetails = null;
     	try {
     		
     		/*DummyDataEngine dummy = new DummyDataEngine();  // acTidy
     		Api4dotXdataFromGETworkaround tmp = dummy.getApi43data( (String) obby );
 */
     		basketContents = new ExtractSubmittedDataEngine().getBasketContentsPreCommitForm(obby);
+    		
+    		/**
+    		 * Precheck before committing payment : to avoid duplicate payments for same patents from different users of same company
+    		 * CHECK :- CHECK WHETHER ALL THE PATENTS ADDED TO THE BASKET IS HAVING A STATUS AS SHOW_PRICE
+    		 */
+    		List<Long> addedPatentIds = basketContents.getPatentIds();
+    		if(!(addedPatentIds.isEmpty())){
+    			for(Long eachId : addedPatentIds){
+    				Patent patent = Patent.findPatent(eachId);
+    				if(!(RenewalStatusEnum.SHOW_PRICE.equals(patent.getRenewalStatus()))){
+    					log().debug("Patent[" +patent.getId() +"] added to basket has got a RENEWAL STATUS NOT EQUALS SHOW_PRICE. Abort the Payment request.");
+    					return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.BAD_REQUEST);  // Pat to display respective error message
+    				}
+    			}
+    		}
+    		
 			bankTransferPostCommitDetails = paymentService.showBankTransferPostCommitDetails(basketContents);
 			
     	} catch (Exception e) {
