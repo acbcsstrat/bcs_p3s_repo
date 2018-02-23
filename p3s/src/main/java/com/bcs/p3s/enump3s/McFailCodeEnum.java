@@ -5,9 +5,13 @@ package com.bcs.p3s.enump3s;
  */
 public class McFailCodeEnum extends P3SAbstractEnum {
 
-    public static final String TOOLATE = "toolate";
+    public static final String NOTRECEIVED = "notreceived";
     public static final String INSUFFICIENTFUNDS = "insufficientfunds";
-    public static final String OTHER = "other"; 
+    public static final String OTHERFAIL = "otherfail"; 
+
+    // Previously, ...
+    // public static final String TOOLATE = "toolate"; 180207 renamed to NOTRECEIVED 
+    // public static final String OTHER = "other"; 180207 renamed to OTHERFAIL
 
 
     // Constructor - Which verifies the value provided
@@ -16,9 +20,9 @@ public class McFailCodeEnum extends P3SAbstractEnum {
                 if (failcode==null) fail("McFailCodeEnum constructor passed null");
 
                 String sofar = null;
-                if (failcode.equalsIgnoreCase(McFailCodeEnum.TOOLATE)) sofar = McFailCodeEnum.TOOLATE;  
+                if (failcode.equalsIgnoreCase(McFailCodeEnum.NOTRECEIVED)) sofar = McFailCodeEnum.NOTRECEIVED;  
                 if (failcode.equalsIgnoreCase(McFailCodeEnum.INSUFFICIENTFUNDS)) sofar = McFailCodeEnum.INSUFFICIENTFUNDS;  
-                if (failcode.equalsIgnoreCase(McFailCodeEnum.OTHER)) sofar = McFailCodeEnum.OTHER;  
+                if (failcode.equalsIgnoreCase(McFailCodeEnum.OTHERFAIL)) sofar = McFailCodeEnum.OTHERFAIL;  
 
                 if (sofar != null) {
                 	this.value = sofar;
@@ -30,7 +34,7 @@ public class McFailCodeEnum extends P3SAbstractEnum {
     
     public String toCustomerFacingString() {
     	String msg = "Transaction Failed";
-    	if (TOOLATE.equals(this.value)) msg = "Funds did not arrive by the agreed time";
+    	if (NOTRECEIVED.equals(this.value)) msg = "Funds did not arrive by the agreed time";
     	if (INSUFFICIENTFUNDS.equals(this.value)) msg = "Funds arrived but were less than the agreed amount";
     	return msg;
     }
