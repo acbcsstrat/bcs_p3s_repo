@@ -127,7 +127,7 @@ HtmlDocCertificate data = (HtmlDocCertificate) request.getAttribute("htmlDocCert
 			<td><%=data.getPatentApplicationNumber() %></td>
 		</tr>
 		<tr>
-			<td><b>DESCRIPTION</b></td>
+			<td><b>TITLE</b></td>
 			<td><%=data.getPatentTitle() %></td>
 		</tr>
 		<tr>
