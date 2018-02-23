@@ -1,4 +1,4 @@
-app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', function($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService){
+app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', function($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart){
 
 	var vm = this;
 
@@ -106,6 +106,54 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
 		 		welcomeMessageModal();
 			}	
 		}, 350);
-	} 
+	}
+
+		function closeModals() {
+		    if ($scope.warning) {
+		      $scope.warning.close();
+		      $scope.warning = null;
+		    }
+
+		    if ($scope.timedout) {
+		      $scope.timedout.close();
+		      $scope.timedout = null;
+		    }
+		}
+
+		$scope.$on('IdleStart', function() {
+		  	closeModals();
+
+		  	$scope.warning = $uibModal.open({
+				  templateUrl: 'warning-dialog.html',
+		  		windowClass: 'modal-danger'
+		    });
+		});
+
+	  $scope.$on('IdleEnd', function() {
+	  	closeModals();
+		});
+
+		var userTimedOut = false;
+
+		$scope.$on('IdleTimeout', function() {
+
+	  	closeModals();
+
+	    userTimedOut = true;  
+
+	    if (userTimedOut) {
+	      ngCart.empty()
+	    	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
+	      	.then(
+	      		function(response){
+	      		  window.location.reload('http://localhost:8080/p3sweb/login');
+	      		},
+	          function(errResponse) {
+	            console.log(errResponse)
+	          }    
+	    		)    	
+	      }
+
+	});	
 
 }])
