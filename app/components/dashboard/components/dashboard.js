@@ -480,7 +480,8 @@ app.component('dashboard', {
 						    		slick.slickGoTo($scope.currentIndex);
 						    	}
 						    }
-						};						
+						};
+						vm.greyNoData = false;
 					break;
 					case 1:
 						vm.sliderPhase = 'amber';
@@ -508,6 +509,7 @@ app.component('dashboard', {
 						    	}
 						    }
 						};
+						vm.greyNoData = false;
 					break;
 					case 2:
 						vm.sliderPhase = 'red';
@@ -534,7 +536,8 @@ app.component('dashboard', {
 						    		slick.slickGoTo($scope.currentIndex);
 						    	}
 						    }
-						};						
+						};
+						vm.greyNoData = false;					
 					break;
 					case 3:
 						vm.sliderPhase = 'blue';
@@ -561,7 +564,8 @@ app.component('dashboard', {
 						    		slick.slickGoTo($scope.currentIndex);
 						    	}
 						    }
-						};	   						
+						};
+						vm.greyNoData = false;	   						
 					break;
 					case 4:
 						vm.sliderPhase = 'black';
@@ -588,7 +592,8 @@ app.component('dashboard', {
 						    		slick.slickGoTo($scope.currentIndex);
 						    	}
 						    }
-						};							
+						};
+						vm.greyNoData = false;
 					break;
 					case 5:
 						vm.colourPhaseTitle = {
