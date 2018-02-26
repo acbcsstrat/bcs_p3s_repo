@@ -362,12 +362,6 @@ app.component('dashboard', {
 
 	    }
 
-		// messageObj.messageArr = messageArr;
-
-		// vm.supresssMessages = function() {
-		// 	dashboardService.supressMessages(messageObj);
-		// };
-
 		function patentFx(i) {
 			vm.selectedPatent = vm.phaseArr[i];
 
@@ -599,8 +593,9 @@ app.component('dashboard', {
 					case 5:
 						vm.colourPhaseTitle = {
 							title: 'Grey',
-							color: '#bdbdbd'
+							color: '#dbdbdb'
 						};
+						vm.greyNoData = true;
 				}
 
 				function loadPhase(i) {
@@ -614,6 +609,7 @@ app.component('dashboard', {
 
 			}	
 		}
+
 
 		function calculateProgress(data, i) {
 	

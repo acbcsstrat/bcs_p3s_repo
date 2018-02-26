@@ -107,11 +107,17 @@
 					</div>
 				</div>
 				<div class="widget-panel__body">
-					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length">
+					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length && !$ctrl.greyNoData">
 						<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
 							<p class="font-body font-weight-bold">No patents currently in this Stage</p>
 						</div>
 					</div>
+					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length && $ctrl.greyNoData">
+						<div class="col-md-12 d-flex align-items-center justify-content-center flex-column z-index-1">
+	            			<p class="font-body font-weight-bold m-b-xs">Patents in the grey phase are not open for renewal.</p>
+	            			<p class="font-body font-weight-bold text-center">To view these patents, click on the grey phase tab within list patents.</p>
+						</div>
+					</div>					
 					<div data-ng-if="$ctrl.phaseArr.length">
 						<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-sm">
 							<uib-tab heading="Today" class="font-body" index="0" data-ng-hide="true">
@@ -496,8 +502,9 @@
 						</uib-tab>
 						<uib-tab heading="Grey" index="5" class="bg-phase-black pill-radius p-pill-tabs pill-tabs" data-ng-hide="true">
 			            	<div class="row h-100 bg-no-data">
-			            		<div class="col-xl-12 d-flex align-items-center justify-content-center z-index-1">
-			            			<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
+			            		<div class="col-xl-12 d-flex align-items-center justify-content-center flex-column z-index-1">
+			            			<p class="font-body font-weight-bold">Patents in the grey phase are not open for renewal.</p>
+			            			<p class="font-body font-weight-bold">To view these patents, click on the grey phase tab within list patents.</p>
 			            		</div>
 	                    	</div>
 						</uib-tab>
@@ -514,11 +521,17 @@
 					</div>
 				</div>
 				<div class="widget-panel__body">
-					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length">
+					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length && !$ctrl.greyNoData">
 						<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
 							<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 						</div>
 					</div>
+					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length && $ctrl.greyNoData">
+						<div class="col-md-12 d-flex align-items-center justify-content-center flex-column z-index-1">
+	            			<p class="font-body font-weight-bold">Patents in the grey phase are not open for renewal.</p>
+	            			<p class="font-body font-weight-bold">To view these patents, click on the grey phase tab within list patents.</p>
+						</div>
+					</div>					
 					<div data-ng-if="$ctrl.phaseArr.length">
 						<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-md">
 							<uib-tab heading="Today" class="font-body" index="0" data-ng-hide="true">
