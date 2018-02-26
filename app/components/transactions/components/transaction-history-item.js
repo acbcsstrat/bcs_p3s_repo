@@ -7,7 +7,11 @@ app.component('transactionHistoryItem', {
 
 		var vm = this;
 
+
+
 	    vm.$onChanges = function(changeObj){
+
+	    	console.log(vm.transactionHistoryItem)
 
 	    	var currTransStatus = vm.transactionHistoryItem.latestTransStatus;	
 
