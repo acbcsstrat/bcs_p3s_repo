@@ -93,6 +93,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             ngModel: '='
         },
         controller : ('CartController', ['$rootScope', '$scope', 'ngCart', 'fulfilmentProvider', 'basketService', function($rootScope, $scope, ngCart, fulfilmentProvider, basketService) {
+
             $scope.ngCart = ngCart;
 
             var productData = ngCart.$cart.items;
@@ -103,9 +104,11 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             });
 
             function calcSummary() {
+
                 var processingFeeArr = [];
                 var renewalFeeArr = [];
                 var extensionFeeArr = [];
+                var expressFeeArr = [];
                 var urgentFeeArr = [];
                 var totalCostArr = [];
 
@@ -113,12 +116,14 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 $scope.renewalFee = 0;
                 $scope.extensionFee = 0;
                 $scope.urgentFee = 0;
+                $scope.expressFee = 0;
                 $scope.totalCost = 0;
 
                 productData.forEach(function(data, i){
                     processingFeeArr.push(data._data.feeUI.processingFeeUSD);
                     renewalFeeArr.push(data._data.feeUI.renewalFeeUSD);
                     extensionFeeArr.push(data._data.feeUI.extensionFeeUSD);
+                    expressFeeArr.push(data._data.feeUI.expressFeeUSD)                    
                     urgentFeeArr.push(data._data.feeUI.urgentFeeUSD);
                     totalCostArr.push(data._data.feeUI.subTotalUSD);
                 });
@@ -135,6 +140,9 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 urgentFeeArr.forEach(function(data, i){
                     $scope.urgentFee += data;
                 });
+                expressFeeArr.forEach(function(data, i){
+                    $scope.expressFee += data;
+                });                
                 totalCostArr.forEach(function(data, i){
                     $scope.totalCost += data;
                 });            
