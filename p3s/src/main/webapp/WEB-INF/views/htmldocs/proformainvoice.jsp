@@ -364,10 +364,10 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
-		            Have 2 spare fields
+		            &nbsp;
 		            </td>
 		            <td>
-		              if needed
+		            &nbsp;
 		            </td>
 		          </tr>
 		        </table>

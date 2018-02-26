@@ -17,7 +17,7 @@ As you know, your payment of $[PRICE]
 must reach our Moneycorp U.S. bank account by [TIMESTAMP_TARGET_FUNDS_ARRIVAL]
 
 <p/>
-Your Invoice for this can be accessed by logging-in to <a href="[LOGIN_URL]">thepatent.place</a>
+Your Invoice for this can be accessed by logging-in to <a href="[LOGIN_URL]">thepatent.place</a>,
  selecting Transactions, clicking on this ([TRANSACTION_REFERENCE]) transaction, then pressing the Invoice button.
 
 <p/>
