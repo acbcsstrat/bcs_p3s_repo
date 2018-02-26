@@ -32,6 +32,8 @@ app.component('bankTransferPreparation', {
 			});
 		};
 
+		
+
 		vm.commitTransfer = function() {
 			
 			vm.commitTransferBtn = true;
@@ -44,7 +46,23 @@ app.component('bankTransferPreparation', {
 	                	order = response.data;
 	                },
 	                function(errResponse){
+	                	if(errResponse) {
+							var modalInstance = $uibModal.open({
+								templateUrl: 'p3sweb/app/components/checkout/views/modals/modal-commit-error.htm',
+								appendTo: undefined,
+								controller: function($uibModalInstance ,$scope) {
 
+								  	$scope.dismissModal = function () {
+								    	$uibModalInstance.close();
+								  	};
+
+								  	$scope.cancel = function() {
+								  		$uibModalInstance.dismiss('cancel');
+								  	};
+								}
+							});
+						}
+					
 	                }
 	            );	            
 		};
