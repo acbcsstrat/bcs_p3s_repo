@@ -10,11 +10,11 @@ app.component('currentTransactions', {
 
 		$rootScope.page = 'Current Transactions';
 
-	  	$scope.patentAppData = {
+	  	vm.patentAppData = {
 		  	defaultSelect: null
 	  	};
 
-	  	$scope.clientRefData = {
+	  	vm.clientRefData = {
 		  	defaultSelect: null
 	  	};
 
@@ -24,14 +24,16 @@ app.component('currentTransactions', {
 	      vm.animate = true;
 	    }, 300);    		
 
-	  	$scope.transactionListFilter = function(data, filter, i) {
+	  	vm.transactionListFilter = function(data, filter, i) {
 	     	
+	  		console.log(data)
+
 		    if(filter == 'clientRefFilter') { //reset altenrate select option
 		        $scope.filter = data;
-	    		$scope.patentAppData.defaultSelect = null;
+	    		vm.patentAppData.defaultSelect = null;
 		    } else {
 		        $scope.filter = data;
-		        $scope.clientRefData.defaultSelect = null;
+		        vm.clientRefData.defaultSelect = null;
 		    }
 
 		};
@@ -46,13 +48,12 @@ app.component('currentTransactions', {
 
 		vm.$onInit = function() {
 
-			var transactions = vm.transactions;
-			
-			transactions.forEach(function(data){
+
+			vm.transactions.forEach(function(data){
 				data.renewalProgress = currentTransactionsService.renewalProgress(data.latestTransStatus);
 			});
 
-			vm.tableData = transactions;
+			vm.tableData = vm.transactions;
 
 		   	vm.sortType     = 'transId'; // set the default sort type
 		  	vm.sortReverse  = false;  // set the default sort order			

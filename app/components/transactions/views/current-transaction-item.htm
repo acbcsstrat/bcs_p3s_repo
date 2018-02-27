@@ -98,7 +98,7 @@
 											<div class="col-md-6">
 												<p class="font-body">$ {{transaction.feeUI.expressFee_USD}}</p>
 											</div>
-										</div>											
+										</div>
 										<div class="row">		
 											<div class="col-md-6">
 												<p class="font-weight-bold font-body">Urgent clearance fee: </p>
@@ -139,7 +139,7 @@
 											</div>
 											<div class="col-md-3">
 												<p class="font-body">$ {{transaction.feeUI.urgentFee_USD}}</p>
-											</div>	
+											</div>
 										</div>
 									</div>
 								</div>
@@ -163,22 +163,15 @@
 											<div class="m-b-sm">
 												<p class="font-body"></p>
 											</div>
-										<div data-ng-if="transaction.renewalStatus == 'EPO Instructed'">
+										</div>
+										<div data-ng-if="transaction.renewalStatus == 'EPO Instructed'"">
 											<div class="progress-tracker m-b-sm">
 												<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="66" max="100"></uib-bar></uib-progress>
 											</div>											
 											<div class="m-b-sm">
-												<p class="font-body"></p>
+												<p class="font-body">Everything is in place, and we’ve instructed the EPO to renew the patent.</p>
 											</div>
 										</div>
-										<div data-ng-if="transaction.renewalStatus == 'Renewal in place'">
-											<div class="progress-tracker m-b-sm">
-												<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="100" max="100"></uib-bar></uib-progress>
-											</div>											
-											<div class="m-b-sm">
-												<p class="font-body"></p>
-											</div>
-										</div>						
 									</div>
 								</div>
 							</div>

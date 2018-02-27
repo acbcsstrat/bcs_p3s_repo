@@ -32,7 +32,7 @@ app.component('currentTransaction', {
 					status: 'Initiated', 
 					active: false, 
 					complete: false,
-					tip: 'You\'ve checked out your basket on the Patent Place, and we\'re now doing our work in the background.  We\'re now send the request over to our payment partners Moneycorp, requesting that they book the currency exchange, and to expect a payment from you.',
+					tip: 'You\'ve checked out your basket on the Patent Place, and we\'re now doing our work in the background.  We will now send the request over to our payment partners Moneycorp, requesting that they book the currency exchange, and to expect a payment from you.',
 					position: 'top-left'
 				}, 
 				{
@@ -60,7 +60,7 @@ app.component('currentTransaction', {
 					status: 'EPO Received', 
 					active: false, 
 					complete: false,
-					tip: 'We\'ve have had confirmation that the funds have been received by the EPO.',
+					tip: 'We\'ve had confirmation that the funds have been received by the EPO.',
 					position: 'top-right'
 				}, 
 				{
@@ -78,8 +78,11 @@ app.component('currentTransaction', {
 					position: 'top-right'
 				}
 			];
+
 			vm.checkProgress = function() {
+
 				var statusIndex;
+
 				vm.transStatus.forEach(function(data, index){
 					if(data.status == vm.currTransStatus) {
 						statusIndex = index;
@@ -93,6 +96,7 @@ app.component('currentTransaction', {
 						vm.transStatus[i].complete = false;
 					}
 				}
+				
 			};
 
 			switch(vm.currTransStatus) {
@@ -123,7 +127,8 @@ app.component('currentTransaction', {
 	    	vm.patents = [];
 
 	 		vm.transaction.renewalUIs.forEach(function(value, index, array){
-	 			vm.patents.push(value)			;
+	 			vm.patents.push(value);
+	 			console.log(value)
 		 	});
     	};
 	}]
