@@ -55,7 +55,7 @@ app.component('patents', {
 			);
 		};
 
-		vm.$onInit = () => {
+		vm.$onInit = function() {
 
 			vm.tableData = vm.patents;
 			var patents = vm.patents;
@@ -217,6 +217,7 @@ app.component('patents', {
 			});
 
 		};
+
 
       	vm.rowSelect = function(event){
       		vm.patentInfoContent = true;

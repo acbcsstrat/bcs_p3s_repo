@@ -16,6 +16,8 @@ app.component('patent', {
 			vm.activeSelectedTab = 2;
 		});
 
+		
+
 		vm.chartActive = 'Stage Cost Chart';
 
 		vm.fetchItemRenewal = function() {
@@ -339,35 +341,38 @@ app.component('patent', {
 	            		}
 	            	};      		
             	
-
-					Object.keys(caLine).forEach(day => {
-						const dayData = caLine[day];
-						lineLabelArr.push(dayData.feeActiveDate.slice(0, -5));
-						lineDataArr.push(dayData.subTotal_USD);
-					});
+            		for (var property in caLine) {
+					    if (caLine.hasOwnProperty(property)) {
+							const dayData = caLine[property];
+							lineLabelArr.push(dayData.feeActiveDate.slice(0, -5));
+							lineDataArr.push(dayData.subTotal_USD);
+					    }
+					}
 
 					const caBar = vm.costAnalysis;
 					const barDataArr = [];
 					const barLabelArr = [];
 
-					Object.keys(caBar).forEach(data => {
-						
-						const dayData = caBar[data];
-						
-						if ((data.includes('StartDate')) && (!data.includes ('UI'))) {
+            		for (var property in caBar) {
+					    if (caBar.hasOwnProperty(property)) {
 
-								var d = new Date(dayData);
-								var date = d.getDate();
-								var month = d.getMonth() + 1;
-								var year = d.getFullYear();
-								var dates = month  +'/'+ date +'/'+year;
-								barLabelArr.push(dates);
-						}
+							const dayData = caBar[property];
+						
+							if ((property.includes('StartDate')) && (!property.includes ('UI'))) {
 
-						if (data.includes('StageCost')) {
-							barDataArr.push(dayData);
-						}
-					});
+									var d = new Date(dayData);
+									var date = d.getDate();
+									var month = d.getMonth() + 1;
+									var year = d.getFullYear();
+									var dates = month  +'/'+ date +'/'+year;
+									barLabelArr.push(dates);
+							}
+
+							if (property.includes('StageCost')) {
+								barDataArr.push(dayData);
+							}
+					    }
+					}
 
 	            	vm.charts = {
 	            		line: {

@@ -19,7 +19,7 @@ app.component('transactionHistory', {
 			return true;
 		}
 
-		vm.$onInit = () => {
+		vm.$onInit = function() {
 
 			var transactions = vm.transactionHistory;
 

@@ -134,7 +134,7 @@
 											<div class="row m-t-xs">
 												<div class="col-md-12 col-lg-12 col-xl-12">
 													<div class="onoffswitch d-flex align-items-center justify-content-between">
-														<span class="font-body font-weight-medium m-r-sm">Same as billing address?</span>
+														<span class="font-body font-weight-medium m-r-sm">Same as business address?</span>
 														<label class="switch font-body">
 													  		<input type="checkbox" name="same_as_business" id="same_as_business">
 													  		<span class="slider round"></span>
@@ -506,7 +506,7 @@
       						break;
       						case 'zip':
       							addObj.zip = business[i].value;
-      						break;	      							      							      						
+      						break;			      							      						
       					}
       				}
 
@@ -530,31 +530,31 @@
       			}
       		});
 
-      		$('#subRegister').change(function(){
-      			if(this.checked) {
-      				$('#registerForm').attr('name', 'subUserForm').attr('id', 'subUserForm');
+      		$('input[name=typeRegister]').change(function(e){
+      			if(e.target.id == 'subRegister') {
 
-      				$('#initialRegistration').hide();
-      				$('#initialRegistrationSubmit').hide();
+  					$('#initialRegistration').hide();
+  					$('#initialRegistrationSubmit').hide();
 
-      				$('#subRegistrationSubmit').show();
-      				$('#companyCode').show();
+  					$('#subRegistrationSubmit').show();
+  					$('#companyCode').show();
+
+      				if(registerForm) {
+      					registerForm.attr('id', 'subUserForm').attr('id', 'subUserForm');
+      				}
+
       			} else {
-      				$('#registerForm').attr('name', 'registerForm').attr('id', 'registerForm');
-      			}
-      		});
-
-      		$('#initalRegister').change(function(){
-      			if(this.checked) {
-      				$('#registerForm').attr('name', 'registerForm').attr('id', 'registerForm');
-      				$('#initialRegistration').show();
-      				$('#initialRegistrationSubmit').show();
-
+      				
+					$('#initialRegistration').show();
+  					$('#initialRegistrationSubmit').show(); 
       				$('#subRegistrationSubmit').hide();
       				$('#companyCode').hide();
-      				$('#businessConfirm').hide();
-      			} else {
-      				$('#registerForm').attr('name', 'subUserForm').attr('id', 'subUserForm');
+      				$('#businessConfirm').hide();  					
+
+      				if(registerForm) {
+      					registerForm.attr('id', 'registerForm');
+      				}
+
       			}
       		});
 
@@ -567,16 +567,11 @@
 					data: dataString,
 				    contentType: "application/json",
 					success: function(response) {
-						console.log(response)
-						$('#initialRegistration').fadeOut(500);	
-
-						$('#register-intro').fadeOut(500);
-
+						$('#initialRegistration, #register-intro,  divQn').fadeOut(500);	
 						$('#register-success').delay(520).fadeIn(500);		      				
 					},
 					error:function(errResponse) {
-						console.log(errResponse)
-						$('#initialRegistration').fadeOut(500);	
+						$('#initialRegistration,  divQn').fadeOut(500);	
 						$('#register-failure').delay(520).fadeIn(500);							
 					}
 				});
@@ -591,15 +586,11 @@
 					data: dataString,
 				    contentType: "application/json",
 					success: function(response) {
-						$('#initialRegistration').fadeOut(500);	
-
-						$('#register-intro').fadeOut(500);
-
-						$('#register-success').delay(520).fadeIn(500);		 						
-
+						$('#initialRegistration, divQn, register-intro').fadeOut(500);	
+						$('#register-success').delay(520).fadeIn(500);
 					},
 					error:function(errResponse) {
-						$('#initialRegistration').fadeOut(500);	
+						$('#initialRegistration, divQn').fadeOut(500);	
 						$('#register-failure').delay(520).fadeIn(500);						
 					}
 				});
@@ -639,7 +630,6 @@
 							$('#companyCodeSubmit').attr('disabled', true);
 							$('#companyCodeSubmit').parent().closest('div.form-group').hide();
 						}
-						console.log(response)
 						$('#businessConfirm').show();
 						$('#businessNameConfirm').html(response.businessName);
 						$('#businessAddressStreetConfirm').html(response.street);

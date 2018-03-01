@@ -29,7 +29,7 @@ app.factory('currentTransactionsService', ['$http', '$q', function($http, $q) {
 	    		case 'Initiated':
 	    			renewalProgress = 14;
 	    		break;
-	    		case 'Pending':
+	    		case 'Awaiting Funds':
 	    			renewalProgress = 28;
     			break;
 	    		case 'Funds Received':

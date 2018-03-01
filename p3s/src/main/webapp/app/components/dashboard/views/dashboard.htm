@@ -107,11 +107,17 @@
 					</div>
 				</div>
 				<div class="widget-panel__body">
-					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length">
+					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length && !$ctrl.greyNoData">
 						<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
-							<p class="font-body font-weight-bold">No patents currently in this Stage</p>
+							<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 						</div>
 					</div>
+					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length && $ctrl.greyNoData">
+						<div class="col-md-12 d-flex align-items-center justify-content-center flex-column z-index-1">
+	            			<p class="font-body font-weight-bold m-b-xs">Patents in the grey phase are not open for renewal.</p>
+	            			<p class="font-body font-weight-bold text-center">To view these patents, click on the grey phase tab within list patents.</p>
+						</div>
+					</div>					
 					<div data-ng-if="$ctrl.phaseArr.length">
 						<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-sm">
 							<uib-tab heading="Today" class="font-body" index="0" data-ng-hide="true">
@@ -256,7 +262,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="widget-panel__body">	
+				<div class="widget-panel__body">
 					<uib-tabset active="activeTab" type="pills" class="pills">
 					    <uib-tab heading="Green" index="0" class="bg-phase-green pill-radius p-pill-tabs pill-tabs font-body" data-ng-hide="true">
 				            <div class="slick-container" data-ng-if="$ctrl.phaseArr.length">
@@ -271,7 +277,7 @@
 								            		<td class="td-50 td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-										            		<p><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd/MM/yy'}}</p>
+										            		<p><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'MM-dd-yy'}}</p>
 															<div class="phase-rectangle bg-phase-green m-r-lg"></div>	
 									            		</div>
 								            		</td>
@@ -280,7 +286,7 @@
 								            		<td class="td-50 td-border td-ellipsis"><span class="font-weight-medium">Description: </span> {{item.title}}</td>
 								            		<td class="td-50 no-border-er">
 								            			<div class="d-flex justify-content-between">
-								            				<p><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'dd/MM/yy'}}</p>
+								            				<p><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'MM-dd-yy'}}</p>
 								            				<div class="phase-rectangle bg-phase-amber m-r-lg"></div>	
 								            			</div>
 								            		</td>
@@ -317,7 +323,7 @@
 								            		<td class="td-50 td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-										            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
+										            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'MM-dd-yy'}}</p>
 										            		<div class="phase-rectangle bg-phase-amber m-r-lg"></div>
 										            	</div>
 								            		</td>
@@ -326,7 +332,7 @@
 								            		<td class="td-50 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
 								            		<td class="td-50 no-border-er">
 								            			<div class="d-flex justify-content-between">
-								            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'dd-MM-yy'}}</p>
+								            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'MM-dd-yy'}}</p>
 								            				<div class="phase-rectangle bg-phase-red m-r-lg"></div>
 								            			</div>
 								            		</td>
@@ -363,7 +369,7 @@
 								            		<td class="td-50 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
+									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'MM-dd-yy'}}</p>
 								            				<div class="phase-rectangle bg-phase-red m-r-lg"></div>
 								            			</div>
 								            		</td>
@@ -372,7 +378,7 @@
 								            		<td class="td-50 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
 								            		<td class="td-50 no-border-er">
 								            			<div class="d-flex justify-content-between">
-								            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'dd-MM-yy'}}</p>
+								            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'MM-dd-yy'}}</p>
 								            				<div class="phase-rectangle bg-phase-blue m-r-lg"></div>
 								            			</div>							            			
 								            		</td>
@@ -412,7 +418,7 @@
 								            		<td class="td-50 td-border td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td  class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
+									            			<p class="font-weight-medium"><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'MM-dd-yy'}}</p>
 									            			<div class="phase-rectangle bg-phase-blue m-r-lg"></div>
 									            		</div>
 								            		</td>
@@ -421,7 +427,7 @@
 								            		<td class="td-50 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
 								            		<td class="td-50 no-border-er">
 								            			<div class="d-flex justify-content-between">
-								            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'dd-MM-yy'}}</p>
+								            				<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'MM-dd-yy'}}</p>
 								            				<div class="phase-rectangle bg-phase-black m-r-lg"></div>
 								            			</div>
 								            		</td>
@@ -458,7 +464,7 @@
 								            		<td class="td-20 td-border"><span class="font-weight-medium">App No: </span>{{item.patentApplicationNumber}}</td>
 								            		<td class="td-50 td-border-nb">
 								            			<div class="d-flex justify-content-between">
-										            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage: </span> {{$ctrl.date | date:'dd-MM-yy'}}</p>
+										            		<p class="font-weight-medium"><span class="font-weight-medium">Current Stage: </span> {{$ctrl.date | date:'MM-dd-yy'}}</p>
 										            		<div class="phase-rectangle bg-phase-black m-r-lg"></div>
 										            	</div>
 								            		</td>
@@ -467,8 +473,8 @@
 								            		<td class="td-20 td-border td-ellipsis"><span class="font-weight-medium">Description: </span>{{item.title}}</td>
 								            		<td class="td-50 no-border-er">
 								            			<div class="d-flex justify-content-between">
-									            			<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span> LAPSE</p>
-									            			<div class="phase-rectangle m-r-lg"></div>
+									            			<p class="font-weight-medium"><span class="font-weight-medium">Next Stage: </span> {{item.costBandEndDate | date:'MM-dd-yy'}}</p>
+									            			<div class="m-r-lg font-weight-bold"><p>LAPSE</p></div>
 									            		</div>
 								            		</td>
 								            	</tr>
@@ -476,7 +482,7 @@
 								            		<td class="td-20 td-border td-border">Due Date: {{item.renewalDueDateUI}}</td>
 								            		<td data-ng-if="item.renewalStatus !== 'Too late to renew'" class="td-50 td-border-nt">
 								            			<div class="progress-phase">
-										            		<uib-progress class="pill-radius"><uib-bar class="bg-phase-black pill-radius"  value="item.progressBar"></uib-bar></uib-progress>
+										            		<uib-progress class="pill-radius"><uib-bar class="bg-phase-black pill-radius" value="item.progressBar"></uib-bar></uib-progress>
 										            	</div>
 								            		</td>
 								            		<td data-ng-if="item.renewalStatus == 'Too late to renew'" class="td-50 td-border-nt">
@@ -496,8 +502,9 @@
 						</uib-tab>
 						<uib-tab heading="Grey" index="5" class="bg-phase-black pill-radius p-pill-tabs pill-tabs" data-ng-hide="true">
 			            	<div class="row h-100 bg-no-data">
-			            		<div class="col-xl-12 d-flex align-items-center justify-content-center z-index-1">
-			            			<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
+			            		<div class="col-xl-12 d-flex align-items-center justify-content-center flex-column z-index-1">
+			            			<p class="font-body font-weight-bold">Patents in the grey phase are not open for renewal.</p>
+			            			<p class="font-body font-weight-bold">To view these patents, click on the grey phase tab within list patents.</p>
 			            		</div>
 	                    	</div>
 						</uib-tab>
@@ -514,11 +521,17 @@
 					</div>
 				</div>
 				<div class="widget-panel__body">
-					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length">
+					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length && !$ctrl.greyNoData">
 						<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
 							<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 						</div>
 					</div>
+					<div class="row bg-no-data" data-ng-if="!$ctrl.phaseArr.length && $ctrl.greyNoData">
+						<div class="col-md-12 d-flex align-items-center justify-content-center flex-column z-index-1">
+	            			<p class="font-body font-weight-bold">Patents in the grey phase are not open for renewal.</p>
+	            			<p class="font-body font-weight-bold">To view these patents, click on the grey phase tab within list patents.</p>
+						</div>
+					</div>					
 					<div data-ng-if="$ctrl.phaseArr.length">
 						<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-md">
 							<uib-tab heading="Today" class="font-body" index="0" data-ng-hide="true">
@@ -691,11 +704,11 @@
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Current Stage</td>
-													<td data-ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')">{{item.costBandColour}}</td>
+													<td data-ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')" class="font-weight-bold">{{item.costBandColour}}</td>
 												</tr>
 												<tr>
 													<td class="font-weight-bold">Next Stage</td>
-													<td data-ng-class="(item.nextCostBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextCostBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.nextCostBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextCostBandColour == 'Black' ? 'txt-phase-white': '')">{{item.nextCostBandColor}}</td>
+													<td data-ng-class="(item.nextCostBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextCostBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.nextCostBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextCostBandColour == 'Black' ? 'txt-phase-white': '')" class="font-weight-bold">{{item.nextCostBandColor}}</td>
 												</tr>					
 											</table>
 										</div>								
@@ -823,11 +836,11 @@
 													</tr>
 													<tr>
 														<td class="font-weight-bold">Current Stage</td>
-														<td data-ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')">{{item.costBandColour}}</td>
+														<td data-ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')" class="font-weight-bold">{{item.costBandColour}}</td>
 													</tr>
 													<tr>
 														<td class="font-weight-bold">Next Stage</td>
-														<td data-ng-class="(item.nextCostBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextCostBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.nextCostBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextCostBandColour == 'Black' ? 'txt-phase-white': '')">{{item.nextCostBandColor}}</td>
+														<td data-ng-class="(item.nextCostBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextCostBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.nextCostBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextCostBandColour == 'Black' ? 'txt-phase-white': '')" class="font-weight-bold">{{item.nextCostBandColor}}</td>
 													</tr>									
 												</tbody>
 											</table>

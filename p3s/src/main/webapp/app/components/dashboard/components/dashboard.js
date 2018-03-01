@@ -340,7 +340,7 @@ app.component('dashboard', {
 		};
 
 
-		function millsToHours(data, millisec) {
+		function millsToHours(millisec) {
 
 	        var seconds = (millisec / 1000).toFixed(0);
 	        var minutes = Math.floor(seconds / 60);
@@ -357,16 +357,10 @@ app.component('dashboard', {
 	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
 	        if (hours < 48) {
-	            return data;
+	            return true;
 	        }
 
 	    }
-
-		// messageObj.messageArr = messageArr;
-
-		// vm.supresssMessages = function() {
-		// 	dashboardService.supressMessages(messageObj);
-		// };
 
 		function patentFx(i) {
 			vm.selectedPatent = vm.phaseArr[i];
@@ -486,7 +480,8 @@ app.component('dashboard', {
 						    		slick.slickGoTo($scope.currentIndex);
 						    	}
 						    }
-						};						
+						};
+						vm.greyNoData = false;
 					break;
 					case 1:
 						vm.sliderPhase = 'amber';
@@ -514,6 +509,7 @@ app.component('dashboard', {
 						    	}
 						    }
 						};
+						vm.greyNoData = false;
 					break;
 					case 2:
 						vm.sliderPhase = 'red';
@@ -540,7 +536,8 @@ app.component('dashboard', {
 						    		slick.slickGoTo($scope.currentIndex);
 						    	}
 						    }
-						};						
+						};
+						vm.greyNoData = false;					
 					break;
 					case 3:
 						vm.sliderPhase = 'blue';
@@ -567,7 +564,8 @@ app.component('dashboard', {
 						    		slick.slickGoTo($scope.currentIndex);
 						    	}
 						    }
-						};	   						
+						};
+						vm.greyNoData = false;	   						
 					break;
 					case 4:
 						vm.sliderPhase = 'black';
@@ -594,13 +592,15 @@ app.component('dashboard', {
 						    		slick.slickGoTo($scope.currentIndex);
 						    	}
 						    }
-						};							
+						};
+						vm.greyNoData = false;
 					break;
 					case 5:
 						vm.colourPhaseTitle = {
 							title: 'Grey',
-							color: '#bdbdbd'
+							color: '#dbdbdb'
 						};
+						vm.greyNoData = true;
 				}
 
 				function loadPhase(i) {
@@ -614,6 +614,7 @@ app.component('dashboard', {
 
 			}	
 		}
+
 
 		function calculateProgress(data, i) {
 	
@@ -634,7 +635,9 @@ app.component('dashboard', {
 							data.progressBar = calcProgress(response.blueStartDate, response.blackStartDate);
 						break;
 						case 'Black':
-							data.progressBar = calcProgress(response.blackStartDate, response.blackAllEnd);
+							if(data.renewalStatus == 'Show price') {
+								data.progressBar = calcProgress(response.blackStartDate, response.blackPhoneUpStart);
+							} 							
 					}
 				},
 				function(errResponse) {
@@ -685,25 +688,18 @@ app.component('dashboard', {
 
 	    }
 
-	    // console.log(vm.recentTransArr)
-
 		function patentCostAnalysisFn(id) {
-
-			
-
 			patentsRestService.fetchCostAnalysis(id)
 			.then(
 				function(response, i){
-
-					
-
                     switch(response.currentcostBand) {
                         case 'Green':
 
 	                    	hours =  vm.date - response.greenStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Green') {
+                    			if(item.costBandColour == 'Green' && item.renewalStatus == 'Show price') {
+
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
@@ -717,7 +713,7 @@ app.component('dashboard', {
 	                    	hours =  vm.date - response.amberStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Amber') {
+                    			if(item.costBandColour == 'Amber' && item.renewalStatus == 'Show price') {
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
@@ -731,7 +727,7 @@ app.component('dashboard', {
 							hours =  vm.date - response.redStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Red') {
+                    			if(item.costBandColour == 'Red' && item.renewalStatus == 'Show price') {
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
@@ -745,7 +741,7 @@ app.component('dashboard', {
 							var hours =  vm.date - response.blueStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Blue') {
+                    			if(item.costBandColour == 'Blue' && item.renewalStatus == 'Show price') {
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
@@ -759,7 +755,7 @@ app.component('dashboard', {
 							hours =  vm.date - response.blackStartDate;
 
                     		patentsArr.forEach(function(item, i) {
-                    			if(item.costBandColour == 'Black') {
+                    			if(item.costBandColour == 'Black' && item.renewalStatus == 'Show price') {
                     				if(item.id == id) {
                     					recentRenewalFn(item, hours)
                     				}
@@ -781,7 +777,7 @@ app.component('dashboard', {
 		//COLOUR KEY	
 
 
-		vm.$onInit = () => {
+		vm.$onInit = function() {
 
 			var counter = localStorageService.get('counter');
 
@@ -886,10 +882,10 @@ app.component('dashboard', {
 			currTrans.forEach(function(data){
 	
 				var hours =  vm.date - data.lastUpdatedDate;
-				var recentTrans  = millsToHours(data, hours);
+				var recentTrans  = millsToHours(hours);
 
 				if(recentTrans) {
-					vm.recentTransArr.push(recentTrans);
+					vm.recentTransArr.push(data);
 				}
 
 				if(recentTrans && data.latestTransStatus === 'Completed') {
