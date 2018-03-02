@@ -17,9 +17,6 @@ app.component('dashboard', {
 
 	    vm.date = new Date().getTime();
 
-		vm.recentTransArr = [];
-		vm.recentRenewalArr = [];		    
-
 		vm.greenRenewals = [];
 		vm.amberRenewals = [];
 		vm.redRenewals = [];
@@ -399,27 +396,7 @@ app.component('dashboard', {
 			);
 		};
 
-		vm.activityNotifications = [
-			{
-				activity: 'Stage Change',
-				index: 0
-			},
-			{
-				activity: 'Transactions',
-				index: 1
-			},
-			{
-				activity: 'Renewals',
-				index: 2
-			}
-		];
 
-		vm.activeMenu = vm.activityNotifications[0].activity;
-
-		vm.setActivityActiveTab = function(menuItem, index) {
-			vm.activeActivityTabResp = index;
-			vm.activeMenu = menuItem;
-		};
 
 		vm.fxPeriodActive = function(fxActive) {
 			switch(fxActive) {
@@ -499,16 +476,15 @@ app.component('dashboard', {
 		    				}
 		    			});
 
-		    			$timeout(function() {
-		    				var fwSaving = parseFloat(vm.todaysPriceUSD - vm.lastMonthsPriceUSD).toFixed(2);
-		    				if(fwSaving < 0) {
-		    					vm.variationSave = true;
-		    					vm.fourWeekVariation = fwSaving.toString().replace('-', '');
-		    				} else {
-		    					vm.variationSave = false;
-		    					vm.fourWeekVariation = fwSaving;
-		    				}		        				
-		    			}, 100);
+	    				var fwSaving = parseFloat(vm.todaysPriceUSD - vm.lastMonthsPriceUSD).toFixed(2);
+
+	    				if(fwSaving < 0) {
+	    					vm.variationSave = true;
+	    					vm.fourWeekVariation = fwSaving.toString().replace('-', '');
+	    				} else {
+	    					vm.variationSave = false;
+	    					vm.fourWeekVariation = fwSaving;
+	    				}		        				
 		    			
 		    		},
 		    		function(error){
@@ -557,51 +533,6 @@ app.component('dashboard', {
 					// body...
 				}
 			)
-		}
-
-		function recentActivityFn(millisec) {
-
-	        var seconds = (millisec / 1000).toFixed(0);
-	        var minutes = Math.floor(seconds / 60);
-	        var hours = "";
-
-	        if (minutes > 59) {
-	            hours = Math.floor(minutes / 60);
-	            hours = (hours >= 10) ? hours : "0" + hours;
-	            minutes = minutes - (hours * 60);
-	            minutes = (minutes >= 10) ? minutes : "0" + minutes;
-	        }
-
-	        seconds = Math.floor(seconds % 60);
-	        seconds = (seconds >= 10) ? seconds : "0" + seconds;
-
-	        if (hours < 48) {
-	            return true;
-	        }
-
-	    }
-
-	    vm.recentStageArr = [];
-
-		function patentCostAnalysisFn(patents, id) {
-			patentsRestService.fetchCostAnalysis(id)
-			.then(
-				function(response, i){
-            		patents.forEach(function(item, i) {
-            			if(item.renewalStatus == 'Show price') {
-            				if(item.id == id) {
-            					if(recentActivityFn(item, hours)) {
-            						vm.recentStageArr.push(item);
-            					}
-            				}
-            			}
-            		})
-				},
-				
-				function(errResponse) {
-					// body...
-				}
-			);
 		}
 		
 		vm.currentIndex = 0;
