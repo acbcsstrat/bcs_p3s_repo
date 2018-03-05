@@ -49,4 +49,12 @@ privileged aspect Certificate_Roo_JavaBean {
         this.certificateTemplateId = certificateTemplateId;
     }
     
+    public Date Certificate.getRenewed_on_date_ex_epo() {
+        return this.renewed_on_date_ex_epo;
+    }
+    
+    public void Certificate.setRenewed_on_date_ex_epo(Date renewed_on_date_ex_epo) {
+        this.renewed_on_date_ex_epo = renewed_on_date_ex_epo;
+    }
+    
 }

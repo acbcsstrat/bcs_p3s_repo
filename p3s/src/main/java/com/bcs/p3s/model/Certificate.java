@@ -60,6 +60,13 @@ public class Certificate {
     private String certificateTemplateId;
 
 
+    /**
+     * New field added for holding renewed_on date
+     */
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date renewed_on_date_ex_epo;
 
     
     // Special methods
