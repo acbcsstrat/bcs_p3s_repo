@@ -457,9 +457,6 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		BankTransferPaymentDetails bankTransferPaymentDetails = new BankTransferPaymentDetails();
 		bankTransferPostCommitDetails.setBankTransferPaymentDetails(bankTransferPaymentDetails);
 		
-		//DummyDataEngine dummy = new DummyDataEngine(); // acTidy
-		//String warningMessage = dummy.gimmeEmptyPostPayWarningMessage();
-		//bankTransferPostCommitDetails.setWarningMessage(warningMessage);
 		bankTransferPostCommitDetails.setWarningMessage(null);
 		
 
