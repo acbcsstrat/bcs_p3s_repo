@@ -57,9 +57,13 @@ public class RenewalDatesEngine extends Universal{
 		        int yearNow = Calendar.getInstance().get(Calendar.YEAR);
 		        int filing_day = calendar.get(Calendar.DAY_OF_MONTH);
 		        
-		        monthEndFilingDate.set(filing_year, filing_month, filing_day , 23,59,59);
+		        //MP06032018 Changes made to compromise Daylight Saving
+		        //monthEndFilingDate.set(filing_year, filing_month, filing_day , 23,59,59);
+		        monthEndFilingDate.set(filing_year, filing_month, filing_day , 22,59,59);
 		        Calendar nextRenewalDate = Calendar.getInstance();
-		        nextRenewalDate.set(yearNow, filing_month, filing_day , 23,59,59);  
+		        //MP06032018 Changes made to compromise Daylight Saving
+		        //nextRenewalDate.set(yearNow, filing_month, filing_day , 23,59,59);  
+		        nextRenewalDate.set(yearNow, filing_month, filing_day , 22,59,59);  
 		        Calendar actualCurrentRenewalDate = new DateUtil().getLastDayOfMonth(nextRenewalDate.getTime());
 		        log().debug("Calculated renewal due for this year"+ actualCurrentRenewalDate.getTime());
 		        
@@ -127,7 +131,9 @@ public class RenewalDatesEngine extends Universal{
 		        	yearNow = cal.get(Calendar.YEAR);
 		        	int year3Renewal = yearNow + 2;
 		        	Calendar year3RenDue = Calendar.getInstance();
-		        	year3RenDue.set(year3Renewal, filing_month, filing_day , 23,59,59);
+		        	//MP06032018 Changes made to compromise Daylight Saving
+		        	//year3RenDue.set(year3Renewal, filing_month, filing_day , 23,59,59);
+		        	year3RenDue.set(year3Renewal, filing_month, filing_day , 22,59,59);
 		        	
 		        	Calendar actualYear3RenDue = new DateUtil().getLastDayOfMonth(year3RenDue.getTime());
 		        	
@@ -177,7 +183,9 @@ public class RenewalDatesEngine extends Universal{
 			        	Calendar year4RenewalDate = Calendar.getInstance();
 			        	yearNow = cal.get(Calendar.YEAR);
 			        	int year4Renewal = yearNow + 3;
-			        	year4RenewalDate.set(year4Renewal, filing_month, filing_day , 23,59,59);
+			        	//MP06032018 Changes made to compromise Daylight Saving
+			        	//year4RenewalDate.set(year4Renewal, filing_month, filing_day , 23,59,59);
+			        	year4RenewalDate.set(year4Renewal, filing_month, filing_day , 22,59,59);
 			        	
 			        	Calendar actualYear4RenDue = new DateUtil().getLastDayOfMonth(year4RenewalDate.getTime());
 			        	
@@ -267,7 +275,9 @@ public class RenewalDatesEngine extends Universal{
 		        	//Calculating Previous year details in the same way
 		            
 		            Calendar prevRenewalDate = Calendar.getInstance();
-		    	    prevRenewalDate.set(yearNow-1, filing_month, filing_day , 23,59,59);  
+		            //MP06032018 Changes made to compromise Daylight Saving
+		    	    //prevRenewalDate.set(yearNow-1, filing_month, filing_day , 23,59,59);  
+		    	    prevRenewalDate.set(yearNow-1, filing_month, filing_day , 22,59,59);  
 		    	    
 		    	    Calendar actualPrevRenewalDate = new DateUtil().getLastDayOfMonth(prevRenewalDate.getTime());
 		    	    
@@ -317,7 +327,9 @@ public class RenewalDatesEngine extends Universal{
 		    		//Calculating next years date as above
 		    		
 		    		Calendar otherRenewalDate = Calendar.getInstance();
-		    	    otherRenewalDate.set(yearNow+1, filing_month, filing_day , 23,59,59);  
+		    		//MP06032018 Changes made to compromise Daylight Saving
+		    	    //otherRenewalDate.set(yearNow+1, filing_month, filing_day , 23,59,59);  
+		    		otherRenewalDate.set(yearNow+1, filing_month, filing_day , 22,59,59);  
 		    	    System.out.println("Renewal date 1 year after " + otherRenewalDate.getTime());
 		    	    Calendar actualNextRenewalDate = new DateUtil().getLastDayOfMonth(otherRenewalDate.getTime());
 		    	    System.out.println("Next year renewal due "+ actualNextRenewalDate.getTime());
@@ -332,7 +344,7 @@ public class RenewalDatesEngine extends Universal{
 		    	    System.out.println("Actual Due Date again" +actualNextRenewalDate.getTime());
 		    	    renewalEnd.add(Calendar.MONTH, 6);*/
 		    	    
-		    	  //NEW CODE STARTS TO GET THE DATES FROM DATABASE TABLE calendar_colour
+		    	    //NEW CODE STARTS TO GET THE DATES FROM DATABASE TABLE calendar_colour
 		        	colourDates = new CalendarColour();
 		        	allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualNextRenewalDate.getTime());
 		        	colourDates = allColourDates.getSingleResult();
