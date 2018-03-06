@@ -102,39 +102,6 @@ public final class BankTransferPaymentDetails {
 	}
 
 
-
-	
-	// Below TMP retained for backward compatibility purposes - acTidy
-
-//	protected String accountNumber;
-//	protected String item1;
-//	protected String item2;
-//	protected String item3;
-
-//	public BankTransferPaymentDetails() {
-//		accountNumber = "12345679";
-//		item1 = "ABA_Bk4_Brch146";
-//		item2 = "item2";
-//		item3 = "item3";
-//	}
-	
-
-	
-	// Setters commented out for safety
-	
-//	public String getAccountNumber() {
-//		return accountNumber;
-//	}
-//	public String getItem1() {
-//		return item1;
-//	}
-//	public String getItem2() {
-//	return item2;
-//}
-//	public String getItem3() {
-//		return item3;
-//	}
-
 	
 	
 	// convenience, for debugging & logging

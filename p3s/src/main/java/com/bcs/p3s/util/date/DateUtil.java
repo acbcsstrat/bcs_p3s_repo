@@ -13,6 +13,8 @@ import org.joda.time.Period;
 
 public class DateUtil implements Comparable<String>{
 
+	// acToDo: DateUtil many unused methods (eg rely on timezone?) + Massive duplication. Make more efficient. - cron & web
+
 	public String dateToUSStringWithoutDayOfWeek(Date date) {
 		if (date==null) return "";
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy"); // Oct 31, 2017

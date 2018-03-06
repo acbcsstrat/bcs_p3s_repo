@@ -5,6 +5,11 @@ package com.bcs.p3s.enump3s;
  */
 public class McFailCodeEnum extends P3SAbstractEnum {
 
+	
+	// acToDo - investigate McFailCodeEnum - isnt this made redundant by MoneycorpPaymentStatusEnum - Tho latter not exist in web
+
+	
+	
     public static final String NOTRECEIVED = "notreceived";
     public static final String INSUFFICIENTFUNDS = "insufficientfunds";
     public static final String OTHERFAIL = "otherfail"; 
