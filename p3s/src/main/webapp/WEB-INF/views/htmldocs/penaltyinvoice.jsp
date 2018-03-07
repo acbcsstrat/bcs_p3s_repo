@@ -306,7 +306,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-		            ABA Number:
+		            ABA Routing Number:
 		            </td>
 		            <td>
 		            <%=data.getBankDetails().getAccount1BranchCode() %>
@@ -330,10 +330,18 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-		            Have 2 spare fields
+		            Amount:
 		            </td>
 		            <td>
-		              if needed
+		              $<%=data.getTotalUsdPayable() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            &nbsp;
+		            </td>
+		            <td>
+		            &nbsp;
 		            </td>
 		          </tr>
 		        </table>
@@ -354,7 +362,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-		            ABA Number:
+		            ABA Routing Number:
 		            </td>
 		            <td>
 		            <%=data.getBankDetails().getAccount2BranchCode() %>
@@ -374,6 +382,14 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		            </td>
 		            <td>
 		              <%=data.getPenaltyPaymentReferenceNumber() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Amount:
+		            </td>
+		            <td>
+		              $<%=data.getTotalUsdPayable() %>
 		            </td>
 		          </tr>
 		          <tr>

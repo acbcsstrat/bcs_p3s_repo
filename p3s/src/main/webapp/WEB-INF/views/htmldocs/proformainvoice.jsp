@@ -340,7 +340,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
-		            ABA Number:
+		            ABA Routing Number:
 		            </td>
 		            <td>
 		            <%=data.getBankDetails().getAccount1BranchCode() %>
@@ -360,6 +360,14 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		            </td>
 		            <td>
 		              <%=data.getTransactionReference() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Amount:
+		            </td>
+		            <td>
+		              $<%=data.getTotalUsdPayable() %>
 		            </td>
 		          </tr>
 		          <tr>
@@ -388,7 +396,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
-		            ABA Number:
+		            ABA Routing Number:
 		            </td>
 		            <td>
 		            <%=data.getBankDetails().getAccount2BranchCode() %>
@@ -408,6 +416,14 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		            </td>
 		            <td>
 		              <%=data.getTransactionReference() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Amount:
+		            </td>
+		            <td>
+		              $<%=data.getTotalUsdPayable() %>
 		            </td>
 		          </tr>
 		          <tr>
