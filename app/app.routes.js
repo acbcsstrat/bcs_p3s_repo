@@ -43,19 +43,63 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
     })
     .state('dashboard', {
         url: '/dashboard',
-        component: 'dashboard',
         resolve: {
             patents: ['patentsRestService', function(patentsRestService) {
                 return patentsRestService.fetchAllPatents();
             }],
-            currTrans: ['currentTransactionsService', function(currentTransactionsService) {
-                return currentTransactionsService.fetchCurrentTransactions();
-            }],       
-            transHistory: ['transactionHistoryService', function(transactionHistoryService) {
+            transactionHistory: ['transactionHistoryService', function(transactionHistoryService) {
                 return transactionHistoryService.fetchTransactionHistory();
-            }]
+            }],            
+            fxRatesWeek: ['fxService', function(fxService) {
+                return fxService.fetchFxWeek();
+            }],
+            fxRatesMonth: ['fxService', function(fxService) {
+                return fxService.fetchFxMonth();
+            }]                       
+        },
+        views: {
+            '@': {
+                templateUrl: 'p3sweb/app/components/dashboard/views/dashboard.htm',
+                controller: 'dashboardCtrl',
+                controllerAs: '$ctrl'
+            },
+            'colourkeywidget@dashboard': {
+                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/colour-key-widget.htm',
+                controller: 'colourKeyCtrl',
+                controllerAs: '$ctrl'                
+            },
+            'graphdonutwidget@dashboard': {
+                controller: 'graphDonutCtrl',
+                controllerAs: '$ctrl',                
+                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/graph-donut-widget.htm',         
+            },
+            'renewalswidget@dashboard': {
+                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/renewals-widget.htm',
+                controller: 'renewalsCarouselCtrl',
+                controllerAs: '$ctrl'                
+            },
+            'fxrateswidget@dashboard': {
+                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/renewalCost.htm',
+                controller: 'renewalCostCtrl',
+                controllerAs: '$ctrl'                
+            },
+            'fxrateswidgetmd@dashboard': {
+                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/renewalCost.htm',
+                controller: 'renewalCostCtrl',
+                controllerAs: '$ctrl'                
+            },            
+            'fxchartwidget@dashboard': {
+                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/fxchart-widget.htm',
+                controller: 'fxChartCtrl',
+                controllerAs: '$ctrl'
+            },
+            'recentactivitywidget@dashboard': {
+                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/recent-activity-widget.htm',
+                controller: 'recentActivityCtrl',
+                controllerAs: '$ctrl'
+            }            
         }
-    })
+    })    
     .state('profile', {
         url: '/profile',
         component: 'user',

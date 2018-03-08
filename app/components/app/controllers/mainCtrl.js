@@ -18,6 +18,14 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
 		}
 	)
 
+	// $scope.$on('phaseInitEmit', function(event, obj){
+	// 	$scope.$broadcast('phaseInitBroadcast', {phase: obj})
+	// });
+
+	// $scope.$on('calculateFx', function(event, obj){
+	// 	$scope.$broadcast('calculateFxBroadcast', {fx: obj})
+	// });	
+	
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'p3sweb/app/components/app/views/modals/welcome-message-modal.htm',
@@ -78,22 +86,7 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
 					$timeout(function() {
 						urgentPatentModal(response);
 					}, 500);
-    			}
-
-
-	    // 		if(response.systemMessages.length > 0) {
-	    // 			response.systemMessages.forEach(function(data){
-	    // 				var dateFrom = data.displayFromDate, dateTo = data.displayToDate;
-	    // 				if(date > dateFrom && date < dateTo) { 
-	    // 					systemResponse.push(data);
-	    // 				}
-	    // 			});
-
-					// $timeout(function() {
-					// 	systemMessageModal(response);
-					// }, 500);
-
-	    // 		}		    			
+    			} 			
 
 	    	},
 	    	function(errResponse){
@@ -106,36 +99,36 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
 		 		welcomeMessageModal();
 			}	
 		}, 350);
+	} //if end
+
+	function closeModals() {
+	    if ($scope.warning) {
+	      $scope.warning.close();
+	      $scope.warning = null;
+	    }
+
+	    if ($scope.timedout) {
+	      $scope.timedout.close();
+	      $scope.timedout = null;
+	    }
 	}
 
-		function closeModals() {
-		    if ($scope.warning) {
-		      $scope.warning.close();
-		      $scope.warning = null;
-		    }
-
-		    if ($scope.timedout) {
-		      $scope.timedout.close();
-		      $scope.timedout = null;
-		    }
-		}
-
-		$scope.$on('IdleStart', function() {
-		  	closeModals();
-
-		  	$scope.warning = $uibModal.open({
-				  templateUrl: 'warning-dialog.html',
-		  		windowClass: 'modal-danger'
-		    });
-		});
-
-	  $scope.$on('IdleEnd', function() {
+	$scope.$on('IdleStart', function() {
 	  	closeModals();
-		});
 
-		var userTimedOut = false;
+	  	$scope.warning = $uibModal.open({
+			  templateUrl: 'warning-dialog.html',
+	  		windowClass: 'modal-danger'
+	    });
+	});
 
-		$scope.$on('IdleTimeout', function() {
+  	$scope.$on('IdleEnd', function() {
+	  	closeModals();
+	});
+
+	var userTimedOut = false;
+
+	$scope.$on('IdleTimeout', function() {
 
 	  	closeModals();
 
