@@ -28,7 +28,7 @@ import com.bcs.p3s.util.date.DateUtil;
  * @author MerinP
  *
  */
-//@Service("MiscService")
+@Service("MiscService")
 public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscService {
 	
 	final String[] urgentColors = {RenewalColourEnum.AMBER, RenewalColourEnum.RED , RenewalColourEnum.BLACK};
