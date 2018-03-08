@@ -1,10 +1,5 @@
 package com.bcs.p3s.docs.htmldoc;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.bcs.p3s.docs.htmldoc.model.HtmlDocCertificate;
 import com.bcs.p3s.docs.htmldoc.model.PenaltyInvoice;
 import com.bcs.p3s.docs.htmldoc.model.ProformaInvoice;
@@ -13,11 +8,8 @@ import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.service.ServiceAuthorisationTools;
 
-@Service("HtmlDocService")
+//@Service("HtmlDocService")
 public class HtmlDocServiceImpl extends ServiceAuthorisationTools implements HtmlDocService  {
-
-	@Autowired
-	HttpSession session;
 
 	protected String PREFIX = this.getClass().getName() + " : "; 
 

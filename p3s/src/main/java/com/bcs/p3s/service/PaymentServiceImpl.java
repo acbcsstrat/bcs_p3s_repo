@@ -44,11 +44,11 @@ import com.bcs.p3s.wrap.BasketContents;
 import com.bcs.p3s.wrap.InBasket;
 import com.bcs.p3s.wrap.PatentExtendedData;
 
-@Service("PaymentService")
+//@Service("PaymentService")
 public class PaymentServiceImpl extends ServiceAuthorisationTools implements PaymentService {
 
-	@Autowired
-	HttpSession session;
+	/*@Autowired
+	HttpSession session;*/
 
 	protected String PREFIX = this.getClass().getName() + " : "; 
 

@@ -25,7 +25,7 @@ import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.email.EmailSender;
 import com.bcs.p3s.util.lang.Universal;
 
-@Service("UserService")
+//@Service("UserService")
 public class UserServiceImpl extends Universal implements UserService {
 
 	@Autowired

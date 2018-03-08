@@ -25,7 +25,7 @@ import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.PatentExtendedData;
 
-@Service("TransactionService")
+//@Service("TransactionService")
 public class TransactionServiceImpl extends ServiceAuthorisationTools implements TransactionService {
 
 	protected String PREFIX = this.getClass().getName() + " : "; 

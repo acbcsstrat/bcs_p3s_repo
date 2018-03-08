@@ -64,12 +64,12 @@ import com.bcs.p3s.wrap.BasketContents;
 import com.bcs.p3s.wrap.CombinedFee;
 import com.bcs.p3s.wrap.PatentExtendedData;
 
-@Service("PatentService")
+//@Service("PatentService")
 public class PatentServiceImpl extends ServiceAuthorisationTools implements PatentService {
 
 	
-	@Autowired
-	HttpSession session;
+	/*@Autowired
+	HttpSession session;*/
 	
 	protected String PREFIX = this.getClass().getName() + " : "; 
 	
