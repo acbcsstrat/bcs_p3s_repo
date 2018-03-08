@@ -444,6 +444,7 @@
                 <version>2.12</version>
                 <configuration>
                 	<junitArtifactName> junit:junit:4.11 </junitArtifactName>
+                	<forkMode>always</forkMode>
                     <printSummary>false</printSummary>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                     <excludes>
