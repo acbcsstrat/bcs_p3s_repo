@@ -3,6 +3,7 @@ package com.bcs.p3s.docs.email;
 import com.bcs.p3s.docs.email.Populators.AbstractPopulator;
 import com.bcs.p3s.docs.email.Populators.CertificatePopulator;
 import com.bcs.p3s.docs.email.Populators.ForgotPasswordPopulator;
+import com.bcs.p3s.docs.email.Populators.InternalUseOnlyPopulator;
 import com.bcs.p3s.docs.email.Populators.RegisterPopulator;
 import com.bcs.p3s.docs.email.Populators.ReminderBasicDetailsPopulator;
 import com.bcs.p3s.docs.email.Populators.ReminderColourOpenPopulator;
@@ -12,6 +13,8 @@ import com.bcs.p3s.docs.email.Populators.TransactionPopulator;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.util.lang.Universal;
 
+/** Factory. Selecets appropriate factory for the email template, and invokes to provide a P3sEmail
+ */
 public class P3sEmailFactory extends Universal implements EmailTemplates {
 
 	// default constructor
@@ -73,6 +76,10 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 			}
 			if (EmailTemplates.email_renewal_certificate.equals(template)) {
 				pop = new CertificatePopulator(template, param1, param2, param3, param4, param5, param6, param7);
+				noBuild = false;
+			}
+			if (EmailTemplates.email_panic.equals(template)) {
+				pop = new InternalUseOnlyPopulator(template, param1, param2);
 				noBuild = false;
 			}
 			

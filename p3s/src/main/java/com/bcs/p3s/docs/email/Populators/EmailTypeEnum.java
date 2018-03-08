@@ -14,6 +14,7 @@ public enum EmailTypeEnum {
 	, REGISTER			// Inc Password Reset
 	, REMINDER
 	, TRANSACTION
+	, INTERNAL_USE_ONLY
 //	, PANIC
 	;
 

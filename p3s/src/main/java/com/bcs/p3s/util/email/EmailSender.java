@@ -52,9 +52,9 @@ public class EmailSender extends Universal {
 			//    			\r    \ u 000d: carriage return CR 
 			//    		& for Plain text: (e.g. Visually Impaired: see https://stackoverflow.com/questions/29539882/not-receiving-
     		//			also: gmail block because ipv6 PTR policy. see todo-later.txt
-			message.setFrom(new InternetAddress("noreply@mail.thepatent.place"));
+			message.setFrom(new InternetAddress(emailContent.getFromAddress()));
+			//message.setFrom(new InternetAddress("noreply@mail.thepatent.place"));
 			message.setSubject(emailContent.getSubject());
-
 			// Body
 			MimeBodyPart messageHtmlBodyPart = new MimeBodyPart();
 			messageHtmlBodyPart.setContent(emailContent.getHtmlBody(), "text/html");

@@ -55,6 +55,7 @@ public interface P3SPropertyNames {
 	// host web URL + support
 	public static final String P3S_WEB_WORDPRESS_URL_BASE = "p3s_web_wordpress_url_base"; 
 	public static final String P3S_WEB_TOMCAT_URL_BASE = "p3s_web_tomcat_url_base"; 
+	public static final String P3S_FROM_EMAIL_ADDRESS = "p3s_from_email_address"; 
 	public static final String PARTNER_COMPANY_NAME = "partner_company_name"; 
 	public static final String PARTNER_COMPANY_PHONE = "partner_company_phone"; 
 	

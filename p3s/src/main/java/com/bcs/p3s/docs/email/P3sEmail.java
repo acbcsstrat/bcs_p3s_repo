@@ -1,6 +1,9 @@
 package com.bcs.p3s.docs.email;
 
 import com.bcs.p3s.docs.email.Populators.EmailTypeEnum;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -10,6 +13,7 @@ public class P3sEmail extends Universal implements P3sEmailInterface {
 
 	String templateName = null;
 	EmailTypeEnum emailType = EmailTypeEnum.NOTSET; 
+	String fromAddress = null;
 	String subject = null;
 	String htmlBody = null;
 	String attachmentPath = null;
@@ -25,6 +29,7 @@ public class P3sEmail extends Universal implements P3sEmailInterface {
 	{
 		this.templateName = templateName;
 		this.emailType = emailType;
+		this.fromAddress = determineFromAddress();
 		this.subject = subject;
 		this.htmlBody = htmlBody;
 		this.attachmentPath = attachmentPath;
@@ -34,6 +39,21 @@ public class P3sEmail extends Universal implements P3sEmailInterface {
 	
 	
 	
+
+	
+	
+	
+	protected String determineFromAddress() {
+		String from = null;
+		// Retrieve data from property file
+		try {
+			P3SPropertyReader reader = new P3SPropertyReader();
+			from = reader.getESProperty(P3SPropertyNames.P3S_FROM_EMAIL_ADDRESS); 
+		} catch (P3SPropertyException e) {
+			fail("P3sEmail determineFromAddress() property read failed",e);
+		}
+		return from;
+	}
 	
 
 //	// Special getter
@@ -60,6 +80,12 @@ public class P3sEmail extends Universal implements P3sEmailInterface {
 	}
 	public void setEmailType(EmailTypeEnum emailType) {
 		this.emailType = emailType;
+	}
+	public String getFromAddress() {
+		return fromAddress;
+	}
+	public void setFromAddress(String fromAddress) {
+		this.fromAddress = fromAddress;
 	}
 	public String getSubject() {
 		return subject;

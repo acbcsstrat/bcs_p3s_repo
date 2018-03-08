@@ -6,7 +6,9 @@ import java.io.StringWriter;
 import org.apache.log4j.Logger;
 
 import com.bcs.p3s.docs.email.P3sEmail;
+import com.bcs.p3s.docs.email.P3sEmailFactory;
 import com.bcs.p3s.docs.email.Populators.EmailTypeEnum;
+import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.util.email.EmailSender;
 
 /**
@@ -124,12 +126,13 @@ public class BcsLogger implements Loggable {
 			x.printStackTrace(new PrintWriter(errors));
 			emailBody += errors.toString();
 		}
-		P3sEmail pan = new P3sEmail("panic", EmailTypeEnum.NOTSET, "PANIC message from P3Sweb !", emailBody, null, null);
+		P3sEmailFactory emailFactory = new P3sEmailFactory();
+		P3sEmail pan = emailFactory.create(EmailTemplates.email_panic, 
+				"PANIC message from P3Sweb !", emailBody, null, null, null, null, null );
+		// formerly:  P3sEmail pan = new P3sEmail("panic", EmailTypeEnum.NOTSET, "PANIC message from P3Sweb !", emailBody, null, null);
     	EmailSender emailer = new EmailSender(pan);
     	emailer.setRecipientsToDevs();
     	emailer.sendEmail();
-	
 	}
-	
 	
 }

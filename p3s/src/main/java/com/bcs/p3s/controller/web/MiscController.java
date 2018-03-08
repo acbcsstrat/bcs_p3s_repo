@@ -3,13 +3,9 @@ package com.bcs.p3s.controller.web;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -24,7 +20,12 @@ import com.bcs.p3s.util.env.Hostname;
 import com.bcs.p3s.util.lang.Universal;
 
 
-
+/**
+ * Provides odd functionality. 
+ * Usually for Internal Use Only, & provided from the actest.html page 
+ * @author andyc
+ *
+ */
 @Controller
 public class MiscController extends Universal {
 
@@ -68,7 +69,22 @@ public class MiscController extends Universal {
 			EmailDevTest tester = new EmailDevTest();
 			tester.testByCode(code);
 			
-            return "index";
+            return "blank";
+	    }
+	    
+		@RequestMapping(value="/actesttestpanic", method = RequestMethod.POST, produces = "text/html")
+	    public String actesttestpanic(Model uiModel, String message) {
+			String keymessage = message;
+			log().debug("actesttestpanic in MiscController invoked  : param = "+keymessage);
+
+			String msg = null;
+			String key = "Don't 0veruse";
+			int lemmy = key.length();
+			if (keymessage!=null && keymessage.length()>lemmy && keymessage.startsWith(key)) {
+				panic("TEST from actest.html: "+keymessage.substring(lemmy));
+			}
+			
+            return "blank";
 	    }
 	    
 

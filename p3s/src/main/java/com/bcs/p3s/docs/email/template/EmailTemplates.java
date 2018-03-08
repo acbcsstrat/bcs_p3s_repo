@@ -10,7 +10,7 @@ public interface EmailTemplates {
 	String email_register_combined	= "email_register_combined";
 	String email_password_reset	= "email_password_reset";
 
-	// 'Notification' Emails : Reminding custoers that a patent can be renewed
+	// 'Notification' Emails : Reminding customers that a patent can be renewed
 	String email_reminder_standard	= "email_reminder_standard"; 
 	String email_reminder_green_opens = "email_reminder_green_opens";
 	String email_reminder_blue_opens = "email_reminder_blue_opens";
@@ -23,5 +23,7 @@ public interface EmailTemplates {
 	String email_final_invoice			= "email_final_invoice"; 
 	String email_renewal_certificate	= "email_renewal_certificate"; 
 	String email_penalty_invoice		= "email_penalty_invoice"; 
-
+	
+	// Other
+	String email_panic					= "email_panic"; 
 }
