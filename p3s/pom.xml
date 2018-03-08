@@ -443,6 +443,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.12</version>
                 <configuration>
+                	<junitArtifactName> junit:junit:4.11 </junitArtifactName>
                     <printSummary>false</printSummary>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                     <excludes>
