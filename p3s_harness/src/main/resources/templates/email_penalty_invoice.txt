@@ -1,0 +1,30 @@
+Subject: thePatent.Place : Your invoice for transaction [TRANSACTION_REFERENCE]
+PENALTY INVOICE<br/>
+<table class="tblEmailBodyHeader"><tr><td>
+To:</td><td>[FIRSTNAME] [LASTNAME]</td></tr>
+<td></td><td>[COMPANY_NAME]</td></tr>
+</table>
+<p/>
+
+In creating thepatent.place transaction [TRANSACTION_REFERENCE] for renewing the below [NUMBER_OF_PATENTS] patent[PATENT_PLURALITY_S] you had agreed that the payment of $[PRICE] would reach our US bank account by:
+<br/>
+[TIMESTAMP_TARGET_FUNDS_ARRIVAL]
+<p/>
+This was for patent[PATENT_PLURALITY_S]:
+<table class="tblpayment3colinvemail">
+[THREECOL_TABLE_OF_PATENTS]<tr><td></td><td>[PATENT_APPLICATION_NUMBER]</td><td>[SHORT_TITLE]</td></tr>
+</table>
+<p/>
+
+Unfortunately, this payment was not successfully received.
+<br/>
+As per our terms & conditions (hyperlink?), this transaction has failed and the attached penalty invoice falls due.
+<br/>
+If funds were sent, you may want to contact us (email or? hyperlink?),  to arrange restoration of such funds, as appropriate.
+<br/>
+We can still renew your patents for you. Just add them to the basket again.
+
+<p/>
+Kind regards,
+<br>
+The Patent Place team

@@ -1,0 +1,9 @@
+<md-button class="md-button-toggle font-weight-medium justify-content-center align-items-center" ng-click="toggle()" 
+           aria-controls="side-menu-{{section.name}}" flex layout="row" aria-expanded="{{isOpen()}}"><img src="{{section.icon}}"><span class="txt-white m-l-xs font-h4">{{section.name}}</span>
+	<md-icon md-font-set="fa fa-chevron-down" class="md-toggle-icon txt-white font-h4" ng-class="{'toggled' : isOpen()}"></md-icon>
+</md-button>
+<ul ng-show="isOpen()" id="side-menu-{{section.name}}" class="nav menu-toggle-list w-100">
+    <li ng-repeat="page in section.pages" class="font-weight-medium">
+        <menu-link section="page"></menu-link>
+    </li>
+</ul>
