@@ -1,5 +1,8 @@
 package com.bcs.p3s.controller.rest;
  
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,6 +25,8 @@ import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.BankTransferPreCommitDetails;
+import com.bcs.p3s.wrap.BasketContents;
  
 @RestController
 public class TransactionRestController extends Universal {
@@ -36,11 +41,17 @@ public class TransactionRestController extends Universal {
     // v similar to below 3.2, but status must be neither of Completed nor Failed
     @RequestMapping(value = "/rest-current-transactions/", method = RequestMethod.GET)
     public ResponseEntity<List<PaymentUI>> listCurrentTransactionsForBusiness() {
-		log().debug("TransactionRestController : /rest-current-transactions/ listCurrentTransactionsForBusiness() invoked.  ");
+    	String err = "TransactionRestController : /rest-current-transactions/ listCurrentTransactionsForBusiness() ";
+		log().debug(err+"invoked.  ");
+		List<PaymentUI> paymentUIs = null;
 
-    	List<PaymentUI> paymentUIs = transactionService.listCurrentTransactionsForBusiness();
+    	try {
+    		paymentUIs = transactionService.listCurrentTransactionsForBusiness();
+		} catch (Exception e) {
+			fail("Exception in "+err,e);
+		}
     	
-		log().debug("TransactionRestController : /rest-current-transactions/ listCurrentTransactionsForBusiness() returning "+paymentUIs.size()+" transactions.");
+		log().debug(err+"returning "+paymentUIs.size()+" transactions.");
         return new ResponseEntity<List<PaymentUI>>(paymentUIs, HttpStatus.OK);
     }
 
@@ -51,11 +62,17 @@ public class TransactionRestController extends Universal {
     // v similar to above 3.1, but status must be Completed or Failed
     @RequestMapping(value = "/rest-historic-transactions/", method = RequestMethod.GET)
     public ResponseEntity<List<PaymentUI>> listHistoricTransactionsForBusiness() {
-		log().debug("TransactionRestController : /rest-historic-transactions/ listHistoricTransactionsForBusiness() invoked.  ");
-
-    	List<PaymentUI> paymentUIs = transactionService.listHistoricTransactionsForBusiness();
+    	String err = "TransactionRestController : /rest-historic-transactions/ listHistoricTransactionsForBusiness() ";
+    	log().debug(err+"invoked.  ");
+		List<PaymentUI> paymentUIs = null;
+		
+		try {
+			paymentUIs = transactionService.listHistoricTransactionsForBusiness();
+		} catch (Exception e) {
+			fail("Exception in "+err,e);
+		}
     	
-		log().debug("TransactionRestController : /rest-historic-transactions/ listHistoricTransactionsForBusiness() returning "+paymentUIs.size()+" transactions.");
+		log().debug(err+"returning "+paymentUIs.size()+" transactions.");
         return new ResponseEntity<List<PaymentUI>>(paymentUIs, HttpStatus.OK);
     }
 
