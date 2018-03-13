@@ -530,8 +530,11 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                        <url>http://localhost:8080/manager/text</url>
+                        <url>http://192.168.200.89:8080/manager/text</url>
                         <server>TomcatServer</server>
+                        <path>/p3sweb</path>
+                        <url>http://devb.thepatent.place:8080/manager/text</url>
+                        <server>TomcatServerB</server>
                         <path>/p3sweb</path>
                 </configuration>
                 <dependencies>
