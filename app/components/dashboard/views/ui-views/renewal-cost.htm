@@ -116,7 +116,7 @@
 				 		<ngcart-addtocart id="{{$ctrl.patentFx.getSelectedPatent().id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.patentFx.getSelectedPatent().id}}" price="{{$ctrl.patentFx.getSelectedPatent().currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
 			 			</ngcart-addtocart>										
 					</div>		
-		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex btn-default">
+		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Payment in progress' || $ctrl.patentFx.getSelectedPatent().renewalStatus =='EPO Instructed'" class="d-flex btn-default">
 				 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patentFx.getSelectedPatent().id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 				 	</div>
 <!-- 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Renewal in place'" class="d-flex btn-default">
