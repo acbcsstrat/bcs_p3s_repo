@@ -72,17 +72,18 @@ function fxCalculation($q, $timeout, fxService) {
 		    				}
 		    			});
 
-		    			// console.log(fxRateData.todaysPriceUSD - fxRateData.lastMonthsPriceUSD)
 		    			$timeout(function(){
+
 		    				var fwSaving = parseFloat(fxRateData.todaysPriceUSD - fxRateData.lastMonthsPriceUSD).toFixed(2);
 
 		    				if(fwSaving < 0) {
 		    					fxRateData.variationSave = true;
 		    					fxRateData.fourWeekVariation = fwSaving.toString().replace('-', '');
-		    				} else {
+		    				} else {	
 		    					fxRateData.variationSave = false;
 		    					fxRateData.fourWeekVariation = fwSaving;
-		    				}		        				
+		    				}
+
 		    			}, 300)
 
 		    			
@@ -94,7 +95,6 @@ function fxCalculation($q, $timeout, fxService) {
 
 				this.currentFx = fxRateData;
 
-				
 		    }
 	    }, //factory end
 	    getSelectedPatent: function() {
