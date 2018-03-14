@@ -1,0 +1,65 @@
+<aspectj>
+<aspects>
+<aspect name="com.bcs.p3s.model.RenewalDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.GlobalVariableSoleIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.FeeIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.ArchivedRateDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.NotificationDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.PaymentDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.NotificationDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.RenewalDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.PaymentIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.P3SUserIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.RenewalIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.PatentDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.PaymentDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.RenewalIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.InvoiceDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.ArchivedRateIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.CertificateIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.DiscountPercentDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.BusinessIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.P3SUserDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.LoginMessageIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.LoginMessageIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.BusinessIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.P3SFeeSoleDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.ArchivedRateIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.P3SFeeSoleDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.BusinessDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.EpoFeeDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.NotificationIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.DiscountPercentIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.FeeDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.EpoFeeIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.P3SUserDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.GlobalVariableSoleDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.PatentDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.DiscountPercentIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.InvoiceDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.InvoiceIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.P3SUserIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.NotificationIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.PaymentIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.EpoFeeDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.PatentIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.EpoFeeIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.CertificateDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.InvoiceIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.P3SFeeSoleIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.GlobalVariableSoleDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.GlobalVariableSoleIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.LoginMessageDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.FeeDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.FeeIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.LoginMessageDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.DiscountPercentDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.CertificateIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.BusinessDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.PatentIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.ArchivedRateDataOnDemand_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.CertificateDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.P3SFeeSoleIntegrationTest_Roo_IntegrationTest"/>
+</aspects>
+</aspectj>
+

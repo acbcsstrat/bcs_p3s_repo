@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" 
+    xmlns:beans="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+    <!-- HTTP security configurations -->
+    <http auto-config="true" use-expressions="true">
+    
+<!-- MP14062017 - Code changes for redirection to index.htm after login starts -->
+        <form-login login-processing-url="/resources/j_spring_security_check" 
+        	login-page="/login" 
+        			authentication-success-handler-ref="myAuthenticationSuccessHandler"
+        				authentication-failure-url="/login?login_error=t" />
+<!-- MP14062017 - Code changes for redirection to index.htm after login ends -->
+        
+        <logout logout-url="/logout" />
+        
+        <intercept-url pattern="/login/**" access="permitAll" />
+        <intercept-url pattern="/register/**" access="permitAll" />
+        <intercept-url pattern="/forgot-password/**" access="permitAll" />
+        <intercept-url pattern="/reset-password/**" access="permitAll" />
+        <intercept-url pattern="/public/**" access="permitAll" />
+        <intercept-url pattern="/assets/css/**" access="permitAll" />
+        <intercept-url pattern="/assets/imgs/**" access="permitAll" />
+        <!-- Below line needed to bypass login for prelogin forgot password functionality -->
+        <intercept-url pattern="/prelogin/**" access="permitAll" />
+        <!--  <intercept-url pattern="/**" access="isAuthenticated()" />  -->
+        <intercept-url pattern="/**" access="hasRole('admin')" />
+        
+	    <session-management>
+			<!-- DISABLE concurrency-control during Development 
+				        <concurrency-control max-sessions="1" />
+			 -->
+	    </session-management>
+    </http>
+ <!-- MP14062017 - Code changes for redirection to index.htm after login starts -->   
+    <beans:bean id="myAuthenticationSuccessHandler"
+        class="com.bcs.p3s.security.SimpleUrlAuthenticationSuccessHandler">
+     
+     	
+    </beans:bean>
+ <!-- MP14062017 - Code changes for redirection to index.htm after login ends -->
+ 
+    <!-- Configure Authentication mechanism -->
+    <authentication-manager alias="authenticationManager">
+	   <authentication-provider>
+            <!--   
+            	DISABLE encrypted passwords during Development <password-encoder ref="bcryptEncoder"/>
+            -->
+		<jdbc-user-service data-source-ref="dataSource"
+ 
+		   users-by-username-query="
+		      select email_address as username, password, (status='enabled')  
+		      from p3suser 
+		      where email_address=?" 
+ 
+		   authorities-by-username-query="
+		      select u.email_address, u.userrole 
+		      from p3suser u 
+		      where u.email_address =?  " 
+ 
+		/>
+	   </authentication-provider>
+	</authentication-manager>
+</beans:beans>
