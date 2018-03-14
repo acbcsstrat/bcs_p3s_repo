@@ -1,5 +1,3 @@
-app.controller('fxChartCtrl', fxChartCtrl);
-
 function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMonth) {
 
 	var vm = this;
@@ -28,6 +26,9 @@ function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMont
 		                    bottom: 55,
 		                    left: 55
 		                },
+		                tooltip: {
+						  hideDelay: 0
+						},		                
 		                showLegend: false,
 		                x: function(d, i){ 
 		                	return d[0]},
@@ -90,8 +91,8 @@ function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMont
 
 	      	}, 200);
 
-		} //if patents end
-		
+		} //if patents end	
 	}
+}
 
-} 
+app.controller('fxChartCtrl', fxChartCtrl);
