@@ -85,6 +85,7 @@ public class SimpleUrlAuthenticationSuccessHandler extends Universal implements 
                 break;
             } else if (grantedAuthority.getAuthority().equals("admin")) {
                 isAdmin = true;
+                isUser = true;
                 break;
             }
         }
