@@ -14,7 +14,7 @@ privileged aspect Certificate_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Certificate.entityManager;
     
-    public static final List<String> Certificate.fieldNames4OrderClauseFilter = java.util.Arrays.asList("renewal", "issueDate", "docPath", "filename", "certificateTemplateId", "renewed_on_date_ex_epo");
+    public static final List<String> Certificate.fieldNames4OrderClauseFilter = java.util.Arrays.asList("renewal", "issueDate", "docPath", "filename", "certificateTemplateId", "renewedOnDateExEpo");
     
     public static final EntityManager Certificate.entityManager() {
         EntityManager em = new Certificate().entityManager;

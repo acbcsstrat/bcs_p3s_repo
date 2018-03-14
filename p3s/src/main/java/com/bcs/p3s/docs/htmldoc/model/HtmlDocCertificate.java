@@ -45,7 +45,7 @@ public class HtmlDocCertificate extends Universal {
 		//EpoPatentYearInPlace = patent.getLastRenewedYearEpo().toString();
 		EpoPatentYearInPlace = renewal.getRenewalYear().toString();
 		//EpoPatentRenewedOnDate = dateUtil.dateToUSStringWithDayOfWeek(patent.getLastRenewedDateExEpo());
-		EpoPatentRenewedOnDate = dateUtil.dateToUSStringWithDayOfWeek(certificate.getRenewed_on_date_ex_epo());
+		EpoPatentRenewedOnDate = dateUtil.dateToUSStringWithDayOfWeek(certificate.getRenewedOnDateExEpo());
 		certificateNumber = certificate.getId().toString();
 		certificateIssueDate = dateUtil.dateToUSStringWithoutDayOfWeek(certificate.getIssueDate());
 	}

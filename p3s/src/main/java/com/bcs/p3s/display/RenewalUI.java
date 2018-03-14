@@ -91,6 +91,8 @@ public class RenewalUI extends Renewal {
 		//if (renewal.getCertificate() != null) this.setCertificateUrl(renewal.getCertificate().getUrl());
 		if (renewal.getCertificate() != null) {
 			this.setCertificateUrl(context + "/certificate/" + renewal.getId().toString());
+			this.setCertificate(renewal.getCertificate());
+			this.getCertificate().setRenewal(null);
 		}
 		
 		//Get the invoice url

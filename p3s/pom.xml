@@ -536,6 +536,9 @@
                         <url>http://devb.thepatent.place:8080/manager/text</url>
                         <server>TomcatServerB</server>
                         <path>/p3sweb</path>
+                        <url>http://demo.thepatent.place:8080/manager/text</url>
+                        <server>TomcatServerDemo</server>
+                        <path>/p3sweb</path>
                 </configuration>
                 <dependencies>
                     <dependency>

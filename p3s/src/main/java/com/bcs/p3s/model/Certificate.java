@@ -66,7 +66,7 @@ public class Certificate {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date renewed_on_date_ex_epo;
+    private Date renewedOnDateExEpo;
 
     
     // Special methods
