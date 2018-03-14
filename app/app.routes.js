@@ -1,10 +1,12 @@
-app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProvider', 'IdleProvider', '$mdThemingProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $qProvider, KeepaliveProvider, IdleProvider, $mdThemingProvider, slickCarouselConfig) {
+app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', '$mdThemingProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, $mdThemingProvider, slickCarouselConfig) {
 
     var customBlueMap =  $mdThemingProvider.extendPalette('light-blue', {
         'contrastDefaultColor': 'light',
         'contrastDarkColors': ['50'],
         '50': 'ffffff'
     });
+
+    $compileProvider.debugInfoEnabled(false);
 
     $mdThemingProvider.definePalette('customBlue', customBlueMap);
     $mdThemingProvider.theme('default')
@@ -79,12 +81,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProv
                 controllerAs: '$ctrl'                
             },
             'fxrateswidget@dashboard': {
-                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/renewalCost.htm',
+                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/renewal-cost.htm',
                 controller: 'renewalCostCtrl',
                 controllerAs: '$ctrl'                
             },
             'fxrateswidgetmd@dashboard': {
-                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/renewalCost.htm',
+                templateUrl: 'p3sweb/app/components/dashboard/views/ui-views/renewal-cost.htm',
                 controller: 'renewalCostCtrl',
                 controllerAs: '$ctrl'                
             },            
