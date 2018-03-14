@@ -236,7 +236,6 @@ app.component('patents', {
 
 	   				if (vm.sortReverse === false) {
 	   					vm.tableData.sort(function(a, b){
-	   						console.log(a)
 	   						// console.log(new Date(a.renewalDueDate).getUTCFullYear())
 	   						var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
 	   						return dateB - dateA;
