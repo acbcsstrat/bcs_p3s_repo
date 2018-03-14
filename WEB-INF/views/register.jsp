@@ -129,7 +129,7 @@
 									</div>
 								</div>
 								<div class="form-section">
-									<div class="row m-b-md">
+									<div id="sameAsBusiness" class="row m-b-md">
 										<div class="col-md-12 col-lg-12 col-xl-12">
 											<div class="row m-t-xs">
 												<div class="col-md-12 col-lg-12 col-xl-12">
@@ -604,12 +604,14 @@
 				dataType: 'json',
 				async: false,
 				success: function(response) {
+
 					response.ustimezones.forEach(function(data){
 						timezoneSelect.append('<option value="'+data.abbr +'">'+data.abbr +'</option>')
 					})
+
 				},
 				error: function() {
-					console.log('noo')
+
 				}
 			})
 
@@ -624,6 +626,7 @@
 					data: dataString,
 				    dataType: 'json',
 					success: function(response) {
+
 						$('#businessValidation').hide();
 						var patentFound = true;
 						if(patentFound) {
@@ -642,13 +645,17 @@
 						$('#subBusiness input[id=city]').val(response.city);
 						$('#subBusiness input[id=USstate]').val(response.usstate);
 						$('#subBusiness input[id=zip]').val(response.zip);
-						$('#subBusiness select[id=timezone]').val(response.timezone);
-						$('#subBilling input[id=billing_street]').val(response.billingStreet);
-						$('#subBilling input[id=billing_city]').val(response.billingCity);
-						$('#subBilling input[id=billing_state]').val(response.billingState);
-						$('#subBilling input[id=billing_zip]').val(response.billingZip);
-						
-						// $('#subBusiness select[id=timezone]').val(data[1]
+						$('#subBusiness select[id=timezone]').append('<option value="'+response.timezone +'">'+response.timezone +'</option>');
+						$('#pasteBusiness input[id=billing_street]').val(response.billingStreet);
+						$('#pasteBusiness input[id=billing_city]').val(response.billingCity);
+						$('#pasteBusiness input[id=billing_state]').val(response.billingState);
+						$('#pasteBusiness input[id=billing_zip]').val(response.billingZip);
+						$('#sameAsBusiness').hide();
+
+						setTimeout(function() {
+							$('#timezone').val(response.timezone);
+						}, 300);
+
 					},
 					error: function(errResponse) {
 						if(errResponse.status == 400) {
@@ -665,6 +672,9 @@
                	$('#businessDetails input').each(function(i){
                		$(this).prop('readonly', true);
                	})
+               	$('#pasteBusiness input').each(function(i){
+               		$(this).prop('readonly', true);
+               	})               	
                	$('#businessDetails select').prop('disabled', true);          	
 
 			})
