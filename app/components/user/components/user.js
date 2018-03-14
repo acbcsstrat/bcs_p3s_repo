@@ -88,7 +88,7 @@ app.directive('validateName', function(){
 })
 .directive('validatePhone', function(){
 
-    var regExp = /^[0-9\s\+\-\(\)\']*$/;
+    var regExp = /^[0-9\s\+\-\(\) ]*$/;
 
     return {
         require: 'ngModel',
@@ -165,8 +165,8 @@ app.directive('checkStrength', function () {
 
             var strength = {
                 colors: ['#e30613', '#e30613', '#f9b233', '#f9b233', '#53ab58'],
-                mesureStrength: function (p) {
-                    
+                measureStrength: function (p) {
+
                     var _force = 0;                    
                     var _regex = /[$-/:-?{-~!"^_`\[\]]/g;
                                           
@@ -205,19 +205,29 @@ app.directive('checkStrength', function () {
                 }
             };
 
-            scope.$watch(iAttrs.checkStrength, function () {
-                if (scope.newPassword === '') {
-                    iElement.children('li')
-                        .css({ "background": "#DDD" });
+            var updatePasswordStrength = function (viewValue) {
+
+                if (!viewValue || viewValue === '') {
+
                 } else {
-                    var c = strength.getColor(strength.mesureStrength(scope.newPassword));
+
+                    var color = strength.getColor(strength.measureStrength(viewValue));
+
                     iElement.css({ "display": "inline" });
                     iElement.children('li')
-                        .css({ "background": "#DDD" })
-                        .slice(0, c.idx)
-                        .css({ "background": c.col });
+                    .css({ "background": "#DDD" })
+                    .slice(0, color.idx)
+                    .css({ "background": color.col });
+
                 }
-            });
+
+                return viewValue;
+
+            };
+
+            scope.userProfileForm[iAttrs.checkStrength].$parsers.unshift(updatePasswordStrength);
+            scope.userProfileForm[iAttrs.checkStrength].$formatters.unshift(updatePasswordStrength);
+
         },
         template: '<li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li>'
     };
