@@ -39,12 +39,14 @@
                   </div>
                </div>
                <div id="forgotPassFail" class="hide-before m-b-sm">
-                  <div class="content-panel">
-                     <div class="row">
-                        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-                           <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-red">Unsuccessful</h3>
-                           <p id="errorMsg" class="font-body text-center m-b-sm"></p>
-                           <p class="font-body">Do you need support? Contact us through our <a class="inline-link font-weight-medium" id="supportLink">website</a></p>
+                  <div class="content-panel bg-white">
+                     <div class="content-panel__body">
+                        <div class="row">
+                           <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+                              <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-red">Unsuccessful</h3>
+                              <p id="errorMsg" class="font-body text-center m-b-sm"></p>
+                              <p class="font-body">Do you need support? Contact us through our <a class="inline-link font-weight-medium" id="supportLink">website</a></p>
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -59,7 +61,7 @@
                </form>                       
             </div>
             <div id="forgotPassSuccess" class="hide-before">
-               <div class="content-panel">
+               <div class="content-panel bg-white">
                   <div class="content-panel__body">
                      <div class="row">
                         <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
