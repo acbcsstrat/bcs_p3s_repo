@@ -1,5 +1,3 @@
-app.controller('graphDonutCtrl', graphDonutCtrl);
-
 function graphDonutCtrl($timeout, $scope, patents, patentPhasesService, selectPhaseService) {
 
 	var vm = this;
@@ -116,3 +114,5 @@ function graphDonutCtrl($timeout, $scope, patents, patentPhasesService, selectPh
 		} //if patents end	
 	}
 }
+
+app.controller('graphDonutCtrl', graphDonutCtrl);

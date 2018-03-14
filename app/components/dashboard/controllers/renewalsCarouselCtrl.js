@@ -1,5 +1,3 @@
-app.controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
-
 function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, calculateService, selectPhaseService, fxCalculationService) {
 
 	var vm = this;
@@ -52,8 +50,6 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, ca
         	},
         	init: function (event, slick) {
               	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
-            
-
             }
         }
     } //slick end
@@ -61,3 +57,5 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, ca
 	//renewal cost logic has to be included to accomodate for responsive design 
 	///////////////////////////////////////////////////////////////////////////
 }
+
+app.controller('renewalsCarouselCtrl', renewalsCarouselCtrl);

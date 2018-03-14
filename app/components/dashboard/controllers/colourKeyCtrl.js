@@ -1,5 +1,3 @@
-app.controller('colourKeyCtrl', colourKeyCtrl);
-
 function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService) {
 
 	var vm = this;
@@ -16,3 +14,5 @@ function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPha
 	vm.selectedPhase = selectPhaseService;
 
 }
+
+app.controller('colourKeyCtrl', colourKeyCtrl);

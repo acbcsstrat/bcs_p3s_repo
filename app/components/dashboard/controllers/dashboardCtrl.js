@@ -1,5 +1,3 @@
-app.controller('dashboardCtrl', dashboardCtrl);
-
 function dashboardCtrl ($scope, $state, $timeout, $rootScope) {
 
 	var vm = this;
@@ -17,3 +15,5 @@ function dashboardCtrl ($scope, $state, $timeout, $rootScope) {
     })
 
 }
+
+app.controller('dashboardCtrl', dashboardCtrl);

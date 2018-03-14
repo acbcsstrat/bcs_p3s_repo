@@ -1,5 +1,3 @@
-app.controller('renewalCostCtrl', renewalCostCtrl);
-
 function renewalCostCtrl($scope, $timeout, $state, $location, patents, fxCalculationService, currentTransactionsService, patentsService) {
 
 	var vm = this;
@@ -62,9 +60,11 @@ function renewalCostCtrl($scope, $timeout, $state, $location, patents, fxCalcula
 				});
 			},
 			function(errResponse) {
-				console.log(errResponse);
+				// console.log(errResponse);
 			}
 		);
 	};
 
 }
+
+app.controller('renewalCostCtrl', renewalCostCtrl);

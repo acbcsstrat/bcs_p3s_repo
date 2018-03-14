@@ -1,5 +1,3 @@
-app.controller('recentActivityCtrl', recentActivityCtrl);
-
 function recentActivityCtrl(patents, transactionHistory, calculateService, patentsRestService) {
 
 	var vm = this;
@@ -19,7 +17,7 @@ function recentActivityCtrl(patents, transactionHistory, calculateService, paten
 				.then(
 					function(response, i){
 	        			if(data.renewalStatus == 'Show price') {
-	        				console.log(data.costBandColour)
+
 	        				var hours = calculateService.calculateHours(data.costBandColour, response)
 
         					if(calculateService.recentActivity(hours)) {
@@ -41,7 +39,7 @@ function recentActivityCtrl(patents, transactionHistory, calculateService, paten
 	
 				var hours =  date - data.lastUpdatedDate;
 				var recentTrans  = calculateService.recentActivity(hours);
-				console.log(hours)
+
 				if(recentTrans) {
 					vm.recentTransArr.push(data);
 				}
@@ -79,3 +77,5 @@ function recentActivityCtrl(patents, transactionHistory, calculateService, paten
 	};	    
 
 }
+
+app.controller('recentActivityCtrl', recentActivityCtrl);
