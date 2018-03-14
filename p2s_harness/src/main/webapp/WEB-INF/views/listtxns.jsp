@@ -68,13 +68,13 @@
 		</form>
     </td>
     <td>
-		<form action="readepo" method="GET" >						
-			<input type="submit" name="readmc" value="Read EPO latest"  /> 
+		<form action="followon" method="GET" >						
+			<input type="submit" name="readmc" value="Followon after EPO Instructed"  /> 
 		</form>
     </td>
     <td>
-		<form action="followon" method="GET" >						
-			<input type="submit" name="readmc" value="Followon after EPO Instructed"  /> 
+		<form action="readepo" method="GET" >						
+			<input type="submit" name="readmc" value="Read EPO latest"  /> 
 		</form>
     </td>
   </tr>
@@ -92,11 +92,8 @@
 <p/>
 <a href="/harness/logout">logout</a>
 <p/>
-<a href="harness/logout">logout</a>
-<p/>
-<a href="http://localhost:8080/harness/logout">logout</a>
 
-   </body>
+</body>
 
 
 	<script>
