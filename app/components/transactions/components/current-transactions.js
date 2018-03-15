@@ -56,7 +56,9 @@ app.component('currentTransactions', {
 			vm.tableData = vm.transactions;
 			// console.log(vm.tableData)
 		   	vm.sortType     = 'transId'; // set the default sort type
-		  	vm.sortReverse  = false;  // set the default sort order					
+
+		  	vm.sortReverse  = false;  // set the default sort order
+
 
   		   	vm.sortType = function(column) {
 
@@ -66,11 +68,13 @@ app.component('currentTransactions', {
 		   			vm.selectedSortType = (function() {
 
 		   				if (vm.sortReverse === false) {
+
 		   					vm.tableData.sort(function(a, b){
 		   						var dateA = new Date(a.transStartDate), dateB = new Date(b.transStartDate);
 		   						console.log(dateA - dateB)
 		   						return dateB - dateA;
 		   					});
+
 		   				} else {
 		   					vm.tableData.sort(function(a, b){
 		   						var dateA = new Date(a.transStartDate), dateB = new Date(b.transStartDate);
@@ -78,9 +82,11 @@ app.component('currentTransactions', {
 		   						return dateB - dateA;
 		   					});
 		   				}
+
 	   				}());
 
 		   		} else if (column == 'clientRef') {
+<<<<<<< Updated upstream
 
 		   			vm.sortClientRef = true;
 		   			vm.selectedSortType = (function() {
