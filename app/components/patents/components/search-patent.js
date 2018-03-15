@@ -201,6 +201,7 @@ app.component('searchpatent', {
         }
 	}
 ]})
+
 .directive('validatePatent', function(){
 
 	return {
@@ -222,6 +223,15 @@ app.component('searchpatent', {
 	}
 })
 
+.directive('focusMe', function($timeout) {
+  return {
+    link: function(scope, element, attrs) {
 
+      $timeout(function() {
+        element[0].focus(); 
+      },750);
+    }
+  };
+});
 
 
