@@ -97,28 +97,28 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-md-12 col-lg-12 col-xl-12">
-											<input type="text" name="phoneNumber" class="form-control pill-radius font-body" id="phoneNumber" data-parsley-validate-phone="" placeholder="Tel" data-parsley-minlength="10" data-parsley-minlength-message="This fields value has a minimum length of 10 characters." data-parsley-maxlength-messsage="This fields value has a maximum length of 40 characters." data-parsley-maxlength="40" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">		
+											<input type="text" name="phoneNumber" class="form-control pill-radius font-body" id="phoneNumber" data-parsley-validate-phone="" placeholder="Business Tel" data-parsley-minlength="10" data-parsley-minlength-message="This fields value has a minimum length of 10 characters." data-parsley-maxlength-messsage="This fields value has a maximum length of 40 characters." data-parsley-maxlength="40" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">		
 										</div>
 									</div>
 									<div id="subBusiness">
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-												<input type="text" name="street" class="form-control pill-radius font-body" id="street" placeholder="Street" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+												<input type="text" name="street" class="form-control pill-radius font-body" id="street" placeholder="Business Street" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-												<input type="text" name="city" class="form-control pill-radius font-body" id="city" placeholder="City" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+												<input type="text" name="city" class="form-control pill-radius font-body" id="city" placeholder="Business City" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-												<input type="text" name="USstate" class="form-control pill-radius font-body" id="USstate" placeholder="State" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
+												<input type="text" name="USstate" class="form-control pill-radius font-body" id="USstate" placeholder="Business State" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-6 col-lg-6 col-xl-6">
-												<input type="text" name="zip" class="form-control pill-radius font-body" id="zip" placeholder="Zip" data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+												<input type="text" name="zip" class="form-control pill-radius font-body" id="zip" placeholder="Business Zip" data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 											<div class="col-md-6 col-lg-6 col-xl-6">
 												<select class="form-control pill-radius font-body form-control" name="timezone" id="timezone" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
@@ -147,22 +147,22 @@
 									<div id="pasteBusiness">
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-												<input type="text" name="billingStreet" class="form-control pill-radius font-body" id="billing_street" placeholder="Street" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+												<input type="text" name="billingStreet" class="form-control pill-radius font-body" id="billing_street" placeholder="Billing Street" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-												<input type="text" name="billingCity" class="form-control pill-radius font-body" id="billing_city" placeholder="City" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+												<input type="text" name="billingCity" class="form-control pill-radius font-body" id="billing_city" placeholder="Billing City" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-												<input type="text" name="billingState" class="form-control pill-radius font-body" id="billing_state" placeholder="State" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+												<input type="text" name="billingState" class="form-control pill-radius font-body" id="billing_state" placeholder="Billing State" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-12 col-lg-12 col-xl-12">
-												<input type="text" name="billingZip" class="form-control pill-radius font-body" id="billing_zip" placeholder="Zip"  data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+												<input type="text" name="billingZip" class="form-control pill-radius font-body" id="billing_zip" placeholder="Billing Zip"  data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
 											</div>
 										</div>
 									</div>
