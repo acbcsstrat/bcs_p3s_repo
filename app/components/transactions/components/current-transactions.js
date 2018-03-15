@@ -86,7 +86,6 @@ app.component('currentTransactions', {
 	   				}());
 
 		   		} else if (column == 'clientRef') {
-<<<<<<< Updated upstream
 
 		   			vm.sortClientRef = true;
 		   			vm.selectedSortType = (function() {
