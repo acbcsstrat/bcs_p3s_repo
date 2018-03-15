@@ -70,4 +70,11 @@ public interface P3SPropertyNames {
 	public static final int TWO_WEEKS_IN_DAYS = 14;
 	public static final int ONE_WEEK_IN_DAYS = 7;
 	
+	
+	//EPO access data 
+	public static final String P3S_EPO_APP_NAME = "p3s_epo_app_name"; 
+	public static final String P3S_EPO_CONSUMER_KEY = "p3s_epo_key"; 
+	public static final String P3S_EPO_CONSUMER_SECRET_KEY = "p3s_epo_seckey"; 
+	
+	
 }

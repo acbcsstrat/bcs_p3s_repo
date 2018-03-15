@@ -94,6 +94,13 @@ public class BcsLogger implements Loggable {
 		else return logInternalError();
 	}
 
+	protected Logger logEpoN4CU = null;
+	public Logger logEpo() {
+		if (logEpoN4CU==null) { logEpoN4CU = Logger.getLogger(EPO_TRAFFIC_MONITOR); }
+		return logEpoN4CU;
+	}
+
+	
 
 	/**
 	 * panic() is used to log potentially (or definitely!) dangerous occurrences - to developers..
