@@ -54,7 +54,20 @@ app.component('currentTransactions', {
 			});
 
 			vm.tableData = vm.transactions;
-			// console.log(vm.tableData)
+
+
+			vm.tableData.forEach(function(data){
+				if(data.renewalUIs.length > 1) {
+					data.renewalUIs.map(function(o, i){ 
+						console.log(o)
+						if(o.patentUI.clientRef == '') {
+							o.patentUI.clientRef = '[No Client Description Provided]'
+						}
+
+					})					
+				}
+			})
+
 		   	vm.sortType     = 'transId'; // set the default sort type
 
 		  	vm.sortReverse  = false;  // set the default sort order

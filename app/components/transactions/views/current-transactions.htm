@@ -76,8 +76,9 @@
 										{{patent.patentUI.patentApplicationNumber}}
 									</span>
 								</span>
-								<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.renewalUIs" data-ng-model="$ctrl.patentAppData.defaultSelect" data-ng-if="" data-ng-change="$ctrl.transactionListFilter($ctrl.patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
+								<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.renewalUIs" data-ng-model="$ctrl.patentAppData.defaultSelect" data-ng-change="$ctrl.transactionListFilter($ctrl.patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
 									<option value="">Multiple</option>
+
 								</select>
 					        </td>
 					        <td class="no-wrap" data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
