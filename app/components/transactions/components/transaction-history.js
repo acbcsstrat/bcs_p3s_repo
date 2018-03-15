@@ -44,10 +44,94 @@ app.component('transactionHistory', {
 		   						return dateB - dateA;
 		   					});
 		   				}
-	   				
+
 	   				}());
 
-		   		} else if (column == 'transAmount_USD') {
+	   		 	} else if (column == 'clientRef') {
+
+		   			vm.sortClientRef = true;
+		   			vm.selectedSortType = (function() {
+
+						var result = []
+
+						var arrayOrder = [];
+
+						vm.tableData.forEach(function(data) {
+							
+							data.renewalUIs.map(function(o, i){ 
+								arrayOrder.push(o.patentUI.clientRef);
+							})
+						})
+
+						arrayOrder.sort();
+
+						arrayOrder.forEach(function(key){
+							// console.log(key)
+							var found = false;
+
+							vm.tableData = vm.tableData.filter(function(item){
+								if(item.renewalUIs.length === 1) {
+									if(!found && item.renewalUIs[0].patentUI.clientRef == key) {
+										result.push(item)
+							            found = true;
+							            return false;									
+									} else {
+										return true;
+									}
+								} else {
+									result.push(item)
+								}
+
+							})
+
+						})
+
+						vm.tableData = result;
+					})
+
+		   		} else if (column == 'patentApplicationNumber') {
+
+		   			vm.sortPatentApplicationNumber = true;
+		   			vm.selectedSortType = (function() {
+
+		   				var result = []
+
+						var arrayOrder = [];
+
+						vm.tableData.forEach(function(data) {
+							
+							data.renewalUIs.map(function(o, i){ 
+								arrayOrder.push(o.patentUI.patentApplicationNumber);
+							})
+						})
+
+						arrayOrder.sort();
+
+						arrayOrder.forEach(function(key){
+
+							var found = false;
+
+							vm.tableData = vm.tableData.filter(function(item){
+								if(item.renewalUIs.length === 1) {
+									if(!found && item.renewalUIs[0].patentUI.patentApplicationNumber == key) {
+										result.push(item)
+							            found = true;
+							            return false;									
+									} else {
+										return true;
+									}
+								} else {
+									result.push(item)
+								}
+
+							})
+
+						})
+
+						vm.tableData = result;
+
+		   			})
+		   		}  else if (column == 'transAmount_USD') {
 		   			vm.sortTransCost = true;
 		   			vm.selectedSortType = (function() {
 		   				if (vm.sortReverse === false) {
