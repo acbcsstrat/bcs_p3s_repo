@@ -155,7 +155,7 @@ public class PaymentRestController extends Universal {
     		if(!(addedPatentIds.isEmpty())){
     			for(Long eachId : addedPatentIds){
     				Patent patent = Patent.findPatent(eachId);
-    				if(!(RenewalStatusEnum.SHOW_PRICE.equals(patent.getRenewalStatus()))){
+    				if(!(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(patent.getRenewalStatus()))){
     					log().debug("Patent[" +patent.getId() +"] added to basket has got a RENEWAL STATUS NOT EQUALS SHOW_PRICE. Abort the Payment request.");
     					return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.BAD_REQUEST);  // Pat to display respective error message
     				}
