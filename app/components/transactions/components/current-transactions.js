@@ -54,29 +54,119 @@ app.component('currentTransactions', {
 			});
 
 			vm.tableData = vm.transactions;
-
+			// console.log(vm.tableData)
 		   	vm.sortType     = 'transId'; // set the default sort type
-		  	vm.sortReverse  = false;  // set the default sort order			
+		  	vm.sortReverse  = false;  // set the default sort order					
 
   		   	vm.sortType = function(column) {
+
 		   		if(column == 'transStartDate') {
+
 		   			vm.sortTransDate = true;
 		   			vm.selectedSortType = (function() {
 
 		   				if (vm.sortReverse === false) {
 		   					vm.tableData.sort(function(a, b){
 		   						var dateA = new Date(a.transStartDate), dateB = new Date(b.transStartDate);
+		   						console.log(dateA - dateB)
 		   						return dateB - dateA;
 		   					});
 		   				} else {
 		   					vm.tableData.sort(function(a, b){
 		   						var dateA = new Date(a.transStartDate), dateB = new Date(b.transStartDate);
+		   						console.log(dateA - dateB)
 		   						return dateB - dateA;
 		   					});
 		   				}
 	   				}());
 
+		   		} else if (column == 'clientRef') {
+
+		   			vm.sortClientRef = true;
+		   			vm.selectedSortType = (function() {
+
+						var result = []
+
+						var arrayOrder = [];
+
+						vm.tableData.forEach(function(data) {
+							
+							data.renewalUIs.map(function(o, i){ 
+								arrayOrder.push(o.patentUI.clientRef);
+							})
+						})
+
+						arrayOrder.sort();
+
+						arrayOrder.forEach(function(key){
+							// console.log(key)
+							var found = false;
+
+							vm.tableData = vm.tableData.filter(function(item){
+								if(item.renewalUIs.length === 1) {
+									if(!found && item.renewalUIs[0].patentUI.clientRef == key) {
+										result.push(item)
+							            found = true;
+							            return false;									
+									} else {
+										return true;
+									}
+								} else {
+									result.push(item)
+								}
+
+							})
+
+						})
+
+						vm.tableData = result;
+					})
+
+		   		} else if (column == 'patentApplicationNumber') {
+
+		   			vm.sortPatentApplicationNumber = true;
+		   			vm.selectedSortType = (function() {
+
+		   				var result = []
+
+						var arrayOrder = [];
+
+						vm.tableData.forEach(function(data) {
+							
+							data.renewalUIs.map(function(o, i){ 
+								arrayOrder.push(o.patentUI.patentApplicationNumber);
+							})
+						})
+
+						arrayOrder.sort();
+
+						arrayOrder.forEach(function(key){
+							// console.log(key)
+							var found = false;
+
+							vm.tableData = vm.tableData.filter(function(item){
+								if(item.renewalUIs.length === 1) {
+									if(!found && item.renewalUIs[0].patentUI.patentApplicationNumber == key) {
+										result.push(item)
+							            found = true;
+							            return false;									
+									} else {
+										return true;
+									}
+								} else {
+									result.push(item)
+								}
+
+							})
+
+						})
+
+						vm.tableData = result;
+
+		   			})
+
 		   		} else if (column == 'transAmount_USD') {
+
 		   			vm.sortTransCost = true;
 		   			vm.selectedSortType = (function() {
 		   				if (vm.sortReverse === false) {
@@ -93,6 +183,7 @@ app.component('currentTransactions', {
    					}());
 
 		   		} else if (column == 'transLength') {
+
 		   			vm.sortTransItems = true;
 		   			vm.selectedSortType = (function() {
 						if (vm.sortReverse === false) {
@@ -101,18 +192,25 @@ app.component('currentTransactions', {
 		   						return renewalsB - renewalsA;
 		   					});
 		   				} else {
-		   					vm.tableData.sort(function(a, b){
-		   						var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
-		   						return renewalsB - renewalsA;
-		   					});
+		   					if(vm.sortReverse === true) {
+			   					vm.tableData.sort(function(a, b){
+			   						var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
+			   						console.log(renewalsA - renewalsB)
+			   						return renewalsB - renewalsA;
+			   					});
+		   					}
 		   				}
 	   				}());
 	   				
 		   		} else {
+
 		   			vm.sortTransCost = false;
+		   			vm.sortPatentApplicationNumber = false;
+		   			vm.sortClientRef = false;
 		   			vm.sortTransDate = false;
 		   			vm.sortTransItems = false;
 		   			vm.selectedSortType = column;
+
 		   		}
 		   	};
 		};

@@ -37,24 +37,24 @@
 	        					<span data-ng-show="$ctrl.selectedSortType == 'p3S_TransRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
 							<th data-ng-click="$ctrl.sortType('transLength'); $ctrl.sortReverse = !$ctrl.sortReverse">No. of patents
-				            	<span data-ng-show="$ctrl.sortTransItems && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span data-ng-show="$ctrl.sortTransItems && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+				            	<span data-ng-show="$ctrl.sortTransItems && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.sortTransItems && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
 							<th data-ng-click="$ctrl.sortType('patentApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">App No.
-				            	<span data-ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span data-ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+				            	<span data-ng-show="$ctrl.sortPatentApplicationNumber && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.sortPatentApplicationNumber && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
 							<th data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">Client Ref
-				            	<span data-ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span data-ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+				            	<span data-ng-show="$ctrl.sortClientRef && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.sortClientRef && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
 							<th data-ng-click="$ctrl.sortType('transStartDate'); $ctrl.sortReverse = !$ctrl.sortReverse">Trans Initiated
-				            	<span data-ng-show="$ctrl.sortTransDate && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span data-ng-show="$ctrl.sortTransDate && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+				            	<span data-ng-show="$ctrl.sortTransDate && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.sortTransDate && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
 							<th data-ng-click="$ctrl.sortType('transAmount_USD'); $ctrl.sortReverse = !$ctrl.sortReverse">Cost
-				            	<span data-ng-show="$ctrl.sortTransCost && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-	        					<span data-ng-show="$ctrl.sortTransCost && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+				            	<span data-ng-show="$ctrl.sortTransCost && $ctrl.sortReverse" class="fa fa-caret-down"></span>
+	        					<span data-ng-show="$ctrl.sortTransCost && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
 							<th data-ng-click="$ctrl.sortType('latestTransStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">Status
 				            	<span data-ng-show="$ctrl.selectedSortType == 'latestTransStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
