@@ -42,7 +42,13 @@ app.component('user', {
         .then(
             function(response){
                 
+                
+                for (var i=0; i < response.length; i++) {
+                    response[i].index = i + 1;
+                }
+
                 vm.companyUsers = response;
+
                 var userCol = (response.length / 2) + 1;
                 var newArr = [];
 
@@ -51,9 +57,12 @@ app.component('user', {
                         newArr.push(arr.slice(i, i+size));
                     }
                     return newArr;
-                }         
+                }
 
-                vm.chunkedData = chunk(vm.companyUsers, userCol);
+                vm.chunkedData = {
+                    chunk: chunk(vm.companyUsers, userCol)
+                }
+
             },
             function(errResponse){
                 console.log(errResponse);

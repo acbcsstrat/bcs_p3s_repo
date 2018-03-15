@@ -197,9 +197,9 @@
 						</div>						
 					</div>
 					<div class="row">
-						<div class="col-md-6" data-ng-repeat="users in $ctrl.chunkedData">
+						<div class="col-md-6" data-ng-repeat="prop in $ctrl.chunkedData.chunk">
 							<ul class="ul-bullet-free">
-								<li class="font-body font-weight-medium" data-ng-repeat="item in users track by $index"><span>{{item.firstName}} {{item.lastName}}</span></li> <!-- removed {{$index + 1}}-->
+								<li class="font-body font-weight-medium" data-ng-repeat="users in prop"><span class="font-weight-bold">{{users.index}}. </span><span>{{users.firstName}} {{users.lastName}}</span></li> <!-- removed {{$index + 1}}-->
 							</ul>
 						</div>
 					</div>
