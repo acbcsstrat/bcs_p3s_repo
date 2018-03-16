@@ -1,23 +1,6 @@
-app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', '$mdThemingProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, $mdThemingProvider, slickCarouselConfig) {
-
-    var customBlueMap =  $mdThemingProvider.extendPalette('light-blue', {
-        'contrastDefaultColor': 'light',
-        'contrastDarkColors': ['50'],
-        '50': 'ffffff'
-    });
+app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig) {
 
     $compileProvider.debugInfoEnabled(false);
-
-    $mdThemingProvider.definePalette('customBlue', customBlueMap);
-    $mdThemingProvider.theme('default')
-        .primaryPalette('customBlue', {
-          'default': '500',
-          'hue-1': '50'
-        })
-        .accentPalette('pink');
-    $mdThemingProvider.theme('altTheme')
-    .primaryPalette('purple')
-
 
     IdleProvider.idle(500);
     IdleProvider.timeout(30);
@@ -116,14 +99,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
     })
     .state('patents', {
         url: '/patents',
-        component: 'patents',
+        templateUrl: 'p3sweb/app/components/patents/views/list-patents.htm',
+        controller: 'listPatentsCtrl',
+        controllerAs: '$ctrl',
         resolve: {
             patents: ['patentsRestService', function(patentsRestService) {
                 return patentsRestService.fetchAllPatents();
             }]
-        },
-        data: {
-            customPatents:'patentsRestService'
         },
         params: {
             navigation: 'patentnav'
