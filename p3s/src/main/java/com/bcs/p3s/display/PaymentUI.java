@@ -72,6 +72,8 @@ public class PaymentUI extends Payment {
 		this.setP3S_TransRef(payment.getP3S_TransRef());  // (payment
 		this.setMC_TransRef(null); // See JavaDoc for Payment:MC_TransRef
 		this.setTransType(payment.getTransType());
+		//set password of initiatedByUserId as null
+		payment.getInitiatedByUserId().setPassword(null);
 		this.setInitiatedByUserId(payment.getInitiatedByUserId());
 		this.setTransStartDate(payment.getTransStartDate());
 		this.setTransTargetEndDate(payment.getTransTargetEndDate());
