@@ -68,7 +68,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        String scrapeData = reader.readEPO(patentApplicationNumber);
 	        
 	        if(scrapeData == null){
-	        	log().debug("No patent Info found for patent appln number " + patentApplicationNumber);
+	        	log().debug("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
 	        	log().fatal("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
 	        	return null;
 	        }
