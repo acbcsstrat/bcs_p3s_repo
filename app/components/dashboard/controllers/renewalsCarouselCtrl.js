@@ -7,7 +7,6 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, ca
 	vm.phaseLoaded = true;
 
 	function setPhaseFn(phase) {
-		console.log('Inside the setPhasefn: ', phase)
 		vm.phaseLoaded = false;
 		selectPhaseService.setPhase(phase, vm.sortedPatentData);
 		$timeout(function() {
