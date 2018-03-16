@@ -15,6 +15,7 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService) {
 					blueRenewals: [],
 					blackRenewals: [],
 					greyRenewals: [],
+					allRenewals: [],
 					totalRenewals: function() {
 						if(patents) {
 							return this.greenRenewals.concat(this.amberRenewals, this.redRenewals, this.amberRenewals, this.blueRenewals, this.blackRenewals, this.greyRenewals).length// totalRenewals: 
@@ -25,6 +26,9 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService) {
 				}
 
 				patents.forEach(function(item) {
+
+					phases.allRenewals.push(item); //purpose of all tab in list patents
+
 					if(item.renewalStatus !== 'Renewal in place' && item.renewalStatus !== 'Too late to renew' && item.renewalStatus !== 'No renewal needed'  && item.renewalStatus !== 'Way too late to renew') {
 
 						switch(item.costBandColour) {
@@ -43,11 +47,13 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService) {
 							case 'Black':
 								phases.blackRenewals.push(item);
 							break;
+							
 						}
 					} else {
 						phases.greyRenewals.push(item);
 					}
 				});
+
 
 				$timeout(function() {
 					phases.greenRenewals.forEach(function(data, i){

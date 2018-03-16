@@ -49,6 +49,7 @@ app.factory('patentsRestService', function($http, $q) {
         };
 
         factory.fetchCostAnalysis = function(id) {
+
             var deferred = $q.defer();
             $http.get(domain+'rest-cost-analysis/'+id)
                 .then(

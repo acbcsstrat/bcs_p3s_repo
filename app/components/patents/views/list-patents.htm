@@ -4,20 +4,20 @@
 		<div class="col-md-12 col-lg-12 col-xl-8 d-flex align-items-center lg-m-b-md">
 			<div class="phase-tabs">
 				<uib-tabset type="pills" active="activePhaseTab" class="phase-pills">
-					<uib-tab index="0" class="tab tab--reg bg-white pill-radius btn--reg pill-tabs font-body font-body--component txt-black border-grey-xs" heading="View All({{$ctrl.allPatentsLength}})" data-ng-attr-id="$ctrl.patentsTabs.all" data-ng-click="$ctrl.displayPhase(1)" data-ui-sref="patents">
+					<uib-tab index="0" class="tab tab--reg bg-white pill-radius btn--reg pill-tabs font-body font-body--component txt-black border-grey-xs" heading="View All({{$ctrl.sortedPatentData.allPatents.length}})" data-ng-attr-id="$ctrl.patentsTabs.all" data-ng-click="$ctrl.displayPhase('all')" data-ui-sref="patents">
 				    </uib-tab>
-				    <uib-tab index="1" class="tab tab--reg bg-phase-green pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Green({{$ctrl.greenPatentsLength}})" data-ng-attr-id="$ctrl.patentsTabs.green" data-ng-click="$ctrl.displayPhase(2)" data-ui-sref="patents">
+				    <uib-tab index="1" class="tab tab--reg bg-phase-green pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Green({{$ctrl.sortedPatentData.greenRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.green" data-ng-click="$ctrl.displayPhase('green')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="2" class="tab tab--reg bg-phase-amber pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Yellow({{$ctrl.amberPatentsLength}})" data-ng-attr-id="$ctrl.patentsTabs.amber" data-ng-click="$ctrl.displayPhase(3)" data-ui-sref="patents">
+				    <uib-tab index="2" class="tab tab--reg bg-phase-amber pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Yellow({{$ctrl.sortedPatentData.amberRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.amber" data-ng-click="$ctrl.displayPhase('amber')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="3" class="tab tab--reg bg-phase-red pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Red({{$ctrl.redPatentsLength}})" data-ng-attr-id="$ctrl.patentsTabs.red" data-ng-click="$ctrl.displayPhase(4)" data-ui-sref="patents">
+				    <uib-tab index="3" class="tab tab--reg bg-phase-red pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Red({{$ctrl.sortedPatentData.redRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.red" data-ng-click="$ctrl.displayPhase('red')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="4" class="tab tab--reg bg-phase-blue pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Blue({{$ctrl.bluePatentsLength}})" data-ng-attr-id="$ctrl.patentsTabs.blue" data-ng-click="$ctrl.displayPhase(5)" data-ui-sref="patents">
+				    <uib-tab index="4" class="tab tab--reg bg-phase-blue pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Blue({{$ctrl.sortedPatentData.blueRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.blue" data-ng-click="$ctrl.displayPhase('blue')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="5" class="tab tab--reg bg-phase-black pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Black({{$ctrl.blackPatentsLength}})" data-ng-attr-id="$ctrl.patentsTabs.black" data-ng-click="$ctrl.displayPhase(6)" data-ui-sref="patents">
+				    <uib-tab index="5" class="tab tab--reg bg-phase-black pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Black({{$ctrl.sortedPatentData.blackRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.black" data-ng-click="$ctrl.displayPhase('black')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="6" class="tab tab--reg bg-phase-grey pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Grey({{$ctrl.greyPatentsLength}})" data-ng-attr-id="$ctrl.patentsTabs.grey" data-ng-click="$ctrl.displayPhase(7)" data-ui-sref="patents">
-					</uib-tab>				
+				    <uib-tab index="6" class="tab tab--reg bg-phase-grey pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Grey({{$ctrl.sortedPatentData.greyRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.grey" data-ng-click="$ctrl.displayPhase('grey')" data-ui-sref="patents">
+					</uib-tab>
 				</uib-tabset>
 			</div>
 		</div>
