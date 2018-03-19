@@ -529,13 +529,8 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
+                <!-- below configuration triggers deployment to demo server -->
                 <configuration>
-                        <url>http://192.168.200.89:8080/manager/text</url>
-                        <server>TomcatServer</server>
-                        <path>/p3sweb</path>
-                        <url>http://devb.thepatent.place:8080/manager/text</url>
-                        <server>TomcatServerB</server>
-                        <path>/p3sweb</path>
                         <url>http://demo.thepatent.place:8080/manager/text</url>
                         <server>TomcatServerDemo</server>
                         <path>/p3sweb</path>
