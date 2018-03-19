@@ -35,7 +35,9 @@ function fxCalculation($q, $timeout, fxService) {
 		    			dateArr.forEach(function(item, index){
 
 		    				if(item == dateArr[0]) {
+
 		    					var todaysFx = data[index].rate;
+		    					fxRateData.todaysFx = todaysFx;
 		    					fxRateData.todaysPriceUSD = parseFloat(patent.feeUI.subTotalEUR * todaysFx).toFixed(2);
 		    				}
 		    				//yesterday

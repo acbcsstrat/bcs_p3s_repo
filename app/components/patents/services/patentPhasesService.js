@@ -33,18 +33,23 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService) {
 
 						switch(item.costBandColour) {
 							case 'Green':
+								item.nextStage = 'Amber';
 								phases.greenRenewals.push(item);
 							break;
 							case 'Amber':
+								item.nextStage = 'Red'
 								phases.amberRenewals.push(item);
 							break;
 							case 'Red':
+								item.nextStage = 'Blue'
 								phases.redRenewals.push(item);
 							break;
 							case 'Blue':
+								item.nextStage = 'Black'
 								phases.blueRenewals.push(item);
 							break;
 							case 'Black':
+								item.nextStage = 'LAPSE'
 								phases.blackRenewals.push(item);
 							break;
 							
