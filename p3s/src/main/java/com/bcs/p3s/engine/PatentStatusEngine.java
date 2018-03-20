@@ -445,8 +445,9 @@ public class PatentStatusEngine extends Universal {
 		/*String[] status_values_to_consider = {"PATENT GRANTED" , "PATENT LAPSED" , "PATENT REFUSED"};
 		boolean isFound = stringContainsItemFromList(newStatus,status_values_to_consider);*/
 		//Getting the status values from database. Ability to extend values as we going forward
-		TypedQuery<PatentStatusNoRenewalNeeded> patentStatus = PatentStatusNoRenewalNeeded.findPatentStatusNoRenewalNeededsByStatusText_OPS(patent.getEpoPatentStatus().toUpperCase());
-		if(!(patentStatus.getResultList().isEmpty())){
+		TypedQuery<PatentStatusNoRenewalNeeded> patentStatusOPS = PatentStatusNoRenewalNeeded.findPatentStatusNoRenewalNeededsByStatusText_OPS(patent.getEpoPatentStatus().toUpperCase());
+		TypedQuery<PatentStatusNoRenewalNeeded> patentStatusEPO = PatentStatusNoRenewalNeeded.findPatentStatusNoRenewalNeededsByStatusText_EPO(patent.getEpoPatentStatus());
+		if((!patentStatusOPS.getResultList().isEmpty()) || (!patentStatusEPO.getResultList().isEmpty())){
 			
 			patent.setRenewalStatus(RenewalStatusEnum.NO_RENEWAL_NEEDED);
 			log().debug("The new status - " + patent.getEpoPatentStatus() + " means PATENT NOT RENEWABLE ANYMORE ");
