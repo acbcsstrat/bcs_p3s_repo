@@ -48,6 +48,7 @@ public class ResponseHeaderReaderImpl extends Universal implements ResponseHeade
 	    
 	    List<String> firstData = headerMap.get(headerMap.keySet().toArray()[0]);
 	    if(firstData!=null){
+	    	//eg: expression -- 		 [HTTP/1.1 200 OK]
 	    	Pattern p = Pattern.compile("HTTP/1.1 (\\d*) ([a-zA-Z]*)");
         	Matcher m = p.matcher(firstData.get(0));
         	boolean b = m.matches();
@@ -64,6 +65,7 @@ public class ResponseHeaderReaderImpl extends Universal implements ResponseHeade
 	    else
 	    {
         	//Pattern p = Pattern.compile(".*?retrieval=[a-z:]*(\\d*).*?search=[a-z:]*(\\d*).*?");
+	    	//eg: expression -- 		  [idle (images=green:200, inpadoc=green:60, other=green:1000, retrieval=green:200, search=green:30)]
 	    	Pattern p = Pattern.compile("([a-z]*) \\(images=([a-z]*):(\\d*).*?inpadoc=([a-z]*):(\\d*).*?other=([a-z]*):(\\d*).*?retrieval=([a-z]*):(\\d*).*?search=([a-z]*):(\\d*).*?\\).*");
         	Matcher m = p.matcher(throttlingInformation.get(0));
         	boolean b = m.matches();

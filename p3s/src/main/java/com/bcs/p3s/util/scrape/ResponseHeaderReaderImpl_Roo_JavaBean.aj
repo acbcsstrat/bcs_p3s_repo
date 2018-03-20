@@ -4,6 +4,7 @@
 package com.bcs.p3s.util.scrape;
 
 import com.bcs.p3s.enump3s.ThrottleStatusEnum;
+import com.bcs.p3s.scrape.model.ResponseHeaderPojo;
 import com.bcs.p3s.util.scrape.ResponseHeaderReaderImpl;
 
 privileged aspect ResponseHeaderReaderImpl_Roo_JavaBean {
@@ -38,6 +39,14 @@ privileged aspect ResponseHeaderReaderImpl_Roo_JavaBean {
     
     public void ResponseHeaderReaderImpl.setAccessInterval(long accessInterval) {
         this.accessInterval = accessInterval;
+    }
+    
+    public ResponseHeaderPojo ResponseHeaderReaderImpl.getResponseHeader() {
+        return this.responseHeader;
+    }
+    
+    public void ResponseHeaderReaderImpl.setResponseHeader(ResponseHeaderPojo responseHeader) {
+        this.responseHeader = responseHeader;
     }
     
 }
