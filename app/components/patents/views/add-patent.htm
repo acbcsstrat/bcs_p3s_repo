@@ -1,118 +1,32 @@
-<div class="row">
-    <div class="col-md-12">
-		<form ng-submit="$ctrl.submit($ctrl.patent)">
-			<div class="row">
-				<div class="col-md-6">
-					<table class="table table-bordered table-inverse td-30-70">
-						<thead>
-							<tr>
-								<td colspan="2">
-									<h2>Patent Information</h2>
-								</td>
-							</tr>
-						</thead>
-						<tbody>
-							<div class="row">
-								<div class="col-md-6">
-									<tr>
-										<td colspan="2">
-											Patent Data for Application Number: {{$ctrl.patent.patentApplicationNumber}}
-										</td>
-									</tr>
-									<tr>
-									    <td>
-									        <label class="text-xs-right col-form-label">Inventor</label>
-								        </td>
-								        <td>
-								        	<input type="text" name="patentPublicationNumber" class="form-control" ng-model="$ctrl.patent.patentPublicationNumber" required readonly>
-								        </td>   		
-									</tr>
-								 	<tr>
-									    <td>
-									        <label class="text-xs-right col-form-label">Inventor</label>
-								        </td>
-								        <td>
-								        	<input type="text" name="primaryApplicantName" class="form-control" ng-model="$ctrl.patent.primaryApplicantName" required readonly>
-								        </td>   		
-									</tr>
-									<tr>
-									    <td>
-								    		<label class="text-xs-right col-form-label">Patent Filing Date</label>
-							    		</td>
-							    		<td>
-							    			<input type="text" name="filingDateUI" class="form-control" ng-model="$ctrl.patent.filingDateUI" required readonly>
-							    		</td>
-							    	</tr>
-							    	<tr>
-									    <td>
-								    		<label class="text-xs-right col-form-label">Title</label>
-							    		</td>
-							    		<td>
-							    			<input type="text" name="title" class="form-control" ng-model="$ctrl.patent.title" required readonly>
-							    		</td>
-							    	</tr>
-								</div>
+<div class="animate-show">
+	<patentnav></patentnav>
+	<div class="content-panel bg-white">
+		<div class="row">
+			<div class="col-md-12 col-lg-9 col-xl-8">
+				<div class="content-panel__head">
+					<form class="form" ng-submit="$ctrl.findPatent(searchPatent);" name="searchPatentForm" novalidate>
+						<div class="form-group row d-flex align-items-center m-none">
+							<div class="col-md-3 col-lg-3 col-xl-4">
+								<label class="font-body font-weight-bold" for="searchPatent">Patent Application No.</label>
 							</div>
-						</tbody>
-					</table>
-				</div>
-				<div class="col-md-6">
-		    		<h3>Optional Data</h3>
-	    			<div class="form-group row">
-	    			
-						<label class="col-md-4" for="clientRef">Your Reference for your Client</label>
-						<div class="col-md-8">
-							<input type="text" name="clientRef" class="form-control" id="clientRef" ng-model="$ctrl.patent.clientRef">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-md-4" for="shortTitle">Your Nickname for this patent</label>
-						<div class="col-md-8">
-							<input type="text" name="shortTitle" class="form-control" id="shortTitle" ng-model="$ctrl.patent.shortTitle" >
-						</div>
-					</div>		    			
-					<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
-						<div class="col-md-4" ng-repeat="item in checkbox">
-							<div class="row" ng-repeat="checkbox in $ctrl.chunkedData">
-								<div class="col-md-4 font-sm text-center" ng-repeat="item in checkbox">
-									{{item.title}}
-									<div class="onoffswitch">
-										<label class="switch font-sm">
-										  <input type="checkbox" ng-model="item.isOn">
-										  <span class="slider round"></span>
-										</label>
+							<div class="col-md-9 col-lg-9 col-xl-8">
+								<div class="row">
+									<div class="col-md-10 col-lg-10 col-xl-10 d-flex">
+										<input type="text" name="searchPatent" id="searchPatent" ng-model="searchPatent" class="form-control pill-radius font-body" placeholder="Search" focus-me="true" validate-patent required>
+									</div>
+									<div class="col-md-2 col-xl-2 user-utils d-flex justify-content-center">
+										<button type="submit" data-ng-disabled="searchPatentForm.$invalid" class="btn bg-phase-green txt-white circle-radius-sm d-flex justify-content-center icon-link"><i class="fa fa-search fa-lg"></i></button>
 									</div>
 								</div>
-							</div>	
+							</div>		
 						</div>
-					</div>
- 					<div class="form-group row">
-						<label class="col-md-4" for="filingDate">RAW Filing Date</label>
-						<div class="col-md-8">
-							<input type="text" name="filingDate" class="form-control" id="filingDate" ng-model="$ctrl.patent.filingDate" required>
-						</div>
-					</div>
-	 			</div>
-	 			<div class="col-md-2 offset-md-10">
-					<button class="btn btn-lg btn-success btn-block" id="add_review_submit" type="submit">Add</button>
-	 			</div>
+					</form>
+					<div class="col-md-9 offset-md-3 col-lg-9 offset-lg-3 col-lg-6 offset-xl-4 m-t-xs"" ng-show="!$ctrl.queriedPatent">
+						<p class="font-body font-weight-medium txt-phase-red" ng-bind="$ctrl.searchError">No results were found with this Patent Application number</p>
+					</div>			
+				</div>
 			</div>
-		</form>
+		</div>
+		<div data-ui-view></div>
 	</div>
 </div>
-
-
-							
-<!-- <tr ng-repeat="x in $ctrl.patent.notificationUIs">
-					<td ng-model="x.title"></td>
-					<td>
-						<input
-						    type="checkbox"
-						    name="notification{{x.id}}"
-						    value="{{x.isOn}}"
-						    ng-checked="{{x.isOn}}"
-						    ng-click="toggleSelection(x.isOn); x.isOn=0"
-						  />
-					</td>
-	 			</tr>
-       -->
