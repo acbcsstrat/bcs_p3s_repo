@@ -1,13 +1,9 @@
 app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig) {
 
-    $compileProvider.debugInfoEnabled(false);
-
     IdleProvider.idle(500);
     IdleProvider.timeout(30);
     KeepaliveProvider.http(domain+'keep-session-alive/');
-    KeepaliveProvider.interval(20)
-
-    $qProvider.errorOnUnhandledRejections(false);
+    KeepaliveProvider.interval(20);
 
     $urlRouterProvider
         .when('', '/dashboard')
@@ -16,6 +12,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
 
     slickCarouselConfig.dots = true;
     slickCarouselConfig.autoplay = false;
+
+    $qProvider.errorOnUnhandledRejections(false);
 
     $stateProvider
         .state('dashboard', {
@@ -79,15 +77,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
         })    
         .state('profile', {
             url: '/profile',
-            component: 'user',
-            resolve: {
-                user: ['userService', function(userService) {
-                    return userService.fetchUser();
-                }],
-                timezones: ['timezoneService', function(timezoneService){
-                    return timezoneService.fetchUsaTimeZones();
-                }]
-            }
+            templateUrl: 'p3sweb/app/components/user/views/user-profile.htm',
+            controller: 'userProfileCtrl',
+            controllerAs: '$ctrl'
         })
         .state('patents', {
             url: '/patents',
@@ -95,7 +87,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
             controller: 'listPatentsCtrl',
             controllerAs: '$ctrl',
             resolve: {
-                patents: ['patentsRestService', function(patentsRestService) {
+                patents: ['patentsRestService', function(patentsRestService) {                 
                     return patentsRestService.fetchAllPatents();
                 }]
             },
@@ -127,7 +119,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
                 'patentinfo@patents.patent': {
                     templateUrl: 'p3sweb/app/components/patents/views/ui-views/patent-info.htm',
                     controller: 'patentInfoCtrl',
-                    controllerAs: '$ctrl'                
+                    controllerAs: '$ctrl'
                 },
                 'patentcostanalysis@patents.patent': {
                     templateUrl: 'p3sweb/app/components/patents/views/ui-views/patent-costanalysis.htm',
@@ -137,7 +129,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
                 'patentrenewals@patents.patent': {
                     templateUrl: 'p3sweb/app/components/patents/views/ui-views/patent-renewals.htm',
                     controller: 'patentRenewalsCtrl',
-                    controllerAs: '$ctrl'                
+                    controllerAs: '$ctrl'
                 }
             },
             params: {
@@ -145,26 +137,29 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
             }
         })
         .state('search-patent', {
-            url: '/search-patent',
-            component: 'searchpatent',
+            url: '/add-patent',
+            templateUrl: 'p3sweb/app/components/patents/views/add-patent.htm',
+            controller: 'addPatentCtrl',
+            controllerAs: '$ctrl',
             params: {
                 navigation: 'patentnav',
-                patent: null
+                patent: null,
+                transactionNo: null
             }
         })
-        .state('add-patent', {
-            url: '^/add-patent',
-            component: 'addpatent',
-            params: {
-                navigation: 'patentnav',
-                obj: null
-            }
+        .state('search-patent.add-patent', {
+            url: '/{transactionNo}',
+            templateUrl: 'p3sweb/app/components/patents/views/ui-views/patent-found.htm',
+            controller: 'patentFoundCtrl', 
+            controllerAs: '$ctrl'
         })
         .state('current-transactions', {
             url: '/current-transactions',
-            component: 'currentTransactions',
+            templateUrl: 'p3sweb/app/components/transactions/views/current-transactions.htm',
+            controller: 'currentTransactionsCtrl',
+            controllerAs: '$ctrl',
             resolve: {
-                transactions: ['currentTransactionsService', function(currentTransactionsService) {
+                currentTransactions: ['currentTransactionsService', function(currentTransactionsService){
                     return currentTransactionsService.fetchCurrentTransactions();
                 }]
             },
@@ -174,10 +169,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
         })
         .state('current-transactions.current-transaction-item', {
             url: '/{transId}/:transHref',
-            component: 'currentTransaction',
+            templateUrl: 'p3sweb/app/components/transactions/views/current-transaction-item.htm',
+            controller: 'currentTransactionItemCtrl',
+            controllerAs: '$ctrl',
             resolve: {
-                transaction: ['transactions', '$stateParams', function(transactions, $stateParams) {
-                    return transactions.find(function(transaction){
+                currentTransactionItem: ['currentTransactions', '$stateParams', function(currentTransactions, $stateParams) {
+                    return currentTransactions.find(function(transaction){
                         return transaction.id == $stateParams.transId;
                     })
                 }]
@@ -188,7 +185,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
         })
         .state('transaction-history', {
             url: '/transaction-history',
-            component: 'transactionHistory',
+            templateUrl: 'p3sweb/app/components/transactions/views/transaction-history.htm',
+            controller: 'transactionHistoryCtrl',
+            controllerAs: '$ctrl',
             resolve: {
                 transactionHistory: ['transactionHistoryService', function(transactionHistoryService){
                     return transactionHistoryService.fetchTransactionHistory();
@@ -200,26 +199,28 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
         })
         .state('transaction-history.transaction-history-item', {
             url: '/{transHistoryId}',
-            component: 'transactionHistoryItem',
+            templateUrl: 'p3sweb/app/components/transactions/views/transaction-history-item.htm',
+            controller: 'transactionHistoryItemCtrl',
+            controllerAs: '$ctrl',            
             resolve: {
                 transactionHistoryItem: ['transactionHistory', '$stateParams', function(transactionHistory, $stateParams){
                     return transactionHistory.find(function(transaction){
-
                         return transaction.id == $stateParams.transHistoryId;
                     })
                 }]
-            },
-            params: {
-                navigation: 'transactionnav'
             }
         })
         .state('basket', {
             url: '/basket',
-            component: 'basket'
+            templateUrl: 'p3sweb/app/components/checkout/views/basket.htm',
+            controller: 'basketCtrl',
+            controllerAs: '$ctrl'
         })
         .state('bank-transfer-preparation', {
             url: '/bank-transfer-preparation',
-            component: 'bankTransferPreparation',
+            templateUrl: 'p3sweb/app/components/checkout/views/bank-transfer-preparation.htm',
+            controller: 'bankTransferPrepCtrl',
+            controllerAs: '$ctrl',
             params: {
             	orderObj: null,
             	patentObj: null
@@ -227,7 +228,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
         })    
         .state('bank-transfer-success', {
             url: '/bank-transfer-success',
-            component: 'bankTransferSuccess',
+            templateUrl: 'p3sweb/app/components/checkout/views/bank-transfer-success.htm',            
+            controller: 'bankTransferSuccessCtrl',
+            controllerAs: '$ctrl',            
             params: {
                 orderObj: null
             }
