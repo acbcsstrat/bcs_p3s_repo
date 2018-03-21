@@ -6,10 +6,6 @@ app.component('searchpatent', {
 		
 	 	vm.queriedPatent = {};
 
-	 	$rootScope.page = 'Add Patent';
-
-		vm.animate = false;
-
 	    $timeout(function() {
 	      vm.animate = true;
 	    }, 300);    	 	
@@ -56,8 +52,6 @@ app.component('searchpatent', {
 			}
 		}
 
-		vm.returnedAppNo = '';
-
 	  	vm.openCancelSearchModal = function() {
 
 			var modalInstance = $uibModal.open({
@@ -74,8 +68,6 @@ app.component('searchpatent', {
 						$uibModalInstance.close()
 					}
 
-					
-				  	
 				}
 			})	  		
 			
