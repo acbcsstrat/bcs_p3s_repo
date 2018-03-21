@@ -29,4 +29,5 @@ app.component('mainnav', {
           vm.menu.toggleSelectSection(section);
         }
 	}]
+	
 })
