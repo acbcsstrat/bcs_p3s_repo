@@ -1,4 +1,4 @@
-function renewalCostCtrl($scope, $timeout, $state, $location, patents, fxCalculationService, currentTransactionsService, patentsService) {
+function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, fxCalculationService, currentTransactionsService, patentsService) {
 
 	var vm = this;
 
