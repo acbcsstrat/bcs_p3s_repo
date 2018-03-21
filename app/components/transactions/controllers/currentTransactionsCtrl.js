@@ -39,14 +39,12 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 
    					vm.tableData.sort(function(a, b){
    						var dateA = new Date(a.transStartDate), dateB = new Date(b.transStartDate);
-   						console.log(dateA - dateB)
    						return dateB - dateA;
    					});
 
    				} else {
    					vm.tableData.sort(function(a, b){
    						var dateA = new Date(a.transStartDate), dateB = new Date(b.transStartDate);
-   						console.log(dateA - dateB)
    						return dateB - dateA;
    					});
    				}

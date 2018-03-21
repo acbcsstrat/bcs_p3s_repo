@@ -65,7 +65,6 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 							}
 						});
 					}
-				
 	            }
 	        );	            
 		};
