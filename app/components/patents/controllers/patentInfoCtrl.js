@@ -1,4 +1,4 @@
-function patentInfoCtrl($scope, patent, $rootScope, $timeout, fxCalculationService, currentTransactionsService, patentsRestService,$uibModal) {
+function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, fxCalculationService, currentTransactionsService, patentsRestService,$uibModal) {
 
 	var vm = this;
 
@@ -127,6 +127,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $timeout, fxCalculationServi
 	};
 
  	vm.deletePatent = function(id){
+
         patentsRestService.deletePatent(id)
             .then(function(){
              	$state.go('patents', {}, {reload: true})

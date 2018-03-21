@@ -13,7 +13,7 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
 			vm.sortedPatentData = patentPhasesService.phases(patents);//patent data service (shared by dashboard)
 
 	  		vm.displayPhase = function(phase) {
-	  			vm.tableData = [];
+	  			vm.tableData = []; //reset data before displaying new phase
 	  			if(phase !== 'all') {
 					switch (phase) {
 					    case 'green':
@@ -41,7 +41,7 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
 			};
 
 			$timeout(function() {
-				vm.displayPhase('all');
+				vm.displayPhase('all'); //invoke displayPhase displaying all patents
 			}, 100);
 			
 		};
@@ -91,7 +91,7 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
       	vm.rowSelect = function(event){
       		vm.patentInfoContent = true;
       		if(!$(event.target).hasClass('cartbtn')) {
-	      		var id = ($($(event.currentTarget).find('a')));
+	      		var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
 	      		var patentId = id[0].hash; //gets data from ui-sref
 	      		window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
       		}
@@ -118,7 +118,7 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
 	   				
 	   			}());
 	   		} else {
-	   			vm.sortDate = false;
+	   			vm.sortDate = false; //resets column if not selected
 	   			vm.selectedSortType = column;
 	   		}
 	   	};
@@ -129,19 +129,3 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
 }
 
 app.controller('listPatentsCtrl', listPatentsCtrl);
-
-
-app.directive('fixedTableHeaders', ['$timeout', function($timeout) {
-  return {
-    restrict: 'A',
-    link: function(scope, element, attrs) {
-      $timeout(function () {
-        
-          var container = element.parentsUntil(attrs.fixedTableHeaders);
-	        element.stickyTableHeaders({ scrollableArea: container, "fixedOffset": 0 });
-
-      }, 0);
-    }
-  };
-}]);
-

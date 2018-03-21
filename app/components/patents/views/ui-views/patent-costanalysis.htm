@@ -31,7 +31,7 @@
 						<h4 class="font-weight-medium font-h4">Cost breakdown</h4>
 					</div>
 					<div class="col-xl-6">
-						<p class="font-h4">1 USD = {{$ctrl.usd2eur}} EUR</p>
+						<p class="font-h4" data-ng-if="$ctrl.feeBreakDown">1 USD = {{$ctrl.feeBreakDown.fxRate}} EUR</p>
 					</div>	
 				</div>
 				<div class="m-t-md">

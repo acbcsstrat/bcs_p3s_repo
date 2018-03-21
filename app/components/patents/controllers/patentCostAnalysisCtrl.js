@@ -2,9 +2,9 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $timeout) {
 
 	var vm = this;
 
-	vm.chartActive = 'Stage Cost Chart';
-
 	var costAnalysisFee = costAnalysis.fee;
+
+	
 
 	if(costAnalysisFee) {
 
@@ -51,7 +51,6 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $timeout) {
 		};
 
 	}
-
 
 	Chart.elements.Rectangle.prototype.draw = function() {
 		    
