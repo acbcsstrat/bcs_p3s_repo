@@ -1,7 +1,9 @@
 package com.bcs.p3s.controller.web;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +74,8 @@ public class MiscController extends Universal {
 			}
 			uiModel.addAttribute("options", alloptions);
 
+			uiModel.addAttribute("timeStr", timeStr());
+			
             return "listtxns";
 	    }
 
@@ -215,5 +219,12 @@ public class MiscController extends Universal {
 	    }
 	    
 
+		protected String timeStr() {
+			String result = ".";
+			Date now = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			result = sdf.format(now);
+			return result;
+		}
 	
 }

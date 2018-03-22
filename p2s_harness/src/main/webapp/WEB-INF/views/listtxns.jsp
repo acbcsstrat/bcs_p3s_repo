@@ -13,6 +13,7 @@
    	<body > 
 <%@ page import="com.bcs.p3s.model.Txn,java.util.List" %>
 
+Server time: ${timeStr}
 <p/>
 &nbsp;
 <p/>
