@@ -63,6 +63,11 @@
 <table>
   <tr>
     <td>
+		<form action="writemc" method="GET" >						
+			<input type="submit" name="writemc" value="Write MC SFTP"  /> 
+		</form>
+    </td>
+    <td>
 		<form action="readmc" method="GET" >						
 			<input type="submit" name="readmc" value="Read MC SFTP"  /> 
 		</form>

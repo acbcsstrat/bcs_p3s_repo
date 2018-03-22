@@ -23,6 +23,7 @@ public class OSCommandService extends Universal {
 
 	protected final String SUDO = "sudo ";
 	protected final String CMD_ROOT = "/usr/bin/java -jar /opt/p3scron/p3scron.jar ";
+	protected final String ACTION_WRITE_MC = "writeOrder";
 	protected final String ACTION_READ_MC = "readMcTxnStatus";
 	protected final String ACTION_READ_EPO = "readEpoStatus";
 	protected final String ACTION_FOLLOWON = "epoInstructedFollowon";
@@ -46,6 +47,11 @@ public class OSCommandService extends Universal {
 		// System.out.println("OSCommandService has determined isLinux  ="+isLinux);
 	}
 
+	
+	public void WriteToMC() throws IOException {
+		String fullCmd = buildFullCommand(ACTION_WRITE_MC);
+		issueCommand(fullCmd);
+	}
 	public void ReadFromMC() throws IOException {
 		String fullCmd = buildFullCommand(ACTION_READ_MC);
 		issueCommand(fullCmd);
@@ -73,20 +79,30 @@ public class OSCommandService extends Universal {
 		//		return null;
 		//}
 		
-		if (ACTION_READ_MC.equalsIgnoreCase(type)) {
+		if (ACTION_WRITE_MC.equalsIgnoreCase(type)) {
+			log().info("buildFullCommand invoked with "+type+". ACTIONING");
+			if (isLinux) fullCommand = SUDO + CMD_ROOT + ACTION_WRITE_MC;
+			else fullCommand = dosRootCmd + " " + ACTION_WRITE_MC;
+		}
+		else if (ACTION_READ_MC.equalsIgnoreCase(type)) {
 			log().info("buildFullCommand invoked with "+type+". ACTIONING");
 			if (isLinux) fullCommand = SUDO + CMD_ROOT + ACTION_READ_MC;
 			else fullCommand = dosRootCmd + " " + ACTION_READ_MC;
-		}
-		else if (ACTION_READ_EPO.equalsIgnoreCase(type)) {
-			log().info("buildFullCommand invoked with "+type+". ACTIONING");
-			if (isLinux) fullCommand = SUDO + CMD_ROOT + ACTION_READ_EPO;
-			else fullCommand = dosRootCmd + " " + ACTION_READ_EPO;
 		}
 		else if (ACTION_FOLLOWON.equalsIgnoreCase(type)) {
 			log().info("buildFullCommand invoked with "+type+". ACTIONING");
 			if (isLinux) fullCommand = SUDO + CMD_ROOT + ACTION_FOLLOWON;
 			else fullCommand = dosRootCmd + " " + ACTION_FOLLOWON;
+		}
+		else if (ACTION_READ_EPO.equalsIgnoreCase(type)) {
+			log().info("buildFullCommand invoked with "+type+". ACTIONING");
+			if (isLinux) {
+				//fullCommand = SUDO + CMD_ROOT + ACTION_READ_EPO;
+				// If tomcat, via sudo, issues 'sudo /usr/bin/java -jar /opt/p3scron/p3scron.jar readEpoStatus'
+				// it hangs, if log4j logging to STD log at debug is enabled! Hence this workaround
+				fullCommand = SUDO + "/usr/bin/touch /root/scripts/p3s/tomcatcronAntiHangWorkaround.go";
+			}
+			else fullCommand = dosRootCmd + " " + ACTION_READ_EPO;
 		}
 		else {
 			log().info("buildFullCommand invoked with "+type+". *** NOT SUPPORTED ********");

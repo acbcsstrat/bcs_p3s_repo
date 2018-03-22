@@ -106,6 +106,19 @@ public class MiscController extends Universal {
 
 		
 		
+		@RequestMapping(value="/writemc", method = RequestMethod.GET, produces = "text/html")
+	    public String writemc(Model uiModel) {
+			log().debug("writemc() in MiscController invoked. ");
+			
+			try {
+				OSCommandService os = new OSCommandService();
+				os.WriteToMC();
+			}
+			catch (Exception e) { return "htmldocs/ohdear"; }
+			
+            return "done";
+	    }
+
 		@RequestMapping(value="/readmc", method = RequestMethod.GET, produces = "text/html")
 	    public String readmc(Model uiModel) {
 			log().debug("readmc() in MiscController invoked. ");
