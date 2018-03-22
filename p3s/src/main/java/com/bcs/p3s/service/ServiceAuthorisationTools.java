@@ -119,7 +119,7 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 	
 	protected void checkThisIsMyPatent(Long id, String err) {
-		err += "  [on checkThisIsMyPatent]";
+		err += ("  [on checkThisIsMyPatent("+id+")]");
 		Patent p = Patent.findPatent(id);
 		if ( (p==null) || ! checkThisIsMy().getBusiness().getId().equals(p.getBusiness().getId())) 
 																	failMalicious(err); 
@@ -172,7 +172,7 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 	
 	protected void failMalicious(String msg) {
-		String eMsg = "*** [failMalicious]   "+msg+" ***  {user "+checkThisIsMy().getUser().getId().longValue()+")  **";
+		String eMsg = "*** [failMalicious]   "+msg+" ***  (user "+checkThisIsMy().getUser().getId().longValue()+")  ***";
 		System.out.println(eMsg);
 		logM().fatal(eMsg);
 		throw new RuntimeException(eMsg);
