@@ -1,3 +1,8 @@
-**/META-INF/
-**/WEB-INF/views.xml
-**/public/
+META-INF/
+*views.xml
+public/
+WEB-INF/classes
+WEB-INF/layouts
+WEB-INF/lib
+WEB-INF/spring
+WEB-INF/tags
