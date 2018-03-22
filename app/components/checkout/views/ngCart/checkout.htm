@@ -1,0 +1,263 @@
+<div class="row">
+    <div class="col-md-12 col-xl-6 lg-m-b-md">
+        <div class="content-panel bg-white">
+            <div class="content-panel__head border-grey-xs--btm">
+                <p class="font-h4 font-weight-medium">Summary</p>
+            </div>
+            <div class="content-panel__head border-grey-xs--btm">
+                <p class="font-body m-b-xs"><span class="font-weight-medium">Date: </span> {{summary.date || date}}</p>
+                <p class="font-body"><span class="font-weight-medium ">Total No of Patents: </span> {{summary.totalPatents}}</p>
+            </div>
+            <div class="content-panel__head border-grey-xs--btm">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-xl-8">
+                        <p class="font-weight-medium font-body">Fee</p>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-4">
+                        <p class="font-weight-medium font-body text-md-right text-lg-right text-xl-left">Amount</p>
+                    </div>
+                    <div class="col-md-3 col-lg-3 hidden-xl-up">
+                        <p class="font-weight-medium font-body">Fee</p>
+                    </div>
+                    <div class="col-md-3 col-lg-3 hidden-xl-up">
+                        <p class="font-weight-medium font-body text-md-right text-lg-right">Amount</p>
+                    </div>
+                </div>
+            </div>
+            <div class="content-panel__head border-grey-xs--btm">
+                <div class="row">
+                    <div class="col-md-6 hidden-xl-up">
+                        <div class="row m-b-md">
+                            <div class="col-md-6">
+                                <p class="font-weight-medium font-body">Official Fees</p>                        
+                            </div>
+                            <div class="col-md-6">
+                                <p class="font-body text-right">$ {{renewalFee | number:2}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-medium font-body">Processing Fees</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="font-body text-right">$ {{processingFee | number:2}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 hidden-xl-up">
+                        <div class="row m-b-md">
+                            <div class="col-md-6">
+                                <p class="font-weight-medium font-body">EPO Surcharges</p>                        
+                            </div>
+                            <div class="col-md-6">
+                                <p class="font-body text-right">$ {{extensionFee | number:2}}</p>
+                            </div>
+                        </div>
+                        <div class="row">                         
+                            <div class="col-md-6">
+                                <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
+                            </div>
+                            <div class="col-md-6">
+                                <p class="font-body text-right">$ {{urgentFee | number:2}}</p>
+                            </div> 
+                        </div>
+                    </div>  
+
+                    <div class="col-xl-12 hidden-lg-down">
+                        <div class="m-b-md">
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <p class="font-weight-medium font-body">Official Fees</p>                        
+                                </div>
+                                <div class="col-xl-4">
+                                    <p class="font-body">$ {{renewalFee | number:2}}</p>
+                                </div>                               
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <p class="font-weight-medium font-body">Processing Fees</p>
+                                </div>
+                                <div class="col-xl-4">
+                                    <p class="font-body">$ {{processingFee | number:2}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <p class="font-weight-medium font-body">EPO Surcharges</p>                        
+                                </div>                  
+                                <div class="col-xl-4">
+                                    <p class="font-body">$ {{extensionFee | number:2}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="row">                         
+                                <div class="col-xl-8">
+                                    <p class="font-weight-medium font-body">Express Fees</p>                        
+                                </div>
+                                <div class="col-xl-4">
+                                    <p class="font-body">$ {{expressFee | number:2}}</p>
+                                </div> 
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row">                         
+                                <div class="col-xl-8">
+                                    <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
+                                </div>
+                                <div class="col-xl-4">
+                                    <p class="font-body">$ {{urgentFee | number:2}}</p>
+                                </div> 
+                            </div>
+                        </div>                        
+                    </div>                       
+                </div>
+            </div>
+            <div class="content-panel__head">
+                <div class="row hidden-lg-down">
+                    <div class="col-xl-8">
+                        <p class="font-weight-medium font-h4">Total:</p> 
+                    </div>
+                    <div class="col-xl-4">
+                        <p class="font-weight-medium font-h4">{{ totalCost | currency }}</p>
+                    </div>
+                </div>
+                <div class="row hidden-xl-up">
+                    <div class="col-md-12 d-flex">
+                        <p class="font-weight-medium font-h4 m-r-sm">Total:</p> 
+                        <p class="font-weight-medium font-h4">{{ totalCost | currency }}</p>                       
+                    </div>
+                </div>                
+            </div>            
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xl-6">
+        <div class="content-panel bg-white">
+            <div class="content-panel__head border-grey-xs--btm">
+                <p class="font-h4 font-weight-medium">Details</p>
+            </div>
+            <div class="content-panel__head">
+                <form class="form" name="billingForm" novalidate>
+                    <div class="row m-b-md">
+                        <div class="col-12">
+                            <div class="m-b-sm">
+                                <p class="font-h4 font-weight-medium">Your Information</p>
+                            </div>
+                            <div class="hidden-lg-down hidden-cxl-up">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="firstName">First Name</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="firstName" id="firstName" data-ng-model="billingDetails.firstName" readonly>
+                                    </div>
+                                </div>
+                                 <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="lastName">Last Name</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="lastName" id="lastName" data-ng-model="billingDetails.lastName" readonly>
+                                    </div>                             
+                                </div>                                     
+                            </div>
+                          
+                            <div class="form-group row hidden-cxl">
+                                <label class="col-form-label col-2 text-left font-body font-weight-medium" for="firstName">First Name</label>
+                                <div class="col-4">
+                                    <input class="form-control font-body pill-radius" type="text" name="firstName" id="firstName" data-ng-model="billingDetails.firstName" readonly>
+                                </div>
+                                <label class="col-form-label col-2 text-left font-body font-weight-medium" for="lastName">Last Name</label>
+                                <div class="col-4">
+                                    <input class="form-control font-body pill-radius" type="text" name="lastName" id="lastName" data-ng-model="billingDetails.lastName" readonly>
+                                </div>                             
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-12">
+                            <div class="m-b-sm">    
+                                <p class="font-h4 font-weight-medium">Billing Address</p>
+                            </div>
+                            <div class="hidden-lg-down hidden-cxl-up">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingStreet">Street</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingStreet" id="billingStreet" data-ng-model="billingDetails.billingStreet" data-validate-address required>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.businessStreet.$error.required && billingForm.businessStreet.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.businessStreet.$error.validAddress && billingForm.businessStreet.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>                                
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingCity">City</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingCity" id="billingCity" data-ng-model="billingDetails.billingCity" data-validate-address required>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingCity.$error.required && billingForm.billingCity.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingCity.$error.validAddress && billingForm.billingCity.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingState">State</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingState" id="billingState" data-ng-model="billingDetails.billingState" data-validate-address required>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingState.$error.required && billingForm.billingState.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingState.$error.validAddress && billingForm.billingState.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingZip">Zip</label>
+                                    <div class="col-cxl-8">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingZip" id="billingZip" data-ng-model="billingDetails.billingZip" data-validate-zip required>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingZip.$error.required && billingForm.billingZip.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingZip.$error.validAddress && billingForm.billingZip.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>
+                                    </div>
+                                </div>
+                            </div>                                   
+                            <div class="hidden-cxl">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingStreet">Street</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="businessStreet" id="businessStreet" data-ng-model="billingDetails.billingStreet" data-validate-address required>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.businessStreet.$error.required && billingForm.businessStreet.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.businessStreet.$error.validAddress && billingForm.businessStreet.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>                                
+                                    </div>
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingCity">City</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingCity" id="billingCity" data-ng-model="billingDetails.billingCity" data-validate-address required>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingCity.$error.required && billingForm.billingCity.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingCity.$error.validAddress && billingForm.billingCity.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingState">State</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingState" id="billingState" data-ng-model="billingDetails.billingState" data-validate-address required>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingState.$error.required && billingForm.billingState.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingState.$error.validAddress && billingForm.billingState.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>                                         
+                                    </div>
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingZip">Zip</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="billingZip" id="billingZip" data-ng-model="billingDetails.billingZip" data-validate-zip required>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingZip.$error.required && billingForm.billingZip.$dirty">Please fill out this field</p>
+                                        <p class="font-body txt-phase-red" data-ng-show="billingForm.billingZip.$error.validZip && billingForm.billingZip.$dirty">Only numbers and - are valid charcters in this field.</p>                                         
+                                    </div>
+                                </div>
+                            </div>                  
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center justify-content-end">
+                        <label class="form-check-label font-body m-r-md">
+                            I accept the <span class="font-weight-medium m-r-xs">Terms and Conditions</span> <input type="checkbox" name="terms-checkout" data-ng-model="tcChecked">
+                        </label>
+                        <div class="text-right">
+                            <div data-ng-if="service=='http' || service == 'log'" class="d-flex justify-content-end btn-default">
+                                <button class="btn btn--lg pill-radius bg-phase-green txt-white font-body font-weight-medium d-flex align-items-center" data-ng-click="checkout()" data-ng-disabled="!tcChecked || ngCart.getItems() == 0 || billingForm.$invalid">Continue <img src="p3sweb/assets/imgs/icons/transaction_icon_small.png" alt="transaction icon" class="m-l-sm"></button>
+                            </div>                    
+                        </div>                
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
