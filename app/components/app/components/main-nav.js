@@ -1,4 +1,4 @@
-app.component('mainnav', {
+angular.module('ppApp').component('mainnav', {
 	templateUrl: 'p3sweb/app/components/app/views/main-nav.htm',
 	controller: ['userService', 'mainNavService', function(userService, mainNavService){
 

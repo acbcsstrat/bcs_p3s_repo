@@ -95,4 +95,4 @@ function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMont
 	}
 }
 
-app.controller('fxChartCtrl', fxChartCtrl);
+angular.module('ppApp').controller('fxChartCtrl', fxChartCtrl);

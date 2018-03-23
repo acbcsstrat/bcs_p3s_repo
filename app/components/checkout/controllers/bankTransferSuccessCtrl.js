@@ -6,4 +6,4 @@ function bankTransferSuccessCtrl($scope, $rootScope, $stateParams) {
 
 }
 
-app.controller('bankTransferSuccessCtrl', bankTransferSuccessCtrl);
+angular.module('ppApp').controller('bankTransferSuccessCtrl', bankTransferSuccessCtrl);

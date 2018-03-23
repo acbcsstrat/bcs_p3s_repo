@@ -1,5 +1,3 @@
-app.controller('transactionHistoryItemCtrl', transactionHistoryItemCtrl);
-
 function transactionHistoryItemCtrl($rootScope, $timeout, transactionHistoryItem, transactionHistoryService) {
 
 	var vm = this;
@@ -160,3 +158,5 @@ function transactionHistoryItemCtrl($rootScope, $timeout, transactionHistoryItem
  	});	
 
 }
+
+angular.module('ppApp').controller('transactionHistoryItemCtrl', transactionHistoryItemCtrl);

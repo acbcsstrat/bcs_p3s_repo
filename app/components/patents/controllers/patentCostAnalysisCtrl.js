@@ -305,4 +305,4 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $timeout) {
 	
 }
 
-app.controller('patentCostAnalysisCtrl', patentCostAnalysisCtrl);
+angular.module('ppApp').controller('patentCostAnalysisCtrl', patentCostAnalysisCtrl);

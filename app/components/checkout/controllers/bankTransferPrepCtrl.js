@@ -71,4 +71,4 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	}
 }
 
-app.controller('bankTransferPrepCtrl', bankTransferPrepCtrl);
+angular.module('ppApp').controller('bankTransferPrepCtrl', bankTransferPrepCtrl);

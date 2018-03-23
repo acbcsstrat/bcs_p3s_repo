@@ -1,4 +1,4 @@
-app.factory('dashboardService', ['$http', '$q', function($http, $q){
+angular.module('ppApp').factory('dashboardService', ['$http', '$q', function($http, $q){
 
     var factory = {};
 

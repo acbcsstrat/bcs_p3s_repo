@@ -67,4 +67,4 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 
 }
 
-app.controller('renewalCostCtrl', renewalCostCtrl);
+angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);

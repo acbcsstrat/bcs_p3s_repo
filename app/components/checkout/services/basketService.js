@@ -1,4 +1,4 @@
-app.factory('basketService', ['$http', '$q', function($http, $q){
+angular.module('ppApp').factory('basketService', ['$http', '$q', function($http, $q){
 
 	var factory = {};
 

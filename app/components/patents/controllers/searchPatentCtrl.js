@@ -41,4 +41,4 @@ function searchPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, se
 
 }
 
-app.controller('searchPatentCtrl', searchPatentCtrl);
+angular.module('ppApp').controller('searchPatentCtrl', searchPatentCtrl);

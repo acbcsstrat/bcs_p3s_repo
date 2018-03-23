@@ -57,4 +57,4 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, ca
 	///////////////////////////////////////////////////////////////////////////
 }
 
-app.controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
+angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);

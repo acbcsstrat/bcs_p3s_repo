@@ -1,4 +1,4 @@
-app.directive('validateName', function(){
+angular.module('ppApp').directive('validateName', function(){
 
     var regExp = /^[a-zA-z0-9\s\w'-]*$/;
 

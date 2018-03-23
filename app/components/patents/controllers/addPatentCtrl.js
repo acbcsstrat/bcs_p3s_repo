@@ -116,4 +116,4 @@ function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $loca
 
 }
 
-app.controller('addPatentCtrl', addPatentCtrl);
+angular.module('ppApp').controller('addPatentCtrl', addPatentCtrl);

@@ -1,4 +1,4 @@
-app.factory('bankTransferCommitService', ['$http', '$q', '$state' ,function($http, $q, $state){
+angular.module('ppApp').factory('bankTransferCommitService', ['$http', '$q', '$state' ,function($http, $q, $state){
 
 	var factory = {};
 

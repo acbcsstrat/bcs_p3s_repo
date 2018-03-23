@@ -1,4 +1,4 @@
-app.directive('fixedTableHeaders', ['$timeout', function($timeout) {
+angular.module('ppApp').directive('fixedTableHeaders', ['$timeout', function($timeout) {
   	return {
 	    restrict: 'A',
 	    link: function(scope, element, attrs) {

@@ -1,4 +1,4 @@
-app.factory('chunkDataService', chunkDataService);
+angular.module('ppApp').factory('chunkDataService', chunkDataService);
 
 function chunkDataService() {
 

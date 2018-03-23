@@ -1,4 +1,4 @@
-app.factory('fxCalculationService', fxCalculation);
+angular.module('ppApp').factory('fxCalculationService', fxCalculation);
 
 function fxCalculation($q, $timeout, fxService) {
 

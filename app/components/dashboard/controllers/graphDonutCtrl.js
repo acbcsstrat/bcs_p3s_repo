@@ -115,4 +115,4 @@ function graphDonutCtrl($timeout, $scope, patents, patentPhasesService, selectPh
 	}
 }
 
-app.controller('graphDonutCtrl', graphDonutCtrl);
+angular.module('ppApp').controller('graphDonutCtrl', graphDonutCtrl);

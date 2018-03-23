@@ -1,4 +1,4 @@
-app.factory('fxService', function($q, $http) {
+angular.module('ppApp').factory('fxService', function($q, $http) {
 	
 	var factory = {};
 

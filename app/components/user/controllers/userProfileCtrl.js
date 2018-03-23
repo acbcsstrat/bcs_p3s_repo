@@ -102,4 +102,4 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
 
 }
 
-app.controller('userProfileCtrl', userProfileCtrl);
+angular.module('ppApp').controller('userProfileCtrl', userProfileCtrl);

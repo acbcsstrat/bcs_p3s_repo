@@ -230,4 +230,4 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 	
 }
 
-app.controller('currentTransactionsCtrl', currentTransactionsCtrl);
+angular.module('ppApp').controller('currentTransactionsCtrl', currentTransactionsCtrl);

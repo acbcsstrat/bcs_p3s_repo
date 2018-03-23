@@ -1,4 +1,4 @@
-app.factory('patentsService', ['$rootScope', '$timeout', function($rootScope, $timeout){
+angular.module('ppApp').factory('patentsService', ['$rootScope', '$timeout', function($rootScope, $timeout){
 	
 	return {
 		activePatentItemMenu: 	function () {

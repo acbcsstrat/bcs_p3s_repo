@@ -16,4 +16,4 @@ function dashboardCtrl ($scope, $state, $timeout, $rootScope) {
 
 }
 
-app.controller('dashboardCtrl', dashboardCtrl);
+angular.module('ppApp').controller('dashboardCtrl', dashboardCtrl);

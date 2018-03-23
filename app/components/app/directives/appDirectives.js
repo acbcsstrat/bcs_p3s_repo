@@ -1,4 +1,4 @@
-app.directive('menuToggle', [ '$timeout', function($timeout){
+angular.module('ppApp').directive('menuToggle', [ '$timeout', function($timeout){
     return {
         scope: {
             section: '=',

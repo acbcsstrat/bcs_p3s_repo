@@ -78,4 +78,4 @@ function recentActivityCtrl(patents, transactionHistory, calculateService, paten
 
 }
 
-app.controller('recentActivityCtrl', recentActivityCtrl);
+angular.module('ppApp').controller('recentActivityCtrl', recentActivityCtrl);

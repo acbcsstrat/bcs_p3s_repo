@@ -165,4 +165,4 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, fxCalculat
 	
 }
 
-app.controller('patentInfoCtrl', patentInfoCtrl);
+angular.module('ppApp').controller('patentInfoCtrl', patentInfoCtrl);

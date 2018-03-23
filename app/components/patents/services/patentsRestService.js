@@ -1,4 +1,4 @@
-app.factory('patentsRestService', function($http, $q) {
+angular.module('ppApp').factory('patentsRestService', function($http, $q) {
 
     var factory = {};
 

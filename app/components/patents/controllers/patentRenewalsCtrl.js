@@ -8,4 +8,4 @@ function patentRenewalsCtrl(patent, renewal) {
 	
 }
 
-app.controller('patentRenewalsCtrl', patentRenewalsCtrl);
+angular.module('ppApp').controller('patentRenewalsCtrl', patentRenewalsCtrl);

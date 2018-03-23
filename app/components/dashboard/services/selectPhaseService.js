@@ -1,4 +1,4 @@
-app.factory('selectPhaseService', selectPhaseService)
+angular.module('ppApp').factory('selectPhaseService', selectPhaseService)
 
 function selectPhaseService (patentPhasesService){
 	

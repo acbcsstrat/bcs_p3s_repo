@@ -16,4 +16,4 @@ function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPha
 
 }
 
-app.controller('colourKeyCtrl', colourKeyCtrl);
+angular.module('ppApp').controller('colourKeyCtrl', colourKeyCtrl);

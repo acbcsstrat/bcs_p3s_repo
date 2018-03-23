@@ -1,4 +1,4 @@
-app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig) {
+angular.module('ppApp').config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig) {
 
     IdleProvider.idle(500);
     IdleProvider.timeout(30);

@@ -1,4 +1,4 @@
-app.factory('calculateService', calculateService);
+angular.module('ppApp').factory('calculateService', calculateService);
 
 function calculateService($q, $timeout, patentsRestService, fxService) {
 

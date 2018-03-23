@@ -1,4 +1,4 @@
-app.factory('mainNavService', function(){
+angular.module('ppApp').factory('mainNavService', function(){
 	
 		var sections = [{
 	      		name: 'Dashboard',

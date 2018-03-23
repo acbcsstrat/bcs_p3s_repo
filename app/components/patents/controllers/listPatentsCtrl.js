@@ -128,4 +128,4 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
 
 }
 
-app.controller('listPatentsCtrl', listPatentsCtrl);
+angular.module('ppApp').controller('listPatentsCtrl', listPatentsCtrl);

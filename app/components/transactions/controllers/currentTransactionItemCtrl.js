@@ -126,4 +126,4 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 
 }
 
-app.controller('currentTransactionItemCtrl', currentTransactionItemCtrl);
+angular.module('ppApp').controller('currentTransactionItemCtrl', currentTransactionItemCtrl);

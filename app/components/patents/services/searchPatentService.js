@@ -1,4 +1,4 @@
-app.factory('searchPatentService', ['$http', '$q', function($http, $q) {
+angular.module('ppApp').factory('searchPatentService', ['$http', '$q', function($http, $q) {
 
     var factory = {};
 

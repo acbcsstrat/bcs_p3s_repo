@@ -1,4 +1,4 @@
-app.factory('patentPhasesService', patentPhasesService);
+angular.module('ppApp').factory('patentPhasesService', patentPhasesService);
 
 function patentPhasesService ($timeout, $q, $rootScope, calculateService) {
 	

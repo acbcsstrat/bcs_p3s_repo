@@ -11,4 +11,4 @@ function patentItemCtrl($scope, patent) {
 	
 }
 
-app.controller('patentItemCtrl', patentItemCtrl);
+angular.module('ppApp').controller('patentItemCtrl', patentItemCtrl);

@@ -229,4 +229,4 @@ function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
   	};
 }	
 
-app.controller('transactionHistoryCtrl', transactionHistoryCtrl);
+angular.module('ppApp').controller('transactionHistoryCtrl', transactionHistoryCtrl);

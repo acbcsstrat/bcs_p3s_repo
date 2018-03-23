@@ -4,4 +4,4 @@ function basketCtrl(basketService, ngCart, fulfilmentProvider, $rootScope, $stat
 
 }
 
-app.controller('basketCtrl', basketCtrl);
+angular.module('ppApp').controller('basketCtrl', basketCtrl);
