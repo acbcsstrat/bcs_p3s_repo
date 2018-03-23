@@ -52,8 +52,6 @@ public class PatentRestController extends Universal {
     HttpSession session ;
     
     
-    
-    
     //------------------- Retrieve All Patents (For this Business) --------------------------------------------------
      
     // Implements API section 2.1 - Get all patents for this business
@@ -287,26 +285,6 @@ public class PatentRestController extends Universal {
 	}
   
   
-//formerly 
-//    // Implements API section 2.5
-//    // User has confirmed this is the correct patent. So persist it
-//	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.DELETE)
-//	public ResponseEntity<Patent> deletePatent(@PathVariable("id") long id) {
-//		log().debug("PatentRestController : /rest-patents/ deletePatent() invoked ");
-//	
-//		Patent patent = patentService.findById(id);
-//		if (patent == null) {
-//			System.out.println("Unable to delete. Patent with id " + id + " not found");
-//				return new ResponseEntity<Patent>(HttpStatus.NOT_FOUND);
-//		    }
-//		
-//		    patentService.deletePatentById(id);
-//		    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
-//		}
-
-  
-    
-    
 	//------------------- Fetch FX rate --------------------------------------------------------
 
 		    // Implements API section 2.6
@@ -332,41 +310,27 @@ public class PatentRestController extends Universal {
 			
 		
 
-		  //-------------------- Fetch Cost Analysis Data ----------------------------------------------
-		  @RequestMapping(value = "/rest-cost-analysis/{id}", method = RequestMethod.GET)    //will be the actual method
+	//-------------------- Fetch Cost Analysis Data ----------------------------------------------
+		  @RequestMapping(value = "/rest-cost-analysis/{id}", method = RequestMethod.GET)    
 		    public ResponseEntity<CostAnalysisData> getCAData(@PathVariable("id") long id) {
-		    //@RequestMapping(value = "/rest-cost-analysis/", method = RequestMethod.GET)
-		    //public ResponseEntity<CostAnalysisData> getCAData() {
 		    	
 		    	log().debug("PatentRestController : /rest-cost-analysis/ invoked ");
 		    	//check whether id is null
 		    	CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(id);
-		    	//CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(2);
-		    	System.out.println("Inside Fetch CA data method");
 		    	return new ResponseEntity<CostAnalysisData>(costAnalysisData, HttpStatus.OK);
 		    }
 		    
 		    
-		  //---------------------Fetch Renewal History ------------------------------------------------
-		    @RequestMapping(value = "/rest-renewal-history/{id}", method = RequestMethod.GET)    //will be the actual method
+	//---------------------Fetch Renewal History ------------------------------------------------
+		    @RequestMapping(value = "/rest-renewal-history/{id}", method = RequestMethod.GET)    
 		    public ResponseEntity<List<RenewalUI>> getRenewalHistory(@PathVariable("id") long id) {
-		    /*@RequestMapping(value = "/rest-renewal-history/", method = RequestMethod.GET)
-		    public ResponseEntity<RenewalUI> getRenewalHistory() {*/
 		    	log().debug("PatentRestController : /rest-renewal-history/ invoked ");
 		    	//check whether id is null
 		    	List<RenewalUI> renewalHistoryData = patentService.getRenewalHistory(id);
-		    	//RenewalUI renewalHistoryData = patentService.getRenewalHistory(1);
 		    	return new ResponseEntity<List<RenewalUI>>(renewalHistoryData, HttpStatus.OK);
 		    }
 	
 	//------------------- next ... a Patent : ARE THERE ANY MORE ???  --------------------------------------------------------
 	
-	//------------------- next ... a Patent : ARE THERE ANY MORE ???  --------------------------------------------------------
 
-    
-    
-    
-    
-//    //-------------------Retrieve Single Patent--------------------------------------------------------
-	// Not required
 }
