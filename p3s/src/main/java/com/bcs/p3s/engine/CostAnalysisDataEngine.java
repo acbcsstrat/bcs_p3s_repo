@@ -374,7 +374,7 @@ public class CostAnalysisDataEngine extends Universal{
 	public CostAnalysisData getNextPhasesInfo(RenewalDates allDates){
 		
 		String msg ="getNextPhasesInfo(allDates)";
-		log().debug(msg +" invoked for getting next year due date info");
+		log().debug(msg +" invoked for getting next year due date info for Next Year Renewal Due " + allDates.getNextRenewalDueDate());
 		
 		CostAnalysisData caData = new CostAnalysisData();
 		/*Date greenStart = allDates.getNextWindowOpenDate();
