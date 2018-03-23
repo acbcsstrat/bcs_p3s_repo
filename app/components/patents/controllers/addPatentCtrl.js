@@ -31,7 +31,7 @@ function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $loca
 	  	}
 
     	$timeout(function() {
-			vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 4);
+			vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
 			vm.colourPhase = phase;
 		}, 10)
 
