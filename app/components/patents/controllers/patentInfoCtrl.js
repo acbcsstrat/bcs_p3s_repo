@@ -1,47 +1,40 @@
-function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, fxCalculationService, currentTransactionsService, patentsRestService,$uibModal) {
+function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, fxCalculationService, currentTransactionsService, patentsRestService, chunkDataService, $uibModal) {
 
 	var vm = this;
 
 	vm.patent = patent;
 
-	if(patent.feeUI !== null) {
+	if(patent) {
+
 		vm.patentFx = fxCalculationService.setFx(patent);
 		vm.patentFx = fxCalculationService;
+	
+		vm.displayNotifications = function(phase) {	
+
+			function phaseNotifications(phase) {
+
+		  		var notificationsArr = patent.notificationUIs;
+		  		var notifications = [];
+	  			
+		  		notificationsArr.forEach(function(data){
+		  			if(data.costbandcolor == phase) {
+		  				notifications.push(data);
+		  			}
+		  		});
+
+		  		return notifications;
+
+	  		}
+
+	    	vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
+
+		};
+
+		$timeout(function() {
+			vm.displayNotifications('Green');
+		}, 100);	
+
 	}
-
-	vm.displayNotifications = function(phase) {	
-
-		function phaseNotifications(phase) {
-
-	  		var notificationsArr = patent.notificationUIs;
-	  		var notifications = [];
-  			
-	  		notificationsArr.forEach(function(data){
-	  			if(data.costbandcolor == phase) {
-	  				notifications.push(data);
-	  			}
-	  		});
-
-	  		return notifications;
-
-  		}
-
-    	var chunkArr = [];
-
-    	function chunk(arr, size) {
-    		for (var i=0; i < arr.length; i+=size) {
-        		chunkArr.push(arr.slice(i, i+size));
-        	}
-        	return chunkArr;
-    	}       	
-
-    	vm.chunkedData = chunk(phaseNotifications(phase), 8);
-
-	};
-
-	$timeout(function() {
-		vm.displayNotifications('Green');
-	}, 100);			
 
 	vm.fetchItemRenewal = function() {
 		$rootScope.$broadcast("renewalHistory"); //REVISE TO SEE IF MORE EFFICIENT WAY
