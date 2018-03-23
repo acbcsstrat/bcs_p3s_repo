@@ -1,4 +1,4 @@
-<div class="animate-show">
+<div data-ng-show="$ctrl.animate" class="animate-show">
 	<patentnav></patentnav>
 	<div class="content-panel bg-white">
 		<div class="row">
@@ -21,12 +21,14 @@
 							</div>		
 						</div>
 					</form>
-					<div class="col-md-9 offset-md-3 col-lg-9 offset-lg-3 col-lg-6 offset-xl-4 m-t-xs"" ng-show="!$ctrl.queriedPatent">
-						<p class="font-body font-weight-medium txt-phase-red" ng-bind="$ctrl.searchError">No results were found with this Patent Application number</p>
+					<div class="col-md-9 offset-md-3 col-lg-9 offset-lg-3 col-lg-6 offset-xl-4 m-t-xs" ng-show="!$ctrl.queriedPatent">
+						<p class="font-body font-weight-medium txt-phase-red" ng-bind="$ctrl.searchError"></p>
 					</div>			
 				</div>
 			</div>
 		</div>
-		<div data-ui-view></div>
+		<div class="animate-show">
+			<div data-ui-view></div>
+		</div>
 	</div>
 </div>

@@ -137,21 +137,22 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
             }
         })
         .state('search-patent', {
-            url: '/add-patent',
-            templateUrl: 'p3sweb/app/components/patents/views/add-patent.htm',
-            controller: 'addPatentCtrl',
+            url: '/search-patent',
+            templateUrl: 'p3sweb/app/components/patents/views/search-patent.htm',
+            controller: 'searchPatentCtrl',
             controllerAs: '$ctrl',
             params: {
-                navigation: 'patentnav',
-                patent: null,
-                transactionNo: null
+                navigation: 'patentnav'
             }
         })
         .state('search-patent.add-patent', {
-            url: '/{transactionNo}',
-            templateUrl: 'p3sweb/app/components/patents/views/ui-views/patent-found.htm',
-            controller: 'patentFoundCtrl', 
-            controllerAs: '$ctrl'
+            url: '?params',
+            templateUrl: 'p3sweb/app/components/patents/views/ui-views/add-patent.htm',
+            controller: 'addPatentCtrl',
+            controllerAs: '$ctrl',
+            params: {
+                patent: null
+            }
         })
         .state('current-transactions', {
             url: '/current-transactions',
@@ -162,9 +163,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvi
                 currentTransactions: ['currentTransactionsService', function(currentTransactionsService){
                     return currentTransactionsService.fetchCurrentTransactions();
                 }]
-            },
-            params: {
-                navigation: 'transactionnav'
             }
         })
         .state('current-transactions.current-transaction-item', {
