@@ -96,7 +96,7 @@ public class BcsLogger implements Loggable {
 
 	protected Logger logEpoN4CU = null;
 	public Logger logEpo() {
-		if (logEpoN4CU==null) { logEpoN4CU = Logger.getLogger(EPO_TRAFFIC_MONITOR); }
+		if (logEpoN4CU==null) { logEpoN4CU = Logger.getLogger(EPO_THROTTLING_MONITORING); }
 		return logEpoN4CU;
 	}
 

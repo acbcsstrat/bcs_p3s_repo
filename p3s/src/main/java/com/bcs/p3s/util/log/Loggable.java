@@ -19,6 +19,7 @@ public interface Loggable {
 	public final String REGISTRATION_EMAIL_SENT = "REGISTRATION_EMAIL_SENT";
 	public final String REMINDER_EMAIL_SENT 	= "REMINDER_EMAIL_SENT";
 	public final String TRANSACTION_EMAIL_SENT 	= "TRANSACTION_EMAIL_SENT";
-	public final String EPO_TRAFFIC_MONITOR 	= "EPO_TRAFFIC_MONITOR";
+	public final String EPO_THROTTLING_MONITORING= "THROTTLE";
+	//public final String EPO_TRAFFIC_MONITOR 	= "EPO_TRAFFIC_MONITOR";
 
 }

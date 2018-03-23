@@ -8,11 +8,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.bcs.p3s.scrape.model.ResponseHeaderPojo;
@@ -91,10 +95,23 @@ public class OPSReader extends Universal{
 			logEpo().debug("\n\n\nResponse Header for request " + strUrl);
 			logEpo().debug("Full header to follow ");
 			logEpo().debug(responseHeader.getHeaderData());
-			logEpo().info(" ##### Summary header info %29F::: Total downloaded Size for this request :: "+ utf8Bytes.length + " bytes" +
-			    		" && Highest Throttling Status :: " + responseHeader.getHighThrottleStatus() +
-			    		" && System state :: " + responseHeader.getSystemState() + " && Quota Used This Week :: " + responseHeader.getQuotaUsedPerWeek() + 
-			    		" && Quota Used This Hour :: " + responseHeader.getQuotaUsedPerHour() + " && X-Throttling-Control :: " + responseHeader.getFullThrottlingData() +" ##### " );
+
+			
+			
+//			logEpo().info(" ##### Summary header info %29F::: Total downloaded Size for this request :: "+ utf8Bytes.length + " bytes" +
+//			    		" && Highest Throttling Status :: " + responseHeader.getHighThrottleStatus() +
+//			    		" && System state :: " + responseHeader.getSystemState() + " && Quota Used This Week :: " + responseHeader.getQuotaUsedPerWeek() + 
+//			    		" && Quota Used This Hour :: " + responseHeader.getQuotaUsedPerHour() + " && X-Throttling-Control :: " + responseHeader.getFullThrottlingData() +" ##### " );
+
+			String greppableLogSummary = "Summary: TotSize="+ toKilo(utf8Bytes.length) 
+		    		+ "; WorstColour=" + responseHeader.getHighThrottleStatus() 
+		    		+ "; Status=" + responseHeader.getSystemState() 
+		    		+ "; QuotaThisWeek=" + toKilo(responseHeader.getQuotaUsedPerWeek())  
+		    		+ "; QuotaThisHour= " + toKilo(responseHeader.getQuotaUsedPerHour()) 
+		    		+ "; X-Throttling-Control :: " + responseHeader.getFullThrottlingData();
+
+			logEpo().info(greppableLogSummary);
+			
 			logEpo().debug("Authentication app name used is "+ new P3SPropertyReader().getESProperty(P3SPropertyNames.P3S_EPO_APP_NAME));
 			logEpo().debug("Response Header Ends");
 		    
@@ -124,5 +141,20 @@ public class OPSReader extends Universal{
 		}
 		return null;
 	}
+
+	protected String toKilo(long lFullNumber) {
+		// Divide by 1,000 (round up), append 'k', add commas 
+		String num = "";
+		BigDecimal ONETHOUSAND = new BigDecimal(1000);
+		BigDecimal bdFullNumber = new BigDecimal(lFullNumber);  
+		BigDecimal kilo = bdFullNumber.divide(ONETHOUSAND, 0, BigDecimal.ROUND_UP); 
 		
+		DecimalFormat df = new DecimalFormat("#,##0");
+		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.UK));
+	
+		num = df.format(kilo) + "k";
+		
+		return num;
+	}
+	
 }
