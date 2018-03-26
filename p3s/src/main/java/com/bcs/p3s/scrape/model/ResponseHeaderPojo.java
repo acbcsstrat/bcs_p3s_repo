@@ -18,6 +18,8 @@ public class ResponseHeaderPojo {
 	
 	private String fullThrottlingData;
 
+	private String conciseColourCodes;
+
 	public long getQuotaUsedPerHour() {
 		return quotaUsedPerHour;
 	}
@@ -73,8 +75,14 @@ public class ResponseHeaderPojo {
 	public void setFullThrottlingData(String fullThrottlingData) {
 		this.fullThrottlingData = fullThrottlingData;
 	}
-	
-	
+
+	public String getConciseColourCodes() {
+		return conciseColourCodes;
+	}
+
+	public void setConciseColourCodes(String conciseColourCodes) {
+		this.conciseColourCodes = conciseColourCodes;
+	}
 
 	
 }

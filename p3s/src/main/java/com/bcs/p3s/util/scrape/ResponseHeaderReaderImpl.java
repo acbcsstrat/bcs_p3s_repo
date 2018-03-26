@@ -57,6 +57,7 @@ public class ResponseHeaderReaderImpl extends Universal implements ResponseHeade
         	}
 	    }
 	    
+		String colourCodes = "";
 	    List<String> throttlingInformation = headerMap.get("X-Throttling-Control");
 	    if (throttlingInformation == null)
 	    {
@@ -73,15 +74,22 @@ public class ResponseHeaderReaderImpl extends Universal implements ResponseHeade
     		{
         		//System.out.println("Throttling info "+ m.group(1) + " : " + m.group(2) + " : " + m.group(3) + " : " + m.group(4) + " : ");
         		//String temp = m.group(1);
+        		String strOb = null;
         		List<String> matcherValues = new ArrayList<String>();
         		int matcherSize = m.groupCount();
         		int n=0;
         		while(n<=matcherSize){
         			Object value = m.group(n);
-        			if(value instanceof Integer)
-        				value = value.toString();
-        			
-        			matcherValues.add((String) value);
+        			//System.out.println(" ("+value.getClass().getName()+") = >"+value.toString()+"<"); // acDebug
+        			strOb = value.toString();
+        			if(value instanceof Integer) {
+        				value = strOb;
+        			}
+        			else if (n>1 && strOb.length()>1) {
+        				Character chr =  strOb.charAt(0);
+        				if (Character.isAlphabetic(chr)) colourCodes += chr;
+        			}
+        			matcherValues.add(strOb );
         			n++;
         		}
         		
@@ -113,8 +121,10 @@ public class ResponseHeaderReaderImpl extends Universal implements ResponseHeade
 	    quotaUsedPerHour = individualQuotaPerHourUsed != null ? Long.valueOf(individualQuotaPerHourUsed.get(0)) : 0L;
 	    responseHeader.setQuotaUsedPerHour(quotaUsedPerHour);
 	    
-	    if (throttlingInformation != null)
+	    if (throttlingInformation != null) {
 	    	responseHeader.setFullThrottlingData(throttlingInformation.get(0));
+	    	responseHeader.setConciseColourCodes(emphasise(colourCodes));
+	    }
 	    
 	    return responseHeader;
 	}
@@ -136,4 +146,18 @@ public class ResponseHeaderReaderImpl extends Universal implements ResponseHeade
 		//return headerDataArr;
 		responseHeader.setHeaderData(headerD);
 	}
+
+	private String emphasise(String str) {
+		if (str==null) return null;
+		String emphasised = "";
+		Character chr = null; 
+		for (int ii = 0 ; ii<str.length() ; ii++) {
+			chr = str.charAt(ii);
+			if (chr=='r' || chr=='b') chr = Character.toUpperCase(chr);
+			emphasised += chr;
+		}
+		System.out.println("emphasise("+str+") returns "+emphasised);
+		return emphasised;
+	}
+
 }

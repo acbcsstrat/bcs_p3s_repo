@@ -103,11 +103,12 @@ public class OPSReader extends Universal{
 //			    		" && System state :: " + responseHeader.getSystemState() + " && Quota Used This Week :: " + responseHeader.getQuotaUsedPerWeek() + 
 //			    		" && Quota Used This Hour :: " + responseHeader.getQuotaUsedPerHour() + " && X-Throttling-Control :: " + responseHeader.getFullThrottlingData() +" ##### " );
 
-			String greppableLogSummary = "Summary: TotSize="+ toKilo(utf8Bytes.length) 
+			String greppableLogSummary = "w~Summary: ccodes=" + responseHeader.getConciseColourCodes()
+					+ "; TotSize="+ to8char(utf8Bytes.length) 
+		    		+ "; QuotaThisWeek=" + to10char(responseHeader.getQuotaUsedPerWeek())  
+		    		+ "; QuotaThisHour=" + to10char(responseHeader.getQuotaUsedPerHour()) 
 		    		+ "; WorstColour=" + responseHeader.getHighThrottleStatus() 
 		    		+ "; Status=" + responseHeader.getSystemState() 
-		    		+ "; QuotaThisWeek=" + toKilo(responseHeader.getQuotaUsedPerWeek())  
-		    		+ "; QuotaThisHour= " + toKilo(responseHeader.getQuotaUsedPerHour()) 
 		    		+ "; X-Throttling-Control :: " + responseHeader.getFullThrottlingData();
 
 			logEpo().info(greppableLogSummary);
@@ -142,9 +143,28 @@ public class OPSReader extends Universal{
 		return null;
 	}
 
-	protected String toKilo(long lFullNumber) {
-		// Divide by 1,000 (round up), append 'k', add commas 
+	//protected String toKilo(long lFullNumber) {
+	//	// Divide by 1,000 (round up), append 'k', add commas 
+	//	String num = "";
+	//	BigDecimal ONETHOUSAND = new BigDecimal(1000);
+	//	BigDecimal bdFullNumber = new BigDecimal(lFullNumber);  
+	//	BigDecimal kilo = bdFullNumber.divide(ONETHOUSAND, 0, BigDecimal.ROUND_UP); 
+	//	
+	//	DecimalFormat df = new DecimalFormat("#,##0");
+	//	df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.UK));
+	//
+	//	num = df.format(kilo) + "k";
+	//	
+	//	return num;
+	//}
+	
+	protected String to10char(long lFullNumber) {
+		// Divide by 1,000 (round up), append 'k', add commas
+		// 10char being N,nnn,nnnk  pad leading spaces
 		String num = "";
+
+		if (lFullNumber > 9900900900L) return "*TOO BIG!*";
+		
 		BigDecimal ONETHOUSAND = new BigDecimal(1000);
 		BigDecimal bdFullNumber = new BigDecimal(lFullNumber);  
 		BigDecimal kilo = bdFullNumber.divide(ONETHOUSAND, 0, BigDecimal.ROUND_UP); 
@@ -154,7 +174,15 @@ public class OPSReader extends Universal{
 	
 		num = df.format(kilo) + "k";
 		
-		return num;
+		return String.format("%1$10s", num);
 	}
+	protected String to8char(long lFullNumber) {
+		String big = to10char(lFullNumber);
+		if (big.trim().length()>8) return "*TOO BIG";
+		else return big.substring(2);
+
+	
+	}
+		// Divide by 1,000 (round up), append 'k', add commas
 	
 }
