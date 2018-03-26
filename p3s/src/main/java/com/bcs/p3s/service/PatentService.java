@@ -97,7 +97,7 @@ public interface PatentService {
 	
 	public PatentUI populateDataToPatentUI(Patent patent);
 	
-	public PostLoginSessionBean populateSessionBean();
+	//public PostLoginSessionBean populateSessionBean();
 	
 	public String validateAndFormatApplicationNumber(String patentApplicationNumber);
 	

@@ -777,7 +777,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		else if(RenewalStatusEnum.TOO_LATE .equalsIgnoreCase(patent.getRenewalStatus())){
 			caData = costEngines.getAllPhasesInfo(allDates);
 			caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
-			caData.setCurrentcostBand(RenewalColourEnum.GREEN);
+			//caData.setCurrentcostBand(RenewalColourEnum.GREEN);
+			caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
 			//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
 			Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 			caData.setFee(new FeeUI(fee));
@@ -881,20 +882,6 @@ public PatentUI populateDataToPatentUI(Patent patent){
 		return patentUI;
 	}
 
-
-
-	@Override
-	public PostLoginSessionBean populateSessionBean() {
-		PostLoginSessionBean postSession = new PostLoginSessionBean();
-	    
-	    P3SUser myUser = SecurityUtil.getMyUser();
-	    postSession.setUser(myUser);
-		Business myBusiness = SecurityUtil.getMyBusiness();
-		postSession.setBusiness(myBusiness);
-		
-		session.setAttribute("postSession", postSession);
-		return postSession;
-	}
 
 	@Override
 	public List<PatentUI> persistAndCalculateFee(Patent patent) {
