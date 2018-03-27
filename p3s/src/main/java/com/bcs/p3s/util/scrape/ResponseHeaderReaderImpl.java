@@ -105,12 +105,13 @@ public class ResponseHeaderReaderImpl extends Universal implements ResponseHeade
         			responseHeader.setHighThrottleStatus(new ThrottleStatusEnum(ThrottleStatusEnum.YELLOW));
         		else if(matcherValues.contains("green"))
         			responseHeader.setHighThrottleStatus(new ThrottleStatusEnum(ThrottleStatusEnum.GREEN));
+        		else logInternalError().warn("Unexpected EPO throttle colour: "+matcherValues);
         		
         		responseHeader.setSystemState(m.group(1));
         		//Finding the highest Throttling Status Colour
         		getResponseHeaderDataForLogs(headerMap);
         		
-    		}
+    		} else logInternalError().warn("EPO throttling response fails matching:  ");
 	    }
 	    
 	    List<String> registeredQuotaPerWeekUsed = headerMap.get("X-RegisteredQuotaPerWeek-Used");
@@ -147,7 +148,7 @@ public class ResponseHeaderReaderImpl extends Universal implements ResponseHeade
 		responseHeader.setHeaderData(headerD);
 	}
 
-	private String emphasise(String str) {
+	protected String emphasise(String str) {
 		if (str==null) return null;
 		String emphasised = "";
 		Character chr = null; 

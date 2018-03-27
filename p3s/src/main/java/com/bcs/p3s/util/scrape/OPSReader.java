@@ -183,6 +183,5 @@ public class OPSReader extends Universal{
 
 	
 	}
-		// Divide by 1,000 (round up), append 'k', add commas
 	
 }
