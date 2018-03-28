@@ -1,12 +1,16 @@
+angular.module('ppApp').controller('fxChartCtrl', fxChartCtrl);
+
+fxChartCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'fxRatesMonth'];
+
 function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMonth) {
 
-	var vm = this;
+    var vm = this;
 
-	$timeout(function() {
+    $timeout(function() {
 
-		vm.lineData = lineData;
-		vm.lineOptions = {
-			chart: {
+        vm.lineData = lineData;
+        vm.lineOptions = {
+            chart: {
                 type: 'lineChart',
                 height: 450,
                 margin : {
@@ -16,21 +20,21 @@ function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMont
                     left: 55
                 },
                 tooltip: {
-				  hideDelay: 0
-				},		                
+                  hideDelay: 0
+                },                      
                 showLegend: false,
                 x: function(d, i){ 
-                	return d[0]},
+                    return d[0]},
                 y: function(d){ return d[1]; },
                 useInteractiveGuideline: true,
                 xAxis: {
-		            tickFormat: function (d, i) {
-		                return d3.time.format('%x')(new Date(d));
-		            },
+                    tickFormat: function (d, i) {
+                        return d3.time.format('%x')(new Date(d));
+                    },
 
-		            showMaxMin: false,
-		            rotateLabels: -30,
-		            ticks: 24        
+                    showMaxMin: false,
+                    rotateLabels: -30,
+                    ticks: 24        
                 },
                 xScale: d3.time.scale(),
                 yAxis: {
@@ -45,39 +49,37 @@ function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMont
                     keyFormatter: function(d) {
                         return d3.time.format('%x')(new Date(d));
                     }
-                },		                
+                },                      
                 useVoronoi: false,
-		        lines: {
-		            interactive: true
-		        },
-		        showXAxis: true,
-		        showYAxis: true,
-		        // forceY: [0],	           
+                lines: {
+                    interactive: true
+                },
+                showXAxis: true,
+                showYAxis: true,
+                // forceY: [0],            
                 callback: function(chart){
 
                 }
             }
-		}
+        }
 
-  	}, 200);
+    }, 200);
 
- 	function lineData() {
+    function lineData() {
 
-		chartValueArrs = [];
+        chartValueArrs = [];
 
-		for(var i = 0; i < fxRatesMonth.length; i++) {
-			chartValueArrs.push([fxRatesMonth[i].rateActiveDate, fxRatesMonth[i].rate]);
-		}
+        for(var i = 0; i < fxRatesMonth.length; i++) {
+            chartValueArrs.push([fxRatesMonth[i].rateActiveDate, fxRatesMonth[i].rate]);
+        }
 
-   		return [
-   			{
-   				values: chartValueArrs.reverse(),
-   				color: '#2ca02c'
-   			}
-   		]
+        return [
+            {
+                values: chartValueArrs.reverse(),
+                color: '#2ca02c'
+            }
+        ]
 
-  	} //function end
+    } //function end
 
 }
-
-angular.module('ppApp').controller('fxChartCtrl', fxChartCtrl);
