@@ -1,6 +1,10 @@
 angular.module('ppApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment', 'ngTable', 'LocalStorageModule', 'nvd3']);
 
-angular.module('ppApp').run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(Idle, userService, $rootScope, amMoment, $timeout, $uibModal) {
+angular.module('ppApp').run(startUpRun)
+
+startUpRun.$inject = ['Idle', 'userService', '$rootScope', 'amMoment', '$timeout'];
+
+function startUpRun(Idle, userService, $rootScope, amMoment, $timeout, $uibModal) {
 
     $rootScope.page = '';
 
@@ -30,4 +34,4 @@ angular.module('ppApp').run(['Idle', 'userService', '$rootScope', 'amMoment', '$
 
    Idle.watch();
 
-}]);
+};
