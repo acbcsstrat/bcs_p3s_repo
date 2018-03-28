@@ -1,19 +1,8 @@
-angular.module('ppApp').config(['$stateProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig) {
+angular.module('ppApp').config(appRoutes);
 
-    IdleProvider.idle(500);
-    IdleProvider.timeout(30);
-    KeepaliveProvider.http(domain+'keep-session-alive/');
-    KeepaliveProvider.interval(20);
+appRoutes.$inject = ['$stateProvider'];
 
-    $urlRouterProvider
-        .when('', '/dashboard')
-        .when('/', '/dashboard')
-        .otherwise('/dashboard');
-
-    slickCarouselConfig.dots = true;
-    slickCarouselConfig.autoplay = false;
-
-    $qProvider.errorOnUnhandledRejections(false);
+function appRoutes($stateProvider) {
 
     $stateProvider
         .state('dashboard', {
@@ -233,13 +222,4 @@ angular.module('ppApp').config(['$stateProvider', '$urlRouterProvider', '$compil
                 orderObj: null
             }
         })
-}])
-
-.config(function(localStorageServiceProvider) {
-
-    localStorageServiceProvider
-        .setStorageType('sessionStorage')
-        .setDefaultToCookie(false)
-        .setNotify(true, true)
-
-})
+}
