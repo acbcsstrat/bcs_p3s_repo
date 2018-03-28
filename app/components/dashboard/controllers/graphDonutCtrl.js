@@ -1,4 +1,8 @@
-function graphDonutCtrl($timeout, $scope, patents, patentPhasesService, selectPhaseService) {
+angular.module('ppApp').controller('graphDonutCtrl', graphDonutCtrl);
+
+graphDonutCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService'];
+
+function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectPhaseService) {
 
 	var vm = this;
 
@@ -108,6 +112,3 @@ function graphDonutCtrl($timeout, $scope, patents, patentPhasesService, selectPh
 
 	} //if patents end	
 }
-
-
-angular.module('ppApp').controller('graphDonutCtrl', graphDonutCtrl);
