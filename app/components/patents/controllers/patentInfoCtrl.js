@@ -1,46 +1,55 @@
-function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, fxCalculationService, currentTransactionsService, patentsRestService, chunkDataService, $uibModal) {
+angular.module('ppApp').controller('patentInfoCtrl', patentInfoCtrl);
+
+patentInfoCtrl.$inject = ['$scope', 'patent', '$rootScope', '$state', '$timeout', '$location', '$anchorScroll', 'fxCalculationService', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal']
+
+function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location, $anchorScroll, fxCalculationService, currentTransactionsService, patentsRestService, chunkDataService, $uibModal) {
 
 	var vm = this;
 
 	vm.patent = patent;
-
+	vm.fetchItemRenewal = fetchItemRenewal;
+	vm.fetchItemTransaction = fetchItemTransaction;
+	vm.openUpdateConfirmModal = openUpdateConfirmModal;
+	vm.openDeleteConfirmModal = openDeleteConfirmModal;
+	vm.deletePatent = deletePatent;
+    vm.updatePatent = updatePatent;
+    vm.editItem = editItem;
+    vm.doneEditing = doneEditing;
+    vm.editing=[];
 	if(patent) {
-
 		vm.patentFx = fxCalculationService.setFx(patent);
 		vm.patentFx = fxCalculationService;
-	
-		vm.displayNotifications = function(phase) {	
-
-			function phaseNotifications(phase) {
-
-		  		var notificationsArr = patent.notificationUIs;
-		  		var notifications = [];
-	  			
-		  		notificationsArr.forEach(function(data){
-		  			if(data.costbandcolor == phase) {
-		  				notifications.push(data);
-		  			}
-		  		});
-
-		  		return notifications;
-
-	  		}
-
-	    	vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
-
-		};
+		vm.displayNotifications = displayNotifications;
 
 		$timeout(function() {
 			vm.displayNotifications('Green');
 		}, 100);	
-
 	}
 
-	vm.fetchItemRenewal = function() {
+	function displayNotifications(phase) {	
+    	vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
+	};
+
+	function phaseNotifications(phase) {
+
+  		var notificationsArr = patent.notificationUIs;
+  		var notifications = [];
+			
+  		notificationsArr.forEach(function(data){
+  			if(data.costbandcolor == phase) {
+  				notifications.push(data);
+  			}
+  		});
+
+  		return notifications;
+
+	}    
+
+	function fetchItemRenewal() {
 		$rootScope.$broadcast("renewalHistory"); //REVISE TO SEE IF MORE EFFICIENT WAY
 	};
 
-	vm.fetchItemTransaction = function(id) {
+	function fetchItemTransaction(id) {
 		currentTransactionsService.fetchCurrentTransactions()
 		.then(
 			function(response) {
@@ -70,7 +79,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, fxCalculat
 		);
 	};
 
-	vm.openUpdateConfirmModal = function(id) {
+	function openUpdateConfirmModal(id) {
 
 		var modalInstance = $uibModal.open({
 			templateUrl: 'p3sweb/app/components/patents/views/modals/modal-update-patent-template.htm',
@@ -92,7 +101,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, fxCalculat
 
 	};
 
-	vm.openDeleteConfirmModal = function(id) {
+	function openDeleteConfirmModal(id) {
 
 		var modalInstance = $uibModal.open({
 			templateUrl: 'p3sweb/app/components/patents/views/modals/modal-remove-patent-template.htm',
@@ -119,7 +128,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, fxCalculat
 		});
 	};
 
- 	vm.deletePatent = function(id){
+ 	function deletePatent(id){
 
         patentsRestService.deletePatent(id)
             .then(function(){
@@ -148,21 +157,17 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, fxCalculat
         );
     };
 
-    vm.updatePatent = function(patent) {
+    function updatePatent(patent) {
     	var id = patent.id;
     	patentsRestService.updatePatent(patent, id);
     };
 
-    vm.editing=[];
-
-    vm.editItem = function (index) {
+    function editItem(index) {
         vm.editing[index] = true;
     };
 
-    vm.doneEditing = function (index) {
+    function doneEditing(index) {
         vm.editing[index] = false;
     };
 	
 }
-
-angular.module('ppApp').controller('patentInfoCtrl', patentInfoCtrl);
