@@ -1,4 +1,8 @@
-function patentItemCtrl($scope, patent) {
+angular.module('ppApp').controller('patentItemCtrl', patentItemCtrl);
+
+patentItemCtrl.$inject = ['$scope']
+
+function patentItemCtrl($scope) {
 
 	var vm = this;
 	
@@ -10,5 +14,3 @@ function patentItemCtrl($scope, patent) {
 	});	
 	
 }
-
-angular.module('ppApp').controller('patentItemCtrl', patentItemCtrl);
