@@ -1,3 +1,7 @@
+angular.module('ppApp').controller('colourKeyCtrl', colourKeyCtrl);
+
+colourKeyCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService'];
+
 function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService) {
 
 	var vm = this;
@@ -16,5 +20,3 @@ function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPha
 	}
 
 }
-
-angular.module('ppApp').controller('colourKeyCtrl', colourKeyCtrl);
