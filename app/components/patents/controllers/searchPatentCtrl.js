@@ -1,3 +1,7 @@
+angular.module('ppApp').controller('searchPatentCtrl', searchPatentCtrl);
+
+searchPatentCtrl.$inject = ['$state', '$stateParams', '$scope', '$rootScope', '$timeout', 'searchPatentService'];
+
 function searchPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, searchPatentService) {
 
 	var vm = this;
@@ -8,7 +12,9 @@ function searchPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, se
       vm.animate = true;
     }, 300);    
 
-	vm.findPatent = function(patentNo) {
+    vm.findPatent = findPatent
+
+	function findPatent(patentNo) {
 		searchPatentService.findPatent(patentNo)
 		.then(
 			function(response) {
@@ -39,6 +45,4 @@ function searchPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, se
 		);
     }  	
 
-}
-
-angular.module('ppApp').controller('searchPatentCtrl', searchPatentCtrl);
+};
