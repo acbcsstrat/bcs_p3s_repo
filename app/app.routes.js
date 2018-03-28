@@ -152,7 +152,10 @@ function appRoutes($stateProvider) {
                 currentTransactions: ['currentTransactionsService', function(currentTransactionsService){
                     return currentTransactionsService.fetchCurrentTransactions();
                 }]
-            }
+            },
+            params: {
+                navigation: 'transactionnav'
+            }            
         })
         .state('current-transactions.current-transaction-item', {
             url: '/{transId}/:transHref',
