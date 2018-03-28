@@ -1,8 +1,8 @@
-angular.module('ppApp').factory('selectPhaseService', selectPhaseService)
+angular.module('ppApp').factory('selectPhaseService', selectPhaseService);
 
-function selectPhaseService (patentPhasesService){
+function selectPhaseService(){
 	
-	return {
+	return { // rather than returning an object literal, return the properties to the service itself
 
 		selectedPhase: '',
 
@@ -102,4 +102,3 @@ function selectPhaseService (patentPhasesService){
 
 	} //return end
 }
-
