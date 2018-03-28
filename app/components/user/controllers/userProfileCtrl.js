@@ -1,3 +1,7 @@
+angular.module('ppApp').controller('userProfileCtrl', userProfileCtrl);
+
+userProfileCtrl.$inject = ['userService', '$rootScope', '$scope', '$timeout', '$uibModal', 'timezoneService']
+
 function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, timezoneService) {
 
     var vm = this;
@@ -5,6 +9,8 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
     $rootScope.page = 'Profile';
 
     $scope.newPassword = '';
+    vm.updateTimezone = updateTimezone;
+    vm.confirmUpdate = confirmUpdate;    
 
     vm.$onInit = function() {
 
@@ -60,12 +66,11 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
        
     };
 
-
-    vm.updateTimezone = function(item) {
+    function updateTimezone(item) {
        vm.user.business.timezone = item;
-    }
+    }   
 
-    vm.confirmUpdate = function(user, p) {
+    function confirmUpdate(user, p) {
         user = vm.user;
        
         $timeout(function() {
@@ -97,9 +102,4 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
         }, 200);
        
     };
-
-
-
 }
-
-angular.module('ppApp').controller('userProfileCtrl', userProfileCtrl);

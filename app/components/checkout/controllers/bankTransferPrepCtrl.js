@@ -1,17 +1,26 @@
+angular.module('ppApp').controller('bankTransferPrepCtrl', bankTransferPrepCtrl);
+
+bankTransferPrepCtrl.$inject = ['bankTransferCommitService', '$state', '$scope', '$stateParams', '$rootScope', '$uibModal', 'ngCart']
+
 function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateParams, $rootScope, $uibModal, ngCart) {
 
 	var vm = this;
 
 	$rootScope.page = 'Confirm Order';
-
-	vm.patentObj = $stateParams.patentObj;
+	
+	vm.patentObj = $stateParams.patentObj;	
 	//object passed as a params through app/assets/js/gCart.fulfilment.js
-
 	if(vm.patentObj === null) { //if page is refreshed when on bank prepration page
 		$state.go('patents'); //direct user to patents
 	} else {
 
-		vm.openCancelTransModal = function() {
+		var order = $stateParams.orderObj;
+
+		vm.openCancelTransModal = openCancelTransModal;
+		vm.commitTransfer = commitTransfer;
+		order.totalCostUSD = $stateParams.patentObj.totalCostUSD;		
+
+		function openCancelTransModal() {
 
 			var modalInstance = $uibModal.open({
 				templateUrl: 'p3sweb/app/components/checkout/views/modals/modal-cancel-transaction.htm',
@@ -37,12 +46,10 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 
 		};
 
-		vm.commitTransfer = function() {
+		function commitTransfer() {
 			
-			vm.commitTransferBtn = true;
+			vm.commitTransferBtn = true; //prevent double click
 
-			var order = $stateParams.orderObj;
-			order.totalCostUSD = $stateParams.patentObj.totalCostUSD;
 			bankTransferCommitService.commitTransfer(order)
 			.then(
 	            function(response){
@@ -70,5 +77,3 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 		};
 	}
 }
-
-angular.module('ppApp').controller('bankTransferPrepCtrl', bankTransferPrepCtrl);

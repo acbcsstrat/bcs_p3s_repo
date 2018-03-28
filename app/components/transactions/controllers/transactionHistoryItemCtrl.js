@@ -1,9 +1,16 @@
+angular.module('ppApp').controller('transactionHistoryItemCtrl', transactionHistoryItemCtrl);
+
+transactionHistoryItemCtrl.$inject = ['$rootScope', '$timeout', 'transactionHistoryItem', 'transactionHistoryService']
+
 function transactionHistoryItemCtrl($rootScope, $timeout, transactionHistoryItem, transactionHistoryService) {
 
 	var vm = this;
 
-	var currTransStatus = transactionHistoryItem.latestTransStatus;	
-
+	var currTransStatus = transactionHistoryItem.latestTransStatus;
+	vm.transactionHistoryItem = transactionHistoryItem;
+	vm.renewalProgress = transactionHistoryService.renewalProgress(currTransStatus)
+	vm.checkProgress = checkProgress;
+	vm.patents = [];
 	vm.transStatus = [
 		{
 			status: 'Initiated', 
@@ -56,7 +63,85 @@ function transactionHistoryItemCtrl($rootScope, $timeout, transactionHistoryItem
 		}
 	];
 
-	vm.checkProgress = function() {
+
+
+	vm.$onInit = function() {
+
+		if(transactionHistoryItem.hasFailed) {
+			vm.hasFailed = true;
+		} 
+
+		switch(currTransStatus) {
+			case 'Initiated':
+				vm.transactionProgress = 0;
+			break;
+			case 'Awaiting Funds':
+				if(transactionHistoryItem.hasFailed) {
+					vm.transactionProgress = 17.28;
+				} else {
+					vm.transactionProgress = 34.56;
+				}
+			break;
+			case 'Funds Received':
+				if(transactionHistoryItem.hasFailed) {
+					vm.transactionProgress = 34.56;
+				} else {
+					vm.transactionProgress = 51.84;
+				}	    		
+			break;
+			case 'Funds Sent':
+				if(transactionHistoryItem.hasFailed) {
+					vm.transactionProgress = 51.84;
+				} else {
+					vm.transactionProgress = 69.12;
+				}	 	    		
+			break;
+			case 'EPO Received':
+				if(transactionHistoryItem.hasFailed) {
+					vm.transactionProgress = 69.12;
+				} else {
+					vm.transactionProgress = 86.4;
+				}		    		
+			break;
+			case 'EPO Instructed':
+				if(transactionHistoryItem.hasFailed) {
+					vm.transactionProgress = 86.4;
+				} else {
+					vm.transactionProgress = 100;
+				}		
+			break;
+			case 'Completed':
+				vm.transactionProgress = 100;	    			    			    			    			    		
+		}
+
+		transactionHistoryItem.renewalUIs.forEach(function(value, index, array){
+
+				vm.patents.push(value);
+
+			switch(value.renewalStatus) {
+	    		case 'Payment in progress':
+	    			vm.patentProgress = 33;
+	    		break;
+	    		case 'EPO Instructed':
+	    			vm.patentProgress = 66;
+	    		break;
+	    		case 'Renewal In Place':
+	    			vm.patentProgress = 100;
+	    		break;
+	    		case 'Show price':
+	    			vm.patentProgress = 100;
+	    		break;
+	    		case 'Too late to renew':
+	    			vm.patentProgress = 100;
+	    		break;
+	    		case 'No renewal needed':
+	    			vm.patentProgress = 100;		
+
+	    	}	
+	 	});	
+	}
+
+	function checkProgress() {
 
 		var statusIndex;
 		
@@ -78,85 +163,7 @@ function transactionHistoryItemCtrl($rootScope, $timeout, transactionHistoryItem
 				vm.transStatus[i].complete = true;						
 			}
 		}
+
 	};
 
-	if(transactionHistoryItem.hasFailed) {
-		vm.hasFailed = true;
-	} 
-
-	switch(currTransStatus) {
-		case 'Initiated':
-			vm.transactionProgress = 0;
-		break;
-		case 'Awaiting Funds':
-			if(transactionHistoryItem.hasFailed) {
-				vm.transactionProgress = 17.28;
-			} else {
-				vm.transactionProgress = 34.56;
-			}
-		break;
-		case 'Funds Received':
-			if(transactionHistoryItem.hasFailed) {
-				vm.transactionProgress = 34.56;
-			} else {
-				vm.transactionProgress = 51.84;
-			}	    		
-		break;
-		case 'Funds Sent':
-			if(transactionHistoryItem.hasFailed) {
-				vm.transactionProgress = 51.84;
-			} else {
-				vm.transactionProgress = 69.12;
-			}	 	    		
-		break;
-		case 'EPO Received':
-			if(transactionHistoryItem.hasFailed) {
-				vm.transactionProgress = 69.12;
-			} else {
-				vm.transactionProgress = 86.4;
-			}		    		
-		break;
-		case 'EPO Instructed':
-			if(transactionHistoryItem.hasFailed) {
-				vm.transactionProgress = 86.4;
-			} else {
-				vm.transactionProgress = 100;
-			}		
-		break;
-		case 'Completed':
-			vm.transactionProgress = 100;	    			    			    			    			    		
-	}
-
-	vm.renewalProgress = transactionHistoryService.renewalProgress(currTransStatus);		
-
-	vm.patents = [];
-
-	transactionHistoryItem.renewalUIs.forEach(function(value, index, array){
-
-			vm.patents.push(value);
-
-		switch(value.renewalStatus) {
-    		case 'Payment in progress':
-    			vm.patentProgress = 33;
-    		break;
-    		case 'EPO Instructed':
-    			vm.patentProgress = 66;
-    		break;
-    		case 'Renewal In Place':
-    			vm.patentProgress = 100;
-    		break;
-    		case 'Show price':
-    			vm.patentProgress = 100;
-    		break;
-    		case 'Too late to renew':
-    			vm.patentProgress = 100;
-    		break;
-    		case 'No renewal needed':
-    			vm.patentProgress = 100;		
-
-    	}	
- 	});	
-
 }
-
-angular.module('ppApp').controller('transactionHistoryItemCtrl', transactionHistoryItemCtrl);

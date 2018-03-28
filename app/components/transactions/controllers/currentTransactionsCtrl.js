@@ -1,3 +1,7 @@
+angular.module('ppApp').controller('currentTransactionsCtrl', currentTransactionsCtrl);
+
+currentTransactionsCtrl.$inject = ['$rootScope', '$scope', '$timeout', '$state', 'currentTransactions', 'currentTransactionsService'];
+
 function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTransactions, currentTransactionsService) {
 
 	var vm = this;
@@ -8,26 +12,36 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
       	vm.animate = true;
     }, 300);
 
-	currentTransactions.forEach(function(data){
-		if(data.renewalUIs.length > 1) {
-			data.renewalUIs.map(function(o, i){ 
-				if(o.patentUI.clientRef == '') {
-					o.patentUI.clientRef = '[No Client Description Provided]'
-				}
-			})					
-		}
-	})    
-
-	currentTransactions.map(function(o, i){
-		o.renewalProgress = currentTransactionsService.renewalProgress(o.latestTransStatus);
-	})
-
-	vm.tableData = currentTransactions;	
-
-   	vm.sortType     = 'transId'; // set the default sort type
+	vm.tableData = currentTransactions;
+	vm.patentAppData = { defaultSelect: null };
+  	vm.clientRefData = { defaultSelect: null };
+   	vm.sortType  = sortType; // set the default sort type
   	vm.sortReverse  = false;  // set the default sort order
+   	vm.transactionListFilter = transactionListFilter;
+   	vm.noClientRef = noClientRef;
+   	vm.displayTrans = displayTrans;
+   	vm.rowSelect = rowSelect;
+   	vm.selectedSortType = 'p3S_TransRef';
+   	fetchData();
 
-   	vm.sortType = function(column) {
+   	function fetchData() {
+		currentTransactions.forEach(function(data){
+			if(data.renewalUIs.length > 1) {
+				data.renewalUIs.map(function(o, i){ 
+					if(o.patentUI.clientRef == '') {
+						o.patentUI.clientRef = '[No Client Description Provided]'
+					}
+				})					
+			}
+		})    
+
+		currentTransactions.map(function(o, i){
+			o.renewalProgress = currentTransactionsService.renewalProgress(o.latestTransStatus);
+		})
+
+   	}
+
+   	function sortType(column) {
 
    		switch(column) {
    			case 'transStartDate':
@@ -171,7 +185,6 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 	   					if(vm.sortReverse === true) {
 		   					vm.tableData.sort(function(a, b){
 		   						var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
-		   						console.log(renewalsA - renewalsB)
 		   						return renewalsB - renewalsA;
 		   					});
 	   					}
@@ -189,17 +202,9 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
    			
    		}
 
-   	};	
+   	};
 
-	vm.patentAppData = {
-	  	defaultSelect: null
-  	};
-
-  	vm.clientRefData = {
-	  	defaultSelect: null
-  	};
-
-  	vm.transactionListFilter = function(data, filter, i) {
+  	function transactionListFilter(data, filter, i) {
 
 	    if(filter == 'clientRefFilter') { //reset altenrate select option
 	        $scope.filter = data;
@@ -211,15 +216,15 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 
 	};
 
-	vm.noClientRef = function() {
+	function noClientRef() {
 		return true;
 	}
 
-	vm.displayTrans = function() {
+	function displayTrans() {
 		$state.go('current-transactions');
 	};		
 
-  	vm.rowSelect = function(event){
+  	function rowSelect(event){
   		vm.transInfoContent = true;
   		if(!$(event.target).hasClass('cartbtn')) {
       		var id = ($($(event.currentTarget).find('a')));
@@ -229,5 +234,3 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
   	};
 	
 }
-
-angular.module('ppApp').controller('currentTransactionsCtrl', currentTransactionsCtrl);

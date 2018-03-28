@@ -1,3 +1,7 @@
+angular.module('ppApp').controller('transactionHistoryCtrl', transactionHistoryCtrl);
+
+transactionHistoryCtrl.$inject = ['$rootScope', '$timeout', 'transactionHistory']
+
 function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
 
 	var vm = this;
@@ -19,11 +23,17 @@ function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
 	})
 
 	vm.tableData = transactionHistory;
+	vm.sortType = sortType;
+   	vm.selectedSortType = 'transId'; // set the default sort type
+  	vm.sortReverse  = false;  // set the default sort order
+	vm.transactionListFilter = transactionListFilter;
+	vm.noClientRef = noClientRef;
+	vm.displayTrans = displayTrans;
+	vm.rowSelect = rowSelect;  	
+	vm.patentAppData = { defaultSelect: null }; //reset altenrate select option logic
+  	vm.clientRefData = { defaultSelect: null };	 //reset altenrate select option logic
 
-   	vm.sortType     = 'transId'; // set the default sort type
-  	vm.sortReverse  = false;  // set the default sort order			
-
-	vm.sortType = function(column) {
+	function sortType(column) {
 
 		switch(column) {
 			case 'transStartDate':
@@ -191,15 +201,7 @@ function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
 
 	}; //sorttype end
 
-	vm.patentAppData = {
-	  	defaultSelect: null
-  	};
-
-  	vm.clientRefData = {
-	  	defaultSelect: null
-  	};	
-
-  	vm.transactionListFilter = function(data, filter, i) {
+  	function transactionListFilter(data, filter, i) {
 
 	    if(filter == 'clientRefFilter') { //reset altenrate select option
 	        $scope.filter = data;
@@ -211,16 +213,16 @@ function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
 
 	};
 
-	vm.noClientRef = function() {
+	function noClientRef() {
 		return true;
 	}
 
-	vm.displayTrans = function() {
+	function displayTrans() {
 		$state.go('current-transactions');
 	};		
 
 
-  	vm.rowSelect = function(event){
+  	function rowSelect(event){
   		if(!$(event.target).hasClass('cartbtn')) {
       		var id = ($($(event.currentTarget).find('a')));
       		var patentId = id[0].hash;
@@ -228,5 +230,3 @@ function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
   		}
   	};
 }	
-
-angular.module('ppApp').controller('transactionHistoryCtrl', transactionHistoryCtrl);

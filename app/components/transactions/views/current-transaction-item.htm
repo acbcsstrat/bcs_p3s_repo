@@ -16,14 +16,14 @@
 					<div class="row d-flex align-items-center m-b-sm">
 						<div class="col-md-6 col-lg-6 col-xl-2">
 							<p class="font-weight-bold font-h4">Transaction ID</p>
-							<p class="font-h4" data-ng-bind="$ctrl.transaction.p3S_TransRef"></p>
+							<p class="font-h4" data-ng-bind="$ctrl.currentTransactionItem.p3S_TransRef"></p>
 						</div>
 						<div class="col-md-6 col-lg-6 col-xl-2 text-md-right text-lg-right text-xl-left">
 							<p class="font-weight-bold font-h4">Transaction Initated</p>
-							<p class="font-h4">{{$ctrl.transaction.transStartDate | date: 'MM/dd/yy'}}</p>
+							<p class="font-h4">{{$ctrl.currentTransactionItem.transStartDate | date: 'MM/dd/yy'}}</p>
 						</div>
 						<div class="col-md-12 col-lg-12 col-xl-8 text-right">
-							<p class="font-weight-bold font-h4 hidden-lg-down">{{$ctrl.transaction.latestTransStatus}}</p>
+							<p class="font-weight-bold font-h4 hidden-lg-down">{{$ctrl.currentTransactionItem.latestTransStatus}}</p>
 							<div data-ng-class="($ctrl.transaction.hasFailed !== true ? 'success' : 'failed')">
 								<div class="steps">
 								    <ul id="progressTracker" class="steps-container d-flex justify-content-between">

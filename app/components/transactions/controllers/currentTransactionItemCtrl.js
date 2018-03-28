@@ -1,3 +1,7 @@
+angular.module('ppApp').controller('currentTransactionItemCtrl', currentTransactionItemCtrl);
+
+currentTransactionItemCtrl.$inject = ['currentTransactionItem', 'currentTransactionsService', '$scope']
+
 function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsService, $scope) {
 	
 	var vm = this;
@@ -12,15 +16,11 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 		}
 	});
 
-	vm.statusInfo = 'Initiated';
-
-	vm.statusInfoFn = function(item) {
-		vm.statusInfo = item;
-	};
-
+	var currTransStatus = currentTransactionItem.latestTransStatus;
 	vm.currentTransactionItem = currentTransactionItem;
-	vm.currTransStatus = currentTransactionItem.latestTransStatus;
-
+	vm.checkProgress = checkProgress;
+	vm.renewalProgress = currentTransactionsService.renewalProgress(currTransStatus);
+	vm.patents = [];	
 	vm.transStatus = [
 		{
 			status: 'Initiated', 
@@ -73,19 +73,50 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 		}
 	];
 
-	vm.checkProgress = function() {
+	vm.$onInit = function() {
+
+		currentTransactionItem.renewalUIs.forEach(function(value, index, array){
+			vm.patents.push(value);
+	 	});
+
+		switch(currTransStatus) { //add current transaction progress value to scope
+			case 'Initiated':
+				vm.transactionProgress = 0;
+			break;
+			case 'Awaiting Funds':
+				vm.transactionProgress = 17.28;
+			break;
+			case 'Funds Received':
+				vm.transactionProgress = 34.56;	
+			break;
+			case 'Funds Sent':
+				vm.transactionProgress = 51.84;	
+			break;
+			case 'EPO Received':
+				vm.transactionProgress = 69.12;
+			break;
+			case 'EPO Instructed':
+				vm.transactionProgress = 86.4;
+			break;
+			case 'Completed':
+				vm.transactionProgress = 100;	    			    			    			    			    		
+		}
+
+	}
+	
+	function checkProgress() {
 
 		var statusIndex;
 
 		vm.transStatus.forEach(function(data, index){
-			if(data.status == vm.currTransStatus) {
+			if(data.status == currTransStatus) {
 				statusIndex = index; //find current active status
 			}
 		});
 
 		for(var i=0; i <= statusIndex; i++){
 			vm.transStatus[i].complete = true; //change property complete to true to all items
-			if(vm.currTransStatus == vm.transStatus[i].status) { //until it matches current tran statues
+			if(currTransStatus == vm.transStatus[i].status) { //until it matches current tran statues
 				vm.transStatus[i].active = true; // change active property value to true
 				vm.transStatus[i].complete = false;
 			}
@@ -93,37 +124,6 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 		
 	};
 
-	switch(vm.currTransStatus) { //add current transaction progress value to scope
-		case 'Initiated':
-			vm.transactionProgress = 0;
-		break;
-		case 'Awaiting Funds':
-			vm.transactionProgress = 17.28;
-		break;
-		case 'Funds Received':
-			vm.transactionProgress = 34.56;	
-		break;
-		case 'Funds Sent':
-			vm.transactionProgress = 51.84;	
-		break;
-		case 'EPO Received':
-			vm.transactionProgress = 69.12;
-		break;
-		case 'EPO Instructed':
-			vm.transactionProgress = 86.4;
-		break;
-		case 'Completed':
-			vm.transactionProgress = 100;	    			    			    			    			    		
-	}
 
-	vm.renewalProgress = currentTransactionsService.renewalProgress(vm.currTransStatus);	
-
-	vm.patents = [];
-
-	currentTransactionItem.renewalUIs.forEach(function(value, index, array){
-		vm.patents.push(value);
- 	});
 
 }
-
-angular.module('ppApp').controller('currentTransactionItemCtrl', currentTransactionItemCtrl);
