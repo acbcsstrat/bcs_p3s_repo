@@ -1,10 +1,13 @@
+angular.module('ppApp').controller('patentCostAnalysisCtrl', patentCostAnalysisCtrl);
+
+patentCostAnalysisCtrl.$inject = ['patent', 'costAnalysis', '$timeout']
+
 function patentCostAnalysisCtrl(patent, costAnalysis, $timeout) {
 
 	var vm = this;
 
 	var costAnalysisFee = costAnalysis.fee;
-
-	
+	vm.chartActive = 'Stage Cost Chart';
 
 	if(costAnalysisFee) {
 
@@ -304,5 +307,3 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $timeout) {
 	}; //charts end
 	
 }
-
-angular.module('ppApp').controller('patentCostAnalysisCtrl', patentCostAnalysisCtrl);
