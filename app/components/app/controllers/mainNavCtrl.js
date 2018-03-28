@@ -1,4 +1,8 @@
-angular.module('ppApp').controller('mainNavCtrl', ['$scope', '$mdSidenav', 'ngCart', '$timeout', function($scope, $mdSidenav, ngCart,  $timeout){
+angular.module('ppApp').controller('mainNavCtrl', mainNavCtrl);
+
+mainNavCtrl.$inject = ['$scope', '$mdSidenav', 'ngCart', '$timeout']
+
+function mainNavCtrl($scope, $mdSidenav, ngCart,  $timeout){
 
  	$scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
@@ -9,4 +13,4 @@ angular.module('ppApp').controller('mainNavCtrl', ['$scope', '$mdSidenav', 'ngCa
       };
     }
     
-}]);
+};
