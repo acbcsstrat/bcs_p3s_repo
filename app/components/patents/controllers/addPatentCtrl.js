@@ -1,45 +1,51 @@
+angular.module('ppApp').controller('addPatentCtrl', addPatentCtrl);
+
+addPatentCtrl.$inject = ['$state', '$stateParams', '$scope', '$rootScope', '$timeout', '$location', '$anchorScroll', 'searchPatentService', 'chunkDataService', 'patentsRestService', '$uibModal'];
+
 function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $location, $anchorScroll, searchPatentService, chunkDataService, patentsRestService, $uibModal) {
 
 	var vm = this;
 
 	var patentFromJson = angular.fromJson($stateParams.patent);
 	vm.queriedPatent = patentFromJson.data;
-
+	vm.displayNotifications = displayNotifications;
+	vm.openCancelSearchModal = openCancelSearchModal;
+	vm.openConfirmModal = openConfirmModal;
+	vm.displayNotifications = displayNotifications;
 	vm.patentNotifications = {
 		green: 'Green',
 		amber: 'Amber',
 		red: 'Red',
 		blue: 'Blue',
 		black: 'Black'
-	}	
+	}
 
-	vm.displayNotifications = function(phase) {
+	displayNotifications(vm.patentNotifications.green)	
 
-		function phaseNotifications(phase) {
-
-			var notificationsArr = vm.queriedPatent.notificationUIs;
-	  		var notifications = [];
-
-	  		notificationsArr.forEach(function(data){
-	  			if(data.costbandcolor == phase) {
-	  				notifications.push(data)
-	  			}
-	  		})
-
-	  		return notifications;
-
-	  	}
-
+	function displayNotifications(phase) {
     	$timeout(function() {
 			vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
 			vm.colourPhase = phase;
 		}, 10)
-
 	}
 
-	vm.displayNotifications(vm.patentNotifications.green)	
+	function phaseNotifications(phase) {
 
-  	vm.openCancelSearchModal = function() {
+		var notificationsArr = vm.queriedPatent.notificationUIs;
+  		var notifications = [];
+
+  		notificationsArr.forEach(function(data){
+  			if(data.costbandcolor == phase) {
+  				notifications.push(data)
+  			}
+  		})
+
+  		return notifications;
+
+  	}
+
+
+  	function openCancelSearchModal() {
 
 		var modalInstance = $uibModal.open({
 			templateUrl: 'p3sweb/app/components/patents/views/modals/modal-cancel-search.htm',
@@ -60,7 +66,7 @@ function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $loca
 
   	}
 
-	vm.openConfirmModal = function(patent) {
+	function openConfirmModal(patent) {
 
 		var modalInstance = $uibModal.open({
 			templateUrl: 'p3sweb/app/components/patents/views/modals/modal-confirm-found-patent.htm',
@@ -110,10 +116,5 @@ function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $loca
 
 			}
 		})
-
 	}
-
-
 }
-
-angular.module('ppApp').controller('addPatentCtrl', addPatentCtrl);
