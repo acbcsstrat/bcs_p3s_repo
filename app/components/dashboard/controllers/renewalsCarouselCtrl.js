@@ -1,31 +1,17 @@
-function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, calculateService, selectPhaseService, fxCalculationService) {
+angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
+
+renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'fxCalculationService']
+
+function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, fxCalculationService) {
 
 	var vm = this;
 
-	vm.sortedPatentData = patentPhasesService.phases(patents);
-
 	vm.phaseLoaded = true;
-
-	function setPhaseFn(phase) {
-		vm.phaseLoaded = false;
-		selectPhaseService.setPhase(phase, vm.sortedPatentData);
-		$timeout(function() {
-			vm.phaseLoaded = true;
-		}, 10);
-	}
-
-	vm.setPhase = function(phase) {
-		setPhaseFn(phase)
-	}
-
-	$scope.$on('updateRenewalCarousel', function(e, o){
-		setPhaseFn(o.phase)
-	})
-
+	vm.sortedPatentData = patentPhasesService.phases(patents);
+	vm.setPhase = setPhase;
 	vm.selectedPhase = selectPhaseService;
 
 	vm.currentIndex = 0;
-
     vm.slickConfig = {
     	accessibility: false,
     	arrows: true,
@@ -53,8 +39,23 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, ca
         }
     } //slick end
 
+	$scope.$on('updateRenewalCarousel', function(e, o){
+		setPhaseFn(o.phase)
+	})
+
+
+	function setPhase(phase) {
+		setPhaseFn(phase)
+	}    
+
+	function setPhaseFn(phase) {
+		vm.phaseLoaded = false;
+		selectPhaseService.setPhase(phase, vm.sortedPatentData);
+		$timeout(function() {
+			vm.phaseLoaded = true;
+		}, 10);
+	}    
+
 	//renewal cost logic has to be included to accomodate for responsive design 
 	///////////////////////////////////////////////////////////////////////////
 }
-
-angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
