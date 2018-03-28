@@ -1,4 +1,8 @@
-function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, $http, $rootScope, patentsRestService, $state, currentTransactionsService, patentsService, $anchorScroll, $location, patentPhasesService) {
+angular.module('ppApp').controller('listPatentsCtrl', listPatentsCtrl);
+
+listPatentsCtrl.$inject = ['$scope', '$timeout', '$http', '$rootScope',  '$state', '$anchorScroll', '$location', 'patentsRestService', 'patents', 'currentTransactionsService', 'patentsService',  'patentPhasesService'];
+
+function listPatentsCtrl($scope, $timeout, $http, $rootScope,  $state, $anchorScroll, $location, patentsRestService, patents, currentTransactionsService, patentsService,  patentPhasesService) {
 
 		var vm = this;
 
@@ -6,55 +10,59 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
 
 	    $timeout(function() {
 	      vm.animate = true;
-	    }, 300);    		
+	    }, 300);
 
-		vm.$onInit = function() {
+		$timeout(function() {
+			vm.displayPhase('all'); //invoke displayPhase displaying all patents
+		}, 100);	    
 
-			vm.sortedPatentData = patentPhasesService.phases(patents);//patent data service (shared by dashboard)
+	    vm.displayPhase = displayPhase;
+	    vm.displayPatents = displayPatents;
+	    vm.fetchItemRenewal = fetchItemRenewal;
+	    vm.fetchItemTransaction = fetchItemTransaction;
+	    vm.rowSelect = rowSelect;
+	    vm.sortType = sortType;
+   		vm.selectedSortType = 'patentApplicationNumber';
+	  	vm.sortReverse  = false;	    
+		vm.sortedPatentData = patentPhasesService.phases(patents);//patent data service (shared by dashboard)
 
-	  		vm.displayPhase = function(phase) {
-	  			vm.tableData = []; //reset data before displaying new phase
-	  			if(phase !== 'all') {
-					switch (phase) {
-					    case 'green':
-					     	vm.tableData = vm.sortedPatentData.greenRenewals;
-				        break;
-					    case 'amber':
-					     	vm.tableData = vm.sortedPatentData.amberRenewals;
-				        break;
-					    case 'red':
-					     	vm.tableData = vm.sortedPatentData.redRenewals;
-				        break;
-					    case 'blue':
-					     	vm.tableData = vm.sortedPatentData.blueRenewals;
-					     	break;
-				     	case 'black':
-					    	vm.tableData = vm.sortedPatentData.blackRenewals;
-					    break;
-				     	case 'grey':
-					    	vm.tableData = vm.sortedPatentData.greyRenewals;
-					}
+  		function displayPhase(phase) {
+  			vm.tableData = []; //reset data before displaying new phase
+  			if(phase !== 'all') {
+				switch (phase) {
+				    case 'green':
+				     	vm.tableData = vm.sortedPatentData.greenRenewals;
+			        break;
+				    case 'amber':
+				     	vm.tableData = vm.sortedPatentData.amberRenewals;
+			        break;
+				    case 'red':
+				     	vm.tableData = vm.sortedPatentData.redRenewals;
+			        break;
+				    case 'blue':
+				     	vm.tableData = vm.sortedPatentData.blueRenewals;
+				     	break;
+			     	case 'black':
+				    	vm.tableData = vm.sortedPatentData.blackRenewals;
+				    break;
+			     	case 'grey':
+				    	vm.tableData = vm.sortedPatentData.greyRenewals;
+				}
 
-	  			} else {
-	  				vm.tableData = patents;
-	  			}
-			};
-
-			$timeout(function() {
-				vm.displayPhase('all'); //invoke displayPhase displaying all patents
-			}, 100);
-			
+  			} else {
+  				vm.tableData = patents;
+  			}
 		};
 
-		vm.displayPatents = function() { //resets view so only list patents displays
+		function displayPatents() { //resets view so only list patents displays
 			$state.go('patents');
 		};
 
-		vm.fetchItemRenewal = function() { // directs user to view renewals in patent item
+		function fetchItemRenewal() { // directs user to view renewals in patent item
 			patentsService.activePatentItemMenu();
 		};
 
-		vm.fetchItemTransaction = function(id) { // directs user to current transaction item
+		function fetchItemTransaction(id) { // directs user to current transaction item
 			currentTransactionsService.fetchCurrentTransactions()
 			.then(
 				function(response) {
@@ -88,7 +96,7 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
 			);
 		};
 
-      	vm.rowSelect = function(event){
+      	function rowSelect(event){
       		vm.patentInfoContent = true;
       		if(!$(event.target).hasClass('cartbtn')) {
 	      		var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
@@ -97,7 +105,7 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
       		}
       	};
 
-	   	vm.sortType = function(column) {
+	   	function sortType(column) {
 	   		if(column == 'dueDate') {
 	   			vm.selectedSortType = (function() {
 
@@ -123,9 +131,6 @@ function listPatentsCtrl(patents, $scope, Idle, Keepalive, $uibModal, $timeout, 
 	   		}
 	   	};
 
-   		vm.selectedSortType = 'patentApplicationNumber';
-	  	vm.sortReverse  =  false;
+
 
 }
-
-angular.module('ppApp').controller('listPatentsCtrl', listPatentsCtrl);
