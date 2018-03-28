@@ -1,4 +1,8 @@
-angular.module('ppApp').factory('basketService', ['$http', '$q', function($http, $q){
+angular.module('ppApp').factory('basketService', basketService);
+
+basketService.$inject = ['$http', '$q'];
+
+function basketService($http, $q){
 
 	var factory = {};
 
@@ -24,4 +28,4 @@ angular.module('ppApp').factory('basketService', ['$http', '$q', function($http,
 
 	return factory;
 
-}]);
+}

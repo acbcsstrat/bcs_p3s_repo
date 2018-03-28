@@ -1,4 +1,8 @@
-angular.module('ppApp').factory('patentsService', ['$rootScope', '$timeout', function($rootScope, $timeout){
+angular.module('ppApp').factory('patentsService', patentsService);
+
+patentsService.$inject = ['$rootScope', '$timeout'];
+
+function patentsService($rootScope, $timeout){
 	
 	return {
 		activePatentItemMenu: 	function () {
@@ -8,4 +12,4 @@ angular.module('ppApp').factory('patentsService', ['$rootScope', '$timeout', fun
 			
 		}
 	};
-}]);
+}

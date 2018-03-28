@@ -1,6 +1,8 @@
-angular.module('ppApp').factory('fxCalculationService', fxCalculation);
+angular.module('ppApp').factory('fxCalculationService', fxCalculationService);
 
-function fxCalculation($q, $timeout, fxService) {
+fxCalculationService.$inject = ['$q', '$timeout', 'fxService']
+
+function fxCalculationService($q, $timeout, fxService) {
 
 	return {
 

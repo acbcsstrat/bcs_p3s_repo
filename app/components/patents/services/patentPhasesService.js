@@ -1,5 +1,7 @@
 angular.module('ppApp').factory('patentPhasesService', patentPhasesService);
 
+patentPhasesService.$inject = ['$timeout', '$q', '$rootScope', 'calculateService']
+
 function patentPhasesService ($timeout, $q, $rootScope, calculateService) {
 	
 	var factory = {};

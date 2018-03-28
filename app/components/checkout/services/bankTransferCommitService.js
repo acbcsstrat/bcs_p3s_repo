@@ -1,21 +1,26 @@
-angular.module('ppApp').factory('bankTransferCommitService', ['$http', '$q', '$state' ,function($http, $q, $state){
+angular.module('ppApp').factory('bankTransferCommitService', bankTransferCommitService);
 
-	var factory = {};
+bankTransferCommitService.$inject = ['$http', '$q', '$state'];
 
-		factory.commitTransfer = function(order) {
-			var deferred = $q.defer();
-			$http.post(domain+'rest-committed-banktransfer/', order)
-			.then(
-				function(response){
-					$state.go('bank-transfer-success', {orderObj: response.data});
-				},
-				function(errResponse){
-				});
-				
-				return deferred.promise;
+function bankTransferCommitService($http, $q, $state){
 
-		};
-  
+	var factory = {
+		commitTransfer: commitTransfer
+	};
+
 	return factory;
 
-}]);
+	function commitTransfer(order) {
+		var deferred = $q.defer();
+		$http.post(domain+'rest-committed-banktransfer/', order)
+		.then(
+			function(response){
+				$state.go('bank-transfer-success', {orderObj: response.data});
+			},
+			function(errResponse){
+			});
+			
+			return deferred.promise;
+
+	};
+}

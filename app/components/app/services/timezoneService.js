@@ -1,11 +1,15 @@
-angular.module('ppApp').factory('timezoneService', ['$http', '$q', function($http, $q){
+angular.module('ppApp').factory('timezoneService', timezoneService);
 
-	var factory = {};
+timezoneService.$inject = ['$http', '$q'];
 
-	factory.fetchUsaTimeZones = function() {
+function timezoneService($http, $q){
 
+	var factory = {
+		fetchUsaTimeZones: fetchUsaTimeZones
+	};
+
+ 	function fetchUsaTimeZones() {
 		var deferred = $q.defer();
-
 		$http.get('/p3sweb/public/ustimezones.json')
 		.then(
 			function(response){
@@ -15,10 +19,7 @@ angular.module('ppApp').factory('timezoneService', ['$http', '$q', function($htt
 				deferred.resolve(errResponse)
 			}
 		);
-
 		return deferred.promise;
 	}
-
 	return factory;
-
-}])
+}

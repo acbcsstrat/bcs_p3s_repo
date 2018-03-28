@@ -1,44 +1,46 @@
-angular.module('ppApp').factory('fxService', function($q, $http) {
+angular.module('ppApp').factory('fxService', fxService);
+
+fxService.$inject = ['$q', '$http'];
+
+function fxService($q, $http) {
 	
-	var factory = {};
+	var factory = {
+		fetchFxWeek: fetchFxWeek,
+		fetchFxMonth: fetchFxMonth
+	};
 
-		factory.fetchFxWeek = function() {
+	return factory;	
 
-			var deferred = $q.defer()
+	function fetchFxWeek() {
 
-			$http.get(domain+'rest-fxrates/week')
-			.then(
-				function(response){
-					deferred.resolve(response.data)
-				},
-				function(errResponse){
-					deferred.reject(response.data)
-				}
-			)
+		var deferred = $q.defer()
 
-			return deferred.promise;
+		$http.get(domain+'rest-fxrates/week')
+		.then(
+			function(response){
+				deferred.resolve(response.data)
+			},
+			function(errResponse){
+				deferred.reject(response.data)
+			}
+		)
+		return deferred.promise;
+	}
 
-		}
 
+	function fetchFxMonth() {
 
-		factory.fetchFxMonth = function() {
+		var deferred = $q.defer()
 
-			var deferred = $q.defer()
-
-			$http.get(domain+'rest-fxrates/month')
-			.then(
-				function(response){
-					deferred.resolve(response.data)
-				},
-				function(errResponse){
-					deferred.reject(errResponse.data)
-				}
-			)
-
-			return deferred.promise;
-
-		}		
-
-	return factory;
-
-})
+		$http.get(domain+'rest-fxrates/month')
+		.then(
+			function(response){
+				deferred.resolve(response.data)
+			},
+			function(errResponse){
+				deferred.reject(errResponse.data)
+			}
+		)
+		return deferred.promise;
+	}
+}
