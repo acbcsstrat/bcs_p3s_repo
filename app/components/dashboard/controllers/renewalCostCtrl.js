@@ -1,16 +1,18 @@
+angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
+
+renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'fxCalculationService', 'currentTransactionsService', 'patentsService']
+
 function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, fxCalculationService, currentTransactionsService, patentsService) {
 
 	var vm = this;
 
-	vm.$onInit = function() {
-
-		vm.renewalfxTimeframe = 'Today';
-		
-	};
-
+	vm.renewalfxTimeframe = 'Today';
 	vm.patentFx = fxCalculationService;
+	vm.fxPeriodActive = fxPeriodActive;
+	vm.fetchItemRenewal = fetchItemRenewal;
+	vm.fetchItemTransaction = fetchItemTransaction;
 
-	vm.fxPeriodActive = function(fxActive) {
+	function fxPeriodActive(fxActive) {
 
 		switch(fxActive) {
 			case 0:
@@ -28,11 +30,11 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 
 	};
 
-	vm.fetchItemRenewal = function() { //direct user to renewal tab in patents
+	function fetchItemRenewal() { //direct user to renewal tab in patents
 		patentsService.activePatentItemMenu();
 	};
 
-	vm.fetchItemTransaction = function(id) { //direct user to transaction item
+	function fetchItemTransaction(id) { //direct user to transaction item
 		currentTransactionsService.fetchCurrentTransactions()
 		.then(
 			function(response) {
@@ -66,5 +68,3 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 	};
 
 }
-
-angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
