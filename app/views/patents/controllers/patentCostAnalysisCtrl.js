@@ -1,14 +1,16 @@
 angular.module('ppApp').controller('patentCostAnalysisCtrl', patentCostAnalysisCtrl);
 
-patentCostAnalysisCtrl.$inject = ['patent', 'costAnalysis', '$timeout']
+patentCostAnalysisCtrl.$inject = ['patent', 'costAnalysis', '$timeout', '$rootScope']
 
-function patentCostAnalysisCtrl(patent, costAnalysis, $timeout) {
+function patentCostAnalysisCtrl(patent, costAnalysis, $timeout, $rootScope) {
 
 	var vm = this;
 
 	var costAnalysisFee = costAnalysis.fee;
 	vm.chartActive = 'Stage Cost Chart';
 	vm.patent  = patent;
+	vm.fetchItemTransaction = fetchItemTransaction;
+	vm.fetchItemRenewal = fetchItemRenewal;
 
 	if(costAnalysisFee) {
 
@@ -306,5 +308,39 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $timeout) {
 		  	}
 		}
 	}; //charts end
+
+	function fetchItemRenewal() {
+		$rootScope.$broadcast("renewalHistory"); //REVISE TO SEE IF MORE EFFICIENT WAY
+	};
+
+	function fetchItemTransaction(id) {
+		currentTransactionsService.fetchCurrentTransactions()
+		.then(
+			function(response) {
+				response.forEach(function(data) {
+					const transId = data.id;
+					data.renewalUIs.forEach(function(data, i) {
+						if(data.patentUI.id == id) { //compare id submitted from view to all array items id
+							$state.go('current-transactions.current-transaction-item',{transId: transId}) //if match, go current-transaction-item
+							.then(
+								function(response){
+									$timeout(function() {
+										$location.hash('currTransAnchor'); 
+									  	$anchorScroll();  //scroll to anchor href
+									}, 300);
+								},
+								function(errResponse){
+									console.log(errResponse);
+								}
+							);
+						}
+					});
+				});
+			},
+			function(errResponse) {
+				console.log(errResponse);
+			}
+		);
+	};	
 	
 }
