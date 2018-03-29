@@ -27,6 +27,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 	}
 
 	function displayNotifications(phase) {	
+		console.log(phase)
     	vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
 	};
 
