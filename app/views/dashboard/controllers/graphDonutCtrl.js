@@ -34,11 +34,11 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 	                    elementClick: function(e) {
 
 							var key = e.data.key;
-							
+
 							$timeout(function(){ //timeout needed to reset carousel content. Colour key emit however is not encapsulated within a timeout method
 								$scope.$emit('phaseChange', {phase: key})
 							}, 10)
-							
+
 							selectPhaseService.setPhase(key, vm.patentData);
 
 	                      	switch(key) {
@@ -60,8 +60,7 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 		                      	case 'grey':
 		                      		$scope.activeTab = 5;                      	  	                      	              		                      		                      	
 	                      	}
-
-	                    },
+	                    }
 	                },
                     startAngle: function(d) { return d.startAngle -Math.PI },
                     endAngle: function(d) { return d.endAngle -Math.PI }

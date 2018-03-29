@@ -15,7 +15,7 @@ function dashboardCtrl ($scope, $state, $timeout, $rootScope) {
     vm.date = new Date().getTime();
 
     $scope.$on('phaseChange', function(e, o){
-        $scope.$broadcast('updateRenewalCarousel', {phase: o.phase});
+        $scope.$broadcast('updatePhase', {phase: o.phase});
     })
 
 }

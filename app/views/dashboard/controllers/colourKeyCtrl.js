@@ -7,7 +7,13 @@ function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPha
 	var vm = this;
 
 	vm.selectedPhase = selectPhaseService;
-	vm.setPhase = setPhase; 
+	vm.setPhase = setPhase;
+
+ 	$scope.$on('updatePhase', function(e, o){
+ 		$timeout(function(){
+	    	$scope.activeTab = selectPhaseService.getPhase().phase.index;
+ 		})
+  	});
 
 	if(patents) {
 		var sortedPatentData = patentPhasesService.phases(patents); //sorts patents into phases and calculate progress
@@ -15,7 +21,7 @@ function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPha
 	}
 
 	function setPhase(phase) {
-		$scope.$emit('phaseChange', {phase: phase})
+		$scope.$emit('phaseChange', {phase: phase});
 		selectPhaseService.setPhase(phase, sortedPatentData); //set current phase being displayed
 	}
 

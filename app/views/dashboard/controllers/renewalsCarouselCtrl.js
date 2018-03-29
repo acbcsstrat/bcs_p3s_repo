@@ -39,12 +39,12 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
         }
     } //slick end
 
-	$scope.$on('updateRenewalCarousel', function(e, o){
+	$scope.$on('updatePhase', function(e, o){
 		setPhaseFn(o.phase)
 	})
 
-
 	function setPhase(phase) {
+		$scope.$emit('phaseChange', {phase: phase})
 		setPhaseFn(phase)
 	}    
 
