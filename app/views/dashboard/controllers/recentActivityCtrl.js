@@ -40,7 +40,7 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
         			if(data.renewalStatus == 'Show price') {
         				var hours = calculateService.calculateHours(data.costBandColour, response);
     					if(calculateService.recentActivity(hours)) {
-    						vm.recentStageArr.push(item);
+    						vm.recentStageArr.push(data);
     					}
         			}
 				},
