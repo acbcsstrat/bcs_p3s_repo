@@ -2,25 +2,20 @@ package com.bcs.p3s.controller.rest;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
-import com.bcs.p3s.engine.OrderProcessingEngine;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
-import com.bcs.p3s.engine.GenericProcessingEngine;
 import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
@@ -177,20 +172,13 @@ public class PaymentRestController extends Universal {
 			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);
 		}
 		else{
-			log().debug("Error retrieving Post Commit Deatails.");
+			log().debug("Error retrieving Post Commit Details.");
 			log().error("Error retrieving details.");
 			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
     }
    
-    @RequestMapping(value = "/rest-create-csv", method = RequestMethod.GET)
-    public void createCSV(){
-    	
-    	OrderProcessingEngine test = new OrderProcessingEngine();
-		Payment payment = Payment.findPayment((long) 9);
-		test.createOrderCsv(payment);
-    }
     
 
 }

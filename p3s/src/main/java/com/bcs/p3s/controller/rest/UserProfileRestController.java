@@ -21,6 +21,7 @@ import com.bcs.p3s.security.SecurityUtil;
 //import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.service.UserService;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
  
 @RestController
@@ -37,13 +38,14 @@ public class UserProfileRestController extends Universal {
      
     @RequestMapping(value = "/rest-user/", method = RequestMethod.GET)
     public ResponseEntity<UserProfileUI> getUserProfileUI() {
-    	System.out.println("UserProfileRestController : /rest-user/ (get UserProfile) invoked ");
-
-    	 PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
-         P3SUser p3sUser = pLoginSession.getUser();
+    	
+    	String msg = "UserProfileRestController : /rest-user/ (get UserProfile)";
+    	log().debug(msg +" invoked");
+    	PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+        P3SUser p3sUser = pLoginSession.getUser();
     	UserProfileUI userProfileUI = userService.getUserProfileUI(p3sUser);
 
-    	
+    	log().debug(msg +" returning current User Information");
         return new ResponseEntity<UserProfileUI>(userProfileUI, HttpStatus.OK);
     }
  
@@ -51,30 +53,13 @@ public class UserProfileRestController extends Universal {
     
     //-------------------Retrieve Single User OBSOLETE - see below --------------------------------------------------------
 
-// Commented out 10/10/17 - should now be safe 
-//    // Tmp fix - in case Patrick invoke Merin's initial API  - ie /rest-user/{user-id} 
-//    @RequestMapping(value = "/rest-user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<UserProfileUI> obsoletegetUserProfileUI_OBS(@PathVariable("id") long id) {
-//    	System.out.println("UserProfileRestController : OBSOLETE /rest-user/{"+id+"}  (get UserProfile) invoked. Redirecting ... ");
-//        return getUserProfileUI();
-//    }
-    
-   //----------------------Update User Info ---------------------------------------------------------------------------------
-//    @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
-//    public ResponseEntity<UserProfileUI> updateUser(@RequestBody UserProfileUI user , UriComponentsBuilder ucBuilder) {
     @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
     public ResponseEntity<UserProfileUI> updateUser(@RequestBody UserProfileUI obUser , UriComponentsBuilder ucBuilder) {
       
-    	String err = "UserProfileRestController updateUser [PUT] : ";
-//    	log().fatal(" REACHED    AAAAAAAAAAAAAAAAAAAAAA  UserProfileRestController updateUser ");
-    	//String msg = " ****************** "+"UserProfileRestController updateUser invoked with UserProfileUI of "+obUser.getClass().getName();
-    	//log().fatal(msg);
-    	//    	System.out.println(msg);
-//    	System.out.println(" ****************** ");
-//    	System.out.println(" ****************** ");
-//    	System.out.println(" ****************** "); // acTidy
+    	String msg = "UserProfileRestController : /rest-user/ updateUser()";
 
-    	if ( ! ( obUser instanceof UserProfileUI)) notYet("updateUser given object which is NOT a UserProfileUI");
+    	log().debug(msg + " invoked");
+    	if ( ! ( obUser instanceof UserProfileUI)) throw new P3SRuntimeException("UserProfileRestController : /rest-user/ updateUser() NOT passed UserProfileUI object");
     	
     	
     	UserProfileUI user = (UserProfileUI) obUser;
@@ -86,10 +71,10 @@ public class UserProfileRestController extends Universal {
         p3sUser.setLastName(user.getLastName());
         p3sUser.setIsEmailNotification(user.getIsEmailNotification());
         
-        //updating password as well
+        //updating User password
         if(!(user.getNewPassword() == null)){
         		p3sUser.setPassword(user.getNewPassword());
-        		log().debug(err + "User updated password as well");
+        		log().debug(msg + "User password got updated");
         }
         
         //p3sUser.setIsEmailNotification(false);
@@ -106,12 +91,12 @@ public class UserProfileRestController extends Universal {
         	Business myBusiness = SecurityUtil.getMyBusiness();
         	pLoginSession.setBusiness(myBusiness);
             session.setAttribute("postSession",pLoginSession);
+            log().debug(msg + " returning success after updating User Information");
       		return new ResponseEntity<UserProfileUI>(user, HttpStatus.OK);
-      		//logging
       	}
       	else{
+      		log().debug(msg + " failed to update User Information");
       		return new ResponseEntity<UserProfileUI>(user, HttpStatus.NOT_MODIFIED);
-      		//logging
       	}
     }
     
@@ -121,9 +106,8 @@ public class UserProfileRestController extends Universal {
     @RequestMapping(value = "/rest-users/", method = RequestMethod.GET)
     public ResponseEntity<List<UserProfileUI>> listUsers() {
     	
-    	System.out.println("Inside listUsers");
-    	System.out.println("####here comes the session in Controller "+session.getCreationTime() + "id ::" + session.getId());
-    	   	
+    	String msg = "UserProfileRestController : /rest-users/ (listUsers())";
+    	log().debug(msg +" invoked");
     	List<UserProfileUI> userProfileUI = new ArrayList<UserProfileUI>();
     	List<P3SUser> p3sUser = userService.getAllUsers();
     	
@@ -138,6 +122,7 @@ public class UserProfileRestController extends Universal {
     		userProfileUI.add(userUI);
     	}
     	
+    	log().debug(msg +" returning all Users for the current business");
         return new ResponseEntity<List<UserProfileUI>>(userProfileUI, HttpStatus.OK);
     }
     

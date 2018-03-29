@@ -37,7 +37,7 @@ public class UserServiceImpl extends Universal implements UserService {
 		UserProfileUI userProfileUI = new UserProfileUI();
 		
 		String msg = PREFIX + "getUserProfileUI(user)";
-		log().debug(msg + " invoked to populate userProfileUI object from user object");
+		log().debug(msg + " invoked to populate userProfileUI object from P3SUser object");
 
 		// Fields from P3SUser
 		userProfileUI.setFirstName(user.getFirstName());
@@ -57,7 +57,7 @@ public class UserServiceImpl extends Universal implements UserService {
 	public String updateUser(P3SUser user, Business business) {
 		
 		String msg =PREFIX + "updateUser(user,business)";
-		log().debug(msg +" invoked to update user and business object");
+		log().debug(msg +" invoked to update P3SUser and business object");
 		if(user.merge() !=null && business.merge() != null){
 			log().debug(msg +" returning success. User and business updated successfully");
 			return "success";  //HARDCODED VALUE NEEDS REPLACEMENT

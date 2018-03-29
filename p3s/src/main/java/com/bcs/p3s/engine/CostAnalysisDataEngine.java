@@ -193,6 +193,7 @@ public class CostAnalysisDataEngine extends Universal{
 			
 			else if (todaysDate.getTime().after(caData.getBlackAllEnd())) {
 				caData.setCurrentcostBand(RenewalColourEnum.GREY);
+				log().warn(msg + " returned unexpected result.");
 			}
 			
 		}
