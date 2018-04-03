@@ -1,10 +1,12 @@
-var app = angular.module('myApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment', 'ngTable', 'LocalStorageModule', 'nvd3']);
+angular.module('ppApp', ['ui.router', 'chart.js', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment', 'ngTable', 'LocalStorageModule', 'nvd3']);
 
-app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(Idle, userService, $rootScope, amMoment, $timeout, $uibModal) {
+angular.module('ppApp').run(startUpRun)
+
+startUpRun.$inject = ['Idle', 'userService', '$rootScope', 'amMoment', '$timeout'];
+
+function startUpRun(Idle, userService, $rootScope, amMoment, $timeout, $uibModal) {
 
     $rootScope.page = '';
-
-    $rootScope.color = 'green';
 
     userService.fetchUser()
     .then(
@@ -16,11 +18,10 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
         }
     )
 
-
     function timeZoneClocks() {
 
-        var utc = moment.tz("Etc/UTC").format('HH:mm MM/D/YYYY');
-        var est = moment.tz("America/New_York").format('HH:mm MM/D/YYYY');
+        var utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
+        var est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
     
         var t = $timeout(function() {
             $rootScope.utcTime = utc;
@@ -33,53 +34,4 @@ app.run(['Idle', 'userService', '$rootScope', 'amMoment', '$timeout', function(I
 
    Idle.watch();
 
-}]);
-
-app.controller('mainNavCtrl', ['$scope', '$mdSidenav', 'ngCart', '$timeout', function($scope, $mdSidenav, ngCart,  $timeout){
- 	$scope.toggleLeft = buildToggler('left');
-    $scope.toggleRight = buildToggler('right');
-
-    function buildToggler(componentId) {
-      return function() {
-        $mdSidenav(componentId).toggle();
-      };
-    } 
-}]);
-
-app.directive('menuToggle', [ '$timeout', function($timeout){
-    return {
-        scope: {
-            section: '=',
-            context: '='
-        },
-        templateUrl: 'p3sweb/app/components/app/views/main-nav-li.htm',
-        link: function($scope, $element) {
-            var controller = $scope.context
-
-            $scope.isOpen = function() {
-                 return controller.isOpen($scope.section);
-            };
-            $scope.toggle = function() {
-                controller.toggleOpen($scope.section);
-            };
-        }
-    };
-}])
-
-app.directive('menuLink', [ '$timeout', function($timeout){
-    return {
-        scope: {
-            section: '='
-        },
-        templateUrl: 'p3sweb/app/components/app/views/main-nav-li-item.htm',
-        link: function ($scope, $element) {
-            var controller = $element.parent().controller();
-            $scope.focusSection = function () {
-                // set flag to be used later when
-                // $locationChangeSuccess calls openPage()
-                controller.autoFocusContent = true;
-            };
-        }
-    };
-}])
-	
+};

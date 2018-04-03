@@ -1,0 +1,32 @@
+<div data-ng-show="$ctrl.animate" class="animate-show">
+	<div class="row m-b-xl lg-m-b-md widget-row-top">
+		<div class="col-md-12 col-lg-12 col-xl-7 md-m-b-md lg-m-b-md">
+			<div ui-view="colourkeywidget" class="h-100"></div>
+		</div> <!--col end-->
+
+		<div class="col-md-6 col-lg-6 col-xl-5">
+			<div ui-view="graphdonutwidget" class="h-100"></div>
+		</div>
+ 		<div class="col-md-6 col-lg-6 hidden-xl-up">
+			<div ui-view="fxrateswidgetmd" class="h-100"></div>
+		</div>
+	</div>
+
+	<div class="row m-b-xl lg-m-b-md widget-row-middle">
+		<div class="col-md-12 col-lg-12 col-xl-7">
+			<div ui-view="renewalswidget" class="h-100"></div>
+		</div>	            
+		<div class="col-xl-5 hidden-lg-down">
+			<div ui-view="fxrateswidget" class="h-100"></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-lg-12 col-xl-12 lg-m-b-md xl-m-b-xl">
+			<div ui-view="fxchartwidget" class="h-100"></div>
+		</div>
+		<div class="col-md-12 col-lg-12 col-xl-6">
+			<div ui-view="recentactivitywidget" class="h-100"></DIV>
+		</div>
+	</div>
+</div>

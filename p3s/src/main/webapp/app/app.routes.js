@@ -1,203 +1,231 @@
-app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', 'KeepaliveProvider', 'IdleProvider', '$mdThemingProvider', 'slickCarouselConfig', function($stateProvider, $urlRouterProvider, $qProvider, KeepaliveProvider, IdleProvider, $mdThemingProvider, slickCarouselConfig) {
+angular.module('ppApp').config(appRoutes);
 
-    var customBlueMap =  $mdThemingProvider.extendPalette('light-blue', {
-        'contrastDefaultColor': 'light',
-        'contrastDarkColors': ['50'],
-        '50': 'ffffff'
-    });
+appRoutes.$inject = ['$stateProvider'];
 
-    $mdThemingProvider.definePalette('customBlue', customBlueMap);
-    $mdThemingProvider.theme('default')
-        .primaryPalette('customBlue', {
-          'default': '500',
-          'hue-1': '50'
-        })
-        .accentPalette('pink');
-    $mdThemingProvider.theme('altTheme')
-    .primaryPalette('purple')
-
-
-    IdleProvider.idle(500);
-    IdleProvider.timeout(30);
-    KeepaliveProvider.http(domain+'keep-session-alive/');
-    KeepaliveProvider.interval(20)
-
-    $qProvider.errorOnUnhandledRejections(false);
-
-    $urlRouterProvider
-        .when('', '/dashboard')
-        .when('/', '/dashboard')
-        .otherwise('/dashboard');
-
-    slickCarouselConfig.dots = true;
-    slickCarouselConfig.autoplay = false;
+function appRoutes($stateProvider) {
 
     $stateProvider
-    .state('login', {
-        url: '/login',
-        component: 'login'
-    })
-    .state('register', {
-        url: '/register',
-        component: 'register'
-    })
-    .state('dashboard', {
-        url: '/dashboard',
-        component: 'dashboard',
-        resolve: {
-            patents: ['patentsRestService', function(patentsRestService) {
-                return patentsRestService.fetchAllPatents();
-            }],
-            currTrans: ['currentTransactionsService', function(currentTransactionsService) {
-                return currentTransactionsService.fetchCurrentTransactions();
-            }],       
-            transHistory: ['transactionHistoryService', function(transactionHistoryService) {
-                return transactionHistoryService.fetchTransactionHistory();
-            }]
-        }
-    })
-    .state('profile', {
-        url: '/profile',
-        component: 'user',
-        resolve: {
-            user: ['userService', function(userService) {
-                return userService.fetchUser();
-            }],
-            timezones: ['timezoneService', function(timezoneService){
-                return timezoneService.fetchUsaTimeZones();
-            }]
-        }
-    })
-    .state('patents', {
-        url: '/patents',
-        component: 'patents',
-        resolve: {
-            patents: ['patentsRestService', function(patentsRestService) {
-                return patentsRestService.fetchAllPatents();
-            }]
-        },
-        data: {
-            customPatents:'patentsRestService'
-        },
-        params: {
-            navigation: 'patentnav'
-        }
-    })
-    .state('patents.patent', {
-        url: '/{patentId}/:patentHref',
-        component: 'patent',
-        resolve: {
-            patent: ['patents', '$stateParams', function(patents, $stateParams) {
-                return patents.find(function(patent){
-                    return patent.id == $stateParams.patentId;
-                })
-            }],
-            costAnalysis: ['patentsRestService', '$stateParams',function(patentsRestService, $stateParams) { 
-                return  patentsRestService.fetchCostAnalysis($stateParams.patentId);  
-            }],
-            renewal: ['patentsRestService','$stateParams', function(patentsRestService, $stateParams){
-                return  patentsRestService.fetchRenewalHistory($stateParams.patentId);  
-            }]
-        },
-        params: {
-            patentHref: null
-        }
-    })
-    .state('search-patent', {
-        url: '/search-patent',
-        component: 'searchpatent',
-        params: {
-            navigation: 'patentnav',
-            patent: null
-        }
-    })
-    .state('add-patent', {
-        url: '^/add-patent',
-        component: 'addpatent',
-        params: {
-            navigation: 'patentnav',
-            obj: null
-        }
-    })
-    .state('current-transactions', {
-        url: '/current-transactions',
-        component: 'currentTransactions',
-        resolve: {
-            transactions: ['currentTransactionsService', function(currentTransactionsService) {
-                return currentTransactionsService.fetchCurrentTransactions();
-            }]
-        },
-        params: {
-            navigation: 'transactionnav'
-        }
-    })
-    .state('current-transactions.current-transaction-item', {
-        url: '/{transId}/:transHref',
-        component: 'currentTransaction',
-        resolve: {
-            transaction: ['transactions', '$stateParams', function(transactions, $stateParams) {
-                return transactions.find(function(transaction){
-                    return transaction.id == $stateParams.transId;
-                })
-            }]
-        },
-        params: {
-            transHref: null
-        }
-    })
-    .state('transaction-history', {
-        url: '/transaction-history',
-        component: 'transactionHistory',
-        resolve: {
-            transactionHistory: ['transactionHistoryService', function(transactionHistoryService){
-                return transactionHistoryService.fetchTransactionHistory();
-            }]
-        },
-        params: {
-            navigation: 'transactionnav'
-        }
-    })
-    .state('transaction-history.transaction-history-item', {
-        url: '/{transHistoryId}',
-        component: 'transactionHistoryItem',
-        resolve: {
-            transactionHistoryItem: ['transactionHistory', '$stateParams', function(transactionHistory, $stateParams){
-                return transactionHistory.find(function(transaction){
-
-                    return transaction.id == $stateParams.transHistoryId;
-                })
-            }]
-        },
-        params: {
-            navigation: 'transactionnav'
-        }
-    })
-    .state('basket', {
-        url: '/basket',
-        component: 'basket'
-    })
-    .state('bank-transfer-preparation', {
-        url: '/bank-transfer-preparation',
-        component: 'bankTransferPreparation',
-        params: {
-        	orderObj: null,
-        	patentObj: null
-        }
-    })    
-    .state('bank-transfer-success', {
-        url: '/bank-transfer-success',
-        component: 'bankTransferSuccess',
-        params: {
-            orderObj: null
-        }
-    })
-}])
-
-.config(function(localStorageServiceProvider) {
-
-    localStorageServiceProvider
-        .setStorageType('sessionStorage')
-        .setDefaultToCookie(false)
-        .setNotify(true, true)
-
-})
+        .state('dashboard', {
+            url: '/dashboard',
+            resolve: {
+                patents: ['patentsRestService', function(patentsRestService) {
+                    return patentsRestService.fetchAllPatents();
+                }],
+                transactionHistory: ['transactionHistoryService', function(transactionHistoryService) {
+                    return transactionHistoryService.fetchTransactionHistory();
+                }],
+                currentTransactions: ['currentTransactionsService', function(currentTransactionsService) {
+                    return currentTransactionsService.fetchCurrentTransactions();
+                }],                       
+                fxRatesWeek: ['fxService', function(fxService) {
+                    return fxService.fetchFxWeek();
+                }],
+                fxRatesMonth: ['fxService', function(fxService) {
+                    return fxService.fetchFxMonth();
+                }]                       
+            },
+            views: {
+                '@': {
+                    templateUrl: 'p3sweb/app/views/dashboard/views/dashboard.htm',
+                    controller: 'dashboardCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'colourkeywidget@dashboard': {
+                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/colour-key-widget.htm',
+                    controller: 'colourKeyCtrl',
+                    controllerAs: '$ctrl'                
+                },
+                'graphdonutwidget@dashboard': {
+                    controller: 'graphDonutCtrl',
+                    controllerAs: '$ctrl',                
+                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/graph-donut-widget.htm',         
+                },
+                'renewalswidget@dashboard': {
+                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/renewals-widget.htm',
+                    controller: 'renewalsCarouselCtrl',
+                    controllerAs: '$ctrl'                
+                },
+                'fxrateswidget@dashboard': {
+                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/renewal-cost.htm',
+                    controller: 'renewalCostCtrl',
+                    controllerAs: '$ctrl'                
+                },
+                'fxrateswidgetmd@dashboard': {
+                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/renewal-cost.htm',
+                    controller: 'renewalCostCtrl',
+                    controllerAs: '$ctrl'                
+                },            
+                'fxchartwidget@dashboard': {
+                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/fxchart-widget.htm',
+                    controller: 'fxChartCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'recentactivitywidget@dashboard': {
+                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/recent-activity-widget.htm',
+                    controller: 'recentActivityCtrl',
+                    controllerAs: '$ctrl'
+                }            
+            }
+        })    
+        .state('profile', {
+            url: '/profile',
+            templateUrl: 'p3sweb/app/views/user/views/user-profile.htm',
+            controller: 'userProfileCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('patents', {
+            url: '/patents',
+            templateUrl: 'p3sweb/app/views/patents/views/list-patents.htm',
+            controller: 'listPatentsCtrl',
+            controllerAs: '$ctrl',
+            resolve: {
+                patents: ['patentsRestService', function(patentsRestService) {                 
+                    return patentsRestService.fetchAllPatents();
+                }]
+            },
+            params: {
+                navigation: 'patentnav'
+            }
+        })
+        .state('patents.patent', {
+            url: '/{patentId}/:patentHref',
+            resolve: {
+                patent: ['patents', '$stateParams', function(patents, $stateParams) {
+                    return patents.find(function(patent){
+                        return patent.id == $stateParams.patentId;
+                    })
+                }],
+                costAnalysis: ['patentsRestService', '$stateParams',function(patentsRestService, $stateParams) { 
+                    return  patentsRestService.fetchCostAnalysis($stateParams.patentId);  
+                }],
+                renewal: ['patentsRestService','$stateParams', function(patentsRestService, $stateParams){
+                    return  patentsRestService.fetchRenewalHistory($stateParams.patentId);  
+                }]
+            },
+            views: {
+                '@patents': {
+                    templateUrl: 'p3sweb/app/views/patents/views/patent-item.htm',
+                    controller: 'patentItemCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'patentinfo@patents.patent': {
+                    templateUrl: 'p3sweb/app/views/patents/views/ui-views/patent-info.htm',
+                    controller: 'patentInfoCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'patentcostanalysis@patents.patent': {
+                    templateUrl: 'p3sweb/app/views/patents/views/ui-views/patent-costanalysis.htm',
+                    controller: 'patentCostAnalysisCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'patentrenewals@patents.patent': {
+                    templateUrl: 'p3sweb/app/views/patents/views/ui-views/patent-renewals.htm',
+                    controller: 'patentRenewalsCtrl',
+                    controllerAs: '$ctrl'
+                }
+            },
+            params: {
+                patentHref: null
+            }
+        })
+        .state('search-patent', {
+            url: '/search-patent',
+            templateUrl: 'p3sweb/app/views/patents/views/search-patent.htm',
+            controller: 'searchPatentCtrl',
+            controllerAs: '$ctrl',
+            params: {
+                navigation: 'patentnav'
+            }
+        })
+        .state('search-patent.add-patent', {
+            url: '?params',
+            templateUrl: 'p3sweb/app/views/patents/views/ui-views/add-patent.htm',
+            controller: 'addPatentCtrl',
+            controllerAs: '$ctrl',
+            params: {
+                patent: null
+            }
+        })
+        .state('current-transactions', {
+            url: '/current-transactions',
+            templateUrl: 'p3sweb/app/views/transactions/views/current-transactions.htm',
+            controller: 'currentTransactionsCtrl',
+            controllerAs: '$ctrl',
+            resolve: {
+                currentTransactions: ['currentTransactionsService', function(currentTransactionsService){
+                    return currentTransactionsService.fetchCurrentTransactions();
+                }]
+            },
+            params: {
+                navigation: 'transactionnav'
+            }            
+        })
+        .state('current-transactions.current-transaction-item', {
+            url: '/{transId}/:transHref',
+            templateUrl: 'p3sweb/app/views/transactions/views/current-transaction-item.htm',
+            controller: 'currentTransactionItemCtrl',
+            controllerAs: '$ctrl',
+            resolve: {
+                currentTransactionItem: ['currentTransactions', '$stateParams', function(currentTransactions, $stateParams) {
+                    return currentTransactions.find(function(transaction){
+                        return transaction.id == $stateParams.transId;
+                    })
+                }]
+            },
+            params: {
+                transHref: null
+            }
+        })
+        .state('transaction-history', {
+            url: '/transaction-history',
+            templateUrl: 'p3sweb/app/views/transactions/views/transaction-history.htm',
+            controller: 'transactionHistoryCtrl',
+            controllerAs: '$ctrl',
+            resolve: {
+                transactionHistory: ['transactionHistoryService', function(transactionHistoryService){
+                    return transactionHistoryService.fetchTransactionHistory();
+                }]
+            },
+            params: {
+                navigation: 'transactionnav'
+            }
+        })
+        .state('transaction-history.transaction-history-item', {
+            url: '/{transHistoryId}',
+            templateUrl: 'p3sweb/app/views/transactions/views/transaction-history-item.htm',
+            controller: 'transactionHistoryItemCtrl',
+            controllerAs: '$ctrl',            
+            resolve: {
+                transactionHistoryItem: ['transactionHistory', '$stateParams', function(transactionHistory, $stateParams){
+                    return transactionHistory.find(function(transaction){
+                        return transaction.id == $stateParams.transHistoryId;
+                    })
+                }]
+            }
+        })
+        .state('basket', {
+            url: '/basket',
+            templateUrl: 'p3sweb/app/views/checkout/views/basket.htm',
+            controller: 'basketCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('bank-transfer-preparation', {
+            url: '/bank-transfer-preparation',
+            templateUrl: 'p3sweb/app/views/checkout/views/bank-transfer-preparation.htm',
+            controller: 'bankTransferPrepCtrl',
+            controllerAs: '$ctrl',
+            params: {
+            	orderObj: null,
+            	patentObj: null
+            }
+        })    
+        .state('bank-transfer-success', {
+            url: '/bank-transfer-success',
+            templateUrl: 'p3sweb/app/views/checkout/views/bank-transfer-success.htm',            
+            controller: 'bankTransferSuccessCtrl',
+            controllerAs: '$ctrl',            
+            params: {
+                orderObj: null
+            }
+        })
+}

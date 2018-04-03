@@ -1,0 +1,27 @@
+<div class="row m-b-md">
+	<div class="col-xl-12">
+		<div class="view-tabs">
+			<ul class="nav view-pills">
+				<li class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs btn--lg font-h4 bg-white border-grey-xs" data-ng-click="$ctrl.activeSelectedTab = 0; $ctrl.activePatentItemMenu = 'Patent Info'" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Patent Info'}">Patent Info</li>
+				<li class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs btn--lg font-h4 bg-white border-grey-xs" data-ng-click="$ctrl.activeSelectedTab = 1; $ctrl.activePatentItemMenu = 'Cost Analysis'" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Cost Analysis'}">Cost Analysis</li>
+				<li class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs btn--lg font-h4 bg-white border-grey-xs" data-ng-click="$ctrl.activeSelectedTab = 2; $ctrl.activePatentItemMenu = 'Renewal History'" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Renewal History'}">Renewal History</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="content-panel">
+	<div id="patentAnchor"></div>
+		<uib-tabset type="pills" active="$ctrl.activeSelectedTab">
+			<uib-tab heading="Patent Information" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs active m-b-md" index="0" data-ng-hide="true">
+				<div ui-view="patentinfo"></div>
+		    </uib-tab>
+		    <uib-tab heading="Cost Analysis" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md" index="1" data-ng-hide="true">
+		    	<div ui-view="patentcostanalysis"></div>
+			</uib-tab>
+		    <uib-tab heading="Renewal History" class="nav-item nav-view-list-item pill-radius p-page-nav-tabs pill-tabs font-lg bg-white border-grey-xs m-b-md"  index="2"  data-ng-hide="true">
+		    	<div ui-view="patentrenewals"></div>
+			</uib-tab>
+		</uib-tabset>
+	</div>
+</div>

@@ -37,14 +37,14 @@ angular.module('ngCart.fulfilment', [])
             .then(
                 function(response){
                     deferred.resolve(response.data);
-                    var patentArr = response.data.orderedPatentUIs;
+
                     var updatedPatentObj = {
                         totalCostUSD: response.data.totalCostUSD,
                         dateNowLocalTime: response.data.dateNowLocalTimeUI,
                         transTargetEndDateUI:response.data.transTargetEndDateUI,
                         patents: (function(){
                             var patentAppNos = [];
-                            patentArr.forEach(function(patent){
+                            response.data.orderedPatentUIs.forEach(function(patent){
                                 patentAppNos.push(patent.patentApplicationNumber);
                             });
                             return patentAppNos;
