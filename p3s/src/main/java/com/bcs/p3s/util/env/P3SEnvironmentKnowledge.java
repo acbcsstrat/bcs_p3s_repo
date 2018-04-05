@@ -33,6 +33,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 			, "reviewsystem"			// Tomacat-A (on Linode)
 			// YET TO INCLUDE: other Linux Hosts? Dev, Test, Demo & Production
 			, "tomcatb"					// Tomacat-B (on Linode). Clone of TomcatA, with postfix Nov17
+			, "tomcatu"					// tomcatU 'alpha' dev host
+			, "tomcatv"					// tomcatU 'alpha' dev host
 	};
 		
 
@@ -67,6 +69,9 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// path = defaultpath; // now redundant, but shows purpose of defaultpath 
 			// path = "C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";	// If running from war 	
 			path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse
+		}
+		if ("tomcatu".equals(host) || "tomcatu".equals(host)) {
+			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
 		
 		if (path==null) {
@@ -124,6 +129,9 @@ public class P3SEnvironmentKnowledge extends Universal {
 		}
 		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";
+		}
+		if ("tomcatu".equals(host) || "tomcatu".equals(host)) {
+			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/";
 		}
 		
 
