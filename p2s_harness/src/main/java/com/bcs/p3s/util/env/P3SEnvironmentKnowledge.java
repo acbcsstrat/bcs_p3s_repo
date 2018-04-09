@@ -148,6 +148,19 @@ public class P3SEnvironmentKnowledge extends Universal {
 	
 	
 	/**
+	 * Provides the path to BCD scripts
+	 */
+	public static String getScriptsFilePath()  {
+		String path = "/root/scripts/";
+		String host = Hostname.getHostname();
+		if (host!=null && host.startsWith("tomcat")) {
+			path = "/var/bcd/scripts/";
+		}
+		return path;
+	};
+	
+	
+	/**
 	 * Indicates if P3Sweb is running on a developer PC or not. 
 	 */
 	public static boolean isDeveloperPC() {

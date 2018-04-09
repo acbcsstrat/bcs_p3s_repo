@@ -100,7 +100,8 @@ public class OSCommandService extends Universal {
 				//fullCommand = SUDO + CMD_ROOT + ACTION_READ_EPO;
 				// If tomcat, via sudo, issues 'sudo /usr/bin/java -jar /opt/p3scron/p3scron.jar readEpoStatus'
 				// it hangs, if log4j logging to STD log at debug is enabled! Hence this workaround
-				fullCommand = SUDO + "/usr/bin/touch /root/scripts/p3s/tomcatcronAntiHangWorkaround.go";
+				String scriptDir = P3SEnvironmentKnowledge.getScriptsFilePath();
+				fullCommand = SUDO + "/usr/bin/touch "+scriptDir +"p3s/tomcatcronAntiHangWorkaround.go";
 			}
 			else fullCommand = dosRootCmd + " " + ACTION_READ_EPO;
 		}
