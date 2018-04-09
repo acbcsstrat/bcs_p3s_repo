@@ -33,7 +33,7 @@ angular.module('ngCart.fulfilment', [])
             };
             
             var deferred = $q.defer();
-            $http.post('http://localhost:8080/p3sweb/rest-prepare-banktransfer/', obj)
+            $http.post('http://localhost:8080/harness/rest-prepare-banktransfer/', obj)
             .then(
                 function(response){
                     deferred.resolve(response.data);

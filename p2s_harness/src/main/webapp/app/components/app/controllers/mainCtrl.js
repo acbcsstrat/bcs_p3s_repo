@@ -143,10 +143,10 @@ app.controller('coreCtrl', ['$uibModal', '$scope', 'dashboardService', 'localSto
 
 	    if (userTimedOut) {
 	      ngCart.empty()
-	    	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
+	    	$http.post('http://localhost:8080/harness/resources/j_spring_security_logout')
 	      	.then(
 	      		function(response){
-	      		  window.location.reload('http://localhost:8080/p3sweb/login');
+	      		  window.location.reload('http://localhost:8080/harness/login');
 	      		},
 	          function(errResponse) {
 	            console.log(errResponse)
