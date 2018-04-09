@@ -23,6 +23,7 @@
         <intercept-url pattern="/public/**" access="permitAll" />
         <intercept-url pattern="/assets/css/**" access="permitAll" />
         <intercept-url pattern="/assets/imgs/**" access="permitAll" />
+        <intercept-url pattern="/logtest/**" access="permitAll" />
         <!-- Below line needed to bypass login for prelogin forgot password functionality -->
         <intercept-url pattern="/prelogin/**" access="permitAll" />
         <intercept-url pattern="/**" access="isAuthenticated()" />

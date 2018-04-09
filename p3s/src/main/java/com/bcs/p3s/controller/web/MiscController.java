@@ -87,6 +87,14 @@ public class MiscController extends Universal {
             return "blank";
 	    }
 	    
+		@RequestMapping(value="/logtest", method = RequestMethod.GET, produces = "text/html")
+	    public String aclogtest(Model uiModel, String message) {
+			String keymessage = message;
+			log().info("aclogtest in MiscController invoked  : param = "+keymessage);
+
+            return "blank";
+	    }
+	    
 
 	
 }
