@@ -74,7 +74,7 @@
 											<td class="font-body">Extension fee:</td>
 											<td class="font-body">$ {{renewal.feeUI.extensionFeeUSD}}</td>
 										</tr>
-										<tr class="border-grey-xs--btm">
+										<tr>
 											<td class="font-body">Express fee:</td>
 											<td class="font-body">$ {{renewal.feeUI.expressFeeUSD}}</td>
 										</tr>
@@ -82,7 +82,7 @@
 											<td class="font-body">Urgent fee:</td>
 											<td class="font-body">$ {{renewal.feeUI.urgentFeeUSD}}</td>
 										</tr>																								
-										<tr>
+										<tr class="border-grey-xs--btm">
 											<td class="font-body font-weight-bold">Total: </td>
 											<td class="font-body font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
 										</tr>													
@@ -90,7 +90,7 @@
 								</td>
 								<td class="td-30">
 									<div class="row">
-										<div class="col-xl-6 d-flex align-items-center" ng-if="renewal.certificateUrl">
+										<div class="col-xl-6 d-flex align-items-center" data-ng-if="renewal.certificateUrl">
 											<div class="btn-default">
 												<a data-ng-href="{{renewal.certificateUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
 											</div>
