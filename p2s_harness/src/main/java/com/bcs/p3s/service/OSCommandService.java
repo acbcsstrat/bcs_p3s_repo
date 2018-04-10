@@ -119,6 +119,7 @@ public class OSCommandService extends Universal {
 		String os = (isLinux) ? "Linux" : "Windows";
 		log().info("P3S Harness, on "+os+", about to issue O/S cmd: "+cmd);
 		java.lang.Runtime.getRuntime().exec(cmd);	
+		log().info("After issue O/S cmd ");
 	}
 	
 	
