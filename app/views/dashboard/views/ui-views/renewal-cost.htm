@@ -113,7 +113,7 @@
 					</div>
 					<p class="font-h4 font-weight-medium" data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Too late to renew'">(+44)1789-000-000</p>
 					<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Show price'" class=" btn-default">
-				 		<ngcart-addtocart id="{{$ctrl.patentFx.getSelectedPatent().id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.patentFx.getSelectedPatent().id}}" price="{{$ctrl.patentFx.getSelectedPatent().currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+				 		<ngcart-addtocart id="{{$ctrl.patentFx.getSelectedPatent().id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.patentFx.getSelectedPatent().id}}" price="{{$ctrl.patentFx.getSelectedPatent().currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patentFx.getSelectedPatent()">
 			 			</ngcart-addtocart>										
 					</div>		
 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Payment in progress' || $ctrl.patentFx.getSelectedPatent().renewalStatus =='EPO Instructed'" class="d-flex btn-default">
@@ -246,7 +246,7 @@
 			<div class="row">
 				<div class="col-md-12 col-lg-12">
 					<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Show price'" class=" btn-default">
-				 		<ngcart-addtocart id="{{$ctrl.patentFx.getSelectedPatent().id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.patentFx.getSelectedPatent().id}}" price="{{$ctrl.patentFx.getSelectedPatent().currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.selectedPatent">
+				 		<ngcart-addtocart id="{{$ctrl.patentFx.getSelectedPatent().id}}" class="cartbtn font-weight-bold" name="patent_{{$ctrl.patentFx.getSelectedPatent().id}}" price="{{$ctrl.patentFx.getSelectedPatent().currentRenewalCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patentFx.getSelectedPatent()">
 			 			</ngcart-addtocart>										
 					</div>
 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex btn-default">
