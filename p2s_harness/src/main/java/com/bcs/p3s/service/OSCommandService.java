@@ -20,8 +20,7 @@ public class OSCommandService extends Universal {
 	boolean isLinux = true;
 	String dosRootCmd = null;
 	
-
-	protected final String SUDO = "sudo ";
+	protected final String SUDO = "sudo ";  
 	protected final String CMD_ROOT = "/usr/bin/java -jar /opt/p3scron/p3scron.jar ";
 	protected final String ACTION_WRITE_MC = "writeOrder";
 	protected final String ACTION_READ_MC = "readMcTxnStatus";
@@ -81,17 +80,17 @@ public class OSCommandService extends Universal {
 		
 		if (ACTION_WRITE_MC.equalsIgnoreCase(type)) {
 			log().info("buildFullCommand invoked with "+type+". ACTIONING");
-			if (isLinux) fullCommand = SUDO + CMD_ROOT + ACTION_WRITE_MC;
+			if (isLinux) fullCommand = CMD_ROOT + ACTION_WRITE_MC;
 			else fullCommand = dosRootCmd + " " + ACTION_WRITE_MC;
 		}
 		else if (ACTION_READ_MC.equalsIgnoreCase(type)) {
 			log().info("buildFullCommand invoked with "+type+". ACTIONING");
-			if (isLinux) fullCommand = SUDO + CMD_ROOT + ACTION_READ_MC;
+			if (isLinux) fullCommand = CMD_ROOT + ACTION_READ_MC;
 			else fullCommand = dosRootCmd + " " + ACTION_READ_MC;
 		}
 		else if (ACTION_FOLLOWON.equalsIgnoreCase(type)) {
 			log().info("buildFullCommand invoked with "+type+". ACTIONING");
-			if (isLinux) fullCommand = SUDO + CMD_ROOT + ACTION_FOLLOWON;
+			if (isLinux) fullCommand = CMD_ROOT + ACTION_FOLLOWON;
 			else fullCommand = dosRootCmd + " " + ACTION_FOLLOWON;
 		}
 		else if (ACTION_READ_EPO.equalsIgnoreCase(type)) {
