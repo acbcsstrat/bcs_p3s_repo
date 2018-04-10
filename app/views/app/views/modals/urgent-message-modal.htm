@@ -9,7 +9,7 @@
 			<p class="font-h4 font-weight-medium text-center">Following patents are reaching the next renewal stage.</p>
 		</div>
 		<div class="content-panel__body p-b-none p-t-none">
-			<div ng-repeat="item in urgentPatents" class="d-flex flex-column align-items-center justify-content-center m-b-md">
+			<div data-ng-repeat="item in urgentPatents" class="d-flex flex-column align-items-center justify-content-center m-b-md">
 				<div class="row w-100">
 					<div class="col-md-12">
 						<table class="t-data font-body">
@@ -18,33 +18,42 @@
 									<th colspan="4" class="txt-white font-weight-medium text-center">App No. {{item.patentApplicationNumber}}</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody data-ng-if="item.costBandColour !== 'Black' || item.costBandColour !== 'Red'">
 								<tr>
-									<td class="td-30">Short Title</td>
+									<td class="td-30">Title</td>
 									<td>{{item.title}}</td>
 								</tr>
 								<tr>
 									<td class="td-30">Current Amount</td>
 									<td>$ {{item.currentRenewalCostUSD}}</td>
-								</tr>					
+								</tr>
 								<tr>
 									<td class="td-30">Next Stage Cost</td>
-									<td data-ng-if="item.costBandColour !== 'Black'">$ {{item.renewalCostNextStageUSD}}</td>
-									<td data-ng-if="item.costBandColour == 'Black'" class="font-weight-bold">LAPSE</td>
+									<td>$ {{item.renewalCostNextStageUSD}}</td>
 								</tr>
 							</tbody>
+							<tbody data-ng-if="item.costBandColour == 'Black' || item.costBandColour == 'Red'">
+								<tr>
+									<td class="td-30">Title</td>
+									<td>{{item.title}}</td>
+								</tr>
+								<tr>
+									<td data-ng-if="item.renewalStatus == 'Show price'" class="td-30">Next Stage Cost</td>
+									<td data-ng-if="item.costBandColour == 'Black' && item.renewalStatus == 'Show price" class="font-weight-bold">LAPSE</td>	
+									<td data-ng-if="item.renewalStatus == 'Too late to renew'" class="font-weight-bold">Call  to Renew (+44)1789-000-000</td>							
+								</tr>
+							</tbody>							
 						</table>
 					</div>
 				</div>
-
-				<div class="row w-100">
+				<div class="row w-100" data-ng-if="item.renewalStatus !== 'Too late to renew'">
 					<div class="col-md-6 p-r-none">
-						<div class="bar-phase bar-curr d-flex align-items-center justify-content-center" ng-class="(item.costBandColour == 'Green' ? 'bg-phase-green': '') +' '+(item.costBandColour == 'Amber' ? 'bg-phase-amber': '')+' '+(item.costBandColour == 'Red' ? 'bg-phase-red': '')+' '+(item.costBandColour == 'Blue' ? 'bg-phase-blue':'')">
+						<div class="bar-phase bar-curr d-flex align-items-center justify-content-center" data-ng-class="(item.costBandColour == 'Green' ? 'bg-phase-green': '') +' '+(item.costBandColour == 'Amber' ? 'bg-phase-amber': '')+' '+(item.costBandColour == 'Red' ? 'bg-phase-red': '')+' '+(item.costBandColour == 'Blue' ? 'bg-phase-blue':'')">
 							<span class="txt-white font-body btn--reg ">Current</span>
 						</div>
 					</div>
 					<div class="col-md-6 p-l-none">
-						<div class="bar-phase bar-curr d-flex align-items-center justify-content-center" ng-class="(item.costBandColour == 'Green' ? 'bg-phase-amber': '') +' '+(item.costBandColour == 'Amber' ? 'bg-phase-red': '')+' '+(item.costBandColour == 'Red' ? 'bg-phase-blue': '')+' '+(item.costBandColour == 'Blue' ? 'bg-phase-black':'')">
+						<div class="bar-phase bar-curr d-flex align-items-center justify-content-center" data-ng-class="(item.costBandColour == 'Green' ? 'bg-phase-amber': '') +' '+(item.costBandColour == 'Amber' ? 'bg-phase-red': '')+' '+(item.costBandColour == 'Red' ? 'bg-phase-blue': '')+' '+(item.costBandColour == 'Blue' ? 'bg-phase-black':'')">
 							<span class="txt-white font-body btn--reg ">Next Stage</span>
 						</div>
 					</div>					
