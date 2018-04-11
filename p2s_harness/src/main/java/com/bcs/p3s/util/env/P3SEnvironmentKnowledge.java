@@ -69,7 +69,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			//path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse
 			path = "C:/dev64/maven.1520878637375/p2s_harness/src/main/resources/META-INF/spring/";  
 		}
-		if ("tomcatu".equals(host) || "tomcatu".equals(host)) {
+		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
 		
@@ -129,7 +129,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";
 		}
-		if ("tomcatu".equals(host) || "tomcatu".equals(host)) {
+		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/";
 		}
 		if ("CCP007".equals(host) ) {
