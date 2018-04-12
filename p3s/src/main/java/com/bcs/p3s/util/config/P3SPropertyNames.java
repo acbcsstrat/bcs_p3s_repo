@@ -76,5 +76,9 @@ public interface P3SPropertyNames {
 	public static final String P3S_EPO_CONSUMER_KEY = "p3s_epo_key"; 
 	public static final String P3S_EPO_CONSUMER_SECRET_KEY = "p3s_epo_seckey"; 
 	
+	//TestNG specific
+	public static final String BASE_URL = "base_url"; 
+	public static final String GECKO_DRIVER_PATH = "gecko_driver_path";
+	public static final String INDEX_URL ="index_url";
 	
 }
