@@ -66,7 +66,7 @@ public class TestP3sLogin extends Universal{
         //driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
         driver.findElement(By.name("j_username")).clear();
-        driver.findElement(By.name("j_username")).sendKeys("merin@p3s.me");
+        driver.findElement(By.name("j_username")).sendKeys("merin.paul@boxcleversoftware.com");
         driver.findElement(By.name("j_password")).clear();
         driver.findElement(By.name("j_password")).sendKeys("merin123");
         driver.findElement(By.name("loginBtn")).click();
