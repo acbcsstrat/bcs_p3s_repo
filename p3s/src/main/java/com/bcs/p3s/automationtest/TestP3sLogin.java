@@ -48,13 +48,26 @@ public class TestP3sLogin extends Universal{
     public void setUp() throws Exception {
     	try{
 			P3SPropertyReader reader = new P3SPropertyReader();
-			baseUrl = reader.getESProperty(P3SPropertyNames.BASE_URL);
-	        indexUrl = reader.getESProperty(P3SPropertyNames.INDEX_URL);
-			System.setProperty("webdriver.firefox.bin",
-                    "/opt/AutoDeployment/Firefox/firefox/firefox-bin");
-			System.setProperty("webdriver.gecko.driver", reader.getESProperty(P3SPropertyNames.GECKO_DRIVER_PATH));
+			
 	        driver = new FirefoxDriver();
 			//driver = new FirefoxDriver(new FirefoxBinary("/opt/AutoDeployment/Firefox/firefox/firefox-bin"), new FirefoxProfile());
+	        
+	        if(host == "tomcatb"){
+	        	System.out.println("Hostname is " + host);
+	        	baseUrl = "http://demo.thepatent.place:8080/p3sweb/login";
+		        indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm#!/dashboard";
+		        System.setProperty("webdriver.firefox.bin",
+	                    "/opt/AutoDeployment/Firefox/firefox/firefox-bin");
+		        System.setProperty("webdriver.gecko.driver", "/opt/AutoDeployment/Gecko Driver/geckodriver.exe");
+	        }
+	        else{
+	        	System.out.println("Hostname is " + host);
+	        	baseUrl = "http://localhost:8080/p3sweb/login";
+		        indexUrl = "http://localhost:8080/p3sweb/index.htm#!/dashboard";
+				/*System.setProperty("webdriver.firefox.bin",
+	                    "/opt/AutoDeployment/Firefox/firefox/firefox-bin");*/
+				System.setProperty("webdriver.gecko.driver", "C:/MERIN/Documents/Selenium Testing Notes/geckodriver-v0.20.0-win32/geckodriver.exe");
+	        }
 	        
 		}
 		catch (P3SPropertyException e) {
