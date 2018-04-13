@@ -49,7 +49,7 @@ public class TestP3sLogin extends Universal{
     	try{
 			P3SPropertyReader reader = new P3SPropertyReader();
 			System.setProperty("webdriver.firefox.bin",
-                    "/opt/AutoDeployment/Firefox/firefox.exe");
+                    "/opt/AutoDeployment/Firefox/firefox");
 	        driver = new FirefoxDriver();
 	        
 	        baseUrl = reader.getESProperty(P3SPropertyNames.BASE_URL);
