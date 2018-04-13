@@ -39,10 +39,10 @@ public class TestP3sLogin extends Universal{
     public void setUp() throws Exception {
     	try{
 			P3SPropertyReader reader = new P3SPropertyReader();
-			System.setProperty("webdriver.gecko.driver", reader.getESProperty(P3SPropertyNames.GECKO_DRIVER_PATH));
 	        driver = new FirefoxDriver();
 	        baseUrl = reader.getESProperty(P3SPropertyNames.BASE_URL);
 	        indexUrl = reader.getESProperty(P3SPropertyNames.INDEX_URL);
+	        System.setProperty("webdriver.gecko.driver", reader.getESProperty(P3SPropertyNames.GECKO_DRIVER_PATH));
 		}
 		catch (P3SPropertyException e) {
             fail("com.bcs.p3s.automationtest.TestP3sLogin : setUp() - EPO Request Authorisation property read failed",e);
