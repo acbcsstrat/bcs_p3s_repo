@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
+import com.bcs.p3s.util.env.Hostname;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -26,7 +27,7 @@ public class TestP3sLogin extends Universal{
     private String baseUrl;
     private String indexUrl;
     private StringBuffer verificationErrors = new StringBuffer();
-    
+    String host = Hostname.getHostname();
     
     public TestP3sLogin() {
 		super();
@@ -44,7 +45,7 @@ public class TestP3sLogin extends Universal{
 	        indexUrl = reader.getESProperty(P3SPropertyNames.INDEX_URL);
 		}
 		catch (P3SPropertyException e) {
-            fail("com.bcs.p3s.util.scrape.OAuthOPSUtils : OAuthOPSUtils() - EPO Request Authorisation property read failed",e);
+            fail("com.bcs.p3s.automationtest.TestP3sLogin : setUp() - EPO Request Authorisation property read failed",e);
         }
     	
     }
