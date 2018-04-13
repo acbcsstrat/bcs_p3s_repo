@@ -48,8 +48,6 @@ public class TestP3sLogin extends Universal{
     public void setUp() throws Exception {
     	try{
 			P3SPropertyReader reader = new P3SPropertyReader();
-			
-	        driver = new FirefoxDriver();
 			//driver = new FirefoxDriver(new FirefoxBinary("/opt/AutoDeployment/Firefox/firefox/firefox-bin"), new FirefoxProfile());
 	        
 	        if(host == "tomcatb"){
@@ -69,6 +67,7 @@ public class TestP3sLogin extends Universal{
 				System.setProperty("webdriver.gecko.driver", "C:/MERIN/Documents/Selenium Testing Notes/geckodriver-v0.20.0-win32/geckodriver.exe");
 	        }
 	        
+	        driver = new FirefoxDriver();
 		}
 		catch (P3SPropertyException e) {
             Assert.fail("com.bcs.p3s.automationtest.TestP3sLogin : setUp() - EPO Request Authorisation property read failed",e);
