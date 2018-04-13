@@ -50,7 +50,7 @@ public class TestP3sLogin extends Universal{
 			P3SPropertyReader reader = new P3SPropertyReader();
 			//driver = new FirefoxDriver(new FirefoxBinary("/opt/AutoDeployment/Firefox/firefox/firefox-bin"), new FirefoxProfile());
 	        
-	        if(host == "tomcatb"){
+	        if("tomcatb".equals(host)){
 	        	System.out.println("Hostname is " + host);
 	        	baseUrl = "http://demo.thepatent.place:8080/p3sweb/login";
 		        indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm#!/dashboard";
