@@ -50,10 +50,11 @@ public class TestP3sLogin extends Universal{
 			P3SPropertyReader reader = new P3SPropertyReader();
 			baseUrl = reader.getESProperty(P3SPropertyNames.BASE_URL);
 	        indexUrl = reader.getESProperty(P3SPropertyNames.INDEX_URL);
-			/*System.setProperty("webdriver.firefox.bin",
-                    "/opt/AutoDeployment/Firefox/firefox");*/
+			System.setProperty("webdriver.firefox.bin",
+                    "/opt/AutoDeployment/Firefox/firefox/firefox-bin");
 			System.setProperty("webdriver.gecko.driver", reader.getESProperty(P3SPropertyNames.GECKO_DRIVER_PATH));
 	        driver = new FirefoxDriver();
+			//driver = new FirefoxDriver(new FirefoxBinary("/opt/AutoDeployment/Firefox/firefox/firefox-bin"), new FirefoxProfile());
 	        
 		}
 		catch (P3SPropertyException e) {
