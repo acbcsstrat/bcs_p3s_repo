@@ -57,6 +57,7 @@ public class TestP3sLogin extends Universal{
 		        indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm#!/dashboard";
 		        //System.setProperty("webdriver.firefox.bin","/opt/AutoDeployment/Firefox/firefox/firefox-bin");
 		        //System.setProperty("webdriver.gecko.driver", "/opt/AutoDeployment/Gecko Driver/geckodriver");
+		        System.setProperty("webdriver.firefox.bin","C:/Program Files/Mozilla Firefox/firefox.exe");
 		        System.setProperty("webdriver.gecko.driver", "C:/MERIN/Documents/Selenium Testing Notes/geckodriver-v0.20.0-win32/geckodriver.exe");
 		        DesiredCapabilities capabilities=DesiredCapabilities.firefox();
 		        capabilities.setCapability("marionette", true);
