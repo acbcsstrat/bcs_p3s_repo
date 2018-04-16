@@ -55,8 +55,9 @@ public class TestP3sLogin extends Universal{
 	        	System.out.println("Hostname is " + host);
 	        	baseUrl = "http://demo.thepatent.place:8080/p3sweb/login";
 		        indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm#!/dashboard";
-		        System.setProperty("webdriver.firefox.bin","/opt/AutoDeployment/Firefox/firefox/firefox-bin");
-		        System.setProperty("webdriver.gecko.driver", "/opt/AutoDeployment/Gecko Driver/geckodriver");
+		        //System.setProperty("webdriver.firefox.bin","/opt/AutoDeployment/Firefox/firefox/firefox-bin");
+		        //System.setProperty("webdriver.gecko.driver", "/opt/AutoDeployment/Gecko Driver/geckodriver");
+		        System.setProperty("webdriver.gecko.driver", "C:/MERIN/Documents/Selenium Testing Notes/geckodriver-v0.20.0-win32/geckodriver.exe");
 		        DesiredCapabilities capabilities=DesiredCapabilities.firefox();
 		        capabilities.setCapability("marionette", true);
 		        driver = new FirefoxDriver();
