@@ -4,24 +4,19 @@
 package com.bcs.p3s.automationtest;
 
 
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeMethod;
-import org.testng.Assert;
-import org.testng.AssertJUnit;
-import java.io.File;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
+import org.testng.AssertJUnit;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.bcs.p3s.util.config.P3SPropertyException;
-import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.env.Hostname;
 import com.bcs.p3s.util.lang.Universal;
@@ -55,13 +50,30 @@ public class TestP3sLogin extends Universal{
 	        	System.out.println("Hostname is " + host);
 	        	baseUrl = "http://demo.thepatent.place:8080/p3sweb/login";
 		        indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm#!/dashboard";
+		        
+		        /** FIREFOX SETTINGS **/
 		        //System.setProperty("webdriver.firefox.bin","/opt/AutoDeployment/Firefox/firefox/firefox-bin");
 		        //System.setProperty("webdriver.gecko.driver", "/opt/AutoDeployment/Gecko Driver/geckodriver");
-		        System.setProperty("webdriver.firefox.bin","C:/Program Files/Mozilla Firefox/firefox.exe");
+		        /*System.setProperty("webdriver.firefox.bin","C:/Program Files/Mozilla Firefox/firefox.exe");
 		        System.setProperty("webdriver.gecko.driver", "C:/MERIN/Documents/Selenium Testing Notes/geckodriver-v0.20.0-win32/geckodriver.exe");
 		        DesiredCapabilities capabilities=DesiredCapabilities.firefox();
 		        capabilities.setCapability("marionette", true);
-		        driver = new FirefoxDriver();
+		        driver = new FirefoxDriver();*/
+		        
+		        /** CHROME SETTINGS - headless chrome **/
+		        System.setProperty("webdriver.chrome.driver", "/opt/AutoDeployment/Chrome/chromedriver");
+
+		        // Add options to Google Chrome. The window-size is important for responsive sites
+		        ChromeOptions options = new ChromeOptions();
+		        options.addArguments("headless");
+		        options.addArguments("window-size=1200x600");
+		        
+		        options.addArguments("disable-extensions");
+		        //options.addArguments("headless");
+		        options.addArguments("disable-gpu");
+		        options.addArguments("no-sandbox");
+
+		        driver = new ChromeDriver(options);
 	        }
 	        else{
 	        	System.out.println("Hostname is " + host);
@@ -69,8 +81,10 @@ public class TestP3sLogin extends Universal{
 		        indexUrl = "http://localhost:8080/p3sweb/index.htm#!/dashboard";
 				/*System.setProperty("webdriver.firefox.bin",
 	                    "/opt/AutoDeployment/Firefox/firefox/firefox-bin");*/
-				System.setProperty("webdriver.gecko.driver", "C:/MERIN/Documents/Selenium Testing Notes/geckodriver-v0.20.0-win32/geckodriver.exe");
-				driver = new FirefoxDriver();
+				/*System.setProperty("webdriver.gecko.driver", "C:/MERIN/Documents/Selenium Testing Notes/geckodriver-v0.20.0-win32/geckodriver.exe");
+				driver = new FirefoxDriver();*/
+		        System.setProperty("webdriver.chrome.driver", "C:/MERIN/Documents/Selenium Testing Notes/Chrome/chromedriver_win32/chromedriver.exe");
+		        driver = new ChromeDriver();
 	        }
 	        
 	        
