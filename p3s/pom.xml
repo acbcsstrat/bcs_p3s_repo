@@ -181,12 +181,70 @@
 		</dependency>
 		
 		<!-- Selenium Dependency -->
+		<!-- Start of dependencies for Chrome headless -->
 		<dependency>
 		    <groupId>org.seleniumhq.selenium</groupId>
-		    <artifactId>selenium-java</artifactId>
-		    <version>3.10.0</version>
+		    <!-- <artifactId>selenium-java</artifactId>
+		    <version>3.10.0</version> -->
+		    <artifactId>htmlunit-driver</artifactId>
+    		<version>2.30.0</version>
 		</dependency>
 		
+		
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit -->
+		
+		<!-- <dependency>
+		    <groupId>net.sourceforge.htmlunit</groupId>
+		    <artifactId>htmlunit-cssparser</artifactId>
+		    <version>1.0.0</version>
+		</dependency> -->
+		
+		<dependency>
+		    <groupId>net.sourceforge.htmlunit</groupId>
+		    <artifactId>htmlunit</artifactId>
+		    <version>2.30</version>
+		    <exclusions>
+		        <exclusion>
+		            <groupId>org.eclipse.jetty.websocket</groupId>
+		            <artifactId>websocket-client</artifactId>
+		        </exclusion>
+    		</exclusions>
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.sourceforge.htmlunit</groupId>
+		    <artifactId>neko-htmlunit</artifactId>
+		    <version>2.23</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.sourceforge.htmlunit</groupId>
+		    <artifactId>htmlunit-cssparser</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-io</artifactId>
+		    <version>9.4.0.v20161208</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty.aggregate/jetty-all -->
+		<dependency>
+		    <groupId>org.eclipse.jetty.aggregate</groupId>
+		    <artifactId>jetty-all</artifactId>
+		    <version>9.4.10.RC0</version>
+		    <type>pom</type>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty.websocket/websocket-api -->
+		<dependency>
+		    <groupId>org.eclipse.jetty.websocket</groupId>
+		    <artifactId>websocket-api</artifactId>
+		    <version>9.4.10.RC0</version>
+		</dependency>
+
+		<!-- End of dependencies for Chrome headless -->
     	<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

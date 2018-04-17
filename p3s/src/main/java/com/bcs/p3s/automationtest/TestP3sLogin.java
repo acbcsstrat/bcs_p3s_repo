@@ -4,12 +4,19 @@
 package com.bcs.p3s.automationtest;
 
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+//import org.openqa.selenium.chrome.ChromeDriver;
+//import org.openqa.selenium.chrome.ChromeOptions;
+//import org.openqa.selenium.firefox.FirefoxDriver;
+//import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeMethod;
@@ -20,6 +27,9 @@ import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.env.Hostname;
 import com.bcs.p3s.util.lang.Universal;
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+
+//import com.gargoylesoftware.htmlunit.BrowserVersion;
 
 /**
  * @author MerinP
@@ -27,7 +37,7 @@ import com.bcs.p3s.util.lang.Universal;
  */
 public class TestP3sLogin extends Universal{
 	
-	private WebDriver driver;
+	private HtmlUnitDriver driver;
     private String baseUrl;
     private String indexUrl;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -38,53 +48,23 @@ public class TestP3sLogin extends Universal{
 		
 	}
 
-
-    @BeforeMethod
 	@BeforeTest
     public void setUp() throws Exception {
     	try{
 			P3SPropertyReader reader = new P3SPropertyReader();
-			//driver = new FirefoxDriver(new FirefoxBinary("/opt/AutoDeployment/Firefox/firefox/firefox-bin"), new FirefoxProfile());
-	        
+			driver = new HtmlUnitDriver(BrowserVersion.CHROME ,true);
+	    	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); 
+	    	
 	        if("tomcatb".equals(host)){
 	        	System.out.println("Hostname is " + host);
 	        	baseUrl = "http://demo.thepatent.place:8080/p3sweb/login";
 		        indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm#!/dashboard";
 		        
-		        /** FIREFOX SETTINGS **/
-		        //System.setProperty("webdriver.firefox.bin","/opt/AutoDeployment/Firefox/firefox/firefox-bin");
-		        //System.setProperty("webdriver.gecko.driver", "/opt/AutoDeployment/Gecko Driver/geckodriver");
-		        /*System.setProperty("webdriver.firefox.bin","C:/Program Files/Mozilla Firefox/firefox.exe");
-		        System.setProperty("webdriver.gecko.driver", "C:/MERIN/Documents/Selenium Testing Notes/geckodriver-v0.20.0-win32/geckodriver.exe");
-		        DesiredCapabilities capabilities=DesiredCapabilities.firefox();
-		        capabilities.setCapability("marionette", true);
-		        driver = new FirefoxDriver();*/
-		        
-		        /** CHROME SETTINGS - headless chrome **/
-		        System.setProperty("webdriver.chrome.driver", "/opt/AutoDeployment/Chrome/chromedriver");
-
-		        // Add options to Google Chrome. The window-size is important for responsive sites
-		        ChromeOptions options = new ChromeOptions();
-		        options.addArguments("headless");
-		        options.addArguments("window-size=1200x600");
-		        
-		        options.addArguments("disable-extensions");
-		        //options.addArguments("headless");
-		        options.addArguments("disable-gpu");
-		        options.addArguments("no-sandbox");
-
-		        driver = new ChromeDriver(options);
 	        }
 	        else{
 	        	System.out.println("Hostname is " + host);
-	        	baseUrl = "http://localhost:8080/p3sweb/login";
-		        indexUrl = "http://localhost:8080/p3sweb/index.htm#!/dashboard";
-				/*System.setProperty("webdriver.firefox.bin",
-	                    "/opt/AutoDeployment/Firefox/firefox/firefox-bin");*/
-				/*System.setProperty("webdriver.gecko.driver", "C:/MERIN/Documents/Selenium Testing Notes/geckodriver-v0.20.0-win32/geckodriver.exe");
-				driver = new FirefoxDriver();*/
-		        System.setProperty("webdriver.chrome.driver", "C:/MERIN/Documents/Selenium Testing Notes/Chrome/chromedriver_win32/chromedriver.exe");
-		        driver = new ChromeDriver();
+	        	baseUrl = "http://demo.thepatent.place:8080/p3sweb/login";
+		        indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm";
 	        }
 	        
 	        
@@ -96,7 +76,6 @@ public class TestP3sLogin extends Universal{
     }
 
     @Test
-   // public void testLoginClass() throws Exception {
     public void main() throws Exception {
         
     	//Login with incorrect credentials
@@ -108,17 +87,20 @@ public class TestP3sLogin extends Universal{
     }
     
     private void loginCorrectCredentials(){
+    	
+    	
+    	//stackoverflow suggestion starts
     	driver.get(baseUrl);
-        //driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
-        driver.findElement(By.name("j_username")).clear();
+    	WebDriverWait wait = new WebDriverWait(driver, 30);
+    	//stackoverflow suggestion ends
+    	
+    	
+    	driver.findElement(By.name("j_username")).clear();
         driver.findElement(By.name("j_username")).sendKeys("merin.paul@boxcleversoftware.com");
         driver.findElement(By.name("j_password")).clear();
         driver.findElement(By.name("j_password")).sendKeys("merin123");
         driver.findElement(By.name("loginBtn")).click();
-        
         try {
-            //assertEquals(driver.findElement(By.id("Your Id for the message")).getText(), "Invalid UserID or Password Entered");
 
             String URL = driver.getCurrentUrl();
             AssertJUnit.assertEquals(URL, indexUrl);
@@ -171,23 +153,5 @@ public class TestP3sLogin extends Universal{
         }
     }
 
-    /*@AfterTest
-    public void tearDown() throws Exception {
-        driver.quit();
-        String verificationErrorString = verificationErrors.toString();
-        if (!"".equals(verificationErrorString)) {
-            fail(verificationErrorString);
-        }
-    }
-
-    @SuppressWarnings("unused")
-    private boolean isElementPresent(By by) {
-        try {
-            driver.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }*/
 
 }
