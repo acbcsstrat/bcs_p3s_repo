@@ -58,7 +58,7 @@ public class TestP3sLogin extends Universal{
 	        if("tomcatb".equals(host)){
 	        	System.out.println("Hostname is " + host);
 	        	baseUrl = "http://demo.thepatent.place:8080/p3sweb/login";
-		        indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm#!/dashboard";
+		        indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm";
 		        
 	        }
 	        else{
