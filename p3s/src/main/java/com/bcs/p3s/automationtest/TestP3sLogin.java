@@ -50,8 +50,7 @@ public class TestP3sLogin extends Universal{
 
 	@BeforeTest
     public void setUp() throws Exception {
-    	try{
-			P3SPropertyReader reader = new P3SPropertyReader();
+			//P3SPropertyReader reader = new P3SPropertyReader();
 			driver = new HtmlUnitDriver(BrowserVersion.CHROME ,true);
 	    	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); 
 	    	
@@ -68,10 +67,7 @@ public class TestP3sLogin extends Universal{
 	        }
 	        
 	        
-		}
-		catch (P3SPropertyException e) {
-            Assert.fail("com.bcs.p3s.automationtest.TestP3sLogin : setUp() - EPO Request Authorisation property read failed",e);
-        }
+		
     	
     }
 
