@@ -499,10 +499,11 @@
 			    	<suiteXmlFiles>
             			<suiteXmlFile>testng.xml</suiteXmlFile>
        				 </suiteXmlFiles>
+       				 <skip>true</skip>
 			   		 <redirectTestOutputToFile>true</redirectTestOutputToFile>
 				    <excludes>
 	                        <exclude>**/*_Roo_*</exclude>
-	                       <!--  <exclude>**/*Integration*</exclude> -->
+	                        <exclude>**/*Integration*</exclude>
 	                </excludes>
 	            </configuration>
 			</plugin>
