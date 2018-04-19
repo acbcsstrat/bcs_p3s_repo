@@ -205,11 +205,11 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $timeout, $rootScope) {
 	for (var property in costAnalysis) {
 	    if (costAnalysis.hasOwnProperty(property)) {
 
-			const dayData = costAnalysis[property];
+			const dyData = costAnalysis[property];
 		
 			if ((property.includes('StartDate')) && (!property.includes ('UI'))) {
 
-					var d = new Date(dayData);
+					var d = new Date(dyData);
 					var date = d.getDate();
 					var month = d.getMonth() + 1;
 					var year = d.getFullYear();
@@ -218,7 +218,7 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $timeout, $rootScope) {
 			}
 
 			if (property.includes('StageCost')) {
-				barDataArr.push(dayData);
+				barDataArr.push(dyData);
 			}
 	    }
 	}
