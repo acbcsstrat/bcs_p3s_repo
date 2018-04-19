@@ -58,7 +58,7 @@ public class TestP3sLogin{
     	loginCorrectCredentials();
     	
     	//Logout function check
-    	//logoutFnCheck();
+    	logoutFnCheck();
     	
     }
     
@@ -88,22 +88,6 @@ public class TestP3sLogin{
             verificationErrors.append(e.toString());
         }
         
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS); 
-        
-        //wait.until(ExpectedConditions.elementToBeClickable(By.name("logoutLink")));
-        driver.findElement(By.name("logoutLink")).click();
-        try{
-
-            //WebElement link = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("logoutLink")));
-            //link.click();
-            URL = driver.getCurrentUrl();
-            AssertJUnit.assertEquals(URL, baseUrl);
-        }
-        catch (Exception e) {
-
-            System.out.println("logout ::: FAIL");
-            verificationErrors.append(e.toString());
-        }
     }
     
     private void loginIncorrectCredentials(){
