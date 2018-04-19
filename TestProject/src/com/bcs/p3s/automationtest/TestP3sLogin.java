@@ -135,11 +135,10 @@ public class TestP3sLogin {
     //@Test
     private void logoutFnCheck(){
     	
+    	driver.findElement(By.name("logoutLink")).click();
     	 try {
              
              //Logout function check
-    		 String URL = driver.getCurrentUrl();
-             driver.findElement(By.name("logoutLink")).click();
              URL = driver.getCurrentUrl();
              Assert.assertEquals(URL, baseUrl);
              
