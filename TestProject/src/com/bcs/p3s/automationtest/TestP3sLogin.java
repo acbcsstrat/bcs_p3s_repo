@@ -7,22 +7,13 @@ package com.bcs.p3s.automationtest;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-//import org.openqa.selenium.chrome.ChromeDriver;
-//import org.openqa.selenium.chrome.ChromeOptions;
-//import org.openqa.selenium.firefox.FirefoxDriver;
-//import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.AssertJUnit;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 
@@ -35,6 +26,7 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 public class TestP3sLogin{
 	
 	private HtmlUnitDriver driver;
+	private String URL;
     private String baseUrl;
     private String indexUrl;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -65,16 +57,17 @@ public class TestP3sLogin{
     	//Login with correct credentials
     	loginCorrectCredentials();
     	
+    	//Logout function check
+    	//logoutFnCheck();
+    	
     }
     
     private void loginCorrectCredentials(){
-    	
     	
     	//stackoverflow suggestion starts
     	driver.get(baseUrl);
     	WebDriverWait wait = new WebDriverWait(driver, 30);
     	//stackoverflow suggestion ends
-    	
     	
     	driver.findElement(By.name("j_username")).clear();
         driver.findElement(By.name("j_username")).sendKeys("merin.paul@boxcleversoftware.com");
@@ -83,20 +76,33 @@ public class TestP3sLogin{
         driver.findElement(By.name("loginBtn")).click();
         try {
 
-            String URL = driver.getCurrentUrl();
+            URL = driver.getCurrentUrl();
+            driver.get(URL);
             AssertJUnit.assertEquals(URL, indexUrl);
             //If the message is displayed
-
-            System.out.println("PASS");
-
+            System.out.println("loginCorrectCredentials() ::: PASS");
+            
         } catch (Exception e) {
 
-            //If the message is not displayed
-
-            System.out.println("FAIL");
-
+            System.out.println("loginCorrectCredentials() ::: FAIL");
             verificationErrors.append(e.toString());
+        }
+        
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS); 
+        
+        //wait.until(ExpectedConditions.elementToBeClickable(By.name("logoutLink")));
+        driver.findElement(By.name("logoutLink")).click();
+        try{
 
+            //WebElement link = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("logoutLink")));
+            //link.click();
+            URL = driver.getCurrentUrl();
+            AssertJUnit.assertEquals(URL, baseUrl);
+        }
+        catch (Exception e) {
+
+            System.out.println("logout ::: FAIL");
+            verificationErrors.append(e.toString());
         }
     }
     
@@ -121,18 +127,38 @@ public class TestP3sLogin{
             String expected_msg = "The username and password do not match our records. Please try again.";
             AssertJUnit.assertEquals(error_msg, expected_msg);
 
-            System.out.println("PASS");
+            System.out.println("loginIncorrectCredentials() ::: PASS");
 
         } catch (Exception e) {
 
             //If the message is not displayed
 
-            System.out.println("FAIL");
+            System.out.println("loginIncorrectCredentials() ::: FAIL");
 
             verificationErrors.append(e.toString());
 
         }
     }
 
+    private void logoutFnCheck(){
+    	
+    	 try {
+             
+             //Logout function check
+    		 String URL = driver.getCurrentUrl();
+             driver.findElement(By.name("logoutLink")).click();
+             URL = driver.getCurrentUrl();
+             AssertJUnit.assertEquals(URL, baseUrl);
+             
+             System.out.println("logoutFnCheck() ::: PASS");
+
+         } catch (Exception e) {
+
+             System.out.println("logoutFnCheck() ::: FAIL");
+
+             verificationErrors.append(e.toString());
+
+         }
+    }
 
 }
