@@ -49,6 +49,10 @@ public class TestP3sLogin {
 	    	
 	        baseUrl = "http://demo.thepatent.place:8080/p3sweb/login";
 		    indexUrl = "http://demo.thepatent.place:8080/p3sweb/index.htm";
+		    
+	    	/** for local testing **/
+		    /*baseUrl = "http://localhost:8080/p3sweb/login";
+		    indexUrl = "http://localhost:8080/p3sweb/index.htm";*/
 		        
     	
     }
@@ -77,6 +81,7 @@ public class TestP3sLogin {
     	
     	driver.findElement(By.name("j_username")).clear();
         driver.findElement(By.name("j_username")).sendKeys("merin.paul@boxcleversoftware.com");
+        //driver.findElement(By.name("j_username")).sendKeys("merin@p3s.me");
         driver.findElement(By.name("j_password")).clear();
         driver.findElement(By.name("j_password")).sendKeys("merin123");
         driver.findElement(By.name("loginBtn")).click();
@@ -99,7 +104,6 @@ public class TestP3sLogin {
     //@Test
     private void loginIncorrectCredentials(){
     	driver.get(baseUrl);
-        //driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
         driver.findElement(By.name("j_username")).clear();
         driver.findElement(By.name("j_username")).sendKeys("merin@p3s.me");
@@ -135,11 +139,12 @@ public class TestP3sLogin {
     //@Test
     private void logoutFnCheck(){
     	
+    	
     	driver.findElement(By.name("logoutLink")).click();
+    	URL = driver.getCurrentUrl();
     	 try {
              
              //Logout function check
-             URL = driver.getCurrentUrl();
              Assert.assertEquals(URL, baseUrl);
              
              //System.out.println("logoutFnCheck() ::: PASS");
