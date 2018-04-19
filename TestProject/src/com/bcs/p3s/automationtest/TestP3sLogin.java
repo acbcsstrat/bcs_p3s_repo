@@ -5,17 +5,22 @@ package com.bcs.p3s.automationtest;
 
 
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 
+import org.eclipse.jetty.util.log.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+
+
 
 //import com.gargoylesoftware.htmlunit.BrowserVersion;
 
@@ -23,7 +28,7 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
  * @author MerinP
  *
  */
-public class TestP3sLogin{
+public class TestP3sLogin {
 	
 	private HtmlUnitDriver driver;
 	private String URL;
@@ -62,6 +67,7 @@ public class TestP3sLogin{
     	
     }
     
+    //@Test
     private void loginCorrectCredentials(){
     	
     	//stackoverflow suggestion starts
@@ -78,18 +84,19 @@ public class TestP3sLogin{
 
             URL = driver.getCurrentUrl();
             driver.get(URL);
-            AssertJUnit.assertEquals(URL, indexUrl);
+            Assert.assertEquals(URL, indexUrl);
             //If the message is displayed
-            System.out.println("loginCorrectCredentials() ::: PASS");
+            //System.out.println("loginCorrectCredentials() ::: PASS");
             
         } catch (Exception e) {
 
-            System.out.println("loginCorrectCredentials() ::: FAIL");
+            //System.out.println("loginCorrectCredentials() ::: FAIL");
             verificationErrors.append(e.toString());
         }
         
     }
     
+    //@Test
     private void loginIncorrectCredentials(){
     	driver.get(baseUrl);
         //driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
@@ -104,26 +111,28 @@ public class TestP3sLogin{
             //assertEquals(driver.findElement(By.id("Your Id for the message")).getText(), "Invalid UserID or Password Entered");
 
             String URL = driver.getCurrentUrl();
-            AssertJUnit.assertEquals(URL, baseUrl+"?login_error=t");
+            //AssertJUnit.assertEquals(URL, baseUrl+"?login_error=t");
+            Assert.assertEquals(URL, baseUrl+"?login_error=t");
             //If the message is displayed
             
             String error_msg=driver.findElement(By.id("loginMessage")).getText();
             String expected_msg = "The username and password do not match our records. Please try again.";
             AssertJUnit.assertEquals(error_msg, expected_msg);
 
-            System.out.println("loginIncorrectCredentials() ::: PASS");
+            //System.out.println("loginIncorrectCredentials() ::: PASS");
 
         } catch (Exception e) {
 
             //If the message is not displayed
 
-            System.out.println("loginIncorrectCredentials() ::: FAIL");
+            //System.out.println("loginIncorrectCredentials() ::: FAIL");
 
             verificationErrors.append(e.toString());
 
         }
     }
 
+    //@Test
     private void logoutFnCheck(){
     	
     	 try {
@@ -132,13 +141,13 @@ public class TestP3sLogin{
     		 String URL = driver.getCurrentUrl();
              driver.findElement(By.name("logoutLink")).click();
              URL = driver.getCurrentUrl();
-             AssertJUnit.assertEquals(URL, baseUrl);
+             Assert.assertEquals(URL, baseUrl);
              
-             System.out.println("logoutFnCheck() ::: PASS");
+             //System.out.println("logoutFnCheck() ::: PASS");
 
          } catch (Exception e) {
 
-             System.out.println("logoutFnCheck() ::: FAIL");
+             //System.out.println("logoutFnCheck() ::: FAIL");
 
              verificationErrors.append(e.toString());
 
