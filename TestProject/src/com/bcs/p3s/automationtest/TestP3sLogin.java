@@ -5,13 +5,9 @@ package com.bcs.p3s.automationtest;
 
 
 import java.util.concurrent.TimeUnit;
-import org.apache.log4j.Logger;
 
-import org.eclipse.jetty.util.log.Log;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.AssertJUnit;
@@ -53,12 +49,14 @@ public class TestP3sLogin {
 	    	/** for local testing **/
 		    /*baseUrl = "http://localhost:8080/p3sweb/login";
 		    indexUrl = "http://localhost:8080/p3sweb/index.htm";*/
+		    
+		    //org.apache.log4j.BasicConfigurator.configure();
 		        
     	
     }
 
-    @Test
-    public void main() throws Exception {
+   // @Test
+    /*public void main() throws Exception {
         
     	//Login with incorrect credentials
     	loginIncorrectCredentials();
@@ -69,9 +67,9 @@ public class TestP3sLogin {
     	//Logout function check
     	logoutFnCheck();
     	
-    }
+    }*/
     
-    //@Test
+    @Test(priority = 1)
     private void loginCorrectCredentials(){
     	
     	//stackoverflow suggestion starts
@@ -101,7 +99,7 @@ public class TestP3sLogin {
         
     }
     
-    //@Test
+    @Test(priority = 0)
     private void loginIncorrectCredentials(){
     	driver.get(baseUrl);
 
@@ -136,14 +134,17 @@ public class TestP3sLogin {
         }
     }
 
-    //@Test
+    //@Test(dependsOnMethods = { "loginCorrectCredentials" })
+    @Test(priority=2)
     private void logoutFnCheck(){
     	
     	
     	driver.findElement(By.name("logoutLink")).click();
-    	URL = driver.getCurrentUrl();
+    	//WebDriverWait wait = new WebDriverWait(driver, 30);
+    	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     	 try {
              
+    		 URL = driver.getCurrentUrl();
              //Logout function check
              Assert.assertEquals(URL, baseUrl);
              

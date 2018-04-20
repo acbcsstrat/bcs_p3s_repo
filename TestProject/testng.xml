@@ -6,8 +6,14 @@
       <listener class-name = "com.bcs.p3s.Listener.CustomListener" />
    </listeners>
   <test thread-count="5" name="Test" verbose="10">
-    <classes>
-      <class name="com.bcs.p3s.automationtest.TestP3sLogin"/>
-    </classes>
+	    <classes>
+		    <class name="com.bcs.p3s.automationtest.TestP3sLogin">
+			     <methods>
+						<include name="loginIncorrectCredentials" />
+						<include name="loginCorrectCredentials" />
+						<include name="logoutFnCheck" />
+				</methods>
+		    </class>
+	    </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
