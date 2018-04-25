@@ -28,44 +28,44 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 	                y: function(d){
 	                	return d.y;
 	                },
+					duration: 500,
 	                showLabels: false,
 	                pie: {
-	                  dispatch: {
-	                    elementClick: function(e) {
+	                  	dispatch: {
+		                    elementClick: function(e) {
 
-							var key = e.data.key;
+								var key = e.data.key;
 
-							$timeout(function(){ //timeout needed to reset carousel content. Colour key emit however is not encapsulated within a timeout method
-								$scope.$emit('phaseChange', {phase: key})
-							}, 10)
+								$timeout(function(){ //timeout needed to reset carousel content. Colour key emit however is not encapsulated within a timeout method
+									$scope.$emit('phaseChange', {phase: key})
+								}, 10)
 
-							selectPhaseService.setPhase(key, vm.patentData);
+								selectPhaseService.setPhase(key, vm.patentData);
 
-	                      	switch(key) {
-		                      	case 'green':
-		                      		$scope.activeTab = 0;
-		                      	break;
-		                      	case 'amber':
-		                      		$scope.activeTab = 1;
-		                      	break;
-		                      	case 'red':
-		                      		$scope.activeTab = 2;
-		                      	break;
-		                      	case 'blue':
-		                      		$scope.activeTab = 3;
-		                      	break;
-		                      	case 'black':
-		                      		$scope.activeTab = 4;
-		                      	break;
-		                      	case 'grey':
-		                      		$scope.activeTab = 5;                      	  	                      	              		                      		                      	
-	                      	}
-	                    }
+		                      	switch(key) {
+			                      	case 'green':
+			                      		$scope.activeTab = 0;
+			                      	break;
+			                      	case 'amber':
+			                      		$scope.activeTab = 1;
+			                      	break;
+			                      	case 'red':
+			                      		$scope.activeTab = 2;
+			                      	break;
+			                      	case 'blue':
+			                      		$scope.activeTab = 3;
+			                      	break;
+			                      	case 'black':
+			                      		$scope.activeTab = 4;
+			                      	break;
+			                      	case 'grey':
+			                      		$scope.activeTab = 5;                      	  	                      	              		                      		                      	
+		                      	}
+	                    	}
+	                	},
+	                    startAngle: function(d) { return d.startAngle -Math.PI },
+	                    endAngle: function(d) { return d.endAngle -Math.PI }
 	                },
-                    startAngle: function(d) { return d.startAngle -Math.PI },
-                    endAngle: function(d) { return d.endAngle -Math.PI }
-	                },
-	                duration: 500,
 	                growOnHover: true,
 	                showLegend: false,
 	                valueFormat: function(d) {
