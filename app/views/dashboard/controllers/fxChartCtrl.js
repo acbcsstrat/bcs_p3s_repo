@@ -19,6 +19,7 @@ function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMont
                     bottom: 55,
                     left: 55
                 },
+                clipEdge: false,
                 tooltip: {
                   hideDelay: 0
                 },                      
