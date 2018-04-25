@@ -71,6 +71,7 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $scope, $state, $timeout, 
                 bottom: 70,
                 left: 80
             },
+            clipEdge: false,
             duration: 500,
             tooltip: {
               hideDelay: 0
@@ -82,7 +83,6 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $scope, $state, $timeout, 
             y: function(d){
             	return d[1]
             },
-            clipEdge: false,
             useInteractiveGuideline: true,
             xAxis: {
                 tickFormat: function (d, i) {
@@ -107,9 +107,9 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $scope, $state, $timeout, 
             useVoronoi: false,
             lines: {
                 interactive: true
-            }
-            // showXAxis: true,
-            // showYAxis: true
+            },
+            showXAxis: true,
+            showYAxis: true
         }
     }
 
