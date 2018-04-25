@@ -35,6 +35,13 @@ function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
 
 	function sortType(column) {
 
+		vm.sortTransCost = false;
+		vm.sortPatentApplicationNumber = false;
+		vm.sortClientRef = false;
+		vm.sortTransDate = false;
+		vm.sortTransItems = false;
+		vm.selectedSortType = column;  				
+
 		switch(column) {
 			case 'transStartDate':
 
@@ -79,7 +86,7 @@ function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
 					arrayOrder.sort();
 
 					arrayOrder.forEach(function(key){
-						// console.log(key)
+
 						var found = false;
 
 						vm.tableData = vm.tableData.filter(function(item){
@@ -101,7 +108,7 @@ function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
 					vm.tableData = result;
 
 				})
-			
+
 			break;
 			case 'patentApplicationNumber':
 
@@ -180,22 +187,12 @@ function transactionHistoryCtrl($rootScope, $timeout, transactionHistory) {
 						if(vm.sortReverse === true) {
 	   					vm.tableData.sort(function(a, b){
 	   						var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
-	   						console.log(renewalsA - renewalsB)
 	   						return renewalsB - renewalsA;
 	   					});
 						}
 					}
 
-				}());
-			
-			default:
-
-				vm.sortTransCost = false;
-				vm.sortPatentApplicationNumber = false;
-				vm.sortClientRef = false;
-				vm.sortTransDate = false;
-				vm.sortTransItems = false;
-				vm.selectedSortType = column;  		   				
+				}());   				
 			
 		} //switch end
 
