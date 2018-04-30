@@ -13,7 +13,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	fetchPatents();
 	displayMessages();
 
-
 	$scope.$on('IdleStart', function() {
 		
 	  	closeModals();
@@ -35,17 +34,17 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	    userTimedOut = true;  
 
 	    if (userTimedOut) {
-	      ngCart.empty()
+	     	ngCart.empty();
 	    	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
 	      	.then(
 	      		function(response){
 	      		  window.location.reload('http://localhost:8080/p3sweb/login');
 	      		},
-	          function(errResponse) {
-	            console.log(errResponse)
-	          }    
-	    		)    	
-	      }
+	          	function(errResponse) {
+	            	console.log(errResponse)
+	          	}    
+    		)    	
+      	}
 
 	});
 
@@ -64,6 +63,19 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 		)
 
 	}
+
+	function welcomeMessageModal() {
+		var modalInstance = $uibModal.open({
+			templateUrl: 'p3sweb/app/views/app/views/modals/welcome-message-modal.htm',
+			scope: $scope,
+			controller: function($uibModalInstance) {
+
+		 	  	$scope.dismissWelcomeModal = function () {
+			    	$uibModalInstance.close();
+			  	};
+			}
+		});
+ 	} //function systemMessageModal	
 
 	function displayMessages() {
 
@@ -100,6 +112,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 			$timeout(function() {
 
 			 	if(patentsFound === false) {
+			 		console.log('hello')
 			 		welcomeMessageModal();
 				}
 
@@ -121,22 +134,9 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	    }
 	}
 
-	function welcomeMessageModal() {
-		var modalInstance = $uibModal.open({
-			templateUrl: 'p3sweb/app/components/app/views/modals/welcome-message-modal.htm',
-			scope: $scope,
-			controller: function($uibModalInstance) {
-
-		 	  	$scope.dismissWelcomeModal = function () {
-			    	$uibModalInstance.close();
-			  	};
-			}
-		});
- 	} //function systemMessageModal
-
 	function urgentPatentModal(response) {
 		var modalInstance = $uibModal.open({
-			templateUrl: 'p3sweb/app/components/app/views/modals/urgent-message-modal.htm',
+			templateUrl: 'p3sweb/app/views/app/views/modals/urgent-message-modal.htm',
 			scope: $scope,
 			controller: function($uibModalInstance, message) {
 

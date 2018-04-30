@@ -68,9 +68,7 @@ function listPatentsCtrl($scope, $timeout, $http, $rootScope,  $state, $anchorSc
 				function(response) {
 
 					response.forEach(function(data) {
-
 						const transId = data.id;
-						
 						data.renewalUIs.forEach(function(data, i) {
 							if(data.patentUI.id == id) {
 								$state.go('current-transactions.current-transaction-item',{transId: transId})
@@ -113,7 +111,6 @@ function listPatentsCtrl($scope, $timeout, $http, $rootScope,  $state, $anchorSc
 
 	   				if (vm.sortReverse === false) {
 	   					vm.tableData.sort(function(a, b){
-	   						// console.log(new Date(a.renewalDueDate).getUTCFullYear())
 	   						var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
 	   						return dateB - dateA;
 	   					});

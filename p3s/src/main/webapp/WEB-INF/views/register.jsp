@@ -134,7 +134,7 @@
 											<div class="row m-t-xs">
 												<div class="col-md-12 col-lg-12 col-xl-12">
 													<div class="onoffswitch d-flex align-items-center justify-content-between">
-														<span class="font-body font-weight-medium m-r-sm">Same as business address?</span>
+														<span class="font-body font-weight-medium m-r-sm">Billing same as business address?</span>
 														<label class="switch font-body">
 													  		<input type="checkbox" name="same_as_business" id="same_as_business">
 													  		<span class="slider round"></span>

@@ -43,6 +43,14 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 
    	function sortType(column) {
 
+
+		vm.sortTransCost = false;
+		vm.sortPatentApplicationNumber = false;
+		vm.sortClientRef = false;
+		vm.sortTransDate = false;
+		vm.sortTransItems = false;
+		vm.selectedSortType = column;  
+
    		switch(column) {
    			case 'transStartDate':
 
@@ -190,15 +198,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 	   					}
 	   				}
    				}());
-   			
-   			default:
-
-	   			vm.sortTransCost = false;
-	   			vm.sortPatentApplicationNumber = false;
-	   			vm.sortClientRef = false;
-	   			vm.sortTransDate = false;
-	   			vm.sortTransItems = false;
-   				vm.selectedSortType = column;  		   				
+   			break;		   				
    			
    		}
 

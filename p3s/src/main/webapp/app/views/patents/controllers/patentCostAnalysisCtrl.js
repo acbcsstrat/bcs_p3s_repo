@@ -1,16 +1,18 @@
 angular.module('ppApp').controller('patentCostAnalysisCtrl', patentCostAnalysisCtrl);
 
-patentCostAnalysisCtrl.$inject = ['patent', 'costAnalysis', '$timeout', '$rootScope']
+patentCostAnalysisCtrl.$inject = ['patent', 'costAnalysis', '$scope', '$state', '$timeout', '$rootScope', '$location', '$anchorScroll',  'currentTransactionsService']
 
-function patentCostAnalysisCtrl(patent, costAnalysis, $timeout, $rootScope) {
+function patentCostAnalysisCtrl(patent, costAnalysis, $scope, $state, $timeout, $rootScope, $location, $anchorScroll, currentTransactionsService) {
 
 	var vm = this;
 
+	var lineChart = costAnalysis.lineChart;
 	var costAnalysisFee = costAnalysis.fee;
 	vm.chartActive = 'Stage Cost Chart';
 	vm.patent  = patent;
 	vm.fetchItemTransaction = fetchItemTransaction;
 	vm.fetchItemRenewal = fetchItemRenewal;
+	vm.loadChart = loadChart;
 
 	if(costAnalysisFee) {
 
@@ -24,6 +26,7 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $timeout, $rootScope) {
 			expressFeeUSD: costAnalysisFee.expressFeeUSD,
 			expressFeeEUR: costAnalysisFee.expressFeeEUR,
 			urgentFeeUSD: costAnalysisFee.urgentFeeUSD,
+			urgentFeeEUR: costAnalysisFee.urgentFeeEUR,			
 			latePayPenaltyUSD: costAnalysisFee.latePayPenaltyUSD,
 			fxRate: costAnalysisFee.fxRate,
 			subTotalEUR: costAnalysisFee.subTotalEUR,
@@ -55,259 +58,173 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $timeout, $rootScope) {
 				return item;
 			}
 		};
-
 	}
 
-	Chart.elements.Rectangle.prototype.draw = function() {
-		    
-	    var ctx = this._chart.ctx;
-	    var vm = this._view;
-	    var left, right, top, bottom, signX, signY, borderSkipped, radius, width, nextCornerId, height, x, y, nextCorner;
-	    var borderWidth = vm.borderWidth;
-	    // Set Radius Here
-	    // If radius is large enough to cause drawing errors a max radius is imposed
-	    var cornerRadius = 40;
+	vm.lineData = lineData;
+    vm.lineOptions = {
+        chart: {
+            type: 'lineChart',
+            height: 350,
+            margin : {
+            	top: 20,
+                right: 50,
+                bottom: 70,
+                left: 80
+            },
+            clipEdge: false,
+            duration: 500,
+            tooltip: {
+              hideDelay: 0
+            },                      
+            showLegend: false,
+            x: function(d, i){ 
+            	return d[0]
+            },
+            y: function(d){
+            	return d[1]
+            },
+            useInteractiveGuideline: true,
+            xAxis: {
+                tickFormat: function (d, i) {
+                    return d3.time.format('%x')(new Date(d));
+                },
+                showMaxMin: false,
+                rotateLabels: -30,
+                tickPadding: 20                
+            },
+            yAxis: {
+                tickFormat: function(d){
+                    return '$ ' + d3.format('.00f')(d);
+                },
+                showMaxMin: false,
+                tickPadding: 20
+            },
+            tooltip: {
+                keyFormatter: function(d) {
+                    return d3.time.format('%x')(new Date(d));
+                }
+            },
+            useVoronoi: false,
+            lines: {
+                interactive: true
+            },
+            showXAxis: true,
+            showYAxis: true
+        }
+    }
 
-	    vm.height = 25;
+	vm.barData = barData;
+    vm.barOptions = {
+		chart: {
+            type: 'multiBarHorizontalChart',
+            height: 350,
+            margin : {
+                top: 20,
+                right: 50,
+                bottom: 70,
+                left: 90
+            },
+            duration: 500,
+            tooltip: {
+              hideDelay: 0
+            },
+         	barColor: ["#3c3c3b", "#0097ce", "#e30613", "#f9b233", "#53ab58"],     
+            x: function(d){
+            	return d[0];
+            },
+            y: function(d){
+              	return d[1];
+            },
+            showControls: false,
+            showValues: true,
+            showLegend: false,
+            stacked: true,
+            duration: 500,
+            multibar: {
+              groupSpacing: 0.4
+            },            
+            xAxis: {
+                showMaxMin: false,
+                tickFormat: function (d, i) {
+                	return d3.time.format('%x')(new Date(d));
+                    
+                },
+                tickPadding: 20      
+            },
+            yAxis: {
+                tickFormat: function(d){
+                    return '$ ' + d3.format('.02f')(d);
+                },
+                showMaxMin: false,
+                tickPadding: 20
+            },
+            callback: function(d, e) {
+            	d3.selectAll('.nvd3 .nv-bar rect').attr("rx", 15);
+            }
+        }    	
 
-	    if (!vm.horizontal) {
-	        // bar
-	        left = vm.x - vm.width / 2;
-	        right = vm.x + vm.width / 2;
-	        top = vm.y;
-	        bottom = vm.base;
-	        signX = 1;
-	        signY = bottom > top? 1: -1;
-	        borderSkipped = vm.borderSkipped || 'bottom';
-	    } else {
-	        // horizontal bar
-	        left = 0;
-	        right = vm.x;
-	        top = vm.y - vm.height / 2;
-	        bottom = vm.y + vm.height / 2;
-	        signX = right > left? 1: -1;
-	        signY = 1;
-	        borderSkipped = vm.borderSkipped || 'left';
-	    }
+    }
 
-	    // Canvas doesn't allow us to stroke inside the width so we can
-	    // adjust the sizes to fit if we're setting a stroke on the line
-	    if (borderWidth) {
-	        // borderWidth shold be less than bar width and bar height.
-	        var barSize = Math.min(Math.abs(left - right), Math.abs(top - bottom));
-	        borderWidth = borderWidth > barSize? barSize: borderWidth;
-	        var halfStroke = borderWidth / 2;
-	        // Adjust borderWidth when bar top position is near vm.base(zero).
-	        var borderLeft = left + (borderSkipped !== 'left'? halfStroke * signX: 0);
-	        var borderRight = right + (borderSkipped !== 'right'? -halfStroke * signX: 0);
-	        var borderTop = top + (borderSkipped !== 'top'? halfStroke * signY: 0);
-	        var borderBottom = bottom + (borderSkipped !== 'bottom'? -halfStroke * signY: 0);
-	        // not become a vertical line?
-	        if (borderLeft !== borderRight) {
-	            top = borderTop;
-	            bottom = borderBottom;
-	        }
-	        // not become a horizontal line?
-	        if (borderTop !== borderBottom) {
-	            left = borderLeft;
-	            right = borderRight;
-	        }
-	    }
+	function barData() {
 
-	    ctx.beginPath();
-	    ctx.fillStyle = vm.backgroundColor;
-	    ctx.strokeStyle = vm.borderColor;
-	    ctx.lineWidth = borderWidth;
+		var barChartArr = [], label = [], data = [];
 
-	    // Corner points, from bottom-left to bottom-right clockwise
-	    // | 1 2 |
-	    // | 0 3 |
-	    var corners = [
-	        [left, bottom],
-	        [left, top],
-	        [right, top],
-	        [right, bottom]
-	    ];
-
-	    // Find first (starting) corner with fallback to 'bottom'
-	    var borders = ['bottom', 'left', 'top', 'right'];
-	    var startCorner = borders.indexOf(borderSkipped, 0);
-	    if (startCorner === -1) {
-	        startCorner = 0;
-	    }
-
-	    function cornerAt(index) {
-	        return corners[(startCorner + index) % 4];
-	    }
-
-	    // Draw rectangle from 'startCorner'
-	    var corner = cornerAt(0);
-	    ctx.moveTo(corner[0], corner[1]);
-
-	    for (var i = 1; i < 4; i++) {
-	        corner = cornerAt(i);
-	        nextCornerId = i+1;
-	        if(nextCornerId == 4){
-	            nextCornerId = 0;
-	        }
-
-	        nextCorner = cornerAt(nextCornerId);
-
-	        width = corners[2][0] - corners[1][0];
-	        height = corners[0][1] - corners[1][1];
-	        x = corners[1][0];
-	        y = corners[1][1];
-	        
-	        radius = cornerRadius;
-	        
-	        // Fix radius being too large
-	        if(radius > height/2){
-	            radius = height/2;
-	        }if(radius > width/2){
-	            radius = width/2;
-	        }
-
-	        ctx.moveTo(x + radius, y);
-	        ctx.lineTo(x + width - radius, y);
-	        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-	        ctx.lineTo(x + width, y + height - radius);
-	        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-	        ctx.lineTo(x + radius, y + height);
-	        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-	        ctx.lineTo(x, y + radius);
-	        ctx.quadraticCurveTo(x, y, x + radius, y);
-
-	    }
-
-	    ctx.fill();
-	    if (borderWidth) {
-	        ctx.stroke();
-	    }
-	
-	}
-
-	var lineChart = costAnalysis.lineChart
-	var lineDataArr = [];
-	var lineLabelArr = [];
-
-
-	for (var property in lineChart) { //change lineChart
-	    if (lineChart.hasOwnProperty(property)) {
-			const dayData = lineChart[property];
-			lineLabelArr.push(dayData.feeActiveDate.slice(0, -5));
-			lineDataArr.push(dayData.subTotal_USD);
-	    }
-	}
-
-	const barDataArr = [];
-	const barLabelArr = [];
-
-	for (var property in costAnalysis) {
-	    if (costAnalysis.hasOwnProperty(property)) {
-
-			const dyData = costAnalysis[property];
-		
-			if ((property.includes('StartDate')) && (!property.includes ('UI'))) {
-
-					var d = new Date(dyData);
-					var date = d.getDate();
-					var month = d.getMonth() + 1;
-					var year = d.getFullYear();
-					var dates = month  +'/'+ date +'/'+year;
-					barLabelArr.push(dates);
-			}
-
-			if (property.includes('StageCost')) {
-				barDataArr.push(dyData);
-			}
-	    }
-	}
-
-	vm.charts = {
-		line: {
-			data: lineDataArr,
-			labels: lineLabelArr,
- 		  	series: ['Series A', 'Series B'],
-		  	datasetoverride: [
-		  		{ yAxisID: 'y-axis-1' }, 
-		  		{ yAxisID: 'y-axis-2' },
-	  		],
-		  	options: {
-		  		tooltips: {
-					titleFontSize: 12,
-					bodyFontSize: 14,
-					bodyFontStyle: 'bold',
-					xPadding: 15,
-					yPadding: 15,
-					enabled: true,
-					position: 'nearest',
-					custom: function(tooltip) {
-						tooltip.displayColors = false;
-					},
-					callbacks: {
-						label: function(x, y) {
-							return '$ ' + x.yLabel;
-						},
-						title: function(tooltipItem, data) {
-				          return;
-				        }
-					}
-				},
-		    	scales: {
-		      		yAxes: [
-			        	{
-				          id: 'y-axis-1',
-				          type: 'linear',
-				          display: true,
-				          position: 'left'
-				        }
-			      	]
-			    },
-	     		elements: {
-		            line: {
-		            	borderColor: '#c6c6c6',
-		            	borderWidth: 2,
-		            	width: '10',
-		            	fill: null,
-		                tension: 0, // disables bezier curves
-		                pointStyle: 'cross'
-		            }
-		        }
-
-		  	}
-		},
-		bar: {
-			colours: ['#3c3c3b','#0097ce', '#e30613', '#f9b233','#53ab58'],
-		  	labels: barLabelArr.slice(0, 5).sort(function(a, b){return b-a;}),
-		  	data: barDataArr.slice(0, 5).sort(function(a, b){return b-a;}),
-			series: ['Series A', 'Series B'],
-			options: {
-				tooltips: {
-					titleFontSize: 12,
-					bodyFontSize: 14,
-					bodyFontStyle: 'bold',
-					xPadding: 15,
-					yPadding: 15,
-					enabled: true,
-					position: 'nearest',
-					custom: function(tooltip) {
-						tooltip.displayColors = false;
-					},
-					callbacks: {
-						label: function(x, y) {
-							return '$ ' + x.xLabel;
-						},
-						title: function(tooltipItem, data) {
-				          return;
-				        }
-					}
-				},
-                scaleShowGridLines: false,
-	            barShowStroke : false,
-	            barDatasetSpacing : 0
-		  	}
+		for (var property in costAnalysis) {
+		    if (costAnalysis.hasOwnProperty(property)) {
+		    	var dayData = costAnalysis[property];		
+				if((property.includes('StartDate')) && (!property.includes ('UI'))) {
+					label.push(dayData);
+				}
+				if(property.includes('StageCost')) {
+					data.push(dayData);
+				}
+		    }
 		}
-	}; //charts end
+
+		for (var i = 0; label.length && i < data.length; i++) {
+			barChartArr[i] = [label[i], data[i]]; //pairs the items from two arrays into a single array in the new array
+		}
+
+		barChartArr.reverse();
+
+		return [
+			{
+				'key': 'Cost',
+				'values': barChartArr
+			}
+		]
+
+	}
+
+	function lineData() {
+
+		var lineDataArr = [];
+
+		for (var property in lineChart) { //change lineChart
+		    if (lineChart.hasOwnProperty(property)) {
+				const dayData = lineChart[property];
+				var d = (dayData.feeActiveDate.split('/'))
+				var date = new Date(d[2], d[1] -1, d[0]).getTime();
+				lineDataArr.push([date, dayData.subTotal_USD]);
+		    }
+		}
+
+		return [
+			{
+                values: lineDataArr,
+                color: '#2ca02c'
+			}
+		]
+
+	}
+
+	function loadChart() {
+		$timeout(function(){
+			window.dispatchEvent(new Event('resize'));
+		}, 20)
+	}
+
+	$scope.$on('loadChart', loadChart);
 
 	function fetchItemRenewal() {
 		$rootScope.$broadcast("renewalHistory"); //REVISE TO SEE IF MORE EFFICIENT WAY
