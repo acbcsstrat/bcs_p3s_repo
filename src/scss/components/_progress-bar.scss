@@ -1,0 +1,29 @@
+.bg-phase-amber {
+	.progress-bar { 
+		background: #53ab58; 
+	} 
+}
+
+.bg-phase-red {
+	.progress-bar { 
+		background: #f9b233; 
+	}
+} 
+.bg-phase-blue {
+	.progress-bar { 
+		background: #e30613; 
+	}
+}
+.bg-phase-black {
+	.progress-bar { 
+		background: #0097ce; 
+	}
+}
+.bg-phase-white {
+	.progress-bar { 
+		background: #000; 
+	}
+}
+
+.progress-phase__progress-15 { min-width: 15%; }
+.progress-phase__progress-10 { min-width: 10%; }

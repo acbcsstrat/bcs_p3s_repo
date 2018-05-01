@@ -1,0 +1,88 @@
+.switch { /*modules*/ /*components*/ /*_form.scss*/
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+}
+
+/* Hide default HTML checkbox */
+.switch input { display:none; } /*modules*/ /*components*/ /*_form.scss*/
+
+/* The slider */
+.slider { /*modules*/ /*components*/ /*_form.scss*/
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider {
+  &:before { /*modules*/ /*components*/ /*_form.scss*/
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+}
+
+input:checked + .slider, input:checked + .slider.bg-phase-green { /*modules*/ /*components*/ /*_form.scss*/
+  background-color: $green;
+}
+
+input:checked + .slider.bg-phase-amber { /*modules*/ /*components*/ /*_form.scss*/
+  background-color: $amber;
+}
+
+input:checked + .slider.bg-phase-red { /*modules*/ /*components*/ /*_form.scss*/
+  background-color: $red;
+}
+
+input:checked + .slider.bg-phase-blue { /*modules*/ /*components*/ /*_form.scss*/
+  background-color: $blue;
+}
+
+input:checked + .slider.bg-phase-black { /*modules*/ /*components*/ /*_form.scss*/
+  background-color: $black;
+}
+
+input:focus + .slider { /*modules*/ /*components*/ /*_form.scss*/
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input {
+  &:checked {
+    + .slider:before { /*modules*/ /*components*/ /*_form.scss*/
+      -webkit-transform: translateX(13px);
+      -ms-transform: translateX(13px);
+      transform: translateX(13px);
+    }
+  }
+}
+
+.slider.round { border-radius: 34px; } /*modules*/ /*components*/ /*_form.scss*/
+
+.slider.round {
+  &:before { 
+    border-radius: 50%; 
+  } /*modules*/ /*components*/ /*_form.scss*/
+}
+
+.form-inline .input-h100, .form .input-h100 { height: 100%; } /*modules*/ /*components*/ /*_form.scss*/
+
+.form-section { /*modules*/ /*components*/ /*_form.scss*/
+  display: none;
+}
+
+.form-section.current { /*modules*/ /*components*/ /*_form.scss*/
+  display: inherit;
+}

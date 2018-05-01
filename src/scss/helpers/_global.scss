@@ -1,0 +1,101 @@
+.m-b-xs { margin-bottom: .75rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-b-sm { margin-bottom: 1.5rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-b-md { margin-bottom: 2.25rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-b-lg { margin-bottom: 3rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-b-xl { margin-bottom: 3.75rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+
+.m-t-xs { margin-top: .75rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-t-sm { margin-top: 1.5rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-t-md { margin-top: 2.25rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-t-lg { margin-top: 3rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-t-xl { margin-top: 3.75rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+
+.m-tb-xl { margin-top: 3.75rem; margin-bottom: 3.75rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+
+.m-r-xs { margin-right: .75rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-r-sm { margin-right: 1.5rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-r-md { margin-right: 2.25rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-r-lg { margin-right: 3rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+
+.m-l-xs { margin-left: .75rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-l-sm { margin-left: 1.5rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-l-md { margin-left: 2.25rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-l-lg { margin-left: 3rem; }   /*modules*/ /*components*/ /*_spacing.scss*/
+
+.m-none { margin: 0!important; } /*modules*/ /*components*/ /*_spacing.scss*/
+.m-b-none { margin-bottom: 0; } /*modules*/ /*components*/ /*_spacing.scss*/
+
+.p-tb-sm { padding-top: 1.5rem; padding-bottom: 1.5rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.p-b-sm { padding-bottom: 1.5rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+.p-tb-35 { padding-top: 3.5rem; padding-bottom: 3.5rem } /*modules*/ /*components*/ /*_spacing.scss*/
+
+.p-a-sm { padding: 1.5rem; } /*modules*/ /*components*/ /*_spacing.scss*/
+
+.p-none { padding: 0; } /*modules*/ /*components*/ /*_spacing.scss*/
+.p-r-none { padding-right: 0; }
+.p-b-none { padding-bottom: 0; }
+.p-t-none { padding-top: 0; }
+.p-l-none { padding-left: 0; } /*modules*/ /*components*/ /*_spacing.scss*/
+
+.green-notification { border: 2px solid #53ab58; } /*modules*/ /*components*/ /*_borders.scss*/
+.amber-notification { border: 2px solid #f9b233; } /*modules*/ /*components*/ /*_borders.scss*/
+.red-notification { border: 2px solid #e30613; } /*modules*/ /*components*/ /*_borders.scss*/
+.blue-notification { border: 2px solid #0097ce; } /*modules*/ /*components*/ /*_borders.scss*/
+.black-notification { border: 2px solid #3c3c3b; } /*modules*/ /*components*/ /*_borders.scss*/
+
+a.cursor-pointer, 
+button.cursor-pointer, 
+input.cursor-pointer,
+span.cursor-pointer { cursor: pointer } /*modules*/ /*components*/ /*_cursor.scss*/
+div.cursor-help { cursor: help; } /*modules*/ /*components*/ /*_cursor.scss*/
+
+.nowrap { white-space: nowrap; } /*modules*/ /*components*/ /*_global.scss*/
+
+.pill-radius { border-radius: 2.5rem; } /*modules*/ /*components*/ /*_global.scss*/
+
+.pill-radius-textarea { border-radius: 1.5rem; } /*modules*/ /*components*/ /*_global.scss*/
+
+.ul-bullet-free { list-style-type: none; padding: 0; }/*modules*/ /*components*/ /*_global.scss*/
+
+.border-none { border: none; } /*modules*/ /*components*/ /*_global.scss*/
+
+.inline-link:hover { text-decoration: underline; } /* modules*/ /*components*/ /*_global.scss*/
+
+.fade.in { opacity: 1; }
+
+.point-reg { 
+  background: #DDD;
+  border-radius: 2px;
+  display: inline-block;
+  height: 10px;
+  margin-right: 2px;
+  width: 23.2%;
+}
+
+.first { /* modules*/ /*components*/ /*_js.scss*/
+  background-color: #e30613;
+}
+
+.second { /* modules*/ /*components*/ /*_js.scss*/
+  background-color: #f9b233;
+}
+
+.third { /* modules*/ /*components*/ /*_js.scss*/
+  background-color: #53ab58;
+}
+
+.fourth { /* modules*/ /*components*/ /*_js.scss*/
+  background-color: #418746;
+}
+
+.point { /* modules*/ /*components*/ /*_js.scss*/
+    background:#DDD;
+    border-radius:2px;
+    display:inline-block;
+    height:10px;
+    margin-right:2px;
+    width: 19.2%;
+}
+
+.point:last,
+.point-reg:last { margin:0 !important; } /* modules*/ /*components*/ /*_js.scss*/
