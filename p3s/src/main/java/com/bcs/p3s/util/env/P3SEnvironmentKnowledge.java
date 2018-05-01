@@ -56,7 +56,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// trying to commit this fix !
 		}
 		if ("avid-ox790-013".equals(host)) {
-			path = "C:/MERIN/Documents/PatentPlace/P3S local repo/bcs_p3s_repo_final_final/p3s/src/main/resources/META-INF/spring/";
+			path = "C:/MERIN/Documents/PatentPlace/P3S local repo/bcs_p3s_repo_18042018_0931/p3s/src/main/resources/META-INF/spring/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
 			// Original: path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
@@ -121,7 +121,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/";
 		}
 		if ("avid-ox790-013".equals(host)) {
-			path = "C:/MERIN/Documents/PatentPlace/P3S local repo/bcs_p3s_repo_final_final/p3s/src/main/resources/";
+			path = "C:/MERIN/Documents/PatentPlace/P3S local repo/bcs_p3s_repo_18042018_0931/p3s/src/main/resources/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
 			//path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
