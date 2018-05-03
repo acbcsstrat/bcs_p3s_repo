@@ -7,56 +7,48 @@
 
 /*modules*/ /*components*/ /*_tables.scss*/ //CHANGE CLASSES USED IN VIEWS
 %border-style { border-style: solid; border-color: #f5f5f5;}
+%border { border-width: 1px 1px 1px 1px; }
+%border-nr { border-width: 1px 0px 1px 1px; }
+%border-nb { border-width: 1px 1px 0px 1px; }
+%border-nt { border-width: 0px 1px 1px 1px; }
+%no-border-er { border-width: 0px 1px 0px 0px; }
+%no-border-eb { border-width: 0px 0px 1px 0px; }
+%no-border { border-width: 0px 0px 0px 0px!important; border: 0px;}
 
-@extend %t-data--border; 
-@extend %t-data--tr-border; 
-@extend %t-list--border; 
-@extend %t-list--tr-border; 
-@extend %t-data--border-nr; 
-@extend %t-data--tr-border-nr; 
-@extend %t-list--border-nr; 
-@extend %t-list--tr-border-nr; 
-@extend %t-data--border-nb; 
-@extend %t-data--tr-border-nb; 
-@extend %t-list--border-nb; 
-@extend %t-list--tr-border-nb; 
-@extend %t-data--border-nt; 
-@extend %t-data--tr-border-nt; 
-@extend %t-list--border-nt; 
-@extend %t-list--tr-border-nt;
-@extend %t-data .no-border-er; 
-@extend %t-data--tr-border-er; 
-@extend %t-list--border-er; 
-@extend %t-list--tr-border-er; 
-@extend %t-data--no-border-eb;
-@extend %t-list--no-border-eb; 
-@extend %t-list--no-border-er;
-@extend %t-data--no-border-er;
+.t-data--border {
+  @extend %border;
+}
 
-.t-data--border { border-width: 1px 1px 1px 1px; }
+.t-data--border-nr {
+  @extend %border-nr;
+} 
 
-.t-data--border-nr,
-.t-data--tr-border-nr { border-width: 1px 0px 1px 1px; }
+.t-data--border-nb {
+  @extend %border-nb;
+}
 
-.t-data--border-nb,
-.t-data--tr-border-nb { border-width: 1px 1px 0px 1px; }
+.t-data--border-nt {
+  @extend %border-nt;
+}
 
-.t-data--border-nt,
-.t-data--tr-border-nt { border-width: 0px 1px 1px 1px; }
+.t-data--no-border-er {
+  @extend %no-border-er;
+}
 
-.t-data--no-border-er { border-width: 0px 1px 0px 0px; }
+.t-data--no-border-eb {
+  @extend %no-border-eb;
+}
 
-.t-data--no-border-eb, 
-.t-data--no-border-eb { border-width: 0px 0px 1px 0px; }
-
-.t-data--no-border { border-width: 0px 0px 0px 0px!important; border: 0px;}
+.t-data--no-border-er{
+  @extend %no-border-er;
+}
 
 .t-data .td-20 { width: 20%; }
 .t-data .td-30 { width: 30%; }
 .t-data .td-40 { width: 40%; }
 .t-data .td-50 { width: 50%; }
 
-.t-data .td-ellipsis {
+.t-data__ellipsis { //td-ellipsis
     max-width: 30rem;
     overflow: hidden;
     text-overflow: ellipsis;
