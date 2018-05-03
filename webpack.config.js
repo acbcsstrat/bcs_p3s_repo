@@ -7,17 +7,21 @@ const webpack = require('webpack');
 
 module.exports = {
 	mode: 'production',
-	context: path.resolve(__dirname, './.'),
+	// context: path.resolve(__dirname, './.'),
 	entry: {
-		app: [
-			'./src/scss/main.scss',
-			'./src/js/index.js'
-		],
-		vendor: './src/js/vendor.js'
+		vendor: './src/js/vendor.js',		
+		app: './src/js/index.js',
+		style: './src/scss/main.scss'
 	},
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: '[name].bundle.js'
+	},
+	resolve: {
+		alias: {
+			localScripts: path.resolve(__dirname, 'assets'),
+			app: path.resolve(__dirname, 'app'),
+		}	
 	},
 	module: {
 		rules: [
@@ -66,6 +70,7 @@ module.exports = {
      	hot: true
    	},	
 	plugins: [
+		new webpack.ContextReplacementPlugin(/\.\/locale$/, 'empty-module', false, /js$/), //needed for bug in moment
 		new ExtractTextPlugin({
 			filename: 'main.css'
 		}),
@@ -75,6 +80,7 @@ module.exports = {
 	  	}),
 	  	new CleanWebpackPlugin(['dist']),
 	  	new HtmlWebpackPlugin({
+	  		inject: false,
 	  		title: 'Testing',
 	  		template: 'index.htm'
 
