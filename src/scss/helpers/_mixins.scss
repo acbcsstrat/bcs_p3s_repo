@@ -23,34 +23,34 @@
 }
 
 @mixin padding($t: 0, $r: 0, $b: 0, $l: 0) {
-	@if length($list) == 2 {
-		padding: $t + 'rem' $r + 'rem';
-	} @else { 
-		padding-top: $t + 'rem';
-		padding-right: $r + 'rem';
-		padding-bottom: $b + 'rem';
-		padding-left: $l + 'rem';
-	}	
+	// @if length($list) == 2 {
+	// 	padding: $t + 'rem' $r + 'rem';
+	// } @else { 
+	// 	padding-top: $t + 'rem';
+	// 	padding-right: $r + 'rem';
+	// 	padding-bottom: $b + 'rem';
+	// 	padding-left: $l + 'rem';
+	// }	
 }
 
 @mixin margin($t: 0, $r: 0, $b: 0, $l: 0) {
-	@if length($list) == 2 {
-		margin: $t + 'rem ' $r + 'rem';
-	} @else {
-		margin-top: $t + 'rem';
-		margin-right: $r + 'rem';
-		margin-bottom: $b + 'rem';
-		margin-left: $l + 'rem';
-	}
+	// @if length($list) == 2 {
+	// 	margin: $t + 'rem ' $r + 'rem';
+	// } @else {
+	// 	margin-top: $t + 'rem';
+	// 	margin-right: $r + 'rem';
+	// 	margin-bottom: $b + 'rem';
+	// 	margin-left: $l + 'rem';
+	// }
 }
 
 
 @mixin border($t: 0, $r: 0, $b: 0, $l: 0) {
-	@if length($list) == 2 {
-		margin: $t + 'rem' $r + 'rem';
-	} @else {
-		margin: $t: +'rem ' + $r +'rem ' + $b +'rem ' +  $l+'rem ';
-	}
+	// @if length($list) == 2 {
+	// 	margin: $t + 'rem' $r + 'rem';
+	// } @else {
+	// 	margin: $t: +'rem ' + $r +'rem ' + $b +'rem ' +  $l+'rem';
+	// }
 }
 // @mixin colour(background, border, color, opacity) {
 // 	@if length($list) == 1 {
