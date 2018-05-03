@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.display.LoginMessageUI;
+import com.bcs.p3s.display.PartnerDetailsUI;
 /*import com.bcs.p3s.docs.PDFGenerators;
 import com.bcs.p3s.docs.TestMethods;
 import com.bcs.p3s.docs.pojo.BillToAddress;
@@ -33,6 +34,9 @@ import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.MiscService;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 
@@ -102,35 +106,35 @@ public class MiscRestController extends Universal{
 	   }
 	   
    }
+
+
+   //------------------------------PROVIDE PARTNER COMPANY DETAILS --------------------------------------------
    
- //---test method-----
-  /* @RequestMapping(value="/create-xml/", method = RequestMethod.GET)
-   public void createXML() throws IOException, TransformerException{
+  @RequestMapping(value="/partner-details/", method = RequestMethod.GET)
+  public ResponseEntity<PartnerDetailsUI> getPartnerDetails(){
 	   
-	   TestMethods method = new TestMethods();
-	   PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
-	   Invoice xmlInvoice = new Invoice();
-	   List<Patent> allPatents = new ArrayList<Patent>();
-	   List<PatentX> invoicedPatents = new ArrayList<PatentX>();
-	   BillToAddress address = new BillToAddress();
+	   String err = "getPartnerDetails() ";
+	   log().debug(err +" invoked :::");
+
+	   String name;
+	   String phone;
+	   PartnerDetailsUI partnerDets = null;
 	   
-	   TypedQuery<Patent> patent = Patent.findPatentsByBusiness(postSession.getBusiness());
-	   allPatents = patent.getResultList();
-	   invoicedPatents.add(new PatentX(allPatents.get(0)));
-	   invoicedPatents.add(new PatentX(allPatents.get(1)));
-	   
-	   xmlInvoice.setPatents(invoicedPatents);
-	   
-	   address.setBillToName(postSession.getUser().getFirstName());
-	   address.setBillToStreet(postSession.getBusiness().getBillingStreet());
-	   address.setBillToCity(postSession.getBusiness().getBillingCity());
-	   
-	   xmlInvoice.setBillToAddress(address);
-	   
-	   method.createTestXml(xmlInvoice);
-	   
-	   //new PDFGenerators().createPDF(xmlInvoice);
-	   
-   } */
+		try {
+			P3SPropertyReader reader = new P3SPropertyReader();
+			name = reader.getGenericProperty(P3SPropertyNames.PARTNER_COMPANY_NAME);
+			phone = reader.getGenericProperty(P3SPropertyNames.PARTNER_COMPANY_PHONE);
+
+			partnerDets = new PartnerDetailsUI(name, phone);
+			log().debug(err +" completed. Provides :"+partnerDets.getPartnerName()+", "+partnerDets.getPartnerPhone());
+		} catch (P3SPropertyException e) {
+			fail(err+"property read failed",e);
+		}
+		
+	   return new ResponseEntity<PartnerDetailsUI>(partnerDets, HttpStatus.OK);
+  }
    
+   
+  //------------------------------ --------------------------------------------
+
 }
