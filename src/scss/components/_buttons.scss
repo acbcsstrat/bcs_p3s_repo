@@ -96,7 +96,7 @@
 }
 
 %btn-submit---check-shared {
-  background: url(../imgs/icons/tick_white_icon.png) no-repeat; 
+  background: url(../../assets/imgs/icons/tick_white_icon.png) no-repeat; 
   @include padding(0, 3.51, 0, 0); 
   background-color: $green; 
   background-position: right 18px center;
@@ -131,8 +131,8 @@
   }
 }
 
-.btn-error--cross { 
-  background: url(../imgs/icons/cross_white_icon.png) no-repeat;
+%btn-error--cross { 
+  background: url(../../assets/imgs/icons/cross_white_icon.png) no-repeat;
   @include padding(0, 3.51, 0, 0); 
   background-color: #e30613; 
   background-position: right 21px center;
