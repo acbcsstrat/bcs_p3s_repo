@@ -3,14 +3,14 @@
 		<h3 class="font-h3 font-weight-bold">Recent Activity</h3>
 		<div class="hidden-xl-up">
 			<ul class="nav btn-default view-pills">
-				<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black m-r-md" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTabResp); $ctrl.activeActivityTabResp = item.index " data-ng-class="{active : $ctrl.activeMenu == item.activity}"><a class="nav-link">{{item.activity}}</a></li>
+				<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius pill-tabs font-body no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black m-r-md" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTabResp); $ctrl.activeActivityTabResp = item.index " data-ng-class="{active : $ctrl.activeMenu == item.activity}"><a class="nav-link">{{item.activity}}</a></li>
 			</ul>
 		</div>
 	</div>
 	<div class="widget-panel__body hidden-xl-up">
 		<div class="view-tabs justify-content-between">
 			<uib-tabset type="pills view-pills" active="$ctrl.activeActivityTabResp">
-				<uib-tab heading="Stage Change" class="pill-radius pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="0" data-ng-hide="true">
+				<uib-tab heading="Stage Change" class="pill-radius pill-tabs font-body no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="0" data-ng-hide="true">
 					<div class="widget-panel--max m-t-sm">
 						<div class="row bg-no-data" data-ng-if="$ctrl.recentStageArr.length === 0">
 							<div class="col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center z-index-1">
@@ -47,7 +47,7 @@
 					</div>
 				</uib-tab>
 
-			    <uib-tab heading="Transactions" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="1" data-ng-hide="true">
+			    <uib-tab heading="Transactions" class="pill-radius p-few-pill-tabs pill-tabs font-body no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="1" data-ng-hide="true">
 			    	<div class="widget-panel--max m-t-sm">	
 						<div class="row bg-no-data" data-ng-if="$ctrl.recentTransArr.length === 0">
 							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
@@ -90,7 +90,7 @@
 					</div>
 				</uib-tab>
 
-			    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="2" data-ng-hide="true">
+			    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs font-body no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="2" data-ng-hide="true">
 			    	<div class="widget-panel--max m-t-sm">	
 						<div class="row bg-no-data" data-ng-if="$ctrl.recentRenewalArr.length === 0">
 							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
@@ -135,7 +135,7 @@
 	<div class="widget-panel__body hidden-lg-down">
 		<div class="view-tabs justify-content-between">
 			<uib-tabset type="pills view-pills">
-				<uib-tab heading="Stage Change" class="pill-radius pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
+				<uib-tab heading="Stage Change" class="pill-radius pill-tabs font-body no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
 					<div class="widget-panel--max m-t-sm">
 						<div class="row bg-no-data m-t-lg" data-ng-if="$ctrl.recentStageArr.length === 0">
 							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
@@ -173,7 +173,7 @@
 						</div>								
 					</div>
 				</uib-tab>
-			    <uib-tab heading="Transactions" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
+			    <uib-tab heading="Transactions" class="pill-radius p-few-pill-tabs pill-tabs font-body no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
 			    	<div class="widget-panel--max m-t-sm">	
 						<div class="row bg-no-data m-t-lg" data-ng-if="$ctrl.recentTransArr.length === 0">
 							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
@@ -215,7 +215,7 @@
 						</div>
 					</div>
 				</uib-tab>
-			    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs font-body font-body--component uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
+			    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs font-body no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black">
 			    	<div class="widget-panel--max m-t-sm">	
 						<div class="row bg-no-data m-t-lg" data-ng-if="$ctrl.recentRenewalArr.length === 0">
 							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">

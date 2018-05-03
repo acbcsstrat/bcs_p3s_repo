@@ -4,19 +4,19 @@
 		<div class="col-md-12 col-lg-12 col-xl-8 d-flex align-items-center lg-m-b-md">
 			<div class="phase-tabs">
 				<uib-tabset type="pills" active="activePhaseTab" class="phase-pills">
-					<uib-tab index="0" class="tab tab--reg bg-white pill-radius btn--reg pill-tabs font-body font-body--component txt-black border-grey-xs" heading="View All({{$ctrl.sortedPatentData.allRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.all" data-ng-click="$ctrl.displayPhase('all')" data-ui-sref="patents">
+					<uib-tab index="0" class="tab tab--reg bg-white pill-radius btn--reg pill-tabs font-body no-line-height txt-black border-grey-xs" heading="View All({{$ctrl.sortedPatentData.allRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.all" data-ng-click="$ctrl.displayPhase('all')" data-ui-sref="patents">
 				    </uib-tab>
-				    <uib-tab index="1" class="tab tab--reg bg-phase-green pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Green({{$ctrl.sortedPatentData.greenRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.green" data-ng-click="$ctrl.displayPhase('green')" data-ui-sref="patents">
+				    <uib-tab index="1" class="tab tab--reg bg-phase-green pill-radius btn--reg pill-tabs font-body no-line-height txt-white" heading="Green({{$ctrl.sortedPatentData.greenRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.green" data-ng-click="$ctrl.displayPhase('green')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="2" class="tab tab--reg bg-phase-amber pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Yellow({{$ctrl.sortedPatentData.amberRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.amber" data-ng-click="$ctrl.displayPhase('amber')" data-ui-sref="patents">
+				    <uib-tab index="2" class="tab tab--reg bg-phase-amber pill-radius btn--reg pill-tabs font-body no-line-height txt-white" heading="Yellow({{$ctrl.sortedPatentData.amberRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.amber" data-ng-click="$ctrl.displayPhase('amber')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="3" class="tab tab--reg bg-phase-red pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Red({{$ctrl.sortedPatentData.redRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.red" data-ng-click="$ctrl.displayPhase('red')" data-ui-sref="patents">
+				    <uib-tab index="3" class="tab tab--reg bg-phase-red pill-radius btn--reg pill-tabs font-body no-line-height txt-white" heading="Red({{$ctrl.sortedPatentData.redRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.red" data-ng-click="$ctrl.displayPhase('red')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="4" class="tab tab--reg bg-phase-blue pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Blue({{$ctrl.sortedPatentData.blueRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.blue" data-ng-click="$ctrl.displayPhase('blue')" data-ui-sref="patents">
+				    <uib-tab index="4" class="tab tab--reg bg-phase-blue pill-radius btn--reg pill-tabs font-body no-line-height txt-white" heading="Blue({{$ctrl.sortedPatentData.blueRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.blue" data-ng-click="$ctrl.displayPhase('blue')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="5" class="tab tab--reg bg-phase-black pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Black({{$ctrl.sortedPatentData.blackRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.black" data-ng-click="$ctrl.displayPhase('black')" data-ui-sref="patents">
+				    <uib-tab index="5" class="tab tab--reg bg-phase-black pill-radius btn--reg pill-tabs font-body no-line-height txt-white" heading="Black({{$ctrl.sortedPatentData.blackRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.black" data-ng-click="$ctrl.displayPhase('black')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="6" class="tab tab--reg bg-phase-grey pill-radius btn--reg pill-tabs font-body font-body--component txt-white" heading="Grey({{$ctrl.sortedPatentData.greyRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.grey" data-ng-click="$ctrl.displayPhase('grey')" data-ui-sref="patents">
+				    <uib-tab index="6" class="tab tab--reg bg-phase-grey pill-radius btn--reg pill-tabs font-body no-line-height txt-white" heading="Grey({{$ctrl.sortedPatentData.greyRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.grey" data-ng-click="$ctrl.displayPhase('grey')" data-ui-sref="patents">
 					</uib-tab>
 				</uib-tabset>
 			</div>
@@ -129,7 +129,7 @@
 									<span class="font-weight-medium font-body d-flex justify-content-end align-items-center">Open for renewal</span>
 								</div>
 								<div class="hidden-lg-down progress-phase" data-ng-if="item.renewalStatus == 'Show price'">
-									<uib-progress class="pill-radius font-body font-body--component" data-ng-class="(item.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (item.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (item.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (item.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (item.costBandColour == 'Black' ? 'bg-phase-white': '')">
+									<uib-progress class="pill-radius font-body no-line-height" data-ng-class="(item.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + (item.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + (item.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + (item.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + (item.costBandColour == 'Black' ? 'bg-phase-white': '')">
 										<uib-bar class="pill-radius d-flex align-items-center justify-content-center progress-15" value="item.progressBar"></uib-bar>
 									</uib-progress>
 								</div>
@@ -150,10 +150,10 @@
 							 		</ngcart-addtocart>						 		
 							 	</div>
 					        	<div data-ng-if="item.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex justify-content-center btn-default">
-							 		<a href="" class="btn btn-list btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction(item.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs hidden-md-down"></a>
+							 		<a href="" class="btn btn-list btn--lg btn-portal pill-radius bg-phase-green font-body no-line-height font-weight-medium cartbtn txt-white d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction(item.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs hidden-md-down"></a>
 							 	</div>
 					        	<div data-ng-if="item.renewalStatus == 'Renewal in place'" class="d-flex justify-content-center btn-default">
-							 		<a href="" class="btn btn-list btn--lg btn-portal pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: item.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs hidden-md-down"></a>
+							 		<a href="" class="btn btn-list btn--lg btn-portal pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: item.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs hidden-md-down"></a>
 							 	</div>						 					 			 	
 					        </td>
 						</tr>

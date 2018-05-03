@@ -6,7 +6,7 @@
 			</div>
 			<div class="col-md-9 col-lg-9 col-lg-9">
 				<div class="phase-tabs">
-					<ul class="nav phase-pills font-body font-body--component d-flex justify-content-end">
+					<ul class="nav phase-pills font-body no-line-height d-flex justify-content-end">
 						<li class="bg-phase-green pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-init="activeTab = 0" data-ng-click="activeTab = 0; $ctrl.setPhase('green')" data-ng-hide="activeTab == 0">({{$ctrl.sortedPatentData.greenRenewals.length}})</li>
 						<li class="bg-phase-amber pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 1; $ctrl.setPhase('amber')" data-ng-hide="activeTab == 1">({{$ctrl.sortedPatentData.amberRenewals.length}})</li>
 						<li class="bg-phase-red pill-radius btn--reg pill-tabs-num font-weight-medium" data-ng-click="activeTab = 2; $ctrl.setPhase('red')" data-ng-hide="activeTab == 2">({{$ctrl.sortedPatentData.redRenewals.length}})</li>

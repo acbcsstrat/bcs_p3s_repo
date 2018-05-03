@@ -2,7 +2,7 @@
 	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
 		<h3 class="font-h3 font-weight-bold">Renewal Cost</h3>
 		<div data-ng-if="$ctrl.renewalfxTimeframe" class="pill-radius d-flex justify-content-center align-items-center flex-column bg-phase-green">	
-			<h4 class="txt-white font-body font-body--component btn--lg">{{$ctrl.renewalfxTimeframe}}</h4>
+			<h4 class="txt-white font-body no-line-height btn--lg">{{$ctrl.renewalfxTimeframe}}</h4>
 		</div>
 	</div>
 	<div class="widget-panel__body">
@@ -78,10 +78,10 @@
 				<div class="col-md-12 col-lg-12 col-xl-12">
 					<div class="view-tabs">
 						<ul class="nav view-pills d-flex justify-content-between">
-							<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" data-ng-init="$ctrl.renewalfxTimeframe = 'Today'" data-ng-click="$ctrl.fxPeriodActive(0); fxPeriodActiveTabs = 0" data-ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
-							<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" data-ng-click="$ctrl.fxPeriodActive(1); fxPeriodActiveTabs = 1" data-ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
-							<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" data-ng-click="$ctrl.fxPeriodActive(2); fxPeriodActiveTabs = 2"  data-ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
-							<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium" data-ng-click="$ctrl.fxPeriodActive(3); fxPeriodActiveTabs = 3" data-ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
+							<li class="pill-radius btn--lg pill-tabs font-body no-line-height border-grey-xs font-weight-medium" data-ng-init="$ctrl.renewalfxTimeframe = 'Today'" data-ng-click="$ctrl.fxPeriodActive(0); fxPeriodActiveTabs = 0" data-ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
+							<li class="pill-radius btn--lg pill-tabs font-body no-line-height border-grey-xs font-weight-medium" data-ng-click="$ctrl.fxPeriodActive(1); fxPeriodActiveTabs = 1" data-ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
+							<li class="pill-radius btn--lg pill-tabs font-body no-line-height border-grey-xs font-weight-medium" data-ng-click="$ctrl.fxPeriodActive(2); fxPeriodActiveTabs = 2"  data-ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
+							<li class="pill-radius btn--lg pill-tabs font-body no-line-height border-grey-xs font-weight-medium" data-ng-click="$ctrl.fxPeriodActive(3); fxPeriodActiveTabs = 3" data-ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
 						</ul>
 					</div>
 				</div>	
@@ -117,10 +117,10 @@
 			 			</ngcart-addtocart>										
 					</div>		
 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Payment in progress' || $ctrl.patentFx.getSelectedPatent().renewalStatus =='EPO Instructed'" class="d-flex btn-default">
-				 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patentFx.getSelectedPatent().id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+				 		<a class="btn btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patentFx.getSelectedPatent().id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 				 	</div>
 <!-- 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Renewal in place'" class="d-flex btn-default">
-				 		<a class="btn btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer d-flex align-items-center" data-ui-sref="patents.patent({patentId: $ctrl.patentFx.getSelectedPatent().id})" data-ng-click="$ctrl.fetchItemRenewal()">View Patent <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs"></a>
+				 		<a class="btn btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center" data-ui-sref="patents.patent({patentId: $ctrl.patentFx.getSelectedPatent().id})" data-ng-click="$ctrl.fetchItemRenewal()">View Patent <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs"></a>
 				 	</div>		 -->						
 				</div>
 			</div>
@@ -132,7 +132,7 @@
 	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
 		<h3 class="font-h3 font-weight-bold">Renewal Cost</h3>
 		<div data-ng-if="$ctrl.renewalfxTimeframe" class="pill-radius d-flex justify-content-center align-items-center flex-column bg-phase-green">	
-			<h4 class="txt-white font-body font-body--component btn--lg">{{$ctrl.renewalfxTimeframe}}</h4>
+			<h4 class="txt-white font-body no-line-height btn--lg">{{$ctrl.renewalfxTimeframe}}</h4>
 		</div>
 	</div>
 	<div class="widget-panel__body">
@@ -208,10 +208,10 @@
 				<div class="col-md-12 col-lg-12">
 					<div class="view-tabs">
 						<ul class="nav view-pills d-flex justify-content-between">
-							<li class="pill-radius btn--lg pill-tabs font-body font-body--component bg-white border-grey-xs font-weight-medium md-btn--lg" data-ng-init="$ctrl.renewalfxTimeframe = 'Today'" data-ng-click="$ctrl.fxPeriodActive(0); fxPeriodActiveTabs = 0" data-ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
-							<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" data-ng-click="$ctrl.fxPeriodActive(1); fxPeriodActiveTabs = 1" data-ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
-							<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" data-ng-click="$ctrl.fxPeriodActive(2); fxPeriodActiveTabs = 2"  data-ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
-							<li class="pill-radius btn--lg pill-tabs font-body font-body--component border-grey-xs font-weight-medium md-btn--lg" data-ng-click="$ctrl.fxPeriodActive(3); fxPeriodActiveTabs = 3" data-ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
+							<li class="pill-radius btn--lg pill-tabs font-body no-line-height bg-white border-grey-xs font-weight-medium md-btn--lg" data-ng-init="$ctrl.renewalfxTimeframe = 'Today'" data-ng-click="$ctrl.fxPeriodActive(0); fxPeriodActiveTabs = 0" data-ng-hide="$ctrl.renewalfxTimeframe == 'Today'">Today</li>
+							<li class="pill-radius btn--lg pill-tabs font-body no-line-height border-grey-xs font-weight-medium md-btn--lg" data-ng-click="$ctrl.fxPeriodActive(1); fxPeriodActiveTabs = 1" data-ng-hide="$ctrl.renewalfxTimeframe == 'Yesterday'">Yesterday</li>
+							<li class="pill-radius btn--lg pill-tabs font-body no-line-height border-grey-xs font-weight-medium md-btn--lg" data-ng-click="$ctrl.fxPeriodActive(2); fxPeriodActiveTabs = 2"  data-ng-hide="$ctrl.renewalfxTimeframe == 'Last Week'">Last Week</li>
+							<li class="pill-radius btn--lg pill-tabs font-body no-line-height border-grey-xs font-weight-medium md-btn--lg" data-ng-click="$ctrl.fxPeriodActive(3); fxPeriodActiveTabs = 3" data-ng-hide="$ctrl.renewalfxTimeframe == 'Last Mth'">Last Mth</li>
 						</ul>								
 					</div>
 				</div>	
@@ -250,10 +250,10 @@
 			 			</ngcart-addtocart>										
 					</div>
 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex btn-default">
-				 		<a class="btn btn-block btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patentFx.getSelectedPatent().id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+				 		<a class="btn btn-block btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patentFx.getSelectedPatent().id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 				 	</div>
 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Renewal in place'" class="d-flex btn-default">
-				 		<a class="btn btn-block btn--lg pill-radius bg-phase-green font-body font-body--component font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patentFx.getSelectedPatent().id})" data-ng-click="$ctrl.fetchItemRenewal()">View Patent <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
+				 		<a class="btn btn-block btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patentFx.getSelectedPatent().id})" data-ng-click="$ctrl.fetchItemRenewal()">View Patent <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
 				 	</div>
 				</div>
 			</div>
