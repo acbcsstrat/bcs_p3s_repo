@@ -1,4 +1,4 @@
-.primary-view-nav .primary-view-nav__list,  { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
+%primary-view-nav__list,  { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
   list-style-type: none;
   padding: 0;
   display: -webkit-box;
@@ -11,10 +11,10 @@
 }
 
 .secondary-view-nav .secondary-view-nav__list {
-  @extend .primary-view-nav .primary-view-nav__list;
+  @extend %primary-view-nav__list;
 }
 .panel-nav .panel-nav__list {
-  @extend .primary-view-nav .primary-view-nav__list;
+  @extend %primary-view-nav__list;
 }
 
 
@@ -110,7 +110,7 @@
 .panel-nav__notification-list-item--gamber-notification { &:hover {background: $amber;} }
 .panel-nav__notification-list-item--gred-notification { &:hover {background: $red;} }
 .panel-nav__notification-list-item--gblue-notification { &:hover {background: $blue;} }
-.panel-nav__notification-list-item--gblack-notification { &:hover {background: $blackb;} }
+.panel-nav__notification-list-item--gblack-notification { &:hover {background: $black;} }
 
 .panel-nav__notification-list-item {
   &:hover { 
