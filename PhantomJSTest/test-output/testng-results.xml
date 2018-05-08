@@ -2,24 +2,24 @@
 <testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite" duration-ms="14976" started-at="2018-05-08T10:54:45Z" finished-at="2018-05-08T10:55:00Z">
+  <suite name="Suite" duration-ms="52517" started-at="2018-05-08T13:44:41Z" finished-at="2018-05-08T13:45:34Z">
     <groups>
     </groups>
-    <test name="Test" duration-ms="14976" started-at="2018-05-08T10:54:45Z" finished-at="2018-05-08T10:55:00Z">
+    <test name="Test" duration-ms="52517" started-at="2018-05-08T13:44:41Z" finished-at="2018-05-08T13:45:34Z">
       <class name="com.bcs.p3s.automationtest.TestP3sLogin">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:com.bcs.p3s.automationtest.TestP3sLogin@1141def]" name="setUp" is-config="true" duration-ms="6975" started-at="2018-05-08T11:54:45Z" finished-at="2018-05-08T11:54:52Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.bcs.p3s.automationtest.TestP3sLogin@70d194]" name="setUp" is-config="true" duration-ms="20285" started-at="2018-05-08T14:44:41Z" finished-at="2018-05-08T14:45:02Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="loginIncorrectCredentials()[pri:0, instance:com.bcs.p3s.automationtest.TestP3sLogin@1141def]" name="loginIncorrectCredentials" duration-ms="3340" started-at="2018-05-08T11:54:52Z" finished-at="2018-05-08T11:54:55Z">
+        <test-method status="PASS" signature="loginIncorrectCredentials()[pri:0, instance:com.bcs.p3s.automationtest.TestP3sLogin@70d194]" name="loginIncorrectCredentials" duration-ms="16709" started-at="2018-05-08T14:45:02Z" finished-at="2018-05-08T14:45:18Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- loginIncorrectCredentials -->
-        <test-method status="PASS" signature="loginCorrectCredentials()[pri:1, instance:com.bcs.p3s.automationtest.TestP3sLogin@1141def]" name="loginCorrectCredentials" duration-ms="4346" started-at="2018-05-08T11:54:55Z" finished-at="2018-05-08T11:54:59Z">
+        <test-method status="PASS" signature="loginCorrectCredentials()[pri:1, instance:com.bcs.p3s.automationtest.TestP3sLogin@70d194]" name="loginCorrectCredentials" duration-ms="15150" started-at="2018-05-08T14:45:18Z" finished-at="2018-05-08T14:45:33Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- loginCorrectCredentials -->
-        <test-method status="PASS" signature="logoutFnCheck()[pri:2, instance:com.bcs.p3s.automationtest.TestP3sLogin@1141def]" name="logoutFnCheck" duration-ms="295" started-at="2018-05-08T11:54:59Z" finished-at="2018-05-08T11:55:00Z">
+        <test-method status="PASS" signature="logoutFnCheck()[pri:2, instance:com.bcs.p3s.automationtest.TestP3sLogin@70d194]" name="logoutFnCheck" duration-ms="293" started-at="2018-05-08T14:45:33Z" finished-at="2018-05-08T14:45:34Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logoutFnCheck -->
