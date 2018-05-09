@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bcs.p3s.automationtest;
+package com.bcs.p3stest.automationtest;
 
 
 import java.io.File;
