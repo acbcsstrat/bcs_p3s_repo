@@ -42,7 +42,7 @@
 		  <groupId>org.testng</groupId>
 		  <artifactId>testng</artifactId>
 		  <version>6.10</version>
-		  <scope>runtime</scope>
+		  <scope>compile</scope>
 		</dependency>
 		
   </dependencies>
