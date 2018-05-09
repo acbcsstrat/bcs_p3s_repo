@@ -5,4 +5,4 @@
  * @author MerinP
  *
  */
-package com.bcs.p3stest.automationtest;
+package com.bcs.p3s.automationtest;
