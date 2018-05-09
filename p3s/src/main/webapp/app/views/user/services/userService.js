@@ -24,7 +24,7 @@ angular.module('ppApp').factory('userService', userService)
                 deferred.resolve(response.data);
             },
             function(errResponse){
-                console.error('Error while fetching user');
+                //console.error('Error while fetching user');
                 deferred.reject(errResponse);
             }
         );
