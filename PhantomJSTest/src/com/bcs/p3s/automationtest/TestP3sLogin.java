@@ -82,6 +82,7 @@ public class TestP3sLogin{
     	
         driver.get(baseUrl);
     	driver.findElement(By.name("j_username")).clear();
+    	System.out.println("Hostname is " + host);
     	if("avid-ox790-013".equals(host))
     		driver.findElement(By.name("j_username")).sendKeys("merin@p3s.me");
     	else
@@ -98,7 +99,7 @@ public class TestP3sLogin{
             //wait till dashboard loads completely
             WebDriverWait wait = new WebDriverWait(driver, 40);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("recentactivitywidget")));
-            
+            System.out.println("Test loginCorrectCredentials()");
             captureScreenshots("dashboard.png");
             
         } catch (Exception e) {
@@ -149,7 +150,7 @@ public class TestP3sLogin{
     	
     	driver.findElement(By.name("logoutLink")).click();
     	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-    	 try {
+    	try {
              
     		 URL = driver.getCurrentUrl();
              //Logout function check
