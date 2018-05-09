@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Suite" duration-ms="22117" started-at="2018-04-23T11:07:11Z" finished-at="2018-04-23T11:07:33Z">
+    <groups>
+    </groups>
+    <test name="Test" duration-ms="22117" started-at="2018-04-23T11:07:11Z" finished-at="2018-04-23T11:07:33Z">
+      <class name="com.bcs.p3s.automationtest.TestP3sLogin">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.bcs.p3s.automationtest.TestP3sLogin@1aeed2f]" name="setUp" is-config="true" duration-ms="1794" started-at="2018-04-23T12:07:11Z" finished-at="2018-04-23T12:07:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="loginIncorrectCredentials()[pri:0, instance:com.bcs.p3s.automationtest.TestP3sLogin@1aeed2f]" name="loginIncorrectCredentials" duration-ms="2997" started-at="2018-04-23T12:07:12Z" finished-at="2018-04-23T12:07:15Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginIncorrectCredentials -->
+        <test-method status="PASS" signature="loginCorrectCredentials()[pri:1, instance:com.bcs.p3s.automationtest.TestP3sLogin@1aeed2f]" name="loginCorrectCredentials" duration-ms="14606" started-at="2018-04-23T12:07:15Z" finished-at="2018-04-23T12:07:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginCorrectCredentials -->
+        <test-method status="PASS" signature="logoutFnCheck()[pri:2, instance:com.bcs.p3s.automationtest.TestP3sLogin@1aeed2f]" name="logoutFnCheck" duration-ms="2640" started-at="2018-04-23T12:07:30Z" finished-at="2018-04-23T12:07:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logoutFnCheck -->
+      </class> <!-- com.bcs.p3s.automationtest.TestP3sLogin -->
+    </test> <!-- Test -->
+  </suite> <!-- Suite -->
+</testng-results>
