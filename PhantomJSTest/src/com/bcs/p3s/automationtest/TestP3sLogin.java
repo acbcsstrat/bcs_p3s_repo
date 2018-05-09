@@ -166,7 +166,7 @@ public class TestP3sLogin{
 
     protected void captureScreenshots(String screenshotName){
     	
-    	System.out.println("Taking screenshot now");
+    	System.out.println("Taking screenshot now for "+ screenshotName);
     	try {
     		 //driver = (PhantomJSDriver) new Augmenter().augment(driver);
 	        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -175,7 +175,7 @@ public class TestP3sLogin{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        System.out.println("Screenshots captured");
+        System.out.println("Screenshots captured for " + screenshotName);
     }
 
 }
