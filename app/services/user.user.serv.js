@@ -2,7 +2,7 @@ angular.module('ppApp').factory('userService', userService)
 
  userService.$inject = ['$http', '$q']; 
 
- function userService($http, $q) {
+export default  function userService($http, $q) {
 
     var REST_SERVICE_URI = domain+'rest-user/'; //variable declared before function are initiated
 
