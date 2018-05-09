@@ -98,8 +98,8 @@ public class TestP3sLogin{
             
             //wait till dashboard loads completely
             WebDriverWait wait = new WebDriverWait(driver, 40);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("recentactivitywidget")));
             System.out.println("Test loginCorrectCredentials()");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("recentactivitywidget")));
             captureScreenshots("dashboard.png");
             
         } catch (Exception e) {
