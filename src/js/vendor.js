@@ -1,26 +1,28 @@
-import polyfiller from 'localScripts/js/polyfillers.js';
+require("tether/dist/js/tether.min.js");
 
-import 'jquery/dist/jquery.min.js';
-import 'tether/dist/js/tether.min.js';
+require("angular-animate/angular-animate.min.js");
+require("angular-aria/angular-aria.min.js");
+require("angular-material/angular-material.min.js");
+require("angular-ui-bootstrap/dist/ui-bootstrap-tpls.js");
+require("angular-route/angular-route.min.js");
+require("@uirouter/angularjs/release/angular-ui-router.min.js");
+require("angular-local-storage/dist/angular-local-storage.min.js");
 
-import 'angular/angular.min.js';
-import 'angular-animate/angular-animate.min.js';
-import 'angular-aria/angular-aria.min.js';
-import 'angular-material/angular-material.min.js';
-import 'angular-ui-bootstrap/dist/ui-bootstrap-tpls.js';
-import 'angular-route/angular-route.min.js';
-import '@uirouter/angularjs/release/angular-ui-router.min.js';
-import 'angular-local-storage/dist/angular-local-storage.min.js';
+require("d3/dist/d3.min.js");
+require("nvd3/build/nv.d3.min.js");
+require("angular-nvd3/dist/angular-nvd3.min.js");
 
-import 'd3/dist/d3.min.js';
-import 'nvd3/build/nv.d3.min.js';
-import 'angular-nvd3/dist/angular-nvd3.min.js';
+require("ng-idle/angular-idle.min.js");
 
-import 'moment/min/moment.min.js';
-import 'moment-timezone/builds/moment-timezone.min.js';
-import 'moment-timezone/builds/moment-timezone-with-data-2012-2022.min.js';
-import 'angular-moment/angular-moment.min.js';
+require("moment/min/moment.min.js");
+require("moment-timezone/builds/moment-timezone.min.js");
+require("moment-timezone/builds/moment-timezone-with-data-2012-2022.min.js");
+require("angular-moment/angular-moment.min.js");
 
-import stick from 'localScripts/js/jquery.stickytableheader.js';
-import ngCartDirectives from 'localScripts/js/ngCart.directives.js';
-import ngCartFulfilment from 'localScripts/js/ngCart.fulfilment.js';
+require("localScripts/js/vendors/jquery.stickytableheader.js")
+
+require("slick-carousel/slick/slick.min.js");
+require("angular-slick-carousel/dist/angular-slick.min.js");
+
+require("localScripts/js/vendors/ngCart.js")
+require("localScripts/js/vendors/parsley.min.js")
