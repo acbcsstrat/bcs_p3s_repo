@@ -1,5 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin =  require('extract-text-webpack-plugin');
+// const MinifyPlugin = require("babel-minify-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -15,6 +16,7 @@ module.exports = {
 	},
 	output: {
 		path: path.resolve(__dirname, "dist"),
+		publicPath: "/p3sweb/",
 		filename: '[name].bundle.js'
 	},
 	resolve: {
@@ -59,8 +61,11 @@ module.exports = {
 		        test: /\.(png|svg|jpg|gif)$/,
 	         	use: [
 	           		'file-loader'
-	         	]
-		    }
+	         	],
+		        exclude: [
+		          path.resolve(__dirname, "node_modules")
+		        ],
+		    }    
 		]
 	},
    	devServer: {
@@ -76,7 +81,10 @@ module.exports = {
 		}),
 	  	new UglifyJsPlugin({
 	  		sourceMap: true,
-	    	test: /\.js($|\?)/i
+	    	test: /\.js($|\?)/i,
+	    	exclude: [
+	    		path.resolve(__dirname, "node_modules")
+	    	]
 	  	}),
 	  	new CleanWebpackPlugin(['dist']),
 	  	new HtmlWebpackPlugin({
