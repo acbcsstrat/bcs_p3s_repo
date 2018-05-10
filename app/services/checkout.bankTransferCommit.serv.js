@@ -12,7 +12,7 @@ export default function bankTransferCommitService($http, $q, $state){
 
 	function commitTransfer(order) {
 		var deferred = $q.defer();
-		$http.post(domain+'rest-committed-banktransfer/', order)
+		$http.post(ppdomain+'rest-committed-banktransfer/', order)
 		.then(
 			function(response){
 				$state.go('bank-transfer-success', {orderObj: response.data});

@@ -4,7 +4,7 @@ patentsRestService.$inject = ['$http', '$q'];
 
 export default function patentsRestService($http, $q) {
 
-    var REST_SERVICE_URI = domain+'rest-patents/'; 
+    var REST_SERVICE_URI = ppdomain+'rest-patents/'; 
 
     var factory = {
         fetchAllPatents: fetchAllPatents,
@@ -65,7 +65,7 @@ export default function patentsRestService($http, $q) {
     function fetchCostAnalysis(id) {
 
         var deferred = $q.defer();
-        $http.get(domain+'rest-cost-analysis/'+id)
+        $http.get(ppdomain+'rest-cost-analysis/'+id)
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -95,7 +95,7 @@ export default function patentsRestService($http, $q) {
     function fetchRenewalHistory(id) {
 
         var deferred = $q.defer();
-        $http.get(domain+'rest-renewal-history/'+id)
+        $http.get(ppdomain+'rest-renewal-history/'+id)
             .then(
             function (response) {
                 deferred.resolve(response.data);

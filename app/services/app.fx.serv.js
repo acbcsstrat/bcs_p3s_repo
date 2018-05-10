@@ -15,7 +15,7 @@ export default function fxService($q, $http) {
 
 		var deferred = $q.defer()
 
-		$http.get(domain+'rest-fxrates/week')
+		$http.get(ppdomain+'rest-fxrates/week')
 		.then(
 			function(response){
 				deferred.resolve(response.data)
@@ -32,7 +32,7 @@ export default function fxService($q, $http) {
 
 		var deferred = $q.defer()
 
-		$http.get(domain+'rest-fxrates/month')
+		$http.get(ppdomain+'rest-fxrates/month')
 		.then(
 			function(response){
 				deferred.resolve(response.data)

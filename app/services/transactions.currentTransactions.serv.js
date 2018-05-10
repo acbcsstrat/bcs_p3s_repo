@@ -4,7 +4,7 @@ currentTransactionsService.$inject = ['$http', '$q'];
 
 export default function currentTransactionsService($http, $q) {
 
-	var REST_SERVICE_URI = domain+'rest-current-transactions/';
+	var REST_SERVICE_URI = ppdomain+'rest-current-transactions/';
 
 	var factory = {
 		fetchCurrentTransactions:fetchCurrentTransactions,

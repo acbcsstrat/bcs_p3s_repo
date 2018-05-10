@@ -4,7 +4,7 @@ angular.module('ppApp').factory('userService', userService)
 
 export default  function userService($http, $q) {
 
-    var REST_SERVICE_URI = domain+'rest-user/'; //variable declared before function are initiated
+    var REST_SERVICE_URI = ppdomain+'rest-user/'; //variable declared before function are initiated
 
     var factory = {
         fetchUser: fetchUser,
@@ -57,7 +57,7 @@ export default  function userService($http, $q) {
 
         var deferred = $q.defer();
 
-        $http.get(domain+'rest-users/')
+        $http.get(ppdomain+'rest-users/')
             .then(
             function (response) {
                 deferred.resolve(response.data);

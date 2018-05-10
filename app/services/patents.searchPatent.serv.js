@@ -4,7 +4,7 @@ searchPatentService.$inject = ['$http', '$q'];
 
 export default function searchPatentService($http, $q) {
 
-    var REST_SEARCH_PATENT_SERVICE_URI = domain+'rest-search-patents/';
+    var REST_SEARCH_PATENT_SERVICE_URI = ppdomain+'rest-search-patents/';
 
     var factory = {
         findPatent: findPatent

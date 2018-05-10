@@ -13,7 +13,7 @@ export default function dashboardService($http, $q) {
 
     function getMessages() {
         var deferred = $q.defer();
-        $http.get(domain+'login-messages/')
+        $http.get(ppdomain+'login-messages/')
         .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -30,7 +30,7 @@ export default function dashboardService($http, $q) {
     function fetchCostAnalysis(id) {
         
         var deferred = $q.defer();
-         $http.get(domain+'rest-cost-analysis/'+id)
+         $http.get(ppdomain+'rest-cost-analysis/'+id)
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -47,7 +47,7 @@ export default function dashboardService($http, $q) {
 
         // function supressMessages(id) {
         //     var deferred = $q.defer();
-        //     $http.post(domain+'suppress-login-messages/' , id)
+        //     $http.post(ppdomain+'suppress-login-messages/' , id)
         //     .then(
         //         function(response){
         //             deferred.resolve(response);

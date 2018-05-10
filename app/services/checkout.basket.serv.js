@@ -6,7 +6,7 @@ export default function basketService($http, $q){
 
 	var factory = {};
 
-		var REST_SERVICE_URI = domain+'rest-basket/';
+		var REST_SERVICE_URI = ppdomain+'rest-basket/';
 		
 		factory.fetchBasketPatents = function(ids) {
 

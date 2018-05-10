@@ -4,7 +4,7 @@ transactionHistoryService.$inject = ['$http', '$q'];
 
 export default function transactionHistoryService($http, $q) {
 
-	var REST_SERVICE_URI = domain+'rest-historic-transactions/';
+	var REST_SERVICE_URI = ppdomain+'rest-historic-transactions/';
 
 	var factory = {
 		fetchTransactionHistory: fetchTransactionHistory, 
