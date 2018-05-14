@@ -340,6 +340,14 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
+		            Bank name:
+		            </td>
+		            <td>
+		            <%=data.getBankDetails().getAccount1BankName() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
 		            ABA Routing Number:
 		            </td>
 		            <td>
@@ -356,11 +364,27 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
-		            Reference:
+		            Account Type:
 		            </td>
 		            <td>
-		              <%=data.getTransactionReference() %>
+		              <%=data.getBankDetails().getAccount1AcctType() %>
 		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Account Name:
+		            </td>
+		            <td>
+		              <%=data.getBankDetails().getAccount1AcctName() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td><b>
+		            Reference:
+		            </b></td>
+		            <td><b>
+		              <%=data.getTransactionReference() %>
+		            </b></td>
 		          </tr>
 		          <tr>
 		            <td>
@@ -396,6 +420,14 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
+		            Bank name:
+		            </td>
+		            <td>
+		            <%=data.getBankDetails().getAccount2BankName() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
 		            ABA Routing Number:
 		            </td>
 		            <td>
@@ -412,11 +444,27 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
-		            Reference:
+		            Account Type:
 		            </td>
 		            <td>
-		              <%=data.getTransactionReference() %>
+		              <%=data.getBankDetails().getAccount2AcctType() %>
 		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Account Name:
+		            </td>
+		            <td>
+		              <%=data.getBankDetails().getAccount2AcctName() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td><b>
+		            Reference:
+		            </b></td>
+		            <td><b>
+		              <%=data.getTransactionReference() %>
+		            </b></td>
 		          </tr>
 		          <tr>
 		            <td>

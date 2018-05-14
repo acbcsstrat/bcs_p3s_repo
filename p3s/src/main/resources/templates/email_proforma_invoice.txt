@@ -21,7 +21,7 @@ Your Invoice for this can be accessed by logging-in to <a href="[LOGIN_URL]">the
  selecting Transactions, clicking on this ([TRANSACTION_REFERENCE]) transaction, then pressing the Invoice button.
 
 <p/>
-For your convenience, the payment details are:
+For your convenience, the payment details, for both FEDWIRE and ACH, are:
 <table class="tblpayment3colinvemail">
 [THREECOL_TABLE_OF_PAYMENT_DETAILS]<tr><td></td><td>[FIELDB]:</td><td>[FIELDC]</td></tr>
 </table>

@@ -306,6 +306,14 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
+		            Bank name:
+		            </td>
+		            <td>
+		            <%=data.getBankDetails().getAccount1BankName() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
 		            ABA Routing Number:
 		            </td>
 		            <td>
@@ -322,11 +330,27 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-		            Reference:
+		            Account Type:
 		            </td>
 		            <td>
-		              <%=data.getPenaltyPaymentReferenceNumber() %>
+		              <%=data.getBankDetails().getAccount1AcctType() %>
 		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Account Name:
+		            </td>
+		            <td>
+		              <%=data.getBankDetails().getAccount1AcctName() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td><b>
+		            Reference:
+		            </b></td>
+		            <td><b>
+		              <%=data.getPenaltyPaymentReferenceNumber() %>
+		            </b></td>
 		          </tr>
 		          <tr>
 		            <td>
@@ -362,6 +386,14 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
+		            Bank name:
+		            </td>
+		            <td>
+		            <%=data.getBankDetails().getAccount2BankName() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td>
 		            ABA Routing Number:
 		            </td>
 		            <td>
@@ -378,11 +410,27 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-		            Reference:
+		            Account Type:
 		            </td>
 		            <td>
-		              <%=data.getPenaltyPaymentReferenceNumber() %>
+		              <%=data.getBankDetails().getAccount1AcctType() %>
 		            </td>
+		          </tr>
+		          <tr>
+		            <td>
+		            Account Name:
+		            </td>
+		            <td>
+		              <%=data.getBankDetails().getAccount1AcctName() %>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td><b>
+		            Reference:
+		            </b></td>
+		            <td><b>
+		              <%=data.getPenaltyPaymentReferenceNumber() %>
+		            </b></td>
 		          </tr>
 		          <tr>
 		            <td>

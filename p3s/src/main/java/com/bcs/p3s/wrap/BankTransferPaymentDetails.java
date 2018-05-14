@@ -17,7 +17,7 @@ public final class BankTransferPaymentDetails {
 	private String account1field1;
 	private String account1field2;
 	private String account1AcctType;
-	private String account1CustomerName;
+	private String account1AcctName;
 	
 	private String account2PaymentType;
 	private String account2BankName;
@@ -26,7 +26,7 @@ public final class BankTransferPaymentDetails {
 	private String account2field1;
 	private String account2field2;
 	private String account2AcctType;
-	private String account2CustomerName;
+	private String account2AcctName;
 	
 
 	// Fields becoming redundant from 180514
@@ -47,7 +47,7 @@ public final class BankTransferPaymentDetails {
 		account1field1 = ""; 											// former : Community Federal Savings Bank, New York, NY 
 		account1field2 = "";
 		account1AcctType = "Checking";
-		account1CustomerName = "Moneycorp Ltd";
+		account1AcctName = "Moneycorp Ltd";
 		
 		account2PaymentType = "ACH";
 		account2BankName = "Deutsche Bank Trust Company Americas";
@@ -56,7 +56,7 @@ public final class BankTransferPaymentDetails {
 		account2field1 = "";
 		account2field2 = "";
 		account2AcctType = "Checking";
-		account2CustomerName = "Moneycorp Ltd";
+		account2AcctName = "Moneycorp Ltd";
 
 		// Fields becoming redundant from 180514
 		account1Type = "Fedwire-O";
@@ -98,7 +98,7 @@ public final class BankTransferPaymentDetails {
 		tos += account1field1+CRLF;
 		tos += account1field2+CRLF;
 		tos += account1AcctType+CRLF;
-		tos += account1CustomerName+CRLF;
+		tos += account1AcctName+CRLF;
 		tos += " & "+CRLF;
 		tos += account2PaymentType+CRLF;
 		tos += account2BankName+CRLF;
@@ -107,7 +107,7 @@ public final class BankTransferPaymentDetails {
 		tos += account2field1+CRLF;
 		tos += account2field2+CRLF;
 		tos += account2AcctType+CRLF;
-		tos += account2CustomerName+CRLF;
+		tos += account2AcctName+CRLF;
 		return tos;
 	}
 
@@ -145,8 +145,8 @@ public final class BankTransferPaymentDetails {
 	public String getAccount1AcctType() {
 		return account1AcctType;
 	}
-	public String getAccount1CustomerName() {
-		return account1CustomerName;
+	public String getAccount1AcctName() {
+		return account1AcctName;
 	}
 
 	
@@ -171,8 +171,8 @@ public final class BankTransferPaymentDetails {
 	public String getAccount2AcctType() {
 		return account2AcctType;
 	}
-	public String getAccount2CustomerName() {
-		return account2CustomerName;
+	public String getAccount2AcctName() {
+		return account2AcctName;
 	}
 
 

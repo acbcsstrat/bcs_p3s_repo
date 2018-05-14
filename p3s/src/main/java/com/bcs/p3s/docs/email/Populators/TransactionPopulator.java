@@ -170,18 +170,20 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 
 		TwoColRecord a2colRecord = null;
 		List<TwoColRecord> payDets = new ArrayList<TwoColRecord>();
-		a2colRecord = new TwoColRecord("Payment channel", payeeDets.getAccount1Type());
-		payDets.add(a2colRecord);
-		a2colRecord = new TwoColRecord("Bank name", payeeDets.getAccount1field1());
+		//a2colRecord = new TwoColRecord("Payment channel", payeeDets.getAccount1Type()); // inhibit whilst email_proforma_invoice.txt says 'for both FEDWIRE and ACH'
+		//payDets.add(a2colRecord);
+		a2colRecord = new TwoColRecord("Bank name", payeeDets.getAccount1BankName());
 		payDets.add(a2colRecord);
 		a2colRecord = new TwoColRecord("ABA Routing Number", payeeDets.getAccount1BranchCode());
 		payDets.add(a2colRecord);
-		a2colRecord = new TwoColRecord("Account Number", payeeDets.getAccount1Number());
+		a2colRecord = new TwoColRecord("Account Number", payeeDets.getAccount1AcctNumber());
 		payDets.add(a2colRecord);
+		// Here, Skip AcctType & AcctName. They detract from the Reference number, & are unlikley to be needed. 
 		a2colRecord = new TwoColRecord("Reference", data.getTransactionReference()); // Which WILL have been populated by here
 		payDets.add(a2colRecord);
 		a2colRecord = new TwoColRecord("Amount", "$"+price);
 		payDets.add(a2colRecord);
+		
 		data.setPaymentDetails(payDets);
 
 		data.setPrice(price);
