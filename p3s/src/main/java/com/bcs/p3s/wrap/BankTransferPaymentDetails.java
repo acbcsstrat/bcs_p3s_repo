@@ -11,6 +11,7 @@ public final class BankTransferPaymentDetails {
 
 	
 	private String account1PaymentType;
+	private String account1BankName;
 	private String account1BranchCode;
 	private String account1AcctNumber;
 	private String account1field1;
@@ -19,6 +20,7 @@ public final class BankTransferPaymentDetails {
 	private String account1CustomerName;
 	
 	private String account2PaymentType;
+	private String account2BankName;
 	private String account2BranchCode;
 	private String account2AcctNumber;
 	private String account2field1;
@@ -39,28 +41,32 @@ public final class BankTransferPaymentDetails {
 	public BankTransferPaymentDetails() {
 
 		account1PaymentType = "Fedwire";
+		account1BankName = "Deutsche Bank Trust Company Americas";
 		account1BranchCode = "021001033";   							// ABA // former : 026073150 
 		account1Number = "04951460";   									// former : 2715100256 
-		account1field1 = "Deutsche Bank Trust Company Americas"; // Bank name	// former : Community Federal Savings Bank, New York, NY 
+		account1field1 = ""; 											// former : Community Federal Savings Bank, New York, NY 
 		account1field2 = "";
 		account1AcctType = "Checking";
 		account1CustomerName = "Moneycorp Ltd";
 		
 		account2PaymentType = "ACH";
+		account2BankName = "Deutsche Bank Trust Company Americas";
 		account2BranchCode = "021001033";								// ABA
 		account2Number = "04951460";
-		account2field1 = "Deutsche Bank Trust Company Americas"; // Bank name
+		account2field1 = "";
 		account2field2 = "";
 		account2AcctType = "Checking";
 		account2CustomerName = "Moneycorp Ltd";
 
 		// Fields becoming redundant from 180514
 		account1Type = "Fedwire-O";
-		account1Number = "04951460";   									// former : 2715100256 
+		account1Number = "04951460";   									// former : 2715100256
+		account1field1 = "Deutsche Bank Trust Company Americas"; 
+
 		//account1field2 = "";
 		account2Type = "ACH-O";
 		account2Number = "04951460";
-		//account2field1 = "Deutsche Bank Trust Company Americas"; // Bank name
+		account2field1 = "Deutsche Bank Trust Company Americas"; 
 
 		
 //		account1Type = "ACH";
@@ -86,6 +92,7 @@ public final class BankTransferPaymentDetails {
 		String CRLF = "\n";
 		String tos = "   BankTransferPaymentDetails is:"+CRLF;
 		tos += account1PaymentType+CRLF;
+		tos += account1BankName+CRLF;
 		tos += account1BranchCode+CRLF;
 		tos += account1AcctNumber+CRLF;
 		tos += account1field1+CRLF;
@@ -94,6 +101,7 @@ public final class BankTransferPaymentDetails {
 		tos += account1CustomerName+CRLF;
 		tos += " & "+CRLF;
 		tos += account2PaymentType+CRLF;
+		tos += account2BankName+CRLF;
 		tos += account2BranchCode+CRLF;
 		tos += account2AcctNumber+CRLF;
 		tos += account2field1+CRLF;
@@ -119,6 +127,9 @@ public final class BankTransferPaymentDetails {
 	public String getAccount1PaymentType() {
 		return account1Type;
 	}
+	public String getAccount1BankName() {
+		return account1BankName;
+	}
 	public String getAccount1BranchCode() {
 		return account1BranchCode;
 	}
@@ -138,10 +149,12 @@ public final class BankTransferPaymentDetails {
 		return account1CustomerName;
 	}
 
-
 	
 	public String getAccount2PaymentType() {
 		return account2Type;
+	}
+	public String getAccount2BankName() {
+		return account2BankName;
 	}
 	public String getAccount2BranchCode() {
 		return account2BranchCode;
