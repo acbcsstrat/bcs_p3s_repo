@@ -1,10 +1,15 @@
+
+// require('angular-moment');
+// var ngModule = angular.module('ngApp',['angularMoment']);
+// ngModule.constant('moment', require('moment-timezone'));
+
 angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngMaterial', 'slickCarousel', 'angularMoment', 'LocalStorageModule', 'nvd3']);
 
 angular.module('ppApp').run(startUpRun)
 
-startUpRun.$inject = ['Idle', 'userService', '$rootScope', 'amMoment', '$timeout'];
+startUpRun.$inject = ['Idle', 'userService', '$rootScope', 'moment', '$timeout'];
 
-export default function startUpRun(Idle, userService, $rootScope, amMoment, $timeout, $uibModal) {
+export default function startUpRun(Idle, userService, $rootScope, moment, $timeout) {
 
     $rootScope.page = '';
 
@@ -30,8 +35,8 @@ export default function startUpRun(Idle, userService, $rootScope, amMoment, $tim
         }, 500);
     }
 
-   timeZoneClocks()
+    timeZoneClocks()
 
-   Idle.watch();
+    Idle.watch();
 
 };
