@@ -29,7 +29,7 @@ function listPatentsCtrl($scope, $timeout, $http, $rootScope,  $state, $anchorSc
   		function displayPhase(phase) {
   			vm.tableData = []; //reset data before displaying new phase
   			if(phase !== 'all') {
-				switch (phase) {
+					switch (phase) {
 				    case 'green':
 				     	vm.tableData = vm.sortedPatentData.greenRenewals;
 			        break;
@@ -47,8 +47,7 @@ function listPatentsCtrl($scope, $timeout, $http, $rootScope,  $state, $anchorSc
 				    break;
 			     	case 'grey':
 				    	vm.tableData = vm.sortedPatentData.greyRenewals;
-				}
-
+					}
   			} else {
   				vm.tableData = patents;
   			}
