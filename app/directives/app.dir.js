@@ -4,7 +4,7 @@ angular.module('ppApp').directive('menuToggle', [ '$timeout', function($timeout)
             section: '=',
             context: '='
         },
-        templateUrl: 'p3sweb/app/views/app/views/main-nav-li.htm',
+        templateUrl: 'app/templates/nav.main-nav-li.tpl.htm',
         link: function($scope, $element) {
             var controller = $scope.context
 
@@ -23,7 +23,7 @@ angular.module('ppApp').directive('menuToggle', [ '$timeout', function($timeout)
         scope: {
             section: '='
         },
-        templateUrl: 'p3sweb/app/views/app/views/main-nav-li-item.htm',
+        templateUrl: 'app/templates/nav.main-nav-li-item.tpl.htm',
         link: function ($scope, $element) {
             var controller = $element.parent().controller();
             $scope.focusSection = function () {
