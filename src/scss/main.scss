@@ -1,6 +1,23 @@
+// $fa-font-path: "~font-awesome/fonts";
 @import "./helpers/_variables.scss";
 @import "./base/_reset.scss";
 @import "./base/_base.scss";
+
+// @import "~bootstrap/scss/bootstrap.scss";
+@import "~angular-material/modules/scss/angular-material.scss";
+@import "~nvd3/build/nv.d3.css";
+
+@import "~font-awesome/scss/font-awesome";
+@import "~font-awesome/scss/font-awesome.scss";
+
+@import "~slick-carousel/slick/slick.scss";
+@import "~slick-carousel/slick/slick-theme.scss";
+
+@import "~owl.carousel/src/scss/owl.carousel.scss";
+
+@import "./vendors/extensions/_angularJS-materials-ext.scss";
+@import "./vendors/extensions/_bootstrap-ext.scss";
+@import "./vendors/extensions/_parsley-ext.scss";
 
 @import "./base/_colours.scss";
 @import "./base/_typography.scss";
@@ -16,25 +33,14 @@
 @import "./components/_progress-bar.scss";
 @import "./components/_shapes.scss";
 @import "./components/_tables.scss";
+@import "./components/_media_queries.scss";
 
 @import "./layouts/_layout.scss";
 @import "./layouts/_modal.scss";
 @import "./layouts/_panels.scss";
 @import "./layouts/_sidenav.scss";
-@import "./layouts/_slick-carousel.scss";
+// @import "./layouts/_slick-carousel.scss";
 
 @import "./pages/_dashboard.scss";
 @import "./pages/_transactions.scss";
 @import "./pages/_user-profile.scss";
-
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
-@import "../../node_modules/angular-material/modules/scss/angular-material.scss";
-@import "../../node_modules/nvd3/build/nv.d3.css";
-@import "../../node_modules/slick-carousel/slick/slick.scss";
-@import "../../node_modules/slick-carousel/slick/slick-theme.scss";
-@import "../../node_modules/owl.carousel/src/scss/owl.carousel.scss";
-@import "../../node_modules/font-awesome/scss/font-awesome.scss";
-
-@import "./vendors/extensions/_angularJS-materials-ext.scss";
-@import "./vendors/extensions/_bootstrap-ext.scss";
-@import "./vendors/extensions/_parsley-ext.scss";
