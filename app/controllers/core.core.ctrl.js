@@ -18,7 +18,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	  	closeModals();
 
 	  	$scope.warning = $uibModal.open({
-			  templateUrl: 'warning-dialog.html',
+			  templateUrl: 'app/templates/warning-dialog.html',
 	  		windowClass: 'modal-danger'
 	    });
 	});
@@ -66,7 +66,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
-			templateUrl: 'p3sweb/app/views/app/views/modals/welcome-message-modal.htm',
+			templateUrl: 'app/templates/welcome-message-modal.tpl.htm',
 			scope: $scope,
 			controller: function($uibModalInstance) {
 
@@ -136,7 +136,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	function urgentPatentModal(response) {
 		var modalInstance = $uibModal.open({
-			templateUrl: 'p3sweb/app/views/app/views/modals/urgent-message-modal.htm',
+			templateUrl: 'app/templates/urgent-message-modal.htm',
 			scope: $scope,
 			controller: function($uibModalInstance, message) {
 
