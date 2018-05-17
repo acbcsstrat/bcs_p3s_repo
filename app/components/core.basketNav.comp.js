@@ -1,5 +1,5 @@
 angular.module('ppApp').component('basketnav', {
-	templateUrl: 'p3sweb/app/views/app/views/basket-nav.htm',
+	templateUrl: 'app/templates/checkout.basket-nav.tpl.htm',
 	controller: ['ngCart', '$timeout', function(ngCart, $timeout){
 
 		var vm = this;

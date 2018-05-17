@@ -1,6 +1,6 @@
 angular.module('ppApp').component('transactionnav', {
   	template: function($stateParams) {
     	var navigation = $stateParams.navigation || 'default';
-    	return '<div data-ng-include="\'p3sweb/app/views/transactions/views/' + navigation + '.htm\'"></div>'
+    	return '<div data-ng-include="\'app/templates/' + navigation + '.tpl.htm\'"></div>'
 	}
 });
