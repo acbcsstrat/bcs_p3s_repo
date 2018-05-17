@@ -37,12 +37,12 @@
 							<span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call  to Renew (+44)1789-000-000</span>
 						</p>
 						<div>
-							<img data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" src="p3sweb/assets/imgs/icons/progress_icon_lg.png" alt="payment in progress icon">
-							<img data-ng-if="$ctrl.patent.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed__icon_lg.png" alt="epo instructed icon">
-							<img data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon_lg.png" alt="renewal in place icon">
+							<img data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" src="assets/imgs/icons/progress_icon_lg.png" alt="payment in progress icon">
+							<img data-ng-if="$ctrl.patent.renewalStatus == 'EPO Instructed'" src="assets/imgs/icons/epo_instructed__icon_lg.png" alt="epo instructed icon">
+							<img data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" src="assets/imgs/icons/complete_icon_lg.png" alt="renewal in place icon">
 							<i data-ng-if="$ctrl.patent.renewalStatus == 'Too late to renew'" class="fa fa-phone fa-3x txt-phase-red m-r-xs"></i>
-							<img data-ng-if="$ctrl.patent.renewalStatus == 'Way too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon_lg.png" alt="not open for renewal icon">
-							<img data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed'" src="p3sweb/assets/imgs/icons/no_renewal_lg.png" alt="no renewal icon">
+							<img data-ng-if="$ctrl.patent.renewalStatus == 'Way too late to renew'" src="assets/imgs/icons/lapsed_icon_lg.png" alt="not open for renewal icon">
+							<img data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed'" src="assets/imgs/icons/no_renewal_lg.png" alt="no renewal icon">
 						</div>
 			    	</div>						    			    	
 			    	<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
@@ -235,7 +235,7 @@
 								<p class="font-h3">$ {{$ctrl.patentFx.getFx().todaysPriceUSD || '0.00'}}</p>
 							</div>
 							<div class="col-xl-2 d-flex justify-content-center align-items-center">
-								<img src="p3sweb/assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
+								<img src="assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
 							</div>
 							<div class="col-xl-5 text-center">
 								<p class="font-h4 font-weight-medium m-b-xs">EUR</p>
@@ -286,10 +286,10 @@
 	 							</ngcart-addtocart>
 							</div>
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="w-100 btn-default">
-						 		<a class="btn btn-block pill-radius bg-phase-green font-body no-line-height font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" class="m-l-xs" alt="transaction icon"></a>
+						 		<a class="btn btn-block pill-radius bg-phase-green font-body no-line-height font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" class="m-l-xs" alt="transaction icon"></a>
 						 	</div>
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="w-100 btn-default">
-						 		<a class="btn btn-block pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" class="m-l-xs" alt="patent renewal icon"></a>
+						 		<a class="btn btn-block pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" class="m-l-xs" alt="patent renewal icon"></a>
 						 	</div>											
 						</div>
 					</div>	
@@ -314,7 +314,7 @@
 								<p class="font-h3">$ {{$ctrl.patent.feeUI.subTotalUSD || '0.00'}}</p>
 							</div>							
 							<div class="col-cxl-2 d-flex justify-content-center align-items-center">
-								<img src="p3sweb/assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
+								<img src="assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
 							</div>
 							<div class="col-cxl-5 d-flex flex-column justify-content-center align-items-center">
 								<p class="font-h4 font-weight-medium m-b-xs">EUR</p>
@@ -365,10 +365,10 @@
 	 							</ngcart-addtocart>		
 							</div>
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn-default">
-						 		<a class="btn btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+						 		<a class="btn btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 						 	</div>
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
-						 		<a class="btn btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
+						 		<a class="btn btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
 						 	</div>											
 						</div>
 					</div>	
@@ -401,12 +401,12 @@
 								<span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call  to Renew (+44)1789-000-000</span>
 							</p>
 							<div>
-								<img data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" src="p3sweb/assets/imgs/icons/progress_icon_lg.png" alt="payment in progress icon">
-								<img data-ng-if="$ctrl.patent.renewalStatus == 'EPO Instructed'" src="p3sweb/assets/imgs/icons/epo_instructed__icon_lg.png" alt="epo instructed icon">
-								<img data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" src="p3sweb/assets/imgs/icons/complete_icon_lg.png" alt="renewal in place icon">
+								<img data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" src="assets/imgs/icons/progress_icon_lg.png" alt="payment in progress icon">
+								<img data-ng-if="$ctrl.patent.renewalStatus == 'EPO Instructed'" src="assets/imgs/icons/epo_instructed__icon_lg.png" alt="epo instructed icon">
+								<img data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" src="assets/imgs/icons/complete_icon_lg.png" alt="renewal in place icon">
 								<i data-ng-if="$ctrl.patent.renewalStatus == 'Too late to renew'" class="fa fa-phone fa-3x txt-phase-red m-r-xs"></i>
-								<img data-ng-if="$ctrl.patent.renewalStatus == 'Way too late to renew'" src="p3sweb/assets/imgs/icons/lapsed_icon_lg.png" alt="not open for renewal icon">
-								<img data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed'" src="p3sweb/assets/imgs/icons/no_renewal_lg.png" alt="no renewal icon">
+								<img data-ng-if="$ctrl.patent.renewalStatus == 'Way too late to renew'" src="assets/imgs/icons/lapsed_icon_lg.png" alt="not open for renewal icon">
+								<img data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed'" src="assets/imgs/icons/no_renewal_lg.png" alt="no renewal icon">
 							</div>
 				    	</div>						    			    	
 				    	<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
@@ -620,7 +620,7 @@
 											<p class="font-h3">$ {{$ctrl.patent.feeUI.subTotalUSD || '0.00'}}</p>
 										</div>
 										<div class="col-md-2 col-lg-2 d-flex justify-content-center align-items-center">
-											<img src="p3sweb/assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
+											<img src="assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
 										</div>
 										<div class="col-md-5 col-lg-5 text-center">
 											<p class="font-h4 font-weight-medium m-b-xs">EUR</p>
@@ -673,10 +673,10 @@
 											</div>
 										</div>
 							        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="w-100 btn-default">
-									 		<a class="btn btn-block pill-radius bg-phase-green font-body no-line-height font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="p3sweb/assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+									 		<a class="btn btn-block pill-radius bg-phase-green font-body no-line-height font-weight-medium cartbtn txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 									 	</div>
 							        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="w-100 btn-default">
-									 		<a class="btn btn-block pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="p3sweb/assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
+									 		<a class="btn btn-block pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
 									 	</div>						
 									</div>
 								</div>	
