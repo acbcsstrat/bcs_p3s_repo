@@ -1,7 +1,7 @@
 /**
  * 
  */
-window.ppdomain = "http://localhost:8080/";
+window.ppdomain = "http://localhost:8080/p3sweb/";
 
 
 
