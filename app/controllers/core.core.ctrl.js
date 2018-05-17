@@ -136,7 +136,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	function urgentPatentModal(response) {
 		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/urgent-message-modal.htm',
+			templateUrl: 'app/templates/modalurgent-message-modal.tpl.htm',
 			scope: $scope,
 			controller: function($uibModalInstance, message) {
 
