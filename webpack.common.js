@@ -1,85 +1,95 @@
 const path = require('path');
-const ExtractTextPlugin =  require('extract-text-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  mode: 'production',
-  context: path.resolve(__dirname, './.'),
+  devtool: "source-map",
+  
   entry: {
-    app: [
-      './src/scss/main.scss',
-      './src/js/index.js'
-    ],
-    vendor: './src/js/vendor.js'
+    vendor: './src/js/vendor.js',   
+    app: './src/js/index.js',
+    style: './src/scss/main.scss'
   },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: '[name].bundle.js'
   },
+  resolve: {
+    alias: {
+      localScripts: path.resolve(__dirname, 'assets'),
+      app: path.resolve(__dirname, 'app'),
+    }
+  },
   module: {
     rules: [
       {
+        test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: [
+            'file-loader',
+            {
+              loader: 'image-webpack-loader',
+              options: {
+                bypassOnDebug: true,
+              },
+            },            
+        ]
+      }, 
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader', options: { url: false, sourceMap: true } }
+        ]
+      },      
+      {
         test: /\.scss$/,
-            include: [
-              path.resolve(__dirname, "./src/scss")
-            ],
-            exclude: [
-              path.resolve(__dirname, "node_modules")
-            ],                    
-        use: ExtractTextPlugin.extract({
-              use: [
-                  {
-                      loader: 'css-loader',
-                      options: {
-                          // If you are having trouble with urls not resolving add this setting.
-                          // See https://github.com/webpack-contrib/css-loader#url
-                          url: false,
-                          minimize: true,
-                          sourceMap: true
-                      }
-                  }, 
-                  {
-                      loader: 'sass-loader',
-                      options: {
-                          sourceMap: true
-                      }
-                  }
-                ],
-          fallback: 'style-loader'
-        })
+        include: [
+          path.resolve(__dirname, "./src/scss")
+        ],
+        // exclude: [
+        //   path.resolve(__dirname, "node_modules")
+        // ],        
+        use: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          { 
+            loader: 'css-loader', 
+            options: { 
+              url: false, sourceMap: true 
+            } 
+          },
+          { 
+            loader: 'sass-loader', 
+            options: { 
+              sourceMap: true 
+            } 
+          }
+        ]
       },
-        {
-            test: /\.(png|svg|jpg|gif)$/,
-            use: [
-                'file-loader'
-            ]
-        }
+      { 
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+        loader: 'url-loader?limit=100000' 
+      }
     ]
   },
-  devServer: {
-      contentBase: path.join(__dirname, "./dist"),
-      compress: true,
-      port: 9000,
-      hot: true
-    },  
+  // cache: false,
   plugins: [
-    new ExtractTextPlugin({
-      filename: 'main.css'
-    }),
-      new UglifyJsPlugin({
-        sourceMap: true,
-        test: /\.js($|\?)/i
-      }),
-      new CleanWebpackPlugin(['dist']),
-      new HtmlWebpackPlugin({
-        title: 'Testing',
-        template: 'index.htm'
+    new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery'
+    }),  
+    new webpack.ContextReplacementPlugin(/\.\/locale$/, 'empty-module', false, /js$/), //needed for bug in moment
+    new CleanWebpackPlugin(['dist']),
+    new HtmlWebpackPlugin({
+      inject: false,
+      title: 'Patent Place',
+      template: 'index.htm'
 
-      }),
-      new webpack.NamedModulesPlugin(),
-      new webpack.HotModuleReplacementPlugin()      
+    }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()      
   ]
 }
