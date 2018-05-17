@@ -31,7 +31,7 @@
 }
 
 .bg-info-icon:after { /*modules*/ /*components*/ /*_layout.scss*/
-  content: url(../../assets/imgs/icons/info_icon.png);
+  content: url(../../p3sweb/assets/imgs/icons/info_icon.png);
   position: absolute;
   bottom: -4px;
   right: -1px;
@@ -46,7 +46,7 @@
   top:0;
   left:0;
   right:0;
-  background: url(../../assets/imgs/icons/chart_icon.png) no-repeat center center;
+  background: url(../../p3sweb/assets/imgs/icons/chart_icon.png) no-repeat center center;
   background-size: contain;
   width: 100%;
   z-index: -1;
@@ -60,7 +60,7 @@
     top:0;
     left:0;
     right:0;
-    background: url(../../assets/imgs/icons/chart_icon.png) no-repeat center center;
+    background: url(../../p3sweb/assets/imgs/icons/chart_icon.png) no-repeat center center;
     background-size: contain;
     width: 100%;
     z-index: -1;
