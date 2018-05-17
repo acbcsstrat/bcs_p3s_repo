@@ -33,6 +33,11 @@ require("app/services/transactions.currentTransactions.serv.js");
 require("app/services/user.user.serv.js");
 require("app/services/vendors/ngCart.fulfilment.js");
 
+require("app/components/core.basketNav.comp.js");
+require("app/components/core.mainNav.comp.js");
+require("app/components/patents.patentNav.comp.js");
+require("app/components/transactions.transNav.comp.js");
+
 require("app/controllers/checkout.bankTransferPrep.ctrl.js");
 require("app/controllers/checkout.bankTransferSuccess.ctrl.js");
 require("app/controllers/checkout.basket.ctrl.js");
@@ -57,3 +62,4 @@ require("app/controllers/transactions.currentTransactions.ctrl.js");
 require("app/controllers/transactions.transactionHistory.ctrl.js");
 require("app/controllers/transactions.transactionHistoryItem.ctrl.js");
 require("app/controllers/user.userProfile.ctrl.js");
+
