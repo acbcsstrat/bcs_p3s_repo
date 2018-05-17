@@ -7,6 +7,10 @@ require("app/app.config.js");
 require("app/app.routes.js");
 
 require('app/directives/app.dir.js');
+require('app/directives/checkout.dir.js');
+require('app/directives/current-transactions.transactions.dir.js');
+require('app/directives/patents.list-patents.dir.js');
+require('app/directives/user.dir.js');
 
 require('app/directives/checkout.dir.js');
 require('app/directives/current-transactions.transactions.dir.js');
@@ -33,11 +37,6 @@ require("app/services/transactions.currentTransactions.serv.js");
 require("app/services/user.user.serv.js");
 require("app/services/vendors/ngCart.fulfilment.js");
 
-require("app/components/core.basketNav.comp.js");
-require("app/components/core.mainNav.comp.js");
-require("app/components/patents.patentNav.comp.js");
-require("app/components/transactions.transNav.comp.js");
-
 require("app/controllers/checkout.bankTransferPrep.ctrl.js");
 require("app/controllers/checkout.bankTransferSuccess.ctrl.js");
 require("app/controllers/checkout.basket.ctrl.js");
@@ -63,3 +62,7 @@ require("app/controllers/transactions.transactionHistory.ctrl.js");
 require("app/controllers/transactions.transactionHistoryItem.ctrl.js");
 require("app/controllers/user.userProfile.ctrl.js");
 
+require("app/components/core.basketNav.comp.js");
+require("app/components/core.mainNav.comp.js");
+require("app/components/patents.patentNav.comp.js");
+require("app/components/transactions.transNav.comp.js");
