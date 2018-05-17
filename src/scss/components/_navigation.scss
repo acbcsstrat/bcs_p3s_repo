@@ -13,37 +13,62 @@
 .secondary-view-nav .secondary-view-nav__list {
   @extend %primary-view-nav__list;
 }
-.panel-nav .panel-nav__list {
+.panel-nav__list {
   @extend %primary-view-nav__list;
 }
-
-
-// .panel-nav .panel-nav__list, /*rename to phase-tabs__phase-pills*/ //PANEL NAV
-// .phase-tabs ul.nav-pills, /*think of new naming convention. whats difference between them? not obvious*/ //PRIMARY
-// // .view-tabs .view-pills, /*rename to view-tabs__view-pills*/ //PANEL NAV
-// .primary-view-nav .primary-view-nav__list, /*rename to view-tabs__view-pills*/ //PANEL NAV
-// .view-tabs .chart-pills,  /*rename to view-tabs__chart-pills*/ //PANEL NAV
-// .widget-panel .view-tabs ul.nav-pills, /*rename to */ /*rename*/
-// .notifcation-tabs .notification-pill  { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
-
-
 /*think of new naming convention. whats difference between them? not obvious*/
 .panel-nav__list-item { 
-  text-align: center;  
-  margin-right: 1rem; 
+  @include list-item-transition;
   &:last-child {
     margin-right: 0;
   }
-
+  &:not([disabled]):hover { 
+    @include list-item-hover; 
+  }
+  &:hover {
+    .panel-nav__link { 
+      @include hover-white; 
+    }
+  }
+  &:active { 
+    color: #fff; 
+    opacity: 1!important;     
+    @include opacity(1); 
+  }  
+  &:not([disabled]):active { 
+    @include opacity(1); 
+  }  
 } /*modules*/ /*components*/ /*_navigation.scss*/ /*OR REMOVE CLASS AND ADD CLASSES TO VIEW?*/ //ADD CLASS TO LI ITEMS
-.panel-nav__list-item { 
+
+.panel-nav__list-item--md {
+  @include margin-mixin(0 1rem 0 0);
   @include list-item(10.5rem, 10.5rem);
+  @include padding-mixin(0.5rem 1.5rem);  
 }
-.panel-nav__list-item--num { 
+
+.panel-nav__list-item--fluid {
+  @include margin-mixin(0 1rem 0 0);
+  @include padding-mixin(0.5rem 3rem);  
+}
+
+
+.panel-nav__list-item--num {
+  @include margin-mixin(0 1rem 0 0);
+  @include list-item-transition;
   @include list-item(7.5rem, 9.5rem);
+  &:hover {
+    @include list-item-hover; 
+  }
+  &:active { 
+    @include opacity(1); 
+  }  
 }
+
 .panel-nav__list-item--notifications {
-  @include list-item(7.5rem, 8rem)  ;
+  @include list-item(7.5rem, 8rem);
+  &:hover { 
+    color: $white; 
+  }  
 }
 
 .secondary-view-nav__list-item { 
@@ -62,46 +87,31 @@
     transition: background .2s ease-in-out, border  .2s ease-in-out, color .2s ease-in-out;
 }  
 
-.panel-nav__list-item { @include list-item-transition; } 
-.panel-nav__list-item--num { @include list-item-transition; }  
-.primary-view-nav__list-item.active { @include list-item-transition; }
 .secondary-view-nav__list-item.active { @include list-item-transition; } 
 
 .primary-view-nav__list-item {
+  &:hover {
+    text-decoration: none;
+    .primary-view-nav__link { //add class to link
+      @include hover-white;
+    }
+  } 
+  &:not(.disabled):not(.active):hover { 
+    @include list-item-hover; 
+  }  
+  &:active {
+    text-decoration: none;
+    background: $dark-green; 
+    border: 1px solid $dark-green; 
+    color: #fff; 
+    opacity: 1; 
+  }
   &[disabled]:hover, &[disabled]:active {
     background: #fff; 
     border: 1px solid #dbdbdb; 
     opacity: .65; 
     color: $blacktxt;
   }
-}
-
-.primary-view-nav__list-item { 
-  &:hover {
-    text-decoration: none;
-  } 
-}
-
-.panel-nav__list-item--num { 
-  &:hover {
-    @include list-item-hover; 
-  }
-}
-
-.primary-view-nav__list-item {
-  &:not(.disabled):not(.active):hover { 
-    @include list-item-hover; 
-  }
-}
-
-.panel-nav__list-item {
-  &:not([disabled]):hover { 
-    @include list-item-hover; 
-  }
-}
-
-.primary-view-nav__list-item {
-  &:active {text-decoration: none; }
 }
 
 /*notification-nav*/
@@ -112,43 +122,37 @@
 .panel-nav__notification-list-item--gblue-notification { &:hover {background: $blue;} }
 .panel-nav__notification-list-item--gblack-notification { &:hover {background: $black;} }
 
-.panel-nav__notification-list-item {
-  &:hover { 
-    color: #fff; 
-  }
-}
-
-.panel-nav__list-item { 
-  &:not([disabled]):hover { 
-    background: $black; 
-  }
-}
-
 .primary-view-nav__list-item, .secondary-view-nav__list-item {
   &:hover { 
     background: $green; 
-    color: #fff; 
+    color: $white; 
     border: 1px solid $green; 
   }
 }
 
-.primary-view-nav__list-item {
-  &:hover { 
-    .primary-view-nav__link { //add class to link
-      @include hover-white;
-    }
-  }
-}
-
-.panel-nav__list-item {
-  &:hover {
-    .panel-nav__link { 
-      @include hover-white; 
-    }
-  }
-}
-
 .primary-view-nav__list-item.active {
+  @include list-item-transition;
+  font-weight: medium; 
+  background: #53ab58; 
+  border: 1px solid #53ab58; 
+  color: #fff;
+  > .primary-view-nav__link { 
+    color: #fff; font-weight: 500;
+  }
+  &:active { 
+    background: $dark-green; 
+    border: 1px solid $dark-green; 
+    color: #fff; 
+    opacity: 1!important; 
+  }
+  &:active .primary-view-nav__link { 
+    color: #fff; 
+    opacity: 1; 
+  }
+  &.active:active .primary-view-nav__link { 
+    color: #fff; 
+    opacity: 1; 
+  }  
   &:hover {
     .primary-view-nav__link { 
       @include opacity(1); 
@@ -158,25 +162,7 @@
 
 .panel-nav__list-item.active { 
   background: $blacktxt; 
-  color: #fff;
-}
-
-.panel-nav__list-item {
-  &:active { 
-    @include opacity(1); 
-  }
-}
-
-.panel-nav__list-item--num {
-  &:active { 
-    @include opacity(1); 
-  }
-}
-
-.panel-nav__list-item {
-  &:not([disabled]):active { 
-    @include opacity(1); 
-  }
+  color: $white;
 }
 
 .panel-nav__list-item.active { 
@@ -185,74 +171,11 @@
   }
 } 
 
-.nav__nav-link { @include padding(0, 0, 0, 0); } //add class name
-
-.panel-nav__list-item {
-  &:active {
-    background: $dark-green; 
-    border: 1px solid $dark-green; 
-    color: #fff; 
-    opacity: 1!important; 
-  } 
-}
-
-.primary-view-nav__list-item.active { 
-  &:active { 
-    background: $dark-green; 
-    border: 1px solid $dark-green; 
-    color: #fff; 
-    opacity: 1!important; 
-  }
-}
-
-.panel-nav__list-item {
-  &:active { 
-    background: $dark-green; 
-    border: 1px solid $dark-green; 
-    color: #fff; 
-    opacity: 1; 
-  }
-}
-
-.primary-view-nav__list-item { 
-  &:active { 
-    background: $dark-green; 
-    border: 1px solid $dark-green; 
-    color: #fff; 
-    opacity: 1; 
-  }
-}
-
-.primary-view-nav__list-item { 
-  &:active .primary-view-nav__link { 
-    color: #fff; 
-    opacity: 1; 
-  }
-}
-
-.primary-view-nav__list-item { 
-  &.active:active .primary-view-nav__link { 
-    color: #fff; 
-    opacity: 1; 
-  }
-}
-
-.primary-view-nav__list-item.active { 
-  font-weight: medium; 
-  background: #53ab58; 
-  border: 1px solid #53ab58; 
-  color: #fff;
-}
+.nav__nav-link { @include padding-mixin(0 0 0 0); } //add class name
 
 .panel-nav__list-item.active { 
   font-weight: bold; 
   background: #3c3c3b; 
   border: none;  
   color: #fff;
-}
-
-.primary-view-nav__list-item.active {
-  > .primary-view-nav__link { 
-      color: #fff; font-weight: 500;
-  }
 }
