@@ -43,10 +43,10 @@
   @extend %no-border-er;
 }
 
-.t-data .td-20 { width: 20%; }
-.t-data .td-30 { width: 30%; }
-.t-data .td-40 { width: 40%; }
-.t-data .td-50 { width: 50%; }
+.t-data__td-20 { width: 20%; }
+.t-data__td-30 { width: 30%; }
+.t-data__td-40 { width: 40%; }
+.t-data__td-50 { width: 50%; }
 
 .t-data__ellipsis { //td-ellipsis
     max-width: 30rem;
@@ -55,7 +55,7 @@
     white-space: nowrap; 
 }
 
-.t-data .td-panel-p-l { padding: 1.3rem 1rem 1.2rem 3rem; }
+.t-data__td-panel-p-l { padding: 1.3rem 1rem 1.2rem 3rem; }
 
 .t-data td, 
 .t-data th,
