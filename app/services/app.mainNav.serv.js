@@ -6,7 +6,7 @@ export default function mainNavService(){
   		name: 'Dashboard',
   		type: 'link',
   		state: 'dashboard',
-  		icon: 'p3sweb/assets/imgs/icons/menu/menu_dashboard_icon.png'
+  		icon: 'assets/imgs/icons/menu/menu_dashboard_icon.png'
 		}];
 
 
@@ -27,7 +27,7 @@ export default function mainNavService(){
 
 			}
 		],
-		icon: 'p3sweb/assets/imgs/icons/menu/menu_patent_icon.png'
+		icon: 'assets/imgs/icons/menu/menu_patent_icon.png'
   	})
 
   	sections.push({
@@ -46,7 +46,7 @@ export default function mainNavService(){
             type: 'link',
         }
       ],
-      icon: 'p3sweb/assets/imgs/icons/menu/menu_transaction_icon.png'
+      icon: 'assets/imgs/icons/menu/menu_transaction_icon.png'
 	})
      
      	// console.log(sections)
