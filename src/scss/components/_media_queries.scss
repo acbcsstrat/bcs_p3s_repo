@@ -198,8 +198,12 @@
   .t-data__w10 { width: 16%; }
   .t-data__w20 { width: 10%; }
 
-  .t-data .t-data__td, .t-data .t-data__th {
+  .t-data .t-data__td {
     @include padding-mixin(0.5rem 1rem);
+  }
+
+  .t-data .t-data__th {
+    @include padding-mixin(1.5rem 1rem);
   }
 
   .btn-default .t-data__btn-portal, 
