@@ -1,4 +1,4 @@
-<div class="hidden-lg-down">	
+<div class="d-none d-xl-block">	
 	<div class="content-panel__head bg-white border-grey-xs--btm">
 		<div class="row">
 			<div class="col-xl-2">
@@ -39,66 +39,66 @@
 			<div class="row">
 				<div class="col-xl-12">
 					<table class="t-data">
-						<thead class="border-grey-xs--top">
-							<tr>
-								<td class="font-h4 font-weight-bold td-panel-p-l td-20" data-ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
+						<thead>
+							<tr class="t-data__row">
+								<th class="font-h4 text-left font-weight-bold t-data__th" data-ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
 									<span data-ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 									<span data-ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-								</td>
-								<td class="font-h4 font-weight-bold td-20" data-ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
+								</th>
+								<th class="font-h4 text-left font-weight-bold t-data__th" data-ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
 									<span data-ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 									<span data-ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-								</td>
-								<td class="font-h4 font-weight-bold td-30" data-ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
+								</th>
+								<th class="font-h4 text-left font-weight-bold t-data__th" data-ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
 									<span data-ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 									<span data-ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-								</td>
-								<td class="font-h4 font-weight-bold td-30">Downloads</td>
+								</th>
+								<th class="font-h4 text-left font-weight-bold">Downloads</th>
 							</tr>
 						</thead>
-						<tbody class="border-grey-xs--btm">
-							<tr data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
-								<td class="font-body td-panel-p-l td-20">Year <span data-ng-bind="renewal.renewalYear"></span></td>
-								<td class="font-body td-20">{{renewal.certificate.renewedOnDateExEpo | date: 'MM/dd/yy'}}</td>
-								<td class="font-body td-30">
-									<table class="table-borderless">
+						<tbody>
+							<tr class="t-data__row t-data_td--b-border" data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+								<td class="t-data__td text-left align-top">Year <span data-ng-bind="renewal.renewalYear"></span></td>
+								<td class="t-data__td text-left align-top">{{renewal.certificate.renewedOnDateExEpo | date: 'MM/dd/yy'}}</td>
+								<td class="text-left align-top">
+									<table class="t-data table-borderless">
 										<tr>
-											<td class="font-body p-t-none">Official fee:</td>
-											<td class="font-body p-t-none">$ {{renewal.feeUI.renewalFeeUSD}}</td>
+											<td class="t-data__td text-left">Official fee:</td>
+											<td class="t-data__td text-left">$ {{renewal.feeUI.renewalFeeUSD}}</td>
 										</tr>
 										<tr>
-											<td class="font-body">Processing fee:</td>
-											<td class="font-body">$ {{renewal.feeUI.processingFeeUSD}}</td>
+											<td class="t-data__td text-left">Processing fee:</td>
+											<td class="t-data__td text-left">$ {{renewal.feeUI.processingFeeUSD}}</td>
 										</tr>
 										<tr>
-											<td class="font-body">Extension fee:</td>
-											<td class="font-body">$ {{renewal.feeUI.extensionFeeUSD}}</td>
+											<td class="t-data__td text-left">Extension fee:</td>
+											<td class="t-data__td text-left">$ {{renewal.feeUI.extensionFeeUSD}}</td>
 										</tr>
 										<tr>
-											<td class="font-body">Express fee:</td>
-											<td class="font-body">$ {{renewal.feeUI.expressFeeUSD}}</td>
+											<td class="t-data__td text-left">Express fee:</td>
+											<td class="t-data__td text-left">$ {{renewal.feeUI.expressFeeUSD}}</td>
 										</tr>
-										<tr class="border-grey-xs--btm">
-											<td class="font-body">Urgent fee:</td>
-											<td class="font-body">$ {{renewal.feeUI.urgentFeeUSD}}</td>
+										<tr class="t-data_td--b-border">
+											<td class="t-data__td text-left">Urgent fee:</td>
+											<td class="t-data__td text-left ">$ {{renewal.feeUI.urgentFeeUSD}}</td>
 										</tr>																								
-										<tr class="border-grey-xs--btm">
-											<td class="font-body font-weight-bold">Total: </td>
-											<td class="font-body font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
+										<tr class="t-data_td--b-border">
+											<td class="t-data__td text-left font-weight-bold">Total: </td>
+											<td class="t-data__td text-left font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
 										</tr>													
 									</table>
 								</td>
-								<td class="td-30">
+								<td class="t-data__td align-top">
 									<div class="row">
 										<div class="col-xl-6 d-flex align-items-center" data-ng-if="renewal.certificateUrl">
-											<div class="btn-default">
-												<a data-ng-href="{{renewal.certificateUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
-											</div>
+											<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+							 					<a class="btn__link btn__link--white btn--lg" data-ng-href="{{renewal.certificateUrl}}" target="_blank">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+							 				</button>
 										</div>
 										<div class="col-xl-6 d-flex align-items-center">
-											<div class="btn-default">
-												<a data-ng-href="{{renewal.invoiceUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
-											</div>
+											<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+							 					<a class="btn__link btn__link--white btn--lg" data-ng-href="{{renewal.invoiceUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+											</button>
 										</div>	
 									</div>
 								</td>
@@ -110,10 +110,7 @@
 		</div>
 	</div>
 </div>
-
-
-
-<div class="hidden-xl-up">
+<div class="d-xl-none">
 	<div class="content-panel">
 		<div class="content-panel__head bg-white">
 			<div class="row">
@@ -153,51 +150,69 @@
 				<div class="row">
 					<div class="col-md-12 col-lg-12">
 						<table class="t-data">
-							<thead class="border-grey-xs--top">
-								<tr>
-									<td class="font-h4 font-weight-bold td-panel-p-l" data-ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
+							<thead>
+								<tr class="t-data__row">
+									<th class="font-h4 text-left font-weight-bold t-data__th" data-ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
 										<span data-ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 										<span data-ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-									</td>
-									<td class="font-h4 font-weight-bold" data-ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
+									</th>
+									<th class="font-h4 text-left font-weight-bold t-data__th" data-ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
 										<span data-ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 										<span data-ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-									</td>
-									<td class="font-h4 font-weight-bold" data-ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
+									</th>
+									<th class="font-h4 text-left font-weight-bold t-data__th" data-ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
 										<span data-ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 										<span data-ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
-									</td>
-									<td class="font-h4 font-weight-bold">Downloads</td>
+									</th>
+									<th class="font-h4 text-left font-weight-bold">Downloads</th>
 								</tr>
 							</thead>
-							<tbody class="border-grey-xs--btm">
-								<tr data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
-									<td class="font-body td-panel-p-l">Year <span data-ng-bind="renewal.renewalYear"></span></td>
-									<td class="font-body">{{renewal.patentUI.lastRenewedDateExEpo | date: 'MM/dd/yy'}}</td>
-									<td class="font-body">
-										<table class="table-borderless">
+							<tbody>
+								<tr class="t-data__row t-data_td--b-border" data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+									<td class="t-data__td text-left align-top">Year <span data-ng-bind="renewal.renewalYear"></span></td>
+									<td class="t-data__td text-left align-top">{{renewal.certificate.renewedOnDateExEpo | date: 'MM/dd/yy'}}</td>
+									<td class="text-left align-top">
+										<table class="t-data table-borderless">
 											<tr>
-												<td class="font-body p-t-none">Official Fee:</td>
-												<td class="font-body p-t-none">$ {{renewal.feeUI.renewalFeeUSD}}</td>
+												<td class="t-data__td text-left">Official fee:</td>
+												<td class="t-data__td text-left">$ {{renewal.feeUI.renewalFeeUSD}}</td>
 											</tr>
-											<tr class="border-grey-xs--btm">
-												<td class="font-body">Processing Fee:</td>
-												<td class="font-body">$ {{renewal.feeUI.processingFeeEUR}}</td>
-											</tr>														
-
 											<tr>
-												<td class="font-body font-weight-bold">Total: </td>
-												<td class="font-body font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
+												<td class="t-data__td text-left">Processing fee:</td>
+												<td class="t-data__td text-left">$ {{renewal.feeUI.processingFeeUSD}}</td>
+											</tr>
+											<tr>
+												<td class="t-data__td text-left">Extension fee:</td>
+												<td class="t-data__td text-left">$ {{renewal.feeUI.extensionFeeUSD}}</td>
+											</tr>
+											<tr>
+												<td class="t-data__td text-left">Express fee:</td>
+												<td class="t-data__td text-left">$ {{renewal.feeUI.expressFeeUSD}}</td>
+											</tr>
+											<tr class="t-data_td--b-border">
+												<td class="t-data__td text-left">Urgent fee:</td>
+												<td class="t-data__td text-left ">$ {{renewal.feeUI.urgentFeeUSD}}</td>
+											</tr>																								
+											<tr class="t-data_td--b-border">
+												<td class="t-data__td text-left font-weight-bold">Total: </td>
+												<td class="t-data__td text-left font-weight-bold">$ {{renewal.feeUI.subTotalUSD}}</td>
 											</tr>													
 										</table>
 									</td>
-									<td>
-										<div class="btn-default m-b-sm">
-											<a data-ng-href="{{renewal.certificateUrl}}" target="_blank" class="btn btn-block btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white  d-flex justify-content-center align-items-center">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+									<td class="t-data__td align-top">
+										<div class="row m-b-xs">
+											<div class="col-xl-6 d-flex align-items-center" data-ng-if="renewal.certificateUrl">
+												<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+								 					<a class="btn__link btn__link--white btn--lg" data-ng-href="{{renewal.certificateUrl}}" target="_blank">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+								 				</button>
+											</div>
 										</div>
-
-										<div class="btn-default">
-											<a data-ng-href="{{renewal.invoiceUrl}}" target="_blank" class="btn btn-block btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white  d-flex justify-content-center align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+										<div class="row">
+											<div class="col-xl-6 d-flex align-items-center">
+												<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+								 					<a class="btn__link btn__link--white btn--lg" data-ng-href="{{renewal.invoiceUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+												</button>
+											</div>	
 										</div>
 									</td>
 								</tr>
