@@ -1,8 +1,7 @@
-@mixin list-item($min, $max, $color: #fff) {
+@mixin list-item($min, $max) {
     text-align: center;  
     min-width: $min;
     max-width: $max;
-    color: $color; 
 }
 
 @mixin list-item-transition {
@@ -29,6 +28,10 @@
 
 @mixin margin-mixin($some-number) {
   margin: $some-number;
+}
+
+@mixin rfs($font-size: 1rem) {
+    font-size: $font-size;
 }
 
 // @mixin font-mixin($size: 1.3rem, $letterspacing, $lineheight) {
