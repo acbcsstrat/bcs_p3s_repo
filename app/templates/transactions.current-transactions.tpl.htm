@@ -104,7 +104,7 @@
 					        		{{item.transStartDate | date: 'MM/dd/yy'}}
 						        </td>
 						        <td class="t-data__td t-data__w13">
-						        	$ {{item.transAmount_USD}}
+						        	$ {{item.transAmount_USD | number: 2}}
 						        </td>
 						        <td class="t-data__td t-data__w16">
 									<p class="font-weight-bold m-b-xs">{{item.latestTransStatus}}</p>
