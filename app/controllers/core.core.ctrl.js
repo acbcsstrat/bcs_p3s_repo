@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('coreCtrl', coreCtrl);
 
-coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart'];
+coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService'];
 
-function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart) {
+function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService) {
 
 	var vm = this;
 
@@ -10,8 +10,10 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	var patentsFound = true;
 	var displayMessages = displayMessages;
 	var userTimedOut = false;
+	vm.fetchContact = fetchContact;
 	fetchPatents();
 	displayMessages();
+	fetchContact();
 
 	$scope.$on('IdleStart', function() {
 		
@@ -22,6 +24,38 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	  		windowClass: 'modal-danger'
 	    });
 	});
+
+	function fetchContact() { 
+		coreService.ppContact()
+		.then(
+			function(response){
+				console.log(response)
+				console.log('response: ',response)
+			},
+			function(errResponse){
+
+			}
+		)
+	}
+
+
+
+
+	function fetchFxWeek() {
+
+		var deferred = $q.defer()
+
+		$http.get(ppdomain+'rest-fxrates/week')
+		.then(
+			function(response){
+				deferred.resolve(response.data)
+			},
+			function(errResponse){
+				deferred.reject(response.data)
+			}
+		)
+		return deferred.promise;
+	}
 
   	$scope.$on('IdleEnd', function() {
 	  	closeModals();
@@ -66,7 +100,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/welcome-message-modal.tpl.htm',
+			templateUrl: 'app/templates/modal.welcome-message.tpl.htm',
 			scope: $scope,
 			controller: function($uibModalInstance) {
 
@@ -136,7 +170,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	function urgentPatentModal(response) {
 		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modalurgent-message-modal.tpl.htm',
+			templateUrl: 'app/templates/modal.urgent-message.tpl.htm',
 			scope: $scope,
 			controller: function($uibModalInstance, message) {
 
