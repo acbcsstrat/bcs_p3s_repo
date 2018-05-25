@@ -4,7 +4,7 @@
 @import "./base/_base.scss";
 
 // @import "~bootstrap/scss/bootstrap.scss";
-@import "~angular-material/modules/scss/angular-material.scss";
+@import "~angular-material/angular-material.scss";
 @import "~nvd3/build/nv.d3.css";
 
 @import "~font-awesome/scss/font-awesome";
@@ -15,6 +15,7 @@
 
 @import "~owl.carousel/src/scss/owl.carousel.scss";
 
+@import "./vendors/stepProgress.scss";
 @import "./vendors/extensions/_angularJS-materials-ext.scss";
 @import "./vendors/extensions/_bootstrap-ext.scss";
 @import "./vendors/extensions/_parsley-ext.scss";
