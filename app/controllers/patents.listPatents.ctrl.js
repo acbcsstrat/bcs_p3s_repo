@@ -16,6 +16,7 @@ function listPatentsCtrl($scope, $timeout, $http, $rootScope,  $state, $anchorSc
 			vm.displayPhase('all'); //invoke displayPhase displaying all patents
 		}, 100);	    
 
+		vm.date = new Date();
 	    vm.displayPhase = displayPhase;
 	    vm.displayPatents = displayPatents;
 	    vm.fetchItemRenewal = fetchItemRenewal;
