@@ -17,28 +17,13 @@
   } 
 }
 
-.btn__link { 
-  font-size: $font-normal;
-  color: $white; 
-}
-
-%btn-box-shadow--shared { box-shadow: none!important; }
-.btn.focus { 
-   @extend %btn-box-shadow--shared;
-}
-.btn {
-  &:focus{
-    @extend %btn-box-shadow--shared;
-  }
-}
-
 .btn-no-bg--green {
   -webkit-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
   -o-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
   transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
 }
 
-.btn-default {
+.btn--default {
   -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out;
   -o-transition: opacity .2s ease-in-out, background .2s ease-in-out;
   transition: opacity .2s ease-in-out, background .2s ease-in-out;
@@ -46,23 +31,76 @@
 
 %btn-opacity { @include opacity(0.85); color: $white; }
 
-.btn { 
-  &:not([disabled]):not(.btn-list):hover {
+.btn-submit {
+  .btn-submit--check {
+    background: url(../assets/imgs/icons/tick_white_icon.png) no-repeat; 
+    padding-right: 3.51rem;
+    background-color: $green;
+    background-position: right 18px center;
+  }
+  .btn-submit--check:not(:disabled):not(.disabled):active {
+    background-image: url(../assets/imgs/icons/tick_white_icon.png);
+  }
+}
+
+.btn-cancel {
+  .btn-error--cross {
+    background: url(../assets/imgs/icons/cross_white_icon.png) no-repeat; 
+    padding-right: 3.51rem; 
+    background-color: $red; 
+    background-position: right 18px center; 
+  }
+  .btn-error--cross:not(:disabled):not(.disabled):active {
+    background-image: url(../assets/imgs/icons/cross_white_icon.png);
+  }
+}
+
+// .btn-default {
+//   &> .btn {
+//     &> .btn__link--white { 
+//       color: $white; 
+//     }
+//   }
+// }
+
+// .btn-default .btn:not(.btn-list):active {
+//     background: $green;
+//     color: #fff;
+//     border: 1px solid $green;
+//     opacity: 1;
+// }
+
+.btn {
+  &:disabled:hover {
+    opacity: .65;
+  }
+  font-weight: 500;
+  line-height: $line-none;
+  &.focus, &:focus { 
+    box-shadow: none!important;
+  }
+  &:not([disabled]):not(.t-data__btn-portal):hover, &:not([disabled]):hover,  &:hover {
      @extend %btn-opacity;
   }
-  &:hover {
-     @extend %btn-opacity;
-  } 
-  &:not([disabled]):hover {
-    @extend %btn-opacity;
+  &> .btn__link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }  
+  &> .btn__link:hover {
+    text-decoration: none;
   }
-  &:not(.btn-list):active { 
-    background: #418746; 
+  &> .btn__link--white, , a:not([href]):not([tabindex]), a:not([href]):not([tabindex]):hover { 
     color: $white; 
-    border: 1px solid #418746; 
-    opacity: 1; 
-  }  
-} 
+  }
+  &:not([disabled]):not(.t-data__btn-portal):active, &:not([disabled]):active,  &:active {
+    opacity: 1;
+  }
+}
+
+.btn--white {
+  color: $white; 
+}
 
 .uib-btn--lg {
   &:not(.active):hover { 
@@ -78,74 +116,17 @@
   }
 }
 
-// .btn-default .btn:not(.btn-list):active CHECK WHAT HAPPENED TO THE RULES. DIDNT PASTE THEM
+// .btn--default .btn:not(.t-data__btn-portal):active CHECK WHAT HAPPENED TO THE RULES. DIDNT PASTE THEM
 
-.btn-default {
-  font-size: $font-body;
-  @include padding-mixin(.5rem 3rem)
+.btn--default {
+  font-size: $font-normal;
+  // @include padding-mixin(.5rem 3rem)
 
 }
 
-.btn-default__green {
-  background: $green;
-  color: $white;
-}
-
-.btn-remove__link.btn { 
-  &:active { 
-    background: $dark-red; 
-    color: $white; 
-    border: 1px solid $dark-red; 
-    opacity: 1; 
-  }
-}
-
-%btn-submit---check-shared {
-  background: url(../../assets/imgs/icons/tick_white_icon.png) no-repeat; 
-  @include padding-mixin(0 3.51rem 0 0); 
-  background-color: $green; 
-  background-position: right 18px center;
-  opacity: 1;
-}
-
-.btn-submit--check {
-   @extend %btn-submit---check-shared;
-}
-
-.btn-submit--check {
-  &:active {
-    @extend %btn-submit---check-shared;
-  }
-}
-
-.btn-error--cross { 
-  &:active { 
-    @include opacity(1) 
-  }
-}
-
-.btn-submit--check { 
-  &:active { 
-    @include opacity(1) 
-  }
-}
 
 .user-utils__icon-link { 
   &:active { 
     @include opacity(1) 
-  }
-}
-
-%btn-error--cross { 
-  background: url(../../assets/imgs/icons/cross_white_icon.png) no-repeat;
-  @include padding-mixin(0 3.51rem 0 0); 
-  background-color: #e30613; 
-  background-position: right 21px center;
-  opacity: 1;
-}
-
-.btn-error--cross {
-  &:active {
-    @extend %btn-error--cross
   }
 }
