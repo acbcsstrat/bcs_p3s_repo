@@ -44,7 +44,21 @@ a,
 input, 
 table, 
 td, 
-th { font-family: $font-body }
+th { 
+  font-family: $font-body; 
+}
+
+p, 
+li, 
+button, 
+a, 
+input, 
+table, 
+td, 
+th,
+label { 
+  font-size: $font-normal; 
+}
 
 label { margin-bottom: 0; }
 
@@ -81,8 +95,12 @@ a {
       text-decoration: none;
       color: #212121;
   }
-  &:focus {
-    text-decoration: none;
-    color: #212121;
+}
+
+button {
+
+  &:disabled, &[disabled], &[disabled] a {
+    cursor: not-allowed!important;
   }
+
 }
