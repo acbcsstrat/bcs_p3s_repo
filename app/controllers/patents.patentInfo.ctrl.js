@@ -90,11 +90,11 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 	function openUpdateConfirmModal(id) {
 
 		var modalInstance = $uibModal.open({
-			templateUrl: 'p3sweb/app/views/patents/views/modals/modal-update-patent-template.htm',
+			templateUrl: 'app/templates/modal.update-patent.tpl.htm',
 			appendTo: undefined,
 			scope: $scope,
-			controller: function($uibModalInstance, $scope, $timeout){
-
+			controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+                
 			  	$scope.dismissModal = function () {
 			    	$uibModalInstance.close();
 			  	};
@@ -103,7 +103,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 			  		vm.updatePatent(id);
 			  	})
 
-			}
+			}]
 
 		});
 
@@ -112,10 +112,10 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 	function openDeleteConfirmModal(id) {
 
 		var modalInstance = $uibModal.open({
-			templateUrl: 'p3sweb/app/views/patents/views/modals/modal-remove-patent-template.htm',
+			templateUrl: 'app/templates/modal.remove-patent.tpl.htm',
 			appendTo: undefined,
 			scope: $scope,
-			controller: function($uibModalInstance, $scope){
+			controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timout){
 
 				$scope.dismissModal = function () {
 			    	$uibModalInstance.close();
@@ -132,7 +132,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 			  		$uibModalInstance.dismiss('cancel');
 			  	};
 
-			}
+			}]
 		});
 	};
 
@@ -144,21 +144,21 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
          		.then(function(){
              		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
              	});
-             },
+            },
             function(errResponse){
             	if(errResponse.status === 304) {
 					var modalInstance = $uibModal.open({
-						templateUrl: 'p3sweb/app/views/patents/views/modals/modal-delete-patent-error.htm',
+						templateUrl: 'app/templates/modal.delete-patent-error.tpl.htm',
 						appendTo: undefined,
 						scope: $scope,
-						controller: function($uibModalInstance ,$scope) {
+						controller: ['$uibModalInstance', '$scope', function($uibModalInstance ,$scope) {
 
 							vm.updatePatent(id);
 
 						  	$scope.dismissModal = function () {
 						    	$uibModalInstance.close();
 						  	};
-						}
+						}]
 					});
             	}
             }

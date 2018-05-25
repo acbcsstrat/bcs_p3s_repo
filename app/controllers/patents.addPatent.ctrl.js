@@ -48,10 +48,10 @@ function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $loca
   	function openCancelSearchModal() {
 
 		var modalInstance = $uibModal.open({
-			templateUrl: 'p3sweb/app/views/patents/views/modals/modal-cancel-search.htm',
+			templateUrl: 'app/templates/modal.cancel-search.tpl.htm',
 			scope: $scope,
 			appendTo: undefined,
-			controller: function($uibModalInstance ,$scope) {
+			controller: ['$uibModalInstance', '$scope', function($uibModalInstance ,$scope) {
 
 				$scope.cancelAdd = function() {
 					$state.go('search-patent', {}, {reload: true});
@@ -61,7 +61,7 @@ function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $loca
 					$uibModalInstance.close();
 				}
 
-			}
+			}]
 		})
 
   	}
@@ -69,34 +69,34 @@ function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $loca
 	function openConfirmModal(patent) {
 
 		var modalInstance = $uibModal.open({
-			templateUrl: 'p3sweb/app/views/patents/views/modals/modal-confirm-found-patent.htm',
+			templateUrl: 'app/templates/modal.confirm-found-patent.tpl.htm',
 			scope: $scope,
 			appendTo: undefined,
-			controller: function($uibModalInstance, $scope, $location, $anchorScroll) {
+			controller: ['$uibModalInstance', '$scope', '$location', '$anchorScroll', function($uibModalInstance, $scope, $location, $anchorScroll) {
 
 			  	$scope.addPatent = function () {
 			 		$timeout(function(){
 						patentsRestService.savePatent(patent)
-				            .then(
-				            	function(response){
-		        			 		var patent = response[0];
-					             	$state.go('patents.patent', {patentId: patent.id})
-					             	.then(
-										function(response){
-											$timeout(function() {
-												$location.hash('patentAnchor');
-											  	$anchorScroll();
-											}, 300);
-										},
-										function(errResponse){
-											console.log(errResponse)
-										}
-									);
+			            .then(
+			            	function(response){
+	        			 		var patent = response[0];
+				             	$state.go('patents.patent', {patentId: patent.id})
+				             	.then(
+									function(response){
+										$timeout(function() {
+											$location.hash('patentAnchor');
+										  	$anchorScroll();
+										}, 300);
+									},
+									function(errResponse){
+										console.log(errResponse)
+									}
+								);
 
-				             	},
-					            function(errResponse){
-					                console.error('Error while saving Patent');
-					            }
+			             	},
+				            function(errResponse){
+				                console.error('Error while saving Patent');
+				            }
 			    		)
 			 		}, 100);
 
@@ -114,7 +114,7 @@ function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $loca
 			  		$uibModalInstance.dismiss('cancel');
 			  	}
 
-			}
+			}]
 		})
 	}
 }

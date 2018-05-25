@@ -79,9 +79,9 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
                 function(response){
 
                      var modalInstance = $uibModal.open({
-                        templateUrl: 'p3sweb/app/views/user/views/modals/modal-successfully-updated-profile.htm',
+                        templateUrl: 'app/templates/modal.successfully-updated-profile.tpl.htm',
                         appendTo: undefined,
-                        controller: function($uibModalInstance, $scope) {
+                        controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 
                             if (p !== '') {
                                 user.newPassword = p;
@@ -91,7 +91,7 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
                                 $uibModalInstance.close();
                             };
 
-                        }
+                        }]
                     })
                 },
                 function(errResponse){

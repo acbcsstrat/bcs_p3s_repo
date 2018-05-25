@@ -23,9 +23,9 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 		function openCancelTransModal() {
 
 			var modalInstance = $uibModal.open({
-				templateUrl: 'p3sweb/app/views/checkout/views/modals/modal-cancel-transaction.htm',
+				templateUrl: 'app/templates/modal.cancel-transaction.tpl.htm',
 				appendTo: undefined,
-				controller: function($uibModalInstance, $scope) {
+				controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 
 				  	$scope.dismissModal = function () {
 				    	$uibModalInstance.close();
@@ -41,7 +41,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 				  		$uibModalInstance.dismiss('cancel');
 				  	};
 
-				}
+				}]
 			});
 
 		};
@@ -58,9 +58,9 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	            function(errResponse){
 	            	if(errResponse) {
 						var modalInstance = $uibModal.open({
-							templateUrl: 'p3sweb/app/views/checkout/views/modals/modal-commit-error.htm',
+							templateUrl: 'app/templates/modal.commit-error.tpl.htm',
 							appendTo: undefined,
-							controller: function($uibModalInstance, $scope) {
+							controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 
 							  	$scope.dismissModal = function () {
 							    	$uibModalInstance.close();
@@ -69,7 +69,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 							  	$scope.cancel = function() {
 							  		$uibModalInstance.dismiss('cancel');
 							  	};
-							}
+							}]
 						});
 					}
 	            }
