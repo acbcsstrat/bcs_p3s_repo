@@ -18,6 +18,7 @@ require('app/directives/patents.list-patents.dir.js');
 require('app/directives/user.dir.js');
 require('app/directives/vendors/ngCart.directives.js');
 
+require("app/services/app.core.serv.js");
 require("app/services/app.calculate.serv.js");
 require("app/services/app.chunkData.serv.js");
 require("app/services/app.fx.serv.js");
