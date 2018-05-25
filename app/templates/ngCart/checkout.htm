@@ -16,23 +16,23 @@
                     <div class="col-md-3 col-lg-3 col-xl-4">
                         <p class="font-weight-medium font-body text-md-right text-lg-right text-xl-left">Amount</p>
                     </div>
-                    <div class="col-md-3 col-lg-3 hidden-xl-up">
+                    <div class="col-md-3 col-lg-3 d-xl-none">
                         <p class="font-weight-medium font-body">Fee</p>
                     </div>
-                    <div class="col-md-3 col-lg-3 hidden-xl-up">
+                    <div class="col-md-3 col-lg-3 d-xl-none">
                         <p class="font-weight-medium font-body text-md-right text-lg-right">Amount</p>
                     </div>
                 </div>
             </div>
             <div class="content-panel__head border-grey-xs--btm">
                 <div class="row">
-                    <div class="col-md-6 hidden-xl-up">
+                    <div class="col-md-6 d-xl-none">
                         <div class="row m-b-md">
                             <div class="col-md-6">
                                 <p class="font-weight-medium font-body">Official Fees</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{renewalFee | number:2}}</p>
+                                <p class="font-body text-right">$ {{renewalFee | number:2 }}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -40,17 +40,17 @@
                                 <p class="font-weight-medium font-body">Processing Fees</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{processingFee | number:2}}</p>
+                                <p class="font-body text-right">$ {{processingFee | number:2 }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 hidden-xl-up">
+                    <div class="col-md-6 d-xl-none">
                         <div class="row m-b-md">
                             <div class="col-md-6">
                                 <p class="font-weight-medium font-body">EPO Surcharges</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{extensionFee | number:2}}</p>
+                                <p class="font-body text-right">$ {{extensionFee | number:2 }}</p>
                             </div>
                         </div>
                         <div class="row">                         
@@ -58,19 +58,19 @@
                                 <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{urgentFee | number:2}}</p>
+                                <p class="font-body text-right">$ {{urgentFee | number:2 }}</p>
                             </div> 
                         </div>
                     </div>  
 
-                    <div class="col-xl-12 hidden-lg-down">
+                    <div class="col-xl-12 d-none d-xl-block">
                         <div class="m-b-md">
                             <div class="row">
                                 <div class="col-xl-8">
                                     <p class="font-weight-medium font-body">Official Fees</p>                        
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{renewalFee | number:2}}</p>
+                                    <p class="font-body">$ {{renewalFee | number:2 }}</p>
                                 </div>                               
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                     <p class="font-weight-medium font-body">Processing Fees</p>
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{processingFee | number:2}}</p>
+                                    <p class="font-body">$ {{processingFee | number:2 }}</p>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                     <p class="font-weight-medium font-body">EPO Surcharges</p>                        
                                 </div>                  
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{extensionFee | number:2}}</p>
+                                    <p class="font-body">$ {{extensionFee | number:2 }}</p>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                     <p class="font-weight-medium font-body">Express Fees</p>                        
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{expressFee | number:2}}</p>
+                                    <p class="font-body">$ {{expressFee | number:2 }}</p>
                                 </div> 
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                                     <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{urgentFee | number:2}}</p>
+                                    <p class="font-body">$ {{urgentFee | number:2 }}</p>
                                 </div> 
                             </div>
                         </div>                        
@@ -118,18 +118,22 @@
                 </div>
             </div>
             <div class="content-panel__head">
-                <div class="row hidden-lg-down">
-                    <div class="col-xl-8">
-                        <p class="font-weight-medium font-h4">Total:</p> 
-                    </div>
-                    <div class="col-xl-4">
-                        <p class="font-weight-medium font-h4">{{ totalCost | currency }}</p>
+                <div class="d-none d-xl-block">
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <p class="font-weight-medium font-h4">Total:</p> 
+                        </div>
+                        <div class="col-xl-4">
+                            <p class="font-weight-medium font-h4">$ {{ totalCost | number:2 }}</p>
+                        </div>
                     </div>
                 </div>
-                <div class="row hidden-xl-up">
-                    <div class="col-md-12 d-flex">
-                        <p class="font-weight-medium font-h4 m-r-sm">Total:</p> 
-                        <p class="font-weight-medium font-h4">{{ totalCost | currency }}</p>                       
+                <div class="d-xl-none">
+                    <div class="row">
+                        <div class="col-md-12 d-flex">
+                            <p class="font-weight-medium font-h4 m-r-sm">Total:</p> 
+                            <p class="font-weight-medium font-h4">$ {{ totalCost | number:2 }}</p>                       
+                        </div>
                     </div>
                 </div>                
             </div>            
@@ -148,7 +152,7 @@
                             <div class="m-b-sm">
                                 <p class="font-h4 font-weight-medium">Your Information</p>
                             </div>
-                            <div class="hidden-lg-down hidden-cxl-up">
+                            <div class="d-none d-xl-block hidden-cxl-up">
                                 <div class="form-group row">
                                     <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="firstName">First Name</label>
                                     <div class="col-cxl-8">
@@ -162,16 +166,17 @@
                                     </div>                             
                                 </div>                                     
                             </div>
-                          
-                            <div class="form-group row hidden-cxl">
-                                <label class="col-form-label col-2 text-left font-body font-weight-medium" for="firstName">First Name</label>
-                                <div class="col-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="firstName" id="firstName" data-ng-model="billingDetails.firstName" readonly>
+                            <div class="d-none d-md-block hidden-cxl d-xl-block">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="firstName">First Name</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="firstName" id="firstName" data-ng-model="billingDetails.firstName" readonly>
+                                    </div>
+                                    <label class="col-form-label col-2 text-left font-body font-weight-medium" for="lastName">Last Name</label>
+                                    <div class="col-4">
+                                        <input class="form-control font-body pill-radius" type="text" name="lastName" id="lastName" data-ng-model="billingDetails.lastName" readonly>
+                                    </div>                             
                                 </div>
-                                <label class="col-form-label col-2 text-left font-body font-weight-medium" for="lastName">Last Name</label>
-                                <div class="col-4">
-                                    <input class="form-control font-body pill-radius" type="text" name="lastName" id="lastName" data-ng-model="billingDetails.lastName" readonly>
-                                </div>                             
                             </div>                        
                         </div>
                     </div>
@@ -180,9 +185,9 @@
                             <div class="m-b-sm">    
                                 <p class="font-h4 font-weight-medium">Billing Address</p>
                             </div>
-                            <div class="hidden-lg-down hidden-cxl-up">
+                            <div class="d-none d-xl-block hidden-cxl-up hidden-cxl-up">
                                 <div class="form-group row">
-                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingStreet">Street</label>
+                                    <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="billingStreet">Streettt</label>
                                     <div class="col-cxl-8">
                                         <input class="form-control font-body pill-radius" type="text" name="billingStreet" id="billingStreet" data-ng-model="billingDetails.billingStreet" data-validate-address required>
                                         <p class="font-body txt-phase-red" data-ng-show="billingForm.businessStreet.$error.required && billingForm.businessStreet.$dirty">Please fill out this field</p>
@@ -214,7 +219,7 @@
                                     </div>
                                 </div>
                             </div>                                   
-                            <div class="hidden-cxl">
+                            <div class="d-none d-md-block hidden-cxl d-xl-block">
                                 <div class="form-group row">
                                     <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingStreet">Street</label>
                                     <div class="col-4">
@@ -252,7 +257,9 @@
                         </label>
                         <div class="text-right">
                             <div data-ng-if="service=='http' || service == 'log'" class="d-flex justify-content-end btn-default">
-                                <button class="btn btn--lg pill-radius bg-phase-green txt-white font-body font-weight-medium d-flex align-items-center" data-ng-click="checkout()" data-ng-disabled="!tcChecked || ngCart.getItems() == 0 || billingForm.$invalid">Continue <img src="p3sweb/assets/imgs/icons/transaction_icon_small.png" alt="transaction icon" class="m-l-sm"></button>
+                                <button class="btn pill-radius bg-phase-green font-weight-medium d-flex align-items-center" data-ng-click="checkout()" data-ng-disabled="!tcChecked || ngCart.getItems() == 0 || billingForm.$invalid">
+                                    <a href="" class="btn__link btn__link--white btn--lg">Continue<img src="assets/imgs/icons/transaction_icon_small.png" alt="transaction icon" class="m-l-sm"></a> 
+                                </button>
                             </div>                    
                         </div>                
                     </div>
