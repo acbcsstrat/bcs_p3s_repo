@@ -41,7 +41,7 @@
         <div class="col-md-6">
             <div class="content-panel bg-white">
                 <div class="content-panel__head border-grey-xs--btm">
-                    <p class="font-h4 font-weight-medium"><span class="font-weight-bold" ng-bind="orderObj.bankTransferPaymentDetails.account1Type"></span> Account Details</p>
+                    <p class="font-h4 font-weight-medium"><span class="font-weight-bold" ng-bind="orderObj.bankTransferPaymentDetails.account1PaymentType"></span> Account Details</p>
                 </div>
                 <div class="content-panel__body">
                     <div class="row">
@@ -49,10 +49,10 @@
                             <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-weight-medium font-body">Account number: </p>                        
+                                        <p class="font-weight-medium font-body">Bank Name: </p>                        
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-body">{{orderObj.bankTransferPaymentDetails.account1Number}}</p>
+                                        <p class="font-body">{{orderObj.bankTransferPaymentDetails.account1BankName}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -69,20 +69,40 @@
                             <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-weight-medium font-body">Bank Name: </p>
+                                        <p class="font-weight-medium font-body">Account Number: </p>
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-body">{{orderObj.bankTransferPaymentDetails.account1field1}}</p>
+                                        <p class="font-body">{{orderObj.bankTransferPaymentDetails.account1AcctNumber}}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-weight-medium font-body">Reference: </p>
+                                        <p class="font-weight-medium font-body">Account Type: </p>
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-body">{{orderObj.p3sTransRef}}</p>
+                                        <p class="font-body">{{orderObj.account1AcctType}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-grey-xs--btm m-b-xs">
+                                <div class="row font-body m-b-xs">
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
+                                        <p class="font-weight-medium font-body">Account Name: </p>                        
+                                    </div>
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
+                                        <p class="font-body">$ {{orderObj.account1AcctName}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-grey-xs--btm m-b-xs">
+                                <div class="row font-body m-b-xs">
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
+                                        <p class="font-weight-medium font-body">Reference: </p>                        
+                                    </div>
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
+                                        <p class="font-body">$ {{orderObj.p3sTransRef}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -92,10 +112,10 @@
                                         <p class="font-weight-medium font-body">Amount: </p>                        
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-body">$ {{orderObj.totalCostUSD}}</p>
+                                        <p class="font-body">$ {{orderObj.totalCostUSD | number: 2 }}</p>
                                     </div>
                                 </div>
-                            </div>                                                                                                                             
+                            </div>                                                                                                                                                     
                         </div>
                     </div>
     			</div>
@@ -104,7 +124,7 @@
         <div class="col-md-6">
             <div class="content-panel bg-white">
                 <div class="content-panel__head border-grey-xs--btm">
-                    <p class="font-h4 font-weight-medium"><span class="font-weight-bold" ng-bind="orderObj.bankTransferPaymentDetails.account2Type"></span> Account Details</p>
+                    <p class="font-h4 font-weight-medium"><span class="font-weight-bold" ng-bind="orderObj.bankTransferPaymentDetails.account2PaymentType"></span> Account Details</p>
                 </div>
                 <div class="content-panel__body">
                     <div class="row">
@@ -112,10 +132,10 @@
                             <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-weight-medium font-body">Account number: </p>                        
+                                        <p class="font-weight-medium font-body">Bank Name: </p>                        
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-body">{{orderObj.bankTransferPaymentDetails.account2Number}}</p>
+                                        <p class="font-body">{{orderObj.bankTransferPaymentDetails.account2BankName}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -132,20 +152,40 @@
                             <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-weight-medium font-body">Bank Name: </p>                        
+                                        <p class="font-weight-medium font-body">Account Number: </p>
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-body">{{orderObj.bankTransferPaymentDetails.account2field1}}</p>
+                                        <p class="font-body">{{orderObj.bankTransferPaymentDetails.account2AcctNumber}}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="border-grey-xs--btm m-b-xs">
                                 <div class="row font-body m-b-xs">
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-weight-medium font-body">Reference: </p>
+                                        <p class="font-weight-medium font-body">Account Type: </p>
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-body">{{orderObj.p3sTransRef}}</p>
+                                        <p class="font-body">{{orderObj.account2AcctType}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-grey-xs--btm m-b-xs">
+                                <div class="row font-body m-b-xs">
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
+                                        <p class="font-weight-medium font-body">Account Name: </p>                        
+                                    </div>
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
+                                        <p class="font-body">$ {{orderObj.account2AcctName}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-grey-xs--btm m-b-xs">
+                                <div class="row font-body m-b-xs">
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
+                                        <p class="font-weight-medium font-body">Reference: </p>                        
+                                    </div>
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
+                                        <p class="font-body">$ {{orderObj.p3sTransRef}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -155,20 +195,24 @@
                                         <p class="font-weight-medium font-body">Amount: </p>                        
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-xl-6">
-                                        <p class="font-body">$ {{orderObj.totalCostUSD}}</p>
+                                        <p class="font-body">$ {{orderObj.totalCostUSD | number: 2 }}</p>
                                     </div>
                                 </div>
-                            </div>                                                                                                                             
-                        </div>                       
+                            </div>                                                                                                                                                     
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>      
     </div><!-- row end-->
     <div class="row m-t-md">
         <div class="col-md-12 d-flex justify-content-end btn-default">
-            <a class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center m-r-sm" target="__blank" data-ng-href="{{orderObj.proformaInvoiceUrl}}">Download Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
-            <a class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center" data-ui-sref="dashboard">Return to dashboard <img src="assets/imgs/icons/dashboard_icon_sm.png" alt="dashboard icon" class="m-l-xs"></a>
+            <button class="btn font-weight-medium bg-phase-green pill-radius d-flex align-items-center m-r-sm">
+                <a target="__blank" class="btn__link btn__link--white btn--lg" data-ng-href="{{orderObj.proformaInvoiceUrl}}">Download Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
+            </button>
+            <button class="btn font-weight-medium bg-phase-green pill-radius d-flex align-items-center m-r-sm">
+                <a class="btn__link btn__link--white btn--lg" data-ui-sref="dashboard">Return to dashboard <img src="assets/imgs/icons/dashboard_icon_sm.png" alt="dashboard icon" class="m-l-xs"></a>
+            </button>
         </div>
     </div>        
 </div>
