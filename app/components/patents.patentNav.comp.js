@@ -2,7 +2,7 @@ angular.module('ppApp').component('patentnav', patentnav);
 
 patentnav.$inject = ['$stateParams'];
 
-function patentnav($stateParams) {
+export default function patentnav($stateParams) {
 
     return {
     	template: function($stateParams) {

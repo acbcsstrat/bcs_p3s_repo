@@ -2,7 +2,7 @@ angular.module('ppApp').component('transactionnav', transactionnav);
 
 transactionnav.$inject = ['$stateParams'];
 
-function transactionnav($stateParams) {
+export default function transactionnav($stateParams) {
 
     return {
       	template: function($stateParams) {
