@@ -1,17 +1,11 @@
 <div class="widget-panel bg-white">
-	<div class="widget-panel__head border-grey-xs--btm">
-		<div class="row d-flex align-items-center">
-			<div class="col-md-9 col-lg-9 col-xl-9">
-				<h3 class="font-h3 font-weight-bold">Colour Key</h3>
-			</div>
-			<div class="col-md-3 col-lg-3 col-xl-3">
-				<div class="d-flex justify-content-center align-items-center flex-column">
-					<div class="pill-radius btn btn--lg" data-ng-class="$ctrl.selectedPhase.getPhase().phase.bgClass">
-						<h3 class="txt-white widget-pill-title font-weight-medium font-h4">{{$ctrl.selectedPhase.getPhase().phase.title}} Phase</h3>
-					</div>
+	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
+			<h3 class="font-h3 font-weight-bold">Colour Key</h3>
+			<div class="d-flex justify-content-center align-items-center flex-column">
+				<div class="pill-radius btn--lg" data-ng-class="$ctrl.selectedPhase.getPhase().phase.bgClass">
+					<h3 class="font-weight-medium font-h4 txt-white">{{$ctrl.selectedPhase.getPhase().phase.title}} Phase</h3>
 				</div>
-			</div>						
-		</div>
+			</div>
 	</div>
 	<div class="widget-panel__body">
 		<div class="m-b-md">
@@ -44,16 +38,14 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-xl-12">
-				<div class="phase-tabs">
-					<ul class="nav phase-pills">
-						<li class="bg-phase-green pill-radius btn--reg pill-tabs font-body no-line-height font-weight-medium" data-ng-click="activeTab = 0; $ctrl.setPhase('green')" data-ng-hide="activeTab == 0">Green</li>
-						<li class="bg-phase-amber pill-radius btn--reg pill-tabs font-body no-line-height font-weight-medium" data-ng-click="activeTab = 1; $ctrl.setPhase('amber')" data-ng-hide="activeTab == 1">Amber</li>
-						<li class="bg-phase-red pill-radius btn--reg pill-tabs font-body no-line-height font-weight-medium" data-ng-click="activeTab = 2; $ctrl.setPhase('red')" data-ng-hide="activeTab == 2">Red</li>
-						<li class="bg-phase-blue pill-radius btn--reg pill-tabs font-body no-line-height font-weight-medium" data-ng-click="activeTab = 3; $ctrl.setPhase('blue')" data-ng-hide="activeTab == 3">Blue</li>
-						<li class="bg-phase-black pill-radius btn--reg pill-tabs font-body no-line-height font-weight-medium" data-ng-click="activeTab = 4; $ctrl.setPhase('black')" data-ng-hide="activeTab == 4">Black</li>
-						<li class="bg-phase-grey pill-radius btn--reg pill-tabs font-body no-line-height font-weight-medium" data-ng-click="activeTab = 5; $ctrl.setPhase('grey')" data-ng-hide="activeTab == 5">Grey</li>
-					</ul>
-				</div>
+				<ul class="panel-nav nav">
+					<li class="bg-phase-green pill-radius panel-nav__list-item panel-nav__list-item--md font-body no-line-height font-weight-medium" data-ng-click="activeTab = 0; $ctrl.setPhase('green')" data-ng-hide="activeTab == 0">Green</li>
+					<li class="bg-phase-amber pill-radius panel-nav__list-item panel-nav__list-item--md font-body no-line-height font-weight-medium" data-ng-click="activeTab = 1; $ctrl.setPhase('amber')" data-ng-hide="activeTab == 1">Amber</li>
+					<li class="bg-phase-red pill-radius panel-nav__list-item panel-nav__list-item--md font-body no-line-height font-weight-medium" data-ng-click="activeTab = 2; $ctrl.setPhase('red')" data-ng-hide="activeTab == 2">Red</li>
+					<li class="bg-phase-blue pill-radius panel-nav__list-item panel-nav__list-item--md font-body no-line-height font-weight-medium" data-ng-click="activeTab = 3; $ctrl.setPhase('blue')" data-ng-hide="activeTab == 3">Blue</li>
+					<li class="bg-phase-black pill-radius panel-nav__list-item panel-nav__list-item--md font-body no-line-height font-weight-medium" data-ng-click="activeTab = 4; $ctrl.setPhase('black')" data-ng-hide="activeTab == 4">Black</li>
+					<li class="bg-phase-grey pill-radius panel-nav__list-item panel-nav__list-item--md font-body no-line-height font-weight-medium" data-ng-click="activeTab = 5; $ctrl.setPhase('grey')" data-ng-hide="activeTab == 5">Grey</li>
+				</ul>
 			</div>
 		</div>
 	</div>
