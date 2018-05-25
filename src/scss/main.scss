@@ -28,6 +28,11 @@
 @import "./helpers/_mixins.scss";
 @import "./helpers/_global.scss";
 
+@import "./layouts/_layout.scss";
+@import "./layouts/_modal.scss";
+@import "./layouts/_panels.scss";
+@import "./layouts/_sidenav.scss";
+
 @import "./components/_buttons.scss";
 @import "./components/_form.scss";
 @import "./components/_navigation.scss";
@@ -36,10 +41,6 @@
 @import "./components/_tables.scss";
 @import "./components/_media_queries.scss";
 
-@import "./layouts/_layout.scss";
-@import "./layouts/_modal.scss";
-@import "./layouts/_panels.scss";
-@import "./layouts/_sidenav.scss";
 // @import "./layouts/_slick-carousel.scss";
 
 @import "./pages/_dashboard.scss";
