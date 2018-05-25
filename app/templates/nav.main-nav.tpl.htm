@@ -17,7 +17,6 @@
 			      	</div>	    			
 	    		</div>
 	    	</div>
-
       	 	<md-content class="bg-phase-black">
 	      	 	<div layout="column" class="p-pill-tabs m-b-sm p-a-sm">
 		      	 	<div class="d-flex justify-content-center align-items-center m-b-sm white-nav-a">
@@ -34,7 +33,7 @@
 		      	 		<p class="txt-white font-body text-center">{{$ctrl.user.business.businessName}}</p>
 		      	 	</div>
 	      	 	</div>
-	      	 	<div layout="column" class="p-pill-tabs d-flex justify-content-center">
+	      	 	<div layout="column" class=" d-flex justify-content-center">
 	      	 		<nav class="nav">
 						<ul class="side-menu w-100">
 							<li ng-repeat="section in $ctrl.menu.sections" class="font-h4 txt-white font-weight-medium" ui-sref-active="active" ng-class="{'parentActive' : $ctrl.isSectionSelected(section)}">
@@ -44,7 +43,6 @@
 						</ul>
 					</nav>
 				</div>
-
 			</md-content>
 			<div class="text-center position-bottom w-100">
 				<img src="assets/imgs/logos/moneycorp_logo.png" alt="moneycorp icon">
@@ -58,8 +56,8 @@
 	  			<img width="40" src="assets/imgs/logos/pp_icon.png">
 	  		</a>
 	    </div>		
-	    <div ng-click="toggleLeft()" class="bg-phase-green p-tb-sm text-center">
-	    	<img class="d-none d-xl-block" src="assets/imgs/icons/menu/menu_menu_icon.png">
+	    <div ng-click="toggleLeft()" class="bg-phase-green p-tb-sm text-center btn">
+	    	<img class="d-none d-xl-inline-block" src="assets/imgs/icons/menu/menu_menu_icon.png">
 	    	<img class="d-xl-none" src="assets/imgs/icons/menu/menu_menu_icon_sm.png">
 	    </div>		    
 		<ul class="nav flex-column">
