@@ -20,8 +20,8 @@
 		<uib-tabset type="pills" class="pills">
 		    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body" data-ng-hide="true">
 	            <div class="slick-container"  data-ng-if="$ctrl.selectedPhase.getPhase().patents.length" class="animate-show">
-	            	<div class="txt-white font-h4 tr-border slick-header" data-ng-class="$ctrl.selectedPhase.getPhase().phase.bgClass">
-        				<h4 class="font-weight-medium text-center txt-white"><span data-ng-bind="$ctrl.selectedPhase.getPhase().phase.title"></span> Renewal <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.selectedPhase.getPhase().patents.length}}</h4>
+	            	<div class="tr-border slick-header" data-ng-class="$ctrl.selectedPhase.getPhase().phase.bgClass">
+        				<h4 class="font-weight-medium text-center font-h4 txt-white"><span data-ng-bind="$ctrl.selectedPhase.getPhase().phase.title"></span> Renewal <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.selectedPhase.getPhase().patents.length}}</h4>
         			</div>					            	
 				    <slick data="$ctrl.selectedPhase.getPhase().patents" settings="$ctrl.slickConfig" data-ng-if="$ctrl.phaseLoaded">
 				        <div data-ng-repeat="item in $ctrl.selectedPhase.getPhase().patents">
@@ -39,7 +39,7 @@
 					            		</td>
 					            	</tr>
 					            	<tr class="t-data__tr">
-					            		<td class="t-data__td td-border text-left border t-data__td-50 t-data__td--ellipsis"><span class="font-weight-medium">Title: </span> {{item.title}}</td>
+					            		<td class="t-data__td td-border text-left border t-data__td-50 t-data__td--ellipsis"><span class="font-weight-medium">Title: </span> <span class="td-ellipsis">{{item.title}}</span></td>
 					            		<td class="t-data__td no-border-er text-left">
 					            			<div class="d-flex justify-content-between">
 					            				<p><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'MM-dd-yy'}}</p>
