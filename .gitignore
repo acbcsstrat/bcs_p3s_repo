@@ -6,3 +6,7 @@ WEB-INF/layouts
 WEB-INF/lib
 WEB-INF/spring
 WEB-INF/tags
+node_modules
+dist/
+package-lock.json
+package.json

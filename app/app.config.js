@@ -2,11 +2,11 @@ angular.module('ppApp').config(appConfig);
 
 appConfig.$inject = ['$urlRouterProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'slickCarouselConfig', 'localStorageServiceProvider'];
 
-function appConfig($urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig, localStorageServiceProvider) {
+export default function appConfig($urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig, localStorageServiceProvider) {
 
     IdleProvider.idle(500);
     IdleProvider.timeout(30);
-    KeepaliveProvider.http(domain+'keep-session-alive/');
+    KeepaliveProvider.http(ppdomain+'keep-session-alive/');
     KeepaliveProvider.interval(20);
 
     $urlRouterProvider

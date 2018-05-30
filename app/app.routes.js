@@ -2,7 +2,7 @@ angular.module('ppApp').config(appRoutes);
 
 appRoutes.$inject = ['$stateProvider'];
 
-function appRoutes($stateProvider) {
+export default function appRoutes($stateProvider) {
 
     $stateProvider
         .state('dashboard', {
@@ -26,42 +26,42 @@ function appRoutes($stateProvider) {
             },
             views: {
                 '@': {
-                    templateUrl: 'p3sweb/app/views/dashboard/views/dashboard.htm',
+                    templateUrl: 'app/templates/dashboard.tpl.htm',
                     controller: 'dashboardCtrl',
                     controllerAs: '$ctrl'
                 },
                 'colourkeywidget@dashboard': {
-                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/colour-key-widget.htm',
+                    templateUrl: 'app/templates/dashboard.colour-key-widget.tpl.htm',
                     controller: 'colourKeyCtrl',
                     controllerAs: '$ctrl'                
                 },
                 'graphdonutwidget@dashboard': {
                     controller: 'graphDonutCtrl',
                     controllerAs: '$ctrl',                
-                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/graph-donut-widget.htm',         
+                    templateUrl: 'app/templates/dashboard.graph-donut-widget.tpl.htm',         
                 },
                 'renewalswidget@dashboard': {
-                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/renewals-widget.htm',
+                    templateUrl: 'app/templates/dashboard.renewals-widget.tpl.htm',
                     controller: 'renewalsCarouselCtrl',
                     controllerAs: '$ctrl'                
                 },
                 'fxrateswidget@dashboard': {
-                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/renewal-cost.htm',
+                    templateUrl: 'app/templates/dashboard.renewal-cost.tpl.htm',
                     controller: 'renewalCostCtrl',
                     controllerAs: '$ctrl'                
                 },
                 'fxrateswidgetmd@dashboard': {
-                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/renewal-cost.htm',
+                    templateUrl: 'app/templates/dashboard.renewal-cost.tpl.htm',
                     controller: 'renewalCostCtrl',
                     controllerAs: '$ctrl'                
                 },            
                 'fxchartwidget@dashboard': {
-                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/fxchart-widget.htm',
+                    templateUrl: 'app/templates/dashboard.fxchart-widget.tpl.htm',
                     controller: 'fxChartCtrl',
                     controllerAs: '$ctrl'
                 },
                 'recentactivitywidget@dashboard': {
-                    templateUrl: 'p3sweb/app/views/dashboard/views/ui-views/recent-activity-widget.htm',
+                    templateUrl: 'app/templates/dashboard.recent-activity-widget.tpl.htm',
                     controller: 'recentActivityCtrl',
                     controllerAs: '$ctrl'
                 }            
@@ -69,13 +69,13 @@ function appRoutes($stateProvider) {
         })    
         .state('profile', {
             url: '/profile',
-            templateUrl: 'p3sweb/app/views/user/views/user-profile.htm',
+            templateUrl: 'app/templates/user.user-profile.tpl.htm',
             controller: 'userProfileCtrl',
             controllerAs: '$ctrl'
         })
         .state('patents', {
             url: '/patents',
-            templateUrl: 'p3sweb/app/views/patents/views/list-patents.htm',
+            templateUrl: 'app/templates/patents.list-patents.tpl.htm',
             controller: 'listPatentsCtrl',
             controllerAs: '$ctrl',
             resolve: {
@@ -104,22 +104,22 @@ function appRoutes($stateProvider) {
             },
             views: {
                 '@patents': {
-                    templateUrl: 'p3sweb/app/views/patents/views/patent-item.htm',
+                    templateUrl: 'app/templates/patents.patent-item.tpl.htm',
                     controller: 'patentItemCtrl',
                     controllerAs: '$ctrl'
                 },
                 'patentinfo@patents.patent': {
-                    templateUrl: 'p3sweb/app/views/patents/views/ui-views/patent-info.htm',
+                    templateUrl: 'app/templates/patents.patent-info.tpl.htm',
                     controller: 'patentInfoCtrl',
                     controllerAs: '$ctrl'
                 },
                 'patentcostanalysis@patents.patent': {
-                    templateUrl: 'p3sweb/app/views/patents/views/ui-views/patent-costanalysis.htm',
+                    templateUrl: 'app/templates/patents.patent-costanalysis.tpl.htm',
                     controller: 'patentCostAnalysisCtrl',
                     controllerAs: '$ctrl'
                 },
                 'patentrenewals@patents.patent': {
-                    templateUrl: 'p3sweb/app/views/patents/views/ui-views/patent-renewals.htm',
+                    templateUrl: 'app/templates/patents.patent-renewals.tpl.htm',
                     controller: 'patentRenewalsCtrl',
                     controllerAs: '$ctrl'
                 }
@@ -130,7 +130,7 @@ function appRoutes($stateProvider) {
         })
         .state('search-patent', {
             url: '/search-patent',
-            templateUrl: 'p3sweb/app/views/patents/views/search-patent.htm',
+            templateUrl: 'app/templates/patents.search-patent.tpl.htm',
             controller: 'searchPatentCtrl',
             controllerAs: '$ctrl',
             params: {
@@ -139,7 +139,7 @@ function appRoutes($stateProvider) {
         })
         .state('search-patent.add-patent', {
             url: '?params',
-            templateUrl: 'p3sweb/app/views/patents/views/ui-views/add-patent.htm',
+            templateUrl: 'app/templates/patents.add-patent.tpl.htm',
             controller: 'addPatentCtrl',
             controllerAs: '$ctrl',
             params: {
@@ -148,7 +148,7 @@ function appRoutes($stateProvider) {
         })
         .state('current-transactions', {
             url: '/current-transactions',
-            templateUrl: 'p3sweb/app/views/transactions/views/current-transactions.htm',
+            templateUrl: 'app/templates/transactions.current-transactions.tpl.htm',
             controller: 'currentTransactionsCtrl',
             controllerAs: '$ctrl',
             resolve: {
@@ -162,7 +162,7 @@ function appRoutes($stateProvider) {
         })
         .state('current-transactions.current-transaction-item', {
             url: '/{transId}/:transHref',
-            templateUrl: 'p3sweb/app/views/transactions/views/current-transaction-item.htm',
+            templateUrl: 'app/templates/transactions.current-transaction-item.tpl.htm',
             controller: 'currentTransactionItemCtrl',
             controllerAs: '$ctrl',
             resolve: {
@@ -178,7 +178,7 @@ function appRoutes($stateProvider) {
         })
         .state('transaction-history', {
             url: '/transaction-history',
-            templateUrl: 'p3sweb/app/views/transactions/views/transaction-history.htm',
+            templateUrl: 'app/templates/transactions.transaction-history.tpl.htm',
             controller: 'transactionHistoryCtrl',
             controllerAs: '$ctrl',
             resolve: {
@@ -192,7 +192,7 @@ function appRoutes($stateProvider) {
         })
         .state('transaction-history.transaction-history-item', {
             url: '/{transHistoryId}',
-            templateUrl: 'p3sweb/app/views/transactions/views/transaction-history-item.htm',
+            templateUrl: 'app/templates/transactions.transaction-history-item.tpl.htm',
             controller: 'transactionHistoryItemCtrl',
             controllerAs: '$ctrl',            
             resolve: {
@@ -205,23 +205,23 @@ function appRoutes($stateProvider) {
         })
         .state('basket', {
             url: '/basket',
-            templateUrl: 'p3sweb/app/views/checkout/views/basket.htm',
+            templateUrl: 'app/templates/checkout.basket.tpl.htm',
             controller: 'basketCtrl',
             controllerAs: '$ctrl'
         })
         .state('bank-transfer-preparation', {
             url: '/bank-transfer-preparation',
-            templateUrl: 'p3sweb/app/views/checkout/views/bank-transfer-preparation.htm',
+            templateUrl: 'app/templates/checkout.bank-transfer-preparation.tpl.htm',
             controller: 'bankTransferPrepCtrl',
             controllerAs: '$ctrl',
             params: {
             	orderObj: null,
             	patentObj: null
             }
-        })    
+        })
         .state('bank-transfer-success', {
             url: '/bank-transfer-success',
-            templateUrl: 'p3sweb/app/views/checkout/views/bank-transfer-success.htm',            
+            templateUrl: 'app/templates/checkout.bank-transfer-success.tpl.htm',            
             controller: 'bankTransferSuccessCtrl',
             controllerAs: '$ctrl',            
             params: {
