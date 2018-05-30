@@ -68,7 +68,7 @@ export default function selectPhaseService(){
 						phase: {
 			                title: 'Black',
 			                bgClass: 'bg-phase-black',
-			                nextBgClass: 'bg-phase-white',
+			                nextBgClass: 'bg-white',
 			                index: 4
 						}									
 												
