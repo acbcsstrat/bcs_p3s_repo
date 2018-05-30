@@ -12,37 +12,31 @@
 			<div data-ng-repeat="item in urgentPatents" class="d-flex flex-column align-items-center justify-content-center m-b-md">
 				<div class="row w-100">
 					<div class="col-md-12">
-						<table class="t-data font-body">
+						<table class="table t-data font-body">
 							<thead class="bg-phase-black">
-								<tr>
-									<th colspan="4" class="txt-white font-weight-medium text-center">App No. {{item.patentApplicationNumber}}</th>
+								<tr class="t-data__row---border">
+									<th colspan="4" class="t-data__th txt-white font-weight-medium text-center">App No. {{item.patentApplicationNumber}}</th>
 								</tr>
 							</thead>
-							<tbody data-ng-if="item.costBandColour !== 'Black' || item.costBandColour !== 'Red'">
-								<tr>
-									<td class="td-30">Title</td>
-									<td>{{item.title}}</td>
+							<tbody >
+								<tr class="t-data__row--border">
+									<td class="t-data__td t-data__w30">Title</td>
+									<td class="t-data__td">{{item.title}}</td>
 								</tr>
-								<tr>
-									<td class="td-30">Current Amount</td>
-									<td>$ {{item.currentRenewalCostUSD}}</td>
+								<tr class="t-data__row--border">
+									<td class="t-data__td t-data__w30">Current Amount</td>
+									<td class="t-data__td">$ {{item.currentRenewalCostUSD}}</td>
 								</tr>
-								<tr>
-									<td class="td-30">Next Stage Cost</td>
-									<td>$ {{item.renewalCostNextStageUSD}}</td>
+								<tr class="t-data__row--border" data-ng-if="item.costBandColour !== 'Black' && item.costBandColour !== 'Red'">
+									<td class="t-data__td t-data__w30">Next Stage Cost</td>
+									<td class="t-data__td">$ {{item.renewalCostNextStageUSD}}</td>
 								</tr>
-							</tbody>
-							<tbody data-ng-if="item.costBandColour == 'Black' || item.costBandColour == 'Red'">
-								<tr>
-									<td class="td-30">Title</td>
-									<td>{{item.title}}</td>
-								</tr>
-								<tr>
-									<td data-ng-if="item.renewalStatus == 'Show price'" class="td-30">Next Stage Cost</td>
-									<td data-ng-if="item.costBandColour == 'Black' && item.renewalStatus == 'Show price" class="font-weight-bold">LAPSE</td>	
+								<tr class="t-data__row--border" data-ng-if="item.costBandColour == 'Black' || item.costBandColour == 'Red'">
+									<td data-ng-if="item.renewalStatus == 'Show price'" class="t-data__td t-data__w30">Next Stage Cost</td>
+									<td data-ng-if="item.costBandColour == 'Black' && item.renewalStatus == 'Show price'" class="font-weight-bold">LAPSE</td>	
 									<td data-ng-if="item.renewalStatus == 'Too late to renew'" class="font-weight-bold">Call  to Renew (+44)1789-000-000</td>							
-								</tr>
-							</tbody>							
+								</tr>								
+							</tbody>						
 						</table>
 					</div>
 				</div>
