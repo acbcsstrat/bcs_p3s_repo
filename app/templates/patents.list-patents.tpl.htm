@@ -4,19 +4,19 @@
 		<div class="col-md-12 col-lg-12 col-xl-8 d-flex align-items-center lg-m-b-md">
 			<div class="panel-nav">
 				<uib-tabset type="pills" active="activePhaseTab">
-					<uib-tab index="0" class="tab tab--reg bg-white pill-radius panel-nav__list-item panel-nav__list-item--md no-line-height panel-nav__li--txt-black border-grey-xs" heading="View All({{$ctrl.sortedPatentData.allRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.all" data-ng-click="$ctrl.displayPhase('all')" data-ui-sref="patents">
+					<uib-tab index="0" class="tab tab--reg bg-white pill-radius panel-nav__list-item panel-nav__list-item--md-nav no-line-height panel-nav__li--txt-black border-grey-xs" heading="View All({{$ctrl.sortedPatentData.allRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.all" data-ng-click="$ctrl.displayPhase('all')" data-ui-sref="patents">
 				    </uib-tab>
-				    <uib-tab index="1" class="tab tab--reg bg-phase-green  pill-radius panel-nav__list-item panel-nav__list-item--md panel-nav__li--txt-white no-line-height txt-white" heading="Green({{$ctrl.sortedPatentData.greenRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.green" data-ng-click="$ctrl.displayPhase('green')" data-ui-sref="patents">
+				    <uib-tab index="1" class="tab tab--reg bg-phase-green  pill-radius panel-nav__list-item panel-nav__list-item--md-nav panel-nav__li--txt-white no-line-height txt-white" heading="Green({{$ctrl.sortedPatentData.greenRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.green" data-ng-click="$ctrl.displayPhase('green')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="2" class="tab tab--reg bg-phase-amber pill-radius panel-nav__list-item panel-nav__list-item--md panel-nav__li--txt-white no-line-height txt-white" heading="Yellow({{$ctrl.sortedPatentData.amberRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.amber" data-ng-click="$ctrl.displayPhase('amber')" data-ui-sref="patents">
+				    <uib-tab index="2" class="tab tab--reg bg-phase-amber pill-radius panel-nav__list-item panel-nav__list-item--md-nav panel-nav__li--txt-white no-line-height txt-white" heading="Yellow({{$ctrl.sortedPatentData.amberRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.amber" data-ng-click="$ctrl.displayPhase('amber')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="3" class="tab tab--reg bg-phase-red pill-radius panel-nav__list-item panel-nav__list-item--md panel-nav__li--txt-white no-line-height txt-white" heading="Red({{$ctrl.sortedPatentData.redRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.red" data-ng-click="$ctrl.displayPhase('red')" data-ui-sref="patents">
+				    <uib-tab index="3" class="tab tab--reg bg-phase-red pill-radius panel-nav__list-item panel-nav__list-item--md-nav panel-nav__li--txt-white no-line-height txt-white" heading="Red({{$ctrl.sortedPatentData.redRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.red" data-ng-click="$ctrl.displayPhase('red')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="4" class="tab tab--reg bg-phase-blue pill-radius panel-nav__list-item panel-nav__list-item--md panel-nav__li--txt-white no-line-height txt-white" heading="Blue({{$ctrl.sortedPatentData.blueRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.blue" data-ng-click="$ctrl.displayPhase('blue')" data-ui-sref="patents">
+				    <uib-tab index="4" class="tab tab--reg bg-phase-blue pill-radius panel-nav__list-item panel-nav__list-item--md-nav panel-nav__li--txt-white no-line-height txt-white" heading="Blue({{$ctrl.sortedPatentData.blueRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.blue" data-ng-click="$ctrl.displayPhase('blue')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="5" class="tab tab--reg bg-phase-black pill-radius panel-nav__list-item panel-nav__list-item--md panel-nav__li--txt-white no-line-height txt-white" heading="Black({{$ctrl.sortedPatentData.blackRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.black" data-ng-click="$ctrl.displayPhase('black')" data-ui-sref="patents">
+				    <uib-tab index="5" class="tab tab--reg bg-phase-black pill-radius panel-nav__list-item panel-nav__list-item--md-nav panel-nav__li--txt-white no-line-height txt-white" heading="Black({{$ctrl.sortedPatentData.blackRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.black" data-ng-click="$ctrl.displayPhase('black')" data-ui-sref="patents">
 					</uib-tab>
-				    <uib-tab index="6" class="tab tab--reg bg-phase-grey pill-radius panel-nav__list-item panel-nav__list-item--md panel-nav__li--txt-white no-line-height txt-white" heading="Grey({{$ctrl.sortedPatentData.greyRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.grey" data-ng-click="$ctrl.displayPhase('grey')" data-ui-sref="patents">
+				    <uib-tab index="6" class="tab tab--reg bg-phase-grey pill-radius panel-nav__list-item panel-nav__list-item--md-nav panel-nav__li--txt-white no-line-height txt-white" heading="Grey({{$ctrl.sortedPatentData.greyRenewals.length}})" data-ng-attr-id="$ctrl.patentsTabs.grey" data-ng-click="$ctrl.displayPhase('grey')" data-ui-sref="patents">
 					</uib-tab>
 				</uib-tabset>
 			</div>
@@ -92,17 +92,17 @@
 					<tbody>
 						<tr data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: searchPatents as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
 							<td class="t-data__td--ellipsis t-data__td t-data__w12">
-								<span>
+								<span class="td-ellipsis">
 									<a class="t-data__a" data-ui-sref="patents.patent({patentId: item.id})">{{item.patentApplicationNumber}}</a>
 								</span>
 							</td>
 							<td class="t-data__td--ellipsis t-data__td t-data__w12" data-ng-class="item.clientRef == '' ? 'ellipsis-remove' : ''">
-								<span class="txt-grey" data-ng-if="item.clientRef == ''">[No client reference provided]</span>
-								<span data-ng-if="item.clientRef !== ''">{{item.clientRef}}</span>
+								<span class="td-ellipsis txt-grey" data-ng-if="item.clientRef == ''">[No client reference provided]</span>
+								<span class="td-ellipsis" data-ng-if="item.clientRef !== ''">{{item.clientRef}}</span>
 							</td>
 							<td class="t-data__td--ellipsis t-data__td t-data__w12" data-ng-class="item.shortTitle == '' ? 'ellipsis-remove' : ''">
-								<span class="txt-grey" data-ng-if="item.shortTitle == ''">[No client description provided]</span>
-								<span data-ng-if="item.shortTitle !== ''">{{item.shortTitle}}</span>
+								<span class="td-ellipsis txt-grey" data-ng-if="item.shortTitle == ''">[No client description provided]</span>
+								<span class="td-ellipsis" data-ng-if="item.shortTitle !== ''">{{item.shortTitle}}</span>
 							</td>
 							<td class="t-data__td t-data__w10 d-none d-xl-table-cell">
 								<div data-ng-if="item.renewalStatus == 'Show price'" data-ng-class="(item.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + (item.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.costBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.costBandColour == 'Black' ? 'txt-phase-white': '')" class="">
