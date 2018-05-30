@@ -385,7 +385,7 @@ select.form-control:not([size]):not([multiple]) {
 
 .modal-max {
   max-height: 600px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .btn-block+.btn-block { margin-top: 0px; }
