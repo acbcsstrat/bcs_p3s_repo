@@ -94,7 +94,14 @@
 
 .panel-nav__list-item--md {
   @include list-item(10.5rem, 10.5rem);
-  @include padding-mixin(0.5rem 1.5rem);  
+  @include padding-mixin(0.5rem 1.5rem);
+}
+
+.panel-nav__list-item--md-nav {
+  .nav-link {
+    @include list-item(10.5rem, 10.5rem);
+    @include padding-mixin(0.5rem 1.5rem);
+  }
 }
 
 .panel-nav__list-item--fluid {
