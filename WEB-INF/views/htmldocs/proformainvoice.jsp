@@ -340,6 +340,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
+<<<<<<< HEAD
 		            Bank name:
 		            </td>
 		            <td>
@@ -348,6 +349,8 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
+=======
+>>>>>>> 01ff47a150ae08e192a7930e4ea0f18af9a9984f
 		            ABA Routing Number:
 		            </td>
 		            <td>
@@ -364,6 +367,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
+<<<<<<< HEAD
 		            Account Type:
 		            </td>
 		            <td>
@@ -385,6 +389,13 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		            <td><b>
 		              <%=data.getTransactionReference() %>
 		            </b></td>
+=======
+		            Reference:
+		            </td>
+		            <td>
+		              <%=data.getTransactionReference() %>
+		            </td>
+>>>>>>> 01ff47a150ae08e192a7930e4ea0f18af9a9984f
 		          </tr>
 		          <tr>
 		            <td>
@@ -420,6 +431,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
+<<<<<<< HEAD
 		            Bank name:
 		            </td>
 		            <td>
@@ -428,6 +440,8 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
+=======
+>>>>>>> 01ff47a150ae08e192a7930e4ea0f18af9a9984f
 		            ABA Routing Number:
 		            </td>
 		            <td>
@@ -444,6 +458,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		          </tr>
 		          <tr>
 		            <td>
+<<<<<<< HEAD
 		            Account Type:
 		            </td>
 		            <td>
@@ -465,6 +480,13 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		            <td><b>
 		              <%=data.getTransactionReference() %>
 		            </b></td>
+=======
+		            Reference:
+		            </td>
+		            <td>
+		              <%=data.getTransactionReference() %>
+		            </td>
+>>>>>>> 01ff47a150ae08e192a7930e4ea0f18af9a9984f
 		          </tr>
 		          <tr>
 		            <td>
