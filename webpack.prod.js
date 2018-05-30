@@ -20,7 +20,7 @@ module.exports = merge(common, {
     new OptimizeCSSAssetsPlugin({
       cssProcessorOptions: {
         map: {
-          inline: true
+          inline: false
         }
       }
     }),

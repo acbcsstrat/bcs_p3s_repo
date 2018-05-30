@@ -7,7 +7,6 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   devtool: "source-map",
-  
   entry: {
     vendor: './src/js/vendor.js',   
     app: './src/js/index.js',
@@ -40,8 +39,9 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
+          { loader: 'css-loader', options: { url: false, sourceMap: true } },
           MiniCssExtractPlugin.loader,
-          { loader: 'css-loader', options: { url: false, sourceMap: true } }
+          { loader: 'css-loader' }
         ]
       },      
       {
