@@ -10,6 +10,7 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
 	vm.sortedPatentData = patentPhasesService.phases(patents);
 	vm.setPhase = setPhase;
 	vm.selectedPhase = selectPhaseService;
+    vm.date = new Date();
 
 	vm.currentIndex = 0;
     vm.slickConfig = {
