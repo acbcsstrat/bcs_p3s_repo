@@ -224,6 +224,10 @@
     color: #000; 
   }
 
+  .widget-row-middle .widget-panel {
+    min-height: 230px;
+  }
+
   .btn-default .t-data__btn-portal:hover,  .btn-default .t-data__btn-portal:active, 
   .btn-default ngcart-addtocart.t-data__btn-portal button:hover, 
   .btn-default ngcart-addtocart button.t-data__btn-portal a,
