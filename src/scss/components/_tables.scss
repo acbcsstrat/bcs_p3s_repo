@@ -89,10 +89,11 @@
   &:hover {
     text-overflow: inherit; overflow: visible;
   }
-  &:hover span {
+  &:hover span.td-ellipsis {
     background: white; 
     z-index: 999; 
-    padding: .2rem; 
+    padding: .2rem;
+    margin-left: -.2rem; 
     position: relative; 
     color: #212121;
   }
