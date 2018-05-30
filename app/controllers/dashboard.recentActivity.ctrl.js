@@ -12,8 +12,6 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 	vm.recentRenewalArr = [];
     vm.recentStageArr = [];
     vm.setActivityActiveTab = setActivityActiveTab;
-
-    console.log()
     
     vm.activityNotifications = [
 		{
