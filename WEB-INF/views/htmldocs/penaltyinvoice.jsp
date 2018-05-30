@@ -306,7 +306,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-<<<<<<< HEAD
 		            Bank name:
 		            </td>
 		            <td>
@@ -315,8 +314,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-=======
->>>>>>> 01ff47a150ae08e192a7930e4ea0f18af9a9984f
 		            ABA Routing Number:
 		            </td>
 		            <td>
@@ -333,7 +330,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-<<<<<<< HEAD
 		            Account Type:
 		            </td>
 		            <td>
@@ -355,13 +351,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		            <td><b>
 		              <%=data.getPenaltyPaymentReferenceNumber() %>
 		            </b></td>
-=======
-		            Reference:
-		            </td>
-		            <td>
-		              <%=data.getPenaltyPaymentReferenceNumber() %>
-		            </td>
->>>>>>> 01ff47a150ae08e192a7930e4ea0f18af9a9984f
 		          </tr>
 		          <tr>
 		            <td>
@@ -397,7 +386,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-<<<<<<< HEAD
 		            Bank name:
 		            </td>
 		            <td>
@@ -406,8 +394,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-=======
->>>>>>> 01ff47a150ae08e192a7930e4ea0f18af9a9984f
 		            ABA Routing Number:
 		            </td>
 		            <td>
@@ -424,7 +410,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		          </tr>
 		          <tr>
 		            <td>
-<<<<<<< HEAD
 		            Account Type:
 		            </td>
 		            <td>
@@ -446,13 +431,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		            <td><b>
 		              <%=data.getPenaltyPaymentReferenceNumber() %>
 		            </b></td>
-=======
-		            Reference:
-		            </td>
-		            <td>
-		              <%=data.getPenaltyPaymentReferenceNumber() %>
-		            </td>
->>>>>>> 01ff47a150ae08e192a7930e4ea0f18af9a9984f
 		          </tr>
 		          <tr>
 		            <td>
