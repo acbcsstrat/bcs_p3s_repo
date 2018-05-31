@@ -1,20 +1,18 @@
 angular.module('ppApp').controller('coreCtrl', coreCtrl);
 
-coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService'];
+coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart'];
 
-function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService) {
+function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart) {
 
 	var vm = this;
 
 	var urgentResponse = [];
 	var systemResponse = [];
 	var patentsFound = true;
-	var displayMessages = displayMessages;
 	var userTimedOut = false;
-	vm.fetchContact = fetchContact;
-	fetchPatents();
-	displayMessages();
-	fetchContact();
+	// vm.checkedMessages = checkedMessages;
+	// vm.supresssMessages = supresssMessages;
+	var messageArr = [];
 
 	$scope.$on('IdleStart', function() {
 		
@@ -25,38 +23,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	  		windowClass: 'modal-danger'
 	    });
 	});
-
-	function fetchContact() { 
-		coreService.ppContact()
-		.then(
-			function(response){
-				console.log(response)
-				console.log('response: ',response)
-			},
-			function(errResponse){
-
-			}
-		)
-	}
-
-
-
-
-	function fetchFxWeek() {
-
-		var deferred = $q.defer()
-
-		$http.get(ppdomain+'rest-fxrates/week')
-		.then(
-			function(response){
-				deferred.resolve(response.data)
-			},
-			function(errResponse){
-				deferred.reject(response.data)
-			}
-		)
-		return deferred.promise;
-	}
 
   	$scope.$on('IdleEnd', function() {
 	  	closeModals();
@@ -99,6 +65,8 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	}
 
+	fetchPatents();
+
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modal.welcome-message.tpl.htm',
@@ -110,7 +78,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 			  	};
 			}]
 		});
- 	} //function systemMessageModal	
+ 	}
 
 	function displayMessages() {
 
@@ -132,36 +100,13 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 			            response.systemMessages.forEach(function(data){
 			                var dateFrom = data.displayFromDate; dateTo = data.displayToDate;
-			                if(date > dateFrom && date < dateTo) { 
+			                if(date > dateFrom && date < dateTo) {
+			                	console.log(data)
 			                    systemResponse.push(data)
 			                }
 			            })
 
-			            function systemMessageModal() {
 
-			                var modalInstance = $uibModal.open({
-			                    templateUrl: 'p3sweb/app/components/dashboard/views/modals/system-message-modal.htm',
-			                    scope: $scope,
-			                    appendTo: undefined,
-			                    controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
-
-			                        open = true;
-
-			                        vm.systemMessage = message;
-
-			                        vm.ok = function () {
-			                            $uibModalInstance.close();
-			                        };
-
-			                    }],
-			                    resolve: {
-			                        message: function() {
-			                            return systemResponse;
-			                        }
-			                    }
-			                });
-
-			            }; //function end
 
 			            $timeout(function() {
 			                systemMessageModal()    
@@ -196,6 +141,8 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 		} //if end
 
 	}
+
+	displayMessages();
 	
 	function closeModals() {
 	    if ($scope.warning) {
@@ -209,11 +156,58 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	    }
 	}
 
+    function systemMessageModal() {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modal.system-message.tpl.htm',
+            scope: $scope,
+            appendTo: undefined,
+            controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
+
+                open = true;
+
+                $scope.systemMessage = {
+                	message:  message
+                }
+
+                $scope.systemOk = function () {
+                    $uibModalInstance.close();
+                };
+
+				$scope.checkedMessages = function(id, checked) {
+					if(checked) {
+						messageArr.push(id)
+						$scope.message = true;
+					} else {
+						messageArr.splice(-1, 1)
+					}
+
+					if(messageArr.length == 0) {
+						$scope.message = false;				
+					}
+
+				}
+
+				$scope.supresssMessages = function() {
+					dashboardService.supressMessages(messageArr)
+				} 	                
+
+            }],
+            resolve: {
+                message: function() {
+                    return systemResponse;
+                }
+            }
+        });
+
+    }; //function end
+
 	function urgentPatentModal(response) {
-		console.log(response)
+
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modal.urgent-message.tpl.htm',
 			scope: $scope,
+			appendTo: undefined,
 			controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
 
 				$scope.urgentPatents = message;

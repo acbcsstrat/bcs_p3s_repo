@@ -6,6 +6,7 @@ export default function dashboardService($http, $q) {
 
     var factory = {
         getMessages: getMessages,
+        supressMessages: supressMessages,
         fetchCostAnalysis: fetchCostAnalysis
     };
 
@@ -45,18 +46,18 @@ export default function dashboardService($http, $q) {
         
     };
 
-        // function supressMessages(id) {
-        //     var deferred = $q.defer();
-        //     $http.post(ppdomain+'suppress-login-messages/' , id)
-        //     .then(
-        //         function(response){
-        //             deferred.resolve(response);
-        //         }, 
-        //         function(errResponse){
-        //             deferred.reject(errResponse);
-        //         }
-        //     );
-        //     return deferred.promise;
-        // };
+    function supressMessages(id) {
+        var deferred = $q.defer();
+        $http.post(ppdomain+'suppress-login-messages/' , id)
+        .then(
+            function(response){
+                deferred.resolve(response);
+            }, 
+            function(errResponse){
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    };
 
 };
