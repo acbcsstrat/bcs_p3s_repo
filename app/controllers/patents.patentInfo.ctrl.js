@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('patentInfoCtrl', patentInfoCtrl);
 
-patentInfoCtrl.$inject = ['$scope', 'patent', '$rootScope', '$state', '$timeout', '$location', '$anchorScroll', 'fxCalculationService', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal']
+patentInfoCtrl.$inject = ['$scope', 'patent', '$rootScope', '$state', '$timeout', '$location', '$anchorScroll', 'fxCalculationService', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService']
 
-function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location, $anchorScroll, fxCalculationService, currentTransactionsService, patentsRestService, chunkDataService, $uibModal) {
+function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location, $anchorScroll, fxCalculationService, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService) {
 
 	var vm = this;
 
@@ -19,6 +19,20 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
     vm.displayNotifications = displayNotifications;
 
     activateData();
+    fetchContact();
+
+    function fetchContact() { 
+        coreService.ppContact()
+        .then(
+            function(response){
+                vm.partnerName = response.partnerName;
+                vm.partnerPhone = response.partnerPhone;
+            },
+            function(errResponse){
+
+            }
+        )
+    }
 
     function activateData() {
 		if(patent) {

@@ -91,6 +91,9 @@ input[type=checkbox], input[type=radio] {
 }
 
 a {
+  &:hover {
+    color: #000;
+  }
   &:focus {
       text-decoration: none;
       color: #212121;
@@ -104,3 +107,4 @@ button {
   }
 
 }
+

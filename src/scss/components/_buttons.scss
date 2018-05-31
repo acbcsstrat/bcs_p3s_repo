@@ -90,7 +90,7 @@
   &> .btn__link:hover {
     text-decoration: none;
   }
-  &> .btn__link--white, , a:not([href]):not([tabindex]), a:not([href]):not([tabindex]):hover { 
+  &> .btn__link--white, a:not([href]):not([tabindex]), a:not([href]):not([tabindex]):hover { 
     color: $white; 
   }
   &:not([disabled]):not(.t-data__btn-portal):active, &:not([disabled]):active,  &:active {

@@ -115,13 +115,16 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="row m-t-md">
+				<div class="row m-t-md m-b-xs">
 					<div class="col-xl-12 d-flex justify-content-between align-items-end">
 						<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-							<p class="font-h3 font-weight-bold m-b-xs">Save:</p>
-							<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ {{$ctrl.feeBreakDown.bandSaving().savings}}</p>
-							<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
+							<p class="font-h3 font-weight-bold m-b-xs">Save: <span class="txt-phase-green">$ {{$ctrl.feeBreakDown.bandSaving().savings}}</span></p>
+							<p class="font-body">Renew before: <span class="font-weight-bold">{{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</span></p>
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 d-flex justify-content-between align-items-end">				
 						<div class="w-100">
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn-default">
 						 		<button type="button" class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
@@ -274,19 +277,22 @@
 						<p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ {{$ctrl.feeBreakDown.bandSaving().savings}}</p>
 						<p class="font-body">Renew before: {{$ctrl.feeBreakDown.bandSaving().renewBefore | date: dd-mm-yy}}</p>
 					</div>
-					<div>
-			        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn-default">
-					 		<button type="button" class="btn btn-block btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-							 	<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
-							 </button>
-					 	</div>
-			        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
-					 		<a class="btn btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
-					 	</div>																		
-						<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="btn-default">
-					 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-					 		</ngcart-addtocart>
-					 	</div>
+					<div class="w-100">
+				        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn-default">
+						 		<button type="button" class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+							 		<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+							 	</button>
+						 	</div>
+				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
+						 		<button type="button" class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+							 		<a class="btn__link btn__link--white btn--lg" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
+							 	</button>
+						 	</div>																		
+							<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="btn-default">
+						 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+						 		</ngcart-addtocart>
+						 	</div>
+					
 					</div>
 				</div>		
 			</div> <!-- row end-->
