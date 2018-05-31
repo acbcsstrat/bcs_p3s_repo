@@ -58,60 +58,67 @@
 							</tr>
 						</thead>
 						<tbody>
-						 <tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: searchTrans as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
-					        <td class="t-data__td--ellipsis t-data__td t-data__w15">
-								<a class="txt-black" data-ui-sref="transaction-history.transaction-history-item({transHistoryId: item.id})">{{item.p3S_TransRef}}</a>
-					        </td>
-					        <td class="t-data__td t-data__w13">
-								{{item.renewalUIs.length}}
-					        </td>
-					        <td class="t-data__td--ellipsis t-data__td t-data__w15">
-								<span data-ng-if="item.renewalUIs.length === 1" data-ng-repeat="patent in item.renewalUIs">
-									<span data-ng-if="patent.patentUI.patentApplicationNumber.length">
-										{{patent.patentUI.patentApplicationNumber}}
+						 	<tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: searchTrans as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
+						        <td class="t-data__td--ellipsis t-data__td t-data__w15">
+						        	<span class="td-ellipsis">
+										<a class="txt-black" data-ui-sref="transaction-history.transaction-history-item({transHistoryId: item.id})">{{item.p3S_TransRef}}</a>
 									</span>
-								</span>
-								<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.renewalUIs" data-ng-model="patentAppData.defaultSelect" data-ng-change="transactionListFilter(patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
-									<option value="">Multiple</option>
-								</select>
-					        </td>
-					        <td class="t-data__td--ellipsis t-data__td t-data__w15" " data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
-								<span data-ng-if="item.renewalUIs.length == 1;" data-ng-repeat="ref in item.renewalUIs">
-									<span data-ng-if="ref.patentUI.clientRef === ''" class="txt-grey" data-ng-init="$ctrl.noClientRef()">[No client reference provided]</span>
-									<span data-ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>
-								</span>
-								<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.clientRef for item in item.renewalUIs" data-ng-model="clientRefData.defaultSelect" class="pill-radius form-control font-body" data-ng-change="transactionListFilter(clientRefData.defaultSelect, 'clientRefFilter', item.id)">
-									<option value="">Multiple</option>
-								</select>
-					        </td>
-					        <td class="t-data__td t-data__w13">
-					        	{{item.transStartDate | date: 'MM/dd/yy'}}
-					        </td>
-					        <td class="t-data__td t-data__w13">
-					        	$ {{item.transAmount_USD | number: 2}}
-					        </td>
-					        <td class="t-data__td t-data__w16">
-								<p class="font-weight-bold">
-									<span data-ng-if="item.hasFailed">Failed</span>
-									<span data-ng-if="!item.hasFailed">{{item.latestTransStatus}}</span>
-								</p>
-								<div class="progress-tracker progress-trans">
-									<div data-ng-if="item.hasFailed">
-										<uib-progress><uib-bar class="pill-radius bg-phase-red tracker-item"  value="item.renewalProgress" max="100"></uib-bar></uib-progress>									
-									</div>
-									<div data-ng-if="item.hasFailed !== true">
-										<uib-progress><uib-bar class="pill-radius bg-phase-green tracker-item"  value="item.renewalProgress" max="100"></uib-bar></uib-progress>										
-									</div>
-								</div>	
-					        </td>      				                 
-					    </tr>
-					 	<tr data-ng-show="Result.length==0">
-					 		<td colspan="7">
-					 			No Results Found
-					 		</td>
-					 	</tr>					
-					</tbody>
-				</table>
+						        </td>
+						        <td class="t-data__td t-data__w13">
+									{{item.renewalUIs.length}}
+						        </td>
+						        <td class="t-data__td--ellipsis t-data__td t-data__w15">
+									<span data-ng-if="item.renewalUIs.length === 1" data-ng-repeat="patent in item.renewalUIs">
+										<span data-ng-if="patent.patentUI.patentApplicationNumber.length">
+											<span class="td-ellipsis txt-grey">
+												{{patent.patentUI.patentApplicationNumber}}
+											</span>
+										</span>
+									</span>
+									<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.renewalUIs" data-ng-model="patentAppData.defaultSelect" data-ng-change="transactionListFilter(patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
+										<option value="">Multiple</option>
+									</select>
+						        </td>
+						        <td class="t-data__td--ellipsis t-data__td t-data__w15" " data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
+									<span data-ng-if="item.renewalUIs.length == 1;" data-ng-repeat="ref in item.renewalUIs">
+										<span data-ng-if="ref.patentUI.clientRef === ''" class="txt-grey" data-ng-init="$ctrl.noClientRef()">
+											<span class="td-ellipsis txt-grey">[No client reference provided]</span>
+										</span>
+										<span data-ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>
+									</span>
+									<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.clientRef for item in item.renewalUIs" data-ng-model="clientRefData.defaultSelect" class="pill-radius form-control font-body" data-ng-change="transactionListFilter(clientRefData.defaultSelect, 'clientRefFilter', item.id)">
+										<option value="">Multiple</option>
+									</select>
+						        </td>
+						        <td class="t-data__td t-data__w13">
+						        	{{item.transStartDate | date: 'MM/dd/yy'}}
+						        </td>
+						        <td class="t-data__td t-data__w13">
+						        	$ {{item.transAmount_USD | number: 2}}
+						        </td>
+						        <td class="t-data__td t-data__w16">
+									<p class="font-weight-bold">
+										<span data-ng-if="item.hasFailed">Failed</span>
+										<span data-ng-if="!item.hasFailed">{{item.latestTransStatus}}</span>
+									</p>
+									<div class="progress-tracker progress-trans">
+										<div data-ng-if="item.hasFailed">
+											<uib-progress><uib-bar class="pill-radius bg-phase-red tracker-item"  value="item.renewalProgress" max="100"></uib-bar></uib-progress>									
+										</div>
+										<div data-ng-if="item.hasFailed !== true">
+											<uib-progress><uib-bar class="pill-radius bg-phase-green tracker-item"  value="item.renewalProgress" max="100"></uib-bar></uib-progress>										
+										</div>
+									</div>	
+						        </td>      				                 
+					    	</tr>
+						 	<tr data-ng-show="Result.length==0">
+						 		<td colspan="7">
+						 			No Results Found
+						 		</td>
+						 	</tr>					
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
