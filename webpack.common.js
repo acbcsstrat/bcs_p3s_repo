@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== 'production';
@@ -82,7 +82,6 @@ module.exports = {
         jQuery: 'jquery'
     }),  
     new webpack.ContextReplacementPlugin(/\.\/locale$/, 'empty-module', false, /js$/), //needed for bug in moment
-    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       inject: false,
       title: 'Patent Place',
