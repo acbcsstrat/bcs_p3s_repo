@@ -2,7 +2,7 @@ angular.module('ppApp').factory('fxService', fxService);
 
 fxService.$inject = ['$q', '$http'];
 
-export default function fxService($q, $http) {
+function fxService($q, $http) {
 	
 	var factory = {
 		fetchFxWeek: fetchFxWeek,

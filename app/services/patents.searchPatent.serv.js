@@ -2,7 +2,7 @@ angular.module('ppApp').factory('searchPatentService', searchPatentService);
 
 searchPatentService.$inject = ['$http', '$q']; 
 
-export default function searchPatentService($http, $q) {
+function searchPatentService($http, $q) {
 
     var REST_SEARCH_PATENT_SERVICE_URI = ppdomain+'rest-search-patents/';
 

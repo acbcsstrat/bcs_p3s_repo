@@ -2,7 +2,7 @@ angular.module('ppApp').factory('transactionHistoryService', transactionHistoryS
 
 transactionHistoryService.$inject = ['$http', '$q'];
 
-export default function transactionHistoryService($http, $q) {
+function transactionHistoryService($http, $q) {
 
 	var REST_SERVICE_URI = ppdomain+'rest-historic-transactions/';
 

@@ -2,7 +2,7 @@ angular.module('ppApp').factory('patentsRestService', patentsRestService);
 
 patentsRestService.$inject = ['$http', '$q'];
 
-export default function patentsRestService($http, $q) {
+function patentsRestService($http, $q) {
 
     var REST_SERVICE_URI = ppdomain+'rest-patents/'; 
 

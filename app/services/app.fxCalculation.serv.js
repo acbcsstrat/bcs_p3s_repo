@@ -2,7 +2,7 @@ angular.module('ppApp').factory('fxCalculationService', fxCalculationService);
 
 fxCalculationService.$inject = ['$q', '$timeout', 'fxService']
 
-export default function fxCalculationService($q, $timeout, fxService) {
+function fxCalculationService($q, $timeout, fxService) {
 
 	return {
 

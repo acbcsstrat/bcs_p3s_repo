@@ -1,6 +1,6 @@
 angular.module('ppApp').factory('selectPhaseService', selectPhaseService);
 
-export default function selectPhaseService(){
+function selectPhaseService(){
 	
 	return { // rather than returning an object literal, return the properties to the service itself
 

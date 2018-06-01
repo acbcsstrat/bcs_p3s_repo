@@ -2,7 +2,7 @@ angular.module('ppApp').factory('dashboardService', dashboardService);
 
 dashboardService.$inject = ['$http', '$q']
 
-export default function dashboardService($http, $q) {
+function dashboardService($http, $q) {
 
     var factory = {
         getMessages: getMessages,

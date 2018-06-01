@@ -1,4 +1,4 @@
-export default angular.module('ppApp').controller('bankTransferPrepCtrl', bankTransferPrepCtrl);
+angular.module('ppApp').controller('bankTransferPrepCtrl', bankTransferPrepCtrl);
 
 bankTransferPrepCtrl.$inject = ['bankTransferCommitService', '$state', '$scope', '$stateParams', '$rootScope', '$uibModal', 'ngCart']
 

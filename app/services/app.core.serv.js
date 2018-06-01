@@ -2,7 +2,7 @@ angular.module('ppApp').factory('coreService', coreService);
 
 coreService.$inject = ['$q', '$timeout', 'fxService', '$http'];
 
-export default function coreService($q, $timeout, fxService, $http) {
+function coreService($q, $timeout, fxService, $http) {
 
     var REST_SERVICE_URI = ppdomain+'partner-details/'; 
 

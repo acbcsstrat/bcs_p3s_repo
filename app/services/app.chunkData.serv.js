@@ -1,6 +1,6 @@
 angular.module('ppApp').factory('chunkDataService', chunkDataService);
 
-export default function chunkDataService() {
+function chunkDataService() {
 
 	return {
 

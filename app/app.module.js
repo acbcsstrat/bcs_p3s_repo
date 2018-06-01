@@ -9,7 +9,7 @@ angular.module('ppApp').run(startUpRun)
 
 startUpRun.$inject = ['Idle', 'userService', '$rootScope', 'moment', '$timeout'];
 
-export default function startUpRun(Idle, userService, $rootScope, moment, $timeout) {
+function startUpRun(Idle, userService, $rootScope, moment, $timeout) {
 
     $rootScope.page = '';
 

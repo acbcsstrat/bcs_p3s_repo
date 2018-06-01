@@ -2,7 +2,7 @@ angular.module('ppApp').factory('currentTransactionsService', currentTransaction
 
 currentTransactionsService.$inject = ['$http', '$q'];
 
-export default function currentTransactionsService($http, $q) {
+function currentTransactionsService($http, $q) {
 
 	var REST_SERVICE_URI = ppdomain+'rest-current-transactions/';
 

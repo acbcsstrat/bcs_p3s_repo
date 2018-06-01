@@ -2,7 +2,7 @@ angular.module('ppApp').config(appRoutes);
 
 appRoutes.$inject = ['$stateProvider'];
 
-export default function appRoutes($stateProvider) {
+function appRoutes($stateProvider) {
 
     $stateProvider
         .state('dashboard', {

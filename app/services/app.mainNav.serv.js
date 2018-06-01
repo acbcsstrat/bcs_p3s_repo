@@ -1,6 +1,6 @@
 angular.module('ppApp').factory('mainNavService', mainNavService)
 
-export default function mainNavService(){
+function mainNavService(){
 	
 		var sections = [{
   		name: 'Dashboard',

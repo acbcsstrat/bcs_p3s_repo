@@ -2,7 +2,7 @@ angular.module('ppApp').factory('timezoneService', timezoneService);
 
 timezoneService.$inject = ['$http', '$q'];
 
-export default function timezoneService($http, $q){
+function timezoneService($http, $q){
 
 	var factory = {
 		fetchUsaTimeZones: fetchUsaTimeZones
