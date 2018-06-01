@@ -7,7 +7,7 @@ WEB-INF/lib
 WEB-INF/spring
 WEB-INF/tags
 node_modules
-# dist/
+dist/
 app/views/
 package-lock.json
 package.json
