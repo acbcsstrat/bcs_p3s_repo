@@ -152,7 +152,7 @@
   color: $blacktxt; 
 }
 
-.primary-view-nav__list-item, 
+.primary-view-nav__list-item-a, 
 .secondary-view-nav__list-item {
   cursor: pointer;
   background: $white;
@@ -165,8 +165,19 @@
 .secondary-view-nav__list-item.active { 
     @include list-item-transition; 
 } 
-.primary-view-nav__list-item
- {
+
+.primary-view-nav__list-item {
+  &:last-child {
+    margin-right: 0;
+  }  
+}
+
+.primary-view-nav__list-item-a {
+  @include padding-mixin(0.5rem 3rem);
+  line-height: $line-h3;
+  font-size: $font-h3;
+  margin-right: 1.5rem;
+
   &:hover {
     text-decoration: none;
     .primary-view-nav__link { //add class to link
@@ -238,7 +249,7 @@
   } 
 }
 
-.primary-view-nav__list-item, .secondary-view-nav__list-item--green, .panel-nav__list-item--green {
+.primary-view-nav__list-item-a, .secondary-view-nav__list-item--green, .panel-nav__list-item--green {
   &:hover, &.active { 
     background: $green; 
     color: $white; 
@@ -259,10 +270,20 @@
 }
 
 .primary-view-nav__list-item.active {
+  > .primary-view-nav__list-item-a {
+    @include list-item-transition;
+    font-weight: medium; 
+    background: $green; 
+    border: 1px solid $green; 
+    color: #fff;
+  }
+}
+
+.primary-view-nav__list-item-a.active {
   @include list-item-transition;
   font-weight: medium; 
-  background: #53ab58; 
-  border: 1px solid #53ab58; 
+  background: $green; 
+  border: 1px solid $green; 
   color: #fff;
   > .primary-view-nav__link { 
     color: #fff; font-weight: 500;

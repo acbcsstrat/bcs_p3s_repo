@@ -1,13 +1,6 @@
-angular.module('ppApp').component('transactionnav', transactionnav);
-
-transactionnav.$inject = ['$stateParams'];
-
-export default function transactionnav($stateParams) {
-
-    return {
-      	template: function($stateParams) {
-        	var navigation = $stateParams.navigation || 'default';
-        	return '<div data-ng-include="\'app/templates/' + navigation + '.tpl.htm\'"></div>'
-        }
-    }
-};
+angular.module('ppApp').component('transactionnav',{
+  	template: ['$stateParams', function($stateParams) {
+    	var navigation = $stateParams.navigation || 'default';
+    	return '<div data-ng-include="\'app/templates/transactions.' + navigation + '.tpl.htm\'"></div>'
+    }]
+})
