@@ -6,7 +6,7 @@ function appConfig($urlRouterProvider, $compileProvider, $qProvider, KeepalivePr
 
     IdleProvider.idle(500);
     IdleProvider.timeout(30);
-    KeepaliveProvider.http(domain+'keep-session-alive/');
+    KeepaliveProvider.http(ppdomain+'keep-session-alive/');
     KeepaliveProvider.interval(20);
 
     $urlRouterProvider

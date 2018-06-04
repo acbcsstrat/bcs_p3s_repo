@@ -176,9 +176,9 @@
 							  	<div class="row">
 							  		<div class="col-md-12 col-lg-12 col-xl-12">
 								  	  	<div class="form-navigation d-flex justify-content-between btn-default">
-									    	<button type="button" class="previous btn btn--lg pill-radius bg-phase-green font-body font-body--component txt-white font-weight-medium cursor-pointer">Previous</button>
-									    	<button type="button" class="next btn btn--lg pill-radius bg-phase-green font-body font-body--component txt-white font-weight-medium cursor-pointer">Next</button>
-									    	<input type="submit" value="Register" id="register" class="btn btn--lg bg-phase-green pill-radius txt-white font-body font-body--component font-weight-medium cursor-pointer" disabled>
+									    	<button type="button" class="previous btn btn--lg pill-radius bg-phase-green font-body no-line-height txt-white font-weight-medium cursor-pointer">Previous</button>
+									    	<button type="button" class="next btn btn--lg pill-radius bg-phase-green font-body no-line-height txt-white font-weight-medium cursor-pointer">Next</button>
+									    	<input type="submit" value="Register" id="register" class="btn btn--lg bg-phase-green pill-radius txt-white font-body no-line-height font-weight-medium cursor-pointer" disabled>
 									  	</div>								  			
 							  		</div>
 							  	</div>
@@ -274,10 +274,10 @@
 	   							<div class="row">
 									<div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-md-between justify-content-lg-end justify-content-xl-end">
 	   									<div class="btn-submit m-r-sm">
-	       									<input type="button" id="businessConfirmSubmit" name="businessConfirmSubmit" class="btn btn--check bg-phase-green pill-radius txt-white font-body font-body--component font-weight-medium btn--lg m-r-xs cursor-pointer" value="Yes">
+	       									<input type="button" id="businessConfirmSubmit" name="businessConfirmSubmit" class="btn btn--check bg-phase-green pill-radius txt-white font-body no-line-height font-weight-medium btn--lg m-r-xs cursor-pointer" value="Yes">
 	   									</div>
 	   									<div class="btn-error">      									
-	       									<input type="button" id="businessCancel" name="businessCancel" class="btn btn--cross bg-phase-red pill-radius txt-white font-body font-body--component font-weight-medium btn--lg cursor-pointer" value="No">       										
+	       									<input type="button" id="businessCancel" name="businessCancel" class="btn btn--cross bg-phase-red pill-radius txt-white font-body no-line-height font-weight-medium btn--lg cursor-pointer" value="No">       										
 	   									</div>   										
 	   								</div>
 	   							</div>

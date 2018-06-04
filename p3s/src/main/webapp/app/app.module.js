@@ -1,10 +1,15 @@
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngCookies', 'ngMaterial', 'slickCarousel', 'angularMoment', 'ngTable', 'LocalStorageModule', 'nvd3']);
+
+// require('angular-moment');
+// var ngModule = angular.module('ngApp',['angularMoment']);
+// ngModule.constant('moment', require('moment-timezone'));
+
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngMaterial', 'slickCarousel', 'angularMoment', 'LocalStorageModule', 'nvd3']);
 
 angular.module('ppApp').run(startUpRun)
 
-startUpRun.$inject = ['Idle', 'userService', '$rootScope', 'amMoment', '$timeout'];
+startUpRun.$inject = ['Idle', 'userService', '$rootScope', 'moment', '$timeout'];
 
-function startUpRun(Idle, userService, $rootScope, amMoment, $timeout, $uibModal) {
+function startUpRun(Idle, userService, $rootScope, moment, $timeout) {
 
     $rootScope.page = '';
 
@@ -30,8 +35,8 @@ function startUpRun(Idle, userService, $rootScope, amMoment, $timeout, $uibModal
         }, 500);
     }
 
-   timeZoneClocks()
+    timeZoneClocks()
 
-   Idle.watch();
+    Idle.watch();
 
 };
