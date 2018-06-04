@@ -180,7 +180,7 @@ public class ServiceAuthorisationTools extends Universal {
 	
 	// End of   : Failure Handling utils
 	
-	public boolean checkMessageForThisUser(List<Long> messagesID){
+	/*public boolean checkMessageForThisUser(List<Long> messagesID){
 		
 		boolean isAnyMaliciousData = false;
 		List<LoginMessage> messages = SecurityUtil.getMyUser().getLoginMessagesToDisplay();
@@ -196,7 +196,7 @@ public class ServiceAuthorisationTools extends Universal {
 			}
 		}
 		return isAnyMaliciousData;
-	}
+	}*/
 
 	
 }

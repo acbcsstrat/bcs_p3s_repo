@@ -35,52 +35,59 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 
 	@Override
 	public LoginMessageUI findAllLoginMessagesForUser(PostLoginSessionBean pLoginBean){
-			
-		/**
-		 * Includes 2 sections
-		 * 		1. Retrieve all System Messages from database
-		 * 		2. Find all Urgent Patents info
-		 * 			2.1 When a band change will take place within a week for end of green or blue.
-		 * 			2.2 When in Amber, red or Black,
-		 */
 		
-		String msg = "findAllLoginMessagesForUser()";
-		log().debug(msg + " invoked");
-		if(pLoginBean == null){
-			log().debug(msg +" invoked with session null");
-			return null;
-		}
-		
-		LoginMessageUI loginMessages = new LoginMessageUI();
-		List<LoginMessage> allSystemMessages = pLoginBean.getUser().getLoginMessagesToDisplay();
-		List<LoginMessage> systemMessages = new ArrayList<LoginMessage>();
-		//List<LoginMessageUI> loginMessagesUI = new ArrayList<LoginMessageUI>();
-		Calendar today = Calendar.getInstance();
-		for(LoginMessage eachMessage : allSystemMessages){
-				
-			Calendar displayFrom = Calendar.getInstance();
-			displayFrom.setTime(eachMessage.getDisplayFromDate());
-				
-			Calendar displayTill = Calendar.getInstance();
-			displayTill.setTime(eachMessage.getDisplayToDate());
-				
-			if(today.getTime().after(displayFrom.getTime()) && today.getTime().before(displayTill.getTime())){
-				systemMessages.add(eachMessage);
-			}
-		}
-			
-		loginMessages.setSystemMessages(systemMessages);
-		log().debug(msg +" found [" + systemMessages +"] to be displyed to user[" +pLoginBean.getUser().getId());
-		//find urgent Patents info
-		TypedQuery<Patent> patents = Patent.findPatentsByBusiness(pLoginBean.getBusiness());
-		if(!(patents.getResultList() == null))
-			loginMessages.setUrgentPatents(getUrgentPatentsForModalDisplay(patents.getResultList(),pLoginBean));
-		
-		return loginMessages;
-			
+	/**
+	 * Includes 2 sections
+	 * 		1. Retrieve all System Messages from database
+	 * 		2. Find all Urgent Patents info
+	 * 			2.1 When a band change will take place within a week for end of green or blue.
+	 * 			2.2 When in Amber, red or Black,
+	 */
+	
+	String msg = "findAllLoginMessagesForUser()";
+	log().debug(msg + " invoked");
+	if(pLoginBean == null){
+		log().debug(msg +" invoked with session null");
+		return null;
 	}
 	
-	//Note :- Code not being TESTED
+	LoginMessageUI loginMessages = new LoginMessageUI();
+	/** Logic change for System Messages.Now displaying all messages in LoginMessage table for all 
+	 * 	user unless they told to inhibit the msg
+	 */
+	//List<LoginMessage> allSystemMessages = pLoginBean.getUser().getLoginMessagesToInhibit();
+	/*List<LoginMessage> allSystemMessages = LoginMessage.findAllLoginMessages();
+	List<LoginMessage> systemMessages = new ArrayList<LoginMessage>();
+	//List<LoginMessageUI> loginMessagesUI = new ArrayList<LoginMessageUI>();
+	Calendar today = Calendar.getInstance();
+	for(LoginMessage eachMessage : allSystemMessages){
+			
+		Calendar displayFrom = Calendar.getInstance();
+		displayFrom.setTime(eachMessage.getDisplayFromDate());
+			
+		Calendar displayTill = Calendar.getInstance();
+		displayTill.setTime(eachMessage.getDisplayToDate());
+			
+		if(today.getTime().after(displayFrom.getTime()) && today.getTime().before(displayTill.getTime())){
+			systemMessages.add(eachMessage);
+		}
+	}*/
+	
+	//Check whether user told to inhibit any of these messages
+	
+	List<LoginMessage> systemMessagesToDisplay = getLoginMessagesToDisplayForUser(pLoginBean);
+		
+	loginMessages.setSystemMessages(systemMessagesToDisplay);
+	log().debug(msg +" found [" + systemMessagesToDisplay +"] to be displayed to user[" +pLoginBean.getUser().getId() +"]");
+	//find urgent Patents info
+	TypedQuery<Patent> patents = Patent.findPatentsByBusiness(pLoginBean.getBusiness());
+	if(!(patents.getResultList() == null))
+		loginMessages.setUrgentPatents(getUrgentPatentsForModalDisplay(patents.getResultList(),pLoginBean));
+	
+	return loginMessages;
+		
+}
+	
 	@Override
 	public void suppressLoginMessages(List<Long> ids, P3SUser user){
 		
@@ -94,16 +101,18 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 		 }
 		
 		//check whether the extracted ids are relevant to the user - checking for malicious ids being sent over
-		isAnyMaliciousData = checkMessageForThisUser(ids);
+		//isAnyMaliciousData = checkMessageForThisUser(ids);
 		if(isAnyMaliciousData)
 		{
 			log().debug(msg + " invoked with MALICIOUS DATA");
 			return;
 		}
 		  
-		List<LoginMessage> allMessages = user.getLoginMessagesToDisplay();
+		List<LoginMessage> allMessages = user.getLoginMessagesToInhibit();
 		
-		for(Long id : ids){
+		/** Change of logic: mapping table to store inhibited messages for the user starts **/
+		 
+		/*for(Long id : ids){
 			for(LoginMessage eachMsg : allMessages){
 				if(id.equals(eachMsg.getId())){
 					allMessages.remove(eachMsg);
@@ -111,9 +120,17 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 					break;
 				}
 			}
+		}*/
+		
+		for(Long id : ids){
+			LoginMessage loginMsg = LoginMessage.findLoginMessage(id);
+			allMessages.add(loginMsg);
+			log().debug("Added message id[" + id.toString() +"] such that it will get inhibited for user[" +user.getId() +"]");
 		}
 		
-		user.setLoginMessagesToDisplay(allMessages);
+		/** Change of logic: mapping table to store inhibited messages for the user ends **/
+		
+		user.setLoginMessagesToInhibit(allMessages);
 		user.merge();
 		log().debug("Suppressed messages from user " + ids.toString());
 		return;
@@ -148,5 +165,41 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 		return urgentPatents;
 	}
 	
+	protected List<LoginMessage> getLoginMessagesToDisplayForUser(PostLoginSessionBean pLoginBean){
+		
+		List<LoginMessage> allSystemMessages = LoginMessage.findAllLoginMessages();
+		List<LoginMessage> suppressedMessages = pLoginBean.getUser().getLoginMessagesToInhibit();
+		
+		List<LoginMessage> activeSystemMessages = new ArrayList<LoginMessage>();
+		//List<LoginMessageUI> loginMessagesUI = new ArrayList<LoginMessageUI>();
+		Calendar today = Calendar.getInstance();
+		for(LoginMessage eachMessage : allSystemMessages){
+				
+			Calendar displayFrom = Calendar.getInstance();
+			displayFrom.setTime(new DateUtil().getMidnight(eachMessage.getDisplayFromDate()));
+				
+			Calendar displayTill = Calendar.getInstance();
+			displayTill.setTime(new DateUtil().getEndOfDate(eachMessage.getDisplayToDate()));
+				
+			if(today.getTime().after(displayFrom.getTime()) && today.getTime().before(displayTill.getTime())){
+				if(!(containsId(suppressedMessages, eachMessage.getId())))
+					activeSystemMessages.add(eachMessage);
+			}
+		}
+		
+		
+		return activeSystemMessages;
+		
+	}
+	
+	
+	public boolean containsId(List<LoginMessage> list, long id) {
+	    for (LoginMessage object : list) {
+	        if (object.getId() == id) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 
 }

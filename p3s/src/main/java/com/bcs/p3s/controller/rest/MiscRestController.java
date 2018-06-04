@@ -88,10 +88,10 @@ public class MiscRestController extends Universal{
 	   log().debug(msg +" invoked :::");
 	   try{
 		   System.out.println("Params obtained as "+ id);
-		   if (!(id instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("MiscRestController : /suppress-login-messages/ suppressLoginMessages() NOT passed String");
+		   if (!(id instanceof ArrayList)) throw new P3SRuntimeException("MiscRestController : /suppress-login-messages/ suppressLoginMessages() NOT passed ArrayList of ids");
 		   
 		   ExtractSubmittedDataEngine extractor = new ExtractSubmittedDataEngine();
-		   List<Long> suppressMessages = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs((LinkedHashMap<String,Object>) id);
+		   List<Long> suppressMessages = extractor.commaSeparatedListOfIntegerNumbersStrToListLongs((ArrayList<String>) id);
 	   
 		   PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
 		   if(postSession.getUser() == null){

@@ -368,7 +368,6 @@ public List<NotificationMapping> extractNotificationsFromAddPatentForm(Patent pa
 
 
 	/**
-	 * Created for development testing, but may be of use later for production use.
 	 * @param commaSeparatedListOfIntegerNumbers eg: patent_id[1,2] - this format because UI cannot send an anonymous array
 	 * @return List<Long>
 	 */
@@ -422,6 +421,33 @@ public List<NotificationMapping> extractNotificationsFromAddPatentForm(Patent pa
 		return result;
 	}
 
+	/*
+	 * Created for development testing of Payments: API suppressLoginMessages
+	 */
+	public List<Long> commaSeparatedListOfIntegerNumbersStrToListLongs(ArrayList<String> listOfIds) {
+		
+		List<Long> result = new ArrayList<Long>();
+		String err = "ExtractSubmittedDataEngine extractOrderedPatentIdList ";
+		
+		if(! (listOfIds.isEmpty())){
+			for (Object element : listOfIds){
+				if(element instanceof String){
+					Long longy = new Long(((String) element).trim());
+					result.add(longy);
+				}
+				if(element instanceof Integer){
+					Long longy = new Long(((Integer) element));
+					result.add(longy);
+				}
+			}
+			
+		}
+		System.out.println(err+" completed. "+listOfIds+" has "+result.size()+" items.");
+		
+		return result;
+		
+	}
+	
 	
 	public InBasket getBasketContentsFromCheckOutForm(Object obby){
 		

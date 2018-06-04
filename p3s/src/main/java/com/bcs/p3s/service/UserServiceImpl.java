@@ -233,7 +233,7 @@ public class UserServiceImpl extends Universal implements UserService {
 		String msg =PREFIX + "findAllLoginMessagesForUser(user)";
 		log().debug(msg +" invoked to find login messages for the user[" +user.getId()+"]");
 		
-		List<LoginMessage> loginMessages = user.getLoginMessagesToDisplay();
+		List<LoginMessage> loginMessages = user.getLoginMessagesToInhibit();
 		List<LoginMessageUI> loginMessagesUI = new ArrayList<LoginMessageUI>();
 		Calendar today = Calendar.getInstance();
 		for(LoginMessage eachMessage : loginMessages){

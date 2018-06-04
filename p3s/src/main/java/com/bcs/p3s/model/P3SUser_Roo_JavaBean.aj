@@ -74,12 +74,12 @@ privileged aspect P3SUser_Roo_JavaBean {
         this.password = password;
     }
     
-    public List<LoginMessage> P3SUser.getLoginMessagesToDisplay() {
-        return this.loginMessagesToDisplay;
+    public List<LoginMessage> P3SUser.getLoginMessagesToInhibit() {
+        return this.loginMessagesToInhibit;
     }
     
-    public void P3SUser.setLoginMessagesToDisplay(List<LoginMessage> loginMessagesToDisplay) {
-        this.loginMessagesToDisplay = loginMessagesToDisplay;
+    public void P3SUser.setLoginMessagesToInhibit(List<LoginMessage> loginMessagesToInhibit) {
+        this.loginMessagesToInhibit = loginMessagesToInhibit;
     }
     
 }
