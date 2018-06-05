@@ -12,7 +12,10 @@
 							<div class="col-md-9 col-lg-9 col-xl-8">
 								<div class="row">
 									<div class="col-md-10 col-lg-10 col-xl-10 d-flex">
-										<input type="text" name="searchPatent" id="searchPatent" ng-model="searchPatent" class="form-control pill-radius font-body" placeholder="Search" focus-me="true" validate-patent required>
+										<input type="text" name="searchPatent" id="searchPatent" ng-model="searchPatent" class="form-control pill-radius font-body" placeholder="Search" focus-me="true" validate-patent required autofocus>
+										<script>
+											document.searchPatentForm.searchPatent.focus();
+										</script>
 									</div>
 									<div class="col-md-2 col-xl-2 user-utils d-flex justify-content-center">
 										<button type="submit" data-ng-disabled="searchPatentForm.$invalid" class="btn bg-phase-green  circle-radius-sm d-flex justify-content-center icon-link">
