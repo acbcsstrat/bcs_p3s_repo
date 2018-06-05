@@ -43,7 +43,7 @@ public final class BankTransferPaymentDetails {
 		account1PaymentType = "Fedwire";
 		account1BankName = "Deutsche Bank Trust Company Americas";
 		account1BranchCode = "021001033";   							// ABA // former : 026073150 
-		account1Number = "04951460";   									// former : 2715100256 
+		account1AcctNumber = "04951460";   									// former : 2715100256 
 		account1field1 = ""; 											// former : Community Federal Savings Bank, New York, NY 
 		account1field2 = "";
 		account1AcctType = "Checking";
@@ -52,7 +52,7 @@ public final class BankTransferPaymentDetails {
 		account2PaymentType = "ACH";
 		account2BankName = "Deutsche Bank Trust Company Americas";
 		account2BranchCode = "021001033";								// ABA
-		account2Number = "04951460";
+		account2AcctNumber = "04951460";
 		account2field1 = "";
 		account2field2 = "";
 		account2AcctType = "Checking";
