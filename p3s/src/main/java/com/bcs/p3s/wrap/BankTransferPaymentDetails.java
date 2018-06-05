@@ -8,7 +8,7 @@ package com.bcs.p3s.wrap;
  */
 public final class BankTransferPaymentDetails {
 
-
+	private final String OBS = "OBSOLETEfield"; 
 	
 	private String account1PaymentType;
 	private String account1BankName;
@@ -59,14 +59,20 @@ public final class BankTransferPaymentDetails {
 		account2AcctName = "Moneycorp Ltd";
 
 		// Fields becoming redundant from 180514
-		account1Type = "Fedwire-O";
-		account1Number = "04951460";   									// former : 2715100256
-		account1field1 = "Deutsche Bank Trust Company Americas"; 
+//		account1Type = "Fedwire-O";
+//		account1Number = "04951460";   									// former : 2715100256
+//		account1field1 = "Deutsche Bank Trust Company Americas"; 
+		account1Type = OBS;
+		account1Number = OBS;
+		account1field1 = OBS; 
 
 		//account1field2 = "";
-		account2Type = "ACH-O";
-		account2Number = "04951460";
-		account2field1 = "Deutsche Bank Trust Company Americas"; 
+//		account2Type = "ACH-O";
+//		account2Number = "04951460";
+//		account2field1 = "Deutsche Bank Trust Company Americas"; 
+		account2Type = OBS;
+		account2Number = OBS;
+		account2field1 = OBS; 
 
 		
 //		account1Type = "ACH";

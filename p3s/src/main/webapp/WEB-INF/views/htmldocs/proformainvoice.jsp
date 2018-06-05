@@ -335,7 +335,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		              
 		            </td>
 		            <td>
-		              <b><%=data.getBankDetails().getAccount1Type().toUpperCase() %></b>
+		              <b><%=data.getBankDetails().getAccount1PaymentType().toUpperCase() %></b>
 		            </td>
 		          </tr>
 		          <tr>
@@ -415,7 +415,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		              
 		            </td>
 		            <td>
-		              <b><%=data.getBankDetails().getAccount2Type().toUpperCase() %></b>
+		              <b><%=data.getBankDetails().getAccount2PaymentType().toUpperCase() %></b>
 		            </td>
 		          </tr>
 		          <tr>
