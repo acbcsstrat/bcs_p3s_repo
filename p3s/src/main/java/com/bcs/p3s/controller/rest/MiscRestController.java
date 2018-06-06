@@ -2,6 +2,8 @@
 package com.bcs.p3s.controller.rest;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -102,7 +104,9 @@ public class MiscRestController extends Universal{
 		  
 	   }
 	   catch(Exception e){
-		   e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 	   }
 	   
    }

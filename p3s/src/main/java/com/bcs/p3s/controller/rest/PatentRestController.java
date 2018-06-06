@@ -281,7 +281,7 @@ public class PatentRestController extends Universal {
 			log().error("Stacktrace was: "+errors.toString());
 		}
 		
-	    return new ResponseEntity<Patent>(HttpStatus.NO_CONTENT);
+	    return new ResponseEntity<Patent>(HttpStatus.OK);
 	}
   
   
