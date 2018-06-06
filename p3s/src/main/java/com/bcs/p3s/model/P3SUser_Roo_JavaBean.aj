@@ -6,6 +6,7 @@ package com.bcs.p3s.model;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
+import java.sql.Blob;
 import java.util.List;
 
 privileged aspect P3SUser_Roo_JavaBean {
@@ -72,6 +73,14 @@ privileged aspect P3SUser_Roo_JavaBean {
     
     public void P3SUser.setPassword(String password) {
         this.password = password;
+    }
+    
+    public Blob P3SUser.getAvatar() {
+        return this.avatar;
+    }
+    
+    public void P3SUser.setAvatar(Blob avatar) {
+        this.avatar = avatar;
     }
     
     public List<LoginMessage> P3SUser.getLoginMessagesToInhibit() {

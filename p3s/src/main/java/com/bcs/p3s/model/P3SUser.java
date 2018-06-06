@@ -6,7 +6,10 @@ import org.springframework.roo.addon.tostring.RooToString;
 import javax.validation.constraints.NotNull;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -58,6 +61,11 @@ public class P3SUser {
      */
     @NotNull
     private String password;
+
+
+    /** Optional User image */
+    @Lob
+    private Blob avatar;
 
     /**
      */
