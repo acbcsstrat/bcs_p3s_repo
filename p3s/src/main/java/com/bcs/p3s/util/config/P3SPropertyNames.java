@@ -81,4 +81,9 @@ public interface P3SPropertyNames {
 	public static final String GECKO_DRIVER_PATH = "gecko_driver_path";
 	public static final String INDEX_URL ="index_url";
 	
+	// File-Uploads
+	//public static final String UPLOAD_DIR_PDF 				= "upload_dir_pdf"; 
+	public static final String UPLOAD_RESULT_URL 				= "upload_result_url"; 
+
+	
 }

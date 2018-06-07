@@ -1,13 +1,21 @@
 package com.bcs.p3s.controller.web;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.docs.email.EmailDevTest;
@@ -94,7 +102,48 @@ public class MiscController extends Universal {
 
             return "blank";
 	    }
-	    
+
+		
+		@RequestMapping(value = "/avatarImage", method = RequestMethod.GET)
+		public void avatarImage(@RequestParam(value = "id", required = false) Integer itemId, 
+				HttpServletResponse response,HttpServletRequest request) throws ServletException, IOException {
+
+			
+			
+			//protected String PREFIX = this.getClass().getName() + " : "; 
+			String PREFIX = this.getClass().getName() + " : "; 
+
+			
+			
+			
+			
+			
+			log().debug(PREFIX+"/avatarImage invoked  : id = "+itemId);
+
+	  		P3SUser myUser = SecurityUtil.getMyUser();
+
+			byte[] bytearray = new byte[1048576];
+
+			try {
+
+				Blob blobby = myUser.getAvatar();
+
+				int size=0;
+				InputStream sImage = blobby.getBinaryStream();
+				while( (size=sImage.read(bytearray)) != -1 ) {
+					System.out.println(" top of loop : size is "+size);
+
+					response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+					response.getOutputStream().write(bytearray,0,size); 
+				}
+			    response.getOutputStream().close();
+				System.out.println(" AFTER loop. size NOW = "+size);
+			
+			}
+			catch(Exception ex) {
+				logInternalError().error("Error retrieving avatar. Rqst was id "+itemId, ex);
+			}
+		}
 
 	
 }
