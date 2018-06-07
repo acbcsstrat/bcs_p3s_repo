@@ -26,7 +26,6 @@ import com.bcs.p3s.service.model.FileUploadAvatarData;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
-import com.bcs.p3s.util.lang.P3SException;
 import com.bcs.p3s.util.lang.Universal;
 
 

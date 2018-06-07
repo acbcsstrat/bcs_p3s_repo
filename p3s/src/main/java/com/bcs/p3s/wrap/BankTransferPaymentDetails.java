@@ -80,8 +80,8 @@ public final class BankTransferPaymentDetails {
 //		account1Number = "2715100256";   								// former : 2715100256 
 //		account1field1 = "Community Federal Savings Bank, New York, NY";// former : Community Federal Savings Bank, New York, NY 
 //		account1field2 = "";
-//		account1AcctType = "zaph";
-//		account1CustomerName = "zaph";
+//		account1AcctType = "aaa";
+//		account1CustomerName = "bbb";
 //		
 //		//account2Type = "FedWire";
 //		account2Type = "Alternative Payment";
@@ -89,8 +89,8 @@ public final class BankTransferPaymentDetails {
 //		account2Number = "Not yet available";
 //		account2field1 = "Not yet available";
 //		account2field2 = "";
-//		account2AcctType = "zaph";
-//		account2CustomerName = "zaph";
+//		account2AcctType = "ccc";
+//		account2CustomerName = "ddd";
 }
 
 	

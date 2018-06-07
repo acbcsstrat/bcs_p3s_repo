@@ -51,7 +51,7 @@ public class UserProfileRestController extends Universal {
  
  
     
-    //-------------------Retrieve Single User OBSOLETE - see below --------------------------------------------------------
+    //-------------------Update User  --------------------------------------------------------
 
     @RequestMapping(value = "/rest-user/", method = RequestMethod.PUT)
     public ResponseEntity<UserProfileUI> updateUser(@RequestBody UserProfileUI obUser , UriComponentsBuilder ucBuilder) {
@@ -61,16 +61,23 @@ public class UserProfileRestController extends Universal {
     	log().debug(msg + " invoked");
     	if ( ! ( obUser instanceof UserProfileUI)) throw new P3SRuntimeException("UserProfileRestController : /rest-user/ updateUser() NOT passed UserProfileUI object");
     	
-    	
     	UserProfileUI user = (UserProfileUI) obUser;
     	
         PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
         P3SUser p3sUser = pLoginSession.getUser();
+
+        // Verify not updating some other user!
+    	if ( (p3sUser==null) || ! p3sUser.getEmailAddress().equals(user.getEmailAddress())) {
+    		String eMsg = "*** [failMalicious]   [on checkUpdatingOwnUser]  ***  " +"(user "+ ((p3sUser==null)?"NuLL":p3sUser.getId()) +" attempted set email "+user.getEmailAddress()+")  ***";
+    		System.out.println(eMsg); logM().fatal(eMsg); throw new P3SRuntimeException(eMsg);
+    	}
+
+    	// Make the changes
         p3sUser.setEmailAddress(user.getEmailAddress());
         p3sUser.setFirstName(user.getFirstName());
         p3sUser.setLastName(user.getLastName());
         p3sUser.setIsEmailNotification(user.getIsEmailNotification());
-        
+
         //updating User password
         if(!(user.getNewPassword() == null)){
         		p3sUser.setPassword(user.getNewPassword());

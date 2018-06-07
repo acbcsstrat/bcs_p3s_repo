@@ -25,6 +25,7 @@ import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.util.config.BuildinfoPropertyReader;
 import com.bcs.p3s.util.env.Hostname;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 
 
@@ -40,6 +41,10 @@ public class MiscController extends Universal {
 		@Autowired
 		PatentService patentService;  //Service which will do all data retrieval/manipulation work
 
+		protected String PREFIX = this.getClass().getName() + " : "; 
+
+		
+	    //------------------- whoami --------------------------------------------------
 
 		@RequestMapping(value="/whoami", method = RequestMethod.GET, produces = "text/html")
 	    public String whoami(Model uiModel) {
@@ -69,6 +74,8 @@ public class MiscController extends Universal {
 
 		
 		
+	    //------------------- acgenerateemail --------------------------------------------------
+
 		@RequestMapping(value="/acgenerateemail", method = RequestMethod.POST, produces = "text/html")
 	    public String acgenerateemail(Model uiModel, String emailchoice) {
 			log().debug("acgenerateemail in MiscController invoked  : param = "+emailchoice);
@@ -80,6 +87,9 @@ public class MiscController extends Universal {
             return "blank";
 	    }
 	    
+
+	    //------------------- actesttestpanic --------------------------------------------------
+
 		@RequestMapping(value="/actesttestpanic", method = RequestMethod.POST, produces = "text/html")
 	    public String actesttestpanic(Model uiModel, String message) {
 			String keymessage = message;
@@ -95,6 +105,9 @@ public class MiscController extends Universal {
             return "blank";
 	    }
 	    
+
+	    //------------------- logtest --------------------------------------------------
+
 		@RequestMapping(value="/logtest", method = RequestMethod.GET, produces = "text/html")
 	    public String aclogtest(Model uiModel, String message) {
 			String keymessage = message;
@@ -104,44 +117,61 @@ public class MiscController extends Universal {
 	    }
 
 		
+
+	    //------------------- Provide an avatar image --------------------------------------------------
+
+		/**
+		 * If id of P3SUser is NOT provided, provide avatar of currently-logged-in user.
+		 * Otherwise, provide avatar of specified user PROVIDED that user is a colleague of currently-logged-in user.
+		 * 
+		 * TBC: If avatar has never been set, provide the data from the db (zero-length image)
+		 */
 		@RequestMapping(value = "/avatarImage", method = RequestMethod.GET)
-		public void avatarImage(@RequestParam(value = "id", required = false) Integer itemId, 
+		public void avatarImage(@RequestParam(value = "id", required = false) Long itemId, 
 				HttpServletResponse response,HttpServletRequest request) throws ServletException, IOException {
 
-			
-			
-			//protected String PREFIX = this.getClass().getName() + " : "; 
-			String PREFIX = this.getClass().getName() + " : "; 
+			String err = PREFIX+"/avatarImage  ";
+			log().debug(err + "invoked  : id = "+itemId);
 
-			
-			
-			
-			
-			
-			log().debug(PREFIX+"/avatarImage invoked  : id = "+itemId);
-
+			byte[] bytearray = new byte[1048576]; // 1MB. Plenty big for 10k resized Avatars
 	  		P3SUser myUser = SecurityUtil.getMyUser();
+	  		P3SUser selectedUser = null;
 
-			byte[] bytearray = new byte[1048576];
-
+	  		
 			try {
 
-				Blob blobby = myUser.getAvatar();
+		  		if (itemId==null) selectedUser = myUser;
+		  		else {
+		  			selectedUser = P3SUser.findP3SUser(itemId);
+		  			if ( (selectedUser==null) || 
+		  			selectedUser.getBusiness().getId() != myUser.getBusiness().getId()) {
+		  					err+= ("user "+myUser.getId()+" asked for invalid userId "+itemId); 
+		  					logM().warn(err); throw new P3SRuntimeException(err+" asked for invalid userId "+itemId);
+		  			}
+		  		}
 
-				int size=0;
-				InputStream sImage = blobby.getBinaryStream();
-				while( (size=sImage.read(bytearray)) != -1 ) {
-					System.out.println(" top of loop : size is "+size);
+				Blob blobby = selectedUser.getAvatar();
 
-					response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-					response.getOutputStream().write(bytearray,0,size); 
+				if (blobby==null) {
+						log().warn(err+" IS NO AVATAR IN dB FOR ID "+itemId);
+						response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+						response.getOutputStream().write(bytearray,0,0); 
+				} else {
+					int size=0;
+					InputStream sImage = blobby.getBinaryStream();
+					while( (size=sImage.read(bytearray)) != -1 ) {
+						log().debug(err+" in loop reading avatar. Size this loop is "+size);
+	
+						response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+						response.getOutputStream().write(bytearray,0,size); 
+					}
 				}
-			    response.getOutputStream().close();
-				System.out.println(" AFTER loop. size NOW = "+size);
-			
+
+				response.getOutputStream().close();
+			    //log().debug(PREFIX+" AFTER loop. size NOW = "+size);
 			}
 			catch(Exception ex) {
-				logInternalError().error("Error retrieving avatar. Rqst was id "+itemId, ex);
+				logInternalError().error(err+"Error retrieving avatar. Rqst was id "+itemId, ex);
 			}
 		}
 
