@@ -3,19 +3,12 @@
 @import "./base/_reset.scss";
 @import "./base/_base.scss";
 
-// @import "~bootstrap/scss/bootstrap.scss";
-@import "~angular-material/angular-material.scss";
-@import "~nvd3/build/nv.d3.css";
-
-@import "~font-awesome/scss/font-awesome";
-@import "~font-awesome/scss/font-awesome.scss";
-
-@import "~slick-carousel/slick/slick.scss";
-@import "~slick-carousel/slick/slick-theme.scss";
-
-@import "~owl.carousel/src/scss/owl.carousel.scss";
-
-@import "./vendors/stepProgress.scss";
+@import "./vendors/angular-material/angular-material.scss";
+@import "./vendors/nvd3/build/nv.d3.css";
+@import "./vendors/font-awesome/scss/font-awesome";
+@import "./vendors/font-awesome/scss/font-awesome.scss";
+@import "./vendors/slick-carousel/slick/slick.scss";
+@import "./vendors/slick-carousel/slick/slick-theme.scss";
 @import "./vendors/extensions/_angularJS-materials-ext.scss";
 @import "./vendors/extensions/_bootstrap-ext.scss";
 @import "./vendors/extensions/_parsley-ext.scss";
