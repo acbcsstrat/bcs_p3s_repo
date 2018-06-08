@@ -139,7 +139,7 @@ public class TestP3sLogin {
     private void logoutFnCheck(){
     	
     	
-    	driver.findElement(By.name("logoutLink")).click();
+    	driver.findElement(By.linkText("Logout")).click();
     	//WebDriverWait wait = new WebDriverWait(driver, 30);
     	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     	 try {
