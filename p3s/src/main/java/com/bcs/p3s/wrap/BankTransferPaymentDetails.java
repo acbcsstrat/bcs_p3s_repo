@@ -131,7 +131,7 @@ public final class BankTransferPaymentDetails {
 	// Getters. No setters
 	
 	public String getAccount1PaymentType() {
-		return account1Type;
+		return account1PaymentType;
 	}
 	public String getAccount1BankName() {
 		return account1BankName;
@@ -140,7 +140,7 @@ public final class BankTransferPaymentDetails {
 		return account1BranchCode;
 	}
 	public String getAccount1AcctNumber() {
-		return account1Number;
+		return account1AcctNumber;
 	}
 	public String getAccount1field1() {
 		return account1field1;
@@ -157,7 +157,7 @@ public final class BankTransferPaymentDetails {
 
 	
 	public String getAccount2PaymentType() {
-		return account2Type;
+		return account2PaymentType;
 	}
 	public String getAccount2BankName() {
 		return account2BankName;
@@ -166,7 +166,7 @@ public final class BankTransferPaymentDetails {
 		return account2BranchCode;
 	}
 	public String getAccount2AcctNumber() {
-		return account2Number;
+		return account2AcctNumber;
 	}
 	public String getAccount2field1() {
 		return account2field1;
