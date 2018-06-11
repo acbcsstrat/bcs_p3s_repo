@@ -163,12 +163,28 @@ public class MiscRestController extends Universal{
    * @param patentApplicationNumber
    * @return Form1200Record object
    */
-  @RequestMapping(value="/patent-register/{patentApplicationNumber:.+}", method = RequestMethod.GET)
-  public ResponseEntity<Form1200Record> getPatentRegisterForForm1200(@PathVariable("patentApplicationNumber") String patentApplicationNumber){
+  @RequestMapping(value="/rest-form1200/{patentApplicationNumber:.+}", method = RequestMethod.GET)
+  public ResponseEntity<Form1200Record> getPatentDetailsForForm1200(@PathVariable("patentApplicationNumber") String patentApplicationNumber){
 	  
+	  String msg = "getPatentDetailsForForm1200("+patentApplicationNumber+")";
 	  Form1200Record form1200 = new Form1200Record();
+	  log().debug(msg +" invoked");
 	  
-	  form1200 = miscService.readEPOForForm1200(patentApplicationNumber);
+	  try{
+		  form1200 = miscService.readEPOForForm1200(patentApplicationNumber);
+		  
+		  if(form1200 == null)
+			  log().warn(msg +" returning no data for form1200");
+		  else
+			  log().info(msg +" returning form1200 data");
+	  }
+	  catch(Exception e){
+		  
+		StringWriter errors = new StringWriter();
+		e.printStackTrace(new PrintWriter(errors));
+		log().error("Stacktrace was: "+errors.toString());
+	  }
+	  
 	  return new ResponseEntity<Form1200Record>(form1200, HttpStatus.OK);
   }
 
