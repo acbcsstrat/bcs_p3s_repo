@@ -84,6 +84,16 @@ public interface P3SPropertyNames {
 	// File-Uploads
 	//public static final String UPLOAD_DIR_PDF 				= "upload_dir_pdf"; 
 	public static final String UPLOAD_RESULT_URL 				= "upload_result_url"; 
+	
+	//EPO Scrape
+	public static final String REGISTER_BASE_URL = "register_base_url"; 
+	public static final String PUBLISHED_DATA_BASE_URL = "published_data_base_url"; 
+	public static final String EPO_SCRAPE_TYPE_APPLICATION = "epo_scrape_type_application"; 
+	public static final String EPO_SCRAPE_TYPE_PUBLICATION = "epo_scrape_type_publication"; 
+	public static final String EPO_SCRAPE_FORMAT_EPODOC = "epo_scrape_format_epodoc";
+	public static final String EPO_SCRAPE_RESULT_BIBLIO = "epo_scrape_result_biblio";
+	public static final String EPO_SCRAPE_RESULT_CLAIMS = "epo_scrape_result_claims";
+	public static final String EPO_SCRAPE_RESULT_BIBLIO_PROCEDURAL = "epo_scrape_result_bibio_procedural";
 
 	
 }

@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,17 +20,26 @@ import org.xml.sax.SAXException;
 
 import com.bcs.p3s.scrape.model.Agent;
 import com.bcs.p3s.scrape.model.Applicants;
+import com.bcs.p3s.scrape.model.Claims;
 import com.bcs.p3s.scrape.model.Events;
+import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.scrape.model.Record;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.util.scrape.OPSReader;
+import com.bcs.p3s.enump3s.EPOSearchTypeEnum;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.digesters.DigesterElements;
+import com.bcs.p3s.scrape.digesters.Form1200Details;
 import com.bcs.p3s.scrape.digesters.ReadAgent;
 import com.bcs.p3s.scrape.digesters.ReadApplicant;
+import com.bcs.p3s.scrape.digesters.ReadClaims;
 import com.bcs.p3s.scrape.digesters.ReadIPC;
+import com.bcs.p3s.scrape.digesters.ReadInventor;
 import com.bcs.p3s.scrape.digesters.ReadRenewalInfo;
 import com.bcs.p3s.scrape.digesters.RecordDetails;
 import com.bcs.p3s.scrape.digesters.Response;
@@ -40,17 +50,19 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	private final String ADDRESS_DELIMITER = ",";
 
 	@Override
-	public Patent populatePatentEPOData(String patentApplicationNumber) { 
+	public Patent readEPORegisterForRenewals(String patentApplicationNumber) { 
 		
-		String msg = PREFIX + "populatePatentEPOData(" + patentApplicationNumber + ")";
+		String msg = PREFIX + "readEPORegisterForRenewals(" + patentApplicationNumber + ")";
 		
 		log().debug( msg +" invoked ");
 		OPSReader reader = new OPSReader();
 		Patent patent = new Patent();
 		
+		
 		List<DigesterElements> digesters = new ArrayList<DigesterElements>();
 		try {
 			
+			String search_url = generateURL(patentApplicationNumber, EPOSearchTypeEnum.REGISTER_RETRIEVAL_RENEWAL);
 			
 			//Create a "parser factory" for creating SAX parsers
 	        SAXParserFactory spfac = SAXParserFactory.newInstance();
@@ -65,7 +77,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        digesters.add(new ReadAgent(record));
 	        digesters.add(new ReadIPC(record));
 	           
-	        String scrapeData = reader.readEPO(patentApplicationNumber);
+	        String scrapeData = reader.readEPO(search_url);
 	        
 	        if(scrapeData == null){
 	        	log().debug("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
@@ -78,6 +90,8 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        
 	        Response response = new Response();
 	        response.setContent(scrapeData);
+	        
+	        System.out.println("Response : " + response.getContent());
 	        for(DigesterElements digest: digesters){
 	    		
 	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
@@ -143,13 +157,20 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	}
 	
 	
-	protected void findLatestRenewalInfo(List<Events> events, Patent patent) throws ParseException{
+	protected void findLatestRenewalInfo(List<Events> events, Patent patent) {
 		
 		patent.setLastRenewedYearEpo(0);
 		for(Events event : events){
 			if(event.getRenewalYear() > patent.getLastRenewedYearEpo()){
 				patent.setLastRenewedYearEpo(event.getRenewalYear());
-				patent.setLastRenewedDateExEpo(new DateUtil().stringToDate(event.getLastRenewalPayDate()));
+				try {
+					patent.setLastRenewedDateExEpo(new DateUtil().stringToDate(event.getLastRenewalPayDate()));
+				} catch (ParseException e) {
+					StringWriter errors = new StringWriter();
+					e.printStackTrace(new PrintWriter(errors));
+					log().error("Exception in findLatestRenewalInfo() " );
+					log().error("Stacktrace was: "+errors.toString());
+				}
 			}
 		}
 		
@@ -227,6 +248,235 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
     	
     	return repDetails;
     }
+
+
+	//@Override
+	protected String generateURL(String patentNumber, String searchType) throws P3SPropertyException {
+		
+		/*
+		 * Note: patentNumber can be either application number or publication number
+		 * For claims retrieval service we need Patent Publication Number
+		 */
+		P3SPropertyReader reader = new P3SPropertyReader();
+		
+		String url = "";
+		String base_url = null;
+		String type = null;
+		String format = null;
+		String result = null;
+		String delimiter = "/";
+		
+		String msg = PREFIX + "generateURL(" + patentNumber +" , " +  searchType + ")";
+			
+		log().debug(msg +" invoked ");
+			
+		if(EPOSearchTypeEnum.REGISTER_RETRIEVAL_RENEWAL.equals(searchType)){
+			base_url = reader.getGenericProperty(P3SPropertyNames.REGISTER_BASE_URL); 
+			type = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_TYPE_APPLICATION); 
+			format = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_FORMAT_EPODOC); 
+			result = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_RESULT_BIBLIO_PROCEDURAL); 
+				
+			url = base_url.concat(type).concat(delimiter).concat(format).concat(delimiter).concat(patentNumber).concat(delimiter).concat(result);
+		}
+		
+		else if(EPOSearchTypeEnum.PUBLISHED_DATA_CLAIMS.equals(searchType)){
+			
+			base_url = reader.getGenericProperty(P3SPropertyNames.PUBLISHED_DATA_BASE_URL); 
+			type = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_TYPE_PUBLICATION); 
+			format = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_FORMAT_EPODOC); 
+			result = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_RESULT_CLAIMS); 
+			
+			url = base_url.concat(type).concat(delimiter).concat(format).concat(delimiter).concat(patentNumber).concat(delimiter).concat(result);
+		}
+		
+		else if(EPOSearchTypeEnum.REGISTER_RETRIEVAL_FORM1200.equals(searchType)){
+			
+			base_url = reader.getGenericProperty(P3SPropertyNames.REGISTER_BASE_URL); 
+			type = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_TYPE_APPLICATION); 
+			format = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_FORMAT_EPODOC); 
+			result = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_RESULT_BIBLIO); 
+				
+			url = base_url.concat(type).concat(delimiter).concat(format).concat(delimiter).concat(patentNumber).concat(delimiter).concat(result);
+		}
+			
+		log().debug(msg +" returning EPO search URL as " + url);
+		return url;
+	}
+
+
+	//------------ Below are the scraping methods for FORM1200 -----------
+	@Override
+	//Note :- Claims retrievals service requires PATENT PUBLICATION NUMBER
+	public Claims readEPOForClaims(String patentPublicationNumber){
+		
+		Claims claims = new Claims();
+		
+		String msg = PREFIX + "readEPOForClaims(" + patentPublicationNumber + ")";
+		
+		log().debug( msg +" invoked ");
+		OPSReader reader = new OPSReader();
+		
+		List<DigesterElements> digesters = new ArrayList<DigesterElements>();
+		try {
+			
+			String search_url = generateURL(patentPublicationNumber, EPOSearchTypeEnum.PUBLISHED_DATA_CLAIMS);
+			//Create a "parser factory" for creating SAX parsers
+	        SAXParserFactory spfac = SAXParserFactory.newInstance();
+
+	        //Now use the parser factory to create a SAXParser object
+	        SAXParser sp = spfac.newSAXParser();
+	          
+	        Form1200Record form1200 = new Form1200Record();
+	        digesters.add(new ReadClaims(form1200));
+	        
+	           
+	        String scrapeData = reader.readEPO(search_url);
+	        
+	        if(scrapeData == null){
+	        	log().debug("Search for Claims with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
+	        	log().fatal("Search fro Claims with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
+	        	return null;
+	        }
+	        
+	        Response response = new Response();
+	        response.setContent(scrapeData);
+	        
+	        System.out.println("Response : " + response.getContent());
+	        for(DigesterElements digest: digesters){
+	    		
+	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
+	        	iss.setEncoding("UTF-8");
+	        	sp.parse(iss, digest);
+	        }
+	        
+	        claims.setAllClaims(form1200.getAllClaims());
+	        claims = populateClaims(claims);
+	       
+		}
+		catch(Exception e){
+			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		
+		 return claims;
+	}
+
+
+	@Override
+	public Form1200Record readEPORegisterForForm1200(String patentApplicationNumber){
+		
+		String msg = PREFIX + "readEPORegisterForForm1200(" + patentApplicationNumber + ")";
+		
+		log().debug( msg +" invoked ");
+		OPSReader reader = new OPSReader();
+		Form1200Record form1200 = new Form1200Record();
+		
+		
+		List<DigesterElements> digesters = new ArrayList<DigesterElements>();
+		try {
+			
+			String search_url = generateURL(patentApplicationNumber, EPOSearchTypeEnum.REGISTER_RETRIEVAL_FORM1200);
+			//Create a "parser factory" for creating SAX parsers
+	        SAXParserFactory spfac = SAXParserFactory.newInstance();
+
+	        //Now use the parser factory to create a SAXParser object
+	        SAXParser sp = spfac.newSAXParser();
+	          
+	        Record record = new Record();
+	        digesters.add(new Form1200Details(form1200));
+	        digesters.add(new ReadApplicant(record));
+	        digesters.add(new ReadAgent(record));
+	        digesters.add(new ReadIPC(record));
+	        digesters.add(new ReadInventor(form1200));
+	        digesters.add(new ReadClaims(form1200));
+	           
+	        String scrapeData = reader.readEPO(search_url);
+	        
+	        if(scrapeData == null){
+	        	log().debug("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
+	        	log().fatal("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
+	        	return null;
+	        }
+	        
+	        //SET Application Number from request
+	        //patent.setPatentApplicationNumber(patentApplicationNumber);
+	        
+	        Response response = new Response();
+	        response.setContent(scrapeData);
+	        
+	        System.out.println("Response : " + response.getContent());
+	        for(DigesterElements digest: digesters){
+	    		
+	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
+	        	iss.setEncoding("UTF-8");
+	        	sp.parse(iss, digest);
+	        }
+	        
+	        //if((patent.getPatentApplicationNumber().substring(2)).equals(record.getPatentApplicationNumber()))   // this check became redundant
+	        //patent = populatePatent(patent,record);
+	        populateForm1200(form1200,record);
+	        return form1200;
 	
+		} 
+		catch(SAXException e){
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in " + msg );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		catch(ParserConfigurationException e){
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in " + msg );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		catch (FileNotFoundException e) {
+			log().debug("No data found for application number " + patentApplicationNumber);
+			return null;
+		}
+		catch (Exception e) {
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in " + msg );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		return form1200;
+		
+	}
+	
+	protected Form1200Record populateForm1200(Form1200Record form1200, Record record)
+	{
+		
+		form1200.setApplicants(record.getApplicants());
+		form1200.setIpcCodes(record.getIpcCodes());
+		//form1200.setPublicationNumber(record.getPatentPublicationNumber());
+		//form1200.setPublishedDate(record.get);
+		return form1200;
+	}
+	
+	protected Claims populateClaims(Claims claims){
+		
+		String msg = PREFIX + "populateClaims(claims)";
+		log().debug(msg +" invoked");
+		log().debug("Obtained claims list having size of "+ claims.getAllClaims().length);
+		
+		String temp[] = claims.getAllClaims();
+		if("CLAIMS:".equals(temp[0])){
+			log().debug("First index value of claims list is "+ temp[0] +" and so it can be removed");
+			List<String> list = new ArrayList<String>(Arrays.asList(temp));
+			list.remove(0);
+			temp = list.toArray(new String[0]);
+			claims.setAllClaims(temp);
+		}
+		else{
+			log().debug("No change required for claims list");
+		}
+		
+		log().debug(msg +" returning claims list having size " + claims.getAllClaims().length); 
+		return claims;
+	}
+
 	
 }

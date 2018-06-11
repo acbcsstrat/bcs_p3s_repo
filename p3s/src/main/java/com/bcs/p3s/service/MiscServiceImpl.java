@@ -20,6 +20,9 @@ import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.scrape.model.Claims;
+import com.bcs.p3s.scrape.model.Form1200Record;
+import com.bcs.p3s.scrape.service.EPOAccessImpl;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.date.DateUtil;
@@ -202,4 +205,30 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 	    return false;
 	}
 
+	//------------ Below are the scraping methods for FORM1200 -----------
+	@Override
+	public Claims getClaims(String patentPublicationNumber) {
+					
+		Claims claims = new Claims();
+					
+		EPOAccessImpl epoAccess = new EPOAccessImpl();
+		claims = epoAccess.readEPOForClaims(patentPublicationNumber);
+		return claims;
+	}
+	
+	@Override
+	public Form1200Record readEPOForForm1200(String patentApplicationNumber) {
+	
+		Form1200Record form1200 = new Form1200Record();
+		Claims claims = new Claims();
+					
+		EPOAccessImpl epoAccess = new EPOAccessImpl();
+		form1200 = epoAccess.readEPORegisterForForm1200(patentApplicationNumber);
+					
+		
+		claims = epoAccess.readEPOForClaims(form1200.getPublicationNumber());
+		form1200.setAllClaims(claims.getAllClaims());
+					
+		return form1200;
+	}
 }

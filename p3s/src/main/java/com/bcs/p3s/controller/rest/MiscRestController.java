@@ -33,6 +33,8 @@ import com.bcs.p3s.docs.pojo.PatentX;*/
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.scrape.model.Claims;
+import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.service.MiscService;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -140,5 +142,34 @@ public class MiscRestController extends Universal{
    
    
   //------------------------------ --------------------------------------------
+  
+//------------ Below are the scraping methods for FORM1200 -----------
+  /**
+   * Single request to get all claims for the patent
+   * @param patentPublicationNumber
+   * @return String[] of claims
+   */
+  @RequestMapping(value="/patent-claims/{patentPublicationNumber:.+}", method = RequestMethod.GET)
+  public ResponseEntity<Claims> getPatentClaims(@PathVariable("patentPublicationNumber") String patentPublicationNumber){
+	  
+	  Claims claims = new Claims();
+	  
+	  claims = miscService.getClaims(patentPublicationNumber);
+	  return new ResponseEntity<Claims>(claims, HttpStatus.OK);
+  }
+  
+  /**
+   * Request that encapsulates all EPO data required for Form1200
+   * @param patentApplicationNumber
+   * @return Form1200Record object
+   */
+  @RequestMapping(value="/patent-register/{patentApplicationNumber:.+}", method = RequestMethod.GET)
+  public ResponseEntity<Form1200Record> getPatentRegisterForForm1200(@PathVariable("patentApplicationNumber") String patentApplicationNumber){
+	  
+	  Form1200Record form1200 = new Form1200Record();
+	  
+	  form1200 = miscService.readEPOForForm1200(patentApplicationNumber);
+	  return new ResponseEntity<Form1200Record>(form1200, HttpStatus.OK);
+  }
 
 }

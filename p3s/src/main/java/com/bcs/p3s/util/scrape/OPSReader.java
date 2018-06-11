@@ -38,9 +38,9 @@ public class OPSReader extends Universal{
 	
 	private long quotaUsedPerWeek;
 	
-	public String readEPO(String patentApplicationNumber) { 
+	public String readEPO(String search_url) { 
 		
-		String msg = PREFIX + "readEPO(" + patentApplicationNumber + ")";
+		String msg = PREFIX + "readEPO(" + search_url + ")";
 		URL url;
 		try {
 			
@@ -49,9 +49,9 @@ public class OPSReader extends Universal{
 				ACCESS_KEY = authUtilsObj.getAccessKey();
 			log().debug(msg + " invoked to connect to EPO");
 			
-			String strUrl = "http://ops.epo.org/3.2/rest-services/register/application/epodoc/" + patentApplicationNumber + "/biblio,procedural-steps";
+			//String strUrl = "http://ops.epo.org/3.2/rest-services/register/application/epodoc/" + patentApplicationNumber + "/biblio,procedural-steps";
 		
-			url = new URL(strUrl);
+			url = new URL(search_url);
 		
 			URLConnection request 	= url.openConnection();
 			
@@ -92,7 +92,7 @@ public class OPSReader extends Universal{
 			    
 			    
 			//Logging for response header starts
-			logEpo().debug("\n\n\nResponse Header for request " + strUrl);
+			logEpo().debug("\n\n\nResponse Header for request " + search_url);
 			logEpo().debug("Full header to follow ");
 			logEpo().debug(responseHeader.getHeaderData());
 
@@ -125,7 +125,7 @@ public class OPSReader extends Universal{
 		    log().debug("Caught exception; inside "+ msg + " : " + stack.toString());
 		}
 		catch (FileNotFoundException e) {
-			log().debug("No data found for application number " + patentApplicationNumber);
+			log().debug("No data found for search url " + search_url);
 			return null;
 		}
 		catch (IOException e) {

@@ -141,7 +141,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		 * 
 		 */
 		EPOAccess epo = new EPOAccessImpl();
-		patent = epo.populatePatentEPOData(patentApplicationNumber);
+		patent = epo.readEPORegisterForRenewals(patentApplicationNumber);
 		
 		if(patent == null){
 			return patentUI;
