@@ -94,6 +94,7 @@ public interface P3SPropertyNames {
 	public static final String EPO_SCRAPE_RESULT_BIBLIO = "epo_scrape_result_biblio";
 	public static final String EPO_SCRAPE_RESULT_CLAIMS = "epo_scrape_result_claims";
 	public static final String EPO_SCRAPE_RESULT_BIBLIO_PROCEDURAL = "epo_scrape_result_bibio_procedural";
+	public static final String EPO_SCRAPE_RESULT_ABSTRACT = "epo_scrape_result_abstract";
 
 	
 }

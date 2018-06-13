@@ -33,6 +33,8 @@ public class Form1200Record {
 	private ArrayList<String> designatedContractingStates;
 	
 	private String[] allClaims;
+	
+	private String abstractTxt;
 
 	public String getAppNumber() {
 		return appNumber;
@@ -147,6 +149,14 @@ public class Form1200Record {
 
 	public void setAllClaims(String[] allClaims) {
 		this.allClaims = allClaims;
+	}
+
+	public String getAbstractTxt() {
+		return abstractTxt;
+	}
+
+	public void setAbstractTxt(String abstractTxt) {
+		this.abstractTxt = abstractTxt;
 	}
 
 	

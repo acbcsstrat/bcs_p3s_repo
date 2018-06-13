@@ -35,6 +35,7 @@ import com.bcs.p3s.enump3s.EPOSearchTypeEnum;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.digesters.DigesterElements;
 import com.bcs.p3s.scrape.digesters.Form1200Details;
+import com.bcs.p3s.scrape.digesters.ReadAbstract;
 import com.bcs.p3s.scrape.digesters.ReadAgent;
 import com.bcs.p3s.scrape.digesters.ReadApplicant;
 import com.bcs.p3s.scrape.digesters.ReadClaims;
@@ -132,7 +133,205 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	}
 	
 	
-	protected Patent populatePatent(Patent patent, Record record) throws ParseException{
+
+	//------------ Below are the scraping methods for FORM1200 -----------
+	@Override
+	//Note :- Claims retrievals service requires PATENT PUBLICATION NUMBER
+	public Claims readEPOForClaims(String patentPublicationNumber){
+		
+		Claims claims = new Claims();
+		
+		String msg = PREFIX + "readEPOForClaims(" + patentPublicationNumber + ")";
+		
+		log().debug( msg +" invoked ");
+		OPSReader reader = new OPSReader();
+		
+		List<DigesterElements> digesters = new ArrayList<DigesterElements>();
+		try {
+			
+			String search_url = generateURL(patentPublicationNumber, EPOSearchTypeEnum.PUBLISHED_DATA_CLAIMS);
+			//Create a "parser factory" for creating SAX parsers
+	        SAXParserFactory spfac = SAXParserFactory.newInstance();
+
+	        //Now use the parser factory to create a SAXParser object
+	        SAXParser sp = spfac.newSAXParser();
+	          
+	        Form1200Record form1200 = new Form1200Record();
+	        digesters.add(new ReadClaims(form1200));
+	        
+	           
+	        String scrapeData = reader.readEPO(search_url);
+	        
+	        if(scrapeData == null){
+	        	log().debug("Search for Claims with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
+	        	log().fatal("Search fro Claims with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
+	        	return null;
+	        }
+	        
+	        Response response = new Response();
+	        response.setContent(scrapeData);
+	        
+	        System.out.println("Response : " + response.getContent());
+	        for(DigesterElements digest: digesters){
+	    		
+	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
+	        	iss.setEncoding("UTF-8");
+	        	sp.parse(iss, digest);
+	        }
+	        
+	        claims.setAllClaims(form1200.getAllClaims());
+	        claims = populateClaims(claims);
+	       
+		}
+		catch(Exception e){
+			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		
+		 return claims;
+	}
+
+
+	@Override
+	public Form1200Record readEPORegisterForForm1200(String patentApplicationNumber){
+		
+		String msg = PREFIX + "readEPORegisterForForm1200(" + patentApplicationNumber + ")";
+		
+		log().debug( msg +" invoked ");
+		OPSReader reader = new OPSReader();
+		Form1200Record form1200 = new Form1200Record();
+		
+		
+		List<DigesterElements> digesters = new ArrayList<DigesterElements>();
+		try {
+			
+			String search_url = generateURL(patentApplicationNumber, EPOSearchTypeEnum.REGISTER_RETRIEVAL_FORM1200);
+			//Create a "parser factory" for creating SAX parsers
+	        SAXParserFactory spfac = SAXParserFactory.newInstance();
+
+	        //Now use the parser factory to create a SAXParser object
+	        SAXParser sp = spfac.newSAXParser();
+	          
+	        Record record = new Record();
+	        digesters.add(new Form1200Details(form1200));
+	        digesters.add(new ReadApplicant(record));
+	        digesters.add(new ReadAgent(record));
+	        digesters.add(new ReadIPC(record));
+	        digesters.add(new ReadInventor(form1200));
+	        digesters.add(new ReadClaims(form1200));
+	           
+	        String scrapeData = reader.readEPO(search_url);
+	        
+	        if(scrapeData == null){
+	        	log().debug("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
+	        	log().fatal("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
+	        	return null;
+	        }
+	        
+	        //SET Application Number from request
+	        //patent.setPatentApplicationNumber(patentApplicationNumber);
+	        
+	        Response response = new Response();
+	        response.setContent(scrapeData);
+	        
+	        System.out.println("Response : " + response.getContent());
+	        for(DigesterElements digest: digesters){
+	    		
+	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
+	        	iss.setEncoding("UTF-8");
+	        	sp.parse(iss, digest);
+	        }
+	        
+	        //if((patent.getPatentApplicationNumber().substring(2)).equals(record.getPatentApplicationNumber()))   // this check became redundant
+	        //patent = populatePatent(patent,record);
+	        populateForm1200(form1200,record);
+	        return form1200;
+	
+		} 
+		catch(SAXException e){
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in " + msg );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		catch(ParserConfigurationException e){
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in " + msg );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		catch (FileNotFoundException e) {
+			log().debug("No data found for application number " + patentApplicationNumber);
+			return null;
+		}
+		catch (Exception e) {
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in " + msg );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		return form1200;
+		
+	}
+	
+	@Override
+	public String readEPOForAbstract(String patentPublicationNumber) {
+		
+		String msg = PREFIX + "readEPOForClaims(" + patentPublicationNumber + ")";
+		String abstractTxt = null;
+		
+		log().debug( msg +" invoked ");
+		OPSReader reader = new OPSReader();
+		Form1200Record form1200 = new Form1200Record();
+		
+		List<DigesterElements> digesters = new ArrayList<DigesterElements>();
+		try {
+			
+			String search_url = generateURL(patentPublicationNumber, EPOSearchTypeEnum.PUBLISHED_DATA_ABSTRACT);
+			//Create a "parser factory" for creating SAX parsers
+	        SAXParserFactory spfac = SAXParserFactory.newInstance();
+
+	        //Now use the parser factory to create a SAXParser object
+	        SAXParser sp = spfac.newSAXParser();
+	          
+	        digesters.add(new ReadAbstract(form1200));
+	        
+	           
+	        String scrapeData = reader.readEPO(search_url);
+	        
+	        if(scrapeData == null){
+	        	log().debug("Search for Abstract with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
+	        	log().fatal("Search fro Abstract with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
+	        	return null;
+	        }
+	        
+	        Response response = new Response();
+	        response.setContent(scrapeData);
+	        
+	        System.out.println("Response : " + response.getContent());
+	        for(DigesterElements digest: digesters){
+	    		
+	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
+	        	iss.setEncoding("UTF-8");
+	        	sp.parse(iss, digest);
+	        }
+	        
+	       
+		}
+		catch(Exception e){
+			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		
+		 return form1200.getAbstractTxt();
+		 
+	}
+	
+protected Patent populatePatent(Patent patent, Record record) throws ParseException{
 		
 		if(record == null)
 			return patent;
@@ -298,153 +497,20 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 				
 			url = base_url.concat(type).concat(delimiter).concat(format).concat(delimiter).concat(patentNumber).concat(delimiter).concat(result);
 		}
+		else if(EPOSearchTypeEnum.PUBLISHED_DATA_ABSTRACT.equals(searchType)){
+			
+			base_url = reader.getGenericProperty(P3SPropertyNames.PUBLISHED_DATA_BASE_URL); 
+			type = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_TYPE_PUBLICATION); 
+			format = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_FORMAT_EPODOC); 
+			result = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_RESULT_ABSTRACT); 
+				
+			url = base_url.concat(type).concat(delimiter).concat(format).concat(delimiter).concat(patentNumber).concat(delimiter).concat(result);
+		}
 			
 		log().debug(msg +" returning EPO search URL as " + url);
 		return url;
 	}
-
-
-	//------------ Below are the scraping methods for FORM1200 -----------
-	@Override
-	//Note :- Claims retrievals service requires PATENT PUBLICATION NUMBER
-	public Claims readEPOForClaims(String patentPublicationNumber){
-		
-		Claims claims = new Claims();
-		
-		String msg = PREFIX + "readEPOForClaims(" + patentPublicationNumber + ")";
-		
-		log().debug( msg +" invoked ");
-		OPSReader reader = new OPSReader();
-		
-		List<DigesterElements> digesters = new ArrayList<DigesterElements>();
-		try {
-			
-			String search_url = generateURL(patentPublicationNumber, EPOSearchTypeEnum.PUBLISHED_DATA_CLAIMS);
-			//Create a "parser factory" for creating SAX parsers
-	        SAXParserFactory spfac = SAXParserFactory.newInstance();
-
-	        //Now use the parser factory to create a SAXParser object
-	        SAXParser sp = spfac.newSAXParser();
-	          
-	        Form1200Record form1200 = new Form1200Record();
-	        digesters.add(new ReadClaims(form1200));
-	        
-	           
-	        String scrapeData = reader.readEPO(search_url);
-	        
-	        if(scrapeData == null){
-	        	log().debug("Search for Claims with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
-	        	log().fatal("Search fro Claims with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
-	        	return null;
-	        }
-	        
-	        Response response = new Response();
-	        response.setContent(scrapeData);
-	        
-	        System.out.println("Response : " + response.getContent());
-	        for(DigesterElements digest: digesters){
-	    		
-	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
-	        	iss.setEncoding("UTF-8");
-	        	sp.parse(iss, digest);
-	        }
-	        
-	        claims.setAllClaims(form1200.getAllClaims());
-	        claims = populateClaims(claims);
-	       
-		}
-		catch(Exception e){
-			
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			log().error("Stacktrace was: "+errors.toString());
-		}
-		
-		 return claims;
-	}
-
-
-	@Override
-	public Form1200Record readEPORegisterForForm1200(String patentApplicationNumber){
-		
-		String msg = PREFIX + "readEPORegisterForForm1200(" + patentApplicationNumber + ")";
-		
-		log().debug( msg +" invoked ");
-		OPSReader reader = new OPSReader();
-		Form1200Record form1200 = new Form1200Record();
-		
-		
-		List<DigesterElements> digesters = new ArrayList<DigesterElements>();
-		try {
-			
-			String search_url = generateURL(patentApplicationNumber, EPOSearchTypeEnum.REGISTER_RETRIEVAL_FORM1200);
-			//Create a "parser factory" for creating SAX parsers
-	        SAXParserFactory spfac = SAXParserFactory.newInstance();
-
-	        //Now use the parser factory to create a SAXParser object
-	        SAXParser sp = spfac.newSAXParser();
-	          
-	        Record record = new Record();
-	        digesters.add(new Form1200Details(form1200));
-	        digesters.add(new ReadApplicant(record));
-	        digesters.add(new ReadAgent(record));
-	        digesters.add(new ReadIPC(record));
-	        digesters.add(new ReadInventor(form1200));
-	        digesters.add(new ReadClaims(form1200));
-	           
-	        String scrapeData = reader.readEPO(search_url);
-	        
-	        if(scrapeData == null){
-	        	log().debug("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
-	        	log().fatal("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
-	        	return null;
-	        }
-	        
-	        //SET Application Number from request
-	        //patent.setPatentApplicationNumber(patentApplicationNumber);
-	        
-	        Response response = new Response();
-	        response.setContent(scrapeData);
-	        
-	        System.out.println("Response : " + response.getContent());
-	        for(DigesterElements digest: digesters){
-	    		
-	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
-	        	iss.setEncoding("UTF-8");
-	        	sp.parse(iss, digest);
-	        }
-	        
-	        //if((patent.getPatentApplicationNumber().substring(2)).equals(record.getPatentApplicationNumber()))   // this check became redundant
-	        //patent = populatePatent(patent,record);
-	        populateForm1200(form1200,record);
-	        return form1200;
 	
-		} 
-		catch(SAXException e){
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			log().error("Exception in " + msg );
-			log().error("Stacktrace was: "+errors.toString());
-		}
-		catch(ParserConfigurationException e){
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			log().error("Exception in " + msg );
-			log().error("Stacktrace was: "+errors.toString());
-		}
-		catch (FileNotFoundException e) {
-			log().debug("No data found for application number " + patentApplicationNumber);
-			return null;
-		}
-		catch (Exception e) {
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			log().error("Exception in " + msg );
-			log().error("Stacktrace was: "+errors.toString());
-		}
-		return form1200;
-		
-	}
 	
 	protected Form1200Record populateForm1200(Form1200Record form1200, Record record)
 	{
@@ -477,6 +543,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		log().debug(msg +" returning claims list having size " + claims.getAllClaims().length); 
 		return claims;
 	}
+
 
 	
 }

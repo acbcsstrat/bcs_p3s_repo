@@ -24,6 +24,8 @@ public interface MiscService {
 	//------------ Below are the scraping methods for FORM1200 -----------
 	public Form1200Record readEPOForForm1200(String patentPublicationNumber);
 		
-	public Claims getClaims(String patentApplicationNumber);
+	public Claims getClaims(String patentPublicationNumber);
+	
+	public String readAbstract(String patentPublicationNumber);
 
 }

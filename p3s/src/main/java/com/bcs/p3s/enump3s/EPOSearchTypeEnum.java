@@ -5,6 +5,7 @@ public class EPOSearchTypeEnum extends P3SAbstractEnum {
     public static final String REGISTER_RETRIEVAL_RENEWAL					= "Register Retrieval Renewal"; 
     public static final String REGISTER_RETRIEVAL_FORM1200					= "Register Retrieval Form1200";
     public static final String PUBLISHED_DATA_CLAIMS					= "Published Data Claims"; 
+    public static final String PUBLISHED_DATA_ABSTRACT					= "Published Data Abstract"; 
 
 
     // Constructor - Which verifies the value provided
@@ -25,6 +26,10 @@ public class EPOSearchTypeEnum extends P3SAbstractEnum {
         if (status.equalsIgnoreCase(EPOSearchTypeEnum.PUBLISHED_DATA_CLAIMS) 
                 || status.equalsIgnoreCase("PUBLISHED_DATA_CLAIMS")) 
             			sofar = EPOSearchTypeEnum.PUBLISHED_DATA_CLAIMS;  
+        
+        if (status.equalsIgnoreCase(EPOSearchTypeEnum.PUBLISHED_DATA_ABSTRACT) 
+                || status.equalsIgnoreCase("PUBLISHED_DATA_ABSTRACT")) 
+            			sofar = EPOSearchTypeEnum.PUBLISHED_DATA_ABSTRACT;  
 
         			
         if (sofar != null) {

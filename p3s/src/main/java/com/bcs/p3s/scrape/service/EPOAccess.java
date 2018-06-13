@@ -11,6 +11,8 @@ public interface EPOAccess {
 	//------------ Below are the scraping methods for FORM1200 -----------
 	public Form1200Record readEPORegisterForForm1200(String patentApplicationNumber);
 	
-	public Claims readEPOForClaims(String patentApplicationNumber);
+	public Claims readEPOForClaims(String patentPublicationNumber);
+	
+	public String readEPOForAbstract(String patentPublicationNumber);
 
 }

@@ -187,5 +187,19 @@ public class MiscRestController extends Universal{
 	  
 	  return new ResponseEntity<Form1200Record>(form1200, HttpStatus.OK);
   }
+  
+  /**
+   * Single request to get the Abstract text for the patent in English
+   * @param patentPublicationNumber
+   * @return String 
+   */
+  @RequestMapping(value="/patent-abstract/{patentPublicationNumber:.+}", method = RequestMethod.GET)
+  public ResponseEntity<String> getPatentAbstract(@PathVariable("patentPublicationNumber") String patentPublicationNumber){
+	  
+	  String abstractTxt = null;
+	  
+	  abstractTxt = miscService.readAbstract(patentPublicationNumber);
+	  return new ResponseEntity<String>(abstractTxt, HttpStatus.OK);
+  }
 
 }

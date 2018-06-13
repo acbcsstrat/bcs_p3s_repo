@@ -221,14 +221,33 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 	
 		Form1200Record form1200 = new Form1200Record();
 		Claims claims = new Claims();
-					
-		EPOAccessImpl epoAccess = new EPOAccessImpl();
-		form1200 = epoAccess.readEPORegisterForForm1200(patentApplicationNumber);
-					
-		
-		claims = epoAccess.readEPOForClaims(form1200.getPublicationNumber());
-		form1200.setAllClaims(claims.getAllClaims());
+		String abstractTxt = null;
+			
+		try{
+			EPOAccessImpl epoAccess = new EPOAccessImpl();
+			form1200 = epoAccess.readEPORegisterForForm1200(patentApplicationNumber);
+						
+			
+			claims = epoAccess.readEPOForClaims(form1200.getPublicationNumber());
+			form1200.setAllClaims(claims.getAllClaims());
+			
+			abstractTxt = epoAccess.readEPOForAbstract(form1200.getPublicationNumber());
+			form1200.setAbstractTxt(abstractTxt);
+		}
+		catch(NullPointerException e){
+			if(form1200 == null || claims ==null || abstractTxt == null)
+				logErrorAndContinue("Scrape returned no data");
+		}
 					
 		return form1200;
+	}
+
+	@Override
+	public String readAbstract(String patentPublicationNumber) {
+		
+		String abstractTxt = null;
+		EPOAccessImpl epoAccess = new EPOAccessImpl();
+		abstractTxt = epoAccess.readEPOForAbstract(patentPublicationNumber);
+		return abstractTxt;
 	}
 }
