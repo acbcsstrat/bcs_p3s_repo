@@ -1,4 +1,4 @@
-<div ng-controller="mainNavCtrl">
+<div data-ng-controller="mainNavCtrl">
 	 <section flex>
 	    <md-sidenav class="md-sidenav-left bg-phase-black " md-component-id="left" md-disable-backdrop md-whiteframe="3">
 	    	<div class="row">
@@ -9,7 +9,7 @@
 					      		<img src="assets/imgs/logos/pp_icon.png" alt="patent place icon small">
 					      	</div>
 					      	<div class="col-md-6 d-flex justify-content-center align-items-center">
-						        <md-button ng-click="toggleLeft()" class="d-flex justify-content-right align-items-center">
+						        <md-button data-ng-click="toggleLeft()" class="d-flex justify-content-right align-items-center">
 					          		<img src="assets/imgs/icons/close_icon.png" alt="close menu icon">
 					        	</md-button>
 					      	</div>			      			
@@ -36,9 +36,9 @@
 	      	 	<div layout="column" class=" d-flex justify-content-center">
 	      	 		<nav class="nav">
 						<ul class="side-menu w-100">
-							<li ng-repeat="section in $ctrl.menu.sections" class="font-h4 txt-white font-weight-medium" ui-sref-active="active" ng-class="{'parentActive' : $ctrl.isSectionSelected(section)}">
-	                        	<menu-link section="section" ng-if="section.type === 'link'"></menu-link>
-	        					<menu-toggle section="section" ng-if="section.type === 'toggle'" context="$ctrl"></menu-toggle>
+							<li data-ng-repeat="section in $ctrl.menu.sections" class="font-body txt-white font-weight-medium" ui-sref-active="active" data-ng-class="{'parentActive' : $ctrl.isSectionSelected(section)}">
+	                        	<menu-link section="section" data-ng-if="section.type === 'link'"></menu-link>
+	        					<menu-toggle section="section" data-ng-if="section.type === 'toggle'" context="$ctrl"></menu-toggle>
 					        </li>
 						</ul>
 					</nav>
@@ -56,7 +56,7 @@
 	  			<img width="40" src="assets/imgs/logos/pp_icon.png">
 	  		</a>
 	    </div>		
-	    <div ng-click="toggleLeft()" class="bg-phase-green p-tb-sm text-center btn">
+	    <div data-ng-click="toggleLeft()" class="bg-phase-green p-tb-sm text-center btn">
 	    	<img class="d-none d-xl-inline-block" src="assets/imgs/icons/menu/menu_menu_icon.png">
 	    	<img class="d-xl-none" src="assets/imgs/icons/menu/menu_menu_icon_sm.png">
 	    </div>		    
@@ -64,8 +64,15 @@
 			<li class="nav-item" ui-sref-active="active white-nav-a">
 				<a class="nav-link p-tb-md txt-white d-flex justify-content-center align-items-center" ui-sref="dashboard">
 					<img class="d-none d-xl-block" src="assets/imgs/icons/menu/menu_dashboard_icon.png">
-					<img class="d-xl-none" src="assets/imgs/icons/menu/menu_dashboard_icon_sm.png"></a>
+					<img class="d-xl-none" src="assets/imgs/icons/menu/menu_dashboard_icon_sm.png">
+				</a>
 			</li>
+<!-- 			<li class="nav-item" ui-sref-active="active white-nav-a">
+				<a class="nav-link p-tb-md txt-white d-flex justify-content-center align-items-center" ui-sref="portfolio">
+					<img class="d-none d-xl-block" src="assets/imgs/icons/menu/menu_portfolio_icon.png">
+					<img class="d-xl-none" src="assets/imgs/icons/menu/menu_portfolio_icon_sm.png">
+				</a>
+			</li> -->			
 			<li class="nav-item" ui-sref-active="active white-nav-a">
 				<a class="nav-link p-tb-md txt-white d-flex justify-content-center align-items-center" ui-sref="patents">
 					<img class="d-none d-xl-block" src="assets/imgs/icons/menu/menu_patent_icon.png">
