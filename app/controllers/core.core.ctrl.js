@@ -19,8 +19,9 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	  	closeModals();
 
 	  	$scope.warning = $uibModal.open({
-			  templateUrl: 'app/templates/warning-dialog.html',
-	  		windowClass: 'modal-danger'
+		  	templateUrl: 'app/templates/modal.idle.tpl.htm',
+	  		windowClass: 'modal-danger',
+			appendTo: undefined
 	    });
 	});
 
