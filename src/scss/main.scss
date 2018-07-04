@@ -1,4 +1,4 @@
-// $fa-font-path: "~font-awesome/fonts";
+// $fa-font-path: "~font-awesome/fonts"; 
 @import "./helpers/_variables.scss";
 @import "./base/_reset.scss";
 @import "./base/_base.scss";
@@ -13,6 +13,7 @@
 @import "./vendors/extensions/_bootstrap-ext.scss";
 @import "./vendors/extensions/_parsley-ext.scss";
 @import "./vendors/extensions/_nvd3.scss";
+@import "./vendors/_stepProgress.scss";
 
 @import "./base/_colours.scss";
 @import "./base/_typography.scss";
