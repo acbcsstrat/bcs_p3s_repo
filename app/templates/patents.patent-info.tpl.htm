@@ -112,10 +112,10 @@
 								<div class="row">
 									<div class="col-xl-12 d-flex">
 										<div class="btn-submit">
-											<input type="submit" id="submit" class="btn btn--lg btn--white btn-submit--check bg-phase-green pill-radius m-r-sm" value="Save" data-ng-click="$ctrl.openUpdateConfirmModal($ctrl.patent)">									
+											<input type="submit" id="submit" class="btn btn--lg btn-submit--check bg-phase-green pill-radius m-r-sm" value="Save" data-ng-click="$ctrl.openUpdateConfirmModal($ctrl.patent)">									
 										</div>
 										<div class="btn-cancel">
-											<input type="button" id="delete" class="btn btn--lg btn--white btn-error--cross pill-radius bg-phase-red" value="Remove" data-ng-click="$ctrl.openDeleteConfirmModal($ctrl.patent.id)">
+											<input type="button" id="delete" class="btn btn--lg btn-error--cross pill-radius bg-phase-red" value="Remove" data-ng-click="$ctrl.openDeleteConfirmModal($ctrl.patent.id)">
 										</div>
 									</div>
 								</div>
@@ -139,17 +139,17 @@
 									<div class="col-xl-12">
 										<div class="panel-nav">
 											<ul class="nav panel-nav__notification-list d-flex justify-content-between">
-												<li class="panel-nav__notification-list-item--green-notification panel-nav__list-item--notifications pill-radius active d-flex justify-content-center align-items-center m-b-xs" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications($ctrl.patentNotifications.green);" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
-												<li class="panel-nav__notification-list-item--amber-notification pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications($ctrl.patentNotifications.amber);" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
-												<li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications($ctrl.patentNotifications.red);" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li>
-												<li class="panel-nav__notification-list-item--blue-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 3; $ctrl.displayNotifications($ctrl.patentNotifications.blue);" data-ng-class="{'active bg-phase-blue': activeNotificationTab == 3, 'txt-phase-blue': activeNotificationTab !== 3}">Blue</li>
-												<li class="panel-nav__notification-list-item--black-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 4; $ctrl.displayNotifications($ctrl.patentNotifications.black);" data-ng-class="{'active bg-phase-black': activeNotificationTab == 4, 'txt-phase-black': activeNotificationTab !== 4}">Black</li>
+												<li class="panel-nav__notification-list-item--green-notification panel-nav__list-item--notifications pill-radius active d-flex justify-content-center align-items-center m-b-xs" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
+												<li class="panel-nav__notification-list-item--amber-notification pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
+												<li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li>
+												<li class="panel-nav__notification-list-item--blue-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 3; $ctrl.displayNotifications('Blue');" data-ng-class="{'active bg-phase-blue': activeNotificationTab == 3, 'txt-phase-blue': activeNotificationTab !== 3}">Blue</li>
+												<li class="panel-nav__notification-list-item--black-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 4; $ctrl.displayNotifications('Black');" data-ng-class="{'active bg-phase-black': activeNotificationTab == 4, 'txt-phase-black': activeNotificationTab !== 4}">Black</li>
 											</ul>
 										</div>
 									</div>
 									<div class="col-xl-12">
 										<uib-tabset active="activeNotificationTab" vertical="true" type="pills" class="flex-column">
-											<uib-tab index="0" heading="Green" data-ng-attr-id="$ctrl.patentNotifications.green" data-ng-hide="true">
+											<uib-tab index="0" heading="Green" data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -162,7 +162,7 @@
 													</div>
 												</div>	
 										    </uib-tab>
-										    <uib-tab index="1" heading="Amber" data-ng-attr-id="$ctrl.patentNotifications.amber" data-ng-hide="true">
+										    <uib-tab index="1" heading="Amber" data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -175,7 +175,7 @@
 													</div>
 												</div>								    
 											</uib-tab>
-										    <uib-tab index="2" heading="Red" data-ng-attr-id="$ctrl.patentNotifications.red" data-ng-hide="true">
+										    <uib-tab index="2" heading="Red" data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -188,7 +188,7 @@
 													</div>
 												</div>								    
 											</uib-tab>
-										    <uib-tab index="3" heading="Blue" data-ng-attr-id="$ctrl.patentNotifications.blue" data-ng-hide="true">
+										    <uib-tab index="3" heading="Blue" data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -201,7 +201,7 @@
 													</div>
 												</div>								    
 											</uib-tab>
-										    <uib-tab index="4" heading="Black" data-ng-attr-id="$ctrl.patentNotifications.black" data-ng-hide="true">
+										    <uib-tab index="4" heading="Black" data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">	
 													<div class="col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -286,12 +286,12 @@
 	 							</ngcart-addtocart>
 							</div>
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="w-100">
-				        		<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+				        		<button type="button" class="btn btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
 							 		<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 				        		</button>
 						 	</div>
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="w-100">
-				        		<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+				        		<button type="button" class="btn btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
 						 			<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
 						 		</button>
 						 	</div>											
@@ -503,10 +503,10 @@
 						<div class="row m-t-xs">
 							<div class="col-md-12 col-lg-12 d-flex">
 								<div class="btn-submit">
-									<input type="submit" id="submit" class="btn btn--lg btn--white btn-submit--check pill-radius bg-phase-green font-weight-medium m-r-sm" value="Save" data-ng-click="$ctrl.openUpdateConfirmModal($ctrl.patent)">									
+									<input type="submit" id="submit" class="btn btn--lg btn-submit--check pill-radius bg-phase-green font-weight-medium m-r-sm" value="Save" data-ng-click="$ctrl.openUpdateConfirmModal($ctrl.patent)">									
 								</div>
 								<div class="btn-cancel">
-									<input type="button" id="delete" class="btn btn--lg btn--white btn-error--cross pill-radius bg-phase-red" value="Remove" data-ng-click="$ctrl.openDeleteConfirmModal($ctrl.patent.id)">
+									<input type="button" id="delete" class="btn btn--lg btn-error--cross pill-radius bg-phase-red" value="Remove" data-ng-click="$ctrl.openDeleteConfirmModal($ctrl.patent.id)">
 								</div>
 							</div>
 						</div>																						
@@ -548,7 +548,7 @@
 									</div>
 									<div class="col-md-8 col-lg-8">
 										<uib-tabset active="activeNotificationTab" vertical="true" type="pills" class="flex-column">
-											<uib-tab index="0" heading="Green" data-ng-attr-id="$ctrl.patentNotifications.green" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.green)" data-ng-hide="true">
+											<uib-tab index="0" heading="Green" data-ng-click="$ctrl.displayNotifications('Green')" data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-md-6 col-lg-6 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -561,7 +561,7 @@
 													</div>
 												</div>	
 										    </uib-tab>
-										    <uib-tab index="1" heading="Amber" data-ng-attr-id="$ctrl.patentNotifications.amber" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.amber)" data-ng-hide="true">
+										    <uib-tab index="1" heading="Amber" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.amber)" data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-md-6 col-lg-6 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -574,7 +574,7 @@
 													</div>
 												</div>								    
 											</uib-tab>
-										    <uib-tab index="2" heading="Red" data-ng-attr-id="$ctrl.patentNotifications.red" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.red)" data-ng-hide="true">
+										    <uib-tab index="2" heading="Red" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.red)" data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-md-6 col-lg-6 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -587,7 +587,7 @@
 													</div>
 												</div>								    
 											</uib-tab>
-										    <uib-tab index="3" heading="Blue" data-ng-attr-id="$ctrl.patentNotifications.blue" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)"  data-ng-hide="true">
+										    <uib-tab index="3" heading="Blue" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)"  data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
 													<div class="col-md-6 col-lg-6 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -600,7 +600,7 @@
 													</div>
 												</div>								    
 											</uib-tab>
-										    <uib-tab index="4" heading="Black" data-ng-attr-id="$ctrl.patentNotifications.black" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)" data-ng-hide="true">
+										    <uib-tab index="4" heading="Black" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)" data-ng-hide="true">
 												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">	
 													<div class="col-md-6 col-lg-6 text-center font-body" data-ng-repeat="item in checkbox">
 														{{item.title}}
@@ -683,12 +683,12 @@
 											</div>
 										</div>
 							        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="w-100">
-									 		<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+									 		<button type="button" class="btn btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
 							 					<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
 							 				</button>
 									 	</div>
 							        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="w-100">
-									 		<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+									 		<button type="button" class="btn btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
 									 			<a class="btn__link btn__link--white btn--lg" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
 									 		</button>
 									 	</div>						
