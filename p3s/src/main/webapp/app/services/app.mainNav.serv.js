@@ -6,29 +6,44 @@ function mainNavService(){
   		name: 'Dashboard',
   		type: 'link',
   		state: 'dashboard',
-  		icon: 'assets/imgs/icons/menu/menu_dashboard_icon.png'
+  		icon: 'assets/imgs/icons/menu/menu_dashboard_icon_sm.png'
 		}];
 
-
+    // sections.push({
+    //   name: 'Portfolio',
+    //   type: 'link',
+    //   state: 'portfolio',
+    //   icon: 'assets/imgs/icons/menu/menu_portfolio_icon_sm.png'
+    // })    
+    // sections.push({
+    //   name: 'EPE',
+    //   type: 'toggle',
+    //   pages: [
+    //     {
+    //       name: 'Form 1200 Generator',
+    //       type: 'link',
+    //       state: 'epeForm'
+    //     }
+    //   ],
+    //   icon: 'assets/imgs/icons/menu/menu_erp_icon_sm.png'
+    // })        
   	sections.push({
-  		name: 'Patents',
+  		name: 'Renewals',
   		type: 'toggle',
   		pages: [
   			{
       		name: 'List Patents',
       		type: 'link',
-      		state: 'patents',
-
-			},
-			{
-				name: 'Add Patents',
-				type: 'link',
-				state: 'search-patent',
-
-			}
-		],
-		icon: 'assets/imgs/icons/menu/menu_patent_icon.png'
-  	})
+      		state: 'patents'
+		    },
+		    {
+				  name: 'Add Patent',
+				  type: 'link',
+				  state: 'search-patent'
+		    }
+		  ],
+		  icon: 'assets/imgs/icons/menu/menu_patent_icon_sm.png'
+    })
 
   	sections.push({
   		
@@ -46,7 +61,7 @@ function mainNavService(){
             type: 'link',
         }
       ],
-      icon: 'assets/imgs/icons/menu/menu_transaction_icon.png'
+      icon: 'assets/imgs/icons/menu/menu_transaction_icon_sm.png'
 	})
      
      	// console.log(sections)
