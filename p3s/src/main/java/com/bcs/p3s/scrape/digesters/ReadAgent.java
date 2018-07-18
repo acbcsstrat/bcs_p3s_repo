@@ -11,17 +11,20 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.bcs.p3s.scrape.model.Agent;
+import com.bcs.p3s.scrape.model.AgentData;
 import com.bcs.p3s.scrape.model.Record;
 
 
 
 public class ReadAgent extends DigesterElements{
 	
-	private Agent acct;
+	private Agent agent = new Agent();
+	private AgentData agentData = new AgentData();
     
     private String temp;
-    private List<Agent> accList = new ArrayList<Agent>();
-    private Boolean isCurrentAgentDetails = false;
+    private List<Agent> agentList = new ArrayList<Agent>();
+    private List<AgentData> allAgentsList = new ArrayList<AgentData>();
+    private Boolean isAgentDetails = false;
     private Record record;
 	
     
@@ -50,19 +53,21 @@ public class ReadAgent extends DigesterElements{
                   String qName, Attributes attributes) throws SAXException {
            temp = "";
            if (qName.equalsIgnoreCase("reg:agents")) {
-        	   if(accList == null)
-        		   accList = new ArrayList<Agent>();
+        	   if(allAgentsList == null)
+        		   allAgentsList = new ArrayList<AgentData>();
         	  // if("N/P".equals(attributes.getValue("change-gazette-num"))){
-        	acct = new Agent();
-	        isCurrentAgentDetails = true;
-	        acct.setChngGazetteNum(attributes.getValue("change-gazette-num"));
-	        acct.setChangeDate(attributes.getValue("change-date"));
+        	   agentList = new ArrayList<Agent>();
+        	   isAgentDetails = true;
+        	   agentData = new AgentData();
+        	   agentData.setChangeGazetteNumber(attributes.getValue("change-gazette-num"));
+        	   agentData.setChangeDate(attributes.getValue("change-date"));
         	//   }
         	  
-         }
+           }
            
-           
-           
+           if(qName.equalsIgnoreCase("reg:agent")){
+        	   agent = new Agent();
+           }
     }
 
     
@@ -71,39 +76,44 @@ public class ReadAgent extends DigesterElements{
     public void endElement(String uri, String localName, String qName)
                   throws SAXException {
 
- 	   if(isCurrentAgentDetails){
+ 	   if(isAgentDetails){
  		   
  		  
 	       if(qName.equals("reg:name")){
-	           acct.setName(temp);
+	    	   agent.setName(temp);
 	       }
 	       else if(qName.equals("reg:address-1")){
 	    	   
-	    	   acct.setAddress1(temp);
+	    	   agent.setAddress1(temp);
 	       }
 	       else if(qName.equals("reg:address-2")){
-	    	   acct.setAddress2(temp);
+	    	   agent.setAddress2(temp);
 	       }
 	       else if(qName.equals("reg:address-3")){
-	    	   acct.setAddress3(temp);
+	    	   agent.setAddress3(temp);
 	       }
 	       else if(qName.equals("reg:address-4")){
-	    	   acct.setAddress4(temp);
+	    	   agent.setAddress4(temp);
 	       }
 	       else if(qName.equals("reg:country")){
-	    	   acct.setCountry(temp);
+	    	   agent.setCountry(temp);
+	       }
+	       
+	       if(qName.equalsIgnoreCase("reg:agent")){
+	    	   agentList.add(agent);
 	       }
 	       
 	       if (qName.equalsIgnoreCase("reg:agents")) {
-	    	   isCurrentAgentDetails = false;
+	    	   isAgentDetails = false;
 	    	   //record.setRepresentativeDetails(formatAgentDetails(acct));
-	    	   accList.add(acct);
+	    	   agentData.setListAgents(agentList);
+	    	   allAgentsList.add(agentData);
 	    	   
 	       }
     
  	   }
  	  
- 	  record.setRepresentativesList(accList);
+ 	  record.setAgentData(allAgentsList);
 
     }
     

@@ -23,11 +23,11 @@ public class Record {
 	
 	private String patentPublicationNumber;
 	
-	private List<Applicants> applicants;
+	private List<ApplicantData> applicantsData;
 	
 	private List<Events> events;
 	
-	private List<Agent> representativesList;
+	private List<AgentData> agentData;
 	
 	private List<IPClassification> ipcCodes;
 	
@@ -73,12 +73,13 @@ public class Record {
 		this.patentPublicationNumber = patentPublicationNumber;
 	}
 
-	public List<Applicants> getApplicants() {
-		return applicants;
+
+	public List<ApplicantData> getApplicantsData() {
+		return applicantsData;
 	}
 
-	public void setApplicants(List<Applicants> applicants) {
-		this.applicants = applicants;
+	public void setApplicantsData(List<ApplicantData> applicantsData) {
+		this.applicantsData = applicantsData;
 	}
 
 	public List<Events> getEvents() {
@@ -89,13 +90,12 @@ public class Record {
 		this.events = events;
 	}
 
-
-	public List<Agent> getRepresentativesList() {
-		return representativesList;
+	public List<AgentData> getAgentData() {
+		return agentData;
 	}
 
-	public void setRepresentativesList(List<Agent> representativesList) {
-		this.representativesList = representativesList;
+	public void setAgentData(List<AgentData> agentData) {
+		this.agentData = agentData;
 	}
 
 	public List<IPClassification> getIpcCodes() {

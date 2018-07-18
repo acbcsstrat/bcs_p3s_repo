@@ -64,14 +64,9 @@ public class ReadIPC extends DigesterElements{
 				ipcList = new ArrayList<IPClassification>();
 			}
 			isIpcCodes = true;
-	    //acct.setType(attributes.getValue("type"));
+			ipc = new IPClassification();  
+			ipc.setChangeDate(attributes.getValue("change-date"));
 		}
-		else if(qName.equalsIgnoreCase("reg:text")){
-			ipc = new IPClassification();              
-		}
-	
-		
-	
 	}
 
 	/*

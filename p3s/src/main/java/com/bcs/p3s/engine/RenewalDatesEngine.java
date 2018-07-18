@@ -1,5 +1,8 @@
 package com.bcs.p3s.engine;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * This engine calculates current Patent Year and respective start and end dates of Renewal Window
  * Also Calculates the next Patent Year Renewal window start and end dates
@@ -14,16 +17,17 @@ import javax.persistence.TypedQuery;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.model.CalendarColour;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.modelDBConnecction.CalendarColourJDBC;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.Universal;
 
 public class RenewalDatesEngine extends Universal{
 	
 	protected String PREFIX = this.getClass().getName() + " : "; 
-	RenewalDates allDates = new RenewalDates();
 	
 	public RenewalDates getRenewalDates(Patent patent){
 		
+		RenewalDates allDates = new RenewalDates();
 		try{
 			
 			String msg = PREFIX + "getRenewalDates(" +patent.getId() +")"; 
@@ -38,7 +42,7 @@ public class RenewalDatesEngine extends Universal{
 			 */
 				
 				/** 
-				 * STEP 1.1 :- Calculating the next Renewal Due Date - get the last day of the month containing the anniversary of the filing Date
+				 * STEP 1.1 :- Calculating current year's Renewal Due Date - get the last day of the month containing the anniversary of the filing Date
 				 * 
 				 */
 				
@@ -92,10 +96,17 @@ public class RenewalDatesEngine extends Universal{
 		        Calendar renewalEnd = Calendar.getInstance();
 	        	CalendarColour colourDates = new CalendarColour();
 	        	TypedQuery<CalendarColour> allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
+	        	if(allColourDates.getResultList().size() == 0){
+	        		log().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table");
+	        		logInternalError().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table");
+	        		return null;
+	        		
+	        	}
 	        	colourDates = allColourDates.getSingleResult();
+	        	//colourDates = new CalendarColourJDBC().findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 	        	if(colourDates == null){
 	        		log().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table");
-	        		//any other logging
+	        		logInternalError().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table");
 	        		return null;
 	        	}
 	        	renewalStart.setTime(colourDates.getGreenStart());
@@ -121,7 +132,7 @@ public class RenewalDatesEngine extends Universal{
 		        Date todays = new DateUtil().getTodaysDate();
 		        
 		        /**
-		         * DIFFERENT SITUATION :: IF RENEWAL YEAR < 3 OR RENEWAL YEAR > 20
+		         * DIFFERENT SITUATION :: IF RENEWAL YEAR < 3 
 		         */
 		        if(renewalYear < 3){
 		        	
@@ -137,31 +148,26 @@ public class RenewalDatesEngine extends Universal{
 		        	
 		        	Calendar actualYear3RenDue = new DateUtil().getLastDayOfMonth(year3RenDue.getTime());
 		        	
-		        	/**
-		        	 * Commenting below as getting boundary dates from database table calendar_colour
-		        	 */
-		        	
-		        	/*renewalStart = Calendar.getInstance();
-			        renewalStart.setTime(actualYear3RenDue.getTime());
-			        renewalStart.add(Calendar.MONTH, -3);
-			        renewalStart.setTime(new DateUtil().getMidnight(renewalStart.getTime()));
-			        
-			        renewalEnd = Calendar.getInstance();
-			        renewalEnd.setTime(actualYear3RenDue.getTime());
-			        System.out.println("Patent year 3 Renewal Due is " +actualYear3RenDue.getTime());
-			        renewalEnd.add(Calendar.MONTH, 6);
-			        /** P3S WIndow close date is 2 days before the actual closing date **//*
-			        renewalEnd.add(Calendar.DATE, -2);  */
-		        	
-		        	//NEW CODE STARTS TO GET THE DATES FROM DATABASE TABLE calendar_colour
+		        	log().debug("Year 3 Renewal due date will be " + actualYear3RenDue.getTime());
 		        	colourDates = new CalendarColour();
 		        	allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualYear3RenDue.getTime());
+		        	if(allColourDates.getResultList().size() == 0){
+		        		log().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table");
+		        		logInternalError().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table");
+		        		allDates.setRenewalYear(renewalYear);
+		        		allDates.setCurrentRenewalDueDate(actualYear3RenDue.getTime());
+		        		return allDates;
+		        		
+		        	}
 		        	colourDates = allColourDates.getSingleResult();
+		        	//colourDates = new CalendarColourJDBC().findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 		        	
 		        	if(colourDates == null){
 		        		log().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table");
-		        		//any other logging
-		        		return null;
+		        		logInternalError().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table");
+		        		allDates.setRenewalYear(renewalYear);
+		        		allDates.setCurrentRenewalDueDate(actualYear3RenDue.getTime());
+		        		return allDates;
 		        	}
 		        	renewalStart.setTime(colourDates.getGreenStart());
 		        	renewalEnd.setTime(colourDates.getBlackAllEnd());
@@ -179,26 +185,6 @@ public class RenewalDatesEngine extends Universal{
 			        	
 			        	allDates.setRenewalYear(renewalYear);
 			        	
-			        	//next year's data in case Renewal fee being paid up
-			        	Calendar year4RenewalDate = Calendar.getInstance();
-			        	yearNow = cal.get(Calendar.YEAR);
-			        	int year4Renewal = yearNow + 3;
-			        	//MP06032018 Changes made to compromise Daylight Saving
-			        	//year4RenewalDate.set(year4Renewal, filing_month, filing_day , 23,59,59);
-			        	year4RenewalDate.set(year4Renewal, filing_month, filing_day , 22,59,59);
-			        	
-			        	Calendar actualYear4RenDue = new DateUtil().getLastDayOfMonth(year4RenewalDate.getTime());
-			        	
-			        	//NEW CODE STARTS TO GET THE DATES FROM DATABASE TABLE calendar_colour
-			        	colourDates = new CalendarColour();
-			        	allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualYear4RenDue.getTime());
-			        	colourDates = allColourDates.getSingleResult();
-			        	if(colourDates == null){
-			        		log().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table");
-			        		//any other logging
-			        		return null;
-			        	}
-			        	
 			        	renewalStart.setTime(colourDates.getGreenStart());
 			        	renewalEnd.setTime(colourDates.getBlackAllEnd());
 				        
@@ -210,15 +196,13 @@ public class RenewalDatesEngine extends Universal{
 				        log().debug("CURRENT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getCurrentRenewalDueDate());
 			    	    log().debug("CURRENT renewal window starts on "+ allDates.getCurrentWindowOpenDate() + " and ends on " + allDates.getCurrentWindowCloseDate());
 			    	    
-			    		log().debug("NEXT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
-			    		log().debug("NEXT renewal window starts on "+ allDates.getNextWindowOpenDate() + " and ends on " +  allDates.getNextWindowCloseDate());
-			    		
+			    		//log().debug("NEXT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
 			        	
-				        System.out.println("Calculated Window for this year are " + renewalStart.getTime() +" and " + renewalEnd.getTime());
 				        //allDates.setCurrentColorDates(getAllColorDates(allDates));
 		        	}
 		        	
 		        	else{
+		        		log().debug("Renewal window not yet opened for PATENT YEAR 3");
 		        		allDates.setRenewalWindowOpened(false);
 		        		allDates.setRenewalYear(renewalYear);
 		        		log().debug("Renewal year is less than 3. So renewal window remain closed until PATENT YEAR 3" );
@@ -236,13 +220,11 @@ public class RenewalDatesEngine extends Universal{
 			        	
 			        	log().debug("CURRENT Renewal Year for patent [" + patent.getPatentApplicationNumber() +"] is " + allDates.getRenewalYear());
 			    	    
-			    		log().debug("NEXT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
-			    		log().debug("NEXT renewal window starts on "+ allDates.getNextWindowOpenDate() + " and ends on " +  allDates.getNextWindowCloseDate());
+			    		//log().debug("NEXT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
+			    		//log().debug("NEXT renewal window starts on "+ allDates.getNextWindowOpenDate() + " and ends on " +  allDates.getNextWindowCloseDate());
 		        	}
 		        	
-		        	
 		    		return allDates;
-		    		
 		        	
 		        }
 		        
@@ -263,8 +245,31 @@ public class RenewalDatesEngine extends Universal{
 		     /************************************************************************************************************************************************/
 		        
 		        if(todays.before(renewalStart.getTime())){
-		        	log().debug("Patent is in last years renewal window.");
+		        	log().debug("Patent is in last year's renewal window.");
+		        	
 		        	renewalYear = renewalYear-1;
+		        	if(renewalYear < 3){
+		        		log().debug("Patent will be in Year 3 Renewal on " + actualCurrentRenewalDate.getTime());
+		        		log().debug("Renewal window not yet opened for PATENT YEAR 3");
+		        		allDates.setRenewalWindowOpened(false);
+		        		allDates.setRenewalYear(renewalYear);
+		        		log().debug("Renewal year is less than 3. So renewal window remain closed until PATENT YEAR 3" );
+		        		
+		        		/**
+		        		 * In this case we can set the current and next Due Date as same. As no Renewal due date before that
+		        		 */
+		        		allDates.setCurrentRenewalDueDate(actualCurrentRenewalDate.getTime());
+			    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
+			    		allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
+			    		
+		        		allDates.setNextRenewalDueDate(actualCurrentRenewalDate.getTime());
+			        	allDates.setNextWindowOpenDate(renewalStart.getTime());
+			        	allDates.setNextWindowCloseDate(renewalEnd.getTime());
+			        	
+			        	log().debug("CURRENT Renewal Year for patent [" + patent.getPatentApplicationNumber() +"] is " + allDates.getRenewalYear());
+			        	
+			        	return allDates;
+		        	}
 		        	
 		        	//SET THE CURRENT TO DATES TO NEXT WINDOW DATES
 		        	
@@ -283,24 +288,21 @@ public class RenewalDatesEngine extends Universal{
 		    	    
 		    	    log().debug("Renewal Due for last year :: " + actualPrevRenewalDate.getTime());
 		    	    
-		    	    /*renewalStart = Calendar.getInstance();
-		    	    renewalStart.setTime(actualPrevRenewalDate.getTime());
-		    	    renewalStart.add(Calendar.MONTH, -3);
-		    	    renewalStart.setTime(new DateUtil().getMidnight(renewalStart.getTime()));
-		    	    
-		    	    renewalEnd = Calendar.getInstance();
-		    	    renewalEnd.setTime(actualPrevRenewalDate.getTime());
-		    	    System.out.println("Actual Due Date again" +actualPrevRenewalDate.getTime());
-		    	    renewalEnd.add(Calendar.MONTH, 6);*/
-		    	    
-		    	    //NEW CODE STARTS TO GET THE DATES FROM DATABASE TABLE calendar_colour
 		        	colourDates = new CalendarColour();
 		        	allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualPrevRenewalDate.getTime());
+		        	if(allColourDates.getResultList().size() == 0){
+		        		log().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table");
+		        		logInternalError().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table");
+		        		//allDates.setRenewalYear(renewalYear);
+		        		return null;
+		        		
+		        	}
 		        	colourDates = allColourDates.getSingleResult();
+		    	   // colourDates = new CalendarColourJDBC().findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 		        	
 		        	if(colourDates == null){
 		        		log().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table");
-		        		//any other logging
+		        		logInternalError().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table");
 		        		return null;
 		        	}
 		        	
@@ -320,6 +322,7 @@ public class RenewalDatesEngine extends Universal{
 		        
 		        else{
 		        	
+		        	log().debug("Patent is in current year's renewal window");
 		        	allDates.setCurrentRenewalDueDate(actualCurrentRenewalDate.getTime());
 		    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
 		    		allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
@@ -334,24 +337,29 @@ public class RenewalDatesEngine extends Universal{
 		    	    Calendar actualNextRenewalDate = new DateUtil().getLastDayOfMonth(otherRenewalDate.getTime());
 		    	    System.out.println("Next year renewal due "+ actualNextRenewalDate.getTime());
 		    	    
-		    	    /*renewalStart = Calendar.getInstance();
-		    	    renewalStart.setTime(actualNextRenewalDate.getTime());
-		    	    renewalStart.add(Calendar.MONTH, -3);
-		    	    renewalStart.setTime(new DateUtil().getMidnight(renewalStart.getTime()));
 		    	    
-		    	    renewalEnd = Calendar.getInstance();
-		    	    renewalEnd.setTime(actualNextRenewalDate.getTime());
-		    	    System.out.println("Actual Due Date again" +actualNextRenewalDate.getTime());
-		    	    renewalEnd.add(Calendar.MONTH, 6);*/
 		    	    
+		    	    log().debug("Next year's renewal due is "+ actualNextRenewalDate.getTime());
 		    	    //NEW CODE STARTS TO GET THE DATES FROM DATABASE TABLE calendar_colour
 		        	colourDates = new CalendarColour();
 		        	allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualNextRenewalDate.getTime());
+		        	if(allColourDates.getResultList().size() == 0){
+		        		log().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table");
+		        		logInternalError().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table");
+		        		allDates.setRenewalYear(renewalYear);
+		        		log().debug("Patent is in Year "+ allDates.getRenewalYear() +" renewal period");
+		        		return allDates;
+		        		
+		        	}
 		        	colourDates = allColourDates.getSingleResult();
+		        	
+		        	//colourDates = new CalendarColourJDBC().findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 		        	if(colourDates == null){
 		        		log().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table");
-		        		//any other logging
-		        		return null;
+		        		logInternalError().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table");
+		        		allDates.setRenewalYear(renewalYear);
+		        		log().debug("Patent is in Year "+ allDates.getRenewalYear() +" renewal period");
+		        		return allDates;
 		        	}
 		        	
 		        	renewalStart.setTime(colourDates.getGreenStart());
@@ -375,15 +383,12 @@ public class RenewalDatesEngine extends Universal{
 			    		allDates.setCurrentWindowOpenDate(renewalStart.getTime());
 			    		allDates.setCurrentWindowCloseDate(renewalEnd.getTime());
 			    		
-			    		log().debug("This time set next renewal details to same as current dates");
-			    		allDates.setNextRenewalDueDate(actualNextRenewalDate.getTime());
-				        allDates.setNextWindowOpenDate(actualNextRenewalDate.getTime());
-				       	allDates.setNextWindowCloseDate(actualNextRenewalDate.getTime());
 		    	    }
 		    	    
 		        }
 		        
 		        allDates.setRenewalYear(renewalYear);
+		        log().debug("Patent is in Year "+ allDates.getRenewalYear() +" renewal period");
 		        
 		        log().debug("CURRENT Renewal Year for patent [" + patent.getPatentApplicationNumber() +"] is " + allDates.getRenewalYear());
 		        log().debug("CURRENT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getCurrentRenewalDueDate());
@@ -397,7 +402,9 @@ public class RenewalDatesEngine extends Universal{
 	    		
 		}
 		catch(Exception e){
-			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 		}
 		
 		return allDates;

@@ -1,5 +1,7 @@
 package com.bcs.p3s.engine;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -165,6 +167,9 @@ public class PatentStatusEngine extends Universal {
 			
 		}
 		catch(Exception e){
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 			
 		}
 		
@@ -265,7 +270,9 @@ public class PatentStatusEngine extends Universal {
 					
 	    }
 		catch (Exception e) {
-			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 		}
 	    	
 		return newPatentData;
@@ -286,10 +293,14 @@ public class PatentStatusEngine extends Universal {
 	    	}
 		}
 		catch(NullPointerException e){
-			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 		}
 		catch(Exception e){
-			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Stacktrace was: "+errors.toString());
 		}
     	return colourDates;
 		

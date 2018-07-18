@@ -9,6 +9,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.bcs.p3s.scrape.model.ApplicantData;
 import com.bcs.p3s.scrape.model.Applicants;
 import com.bcs.p3s.scrape.model.Record;
 
@@ -17,9 +18,11 @@ import com.bcs.p3s.scrape.model.Record;
 public class ReadApplicant extends DigesterElements{
 	
 	private String temp;
-	private Applicants applicants;
+	private Applicants applicants = new Applicants();
+	private ApplicantData allApplicants = new ApplicantData();
 	private boolean isApplicantsDetails, isCountry;
 	private List<Applicants> applicantsList = new ArrayList<Applicants>();
+	private List<ApplicantData> allApplicantsData = new ArrayList<ApplicantData>();
 	private Record record;
 	
 	
@@ -32,7 +35,11 @@ public class ReadApplicant extends DigesterElements{
 
 
 	public void characters(char[] buffer, int start, int length) {
-        temp = new String(buffer, start, length);
+        //temp = new String(buffer, start, length);
+		if(temp == null)
+			temp = new String(buffer, start, length);
+		else
+			temp = temp + new String(buffer, start, length);
         
  }
 
@@ -45,15 +52,21 @@ public class ReadApplicant extends DigesterElements{
                String qName, Attributes attributes) throws SAXException {
         temp = "";
         if (qName.equalsIgnoreCase("reg:applicants")) {
-     	   if(applicantsList == null)
-     		  applicantsList = new ArrayList<Applicants>();
+        	allApplicants = new ApplicantData();
+     	   if(allApplicantsData == null)
+     		  allApplicantsData = new ArrayList<ApplicantData>();
                //acct.setType(attributes.getValue("type"));
      	  isApplicantsDetails = true;
-     	 applicants = new Applicants();
+     	 allApplicants = new ApplicantData();
+     	 allApplicants.setChangeDate(attributes.getValue("change-date"));
+     	applicantsList = new ArrayList<Applicants>();
      	   
       }
         if(qName.equals("reg:addressbook")){
         	isCountry = true;
+        }
+        if (qName.equalsIgnoreCase("reg:applicant")) {
+        	applicants = new Applicants();
         }
         
  }
@@ -67,10 +80,14 @@ public class ReadApplicant extends DigesterElements{
 	   if(isApplicantsDetails){
 		   
 		  
-	       if(qName.equals("reg:addressbook")){
+	       if(qName.equals("reg:applicant")){
 	           applicantsList.add(applicants);
-	           isCountry = false;
+	           //isCountry = false;
 	       }
+	       
+	       if(qName.equals("reg:addressbook")){
+	        	isCountry = false;
+	        }
 	       
 	       
 	       if(qName.equals("reg:name")){
@@ -91,11 +108,14 @@ public class ReadApplicant extends DigesterElements{
 	       
 	       if (qName.equalsIgnoreCase("reg:applicants")) {
 	    	   isApplicantsDetails = false;
+	    	   //allApplicantsList.add(applicantsList);
+	    	   allApplicants.setListApplicants(applicantsList);
+	    	   allApplicantsData.add(allApplicants);
 	       }
  
 	   }
 	   
-	   record.setApplicants(applicantsList);
+	   record.setApplicantsData(allApplicantsData);
 	   
 	  
 

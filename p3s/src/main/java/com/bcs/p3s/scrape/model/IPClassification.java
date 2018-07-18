@@ -21,6 +21,7 @@ public class IPClassification {
 	
 	
 	private String ipcCodes;
+	private String changeDate;
 	
 	
 	public String getIpcCodes() {
@@ -30,6 +31,15 @@ public class IPClassification {
 	public void setIpcCodes(String ipcCodes) {
 		this.ipcCodes = ipcCodes;
 	}
+
+	public String getChangeDate() {
+		return changeDate;
+	}
+
+	public void setChangeDate(String changeDate) {
+		this.changeDate = changeDate;
+	}
+	
 	
 	
 }

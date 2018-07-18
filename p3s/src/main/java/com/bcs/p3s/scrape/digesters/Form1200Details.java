@@ -54,8 +54,8 @@ public class Form1200Details extends DigesterElements{
      		   
         }
         
-        if("reg:search-report-information".equals(qName))
-        	form1200.setSearchReportPublishedOn(attributes.getValue("office"));
+        /*if("reg:search-report-information".equals(qName))
+        	form1200.setSearchReportPublishedOn(attributes.getValue("office"));*/
         
         if("reg:application-reference".equals(qName)){
      	   isApplicationData = true;
@@ -108,9 +108,12 @@ public class Form1200Details extends DigesterElements{
     		if("reg:publication-reference".equals(qName)){
          	   isPublicationData = false;
          	   publicationList.add(publication);
-         	   //if("EP".equals(publication.getCountryCode())){
-         	   form1200.setPublicationNumber(publication.getCountryCode().concat(publication.getPublicationNumber()));
-         	   //}
+         	   if("EP".equals(publication.getCountryCode())){
+         	   form1200.setEP_PublicationNumber(publication.getCountryCode().concat(publication.getPublicationNumber()));
+         	   }
+         	  if("WO".equals(publication.getCountryCode())){
+            	   form1200.setPCT_PublicationNumber(publication.getCountryCode().concat(publication.getPublicationNumber()));
+         	  }
          	   //record.addPublication(publication);
             }
 	    	if("reg:country".equals(qName)){
@@ -132,7 +135,10 @@ public class Form1200Details extends DigesterElements{
 				applicationList.add(application);
 				//record.addApplication(application);
 				if("EP".equals(application.getCountryCode())){
-					form1200.setAppNumber(application.getCountryCode().concat(application.getApplicationNumber()));
+					form1200.setEP_AppNumber(application.getCountryCode().concat(application.getApplicationNumber()));
+				}
+				if("WO".equals(application.getCountryCode())){
+					form1200.setPCT_AppNumber(application.getCountryCode().concat(application.getApplicationNumber()));
 				}
 			}
 			if("reg:country".equals(qName)){

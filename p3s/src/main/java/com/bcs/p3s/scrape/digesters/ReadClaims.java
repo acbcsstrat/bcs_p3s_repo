@@ -1,5 +1,11 @@
 package com.bcs.p3s.scrape.digesters;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -62,7 +68,26 @@ public class ReadClaims extends DigesterElements{
 	
 			if(qName.equals("claim-text")){
 				claimsTxt = temp;
-				claims = claimsTxt.split("\\d+\\.");
+				System.out.println(claimsTxt);
+				form1200.setClaimsTxt(claimsTxt);
+				/**
+				 * Splitting claims based on 2 regex conditions ;
+				 * 	1.number then a dot and space (ie, '2. Here comes the 2nd claim')
+				 * 	2.character return(assuming each claims will start on new line 
+				 */
+				//claims = claimsTxt.split("\\d+\\.\\s+|\\.\\r?\\n");
+				//claims = claimsTxt.replace("\n", "").split("\\.\\r\\n|\\d+\\.\\s+");
+				claims = claimsTxt.split("\\.\\n|\\.\\r\\n|\\d+\\.\\s+");
+				//claims = claimsTxt.split("\\.\\r\\n");
+				
+				/*List<String> tokens = new ArrayList<String>();
+
+				Pattern tokenPattern = Pattern.compile("\\d+\\.\\s|\\.\\r\\n");
+				Matcher matcher = tokenPattern.matcher(claimsTxt);
+				while(matcher.find()) {
+				    tokens.add(matcher.group());
+				}*/
+				isClaimsText = false; 
 			}
 		}
 		

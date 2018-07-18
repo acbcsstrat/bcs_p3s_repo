@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.springframework.util.StringUtils;
+
 import com.bcs.p3s.scrape.model.ResponseHeaderPojo;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
@@ -78,14 +80,36 @@ public class OPSReader extends Universal{
 		    this.setQuotaUsedPerHour(this.responseHeaderReader.getQuotaUsedPerHour());
 		    this.setQuotaUsedPerWeek(this.responseHeaderReader.getQuotaUsedPerWeek());*/
 		        
-		    InputStream is		=	request.getInputStream();
+		   /* InputStream is		=	request.getInputStream();
 			InputStreamReader isr 	= new InputStreamReader(is, Charset.forName("UTF-8"));
 			BufferedReader br 		= new BufferedReader(isr);
 			   
 			String cp;
 			while ((cp = br.readLine()) !=null ) {
 				content.append( cp);
-			}
+			}*/
+			
+			
+			InputStream is 			= request.getInputStream();
+		    InputStreamReader isr 	= new InputStreamReader(is, Charset.forName("UTF-8"));
+		    BufferedReader br 		= new BufferedReader(isr);
+		    //Response response 		= new Response();
+		    
+		    //response.setUrl(url.getPath() + "?" + r.getParameterString() + rangeParameter);
+		    //StringBuilder content = new StringBuilder();
+		    String newLine = "temp_data";
+		    while(StringUtils.hasText(newLine))
+		    {
+		    	newLine = br.readLine();
+		    	if(!(newLine== null))
+		    	content.append(newLine+"\n");
+		    		//content.append(newLine);
+		    }
+		    //response.setContent(content.toString());
+			
+			
+			
+			
 			byte[] utf8Bytes = content.toString().getBytes("UTF-8");
 			System.out.println("Response has been read. Download size is approximately " + utf8Bytes.length + " bytes");
 			log().debug("Response has been read. Download size is approximately " + utf8Bytes.length + " bytes");

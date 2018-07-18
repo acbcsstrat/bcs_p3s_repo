@@ -19,22 +19,20 @@ public class Applicants {
 	private String country;
 	
 	
+	
+	
 	public Applicants() {
 		super();
 	}
 	
-	
-	
+
 	public Applicants(String applicantName, String applicantAddress1, String applicantAddress2, String country) {
 		super();
 		this.applicantName = applicantName;
 		this.applicantAddress1 = applicantAddress1;
 		this.applicantAddress2 = applicantAddress2;
 		this.country = country;
-		
 	}
-
-
 
 	public String getApplicantName() {
 		return applicantName;
@@ -78,8 +76,8 @@ public class Applicants {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
-	
+
+
 	
 
 }

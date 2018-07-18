@@ -27,9 +27,6 @@ public class Agent {
 	private String address4;
 	private String country;
 	
-    private String chngGazetteNum;
-    private String changeDate;
-      
     
 	public Agent() {
        }
@@ -42,15 +39,6 @@ public class Agent {
 
 		public void setName(String name) {
 			this.name = name;
-		}
-
-		
-		public String getChngGazetteNum() {
-			return chngGazetteNum;
-		}
-
-		public void setChngGazetteNum(String chngGazetteNum) {
-			this.chngGazetteNum = chngGazetteNum;
 		}
 
        public String getAddress1() {
@@ -92,15 +80,6 @@ public class Agent {
 		public void setCountry(String country) {
 			this.country = country;
 		}
-
-		public String getChangeDate() {
-			return changeDate;
-		}
-
-		public void setChangeDate(String changeDate) {
-			this.changeDate = changeDate;
-		}
-
 
 
 	public String toString() {

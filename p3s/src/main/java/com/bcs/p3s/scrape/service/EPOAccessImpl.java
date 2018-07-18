@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -19,10 +20,13 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.bcs.p3s.scrape.model.Agent;
+import com.bcs.p3s.scrape.model.AgentData;
+import com.bcs.p3s.scrape.model.ApplicantData;
 import com.bcs.p3s.scrape.model.Applicants;
 import com.bcs.p3s.scrape.model.Claims;
 import com.bcs.p3s.scrape.model.Events;
 import com.bcs.p3s.scrape.model.Form1200Record;
+import com.bcs.p3s.scrape.model.IPClassification;
 import com.bcs.p3s.scrape.model.Record;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
@@ -42,6 +46,7 @@ import com.bcs.p3s.scrape.digesters.ReadClaims;
 import com.bcs.p3s.scrape.digesters.ReadIPC;
 import com.bcs.p3s.scrape.digesters.ReadInventor;
 import com.bcs.p3s.scrape.digesters.ReadRenewalInfo;
+import com.bcs.p3s.scrape.digesters.ReadSearchReports;
 import com.bcs.p3s.scrape.digesters.RecordDetails;
 import com.bcs.p3s.scrape.digesters.Response;
 
@@ -180,6 +185,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        }
 	        
 	        claims.setAllClaims(form1200.getAllClaims());
+	        claims.setClaimsTxt(form1200.getClaimsTxt());
 	        claims = populateClaims(claims);
 	       
 		}
@@ -221,6 +227,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        digesters.add(new ReadIPC(record));
 	        digesters.add(new ReadInventor(form1200));
 	        digesters.add(new ReadClaims(form1200));
+	        digesters.add(new ReadSearchReports(form1200));
 	           
 	        String scrapeData = reader.readEPO(search_url);
 	        
@@ -279,7 +286,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	@Override
 	public String readEPOForAbstract(String patentPublicationNumber) {
 		
-		String msg = PREFIX + "readEPOForClaims(" + patentPublicationNumber + ")";
+		String msg = PREFIX + "readEPOForAbstract(" + patentPublicationNumber + ")";
 		String abstractTxt = null;
 		
 		log().debug( msg +" invoked ");
@@ -303,7 +310,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        
 	        if(scrapeData == null){
 	        	log().debug("Search for Abstract with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
-	        	log().fatal("Search fro Abstract with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
+	        	log().fatal("Search for Abstract with publication number[" +patentPublicationNumber +"] resulted in NO DATA");
 	        	return null;
 	        }
 	        
@@ -331,7 +338,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		 
 	}
 	
-protected Patent populatePatent(Patent patent, Record record) throws ParseException{
+	protected Patent populatePatent(Patent patent, Record record) throws ParseException{
 		
 		if(record == null)
 			return patent;
@@ -343,14 +350,17 @@ protected Patent populatePatent(Patent patent, Record record) throws ParseExcept
 		
 		patent.setTitle(record.getTitle());
 		findLatestRenewalInfo(record.getEvents(),patent);
-		findPrimaryApplicantName(record.getApplicants(),patent);
-		patent.setIpcCodes(record.getIpcCodes().get(0).getIpcCodes());
-		//patent.setRepresentative(record.getRepresentativeDetails());
-		if(record.getRepresentativesList().size() > 1)
-			findRecentRepresentativeInfo(record.getRepresentativesList(),patent);
-		else
-			patent.setRepresentative(formatAgentDetails(record.getRepresentativesList().get(0)));
-		
+		//findPrimaryApplicantName(record.getApplicants(),patent);
+		patent.setPrimaryApplicantName(findRecentApplicantsInfo(record.getApplicantsData()).getListApplicants().get(0).getApplicantName());
+		patent.setIpcCodes(findLatestIPCCodes(record.getIpcCodes()).getIpcCodes());
+		patent.setRepresentative(formatAgentDetails(findRecentAgentsInfo(record.getAgentData()).getListAgents().get(0)));
+		/*if(!(record.getRepresentativesList().size() == 0)){
+			if(record.getRepresentativesList().size() > 1)
+				findRecentRepresentativeInfo(record.getRepresentativesList(),patent);
+			else
+				patent.setRepresentative(formatAgentDetails(record.getRepresentativesList().get(0)));
+		}*/
+			
 		return patent;
 		
 	}
@@ -378,11 +388,11 @@ protected Patent populatePatent(Patent patent, Record record) throws ParseExcept
 	//Assumption :- first applicant details on the list
 	protected void findPrimaryApplicantName(List<Applicants> applicants, Patent patent){
 		
-		patent.setPrimaryApplicantName(applicants.get(0).getApplicantName());
+		//patent.setPrimaryApplicantName(applicants.get(0).getApplicantName());
 		
 	}
 	
-	protected void findRecentRepresentativeInfo(List<Agent> agents, Patent patent){
+	/*protected void findRecentRepresentativeInfo(List<Agent> agents, Patent patent){
 		String repDetails = "";
 		boolean isGood = true;
 		Agent recentAgent = new Agent();
@@ -422,12 +432,16 @@ protected Patent populatePatent(Patent patent, Record record) throws ParseExcept
 			log().error("Exception in findRecentRepresentativeInfo() "  );
 			log().error("Stacktrace was: "+errors.toString());
 		}
-	}
+	}*/
+	
 	
 	
 	protected String formatAgentDetails(Agent acct){
     	
     	String repDetails = "";
+    	
+    	if(acct == null)
+    		return null;
     	
     	if(acct.getAddress3() == null){
     		repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
@@ -515,8 +529,9 @@ protected Patent populatePatent(Patent patent, Record record) throws ParseExcept
 	protected Form1200Record populateForm1200(Form1200Record form1200, Record record)
 	{
 		
-		form1200.setApplicants(record.getApplicants());
-		form1200.setIpcCodes(record.getIpcCodes());
+		form1200.setApplicants(findRecentApplicantsInfo(record.getApplicantsData()));
+		form1200.setIpcCodes(findLatestIPCCodes(record.getIpcCodes()));
+		form1200.setAgents(findRecentAgentsInfo(record.getAgentData()));
 		//form1200.setPublicationNumber(record.getPatentPublicationNumber());
 		//form1200.setPublishedDate(record.get);
 		return form1200;
@@ -529,10 +544,11 @@ protected Patent populatePatent(Patent patent, Record record) throws ParseExcept
 		log().debug("Obtained claims list having size of "+ claims.getAllClaims().length);
 		
 		String temp[] = claims.getAllClaims();
-		if("CLAIMS:".equals(temp[0])){
+		if(temp[0].contains("CLAIMS")){
 			log().debug("First index value of claims list is "+ temp[0] +" and so it can be removed");
 			List<String> list = new ArrayList<String>(Arrays.asList(temp));
 			list.remove(0);
+			list.removeAll(Collections.singleton(""));
 			temp = list.toArray(new String[0]);
 			claims.setAllClaims(temp);
 		}
@@ -543,7 +559,137 @@ protected Patent populatePatent(Patent patent, Record record) throws ParseExcept
 		log().debug(msg +" returning claims list having size " + claims.getAllClaims().length); 
 		return claims;
 	}
+	
+	protected ApplicantData findRecentApplicantsInfo(List<ApplicantData> allApplicants){
+		String msg = "findRecentApplicantsInfo() from the list of ApplicantData";
+		log().debug(msg +" invoked");
+		ApplicantData recentApplicantsData = new ApplicantData();
+		
+		try {
+			
+			if(allApplicants.size() == 1){
+				recentApplicantsData = allApplicants.get(0);
+				return recentApplicantsData;
+			}
+			
+			for(ApplicantData eachAppList : allApplicants){
+				if(eachAppList.getChangeDate() == null){
+					log().info("Applicant List is having null value for change date. So setting 0th index from the list as the recent Applicant Data");
+					recentApplicantsData = allApplicants.get(0);
+					return recentApplicantsData;
+				}
+			}
+			
+			
+			Date latestDate = new DateUtil().stringToDate(allApplicants.get(0).getChangeDate());
+			recentApplicantsData = allApplicants.get(0);
+			for(ApplicantData eachAppList : allApplicants){
+				Date date = new DateUtil().stringToDate(eachAppList.getChangeDate());
+				if(date.after(latestDate)){
+					latestDate = date;
+					recentApplicantsData = eachAppList;
+						//repDetails = formatAgentDetails(agent);
+				}
+			}
+			
+		} 
+		
+		catch (ParseException e) {
+			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in findRecentApplicantsInfo() "  );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		return recentApplicantsData;
+	}
 
-
+	protected AgentData findRecentAgentsInfo(List<AgentData> allAgents){
+		String msg = "findRecentAgentsInfo() from the list of AgentData";
+		log().debug(msg +" invoked");
+		AgentData recentAgentsData = new AgentData();
+		
+		try {
+			
+			if(allAgents.size() == 1){
+				recentAgentsData = allAgents.get(0);
+				return recentAgentsData;
+			}
+			
+			for(AgentData eachAgentList : allAgents){
+				if(eachAgentList.getChangeDate() == null){
+					log().info("Agent List is having null value for change date. So setting 0th index from the list as the recent Agent Data");
+					recentAgentsData = allAgents.get(0);
+					return recentAgentsData;
+				}
+			}
+			
+			
+			Date latestDate = new DateUtil().stringToDate(allAgents.get(0).getChangeDate());
+			recentAgentsData = allAgents.get(0);
+			for(AgentData eachAgentList : allAgents){
+				Date date = new DateUtil().stringToDate(eachAgentList.getChangeDate());
+				if(date.after(latestDate)){
+					latestDate = date;
+					recentAgentsData = eachAgentList;
+						//repDetails = formatAgentDetails(agent);
+				}
+			}
+			
+		} 
+		
+		catch (ParseException e) {
+			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in findRecentAgentsInfo() "  );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		return recentAgentsData;
+	}
+	
+	protected IPClassification findLatestIPCCodes(List<IPClassification> ipcCodes){
+		String msg = "findLatestIPCCodes() from the list of IPC";
+		log().debug(msg +" invoked");
+		IPClassification latestCodes = new IPClassification();
+		
+		try {
+			
+			if(ipcCodes.size() == 1){
+				latestCodes = ipcCodes.get(0);
+				return latestCodes;
+			}
+			
+			for(IPClassification eachIPC : ipcCodes){
+				if(eachIPC.getChangeDate() == null){
+					log().info("IPC Code List is having null value for change date. So setting 0th index from the list as the latest ipc Code");
+					latestCodes = ipcCodes.get(0);
+					return latestCodes;
+				}
+			}
+			
+			
+			Date latestDate = new DateUtil().stringToDate(ipcCodes.get(0).getChangeDate());
+			latestCodes = ipcCodes.get(0);
+			for(IPClassification eachIPC : ipcCodes){
+				Date date = new DateUtil().stringToDate(eachIPC.getChangeDate());
+				if(date.after(latestDate)){
+					latestDate = date;
+					latestCodes = eachIPC;
+						//repDetails = formatAgentDetails(agent);
+				}
+			}
+			
+		} 
+		
+		catch (ParseException e) {
+			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log().error("Exception in findLatestIPCCodes() "  );
+			log().error("Stacktrace was: "+errors.toString());
+		}
+		return latestCodes;
+	}
 	
 }
