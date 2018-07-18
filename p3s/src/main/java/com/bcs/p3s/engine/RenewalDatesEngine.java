@@ -17,7 +17,6 @@ import javax.persistence.TypedQuery;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.model.CalendarColour;
 import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.modelDBConnecction.CalendarColourJDBC;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.Universal;
 
