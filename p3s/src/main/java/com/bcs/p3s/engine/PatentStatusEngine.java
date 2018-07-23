@@ -224,12 +224,30 @@ public class PatentStatusEngine extends Universal {
 				Fee currentFee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
 				FeeUI currentfeeUI = new FeeUI(currentFee);
 				
-				FeeUI nextStageFeeUI = null;
-				if(!currentPhase.equalsIgnoreCase(RenewalColourEnum.BLACK)) { //If black no next stage
-					/*nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); */
+				/**
+				 * MP23072018 1442 Temp fix to udjust the functionality to be able to Add Patent in Black period with Show price status
+				 */
+				/*FeeUI nextStageFeeUI = null;
+				if(!currentPhase.equalsIgnoreCase(RenewalColourEnum.BLACK)) { //If black no next stage Fee
+					//nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
 					Fee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
 					nextStageFeeUI = new FeeUI(nextStageFee);
 				}
+				newPatentData.setPatentId(patent.getId());
+				newPatentData.setRenewalDueDate(renewalInfo.getRenewalDueDate());
+				newPatentData.setCurrentCostBand(renewalInfo.getColour().toString());
+				newPatentData.setCurrentRenewalCost(currentfeeUI.getSubTotal_USD());
+				newPatentData.setRenewalCostNextStage(nextStageFeeUI.getSubTotal_USD());
+				newPatentData.setCostBandEndDate(getCostBandEnddate(renewalInfo).getTime());
+				newPatentData.setActiveRenewalYear(patent.getRenewalYear());
+				newPatentData.setCurrentRenewalStatus(patent.getRenewalStatus());*/
+				
+				FeeUI nextStageFeeUI = null;
+				//if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(renewalInfo.getCurrentRenewalStatus())) { //If renewal status is Show price then only we need to calculate the next stage price
+					//nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
+					Fee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(renewalInfo), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
+					nextStageFeeUI = new FeeUI(nextStageFee);
+				//}
 				newPatentData.setPatentId(patent.getId());
 				newPatentData.setRenewalDueDate(renewalInfo.getRenewalDueDate());
 				newPatentData.setCurrentCostBand(renewalInfo.getColour().toString());
@@ -399,10 +417,17 @@ public class PatentStatusEngine extends Universal {
 	}
 	
 	
-	protected String getNextPhase(String currentPhase){
+	/**
+	 * MP23072018 1442 Temp fix to udjust the functionality to be able to Add Patent in Black period with Show price status
+	 * 
+	 */
+	//protected String getNextPhase(String currentPhase){
+	protected String getNextPhase(PatentStatus renewalInfo){
 		
 		String err = PREFIX+"getNextPhase(currentPhase) ";
 		String nextPhase = "";
+		
+		String currentPhase = renewalInfo.getColour().toString();
 		
 		if(currentPhase.equalsIgnoreCase(RenewalColourEnum.GREEN))
 			nextPhase = RenewalColourEnum.AMBER;
@@ -412,8 +437,12 @@ public class PatentStatusEngine extends Universal {
 			nextPhase = RenewalColourEnum.BLUE;
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLUE))
 			nextPhase = RenewalColourEnum.BLACK;
-		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLACK))
-			nextPhase = RenewalColourEnum.GREY;
+		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.BLACK)){
+			if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(renewalInfo.getCurrentRenewalStatus()))
+				nextPhase = RenewalColourEnum.BLACK;
+			else
+				nextPhase = RenewalColourEnum.GREY;
+		}
 		else if(currentPhase.equalsIgnoreCase(RenewalColourEnum.GREY))
 			nextPhase = RenewalColourEnum.GREEN;
 		return nextPhase;
