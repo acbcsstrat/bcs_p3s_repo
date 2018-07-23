@@ -1,6 +1,5 @@
 package com.bcs.p3s.scrape.digesters;
 
-import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +12,6 @@ import com.bcs.p3s.scrape.model.ApplicationData;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.scrape.model.PublicationData;
 
-import antlr.collections.List;
 
 public class Form1200Details extends DigesterElements{
 	
