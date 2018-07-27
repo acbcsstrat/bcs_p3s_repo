@@ -156,14 +156,14 @@
 							 		</ngcart-addtocart>
 							 	</div>
 					        	<div data-ng-if="item.renewalStatus == 'Payment in progress' || item.renewalStatus ==  'EPO Instructed'" class="d-flex justify-content-center btn-default">
-					        		<button type="button" class="btn btn-block t-data__btn-portal pill-radius bg-phase-green font-weight-medium cartbtn d-flex align-items-center justify-content-center">				        			
-								 		<a href="" class="btn__link btn--lg btn__link--white" data-ng-click="$ctrl.fetchItemTransaction(item.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs d-none d-md-none d-lg-inline-block"></a>
-					        		</button>
+					        		<div class="btn btn-block t-data__btn-portal pill-radius bg-phase-green font-weight-medium cartbtn d-flex align-items-center justify-content-center">
+								 		<a class="btn__link btn--lg btn__link--white" data-ng-click="$ctrl.fetchItemTransaction(item.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs d-none d-md-none d-lg-inline-block"></a>
+					        		</div>
 							 	</div>
 					        	<div data-ng-if="item.renewalStatus == 'Renewal in place'" class="d-flex justify-content-center btn-default">
-					        		<button type="button" class="btn btn-block t-data__btn-portal pill-radius bg-phase-green font-weight-medium cartbtn d-flex align-items-center justify-content-center">					        		
-							 			<a href="" class="btn__link btn--lg btn__link--white m-l-xs" data-ui-sref="patents.patent({patentId: item.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs d-md-none d-lg-inline-block"></a>
-							 		</button>
+					        		<div class="btn btn-block t-data__btn-portal pill-radius bg-phase-green font-weight-medium cartbtn d-flex align-items-center justify-content-center">
+							 			<a class="btn__link btn--lg btn__link--white m-l-xs" data-ui-sref="patents.patent({patentId: item.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs d-md-none d-lg-inline-block"></a>
+							 		</div>
 							 	</div>						 					 			 	
 					        </td>
 						</tr>
