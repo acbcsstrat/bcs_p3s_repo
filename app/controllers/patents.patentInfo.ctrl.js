@@ -35,21 +35,20 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
     }
 
     function activateData() {
+        $timeout(function() {
+            vm.displayNotifications('Green');
+        }, 100);
 		if(patent) {
-			if(patent.costBandColour == 'GREY' || patent.costBandColour == 'grey') {
-				return false;
-			} else {
-				fxCalculationService.setFx(patent);
-				vm.patentFx = fxCalculationService;
-			}
-			$timeout(function() {
-				vm.displayNotifications('Green');
-			}, 100);
+            if(patent.costBandColour == 'GREY' || patent.costBandColour == 'grey') {
+                return false;
+            } else {
+                fxCalculationService.setFx(patent);
+                vm.patentFx = fxCalculationService;
+            }
 		}
     }
 
 	function displayNotifications(phase) {
-        console.log(phase)
     	vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
 	};
 
