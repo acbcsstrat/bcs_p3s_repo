@@ -6,7 +6,7 @@
 				<img src="assets/imgs/icons/modal/alert_icon.png" alt="alert icon">	
 			</div>
 			<p class="font-h3 font-weight-bold m-b-xs">Renewal Stage Changes </p>
-			<p class="font-h4 font-weight-medium text-center">Following patents are reaching the next renewal stage.</p>
+			<p class="font-h4 font-weight-medium text-center">The following patents require your attention.</p>
 		</div>
 		<div class="content-panel__body p-b-none p-t-none">
 			<div data-ng-repeat="item in urgentPatents" class="d-flex flex-column align-items-center justify-content-center m-b-md">
@@ -18,24 +18,24 @@
 									<th colspan="4" class="t-data__th txt-white font-weight-medium text-center">App No. {{item.patentApplicationNumber}}</th>
 								</tr>
 							</thead>
-							<tbody >
+							<tbody>
 								<tr class="t-data__row--border">
 									<td class="t-data__td t-data__w30">Title</td>
 									<td class="t-data__td">{{item.title}}</td>
 								</tr>
-								<tr class="t-data__row--border">
+								<tr class="t-data__row--border" data-ng-hide="item.costBandColour !== 'Black' || item.costBandColour !== 'Red'">
 									<td class="t-data__td t-data__w30">Current Amount</td>
 									<td class="t-data__td">$ {{item.currentRenewalCostUSD}}</td>
 								</tr>
-								<tr class="t-data__row--border" data-ng-if="item.costBandColour !== 'Black' && item.costBandColour !== 'Red'">
+								<tr class="t-data__row--border" data-ng-hide="item.costBandColour !== 'Black' || item.costBandColour !== 'Red'">
 									<td class="t-data__td t-data__w30">Next Stage Cost</td>
 									<td class="t-data__td">$ {{item.renewalCostNextStageUSD}}</td>
 								</tr>
 								<tr class="t-data__row--border" data-ng-if="item.costBandColour == 'Black' || item.costBandColour == 'Red'">
-									<td data-ng-if="item.renewalStatus == 'Show price'" class="t-data__td t-data__w30">Next Stage Cost</td>
-									<td data-ng-if="item.costBandColour == 'Black' && item.renewalStatus == 'Show price'" class="font-weight-bold">LAPSE</td>	
-									<td data-ng-if="item.renewalStatus == 'Too late to renew'" class="font-weight-bold">Call  to Renew (+44)1789-000-000</td>							
-								</tr>								
+									<td data-ng-if="item.costBandColour == 'Black' || item.costBandColour == 'Red'" class="t-data__td t-data__w30">Next Stage</td>
+									<td data-ng-if="item.costBandColour == 'Black' && item.renewalStatus == 'Way too late'" class="font-weight-bold t-data__td">LAPSE</td>	
+									<td data-ng-if="item.renewalStatus == 'Too late to renew'" class="t-data__td">Call <span class="font-weight-bold" data-ng-bind="partnerName"></span> on:<br><span class="font-weight-bold" data-ng-bind="partnerPhone"></span></td>
+								</tr>
 							</tbody>						
 						</table>
 					</div>
