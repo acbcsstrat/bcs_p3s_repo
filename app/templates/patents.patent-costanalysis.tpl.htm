@@ -132,10 +132,10 @@
 							 	</button>
 						 	</div>
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
-						 		<button type="button" class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-							 		<a class="btn__link btn__link--white btn--lg" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon"></a>
-							 	</button>
-						 	</div>																		
+						 		<div class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+							 		<a class="btn__link btn__link--white btn--lg" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
+							 	</div>
+						 	</div>
 							<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="btn-default">
 						 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
 						 		</ngcart-addtocart>
@@ -284,9 +284,9 @@
 							 	</button>
 						 	</div>
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
-						 		<button type="button" class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+						 		<div class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
 							 		<a class="btn__link btn__link--white btn--lg" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
-							 	</button>
+							 	</div>
 						 	</div>																		
 							<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="btn-default">
 						 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">

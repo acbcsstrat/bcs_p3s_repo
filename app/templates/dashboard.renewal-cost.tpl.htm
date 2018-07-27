@@ -117,9 +117,9 @@
 			 			</ngcart-addtocart>										
 					</div>		
 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Payment in progress' || $ctrl.patentFx.getSelectedPatent().renewalStatus =='EPO Instructed'" class="d-flex btn-default">
-		        		<button class="btn bg-phase-green pill-radius font-weight-medium cartbtn d-flex align-items-center">
+		        		<div class="btn bg-phase-green pill-radius font-weight-medium cartbtn d-flex align-items-center">
 		        			<a class="btn__link btn--lg btn__link--white" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patentFx.getSelectedPatent().id)">View Transaction<img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
-		        		</button>
+		        		</div>
 				 	</div>
 <!-- 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Renewal in place'" class="d-flex btn-default">
 				 		<a class="btn btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center" data-ui-sref="patents.patent({patentId: $ctrl.patentFx.getSelectedPatent().id})" data-ng-click="$ctrl.fetchItemRenewal()">View Patent <img src="assets/imgs/icons/view_renewal_icon.png" alt="renewal icon" class="m-l-xs"></a>
@@ -252,9 +252,9 @@
 			 			</ngcart-addtocart>										
 					</div>
 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="d-flex btn-default">
-		        		<button class="btn btn-block bg-phase-green pill-radius font-weight-medium cartbtn d-flex align-items-center justify-content-center">
+		        		<div class="btn btn-block bg-phase-green pill-radius font-weight-medium cartbtn d-flex align-items-center justify-content-center">
 		        			<a class="btn__link btn--lg btn__link--white" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patentFx.getSelectedPatent().id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
-		        		</button>
+		        		</div>
 				 	</div>
 		        	<div data-ng-if="$ctrl.patentFx.getSelectedPatent().renewalStatus == 'Renewal in place'" class="d-flex btn-default">
 				 		<a class="btn btn-block btn--lg pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white cursor-pointer d-flex align-items-center justify-content-center" data-ui-sref="patents.patent({patentId: $ctrl.patentFx.getSelectedPatent().id})" data-ng-click="$ctrl.fetchItemRenewal()">View Patent <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
