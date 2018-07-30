@@ -37,6 +37,7 @@
     padding-right: 3.51rem;
     background-color: $green;
     background-position: right 18px center;
+    color: $white;
   }
   .btn-submit--check:not(:disabled):not(.disabled):active {
     background-image: url(../assets/imgs/icons/tick_white_icon.png);
@@ -48,20 +49,19 @@
     background: url(../assets/imgs/icons/cross_white_icon.png) no-repeat; 
     padding-right: 3.51rem; 
     background-color: $red; 
-    background-position: right 18px center; 
+    background-position: right 18px center;
+    color: $white;
   }
   .btn-error--cross:not(:disabled):not(.disabled):active {
     background-image: url(../assets/imgs/icons/cross_white_icon.png);
   }
 }
 
-// .btn-default {
-//   &> .btn {
-//     &> .btn__link--white { 
-//       color: $white; 
-//     }
-//   }
-// }
+.btn-default {
+  &> .btn.focus, .btn:focus {
+    color: $white;
+  }
+}
 
 // .btn-default .btn:not(.btn-list):active {
 //     background: $green;

@@ -11,6 +11,7 @@ require('app/directives/checkout.dir.js');
 require('app/directives/current-transactions.transactions.dir.js');
 require('app/directives/patents.list-patents.dir.js');
 require('app/directives/user.dir.js');
+require('app/directives/patents.search-patent.dir.js');
 
 require('app/directives/checkout.dir.js');
 require('app/directives/current-transactions.transactions.dir.js');
