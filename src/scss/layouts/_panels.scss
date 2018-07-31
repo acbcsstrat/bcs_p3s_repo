@@ -2,6 +2,7 @@
 .content-panel { /*modules*/ /*components*/ /*_panels.scss*/
   position: relative;
   z-index: 0;
+  border: 1px solid $border;
 }
 
 .widget-panel .widget-panel__body { padding: 3rem 3rem ; } 
