@@ -68,7 +68,7 @@ function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMont
 
     function lineData() {
 
-        chartValueArrs = [];
+        var chartValueArrs = [];
 
         for(var i = 0; i < fxRatesMonth.length; i++) {
             chartValueArrs.push([fxRatesMonth[i].rateActiveDate, fxRatesMonth[i].rate]);
