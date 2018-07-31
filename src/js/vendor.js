@@ -1,3 +1,5 @@
+require("babel-polyfill");
+
 import $ from 'jquery'; //neede to prevent error with slick-carousel
 window.jQuery = $;
 window.$ = $;
