@@ -8,11 +8,10 @@ angular.module('ppApp').directive('validateSearch', function(){
         link: function(scope, elem, attr, ctrl) {
 
             function myValidation(value) {
-                console.log(value)
                 if (regExp.test(value)) {
-                    ctrl.$setValidity('validName', true);
+                    ctrl.$setValidity('validSearch', true);
                 } else {
-                    ctrl.$setValidity('validName', false);
+                    ctrl.$setValidity('validSearch', false);
                 }
                 return value;
             }
