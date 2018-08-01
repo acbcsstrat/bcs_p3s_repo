@@ -1,5 +1,5 @@
 <div class="d-none d-xl-block">	
-	<div class="bg-white border-grey-xs">
+	<div class="bg-white">
 		<div class="content-panel__head border-grey-xs--btm">
 			<div class="row d-flex align-items-center">
 			    <div class="col-xl-4">
@@ -291,9 +291,9 @@
 				        		</button>
 						 	</div>
 				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="w-100">
-				        		<button type="button" class="btn btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+				        		<div class="btn btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
 						 			<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
-						 		</button>
+						 		</div>
 						 	</div>											
 						</div>
 					</div>	
@@ -688,9 +688,9 @@
 							 				</button>
 									 	</div>
 							        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="w-100">
-									 		<button type="button" class="btn btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+									 		<div class="btn btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
 									 			<a class="btn__link btn__link--white btn--lg" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
-									 		</button>
+									 		</div>
 									 	</div>						
 									</div>
 								</div>	

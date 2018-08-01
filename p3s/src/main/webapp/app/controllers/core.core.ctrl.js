@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('coreCtrl', coreCtrl);
 
-coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart'];
+coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService'];
 
-function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart) {
+function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService) {
 
 	var vm = this;
 
@@ -210,8 +210,20 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 			scope: $scope,
 			appendTo: undefined,
 			controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
-
+				console.log(message)
 				$scope.urgentPatents = message;
+
+		        coreService.ppContact()
+		        .then(
+		            function(response){
+		            	console.log(response)
+		                $scope.partnerName = response.partnerName;
+		                $scope.partnerPhone = response.partnerPhone;
+		            },
+		            function(errResponse){
+
+		            }
+		        )
 
 		 	  	$scope.urgentOk = function () {
 			    	$uibModalInstance.close();

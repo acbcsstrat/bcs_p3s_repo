@@ -70,13 +70,14 @@
                             </div>                       
                             <div class="col-md-7 d-flex justify-content-end align-items-end">
                                 <div class="btn-cancel">
-                                    <button class="btn bg-phase-red font-weight-medium pill-radius d-flex align-items-center" data-ng-click="$ctrl.openCancelTransModal()">
-                                        <a href="" class="btn__link btn__link--white btn--lg ">Cancel transaction <img class="m-l-xs d-md-none" src="assets/imgs/icons/cart_icon_white_sm.png"></a></button>                            
+                                    <div class="btn bg-phase-red font-weight-medium pill-radius d-flex align-items-center" data-ng-click="$ctrl.openCancelTransModal()">
+                                        <a class="btn__link btn__link--white btn--lg ">Cancel transaction <img class="m-l-xs d-md-none" src="assets/imgs/icons/cart_icon_white_sm.png"></a> 
+                                    </div>                            
                                 </div>
                                 <div class="btn-submit">
-                                   <button class="btn bg-phase-green font-weight-medium pill-radius d-flex align-items-center m-l-sm" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">
+                                   <div class="btn bg-phase-green font-weight-medium pill-radius d-flex align-items-center m-l-sm" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">
                                         <a href="" class="btn--lg btn__link btn__link--white">Place this order<img class="m-l-xs d-md-none" src="assets/imgs/icons/cart_icon_white_sm.png"></a>
-                                    </button>  
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -153,13 +154,14 @@
             			<div class="row">
         					<div class="col-xl-12 d-flex justify-content-end">
                                 <div class="btn-cancel">
-                                    <button class="btn bg-phase-red font-weight-medium pill-radius d-flex align-items-center" data-ng-click="$ctrl.openCancelTransModal()">
-                                        <a href="" class="btn__link btn__link--white btn--lg ">Cancel transaction<img class="m-l-xs" src="assets/imgs/icons/cross_white_icon.png"></a></button>                            
+                                    <div class="btn bg-phase-red font-weight-medium pill-radius d-flex align-items-center" data-ng-click="$ctrl.openCancelTransModal()">
+                                        <a class="btn__link btn__link--white btn--lg ">Cancel transaction<img class="m-l-xs" src="assets/imgs/icons/cross_white_icon.png"></a>
+                                    </div>                            
                                 </div>
                                 <div class="btn-submit">
-                                   <button class="btn bg-phase-green font-weight-medium pill-radius d-flex align-items-center m-l-sm" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">
-                                        <a href="" class="btn--lg btn__link btn__link--white">Place this order<img class="m-l-xs" src="assets/imgs/icons/tick_white_icon.png"></a>
-                                    </button>  
+                                   <div class="btn bg-phase-green font-weight-medium pill-radius d-flex align-items-center m-l-sm" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">
+                                        <a class="btn--lg btn__link btn__link--white">Place this order<img class="m-l-xs" src="assets/imgs/icons/tick_white_icon.png"></a>
+                                    </div>  
                                 </div>
         					</div>						
             			</div>
