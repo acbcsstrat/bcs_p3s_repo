@@ -99,7 +99,9 @@ function fxCalculationService($q, $timeout, fxService) {
 
 				this.currentFx = fxRateData;
 
-		    }
+		    } else {//if end
+		    	this.currentFx = null;
+		    } 
 	    }, //factory end
 	    getSelectedPatent: function() {
 	    	return this.selectedPatent;

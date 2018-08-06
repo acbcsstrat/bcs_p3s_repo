@@ -20,7 +20,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 
     activateData();
     fetchContact();
-
+    console.log('patent: ', vm.patent)
     function fetchContact() { 
         coreService.ppContact()
         .then(
@@ -39,12 +39,11 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
             vm.displayNotifications('Green');
         }, 100);
 		if(patent) {
-            if(patent.costBandColour == 'GREY' || patent.costBandColour == 'grey') {
-                return false;
-            } else {
-                fxCalculationService.setFx(patent);
-                vm.patentFx = fxCalculationService;
-            }
+    
+            fxCalculationService.setFx(patent);
+            vm.patentFx = fxCalculationService;
+            console.log('fx: ', vm.patentFx)
+            
 		}
     }
 
