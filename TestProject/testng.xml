@@ -11,7 +11,7 @@
 			     <methods>
 						<include name="loginIncorrectCredentials" />
 						<include name="loginCorrectCredentials" />
-						<include name="logoutFnCheck" />
+						<!-- <include name="logoutFnCheck" /> -->
 				</methods>
 		    </class>
 	    </classes>

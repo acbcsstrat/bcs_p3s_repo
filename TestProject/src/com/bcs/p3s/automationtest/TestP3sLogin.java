@@ -69,6 +69,42 @@ public class TestP3sLogin {
     	
     }*/
     
+	 @Test(priority = 0)
+	    private void loginIncorrectCredentials(){
+	    	driver.get(baseUrl);
+
+	        driver.findElement(By.name("j_username")).clear();
+	        driver.findElement(By.name("j_username")).sendKeys("merin@p3s.me");
+	        driver.findElement(By.name("j_password")).clear();
+	        driver.findElement(By.name("j_password")).sendKeys("merin");
+	        driver.findElement(By.name("loginBtn")).click();
+	        
+	        try {
+	            //assertEquals(driver.findElement(By.id("Your Id for the message")).getText(), "Invalid UserID or Password Entered");
+
+	            String URL = driver.getCurrentUrl();
+	            //AssertJUnit.assertEquals(URL, baseUrl+"?login_error=t");
+	            Assert.assertEquals(URL, baseUrl+"?login_error=t");
+	            //If the message is displayed
+	            
+	            String error_msg=driver.findElement(By.id("loginMessage")).getText();
+	            String expected_msg = "The username and password do not match our records. Please try again.";
+	            AssertJUnit.assertEquals(error_msg, expected_msg);
+
+	            //System.out.println("loginIncorrectCredentials() ::: PASS");
+
+	        } catch (Exception e) {
+
+	            //If the message is not displayed
+
+	            //System.out.println("loginIncorrectCredentials() ::: FAIL");
+
+	            verificationErrors.append(e.toString());
+
+	        }
+	    }
+
+	 
     @Test(priority = 1)
     private void loginCorrectCredentials(){
     	
@@ -99,49 +135,15 @@ public class TestP3sLogin {
         
     }
     
-    @Test(priority = 0)
-    private void loginIncorrectCredentials(){
-    	driver.get(baseUrl);
-
-        driver.findElement(By.name("j_username")).clear();
-        driver.findElement(By.name("j_username")).sendKeys("merin@p3s.me");
-        driver.findElement(By.name("j_password")).clear();
-        driver.findElement(By.name("j_password")).sendKeys("merin");
-        driver.findElement(By.name("loginBtn")).click();
-        
-        try {
-            //assertEquals(driver.findElement(By.id("Your Id for the message")).getText(), "Invalid UserID or Password Entered");
-
-            String URL = driver.getCurrentUrl();
-            //AssertJUnit.assertEquals(URL, baseUrl+"?login_error=t");
-            Assert.assertEquals(URL, baseUrl+"?login_error=t");
-            //If the message is displayed
-            
-            String error_msg=driver.findElement(By.id("loginMessage")).getText();
-            String expected_msg = "The username and password do not match our records. Please try again.";
-            AssertJUnit.assertEquals(error_msg, expected_msg);
-
-            //System.out.println("loginIncorrectCredentials() ::: PASS");
-
-        } catch (Exception e) {
-
-            //If the message is not displayed
-
-            //System.out.println("loginIncorrectCredentials() ::: FAIL");
-
-            verificationErrors.append(e.toString());
-
-        }
-    }
-
     //@Test(dependsOnMethods = { "loginCorrectCredentials" })
     @Test(priority=2)
     private void logoutFnCheck(){
     	
-    	
+    	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    	System.out.println("Current url : " + driver.getCurrentUrl());
     	driver.findElement(By.linkText("Logout")).click();
     	//WebDriverWait wait = new WebDriverWait(driver, 30);
-    	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    	driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     	 try {
              
     		 URL = driver.getCurrentUrl();
