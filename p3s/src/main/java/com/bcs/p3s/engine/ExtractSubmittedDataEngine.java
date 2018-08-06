@@ -265,6 +265,10 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   		
 			   		patent.setLastRenewedDateExEpo(itch);
 			   	}
+			   	/**
+			   	 * Added later 02/08/2018 - Renewal Instruction requires full EP Application number with check digit 
+			   	 */
+			   	if("checkDigit".equals(key.trim())) patent.setCheckDigit(value);
 			   	
 			   	/** 
 			   	 * ADDED AFTER DAN'S MEETING 24/10/2017 - STORING IPC CODES AND REP DETAILS FOR FUTURE REFERENCE

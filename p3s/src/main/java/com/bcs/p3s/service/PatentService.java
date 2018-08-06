@@ -103,6 +103,8 @@ public interface PatentService {
 	
 	public boolean isPatentFoundForBusiness(String patentApplicationNumber, PostLoginSessionBean postSession);
 	
+	public String truncateAndStoreCheckDigit(String patentApplicationNumber);
+	
 //	Patent findById(long id);
 //	
 //	Patent findByName(String name);

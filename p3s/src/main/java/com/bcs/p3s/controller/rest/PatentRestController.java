@@ -96,14 +96,22 @@ public class PatentRestController extends Universal {
 		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
 		PatentUI patentUI = null;
 		boolean isFound = false;
+		String checkDigit = null;
 		
 		try{
 			System.out.println("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
 			
+			/** Truncate check digit from EP application number entered **/
+			checkDigit = patentService.truncateAndStoreCheckDigit(patentApplicationNumber);
+			if(checkDigit == null){
+				log().error("Format error for Patent Application Number ");
+				return new ResponseEntity<PatentUI>(HttpStatus.BAD_REQUEST); 
+			}
+			
 			/** PRECHECK 1::TO CHECK THE FORMAT OF PATENT APPLICATION NUMBER **/
 			patentApplicationNumber = patentService.validateAndFormatApplicationNumber(patentApplicationNumber);
 			if(patentApplicationNumber == null){
-				log().error("Format error for Patent Applicatioon Number ");
+				log().error("Format error for Patent Application Number ");
 				return new ResponseEntity<PatentUI>(HttpStatus.BAD_REQUEST); 
 			}
 			
@@ -117,6 +125,7 @@ public class PatentRestController extends Universal {
 			
 			
 		  	patentUI = patentService.searchEpoForPatent(patentApplicationNumber,postSession);
+		  	patentUI.setCheckDigit(checkDigit);
 		  	
 		}
 		

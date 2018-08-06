@@ -905,7 +905,7 @@ public PatentUI populateDataToPatentUI(Patent patent){
 	}
 	
 	/**
-	 * Formatting patentAppicationNumber
+	 * Formatting patentApplicationNumber
 	 * Checking for EP in front
 	 * Checking for check digit
 	 * Checking for white spaces
@@ -977,11 +977,26 @@ public PatentUI populateDataToPatentUI(Patent patent){
 		}
 		
 		if(!isFound){
-			log().debug("Not dupliacte patent for business.");
+			log().debug("Not duplicate patent for business.");
 		}
 		
 		log().debug("Is Duplicate patent check completed. Returning isFound = " + isFound);
 		return isFound;
+	}
+
+	@Override
+	public String truncateAndStoreCheckDigit(String patentApplicationNumber) {
+		// TODO Auto-generated method stub
+		String checkDigit = null;
+		int len = patentApplicationNumber.length();
+		int index = patentApplicationNumber.indexOf(".");
+		if(len == index){
+			log().error("EP Application Numbered entered without a check digit");
+			return checkDigit;
+		}
+		checkDigit = patentApplicationNumber.substring(index+1, len);
+		log().debug("Check digit from EP Application Number[" + patentApplicationNumber +"] is " + checkDigit);
+		return checkDigit;
 	}
 
 

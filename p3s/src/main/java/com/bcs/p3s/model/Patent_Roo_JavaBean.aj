@@ -125,4 +125,12 @@ privileged aspect Patent_Roo_JavaBean {
         this.representative = representative;
     }
     
+    public String Patent.getCheckDigit() {
+        return this.checkDigit;
+    }
+    
+    public void Patent.setCheckDigit(String checkDigit) {
+        this.checkDigit = checkDigit;
+    }
+    
 }

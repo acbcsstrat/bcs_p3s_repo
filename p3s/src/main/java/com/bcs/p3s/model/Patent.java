@@ -113,6 +113,9 @@ public class Patent {
     private String ipcCodes;
     
     private String representative;
+    
+    @NotNull
+    private String checkDigit;
 
     /**
      *//*
