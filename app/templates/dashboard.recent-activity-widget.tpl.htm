@@ -31,7 +31,7 @@
 									</tr>
 									<tr class="t-data t-data__row">
 										<td class="font-weight-bold t-data__td-50">Amount</td>
-										<td class="t-data__td-50">$ {{item.currentRenewalCostUSD}}</td>
+										<td class="t-data__td-50">$ {{item.currentRenewalCostUSD | number: 2 }}</td>
 									</tr>
 									<tr class="t-data t-data__row">
 										<td class="font-weight-bold t-data__td-50">Current Stage</td>
@@ -77,7 +77,7 @@
 									</tr>
 									<tr>
 										<td class="font-weight-bold t-data__td-50">Total</td>
-										<td class="t-data__td-50">$ {{trans.transAmount_USD}}</td>
+										<td class="t-data__td-50">$ {{trans.transAmount_USD | number: 2 }}</td>
 									</tr>
 									<tr>
 										<td class="font-weight-bold t-data__td-50">Transaction status</td>
@@ -120,7 +120,7 @@
 									</tr>
 									<tr>
 										<td class="font-weight-bold t-data__td-50">Amount</td>
-										<td class="t-data__td-50">$ {{item.transAmount_USD}}</td>
+										<td class="t-data__td-50">$ {{item.transAmount_USD | number: 2 }}</td>
 									</tr>			
 								</table>
 							</div>
@@ -155,7 +155,7 @@
 										</tr>
 										<tr>
 											<td class="font-weight-bold">Amount</td>
-											<td class="t-data__td-50">$ {{item.currentRenewalCostUSD}}</td>
+											<td class="t-data__td-50">$ {{item.currentRenewalCostUSD | number: 2 }}</td>
 										</tr>
 										<tr>
 											<td class="font-weight-bold t-data__td-50">Current Stage</td>
@@ -202,7 +202,7 @@
 									</tr>
 									<tr>
 										<td class="font-weight-bold">Total</td>
-										<td class="t-data__td-50">$ {{trans.transAmount_USD}}</td>
+										<td class="t-data__td-50">$ {{trans.transAmount_USD | number: 2 }}</td>
 									</tr>
 									<tr>
 										<td class="font-weight-bold">Transaction status</td>
@@ -245,7 +245,7 @@
 									</tr>
 									<tr>
 										<td class="font-weight-bold">Amount</td>
-										<td class="t-data__td-50">$ {{item.transAmount_USD}}</td>
+										<td class="t-data__td-50">$ {{item.transAmount_USD | number: 2 }}</td>
 									</tr>			
 								</table>
 							</div>

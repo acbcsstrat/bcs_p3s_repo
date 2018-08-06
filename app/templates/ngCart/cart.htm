@@ -26,7 +26,7 @@
                             <span data-ng-if="item.getData().clientRef == ''" class="txt-grey">[No client description provided]</span>
                             <span data-ng-if="item.getData().clientRef !== ''">{{item.getData().shortTitle}}</span>
                         </td>
-                        <td class="t-data__td">{{(item.getPrice() | number: 2) | currency}}</td>
+                        <td class="t-data__td">$ {{item.getData().feeUI.subTotalUSD | number: 2}}</td>
                         <td class="t-data__td">
                             <div class="btn-cancel">
                                 <button class="btn btn--lg btn--white btn-error--cross pill-radius bg-phase-red" data-ng-click="ngCart.removeItemById(item.getId())">
