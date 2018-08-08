@@ -8,7 +8,6 @@ function mainNavService(){
   		state: 'dashboard',
   		icon: 'assets/imgs/icons/menu/menu_dashboard_icon_sm.png'
 		}];
-
     // sections.push({
     //   name: 'Portfolio',
     //   type: 'link',
@@ -28,13 +27,13 @@ function mainNavService(){
     //   icon: 'assets/imgs/icons/menu/menu_erp_icon_sm.png'
     // })        
   	sections.push({
-  		name: 'Renewals',
+  		name: 'Portfolio',
   		type: 'toggle',
   		pages: [
   			{
-      		name: 'List Patents',
+      		name: 'Portfolio',
       		type: 'link',
-      		state: 'patents'
+      		state: 'portfolio'
 		    },
 		    {
 				  name: 'Add Patent',

@@ -1,0 +1,104 @@
+<patentnav></patentnav>
+<div class="animate-show"> 
+    <div class="row m-b-md">
+        <div class="col-md-12 col-xl-4">
+            <form class="form">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xl-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.patentApplicationNumber" data-ng-change="$ctrl.displayPatents()" placeholder="App No.">
+                            <div class="input-group-append">
+                                <i class="d-flex input-group-text pill-radius fa fa-search"></i>
+                            </div>
+                        </div>                  
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xl-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control pill-radius" name="clientRefFilter" data-ng-model="filterPortfolio.clientRef" data-ng-change="$ctrl.displayPatents()" placeholder="Client Ref">
+                            <div class="input-group-append pill-radius">
+                                <i class="d-flex input-group-text pill-radius fa fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row m-b-md">
+        <div data-ng-show="$ctrl.portfolioData.length === 0" class="col-md-12">
+            <div class="bg-white p-a-sm">
+                <p class="font-weight-medium">There aren't any patents in this phase at the moment.  You can see all the patents in all phases by clicking on the View All  button above.</p>
+            </div>
+        </div>        
+        <div data-ng-show="$ctrl.portfolioData.length !== 0" class="col-md-12">
+            <div id="scrollable-area" class="table-responsive-md">
+                <table class="table t-data t-data--border table-scroll" fixed-table-headers="scrollable-area">
+                    <thead>
+                        <tr class="t-data__row t-data__row--select t-data__head">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('patentApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                                <span>App No.</span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+                            </th>
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                                <span>Client Ref</span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                          
+                            </th>
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                                <span>Client Desc</span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                         
+                            </th>
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                                <span>EPO Status</span>
+<!--                                 <span class="fa fa-caret-down"></span>
+                                <span class="fa fa-caret-up"></span>      -->                     
+                            </th>                            
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('ppStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                                <span>PP Status</span>
+<!--                                 <span data-ng-show="$ctrl.selectedSortType == 'renewalStatus' && !$ctrl.sortReverse" class="fa fa-caret-donw"></span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'renewalStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                           -->
+                            </th>                  
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="patent in $ctrl.portfolioData" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
+                            {{patent}}
+                            <td class="t-data__td t-data__w15">
+                                <span class="td-ellipsis">
+                                    <a class="t-data__a" data-ng-bind="patent.patentApplicationNumber" data-ui-sref="portfolio.patent({patentId: patent.id})"></a>
+                                </span>
+                            </td>
+                            <td class="t-data__td t-data__w20" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">
+                                <span class="td-ellipsis txt-grey" data-ng-if="patent.clientRef == ''">[No client reference provided]</span>
+                                <span class="td-ellipsis" data-ng-if="patent.clientRef !== ''">{{patent.clientRef}}</span>
+                            </td>
+                            </td>                            
+                            <td class="t-data__td t-data__w15" data-ng-class="patent.shortTitle == '' ? 'ellipsis-remove' : ''">
+                                <span class="td-ellipsis txt-grey" data-ng-if="patent.shortTitle == ''">[No client description provided]</span>
+                                <span class="td-ellipsis" data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
+                            </td>
+                            </td>
+                            <td class="t-data__td t-data__w15">
+                                <span class="td-ellipsis" data-ng-bind="patent.epoStatus"></span>
+                            </td>                            
+                            <td class="t-data__td t-data__w20" data-ng-bind="patent.service.ppStatus">
+                            </td>
+                            <td class="t-data__td t-data__w15">
+                                <div data-ng-if="patent.renewal.renewalStatus == 'Show price'" class="d-flex justify-content-center btn-default">
+                                    <ngcart-addtocart id="{{patent.id}}" class="cartbtn w-100" name="patent_{{patent.id}}" price="{{patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="patent">
+                                    </ngcart-addtocart>
+                                </div>    
+                            </td>                            
+                        </tr>                      
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="animate-show">
+    <div data-ui-view></div>
+</div>

@@ -99,7 +99,7 @@ function appRoutes($stateProvider) {
                     return  patentsRestService.fetchCostAnalysis($stateParams.patentId);  
                 }],
                 renewal: ['patentsRestService', '$stateParams', function(patentsRestService, $stateParams){
-                    return  patentsRestService.fetchRenewalHistory($stateParams.patentId);  
+                    return  patentsRestService.fetchRenewalHistory($stateParams.patentId);
                 }]
             },
             views: {
@@ -113,11 +113,26 @@ function appRoutes($stateProvider) {
                     controller: 'patentInfoCtrl',
                     controllerAs: '$ctrl'
                 },
-                'filEuroPct@portfolio.patent': {
+                'euroPct@portfolio.patent': {
                     templateUrl: 'app/templates/patent.europct.tpl.htm',
                     controller: 'euroPctCtrl',
+                    controllerAs: '$ctrl',
+                },
+                'euroPct.euroPctInfo@portfolio.patent': {
+                    templateUrl: 'app/templates/europct.europct-info.tpl.htm',
+                    controller: 'euroPctInfoCtrl',
                     controllerAs: '$ctrl'
                 },
+                'euroPct.form1200Questionnaire@portfolio.patent': {
+                    templateUrl: 'app/templates/europct.form1200-questionnaire.tpl.htm',
+                    controller: 'form1200Ctrl',
+                    controllerAs: '$ctrl'                    
+                },
+                'euroPct.euroPctCostAnalysis@portfolio.patent': {
+                    templateUrl: 'app/templates/europct.europct-costanalysis.tpl.htm',
+                    controller: 'euroPctCostAnalysisCtrl',
+                    controllerAs: '$ctrl'
+                },                         
                 'patentrenewals@portfolio.patent': {
                     templateUrl: 'app/templates/patent.patent-renewals.tpl.htm',
                     controller: 'patentRenewalsCtrl',
@@ -215,8 +230,8 @@ function appRoutes($stateProvider) {
             controller: 'bankTransferPrepCtrl',
             controllerAs: '$ctrl',
             params: {
-            	orderObj: null,
-            	patentObj: null
+                orderObj: null,
+                patentObj: null
             }
         })
         .state('bank-transfer-success', {

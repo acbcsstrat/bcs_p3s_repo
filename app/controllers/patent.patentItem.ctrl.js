@@ -6,6 +6,8 @@ function patentItemCtrl($rootScope, $scope) {
 
 	var vm = this;
 	
+	console.log('hello')
+
 	vm.activePatentItemMenu = 'Patent Info';
 	vm.loadChart = loadChart;
 

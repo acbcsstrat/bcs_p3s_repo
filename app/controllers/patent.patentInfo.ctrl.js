@@ -6,6 +6,8 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 
 	var vm = this;
 
+    console.log('patent info', patent);
+
 	vm.patent = patent;
 	vm.fetchItemRenewal = fetchItemRenewal;
 	vm.fetchItemTransaction = fetchItemTransaction;
@@ -20,7 +22,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 
     activateData();
     fetchContact();
-    console.log('patent: ', vm.patent)
+
     function fetchContact() { 
         coreService.ppContact()
         .then(
@@ -39,19 +41,16 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
             vm.displayNotifications('Green');
         }, 100);
 		if(patent) {
-    
             fxCalculationService.setFx(patent);
             vm.patentFx = fxCalculationService;
-            console.log('fx: ', vm.patentFx)
-            
 		}
     }
 
-	function displayNotifications(phase) {
+	function displayNotifications(phase) {  //migrate to renewalCtrl
     	vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
 	};
 
-	function phaseNotifications(phase) {
+	function phaseNotifications(phase) { //migrate to renewalCtrl
 
   		var notificationsArr = patent.notificationUIs;
   		var notifications = [];
@@ -64,7 +63,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 
   		return notifications;
 
-	}    
+	}
 
 	function fetchItemRenewal() {
 		$rootScope.$broadcast("renewalHistory"); //REVISE TO SEE IF MORE EFFICIENT WAY
@@ -113,7 +112,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 			  	};
 
 			  	$timeout(function(){
-			  		vm.updatePatent(id);
+			  		vm.updatePatent(id); //migrate to renewalsCtrl when API provided
 			  	})
 
 			}]

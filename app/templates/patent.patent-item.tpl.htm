@@ -1,0 +1,24 @@
+<div class="row m-b-md">
+	<div class="col-xl-12">
+		<div class="secondary-view-nav">
+			<ul class="nav secondary-view-nav__list">
+				<li class="pill-radius secondary-view-nav__list-item secondary-view-nav__list-item--green" data-ng-click="$ctrl.activeSelectedTab = 0; $ctrl.activePatentItemMenu = 'Patent Info'" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Patent Info'}">Patent Info</li>
+				<li class="pill-radius secondary-view-nav__list-item secondary-view-nav__list-item--green" data-ng-click="$ctrl.activeSelectedTab = 1; $ctrl.activePatentItemMenu = 'Cost Analysis'; $ctrl.loadChart()" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Cost Analysis'}">Euro-PCT</li>
+				<li class="pill-radius secondary-view-nav__list-item secondary-view-nav__list-item--green" data-ng-click="$ctrl.activeSelectedTab = 2; $ctrl.activePatentItemMenu = 'Renewal History'" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Renewal History'}">Renewal</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="patentAnchor"></div>
+	<uib-tabset type="pills" active="$ctrl.activeSelectedTab">
+		<uib-tab heading="Patent Information" index="0" data-ng-hide="true">
+			<div ui-view="patentinfo"></div>
+	    </uib-tab>
+	    <uib-tab heading="Euro-PCT" index="1" data-ng-hide="true">
+	    	<div ui-view="euroPct"></div>
+		</uib-tab>
+	    <uib-tab heading="Renewal" index="2" data-ng-hide="true">
+	    	<div ui-view="patentrenewals"></div>
+		</uib-tab>
+	</uib-tabset>
+</div>
