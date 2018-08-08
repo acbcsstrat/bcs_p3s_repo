@@ -88,18 +88,22 @@ function appRoutes($stateProvider) {
             }
         })
         .state('portfolio.patent', {
-            url: '/patent/{patentId}/:patentHref',
+            url: '/{patentId}/:patentHref',
             resolve: {
                 patent: ['patents', '$stateParams', function(patents, $stateParams) {
                     return patents.find(function(patent){
                         return patent.id == $stateParams.patentId;
                     })
                 }],
-                costAnalysis: ['patentsRestService', '$stateParams', function(patentsRestService, $stateParams) { 
-                    return  patentsRestService.fetchCostAnalysis($stateParams.patentId);  
+                costAnalysis: ['patentsRestService', '$stateParams', 'patent', function(patentsRestService, $stateParams, patent) {
+                    if(patent) {
+                        return patentsRestService.fetchCostAnalysis(patent.id);  
+                    }
                 }],
-                renewal: ['patentsRestService', '$stateParams', function(patentsRestService, $stateParams){
-                    return  patentsRestService.fetchRenewalHistory($stateParams.patentId);
+                renewal: ['patentsRestService', '$stateParams', 'patent', function(patentsRestService, $stateParams, patent){
+                    if(patent) {
+                        return patentsRestService.fetchRenewalHistory(patent.id);
+                    }
                 }]
             },
             views: {
@@ -133,9 +137,24 @@ function appRoutes($stateProvider) {
                     controller: 'euroPctCostAnalysisCtrl',
                     controllerAs: '$ctrl'
                 },
-                'patentrenewals@portfolio.patent': {
-                    templateUrl: 'app/templates/patent.patent-renewals.tpl.htm',
-                    controller: 'patentRenewalsCtrl',
+                'renewal@portfolio.patent': {
+                    templateUrl: 'app/templates/patent.renewal.tpl.htm',
+                    controller: 'renewalCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'renewal.renewalInfo@portfolio.patent': {
+                    templateUrl: 'app/templates/renewal.info.tpl.htm',
+                    controller: 'renewalInfoCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'renewal.renewalHistory@portfolio.patent': {
+                    templateUrl: 'app/templates/renewal.history.tpl.htm',
+                    controller: 'renewalHistoryCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'renewal.costAnalysis@portfolio.patent': {
+                    templateUrl: 'app/templates/renewal.cost-analysis.tpl.htm',
+                    controller: 'renewalCaCtrl',
                     controllerAs: '$ctrl'
                 }
             },
