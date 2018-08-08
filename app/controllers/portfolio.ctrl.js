@@ -16,8 +16,8 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
         if(!$(event.target).hasClass('cartbtn')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].hash; //gets data from ui-sref
-            window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
-            // $state.go('portfolio.patent.patentinfo', {patentHref: patentId})
+            // window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
+            $state.go('portfolio.patent', {patentId: patentId});
         }
     };    
 
