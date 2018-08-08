@@ -88,7 +88,7 @@ function appRoutes($stateProvider) {
             }
         })
         .state('portfolio.patent', {
-            url: '/{patentId}/:patentHref',
+            url: '/patent/{patentId}/:patentHref',
             resolve: {
                 patent: ['patents', '$stateParams', function(patents, $stateParams) {
                     return patents.find(function(patent){
@@ -119,20 +119,20 @@ function appRoutes($stateProvider) {
                     controllerAs: '$ctrl',
                 },
                 'euroPct.euroPctInfo@portfolio.patent': {
-                    templateUrl: 'app/templates/europct.europct-info.tpl.htm',
+                    templateUrl: 'app/templates/europct.info.tpl.htm',
                     controller: 'euroPctInfoCtrl',
                     controllerAs: '$ctrl'
                 },
                 'euroPct.form1200Questionnaire@portfolio.patent': {
-                    templateUrl: 'app/templates/europct.form1200-questionnaire.tpl.htm',
+                    templateUrl: 'app/templates/europct.questionnaire.tpl.htm',
                     controller: 'form1200Ctrl',
-                    controllerAs: '$ctrl'                    
+                    controllerAs: '$ctrl'
                 },
                 'euroPct.euroPctCostAnalysis@portfolio.patent': {
-                    templateUrl: 'app/templates/europct.europct-costanalysis.tpl.htm',
+                    templateUrl: 'app/templates/europct.costanalysis.tpl.htm',
                     controller: 'euroPctCostAnalysisCtrl',
                     controllerAs: '$ctrl'
-                },                         
+                },
                 'patentrenewals@portfolio.patent': {
                     templateUrl: 'app/templates/patent.patent-renewals.tpl.htm',
                     controller: 'patentRenewalsCtrl',
