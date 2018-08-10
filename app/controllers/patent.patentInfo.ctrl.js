@@ -16,52 +16,24 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
     vm.editItem = editItem;
     vm.doneEditing = doneEditing;
     vm.editing=[];
-    // vm.displayNotifications = displayNotifications;
 
-    // activateData();
-    fetchContact();
+    vm.$onInit = function() {
+        if(patent) {
+            fxCalculationService.setFx(patent);
+            vm.patentFx = fxCalculationService;
 
-    function fetchContact() { 
-        coreService.ppContact()
-        .then(
-            function(response){
-                vm.partnerName = response.partnerName;
-                vm.partnerPhone = response.partnerPhone;
-            },
-            function(errResponse){
+            coreService.ppContact()
+            .then(
+                function(response){
+                    vm.partnerName = response.partnerName;
+                    vm.partnerPhone = response.partnerPhone;
+                },
+                function(errResponse){
 
-            }
-        )
+                }
+            )
+        }
     }
-
- //    function activateData() {
- //        $timeout(function() {
- //            vm.displayNotifications('Green');
- //        }, 100);
-	// 	if(patent) {
- //            fxCalculationService.setFx(patent);
- //            vm.patentFx = fxCalculationService;
-	// 	}
- //    }
-
-	// function displayNotifications(phase) {  //migrate to renewalCtrl
- //    	vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
-	// };
-
-	// function phaseNotifications(phase) { //migrate to renewalCtrl
-
- //  		var notificationsArr = patent.notificationUIs;
- //  		var notifications = [];
-			
- //  		notificationsArr.forEach(function(data){
- //  			if(data.costbandcolor == phase) {
- //  				notifications.push(data);
- //  			}
- //  		});
-
- //  		return notifications;
-
-	// }
 
 	function fetchItemRenewal() {
 		$rootScope.$broadcast("renewalHistory"); //REVISE TO SEE IF MORE EFFICIENT WAY
