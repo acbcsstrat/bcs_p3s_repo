@@ -1,41 +1,12 @@
 angular.module('ppApp').controller('renewalHistoryCtrl', renewalHistoryCtrl);
 
-renewalHistoryCtrl.$inject = ['chunkDataService']
+renewalHistoryCtrl.$inject = ['renewal', 'patent', 'chunkDataService']
 
-function renewalHistoryCtrl(chunkDataService) {
+function renewalHistoryCtrl(renewal, patent, chunkDataService) {
 
     var vm = this;
 
-    // vm.displayNotifications = displayNotifications;
+    vm.renewal = renewal;
+    vm.patent = patent;
 
-    // activateData();
-
-    // function activateData() {
-    //     $timeout(function() {
-    //         vm.displayNotifications('Green');
-    //     }, 100);
-    //     if(patent) {
-    //         fxCalculationService.setFx(patent);
-    //         vm.patentFx = fxCalculationService;
-    //     }
-    // }
-
-    // function displayNotifications(phase) {  //migrate to renewalCtrl
-    //     vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
-    // };
-
-    // function phaseNotifications(phase) { //migrate to renewalCtrl
-
-    //     var notificationsArr = patent.notificationUIs;
-    //     var notifications = [];
-            
-    //     notificationsArr.forEach(function(data){
-    //         if(data.costbandcolor == phase) {
-    //             notifications.push(data);
-    //         }
-    //     });
-
-    //     return notifications;
-
-    // }
 }
