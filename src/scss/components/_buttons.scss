@@ -33,28 +33,28 @@
 
 .btn-submit {
   .btn-submit--check {
-    background: url(../assets/imgs/icons/tick_white_icon.png) no-repeat; 
-    padding-right: 3.51rem;
+    // background: url(../assets/imgs/icons/tick_white_icon.png) no-repeat; 
+    // padding-right: 3.51rem;
     background-color: $green;
     background-position: right 18px center;
     color: $white;
   }
-  .btn-submit--check:not(:disabled):not(.disabled):active {
-    background-image: url(../assets/imgs/icons/tick_white_icon.png);
-  }
+  // .btn-submit--check:not(:disabled):not(.disabled):active {
+  //   // background-image: url(../assets/imgs/icons/tick_white_icon.png);
+  // }
 }
 
 .btn-cancel {
   .btn-error--cross {
-    background: url(../assets/imgs/icons/cross_white_icon.png) no-repeat; 
-    padding-right: 3.51rem; 
+    // background: url(../assets/imgs/icons/cross_white_icon.png) no-repeat; 
+    // padding-right: 3.51rem; 
     background-color: $red; 
     background-position: right 18px center;
     color: $white;
   }
-  .btn-error--cross:not(:disabled):not(.disabled):active {
-    background-image: url(../assets/imgs/icons/cross_white_icon.png);
-  }
+  // .btn-error--cross:not(:disabled):not(.disabled):active {
+  //   background-image: url(../assets/imgs/icons/cross_white_icon.png);
+  // }
 }
 
 .btn-default {
