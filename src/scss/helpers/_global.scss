@@ -27,6 +27,7 @@
 .m-l-lg { margin-left: 3rem; }  
 
 .m-none { margin: 0!important; }
+.m-l-none { margin-left: 0!important; }
 .m-b-none { margin-bottom: 0; }
 
 .p-tb-sm { padding-top: 1.5rem; padding-bottom: 1.5rem; }
@@ -62,6 +63,7 @@ div.cursor-help { cursor: help; }
 .ul-bullet-free { list-style-type: none; padding: 0; }
 
 .border-none { border: none; }
+.border-t-none { border-top: none!important; }
 
 .inline-link:hover { text-decoration: underline; color: $black; }
 
