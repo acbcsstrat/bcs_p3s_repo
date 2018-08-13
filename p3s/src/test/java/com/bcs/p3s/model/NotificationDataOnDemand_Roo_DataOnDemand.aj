@@ -29,6 +29,7 @@ privileged aspect NotificationDataOnDemand_Roo_DataOnDemand {
         setDisplayOrder(obj, index);
         setEmailTemplateId(obj, index);
         setNotificationName(obj, index);
+        setProductType(obj, index);
         setTitle(obj, index);
         return obj;
     }
@@ -56,6 +57,11 @@ privileged aspect NotificationDataOnDemand_Roo_DataOnDemand {
     public void NotificationDataOnDemand.setNotificationName(Notification obj, int index) {
         String notificationName = "notificationName_" + index;
         obj.setNotificationName(notificationName);
+    }
+    
+    public void NotificationDataOnDemand.setProductType(Notification obj, int index) {
+        String productType = "productType_" + index;
+        obj.setProductType(productType);
     }
     
     public void NotificationDataOnDemand.setTitle(Notification obj, int index) {

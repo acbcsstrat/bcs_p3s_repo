@@ -70,6 +70,13 @@ public class PatentUI extends Patent {
     private Date renewalDueDate;
 
     private String costBandColour;  
+    
+    /**
+     * To support FE on the property name change from patentApplicationNumber to EP_ApplicationNumber
+     */
+    private String patentApplicationNumber;
+    private String patentPublicationNumber;
+    private Date filingDate;
 
 	/*private BigDecimal currentRenewalFeeEUR;
 	private BigDecimal currentExtensionFeeEUR;
@@ -99,11 +106,11 @@ public class PatentUI extends Patent {
 		this.setId(patent.getId());
 		this.setVersion(patent.getVersion());
 		
-		this.setPatentApplicationNumber(patent.getPatentApplicationNumber());
+		this.setEP_ApplicationNumber(patent.getEP_ApplicationNumber());
 		this.setTitle(patent.getTitle());
-		this.setFilingDate(patent.getFilingDate());
+		this.setInternationalFilingDate(patent.getInternationalFilingDate());
 		this.setPrimaryApplicantName(patent.getPrimaryApplicantName());
-		this.setPatentPublicationNumber(patent.getPatentPublicationNumber());
+		this.setEP_PublicationNumber(patent.getEP_PublicationNumber());
 		this.setClientRef(patent.getClientRef());
 		this.setShortTitle(patent.getShortTitle());
 		this.setEpoPatentStatus(patent.getEpoPatentStatus());
@@ -112,6 +119,9 @@ public class PatentUI extends Patent {
 		this.setLastRenewedDateExEpo(patent.getLastRenewedDateExEpo()); 
 		this.setLastRenewedYearEpo(patent.getLastRenewedYearEpo()); 
 		this.setRenewalYear(patent.getRenewalYear());
+		this.setPatentApplicationNumber(patent.getEP_ApplicationNumber());
+		this.setPatentPublicationNumber(patent.getEP_PublicationNumber());
+		this.setFilingDate(patent.getInternationalFilingDate());
 		
 		/*
 		 * MORE FIELDS ADDED FOR PATENT
@@ -171,7 +181,7 @@ public class PatentUI extends Patent {
 		return res;
 	}
 	public String getFilingDateUI() {
-		String res = (new DateUtil()).dateToUSStringWithDayOfWeek(this.getFilingDate());
+		String res = (new DateUtil()).dateToUSStringWithDayOfWeek(this.getInternationalFilingDate());
 		return res;
 	}
 	public String getCostBandEndDateUI() {
@@ -247,6 +257,34 @@ public class PatentUI extends Patent {
 
 	public void setFeeUI(FeeUI feeUI) {
 		this.feeUI = feeUI;
+	}
+	
+	
+
+	public String getPatentApplicationNumber() {
+		return patentApplicationNumber;
+	}
+
+	public void setPatentApplicationNumber(String EP_ApplicationNumber) {
+		this.patentApplicationNumber = EP_ApplicationNumber;
+	}
+	
+	
+
+	public String getPatentPublicationNumber() {
+		return patentPublicationNumber;
+	}
+
+	public void setPatentPublicationNumber(String EP_PublicationNumber) {
+		this.patentPublicationNumber = EP_PublicationNumber;
+	}
+	
+	public Date getFilingDate() {
+		return filingDate;
+	}
+
+	public void setFilingDate(Date internationalFilingDate) {
+		this.filingDate = internationalFilingDate;
 	}
 
 	/**

@@ -3,8 +3,8 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.EpoFee;
-import com.bcs.p3s.model.EpoFeeDataOnDemand;
+import com.bcs.p3s.model.EpoRenewalFee;
+import com.bcs.p3s.model.EpoRenewalFeeDataOnDemand;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -15,38 +15,38 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.springframework.stereotype.Component;
 
-privileged aspect EpoFeeDataOnDemand_Roo_DataOnDemand {
+privileged aspect EpoRenewalFeeDataOnDemand_Roo_DataOnDemand {
     
-    declare @type: EpoFeeDataOnDemand: @Component;
+    declare @type: EpoRenewalFeeDataOnDemand: @Component;
     
-    private Random EpoFeeDataOnDemand.rnd = new SecureRandom();
+    private Random EpoRenewalFeeDataOnDemand.rnd = new SecureRandom();
     
-    private List<EpoFee> EpoFeeDataOnDemand.data;
+    private List<EpoRenewalFee> EpoRenewalFeeDataOnDemand.data;
     
-    public EpoFee EpoFeeDataOnDemand.getNewTransientEpoFee(int index) {
-        EpoFee obj = new EpoFee();
+    public EpoRenewalFee EpoRenewalFeeDataOnDemand.getNewTransientEpoRenewalFee(int index) {
+        EpoRenewalFee obj = new EpoRenewalFee();
         setExtensionFee_EUR(obj, index);
         setRenewalFee_EUR(obj, index);
         setRenewalYear(obj, index);
         return obj;
     }
     
-    public void EpoFeeDataOnDemand.setExtensionFee_EUR(EpoFee obj, int index) {
+    public void EpoRenewalFeeDataOnDemand.setExtensionFee_EUR(EpoRenewalFee obj, int index) {
         BigDecimal extensionFee_EUR = BigDecimal.valueOf(index);
         obj.setExtensionFee_EUR(extensionFee_EUR);
     }
     
-    public void EpoFeeDataOnDemand.setRenewalFee_EUR(EpoFee obj, int index) {
+    public void EpoRenewalFeeDataOnDemand.setRenewalFee_EUR(EpoRenewalFee obj, int index) {
         BigDecimal renewalFee_EUR = BigDecimal.valueOf(index);
         obj.setRenewalFee_EUR(renewalFee_EUR);
     }
     
-    public void EpoFeeDataOnDemand.setRenewalYear(EpoFee obj, int index) {
+    public void EpoRenewalFeeDataOnDemand.setRenewalYear(EpoRenewalFee obj, int index) {
         Integer renewalYear = new Integer(index);
         obj.setRenewalYear(renewalYear);
     }
     
-    public EpoFee EpoFeeDataOnDemand.getSpecificEpoFee(int index) {
+    public EpoRenewalFee EpoRenewalFeeDataOnDemand.getSpecificEpoRenewalFee(int index) {
         init();
         if (index < 0) {
             index = 0;
@@ -54,36 +54,36 @@ privileged aspect EpoFeeDataOnDemand_Roo_DataOnDemand {
         if (index > (data.size() - 1)) {
             index = data.size() - 1;
         }
-        EpoFee obj = data.get(index);
+        EpoRenewalFee obj = data.get(index);
         Long id = obj.getId();
-        return EpoFee.findEpoFee(id);
+        return EpoRenewalFee.findEpoRenewalFee(id);
     }
     
-    public EpoFee EpoFeeDataOnDemand.getRandomEpoFee() {
+    public EpoRenewalFee EpoRenewalFeeDataOnDemand.getRandomEpoRenewalFee() {
         init();
-        EpoFee obj = data.get(rnd.nextInt(data.size()));
+        EpoRenewalFee obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return EpoFee.findEpoFee(id);
+        return EpoRenewalFee.findEpoRenewalFee(id);
     }
     
-    public boolean EpoFeeDataOnDemand.modifyEpoFee(EpoFee obj) {
+    public boolean EpoRenewalFeeDataOnDemand.modifyEpoRenewalFee(EpoRenewalFee obj) {
         return false;
     }
     
-    public void EpoFeeDataOnDemand.init() {
+    public void EpoRenewalFeeDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = EpoFee.findEpoFeeEntries(from, to);
+        data = EpoRenewalFee.findEpoRenewalFeeEntries(from, to);
         if (data == null) {
-            throw new IllegalStateException("Find entries implementation for 'EpoFee' illegally returned null");
+            throw new IllegalStateException("Find entries implementation for 'EpoRenewalFee' illegally returned null");
         }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<EpoFee>();
+        data = new ArrayList<EpoRenewalFee>();
         for (int i = 0; i < 10; i++) {
-            EpoFee obj = getNewTransientEpoFee(i);
+            EpoRenewalFee obj = getNewTransientEpoRenewalFee(i);
             try {
                 obj.persist();
             } catch (final ConstraintViolationException e) {

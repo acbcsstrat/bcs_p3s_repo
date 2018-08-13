@@ -65,7 +65,7 @@ public class P3SUser {
 
     /** Optional User image */
     @Lob
-    private Blob avatar;
+    private Blob avatar_blob;
 
     /**
      */

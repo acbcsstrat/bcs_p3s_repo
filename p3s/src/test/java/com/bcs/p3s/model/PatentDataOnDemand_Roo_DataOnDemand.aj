@@ -34,14 +34,15 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
     public Patent PatentDataOnDemand.getNewTransientPatent(int index) {
         Patent obj = new Patent();
         setBusiness(obj, index);
+        setCheckDigit(obj, index);
         setClientRef(obj, index);
+        setEP_ApplicationNumber(obj, index);
+        setEP_PublicationNumber(obj, index);
         setEpoPatentStatus(obj, index);
-        setFilingDate(obj, index);
+        setInternationalFilingDate(obj, index);
         setIpcCodes(obj, index);
         setLastRenewedDateExEpo(obj, index);
         setLastRenewedYearEpo(obj, index);
-        setPatentApplicationNumber(obj, index);
-        setPatentPublicationNumber(obj, index);
         setPrimaryApplicantName(obj, index);
         setRenewalStatus(obj, index);
         setRenewalYear(obj, index);
@@ -56,6 +57,11 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
         obj.setBusiness(business);
     }
     
+    public void PatentDataOnDemand.setCheckDigit(Patent obj, int index) {
+        String checkDigit = "checkDigit_" + index;
+        obj.setCheckDigit(checkDigit);
+    }
+    
     public void PatentDataOnDemand.setClientRef(Patent obj, int index) {
         String clientRef = "clientRef_" + index;
         if (clientRef.length() > 30) {
@@ -64,14 +70,24 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
         obj.setClientRef(clientRef);
     }
     
+    public void PatentDataOnDemand.setEP_ApplicationNumber(Patent obj, int index) {
+        String EP_ApplicationNumber = "EP_ApplicationNumber_" + index;
+        obj.setEP_ApplicationNumber(EP_ApplicationNumber);
+    }
+    
+    public void PatentDataOnDemand.setEP_PublicationNumber(Patent obj, int index) {
+        String EP_PublicationNumber = "EP_PublicationNumber_" + index;
+        obj.setEP_PublicationNumber(EP_PublicationNumber);
+    }
+    
     public void PatentDataOnDemand.setEpoPatentStatus(Patent obj, int index) {
         String epoPatentStatus = "epoPatentStatus_" + index;
         obj.setEpoPatentStatus(epoPatentStatus);
     }
     
-    public void PatentDataOnDemand.setFilingDate(Patent obj, int index) {
-        Date filingDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
-        obj.setFilingDate(filingDate);
+    public void PatentDataOnDemand.setInternationalFilingDate(Patent obj, int index) {
+        Date internationalFilingDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        obj.setInternationalFilingDate(internationalFilingDate);
     }
     
     public void PatentDataOnDemand.setIpcCodes(Patent obj, int index) {
@@ -87,16 +103,6 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
     public void PatentDataOnDemand.setLastRenewedYearEpo(Patent obj, int index) {
         Integer lastRenewedYearEpo = new Integer(index);
         obj.setLastRenewedYearEpo(lastRenewedYearEpo);
-    }
-    
-    public void PatentDataOnDemand.setPatentApplicationNumber(Patent obj, int index) {
-        String patentApplicationNumber = "patentApplicationNumber_" + index;
-        obj.setPatentApplicationNumber(patentApplicationNumber);
-    }
-    
-    public void PatentDataOnDemand.setPatentPublicationNumber(Patent obj, int index) {
-        String patentPublicationNumber = "patentPublicationNumber_" + index;
-        obj.setPatentPublicationNumber(patentPublicationNumber);
     }
     
     public void PatentDataOnDemand.setPrimaryApplicantName(Patent obj, int index) {

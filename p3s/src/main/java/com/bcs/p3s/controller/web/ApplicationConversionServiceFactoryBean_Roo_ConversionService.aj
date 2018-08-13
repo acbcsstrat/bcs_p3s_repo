@@ -66,7 +66,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Patent, String> ApplicationConversionServiceFactoryBean.getPatentToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.bcs.p3s.model.Patent, java.lang.String>() {
             public String convert(Patent patent) {
-                return new StringBuilder().append(patent.getPatentApplicationNumber()).append(' ').append(patent.getTitle()).append(' ').append(patent.getFilingDate()).append(' ').append(patent.getPrimaryApplicantName()).toString();
+                return new StringBuilder().append(patent.getEP_ApplicationNumber()).append(' ').append(patent.getTitle()).append(' ').append(patent.getInternationalFilingDate()).append(' ').append(patent.getPrimaryApplicantName()).toString();
             }
         };
     }

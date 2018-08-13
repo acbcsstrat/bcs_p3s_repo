@@ -6,6 +6,7 @@ package com.bcs.p3s.model;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.InvoiceDataOnDemand;
 import com.bcs.p3s.model.PaymentDataOnDemand;
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ privileged aspect InvoiceDataOnDemand_Roo_DataOnDemand {
         setInvoiceTemplateId(obj, index);
         setInvoiceType(obj, index);
         setIssueDate(obj, index);
+        setLatePayPenalty_USD(obj, index);
         setPreceedingInvoiceId(obj, index);
         return obj;
     }
@@ -76,6 +78,11 @@ privileged aspect InvoiceDataOnDemand_Roo_DataOnDemand {
     public void InvoiceDataOnDemand.setIssueDate(Invoice obj, int index) {
         Date issueDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setIssueDate(issueDate);
+    }
+    
+    public void InvoiceDataOnDemand.setLatePayPenalty_USD(Invoice obj, int index) {
+        BigDecimal latePayPenalty_USD = BigDecimal.valueOf(index);
+        obj.setLatePayPenalty_USD(latePayPenalty_USD);
     }
     
     public void InvoiceDataOnDemand.setPreceedingInvoiceId(Invoice obj, int index) {

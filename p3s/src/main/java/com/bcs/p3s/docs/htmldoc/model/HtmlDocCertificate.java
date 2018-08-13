@@ -35,13 +35,13 @@ public class HtmlDocCertificate extends Universal {
 		renewingOrganisation = "EPO";
 		ourAddress = new PostalAddressAndHyperlink(); // Default constructor defaults to our address
 		clientBusinessName = patent.getBusiness().getBusinessName(); 
-		patentApplicationNumber = patent.getPatentApplicationNumber(); 
+		patentApplicationNumber = patent.getEP_ApplicationNumber(); 
 		patentTitle = patent.getTitle();
 		ourClientsShortTitleForPatent = patent.getShortTitle();
 		ourClientsReferenceForTheirClient = patent.getClientRef();
-		patentPublicationNumber = patent.getPatentPublicationNumber();  
+		patentPublicationNumber = patent.getEP_PublicationNumber();  
 		patentApplicantName = patent.getPrimaryApplicantName();
-		patentFilingDate = dateUtil.dateToUSStringWithDayOfWeek(patent.getFilingDate());
+		patentFilingDate = dateUtil.dateToUSStringWithDayOfWeek(patent.getInternationalFilingDate());
 		//EpoPatentYearInPlace = patent.getLastRenewedYearEpo().toString();
 		EpoPatentYearInPlace = renewal.getRenewalYear().toString();
 		//EpoPatentRenewedOnDate = dateUtil.dateToUSStringWithDayOfWeek(patent.getLastRenewedDateExEpo());

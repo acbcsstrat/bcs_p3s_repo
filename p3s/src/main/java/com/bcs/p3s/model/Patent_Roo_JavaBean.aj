@@ -9,12 +9,12 @@ import java.util.Date;
 
 privileged aspect Patent_Roo_JavaBean {
     
-    public String Patent.getPatentApplicationNumber() {
-        return this.patentApplicationNumber;
+    public String Patent.getEP_ApplicationNumber() {
+        return this.EP_ApplicationNumber;
     }
     
-    public void Patent.setPatentApplicationNumber(String patentApplicationNumber) {
-        this.patentApplicationNumber = patentApplicationNumber;
+    public void Patent.setEP_ApplicationNumber(String EP_ApplicationNumber) {
+        this.EP_ApplicationNumber = EP_ApplicationNumber;
     }
     
     public String Patent.getTitle() {
@@ -25,12 +25,12 @@ privileged aspect Patent_Roo_JavaBean {
         this.title = title;
     }
     
-    public Date Patent.getFilingDate() {
-        return this.filingDate;
+    public Date Patent.getInternationalFilingDate() {
+        return this.internationalFilingDate;
     }
     
-    public void Patent.setFilingDate(Date filingDate) {
-        this.filingDate = filingDate;
+    public void Patent.setInternationalFilingDate(Date internationalFilingDate) {
+        this.internationalFilingDate = internationalFilingDate;
     }
     
     public Business Patent.getBusiness() {
@@ -101,12 +101,12 @@ privileged aspect Patent_Roo_JavaBean {
         return this.renewalStatus;
     }
     
-    public String Patent.getPatentPublicationNumber() {
-        return this.patentPublicationNumber;
+    public String Patent.getEP_PublicationNumber() {
+        return this.EP_PublicationNumber;
     }
     
-    public void Patent.setPatentPublicationNumber(String patentPublicationNumber) {
-        this.patentPublicationNumber = patentPublicationNumber;
+    public void Patent.setEP_PublicationNumber(String EP_PublicationNumber) {
+        this.EP_PublicationNumber = EP_PublicationNumber;
     }
     
     public String Patent.getIpcCodes() {

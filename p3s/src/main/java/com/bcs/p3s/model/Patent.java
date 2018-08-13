@@ -34,7 +34,7 @@ public class Patent {
     /**
      */
     @NotNull
-    private String patentApplicationNumber;
+    private String EP_ApplicationNumber;
 
     /**
      */
@@ -46,7 +46,7 @@ public class Patent {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date filingDate;
+    private Date internationalFilingDate;
 
     /**
      */
@@ -108,7 +108,7 @@ public class Patent {
     /**
      */
     @NotNull
-    private String patentPublicationNumber;
+    private String EP_PublicationNumber;
     
     private String ipcCodes;
     

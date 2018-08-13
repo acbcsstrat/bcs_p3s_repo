@@ -3,11 +3,11 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.RenewalFeeDataOnDemand;
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect Fee_Roo_Configurable {
+privileged aspect RenewalFeeDataOnDemand_Roo_Configurable {
     
-    declare @type: Fee: @Configurable;
+    declare @type: RenewalFeeDataOnDemand: @Configurable;
     
 }

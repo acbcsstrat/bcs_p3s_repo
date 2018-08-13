@@ -3,7 +3,7 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.EpoFee;
+import com.bcs.p3s.model.EpoRenewalFee;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,32 +11,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-privileged aspect EpoFee_Roo_Jpa_Entity {
+privileged aspect EpoRenewalFee_Roo_Jpa_Entity {
     
-    declare @type: EpoFee: @Entity;
+    declare @type: EpoRenewalFee: @Entity;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long EpoFee.id;
+    private Long EpoRenewalFee.id;
     
     @Version
     @Column(name = "version")
-    private Integer EpoFee.version;
+    private Integer EpoRenewalFee.version;
     
-    public Long EpoFee.getId() {
+    public Long EpoRenewalFee.getId() {
         return this.id;
     }
     
-    public void EpoFee.setId(Long id) {
+    public void EpoRenewalFee.setId(Long id) {
         this.id = id;
     }
     
-    public Integer EpoFee.getVersion() {
+    public Integer EpoRenewalFee.getVersion() {
         return this.version;
     }
     
-    public void EpoFee.setVersion(Integer version) {
+    public void EpoRenewalFee.setVersion(Integer version) {
         this.version = version;
     }
     

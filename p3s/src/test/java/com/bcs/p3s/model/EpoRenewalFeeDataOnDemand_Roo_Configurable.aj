@@ -3,11 +3,11 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.EpoFeeDataOnDemand;
+import com.bcs.p3s.model.EpoRenewalFeeDataOnDemand;
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect EpoFeeDataOnDemand_Roo_Configurable {
+privileged aspect EpoRenewalFeeDataOnDemand_Roo_Configurable {
     
-    declare @type: EpoFeeDataOnDemand: @Configurable;
+    declare @type: EpoRenewalFeeDataOnDemand: @Configurable;
     
 }

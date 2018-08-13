@@ -3,7 +3,7 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.RenewalFee;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,36 +11,36 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-privileged aspect Fee_Roo_Jpa_Entity {
+privileged aspect RenewalFee_Roo_Jpa_Entity {
     
-    declare @type: Fee: @Entity;
+    declare @type: RenewalFee: @Entity;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long Fee.id;
+    private Long RenewalFee.id;
     
     @Version
     @Column(name = "version")
-    private Integer Fee.version;
+    private Integer RenewalFee.version;
     
-    public Fee.new() {
+    public RenewalFee.new() {
         super();
     }
 
-    public Long Fee.getId() {
+    public Long RenewalFee.getId() {
         return this.id;
     }
     
-    public void Fee.setId(Long id) {
+    public void RenewalFee.setId(Long id) {
         this.id = id;
     }
     
-    public Integer Fee.getVersion() {
+    public Integer RenewalFee.getVersion() {
         return this.version;
     }
     
-    public void Fee.setVersion(Integer version) {
+    public void RenewalFee.setVersion(Integer version) {
         this.version = version;
     }
     

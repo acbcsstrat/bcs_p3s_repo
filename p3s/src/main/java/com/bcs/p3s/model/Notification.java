@@ -43,7 +43,11 @@ public class Notification {
      */
     @NotNull
     private String notificationName;
-
+    
+    /**
+     */
+    @NotNull
+    private String productType;
 
 
     public static TypedQuery<Notification> findNotifications() {

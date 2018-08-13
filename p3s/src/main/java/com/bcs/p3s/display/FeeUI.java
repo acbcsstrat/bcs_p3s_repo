@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.RenewalFee;
 
 
 
@@ -43,14 +43,14 @@ public class FeeUI {
 
 	
 	
-	public FeeUI(Fee fee){
+	public FeeUI(RenewalFee fee){
 		
 		this.setRenewalFeeEUR(fee.getRenewalFee_EUR());
 		this.setExtensionFeeEUR(fee.getExtensionFee_EUR());
 		this.setProcessingFeeUSD(fee.getProcessingFee_USD());
 		this.setExpressFeeUSD(fee.getExpressFee_USD());
 		this.setUrgentFeeUSD(fee.getUrgentFee_USD());
-		this.setLatePayPenaltyUSD(fee.getLatePayPenalty_USD());
+		//this.setLatePayPenaltyUSD(fee.getLatePayPenalty_USD());
 		this.setFxRate(fee.getFxRate());
 		this.setSubTotalUSD(fee.getSubTotal_USD());
 		

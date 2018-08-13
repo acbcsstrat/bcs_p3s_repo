@@ -3,11 +3,11 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.FeeIntegrationTest;
+import com.bcs.p3s.model.RenewalFee;
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect FeeIntegrationTest_Roo_Configurable {
+privileged aspect RenewalFee_Roo_Configurable {
     
-    declare @type: FeeIntegrationTest: @Configurable;
+    declare @type: RenewalFee: @Configurable;
     
 }

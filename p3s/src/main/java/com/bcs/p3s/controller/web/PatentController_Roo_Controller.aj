@@ -97,7 +97,7 @@ privileged aspect PatentController_Roo_Controller {
     }
     
     void PatentController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("patent_filingdate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+        uiModel.addAttribute("patent_internationalfilingdate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("patent_lastreneweddateexepo_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
     }
     

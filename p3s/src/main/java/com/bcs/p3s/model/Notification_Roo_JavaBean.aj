@@ -55,4 +55,12 @@ privileged aspect Notification_Roo_JavaBean {
         this.notificationName = notificationName;
     }
     
+    public String Notification.getProductType() {
+        return this.productType;
+    }
+    
+    public void Notification.setProductType(String productType) {
+        this.productType = productType;
+    }
+    
 }

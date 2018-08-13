@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord(finders = { "findFeesByRenewal"})
-public class Fee {
+public class RenewalFee {
 
     /**
      */
@@ -48,9 +48,9 @@ public class Fee {
 
     /**
      */
-    @NotNull
+    /*@NotNull
     private BigDecimal latePayPenalty_USD;
-
+*/
     /**
      */
     @NotNull
@@ -62,8 +62,8 @@ public class Fee {
     @NotNull
     private BigDecimal subTotal_USD;
 
-	public Fee(BigDecimal renewalFee_EUR, BigDecimal extensionFee_EUR, BigDecimal processingFee_USD,
-			BigDecimal expressFee_USD, BigDecimal urgentFee_USD, BigDecimal latePayPenalty_USD, BigDecimal fxRate,
+	public RenewalFee(BigDecimal renewalFee_EUR, BigDecimal extensionFee_EUR, BigDecimal processingFee_USD,
+			BigDecimal expressFee_USD, BigDecimal urgentFee_USD,BigDecimal fxRate,
 			BigDecimal subTotal_USD) {
 		super();
 		
@@ -72,18 +72,18 @@ public class Fee {
 		this.processingFee_USD = processingFee_USD;
 		this.expressFee_USD = expressFee_USD;
 		this.urgentFee_USD = urgentFee_USD;
-		this.latePayPenalty_USD = latePayPenalty_USD;
+		//this.latePayPenalty_USD = latePayPenalty_USD;
 		this.fxRate = fxRate;
 		this.subTotal_USD = subTotal_USD;
 		
 	}
     
 	 @Transactional
-	 public Fee persist() {  
-	    Fee fee = new Fee();  
+	 public RenewalFee persist() {  
+	    RenewalFee fee = new RenewalFee();  
 	    EntityManager em = this.entityManager();
 	    em.persist(this);
-	    fee = Fee.findFee(this.getId());
+	    fee = RenewalFee.findRenewalFee(this.getId());
 	    return fee;
 	  }
     

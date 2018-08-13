@@ -182,7 +182,7 @@ public class FileUploadServiceImpl extends Universal implements FileUploadServic
 
   		Blob blob = new javax.sql.rowset.serial.SerialBlob(bites);
 
-  		myUser.setAvatar(blob);
+  		myUser.setAvatar_blob(blob);
   		myUser.merge();
 		
       		

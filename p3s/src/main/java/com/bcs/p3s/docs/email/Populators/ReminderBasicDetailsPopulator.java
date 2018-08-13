@@ -92,11 +92,11 @@ public class ReminderBasicDetailsPopulator extends AbstractPopulator implements 
 		data.setCompanyName(company.getBusinessName());
 
 		// 2of3: retrieve patent details
-		data.setPatentApplicationNumber(patent.getPatentApplicationNumber());
+		data.setPatentApplicationNumber(patent.getEP_ApplicationNumber());
 		
 		TwoColRecord a2colRecord = null;
 		List<TwoColRecord> patentDetails = new ArrayList<TwoColRecord>();
-		a2colRecord = new TwoColRecord("Application Number", patent.getPatentApplicationNumber());
+		a2colRecord = new TwoColRecord("Application Number", patent.getEP_ApplicationNumber());
 		patentDetails.add(a2colRecord);
 		a2colRecord = new TwoColRecord("Patent Title", patent.getTitle());
 		patentDetails.add(a2colRecord);

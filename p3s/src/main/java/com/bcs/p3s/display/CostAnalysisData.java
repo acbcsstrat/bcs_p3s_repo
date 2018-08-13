@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.RenewalFee;
 
 public class CostAnalysisData {
 	

@@ -3,13 +3,13 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.EpoFee;
+import com.bcs.p3s.model.EpoRenewalFee;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-privileged aspect EpoFee_Roo_ToString {
+privileged aspect EpoRenewalFee_Roo_ToString {
     
-    public String EpoFee.toString() {
+    public String EpoRenewalFee.toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     

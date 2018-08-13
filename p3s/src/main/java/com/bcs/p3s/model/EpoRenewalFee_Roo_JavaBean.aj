@@ -3,32 +3,32 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.EpoFee;
+import com.bcs.p3s.model.EpoRenewalFee;
 import java.math.BigDecimal;
 
-privileged aspect EpoFee_Roo_JavaBean {
+privileged aspect EpoRenewalFee_Roo_JavaBean {
     
-    public Integer EpoFee.getRenewalYear() {
+    public Integer EpoRenewalFee.getRenewalYear() {
         return this.renewalYear;
     }
     
-    public void EpoFee.setRenewalYear(Integer renewalYear) {
+    public void EpoRenewalFee.setRenewalYear(Integer renewalYear) {
         this.renewalYear = renewalYear;
     }
     
-    public BigDecimal EpoFee.getRenewalFee_EUR() {
+    public BigDecimal EpoRenewalFee.getRenewalFee_EUR() {
         return this.renewalFee_EUR;
     }
     
-    public void EpoFee.setRenewalFee_EUR(BigDecimal renewalFee_EUR) {
+    public void EpoRenewalFee.setRenewalFee_EUR(BigDecimal renewalFee_EUR) {
         this.renewalFee_EUR = renewalFee_EUR;
     }
     
-    public BigDecimal EpoFee.getExtensionFee_EUR() {
+    public BigDecimal EpoRenewalFee.getExtensionFee_EUR() {
         return this.extensionFee_EUR;
     }
     
-    public void EpoFee.setExtensionFee_EUR(BigDecimal extensionFee_EUR) {
+    public void EpoRenewalFee.setExtensionFee_EUR(BigDecimal extensionFee_EUR) {
         this.extensionFee_EUR = extensionFee_EUR;
     }
     

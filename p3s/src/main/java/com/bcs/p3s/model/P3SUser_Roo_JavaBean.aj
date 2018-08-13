@@ -75,12 +75,12 @@ privileged aspect P3SUser_Roo_JavaBean {
         this.password = password;
     }
     
-    public Blob P3SUser.getAvatar() {
-        return this.avatar;
+    public Blob P3SUser.getAvatar_blob() {
+        return this.avatar_blob;
     }
     
-    public void P3SUser.setAvatar(Blob avatar) {
-        this.avatar = avatar;
+    public void P3SUser.setAvatar_blob(Blob avatar_blob) {
+        this.avatar_blob = avatar_blob;
     }
     
     public List<LoginMessage> P3SUser.getLoginMessagesToInhibit() {

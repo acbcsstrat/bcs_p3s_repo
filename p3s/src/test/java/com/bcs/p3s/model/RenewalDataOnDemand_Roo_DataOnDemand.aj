@@ -4,14 +4,14 @@
 package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.CertificateDataOnDemand;
-import com.bcs.p3s.model.Fee;
-import com.bcs.p3s.model.FeeDataOnDemand;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.PatentDataOnDemand;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.PaymentDataOnDemand;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.model.RenewalDataOnDemand;
+import com.bcs.p3s.model.RenewalFee;
+import com.bcs.p3s.model.RenewalFeeDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,7 +40,7 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
     CertificateDataOnDemand RenewalDataOnDemand.certificateDataOnDemand;
     
     @Autowired
-    FeeDataOnDemand RenewalDataOnDemand.feeDataOnDemand;
+    RenewalFeeDataOnDemand RenewalDataOnDemand.renewalFeeDataOnDemand;
     
     @Autowired
     PatentDataOnDemand RenewalDataOnDemand.patentDataOnDemand;
@@ -64,7 +64,7 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
     }
     
     public void RenewalDataOnDemand.setFee(Renewal obj, int index) {
-        Fee fee = feeDataOnDemand.getRandomFee();
+        RenewalFee fee = renewalFeeDataOnDemand.getRandomRenewalFee();
         obj.setFee(fee);
     }
     

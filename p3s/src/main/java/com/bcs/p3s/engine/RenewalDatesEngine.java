@@ -31,7 +31,7 @@ public class RenewalDatesEngine extends Universal{
 			
 			String msg = PREFIX + "getRenewalDates(" +patent.getId() +")"; 
 			
-			log().debug(msg +" invoked for patent  [" + patent.getPatentApplicationNumber() + "]");
+			log().debug(msg +" invoked for patent  [" + patent.getEP_ApplicationNumber() + "]");
 			
 			
 			/** Call to PatentStatusEngine to get the current window dates **/
@@ -46,7 +46,7 @@ public class RenewalDatesEngine extends Universal{
 				 */
 				
 				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(patent.getFilingDate());
+				calendar.setTime(patent.getInternationalFilingDate());
 				
 				Calendar monthEndFilingDate = Calendar.getInstance();
 				
@@ -137,7 +137,7 @@ public class RenewalDatesEngine extends Universal{
 		        	
 		        	log().debug("Current renewal year < 3.");
 		        	Calendar cal = Calendar.getInstance();
-		        	cal.setTime(patent.getFilingDate());
+		        	cal.setTime(patent.getInternationalFilingDate());
 		        	yearNow = cal.get(Calendar.YEAR);
 		        	int year3Renewal = yearNow + 2;
 		        	Calendar year3RenDue = Calendar.getInstance();
@@ -191,8 +191,8 @@ public class RenewalDatesEngine extends Universal{
 			        	allDates.setNextWindowOpenDate(renewalStart.getTime());
 			        	allDates.setNextWindowCloseDate(renewalEnd.getTime());
 			        	
-			        	log().debug("CURRENT Renewal Year for patent [" + patent.getPatentApplicationNumber() +"] is " + allDates.getRenewalYear());
-				        log().debug("CURRENT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getCurrentRenewalDueDate());
+			        	log().debug("CURRENT Renewal Year for patent [" + patent.getEP_ApplicationNumber() +"] is " + allDates.getRenewalYear());
+				        log().debug("CURRENT renewal due for patent [" + patent.getEP_ApplicationNumber() + "] : " + allDates.getCurrentRenewalDueDate());
 			    	    log().debug("CURRENT renewal window starts on "+ allDates.getCurrentWindowOpenDate() + " and ends on " + allDates.getCurrentWindowCloseDate());
 			    	    
 			    		//log().debug("NEXT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
@@ -217,7 +217,7 @@ public class RenewalDatesEngine extends Universal{
 			        	allDates.setNextWindowOpenDate(renewalStart.getTime());
 			        	allDates.setNextWindowCloseDate(renewalEnd.getTime());
 			        	
-			        	log().debug("CURRENT Renewal Year for patent [" + patent.getPatentApplicationNumber() +"] is " + allDates.getRenewalYear());
+			        	log().debug("CURRENT Renewal Year for patent [" + patent.getEP_ApplicationNumber() +"] is " + allDates.getRenewalYear());
 			    	    
 			    		//log().debug("NEXT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
 			    		//log().debug("NEXT renewal window starts on "+ allDates.getNextWindowOpenDate() + " and ends on " +  allDates.getNextWindowCloseDate());
@@ -265,7 +265,7 @@ public class RenewalDatesEngine extends Universal{
 			        	allDates.setNextWindowOpenDate(renewalStart.getTime());
 			        	allDates.setNextWindowCloseDate(renewalEnd.getTime());
 			        	
-			        	log().debug("CURRENT Renewal Year for patent [" + patent.getPatentApplicationNumber() +"] is " + allDates.getRenewalYear());
+			        	log().debug("CURRENT Renewal Year for patent [" + patent.getEP_ApplicationNumber() +"] is " + allDates.getRenewalYear());
 			        	
 			        	return allDates;
 		        	}
@@ -389,11 +389,11 @@ public class RenewalDatesEngine extends Universal{
 		        allDates.setRenewalYear(renewalYear);
 		        log().debug("Patent is in Year "+ allDates.getRenewalYear() +" renewal period");
 		        
-		        log().debug("CURRENT Renewal Year for patent [" + patent.getPatentApplicationNumber() +"] is " + allDates.getRenewalYear());
-		        log().debug("CURRENT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getCurrentRenewalDueDate());
+		        log().debug("CURRENT Renewal Year for patent [" + patent.getEP_ApplicationNumber() +"] is " + allDates.getRenewalYear());
+		        log().debug("CURRENT renewal due for patent [" + patent.getEP_ApplicationNumber() + "] : " + allDates.getCurrentRenewalDueDate());
 	    	    log().debug("CURRENT renewal window starts on "+ allDates.getCurrentWindowOpenDate() + " and ends on " + allDates.getCurrentWindowCloseDate());
 	    	    
-	    		log().debug("NEXT renewal due for patent [" + patent.getPatentApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
+	    		log().debug("NEXT renewal due for patent [" + patent.getEP_ApplicationNumber() + "] : " + allDates.getNextRenewalDueDate());
 	    		log().debug("NEXT renewal window starts on "+ allDates.getNextWindowOpenDate() + " and ends on " +  allDates.getNextWindowCloseDate());
 	    		
 	    		//allDates.setCurrentColorDates(getAllColorDates(allDates));

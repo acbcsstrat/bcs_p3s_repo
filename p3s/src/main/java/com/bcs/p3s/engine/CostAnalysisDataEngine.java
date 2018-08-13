@@ -18,8 +18,8 @@ import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.CalendarColour;
 import com.bcs.p3s.model.DiscountPercent;
-import com.bcs.p3s.model.EpoFee;
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.EpoRenewalFee;
+import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.P3SFeeSole;
 import com.bcs.p3s.model.Patent;
@@ -211,7 +211,7 @@ public class CostAnalysisDataEngine extends Universal{
 	 * @return caData plus costs for individual phases - sum up of costs for each phase ( NO BREAKDOWN COSTS )
 	 */
 	
-	public CostAnalysisData getAllCosts(CostAnalysisData caData, P3SFeeSole p3sFee , EpoFee epoFee, BigDecimal fxRate){
+	public CostAnalysisData getAllCosts(CostAnalysisData caData, P3SFeeSole p3sFee , EpoRenewalFee epoFee, BigDecimal fxRate){
 		
 		CostAnalysisData caMoreData = caData;
 		
@@ -257,13 +257,13 @@ public class CostAnalysisDataEngine extends Universal{
 	 * @return fee object (breakdown fee) for @param phase
 	 */
 	
-	public Fee getCurrentPhaseCost(String currentPhase, P3SFeeSole p3sFee , EpoFee epoFee, BigDecimal fxRate){
+	public RenewalFee getCurrentPhaseCost(String currentPhase, P3SFeeSole p3sFee , EpoRenewalFee epoFee, BigDecimal fxRate){
 		
 		String msg = PREFIX + "getCurrentPhaseCost()";
 		log().debug(msg +" invoked for calculating current Renewal colour fee breakdown");
 		
-		Fee fee = new Fee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
-					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
+		RenewalFee fee = new RenewalFee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
+					new BigDecimal(0.0),new BigDecimal(0.0));
 		//Fee fee = new Fee();
 		
 		BigDecimal subTotalUSD = new BigDecimal(0.0);
@@ -425,7 +425,7 @@ public class CostAnalysisDataEngine extends Universal{
 	 * @return Fx Variance for current phase in last 6 weeks
 	 *    format :- TreeMap<Date,FeeUI> for last 6 weeks 
 	 */
-	public TreeMap<Date,FeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee, EpoFee epoFee){
+	public TreeMap<Date,FeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee, EpoRenewalFee epoFee){
 		
 		
 		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
@@ -487,7 +487,7 @@ public class CostAnalysisDataEngine extends Universal{
 	}
 	
 	
-	public TreeMap<Date, FeeUI> getAllFeeUI(List<ArchivedRate> history , CostAnalysisData caData, P3SFeeSole p3sFee, EpoFee epoFee){
+	public TreeMap<Date, FeeUI> getAllFeeUI(List<ArchivedRate> history , CostAnalysisData caData, P3SFeeSole p3sFee, EpoRenewalFee epoFee){
 		
 		TreeMap<Date, FeeUI> lineChart = new TreeMap<Date, FeeUI>();
 		
@@ -496,7 +496,7 @@ public class CostAnalysisDataEngine extends Universal{
 		
 		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
 		BigDecimal fxRate = current.getCurrent_P3S_rate();
-		Fee todaysFee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxRate);
+		RenewalFee todaysFee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxRate);
 		FeeUI feeUI = new FeeUI(todaysFee);
 		feeUI.setFeeActiveDate(utils.dateToUSStringWithTimeandZone(calendar.getTime()));
 		lineChart.put(calendar.getTime(),feeUI);
@@ -504,8 +504,8 @@ public class CostAnalysisDataEngine extends Universal{
 		final long ONEDAY = 24 * 3600 * 1000;
 		for (ArchivedRate eachData : history) {
 			
-			Fee fee = new Fee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
-					new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0));
+			RenewalFee fee = new RenewalFee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
+					new BigDecimal(0.0),new BigDecimal(0.0));
 		    BigDecimal fxValue = eachData.getFxRate_P3s();
 		    fee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxValue);
 		    //NOW POPULATE FEEUI 
@@ -528,13 +528,13 @@ public class CostAnalysisDataEngine extends Universal{
 		log().debug(msg +" invoked for patent [" + patent.getId() + "]");
 		CombinedFee combinedFee = new CombinedFee();
 		P3SFeeSole p3sFee = new P3SFeeSole();
-		EpoFee epoFee = new EpoFee();
+		EpoRenewalFee epoFee = new EpoRenewalFee();
 		
 		boolean isDiscountedRate = false; //a boolean value to check whether the business has got any discount rates
 		//boolean renewalWindowOpened = false;  // a boolean value to determine whether we are still in doldrums
 		RenewalDates allDates = new RenewalDates();
 		
-		System.out.println("Got the new patent with filing date as " + patent.getFilingDate());
+		System.out.println("Got the new patent with filing date as " + patent.getInternationalFilingDate());
 		
 		/** Check whether current business has got any reduced Fees.
 		 * 		If so get the discounted rates ( PROCESSING FEE, EXPRESS FEE, URGENT FEE AND LATE PAY PENALTY )
@@ -572,7 +572,7 @@ public class CostAnalysisDataEngine extends Universal{
 			log().debug("Patent renewal year < 3 , so set the Renewal Year to 3 which is the nearest");
 			epoFee.setRenewalYear(3);
 		}
-		epoFee = EpoFee.findEpoFeesByRenewalYear(epoFee);
+		epoFee = EpoRenewalFee.findEpoFeesByRenewalYear(epoFee);
 		
 		combinedFee.setP3sFee(p3sFee);
 		combinedFee.setEpoFee(epoFee);

@@ -5,6 +5,7 @@ package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.Payment;
+import java.math.BigDecimal;
 import java.util.Date;
 
 privileged aspect Invoice_Roo_JavaBean {
@@ -71,6 +72,14 @@ privileged aspect Invoice_Roo_JavaBean {
     
     public void Invoice.setInvoiceTemplateId(String invoiceTemplateId) {
         this.invoiceTemplateId = invoiceTemplateId;
+    }
+    
+    public BigDecimal Invoice.getLatePayPenalty_USD() {
+        return this.latePayPenalty_USD;
+    }
+    
+    public void Invoice.setLatePayPenalty_USD(BigDecimal latePayPenalty_USD) {
+        this.latePayPenalty_USD = latePayPenalty_USD;
     }
     
 }

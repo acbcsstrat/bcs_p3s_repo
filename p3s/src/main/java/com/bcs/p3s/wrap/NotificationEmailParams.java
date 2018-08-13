@@ -5,8 +5,8 @@ import java.util.Date;
 import com.bcs.p3s.engine.CostAnalysisDataEngine;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.model.CalendarColour;
-import com.bcs.p3s.model.EpoFee;
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.EpoRenewalFee;
+import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.P3SFeeSole;
@@ -55,7 +55,7 @@ public class NotificationEmailParams extends Universal{
 			log().error("Error calculating Fee object for patent with renewal year " + patent.getRenewalYear());
 			return price;
 		}
-		Fee currentFee = new CostAnalysisDataEngine().getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+		RenewalFee currentFee = new CostAnalysisDataEngine().getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
 		
 		if(!(currentFee.getSubTotal_USD() == null)){
 			price = currentFee.getSubTotal_USD().toString();

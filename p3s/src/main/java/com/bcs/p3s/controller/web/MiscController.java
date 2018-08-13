@@ -150,7 +150,7 @@ public class MiscController extends Universal {
 		  			}
 		  		}
 
-				Blob blobby = selectedUser.getAvatar();
+				Blob blobby = selectedUser.getAvatar_blob();
 
 				if (blobby==null) {
 						log().warn(err+" IS NO AVATAR IN dB FOR ID "+itemId);

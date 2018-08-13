@@ -43,8 +43,8 @@ import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.DiscountPercent;
-import com.bcs.p3s.model.EpoFee;
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.EpoRenewalFee;
+import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
@@ -622,8 +622,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		RenewalDates allDates = new RenewalDates();
 		Patent patent = Patent.findPatent(id);
-		System.out.println("Got the new patent with filing date as " + patent.getFilingDate());
-		log().debug("Queried database for patent id " + id+" and got hte filing date as " + patent.getFilingDate());
+		System.out.println("Got the new patent with filing date as " + patent.getInternationalFilingDate());
+		log().debug("Queried database for patent id " + id+" and got hte filing date as " + patent.getInternationalFilingDate());
 		
 		/** 
 		 * Checking whether patent year > 20
@@ -770,7 +770,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 			caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
 			//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
-			Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
+			RenewalFee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 			caData.setFee(new FeeUI(fee));
 		}
 		
@@ -780,7 +780,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			//caData.setCurrentcostBand(RenewalColourEnum.GREEN);
 			caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
 			//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
-			Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
+			RenewalFee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 			caData.setFee(new FeeUI(fee));
 		}
 		
@@ -969,9 +969,9 @@ public PatentUI populateDataToPatentUI(Patent patent){
 		log().debug(msg + " invoked ");
 		TypedQuery<Patent> patents = Patent.findPatentsByBusiness(postSession.getBusiness());
 		for(Patent patent : patents.getResultList()){
-			if(patentApplicationNumber.equals(patent.getPatentApplicationNumber())){
+			if(patentApplicationNumber.equals(patent.getEP_ApplicationNumber())){
 				log().debug("Duplicate for the patent for the business. Patent Number[" + patentApplicationNumber + "] already exist for the business. "
-						+ "		Patent id[" +patent.getId() +"] and application number[" + patent.getPatentApplicationNumber() +"]" );
+						+ "		Patent id[" +patent.getId() +"] and application number[" + patent.getEP_ApplicationNumber() +"]" );
 				isFound = true;
 			}
 		}

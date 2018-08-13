@@ -14,7 +14,7 @@ privileged aspect Invoice_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Invoice.entityManager;
     
-    public static final List<String> Invoice.fieldNames4OrderClauseFilter = java.util.Arrays.asList("payment", "invoiceNumber", "issueDate", "invoiceStatus", "preceedingInvoiceId", "invoiceType", "docPath", "filename", "invoiceTemplateId");
+    public static final List<String> Invoice.fieldNames4OrderClauseFilter = java.util.Arrays.asList("payment", "invoiceNumber", "issueDate", "invoiceStatus", "preceedingInvoiceId", "invoiceType", "docPath", "filename", "invoiceTemplateId", "latePayPenalty_USD");
     
     public static final EntityManager Invoice.entityManager() {
         EntityManager em = new Invoice().entityManager;

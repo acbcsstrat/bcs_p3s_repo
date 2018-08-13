@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
-public class EpoFee {
+public class EpoRenewalFee {
 
     /**
      * From 3 to 20
@@ -29,10 +29,10 @@ public class EpoFee {
     @NotNull
     private BigDecimal extensionFee_EUR;
     
-    public static EpoFee findEpoFeesByRenewalYear(EpoFee epoFee) {
+    public static EpoRenewalFee findEpoFeesByRenewalYear(EpoRenewalFee epoFee) {
     	//new EpoFee();
-		EntityManager em = EpoFee.entityManager();
-		TypedQuery<EpoFee> query = em.createQuery("SELECT o FROM EpoFee AS o WHERE o.renewalYear = :renewalYear", EpoFee.class);
+		EntityManager em = EpoRenewalFee.entityManager();
+		TypedQuery<EpoRenewalFee> query = em.createQuery("SELECT o FROM EpoRenewalFee AS o WHERE o.renewalYear = :renewalYear", EpoRenewalFee.class);
 		query.setParameter("renewalYear", epoFee.getRenewalYear());
         return query.getSingleResult();
     }

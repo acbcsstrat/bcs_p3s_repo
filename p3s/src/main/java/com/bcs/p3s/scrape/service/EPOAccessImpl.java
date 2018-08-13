@@ -92,7 +92,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        }
 	        
 	        //SET Application Number from request
-	        patent.setPatentApplicationNumber(patentApplicationNumber);
+	        patent.setEP_ApplicationNumber(patentApplicationNumber);
 	        
 	        Response response = new Response();
 	        response.setContent(scrapeData);
@@ -344,9 +344,9 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 			return patent;
 		
 		patent.setEpoPatentStatus(record.getEpoPatentStatus());
-		patent.setFilingDate(new DateUtil().stringToDate(record.getFilingDate()));
+		patent.setInternationalFilingDate(new DateUtil().stringToDate(record.getFilingDate()));
 		
-		patent.setPatentPublicationNumber(record.getPatentPublicationNumber());
+		patent.setEP_PublicationNumber(record.getPatentPublicationNumber());
 		
 		patent.setTitle(record.getTitle());
 		findLatestRenewalInfo(record.getEvents(),patent);

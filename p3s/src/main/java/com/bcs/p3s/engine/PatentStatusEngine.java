@@ -17,7 +17,7 @@ import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.CalendarColour;
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.PatentStatusNoRenewalNeeded;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -58,8 +58,8 @@ public class PatentStatusEngine extends Universal {
 			RenewalDates allDates = datesEngineObj.getRenewalDates(patent);
 			
 			if(allDates == null){
-				log().error("Error occured in calculating renewal dates for patent[" + patent.getPatentApplicationNumber() +"].");
-				logErrorAndContinue("Error occured in calculating renewal dates for patent[" + patent.getPatentApplicationNumber() +"].");
+				log().error("Error occured in calculating renewal dates for patent[" + patent.getEP_ApplicationNumber() +"].");
+				logErrorAndContinue("Error occured in calculating renewal dates for patent[" + patent.getEP_ApplicationNumber() +"].");
 				//renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 				return null;
 			}
@@ -190,7 +190,7 @@ public class PatentStatusEngine extends Universal {
 	    	PatentStatus renewalInfo = getRenewalInfo(patent);
 	    	
 	    	if(renewalInfo == null){
-	    		logErrorAndContinue("Error occured in calculating renewal dates for patent[" + patent.getPatentApplicationNumber() +"].");
+	    		logErrorAndContinue("Error occured in calculating renewal dates for patent[" + patent.getEP_ApplicationNumber() +"].");
 	    		return null;
 	    	}
 	    	/** 
@@ -221,7 +221,7 @@ public class PatentStatusEngine extends Universal {
 				CombinedFee fee = caEngine.getFeeObj(patent);
 				
 				//FeeUI currentfeeUI = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-				Fee currentFee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+				RenewalFee currentFee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
 				FeeUI currentfeeUI = new FeeUI(currentFee);
 				
 				/**
@@ -245,7 +245,7 @@ public class PatentStatusEngine extends Universal {
 				FeeUI nextStageFeeUI = null;
 				//if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(renewalInfo.getCurrentRenewalStatus())) { //If renewal status is Show price then only we need to calculate the next stage price
 					//nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
-					Fee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(renewalInfo), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
+					RenewalFee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(renewalInfo), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
 					nextStageFeeUI = new FeeUI(nextStageFee);
 				//}
 				newPatentData.setPatentId(patent.getId());
