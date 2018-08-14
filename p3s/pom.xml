@@ -575,8 +575,8 @@
                 <version>2.2</version>
                 <!-- below configuration triggers deployment to demo server -->
                 <configuration>
-                        <url>http://demo.thepatent.place:8080/manager/text</url>
-                        <server>TomcatServerDemo</server>
+                        <url>http://roleu.thepatent.place:8080/manager/text</url>
+                        <server>TomcatServerTomcatU</server>
                         <path>/p3sweb</path>
                 </configuration>
                 <dependencies>
