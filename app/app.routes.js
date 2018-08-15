@@ -127,11 +127,21 @@ function appRoutes($stateProvider) {
                     controller: 'euroPctInfoCtrl',
                     controllerAs: '$ctrl'
                 },
-                'euroPct.form1200Questionnaire@portfolio.patent': {
-                    templateUrl: 'app/templates/europct.questionnaire.tpl.htm',
+                'euroPct.form1200@portfolio.patent': {
+                    templateUrl: 'app/templates/europct.form1200.tpl.htm',
                     controller: 'form1200Ctrl',
                     controllerAs: '$ctrl'
                 },
+                'euroPct.form1200.form1200intro@portfolio.patent': {
+                    templateUrl: 'app/templates/europct.form1200.intro.tpl.htm',
+                    controller: 'form1200IntroCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'euroPct.form1200.form1200questionnaire@portfolio.patent': {
+                    templateUrl: 'app/templates/europct.form1200.questionnaire.tpl.htm',
+                    controller: 'form1200questionnaireCtrl',
+                    controllerAs: '$ctrl'
+                },                
                 'euroPct.euroPctCostAnalysis@portfolio.patent': {
                     templateUrl: 'app/templates/europct.costanalysis.tpl.htm',
                     controller: 'euroPctCostAnalysisCtrl',
@@ -152,7 +162,7 @@ function appRoutes($stateProvider) {
                     controller: 'renewalHistoryCtrl',
                     controllerAs: '$ctrl'
                 },
-                'renewal.costAnalysis@portfolio.patent': {
+                'renewal.renewalCostAnalysis@portfolio.patent': {
                     templateUrl: 'app/templates/renewal.cost-analysis.tpl.htm',
                     controller: 'renewalCaCtrl',
                     controllerAs: '$ctrl'
