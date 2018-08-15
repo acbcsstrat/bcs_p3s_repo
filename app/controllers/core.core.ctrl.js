@@ -102,7 +102,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 			            response.systemMessages.forEach(function(data){
 			                var dateFrom = data.displayFromDate; dateTo = data.displayToDate;
 			                if(date > dateFrom && date < dateTo) {
-			                	console.log(data)
 			                    systemResponse.push(data)
 			                }
 			            })
@@ -210,13 +209,12 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 			scope: $scope,
 			appendTo: undefined,
 			controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
-				console.log(message)
+
 				$scope.urgentPatents = message;
 
 		        coreService.ppContact()
 		        .then(
 		            function(response){
-		            	console.log(response)
 		                $scope.partnerName = response.partnerName;
 		                $scope.partnerPhone = response.partnerPhone;
 		            },
