@@ -1,13 +1,17 @@
 angular.module('ppApp').controller('patentItemCtrl', patentItemCtrl);
 
-patentItemCtrl.$inject = ['$rootScope', '$scope']
+patentItemCtrl.$inject = ['$rootScope', '$scope', '$state']
 
-function patentItemCtrl($rootScope, $scope) {
+function patentItemCtrl($rootScope, $scope, $state) {
 
 	var vm = this;
 
 	vm.activePatentItemMenu = 'Patent Info';
 	vm.loadChart = loadChart;
+
+	vm.$onInit = function() {
+		$state.go('portfolio.patent.patent-info', {}, {reload: false})
+	}
 
 	$scope.$on('renewalHistory', function() {		
 		vm.activePatentItemMenu = 'Renewal History';
