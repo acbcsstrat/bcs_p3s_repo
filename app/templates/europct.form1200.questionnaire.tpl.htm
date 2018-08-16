@@ -4,7 +4,16 @@
             <div class="content-panel__body bg-white">
                 <div class="m-t-sm m-b-md">
                     <div class="nav panel-nav__list justify-content-center">
-                        <button data-ng-repeat="item in $ctrl.questionNav" class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-init="$ctrl.activeTab = $ctrl.form1200Tabs.index" data-ng-click="$ctrl.activeTab = item.index" data-ng-class="{'active': $ctrl.activeTab == item.index}">{{item.title}}</button>
+
+                        <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-init="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-click="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-class="{'active': $ctrl.activeTab == 0}">{{$ctrl.confirmEntity.title()}}</button>
+                        <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.amendments.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.amendments.index}" data-ng-disabled="!$ctrl.confirmEntityChecked">{{$ctrl.amendments.title()}}</button>
+
+                        <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.documents.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.documents.index}" data-ng-if="$ctrl.documents.active" data-ng-disabled="!$ctrl.amendmentsChecked">{{$ctrl.documents.title()}}</button>
+                        <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.extAndValid.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.extAndValid.index}" data-ng-disabled="!$ctrl.documentsChecked">{{$ctrl.extAndValid.title()}}</button>
+
+                        <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.reference.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.reference.index}" data-ng-disabled="!$ctrl.extAndValidChecked">{{$ctrl.reference.title()}}</button> 
+                        <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.confirmPages.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.confirmPages.index}" data-ng-disabled="!$ctrl.referenceChecked">{{$ctrl.confirmPages.title()}}</button>
+                        <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-if="$ctrl.renewal.active" data-ng-click="$ctrl.activeTab = $ctrl.renewal.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.renewal.index}" data-ng-disabled="!$ctrl.confirmPagesChecked">{{$ctrl.renewal.title()}}</button>
                     </div>
                 </div>
                 <form name="form1200Form" data-ng-submit="$ctrl.submitForm1200(form1200Form, item.selected)" novalidate>
@@ -98,7 +107,7 @@
                                                 <a class="btn__link btn__link btn--lg">Next</a>
                                             </button>
                                         </div>
-                                    </div>                            
+                                    </div>
                                 </div>
                             </div>
                         </uib-tab>
@@ -113,7 +122,7 @@
                                     </div>
                                     <div class="row m-t-sm">
                                         <div class="col-md-12 d-flex justify-content-end">
-                                            <button class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-click="$ctrl.reference.fn()">
+                                            <button class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-click="$ctrl.reference.fn()" data-ng-disabled="!referenceModel">
                                                 <a class="btn__link btn--lg">Next</a>
                                             </button>
                                         </div>
@@ -125,24 +134,24 @@
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="form-group row">
-                                        <label class="col-xl-8 col-form-label font-body">Please enter the total number of pages</label>
+                                        <label for="totalPages" class="col-xl-8 col-form-label font-body">Please enter the total number of pages</label>
                                         <div class="col-xl-4">
-                                            <input type="text" name="totalPages" class="form-control" required>
+                                            <input type="text" name="totalPages" class="form-control" data-ng-model="totalPagesModel" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-xl-8 col-form-label font-body">Please enter the total number of claim</label>
+                                        <label for="totalClaims" class="col-xl-8 col-form-label font-body">Please enter the total number of claim</label>
                                         <div class="col-xl-4">
-                                            <input type="text" name="totalClaims" class="form-control" required>
+                                            <input type="text" name="totalClaims" class="form-control" data-ng-model="totalClaimsModel" required>
                                         </div>
                                     </div>
                                     <p>Please enter the page start and end numbers</p>
                                     <div class="row m-t-sm">
                                         <div class="col-md-12 d-flex justify-content-end">
-                                            <button type="submit" id="submit" class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-click="$ctrl.generateForm()" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.reference.$error.required || form1200Form.reference.$pristine">
-                                                <a class="btn__link btn--lg">Generate form</a>
+                                            <button type="submit" id="submit" class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-click="$ctrl.generateForm()" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid">
+                                                <a class="btn__link btn--lg">Generate forrrrrm</a>
                                             </button>
-                                            <button class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-click="$ctrl.confirmPages.fn()">
+                                            <button class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-if="$ctrl.renewal.active" data-ng-click="$ctrl.confirmPages.fn()">
                                                 <a class="btn__link btn--lg">Next</a>
                                             </button>
                                         </div>
@@ -162,14 +171,14 @@
                             </div>
                             <div class="row m-t-sm">
                                 <div class="col-md-12 d-flex justify-content-end">
-                                    <button type="submit" id="submit" class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-click="$ctrl.generateForm()"data-ng-disabled="form1200Form.reference.$error.required || form1200Form.reference.$pristine">
-                                        <a class="btn__link btn--lg">Generate form</a>
+                                    <button type="submit" id="submit" class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-click="$ctrl.generateForm()"data-ng-disabled="form1200Form.$error.required">
+                                        <a class="btn__link btn--lg">Generate formm</a>
                                     </button>
                                 </div>
                             </div>                            
                         </uib-tab>
                     </uib-tabset>
-                </form>           
+                </form>
             </div><!--form end-->
         </div>
     </div>

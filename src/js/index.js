@@ -53,6 +53,8 @@ require("app/controllers/dashboard.renewalCost.ctrl.js");
 require("app/controllers/dashboard.renewalsCarousel.ctrl.js");
 require("app/controllers/europct.info.ctrl.js");
 require("app/controllers/europct.form1200.ctrl.js");
+require("app/controllers/europct.form1200intro.ctrl.js");
+require("app/controllers/europct.form1200questionnaire.ctrl.js");
 require("app/controllers/europct.costanalysis.ctrl.js");
 require("app/controllers/portfolio.ctrl.js");
 require("app/controllers/patents.listPatents.ctrl.js");

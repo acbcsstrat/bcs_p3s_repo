@@ -1,0 +1,30 @@
+<div class="content-panel bg-white">   
+    <div class="content-panel__head">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="view-tabs">
+                    <ul class="nav chart-pills">
+                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" 
+                        data-ng-init="euroPct.activeSelectedTab = 0; euroPct.activePatentItemMenu = 'Euro-PCT Info'" 
+                        data-ng-click="euroPct.activeSelectedTab = 0; euroPct.activePatentItemMenu = 'Euro-PCT Info'" 
+                        data-ng-class="{active : euroPct.activePatentItemMenu == 'Euro-PCT Info'}">Euro-PCT Info</li>
+                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="euroPct.activeSelectedTab = 1; euroPct.activePatentItemMenu = 'Form 1200'" data-ng-class="{active : euroPct.activePatentItemMenu == 'Form 1200'}">Form 1200</li>
+                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="euroPct.activeSelectedTab = 3; euroPct.activePatentItemMenu = 'Cost Analysis'" data-ng-class="{active : euroPct.activePatentItemMenu == 'Cost Analysis'}">Cost Analysis</li> 
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+    <uib-tabset type="pills" active="euroPct.activeSelectedTab">
+        <uib-tab heading="Euro-PCT Info" index="0" data-ng-hide="true">
+            <div ui-view="euroPctInfo"></div>
+        </uib-tab>
+        <uib-tab heading="Form 1200" index="1" data-ng-hide="true">
+            <div ui-view="form1200"></div>
+        </uib-tab>
+        <uib-tab heading="Cost Analysis" index="2" data-ng-hide="true">
+            <div ui-view="euroPctCostAnalysis"></div>
+        </uib-tab>
+    </uib-tabset>

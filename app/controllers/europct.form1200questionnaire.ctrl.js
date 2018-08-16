@@ -1,107 +1,115 @@
 angular.module('ppApp').controller('form1200questionnaireCtrl', form1200questionnaireCtrl);
 
-form1200questionnaireCtrl.$inject = ['patent', '$stateParams', '$timeout'];
+form1200questionnaireCtrl.$inject = ['patent', '$stateParams', '$timeout', 'chunkDataService'];
 
-function form1200questionnaireCtrl(patent, $stateParams, $timeout) {
+function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataService) {
 
     var vm = this;
 
     vm.manualProcess = manualProcess;
-    vm.questionNav = [
-        {
-            index: 0,
-            title: 'Q.1'
-        },
-        {
-            index: 1,
-            title: 'Q.2'
-        },
-        {
-            index: 2,
-            title: 'Q.3'
-        },
-        {
-            index: 3,
-            title:  'Q.4'
-        },
-        {
-            index: 4,
-            title: 'Q.5'
-        },
-        {
-            index: 5,
-            title: 'Q.6'
-        },
-        {
-            index: 6,
-            title: 'Q.7'
-        }
-    ]
-
+    // vm.chunkedData = chunkDataService.chunkData(validateStates, 1);
+    vm.generateForm1200 = generateForm1200;
     vm.confirmEntity = {
         index: 0,
-        navItem: 1,
+        title: function() {
+           return 'Q.'+(this.index+1)+'';
+        },
+        activeTabFn: function() {
+            return this.index+1;
+        },        
         fn: function() {
-            vm.activeTab = 1; //2nd
+            vm.activeTab = this.activeTabFn();
+            vm.confirmEntityChecked = true;
         }
     }
 
     vm.amendments = {
         index: 1,
-        navItem: 2,
+        title: function() {
+           return 'Q.'+(this.index+1)+'';
+        },
+        activeTabFn: function() {
+            return this.index+1;
+        },
         fn: function(){
-            vm.activeTab = 2; //3rd
+            vm.activeTab = this.activeTabFn();
+            vm.amendmentsChecked = true;
+            if(!vm.documents.active) {
+                vm.documentsChecked = true;
+            }
         }
     }
 
     vm.documents = {
         active: false,
         index: 2,
-        navItem: 3,
+        title: function() {
+           return 'Q.'+(this.index+1)+'';
+        },
+        activeTabFn: function() {
+            return this.index+1;
+        },        
         fn: function() {
-            vm.activeTab = 3;
+            vm.activeTab = this.activeTabFn();
+            vm.documentsChecked = true;
         }
     }
 
     vm.extAndValid = {
         index: 2,
-        navItem: 3,
+        title: function() {
+           return 'Q.'+(this.index+1)+'';
+        },
+        activeTabFn: function() {
+            return this.index+1;
+        },        
         fn: function() {
-            if(!vm.documents.active) {
-                vm.activeTab = 3;
-            } else {
-                vm.activeTab = 4;
-            }
+            vm.activeTab = this.activeTabFn();
+            vm.extAndValidChecked = true;
         }
     }
 
     vm.reference = {
         index: 3,
-        navItem: 5,
+        title: function() {
+           return 'Q.'+(this.index+1)+'';
+        },
+        activeTabFn: function() {
+            return this.index+1;
+        },
         fn: function() {
-            vm.activeTab = 5;
+            vm.activeTab = this.activeTabFn();
+            vm.referenceChecked = true;
         }               
     }
 
     vm.confirmPages = {
         index: 4,
-        navItem: 6,
+        title: function() {
+           return 'Q.'+(this.index+1)+'';
+        },
+        activeTabFn: function() {
+            return this.index+1;
+        },
         fn: function() {
-            vm.activeTab = 6;
+            vm.activeTab = this.activeTabFn();
+            vm.confirmPagesChecked = true;
         }           
     }
 
     vm.renewal = {
         active: false,
         index: 5,
-        navItem: 7 
+        title: function() {
+           return 'Q.'+(this.index+1)+'';
+        } 
     }
 
     vm.$onInit = function () {
 
         var questions = {
             showOptionalQuestion: true,
-            isYear3RenewalDue: true
+            isYear3RenewalDue: false
         }
 
         if(questions.showOptionalQuestion) {
@@ -116,26 +124,20 @@ function form1200questionnaireCtrl(patent, $stateParams, $timeout) {
             vm.renewal.active = true;
         }
 
-        if(questions.showOptionalQuestion && questions.isYear3RenewalDue) {
-            return;    
-        } else if (questions.showOptionalQuestion || questions.isYear3RenewalDue) {
-            vm.questionNav = vm.questionNav.splice(0, (vm.questionNav.length - 1))
-        } else {
-            vm.questionNav = vm.questionNav.splice(0, (vm.questionNav.length - 2))
-        }
-        
+    }
+
+    function generateForm1200() {
+        $scope.$parent.$parent.tabset.active = 1;
     }
 
     function manualProcess(value, question) {
 
         if(value == true && question == 'amendments') {
-            console.log('ding dong')
         }
 
         if(value == true && question == 'documents') {
-            console.log('ding doy ')
         }
 
     }          
 
-} 
+}
