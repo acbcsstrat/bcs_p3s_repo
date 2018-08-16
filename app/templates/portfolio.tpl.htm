@@ -65,7 +65,6 @@
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="patent in $ctrl.portfolioData" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
-                            {{patent}}
                             <td class="t-data__td t-data__w15">
                                 <span class="td-ellipsis">
                                     <a class="t-data__a" data-ng-bind="patent.patentApplicationNumber" data-ng-click="$ctrl.rowSelect" ng-attr-id="{{patent.id}}" data-ui-sref="portfolio.patent({patentId: patent.id})"></a>
