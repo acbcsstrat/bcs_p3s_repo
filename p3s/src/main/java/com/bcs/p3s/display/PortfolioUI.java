@@ -4,6 +4,7 @@ import java.util.List;
 
 public class PortfolioUI {
 	
+	private Long id;
 	private String EP_ApplicationNumber;
 	private String clientRef;
 	private String shortTitle;
@@ -12,6 +13,12 @@ public class PortfolioUI {
 	private List<Service> serviceList;
 	
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getEP_ApplicationNumber() {
 		return EP_ApplicationNumber;
 	}

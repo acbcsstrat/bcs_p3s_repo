@@ -75,6 +75,14 @@ public class ServiceAuthorisationTools extends Universal {
 		}
 	}
 	
+	protected void checkForm1200isViable(long id, String err) {
+
+		// YET TO BE WRITTEN. acTodo 180816: NONE of these check* methods are throwing exceptions, & hence correctly signalling controllers to return an error
+		
+		checkThisIsMyPatent(id, err);
+
+	}
+	
 
 	
 	

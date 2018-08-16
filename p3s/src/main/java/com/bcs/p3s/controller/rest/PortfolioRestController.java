@@ -32,7 +32,7 @@ import com.bcs.p3s.util.lang.Universal;
 @RestController
 @Configuration
 @ComponentScan("com.bcs.p3s")
-public class PortfolioRestController extends Universal{
+public class PortfolioRestController extends Universal {
 	
 	@Autowired
     PortfolioService portfolioService;
