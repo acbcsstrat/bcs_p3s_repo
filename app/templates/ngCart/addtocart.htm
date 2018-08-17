@@ -1,0 +1,11 @@
+
+<button data-ng-hide="inCart()" class="btn btn-block t-data__btn-portal pill-radius bg-phase-green font-weight-medium cartbtn d-flex align-items-center justify-content-center cartbtn" data-ng-click="ngCart.addItem(id, name, price, q, data)">
+    <span class="btn__link btn--lg btn__link--white m-l-xs">Add</span>
+</button>
+<div class="btn-remove">
+	<a data-ng-show="inCart()" class="btn btn-block t-data__btn-portal pill-radius bg-phase-red cartbtn d-flex align-items-center justify-content-center" data-ng-click="ngCart.removeItemById(id)">
+		<span class="btn__link btn--lg btn__link--white m-l-xs">Remove</span>
+	</a>	
+</div>
+
+

@@ -1,0 +1,195 @@
+<div class="row" data-ng-if="$ctrl.queriedPatent">
+    <div class="col-md-12 col-lg-12">
+    	<div class="content-panel__body">
+			<form name="addPatentForm">
+				<div class="row">
+					<div class="col-md-12 col-lg-12 col-xl-7 m-b-sm">	
+						<table class="table t-data table-bordered">
+							<tbody>
+								<tr class="t-data__row">
+									<td class="col-form-label t-data__td font-weight-bold text-left">
+										Client Description:
+									</td>
+									<td>
+						        		<input type="text" name="patentShortTitle" class="form-control" data-ng-maxlength="25" data-ng-model="$ctrl.queriedPatent.shortTitle">
+						        		<p class="txt-phase-red" data-ng-show="addPatentForm.patentShortTitle.$error.maxlength && addPatentForm.patentShortTitle.$dirty" required>The field exceeds the maximum value of 25 characters</p>
+									</td>
+								</tr>
+								<tr class="t-data__row">
+									<td class="col-form-label t-data__td font-weight-bold text-left">
+										Client Reference:
+									</td>
+									<td>
+						        		<input type="text" name="patentClientRef" class="form-control" data-ng-maxlength="30" data-ng-model="$ctrl.queriedPatent.clientRef">
+						        		<p class="txt-phase-red" data-ng-show="addPatentForm.patentClientRef.$error.maxlength && addPatentForm.patentClientRef.$dirty">The field exceeds the maximum value of 30 characters</p>							        		
+									</td>
+								</tr>
+							 	<tr class="t-data__row">
+								    <td class="col-form-label t-data__td font-weight-bold text-left">
+								        <label class="col-form-label font-weight-bold">Primary Applicant Name:</label>
+							        </td>
+							        <td>
+							        	<input type="text" name="primaryApplicantName" class="form-control border-none" data-ng-model="$ctrl.queriedPatent.primaryApplicantName" required readonly>
+							        </td>
+								</tr>
+								<tr class="t-data__row">
+								    <td class="col-form-label t-data__td font-weight-bold text-left">
+							    		<label class="col-form-label font-weight-bold">Application No:</label>
+						    		</td>
+						    		<td>
+						    			<input type="text" name="filingDateUI" class="form-control border-none" data-ng-model="$ctrl.queriedPatent.patentApplicationNumber" required readonly>
+						    		</td>
+						    	</tr>
+						    	<tr class="t-data__row">
+								    <td class="col-form-label t-data__td font-weight-bold text-left">
+							    		<label class="col-form-label font-weight-bold">Publication No:</label>
+						    		</td>
+						    		<td>
+						    			<input type="text" name="title" class="form-control border-none" data-ng-model="$ctrl.queriedPatent.patentPublicationNumber" required readonly>
+						    		</td>
+						    	</tr>
+						    	<tr class="t-data__row">
+								    <td class="col-form-label t-data__td font-weight-bold text-left">
+							    		<label class="col-form-label font-weight-bold">Title:</label>
+						    		</td>
+						    		<td>
+						    			<input type="text" name="title" class="form-control border-none" data-ng-model="$ctrl.queriedPatent.title" required readonly>
+						    		</td>
+						    	</tr>
+						    	<tr class="t-data__row">
+								    <td class="col-form-label t-data__td font-weight-bold text-left">
+							    		<label class="col-form-label font-weight-bold">Filing Date:</label>
+						    		</td>
+						    		<td>
+						    			<input type="text" name="title" class="form-control border-none" data-ng-model="$ctrl.queriedPatent.filingDateUI" required readonly>
+						    		</td>
+						    	</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-12 col-lg-12 col-xl-5 md-m-b-md">
+						<div class="row lg-m-b-md">
+							<div class="col-lg-4 col-xl-12">
+				    			<div class="m-b-md">
+				    				<div class="m-b-md">
+										<h4 class="font-weight-medium m-b-xs font-h4">Notifications</h4>
+									</div>
+									<p>Select the colour and time frame to recieve email notifications for this patent prior to each stage.</p>
+				    			</div>
+			    			</div>
+			    			<div class="col-lg-8 col-xl-12">
+								<div class="m-b-xs">
+									<div class="row m-b-sm">
+										<div class="col-md-12 d-flex justify-content-between align-items-center">
+											<p class="font-h4 font-weight-medium">Selected</p>
+<!-- 											<div class="pill-radius btn--lg no-line-height" data-ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
+												<span class="font-weight-medium no-line-height">{{$ctrl.colourPhaseTitle.title}} Stage</span>
+											</div>		 -->										
+										</div>
+									</div>
+								</div>					
+								<div class="row">
+									<div class="col-md-10 col-lg-12 col-xl-12">
+										<div class="panel-nav">
+											<ul class="nav panel-nav__notification-list d-flex justify-content-between">
+												<li class="panel-nav__notification-list-item--green-notification panel-nav__list-item--notifications pill-radius active d-flex justify-content-center align-items-center m-b-xs" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications($ctrl.patentNotifications.green);" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
+												<li class="panel-nav__notification-list-item--amber-notification pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications($ctrl.patentNotifications.amber);" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
+												<li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications($ctrl.patentNotifications.red);" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li>
+												<li class="panel-nav__notification-list-item--blue-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 3; $ctrl.displayNotifications($ctrl.patentNotifications.blue);" data-ng-class="{'active bg-phase-blue': activeNotificationTab == 3, 'txt-phase-blue': activeNotificationTab !== 3}">Blue</li>
+												<li class="panel-nav__notification-list-item--black-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 4; $ctrl.displayNotifications($ctrl.patentNotifications.black);" data-ng-class="{'active bg-phase-black': activeNotificationTab == 4, 'txt-phase-black': activeNotificationTab !== 4}">Black</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<uib-tabset active="activeNotificationTab" vertical="true" type="pills">
+											<uib-tab index="0" heading="Green" data-ng-attr-id="$ctrl.patentNotifications.green" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.green)" data-ng-hide="true">
+												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-2 col-lg-2 col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
+														<span data-ng-bind="item.title"></span>
+														<div class="onoffswitch">
+															<label class="switch">
+															  <input type="checkbox" data-ng-model="item.isOn">
+															  <span class="slider round bg-phase-green"></span>
+															</label>
+														</div>
+													</div>
+												</div>	
+										    </uib-tab>
+										    <uib-tab index="1" heading="Amber" data-ng-attr-id="$ctrl.patentNotifications.amber" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.amber)" data-ng-hide="true">
+												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-2 col-lg-2 col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
+														<span data-ng-bind="item.title"></span>
+														<div class="onoffswitch">
+															<label class="switch">
+															  <input type="checkbox" data-ng-model="item.isOn">
+															  <span class="slider round bg-phase-amber"></span>
+															</label>
+														</div>
+													</div>
+												</div>								    
+											</uib-tab>
+										    <uib-tab index="2" heading="Red" data-ng-attr-id="$ctrl.patentNotifications.red" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.red)" data-ng-hide="true">
+												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-2 col-lg-2 col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
+														<span data-ng-bind="item.title"></span>
+														<div class="onoffswitch">
+															<label class="switch">
+															  <input type="checkbox" data-ng-model="item.isOn">
+															  <span class="slider round bg-phase-red"></span>
+															</label>
+														</div>
+													</div>
+												</div>	
+											</uib-tab>
+										    <uib-tab index="3" heading="Blue" data-ng-attr-id="$ctrl.patentNotifications.blue" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.blue)" data-ng-hide="true">
+												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-2 col-lg-2 col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
+														<span data-ng-bind="item.title"></span>
+														<div class="onoffswitch">
+															<label class="switch">
+															  <input type="checkbox" data-ng-model="item.isOn">
+															  <span class="slider round bg-phase-blue"></span>
+															</label>
+														</div>
+													</div>
+												</div>					    
+											</uib-tab>
+										    <uib-tab index="4" heading="Black" data-ng-attr-id="$ctrl.patentNotifications.brown" data-ng-click="$ctrl.displayNotifications($ctrl.patentNotifications.black)" data-ng-hide="true">
+												<div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+													<div class="col-md-2 col-lg-2 col-xl-3 text-center font-body" data-ng-repeat="item in checkbox">
+														<span data-ng-bind="item.title"></span>
+														<div class="onoffswitch">
+															<label class="switch">
+															  <input type="checkbox" data-ng-model="item.isOn">
+															  <span class="slider round bg-phase-black"></span>
+															</label>
+														</div>
+													</div>
+												</div>								    
+											</uib-tab>
+										</uib-tabset>
+									</div> <!-- col end-->
+								</div>	 <!-- row end-->
+							</div>
+						</div>
+					</div> <!--col end-->
+				</div> 	<!-- row end-->	
+
+				<div class="row">
+					<div class="col-md-12 col-lg-12 col-xl-12">
+						<div class="d-flex align-items-center">
+							<button class="btn bg-phase-red pill-radius font-weight-medium d-flex align-items-center m-r-sm" type="button" data-ng-click="$ctrl.openCancelSearchModal()">
+								<a href="" class="btn__link btn__link--white btn--lg">Cancel</a>
+							</button>
+							<button class="btn bg-phase-green pill-radius font-weight-medium m-r-sm d-flex align-items-center" data-ng-click="$ctrl.openConfirmModal($ctrl.queriedPatent)" data-ng-disabled="!searchPatentForm.$valid" type="submit">
+								<a href="" class="btn__link btn__link--white btn--lg">Add patent</a>
+							</button>									
+						</div>		
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
