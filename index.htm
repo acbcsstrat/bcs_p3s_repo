@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- 		<base href="/"> -->
+
+		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="dist/main.css">
+
+<!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>	
+ -->
+		<script type="text/javascript" src="dist/vendor.bundle.js"></script>
+		<script type="text/javascript" src="dist/app.bundle.js"></script>
+
+		<title>Patent Place</title>
+
+	</head>
+
+	<body ng-app="ppApp" class="bg-light-grey">
+		
+		<mainnav></mainnav>
+
+		<main class="app-container m-tb-xl" ng-controller="coreCtrl">
+			<basketnav></basketnav>
+			<ui-view></ui-view>
+			<idle></idle>
+		</main>
+
+	</body>
+	
+</html>

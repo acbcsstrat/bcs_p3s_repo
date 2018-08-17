@@ -1,0 +1,277 @@
+<div class="d-none d-xl-block">   
+    <div class="bg-white">
+        <div class="content-panel__head border-grey-xs--btm">
+            <div class="row d-flex align-items-center">
+                <div class="col-xl-4">
+                    <p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.patentApplicationNumber}}</p>
+                    <p class="font-h4">
+                        <span class="font-weight-bold">EPO Status:</span> 
+                        <span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.renewalStatus}}</span>
+                        <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to Renew</span>
+                        <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">Renewal lapsed</span>
+                        <span data-ng-if="$ctrl.patent.renewalStatus === 'Show price'">Open for renewal</span>
+                    </p>
+                </div>
+                <div class="col-xl-5" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.progressBar + '%'}">
+                                <span class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentRenewalCost | number: 2 }}</span>
+                            </div>
+                            <div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.patent.progressBar) - 1)  + '%'}">
+                                <span data-ng-if="$ctrl.patent.costBandColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.renewalCostNextStageUSD}}</span>
+                                <span data-ng-if="$ctrl.patent.costBandColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'bg-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.progressBar">{{$ctrl.patent.progressBar}}%</uib-bar></uib-progress>
+                        </div>
+                    </div>
+                </div>
+                <div data-ng-class="($ctrl.patent.renewalStatus == 'Show price' ? 'col-xl-3': 'col-xl-8')">
+                    <div data-ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="d-flex flex-column align-items-end">
+                        <p class="font-weight-medium font-h4">PP Status:</p>
+                        <p class="font-weight-medium font-h4">
+                            <span data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" class="txt-phase-amber">{{$ctrl.patent.renewalStatus}}</span>
+                            <span data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed' || $ctrl.patent.renewalStatus == 'Open for renewal' || $ctrl.patent.renewalStatus == 'Renewal in place'" class="txt-phase-green">{{$ctrl.patent.renewalStatus}}</span>
+                            <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'" class="txt-phase-red">Renewal lapsed</span>
+                            <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'" class="txt-phase-red">Call <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerName"></span> on <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerPhone"></span></span>
+                        </p>
+                    </div>                                              
+                    <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
+                        <p class="font-h4 m-b-xs">
+                            <span class="font-weight-bold">Next stage: </span> 
+                            <span data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">{{$ctrl.patent.nextStage}}</span>
+                        </p>
+                        <p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
+                    </div>
+                </div>                      
+            </div>
+        </div>
+        <div class="content-panel__head border-grey-xs--btm">
+            <div class="row">
+                <div class="col-xl-6 col-cxl-6">
+                    <div class="m-b-md">
+                        <div class="m-b-md">
+                            <h4 class="font-weight-medium">Notifications</h4>
+                        </div>
+                        <p>Simply select the colour and time frame to receive email notifications for this patent prior to each stage. You can select as many or few as you want.</p>
+                    </div>
+                    <div class="row m-b-md">
+                        <div class="col-xl-12 d-flex align-items-center justify-content-between">
+                            <h4 class="font-h4 font-weight-medium">Selected</h4>
+<!--                                        <div class="pill-radius pill-tabs btn--lg"  data-ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
+                                <span class="font-weight-medium">{{$ctrl.colourPhaseTitle.title}} Stage</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="panel-nav">
+                                <ul class="nav panel-nav__notification-list">
+                                    <li class="panel-nav__notification-list-item--green-notification panel-nav__list-item--notifications pill-radius active d-flex justify-content-center align-items-center m-b-xs" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
+                                    <li class="panel-nav__notification-list-item--amber-notification pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
+                                    <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li>
+                                    <li class="panel-nav__notification-list-item--blue-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 3; $ctrl.displayNotifications('Blue');" data-ng-class="{'active bg-phase-blue': activeNotificationTab == 3, 'txt-phase-blue': activeNotificationTab !== 3}">Blue</li>
+                                    <li class="panel-nav__notification-list-item--black-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 4; $ctrl.displayNotifications('Black');" data-ng-class="{'active bg-phase-black': activeNotificationTab == 4, 'txt-phase-black': activeNotificationTab !== 4}">Black</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <uib-tabset active="activeNotificationTab" vertical="true" type="pills" class="flex-column">
+                                <uib-tab index="0" heading="Green" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                        <div class="col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-green"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </uib-tab>
+                                <uib-tab index="1" heading="Amber" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                        <div class="col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-amber"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                </uib-tab>
+                                <uib-tab index="2" heading="Red" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                        <div class="col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-red"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                </uib-tab>
+                                <uib-tab index="3" heading="Blue" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                        <div class="col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-blue"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                </uib-tab>
+                                <uib-tab index="4" heading="Black" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">    
+                                        <div class="col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-black"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                </uib-tab>  
+                            </uib-tabset>
+                        </div>
+                    </div>
+                </div> <!--col-xl-6-->
+                <div class="col-xl-6 hidden-cxl p-l-none">
+                    <div class="content-panel__body">
+                        <div class="m-b-sm">
+                            <div class="row">
+                                <div class="col-xl-12 d-flex justify-content-between m-b-sm">
+                                    <h4 class="font-weight-medium font-h4">FX Rate Impact</h4>
+                                    <p class="font-weight-medium font-h4">Today's Rate: <span class="txt-phase-green">1.83</span></p>
+                                </div>  
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12 d-flex justify-content-between">
+                                    <p class="font-weight-medium font-h4">Yesterday: <span class="txt-phase-red">1.801</span></p>
+                                    <p class="font-weight-medium font-h4">Last Week: <span class="txt-phase-red">1.798</span></p>
+                                    <p class="font-weight-medium font-h4">Last Month: <span class="txt-phase-red">1.777</span></p>
+                                </div>
+                            </div>                  
+                        </div>
+                        <div class="row border-grey-xs--btm m-b-sm">
+                            <div class="col-xl-12">
+                                <div class="row m-b-sm border-grey-xs--btm">
+                                    <div class="col-xl-3 offset-xl-4">
+                                        <p class="font-h4 font-weight-medium m-b-xs text-center">USD</p>
+                                    </div>
+                                    <div class="col-xl-3 offset-xl-2">
+                                        <p class="font-h4 font-weight-medium m-b-xs text-center">EUR</p>
+                                    </div>
+                                </div>
+                                <div class="row m-b-sm">
+                                    <div class="col-xl-4">
+                                        <p class="font-weight-medium font-h4">Today:</p>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <p class="text-center font-h4">$ {{($ctrl.patentFx.getFx().todaysPriceUSD | number: 2) || '0.00'}}</p>
+                                    </div>
+                                    <div class="col-xl-2">
+                                        
+                                    </div>                              
+                                    <div class="col-xl-3">
+                                        <p class="text-center font-h4">&euro; {{($ctrl.patentFx.getFx().todaysPriceEUR | number: 2) || '0.00'}}</p>
+                                    </div>
+                                </div>                          
+                                <div class="row m-b-sm">
+                                    <div class="col-xl-4">
+                                        <p class="font-weight-medium font-h4">Yesterday:</p>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <p class="text-center font-h4">$ {{($ctrl.patentFx.getFx().yesterdaysPriceUSD | number: 2) || '0.00'}}</p>
+                                    </div>
+                                    <div class="col-xl-2">
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <p class="text-center font-h4">&euro; {{($ctrl.patentFx.getFx().yesterdaysPriceEUR | number: 2) || '0.00'}}</p>
+                                    </div>                                                                                              
+                                </div>
+                                <div class="row m-b-sm">
+                                    <div class="col-xl-4">
+                                        <p class="font-weight-medium font-h4">Last week:</p>            
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <p class="text-center font-h4">$ {{($ctrl.patentFx.getFx().lastWeeksPriceUSD | number: 2) || '0.00'}}</p>
+                                    </div>
+                                    <div class="col-xl-2">
+                                    </div>                              
+                                    <div class="col-xl-3">
+                                        <p class="text-center font-h4">&euro; {{($ctrl.patentFx.getFx().lastWeeksPriceEUR | number: 2) || '0.00'}}</p>
+                                    </div>                                              
+                                </div>
+                                <div class="row m-b-sm">
+                                    <div class="col-xl-4">
+                                        <p class="font-weight-medium font-h4">Last month:</p>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <p class="text-center font-h4">$ {{($ctrl.patentFx.getFx().lastMonthsPriceUSD | number: 2) || '0.00'}}</p>
+                                    </div>
+                                    <div class="col-xl-2">
+                                    </div>                              
+                                    <div class="col-xl-3">
+                                        <p class="text-center font-h4">&euro; {{($ctrl.patentFx.getFx().lastMonthsPriceEUR | number: 2) || '0.00'}}</p>
+                                    </div>                                              
+                                </div>
+                                <div class="row m-b-sm">
+                                    <div class="col-xl-4">
+                                        <p class="font-weight-bold font-h4">4 week variation:</p>   
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <p class="font-h4 text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
+                                            <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
+                                            <i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i>
+                                            $ {{($ctrl.patentFx.getFx().fourWeekVariationUSD | number: 2)  || '0.00'}}</p>      
+                                    </div>
+                                    <div class="col-xl-2">
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <p class="font-h4 text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
+                                            <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
+                                            <i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i> 
+                                            &euro; {{($ctrl.patentFx.getFx().fourWeekVariationEUR | number: 2)  || '0.00'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- row end -->
+                        <div class="row d-flex justify-content-end">
+                            <div class="col-xl-6 d-flex justify-content-end">
+                                <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+                                    <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+                                    </ngcart-addtocart>
+                                </div>
+                                <div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
+                                    <button type="button" class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+                                        <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
+                                    </button>
+                                </div>
+                                <div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
+                                    <div class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+                                        <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Renewal</a>
+                                    </div>
+                                </div>                                          
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- col-xl-6 END -->                
+            </div>
+        </div>
+    </div>
+</div>

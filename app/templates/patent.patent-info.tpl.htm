@@ -1,0 +1,623 @@
+<div class="content-panel d-none d-xl-block">	
+	<div class="bg-white">
+		<div class="content-panel__head border-grey-xs--btm">
+			<div class="row d-flex align-items-center">
+			    <div class="col-xl-4">
+					<p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.patentApplicationNumber}}</p>
+					<p class="font-h4">
+						<span class="font-weight-bold">EPO Status:</span> 
+						<span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.renewalStatus}}</span>
+						<span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to Renew</span>
+						<span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">Renewal lapsed</span>
+						<span data-ng-if="$ctrl.patent.renewalStatus === 'Show price'">Open for renewal</span>
+					</p>
+			    </div>
+			    <div class="col-xl-5" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.progressBar + '%'}">
+								<span class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentRenewalCost | number: 2 }}</span>
+							</div>
+							<div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.patent.progressBar) - 1)  + '%'}">
+								<span data-ng-if="$ctrl.patent.costBandColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.renewalCostNextStageUSD}}</span>
+								<span data-ng-if="$ctrl.patent.costBandColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12">
+							<uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'bg-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.progressBar">{{$ctrl.patent.progressBar}}%</uib-bar></uib-progress>
+						</div>
+					</div>
+			    </div>
+			    <div data-ng-class="($ctrl.patent.renewalStatus == 'Show price' ? 'col-xl-3': 'col-xl-8')">
+					<div data-ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="d-flex flex-column align-items-end">
+						<p class="font-weight-medium font-h4">PP Status:</p>
+						<p class="font-weight-medium font-h4">
+							<span data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" class="txt-phase-amber">{{$ctrl.patent.renewalStatus}}</span>
+							<span data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed' || $ctrl.patent.renewalStatus == 'Open for renewal' || $ctrl.patent.renewalStatus == 'Renewal in place'" class="txt-phase-green">{{$ctrl.patent.renewalStatus}}</span>
+							<span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'" class="txt-phase-red">Renewal lapsed</span>
+							<span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'" class="txt-phase-red">Call <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerName"></span> on <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerPhone"></span></span>
+						</p>
+			    	</div>						    			    	
+			    	<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
+				    	<p class="font-h4 m-b-xs">
+				    		<span class="font-weight-bold">Next stage: </span> 
+				    		<span data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">{{$ctrl.patent.nextStage}}</span>
+				    	</p>
+				    	<p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
+			    	</div>
+			    </div>		    		    
+		    </div>
+	    </div>
+
+		<div class="row">
+			<div class="col-xl-6 col-cxl-6 p-r-none border-grey-xs--right">
+				<div class="content-panel__body">
+	    			<form class="form" name="patentInfoForm" novalidate>
+	    				<div class="row">
+		    				<div class="col-xl-12 col-cxl-12">
+		    					<div class="m-b-lg">
+			    					<h4 class="font-h4 font-weight-medium m-b-sm">Details</h4>
+									<div class="form-group row">
+										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Client Desc: </label>
+										<div class="col-xl-8">
+											<div class="d-flex justify-content-between align-items-center">
+												<span class="font-body" data-ng-hide="$ctrl.editing[1]">{{$ctrl.patent.shortTitle}}</span>
+										        <input type="text" name="shortTitle" id="shortTitle" class="form-control m-r-sm" data-ng-show="$ctrl.editing[1]" data-ng-focus="focus.shortTitleFocus = true" data-ng-blur="$ctrl.doneEditing(1); focus.shortTitleFocus = false" data-ng-model="$ctrl.patent.shortTitle" data-ng-maxlength="25" autofocus>
+										        <span data-ng-click="$ctrl.editItem(1)">
+										        	<i class="fa fa-edit fa-2x"></i>
+										        </span>
+											</div>
+							        		<p class="txt-phase-red" data-ng-show="patentInfoForm.shortTitle.$error.maxlength && patentInfoForm.shortTitle.$dirty && focus.shortTitleFocus">A maximum of 25 characters is allowed for a Client Description</p>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Client Ref: </label>
+										<div class="col-xl-8">
+											<div class="d-flex justify-content-between align-items-center">
+										 		<span class="font-body" data-ng-hide="$ctrl.editing[2]">{{$ctrl.patent.clientRef}}</span>
+								        		<input type="text" class="form-control" name="clientRef" id="clientRef" data-ng-show="$ctrl.editing[2]" data-ng-focus="focus.clientRefFocus = true" data-ng-blur="$ctrl.doneEditing(2); focus.clientRefFocus = false" data-ng-model="$ctrl.patent.clientRef" data-ng-maxlength="30" autofocus>
+								        		
+								        		<span data-ng-click="$ctrl.editItem(2)"><i class="fa fa-edit fa-2x"></i></span>
+							        		</div>
+							        		<p class="txt-phase-red" data-ng-show="patentInfoForm.clientRef.$error.maxlength && patentInfoForm.clientRef.$dirty && focus.clientRefFocus">A maximum of 30 characters is allowed for a Client Reference</p>
+						        		</div>	
+									</div>
+									<div class="form-group row">
+										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Applicant Name: </label>
+										<div class="col-xl-8">
+							        		<input type="text" class="form-control" data-ng-model="$ctrl.patent.primaryApplicantName" readonly>
+							        	</div>
+									</div>
+									<div class="form-group row">
+										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Publication No: </label>
+										<div class="col-xl-8">
+								        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.patentPublicationNumber" readonly>
+								        </div>
+									</div>
+									<div class="form-group row">
+										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Title: </label>
+										<div class="col-xl-8">
+								        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.title" readonly>
+								        </div>
+									</div>	
+									<div class="form-group row">
+										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Filing date: </label>
+										<div class="col-xl-8">
+								        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.filingDateUI" readonly>
+								        </div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xl-12 d-flex">
+										<div class="btn-submit">
+											<input type="submit" id="submit" class="btn btn--lg btn-submit--check bg-phase-green pill-radius m-r-sm" value="Save" data-ng-click="$ctrl.openUpdateConfirmModal($ctrl.patent)">									
+										</div>
+										<div class="btn-cancel">
+											<input type="button" id="delete" class="btn btn--lg btn-error--cross pill-radius bg-phase-red" value="Remove" data-ng-click="$ctrl.openDeleteConfirmModal($ctrl.patent.id)">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>								
+					</form>
+				</div>
+			</div>
+			<div class="col-xl-6 hidden-cxl p-l-none">
+				<div class="content-panel__body">
+					<div class="m-b-sm">
+						<div class="row">
+							<div class="col-xl-12 d-flex justify-content-between m-b-sm">
+								<h4 class="font-weight-medium font-h4">FX Rate Impact</h4>
+								<p class="font-weight-medium font-h4">Today's Rate: <span class="txt-phase-green">1.83</span></p>
+							</div>	
+						</div>
+						<div class="row">
+							<div class="col-xl-12 d-flex justify-content-between">
+								<p class="font-weight-medium font-h4">Yesterday: <span class="txt-phase-red">1.801</span></p>
+								<p class="font-weight-medium font-h4">Last Week: <span class="txt-phase-red">1.798</span></p>
+								<p class="font-weight-medium font-h4">Last Month: <span class="txt-phase-red">1.777</span></p>
+							</div>
+						</div>					
+					</div>
+					<div class="row border-grey-xs--btm m-b-sm">
+						<div class="col-xl-12">
+							<div class="row m-b-sm border-grey-xs--btm">
+								<div class="col-xl-3 offset-xl-4">
+									<p class="font-h4 font-weight-medium m-b-xs text-center">USD</p>
+								</div>
+								<div class="col-xl-3 offset-xl-2">
+									<p class="font-h4 font-weight-medium m-b-xs text-center">EUR</p>
+								</div>
+							</div>
+							<div class="row m-b-sm">
+								<div class="col-xl-4">
+									<p class="font-weight-medium font-h4">Today:</p>
+								</div>
+								<div class="col-xl-3">
+									<p class="text-center font-h4">$ {{($ctrl.patentFx.getFx().todaysPriceUSD | number: 2) || '0.00'}}</p>
+								</div>
+								<div class="col-xl-2">
+									
+								</div>								
+								<div class="col-xl-3">
+									<p class="text-center font-h4">&euro; {{($ctrl.patentFx.getFx().todaysPriceEUR | number: 2) || '0.00'}}</p>
+								</div>
+							</div>							
+							<div class="row m-b-sm">
+								<div class="col-xl-4">
+									<p class="font-weight-medium font-h4">Yesterday:</p>
+								</div>
+								<div class="col-xl-3">
+									<p class="text-center font-h4">$ {{($ctrl.patentFx.getFx().yesterdaysPriceUSD | number: 2) || '0.00'}}</p>
+								</div>
+								<div class="col-xl-2">
+								</div>
+								<div class="col-xl-3">
+									<p class="text-center font-h4">&euro; {{($ctrl.patentFx.getFx().yesterdaysPriceEUR | number: 2) || '0.00'}}</p>
+								</div>																								
+							</div>
+							<div class="row m-b-sm">
+								<div class="col-xl-4">
+									<p class="font-weight-medium font-h4">Last week:</p>			
+								</div>
+								<div class="col-xl-3">
+									<p class="text-center font-h4">$ {{($ctrl.patentFx.getFx().lastWeeksPriceUSD | number: 2) || '0.00'}}</p>
+								</div>
+								<div class="col-xl-2">
+								</div>								
+								<div class="col-xl-3">
+									<p class="text-center font-h4">&euro; {{($ctrl.patentFx.getFx().lastWeeksPriceEUR | number: 2) || '0.00'}}</p>
+								</div>												
+							</div>
+							<div class="row m-b-sm">
+								<div class="col-xl-4">
+									<p class="font-weight-medium font-h4">Last month:</p>
+								</div>
+								<div class="col-xl-3">
+									<p class="text-center font-h4">$ {{($ctrl.patentFx.getFx().lastMonthsPriceUSD | number: 2) || '0.00'}}</p>
+								</div>
+								<div class="col-xl-2">
+								</div>								
+								<div class="col-xl-3">
+									<p class="text-center font-h4">&euro; {{($ctrl.patentFx.getFx().lastMonthsPriceEUR | number: 2) || '0.00'}}</p>
+								</div>												
+							</div>
+							<div class="row m-b-sm">
+								<div class="col-xl-4">
+									<p class="font-weight-bold font-h4">4 week variation:</p>	
+								</div>
+								<div class="col-xl-3">
+									<p class="font-h4 text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
+										<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
+										<i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i>
+										$ {{($ctrl.patentFx.getFx().fourWeekVariationUSD | number: 2)  || '0.00'}}</p>		
+								</div>
+								<div class="col-xl-2">
+								</div>
+								<div class="col-xl-3">
+									<p class="font-h4 text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
+										<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
+										<i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i> 
+										&euro; {{($ctrl.patentFx.getFx().fourWeekVariationEUR | number: 2)  || '0.00'}}</p>
+								</div>
+							</div>
+						</div>
+					</div> <!-- row end -->
+					<div class="row d-flex justify-content-end">
+						<div class="col-xl-6 d-flex justify-content-end">
+							<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+						 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+	 							</ngcart-addtocart>
+							</div>
+				        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
+				        		<button type="button" class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+							 		<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
+				        		</button>
+						 	</div>
+				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
+				        		<div class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+						 			<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Renewal</a>
+						 		</div>
+						 	</div>											
+						</div>
+					</div>	
+				</div>
+			</div>	<!-- col-xl-6 END -->
+	
+			<div class="col-cxl-6 hidden-cxl-up p-l-none">
+				<div class="content-panel__body">
+					<div class="m-b-sm">
+						<div class="row m-b-sm">
+							<div class="col-md-12 d-flex justify-content-between">
+								<h4 class="font-weight-medium font-h4">FX Rate Impact</h4>
+								<p class="font-weight-medium">Today's Rate: <span class="txt-phase-green">1.83</span></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 d-flex justify-content-between">
+								<p class="font-weight-medium">Yesterday: <span class="txt-phase-red">1.801</span></p>
+								<p class="font-weight-medium">Last Week: <span class="txt-phase-red">1.798</span></p>
+								<p class="font-weight-medium">Last Month: <span class="txt-phase-red">1.777</span></p>
+							</div>
+						</div>					
+					</div>
+					<div class="row border-grey-xs--btm m-b-sm">
+						<div class="col-cxl-12">
+							<div class="row m-b-sm border-grey-xs--btm">
+								<div class="col-cxl-3 offset-xl-4">
+									<p class="font-weight-medium m-b-xs text-center">USD</p>
+								</div>
+								<div class="col-cxl-3 offset-xl-2">
+									<p class="font-weight-medium m-b-xs text-center">EUR</p>
+								</div>
+							</div>
+							<div class="row m-b-sm">
+								<div class="col-cxl-4">
+									<p class="font-weight-medium">Today:</p>
+								</div>
+								<div class="col-cxl-3">
+									<p class="text-center">$ {{($ctrl.patentFx.getFx().todaysPriceUSD | number: 2) || '0.00'}}</p>
+								</div>
+								<div class="col-cxl-2">
+									
+								</div>								
+								<div class="col-cxl-3">
+									<p class="text-center">&euro; {{($ctrl.patentFx.getFx().todaysPriceEUR | number: 2) || '0.00'}}</p>
+								</div>
+							</div>							
+							<div class="row m-b-sm">
+								<div class="col-cxl-4">
+									<p class="font-weight-medium">Yesterday:</p>
+								</div>
+								<div class="col-cxl-3">
+									<p class="text-center">$ {{($ctrl.patentFx.getFx().yesterdaysPriceUSD | number: 2) || '0.00'}}</p>
+								</div>
+								<div class="col-cxl-2">
+								</div>
+								<div class="col-cxl-3">
+									<p class="text-center">&euro; {{($ctrl.patentFx.getFx().yesterdaysPriceEUR | number: 2) || '0.00'}}</p>
+								</div>																								
+							</div>
+							<div class="row m-b-sm">
+								<div class="col-cxl-4">
+									<p class="font-weight-medium">Last week:</p>			
+								</div>
+								<div class="col-cxl-3">
+									<p class="text-center">$ {{($ctrl.patentFx.getFx().lastWeeksPriceUSD | number: 2) || '0.00'}}</p>
+								</div>
+								<div class="col-cxl-2">
+								</div>								
+								<div class="col-cxl-3">
+									<p class="text-center">&euro; {{($ctrl.patentFx.getFx().lastWeeksPriceEUR | number: 2) || '0.00'}}</p>
+								</div>												
+							</div>
+							<div class="row m-b-sm">
+								<div class="col-cxl-4">
+									<p class="font-weight-medium">Last month:</p>
+								</div>
+								<div class="col-cxl-3">
+									<p class="text-center">$ {{($ctrl.patentFx.getFx().lastMonthsPriceUSD | number: 2) || '0.00'}}</p>
+								</div>
+								<div class="col-cxl-2">
+								</div>								
+								<div class="col-cxl-3">
+									<p class="text-center">&euro; {{($ctrl.patentFx.getFx().lastMonthsPriceEUR | number: 2) || '0.00'}}</p>
+								</div>												
+							</div>
+							<div class="row m-b-sm">
+								<div class="col-cxl-4">
+									<p class="font-weight-bold">4 week variation:</p>	
+								</div>
+								<div class="col-cxl-3">
+									<p class="text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
+										<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
+										<i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i>
+										$ {{($ctrl.patentFx.getFx().fourWeekVariationUSD | number: 2)  || '0.00'}}</p>		
+								</div>
+								<div class="col-cxl-2">
+								</div>
+								<div class="col-cxl-3">
+									<p class="text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
+										<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
+										<i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i> 
+										&euro; {{($ctrl.patentFx.getFx().fourWeekVariationEUR | number: 2)  || '0.00'}}</p>
+								</div>
+							</div>
+						</div>
+					</div> <!-- row end -->
+					<div class="row d-flex justify-content-end">
+						<div class="col-cxl-6 d-flex justify-content-end">
+							<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="w-100">
+						 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+	 							</ngcart-addtocart>
+							</div>
+				        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
+				        		<button type="button" class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+							 		<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
+				        		</button>
+						 	</div>
+				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="w-100">
+				        		<div class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+						 			<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Renewal</a>
+						 		</div>
+						 	</div>											
+						</div>
+					</div>	
+				</div>
+			</div>	
+	   	</div>
+	</div>
+</div>
+
+
+<!--MD AND LG DEVICES-->
+
+
+
+<div class="d-xl-none">
+	<div class="row">
+		<div class="col-md-12 col-lg-12">
+			<form class="form">
+				<div class="content-panel lg-m-b-md">
+					<div class="content-panel__head lg-border-none bg-white">
+						<div class="row d-flex align-items-center">
+						    <div class="col-md-6 col-lg-6">
+								<p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.patentApplicationNumber}}</p>
+								<p class="font-h4"><span class="font-weight-bold">Status:</span> 
+									<span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew'">{{$ctrl.patent.renewalStatus}}</span>
+									<span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to Renew</span>
+									<span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">The renewal window is not open at this time</span>
+								</p>			
+						    </div>
+							<div data-ng-class="($ctrl.patent.renewalStatus == 'Show price' ? 'col-md-6 col-lg-6' : 'col-md-6 col-lg-6')">
+								<div data-ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="d-flex flex-column align-items-end">
+									<p class="font-weight-medium font-h4">PP Status:</p>
+									<p class="font-weight-medium font-h4">
+										<span data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" class="txt-phase-amber">{{$ctrl.patent.renewalStatus}}</span>
+										<span data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed' || $ctrl.patent.renewalStatus == 'Open for renewal' || $ctrl.patent.renewalStatus == 'Renewal in place'" class="txt-phase-green">{{$ctrl.patent.renewalStatus}}</span>
+										<span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'" class="txt-phase-red">Renewal lapsed</span>
+										<span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'" class="txt-phase-red">Call <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerName"></span> on <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerPhone"></span></span>
+									</p>
+						    	</div>						    			    	
+						    	<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
+							    	<p class="font-h4 m-b-xs"><span class="font-weight-bold">Next stage: </span> <span data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">{{$ctrl.patent.nextStage}}</span></p>
+							    	<p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
+						    	</div>
+					    	</div>		    						    
+						    <div class="col-md-12 col-lg-12 col-xl-5 pull-xl-3 lg-m-t-sm" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+								<div class="row">
+									<div class="col-md-12 col-lg-12">
+										<div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.progressBar + '%'}">
+											<span class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentRenewalCost | number: 2 }}</span>
+										</div>
+										<div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.patent.progressBar) - 1)  + '%'}">
+											<span data-ng-if="$ctrl.patent.costBandColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.renewalCostNextStageUSD}}</span>
+											<span data-ng-if="$ctrl.patent.costBandColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
+										</div>	
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12 col-lg-12">
+										<uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'bg-phase-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-bold progress-10" value="$ctrl.patent.progressBar">{{$ctrl.patent.progressBar}}%</uib-bar></uib-progress>									
+									</div>
+								</div>
+						    </div>		    
+					    </div>
+				    </div>					
+					<div class="content-panel__body bg-white">
+						<div class="row">	
+		    				<div class="col-md-12 col-lg-12">
+		    					<div class="xl-m-b-lg">
+			    					<h4 class="font-h4 font-weight-medium m-b-sm">Details</h4>
+									<div class="row">
+										<div class="form-group col-md-6 col-lg-6 p-none">
+											<label class="font-weight-medium col-lg-12 col-lg-12 col-xl-4  d-flex align-items-center">Client Description: </label>
+											<div class="col-md-12 col-lg-12">
+												<div class="d-flex justify-content-between align-items-center">
+													<span class="font-body" data-ng-hide="$ctrl.editing[1]">{{$ctrl.patent.shortTitle}}</span>
+											        <input type="text" class="form-control m-r-sm" data-id="123" data-ng-show="$ctrl.editing[1]" data-ng-blur="$ctrl.doneEditing(1)" data-ng-model="$ctrl.patent.shortTitle" autofocus>
+											        <span data-ng-click="$ctrl.editItem(1)"><i class="fa fa-edit fa-2x"></i></span>
+												</div>
+											</div>														
+										</div>
+										<div class="form-group col-md-6 col-lg-6 p-none">
+											<label class="font-weight-medium col-lg-4 col-lg-12 d-flex align-items-center">Client Ref: </label>
+											<div class="col-md-12 col-lg-12">
+												<div class="d-flex justify-content-between align-items-center">
+											 		<span class="font-body" data-ng-hide="$ctrl.editing[2]">{{$ctrl.patent.clientRef}}</span>
+									        		<input type="text" class="form-control" data-id="123" data-ng-show="$ctrl.editing[2]" data-ng-blur="$ctrl.doneEditing(2)" data-ng-model="$ctrl.patent.clientRef" autofocus>
+									        		<span data-ng-click="$ctrl.editItem(2)"><i class="fa fa-edit fa-2x"></i></span>
+								        		</div>
+							        		</div>												
+										</div>													
+									</div>
+									<div class="row">
+										<div class="form-group col-md-6 col-lg-6 p-none">
+											<label class="font-weight-medium col-md-12 col-lg-12 d-flex align-items-center">Applicant Name: </label>
+											<div class="col-md-12 col-lg-12">
+								        		<input type="text" class="form-control" data-id="123" data-ng-model="$ctrl.patent.primaryApplicantName" readonly>
+								        	</div>
+										</div>
+										<div class="form-group col-md-6 col-lg-6 p-none">
+											<label class="font-weight-medium col-md-12 col-lg-12 d-flex align-items-center">Publication No: </label>
+											<div class="col-md-12 col-lg-12">
+									        	<input type="text" class="form-control" data-id="123" data-ng-model="$ctrl.patent.patentPublicationNumber" readonly>
+									        </div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-md-6 col-lg-6 p-none">
+											<label class="font-weight-medium col-lg-4 col-lg-12 d-flex align-items-center">Title: </label>
+											<div class="col-md-12 col-lg-12">
+									        	<input type="text" class="form-control" data-id="123" data-ng-model="$ctrl.patent.title" readonly>
+									        </div>
+										</div>	
+										<div class="form-group col-md-6 col-lg-6 p-none">
+											<label class="font-weight-medium col-lg-4 col-lg-12 d-flex align-items-center">Filing date: </label>
+											<div class="col-md-12 col-lg-12">
+									        	<input type="text" class="form-control" data-id="123" data-ng-model="$ctrl.patent.filingDateUI" readonly>
+									        </div>
+										</div>
+									</div>
+								</div>											
+								<div class="row m-t-xs">
+									<div class="col-md-12 col-lg-12 d-flex">
+										<div class="btn-submit">
+											<input type="submit" id="submit" class="btn btn--lg btn-submit--check pill-radius bg-phase-green m-r-sm" value="Save" data-ng-click="$ctrl.openUpdateConfirmModal($ctrl.patent)">									
+										</div>
+										<div class="btn-cancel">
+											<input type="button" id="delete" class="btn btn--lg btn-error--cross pill-radius bg-phase-red" value="Remove" data-ng-click="$ctrl.openDeleteConfirmModal($ctrl.patent.id)">
+										</div>
+									</div>
+								</div>																						
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-lg-8">
+			<div class="content-panel">
+				<div class="content-panel__body bg-white">
+					<div class="m-b-sm">
+						<div class="row m-b-sm">
+							<div class="col-md-12 col-lg-12 d-flex justify-content-between">
+								<h4 class="font-weight-medium font-h4">FX Rate Impact</h4>
+								<p class="font-weight-medium">LGToday's Rate: <span class="txt-phase-green">1.83</span></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 col-lg-12 d-flex justify-content-between">
+								<p class="font-weight-medium">Yesterday: <span class="txt-phase-red">1.801</span></p>
+								<p class="font-weight-medium">Last Week: <span class="txt-phase-red">1.798</span></p>
+								<p class="font-weight-medium">Last Month: <span class="txt-phase-red">1.777</span></p>
+							</div>
+						</div>					
+					</div>
+					<div class="row m-b-sm">
+						<div class="col-md-3 offset-md-4">
+							<p class="font-weight-medium m-b-xs text-center">USD</p>
+						</div>
+						<div class="col-md-3 offset-md-2">
+							<p class="font-weight-medium m-b-xs text-center">EUR</p>
+						</div>
+					</div>
+					<div class="row m-b-sm">
+						<div class="col-md-4">
+							<p class="font-weight-medium">Today:</p>
+						</div>
+						<div class="col-md-3">
+							<p class="text-center">$ {{($ctrl.patentFx.getFx().todaysPriceUSD | number: 2) || '0.00'}}</p>
+						</div>
+						<div class="col-md-2">
+							
+						</div>								
+						<div class="col-md-3">
+							<p class="text-center">&euro; {{($ctrl.patentFx.getFx().todaysPriceEUR | number: 2) || '0.00'}}</p>
+						</div>
+					</div>							
+					<div class="row m-b-sm">
+						<div class="col-md-4">
+							<p class="font-weight-medium">Yesterday:</p>
+						</div>
+						<div class="col-md-3">
+							<p class="text-center">$ {{($ctrl.patentFx.getFx().yesterdaysPriceUSD | number: 2) || '0.00'}}</p>
+						</div>
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-3">
+							<p class="text-center">&euro; {{($ctrl.patentFx.getFx().yesterdaysPriceEUR | number: 2) || '0.00'}}</p>
+						</div>																								
+					</div>
+					<div class="row m-b-sm">
+						<div class="col-md-4">
+							<p class="font-weight-medium">Last week:</p>			
+						</div>
+						<div class="col-md-3">
+							<p class="text-center">$ {{($ctrl.patentFx.getFx().lastWeeksPriceUSD | number: 2) || '0.00'}}</p>
+						</div>
+						<div class="col-md-2">
+						</div>								
+						<div class="col-md-3">
+							<p class="text-center">&euro; {{($ctrl.patentFx.getFx().lastWeeksPriceEUR | number: 2) || '0.00'}}</p>
+						</div>												
+					</div>
+					<div class="row m-b-sm">
+						<div class="col-md-4">
+							<p class="font-weight-medium">Last month:</p>
+						</div>
+						<div class="col-md-3">
+							<p class="text-center">$ {{($ctrl.patentFx.getFx().lastMonthsPriceUSD | number: 2) || '0.00'}}</p>
+						</div>
+						<div class="col-md-2">
+						</div>								
+						<div class="col-md-3">
+							<p class="text-center">&euro; {{($ctrl.patentFx.getFx().lastMonthsPriceEUR | number: 2) || '0.00'}}</p>
+						</div>												
+					</div>
+					<div class="row m-b-sm">
+						<div class="col-md-4">
+							<p class="font-weight-bold">4 week variation:</p>	
+						</div>
+						<div class="col-md-3">
+							<p class="text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
+								<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
+								<i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i>
+								$ {{($ctrl.patentFx.getFx().fourWeekVariationUSD | number: 2)  || '0.00'}}</p>		
+						</div>
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-3">
+							<p class="text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
+								<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
+								<i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i> 
+								&euro; {{($ctrl.patentFx.getFx().fourWeekVariationEUR | number: 2)  || '0.00'}}</p>
+						</div>
+					</div>
+					<div class="row d-flex justify-content-end">
+						<div class="col-md-6 d-flex justify-content-end">
+							<div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+						 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+								</ngcart-addtocart>
+							</div>
+				        	<div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
+				        		<button type="button" class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+							 		<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
+				        		</button>
+						 	</div>
+				        	<div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
+				        		<div class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+						 			<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Renewal</a>
+						 		</div>
+						 	</div>											
+						</div>
+					</div>
+				</div>
+			</div> <!-- row end -->
+		</div>
+	</div>
+</div>
