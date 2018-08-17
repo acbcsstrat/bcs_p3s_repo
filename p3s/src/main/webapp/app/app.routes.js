@@ -73,10 +73,10 @@ function appRoutes($stateProvider) {
             controller: 'userProfileCtrl',
             controllerAs: '$ctrl'
         })
-        .state('patents', {
-            url: '/patents',
-            templateUrl: 'app/templates/patents.list-patents.tpl.htm',
-            controller: 'listPatentsCtrl',
+        .state('portfolio', {
+            url: '/portfolio',
+            templateUrl: 'app/templates/portfolio.tpl.htm',
+            controller: 'portfolioCtrl',
             controllerAs: '$ctrl',
             resolve: {
                 patents: ['patentsRestService', function(patentsRestService) {                 
@@ -84,10 +84,13 @@ function appRoutes($stateProvider) {
                 }]
             },
             params: {
-                navigation: 'patentnav'
+                navigation: 'portfolio'
             }
         })
-        .state('patents.patent', {
+        .state('portfolio.patent', {
+            templateUrl: 'app/templates/patent.patent-item.tpl.htm',
+            controller: 'patentItemCtrl',
+            controllerAs: '$ctrl',
             url: '/{patentId}/:patentHref',
             resolve: {
                 patent: ['patents', '$stateParams', function(patents, $stateParams) {
@@ -95,38 +98,61 @@ function appRoutes($stateProvider) {
                         return patent.id == $stateParams.patentId;
                     })
                 }],
-                costAnalysis: ['patentsRestService', '$stateParams',function(patentsRestService, $stateParams) { 
-                    return  patentsRestService.fetchCostAnalysis($stateParams.patentId);  
+                costAnalysis: ['patentsRestService', '$stateParams', 'patent', function(patentsRestService, $stateParams, patent) {
+                    if(patent) {
+                        return patentsRestService.fetchCostAnalysis(patent.id);  
+                    }
                 }],
-                renewal: ['patentsRestService','$stateParams', function(patentsRestService, $stateParams){
-                    return  patentsRestService.fetchRenewalHistory($stateParams.patentId);  
+                renewal: ['patentsRestService', '$stateParams', 'patent', function(patentsRestService, $stateParams, patent){
+                    if(patent) {
+                        return patentsRestService.fetchRenewalHistory(patent.id);
+                    }
                 }]
-            },
-            views: {
-                '@patents': {
-                    templateUrl: 'app/templates/patents.patent-item.tpl.htm',
-                    controller: 'patentItemCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'patentinfo@patents.patent': {
-                    templateUrl: 'app/templates/patents.patent-info.tpl.htm',
-                    controller: 'patentInfoCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'patentcostanalysis@patents.patent': {
-                    templateUrl: 'app/templates/patents.patent-costanalysis.tpl.htm',
-                    controller: 'patentCostAnalysisCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'patentrenewals@patents.patent': {
-                    templateUrl: 'app/templates/patents.patent-renewals.tpl.htm',
-                    controller: 'patentRenewalsCtrl',
-                    controllerAs: '$ctrl'
-                }
             },
             params: {
                 patentHref: null
             }
+        })
+        .state('portfolio.patent.patent-info', {
+            templateUrl: 'app/templates/patent.patent-info.tpl.htm',
+            controller: 'patentInfoCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('portfolio.patent.euro-pct', {
+            abstract: true,
+            templateUrl: 'app/templates/patent.europct.tpl.htm',
+        })
+        .state('portfolio.patent.euro-pct.info', {
+            templateUrl: 'app/templates/europct.info.tpl.htm',
+            controller: 'euroPctInfoCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('portfolio.patent.euro-pct.form1200', {
+            abstract: true,
+            templateUrl: 'app/templates/europct.form1200.tpl.htm'
+        })
+        .state('portfolio.patent.euro-pct.form1200.intro', {
+            templateUrl: 'app/templates/europct.form1200.intro.tpl.htm',
+            controller: 'form1200IntroCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('portfolio.patent.euro-pct.form1200.questionnaire', {
+            templateUrl: 'app/templates/europct.form1200.questionnaire.tpl.htm',
+            controller: 'form1200questionnaireCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('portfolio.patent.euro-pct.form1200.generated', {
+            templateUrl: 'app/templates/europct.form1200.generated.tpl.htm',
+            controller: 'form1200GeneratedCtrl',
+            controllerAs: '$ctrl',
+            params: {
+                generatedPdf: null
+            }
+        })
+        .state('portfolio.patent.renewal', {
+            templateUrl: 'app/templates/patent.renewal.tpl.htm',
+            controller: 'patentRenewalsCtrl',
+            controllerAs: '$ctrl'
         })
         .state('search-patent', {
             url: '/search-patent',
@@ -134,7 +160,7 @@ function appRoutes($stateProvider) {
             controller: 'searchPatentCtrl',
             controllerAs: '$ctrl',
             params: {
-                navigation: 'patentnav'
+                navigation: 'portfolio'
             }
         })
         .state('search-patent.add-patent', {
@@ -215,8 +241,8 @@ function appRoutes($stateProvider) {
             controller: 'bankTransferPrepCtrl',
             controllerAs: '$ctrl',
             params: {
-            	orderObj: null,
-            	patentObj: null
+                orderObj: null,
+                patentObj: null
             }
         })
         .state('bank-transfer-success', {

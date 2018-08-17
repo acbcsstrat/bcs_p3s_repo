@@ -1,0 +1,21 @@
+<div class="modal-header d-flex flex-column align-items-center justify-content-center">
+    <span class="modal-cross cursor-pointer" ng-click="dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+    <div class="m-b-sm">
+        <img src="assets/imgs/icons/modal/alert_icon.png" alt="updated icon">   
+    </div>
+    <p class="font-h3 font-weight-medium">Amendments being made</p>
+</div>
+<div class="modal-body d-flex flex-column align-items-center justify-content-center">
+    <div class="text-center">
+        <p class="m-b-sm">Our automated form 1200 is designed to make the entry into the European phase a quick, hassle free process. However, certain applications that do not fit Patent Place's automated form 1200 criteria, such as applications that amendments have been made to, will have to be re-directed for manual processing. It entails one of our legal team contacting you to help you process your application.</p>
+        <p>Do you want one of our legal team members to contact you as soon as possible to process your application?</p>
+    </div>
+</div>
+<div class="modal-footer d-flex align-items-center justify-content-center">
+    <button class="btn pill-radius btn--default bg-phase-green pill-radius m-r-sm" type="button" data-ng-click="redirectPureIdeas()">
+        <a class="btn__link btn__link btn--lg">Yes</a>
+    </button>
+    <button class="btn pill-radius btn--default bg-phase-red pill-radius" type="button"  data-ng-click="dismissModal()">
+        <a class="btn__link btn__link btn--lg">No</a>
+    </button>    
+</div>

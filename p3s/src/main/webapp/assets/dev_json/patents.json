@@ -1,0 +1,60 @@
+{
+    "patents": [
+        {
+            "patentApplicationNumber": "EP38392910",
+            "clientRef": "CLIENT REFERENCE",
+            "epeStage": "Filing",
+            "stageStatus": "Form 1200 saved",
+            "renewal": {
+
+            }
+        },
+        {
+            "patentApplicationNumber": "EP38392910",
+            "clientRef": "CLIENT REFERENCE",
+            "epeStage": "Filing",
+            "stageStatus": "Open for filing",
+            "renewal": {
+
+            }
+        },
+        {
+            "patentApplicationNumber": "EP38392910",
+            "clientRef": "CLIENT REFERENCE",
+            "epeStage": "Prosecution",
+            "stageStatus": "Second office action",
+            "renewal": {
+                "renewalYear": 5,
+                "renewalStatus": "Not open for renewal"
+            }
+        },
+        {
+            "patentApplicationNumber": "EP38392910",
+            "clientRef": "CLIENT REFERENCE",
+            "epeStage": "Prosecution",
+            "stageStatus": "Third office action",
+            "renewal": {
+                "renewalYear": 5,
+                "renewalStatus": "Show price"
+            }
+        },
+        {
+            "patentApplicationNumber": "EP38392910",
+            "clientRef": "CLIENT REFERENCE",
+            "epeStage": "Intent to grant",
+            "stageStatus": "Awaiting fees",
+            "renewal": {
+
+            }
+        },
+        {
+            "patentApplicationNumber": "EP38392910",
+            "clientRef": "CLIENT REFERENCE",
+            "epeStage": "Granted",
+            "stageStatus": "Awaiting fees",
+            "renewal": {
+
+            }
+        }               
+    ]
+}
