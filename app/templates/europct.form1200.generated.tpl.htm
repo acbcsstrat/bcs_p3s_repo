@@ -1,43 +1,87 @@
 <div class="row">
-    <div class="col-md-12 col-lg-9 col-xl-9">
-        <div class="content-panel__body bg-white">
-            <h4 class="font-h4">Form 1200</h4>
-            <p>The application has been saved to your portfolio which is available to review, download or cancel at anytime you want. You can now either:</p>
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="button" class="btn">Download</button>
-                    <button type="button" class="btn">Open</button>
-                </div>
-            </div>
-        </div>
-    </div>   
-</div>
-<div class="row">
-    <div class="col-md-12 col-lg-9 col-xl-9">
-        <div class="content-panel__body bg-white">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-    </div>   
-</div>
-
-            <!-- <div class="content-panel__body bg-white" data-ng-if="$ctrl.generatedPdf">
+    <div class="col-xl-6">
+        <div class="content-panel bg-white border-t-none">
+            <div class="content-panel__head bg-white border-grey-xs--btm">
                 <div class="row">
-                    <div class="col-xl-12 d-flex justify-content-end align-items-center">
-                        <p class="font-weight-bold m-r-sm">After reviewing the form, can you confirm the details are correct?</p>
-                        <button type="button" class="btn btn--default bg-phase-red pill-radius m-r-sm">
-                            <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.form1200Incorrect()">Incorrect</a>
-                        </button>
-                        <button type="button" class="btn btn--default bg-phase-green pill-radius">
-                            <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.form1200Correct()">Correct</a>
-                        </button>                        
+                    <div class="col-md-12 col-lg-6 col-xl-12 d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <h4 class="font-h4 m-r-sm" data-ng-if="!$ctrl.form1200.form1200PdfUrl">Generating Form 1200</h4>
+                            <h4 class="font-h4" data-ng-if="$ctrl.form1200.form1200PdfUrl">Review Form 1200</h4>
+                            <img src="assets/imgs/icons/ajax-loader.gif" data-ng-if="!$ctrl.form1200.form1200PdfUrl">
+                        </div>
+                        <div class="row" data-ng-if="$ctrl.form1200.form1200PdfUrl">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn--default bg-phase-green pill-radius m-r-xs">
+                                    <a class="btn__link btn__link--white btn--lg">Open</a>
+                                </button>
+                                <button type="button" class="btn btn--default bg-phase-green pill-radius">
+                                    <a class="btn__link btn__link--white btn--lg">Download</a>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="content-panel__body bg-white">
+                <div class="row m-b-sm">
+                    <div class="col-xl-12 d-flex justify-content-between">
+                        <p class="font-h4 font-weight-medium">Yesterday: <span class="font-weight-medium txt-phase-green">-0.274</span></p>
+                        <p class="font-h4 font-weight-medium">Last Week: <span class="font-weight-medium txt-phase-green">-0.284</span></p>
+                        <p class="font-h4 font-weight-medium">Last Mth: <span class="font-weight-medium txt-phase-red">-0.279</span></p>
+                    </div>
+                </div>
+                <div class="row m-b-sm">
+                    <div class="col-xl-12 d-flex justify-content-between">
+                        <p class="font-h4 font-weight-medium">Today's Fx Rate: 1.874</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
+                        <p>Supplmentary search fee:</p>
+                        <p class="font-weight-medium">$ <span>885.00</span></p>
+                    </div>
+                    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
+                        <p>Designation fee:</p>
+                        <p class="font-weight-medium">$ <span>885.00</span></p>
+                    </div>
+                    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
+                        <p>Examination fee:</p>
+                        <p class="font-weight-medium">$ <span>885.00</span></p>
+                    </div>
+                    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
+                        <p>Filing Fee:</p>
+                        <p class="font-weight-medium">$ <span>885.00</span></p>
+                    </div> 
+                    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
+                        <p>Claims:</p>
+                        <p class="font-weight-medium">$ <span>885.00</span></p>
+                    </div>                                 
+                </div>
+            </div>
+            <div class="content-panel__head border-grey-xs--top">
+                <div class="row">
+                    <div class="col-xl-12 d-flex justify-content-end">
+                        <button type="button" class="btn btn--default bg-phase-red pill-radius m-r-xs" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl">
+                            <a class="btn__link btn__link--white btn--lg">Delete application</a>
+                        </button>
+                        <button type="button" class="btn btn--default bg-phase-green pill-radius m-r-xs" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl">
+                            <a class="btn__link btn__link--white btn--lg">Edit application</a>
+                        </button>
+                        <button type="button" class="btn btn--default bg-phase-green pill-radius" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl">
+                            <a class="btn__link btn__link--white btn--lg">Add to cart</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="content-panel__head border-grey-xs--top">
+                <div class="row">
+                    <div class="col-xl-12 d-flex justify-content-end">
+                        <button type="button" class="btn btn--default bg-phase-green pill-radius">
+                            <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.portfolioDir()">Portfolio</a>
+                        </button>
+                    </div>
+                </div>                
+            </div>
+        </div>      
     </div>
-</div> -->
+</div>

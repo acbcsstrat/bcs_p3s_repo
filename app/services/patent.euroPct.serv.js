@@ -1,15 +1,29 @@
-angular.module('ppApp').service('euroPhaseEntryCtrlService', euroPhaseEntryCtrlService);
+angular.module('ppApp').service('euroPctService', euroPctService);
 
-// euroPhaseEntryCtrlCtrl.$inject = [];
+euroPctService.$inject = ['$q', '$http'];
 
-function euroPhaseEntryCtrlService() {
+function euroPctService($q, $http) {
 
     var factory = {
-        fetchPatent: fetchPatent
+        fetchForm1200: fetchForm1200
     }
 
-    function fetchPatent() {
+    function fetchForm1200() {
         
+        var deferred = $q.defer();
+
+        $http.get('assets/dev_json/patents.json')
+        .then(
+            function(response){
+                deferred.resolve(response.data);
+            },
+            function(errResponse) {
+                deferred.reject(errResponse.data);
+            }
+        )
+
+        return deferred.promise
+
     }
 
     return factory;

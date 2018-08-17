@@ -119,44 +119,41 @@ function appRoutes($stateProvider) {
             controllerAs: '$ctrl'
         })
         .state('portfolio.patent.euro-pct', {
-            views: {
-                '@portfolio.patent': {
-                    templateUrl: 'app/templates/patent.europct.tpl.htm',
-                    controller: 'euroPctCtrl',
-                    controllerAs: '$ctrl',
-                },
-                'euroPctInfo@portfolio.patent.euro-pct': {
-                    templateUrl: 'app/templates/europct.info.tpl.htm',
-                    controller: 'euroPctInfoCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'form1200@portfolio.patent.euro-pct': {
-                    templateUrl: 'app/templates/europct.form1200.tpl.htm',
-                    controller: 'form1200Ctrl',
-                    controllerAs: '$ctrl'
-                },
-                'form1200intro@portfolio.patent.euro-pct': {
-                    templateUrl: 'app/templates/europct.form1200.intro.tpl.htm',
-                    controller: 'form1200IntroCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'form1200questionnaire@portfolio.patent.euro-pct': {
-                    templateUrl: 'app/templates/europct.form1200.questionnaire.tpl.htm',
-                    controller: 'form1200questionnaireCtrl',
-                    controllerAs: '$ctrl'
-                }
-                'form1200generated@portfolio.patent.euro-pct': {
-                    templateUrl: 'app/templates/europct.form1200.generated.tpl.htm',
-                    controller: 'form1200IntroCtrl',
-                    controllerAs: '$ctrl'
-                }
+            abstract: true,
+            templateUrl: 'app/templates/patent.europct.tpl.htm',
+        })
+        .state('portfolio.patent.euro-pct.info', {
+            templateUrl: 'app/templates/europct.info.tpl.htm',
+            controller: 'euroPctInfoCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('portfolio.patent.euro-pct.form1200', {
+            abstract: true,
+            templateUrl: 'app/templates/europct.form1200.tpl.htm'
+        })
+        .state('portfolio.patent.euro-pct.form1200.intro', {
+            templateUrl: 'app/templates/europct.form1200.intro.tpl.htm',
+            controller: 'form1200IntroCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('portfolio.patent.euro-pct.form1200.questionnaire', {
+            templateUrl: 'app/templates/europct.form1200.questionnaire.tpl.htm',
+            controller: 'form1200questionnaireCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('portfolio.patent.euro-pct.form1200.generated', {
+            templateUrl: 'app/templates/europct.form1200.generated.tpl.htm',
+            controller: 'form1200GeneratedCtrl',
+            controllerAs: '$ctrl',
+            params: {
+                generatedPdf: null
             }
         })
         .state('portfolio.patent.renewal', {
             templateUrl: 'app/templates/patent.renewal.tpl.htm',
             controller: 'patentRenewalsCtrl',
             controllerAs: '$ctrl'
-        })                
+        })
         .state('search-patent', {
             url: '/search-patent',
             templateUrl: 'app/templates/patents.search-patent.tpl.htm',

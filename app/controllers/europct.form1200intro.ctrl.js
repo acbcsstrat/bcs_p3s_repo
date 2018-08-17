@@ -11,8 +11,9 @@ function form1200IntroCtrl($scope, patent, $http, $state) {
     vm.loadingQuestions = false;
 
     function initiate1200(appNo) {
-        $scope.$parent.$parent.tabset.active = 1;
-        // vm.activeSelectedTab = 1;
+
+        $state.go('portfolio.patent.euro-pct.form1200.questionnaire', {}, {reload: false});
+
     }
 
 }

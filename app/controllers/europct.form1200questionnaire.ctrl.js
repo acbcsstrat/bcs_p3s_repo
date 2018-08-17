@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('form1200questionnaireCtrl', form1200questionnaireCtrl);
 
-form1200questionnaireCtrl.$inject = ['patent', '$stateParams', '$timeout', 'chunkDataService'];
+form1200questionnaireCtrl.$inject = ['patent', '$stateParams', '$timeout', 'chunkDataService', '$state'];
 
-function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataService) {
+function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataService, $state) {
 
     var vm = this;
 
@@ -127,7 +127,7 @@ function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataServ
     }
 
     function generateForm1200() {
-        $scope.$parent.$parent.tabset.active = 1;
+        $state.go('portfolio.patent.euro-pct.form1200.generated', {}, {reload: false})
     }
 
     function manualProcess(value, question) {
