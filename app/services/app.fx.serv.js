@@ -21,7 +21,7 @@ function fxService($q, $http) {
 				deferred.resolve(response.data)
 			},
 			function(errResponse){
-				deferred.reject(response.data)
+				deferred.reject(errResponse.data)
 			}
 		)
 		return deferred.promise;
