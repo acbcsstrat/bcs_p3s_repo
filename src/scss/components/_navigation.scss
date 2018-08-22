@@ -136,7 +136,17 @@
   }  
 }
 
-.secondary-view-nav__list-item { 
+.secondary-view-nav__list { 
+  .secondary-view-nav__nav-item {
+    margin-right: 1.5rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+}
+
+.secondary-view-nav__nav-link { 
   line-height: $line-h4;
   font-size: $font-h4;
   @include padding-mixin(0.5rem 3rem);
@@ -144,16 +154,19 @@
   &:last-child {
     margin-right: 0;
   }
+  &:hover {
+    text-decoration: none;
+  }  
 } /*needed? rename to view*/ /*rename view-tabs_li-item*/
 
-.secondary-view-nav__link {
-  // @include padding-mixin(0.5rem 3rem);
-  display: block; 
-  color: $blacktxt; 
-}
+// .secondary-view-nav__link {
+//   display: block; 
+//   color: $blacktxt; 
+
+// }
 
 .primary-view-nav__list-item-a, 
-.secondary-view-nav__list-item {
+.secondary-view-nav__nav-link {
   cursor: pointer;
   background: $white;
   border: 1px solid $border;
@@ -162,7 +175,7 @@
   transition: background .2s ease-in-out, border  .2s ease-in-out, color .2s ease-in-out;
 }  
 
-.secondary-view-nav__list-item.active { 
+.secondary-view-nav__nav-link.active { 
     @include list-item-transition; 
 } 
 
@@ -259,7 +272,7 @@
   } 
 }
 
-.primary-view-nav__list-item-a, .secondary-view-nav__list-item--green, .panel-nav__list-item--green {
+.primary-view-nav__list-item-a, .secondary-view-nav__nav-link--green, .panel-nav__list-item--green {
   &:hover, &.active { 
     background: $green; 
     color: $white; 
@@ -271,7 +284,7 @@
 
 }
 
-.secondary-view-nav__list-item--black {
+.secondary-view-nav__nav-link--black {
    &:hover, &.active { 
     background: $black; 
     color: $white; 
