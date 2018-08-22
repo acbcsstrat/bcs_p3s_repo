@@ -31,6 +31,7 @@ require("app/services/checkout.basket.serv.js");
 require("app/services/dashboard.dashboard.serv.js");
 require("app/services/dashboard.selectPhase.serv.js");
 require("app/services/patent.euroPct.serv.js");
+require("app/services/europct.form1200.serv.js");
 require("app/services/patents.patentPhases.serv.js");
 require("app/services/patents.patents.serv.js");
 require("app/services/patents.patentsRest.serv.js");
