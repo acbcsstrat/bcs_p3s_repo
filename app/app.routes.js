@@ -79,7 +79,7 @@ function appRoutes($stateProvider) {
             controller: 'portfolioCtrl',
             controllerAs: '$ctrl',
             resolve: {
-                patents: ['patentsRestService', function(patentsRestService) {                 
+                patents: ['patentsRestService', function(patentsRestService) {     
                     return patentsRestService.fetchAllPatents();
                 }]
             },
@@ -139,7 +139,10 @@ function appRoutes($stateProvider) {
         .state('portfolio.patent.euro-pct.form1200.questionnaire', {
             templateUrl: 'app/templates/europct.form1200.questionnaire.tpl.htm',
             controller: 'form1200questionnaireCtrl',
-            controllerAs: '$ctrl'
+            controllerAs: '$ctrl',
+            params: {
+                questions: null
+            }
         })
         .state('portfolio.patent.euro-pct.form1200.generated', {
             templateUrl: 'app/templates/europct.form1200.generated.tpl.htm',
@@ -149,6 +152,11 @@ function appRoutes($stateProvider) {
                 generatedPdf: null
             }
         })
+        .state('portfolio.patent.euro-pct.cost-analysis', {
+            templateUrl: 'app/templates/europct.costanalysis.tpl.htm',
+            controller: 'euroPctCostAnalysisCtrl',
+            controllerAs: '$ctrl'
+        })        
         .state('portfolio.patent.renewal', {
             templateUrl: 'app/templates/patent.renewal.tpl.htm',
             controller: 'patentRenewalsCtrl',
