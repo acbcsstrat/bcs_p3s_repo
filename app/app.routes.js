@@ -129,7 +129,7 @@ function appRoutes($stateProvider) {
         })
         .state('portfolio.patent.euro-pct.form1200', {
             abstract: true,
-            templateUrl: 'app/templates/europct.form1200.tpl.htm'
+            templateUrl: 'app/templates/europct.form1200.tpl.htm',
         })
         .state('portfolio.patent.euro-pct.form1200.intro', {
             templateUrl: 'app/templates/europct.form1200.intro.tpl.htm',

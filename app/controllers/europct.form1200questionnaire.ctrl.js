@@ -1,12 +1,12 @@
 angular.module('ppApp').controller('form1200questionnaireCtrl', form1200questionnaireCtrl);
 
-form1200questionnaireCtrl.$inject = ['patent', '$stateParams', '$timeout', 'chunkDataService', '$state', '$uibModal'];
+form1200questionnaireCtrl.$inject = ['patent', '$scope', '$stateParams', '$timeout', 'chunkDataService', '$state', '$uibModal'];
 
-function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataService, $state, $uibModal) {
+function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunkDataService, $state, $uibModal) {
 
     var vm = this;
 
-    // vm.manualProcess = manualProcess;
+    vm.manualProcess = manualProcess;
     vm.chkValidStates = chkValidStates;
     vm.chkExtStates = chkExtStates;
     vm.submitForm1200 = submitForm1200;
@@ -145,9 +145,6 @@ function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataServ
 
     }
 
-
-
-
     function sortPageDetails(data) {
 
         var arr = []
@@ -178,14 +175,13 @@ function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataServ
     function submitForm1200(data) {
 
         var arr = sortPageDetails(data);
-
         vm.formData.pageDescriptionsUI = arr;
-        console.log(vm.formData)
+        vm.formData.EP_ApplicationNumber = patent.ep_ApplicationNumber;
 
         // form1200Service.generateForm1200(vm.formData)
         // .then(
         //     function(response){
-                // $state.go('portfolio.patent.euro-pct.form1200.generated', {}, {reload: false})
+                $state.go('portfolio.patent.euro-pct.form1200.generated', {}, {reload: false})
         //     },
         //     function(errResponse){
 
@@ -211,31 +207,55 @@ function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataServ
         vm.formData.extensionStatesUI =  vm.questionsParam.extensionStatesUI;
     }
 
-    // function manualProcess(value, question) {
+    function manualProcess(value, question) {
 
-    //     if(value == true && question == 'amendments') {
-    //         var modalInstance = $uibModal.open({
-    //             templateUrl: 'app/templates/modal.manual-processing-amendments.tpl.htm',
-    //             appendTo: undefined,
-    //             scope: $scope,
-    //             controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
-    //                 console.log('manual-processing-amendments')
-    //                 $scope.dismissModal = function () {
-    //                     $uibModalInstance.close();
-    //                 };
+        if(value == true && question == 'amendments') {
 
-    //                 $scope.ok = function () {
-    //                     $state.go('portfolio', {manual: true}, {reload: true});
-    //                 };
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/templates/modal.manual-processing-amendments.tpl.htm',
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+
+                    vm.proceedMsgAmend  = true;
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+
+                    this.ok = function () {
+                        $state.go('portfolio', {manual: true}, {reload: true});
+                    };
 
 
-    //             }]
-    //         });
-    //     }
+                }]
+            });
+        } else {
+            vm.proceedMsgAmend = false;
+        }
 
-    //     if(value == true && question == 'documents') {
-    //     }
+        if(value == true && question == 'documents') {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/templates/modal.manual-processing-documents.tpl.htm',
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
 
-    // }          
+                    vm.proceedMsgDocs  = true;
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+
+                    this.ok = function () {
+                        $state.go('portfolio', {manual: true}, {reload: true});
+                    };
+
+
+                }]
+            });            
+        } else {
+            vm.proceedMsgDocs = false;
+        }
+
+    }          
 
 }
