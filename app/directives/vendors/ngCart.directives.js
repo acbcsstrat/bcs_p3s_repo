@@ -27,6 +27,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             }
         },
         link:function(scope, element, attrs){
+
             scope.attrs = attrs;
             scope.inCart = function(){
                 return  ngCart.getItemById(attrs.id);
