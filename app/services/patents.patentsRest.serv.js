@@ -4,7 +4,7 @@ patentsRestService.$inject = ['$http', '$q'];
 
 function patentsRestService($http, $q) {
 
-    var REST_SERVICE_URI = ppdomain+'rest-patents/'; 
+    var REST_SERVICE_URI = ppdomain+'rest-patents-portfolio/'; 
 
     var factory = {
         fetchAllPatents: fetchAllPatents,
