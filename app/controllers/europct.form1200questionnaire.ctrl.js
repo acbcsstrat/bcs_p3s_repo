@@ -1,14 +1,20 @@
 angular.module('ppApp').controller('form1200questionnaireCtrl', form1200questionnaireCtrl);
 
-form1200questionnaireCtrl.$inject = ['patent', '$stateParams', '$timeout', 'chunkDataService', '$state'];
+form1200questionnaireCtrl.$inject = ['patent', '$stateParams', '$timeout', 'chunkDataService', '$state', '$uibModal'];
 
-function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataService, $state) {
+function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataService, $state, $uibModal) {
 
     var vm = this;
 
-    vm.manualProcess = manualProcess;
-    // vm.chunkedData = chunkDataService.chunkData(validateStates, 1);
-    vm.generateForm1200 = generateForm1200;
+    // vm.manualProcess = manualProcess;
+    vm.chkValidStates = chkValidStates;
+    vm.chkExtStates = chkExtStates;
+    vm.submitForm1200 = submitForm1200;
+    vm.questionsParam =  $stateParams.questions;
+    vm.formData = {};
+    vm.formData.extensionStatesUI = vm.questionsParam.extensionStatesUI
+    vm.formData.validationStatesUI = vm.questionsParam.validationStatesUI
+
     vm.confirmEntity = {
         index: 0,
         title: function() {
@@ -105,14 +111,27 @@ function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataServ
         } 
     }
 
+
     vm.$onInit = function () {
 
         var questions = {
-            showOptionalQuestion: true,
-            isYear3RenewalDue: false
+            showOptionalQuestion: function() {
+                if(vm.questionsParam.showOptionalQuestion) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            isYear3RenewalDue: function() {
+                if(vm.questionsParam.isYear3RenewalDue) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
 
-        if(questions.showOptionalQuestion) {
+        if(questions.showOptionalQuestion()) {
             vm.documents.active = true;
             vm.extAndValid.index++;
             vm.reference.index++;
@@ -120,24 +139,103 @@ function form1200questionnaireCtrl(patent, $stateParams, $timeout, chunkDataServ
             vm.renewal.index++;
         }
 
-        if(questions.isYear3RenewalDue) {
+        if(questions.isYear3RenewalDue()) {
             vm.renewal.active = true;
         }
 
     }
 
-    function generateForm1200() {
-        $state.go('portfolio.patent.euro-pct.form1200.generated', {}, {reload: false})
+
+
+
+    function sortPageDetails(data) {
+
+        var arr = []
+
+        for(var property in data) {
+            if(data.hasOwnProperty(property)) {
+                switch(property) {
+                    case 'claims':
+                        data[property].type = 'Claims';
+                        arr.push(data[property])
+                    break;
+                    case 'description':
+                        data[property].type = 'Description';
+                        arr.push(data[property])
+                    break;
+                    case 'drawings':
+                        data[property].type = 'Drawings';
+                        arr.push(data[property])
+                    break;
+                }
+            }
+        }
+
+        return arr;
+
     }
 
-    function manualProcess(value, question) {
+    function submitForm1200(data) {
 
-        if(value == true && question == 'amendments') {
+        var arr = sortPageDetails(data);
+
+        vm.formData.pageDescriptionsUI = arr;
+        console.log(vm.formData)
+
+        // form1200Service.generateForm1200(vm.formData)
+        // .then(
+        //     function(response){
+                // $state.go('portfolio.patent.euro-pct.form1200.generated', {}, {reload: false})
+        //     },
+        //     function(errResponse){
+
+        //     }
+        // )
+    }
+
+    function chkValidStates(item, index) {
+        if(item === '') {
+            vm.questionsParam.validationStatesUI[index].selected = true;
+        } else {
+            vm.questionsParam.validationStatesUI[index].selected = false;
         }
+        vm.formData.validationStatesUI =  vm.questionsParam.validationStatesUI;
+    }
 
-        if(value == true && question == 'documents') {
+    function chkExtStates(item, index) {
+        if(item === '') {
+            vm.questionsParam.extensionStatesUI[index].selected = true;
+        } else {
+            vm.questionsParam.extensionStatesUI[index].selected = false;
         }
+        vm.formData.extensionStatesUI =  vm.questionsParam.extensionStatesUI;
+    }
 
-    }          
+    // function manualProcess(value, question) {
+
+    //     if(value == true && question == 'amendments') {
+    //         var modalInstance = $uibModal.open({
+    //             templateUrl: 'app/templates/modal.manual-processing-amendments.tpl.htm',
+    //             appendTo: undefined,
+    //             scope: $scope,
+    //             controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+    //                 console.log('manual-processing-amendments')
+    //                 $scope.dismissModal = function () {
+    //                     $uibModalInstance.close();
+    //                 };
+
+    //                 $scope.ok = function () {
+    //                     $state.go('portfolio', {manual: true}, {reload: true});
+    //                 };
+
+
+    //             }]
+    //         });
+    //     }
+
+    //     if(value == true && question == 'documents') {
+    //     }
+
+    // }          
 
 }
