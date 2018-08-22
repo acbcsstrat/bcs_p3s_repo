@@ -11,12 +11,14 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.rowSelect = rowSelect;
     vm.portfolioData = patents;
 
+    vm.formData = {};
+
     function rowSelect(event){
         vm.patentInfoContent = true;
         if(!$(event.target).hasClass('cartbtn')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].id; //gets data from data-id
-            $state.go('portfolio.patent', {patentId: patentId});
+            $state.go('portfolio.patent.patent-info', {patentId: patentId});
         }
     };    
 

@@ -2,19 +2,19 @@
     <div class="content-panel__head">
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <div class="view-tabs">
-                    <ul class="nav chart-pills">
-                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-init="euroPct.activePatentItemMenu = 'Euro-PCT Info'" data-ng-click="euroPct.activePatentItemMenu = 'Euro-PCT Info'" data-ui-sref-ative="active" data-ng-class="{active : euroPct.activePatentItemMenu == 'Euro-PCT Info'}">
-                            <a data-ui-sref="portfolio.patent.euro-pct.info">Euro-PCT Info</a>
+                <nav class="navbar secondary-view-nav">
+                    <ul class="navbar-nav secondary-view-nav__list">
+                        <li class="secondary-view-nav__nav-item" data-ng-init="euroPct.activePatentItemMenu = 'Euro-PCT Info'" data-ng-click="euroPct.activePatentItemMenu = 'Euro-PCT Info'">
+                            <a class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ui-sref="portfolio.patent.euro-pct.info" data-ui-sref-ative="active" data-ng-class="{active : euroPct.activePatentItemMenu == 'Euro-PCT Info'}">Euro-PCT Info</a>
                         </li>
-                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="euroPct.activePatentItemMenu = 'Form 1200'" data-ng-class="{active : euroPct.activePatentItemMenu == 'Form 1200'}">
-                            <a data-ui-sref="portfolio.patent.euro-pct.form1200.generated">Form 1200</a><!--change back t0 intro-->
+                        <li class="secondary-view-nav__nav-item" data-ng-click="euroPct.activePatentItemMenu = 'Form 1200'" >
+                            <a class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ui-sref="portfolio.patent.euro-pct.form1200.intro" data-ui-sref-active="active" data-ng-class="{active : euroPct.activePatentItemMenu == 'Form 1200'}">Form 1200</a><!--change back t0 intro-->
                         </li>
-                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="euroPct.activePatentItemMenu = 'Cost Analysis'" data-ng-class="{active : euroPct.activePatentItemMenu == 'Cost Analysis'}">
-                           <a data-ui-sref="portfolio.patent.euro-pct.info">Cost Analysis</a>
+                        <li class="secondary-view-nav__nav-item" data-ng-click="euroPct.activePatentItemMenu = 'Cost Analysis'">
+                           <a class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ui-sref="portfolio.patent.euro-pct.cost-analysis" data-ui-sref-active="active" data-ng-class="{active : euroPct.activePatentItemMenu == 'Cost Analysis'}">Cost Analysis</a>
                         </li> 
                     </ul>
-                </div>
+                </nav>
             </div>
         </div>
     </div>

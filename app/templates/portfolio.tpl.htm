@@ -65,33 +65,43 @@
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="patent in $ctrl.portfolioData" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
-                            <td class="t-data__td t-data__w15">
+                            <td class="t-data__td--ellipsis t-data__td t-data__w12">
                                 <span class="td-ellipsis">
-                                    <a class="t-data__a" data-ng-bind="patent.patentApplicationNumber" data-ng-click="$ctrl.rowSelect" ng-attr-id="{{patent.id}}" data-ui-sref="portfolio.patent({patentId: patent.id})"></a>
+                                    <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-click="$ctrl.rowSelect" ng-attr-id="{{patent.id}}" data-ui-sref="portfolio.patent({patentId: patent.id})"></a>
                                 </span>
                             </td>
-                            <td class="t-data__td t-data__w20" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">
+                            <td class="t-data__td--ellipsis t-data__td t-data__w12 ellipsis-remove" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">
                                 <span class="td-ellipsis txt-grey" data-ng-if="patent.clientRef == ''">[No client reference provided]</span>
                                 <span class="td-ellipsis" data-ng-if="patent.clientRef !== ''">{{patent.clientRef}}</span>
                             </td>
-                            </td>                            
-                            <td class="t-data__td t-data__w15" data-ng-class="patent.shortTitle == '' ? 'ellipsis-remove' : ''">
+                            <td class="t-data__td--ellipsis t-data__td t-data__w12 ellipsis-remove" data-ng-class="patent.shortTitle == '' ? 'ellipsis-remove' : ''">
                                 <span class="td-ellipsis txt-grey" data-ng-if="patent.shortTitle == ''">[No client description provided]</span>
                                 <span class="td-ellipsis" data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
                             </td>
-                            </td>
-                            <td class="t-data__td t-data__w15">
+                            <td class="t-data__td--ellipsis t-data__td t-data__w15 ellipsis-remove">
                                 <span class="td-ellipsis" data-ng-bind="patent.epoStatus"></span>
-                            </td>                            
-                            <td class="t-data__td t-data__w20" data-ng-bind="patent.service.ppStatus">
+                            </td>
+                            <td class="t-data__td t-data__w20" data-ng-repeat="item in patent.serviceList">
+                                <span data-ng-bind="item.serviceStatus"></span>
                             </td>
                             <td class="t-data__td t-data__w15">
-                                <div data-ng-if="patent.renewal.renewalStatus == 'Show price'" class="d-flex justify-content-center btn-default">
-                                    <ngcart-addtocart id="{{patent.id}}" class="cartbtn w-100" name="patent_{{patent.id}}" price="{{patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="patent">
-                                    </ngcart-addtocart>
-                                </div>    
-                            </td>                            
-                        </tr>                      
+                                <div class="d-flex justify-content-center btn-default" data-ng-repeat="item in patent.serviceList">
+                                    <div data-ng-if="item.serviceType == 'Form1200'">
+                                        <button data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejeted' || item.serviceStatus == 'Payment failed'" type="button" class="btn btn--default pill-radius bg-phase-green t-data__btn-portal" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">
+                                            <a class="btn__link btn__link--white btn--lg">Generate Form 1200</a>
+                                        </button>
+                                        <div data-ng-if="item.serviceStatus == 'Epct saved'">
+                                            <ngcart-addtocart id="{{patent.id}}" class="cartbtn w-100" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            </ngcart-addtocart>
+                                        </div>                        
+                                    </div>
+                                    <div data-ng-if="item.serviceType == 'Renewal'">
+                                        <ngcart-addtocart id="{{patent.id}}" class="cartbtn w-100" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
+                                        </ngcart-addtocart>
+                                    </div>                                    
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
