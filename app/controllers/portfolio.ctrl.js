@@ -9,10 +9,22 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     $rootScope.page = 'Portfolio'; 
 
     vm.rowSelect = rowSelect;
-    vm.portfolioData = patents;
 
-    vm.formData = {};
 
+
+    vm.$onInit = function() {
+
+        vm.portfolioData = addItem(patents)
+    }
+    
+    function addItem(patents) { //using for testing two services
+
+        patents[3].serviceList[1] = patents[2].serviceList[0];
+
+        return patents
+
+    }
+    console.log(patents)
     function rowSelect(event){
         vm.patentInfoContent = true;
         if(!$(event.target).hasClass('cartbtn')) {
