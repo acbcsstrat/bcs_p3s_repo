@@ -26,6 +26,8 @@ require("app/services/app.fx.serv.js");
 require("app/services/app.fxCalculation.serv.js");
 require("app/services/app.mainNav.serv.js");
 require("app/services/app.timezone.serv.js");
+require("app/services/app.CostAnalysis.serv.js")
+
 require("app/services/checkout.bankTransferCommit.serv.js");
 require("app/services/checkout.basket.serv.js");
 require("app/services/dashboard.dashboard.serv.js");
@@ -36,6 +38,7 @@ require("app/services/patents.patentPhases.serv.js");
 require("app/services/patents.patents.serv.js");
 require("app/services/patents.patentsRest.serv.js");
 require("app/services/patents.searchPatent.serv.js");
+require("app/services/renewal.renewalRest.serv.js")
 require("app/services/transactions.transactionHistory.serv.js");
 require("app/services/transactions.currentTransactions.serv.js");
 require("app/services/user.user.serv.js");

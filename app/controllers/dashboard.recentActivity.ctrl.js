@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('recentActivityCtrl', recentActivityCtrl);
 
-recentActivityCtrl.$inject = ['patents', 'transactionHistory', 'currentTransactions', 'calculateService', 'patentsRestService'];
+recentActivityCtrl.$inject = ['patents', 'transactionHistory', 'currentTransactions', 'calculateService', 'costAnalysisService'];
 
-function recentActivityCtrl(patents, transactionHistory, currentTransactions, calculateService, patentsRestService) {
+function recentActivityCtrl(patents, transactionHistory, currentTransactions, calculateService, costAnalysisService) {
 
 	var vm = this;
 
@@ -32,7 +32,7 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 
 	if(patents) {
 		patents.forEach(function(data){
-			patentsRestService.fetchCostAnalysis(data.id)
+			costAnalysisService.fetchCostAnalysis(data.id)
 			.then(
 				function(response, i){
         			if(data.renewalStatus == 'Show price') {

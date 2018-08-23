@@ -10,10 +10,8 @@ function patentsRestService($http, $q) {
         fetchAllPatents: fetchAllPatents,
         updatePatent: updatePatent,
         savePatent: savePatent,
-        fetchCostAnalysis: fetchCostAnalysis,
-        deletePatent: deletePatent,
-        fetchRenewalHistory: fetchRenewalHistory
-
+        deletePatent: deletePatent
+        // fetchRenewalHistory: fetchRenewalHistory
     };
 
     return factory;
@@ -62,22 +60,6 @@ function patentsRestService($http, $q) {
         return deferred.promise;
     };
 
-    function fetchCostAnalysis(id) {
-
-        var deferred = $q.defer();
-        $http.get(ppdomain+'rest-cost-analysis/'+id)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                deferred.reject(errResponse);
-            }
-        );
-
-        return deferred.promise;
-    };
-
     function deletePatent(id) {
         var deferred = $q.defer();
         $http.delete(REST_SERVICE_URI+id)
@@ -92,20 +74,20 @@ function patentsRestService($http, $q) {
         return deferred.promise;
     };
 
-    function fetchRenewalHistory(id) {
+    // function fetchRenewalHistory(id) {
 
-        var deferred = $q.defer();
-        $http.get(ppdomain+'rest-renewal-history/'+id)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                console.error('Error while fetching renewal history');
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
-    };
+    //     var deferred = $q.defer();
+    //     $http.get(ppdomain+'rest-renewal-history/'+id)
+    //         .then(
+    //         function (response) {
+    //             deferred.resolve(response.data);
+    //         },
+    //         function(errResponse){
+    //             console.error('Error while fetching renewal history');
+    //             deferred.reject(errResponse);
+    //         }
+    //     );
+    //     return deferred.promise;
+    // };
 }
 
