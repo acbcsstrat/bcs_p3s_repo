@@ -32,7 +32,7 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 
 	if(patents) {
 		patents.forEach(function(data){
-			costAnalysisService.fetchCostAnalysis(data.id)
+			costAnalysisService.fetchRenewalCa(data.id)
 			.then(
 				function(response, i){
         			if(data.renewalStatus == 'Show price') {
