@@ -15,10 +15,12 @@ function addPatentCtrl($state, $stateParams, $rootScope, $timeout, $location, $a
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modal.cancel-search.tpl.htm',
             appendTo: undefined,
+            // scope: $scope, // asigns modal to the rootscope rathen than the modal scope
             controllerAs: '$ctrl',
 			controller: ['$uibModalInstance', function($uibModalInstance) {
 
 				this.cancelAdd = function() {
+					$uibModalInstance.close();
 					$state.go('search-patent', {}, {reload: true});
 				}
 
@@ -75,8 +77,9 @@ function addPatentCtrl($state, $stateParams, $rootScope, $timeout, $location, $a
 			  	};
 
 			  	this.cancelAdd = function() {
+	  				$uibModalInstance.close();			  		
 		  			$state.go('search-patent', {}, {reload: true});
-			  		$uibModalInstance.dismiss('cancel');
+
 			  	}
 
 			}]
