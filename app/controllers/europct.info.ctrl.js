@@ -6,29 +6,30 @@ function euroPctInfoCtrl($timeout, chunkDataService, patent) {
 
     var vm = this;
 
-    // vm.displayNotifications = displayNotifications;
+    vm.patent = patent;
+    vm.displayNotifications = displayNotifications;
 
-    // $timeout(function() {
-    //     vm.displayNotifications('Green');
-    // }, 100);    
+    displayNotifications('Green');
 
-    // function displayNotifications(phase) {  //migrate to renewalCtrl
-    //     vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
-    // };
+    function displayNotifications(phase) {
+        $timeout(function() {
+            vm.chunkedData = chunkDataService.chunkData(phaseNotifications(phase), 8);
+            vm.colourPhase = phase;
+        }, 10)
+    }
 
-    // function phaseNotifications(phase) { //migrate to renewalCtrl
+    function phaseNotifications(phase) {
 
-    //     var notificationsArr = patent.notificationUIs;
-    //     var notifications = [];
+        var notifications = [];
 
-    //     notificationsArr.forEach(function(data){
-    //         if(data.costbandcolor == phase) {
-    //             notifications.push(data);
-    //         }
-    //     });
+        vm.patent.notificationUIs.forEach(function(data){
+            if(data.costbandcolor == phase) {
+                notifications.push(data)
+            }
+        })
 
-    //     return notifications;
+        return notifications;
 
-    // }    
+    }
 
 }

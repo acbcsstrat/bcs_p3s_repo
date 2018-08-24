@@ -3,10 +3,10 @@
         <div class="content-panel__head border-grey-xs--btm">
             <div class="row d-flex align-items-center">
                 <div class="col-xl-4">
-                    <p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.patentApplicationNumber}}</p>
+                    <p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
                         <span class="font-weight-bold">EPO Status:</span> 
-                        <span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.renewalStatus}}</span>
+                        <span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.epoStatus}}</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to Renew</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">Renewal lapsed</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Show price'">Open for renewal</span>
@@ -16,17 +16,17 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.progressBar + '%'}">
-                                <span class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentRenewalCost | number: 2 }}</span>
+                                <span class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.currentStageColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.currentStageColour == 'Amber' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.currentStageColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentStageCostUSD | number: 2 }}</span>
                             </div>
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.patent.progressBar) - 1)  + '%'}">
-                                <span data-ng-if="$ctrl.patent.costBandColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.renewalCostNextStageUSD}}</span>
-                                <span data-ng-if="$ctrl.patent.costBandColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
+                                <span data-ng-if="$ctrl.patent.currentStageColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.currentStageColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.currentStageColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.currentStageColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.currentStageColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.nextStageCostUSD}}</span>
+                                <span data-ng-if="$ctrl.patent.currentStageColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
-                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'bg-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.progressBar">{{$ctrl.patent.progressBar}}%</uib-bar></uib-progress>
+                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.patent.currentStageColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.patent.currentStageColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.patent.currentStageColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.patent.currentStageColour == 'Black' ? 'bg-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.progressBar">{{$ctrl.patent.progressBar}}%</uib-bar></uib-progress>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-bold">Next stage: </span> 
-                            <span data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">{{$ctrl.patent.nextStage}}</span>
+                            <span data-ng-class="($ctrl.patent.currentStageColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.currentStageColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.currentStageColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.currentStageColour == 'Black' ? 'txt-phase-white': '')">{{$ctrl.patent.nextStage}}</span>
                         </p>
                         <p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
                     </div>
@@ -121,7 +121,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    </div>                                  
+                                    </div>
                                 </uib-tab>
                                 <uib-tab index="2" heading="Red" data-ng-hide="true">
                                     <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
@@ -255,18 +255,13 @@
                     <div class="row d-flex justify-content-end">
                         <div class="col-xl-6 d-flex justify-content-end">
                             <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-                                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+                                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
                                 </ngcart-addtocart>
                             </div>
                             <div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
                                 <button type="button" class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
                                     <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
                                 </button>
-                            </div>
-                            <div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
-                                <div class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-                                    <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Renewal</a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -281,10 +276,10 @@
         <div class="content-panel__head bg-white border-grey-xs--btm">
             <div class="row d-flex align-items-center">
                 <div class="col-md-4">
-                    <p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.patentApplicationNumber}}</p>
+                    <p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
                         <span class="font-weight-bold">EPO Status:</span> 
-                        <span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.renewalStatus}}</span>
+                        <span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.epoStatus}}</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to Renew</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">Renewal lapsed</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Show price'">Open for renewal</span>
@@ -294,17 +289,17 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.progressBar + '%'}">
-                                <span class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentRenewalCost | number: 2 }}</span>
+                                <span class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.currentStageColour == 'Green' ? 'txt-phase-green': '') + '' + ($ctrl.patent.currentStageColour == 'Amber' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.currentStageColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Blue' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.currentStageCostUSD | number: 2 }}</span>
                             </div>
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.patent.progressBar) - 1)  + '%'}">
-                                <span data-ng-if="$ctrl.patent.costBandColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.renewalCostNextStageUSD}}</span>
-                                <span data-ng-if="$ctrl.patent.costBandColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
+                                <span data-ng-if="$ctrl.patent.currentStageColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="($ctrl.patent.currentStageColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.currentStageColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.currentStageColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.currentStageColour == 'Black' ? 'txt-phase-white': '')">$ {{$ctrl.patent.nextStageCostUSD}}</span>
+                                <span data-ng-if="$ctrl.patent.currentStageColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'bg-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.progressBar">{{$ctrl.patent.progressBar}}%</uib-bar></uib-progress>
+                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.patent.currentStageColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.patent.currentStageColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.patent.currentStageColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.patent.currentStageColour == 'Black' ? 'bg-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.progressBar">{{$ctrl.patent.progressBar}}%</uib-bar></uib-progress>
                         </div>
                     </div>
                 </div>
@@ -321,7 +316,7 @@
                     <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-bold">Next stage: </span> 
-                            <span data-ng-class="($ctrl.patent.costBandColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.costBandColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.costBandColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.costBandColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.costBandColour == 'Black' ? 'txt-phase-white': '')">{{$ctrl.patent.nextStage}}</span>
+                            <span data-ng-class="($ctrl.patent.currentStageColour == 'Green' ? 'txt-phase-amber': '') + '' + ($ctrl.patent.currentStageColour == 'Amber' ? 'txt-phase-red': '') + '' + ($ctrl.patent.currentStageColour == 'Red' ? 'txt-phase-blue': '') + '' + ($ctrl.patent.currentStageColour == 'Blue' ? 'txt-phase-black': '') + '' + ($ctrl.patent.currentStageColour == 'Black' ? 'txt-phase-white': '')">{{$ctrl.patent.nextStage}}</span>
                         </p>
                         <p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
                     </div>
@@ -536,7 +531,7 @@
                         <div class="row d-flex justify-content-end">
                             <div class="col-md-6 d-flex justify-content-end">
                                 <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-                                    <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+                                    <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
                                     </ngcart-addtocart>
                                 </div>
                                 <div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
