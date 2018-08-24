@@ -12,7 +12,7 @@ function form1200IntroCtrl($scope, patent, $http, $state, form1200Service) {
 
     function initiate1200(id) {
 
-        form1200Service.fetchPatent(id)
+        form1200Service.fetchQuestions(id)
         .then(
             function(response){
                 if(response) {

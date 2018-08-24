@@ -5,10 +5,10 @@ form1200Service.$inject = ['$http', '$q'];
 function form1200Service($http, $q) {
 
     var factory = {
-        fetchPatent: fetchPatent
+        fetchQuestions: fetchQuestions
     }
 
-    function fetchPatent(id) {
+    function fetchQuestions(id) {
             
         var deferred = $q.defer()
 
