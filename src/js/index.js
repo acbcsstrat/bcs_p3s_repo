@@ -64,6 +64,7 @@ require("app/controllers/europct.form1200generated.ctrl.js");
 require("app/controllers/europct.costanalysis.ctrl.js");
 require("app/controllers/portfolio.ctrl.js");
 require("app/controllers/patents.listPatents.ctrl.js");
+require("app/controllers/patents.addPatent.ctrl.js");
 require("app/controllers/patents.searchPatent.ctrl.js");
 require("app/controllers/patent.europct.ctrl.js");
 require("app/controllers/patent.patentCostAnalysis.ctrl.js");
