@@ -5,26 +5,61 @@ euroPctService.$inject = ['$q', '$http'];
 function euroPctService($q, $http) {
 
     var factory = {
-        fetchForm1200: fetchForm1200
+        deleteApplication: deleteApplication,
+        editApplication: editApplication,
+        updateNotifications: updateNotifications
     }
 
-    function fetchForm1200() {
-        
-        var deferred = $q.defer();
+    function updateNotifications(id) {
 
-        $http.get('assets/dev_json/patents.json')
+        var deferred = $q.defer()
+
+        $http.put(ppdomain+'rest-epct-notifications/'+id)
         .then(
             function(response){
-                deferred.resolve(response.data);
+                deferred.resolve(response.data)
             },
-            function(errResponse) {
-                deferred.reject(errResponse.data);
+            function(errResponse){
+                deferred.reject(errResponse.data)
             }
         )
 
-        return deferred.promise
+        return deferred.promise;
+    }        
 
+    function deleteApplication(id) {
+            
+        var deferred = $q.defer()
+
+        $http.delete(ppdomain+'rest-start-form1200/'+id)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                deferred.reject(errResponse.data)
+            }
+        )
+
+        return deferred.promise;
     }
+
+    function editApplication(id) {
+            
+        var deferred = $q.defer()
+
+        $http.put(ppdomain+'rest-start-form1200/'+id)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                deferred.reject(errResponse.data)
+            }
+        )
+
+        return deferred.promise;
+    }    
 
     return factory;
 
