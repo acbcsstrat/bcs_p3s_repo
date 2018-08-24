@@ -9,6 +9,6 @@ WEB-INF/tags
 node_modules
 # dist/
 app/views/
-package-lock.json
-package.json
+# package-lock.json
+# package.json
 WEB-INF/views/htmldocs
