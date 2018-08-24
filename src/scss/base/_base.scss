@@ -45,7 +45,7 @@ input,
 table, 
 td, 
 th { 
-  font-family: $font-body; 
+  font-family: $font-body!important; 
 }
 
 p, 
@@ -74,6 +74,11 @@ thead {
   background: #fff;
   margin-top: 0;
   width: 100%;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  padding: 0;
 }
 
 [ng\:cloak], [ng-cloak], .ng-cloak {

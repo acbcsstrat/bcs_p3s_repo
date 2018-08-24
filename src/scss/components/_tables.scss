@@ -69,6 +69,7 @@
 .t-data .t-data__td {
   vertical-align: middle;
   text-align: center;
+  height: 50px;
   @include padding-mixin(1rem 2rem);
 }
 
