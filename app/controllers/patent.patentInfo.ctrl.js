@@ -7,7 +7,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 	var vm = this;
 
 	vm.patent = patent;
-	vm.fetchItemRenewal = fetchItemRenewal;
+	vm.directToRenewal = directToRenewal;
 	vm.fetchItemTransaction = fetchItemTransaction;
 	vm.confirmDeletePatent = confirmDeletePatent;
 	vm.deletePatent = deletePatent;
@@ -16,13 +16,10 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
     vm.doneEditing = doneEditing;
     vm.editing=[];
 
-    console.log(vm.patent)
-
     vm.$onInit = function() {
         if(patent) {
-            fxCalculationService.setFx(patent);
-            vm.patentFx = fxCalculationService;
-
+            // fxCalculationService.setFx(patent);
+            // vm.patentFx = fxCalculationService;
             coreService.ppContact()
             .then(
                 function(response){
@@ -36,8 +33,8 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
         }
     }
 
-	function fetchItemRenewal() {
-		$rootScope.$broadcast("renewalHistory"); //REVISE TO SEE IF MORE EFFICIENT WAY
+	function directToRenewal() {
+		$state.go('portfolio.patent.renewal.info', {}, {reload: false}); //REVISE TO SEE IF MORE EFFICIENT WAY
 	};
 
 	function fetchItemTransaction(id) {
@@ -126,7 +123,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 			templateUrl: 'app/templates/modals/modal.confirm-delete-patent.tpl.htm',
 			appendTo: undefined,
 			controllerAs: '$ctrl',
-			controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+			controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
 				this.dismissModal = function() {
 			    	$uibModalInstance.close();
