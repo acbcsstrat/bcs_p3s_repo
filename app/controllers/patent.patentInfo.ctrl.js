@@ -9,13 +9,14 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 	vm.patent = patent;
 	vm.fetchItemRenewal = fetchItemRenewal;
 	vm.fetchItemTransaction = fetchItemTransaction;
-	vm.openUpdateConfirmModal = openUpdateConfirmModal;
-	vm.openDeleteConfirmModal = openDeleteConfirmModal;
+	vm.confirmDeletePatent = confirmDeletePatent;
 	vm.deletePatent = deletePatent;
     vm.updatePatent = updatePatent;
     vm.editItem = editItem;
     vm.doneEditing = doneEditing;
     vm.editing=[];
+
+    console.log(vm.patent)
 
     vm.$onInit = function() {
         if(patent) {
@@ -69,48 +70,76 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 		);
 	};
 
-	function openUpdateConfirmModal(id) {
+	function updatePatent(id) {
+
+        patentsRestService.updatePatent(patent, id)
+        .then(
+            function(response){
+                updatePatentSuccess();
+            },
+            function(errResponse){
+                updatePatentError();
+            }
+        )
+
+    };
+
+    function updatePatentSuccess() {
 
 		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modals/modal.update-patent.tpl.htm',
+			templateUrl: 'app/templates/modals/modal.update-patent-success.tpl.htm',
 			appendTo: undefined,
-			scope: $scope,
-			controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
-                
-			  	$scope.dismissModal = function () {
+			controllerAs: '$ctrl',
+			controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+			  	this.dismissModal = function() {
 			    	$uibModalInstance.close();
 			  	};
-
-			  	$timeout(function(){
-			  		vm.updatePatent(id); //migrate to renewalsCtrl when API provided
-			  	})
 
 			}]
 
 		});
+        
+    }
 
-	};
+    function updatePatentError() {
 
-	function openDeleteConfirmModal(id) {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.update-patent-error.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
+
+            }]
+
+        });
+
+    }
+
+	function confirmDeletePatent(id) {
 
 		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modals/modal.remove-patent.tpl.htm',
+			templateUrl: 'app/templates/modals/modal.confirm-delete-patent.tpl.htm',
 			appendTo: undefined,
-			scope: $scope,
-			controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timout){
+			controllerAs: '$ctrl',
+			controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
 
-				$scope.dismissModal = function () {
+				this.dismissModal = function() {
 			    	$uibModalInstance.close();
 			  	};
 
-			  	$scope.deletePatent = function () {
-		  			vm.deletePatent(id);
+			  	this.deletePatent = function() {
+		  			deletePatent(id);
 		  			$timeout(function() {
 						$uibModalInstance.close();
 		  			}, 300);
 			  	};
 
-			  	$scope.cancelDeletion = function() {
+			  	this.cancelDeletion = function() {
 			  		$uibModalInstance.dismiss('cancel');
 			  	};
 
@@ -121,36 +150,54 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
  	function deletePatent(id){
 
         patentsRestService.deletePatent(id)
-            .then(function(){
+        .then(
+            function(){
              	$state.go('patents', {}, {reload: true})
          		.then(function(){
-             		$timeout(function(){patentsRestService.fetchAllPatents()}, 400);
+             		$timeout(function(){
+                        patentsRestService.fetchAllPatents()
+                    }, 400);
              	});
             },
             function(errResponse){
-            	if(errResponse.status === 304) {
-					var modalInstance = $uibModal.open({
-						templateUrl: 'app/templates/modals/modal.delete-patent-error.tpl.htm',
-						appendTo: undefined,
-						scope: $scope,
-						controller: ['$uibModalInstance', '$scope', function($uibModalInstance ,$scope) {
-
-							vm.updatePatent(id);
-
-						  	$scope.dismissModal = function () {
-						    	$uibModalInstance.close();
-						  	};
-						}]
-					});
-            	}
+                deletePatentError(errResponse);
             }
         );
     };
 
-    function updatePatent(patent) {
-    	var id = patent.id;
-    	patentsRestService.updatePatent(patent, id);
-    };
+    function deletePatentError(errResponse) {
+
+        if(errResponse.status === 304) {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/templates/modals/modal.delete-patent-error-trans.tpl.htm',
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', function($uibModalInstance) {
+
+                    // vm.updatePatent(id); DONT THINK IS NEEDED
+
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+                }]
+            });
+        } else {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/templates/modals/modal.delete-patent-error.tpl.htm',
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', function($uibModalInstance) {
+
+                    // vm.updatePatent(id); DONT THINK IS NEEDED
+
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+                }]
+            });
+        }
+
+    }
 
     function editItem(index) {
         vm.editing[index] = true;
