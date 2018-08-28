@@ -212,7 +212,7 @@ function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunk
         if(value == true && question == 'amendments') {
 
             var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modal.manual-processing-amendments.tpl.htm',
+                templateUrl: 'app/templates/modals/modal.manual-processing-amendments.tpl.htm',
                 appendTo: undefined,
                 controllerAs: '$ctrl',
                 controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
@@ -235,7 +235,7 @@ function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunk
 
         if(value == true && question == 'documents') {
             var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modal.manual-processing-documents.tpl.htm',
+                templateUrl: 'app/templates/modals/modal.manual-processing-documents.tpl.htm',
                 appendTo: undefined,
                 controllerAs: '$ctrl',
                 controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){

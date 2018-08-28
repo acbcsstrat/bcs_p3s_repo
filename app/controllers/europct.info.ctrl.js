@@ -51,7 +51,7 @@ function euroPctInfoCtrl($timeout, chunkDataService, patent, euroPctService, $ui
 
     function deleteApplicationSuccess() {
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modal.delete-epct-application-success.tpl.htm', //create html for notifications update success
+            templateUrl: 'app/templates/modals/modal.delete-epct-application-success.tpl.htm', //create html for notifications update success
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
@@ -66,7 +66,7 @@ function euroPctInfoCtrl($timeout, chunkDataService, patent, euroPctService, $ui
     function deleteApplicationError(errResponse) {
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modal.delete-epct-application-error.tpl.htm', //create html for notifications update success
+            templateUrl: 'app/templates/modals/modal.delete-epct-application-error.tpl.htm', //create html for notifications update success
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
@@ -86,7 +86,7 @@ function euroPctInfoCtrl($timeout, chunkDataService, patent, euroPctService, $ui
     function editApplicationError(errResponse) {
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modal.edit-epct-application-error.tpl.htm', //create html for notifications update success
+            templateUrl: 'app/templates/modals/modal.edit-epct-application-error.tpl.htm', //create html for notifications update success
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
@@ -105,7 +105,7 @@ function euroPctInfoCtrl($timeout, chunkDataService, patent, euroPctService, $ui
 
     function updateNotificationsSuccess() {
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modal.update-epct-notifications-success.tpl.htm', //create html for notifications update success
+            templateUrl: 'app/templates/modals/modal.update-epct-notifications-success.tpl.htm', //create html for notifications update success
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
@@ -120,7 +120,7 @@ function euroPctInfoCtrl($timeout, chunkDataService, patent, euroPctService, $ui
     function updateNotificationsError(errResponse) {
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modal.update-epct-notifications-error.tpl.htm', //create html for notifications update fail
+            templateUrl: 'app/templates/modals/modal.update-epct-notifications-error.tpl.htm', //create html for notifications update fail
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){

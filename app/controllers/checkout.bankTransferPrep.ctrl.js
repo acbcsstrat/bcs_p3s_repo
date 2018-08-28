@@ -23,7 +23,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 		function openCancelTransModal() {
 
 			var modalInstance = $uibModal.open({
-				templateUrl: 'app/templates/modal.cancel-transaction.tpl.htm',
+				templateUrl: 'app/templates/modals/modal.cancel-transaction.tpl.htm',
 				appendTo: undefined,
 				controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 
@@ -58,7 +58,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	            function(errResponse){
 	            	if(errResponse) {
 						var modalInstance = $uibModal.open({
-							templateUrl: 'app/templates/modal.commit-error.tpl.htm',
+							templateUrl: 'app/templates/modals/modal.commit-error.tpl.htm',
 							appendTo: undefined,
 							controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 

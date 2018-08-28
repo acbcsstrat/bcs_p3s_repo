@@ -134,7 +134,7 @@ function form1200Ctrl(patent, $state) {
 
     // function redirectedPortfolio() {
     //     var modalInstance = $uibModal.open({
-    //         templateUrl: 'app/templates/modal.amendments-made.tpl.htm',
+    //         templateUrl: 'app/templates/modals/modal.amendments-made.tpl.htm',
     //         appendTo: undefined,
     //         scope: $scope,
     //         controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
@@ -149,7 +149,7 @@ function form1200Ctrl(patent, $state) {
 
     //     if(check) {
     //         var modalInstance = $uibModal.open({
-    //             templateUrl: 'app/templates/modal.amendments-made.tpl.htm',
+    //             templateUrl: 'app/templates/modals/modal.amendments-made.tpl.htm',
     //             appendTo: undefined,
     //             scope: $scope,
     //             controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){

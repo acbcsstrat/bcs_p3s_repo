@@ -37,7 +37,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     function manualProcessingModal() {
         $timeout(function(){
             var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modal.submitted-manual-processing.tpl.htm',
+                templateUrl: 'app/templates/modals/modal.submitted-manual-processing.tpl.htm',
                 appendTo: undefined,
                 scope: $scope,
                 controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){

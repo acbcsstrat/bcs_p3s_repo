@@ -19,7 +19,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	  	closeModals();
 
 	  	$scope.warning = $uibModal.open({
-		  	templateUrl: 'app/templates/modal.idle.tpl.htm',
+		  	templateUrl: 'app/templates/modals/modal.idle.tpl.htm',
 	  		windowClass: 'modal-danger',
 			appendTo: undefined
 	    });
@@ -70,7 +70,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modal.welcome-message.tpl.htm',
+			templateUrl: 'app/templates/modals/modal.welcome-message.tpl.htm',
 			scope: $scope,
 			controller: ['$uibModalInstance', function($uibModalInstance) {
 
@@ -159,7 +159,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
     function systemMessageModal() {
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modal.system-message.tpl.htm',
+            templateUrl: 'app/templates/modals/modal.system-message.tpl.htm',
             scope: $scope,
             appendTo: undefined,
             controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
@@ -205,7 +205,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	function urgentPatentModal(response) {
 
 		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modal.urgent-message.tpl.htm',
+			templateUrl: 'app/templates/modals/modal.urgent-message.tpl.htm',
 			scope: $scope,
 			appendTo: undefined,
 			controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {

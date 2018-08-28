@@ -72,7 +72,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 	function openUpdateConfirmModal(id) {
 
 		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modal.update-patent.tpl.htm',
+			templateUrl: 'app/templates/modals/modal.update-patent.tpl.htm',
 			appendTo: undefined,
 			scope: $scope,
 			controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
@@ -94,7 +94,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 	function openDeleteConfirmModal(id) {
 
 		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modal.remove-patent.tpl.htm',
+			templateUrl: 'app/templates/modals/modal.remove-patent.tpl.htm',
 			appendTo: undefined,
 			scope: $scope,
 			controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timout){
@@ -130,7 +130,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
             function(errResponse){
             	if(errResponse.status === 304) {
 					var modalInstance = $uibModal.open({
-						templateUrl: 'app/templates/modal.delete-patent-error.tpl.htm',
+						templateUrl: 'app/templates/modals/modal.delete-patent-error.tpl.htm',
 						appendTo: undefined,
 						scope: $scope,
 						controller: ['$uibModalInstance', '$scope', function($uibModalInstance ,$scope) {
