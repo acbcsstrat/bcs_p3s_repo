@@ -1,4 +1,4 @@
-<div class="content-panel d-none d-xl-block">
+<div class="content-panel d-none d-xl-block border-t-none">
     <div class="bg-white">
         <div class="content-panel__body">
             <div class="row">
@@ -7,8 +7,8 @@
                         <div class="col-xl-12">
                             <div class="view-tabs m-b-md secondary-view-nav">
                                 <ul class="nav secondary-view-nav__list">
-                                    <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ng-click="$ctrl.loadChart(); activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" data-ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
-                                    <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ng-click="$ctrl.loadChart(); activeChart = 1; $ctrl.chartActive = 'FX Chart'" data-ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
+                                    <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ng-click="$ctrl.loadChart(); activeChart = 0;" data-ng-class="{active : activeChart == 0}">Stage Cost Chart</li>
+                                    <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ng-click="$ctrl.loadChart(); activeChart = 1;" data-ng-class="{active : activeChart == 1}">FX Chart</li>
                                 </ul>
                             </div>  
                         </div>
