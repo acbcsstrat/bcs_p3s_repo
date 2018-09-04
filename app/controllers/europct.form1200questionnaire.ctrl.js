@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('form1200questionnaireCtrl', form1200questionnaireCtrl);
 
-form1200questionnaireCtrl.$inject = ['patent', '$scope', '$stateParams', '$timeout', 'chunkDataService', '$state', '$uibModal'];
+form1200questionnaireCtrl.$inject = ['patent', '$scope', '$stateParams', '$timeout', 'chunkDataService', '$state', '$uibModal', 'euroPctService'];
 
-function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunkDataService, $state, $uibModal) {
+function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunkDataService, $state, $uibModal, euroPctService) {
 
     var vm = this;
 
@@ -178,15 +178,17 @@ function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunk
         vm.formData.pageDescriptionsUI = arr;
         vm.formData.EP_ApplicationNumber = patent.ep_ApplicationNumber;
 
-        // form1200Service.generateForm1200(vm.formData)
-        // .then(
-        //     function(response){
-                $state.go('portfolio.patent.euro-pct.form1200.generated', {}, {reload: false})
-        //     },
-        //     function(errResponse){
+        euroPctService.generateForm1200(vm.formData)
+        .then(
+            function(response){
+                $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response}, {reload: false})
+            },
+            function(errResponse){
+                console.log('Error generating form 1200')
+                $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: 'error'}, {reload: false})
+            }
+        )
 
-        //     }
-        // )
     }
 
     function chkValidStates(item, index) {
