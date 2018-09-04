@@ -61,10 +61,10 @@
             <div class="content-panel__head border-grey-xs--top">
                 <div class="row">
                     <div class="col-xl-12 d-flex justify-content-end">
-                        <button type="button" class="btn btn--default bg-phase-red pill-radius m-r-xs" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl">
+                        <button type="button" class="btn btn--default bg-phase-red pill-radius m-r-xs" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">
                             <a class="btn__link btn__link--white btn--lg">Delete application</a>
                         </button>
-                        <button type="button" class="btn btn--default bg-phase-green pill-radius m-r-xs" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl">
+                        <button type="button" class="btn btn--default bg-phase-green pill-radius m-r-xs" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl" data-ng-click="$ctrl.editApplication($ctrl.patent.id)">
                             <a class="btn__link btn__link--white btn--lg">Edit application</a>
                         </button>
                         <button type="button" class="btn btn--default bg-phase-green pill-radius" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl">
@@ -84,4 +84,8 @@
             </div>
         </div>      
     </div>
+    <div class="col-xl-6">
+        <div class="bg-white">
+        </div>
+    </div>  
 </div>
