@@ -139,34 +139,35 @@ function appRoutes($stateProvider) {
             controller: 'form1200GeneratedCtrl',
             controllerAs: '$ctrl',
             params: {
-                generatedPdf: null
+                form1200: null
             }
         })
         .state('portfolio.patent.euro-pct.cost-analysis', {
             templateUrl: 'app/templates/europct.costanalysis.tpl.htm',
             controller: 'euroPctCostAnalysisCtrl',
-            controllerAs: '$ctrl'
-            // resolve: {
-            //     costAnalysis: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
-            //         if(patent) {
-            //             return costAnalysisService.fetchEuroPctCa(patent.id);  
-            //         }
-            //     }]
-            // }            
+            controllerAs: '$ctrl',
+            resolve: {
+                ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
+                    return costAnalysisService.fetchRenewalCa(patent.id);  
+                }]
+            }            
         })        
         .state('portfolio.patent.renewal', {
             abstract: true,
-            templateUrl: 'app/templates/patent.renewal.tpl.htm'
+            templateUrl: 'app/templates/patent.renewal.tpl.htm',
+            resolve: {
+                ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
+                    return costAnalysisService.fetchRenewalCa(patent.id);  
+                }],
+                renewal: ['renewalRestService', '$stateParams', 'patent', function(renewalRestService, $stateParams, patent){
+                        return renewalRestService.fetchHistory(patent.id);
+                }]                   
+            }            
         })
         .state('portfolio.patent.renewal.info', {
             templateUrl: 'app/templates/renewal.info.tpl.htm',
             controller: 'renewalInfoCtrl',
-            controllerAs: '$ctrl',
-            renewal: ['patentsRestService', '$stateParams', 'patent', function(patentsRestService, $stateParams, patent){
-                if(patent) {
-                    return patentsRestService.fetchRenewalHistory(patent.id);
-                }
-            }]            
+            controllerAs: '$ctrl'
         })
         .state('portfolio.patent.renewal.history', {
             templateUrl: 'app/templates/renewal.history.tpl.htm',
@@ -176,14 +177,7 @@ function appRoutes($stateProvider) {
         .state('portfolio.patent.renewal.cost-analysis', {
             templateUrl: 'app/templates/renewal.cost-analysis.tpl.htm',
             controller: 'renewalCaCtrl',
-            controllerAs: '$ctrl',
-            resolve: {
-                costAnalysis: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
-                    if(patent) {
-                        return costAnalysisService.fetchRenewalCa(patent.id);  
-                    }
-                }]
-            }
+            controllerAs: '$ctrl'
         })               
         .state('search-patent', {
             url: '/search-patent',
