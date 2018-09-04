@@ -1,9 +1,11 @@
 angular.module('ppApp').controller('renewalCaCtrl', renewalCaCtrl);
 
-renewalCaCtrl.$inject = ['patent', '$timeout', 'chunkDataService', 'fxCalculationService'];
+renewalCaCtrl.$inject = ['patent','ca', '$timeout', 'chunkDataService', 'costAnalysisService'];
 
-function renewalCaCtrl(patent, $timeout, chunkDataService, fxCalculationService) {
+function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisService) {
 
     var vm = this;
+
+    vm.ca = ca;
 
 }
