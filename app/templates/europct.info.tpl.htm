@@ -98,12 +98,12 @@
                         <div class="col-xl-12">
                             <uib-tabset active="activeNotificationTab" vertical="true" type="pills" class="flex-column">
                                 <uib-tab index="0" heading="Green" data-ng-hide="true">
-                                    <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
                                         <div class="col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
                                             {{item.title}}
                                             <div class="onoffswitch">
                                                 <label class="switch">
-                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <input type="checkbox" data-ng-model="item.defaultOn">
                                                   <span class="slider round bg-phase-green"></span>
                                                 </label>
                                             </div>
@@ -111,12 +111,12 @@
                                     </div>  
                                 </uib-tab>
                                 <uib-tab index="1" heading="Amber" data-ng-hide="true">
-                                    <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
                                         <div class="col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
                                             {{item.title}}
                                             <div class="onoffswitch">
                                                 <label class="switch">
-                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <input type="checkbox" data-ng-model="item.defaultOn">
                                                   <span class="slider round bg-phase-amber"></span>
                                                 </label>
                                             </div>
@@ -124,12 +124,12 @@
                                     </div>
                                 </uib-tab>
                                 <uib-tab index="2" heading="Red" data-ng-hide="true">
-                                    <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
                                         <div class="col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
                                             {{item.title}}
                                             <div class="onoffswitch">
                                                 <label class="switch">
-                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <input type="checkbox" data-ng-model="item.defaultOn">
                                                   <span class="slider round bg-phase-red"></span>
                                                 </label>
                                             </div>
@@ -369,12 +369,12 @@
                             <div class="col-md-12 col-lg-7">
                                 <uib-tabset active="activeNotificationTab" vertical="true" type="pills" class="flex-column">
                                     <uib-tab index="0" heading="Green" data-ng-hide="true">
-                                        <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                        <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
                                             <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
                                                 {{item.title}}
                                                 <div class="onoffswitch">
                                                     <label class="switch">
-                                                      <input type="checkbox" data-ng-model="item.isOn">
+                                                      <input type="checkbox" data-ng-model="item.defaultOn">
                                                       <span class="slider round bg-phase-green"></span>
                                                     </label>
                                                 </div>
@@ -382,12 +382,12 @@
                                         </div>  
                                     </uib-tab>
                                     <uib-tab index="1" heading="Amber" data-ng-hide="true">
-                                        <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                        <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
                                             <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
                                                 {{item.title}}
                                                 <div class="onoffswitch">
                                                     <label class="switch">
-                                                      <input type="checkbox" data-ng-model="item.isOn">
+                                                      <input type="checkbox" data-ng-model="item.defaultOn">
                                                       <span class="slider round bg-phase-amber"></span>
                                                     </label>
                                                 </div>
@@ -395,12 +395,12 @@
                                         </div>                                  
                                     </uib-tab>
                                     <uib-tab index="2" heading="Red" data-ng-hide="true">
-                                        <div class="row" data-ng-repeat="checkbox in $ctrl.chunkedData">
+                                        <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
                                             <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
                                                 {{item.title}}
                                                 <div class="onoffswitch">
                                                     <label class="switch">
-                                                      <input type="checkbox" data-ng-model="item.isOn">
+                                                      <input type="checkbox" data-ng-model="item.defaultOn">
                                                       <span class="slider round bg-phase-red"></span>
                                                     </label>
                                                 </div>
