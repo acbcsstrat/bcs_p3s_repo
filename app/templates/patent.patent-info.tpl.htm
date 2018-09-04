@@ -11,10 +11,11 @@
 					</p>
 			    </div>
 			    <div class="col-xl-6 text-right">
+					<p class="font-h4 font-weight-medium">
+						Services available:
+					</p>
 					<p class="font-h4">
-						Service<span data-ng-if="$ctrl.patent.serviceList.length > 1">s</span> 
-						<span class="font-weight-medium txt-phase-green" data-ng-repeat="service in $ctrl.patent.serviceList">{{service.serviceType}}<span data-ng-if="service.length > 1">, </span></span> 
-						<span data-ng-if="service.length > 1">are</span> available 
+						<span class="font-weight-medium txt-phase-green" data-ng-repeat="service in $ctrl.patent.serviceList"> {{service.serviceType}}</span><span data-ng-if="$ctrl.patent.serviceList.length > 1"> |</span> 
 					</p>
 			    </div>			    
 			</div>
@@ -103,7 +104,7 @@
 					<div class="m-b-sm">
 						<div class="row">
 							<div class="col-xl-12 d-flex justify-content-between m-b-sm">
-								<h3 class="font-weight-medium font-h3">Renewal</h3>
+								<h3 class="font-weight-medium font-h3">Regional Renewal</h3>
 							</div>	
 						</div>						
 						<div class="row">
@@ -132,7 +133,7 @@
 							</div>
 							<div class="row m-b-sm">
 								<div class="col-xl-4">
-									<p class="font-weight-medium">Today:</p>
+									<p class="font-weight-medium">EPO Fees:</p>
 								</div>
 								<div class="col-xl-3">
 									<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.subTotalUSD | number: 2) || '0.00'}}</p>
@@ -146,7 +147,7 @@
 							</div>							
 							<div class="row m-b-sm">
 								<div class="col-xl-4">
-									<p class="font-weight-medium">Yesterday:</p>
+									<p class="font-weight-medium">Patent Place Fees:</p>
 								</div>
 								<div class="col-xl-3">
 									<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.subTotalUSDYesterday | number: 2) || '0.00'}}</p>
@@ -159,18 +160,18 @@
 							</div>
 							<div class="row m-b-sm">
 								<div class="col-xl-4">
-									<p class="font-weight-medium">Last Week:</p>			
+									<p class="font-weight-medium">Total:</p>			
 								</div>
 								<div class="col-xl-3">
-									<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.subTotalUSDLastWeek | number: 2) || '0.00'}}</p>
+									<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.subTotalUSD | number: 2) || '0.00'}}</p>
 								</div>
 								<div class="col-xl-2">
 								</div>								
 								<div class="col-xl-3">
-									<p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.subTotalEURLastWeek | number: 2) || '0.00'}}</p>
+									<p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.subTotalEUR | number: 2) || '0.00'}}</p>
 								</div>												
 							</div>
-							<div class="row m-b-sm">
+						<!-- 	<div class="row m-b-sm">
 								<div class="col-xl-4">
 									<p class="font-weight-medium">Last Month:</p>
 								</div>
@@ -201,48 +202,16 @@
 										<i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patent.renewalFeeUI.variationSave"></i> 
 										&euro; {{($ctrl.patent.renewalFeeUI.fourWeekVariationEUR | number: 2)  || '0.00'}}</p>
 								</div>
-							</div>							
-<!-- 							<div class="row m-b-sm">
-								<div class="col-xl-4">
-									<p class="font-weight-medium">Urgent Fee:</p>
-								</div>
-								<div class="col-xl-3">
-									<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.lastMonthsPriceUSD | number: 2) || '0.00'}}</p>
-								</div>
-								<div class="col-xl-2">
-								</div>								
-								<div class="col-xl-3">
-									<p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.lastMonthsPriceEUR | number: 2) || '0.00'}}</p>
-								</div>												
-							</div>
-							<div class="row m-b-sm">
-								<div class="col-xl-4">
-									<p class="font-weight-medium">Total:</p>
-								</div>
-								<div class="col-xl-3">
-									<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.lastMonthsPriceUSD | number: 2) || '0.00'}}</p>
-								</div>
-								<div class="col-xl-2">
-								</div>								
-								<div class="col-xl-3">
-									<p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.lastMonthsPriceEUR | number: 2) || '0.00'}}</p>
-								</div>												
-							</div>	 -->
-<!-- 							<div class="row m-b-sm">
-								<div class="col-xl-4">
-									<p class="font-weight-medium font-h4">Cost to renew:</p>
-								</div>
-								<div class="col-xl-3">
-									<p class="text-center font-weight-medium font-h4 txt-phase-green">$ 90</p>
-								</div>
-								<div class="col-xl-2">
-								</div>								
-								<div class="col-xl-3">
-									<p class="text-center font-weight-medium font-h4 txt-phase-green">&euro; 105</p>
-								</div>												
-							</div>		 -->																			
+							</div> -->														
 						</div>
+
 					</div> <!-- row end -->
+					<div class="row">
+						<div class="col-md-12">
+							<p class="font-h4 font-weight-medium">Save: <span class="txt-phase-green">$ 100</span></p>
+							<p>Renew before: <span data-ng-bind="$ctrl.renewalFeeUI"></span></p>
+						</div>
+					</div>
 					<div class="row d-flex justify-content-end">
 						<div class="col-xl-6 d-flex justify-content-end">
 							<div data-ng-if="$ctrl.patent.renewalFeeUI !== null">
@@ -254,6 +223,7 @@
 							 		<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
 				        		</button>
 						 	</div> -->
+						 	
 				        	<div><!-- data-ng-if="$ctrl.patent.portfolioUI.serviceList.serviceType == 'Renewal'" review if condition is correct when api released-->
 				        		<div class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
 						 			<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.directToRenewal()">View Fee Breakdown</a> <!--data-ui-sref="patents.patent({patentId: $ctrl.patent.id})"-->
