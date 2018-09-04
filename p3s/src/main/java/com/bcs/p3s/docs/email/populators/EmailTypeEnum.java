@@ -1,4 +1,4 @@
-package com.bcs.p3s.docs.email.Populators;
+package com.bcs.p3s.docs.email.populators;
 
 // What purpose does this server - Does this still serve any purpose ? - acTidy
 /**

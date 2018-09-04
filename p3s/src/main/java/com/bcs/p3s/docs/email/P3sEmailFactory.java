@@ -1,15 +1,15 @@
 package com.bcs.p3s.docs.email;
 
-import com.bcs.p3s.docs.email.Populators.AbstractPopulator;
-import com.bcs.p3s.docs.email.Populators.CertificatePopulator;
-import com.bcs.p3s.docs.email.Populators.ForgotPasswordPopulator;
-import com.bcs.p3s.docs.email.Populators.InternalUseOnlyPopulator;
-import com.bcs.p3s.docs.email.Populators.RegisterPopulator;
-import com.bcs.p3s.docs.email.Populators.ReminderBasicDetailsPopulator;
-import com.bcs.p3s.docs.email.Populators.ReminderColourOpenPopulator;
-import com.bcs.p3s.docs.email.Populators.ReminderInBlackPopulator;
-import com.bcs.p3s.docs.email.Populators.ReminderStandardPopulator;
-import com.bcs.p3s.docs.email.Populators.TransactionPopulator;
+import com.bcs.p3s.docs.email.populators.AbstractPopulator;
+import com.bcs.p3s.docs.email.populators.CertificatePopulator;
+import com.bcs.p3s.docs.email.populators.ForgotPasswordPopulator;
+import com.bcs.p3s.docs.email.populators.InternalUseOnlyPopulator;
+import com.bcs.p3s.docs.email.populators.RegisterPopulator;
+import com.bcs.p3s.docs.email.populators.ReminderBasicDetailsPopulator;
+import com.bcs.p3s.docs.email.populators.ReminderColourOpenPopulator;
+import com.bcs.p3s.docs.email.populators.ReminderInBlackPopulator;
+import com.bcs.p3s.docs.email.populators.ReminderStandardPopulator;
+import com.bcs.p3s.docs.email.populators.TransactionPopulator;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.util.lang.Universal;
 

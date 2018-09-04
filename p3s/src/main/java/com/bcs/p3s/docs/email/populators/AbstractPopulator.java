@@ -1,4 +1,4 @@
-package com.bcs.p3s.docs.email.Populators;
+package com.bcs.p3s.docs.email.populators;
 
 import java.util.ArrayList;
 import java.util.List;

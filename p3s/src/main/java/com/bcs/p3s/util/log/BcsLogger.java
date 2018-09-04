@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.bcs.p3s.docs.email.P3sEmail;
 import com.bcs.p3s.docs.email.P3sEmailFactory;
-import com.bcs.p3s.docs.email.Populators.EmailTypeEnum;
+import com.bcs.p3s.docs.email.populators.EmailTypeEnum;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.util.email.EmailSender;
 

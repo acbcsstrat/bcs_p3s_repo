@@ -15,4 +15,4 @@
  * So by the time the client is able to call generateEmail(), it's all ready
  * 
  */
-package com.bcs.p3s.docs.email.Populators;
+package com.bcs.p3s.docs.email.populators;

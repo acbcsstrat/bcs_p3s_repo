@@ -1,6 +1,6 @@
 package com.bcs.p3s.docs.email;
 
-import com.bcs.p3s.docs.email.Populators.EmailTypeEnum;
+import com.bcs.p3s.docs.email.populators.EmailTypeEnum;
 
 /**
  * All P3S emails implement this

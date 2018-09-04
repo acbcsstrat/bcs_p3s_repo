@@ -1,6 +1,6 @@
 package com.bcs.p3s.docs.email;
 
-import com.bcs.p3s.docs.email.Populators.EmailTypeEnum;
+import com.bcs.p3s.docs.email.populators.EmailTypeEnum;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;

@@ -1,4 +1,4 @@
-package com.bcs.p3s.docs.email.Populators;
+package com.bcs.p3s.docs.email.populators;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,41 +16,38 @@ import com.bcs.p3s.wrap.TwoColRecord;
 
 /**
  * 
- * The Populator for emails associated with the 'ColourOpen' Reminder/Notification emails
- * 'ColourOpen' means that the window for renewing (whether green or blue) has just opened. 
+ * The Populator for Basic details. 
+ * Can be used on its own, but likely to be extended by other populators
  * 
  * This supports the template: 
- * 		EmailTemplates.email_reminder_green_opens
- * 		EmailTemplates.email_reminder_blue_opens
+ * 		EmailTemplates.email_reminder_after_black
  *   
  */
-public class ReminderColourOpenPopulator extends AbstractPopulator implements Injectables {
+public class ReminderBasicDetailsPopulator extends AbstractPopulator implements Injectables {
 
 	// Constructor - populates the P3sEmailData
 	// for use with: email_reminder_green_opens & email_reminder_blue_opens
-	public ReminderColourOpenPopulator(String templateName, Object obP3suser, Object obPatent, Object obPrice)
+	public ReminderBasicDetailsPopulator(String templateName, Object obP3suser, Object obPatent)
 	{
-		// same as email_reminder_standard, but has no TimeBeforeChangePhrase nor TimestampOfNextColourChange
 		super(templateName);  // set templateName
-		templatetype = EmailTypeEnum.REMINDER;
-		String err = "ReminderColourOpenPopulator constructor ("+templateName+") : ";
+		templatetype = EmailTypeEnum.REMINDER; // Used for logging of emails sent
+		String err = "ReminderBasicDetailsPopulator constructor ("+templateName+") : ";
 
-		if (EmailTemplates.email_reminder_green_opens.equals(templateName)
-		 || EmailTemplates.email_reminder_blue_opens.equals(templateName)
-		 || EmailTemplates.email_reminder_standard.equals(templateName) // Must include this for the extended class 
+		if (EmailTemplates.email_reminder_after_black.equals(templateName)
+		 || EmailTemplates.email_reminder_black_5day.equals(templateName) // Must include these for the extended class 
 		) 
 		{
-			populateForColourOpenReminder(templateName, obP3suser, obPatent, obPrice);
+			populateBasicDetailsReminder(templateName, obP3suser, obPatent);
 		}
 		else fail(err+"cannot support offered template (templateName): "+templateName);
 	}
 	
 	
 
-	protected void populateForColourOpenReminder(String templateName, Object obP3suser, Object obPatent, Object obPrice) {
-		String err = "ReminderColourOpenPopulator populateForColourOpenReminder : ";
+	protected void populateBasicDetailsReminder(String templateName, Object obP3suser, Object obPatent) {
+		String err = "ReminderBasicDetailsPopulator populateBasicDetailsReminder : ";
 
-		prepareDataForColourOpensReminder(templateName, obP3suser, obPatent, obPrice);
+		prepareDataForBasicDetailsReminder(templateName, obP3suser, obPatent);
 		
 		
 		// data is now populated with all the injectables required for this template
@@ -64,20 +61,16 @@ public class ReminderColourOpenPopulator extends AbstractPopulator implements In
 	
 	
 	
-	protected void prepareDataForColourOpensReminder(String templateName, Object obP3suser, Object obPatent,
-			Object obPrice) {
+	protected void prepareDataForBasicDetailsReminder(String templateName, Object obP3suser, Object obPatent) {
 		// Supports ALL email reminder templates 
-		String err = "ReminderColourOpenPopulator prepareDataForColourOpensReminder : ";
-		if  ( isEmpty(templateName) || (obP3suser==null) || (obPatent==null) 
-			|| (obPrice==null)) 
-				fail(err+"invoked with Bad Parameters : "+isEmpty(templateName)+(obP3suser==null)+(obPatent==null)+(obPrice==null));
+		String err = "ReminderBasicDetailsPopulator prepareDataForBasicDetailsReminder : ";
+		if  ( isEmpty(templateName) || (obP3suser==null) || (obPatent==null) ) 
+				fail(err+"invoked with Bad Parameters : "+isEmpty(templateName)+(obP3suser==null)+(obPatent==null));
 		P3SUser userRecord = null;
 		Patent patent = null;
-		String price = null;
 		try {
 			userRecord = (P3SUser) obP3suser;
 			patent = (Patent) obPatent;
-			price = (String) obPrice;
 		} catch (Exception e) { fail(err+"failed casting of object parameters", e); }
 		
 		
@@ -100,10 +93,6 @@ public class ReminderColourOpenPopulator extends AbstractPopulator implements In
 
 		// 2of3: retrieve patent details
 		data.setPatentApplicationNumber(patent.getEP_ApplicationNumber());
-//		data.setPatentTitle(patent.getTitle());
-//		data.setPatentShortTitle(patent.getShortTitle());
-//		data.setPatentClientRef(patent.getClientRef());
-		data.setPrice(price);
 		
 		TwoColRecord a2colRecord = null;
 		List<TwoColRecord> patentDetails = new ArrayList<TwoColRecord>();
@@ -125,11 +114,12 @@ public class ReminderColourOpenPopulator extends AbstractPopulator implements In
 		// Set any dummy values needed to prevent NPE here, if invoked by extended class
 		data.setTimeBeforeChangePhrase("TEMPORARY_VALUE");
 		data.setTimestampOfNextColourChange("TEMPORARY_VALUE");
+		data.setPrice("TEMPORARY_VALUE");
 	}
 	
 	
 	protected void prepareEmailContent() {
-		String err = "ReminderColourOpenPopulator prepareEmailContent : ";
+		String err = "ReminderBasicDetailsPopulator prepareEmailContent : ";
 
 		EmailTemplateReader eReader = new EmailTemplateReader();
 		List<String> wholeTemplate = eReader.readTemplate(this.templateName);
@@ -149,15 +139,15 @@ public class ReminderColourOpenPopulator extends AbstractPopulator implements In
 		currentLine = subjectLinePREinject;
 		injectPATENT_APPLICATION_NUMBER();		
 		
-		zz("ReminderColourOpenPopulator prepareEmailContent : PREinject Subject WAS "+subjectLinePREinject);
-		zz("ReminderColourOpenPopulator prepareEmailContent : injectIntoSubject has created "+currentLine);
+		zz("ReminderBasicDetailsPopulator prepareEmailContent : PREinject Subject WAS "+subjectLinePREinject);
+		zz("ReminderBasicDetailsPopulator prepareEmailContent : injectIntoSubject has created "+currentLine);
 
 		return currentLine;
 	}
 	
 	
 	protected String injectIntoBody(List<String> wholeTemplate) {
-		String err = "ReminderColourOpenPopulator injectIntoBody ("+ this.templateName +") : ";
+		String err = "ReminderBasicDetailsPopulator injectIntoBody ("+ this.templateName +") : ";
 		log().debug(err+"invoked");
 		String newHtmlBody = doAllInjectionsIntoBody(wholeTemplate);
 		return newHtmlBody;
@@ -173,7 +163,6 @@ public class ReminderColourOpenPopulator extends AbstractPopulator implements In
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectFIRSTNAME();
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectLASTNAME();
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectCOMPANY_NAME();
-		if (moreInjectionsNeeded) moreInjectionsNeeded = injectPRICE();
 		if (moreInjectionsNeeded) moreInjectionsNeeded = injectLOGIN_URL();
 		
 		// Check for Repeating sets
