@@ -21,14 +21,14 @@
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="form-group">
-                                        <label for="confirmEntityModel""><span class="font-weight-medium">The/Each applicant hereby declares that he is an entity or a natural person under Rule 6(4) EPC.</span>
-                                            <input type="checkbox" name="entityCheck" data-ng-model="confirmEntityModel" class="m-l-xs" required>
+                                        <label for="entityCheck"><span class="font-weight-medium">The/Each applicant hereby declares that he is an entity or a natural person under Rule 6(4) EPC.</span>
+                                            <input type="checkbox" name="entityCheck" data-ng-model="$ctrl.confirmEntityModel" class="m-l-xs" required>
                                         </label>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 d-flex justify-content-end">
 
-                                            <button class="btn pill-radius btn--default bg-phase-green pill-radius" data-ng-disabled="!confirmEntityModel"" data-ng-click="$ctrl.confirmEntity.fn()" type="button">
+                                            <button class="btn pill-radius btn--default bg-phase-green pill-radius" data-ng-disabled="$ctrl.confirmEntityModel"" data-ng-click="$ctrl.confirmEntity.fn()" type="button">
                                                 <a class="btn__link btn__link btn--lg">Next</a>
                                             </button>
                                         </div>

@@ -39,7 +39,7 @@ function euroPctInfoCtrl($timeout, chunkDataService, patent, euroPctService, $ui
         euroPctService.editApplication(id)
         .then(
             function(response){
-                // $state.go()
+                $state.go('portfolio.patent.euro-pct.form1200.questionnaire', {savedForm1200: response.data}, {reload: false}) //send saved data to questionnaire
             },
             function(errResponse){
                 editApplicationError(errResponse);
@@ -48,7 +48,6 @@ function euroPctInfoCtrl($timeout, chunkDataService, patent, euroPctService, $ui
     }    
 
     function updateNotifications(id) {
-        console.log(id)
         euroPctService.updateNotifications(id)
         .then(
             function(response){
@@ -70,6 +69,7 @@ function euroPctInfoCtrl($timeout, chunkDataService, patent, euroPctService, $ui
                 this.dismissModal = function () {
                     $uibModalInstance.close();
                 };
+                $state.go('portfolio.patent', {patentId: patent.id}, {reload: true}); //go to patent info on successful deletion
             }]
 
         });

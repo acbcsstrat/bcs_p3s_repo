@@ -10,10 +10,8 @@ function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunk
     vm.chkValidStates = chkValidStates;
     vm.chkExtStates = chkExtStates;
     vm.submitForm1200 = submitForm1200;
-    vm.questionsParam =  $stateParams.questions;
+    vm.questionsParam =  $stateParams.questions; //questions passed from form1200.intro
     vm.formData = {};
-    vm.formData.extensionStatesUI = vm.questionsParam.extensionStatesUI
-    vm.formData.validationStatesUI = vm.questionsParam.validationStatesUI
 
     vm.confirmEntity = {
         index: 0,
@@ -113,34 +111,42 @@ function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunk
 
 
     vm.$onInit = function () {
+        if($stateParams.savedForm1200) { //if user is editing
+            $ctrl.formData = $stateParams.savedForm1200;
+            $ctrl.confirmEntityModel = true; //tick entity checjbox
+        } else { //if new form
 
-        var questions = {
-            showOptionalQuestion: function() {
-                if(vm.questionsParam.showOptionalQuestion) {
-                    return true;
-                } else {
-                    return false;
-                }
-            },
-            isYear3RenewalDue: function() {
-                if(vm.questionsParam.isYear3RenewalDue) {
-                    return true;
-                } else {
-                    return false;
+            vm.formData.extensionStatesUI = vm.questionsParam.extensionStatesUI;
+            vm.formData.validationStatesUI = vm.questionsParam.validationStatesUI;
+            
+            var questions = {
+                showOptionalQuestion: function() {
+                    if(vm.questionsParam.showOptionalQuestion) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                isYear3RenewalDue: function() {
+                    if(vm.questionsParam.isYear3RenewalDue) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
-        }
 
-        if(questions.showOptionalQuestion()) {
-            vm.documents.active = true;
-            vm.extAndValid.index++;
-            vm.reference.index++;
-            vm.confirmPages.index++;
-            vm.renewal.index++;
-        }
+            if(questions.showOptionalQuestion()) {
+                vm.documents.active = true;
+                vm.extAndValid.index++;
+                vm.reference.index++;
+                vm.confirmPages.index++;
+                vm.renewal.index++;
+            }
 
-        if(questions.isYear3RenewalDue()) {
-            vm.renewal.active = true;
+            if(questions.isYear3RenewalDue()) {
+                vm.renewal.active = true;
+            }
         }
 
     }
@@ -178,16 +184,11 @@ function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunk
         vm.formData.pageDescriptionsUI = arr;
         vm.formData.EP_ApplicationNumber = patent.ep_ApplicationNumber;
 
-        euroPctService.generateForm1200(vm.formData)
-        .then(
-            function(response){
-                $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response}, {reload: false})
-            },
-            function(errResponse){
-                console.log('Error generating form 1200')
-                $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: 'error'}, {reload: false})
-            }
-        )
+        $timeout(function(){
+            $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: vm.formData}, {reload: true})
+        }, 300)
+
+
 
     }
 

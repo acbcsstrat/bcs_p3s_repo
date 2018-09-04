@@ -13,11 +13,29 @@ function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euro
     vm.loadingQuestions = false;
     vm.form1200 = {};
     vm.costData = $stateParams.form1200.form1200FeeUI;
-    var fetchForm1200 = fetchForm1200;
+    // var fetchForm1200 = fetchForm1200;
 
-    if(!vm.form1200.form1200PdfUrl) {
-        fetchForm1200()
+    vm.$onInit = function() {
+        form1200Generating();
+        fetchForm1200();
     }
+
+    function form1200Generating() {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.form1200-generating.tpl.htm', //create html for notifications update success
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', function($uibModalInstance){
+                this.dismissModal = function () {
+                    $uibModalInstance.close();
+                };
+            }]
+
+        })
+
+    } 
+
 
     function deleteApplication(id) {    
         euroPctService.deleteApplication(id)
@@ -35,7 +53,7 @@ function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euro
         euroPctService.editApplication(id)
         .then(
             function(response){
-                // $state.go()
+                $state.go('portfolio.patent.euro-pct.form1200.questionnaire', {savedForm1200: response.data}, {reload: false}) //send saved data to questionnaire
             },
             function(errResponse){
                 editApplicationError(errResponse);
@@ -52,12 +70,10 @@ function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euro
                 this.dismissModal = function () {
                     $uibModalInstance.close();
                 };
+                $state.go('portfolio.patent', {patentId: patent.id}, {reload: true}); //go to patent info on successful deletion
             }]
 
-        })
-        // .closed.then(function(){
-        //     $state.go('portfolio.patent',{patentId: patent.id}, {reload: true})
-        // });
+        });
     }
 
     function deleteApplicationError(errResponse) {
@@ -78,7 +94,7 @@ function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euro
 
         });
 
-    }        
+    }
 
     function editApplicationError(errResponse) {
 
@@ -98,26 +114,25 @@ function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euro
 
         });
 
-    }   
+    }
 
     function fetchForm1200() {
         euroPctService.generateForm1200($stateParams.form1200)
         .then(
             function(response){
-                $timeout(function(){
-                    if(response.patents[0].ep_ApplicationNumber) {
-                        vm.form1200.form1200PdfUrl = true;
-                    } else {
-                        $timeout(function(){
-                            fetchForm1200();
-                        }, 10000)
-                    }
-                }, 5000)
-                // $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response}, {reload: false})
+
+                if(response.patents[0].form1200PdfUrl !== '' || response.patents[0].form1200PdfUrl !== null) {
+                    vm.form1200 = response.patents[0];
+                } else {
+                    $timeout(function(){
+                        fetchForm1200();
+                    }, 10000)
+                }
+
             },
             function(errResponse){
                 console.log('Error generating form 1200')
-                // $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: 'error'}, {reload: false})
+                $state.go('portfolio', {reload: false})
             }
         )
     }
