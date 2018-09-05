@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.Message.RecipientType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -18,6 +19,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import com.bcs.p3s.docs.email.P3sEmail;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 import com.bcs.p3s.util.lang.Universal;
 
@@ -72,24 +76,44 @@ public class EmailSender extends Universal {
 	    	}
 	    	
 			message.setContent(multipart);
+
+	    	addBccToOpsIfRequired(emailContent);
+
     	} catch (Exception e1) {
 			fail("Failed whilst preparing email");
 		}  
 	}
 
-// acTidy - 171107 - maybe these are NOT redundant ??
 	/** Add recipient **/
 	public void addRecipient(String another) {
-		internalAddRecipient(another);
+		internalAddRecipient(another, Message.RecipientType.TO);
 		setRecip = true;
 	}
 	/** replace recipient with PanicDevs **/
 	public void setRecipientsToDevs() {
-		internalAddRecipient("andychapman1977@gmail.com");
-		internalAddRecipient("andy.chapman@boxcleversoftware.com");
+		internalAddRecipient("andychapman1977@gmail.com", Message.RecipientType.TO);
+		internalAddRecipient("andy.chapman@boxcleversoftware.com", Message.RecipientType.TO);
 		setRecip = true;
 	}
+	/** Add a BCC to our Operations team, if required **/
+	protected void addBccToOpsIfRequired(P3sEmail emailContent) {
+		if (emailContent==null) return;
+		if (emailContent.isBccToOps() == true) {
+			
+			String opsEmailAddress = null;
+			try {
+				P3SPropertyReader reader = new P3SPropertyReader();
+				opsEmailAddress = reader.getESProperty(P3SPropertyNames.NOTIFY_P3S_OPS_EMAIL_ADDRESS); 
 
+				log().debug(" addBccToOpsIfRequired adding BCC2OPS("+opsEmailAddress+") : Template="+emailContent.getTemplateName());
+				internalAddRecipient(opsEmailAddress, Message.RecipientType.BCC);
+
+			} catch (P3SPropertyException e) {
+				logInternalError().error("EmailSender addBccToOpsIfRequired() : property read failed",e);
+			}
+		}
+	}
+	
 	
 	
 	/**
@@ -116,16 +140,13 @@ public class EmailSender extends Universal {
 	}
 
 	
-	protected void internalAddRecipient(String recip) {
+	protected void internalAddRecipient(String recip, RecipientType emailRecipType) {
 		try {
-			message.addRecipient(Message.RecipientType.TO,   
-	    			new InternetAddress(recip));  
+			message.addRecipient(emailRecipType, new InternetAddress(recip));  
 		} catch (AddressException e1) {
-	    	System.out.println("exception preparing msg - part 1");
-			e1.printStackTrace();
-		} catch (MessagingException e1) {
-	    	System.out.println("exception preparing msg - part 2");
-			e1.printStackTrace();
+			logInternalError().error("exception preparing msg - part 1 - for "+recip,e1);
+		} catch (MessagingException e2) {
+			logInternalError().error("exception preparing msg - part 2 - for "+recip,e2);
 		}  
 	}
 
