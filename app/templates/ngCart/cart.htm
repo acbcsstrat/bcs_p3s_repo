@@ -1,0 +1,50 @@
+<div class="alert alert-warning m-b-lg" role="alert" data-ng-show="ngCart.getTotalItems() === 0">
+    <span class="font-body">Your cart is empty</span>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="t-list table table-responsive m-b-lg" data-ng-show="ngCart.getTotalItems() > 0">
+            <table class="table t-data ngCart cart text-md-center">
+                <thead>
+                    <tr class="font-body font-weight-bold">
+                        <th class="t-data__th text-md-center">Application No.</th>
+                        <th class="t-data__th text-md-center">Client Reference</th>
+                        <th class="t-data__th text-md-center">Client Description</th>
+                        <th class="t-data__th text-md-center">Amount</th>
+                        <th class="t-data__th text-md-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="t-data__tr" data-ng-repeat="item in ngCart.getCart().items track by $index" class="font-body">
+                        <td class="t-data__td">{{item.getData().patentApplicationNumber}}</td>
+                        <td class="t-data__td">
+                            <span data-ng-if="item.getData().clientRef == ''" class="txt-grey">[No client reference provided]</span>
+                            <span data-ng-if="item.getData().clientRef !== ''">{{item.getData().clientRef}}</span>
+                        </td>
+                        <td class="t-data__td">
+                            <span data-ng-if="item.getData().clientRef == ''" class="txt-grey">[No client description provided]</span>
+                            <span data-ng-if="item.getData().clientRef !== ''">{{item.getData().shortTitle}}</span>
+                        </td>
+                        <td class="t-data__td">$ {{item.getData().feeUI.subTotalUSD | number: 2}}</td>
+                        <td class="t-data__td">
+                            <div class="btn-cancel">
+                                <button class="btn btn--lg btn--white btn-error--cross pill-radius bg-phase-red" data-ng-click="ngCart.removeItemById(item.getId())">
+                                   Remove
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>        
+    </div>
+</div>
+
+<div class="row m-b-lg">
+    <div class="col-md-12 d-flex btn-default">
+        <div class="btn bg-phase-green pill-radius font-weight-medium d-flex align-items-center">
+            <a class="btn__link btn__link--white btn--lg" data-ui-sref="patents">Add More Patents <img src="assets/imgs/icons/patent_icon_sm.png" alt="patent icon" class="m-l-sm"></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,172 @@
+<html>
+
+<body>
+	Launch !
+	<p />
+
+	Click
+	<a href="../login">here</a> to login
+
+
+	<p />
+	OR
+
+	<p />
+	Click
+	<a href="../public/unsecured.html">here</a>
+	for a HTML page that does NOT require login
+	<br />By comparison,
+	<a href="../secured.html">this</a> page does
+	require you to be logged in.
+
+	<p />
+	If already logged in (or not)
+	<a href="../index.htm">this</a> attempts to
+	access the initial 'dashboard' page.
+
+	<p />
+	For debugging,
+	<a href="../whoami">this</a> tells you who
+	you are logged in as.
+
+	<p />
+	And to LOGOUT - Click
+	<a
+		href="../resources/j_spring_security_logout">here</a>
+
+	<p />
+	&nbsp;
+	<p />
+	&nbsp;
+	<p />
+	&nbsp;
+	<p />
+	Fixit test string : http://localhost:8080/p3sweb/
+	<br/>
+	For Debugging & Demo: to see the JSON data provided by the REST
+	services:
+	<br/>
+<a href="../login-messages/">login-messages</a>
+<br/>
+<a href="../rest-user/">getMyUserProfile</a>
+&nbsp;&nbsp;<a href="../rest-users/">List Users for my Business</a>
+&nbsp;&nbsp;<a href="../fileuploadform.jsp">AvatarUpload</a>
+&nbsp;&nbsp;<a href="../avatarImage">View Avatar (with or without 'id') [ ?id=7 ]</a>
+<br/>
+<a href="../rest-patents/">getAllMyPatents</a>
+<br/>
+<a href="../rest-user/">getMyUserProfile</a>
+&nbsp;&nbsp;<a href="../rest-users/">List Users for my Business</a>
+<br/>
+<a href="../rest-cost-analysis/"> CostAnalysisData</a>
+<br/>
+FxRate <a href="../rest-fxrate/">current</a>
+<br/>
+FxRate history: 
+&nbsp;&nbsp;<a href="../rest-fxrates/week">week</a>
+&nbsp;&nbsp;<a href="../rest-fxrates/month">month</a>
+&nbsp;&nbsp;<a href="../rest-fxrates/quarter">quarter</a>
+&nbsp;&nbsp;<a href="../rest-fxrates/year">year</a>
+<P/>
+
+<a href="../rest-cost-analysis/"> Fetch CostAnalysisData </a>  [ ::: hard coding the patent id in the controller]
+<br/>
+
+<a href="../rest-renewal-history/"> Fetch Renewal History</a> [ ::: hard coding the patent id in the controller]
+<br/>
+Transactions (aka Payments) : 
+<a href="../rest-current-transactions/">Current</a>
+&nbsp;&nbsp;&nbsp;
+<a href="../rest-historic-transactions/">Historic</a>
+<P/>
+Payments (Bank Transfer) : 
+&nbsp;&nbsp;&nbsp;
+<a href="../rest-basket/1,2">Show Basket</a> (1,2)
+&nbsp;&nbsp;&nbsp;
+Bank Transfer <a href="../rest-prepare-banktransfer/1,2:808^08">Pre-Commit</a> (1,2:808^08)
+&nbsp;&nbsp;&nbsp;
+<a href="../rest-committed-banktransfer/1,2:808^08:25 Meer Street:Denver:CO:44224">Post-Commit</a>  (1,2:808^08:25 Meer Street:Denver:CO:44224)
+<br/>
+<p/>
+Docs : 
+&nbsp;&nbsp;&nbsp;
+<a href="../invoice/1">Invoice for Txn 1</a>
+, <a href="../invoice/2">2</a>
+, <a href="../invoice/3">3</a>
+, <a href="../invoice/4">4</a>
+, <a href="../invoice/5">5</a>
+<br/>
+<a href="../invoice/267">Invoice for Txn 267</a>
+, <a href="../invoice/268">268</a>
+, <a href="../invoice/269">269</a>
+, <a href="../invoice/270">270</a>
+, <a href="../invoice/271">271</a>
+, <a href="../invoice/271">272</a>
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+<br/>
+Certificate for:<a href="../certificate/3">Renewal 3</a>
+, <a href="../certificate/4">4</a>
+, <a href="../certificate/5">5</a>
+, <a href="../certificate/6">6</a>
+, <a href="../certificate/7">7</a>
+, <a href="../certificate/8">8</a>
+, <a href="../certificate/9">9</a>
+, <a href="../certificate/10">10</a>
+<br/>
+<a href="../logtest?message=defaultMsg">logtest</a>
+<br/>
+<a href="../partner-details/">getPartnerDetails</a>
+
+<p/>
+
+Generate Emails:
+<br/>
+<form action="../acgenerateemail" method="POST">
+<select name="emailchoice">
+  <option value="100">email_register_combined</option>
+
+  <option value="200">email_proforma_invoice - 1 patent</option>
+  <option value="210">email_proforma_invoice - 4 patents</option>
+  <option value="220">email_final_invoice - 4 patents</option>
+  <option value="240">email_renewal_certificate</option>
+  <option value="250">email_penalty_invoice - 1 patent</option>
+  <option value="260">email_penalty_invoice - 4 patent</option>
+
+  <option value="300">email_reminder_green_opens - Green</option>
+  <option value="310">email_reminder_blue_opens - Blue</option>
+
+  <option value="400">email_reminder_standard - 6 weeks - Patent1</option>
+  <option value="401">email_reminder_standard - 6 weeks - Patent2</option>
+  <option value="402">email_reminder_standard - 6 weeks - Patent3</option>
+  <option value="403">email_reminder_standard - 6 weeks - Patent4</option>
+  <option value="404">email_reminder_standard - 6 weeks - Patent5</option>
+
+  <option value="450">email_reminder_standard - 12 weeks</option>
+  <option value="455">email_reminder_standard - 2 weeks</option>
+  <option value="460">email_reminder_standard - 7 days</option>
+  <option value="465">email_reminder_standard - 5 days</option>
+  <option value="470">email_reminder_standard - 3 days</option>
+  <option value="475">email_reminder_standard - 2 days</option>
+  <option value="480">email_reminder_standard - 1 day</option>
+
+  <!--   <option value="700">WIP email_reminder_red_1day</option>  -->
+  <option value="730">email_reminder_black_5day</option>
+  <option value="760">email_reminder_after_black</option>
+  <option value="999">test panic()</option>
+</select>
+<input type="submit" value="submit">
+</form>
+<p/>
+<p/>
+
+Test Panic:
+<br/>
+<form action="../actesttestpanic" method="POST">
+<input type="text" name="message">
+<input type="submit" value="submit">
+</form>
+
+
+</body>
+</html>
