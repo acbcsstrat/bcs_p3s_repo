@@ -17,6 +17,7 @@ import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.PaymentService;
+import com.bcs.p3s.service.PaymentServiceImpl;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
@@ -48,6 +49,8 @@ public class PaymentRestController extends Universal {
     	if ( ! (obby instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("PaymentRestController : /rest-basket/ showBasketContents() NOT passed String");
     	
     	BasketContents basketContents = null;
+    	boolean err = false;
+    	
     	try {
 
     		//In due course, an extractor (like below) should be used here. meanwhile, use DummyDataEngine & classes from com.bcs.p3s.engine.dummyclasses
@@ -62,12 +65,14 @@ public class PaymentRestController extends Universal {
 			log().error("Stacktrace was: "+errors.toString());
 			
 			basketContents = new BasketContents(); // to avoid compile error!
+			err = true;
 		}
 
-  	
-		log().debug("PaymentRestController : /rest-basket/ showBasketContents() returning. Content follows (unless null)");
-		//if (basketContents!=null) log().debug(basketContents.toString());
-		return new ResponseEntity<BasketContents>(basketContents, HttpStatus.OK);
+		log().debug("PaymentRestController : /rest-basket/ showBasketContents() returning. Content follows (err="+err+")");
+    	if (err) 
+    		return new ResponseEntity<BasketContents>(basketContents, HttpStatus.INTERNAL_SERVER_ERROR);
+    	else
+    		return new ResponseEntity<BasketContents>(basketContents, HttpStatus.OK);
     }
 
     
@@ -165,8 +170,16 @@ public class PaymentRestController extends Universal {
 			bankTransferPostCommitDetails = new BankTransferPostCommitDetails(); // to avoid compile error!
 		}
 
-  	
-		log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() returning. Content follows (unless null)");
+		log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() returning. Content follows (unless bad)");
+    	// Check WarningMessage (if present, is a failure)
+    	if (bankTransferPostCommitDetails!=null && bankTransferPostCommitDetails.getWarningMessage()!=null) {
+    		String warnMsg = bankTransferPostCommitDetails.getWarningMessage(); 
+    		log().debug("Renewal Commit FAILED. WarningMessage is set. Is : "+warnMsg);
+    		if (PaymentServiceImpl.PRICE_CHANGED.equals(warnMsg))
+    			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.CONFLICT);
+    		else
+    			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
 		if (bankTransferPostCommitDetails!=null){
 			log().debug(bankTransferPostCommitDetails.toString());
 			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);

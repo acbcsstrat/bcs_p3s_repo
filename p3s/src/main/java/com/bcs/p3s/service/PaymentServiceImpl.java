@@ -50,6 +50,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	HttpSession session;*/
 
 	protected String PREFIX = this.getClass().getName() + " : "; 
+	public static String PRICE_CHANGED = "The price has changed from that expected"; 
 
 	
 	// Start of - the methods which implement the prototypes in the Interface
@@ -209,7 +210,9 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				err += "Expected Total Price differs from calculated. Expected="+expected.toString()+"  calculated="+calculated.toString();
 				logM().warn(err);
 				logInternalError().warn(err);
-				// Abort or Continue (=ignore). Choose (fro initial development) CONTINUE. so no exception   acToDo
+				// Abort or Continue (=ignore). Choose (fro initial development) CONTINUE. so no exception   
+				
+				bankTransferPostCommitDetails.setWarningMessage(PRICE_CHANGED);
 			}
 			
 			/**
