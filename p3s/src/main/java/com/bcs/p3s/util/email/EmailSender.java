@@ -97,6 +97,7 @@ public class EmailSender extends Universal {
 	}
 	/** Add a BCC to our Operations team, if required **/
 	protected void addBccToOpsIfRequired(P3sEmail emailContent) {
+		final String INHIBIT = "INHIBIT";
 		if (emailContent==null) return;
 		if (emailContent.isBccToOps() == true) {
 			
@@ -106,7 +107,9 @@ public class EmailSender extends Universal {
 				opsEmailAddress = reader.getESProperty(P3SPropertyNames.NOTIFY_P3S_OPS_EMAIL_ADDRESS); 
 
 				log().debug(" addBccToOpsIfRequired adding BCC2OPS("+opsEmailAddress+") : Template="+emailContent.getTemplateName());
-				internalAddRecipient(opsEmailAddress, Message.RecipientType.BCC);
+				if ( ! INHIBIT.equalsIgnoreCase(opsEmailAddress)) { 
+					internalAddRecipient(opsEmailAddress, Message.RecipientType.BCC);
+				}
 
 			} catch (P3SPropertyException e) {
 				logInternalError().error("EmailSender addBccToOpsIfRequired() : property read failed",e);
