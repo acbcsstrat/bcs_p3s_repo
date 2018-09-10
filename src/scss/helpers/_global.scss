@@ -1,0 +1,107 @@
+.font-body {
+  font-size: 1.3rem;
+}
+
+.m-b-xs { margin-bottom: .75rem; }
+.m-b-sm { margin-bottom: 1.5rem; }
+.m-b-md { margin-bottom: 2.25rem; }
+.m-b-lg { margin-bottom: 3rem; }
+.m-b-xl { margin-bottom: 3.75rem; }
+
+.m-t-xs { margin-top: .75rem; }
+.m-t-sm { margin-top: 1.5rem; }
+.m-t-md { margin-top: 2.25rem; }
+.m-t-lg { margin-top: 3rem; }
+.m-t-xl { margin-top: 3.75rem; }
+
+.m-tb-xl { margin-top: 3.75rem; margin-bottom: 3.75rem; }
+
+.m-r-xs { margin-right: .75rem; }
+.m-r-sm { margin-right: 1.5rem; }
+.m-r-md { margin-right: 2.25rem; }
+.m-r-lg { margin-right: 3rem; }
+
+.m-l-xs { margin-left: .75rem; }
+.m-l-sm { margin-left: 1.5rem; }
+.m-l-md { margin-left: 2.25rem; }
+.m-l-lg { margin-left: 3rem; }  
+
+.m-none { margin: 0!important; }
+.m-l-none { margin-left: 0!important; }
+.m-b-none { margin-bottom: 0; }
+
+.p-tb-sm { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.p-b-sm { padding-bottom: 1.5rem; }
+.p-tb-35 { padding-top: 3.5rem; padding-bottom: 3.5rem }
+
+.p-a-sm { padding: 1.5rem; }
+
+.p-none { padding: 0; }
+.p-r-none { padding-right: 0; }
+.p-b-none { padding-bottom: 0; }
+.p-t-none { padding-top: 0; }
+.p-l-none { padding-left: 0; }
+
+.green-notification { border: 2px solid #53ab58; } 
+.amber-notification { border: 2px solid #f9b233; } 
+.red-notification { border: 2px solid #e30613; } 
+.blue-notification { border: 2px solid #0097ce; } 
+.black-notification { border: 2px solid #3c3c3b; } 
+
+a.cursor-pointer, 
+button.cursor-pointer, 
+input.cursor-pointer,
+span.cursor-pointer { cursor: pointer }
+div.cursor-help { cursor: help; }
+
+.nowrap { white-space: nowrap; }
+
+.pill-radius { border-radius: 2.5rem; }
+
+.pill-radius-textarea { border-radius: 1.5rem; }
+
+.ul-bullet-free { list-style-type: none; padding: 0; }
+
+.border-none { border: none; }
+.border-t-none { border-top: none!important; }
+
+.inline-link:hover { text-decoration: underline; color: $black; }
+
+.fade.in { opacity: 1; }
+
+.point-reg { 
+  background: #DDD;
+  border-radius: 2px;
+  display: inline-block;
+  height: 10px;
+  margin-right: 2px;
+  width: 23.2%;
+}
+
+.first {
+  background-color: #e30613;
+}
+
+.second {
+  background-color: #f9b233;
+}
+
+.third {
+  background-color: #53ab58;
+}
+
+.fourth {
+  background-color: #418746;
+}
+
+.point {
+    background:#DDD;
+    border-radius:2px;
+    display:inline-block;
+    height:10px;
+    margin-right:2px;
+    width: 19.2%;
+}
+
+.point:last,
+.point-reg:last { margin:0 !important; }
