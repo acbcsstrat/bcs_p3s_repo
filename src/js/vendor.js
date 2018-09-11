@@ -10,6 +10,7 @@ require("angular/angular.min.js");
 require("tether/dist/js/tether.min.js");
 
 require("angular-animate/angular-animate.min.js");
+require("@palmabit/angular-cookie-law/dist/angular-cookie-law.min.js");
 require("angular-aria/angular-aria.min.js");
 require("angular-material/angular-material.min.js");
 require("angular-ui-bootstrap/dist/ui-bootstrap-tpls.js");
