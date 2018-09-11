@@ -1,5 +1,6 @@
 package com.bcs.p3s.util.env;
 
+import com.bcs.p3s.harness.harnessspecific.HarnessP3SEnvironmentKnowledge;
 import com.bcs.p3s.util.lang.Universal;
 
 //import com.bcs.p3s.util.os.Hostname;
@@ -72,6 +73,9 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
+		if ("nodea".equals(host) || "nodeb".equals(host)) {
+			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+		}
 		
 		if (path==null) {
 			logInternalError().warn("P3SEnvironmentKnowledge getDatabaseConfigFilespec given unexpected host : "+host);
@@ -87,8 +91,14 @@ public class P3SEnvironmentKnowledge extends Universal {
 	 * Provides the filespec of the BuildInfo property file on this host
 	 */
 	public final String getBuildinfoFilespec()  {
-		String filespec = appendFilenameToPath(getMainPropertyFilePath(), BUILDINFO_FILENAME);
+		//	String filespec = appendFilenameToPath(getMainPropertyFilePath(), BUILDINFO_FILENAME);
+		//	log().debug("P3SEnvironmentKnowledge getBuildinfoFilespec predicts that buildinfo file is at "+filespec);
+
+		HarnessP3SEnvironmentKnowledge knowHarness = new HarnessP3SEnvironmentKnowledge();
+		String folder = knowHarness.getHarnessBuildinfoFolder();
+		String filespec = appendFilenameToPath(folder, BUILDINFO_FILENAME);
 		log().debug("P3SEnvironmentKnowledge getBuildinfoFilespec predicts that buildinfo file is at "+filespec);
+		
 		return filespec ;
 	};
 	
@@ -136,6 +146,9 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/
 			//path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/";
 			path = "C:/dev64/maven.1520878637375/p2s_harness/src/main/resources/";
+		}
+		if ("nodea".equals(host) || "nodeb".equals(host)) {
+			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/";
 		}
 
 		if (path==null) {

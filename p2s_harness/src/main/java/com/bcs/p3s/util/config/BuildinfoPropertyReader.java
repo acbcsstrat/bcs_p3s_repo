@@ -7,6 +7,9 @@ import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 import com.bcs.p3s.util.env.Hostname;
 
+import com.bcs.p3s.harness.harnessspecific.HarnessP3SEnvironmentKnowledge;
+
+
 
 
 // acTidy
@@ -50,7 +53,6 @@ public class BuildinfoPropertyReader extends Universal {
 		//String filespec = "/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/buildinfo.properties"; // for CCP007
 		P3SEnvironmentKnowledge envK = new P3SEnvironmentKnowledge();
 		String filespec = envK.getBuildinfoFilespec();
-
 		
 		try {
 			timestamp = getBuildInfo(filespec).getProperty(BUILDINFO_KEY);
