@@ -1,4 +1,4 @@
-<div class="bg-white widget-panel h-100 d-none d-xl-block">
+<div class="bg-white h-100 widget-panel d-none d-xl-block">
 	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
 		<h3 class="font-h3 font-weight-bold">Renewal Cost</h3>
 		<div data-ng-if="$ctrl.renewalfxTimeframe" class="pill-radius d-flex justify-content-center align-items-center flex-column bg-phase-green">	
@@ -6,9 +6,11 @@
 		</div>
 	</div>
 	<div class="widget-panel__body">
-		<div class="row bg-no-data" data-ng-if="!$ctrl.patentFx.getSelectedPatent()">
-			<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
-				<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
+		<div class="row" data-ng-if="!$ctrl.patentFx.getSelectedPatent()">
+			<div class="col-md-12 d-flex justify-content-center z-index-1">
+				<div class="bg-no-data d-flex align-items-center justify-content-center">
+					<p class="font-body font-weight-bold text-center">Currently there aren't any patents in this phase</p>	
+				</div>
 			</div>
 		</div>
 		<div data-ng-if="$ctrl.patentFx.getSelectedPatent()">
@@ -138,11 +140,13 @@
 		</div>
 	</div>
 	<div class="widget-panel__body">
-		<div class="row bg-no-data" data-ng-if="!$ctrl.patentFx.getSelectedPatent()">
-			<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
-				<p class="font-body font-weight-bold">No patents currently in this Stage</p>
+		<div class="row" data-ng-if="!$ctrl.patentFx.getSelectedPatent()">
+			<div class="col-md-12 d-flex justify-content-center z-index-1">
+				<div class="bg-no-data d-flex align-items-center justify-content-center">
+					<p class="font-body font-weight-bold text-center">Currently there aren't any patents in this phase</p>	
+				</div>
 			</div>
-		</div>
+		</div>	
 		<div data-ng-if="$ctrl.patentFx.getSelectedPatent()">
 			<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-sm">
 				<uib-tab heading="Today" class="font-body" index="0" data-ng-hide="true">
