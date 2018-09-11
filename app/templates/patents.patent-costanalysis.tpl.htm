@@ -7,8 +7,8 @@
 						<div class="col-xl-12">
 	    					<div class="view-tabs m-b-md secondary-view-nav">
 								<ul class="nav secondary-view-nav__list">
-									<li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="$ctrl.loadChart(); activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" data-ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
-									<li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="$ctrl.loadChart(); activeChart = 1; $ctrl.chartActive = 'FX Chart'" data-ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
+									<li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" data-ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
+									<li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="activeChart = 1; $ctrl.chartActive = 'FX Chart'" data-ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
 								</ul>
 							</div>	
 						</div>
@@ -159,8 +159,8 @@
 							<div class="col-md-12 col-lg-12">
 								<div class="view-tabs m-b-md">
 									<ul class="nav chart-pills">
-										<li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="$ctrl.loadChart(); activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" data-ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
-										<li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="$ctrl.loadChart(); activeChart = 1; $ctrl.chartActive = 'FX Chart'; $ctrl.loadLineChart" data-ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
+										<li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" data-ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
+										<li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__list-item secondary-view-nav__list-item--black" data-ng-click="activeChart = 1; $ctrl.chartActive = 'FX Chart'; $ctrl.loadLineChart" data-ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
 									</ul>
 								</div>	
 							</div>
