@@ -35,6 +35,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 			, "tomcatb"					// Tomacat-B (on Linode). Clone of TomcatA, with postfix Nov17
 			, "tomcatu"					// tomcatU 'alpha' dev host
 			, "tomcatv"					// tomcatV 'beta' dev host
+			, "nodea"					// icloudGosting Production P3S host
+			, "nodeb"					// icloudGosting Test/Ref/Demo P3S host
 	};
 		
 
@@ -73,9 +75,12 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
+		if ("nodea".equals(host) || "nodeb".equals(host)) {
+			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+		}
 		
 		if (path==null) {
-			logInternalError().warn("P3SEnvironmentKnowledge getDatabaseConfigFilespec given unexpected host : "+host);
+			logInternalError().error("P3SEnvironmentKnowledge getDatabaseConfigFilespec given unexpected host : "+host);
 		}
 		log().debug("P3SEnvironmentKnowledge getDatabaseConfigFilespec predicts that db conf file is in "+path);
 		
@@ -132,6 +137,9 @@ public class P3SEnvironmentKnowledge extends Universal {
 		}
 		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/";
+		}
+		if ("nodea".equals(host) || "nodeb".equals(host)) {
+			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/";
 		}
 		
 
