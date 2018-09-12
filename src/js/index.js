@@ -55,7 +55,7 @@ require("app/controllers/patents.listPatents.ctrl.js");
 require("app/controllers/patents.addPatent.ctrl.js");
 require("app/controllers/patents.searchPatent.ctrl.js");
 require("app/controllers/patent.patentCostAnalysis.ctrl.js");
-require("app/controllers/patent.patentInfo.ctrl.js");
+require("app/controllers/patents.patentInfo.ctrl.js");
 require("app/controllers/patent.patentItem.ctrl.js");
 require("app/controllers/patent.patentRenewals.ctrl.js");
 require("app/controllers/transactions.currentTransactionItem.ctrl.js");
