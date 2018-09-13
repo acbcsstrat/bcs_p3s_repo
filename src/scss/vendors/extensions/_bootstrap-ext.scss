@@ -53,6 +53,10 @@ uib-progress.progressblue { height: 3rem; }
   width: auto!important;
 }
 
+.modal-open {
+    overflow: scroll;
+}
+
 // .modal {
 //   text-align: center;
 //   padding: 0!important;
@@ -66,8 +70,6 @@ uib-progress.progressblue { height: 3rem; }
 //   margin-right: -4px;
 // }
 
-// .modal-dialog {
-//   display: inline-block;
-//   text-align: left;
-//   vertical-align: middle;
-// }
+.modal-dialog {
+  height: 100%;
+}
