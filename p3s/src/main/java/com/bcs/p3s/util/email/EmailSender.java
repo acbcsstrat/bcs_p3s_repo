@@ -1,5 +1,7 @@
 package com.bcs.p3s.util.email;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -91,8 +93,29 @@ public class EmailSender extends Universal {
 	}
 	/** replace recipient with PanicDevs **/
 	public void setRecipientsToDevs() {
-		internalAddRecipient("andychapman1977@gmail.com", Message.RecipientType.TO);
-		internalAddRecipient("andy.chapman@boxcleversoftware.com", Message.RecipientType.TO);
+
+		// If DEV_EMAIL_ADDRESSES is set in config (it shouldn't be) Use that. Else the original.
+		String devEmailAddresses = null;
+		try {
+			P3SPropertyReader reader = new P3SPropertyReader();
+			devEmailAddresses = reader.getESProperty(P3SPropertyNames.DEV_EMAIL_ADDRESSES); 
+
+			if (isEmpty(devEmailAddresses)) devEmailAddresses = null;
+			else log().info("Internal Email Recips: "+P3SPropertyNames.DEV_EMAIL_ADDRESSES+" : *IS* set. Recips are : "+devEmailAddresses);
+		} catch (P3SPropertyException e) {
+			; // Swallow. This property will normally be absent. Don't wan't a stack dump recorded
+		}
+		
+		if (devEmailAddresses==null) {
+			internalAddRecipient("andychapman1977@gmail.com", Message.RecipientType.TO);
+			internalAddRecipient("andy.chapman@boxcleversoftware.com", Message.RecipientType.TO);
+		} else {
+			List<String> addrs = Arrays.asList(devEmailAddresses.split("\\s*,\\s*"));
+			for (String addr : addrs) {
+				//log().info("   Item : "+addr);
+				internalAddRecipient(addr, Message.RecipientType.TO);
+			}
+		}
 		setRecip = true;
 	}
 	/** Add a BCC to our Operations team, if required **/
