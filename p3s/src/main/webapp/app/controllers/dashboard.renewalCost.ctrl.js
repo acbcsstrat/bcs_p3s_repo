@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
 
-renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'fxCalculationService', 'currentTransactionsService', 'patentsService']
+renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'fxCalculationService', 'currentTransactionsService', 'patentsService', 'selectPhaseService']
 
-function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, fxCalculationService, currentTransactionsService, patentsService) {
+function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, fxCalculationService, currentTransactionsService, patentsService, selectPhaseService) {
 
 	var vm = this;
 
@@ -11,6 +11,15 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 	vm.fxPeriodActive = fxPeriodActive;
 	vm.fetchItemRenewal = fetchItemRenewal;
 	vm.fetchItemTransaction = fetchItemTransaction;
+	vm.selectedPhase = selectPhaseService;
+
+	$scope.$on('updatePhase', function(e, o){
+		if(vm.selectedPhase.getPhase().patents.length === 0) {
+			vm.patentFx = null;
+		} else {
+			vm.patentFx = fxCalculationService;
+		}
+	})
 
 	function fxPeriodActive(fxActive) {
 

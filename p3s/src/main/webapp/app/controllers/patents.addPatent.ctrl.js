@@ -80,7 +80,7 @@ function addPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, $loca
 			            .then(
 			            	function(response){
 	        			 		var patent = response[0];
-				             	$state.go('patents.patent', {patentId: patent.id})
+				             	$state.go('patents.patent', {patentId: patent.id}, {reload: true})
 				             	.then(
 									function(response){
 										$timeout(function() {

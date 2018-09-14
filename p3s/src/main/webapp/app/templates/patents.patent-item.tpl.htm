@@ -1,16 +1,22 @@
-<div class="row m-b-md">
-	<div class="col-xl-12">
-		<div class="secondary-view-nav">
-			<ul class="nav secondary-view-nav__list">
-				<li class="pill-radius secondary-view-nav__list-item secondary-view-nav__list-item--green" data-ng-click="$ctrl.activeSelectedTab = 0; $ctrl.activePatentItemMenu = 'Patent Info'" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Patent Info'}">Patent Info</li>
-				<li class="pill-radius secondary-view-nav__list-item secondary-view-nav__list-item--green" data-ng-click="$ctrl.activeSelectedTab = 1; $ctrl.activePatentItemMenu = 'Cost Analysis'; $ctrl.loadChart()" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Cost Analysis'}">Cost Analysis</li>
-				<li class="pill-radius secondary-view-nav__list-item secondary-view-nav__list-item--green" data-ng-click="$ctrl.activeSelectedTab = 2; $ctrl.activePatentItemMenu = 'Renewal History'" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Renewal History'}">Renewal History</li>
-			</ul>
+<div data-ng-show="$ctrl.loading" class="animate-show">
+	<div class="row m-b-md">
+		<div class="col-xl-12 text-center">
+			<img src="assets/imgs/icons/spinner-loader.gif">
 		</div>
 	</div>
 </div>
-
-
+<div data-ng-show="$ctrl.patentLoaded" class="animate-show">
+	<div class="row m-b-md">
+		<div class="col-xl-12">
+			<div class="secondary-view-nav">
+				<ul class="nav secondary-view-nav__list">
+					<li class="pill-radius secondary-view-nav__list-item secondary-view-nav__list-item--green" data-ng-click="$ctrl.activeSelectedTab = 0; $ctrl.activePatentItemMenu = 'Patent Info'" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Patent Info'}">Patent Info</li>
+					<li class="pill-radius secondary-view-nav__list-item secondary-view-nav__list-item--green" data-ng-click="$ctrl.activeSelectedTab = 1; $ctrl.activePatentItemMenu = 'Cost Analysis'; $ctrl.loadChart()" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Cost Analysis'}">Cost Analysis</li>
+					<li class="pill-radius secondary-view-nav__list-item secondary-view-nav__list-item--green" data-ng-click="$ctrl.activeSelectedTab = 2; $ctrl.activePatentItemMenu = 'Renewal History'" data-ng-class="{active : $ctrl.activePatentItemMenu === 'Renewal History'}">Renewal History</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 	<div id="patentAnchor"></div>
 		<uib-tabset type="pills" active="$ctrl.activeSelectedTab">
 			<uib-tab heading="Patent Information" index="0" data-ng-hide="true">
@@ -24,3 +30,4 @@
 			</uib-tab>
 		</uib-tabset>
 	</div>
+</div>

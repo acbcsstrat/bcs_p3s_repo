@@ -23,11 +23,11 @@
 									<td class="t-data__td t-data__w30">Title</td>
 									<td class="t-data__td">{{item.title}}</td>
 								</tr>
-								<tr class="t-data__row--border" data-ng-hide="item.costBandColour !== 'Black' || item.costBandColour !== 'Red'">
+								<tr class="t-data__row--border" data-ng-if="item.costBandColour !== 'Black' && item.costBandColour !== 'Red'">
 									<td class="t-data__td t-data__w30">Current Amount</td>
 									<td class="t-data__td">$ {{item.currentRenewalCostUSD | number: 2 }}</td>
 								</tr>
-								<tr class="t-data__row--border" data-ng-hide="item.costBandColour !== 'Black' || item.costBandColour !== 'Red'">
+								<tr class="t-data__row--border" data-ng-if="item.costBandColour !== 'Black' && item.costBandColour !== 'Red'">
 									<td class="t-data__td t-data__w30">Next Stage Cost</td>
 									<td class="t-data__td">$ {{item.renewalCostNextStageUSD | number: 2 }}</td>
 								</tr>
