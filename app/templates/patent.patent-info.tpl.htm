@@ -223,6 +223,7 @@
 							 		<a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
 				        		</button>
 						 	</div> -->
+						 	<transaction-link patent-id="{{$ctrl.patent.id}}"></transaction-link>	
 						 	
 				        	<div><!-- data-ng-if="$ctrl.patent.portfolioUI.serviceList.serviceType == 'Renewal'" review if condition is correct when api released-->
 				        		<div class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">

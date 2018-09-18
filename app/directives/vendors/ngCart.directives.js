@@ -120,33 +120,33 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 $scope.expressFee = 0;
                 $scope.totalCost = 0;
 
-                productData.forEach(function(data, i){
-                    processingFeeArr.push(data._data.feeUI.processingFeeUSD);
-                    renewalFeeArr.push(data._data.feeUI.renewalFeeUSD);
-                    extensionFeeArr.push(data._data.feeUI.extensionFeeUSD);
-                    expressFeeArr.push(data._data.feeUI.expressFeeUSD)                    
-                    urgentFeeArr.push(data._data.feeUI.urgentFeeUSD);
-                    totalCostArr.push(data._data.feeUI.subTotalUSD);
-                });
+                // productData.forEach(function(data, i){
+                //     processingFeeArr.push(data._data.feeUI.processingFeeUSD);
+                //     renewalFeeArr.push(data._data.feeUI.renewalFeeUSD);
+                //     extensionFeeArr.push(data._data.feeUI.extensionFeeUSD);
+                //     expressFeeArr.push(data._data.feeUI.expressFeeUSD)                    
+                //     urgentFeeArr.push(data._data.feeUI.urgentFeeUSD);
+                //     totalCostArr.push(data._data.feeUI.subTotalUSD);
+                // });
 
-                processingFeeArr.forEach(function(data, i){
-                    $scope.processingFee += data;
-                });
-                renewalFeeArr.forEach(function(data, i){
-                    $scope.renewalFee += data;
-                });
-                extensionFeeArr.forEach(function(data, i){
-                    $scope.extensionFee += data;
-                });
-                urgentFeeArr.forEach(function(data, i){
-                    $scope.urgentFee += data;
-                });
-                expressFeeArr.forEach(function(data, i){
-                    $scope.expressFee += data;
-                });                
-                totalCostArr.forEach(function(data, i){
-                    $scope.totalCost += data;
-                });            
+                // processingFeeArr.forEach(function(data, i){
+                //     $scope.processingFee += data;
+                // });
+                // renewalFeeArr.forEach(function(data, i){
+                //     $scope.renewalFee += data;
+                // });
+                // extensionFeeArr.forEach(function(data, i){
+                //     $scope.extensionFee += data;
+                // });
+                // urgentFeeArr.forEach(function(data, i){
+                //     $scope.urgentFee += data;
+                // });
+                // expressFeeArr.forEach(function(data, i){
+                //     $scope.expressFee += data;
+                // });                
+                // totalCostArr.forEach(function(data, i){
+                //     $scope.totalCost += data;
+                // });            
             }
 
             calcSummary();
@@ -199,18 +199,31 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
         }]),
         link: function(scope, element, attrs) {
 
-            ngCart.getItems();
+            // ngCart.getItems();
 
-            var cartArr = [];
-            var cartItems = ngCart.getItems();
+            // var cartArr = [];
+            // var cartItems = ngCart.getItems();
+            // console.log(cartItems)
+            // cartItems.forEach(function(currentValue, index, array){  //ADDED IN PREPEARTION FOR V2- STILL TO BE TESTED
+            //     cartArr.push({
+            //         patent_id: currentValue._id, 
+            //         serviceType: sortService(currentValue._data.serviceList) //ADDED IN PREPEARTION FOR V2- STILL TO BE TESTED
+            //     }); //ADDED IN PREPEARTION FOR V2- STILL TO BE TESTED
+            // });
+            // // console.log(cartArr)
+            // var idObj = {
+            //     patent_id: cartArr
+            // };
 
-            cartItems.forEach(function(currentValue, index, array){
-                cartArr.push(currentValue._id);
-            });
+            // function sortService(obj) {
 
-            var idObj = {
-                patent_id: cartArr
-            };
+            //     var service;
+
+            //     obj.
+
+            //     return service;
+
+            // }
 
             fetchBasketPatents(idObj);
 

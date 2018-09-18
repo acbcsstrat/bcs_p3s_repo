@@ -4,13 +4,13 @@ patentInfoCtrl.$inject = ['$scope', 'patent', '$rootScope', '$state', '$timeout'
 
 function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location, $anchorScroll, fxCalculationService, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService) {
 
-	var vm = this;
+    var vm = this;
 
-	vm.patent = patent;
-	vm.directToRenewal = directToRenewal;
-	vm.fetchItemTransaction = fetchItemTransaction;
-	vm.confirmDeletePatent = confirmDeletePatent;
-	vm.deletePatent = deletePatent;
+    vm.patent = patent;
+    vm.directToRenewal = directToRenewal;
+    vm.fetchItemTransaction = fetchItemTransaction;
+    vm.confirmDeletePatent = confirmDeletePatent;
+    vm.deletePatent = deletePatent;
     vm.updatePatent = updatePatent;
     vm.editItem = editItem;
     vm.doneEditing = doneEditing;
@@ -33,41 +33,73 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
         }
     }
 
-	function directToRenewal() {
-		$state.go('portfolio.patent.renewal.info', {}, {reload: false}); //REVISE TO SEE IF MORE EFFICIENT WAY
-	};
+    function directToRenewal() {
+        $state.go('portfolio.patent.renewal.info', {}, {reload: false}); //REVISE TO SEE IF MORE EFFICIENT WAY
+    };
 
-	function fetchItemTransaction(id) {
-		currentTransactionsService.fetchCurrentTransactions()
-		.then(
-			function(response) {
-				response.forEach(function(data) {
-					const transId = data.id;
-					data.renewalUIs.forEach(function(data, i) {
-						if(data.patentUI.id == id) { //compare id submitted from view to all array items id
-							$state.go('current-transactions.current-transaction-item',{transId: transId}) //if match, go current-transaction-item
-							.then(
-								function(response){
-									$timeout(function() {
-										$location.hash('currTransAnchor'); 
-									  	$anchorScroll();  //scroll to anchor href
-									}, 300);
-								},
-								function(errResponse){
-									console.log(errResponse);
-								}
-							);
-						}
-					});
-				});
-			},
-			function(errResponse) {
-				console.log(errResponse);
-			}
-		);
-	};
+    function fetchItemTransaction(id) {
+        currentTransactionsService.fetchCurrentTransactions()
+        .then(
+            function(response) {
+                response.forEach(function(data) {
+                    const transId = data.id;
+                    data.renewalUIs.forEach(function(data, i) {
+                        if(data.patentUI.id == id) { //compare id submitted from view to all array items id
+                            $state.go('current-transactions.current-transaction-item',{transId: transId}) //if match, go current-transaction-item
+                            .then(
+                                function(response){
+                                    $timeout(function() {
+                                        $location.hash('currTransAnchor'); 
+                                        $anchorScroll();  //scroll to anchor href
+                                    }, 300);
+                                },
+                                function(errResponse){
+                                    console.log(errResponse);
+                                }
+                            );
+                        }
+                    });
+                });
+            },
+            function(errResponse) {
+                console.log(errResponse);
+            }
+        );
+    };
 
-	function updatePatent(id) {
+    // function fetchItemTransaction(id) {
+    //     currentTransactionsService.fetchCurrentTransactions()
+    //     .then(
+    //         function(response) {
+    //             response.forEach(function(data) {
+                    
+    //                 var transaction = data.renewalUIs.find(function(data, i) {
+    //                     return data.patentUI.id == id;
+    //                 })
+
+    //                 if(transaction) {
+    //                     $state.go('current-transactions.current-transaction-item',{transId: transaction}) //if match, go current-transaction-item
+    //                     .then(
+    //                         function(response){
+    //                             $timeout(function() {
+    //                                 $location.hash('currTransAnchor'); 
+    //                                 $anchorScroll();  //scroll to anchor href
+    //                             }, 300);
+    //                         },
+    //                         function(errResponse){
+    //                             console.log(errResponse);
+    //                         }
+    //                     );
+    //                 }
+    //             });
+    //         },
+    //         function(errResponse) {
+    //             console.log(errResponse);
+    //         }
+    //     );
+    // };    
+
+    function updatePatent(id) {
 
         patentsRestService.updatePatent(patent, id)
         .then(
@@ -83,19 +115,19 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 
     function updatePatentSuccess() {
 
-		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modals/modal.update-patent-success.tpl.htm',
-			appendTo: undefined,
-			controllerAs: '$ctrl',
-			controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.update-patent-success.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
-			  	this.dismissModal = function() {
-			    	$uibModalInstance.close();
-			  	};
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
 
-			}]
+            }]
 
-		});
+        });
         
     }
 
@@ -117,44 +149,44 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 
     }
 
-	function confirmDeletePatent(id) {
+    function confirmDeletePatent(id) {
 
-		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modals/modal.confirm-delete-patent.tpl.htm',
-			appendTo: undefined,
-			controllerAs: '$ctrl',
-			controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.confirm-delete-patent.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
-				this.dismissModal = function() {
-			    	$uibModalInstance.close();
-			  	};
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
 
-			  	this.deletePatent = function() {
-		  			deletePatent(id);
-		  			$timeout(function() {
-						$uibModalInstance.close();
-		  			}, 300);
-			  	};
+                this.deletePatent = function() {
+                    deletePatent(id);
+                    $timeout(function() {
+                        $uibModalInstance.close();
+                    }, 300);
+                };
 
-			  	this.cancelDeletion = function() {
-			  		$uibModalInstance.dismiss('cancel');
-			  	};
+                this.cancelDeletion = function() {
+                    $uibModalInstance.dismiss('cancel');
+                };
 
-			}]
-		});
-	};
+            }]
+        });
+    };
 
- 	function deletePatent(id){
+    function deletePatent(id){
 
         patentsRestService.deletePatent(id)
         .then(
             function(){
-             	$state.go('patents', {}, {reload: true})
-         		.then(function(){
-             		$timeout(function(){
+                $state.go('patents', {}, {reload: true})
+                .then(function(){
+                    $timeout(function(){
                         patentsRestService.fetchAllPatents()
                     }, 400);
-             	});
+                });
             },
             function(errResponse){
                 deletePatentError(errResponse);
@@ -203,5 +235,5 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
     function doneEditing(index) {
         vm.editing[index] = false;
     };
-	
+    
 }

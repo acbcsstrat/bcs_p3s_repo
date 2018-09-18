@@ -11,12 +11,13 @@ require('app/directives/checkout.dir.js');
 require('app/directives/current-transactions.transactions.dir.js');
 require('app/directives/patents.list-patents.dir.js');
 require('app/directives/user.dir.js');
+require('app/directives/transactions.dir.js');
 require('app/directives/patents.search-patent.dir.js');
 
-require('app/directives/checkout.dir.js');
-require('app/directives/current-transactions.transactions.dir.js');
-require('app/directives/patents.list-patents.dir.js');
-require('app/directives/user.dir.js');
+// require('app/directives/checkout.dir.js');
+// require('app/directives/current-transactions.transactions.dir.js');
+// require('app/directives/patents.list-patents.dir.js');
+// require('app/directives/user.dir.js');
 require('app/directives/vendors/ngCart.directives.js');
 
 require("app/services/app.core.serv.js");
