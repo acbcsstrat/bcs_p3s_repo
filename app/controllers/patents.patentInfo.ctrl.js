@@ -15,6 +15,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
     vm.editItem = editItem;
     vm.doneEditing = doneEditing;
     vm.editing=[];
+    vm.displayNotifications = displayNotifications;
 
     vm.$onInit = function() {
         if(patent) {

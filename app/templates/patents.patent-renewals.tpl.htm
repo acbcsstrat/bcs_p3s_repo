@@ -1,6 +1,29 @@
+<<<<<<< HEAD:app/templates/renewal.history.tpl.htm
 <div class="d-none d-xl-block">
 	<div class="content-panel bg-white border-t-none">
 <!-- 		<div class="content-panel__head bg-white border-grey-xs--btm">
+=======
+<div class="content-panel d-none d-xl-block">	
+	<div class="content-panel__head bg-white border-grey-xs--btm">
+		<div class="row">
+			<div class="col-xl-2">
+				<h4 class="font-weight-bold font-h4 m-b-xs">App No.</h4>
+				<p class="font-h4">{{$ctrl.patent.patentApplicationNumber}}</p>
+			</div>
+			<div class="col-xl-3">
+				<h4 class="font-weight-bold font-h4 m-b-xs">Client Ref</h4>
+				<p class="font-h4" data-ng-if="$ctrl.patent.clientRef !== ''">{{$ctrl.patent.clientRef}}</p>
+				<p class="font-h4 txt-grey" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
+			</div>
+			<div class="col-xl-7 text-right">
+				<h4 class="font-weight-bold font-h4 m-b-xs">Description</h4>
+				<p class="font-h4">{{$ctrl.patent.title}}</p>				
+			</div>
+		</div>
+	</div>
+	<div data-ng-if="!$ctrl.renewal.length">
+		<div class="content-panel__body bg-white">
+>>>>>>> fe-branch-v1:app/templates/patents.patent-renewals.tpl.htm
 			<div class="row">
 				<div class="col-xl-2">
 					<h4 class="font-weight-bold font-h4 m-b-xs">App No.</h4>
