@@ -25,6 +25,16 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     // }
 
+    $timeout(function() {
+      vm.animate = true;
+    }, 300);    
+
+    angular.element(function () {
+        vm.patentsLoaded = true;
+    });
+
+    vm.date = new Date();    
+
     function displayPatents() { //resets view so only list patents displays
         $state.go('portfolio');
     };
