@@ -8,6 +8,12 @@ function patentItemCtrl($rootScope, $scope, $state) {
 
 	vm.activePatentItemMenu = 'Patent Info';
 	vm.loadChart = loadChart;
+	vm.loading = true;
+	
+	angular.element(function () {
+		vm.loading = false;
+	    vm.patentLoaded = true;
+	});	
 
 	vm.$onInit = function() {
 		$state.go('portfolio.patent.patent-info', {}, {reload: false})
