@@ -28,7 +28,7 @@
 .bg-no-data { /*modules*/ /*components*/ /*_layout.scss*/
   position: relative;
   overflow: hidden;
-  height: 20rem; //swappred from min-height due to IE11
+  min-height: 20rem;
   z-index: 1;
 }
 

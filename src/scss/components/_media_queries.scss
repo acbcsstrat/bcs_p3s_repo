@@ -234,7 +234,7 @@
   .btn-default ngcart-addtocart.t-data__btn-portal:not([disabled]) button:hover, 
   .btn-default ngcart-addtocart.t-data__btn-portal:not([disabled]) a:hover { color: #000!important; text-decoration: underline; opacity: 1; }
 
-  .widget-panel .widget-panel__head { padding: 1.2rem 2.5rem ; height: 54px; }
+  .widget-panel .widget-panel__head { padding: 1.2rem 2.5rem ; min-height: 46px; }
   .widget-panel .widget-panel__body { padding: 2.5rem 2.5rem ; }
   
   .md-m-b-sm { margin-bottom: 1.5rem; }
