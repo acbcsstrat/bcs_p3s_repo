@@ -12,12 +12,10 @@
 			<uib-tabset active="$ctrl.activeActivityTabResp">
 				<uib-tab heading="Stage Change" class="pill-radius pill-tabs no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="0" data-ng-hide="true">
 					<div class="widget-panel--max m-t-sm">
-						<div class="row" data-ng-if="$ctrl.recentStageArr.length === 0">
-							<div class="col-md-12 col-lg-12 d-flex justify-content-center z-index-1">
-								<div class="bg-no-data d-flex justify-content-center align-items-center">
-									<p class="font-weight-bold text-center">There is no recent activity to report</p>
-								</div>
-							</div>	
+						<div class="row bg-no-data" data-ng-if="$ctrl.recentStageArr.length === 0">
+							<div class="col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center z-index-1">
+								<p class="font-weight-bold">There is no recent activity to report</p>
+							</div>
 						</div>
 						<div class="row" data-ng-repeat="item in $ctrl.recentStageArr" data-ng-if="$ctrl.recentStageArr.length !== 0">
 							<div class="col-md-12 col-lg-6">
@@ -50,11 +48,9 @@
 				</uib-tab>
 			    <uib-tab heading="Transactions" class="pill-radius p-few-pill-tabs pill-tabs no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="1" data-ng-hide="true">
 			    	<div class="widget-panel--max m-t-sm">	
-						<div class="row" data-ng-if="$ctrl.recentTransArr.length === 0">
-							<div class="col-md-12 col-lg-12 d-flex justify-content-center z-index-1">
-								<div class="bg-no-data d-flex justify-content-center align-items-center">
-									<p class="font-weight-bold text-center">There is no recent activity to report</p>
-								</div>
+						<div class="row bg-no-data" data-ng-if="$ctrl.recentTransArr.length === 0">
+							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
+								<p class="font-weight-bold">There is no recent activity to report</p>
 							</div>								
 						</div>
 					    <div class="row border-grey-xs--btm" data-ng-repeat="trans in $ctrl.recentTransArr" data-ng-if="$ctrl.recentTransArr.length !== 0">
@@ -94,11 +90,9 @@
 				</uib-tab>
 			    <uib-tab heading="Renewals" class="pill-radius p-few-pill-tabs pill-tabs no-line-height uib-btn--lg bg-white border-grey-xs border-xs font-weight-medium txt-black" index="2" data-ng-hide="true">
 			    	<div class="widget-panel--max m-t-sm">	
-						<div class="row" data-ng-if="$ctrl.recentRenewalArr.length === 0">
-							<div class="col-md-12 col-lg-12 d-flex justify-content-center z-index-1">
-								<div class="bg-no-data d-flex justify-content-center align-items-center">
-									<p class="font-weight-bold text-center">There is no recent activity to report</p>
-								</div>
+						<div class="row bg-no-data" data-ng-if="$ctrl.recentRenewalArr.length === 0">
+							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
+								<p class="font-weight-bold">There is no recent activity to report</p>
 							</div>								
 						</div>						    
 				    	<div class="row" data-ng-repeat="item in $ctrl.recentRenewalArr" data-ng-if="$ctrl.recentRenewalArr.length !== 0">
@@ -141,11 +135,9 @@
 			<uib-tabset class="panel-nav__list">
 				<uib-tab heading="Stage Change" class="pill-radius panel-nav__list-item panel-nav__nav-link--fluid panel-nav__list-item--plain panel-nav__list-item--green">
 					<div class="widget-panel--max m-t-sm">
-						<div class="row m-t-lg" data-ng-if="$ctrl.recentStageArr.length === 0">
-							<div class="col-md-12 col-lg-12 d-flex justify-content-center z-index-1">
-								<div class="bg-no-data d-flex align-items-center justify-content-center">
-									<p class="font-weight-bold">There is no recent activity to report</p>
-								</div>
+						<div class="row bg-no-data m-t-lg" data-ng-if="$ctrl.recentStageArr.length === 0">
+							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
+								<p class="font-weight-bold">There is no recent activity to report</p>
 							</div>								
 						</div>
 						<div class="row m-t-md" data-ng-repeat="item in $ctrl.recentStageArr" data-ng-if="$ctrl.recentStageArr.length !== 0">
@@ -182,10 +174,8 @@
 			    <uib-tab heading="Transactions" class="pill-radius panel-nav__list-item panel-nav__nav-link--fluid panel-nav__list-item--plain panel-nav__list-item--green">
 			    	<div class="widget-panel--max m-t-sm">	
 						<div class="row bg-no-data m-t-lg" data-ng-if="$ctrl.recentTransArr.length === 0">
-							<div class="col-md-12 col-lg-12 d-flex justify-content-center z-index-1">
-								<div class="bg-no-data d-flex align-items-center justify-content-center">
-									<p class="font-weight-bold">There is no recent activity to report</p>
-								</div>
+							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
+								<p class="font-weight-bold">There is no recent activity to report</p>
 							</div>								
 						</div>
 					    <div class="row m-t-md border-grey-xs--btm" data-ng-repeat="trans in $ctrl.recentTransArr" data-ng-if="$ctrl.recentTransArr.length !== 0">
@@ -226,10 +216,8 @@
 			    <uib-tab heading="Renewals" class="pill-radius panel-nav__list-item panel-nav__nav-link--fluid panel-nav__list-item--plain panel-nav__list-item--green">
 			    	<div class="widget-panel--max m-t-sm">	
 						<div class="row bg-no-data m-t-lg" data-ng-if="$ctrl.recentRenewalArr.length === 0">
-							<div class="col-md-12 col-lg-12 d-flex justify-content-center z-index-1">
-								<div class="bg-no-data d-flex align-items-center justify-content-center">
-									<p class="font-weight-bold">There is no recent activity to report</p>
-								</div>
+							<div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-center z-index-1">
+								<p class="font-weight-bold">There is no recent activity to report</p>
 							</div>								
 						</div>						    
 				    	<div class="row" data-ng-repeat="item in $ctrl.recentRenewalArr" data-ng-if="$ctrl.recentRenewalArr.length !== 0">

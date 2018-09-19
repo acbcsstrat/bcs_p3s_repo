@@ -14,14 +14,9 @@ function listPatentsCtrl($scope, $timeout, $http, $rootScope,  $state, $anchorSc
 
 		$timeout(function() {
 			vm.displayPhase('all'); //invoke displayPhase displaying all patents
-		}, 100);
-
-		angular.element(function () {
-    		vm.patentsLoaded = true;
-		});		
+		}, 100);	    
 
 		vm.date = new Date();
-
 	    vm.displayPhase = displayPhase;
 	    vm.displayPatents = displayPatents;
 	    vm.fetchItemRenewal = fetchItemRenewal;
@@ -104,7 +99,7 @@ function listPatentsCtrl($scope, $timeout, $http, $rootScope,  $state, $anchorSc
       		if(!$(event.target).hasClass('cartbtn')) {
 	      		var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
 	      		var patentId = id[0].hash; //gets data from ui-sref
-	      		window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
+	      		// window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
       		}
       	};
 

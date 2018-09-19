@@ -56,26 +56,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	            	order = response.data;
 	            },
 	            function(errResponse){
-
-	            	if(errResponse.status == 409) {
-
-						var modalInstance = $uibModal.open({
-							templateUrl: 'app/templates/modal.commit-error-price.tpl.htm',
-							appendTo: undefined,
-							controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
-
-							  	$scope.dismissModal = function () {
-							    	$uibModalInstance.close();
-							  	};
-
-							  	$scope.cancel = function() {
-							  		$uibModalInstance.dismiss('cancel');
-							  	};
-							}]
-						});
-
-					} else {
-
+	            	if(errResponse) {
 						var modalInstance = $uibModal.open({
 							templateUrl: 'app/templates/modals/modal.commit-error.tpl.htm',
 							appendTo: undefined,
@@ -90,7 +71,6 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 							  	};
 							}]
 						});
-
 					}
 	            }
 	        );	            

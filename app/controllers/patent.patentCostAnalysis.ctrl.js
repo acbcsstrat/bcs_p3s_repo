@@ -220,9 +220,7 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $scope, $state, $timeout, 
 
 	function loadChart() {
 		$timeout(function(){
-             var evt = document.createEvent('UIEvents');
-             evt.initUIEvent('resize', true, false, window, 0);
-             window.dispatchEvent(evt);
+			window.dispatchEvent(new Event('resize'));
 		}, 20)
 	}
 

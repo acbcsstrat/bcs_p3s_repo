@@ -1,14 +1,14 @@
 <div class="modal-header d-flex flex-column align-items-center justify-content-center">
-	<span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+	<span class="modal-cross cursor-pointer" ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
 	<div class="m-b-sm">
 		<img src="assets/imgs/icons/modal/alert_icon.png" alt="found patent icon">	
 	</div>
 	<p class="font-h3 txt-phase-red font-weight-medium">Cancel Adding Patent</p>
 </div>
 <div class="modal-body d-flex flex-column align-items-center justify-content-center">
-	<p class="font-h4">Are you sure you want to cancel adding this patent?</p>
+	<p class="font-h4">Are you want to cancel add this patent?</p>
 </div>
 <div class="modal-footer d-flex align-items-center justify-content-center">
-	<button class="btn btn--lg btn-portal pill-radius bg-phase-red font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center m-r-md" data-ng-click="$ctrl.cancel()">No</button>
-	<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center" data-ng-click="$ctrl.cancelAdd()">Yes</button>
+	<button class="btn btn--lg btn-portal pill-radius bg-phase-red font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center m-r-md" ng-click="$ctrl.cancel()">No</button>
+	<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center" ng-click="$ctrl.cancelAdd()">Yes</button>
 </div>

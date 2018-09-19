@@ -1,4 +1,4 @@
-<div class="bg-white h-100 widget-panel">
+<div class="bg-white widget-panel">
 	<div class="widget-panel__head border-grey-xs--btm d-flex flex-column justify-content-center">
 		<div class="row d-flex align-items-center">
 			<div class="col-md-3 col-lg-3 col-xl-3">
@@ -62,11 +62,9 @@
 				        </div>
 				    </slick>      	
             	</div>	
-	            <div data-ng-show="$ctrl.selectedPhase.getPhase().patents.length === 0" class="row">
-	            	<div class="col-md-12 d-flex justify-content-center z-index-1">
-	            		<div class="bg-no-data d-flex align-items-center justify-content-center">
-                			<p class="font-body font-weight-bold text-center">Currently there aren't any patents in this phase</p>
-	            		</div>
+	            <div data-ng-show="$ctrl.selectedPhase.getPhase().patents.length === 0" class="row h-100 bg-no-data">
+	            	<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
+                		<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
                 	</div>
                 </div>
 			</uib-tab>

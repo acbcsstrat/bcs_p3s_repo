@@ -8,16 +8,32 @@ function mainNavService(){
   		state: 'dashboard',
   		icon: 'assets/imgs/icons/menu/menu_dashboard_icon_sm.png'
 		}];
-
+    // sections.push({
+    //   name: 'Portfolio',
+    //   type: 'link',
+    //   state: 'portfolio',
+    //   icon: 'assets/imgs/icons/menu/menu_portfolio_icon_sm.png'
+    // })    
+    // sections.push({
+    //   name: 'EPE',
+    //   type: 'toggle',
+    //   pages: [
+    //     {
+    //       name: 'Form 1200 Generator',
+    //       type: 'link',
+    //       state: 'epeForm'
+    //     }
+    //   ],
+    //   icon: 'assets/imgs/icons/menu/menu_erp_icon_sm.png'
+    // })        
   	sections.push({
-
-  		name: 'Renewals',
+  		name: 'Portfolio',
   		type: 'toggle',
   		pages: [
   			{
-      		name: 'List Patents',
+      		name: 'Portfolio',
       		type: 'link',
-      		state: 'patents'
+      		state: 'portfolio'
 		    },
 		    {
 				  name: 'Add Patent',

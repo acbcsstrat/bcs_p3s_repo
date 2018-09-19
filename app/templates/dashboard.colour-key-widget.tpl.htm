@@ -1,14 +1,11 @@
 <div class="widget-panel bg-white">
 	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
-		<h3 class="font-h3 font-weight-bold">Colour Key</h3>
-		<div class="d-flex justify-content-center align-items-center flex-column">
-			<div class="pill-radius btn--lg d-md-none d-lg-block" data-ng-class="$ctrl.selectedPhase.getPhase().phase.bgClass">
-				<h3 class="font-weight-medium font-h4 txt-white">{{$ctrl.selectedPhase.getPhase().phase.title}} Phase</h3>
+			<h3 class="font-h3 font-weight-bold">Colour Key</h3>
+			<div class="d-flex justify-content-center align-items-center flex-column">
+				<div class="pill-radius btn--lg" data-ng-class="$ctrl.selectedPhase.getPhase().phase.bgClass">
+					<h3 class="font-weight-medium font-h4 txt-white">{{$ctrl.selectedPhase.getPhase().phase.title}} Phase</h3>
+				</div>
 			</div>
-			<div class="pill-radius btn--lg d-md-block d-lg-none" data-ng-class="$ctrl.selectedPhase.getPhase().phase.bgClass">
-				<h3 class="font-weight-medium n-line-height font-h4 txt-white">{{$ctrl.selectedPhase.getPhase().phase.title}} Phase</h3>
-			</div>			
-		</div>
 	</div>
 	<div class="widget-panel__body">
 		<div class="m-b-md">
