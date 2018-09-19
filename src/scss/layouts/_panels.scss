@@ -11,7 +11,7 @@
 .content-panel .content-panel__body { padding: 2rem 3rem; }
 .content-panel .content-panel__head { padding: 2rem 3rem; } 
 
-.widget-panel .widget-panel__head { min-height: 59px; } 
+.widget-panel .widget-panel__head { height: 59px; } 
 .widget-row-top .widget-panel { min-height: 100%; } 
 .widget-row-middle .widget-panel { min-height: 300px; } /*layout*/ /*pages*/ /*dashboard*/ /*_panels.scss*/
 .widget-panel--max {  max-height: 450px; overflow-y: auto; overflow-x: hidden;} /*layout*/ /*pages*/ /*dashboard*/ /*_panels.scss*/

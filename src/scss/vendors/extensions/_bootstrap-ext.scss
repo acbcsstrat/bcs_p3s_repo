@@ -15,6 +15,10 @@
   font-size: 1.3rem; 
 }
 
+.form-control {
+    line-height: 1.5rem;
+}
+
 .nav-link {
   padding: 0;
 }
@@ -52,3 +56,17 @@ uib-progress.progressblue { height: 3rem; }
 .modal-open {
     overflow: scroll;
 }
+ // .modal {
+//   text-align: center;
+//   padding: 0!important;
+// uib-progress.progressblue { height: 3rem; }
+//   margin-right: -4px;
+// }
+ // .modal-dialog {
+//   display: inline-block;
+//   text-align: left;
+//   vertical-align: middle;
+// } 
+.modal-dialog {
+  height: 100%;
+} 
