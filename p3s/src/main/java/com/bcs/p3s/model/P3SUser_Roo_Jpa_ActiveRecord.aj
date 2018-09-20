@@ -14,7 +14,7 @@ privileged aspect P3SUser_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager P3SUser.entityManager;
     
-    public static final List<String> P3SUser.fieldNames4OrderClauseFilter = java.util.Arrays.asList("firstName", "lastName", "emailAddress", "status", "isEmailNotification", "business", "userrole", "password", "avatar_blob", "loginMessagesToInhibit");
+    public static final List<String> P3SUser.fieldNames4OrderClauseFilter = java.util.Arrays.asList("firstName", "lastName", "emailAddress", "status", "isEmailNotification", "business", "userrole", "password", "avatar_blob", "createdDate", "loginMessagesToInhibit");
     
     public static final EntityManager P3SUser.entityManager() {
         EntityManager em = new P3SUser().entityManager;

@@ -7,6 +7,7 @@ import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
 import java.sql.Blob;
+import java.util.Date;
 import java.util.List;
 
 privileged aspect P3SUser_Roo_JavaBean {
@@ -81,6 +82,14 @@ privileged aspect P3SUser_Roo_JavaBean {
     
     public void P3SUser.setAvatar_blob(Blob avatar_blob) {
         this.avatar_blob = avatar_blob;
+    }
+    
+    public Date P3SUser.getCreatedDate() {
+        return this.createdDate;
+    }
+    
+    public void P3SUser.setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
     
     public List<LoginMessage> P3SUser.getLoginMessagesToInhibit() {

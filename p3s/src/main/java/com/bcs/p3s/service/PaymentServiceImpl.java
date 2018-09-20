@@ -651,7 +651,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	}
 	
 	/**
-	 * a method to set all payment proprties except latestInvoice (latestInvoice being set inside persist() of invoice table
+	 * a method to set all payment properties except latestInvoice (latestInvoice being set inside persist() of invoice table
 	 * @param bankTransferPostCommitDetails
 	 * @return
 	 */
@@ -664,7 +664,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		payment.setP3S_TransRef(bankTransferPostCommitDetails.getP3sTransRef());
 		//MP to remove below line later ::::: IMP!!!!!!!!!!
 		//payment.setMC_TransRef("TEMP_REF");  //initial insert this will be null
-		payment.setTransType(PaymentTypeEnum.BANK_TRANSFER);  //inside this method every time Bank Transfer until we provide CC payment option
+		payment.setTransType(PaymentTypeEnum.STANDARD_PAYMENT);  // any Payment created by p3sWEB is std. It's cron that would create penalty payments
 		payment.setInitiatedByUserId(user);
 		payment.setTransStartDate(bankTransferPostCommitDetails.getDateNowLocalTime());
 		payment.setTransTargetEndDate(bankTransferPostCommitDetails.getTransTargetEndDate());
