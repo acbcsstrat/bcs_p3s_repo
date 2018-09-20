@@ -56,9 +56,11 @@ public interface P3SPropertyNames {
 	public static final String P3S_WEB_WORDPRESS_URL_BASE = "p3s_web_wordpress_url_base"; 
 	public static final String P3S_WEB_TOMCAT_URL_BASE = "p3s_web_tomcat_url_base"; 
 	public static final String P3S_FROM_EMAIL_ADDRESS = "p3s_from_email_address"; 
+	public static final String NOTIFY_P3S_OPS_EMAIL_ADDRESS = "notify_p3s_ops_email_address"; 
 	public static final String PARTNER_COMPANY_NAME = "partner_company_name"; 
 	public static final String PARTNER_COMPANY_PHONE = "partner_company_phone"; 
-	
+	public static final String DEV_EMAIL_ADDRESSES = "dev_email_addresses";  // Comma-Separated
+
 	// Document storage (terminate with forwardslash)
 	//public static final String INVOICE_DOCUMENT_PATH = "invoice_doc_path";
 	//public static final String CERTIFICATE_DOCUMENT_PATH = "certificate_doc_path";

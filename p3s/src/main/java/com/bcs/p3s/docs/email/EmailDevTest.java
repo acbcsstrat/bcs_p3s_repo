@@ -69,7 +69,10 @@ public class EmailDevTest extends Universal {
 		 }
 		 else if (code==999) {
 			// test panic()
-			panic("Test PANIC message from EmailDevTest. \nNo attached exception.");
+			// Doscontinued from here - no pwd check. Available elsewhere. LogM any usage 
+			// panic("Test PANIC message from EmailDevTest. \nNo attached exception.");
+			logM().warn("someone has invoked actest-acgenerateemail-code999. Should not be possible");
+			
 		 }
 
 		 else

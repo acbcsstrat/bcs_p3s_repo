@@ -18,6 +18,7 @@ public class P3sEmail extends Universal implements P3sEmailInterface {
 	String htmlBody = null;
 	String attachmentPath = null;
 	String attachmentFilename = null;
+	boolean bccToOps = false;
 	// Note: client is responsible for providing recipient email addresses to emailer
 	
 	
@@ -110,6 +111,12 @@ public class P3sEmail extends Universal implements P3sEmailInterface {
 	}
 	public void setAttachmentFilename(String attachmentFilename) {
 		this.attachmentFilename = attachmentFilename;
+	}
+	public boolean isBccToOps() {
+		return bccToOps;
+	}
+	public void setBccToOps(boolean bccToOps) {
+		this.bccToOps = bccToOps;
 	}
 
 }

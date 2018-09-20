@@ -34,11 +34,13 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 		try {
 			boolean noBuild = true;
 			AbstractPopulator pop = null;
+			boolean bccEmailToOps = false;
 			
 			// Email supporting customer Registrations with P3S
 			if (EmailTemplates.email_register_combined.equals(template)) {
 				pop = new RegisterPopulator(template, param1);
 				noBuild = false;
+				bccEmailToOps = true;
 			}
 
 			// Email supporting customer password reset
@@ -73,6 +75,8 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 			{
 				pop = new TransactionPopulator(template, param1, param2, param3, param4, param5, param6, param7);
 				noBuild = false;
+				
+				if (EmailTemplates.email_proforma_invoice.equals(template)) bccEmailToOps = true;
 			}
 			if (EmailTemplates.email_renewal_certificate.equals(template)) {
 				pop = new CertificatePopulator(template, param1, param2, param3, param4, param5, param6, param7);
@@ -88,6 +92,8 @@ public class P3sEmailFactory extends Universal implements EmailTemplates {
 			}
 			
 			email = pop.generateEmail();
+			if (bccEmailToOps) email.setBccToOps(true);
+
 		} catch (Exception e) {
 			fail("Caught unexpected problem",e);
 		}

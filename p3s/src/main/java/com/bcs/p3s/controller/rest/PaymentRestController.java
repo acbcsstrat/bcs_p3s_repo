@@ -17,6 +17,7 @@ import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.PaymentService;
+import com.bcs.p3s.service.PaymentServiceImpl;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
@@ -165,8 +166,16 @@ public class PaymentRestController extends Universal {
 			bankTransferPostCommitDetails = new BankTransferPostCommitDetails(); // to avoid compile error!
 		}
 
-  	
-		log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() returning. Content follows (unless null)");
+		log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() returning. Content follows (unless bad)");
+    	// Check WarningMessage (if present, is a failure)
+    	if (bankTransferPostCommitDetails!=null && bankTransferPostCommitDetails.getWarningMessage()!=null) {
+    		String warnMsg = bankTransferPostCommitDetails.getWarningMessage(); 
+    		log().debug("Renewal Commit FAILED. WarningMessage is set. Is : "+warnMsg);
+    		if (PaymentServiceImpl.PRICE_CHANGED.equals(warnMsg))
+    			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.CONFLICT);
+    		else
+    			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
 		if (bankTransferPostCommitDetails!=null){
 			log().debug(bankTransferPostCommitDetails.toString());
 			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);
@@ -176,7 +185,6 @@ public class PaymentRestController extends Universal {
 			log().error("Error retrieving details.");
 			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
     }
    
     

@@ -1,5 +1,7 @@
 package com.bcs.p3s.util.email;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -7,6 +9,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
@@ -18,6 +21,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import com.bcs.p3s.docs.email.P3sEmail;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.env.P3SEnvironmentKnowledge;
 import com.bcs.p3s.util.lang.Universal;
 
@@ -72,6 +78,9 @@ public class EmailSender extends Universal {
 	    	}
 	    	
 			message.setContent(multipart);
+
+	    	addBccToOpsIfRequired(emailContent);
+
     	} catch (Exception e1) {
 			fail("Failed whilst preparing email");
 		}  
@@ -80,15 +89,60 @@ public class EmailSender extends Universal {
 // acTidy - 171107 - maybe these are NOT redundant ??
 	/** Add recipient **/
 	public void addRecipient(String another) {
-		internalAddRecipient(another);
+		internalAddRecipient(another, Message.RecipientType.TO);
 		setRecip = true;
 	}
 	/** replace recipient with PanicDevs **/
 	public void setRecipientsToDevs() {
-		internalAddRecipient("andychapman1977@gmail.com");
-		internalAddRecipient("andy.chapman@boxcleversoftware.com");
+
+		// If DEV_EMAIL_ADDRESSES is set in config (it shouldn't be) Use that. Else the original.
+		String devEmailAddresses = null;
+		try {
+			P3SPropertyReader reader = new P3SPropertyReader();
+			devEmailAddresses = reader.getESProperty(P3SPropertyNames.DEV_EMAIL_ADDRESSES); 
+
+			if (isEmpty(devEmailAddresses)) devEmailAddresses = null;
+			else log().info("Internal Email Recips: "+P3SPropertyNames.DEV_EMAIL_ADDRESSES+" : *IS* set. Recips are : "+devEmailAddresses);
+		} catch (P3SPropertyException e) {
+			; // Swallow. This property will normally be absent. Don't wan't a stack dump recorded
+		}
+		
+		if (devEmailAddresses==null) {
+			internalAddRecipient("andychapman1977@gmail.com", Message.RecipientType.TO);
+			internalAddRecipient("andy.chapman@boxcleversoftware.com", Message.RecipientType.TO);
+		} else {
+			List<String> addrs = Arrays.asList(devEmailAddresses.split("\\s*,\\s*"));
+			for (String addr : addrs) {
+				//log().info("   Item : "+addr);
+				internalAddRecipient(addr, Message.RecipientType.TO);
+			}
+		}
 		setRecip = true;
 	}
+	/** Add a BCC to our Operations team, if required **/
+	protected void addBccToOpsIfRequired(P3sEmail emailContent) {
+		final String INHIBIT = "INHIBIT";
+		if (emailContent==null) return;
+		if (emailContent.isBccToOps() == true) {
+			
+			String opsEmailAddress = null;
+			try {
+				P3SPropertyReader reader = new P3SPropertyReader();
+				opsEmailAddress = reader.getESProperty(P3SPropertyNames.NOTIFY_P3S_OPS_EMAIL_ADDRESS); 
+
+				log().debug(" addBccToOpsIfRequired adding BCC2OPS("+opsEmailAddress+") : Template="+emailContent.getTemplateName());
+				if ( ! INHIBIT.equalsIgnoreCase(opsEmailAddress)) { 
+					internalAddRecipient(opsEmailAddress, Message.RecipientType.BCC);
+				}
+
+			} catch (P3SPropertyException e) {
+				logInternalError().error("EmailSender addBccToOpsIfRequired() : property read failed",e);
+			}
+		}
+	}
+	
+	
+	
 
 	
 	
@@ -116,16 +170,13 @@ public class EmailSender extends Universal {
 	}
 
 	
-	protected void internalAddRecipient(String recip) {
+	protected void internalAddRecipient(String recip, RecipientType emailRecipType) {
 		try {
-			message.addRecipient(Message.RecipientType.TO,   
-	    			new InternetAddress(recip));  
+			message.addRecipient(emailRecipType, new InternetAddress(recip));  
 		} catch (AddressException e1) {
-	    	System.out.println("exception preparing msg - part 1");
-			e1.printStackTrace();
-		} catch (MessagingException e1) {
-	    	System.out.println("exception preparing msg - part 2");
-			e1.printStackTrace();
+			logInternalError().error("exception preparing msg - part 1 - for "+recip,e1);
+		} catch (MessagingException e2) {
+			logInternalError().error("exception preparing msg - part 2 - for "+recip,e2);
 		}  
 	}
 
