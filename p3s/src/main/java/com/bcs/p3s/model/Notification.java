@@ -47,9 +47,9 @@ public class Notification {
     /**
      */
     @NotNull
-    private String productType;
+    private String productType;			// values: renewal or epct   see NotificationProductTypeEnum
 
-
+    
     public static TypedQuery<Notification> findNotifications() {
         EntityManager em = Notification.entityManager();
         TypedQuery<Notification> q = em.createQuery("SELECT o FROM Notification AS o ", Notification.class);
