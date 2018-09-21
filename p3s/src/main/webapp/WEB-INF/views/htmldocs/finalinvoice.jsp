@@ -308,6 +308,11 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 </tr>
 
 <tr>
+  <td>
+    All services are provided subject to our agreed Terms.
+  </td>
+</tr>
+<tr>
   <!-- Footer -->
   <table border=0 align="center"  width="100%">
     <tr>

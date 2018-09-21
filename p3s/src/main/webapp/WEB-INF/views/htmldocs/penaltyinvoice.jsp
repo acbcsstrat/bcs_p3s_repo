@@ -470,6 +470,8 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
       <td> <font color="blue">
         <div align="center">
           Please ensure you use our Transaction ID as your payment reference.
+          <br/>
+          All services are provided subject to our agreed Terms.
         </div>
       </font></td>
     </tr>

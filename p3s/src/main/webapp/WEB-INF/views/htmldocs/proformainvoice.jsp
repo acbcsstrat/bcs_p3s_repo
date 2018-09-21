@@ -506,6 +506,8 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
           Please ensure you use our Transaction ID as your payment reference.
           <br/>
           Patents cannot be renewed by our service if the Transaction ID is missing or incorrectly quoted.
+          <br/>
+          All services are provided subject to our agreed Terms.
         </div>
       </font></td>
     </tr>
