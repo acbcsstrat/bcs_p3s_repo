@@ -73,13 +73,13 @@ public class UserProfileRestController extends Universal {
     	}
 
     	// Make the changes
-        p3sUser.setEmailAddress(user.getEmailAddress());
+        //p3sUser.setEmailAddress(user.getEmailAddress());
         p3sUser.setFirstName(user.getFirstName());
         p3sUser.setLastName(user.getLastName());
         p3sUser.setIsEmailNotification(user.getIsEmailNotification());
 
         //updating User password
-        if(!(user.getNewPassword() == null)){
+        if( ! isEmpty(user.getNewPassword())) {
         		p3sUser.setPassword(user.getNewPassword());
         		log().debug(msg + "User password got updated");
         }
@@ -87,6 +87,7 @@ public class UserProfileRestController extends Universal {
         //p3sUser.setIsEmailNotification(false);
         Business business = user.getBusiness();
         business.setVersion(p3sUser.getBusiness().getVersion());
+        business.setBusinessName(p3sUser.getBusiness().getBusinessName()); // prevent user changing business name
         p3sUser.setBusiness(business);
         
       	String response = userService.updateUser(p3sUser,business);

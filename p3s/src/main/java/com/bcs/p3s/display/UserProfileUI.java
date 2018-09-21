@@ -21,7 +21,7 @@ import com.bcs.p3s.security.SecurityUtil;
  * This object is mostly (totally?) a combination of P3SUser and Business
  * 
  * This is different from most *UI classes, in that there is only one UserProfile item.
- * But - that item is more dispered than most 
+ * But - that item is more dispersed than most 
  * 
  * @author andyc
  */
