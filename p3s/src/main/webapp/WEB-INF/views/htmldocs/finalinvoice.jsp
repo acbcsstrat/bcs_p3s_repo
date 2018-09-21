@@ -317,6 +317,20 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
   <table border=0 align="center"  width="100%">
     <tr>
       <td>
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <font color="blue">
+        <div align="center">
+          All services are provided subject to our agreed Terms.
+        </div>
+        </font>
+      </td>
+    </tr>
+    <tr>
+      <td>
         <h1 align="center">NO SERVICES PROVIDED IN THE US</h1>
       </td>
     </tr>

@@ -13,6 +13,8 @@ public interface P3SPropertyNames {
 
 	// Generic Properties
 
+	public static final String P3S_PHASE_VERSION_RELEASE = "p3s_phase_version_release"; 
+			
 	String Smtp_Host = "smtp_host";
 	public static final String P3S_support_email_address = "p3s_support_email_address"; 
 	public static final String P3S_WEB_CONTEXT = "p3s_web_context"; 

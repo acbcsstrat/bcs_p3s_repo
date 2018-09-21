@@ -73,7 +73,7 @@ public class UserProfileRestController extends Universal {
     	}
 
     	// Make the changes
-        //p3sUser.setEmailAddress(user.getEmailAddress());
+        //p3sUser.setEmailAddress(user.getEmailAddress()); // prevent user changing email address! - as no reVerify yet
         p3sUser.setFirstName(user.getFirstName());
         p3sUser.setLastName(user.getLastName());
         p3sUser.setIsEmailNotification(user.getIsEmailNotification());

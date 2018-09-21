@@ -89,7 +89,7 @@ public class RegisterPopulator extends AbstractPopulator implements Injectables 
 		String url2verifyEmail = generateUrlToVerifyEmail(newUserEmailAddress, userRecord, siteTomcatUrl);
 		data.setUrlToVerifyEmail(url2verifyEmail);
 
-		data.setUrlToFaq(siteWordpressUrl+"faq");
+		data.setUrlToFaq(siteWordpressUrl+"faqs");
 
 		TwoColRecord a2colRecord = null;
 		List<TwoColRecord> colleagueCompanyDetails = new ArrayList<TwoColRecord>();

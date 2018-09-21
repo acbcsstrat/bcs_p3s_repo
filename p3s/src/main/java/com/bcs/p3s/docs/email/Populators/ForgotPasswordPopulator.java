@@ -85,7 +85,7 @@ public class ForgotPasswordPopulator extends AbstractPopulator implements Inject
 		String url2verifyEmail = generateUrlToVerifyEmail(userEmailAddress, verifyCode, siteTomcatUrl);
 		data.setUrlToVerifyEmail(url2verifyEmail);
 
-		data.setUrlToFaq(siteWordpressUrl+"faq");
+		data.setUrlToFaq(siteWordpressUrl+"faqs");
 
 		// data is now populated with all the injectables required for this template
 
