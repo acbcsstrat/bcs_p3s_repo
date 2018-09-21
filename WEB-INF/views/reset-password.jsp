@@ -10,7 +10,7 @@
   		<link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700" rel="stylesheet">
 
   		<link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
-  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	  	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -42,7 +42,7 @@
 					<form name="resetPassForm" id="resetPassForm" class="form" data-parsley-validate="">													
 						<div class="form-group row">
 							<div class="col-md-12">
-								<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+								<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -57,7 +57,7 @@
 						</div>														
 						<div class="form-group row m-b-md">
 							<div class="col-md-12">
-								<input type="password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+								<input type="password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
 							</div>
 						</div>
 						<input type="Submit" value="Reset Password" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
