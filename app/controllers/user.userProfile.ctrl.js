@@ -10,7 +10,7 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
 
     $scope.newPassword = '';
     vm.updateTimezone = updateTimezone;
-    vm.confirmUpdate = confirmUpdate;    
+    vm.updateUser = updateUser;    
 
     vm.$onInit = function() {
 
@@ -70,36 +70,34 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
        vm.user.business.timezone = item;
     }   
 
-    function confirmUpdate(user, p) {
+    function updateUser(user, p) {
+
         user = vm.user;
-       
-        $timeout(function() {
-            userService.updateUser(user)
-            .then(
-                function(response){
 
-                     var modalInstance = $uibModal.open({
-                        templateUrl: 'app/templates/modal.successfully-updated-profile.tpl.htm',
-                        appendTo: undefined,
-                        controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
+        if (p !== '' || undefined) {
+            user.newPassword = p;
+        }
+        
+        userService.updateUser(user)
+        .then(
+            function(response){  
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modal.successfully-updated-profile.tpl.htm',
+                    appendTo: undefined,
+                    controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 
-                            if (p !== '') {
-                                user.newPassword = p;
-                            }
+                        $scope.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
 
-                            $scope.dismissModal = function() {
-                                $uibModalInstance.close();
-                            };
+                    }]
+                })
+            },
+            function(errResponse){
+                console.log(errResponse)
+            }
+        
+        )
 
-                        }]
-                    })
-                },
-                function(errResponse){
-                    console.log(errResponse)
-                }
-            
-            )
-        }, 200);
-       
     };
 }
