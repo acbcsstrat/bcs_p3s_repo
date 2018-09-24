@@ -99,6 +99,8 @@ privileged aspect PatentController_Roo_Controller {
     void PatentController.addDateTimeFormatPatterns(Model uiModel) {
         uiModel.addAttribute("patent_internationalfilingdate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("patent_lastreneweddateexepo_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+        uiModel.addAttribute("patent_prioritydate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+        uiModel.addAttribute("patent_pct_publisheddate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
     }
     
     void PatentController.populateEditForm(Model uiModel, Patent patent) {

@@ -17,11 +17,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
-import javax.persistence.ManyToMany;
 
 
 
@@ -31,22 +27,24 @@ import javax.persistence.ManyToMany;
 @OnDelete(action = OnDeleteAction.CASCADE)
 public class Patent {
 
-    /**
+	//  mpiNN codes refer to the definitions in '180730e form1200 Scrape specification.docx', created for Phase 2.1 / E-PCT
+	
+    /** mpi04
      */
     @NotNull
     private String EP_ApplicationNumber;
 
-    /**
+    /** mpi10
      */
     @NotNull
-    private String title;
+    private String title; 
 
-    /**
+    /** mpi05
      */
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date internationalFilingDate;
+    private Date internationalFilingDate; 
 
     /**
      */
@@ -110,20 +108,90 @@ public class Patent {
     @NotNull
     private String EP_PublicationNumber;
     
-    private String ipcCodes;
+    /** mpi03: Comma-Space separated
+     */
+    private String ipcCodes; 
     
+    /**
+     */
     private String representative;
     
+    /**
+     */
     @NotNull
     private String checkDigit;
 
+
+    // Start of: Fields added for phase 2.1 : E-PCT : Form1200  //
+    
+    // These fields could be NOT NULL for offering E-PCT to Americans. But for later phases, this doesn't hold.
+    // So db allows Nulls. Coding must ensure they are populated as required. 
+
+    
+
+    /** mpi01: Typ: 'en'
+    */
+    private String internationalFilingLang;
+    
+    /** mpi06: Typ: WO2013US51650
+    */
+    private String PCT_applicationNumber;
+    
+    /** mpi02: Typ: WO2013US51650
+    */
+    private String PCT_publicationNumber;
+    
+    /** mpi11: search-type then office. For E-PCT, must be 'isr/EP'
+    */
+    private String internationalSearchAuthority;
+    
+    /** mpi09: comma-separated 2character states. Typically about 30
+    */
+    private String designated_states;
+    
+    /** vmpi12: From the 17 values. 
+     * For E-PCT must be 'The international publication has been made' 
+     * See also vmpi13
+    */
+    private String epctStatus;
+    
+    /** Will be null unless E-PCT is not available
+     * The possible codes are specified in the (FE/BE) API
+     * See EPCTnotAvailableReasonEnum
+    */
+    private String epctNotAvailableReason;
+
+    
+    // End of: Fields added for phase 2.1 : E-PCT : Form1200  //
+
+    
+    
+    
     /**
-     *//*
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date priorityDate;		
+
+    /**
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date PCT_publishedDate;
+
+    
+    
+    
+    
+    
+    
+    
+    /*
     // Formerly CascadeType.ALL, which rejects auto-delete child notifications
     @NotNull
     @ManyToMany(cascade = CascadeType.REFRESH)
     private List<Notification> notifications = new ArrayList<Notification>();
-*/
+     */
 
 
     // Setters pushed to support P3S 'Enums'

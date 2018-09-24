@@ -122,12 +122,16 @@ public class PatentUI extends Patent {
 		this.setPatentApplicationNumber(patent.getEP_ApplicationNumber());
 		this.setPatentPublicationNumber(patent.getEP_PublicationNumber());
 		this.setFilingDate(patent.getInternationalFilingDate());
-		
-		/*
-		 * MORE FIELDS ADDED FOR PATENT
-		 */
 		this.setRepresentative(patent.getRepresentative());
-		this.setIpcCodes(patent.getIpcCodes());
+		
+		this.setInternationalFilingLang(patent.getInternationalFilingLang());
+		this.setPCT_applicationNumber(patent.getPCT_applicationNumber());
+		this.setPCT_publicationNumber(patent.getPCT_publicationNumber());
+		this.setInternationalSearchAuthority(patent.getInternationalSearchAuthority());
+		this.setDesignated_states(patent.getDesignated_states());
+		this.setEpctStatus(patent.getEpctStatus());
+		this.setEpctNotAvailableReason(patent.getEpctNotAvailableReason());
+		
 		
 		allNotificationUIs =createNotificationUIs(patent.getId(),SecurityUtil.getMyUser().getId());
 
