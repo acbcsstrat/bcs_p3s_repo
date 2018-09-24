@@ -51,11 +51,11 @@ public class NotificationEmailParams extends Universal{
 		String price = "";
 		CombinedFee fee = new CostAnalysisDataEngine().getFeeObj(patent);
 		
-		if(fee.getEpoFee() == null || fee.getP3sFee() == null || fee.getFxRate() == null){
+		if(fee.getEpoRenewalFee() == null || fee.getP3sFee() == null || fee.getFxRate() == null){
 			log().error("Error calculating Fee object for patent with renewal year " + patent.getRenewalYear());
 			return price;
 		}
-		RenewalFee currentFee = new CostAnalysisDataEngine().getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+		RenewalFee currentFee = new CostAnalysisDataEngine().getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoRenewalFee(), fee.getFxRate());
 		
 		if(!(currentFee.getSubTotal_USD() == null)){
 			price = currentFee.getSubTotal_USD().toString();

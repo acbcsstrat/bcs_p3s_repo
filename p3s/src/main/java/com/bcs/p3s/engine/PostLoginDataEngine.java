@@ -73,10 +73,10 @@ public class PostLoginDataEngine extends Universal{
 					renewalDates.setRenewalWindowOpened(true);
 					caData = caEngine.getAllPhasesInfo(renewalDates);
 					String currentPhase = caEngine.getCurrentPhase(caData);
-					CombinedFee fee = caEngine.getFeeObj(patent);
-					RenewalFee currentfee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+					CombinedFee combinedFee = caEngine.getFeeObj(patent);
+					RenewalFee currentfee = caEngine.getCurrentPhaseCost(currentPhase, combinedFee.getP3sFee(), combinedFee.getEpoRenewalFee(), combinedFee.getFxRate());
 					RenewalFeeUI currentFeeUI = new RenewalFeeUI(currentfee);
-					RenewalFee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+					RenewalFee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), combinedFee.getP3sFee(), combinedFee.getEpoRenewalFee(), combinedFee.getFxRate());
 					RenewalFeeUI nextStageFeeUI = new RenewalFeeUI(nextStageFee);
 					extendedData.setPatentId(patent.getId());
 					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());

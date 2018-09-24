@@ -7,15 +7,15 @@ import com.bcs.p3s.model.P3SFeeSole;
 
 public class CombinedFee {
 	
-	EpoRenewalFee epoFee;
+	EpoRenewalFee epoRenewalFee;
 	P3SFeeSole p3sFee;
 	BigDecimal fxRate;
 	
-	public EpoRenewalFee getEpoFee() {
-		return epoFee;
+	public EpoRenewalFee getEpoRenewalFee() {
+		return epoRenewalFee;
 	}
-	public void setEpoFee(EpoRenewalFee epoFee) {
-		this.epoFee = epoFee;
+	public void setEpoRenewalFee(EpoRenewalFee epoRenewalFee) {
+		this.epoRenewalFee = epoRenewalFee;
 	}
 	public P3SFeeSole getP3sFee() {
 		return p3sFee;

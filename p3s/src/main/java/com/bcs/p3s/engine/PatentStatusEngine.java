@@ -218,10 +218,10 @@ public class PatentStatusEngine extends Universal {
 				log().debug("Patent holds a renewal status of SHOW_PRICE.");
 				//caData = caEngine.getAllPhasesInfo(renewalDates);
 				String currentPhase = renewalInfo.getColour().toString();
-				CombinedFee fee = caEngine.getFeeObj(patent);
+				CombinedFee combinedFee = caEngine.getFeeObj(patent);
 				
 				//FeeUI currentfeeUI = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-				RenewalFee currentFee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
+				RenewalFee currentFee = caEngine.getCurrentPhaseCost(currentPhase, combinedFee.getP3sFee(), combinedFee.getEpoRenewalFee(), combinedFee.getFxRate());
 				RenewalFeeUI currentfeeUI = new RenewalFeeUI(currentFee);
 				
 				/**
@@ -245,7 +245,7 @@ public class PatentStatusEngine extends Universal {
 				RenewalFeeUI nextStageFeeUI = null; // zaphod 
 				//if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(renewalInfo.getCurrentRenewalStatus())) { //If renewal status is Show price then only we need to calculate the next stage price
 					//nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
-					RenewalFee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(renewalInfo), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
+					RenewalFee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(renewalInfo), combinedFee.getP3sFee(), combinedFee.getEpoRenewalFee(), combinedFee.getFxRate()); 
 					nextStageFeeUI = new RenewalFeeUI(nextStageFee);
 				//}
 				newPatentData.setPatentId(patent.getId());
