@@ -94,7 +94,7 @@ public class PatentUI extends Patent {
 	private BigDecimal currentTotalUSD;
 	private BigDecimal fxRate;*/
     
-    private FeeUI feeUI;
+    private RenewalFeeUI renewalFeeUI;
 
     
 	List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
@@ -152,8 +152,8 @@ public class PatentUI extends Patent {
 
 					// Set all the *costUSD & *costEUR fields
 					if (extendedData.getFee()!=null) {
-						FeeUI feeUI = new FeeUI(extendedData.getFee());
-						this.setFeeUI(feeUI);
+						RenewalFeeUI renewalFeeUI = new RenewalFeeUI(extendedData.getFee());
+						this.setRenewalFeeUI(renewalFeeUI);
 					}
 					break;
 				}
@@ -251,12 +251,12 @@ public class PatentUI extends Patent {
 		this.costBandColour = costBandColour;
 	}
 
-	public FeeUI getFeeUI() {
-		return feeUI;
+	public RenewalFeeUI getRenewalFeeUI() {
+		return renewalFeeUI;
 	}
 
-	public void setFeeUI(FeeUI feeUI) {
-		this.feeUI = feeUI;
+	public void setRenewalFeeUI(RenewalFeeUI renewalFeeUI) {
+		this.renewalFeeUI = renewalFeeUI;
 	}
 	
 	

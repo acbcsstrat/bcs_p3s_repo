@@ -3,9 +3,6 @@ package com.bcs.p3s.cron.engine;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,11 +12,8 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.beanutils.BeanToPropertyValueTransformer;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.TransformerUtils;
-import org.apache.commons.io.FileCleaningTracker;
 
 import com.bcs.p3s.cron.notification.provider.NotificationFinder;
-import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.engine.RenewalDatesEngine;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -37,7 +31,6 @@ public class NotificationEngine extends Universal{
 	
 	
 	public List<NotificationEmailParams> findNotification() {
-		// TODO Auto-generated method stub
 		String msg = "findNotification()";
 		String notificationName = "";
 		log().debug(msg + " invoked");

@@ -43,14 +43,14 @@ public class CostAnalysisData {
 	/**
 	 * FEE BREAKDOWN
 	 */
-	private FeeUI fee;
+	private RenewalFeeUI renewalFee;
 	
 	
 	/**
 	 * LINE CHART DATA
 	 * @return HashMap
 	 */
-	TreeMap<Date,FeeUI> lineChart;
+	TreeMap<Date,RenewalFeeUI> lineChart;
 	
 	public Date getGreenStartDate() {
 		return greenStartDate;
@@ -236,19 +236,19 @@ public class CostAnalysisData {
 		this.extraTextCost = extraTextCost;
 	}
 
-	public FeeUI getFee() {
-		return fee;
+	public RenewalFeeUI getRenewalFee() {
+		return renewalFee;
 	}
 
-	public void setFee(FeeUI fee) {
-		this.fee = fee;
+	public void setRenewalFee(RenewalFeeUI enewalFee) {
+		this.renewalFee = renewalFee;
 	}
 
-	public TreeMap<Date, FeeUI> getLineChart() {
+	public TreeMap<Date, RenewalFeeUI> getLineChart() {
 		return lineChart;
 	}
 
-	public void setLineChart(TreeMap<Date, FeeUI> lineChart) {
+	public void setLineChart(TreeMap<Date, RenewalFeeUI> lineChart) {
 		this.lineChart = lineChart;
 	}
 	

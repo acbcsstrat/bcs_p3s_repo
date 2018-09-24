@@ -1,7 +1,5 @@
 package com.bcs.p3s.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
@@ -9,58 +7,44 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TreeMap;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.CostAnalysisData;
-import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalDates;
+import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.engine.CostAnalysisDataEngine;
-import com.bcs.p3s.engine.PatentStatus;
 import com.bcs.p3s.engine.PatentStatusEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
-import com.bcs.p3s.engine.RenewalDatesEngine;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.DiscountPercent;
-import com.bcs.p3s.model.EpoRenewalFee;
 import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
-import com.bcs.p3s.model.P3SFeeSole;
-import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.scrape.service.EPOAccess;
 import com.bcs.p3s.scrape.service.EPOAccessImpl;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.date.DateUtil;
-import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
-import com.bcs.p3s.wrap.BasketContents;
 import com.bcs.p3s.wrap.CombinedFee;
 import com.bcs.p3s.wrap.PatentExtendedData;
 
@@ -771,7 +755,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
 			//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
 			RenewalFee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
-			caData.setFee(new FeeUI(fee));
+			caData.setRenewalFee(new RenewalFeeUI(fee));
 		}
 		
 		else if(RenewalStatusEnum.TOO_LATE .equalsIgnoreCase(patent.getRenewalStatus())){
@@ -781,7 +765,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
 			//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
 			RenewalFee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
-			caData.setFee(new FeeUI(fee));
+			caData.setRenewalFee(new RenewalFeeUI(fee));
 		}
 		
 		// ELSE THE STATUS WILL BE LIKE NO_RENEWAL_NEEDED :- DISABLE CA BUTTON ON THESE CASES
@@ -797,7 +781,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		 * GET THE LINE CHART INFO - NOW GETTING LAST 6 WEEKS INCLUDING TODAYS RATE HISTORY
 		 * 
 		 */
-		TreeMap<Date, FeeUI> lineChart = new TreeMap<Date, FeeUI>();
+		TreeMap<Date, RenewalFeeUI> lineChart = new TreeMap<Date, RenewalFeeUI>();
 		//List<FxRateUI> history = getFxRateHistory("week");
 		lineChart = costEngines.getLineChartData(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee());
 		caData.setLineChart(lineChart);

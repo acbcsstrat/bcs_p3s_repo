@@ -8,8 +8,8 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import com.bcs.p3s.display.CostAnalysisData;
-import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.RenewalDates;
+import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.RenewalFee;
@@ -75,9 +75,9 @@ public class PostLoginDataEngine extends Universal{
 					String currentPhase = caEngine.getCurrentPhase(caData);
 					CombinedFee fee = caEngine.getFeeObj(patent);
 					RenewalFee currentfee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-					FeeUI currentFeeUI = new FeeUI(currentfee);
+					RenewalFeeUI currentFeeUI = new RenewalFeeUI(currentfee);
 					RenewalFee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-					FeeUI nextStageFeeUI = new FeeUI(nextStageFee);
+					RenewalFeeUI nextStageFeeUI = new RenewalFeeUI(nextStageFee);
 					extendedData.setPatentId(patent.getId());
 					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
 					extendedData.setCurrentCostBand(caData.getCurrentcostBand());

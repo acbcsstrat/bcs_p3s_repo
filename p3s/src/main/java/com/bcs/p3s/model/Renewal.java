@@ -44,7 +44,7 @@ public class Renewal {
      */
     @NotNull
     @ManyToOne(cascade = CascadeType.REMOVE)
-    private RenewalFee fee;
+    private RenewalFee renewalFee;
 
     /**
      */

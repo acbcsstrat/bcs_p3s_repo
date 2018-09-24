@@ -14,7 +14,7 @@ privileged aspect Renewal_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Renewal.entityManager;
     
-    public static final List<String> Renewal.fieldNames4OrderClauseFilter = java.util.Arrays.asList("patent", "activePaymentId", "fee", "certificate", "renewalYear", "renewalDueDate", "renewalPeriod", "renewalStatus", "renewalAttemptsMade");
+    public static final List<String> Renewal.fieldNames4OrderClauseFilter = java.util.Arrays.asList("patent", "activePaymentId", "renewalFee", "certificate", "renewalYear", "renewalDueDate", "renewalPeriod", "renewalStatus", "renewalAttemptsMade");
     
     public static final EntityManager Renewal.entityManager() {
         EntityManager em = new Renewal().entityManager;

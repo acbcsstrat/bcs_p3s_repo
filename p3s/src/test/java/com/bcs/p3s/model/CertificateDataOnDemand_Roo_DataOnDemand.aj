@@ -5,7 +5,7 @@ package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.Certificate;
 import com.bcs.p3s.model.CertificateDataOnDemand;
-import com.bcs.p3s.model.RenewalDataOnDemand;
+import com.bcs.p3s.model.Renewal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect CertificateDataOnDemand_Roo_DataOnDemand {
@@ -27,15 +26,13 @@ privileged aspect CertificateDataOnDemand_Roo_DataOnDemand {
     
     private List<Certificate> CertificateDataOnDemand.data;
     
-    @Autowired
-    RenewalDataOnDemand CertificateDataOnDemand.renewalDataOnDemand;
-    
     public Certificate CertificateDataOnDemand.getNewTransientCertificate(int index) {
         Certificate obj = new Certificate();
         setCertificateTemplateId(obj, index);
         setDocPath(obj, index);
         setFilename(obj, index);
         setIssueDate(obj, index);
+        setRenewal(obj, index);
         setRenewedOnDateExEpo(obj, index);
         return obj;
     }
@@ -58,6 +55,11 @@ privileged aspect CertificateDataOnDemand_Roo_DataOnDemand {
     public void CertificateDataOnDemand.setIssueDate(Certificate obj, int index) {
         Date issueDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setIssueDate(issueDate);
+    }
+    
+    public void CertificateDataOnDemand.setRenewal(Certificate obj, int index) {
+        Renewal renewal = null;
+        obj.setRenewal(renewal);
     }
     
     public void CertificateDataOnDemand.setRenewedOnDateExEpo(Certificate obj, int index) {

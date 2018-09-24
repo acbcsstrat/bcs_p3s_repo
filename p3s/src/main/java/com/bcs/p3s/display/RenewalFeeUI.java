@@ -8,7 +8,7 @@ import com.bcs.p3s.model.RenewalFee;
 
 
 
-public class FeeUI {
+public class RenewalFeeUI {
 	
 	private BigDecimal renewalFeeEUR;
     
@@ -43,7 +43,7 @@ public class FeeUI {
 
 	
 	
-	public FeeUI(RenewalFee fee){
+	public RenewalFeeUI(RenewalFee fee){
 		
 		this.setRenewalFeeEUR(fee.getRenewalFee_EUR());
 		this.setExtensionFeeEUR(fee.getExtensionFee_EUR());

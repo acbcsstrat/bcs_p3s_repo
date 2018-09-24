@@ -50,7 +50,7 @@ public class RenewalUI extends Renewal {
     private String certificateUrl;
     private String invoiceUrl;
     private PatentUI patentUI;
-    private FeeUI feeUI;
+    private RenewalFeeUI renewalFeeUI;
 
     
     
@@ -109,9 +109,10 @@ public class RenewalUI extends Renewal {
 		}
 
 		//Get the FeeUI
-		FeeUI feeUI = new FeeUI(renewal.getFee());
-		this.setFee(null);
-		this.setFeeUI(feeUI);
+		RenewalFeeUI renewalFeeUI = new RenewalFeeUI(renewal.getRenewalFee());
+		this.setRenewalFee(null); // Hide detail from frontend. Why?
+		this.setRenewalFeeUI(renewalFeeUI);
+		
 		
 		//Get the paymentUI details
 		renewal.getActivePaymentId().setRenewals(null);
@@ -197,12 +198,11 @@ public class RenewalUI extends Renewal {
 		this.patentUI = patentUI;
 	}
 
-	public FeeUI getFeeUI() {
-		return feeUI;
+	public RenewalFeeUI getRenewalFeeUI() {
+		return renewalFeeUI;
 	}
-
-	public void setFeeUI(FeeUI feeUI) {
-		this.feeUI = feeUI;
+	public void setRenewalFeeUI(RenewalFeeUI renewalFeeUI) {
+		this.renewalFeeUI = renewalFeeUI;
 	}
 	
 	

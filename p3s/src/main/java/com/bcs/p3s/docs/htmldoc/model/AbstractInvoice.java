@@ -80,7 +80,7 @@ public abstract class AbstractInvoice extends Universal {
 		// Rate stored in Fee. There may be multiple Fees per transaction, but all will have the same rate
 		String rate = "";
 		List<Renewal> renewals = payment.getRenewals();
-		RenewalFee aFee = renewals.get(0).getFee();
+		RenewalFee aFee = renewals.get(0).getRenewalFee();
 		BigDecimal fxRateBD = aFee.getFxRate().setScale(5, BigDecimal.ROUND_HALF_UP);
 		rate = fxRateBD.toString();
 		return rate;

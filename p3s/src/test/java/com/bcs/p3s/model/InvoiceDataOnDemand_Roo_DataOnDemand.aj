@@ -5,7 +5,7 @@ package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.InvoiceDataOnDemand;
-import com.bcs.p3s.model.PaymentDataOnDemand;
+import com.bcs.p3s.model.Payment;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect InvoiceDataOnDemand_Roo_DataOnDemand {
@@ -27,9 +26,6 @@ privileged aspect InvoiceDataOnDemand_Roo_DataOnDemand {
     private Random InvoiceDataOnDemand.rnd = new SecureRandom();
     
     private List<Invoice> InvoiceDataOnDemand.data;
-    
-    @Autowired
-    PaymentDataOnDemand InvoiceDataOnDemand.paymentDataOnDemand;
     
     public Invoice InvoiceDataOnDemand.getNewTransientInvoice(int index) {
         Invoice obj = new Invoice();
@@ -41,6 +37,7 @@ privileged aspect InvoiceDataOnDemand_Roo_DataOnDemand {
         setInvoiceType(obj, index);
         setIssueDate(obj, index);
         setLatePayPenalty_USD(obj, index);
+        setPayment(obj, index);
         setPreceedingInvoiceId(obj, index);
         return obj;
     }
@@ -83,6 +80,11 @@ privileged aspect InvoiceDataOnDemand_Roo_DataOnDemand {
     public void InvoiceDataOnDemand.setLatePayPenalty_USD(Invoice obj, int index) {
         BigDecimal latePayPenalty_USD = BigDecimal.valueOf(index);
         obj.setLatePayPenalty_USD(latePayPenalty_USD);
+    }
+    
+    public void InvoiceDataOnDemand.setPayment(Invoice obj, int index) {
+        Payment payment = null;
+        obj.setPayment(payment);
     }
     
     public void InvoiceDataOnDemand.setPreceedingInvoiceId(Invoice obj, int index) {

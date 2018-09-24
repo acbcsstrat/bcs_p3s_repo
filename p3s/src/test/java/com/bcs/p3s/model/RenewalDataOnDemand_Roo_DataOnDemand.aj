@@ -40,18 +40,18 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
     CertificateDataOnDemand RenewalDataOnDemand.certificateDataOnDemand;
     
     @Autowired
-    RenewalFeeDataOnDemand RenewalDataOnDemand.renewalFeeDataOnDemand;
+    PatentDataOnDemand RenewalDataOnDemand.patentDataOnDemand;
     
     @Autowired
-    PatentDataOnDemand RenewalDataOnDemand.patentDataOnDemand;
+    RenewalFeeDataOnDemand RenewalDataOnDemand.renewalFeeDataOnDemand;
     
     public Renewal RenewalDataOnDemand.getNewTransientRenewal(int index) {
         Renewal obj = new Renewal();
         setActivePaymentId(obj, index);
-        setFee(obj, index);
         setPatent(obj, index);
         setRenewalAttemptsMade(obj, index);
         setRenewalDueDate(obj, index);
+        setRenewalFee(obj, index);
         setRenewalPeriod(obj, index);
         setRenewalStatus(obj, index);
         setRenewalYear(obj, index);
@@ -61,11 +61,6 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
     public void RenewalDataOnDemand.setActivePaymentId(Renewal obj, int index) {
         Payment activePaymentId = paymentDataOnDemand.getRandomPayment();
         obj.setActivePaymentId(activePaymentId);
-    }
-    
-    public void RenewalDataOnDemand.setFee(Renewal obj, int index) {
-        RenewalFee fee = renewalFeeDataOnDemand.getRandomRenewalFee();
-        obj.setFee(fee);
     }
     
     public void RenewalDataOnDemand.setPatent(Renewal obj, int index) {
@@ -81,6 +76,11 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
     public void RenewalDataOnDemand.setRenewalDueDate(Renewal obj, int index) {
         Date renewalDueDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setRenewalDueDate(renewalDueDate);
+    }
+    
+    public void RenewalDataOnDemand.setRenewalFee(Renewal obj, int index) {
+        RenewalFee renewalFee = renewalFeeDataOnDemand.getRandomRenewalFee();
+        obj.setRenewalFee(renewalFee);
     }
     
     public void RenewalDataOnDemand.setRenewalPeriod(Renewal obj, int index) {

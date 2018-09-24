@@ -12,8 +12,8 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import com.bcs.p3s.display.CostAnalysisData;
-import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.RenewalDates;
+import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.CalendarColour;
@@ -222,7 +222,7 @@ public class PatentStatusEngine extends Universal {
 				
 				//FeeUI currentfeeUI = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
 				RenewalFee currentFee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
-				FeeUI currentfeeUI = new FeeUI(currentFee);
+				RenewalFeeUI currentfeeUI = new RenewalFeeUI(currentFee);
 				
 				/**
 				 * MP23072018 1442 Temp fix to udjust the functionality to be able to Add Patent in Black period with Show price status
@@ -242,11 +242,11 @@ public class PatentStatusEngine extends Universal {
 				newPatentData.setActiveRenewalYear(patent.getRenewalYear());
 				newPatentData.setCurrentRenewalStatus(patent.getRenewalStatus());*/
 				
-				FeeUI nextStageFeeUI = null;
+				RenewalFeeUI nextStageFeeUI = null; // zaphod 
 				//if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(renewalInfo.getCurrentRenewalStatus())) { //If renewal status is Show price then only we need to calculate the next stage price
 					//nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
 					RenewalFee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(renewalInfo), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
-					nextStageFeeUI = new FeeUI(nextStageFee);
+					nextStageFeeUI = new RenewalFeeUI(nextStageFee);
 				//}
 				newPatentData.setPatentId(patent.getId());
 				newPatentData.setRenewalDueDate(renewalInfo.getRenewalDueDate());

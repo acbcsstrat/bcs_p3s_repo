@@ -490,7 +490,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		String msg = PREFIX+"commitTransaction("+commitTransaction+","+fee+ ") ";
 		Invoice invoice = new Invoice();
 		Payment payment = new Payment();
-		RenewalFee currentFee = null;
+		RenewalFee currentRenewalFee = null;
 		Invoice currentInvoice = null; // new Invoice();
 		Payment currentPayment = null; // new Payment();
 		Renewal currentRenewal = new Renewal();
@@ -589,28 +589,26 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			Renewal renewal = new Renewal();
 			renewal = populateRenewalData(commitTransaction,eachPatent);
 			if(!(fee == null)){
-				currentFee = renewal.getFee().persist();
-				if(currentFee == null){
+				currentRenewalFee = renewal.getRenewalFee().persist();
+				if(currentRenewalFee == null){
 					dbSuccess = false;
-					log().debug("Fee Table persistence failed " + msg);
-					log().error("Fee Table persistence failed " + msg);
+					log().error("Fee Table persistence failed. currentFee=null " + msg);
 					return payment;
 				}
 				log().debug("Persisted Fee Table successfully " + msg);
 			}
 			else{
 				dbSuccess = false;
-				log().debug("Fee Table persistence failed " + msg);
-				log().error("Fee Table persistence failed " + msg);
+				log().error("Fee Table persistence failed. fee=null " + msg);
 				return payment;
 			}
 			
 //e.Insert into Renewal
 			
 			renewal.setActivePaymentId(currentPayment);
-			renewal.setFee(currentFee);
+			renewal.setRenewalFee(currentRenewalFee);
 			currentRenewal = renewal.persist();
-			currentFee.setRenewal(currentRenewal);
+			currentRenewalFee.setRenewal(currentRenewal);
 			renewal_payment.add(currentRenewal);
 			log().debug("Persisted Renewal Table successfully " + msg + "and returned renewal details with id as " + renewal.getId());
 			
@@ -629,8 +627,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			log().debug("payment_renewals join table persisted with "+ renewal_payment.size() +" renewal(s)");
 		}
 //g.Update currentFee Table with currentRenewal
-		if(!(currentFee == null)){
-			currentFee.merge();
+		if(!(currentRenewalFee == null)){
+			currentRenewalFee.merge();
 			log().debug("Fee table updated with renewal id as "+ currentRenewal.getId());
 		}
 		
@@ -695,7 +693,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			if(eachSessionData.getPatentId() == patentUI.getId()){
 				renewal.setRenewalDueDate(eachSessionData.getRenewalDueDate());
 				renewal.setRenewalPeriod(eachSessionData.getCurrentCostBand());
-				renewal.setFee(eachSessionData.getFee());
+				renewal.setRenewalFee(eachSessionData.getFee());
 				break;
 			}
 		}

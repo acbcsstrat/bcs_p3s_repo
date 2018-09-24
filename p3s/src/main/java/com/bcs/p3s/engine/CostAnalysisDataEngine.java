@@ -12,8 +12,8 @@ import java.util.TreeMap;
 import javax.persistence.TypedQuery;
 
 import com.bcs.p3s.display.CostAnalysisData;
-import com.bcs.p3s.display.FeeUI;
 import com.bcs.p3s.display.RenewalDates;
+import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.CalendarColour;
@@ -425,14 +425,14 @@ public class CostAnalysisDataEngine extends Universal{
 	 * @return Fx Variance for current phase in last 6 weeks
 	 *    format :- TreeMap<Date,FeeUI> for last 6 weeks 
 	 */
-	public TreeMap<Date,FeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee, EpoRenewalFee epoFee){
+	public TreeMap<Date,RenewalFeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee, EpoRenewalFee epoFee){
 		
 		
 		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
-		TreeMap<Date, FeeUI> lineChart = new TreeMap<Date, FeeUI>();
+		TreeMap<Date, RenewalFeeUI> lineChart = new TreeMap<Date, RenewalFeeUI>();
 		
 		archivedRateList = getArchivedDataFor6Weeks();
-		lineChart = getAllFeeUI(archivedRateList,caData,p3sFee, epoFee);
+		lineChart = getAllRenewalFeeUI(archivedRateList,caData,p3sFee, epoFee);
 		
 		return lineChart;
 	}
@@ -487,9 +487,9 @@ public class CostAnalysisDataEngine extends Universal{
 	}
 	
 	
-	public TreeMap<Date, FeeUI> getAllFeeUI(List<ArchivedRate> history , CostAnalysisData caData, P3SFeeSole p3sFee, EpoRenewalFee epoFee){
+	public TreeMap<Date, RenewalFeeUI> getAllRenewalFeeUI(List<ArchivedRate> history , CostAnalysisData caData, P3SFeeSole p3sFee, EpoRenewalFee epoFee){
 		
-		TreeMap<Date, FeeUI> lineChart = new TreeMap<Date, FeeUI>();
+		TreeMap<Date, RenewalFeeUI> lineChart = new TreeMap<Date, RenewalFeeUI>();
 		
 		//first entry as todays rate
 		Calendar calendar = Calendar.getInstance();
@@ -497,19 +497,19 @@ public class CostAnalysisDataEngine extends Universal{
 		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
 		BigDecimal fxRate = current.getCurrent_P3S_rate();
 		RenewalFee todaysFee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxRate);
-		FeeUI feeUI = new FeeUI(todaysFee);
+		RenewalFeeUI feeUI = new RenewalFeeUI(todaysFee);
 		feeUI.setFeeActiveDate(utils.dateToUSStringWithTimeandZone(calendar.getTime()));
 		lineChart.put(calendar.getTime(),feeUI);
 		
 		final long ONEDAY = 24 * 3600 * 1000;
 		for (ArchivedRate eachData : history) {
 			
-			RenewalFee fee = new RenewalFee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
+			RenewalFee renewalFee = new RenewalFee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
 					new BigDecimal(0.0),new BigDecimal(0.0));
 		    BigDecimal fxValue = eachData.getFxRate_P3s();
-		    fee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxValue);
+		    renewalFee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoFee, fxValue);
 		    //NOW POPULATE FEEUI 
-		    feeUI = new FeeUI(fee);
+		    feeUI = new RenewalFeeUI(renewalFee);
 			// To convert archived date to active date, substract one day (isGoodEnuf)
 			Date becameActiveDate = new Date( eachData.getArchivedDate().getTime() - ONEDAY );
 			// formerly: lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(eachData.getActiveFromDate()), feeUI);

@@ -32,7 +32,7 @@ public class Patent4htmlDoc extends Universal {
 	public Patent4htmlDoc (Renewal renewal) {
 		Patent patent = renewal.getPatent();
 		DateUtil dateUtil = new DateUtil();
-		RenewalFee fee = renewal.getFee();
+		RenewalFee fee = renewal.getRenewalFee();
 		BigDecimal rate = fee.getFxRate();
 		
 		this.applicationNumber = patent.getEP_ApplicationNumber();
