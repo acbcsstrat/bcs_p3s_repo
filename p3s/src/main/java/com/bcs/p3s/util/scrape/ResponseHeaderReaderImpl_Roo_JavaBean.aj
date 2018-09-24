@@ -49,4 +49,8 @@ privileged aspect ResponseHeaderReaderImpl_Roo_JavaBean {
         this.responseHeader = responseHeader;
     }
     
+    public ResponseHeaderPojo ResponseHeaderReaderImpl.readResponseHeaderData() {
+        return null;
+    }
+    
 }

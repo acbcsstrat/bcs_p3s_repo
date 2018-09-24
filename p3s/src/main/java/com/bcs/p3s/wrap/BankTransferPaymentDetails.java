@@ -5,10 +5,12 @@ package com.bcs.p3s.wrap;
  * Were these details to come from a configuration file (or any other variable source) this would be, by far,
  * the MOST desirable hack target in the entire system. For now, make safe by making it immutable. Values are hardcoded here.
  * @author andyc  14th Feb 2018
+ * AC 180924 made this file same in p3s & cron
  */
 public final class BankTransferPaymentDetails {
 
 	private final String OBS = "OBSOLETEfield"; 
+
 	
 	private String account1PaymentType;
 	private String account1BankName;
@@ -44,8 +46,6 @@ public final class BankTransferPaymentDetails {
 		account1BankName = "Deutsche Bank Trust Company Americas";
 		account1BranchCode = "021001033";   							// ABA // former : 026073150 
 		account1AcctNumber = "04951460";   									// former : 2715100256 
-		account1field1 = ""; 											// former : Community Federal Savings Bank, New York, NY 
-		account1field2 = "";
 		account1AcctType = "Checking";
 		account1AcctName = "Moneycorp Ltd";
 		
@@ -53,8 +53,6 @@ public final class BankTransferPaymentDetails {
 		account2BankName = "Deutsche Bank Trust Company Americas";
 		account2BranchCode = "021001033";								// ABA
 		account2AcctNumber = "04951460";
-		account2field1 = "";
-		account2field2 = "";
 		account2AcctType = "Checking";
 		account2AcctName = "Moneycorp Ltd";
 
@@ -65,32 +63,16 @@ public final class BankTransferPaymentDetails {
 		account1Type = OBS;
 		account1Number = OBS;
 		account1field1 = OBS; 
+		account1field2 = OBS;
 
-		//account1field2 = "";
 //		account2Type = "ACH-O";
 //		account2Number = "04951460";
 //		account2field1 = "Deutsche Bank Trust Company Americas"; 
 		account2Type = OBS;
 		account2Number = OBS;
 		account2field1 = OBS; 
+		account2field2 = OBS;
 
-		
-//		account1Type = "ACH";
-//		account1BranchCode = "026073150";   							// former : 026073150 
-//		account1Number = "2715100256";   								// former : 2715100256 
-//		account1field1 = "Community Federal Savings Bank, New York, NY";// former : Community Federal Savings Bank, New York, NY 
-//		account1field2 = "";
-//		account1AcctType = "aaa";
-//		account1CustomerName = "bbb";
-//		
-//		//account2Type = "FedWire";
-//		account2Type = "Alternative Payment";
-//		account2BranchCode = "Not yet available";
-//		account2Number = "Not yet available";
-//		account2field1 = "Not yet available";
-//		account2field2 = "";
-//		account2AcctType = "ccc";
-//		account2CustomerName = "ddd";
 }
 
 	
@@ -101,8 +83,6 @@ public final class BankTransferPaymentDetails {
 		tos += account1BankName+CRLF;
 		tos += account1BranchCode+CRLF;
 		tos += account1AcctNumber+CRLF;
-		tos += account1field1+CRLF;
-		tos += account1field2+CRLF;
 		tos += account1AcctType+CRLF;
 		tos += account1AcctName+CRLF;
 		tos += " & "+CRLF;
@@ -110,22 +90,11 @@ public final class BankTransferPaymentDetails {
 		tos += account2BankName+CRLF;
 		tos += account2BranchCode+CRLF;
 		tos += account2AcctNumber+CRLF;
-		tos += account2field1+CRLF;
-		tos += account2field2+CRLF;
 		tos += account2AcctType+CRLF;
 		tos += account2AcctName+CRLF;
 		return tos;
 	}
 
-	
-//	Whole block discontinued from 180511
-//	// 171208 - short term bodges until frontend removes obsolete refs to these obsolete fields
-//	protected final String obs = "OBSOLETE_FIELD";
-//	public String getAccountHoldersName() { return obs; }
-//	public String getAccountNumber() { return obs; }
-//	public String getItem1() { return obs; }
-//	public String getItem2() { return obs; }
-	
 	
 	
 	// Getters. No setters
@@ -141,12 +110,6 @@ public final class BankTransferPaymentDetails {
 	}
 	public String getAccount1AcctNumber() {
 		return account1AcctNumber;
-	}
-	public String getAccount1field1() {
-		return account1field1;
-	}
-	public String getAccount1field2() {
-		return account1field2;
 	}
 	public String getAccount1AcctType() {
 		return account1AcctType;
@@ -168,12 +131,6 @@ public final class BankTransferPaymentDetails {
 	public String getAccount2AcctNumber() {
 		return account2AcctNumber;
 	}
-	public String getAccount2field1() {
-		return account2field1;
-	}
-	public String getAccount2field2() {
-		return account2field2;
-	}
 	public String getAccount2AcctType() {
 		return account2AcctType;
 	}
@@ -183,30 +140,32 @@ public final class BankTransferPaymentDetails {
 
 
 	// Getters becoming redundant from 180514
+	// add [[ as safety check. Should never appear
 	public String getAccount1Type() {
-		return account1Type;
+		return "[[  "+account1Type;
 	}
 	public String getAccount1Number() {
-		return account1Number;
+		return "[[  "+account1Number;
 	}
+	public String getAccount1field1() {
+		return "[[  "+account1field1;
+	}
+	public String getAccount1field2() {
+		return "[[  "+account1field2;
+	}
+
 	public String getAccount2Type() {
-		return account2Type;
+		return "[[  "+account2Type;
 	}
 	public String getAccount2Number() {
-		return account2Number;
+		return "[[  "+account2Number;
+	}
+	public String getAccount2field1() {
+		return "[[  "+account2field1;
+	}
+	public String getAccount2field2() {
+		return "[[  "+account2field2;
 	}
 
 
-	
-	
-	// convenience, for debugging & logging
-//	public String toString() {
-//		String CRLF = "\n";
-//		String tos = "   BankTransferPaymentDetails is:"+CRLF;
-//		tos += accountNumber+CRLF;
-//		tos += item1+CRLF;
-//		tos += item2+CRLF;
-//		tos += item3+CRLF;
-//		return tos;
-//	}
 }
