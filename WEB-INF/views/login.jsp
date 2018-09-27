@@ -66,7 +66,7 @@
                               </div>
                            </div>
                            <div class="form-group d-flex justify-content-center flex-column m-b-sm">
-                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red">The username and password do not match our records. Please try again. If it's still a problem then please let us know support@ip.place</p>
+                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red">The username and password do not match our records. Please try again.</p>
                               <div class="btn-default">
                                  <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
                               </div>
