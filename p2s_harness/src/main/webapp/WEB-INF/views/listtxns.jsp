@@ -100,20 +100,20 @@ Server time: ${timeStr}
 <p/>
 &nbsp;
 <p/>
-Dan: To indicate that the EPO has been instructed to renew all patents in a transaction:
+To indicate that the EPO has been instructed to renew all patents in a transaction:
 <br/>
 <ul>
 <li>
-For that transaction, select 'P3S: EPO Instructed' from the dropdown, then press the Submit button 
+For that transaction, select <i>P3S: EPO Instructed</i> from the dropdown, then press the Submit button 
 </li>
 <li>
-(This immediately updates the Transaction status, but not yet the status of associated patents) 
+(This immediately (well, 20 seconds+) updates the Transaction status, but not yet the status of associated patents) 
 </li>
 <li>
-CHECK: Press 'Refesh' hyperlink, Status should have changed. Also login to app & view Transaction and Ppatent(s) status
+CHECK: Press <i>Refresh</i> hyperlink, Status should have changed. Also login to app & view Transaction and Patent(s) status
 </li>
 <li>
-Press the 'Followon after EPO Instructed' button.
+Press the <i>Followon after EPO Instructed</i> button.
 </li>
 <li>
 (This immediately updates the patent status(s)) 
@@ -122,11 +122,11 @@ Press the 'Followon after EPO Instructed' button.
 The change is now complete. Login to app & verify. 
 </li>
 <li>
-Now wait (days) for the EPO to publish renewals, whereupon certificate emails will be sent for each patent. 
+Now wait (days) for the EPO to publish the renewals, whereupon certificate emails will be automatically sent for each patent. 
 </li>
 </ul>  
 <p/>
-
+Note: that <i>P3S: EPO Instructed</i> is the ONLY dropdown value you should use in a Production environment. 
 
  
 
