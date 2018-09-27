@@ -20,7 +20,7 @@
 							</div>	
 						</div>
 						<div class="row" data-ng-if="$ctrl.recentStageArr.length !== 0">
-							<div class="col-md-6 col-lg-6" data-ng-repeat="item in $ctrl.recentStageArr" >
+							<div class="col-md-6 col-lg-6" data-ng-repeat="item in $ctrl.recentStageArr">
 								<table class="table t-data m-b-md">
 									<tr class="t-data t-data__row">
 										<td class="font-weight-bold t-data__w40">Patent No.</td>
@@ -41,7 +41,8 @@
 									</tr>
 									<tr class="t-data t-data__row">
 										<td class="font-weight-bold t-data__w40">Next Stage</td>
-										<td data-ng-class="(item.nextCostBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextCostBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.nextCostBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextCostBandColour == 'Black' ? 'txt-phase-white': '')" class="font-weight-bold t-data__w60">{{item.nextCostBandColor}}</td>
+										<td data-ng-if="item.renewalStatus !== 'Too late to renew'" data-ng-class="(item.nextStage == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextStage == 'Red' ? 'txt-phase-red': '') + '' + (item.nextStage == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextStage == 'Black' ? 'txt-phase-white': '')" class="font-weight-bold t-data__w60">{{item.nextStage}}</td>
+										<td data-ng-if="item.renewalStatus == 'Too late to renew'" class="t-data__w60">Call <span class="font-weight-bold" data-ng-bind="partnerName"></span> on: <span class="font-weight-bold" data-ng-bind="$ctrl.partnerPhone"></span></td>										
 									</tr>					
 								</table>
 							</div>								
@@ -171,7 +172,8 @@
 										</tr>
 										<tr>
 											<td class="font-weight-bold t-data__td-50">Next Stage</td>
-											<td data-ng-class="(item.nextCostBandColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextCostBandColour == 'Red' ? 'txt-phase-red': '') + '' + (item.nextCostBandColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextCostBandColour == 'Black' ? 'txt-phase-white': '')" class="font-weight-bold t-data__td-50">{{item.nextCostBandColor}}</td>
+											<td data-ng-if="item.renewalStatus !== 'Too late to renew'" data-ng-class="(item.nextStage == 'Amber' ? 'txt-phase-amber': '') + '' + (item.nextStage == 'Red' ? 'txt-phase-red': '') + '' + (item.nextStage == 'Blue' ? 'txt-phase-blue': '') + '' + (item.nextStage == 'Black' ? 'txt-phase-white': '')" class="font-weight-bold t-data__w60">{{item.nextStage}}</td>
+											<td data-ng-if="item.renewalStatus == 'Too late to renew'" class="t-data__w60">Call <span class="font-weight-bold" data-ng-bind="partnerName"></span> on: <span class="font-weight-bold" data-ng-bind="$ctrl.partnerPhone"></span></td>		
 										</tr>									
 									</tbody>
 								</table>
