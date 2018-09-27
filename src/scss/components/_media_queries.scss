@@ -137,6 +137,10 @@
     font-size: $font-normal;
   }
 
+  .primary-view-nav__list-item-a {
+    font-size: 1.5rem;
+  }  
+
   .secondary-view-nav__list-item {
     font-size: 1.2rem;
   }
@@ -213,7 +217,8 @@
     border-radius: none;
   }
 
-  .btn-default > .t-data__btn-portal > .btn__link, 
+  .btn-default > .t-data__btn-portal a.btn__link,
+  .btn-default > .t-data__btn-portal a.btn__link:not([href]):not([tabindex]), 
   .btn-default > ngcart-addtocart > .t-data__btn-portal > .btn__link { color:#000; }
 
   .btn-default ngcart-addtocart.t-data__btn-portal .btn-portal:active {
