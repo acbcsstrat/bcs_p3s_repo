@@ -9,21 +9,38 @@
   		<link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700" rel="stylesheet">
 
   		<link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
-  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	  	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>        
+
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>
 
-      <title>Patent Place</title>
+        <title>Patent Place</title>
+
+        <style id="antiClickjack">body{display:none !important;}</style>
+
+        <script type="text/javascript">
+
+            if(self === top) {
+                var antiClickjack = document.getElementById("antiClickjack");
+                antiClickjack.parentNode.removeChild(antiClickjack)
+            } else {
+                top.location = self.location
+            }
+
+        </script>
+
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
    	</head>
 
    	<body class="bg-light-grey2 hide-before"> 
       	<div class="container-pre-app d-flex justify-content-center align-items-center">
-         	<div class="container-pre-app__center-box-40 p-a-sm border">
+         	<div class="container-pre-app__center-box-40 p-a-sm">
           		<div class="row m-b-sm">
                      <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-sm">
@@ -32,7 +49,6 @@
                         <h1 class="font-weight-bold font-h1">Register</h1>
                      </div>
           		</div>
-         <!--   		<div class="d-flex align-items-center flex-column"> -->
          		<div id="register-intro">
 	       			<div class="row m-b-sm">
 	       				<div class="col-md-12 col-lg-12 col-xl-12 text-center">
@@ -70,7 +86,7 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-md-12 col-lg-12 col-xl-12">
-											<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+											<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
 										</div>
 									</div>
 									<div class="form-group row">
@@ -85,7 +101,7 @@
 									</div>
 									<div class="form-group row m-b-none">
 										<div class="col-md-12 col-lg-12 col-xl-12">
-											<input type="password" name="confirm_password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+											<input type="password" name="confirm_password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
 										</div>
 									</div>
 								</div>										  			
@@ -172,6 +188,11 @@
 			                            	<input type="checkbox" name="terms-register" id="terms-register" data-parsley-required-message="Please read and accept out terms and conditions" data-parsley-required="true">		
 			                       	 	</label>									
 									</div>
+                                    <div class="row m-b-sm">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">                                    
+                                            <div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LezdHEUAAAAABvniybP4wWGWWztRMQXT5r0_WMs" data-callback="recaptchaCallback" disabled="disabled"></div>
+                                        </div>
+                                    </div>
 								</div>
 							  	<div class="row">
 							  		<div class="col-md-12 col-lg-12 col-xl-12">
@@ -193,7 +214,7 @@
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
 	   								<h3 class="font-h3 txt-phase-green m-b-sm">Successful</h3>
-	   								<p class="font-body text-center">You have successfully reigstered your details. Please check your inbox to validate your account</p>
+	   								<p class="font-body text-center">You have successfully reigstered your details. Please check your inbox to validate your account.</p>
 	   							</div>
 	   						</div>   							
    						</div>
@@ -206,7 +227,7 @@
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
 									<h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
-	   								<p class="font-body text-center">We were unable to register your details. It is possible that email address has already been registered. Please check and try again.</p>
+	   								<p class="font-body text-center">We were unable to register your details. Please try again. If it's still a problem then please let us know support@ip.place</p>
 	   								<p class="font-body">Do you need support? Contact us through our <a class="inline-link font-weight-medium" id="supportLink">website</a></p>
 	   							</div>
 	   						</div>
@@ -291,13 +312,59 @@
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>      	
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>      	
 
       	<script>
 
 			var domain = 'http://localhost:8080/p3sweb/';
 
+            var captchaChecked = false;
+
+            function recaptchaCallback() {
+
+                var btnSubmit = $('#register');
+
+                var response = grecaptcha.getResponse();
+
+                if(response.length > 0 && $('#terms-register').prop('checked')) {
+                    captchaChecked = true;
+                    btnSubmit.prop('disabled', false);
+                } else {
+                    btnSubmit.prop('disabled', true);
+                }
+
+            }
+
+            function submitRegistration(data) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: domain + 'register/rest-user/',
+                    data: dataString,
+                    contentType: "application/json",
+                    success: function(response) {
+                        $('#initialRegistration, #register-intro,  divQn').fadeOut(500);    
+                        $('#register-success').delay(520).fadeIn(500);                          
+                    },
+                    error:function(errResponse) {
+                        $('#initialRegistration,  divQn').fadeOut(500); 
+                        $('#register-failure').delay(520).fadeIn(500);                          
+                    }
+                });
+
+            }            
+
 			$(function () {
+
+                $('#terms-register').change(function(){
+                    var response = grecaptcha.getResponse();
+                    if(this.checked && response.length > 0) {
+                        recaptchaCallback();
+                    } else {
+                        $('#register').prop('disabled', true);
+                    }
+                });
+
 			  	var $sections = $('.form-section');
 
 			  	function navigateTo(index) {
@@ -337,100 +404,102 @@
 			    	$(section).find(':input').attr('data-parsley-group', 'block-' + index);
 			  	});
 			  	navigateTo(0); // Start at the beginning
-			});
+			
 
-			window.Parsley.addValidator('validateName', {
-				validateString: function(value) {
-					if(!value.match('^[a-zA-z0-9\' -]*$')) {
-						return false;
-					}
-				},
-			 	messages: {
-				    en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
-			  	}
-			});
+    			window.Parsley.addValidator('validateName', {
+    				validateString: function(value) {
+    					if(!value.match('^[a-zA-z0-9\' -]*$')) {
+    						return false;
+    					}
+    				},
+    			 	messages: {
+    				    en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
+    			  	}
+    			});
 
-			window.Parsley.addValidator('validateAddress', {
-				validateString: function(value) {
-					if(!value.match('^[a-zA-z0-9\.\(\), -]*$')) {
-						return false;
-					}
-				},
-			 	messages: {
-				    en: 'Only letters, numbers, commas, ., -, () and spaces are valid charcters in this field.',
-			  	}
-			});
-		
-			window.Parsley.addValidator('validateCompanyName', {
-				validateString: function(value) {
-					if(!value.match('^[a-zA-z0-9\'\+\.\(\) -]*$')) {
-						return false;
-					}
-				},
-			 	messages: {
-				    en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
-			  	}
-			});
+    			window.Parsley.addValidator('validateAddress', {
+    				validateString: function(value) {
+    					if(!value.match('^[a-zA-z0-9\.\(\), -]*$')) {
+    						return false;
+    					}
+    				},
+    			 	messages: {
+    				    en: 'Only letters, numbers, commas, ., -, () and spaces are valid charcters in this field.',
+    			  	}
+    			});
+    		
+    			window.Parsley.addValidator('validateCompanyName', {
+    				validateString: function(value) {
+    					if(!value.match('^[a-zA-z0-9\'\+\.\(\) -]*$')) {
+    						return false;
+    					}
+    				},
+    			 	messages: {
+    				    en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
+    			  	}
+    			});
 
-	        window.Parsley.addValidator('validateEmail', {
+    	        window.Parsley.addValidator('validateEmail', {
 
-		        validateString: function(value){
+    		        validateString: function(value){
 
-		        	var valueTrim = value.trim()
+    		        	var valueTrim = value.trim()
 
-		            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
+    		            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
 
-               		if(!valueTrim.match(reg)) {
-	                    return false;
-	                } 
-	            },
-		            messages: {
-		               en: 'Please enter a valid email address.'
-		            }
-		    });
+                   		if(!valueTrim.match(reg)) {
+    	                    return false;
+    	                } 
+    	            },
+    		            messages: {
+    		               en: 'Please enter a valid email address.'
+    		            }
+    		    });
 
-         	window.Parsley.addValidator('validatePhone', {
-	            validateString: function(value) {
-	               if(!value.match('^[0-9\-\+\(\) ]*$')) {
-	                  return false;
-	               }
-	            },
-	            messages: {
-	                en: 'Please enter a valid phone number.',
-	            }
-         	});
+             	window.Parsley.addValidator('validatePhone', {
+    	            validateString: function(value) {
+    	               if(!value.match('^[0-9\-\+\(\) ]*$')) {
+    	                  return false;
+    	               }
+    	            },
+    	            messages: {
+    	                en: 'Please enter a valid phone number.',
+    	            }
+             	});
 
-         	window.Parsley.addValidator('validateZip', {
-	            validateString: function(value) {
-	               if(!value.match('^[0-9\-]*$')) {
-	                  return false;
-	               }
-	            },
-	            messages: {
-	                en: 'Only numbers and - are valid characters in this field.',
-	            }
-         	}); 			    
+             	window.Parsley.addValidator('validateZip', {
+    	            validateString: function(value) {
+    	               if(!value.match('^[0-9\-]*$')) {
+    	                  return false;
+    	               }
+    	            },
+    	            messages: {
+    	                en: 'Only numbers and - are valid characters in this field.',
+    	            }
+             	}); 			    
 
-         	window.Parsley.addValidator('validateAlpha', {
-	            validateString: function(value) {
-	               if(!value.match('^[a-zA-Z]+]*$')) {
-	                  return false;
-	               }
-	            },
-	            messages: {
-	                en: 'Only letters are valid charcters in this field.',
-	            }
-         	}); 
+             	window.Parsley.addValidator('validateAlpha', {
+    	            validateString: function(value) {
+    	               if(!value.match('^[a-zA-Z]+]*$')) {
+    	                  return false;
+    	               }
+    	            },
+    	            messages: {
+    	                en: 'Only letters are valid charcters in this field.',
+    	            }
+             	}); 
 
-			$('#register-success').hide();
-			$('#register-failure').hide();
-      		$('#initialRegistration').hide();
-      		$('#companyCode').hide();
-      		$('#businessConfirm').hide();
+    			$('#register-success').hide();
+    			$('#register-failure').hide();
+          		$('#initialRegistration').hide();
+          		$('#companyCode').hide();
+          		$('#businessConfirm').hide();
 
-      		$(window).on('load',function() {
-			 	$('.hide-before').fadeIn(500);
-			});
+            });
+
+          		$(window).on('load',function() {
+    			 	$('.hide-before').fadeIn(500);
+    			});
 
 			$(document).ready(function(){
 
@@ -522,14 +591,6 @@
 
       		var registerForm = $('#registerForm');
 
-      		$('#terms-register').change(function(){
-      			if(this.checked) {
-      				$('#register').removeAttr('disabled');
-      			} else {
-      				$('#register').prop('disabled', true);
-      			}
-      		});
-
       		$('input[name=typeRegister]').change(function(e){
       			if(e.target.id == 'subRegister') {
 
@@ -561,20 +622,19 @@
       		$(document).on('submit', '#registerForm', function(e){
   				e.preventDefault();
 				var dataString = JSON.stringify($('#registerForm').serializeArray());
-				$.ajax({
-					type: 'POST',
-					url: domain + 'register/rest-user/',
-					data: dataString,
-				    contentType: "application/json",
-					success: function(response) {
-						$('#initialRegistration, #register-intro,  divQn').fadeOut(500);	
-						$('#register-success').delay(520).fadeIn(500);		      				
-					},
-					error:function(errResponse) {
-						$('#initialRegistration,  divQn').fadeOut(500);	
-						$('#register-failure').delay(520).fadeIn(500);							
-					}
-				});
+                $.ajax({
+                    type: 'POST',
+                    url: domain + 'prelogin/rest-verify-recaptcha/',
+                    data: dataString,
+                    success: function(response) {
+                        submitRegistration(dataString)
+                    },
+                    error:function(errResponse) {
+                        console.log('error', errResponse)
+                        grecaptcha.reset();
+                        $('#recaptchaError').prop('hidden', false);
+                    }
+                });                
 			});
 
 			$(document).on('submit', '#subUserForm', function(e){
