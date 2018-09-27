@@ -82,14 +82,14 @@
    						<div class="content-panel__body">
 	   						<div class="row">
 	   							<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-	   								<h3 class="font-h3 font-weight-medium m-b-sm">Successful!</h3>
-	   								<p class="font-body text-center">Successfully reset your password.</p>
+	   								<h3 class="font-h3 font-weight-medium m-b-sm">Successful</h3>
+	   								<p class="font-body text-center">You have successfully reset your password.</p>
 	   							</div>
 	   						</div>
 	   						<div class="row">
 	   							<div class="col-md-8 offset-md-2">
    									<div class="btn-default m-t-sm">
-	   									<a class="btn btn-block btn-success btn--lg pill-radius font-body font-weight-medium txt-white" href="/p3sweb/login">Login</a>
+	   									<a class="btn btn-block btn-success btn--lg pill-radius font-body font-weight-medium txt-white" href="/p3sweb/login">Go to Login</a>
 	   								</div>
 	   							</div>
 	   						</div>
@@ -101,10 +101,17 @@
    						<div class="content-panel__body">
 	   						<div class="row">
 	   							<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-									<h3 class="font-h3 font-weight-medium m-b-sm">Unsuccessful!</h3>
-	   								<p class="font-body text-center">We were unable to send an email to reset your password. Please try again later.</p>
+									<h3 class="font-h3 font-weight-medium m-b-sm">Unsuccessful</h3>
+	   								<p class="font-body text-center">We've encoutered a problem whilst attempting to reset your password.  Please try again.  If it's still a problem then please let us know support@ip.place</p>
 	   							</div>
 	   						</div>
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <div class="btn-default m-t-sm">
+                                        <a class="btn btn-block btn-success btn--lg pill-radius font-body font-weight-medium txt-white" href="/p3sweb/login">Go to Login</a>
+                                    </div>
+                                </div>
+                            </div>                            
 	   					</div>
    					</div>
           		</div>
