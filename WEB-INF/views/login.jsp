@@ -5,9 +5,9 @@
 
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      
+
       <base href="/p3sweb/">
-	  
+
       <link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700" rel="stylesheet">
 
       <link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
@@ -27,13 +27,13 @@
 
          if(self === top) {
             var antiClickjack = document.getElementById("antiClickjack");
-            antiClickjack.parentNode.removeChild(antiClickjack)
+            antiClickjack.parentNode.removeChild(antiClickjack);
          } else {
-            top.location = self.location
+            top.location = self.location;
          }
 
-      </script>      
-      
+      </script>
+
    </head>
 
    <body class="bg-light-grey2">
@@ -66,7 +66,7 @@
                               </div>
                            </div>
                            <div class="form-group d-flex justify-content-center flex-column m-b-sm">
-                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red">The username and password do not match our records. Please try again.</p>
+                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red">The username and password do not match our records. Please try again. If it's still a problem then please let us know support@ip.place</p>
                               <div class="btn-default">
                                  <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
                               </div>
@@ -116,7 +116,7 @@
                }
             },
             messages: {
-                en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
+                en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.'
             }
          });
 
