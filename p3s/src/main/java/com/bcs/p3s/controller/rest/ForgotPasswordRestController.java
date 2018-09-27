@@ -1,5 +1,7 @@
 package com.bcs.p3s.controller.rest;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +35,49 @@ public class ForgotPasswordRestController extends Universal {
 	
 	@Autowired
     HttpSession session;
+
 	
-	//----------------------API 1.12 Forgot Password – step 1 – Enter email address ----------------
+	// Functionality offered:
+	// 1a : FE initiates a CAPTCHA check. Validated by BE, which reports back  (!)
+	// 1b : (subject to successful Captcha) User provides their email & requests password reset. Send email with link
+	// 2: Page displayed when user clicks link in email. Allows entry of new password
+	// 3: Receive the new password & update accordingly
+	
+	
+	
+	//---------------------- step 1a - FE provides a CAPTCHA check ----------------
+
+	@RequestMapping(value="/prelogin/rest-verify-recaptcha/" , method = RequestMethod.POST)
+	public ResponseEntity<String> captchaOnly(@RequestParam("g-recaptcha-response") String gRecaptchaResponse) {
+
+		String msg = "ForgotPasswordRestController : /prelogin/rest-verify-recaptcha/  ";
+		log().debug(msg + "invoked with g-recaptcha-response");
+	
+		boolean isGenuine = false;
+
+		if (isEmpty(gRecaptchaResponse)) 
+			logErrorAndContinue("ForgotPasswordRestController:captchaOnly: passed empty gRecaptchaResponse");
+		
+		CaptcaService captcha = new CaptcaService();
+		try {
+			isGenuine = captcha.verify(gRecaptchaResponse);
+		} catch (IOException e1) {
+			log().error("ForgotPasswordRestController:captchaOnly: Problem contacting google for captcha verification", e1);
+		}
+		log().debug("ForgotPasswordRestController:captchaOnly validation result is "+isGenuine);
+		
+
+		if (isGenuine)
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		else
+			return new ResponseEntity<String>("error", HttpStatus.FORBIDDEN);  // 403
+	}
+
+	
+	//----------------------API 1.12 Forgot Password – step 1b – Enter email address ----------------
 	
 	@RequestMapping(value="/prelogin/rest-forgot-password/" , method = RequestMethod.POST)
-	public ResponseEntity<String> confirmUser(@RequestParam String emailAddress){
+	public ResponseEntity<String> confirmUser(@RequestParam String emailAddress) { // THis unchanged by reCaptcha
 		
 		String msg = "ForgotPasswordRestController : /prelogin/rest-forgot-password/  confirmUser(emailAddress) ";
 		log().debug(msg + "invoked with parameters ::" + emailAddress);

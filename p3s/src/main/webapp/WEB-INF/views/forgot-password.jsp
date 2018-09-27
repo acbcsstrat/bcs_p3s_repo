@@ -14,6 +14,8 @@
       <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>
 
@@ -57,6 +59,21 @@
                         <input name="emailAddress" class="form-control pill-radius font-body m-b-xs" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-trigger="change" data-parsley-required="true">
                      </div>
                   </div>
+
+
+
+
+
+
+                  <div class="row m-b-sm">
+                      <div class="col-md-12 col-lg-12 col-xl-12">                                    
+                          <div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LezdHEUAAAAABvniybP4wWGWWztRMQXT5r0_WMs" data-callback="recaptchaCallback"></div>
+                      </div>
+                  </div>                            
+
+
+
+
                   <input type="Submit" value="Reset Password" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
                </form>                       
             </div>
@@ -108,9 +125,14 @@
          $(document).on('submit', '#forgotPassForm', function(e){
             e.preventDefault();
             var dataString = $('#forgotPassForm').serializeArray();
+
+            console.log(dataString);
+
+            
+            
             $.ajax({
                type: 'POST',
-               url: domain + 'prelogin/rest-forgot-password/',
+               url: domain + 'prelogin/rest-verify-recaptcha/',
                data: dataString,
                success: function(response) {
                   $('#initialForgotPass').fadeOut(500);
