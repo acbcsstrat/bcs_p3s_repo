@@ -402,6 +402,16 @@
             <version>${javaxmail.version}</version>
 		</dependency>
 
+
+		<!-- This for Json via Glassfish for google reCaptcha -->
+		<!-- https://mvnrepository.com/artifact/org.glassfish/javax.json -->
+		<dependency>
+		    <groupId>org.glassfish</groupId>
+		    <artifactId>javax.json</artifactId>
+		    <version>1.1.2</version>
+		</dependency>
+
+
 		<!--  End of Dependencies added by Andy Chapman -->
 
     </dependencies>
