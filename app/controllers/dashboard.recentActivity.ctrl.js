@@ -50,7 +50,6 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 			patentsRestService.fetchCostAnalysis(data.id)
 			.then(
 				function(response, i){
-					console.log('cost analysis', response)
         			if(data.renewalStatus == 'Show price' || data.renewalStatus == 'Too late to renew') {
         				var hours = calculateService.calculateHours(data.costBandColour, response);
     					if(calculateService.recentActivity(hours)) {
@@ -64,8 +63,6 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 			);
 		})
 	}
-
-	console.log('recent stage', vm.recentStageArr)
 
 	if(currentTransactions.length > 0) {
 		currentTransactions.forEach(function(data){
