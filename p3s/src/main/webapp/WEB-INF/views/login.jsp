@@ -5,13 +5,13 @@
 
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      
+
       <base href="/p3sweb/">
-	  
+
       <link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700" rel="stylesheet">
 
       <link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -20,12 +20,25 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>      
 
       <title>Patent Place</title>
-      
+
+      <style id="antiClickjack">body{display:none !important;}</style>
+
+      <script type="text/javascript">
+
+         if(self === top) {
+            var antiClickjack = document.getElementById("antiClickjack");
+            antiClickjack.parentNode.removeChild(antiClickjack);
+         } else {
+            top.location = self.location;
+         }
+
+      </script>
+
    </head>
 
    <body class="bg-light-grey2">
       <div class="container-pre-app d-flex justify-content-center align-items-center">
-         <div class="container-pre-app__center-box-40 p-a-sm border">
+         <div class="container-pre-app__center-box-40 p-a-sm">
             <div class="content-panel">
                <div class="text-center">
                   <div class="row">
@@ -103,7 +116,7 @@
                }
             },
             messages: {
-                en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
+                en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.'
             }
          });
 
