@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.LoginMessageUI;
@@ -275,5 +276,21 @@ public class UserServiceImpl extends Universal implements UserService {
 		else
 			return "error";  
 	}
-		
+
+	@Override
+	public String encryptPassword(String rawPassword) {
+		if (rawPassword==null) return null;
+		String salt =  BCrypt.gensalt();
+		String hashedPassword = BCrypt.hashpw(rawPassword,salt); 
+		return hashedPassword;
+	}
+
+	@Override
+	public void encryptPassword(P3SUser userWithUnencryptedPassord) {
+		if (userWithUnencryptedPassord==null) return;
+		String rawPassword = userWithUnencryptedPassord.getPassword();
+		String encryptedPassword = encryptPassword(rawPassword);
+		userWithUnencryptedPassord.setPassword(encryptedPassword);
+	}
+
 }

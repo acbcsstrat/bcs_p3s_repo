@@ -80,7 +80,9 @@ public class UserProfileRestController extends Universal {
 
         //updating User password
         if( ! isEmpty(user.getNewPassword())) {
-        		p3sUser.setPassword(user.getNewPassword());
+        		String rawPassword = user.getNewPassword(); 
+        		String safePassword = userService.encryptPassword(rawPassword);
+        		p3sUser.setPassword(safePassword);
         		log().debug(msg + "User password got updated");
         }
         

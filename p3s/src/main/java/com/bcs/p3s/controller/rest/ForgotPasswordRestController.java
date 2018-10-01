@@ -214,7 +214,8 @@ public class ForgotPasswordRestController extends Universal {
 				
 			}
 			
-			user.setPassword(password);
+			String safePassword = userService.encryptPassword(password);
+			user.setPassword(safePassword);
 			updateSuccess = userService.updatePassword(user);
 				
 			if("success".equals(updateSuccess))

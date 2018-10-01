@@ -1,7 +1,7 @@
 <div class="m-b-md">
 	<div class="row m-b-sm">
 		<div class="col-md-8">
-			<h1 ng-show="$ctrl.animate" class="font-h1 animate-show">{{$root.page}}</h1>
+			<h1 data-ng-show="$ctrl.animate" class="font-h1 animate-show">{{$root.page}}</h1>
 		</div>
 		<div class="col-md-4">
 			<div class="d-flex justify-content-end align-items-center">
@@ -12,7 +12,7 @@
 				</div>
 				<div class="m-r-md">
 					<p class="font-body no-line-height font-weight-bold">{{$root.user.firstName}}</p>
-					<a class="font-body no-line-height txt-black inline-link" ng-click="$ctrl.empty()" href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
+					<a class="font-body no-line-height txt-black inline-link" data-ng-click="$ctrl.empty()" data-ng-href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
 				</div>
 				<a ui-sref="basket" class="m-r-md">
 					<ngcart-summary class="font-body txt-black"></ngcart-summary>
@@ -22,7 +22,7 @@
 	</div>
 	<div class="row">		
 		<div class="col-md-12 d-flex justify-content-between align-items-end">
-			<p ng-show="$ctrl.animate" class="animate-show font-h3"><span class="m-r-md"><span class="font-weight-bold">EST:</span> {{$root.estTime}}</span> <span class="font-xl"><span class="font-weight-bold">UTC:</span> {{$root.utcTime}}</p>		
+			<p data-ng-show="$ctrl.animate" class="animate-show font-h3"><span class="m-r-md"><span class="font-weight-bold">EST:</span> {{$root.estTime}}</span> <span class="font-xl"><span class="font-weight-bold">UTC:</span> {{$root.utcTime}}</p>		
 		</div>
 	</div>
 </div>

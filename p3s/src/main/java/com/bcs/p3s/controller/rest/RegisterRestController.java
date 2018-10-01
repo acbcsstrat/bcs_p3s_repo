@@ -141,6 +141,7 @@ public class RegisterRestController extends Universal {
 				//email notification default to ON
 				user.setIsEmailNotification(true);
 				user.setBusiness(business);
+				userService.encryptPassword(user);
 				userService.createNewUser(user, business);
 			}
 			else{ //Error message :- Email address already exist
@@ -260,6 +261,7 @@ public class RegisterRestController extends Universal {
 				PreLoginSessionBean preSession = (PreLoginSessionBean) session.getAttribute("preSession");
 				business = preSession.getBusiness();   //getting business Info from session; ignoring user manipulations
 				user.setBusiness(business);
+				userService.encryptPassword(user);
 				userService.createSubUser(user);
 			}
 			else{

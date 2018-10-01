@@ -32,5 +32,7 @@ public interface UserService {
 	
 	String updatePassword(P3SUser user);
 	
+	String encryptPassword(String rawPassword);
+	void encryptPassword(P3SUser userWithUnencryptedPassord);
 
 }

@@ -48,7 +48,7 @@
                               <div class="d-flex flex-column justify-content-center align-items-center">
                                  <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-red w-100 text-center">Unsuccessful</h3>
                                  <p id="errorMsg" class="font-body text-center m-b-sm w-100 text-center"></p>
-                                 <p class="font-body w-100 text-center">We've encoutered a problem whilst attempting to retrieve your email.  Please try again.  If it's still a problem then please let us know support@ip.place</p>
+                                 <p class="font-body w-100 text-center"></p>
                               </div>
                            </div>
                         </div>
@@ -127,7 +127,6 @@
                url: domain + 'prelogin/rest-forgot-password/',
                data: data,
                success: function(response) {
-                  console.log(response)
                   $('#initialForgotPass').fadeOut(500);
                   $('#forgotPassSuccess').delay(520).fadeIn(500);
                },
@@ -137,7 +136,7 @@
                   if(errResponse.status == 403){
                      $('#forgotPassFail p#errorMsg').html('We were unable to send an email to reset your password. Please complete the Registration process before Reset password.');
                   } else if(errResponse.status == 400) {
-                     $('#forgotPassFail p#errorMsg').html('We were unable to find the email address in our records. Please check and try again.');
+                     $('#forgotPassFail p#errorMsg').html('We\'ve encoutered a problem whilst attempting to retrieve your email.  Please try again.  If it\'s still a problem then please let us know support@ip.place');
                   } else{
                      $('#forgotPassFail p#errorMsg').html('There is currently an issue with our server and are unable to send an email to reset your password. Sorry for any inconvenience. Please try again later.');                     
                   }

@@ -39,7 +39,7 @@
    <body class="bg-light-grey2">
       <div class="container-pre-app d-flex justify-content-center align-items-center">
          <div class="container-pre-app__center-box-40 p-a-sm">
-            <div class="content-panel">
+            <div class="content-panel border-none">
                <div class="text-center">
                   <div class="row">
                      <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
@@ -99,15 +99,29 @@
          
          var url = window.location.href;
 
-         $('#loginMessage').hide();
-
          function loginErrorFn () {
             $('#loginMessage').show();
          }
 
-         if(url.indexOf('login_error') >= 0) {
-            loginErrorFn();
-         }
+         $(function(){
+
+            $('#loginMessage').hide();
+
+            if(url.indexOf('login_error') >= 0) {
+               loginErrorFn();
+            }
+
+            if(window.localStorage) {
+               if(!localStorage.getItem('firstLoad')) {
+                  localStorage['firstLoad'] = true;
+                  window.location.reload();
+               } else {
+                  localStorage.removeItem('firstLoad');
+               }
+            }
+            
+
+         })
 
          window.Parsley.addValidator('validateName', {
             validateString: function(value) {
