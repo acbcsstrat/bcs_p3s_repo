@@ -62,7 +62,7 @@
                            </div>
                            <div class="form-group row m-b-sm">
                               <div class="col-md-12">
-                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true" autocomplete="off">
+                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true" auto-complete="off">
                               </div>
                            </div>
                            <div class="form-group d-flex justify-content-center flex-column m-b-sm">
@@ -100,12 +100,14 @@
          var url = window.location.href;
 
          function loginErrorFn () {
-            $('#loginMessage').html('The username and password do not match our records. Please try again.').show();
+            $('#loginMessage').css('display', 'block');
+            $('#loginMessage').html('The username and password do not match our records. Please try again.');
+            
          }
 
          $(function(){
 
-            $('#loginMessage').hide();
+            $('#loginMessage').css('display', 'none');
 
             if(url.indexOf('login_error') >= 0) {
                loginErrorFn();
