@@ -38,7 +38,7 @@
 
 	<body class="bg-light-grey"> 
       	<div class="container-pre-app d-flex justify-content-center align-items-center">
-         	<div class="container-pre-app__center-box-40 p-a-sm border">
+         	<div class="container-pre-app__center-box-40 p-a-sm">
           		<div class="row m-b-sm">
                      <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-sm">
