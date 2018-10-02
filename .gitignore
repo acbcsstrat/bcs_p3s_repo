@@ -2,6 +2,7 @@ META-INF/
 *views.xml
 public/
 WEB-INF/classes
+WEB-INF/i18n
 WEB-INF/layouts
 WEB-INF/lib
 WEB-INF/spring
