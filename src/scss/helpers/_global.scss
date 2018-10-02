@@ -36,11 +36,11 @@
 
 .p-a-sm { padding: 1.5rem; }
 
-.p-none { padding: 0; }
-.p-r-none { padding-right: 0; }
-.p-b-none { padding-bottom: 0; }
-.p-t-none { padding-top: 0; }
-.p-l-none { padding-left: 0; }
+.p-none { padding: 0!important; }
+.p-r-none { padding-right: 0!important; }
+.p-b-none { padding-bottom: 0!important; }
+.p-t-none { padding-top: 0!important; }
+.p-l-none { padding-left: 0!important; }
 
 .green-notification { border: 2px solid #53ab58; } 
 .amber-notification { border: 2px solid #f9b233; } 
