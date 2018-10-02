@@ -340,7 +340,7 @@
                 $.ajax({
                     type: 'POST',
                     url: domain + 'register/rest-user/',
-                    data: dataString,
+                    data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function(response) {
                         $('#initialRegistration, #register-intro,  divQn').fadeOut(500);    
@@ -375,7 +375,7 @@
 			        .addClass('current');
 			    // Show only the navigation buttons that make sense for the current section:
 				    $('.form-navigation .previous').toggle(index > 0);
-				    var atTheEnd = index >= $sections.length - 1;
+				    var atTheEnd = index >= $sections.length - 1; //return boolen value
 				    $('.form-navigation .next').toggle(!atTheEnd);
 				    $('.form-navigation [type=submit]').toggle(atTheEnd);
 			  	}
@@ -497,9 +497,9 @@
 
             });
 
-          		$(window).on('load',function() {
-    			 	$('.hide-before').fadeIn(500);
-    			});
+      		$(window).on('load',function() {
+			 	$('.hide-before').fadeIn(300);
+			});
 
 			$(document).ready(function(){
 
@@ -507,9 +507,10 @@
 
 				$('#supportLink').attr('href', 'http://thepatent.place/contact/');
 
-				 var password_li = $('#passwordStrength').find('li');
-				  $('#password').bind('keyup', function() {
-				    var counter = 0;
+                var password_li = $('#passwordStrength').find('li');
+
+	            $('#password').bind('keyup', function() {
+			        var counter = 0;
 				    var pw = $(this).val();
 
 				    if (pw.length >= 8) {
@@ -540,210 +541,222 @@
 				    password_li.filter(':lt(' + counter + ')').each(function() { //Select all elements at an index less than index within the matched set. So add class of matched class to all li elements with index less than counter
 				     	$(this).addClass($(this).data('matched-class')); //used in conjuction with data- attribute
 				    });
-				    
-				//validate confirm password
+			    
+			        //validate confirm password
 
-				$('#confirm_password').on('blur', function(){
-					if($(this).val() !== $('#password').val()) {
-						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>');
-					} else {
-						$('#valid_confirm_password').text('');
-					}
-				});
-			});
-	  	});
+    				$('#confirm_password').on('blur', function(){
+    					if($(this).val() !== $('#password').val()) {
+    						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>');
+    					} else {
+    						$('#valid_confirm_password').text('');
+    					}
+    				});
+		        });
+  	        }); 
       	
-      	$(document).ready(function(){
+      	    $(document).ready(function(){
 
-      		$('#same_as_business').change(function(){
-      			if(this.checked) {
+                var registerForm = $('#registerForm');
+                var timezoneSelect = $('#timezone');
+			    var business = $('#subBusiness input');
+                var sameBusiness = $('#same_as_business');
+                        // .prop('checked')
 
-      				var addObj = {};
-      				var business = $('#subBusiness input');
+                function updateBusiness() {
 
-      				for(var i = 0;i < business.length; i++) {
+                    var addObj = {};
 
-      					switch(business[i].id) {
-      						case 'street':
-      							addObj.street = business[i].value;
-      						break;
-      						case 'city':
-      							addObj.city = business[i].value;
-      						break;
-      						case 'USstate':
-      							addObj.USstate = business[i].value;
-      						break;
-      						case 'zip':
-      							addObj.zip = business[i].value;
-      						break;			      							      						
-      					}
-      				}
+                    for(var i = 0;i < business.length; i++) {
 
-      				$('#pasteBusiness input[id=billing_street').val(addObj.street);
-      				$('#pasteBusiness input[id=billing_city').val(addObj.city);
-      				$('#pasteBusiness input[id=billing_state').val(addObj.USstate);
-      				$('#pasteBusiness input[id=billing_zip').val(addObj.zip);
-
-      			} else {
-      				$('#pasteBusiness input').val('');
-      			}
-      		});
-
-      		var registerForm = $('#registerForm');
-
-      		$('input[name=typeRegister]').change(function(e){
-      			if(e.target.id == 'subRegister') {
-
-  					$('#initialRegistration').hide();
-  					$('#initialRegistrationSubmit').hide();
-
-  					$('#subRegistrationSubmit').show();
-  					$('#companyCode').show();
-
-      				if(registerForm) {
-      					registerForm.attr('id', 'subUserForm').attr('id', 'subUserForm');
-      				}
-
-      			} else {
-      				
-					$('#initialRegistration').show();
-  					$('#initialRegistrationSubmit').show(); 
-      				$('#subRegistrationSubmit').hide();
-      				$('#companyCode').hide();
-      				$('#businessConfirm').hide();  					
-
-      				if(registerForm) {
-      					registerForm.attr('id', 'registerForm');
-      				}
-
-      			}
-      		});
-
-      		$(document).on('submit', '#registerForm', function(e){
-  				e.preventDefault();
-				var dataString = JSON.stringify($('#registerForm').serializeArray());
-                $.ajax({
-                    type: 'POST',
-                    url: domain + 'prelogin/rest-verify-recaptcha/',
-                    data: dataString,
-                    success: function(response) {
-                        submitRegistration(dataString)
-                    },
-                    error:function(errResponse) {
-                        console.log('error', errResponse)
-                        grecaptcha.reset();
-                        $('#recaptchaError').prop('hidden', false);
+                        switch(business[i].id) {
+                            case 'street':
+                                addObj.street = business[i].value;
+                            break;
+                            case 'city':
+                                addObj.city = business[i].value;
+                            break;
+                            case 'USstate':
+                                addObj.USstate = business[i].value;
+                            break;
+                            case 'zip':
+                                addObj.zip = business[i].value;
+                            break;                                                                      
+                        }
                     }
-                });                
-			});
 
-			$(document).on('submit', '#subUserForm', function(e){
-				e.preventDefault();
-				var dataString = JSON.stringify($('#subUserForm').serializeArray());
-				$.ajax({
-					type: 'POST',
-					url: domain + 'register/rest-subsequent-user-step2/',
-					data: dataString,
-				    contentType: "application/json",
-					success: function(response) {
-						$('#initialRegistration, divQn, register-intro').fadeOut(500);	
-						$('#register-success').delay(520).fadeIn(500);
-					},
-					error:function(errResponse) {
-						$('#initialRegistration, divQn').fadeOut(500);	
-						$('#register-failure').delay(520).fadeIn(500);						
-					}
-				});
-			});
+                    $('#pasteBusiness input[id=billing_street').val(addObj.street);
+                    $('#pasteBusiness input[id=billing_city').val(addObj.city);
+                    $('#pasteBusiness input[id=billing_state').val(addObj.USstate);
+                    $('#pasteBusiness input[id=billing_zip').val(addObj.zip);      
 
-			var timezoneSelect = $('#timezone');
+                }
 
-			$.ajax({
-				type: 'GET',
-				url: '/p3sweb/public/ustimezones.json',
-				dataType: 'json',
-				async: false,
-				success: function(response) {
+                business.on('input', function(e){
+                    if(sameBusiness.prop('checked')) {
+                        updateBusiness();
+                    }
+                    
+                })
 
-					response.ustimezones.forEach(function(data){
-						timezoneSelect.append('<option value="'+data.abbr +'">'+data.abbr +'</option>')
-					})
+                sameBusiness.change(function(){
+                    if(this.checked) {
+                        updateBusiness();
+      			    } else {
+      				    $('#pasteBusiness input').val('');
+      			    }
+      		    });
 
-				},
-				error: function() {
+          		$('input[name=typeRegister]').change(function(e){
+          			if(e.target.id == 'subRegister') {
 
-				}
-			})
+      					$('#initialRegistration').hide();
+      					$('#initialRegistrationSubmit').hide();
 
-  			$('#companyCodeForm').submit(function(e){
-  				e.preventDefault();
+      					$('#subRegistrationSubmit').show();
+      					$('#companyCode').show();
 
-				var dataString = $('#companyCodeForm').serializeArray();
-				$.ajax({
-					type: 'POST',
-					//url: 'http://localhost:8080/p3sweb/register/rest-subsequent-user-step1/'+dataString,
-					url: domain + 'register/rest-subsequent-user-step1/',
-					data: dataString,
-				    dataType: 'json',
-					success: function(response) {
+          				if(registerForm) {
+          					registerForm.attr('id', 'subUserForm').attr('id', 'subUserForm');
+          				}
 
-						$('#businessValidation').hide();
-						var patentFound = true;
-						if(patentFound) {
-							$('#companyCodeSubmit').attr('disabled', true);
-							$('#companyCodeSubmit').parent().closest('div.form-group').hide();
-						}
-						$('#businessConfirm').show();
-						$('#businessNameConfirm').html(response.businessName);
-						$('#businessAddressStreetConfirm').html(response.street);
-						$('#businessAddressCityConfirm').html(response.city);
-						$('#businessAddressStateConfirm').html(response.usstate);
-						$('#businessAddressZipConfirm').html(response.zip); 							
-						$('input[id=businessName]').val(response.businessName);
-						$('input[id=phoneNumber]').val(response.phoneNumber);
-						$('#subBusiness input[id=street]').val(response.street);
-						$('#subBusiness input[id=city]').val(response.city);
-						$('#subBusiness input[id=USstate]').val(response.usstate);
-						$('#subBusiness input[id=zip]').val(response.zip);
-						$('#subBusiness select[id=timezone]').append('<option value="'+response.timezone +'">'+response.timezone +'</option>');
-						$('#pasteBusiness input[id=billing_street]').val(response.billingStreet);
-						$('#pasteBusiness input[id=billing_city]').val(response.billingCity);
-						$('#pasteBusiness input[id=billing_state]').val(response.billingState);
-						$('#pasteBusiness input[id=billing_zip]').val(response.billingZip);
-						$('#sameAsBusiness').hide();
+          			} else {
+          				
+    					$('#initialRegistration').show();
+      					$('#initialRegistrationSubmit').show(); 
+          				$('#subRegistrationSubmit').hide();
+          				$('#companyCode').hide();
+          				$('#businessConfirm').hide();  					
 
-						setTimeout(function() {
-							$('#timezone').val(response.timezone);
-						}, 300);
+          				if(registerForm) {
+          					registerForm.attr('id', 'registerForm');
+          				}
 
-					},
-					error: function(errResponse) {
-						if(errResponse.status == 400) {
-							$('#businessValidation').html('<p class="font-body txt-phase-red">The business PIN and number do not match our records. Please try again.</p>');
-						}
-					}
-				});
-			});
+          			}
+          		});
 
-			$('#businessConfirmSubmit').click(function(e){
-				e.preventDefault();
-               	$('#businessConfirm, #subRegistration, #companyCode, #divQn').hide();
-             	$('#initialRegistration').show();
-               	$('#businessDetails input').each(function(i){
-               		$(this).prop('readonly', true);
-               	})
-               	$('#pasteBusiness input').each(function(i){
-               		$(this).prop('readonly', true);
-               	})               	
-               	$('#businessDetails select').prop('disabled', true);          	
+          		$(document).on('submit', '#registerForm', function(e){
+      				e.preventDefault();
+    				var dataString = $('#registerForm').serializeArray();
+                    $.ajax({
+                        type: 'POST',
+                        url: domain + 'prelogin/rest-verify-recaptcha/',
+                        data: dataString,
+                        success: function(response) {
+                            submitRegistration(dataString)
+                        },
+                        error:function(errResponse) {
+                            console.log('error', errResponse)
+                            grecaptcha.reset();
+                            $('#recaptchaError').prop('hidden', false);
+                        }
+                    });                
+    			});
 
-			})
+    			$(document).on('submit', '#subUserForm', function(e){
+    				e.preventDefault();
+    				var dataString = JSON.stringify($('#subUserForm').serializeArray());
+    				$.ajax({
+    					type: 'POST',
+    					url: domain + 'register/rest-subsequent-user-step2/',
+    					data: dataString,
+    				    contentType: "application/json",
+    					success: function(response) {
+    						$('#initialRegistration, divQn, register-intro').fadeOut(500);	
+    						$('#register-success').delay(520).fadeIn(500);
+    					},
+    					error:function(errResponse) {
+    						$('#initialRegistration, divQn').fadeOut(500);	
+    						$('#register-failure').delay(520).fadeIn(500);						
+    					}
+    				});
+    			});
 
-			$('#businessCancel').click(function(e){
-				e.preventDefault();
-				window.location.replace(domain+'login');
-			});
-      	});
+    			$.ajax({
+    				type: 'GET',
+    				url: '/p3sweb/public/ustimezones.json',
+    				dataType: 'json',
+    				async: false,
+    				success: function(response) {
+
+    					response.ustimezones.forEach(function(data){
+    						timezoneSelect.append('<option value="'+data.abbr +'">'+data.abbr +'</option>')
+    					})
+
+    				},
+    				error: function() {
+
+    				}
+    			})
+
+      			$('#companyCodeForm').submit(function(e){
+      				e.preventDefault();
+
+    				var dataString = $('#companyCodeForm').serializeArray();
+    				$.ajax({
+    					type: 'POST',
+    					//url: 'http://localhost:8080/p3sweb/register/rest-subsequent-user-step1/'+dataString,
+    					url: domain + 'register/rest-subsequent-user-step1/',
+    					data: dataString,
+    				    dataType: 'json',
+    					success: function(response) {
+
+    						$('#businessValidation').hide();
+    						var patentFound = true;
+    						if(patentFound) {
+    							$('#companyCodeSubmit').attr('disabled', true);
+    							$('#companyCodeSubmit').parent().closest('div.form-group').hide();
+    						}
+    						$('#businessConfirm').show();
+    						$('#businessNameConfirm').html(response.businessName);
+    						$('#businessAddressStreetConfirm').html(response.street);
+    						$('#businessAddressCityConfirm').html(response.city);
+    						$('#businessAddressStateConfirm').html(response.usstate);
+    						$('#businessAddressZipConfirm').html(response.zip); 							
+    						$('input[id=businessName]').val(response.businessName);
+    						$('input[id=phoneNumber]').val(response.phoneNumber);
+    						$('#subBusiness input[id=street]').val(response.street);
+    						$('#subBusiness input[id=city]').val(response.city);
+    						$('#subBusiness input[id=USstate]').val(response.usstate);
+    						$('#subBusiness input[id=zip]').val(response.zip);
+    						$('#subBusiness select[id=timezone]').append('<option value="'+response.timezone +'">'+response.timezone +'</option>');
+    						$('#pasteBusiness input[id=billing_street]').val(response.billingStreet);
+    						$('#pasteBusiness input[id=billing_city]').val(response.billingCity);
+    						$('#pasteBusiness input[id=billing_state]').val(response.billingState);
+    						$('#pasteBusiness input[id=billing_zip]').val(response.billingZip);
+    						$('#sameAsBusiness').hide();
+
+    						setTimeout(function() {
+    							$('#timezone').val(response.timezone);
+    						}, 300);
+
+    					},
+    					error: function(errResponse) {
+    						if(errResponse.status == 400) {
+    							$('#businessValidation').html('<p class="font-body txt-phase-red">The business PIN and number do not match our records. Please try again.</p>');
+    						}
+    					}
+    				});
+    			});
+
+    			$('#businessConfirmSubmit').click(function(e){
+    				e.preventDefault();
+                   	$('#businessConfirm, #subRegistration, #companyCode, #divQn').hide();
+                 	$('#initialRegistration').show();
+                   	$('#businessDetails input').each(function(i){
+                   		$(this).prop('readonly', true);
+                   	})
+                   	$('#pasteBusiness input').each(function(i){
+                   		$(this).prop('readonly', true);
+                   	})               	
+                   	$('#businessDetails select').prop('disabled', true);          	
+
+    			})
+
+    			$('#businessCancel').click(function(e){
+    				e.preventDefault();
+    				window.location.replace(domain+'login');
+    			});
+          	});
 
      	</script>
    </body>

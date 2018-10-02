@@ -1,32 +1,19 @@
 package com.bcs.p3s.controller.rest;
  
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bcs.p3s.display.FxRateCurrentUI;
-import com.bcs.p3s.display.FxRateUI;
-import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PaymentUI;
-import com.bcs.p3s.engine.GenericProcessingEngine;
 //import com.bcs.p3s.controller.web.User;
-import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.util.lang.Universal;
-import com.bcs.p3s.wrap.BankTransferPreCommitDetails;
-import com.bcs.p3s.wrap.BasketContents;
  
 @RestController
 public class TransactionRestController extends Universal {
@@ -50,7 +37,7 @@ public class TransactionRestController extends Universal {
 		} catch (Exception e) {
 			fail("Exception in "+err,e);
 		}
-    	
+
 		log().debug(err+"returning "+paymentUIs.size()+" transactions.");
         return new ResponseEntity<List<PaymentUI>>(paymentUIs, HttpStatus.OK);
     }
