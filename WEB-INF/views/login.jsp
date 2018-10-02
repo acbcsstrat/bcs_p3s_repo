@@ -62,11 +62,11 @@
                            </div>
                            <div class="form-group row m-b-sm">
                               <div class="col-md-12">
-                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
+                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true" autocomplete="off">
                               </div>
                            </div>
                            <div class="form-group d-flex justify-content-center flex-column m-b-sm">
-                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red">The username and password do not match our records. Please try again.</p>
+                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red"></p>
                               <div class="btn-default">
                                  <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
                               </div>
@@ -100,7 +100,7 @@
          var url = window.location.href;
 
          function loginErrorFn () {
-            $('#loginMessage').show();
+            $('#loginMessage').html('The username and password do not match our records. Please try again.').show();
          }
 
          $(function(){
@@ -110,16 +110,6 @@
             if(url.indexOf('login_error') >= 0) {
                loginErrorFn();
             }
-
-            if(window.localStorage) {
-               if(!localStorage.getItem('firstLoad')) {
-                  localStorage['firstLoad'] = true;
-                  window.location.reload();
-               } else {
-                  localStorage.removeItem('firstLoad');
-               }
-            }
-            
 
          })
 
