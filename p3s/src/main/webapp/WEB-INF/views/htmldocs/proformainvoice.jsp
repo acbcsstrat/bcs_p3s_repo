@@ -359,7 +359,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		            Account Number:
 		            </td>
 		            <td>
-		              <%=data.getBankDetails().getAccount1Number() %>
+		              <%=data.getBankDetails().getAccount1AcctNumber() %>
 		            </td>
 		          </tr>
 		          <tr>
@@ -439,7 +439,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		            Account Number:
 		            </td>
 		            <td>
-		              <%=data.getBankDetails().getAccount2Number() %>
+		              <%=data.getBankDetails().getAccount2AcctNumber() %>
 		            </td>
 		          </tr>
 		          <tr>

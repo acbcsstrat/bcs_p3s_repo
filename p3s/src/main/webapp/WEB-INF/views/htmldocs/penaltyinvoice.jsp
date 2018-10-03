@@ -325,7 +325,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		            Account Number:
 		            </td>
 		            <td>
-		              <%=data.getBankDetails().getAccount1Number() %>
+		              <%=data.getBankDetails().getAccount1AcctNumber() %>
 		            </td>
 		          </tr>
 		          <tr>
@@ -405,7 +405,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		            Account Number:
 		            </td>
 		            <td>
-		              <%=data.getBankDetails().getAccount2Number() %>
+		              <%=data.getBankDetails().getAccount2AcctNumber() %>
 		            </td>
 		          </tr>
 		          <tr>
