@@ -43,7 +43,7 @@
  </tr>
  <tr>
 	<td>P3S product version</td>
-	<td>v1 (hardcoded)</td>
+	<td>v1</td>
  </tr>
 </table>
 

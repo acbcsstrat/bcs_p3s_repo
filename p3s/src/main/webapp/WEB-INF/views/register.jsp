@@ -34,7 +34,6 @@
 
         </script>
 
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
    	</head>
 
@@ -214,7 +213,7 @@
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
 	   								<h3 class="font-h3 txt-phase-green m-b-sm">Successful</h3>
-	   								<p class="font-body text-center">You have successfully reigstered your details. Please check your inbox to validate your account.</p>
+	   								<p class="font-body text-center w-100">You have successfully registered your details. Please check your inbox to validate your account.</p>
 	   							</div>
 	   						</div>   							
    						</div>
@@ -227,7 +226,7 @@
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
 									<h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
-	   								<p class="font-body text-center">We were unable to register your details. Please try again. If it's still a problem then please let us know support@ip.place</p>
+	   								<p class="font-body text-center w-100">We were unable to register your details. Please try again. If it's still a problem then please let us know support@ip.place</p>
 	   								<p class="font-body">Do you need support? Contact us through our <a class="inline-link font-weight-medium" id="supportLink">website</a></p>
 	   							</div>
 	   						</div>
@@ -635,8 +634,17 @@
           		});
 
           		$(document).on('submit', '#registerForm', function(e){
+
       				e.preventDefault();
+                    
     				var dataString = $('#registerForm').serializeArray();
+                    var gvalue = $('[name="g-recaptcha-response"]').val();
+
+                    dataString.push({
+                        'name': 'g-recaptcha-response',
+                        'value': gvalue
+                    })
+
                     $.ajax({
                         type: 'POST',
                         url: domain + 'prelogin/rest-verify-recaptcha/',
