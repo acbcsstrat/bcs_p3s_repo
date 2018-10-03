@@ -301,7 +301,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		              
 		            </td>
 		            <td>
-		              <b><%=data.getBankDetails().getAccount1Type().toUpperCase() %></b>
+		              <b><%=data.getBankDetails().getAccount1PaymentType().toUpperCase() %></b>
 		            </td>
 		          </tr>
 		          <tr>
@@ -381,7 +381,7 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 		              
 		            </td>
 		            <td>
-		              <b><%=data.getBankDetails().getAccount2Type().toUpperCase() %></b>
+		              <b><%=data.getBankDetails().getAccount2PaymentType().toUpperCase() %></b>
 		            </td>
 		          </tr>
 		          <tr>
