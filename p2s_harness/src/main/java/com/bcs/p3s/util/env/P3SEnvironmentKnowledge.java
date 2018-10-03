@@ -166,8 +166,10 @@ public class P3SEnvironmentKnowledge extends Universal {
 	public static String getScriptsFilePath()  {
 		String path = "/root/scripts/";
 		String host = Hostname.getHostname();
-		if (host!=null && host.startsWith("tomcat")) {
-			path = "/var/bcd/scripts/";
+		if (host!=null) {
+			if (host.startsWith("tomcat") || host.startsWith("node")) {
+				path = "/var/bcd/scripts/";
+			}
 		}
 		return path;
 	};
