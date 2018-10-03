@@ -97,7 +97,7 @@ angular.module('ppApp').directive('validateName', function(){
         link: function (scope, iElement, iAttrs) {
 
             var strength = {
-                colors: ['#e30613', '#e30613', '#f9b233', '#f9b233', '#53ab58'],
+                colors: ['#e30613', '#f9b233', '#53ab58', '#418746'],
                 measureStrength: function (p) {
 
                     var _force = 0;                    
@@ -120,7 +120,7 @@ angular.module('ppApp').directive('validateName', function(){
                     // penality (poor variety of characters)
                     _force = (_passedMatches == 1) ? Math.min(_force, 10) : _force;
                     _force = (_passedMatches == 2) ? Math.min(_force, 20) : _force;
-                    _force = (_passedMatches == 3) ? Math.min(_force, 40) : _force;
+                    _force = (_passedMatches == 3) ? Math.min(_force, 30) : _force;
                     
                     return _force;
 
@@ -131,22 +131,21 @@ angular.module('ppApp').directive('validateName', function(){
                     if (s <= 10) { idx = 0; }
                     else if (s <= 20) { idx = 1; }
                     else if (s <= 30) { idx = 2; }
-                    else if (s <= 40) { idx = 3; }
-                    else { idx = 4; }
+                    else { idx = 3; }
+                    // else { idx = 4; }
                     return { idx: idx + 1, col: this.colors[idx] };
 
                 }
             };
 
             var updatePasswordStrength = function (viewValue) {
-
+                iElement.css({ "display": "inline" });
                 if (!viewValue || viewValue === '') {
-
+                    iElement.children('li')
+                    .css({ "background": "#DDD" })
                 } else {
 
                     var color = strength.getColor(strength.measureStrength(viewValue));
-
-                    iElement.css({ "display": "inline" });
                     iElement.children('li')
                     .css({ "background": "#DDD" })
                     .slice(0, color.idx)
@@ -162,7 +161,7 @@ angular.module('ppApp').directive('validateName', function(){
             scope.userProfileForm[iAttrs.checkStrength].$formatters.unshift(updatePasswordStrength);
 
         },
-        template: '<li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li>'
+        template: '<li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li>'
     };
 })
 .directive('pwCheck', [function () {
