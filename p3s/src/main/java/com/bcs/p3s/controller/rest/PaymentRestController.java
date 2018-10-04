@@ -49,6 +49,8 @@ public class PaymentRestController extends Universal {
     	if ( ! (obby instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("PaymentRestController : /rest-basket/ showBasketContents() NOT passed String");
     	
     	BasketContents basketContents = null;
+    	boolean err = false;
+    	
     	try {
 
     		//In due course, an extractor (like below) should be used here. meanwhile, use DummyDataEngine & classes from com.bcs.p3s.engine.dummyclasses
@@ -63,16 +65,18 @@ public class PaymentRestController extends Universal {
 			log().error("Stacktrace was: "+errors.toString());
 			
 			basketContents = new BasketContents(); // to avoid compile error!
+			err = true;
 		}
 
-  	
-		log().debug("PaymentRestController : /rest-basket/ showBasketContents() returning. Content follows (unless null)");
-		//if (basketContents!=null) log().debug(basketContents.toString());
-		return new ResponseEntity<BasketContents>(basketContents, HttpStatus.OK);
+		log().debug("PaymentRestController : /rest-basket/ showBasketContents() returning. Content follows (err="+err+")");
+    	if (err) 
+    		return new ResponseEntity<BasketContents>(basketContents, HttpStatus.INTERNAL_SERVER_ERROR);
+    	else
+    		return new ResponseEntity<BasketContents>(basketContents, HttpStatus.OK);
     }
 
     
-    //------------------- Checkout – Bank Transfer prior to Commit --------------------------------------------------
+    //------------------- Checkout - Bank Transfer prior to Commit --------------------------------------------------
 
     // Implements API section 4.2
     // Provide details for display in the about-to-Commit-to-bank-transfer page
@@ -122,7 +126,7 @@ public class PaymentRestController extends Universal {
     }
 
        
-    //------------------- Checkout – Bank Transfer prior to Commit --------------------------------------------------
+    //------------------- Checkout - Bank Transfer prior to Commit --------------------------------------------------
 
     // Implements API section 4.3
     // Provide details for display in the have-just-Commited-to-bank-transfer page
@@ -185,6 +189,7 @@ public class PaymentRestController extends Universal {
 			log().error("Error retrieving details.");
 			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
     }
    
     
