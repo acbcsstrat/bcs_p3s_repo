@@ -73,20 +73,24 @@ public class UserProfileRestController extends Universal {
     	}
 
     	// Make the changes
-        p3sUser.setEmailAddress(user.getEmailAddress());
+        //p3sUser.setEmailAddress(user.getEmailAddress()); // prevent user changing email address! - as no reVerify yet
         p3sUser.setFirstName(user.getFirstName());
         p3sUser.setLastName(user.getLastName());
         p3sUser.setIsEmailNotification(user.getIsEmailNotification());
 
         //updating User password
-        if(!(user.getNewPassword() == null)){
-        		p3sUser.setPassword(user.getNewPassword());
+        if( ! isEmpty(user.getNewPassword())) {
+        		String rawPassword = user.getNewPassword(); 
+        		String safePassword = rawPassword;
+        		// Replace above with THIS for encrypted // String safePassword = userService.encryptPassword(rawPassword);
+        		p3sUser.setPassword(safePassword);
         		log().debug(msg + "User password got updated");
         }
         
         //p3sUser.setIsEmailNotification(false);
         Business business = user.getBusiness();
         business.setVersion(p3sUser.getBusiness().getVersion());
+        business.setBusinessName(p3sUser.getBusiness().getBusinessName()); // prevent user changing business name
         p3sUser.setBusiness(business);
         
       	String response = userService.updateUser(p3sUser,business);

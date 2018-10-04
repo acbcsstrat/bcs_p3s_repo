@@ -10,7 +10,7 @@
     <put-attribute name="body" value="/WEB-INF/views/blank.jsp"/>
   </definition>
 
-  <definition extends="default" name="whoami">
+  <definition extends="default" name="whereami">
     <put-attribute name="body" value="/WEB-INF/views/whoami.jsp"/>
   </definition>
 

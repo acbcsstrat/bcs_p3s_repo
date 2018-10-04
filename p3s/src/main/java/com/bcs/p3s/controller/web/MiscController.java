@@ -46,7 +46,7 @@ public class MiscController extends Universal {
 		
 	    //------------------- whoami --------------------------------------------------
 
-		@RequestMapping(value="/whoami", method = RequestMethod.GET, produces = "text/html")
+		@RequestMapping(value="/whereami", method = RequestMethod.GET, produces = "text/html")
 	    public String whoami(Model uiModel) {
 			System.out.println("whoami in MiscController invoked");
 

@@ -1,5 +1,6 @@
 package com.bcs.p3s.controller.rest;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,37 @@ public class RegisterRestController extends Universal {
 	
 	@Autowired
     HttpSession session ;
+
+	
+	
+	//---------------------- FE provides a CAPTCHA check ----------------
+	@RequestMapping(value="/register/rest-verify-recaptcha/" , method = RequestMethod.POST)
+	public ResponseEntity<String> captchaOnly(@RequestParam("g-recaptcha-response") String gRecaptchaResponse) {
+
+		String msg = "RegisterRestController : /register/rest-verify-recaptcha/  ";
+		log().debug(msg + "invoked with g-recaptcha-response");
+	
+		boolean isGenuine = false;
+
+		if (isEmpty(gRecaptchaResponse)) 
+			logErrorAndContinue("RegisterRestController:captchaOnly: passed empty gRecaptchaResponse");
+		
+		CaptcaService captcha = new CaptcaService();
+		try {
+			isGenuine = captcha.verify(gRecaptchaResponse);
+		} catch (IOException e1) {
+			log().error("RegisterRestController:captchaOnly: Problem contacting google for captcha verification", e1);
+		}
+		log().debug("RegisterRestController:captchaOnly validation result is "+isGenuine);
+		
+
+		if (isGenuine)
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		else
+			return new ResponseEntity<String>("error", HttpStatus.FORBIDDEN);  // 403
+	}
+
+
 	
 	@RequestMapping(value="/register/rest-user/" , method = RequestMethod.POST)
 	public ResponseEntity<String> persistNewUser(@RequestBody Object object){
@@ -111,6 +143,7 @@ public class RegisterRestController extends Universal {
 				user.setIsEmailNotification(true);
 				user.setCreatedDate(Calendar.getInstance().getTime());
 				user.setBusiness(business);
+				// userService.encryptPassword(user); // disabled until near production
 				userService.createNewUser(user, business);
 			}
 			else{ //Error message :- Email address already exist
@@ -227,10 +260,10 @@ public class RegisterRestController extends Universal {
 				user.setUserrole("user");
 				//setting email notification to true by default
 				user.setIsEmailNotification(true);
-				user.setCreatedDate(Calendar.getInstance().getTime());
 				PreLoginSessionBean preSession = (PreLoginSessionBean) session.getAttribute("preSession");
 				business = preSession.getBusiness();   //getting business Info from session; ignoring user manipulations
 				user.setBusiness(business);
+				// userService.encryptPassword(user); // disabled until near production
 				userService.createSubUser(user);
 			}
 			else{

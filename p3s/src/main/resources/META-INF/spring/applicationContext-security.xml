@@ -14,7 +14,7 @@
         				authentication-failure-url="/login?login_error=t" />
 <!-- MP14062017 - Code changes for redirection to index.htm after login ends -->
         
-        <logout logout-url="/resources/j_spring_security_logout" />
+        <logout logout-url="/resources/j_spring_security_logout" logout-success-url="/login" />
         
         <intercept-url pattern="/login/**" access="permitAll" />
         <intercept-url pattern="/register/**" access="permitAll" />
@@ -24,14 +24,15 @@
         <intercept-url pattern="/assets/css/**" access="permitAll" />
         <intercept-url pattern="/assets/imgs/**" access="permitAll" />
         <intercept-url pattern="/logtest/**" access="permitAll" />
+        <!-- Below line needed for index.html (which does redirect) to be served prior to index.htm -->
+        <intercept-url pattern="/index.html" access="permitAll" />
         <!-- Below line needed to bypass login for prelogin forgot password functionality -->
         <intercept-url pattern="/prelogin/**" access="permitAll" />
         <intercept-url pattern="/**" access="isAuthenticated()" />
         
 	    <session-management>
-			<!-- DISABLE concurrency-control during Development 
+			<!-- DISABLE concurrency-control during Development --> 
 				        <concurrency-control max-sessions="1" />
-			 -->
 	    </session-management>
     </http>
  <!-- MP14062017 - Code changes for redirection to index.htm after login starts -->   
@@ -47,6 +48,10 @@
 	   <authentication-provider>
             <!--   
             	DISABLE encrypted passwords during Development <password-encoder ref="bcryptEncoder"/>
+
+				When enabling encrypted passwords, need also activate prepared changes where password Written.
+				See: RegisterRestController : 146&266 ; ForgotPasswordRestController : 217 ; UserProfileRestController : 84
+				AC 4/10/2018
             -->
 		<jdbc-user-service data-source-ref="dataSource"
  
