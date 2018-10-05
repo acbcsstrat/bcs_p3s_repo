@@ -9,21 +9,37 @@
   		<link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700" rel="stylesheet">
 
   		<link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
-  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	  	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>        
+
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>
 
-      <title>Patent Place</title>
+        <title>Patent Place</title>
+
+        <style id="antiClickjack">body{display:none !important;}</style>
+
+        <script type="text/javascript">
+
+            if(self === top) {
+                var antiClickjack = document.getElementById("antiClickjack");
+                antiClickjack.parentNode.removeChild(antiClickjack)
+            } else {
+                top.location = self.location
+            }
+
+        </script>
+
 
    	</head>
 
    	<body class="bg-light-grey2 hide-before"> 
       	<div class="container-pre-app d-flex justify-content-center align-items-center">
-         	<div class="container-pre-app__center-box-40 p-a-sm border">
+         	<div class="container-pre-app__center-box-40 p-a-sm">
           		<div class="row m-b-sm">
                      <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-sm">
@@ -32,7 +48,6 @@
                         <h1 class="font-weight-bold font-h1">Register</h1>
                      </div>
           		</div>
-         <!--   		<div class="d-flex align-items-center flex-column"> -->
          		<div id="register-intro">
 	       			<div class="row m-b-sm">
 	       				<div class="col-md-12 col-lg-12 col-xl-12 text-center">
@@ -70,7 +85,7 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-md-12 col-lg-12 col-xl-12">
-											<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+											<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
 										</div>
 									</div>
 									<div class="form-group row">
@@ -85,7 +100,7 @@
 									</div>
 									<div class="form-group row m-b-none">
 										<div class="col-md-12 col-lg-12 col-xl-12">
-											<input type="password" name="confirm_password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+											<input type="password" name="confirm_password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
 										</div>
 									</div>
 								</div>										  			
@@ -172,6 +187,11 @@
 			                            	<input type="checkbox" name="terms-register" id="terms-register" data-parsley-required-message="Please read and accept out terms and conditions" data-parsley-required="true">		
 			                       	 	</label>									
 									</div>
+                                    <div class="row m-b-sm">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">                                    
+                                            <div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LezdHEUAAAAABvniybP4wWGWWztRMQXT5r0_WMs" data-callback="recaptchaCallback" disabled="disabled"></div>
+                                        </div>
+                                    </div>
 								</div>
 							  	<div class="row">
 							  		<div class="col-md-12 col-lg-12 col-xl-12">
@@ -193,7 +213,7 @@
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
 	   								<h3 class="font-h3 txt-phase-green m-b-sm">Successful</h3>
-	   								<p class="font-body text-center">You have successfully reigstered your details. Please check your inbox to validate your account</p>
+	   								<p class="font-body text-center w-100">You have successfully registered your details. Please check your inbox to validate your account.</p>
 	   							</div>
 	   						</div>   							
    						</div>
@@ -206,7 +226,7 @@
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
 									<h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
-	   								<p class="font-body text-center">We were unable to register your details. It is possible that email address has already been registered. Please check and try again.</p>
+	   								<p class="font-body text-center w-100">We were unable to register your details. Please try again. If it's still a problem then please let us know : support@ip.place</p>
 	   								<p class="font-body">Do you need support? Contact us through our <a class="inline-link font-weight-medium" id="supportLink">website</a></p>
 	   							</div>
 	   						</div>
@@ -291,13 +311,59 @@
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>      	
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>      	
 
       	<script>
 
 			var domain = 'http://localhost:8080/p3sweb/';
 
+            var captchaChecked = false;
+
+            function recaptchaCallback() {
+
+                var btnSubmit = $('#register');
+
+                var response = grecaptcha.getResponse();
+
+                if(response.length > 0 && $('#terms-register').prop('checked')) {
+                    captchaChecked = true;
+                    btnSubmit.prop('disabled', false);
+                } else {
+                    btnSubmit.prop('disabled', true);
+                }
+
+            }
+
+            function submitRegistration(data) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: domain + 'register/rest-user/',
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function(response) {
+                        $('#initialRegistration, #register-intro,  divQn').fadeOut(500);    
+                        $('#register-success').delay(520).fadeIn(500);                          
+                    },
+                    error:function(errResponse) {
+                        $('#initialRegistration,  divQn').fadeOut(500); 
+                        $('#register-failure').delay(520).fadeIn(500);                          
+                    }
+                });
+
+            }            
+
 			$(function () {
+
+                $('#terms-register').change(function(){
+                    var response = grecaptcha.getResponse();
+                    if(this.checked && response.length > 0) {
+                        recaptchaCallback();
+                    } else {
+                        $('#register').prop('disabled', true);
+                    }
+                });
+
 			  	var $sections = $('.form-section');
 
 			  	function navigateTo(index) {
@@ -308,7 +374,7 @@
 			        .addClass('current');
 			    // Show only the navigation buttons that make sense for the current section:
 				    $('.form-navigation .previous').toggle(index > 0);
-				    var atTheEnd = index >= $sections.length - 1;
+				    var atTheEnd = index >= $sections.length - 1; //return boolen value
 				    $('.form-navigation .next').toggle(!atTheEnd);
 				    $('.form-navigation [type=submit]').toggle(atTheEnd);
 			  	}
@@ -337,99 +403,101 @@
 			    	$(section).find(':input').attr('data-parsley-group', 'block-' + index);
 			  	});
 			  	navigateTo(0); // Start at the beginning
-			});
+			
 
-			window.Parsley.addValidator('validateName', {
-				validateString: function(value) {
-					if(!value.match('^[a-zA-z0-9\' -]*$')) {
-						return false;
-					}
-				},
-			 	messages: {
-				    en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
-			  	}
-			});
+    			window.Parsley.addValidator('validateName', {
+    				validateString: function(value) {
+    					if(!value.match('^[a-zA-z0-9\' -]*$')) {
+    						return false;
+    					}
+    				},
+    			 	messages: {
+    				    en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
+    			  	}
+    			});
 
-			window.Parsley.addValidator('validateAddress', {
-				validateString: function(value) {
-					if(!value.match('^[a-zA-z0-9\.\(\), -]*$')) {
-						return false;
-					}
-				},
-			 	messages: {
-				    en: 'Only letters, numbers, commas, ., -, () and spaces are valid charcters in this field.',
-			  	}
-			});
-		
-			window.Parsley.addValidator('validateCompanyName', {
-				validateString: function(value) {
-					if(!value.match('^[a-zA-z0-9\'\+\.\(\) -]*$')) {
-						return false;
-					}
-				},
-			 	messages: {
-				    en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
-			  	}
-			});
+    			window.Parsley.addValidator('validateAddress', {
+    				validateString: function(value) {
+    					if(!value.match('^[a-zA-z0-9\.\(\), -]*$')) {
+    						return false;
+    					}
+    				},
+    			 	messages: {
+    				    en: 'Only letters, numbers, commas, ., -, () and spaces are valid charcters in this field.',
+    			  	}
+    			});
+    		
+    			window.Parsley.addValidator('validateCompanyName', {
+    				validateString: function(value) {
+    					if(!value.match('^[a-zA-z0-9\'\+\.\(\) -]*$')) {
+    						return false;
+    					}
+    				},
+    			 	messages: {
+    				    en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
+    			  	}
+    			});
 
-	        window.Parsley.addValidator('validateEmail', {
+    	        window.Parsley.addValidator('validateEmail', {
 
-		        validateString: function(value){
+    		        validateString: function(value){
 
-		        	var valueTrim = value.trim()
+    		        	var valueTrim = value.trim()
 
-		            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
+    		            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
 
-               		if(!valueTrim.match(reg)) {
-	                    return false;
-	                } 
-	            },
-		            messages: {
-		               en: 'Please enter a valid email address.'
-		            }
-		    });
+                   		if(!valueTrim.match(reg)) {
+    	                    return false;
+    	                } 
+    	            },
+    		            messages: {
+    		               en: 'Please enter a valid email address.'
+    		            }
+    		    });
 
-         	window.Parsley.addValidator('validatePhone', {
-	            validateString: function(value) {
-	               if(!value.match('^[0-9\-\+\(\) ]*$')) {
-	                  return false;
-	               }
-	            },
-	            messages: {
-	                en: 'Please enter a valid phone number.',
-	            }
-         	});
+             	window.Parsley.addValidator('validatePhone', {
+    	            validateString: function(value) {
+    	               if(!value.match('^[0-9\-\+\(\) ]*$')) {
+    	                  return false;
+    	               }
+    	            },
+    	            messages: {
+    	                en: 'Please enter a valid phone number.',
+    	            }
+             	});
 
-         	window.Parsley.addValidator('validateZip', {
-	            validateString: function(value) {
-	               if(!value.match('^[0-9\-]*$')) {
-	                  return false;
-	               }
-	            },
-	            messages: {
-	                en: 'Only numbers and - are valid characters in this field.',
-	            }
-         	}); 			    
+             	window.Parsley.addValidator('validateZip', {
+    	            validateString: function(value) {
+    	               if(!value.match('^[0-9\-]*$')) {
+    	                  return false;
+    	               }
+    	            },
+    	            messages: {
+    	                en: 'Only numbers and - are valid characters in this field.',
+    	            }
+             	}); 			    
 
-         	window.Parsley.addValidator('validateAlpha', {
-	            validateString: function(value) {
-	               if(!value.match('^[a-zA-Z]+]*$')) {
-	                  return false;
-	               }
-	            },
-	            messages: {
-	                en: 'Only letters are valid charcters in this field.',
-	            }
-         	}); 
+             	window.Parsley.addValidator('validateAlpha', {
+    	            validateString: function(value) {
+    	               if(!value.match('^[a-zA-Z]+]*$')) {
+    	                  return false;
+    	               }
+    	            },
+    	            messages: {
+    	                en: 'Only letters are valid charcters in this field.',
+    	            }
+             	}); 
 
-			$('#register-success').hide();
-			$('#register-failure').hide();
-      		$('#initialRegistration').hide();
-      		$('#companyCode').hide();
-      		$('#businessConfirm').hide();
+    			$('#register-success').hide();
+    			$('#register-failure').hide();
+          		$('#initialRegistration').hide();
+          		$('#companyCode').hide();
+          		$('#businessConfirm').hide();
+
+            });
 
       		$(window).on('load',function() {
-			 	$('.hide-before').fadeIn(500);
+			 	$('.hide-before').fadeIn(300);
 			});
 
 			$(document).ready(function(){
@@ -438,9 +506,10 @@
 
 				$('#supportLink').attr('href', 'http://thepatent.place/contact/');
 
-				 var password_li = $('#passwordStrength').find('li');
-				  $('#password').bind('keyup', function() {
-				    var counter = 0;
+                var password_li = $('#passwordStrength').find('li');
+
+	            $('#password').bind('keyup', function() {
+			        var counter = 0;
 				    var pw = $(this).val();
 
 				    if (pw.length >= 8) {
@@ -471,219 +540,231 @@
 				    password_li.filter(':lt(' + counter + ')').each(function() { //Select all elements at an index less than index within the matched set. So add class of matched class to all li elements with index less than counter
 				     	$(this).addClass($(this).data('matched-class')); //used in conjuction with data- attribute
 				    });
-				    
-				//validate confirm password
+			    
+			        //validate confirm password
 
-				$('#confirm_password').on('blur', function(){
-					if($(this).val() !== $('#password').val()) {
-						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>');
-					} else {
-						$('#valid_confirm_password').text('');
-					}
-				});
-			});
-	  	});
+    				$('#confirm_password').on('blur', function(){
+    					if($(this).val() !== $('#password').val()) {
+    						$('#valid_confirm_password').html('<span class="font-body m-t-xs valid-container">The passwords do not match.</span>');
+    					} else {
+    						$('#valid_confirm_password').text('');
+    					}
+    				});
+		        });
+  	        }); 
       	
-      	$(document).ready(function(){
+      	    $(document).ready(function(){
 
-      		$('#same_as_business').change(function(){
-      			if(this.checked) {
+                var registerForm = $('#registerForm');
+                var timezoneSelect = $('#timezone');
+			    var business = $('#subBusiness input');
+                var sameBusiness = $('#same_as_business');
+                        // .prop('checked')
 
-      				var addObj = {};
-      				var business = $('#subBusiness input');
+                function updateBusiness() {
 
-      				for(var i = 0;i < business.length; i++) {
+                    var addObj = {};
 
-      					switch(business[i].id) {
-      						case 'street':
-      							addObj.street = business[i].value;
-      						break;
-      						case 'city':
-      							addObj.city = business[i].value;
-      						break;
-      						case 'USstate':
-      							addObj.USstate = business[i].value;
-      						break;
-      						case 'zip':
-      							addObj.zip = business[i].value;
-      						break;			      							      						
-      					}
-      				}
+                    for(var i = 0;i < business.length; i++) {
 
-      				$('#pasteBusiness input[id=billing_street').val(addObj.street);
-      				$('#pasteBusiness input[id=billing_city').val(addObj.city);
-      				$('#pasteBusiness input[id=billing_state').val(addObj.USstate);
-      				$('#pasteBusiness input[id=billing_zip').val(addObj.zip);
+                        switch(business[i].id) {
+                            case 'street':
+                                addObj.street = business[i].value;
+                            break;
+                            case 'city':
+                                addObj.city = business[i].value;
+                            break;
+                            case 'USstate':
+                                addObj.USstate = business[i].value;
+                            break;
+                            case 'zip':
+                                addObj.zip = business[i].value;
+                            break;                                                                      
+                        }
+                    }
 
-      			} else {
-      				$('#pasteBusiness input').val('');
-      			}
-      		});
+                    $('#pasteBusiness input[id=billing_street').val(addObj.street);
+                    $('#pasteBusiness input[id=billing_city').val(addObj.city);
+                    $('#pasteBusiness input[id=billing_state').val(addObj.USstate);
+                    $('#pasteBusiness input[id=billing_zip').val(addObj.zip);      
 
-      		var registerForm = $('#registerForm');
+                }
 
-      		$('#terms-register').change(function(){
-      			if(this.checked) {
-      				$('#register').removeAttr('disabled');
-      			} else {
-      				$('#register').prop('disabled', true);
-      			}
-      		});
+                business.on('input', function(e){
+                    if(sameBusiness.prop('checked')) {
+                        updateBusiness();
+                    }
+                    
+                })
 
-      		$('input[name=typeRegister]').change(function(e){
-      			if(e.target.id == 'subRegister') {
+                sameBusiness.change(function(){
+                    if(this.checked) {
+                        updateBusiness();
+      			    } else {
+      				    $('#pasteBusiness input').val('');
+      			    }
+      		    });
 
-  					$('#initialRegistration').hide();
-  					$('#initialRegistrationSubmit').hide();
+          		$('input[name=typeRegister]').change(function(e){
+          			if(e.target.id == 'subRegister') {
 
-  					$('#subRegistrationSubmit').show();
-  					$('#companyCode').show();
+      					$('#initialRegistration').hide();
+      					$('#initialRegistrationSubmit').hide();
 
-      				if(registerForm) {
-      					registerForm.attr('id', 'subUserForm').attr('id', 'subUserForm');
-      				}
+      					$('#subRegistrationSubmit').show();
+      					$('#companyCode').show();
 
-      			} else {
-      				
-					$('#initialRegistration').show();
-  					$('#initialRegistrationSubmit').show(); 
-      				$('#subRegistrationSubmit').hide();
-      				$('#companyCode').hide();
-      				$('#businessConfirm').hide();  					
+          				if(registerForm) {
+          					registerForm.attr('id', 'subUserForm').attr('id', 'subUserForm');
+          				}
 
-      				if(registerForm) {
-      					registerForm.attr('id', 'registerForm');
-      				}
+          			} else {
+          				
+    					$('#initialRegistration').show();
+      					$('#initialRegistrationSubmit').show(); 
+          				$('#subRegistrationSubmit').hide();
+          				$('#companyCode').hide();
+          				$('#businessConfirm').hide();  					
 
-      			}
-      		});
+          				if(registerForm) {
+          					registerForm.attr('id', 'registerForm');
+          				}
 
-      		$(document).on('submit', '#registerForm', function(e){
-  				e.preventDefault();
-				var dataString = JSON.stringify($('#registerForm').serializeArray());
-				$.ajax({
-					type: 'POST',
-					url: domain + 'register/rest-user/',
-					data: dataString,
-				    contentType: "application/json",
-					success: function(response) {
-						$('#initialRegistration, #register-intro,  divQn').fadeOut(500);	
-						$('#register-success').delay(520).fadeIn(500);		      				
-					},
-					error:function(errResponse) {
-						$('#initialRegistration,  divQn').fadeOut(500);	
-						$('#register-failure').delay(520).fadeIn(500);							
-					}
-				});
-			});
+          			}
+          		});
 
-			$(document).on('submit', '#subUserForm', function(e){
-				e.preventDefault();
-				var dataString = JSON.stringify($('#subUserForm').serializeArray());
-				$.ajax({
-					type: 'POST',
-					url: domain + 'register/rest-subsequent-user-step2/',
-					data: dataString,
-				    contentType: "application/json",
-					success: function(response) {
-						$('#initialRegistration, divQn, register-intro').fadeOut(500);	
-						$('#register-success').delay(520).fadeIn(500);
-					},
-					error:function(errResponse) {
-						$('#initialRegistration, divQn').fadeOut(500);	
-						$('#register-failure').delay(520).fadeIn(500);						
-					}
-				});
-			});
+          		$(document).on('submit', '#registerForm', function(e){
 
-			var timezoneSelect = $('#timezone');
+      				e.preventDefault();
+                    
+    				var dataString = $('#registerForm').serializeArray();
+                    var gvalue = $('[name="g-recaptcha-response"]').val();
 
-			$.ajax({
-				type: 'GET',
-				url: '/p3sweb/public/ustimezones.json',
-				dataType: 'json',
-				async: false,
-				success: function(response) {
+                    dataString.push({
+                        'name': 'g-recaptcha-response',
+                        'value': gvalue
+                    })
 
-					response.ustimezones.forEach(function(data){
-						timezoneSelect.append('<option value="'+data.abbr +'">'+data.abbr +'</option>')
-					})
+                    $.ajax({
+                        type: 'POST',
+                        url: domain + 'prelogin/rest-verify-recaptcha/',
+                        data: dataString,
+                        success: function(response) {
+                            submitRegistration(dataString)
+                        },
+                        error:function(errResponse) {
+                            console.log('error', errResponse)
+                            grecaptcha.reset();
+                            $('#recaptchaError').prop('hidden', false);
+                        }
+                    });                
+    			});
 
-				},
-				error: function() {
+    			$(document).on('submit', '#subUserForm', function(e){
+    				e.preventDefault();
+    				var dataString = JSON.stringify($('#subUserForm').serializeArray());
+    				$.ajax({
+    					type: 'POST',
+    					url: domain + 'register/rest-subsequent-user-step2/',
+    					data: dataString,
+    				    contentType: "application/json",
+    					success: function(response) {
+    						$('#initialRegistration, divQn, register-intro').fadeOut(500);	
+    						$('#register-success').delay(520).fadeIn(500);
+    					},
+    					error:function(errResponse) {
+    						$('#initialRegistration, divQn').fadeOut(500);	
+    						$('#register-failure').delay(520).fadeIn(500);						
+    					}
+    				});
+    			});
 
-				}
-			})
+    			$.ajax({
+    				type: 'GET',
+    				url: '/p3sweb/public/ustimezones.json',
+    				dataType: 'json',
+    				async: false,
+    				success: function(response) {
 
-  			$('#companyCodeForm').submit(function(e){
-  				e.preventDefault();
+    					response.ustimezones.forEach(function(data){
+    						timezoneSelect.append('<option value="'+data.abbr +'">'+data.abbr +'</option>')
+    					})
 
-				var dataString = $('#companyCodeForm').serializeArray();
-				$.ajax({
-					type: 'POST',
-					//url: 'http://localhost:8080/p3sweb/register/rest-subsequent-user-step1/'+dataString,
-					url: domain + 'register/rest-subsequent-user-step1/',
-					data: dataString,
-				    dataType: 'json',
-					success: function(response) {
+    				},
+    				error: function() {
 
-						$('#businessValidation').hide();
-						var patentFound = true;
-						if(patentFound) {
-							$('#companyCodeSubmit').attr('disabled', true);
-							$('#companyCodeSubmit').parent().closest('div.form-group').hide();
-						}
-						$('#businessConfirm').show();
-						$('#businessNameConfirm').html(response.businessName);
-						$('#businessAddressStreetConfirm').html(response.street);
-						$('#businessAddressCityConfirm').html(response.city);
-						$('#businessAddressStateConfirm').html(response.usstate);
-						$('#businessAddressZipConfirm').html(response.zip); 							
-						$('input[id=businessName]').val(response.businessName);
-						$('input[id=phoneNumber]').val(response.phoneNumber);
-						$('#subBusiness input[id=street]').val(response.street);
-						$('#subBusiness input[id=city]').val(response.city);
-						$('#subBusiness input[id=USstate]').val(response.usstate);
-						$('#subBusiness input[id=zip]').val(response.zip);
-						$('#subBusiness select[id=timezone]').append('<option value="'+response.timezone +'">'+response.timezone +'</option>');
-						$('#pasteBusiness input[id=billing_street]').val(response.billingStreet);
-						$('#pasteBusiness input[id=billing_city]').val(response.billingCity);
-						$('#pasteBusiness input[id=billing_state]').val(response.billingState);
-						$('#pasteBusiness input[id=billing_zip]').val(response.billingZip);
-						$('#sameAsBusiness').hide();
+    				}
+    			})
 
-						setTimeout(function() {
-							$('#timezone').val(response.timezone);
-						}, 300);
+      			$('#companyCodeForm').submit(function(e){
+      				e.preventDefault();
 
-					},
-					error: function(errResponse) {
-						if(errResponse.status == 400) {
-							$('#businessValidation').html('<p class="font-body txt-phase-red">The business PIN and number do not match our records. Please try again.</p>');
-						}
-					}
-				});
-			});
+    				var dataString = $('#companyCodeForm').serializeArray();
+    				$.ajax({
+    					type: 'POST',
+    					//url: 'http://localhost:8080/p3sweb/register/rest-subsequent-user-step1/'+dataString,
+    					url: domain + 'register/rest-subsequent-user-step1/',
+    					data: dataString,
+    				    dataType: 'json',
+    					success: function(response) {
 
-			$('#businessConfirmSubmit').click(function(e){
-				e.preventDefault();
-               	$('#businessConfirm, #subRegistration, #companyCode, #divQn').hide();
-             	$('#initialRegistration').show();
-               	$('#businessDetails input').each(function(i){
-               		$(this).prop('readonly', true);
-               	})
-               	$('#pasteBusiness input').each(function(i){
-               		$(this).prop('readonly', true);
-               	})               	
-               	$('#businessDetails select').prop('disabled', true);          	
+    						$('#businessValidation').hide();
+    						var patentFound = true;
+    						if(patentFound) {
+    							$('#companyCodeSubmit').attr('disabled', true);
+    							$('#companyCodeSubmit').parent().closest('div.form-group').hide();
+    						}
+    						$('#businessConfirm').show();
+    						$('#businessNameConfirm').html(response.businessName);
+    						$('#businessAddressStreetConfirm').html(response.street);
+    						$('#businessAddressCityConfirm').html(response.city);
+    						$('#businessAddressStateConfirm').html(response.usstate);
+    						$('#businessAddressZipConfirm').html(response.zip); 							
+    						$('input[id=businessName]').val(response.businessName);
+    						$('input[id=phoneNumber]').val(response.phoneNumber);
+    						$('#subBusiness input[id=street]').val(response.street);
+    						$('#subBusiness input[id=city]').val(response.city);
+    						$('#subBusiness input[id=USstate]').val(response.usstate);
+    						$('#subBusiness input[id=zip]').val(response.zip);
+    						$('#subBusiness select[id=timezone]').append('<option value="'+response.timezone +'">'+response.timezone +'</option>');
+    						$('#pasteBusiness input[id=billing_street]').val(response.billingStreet);
+    						$('#pasteBusiness input[id=billing_city]').val(response.billingCity);
+    						$('#pasteBusiness input[id=billing_state]').val(response.billingState);
+    						$('#pasteBusiness input[id=billing_zip]').val(response.billingZip);
+    						$('#sameAsBusiness').hide();
 
-			})
+    						setTimeout(function() {
+    							$('#timezone').val(response.timezone);
+    						}, 300);
 
-			$('#businessCancel').click(function(e){
-				e.preventDefault();
-				window.location.replace(domain+'login');
-			});
-      	});
+    					},
+    					error: function(errResponse) {
+    						if(errResponse.status == 400) {
+    							$('#businessValidation').html('<p class="font-body txt-phase-red">The business PIN and number do not match our records. Please try again.</p>');
+    						}
+    					}
+    				});
+    			});
+
+    			$('#businessConfirmSubmit').click(function(e){
+    				e.preventDefault();
+                   	$('#businessConfirm, #subRegistration, #companyCode, #divQn').hide();
+                 	$('#initialRegistration').show();
+                   	$('#businessDetails input').each(function(i){
+                   		$(this).prop('readonly', true);
+                   	})
+                   	$('#pasteBusiness input').each(function(i){
+                   		$(this).prop('readonly', true);
+                   	})               	
+                   	$('#businessDetails select').prop('disabled', true);          	
+
+    			})
+
+    			$('#businessCancel').click(function(e){
+    				e.preventDefault();
+    				window.location.replace(domain+'login');
+    			});
+          	});
 
      	</script>
    </body>

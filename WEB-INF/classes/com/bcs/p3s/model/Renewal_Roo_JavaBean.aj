@@ -28,12 +28,12 @@ privileged aspect Renewal_Roo_JavaBean {
         this.activePaymentId = activePaymentId;
     }
     
-    public RenewalFee Renewal.getFee() {
-        return this.fee;
+    public RenewalFee Renewal.getRenewalFee() {
+        return this.renewalFee;
     }
     
-    public void Renewal.setFee(RenewalFee fee) {
-        this.fee = fee;
+    public void Renewal.setRenewalFee(RenewalFee renewalFee) {
+        this.renewalFee = renewalFee;
     }
     
     public Certificate Renewal.getCertificate() {

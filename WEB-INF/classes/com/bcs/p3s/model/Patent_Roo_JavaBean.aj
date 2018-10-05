@@ -133,4 +133,76 @@ privileged aspect Patent_Roo_JavaBean {
         this.checkDigit = checkDigit;
     }
     
+    public String Patent.getInternationalFilingLang() {
+        return this.internationalFilingLang;
+    }
+    
+    public void Patent.setInternationalFilingLang(String internationalFilingLang) {
+        this.internationalFilingLang = internationalFilingLang;
+    }
+    
+    public String Patent.getPCT_applicationNumber() {
+        return this.PCT_applicationNumber;
+    }
+    
+    public void Patent.setPCT_applicationNumber(String PCT_applicationNumber) {
+        this.PCT_applicationNumber = PCT_applicationNumber;
+    }
+    
+    public String Patent.getPCT_publicationNumber() {
+        return this.PCT_publicationNumber;
+    }
+    
+    public void Patent.setPCT_publicationNumber(String PCT_publicationNumber) {
+        this.PCT_publicationNumber = PCT_publicationNumber;
+    }
+    
+    public String Patent.getInternationalSearchAuthority() {
+        return this.internationalSearchAuthority;
+    }
+    
+    public void Patent.setInternationalSearchAuthority(String internationalSearchAuthority) {
+        this.internationalSearchAuthority = internationalSearchAuthority;
+    }
+    
+    public String Patent.getDesignated_states() {
+        return this.designated_states;
+    }
+    
+    public void Patent.setDesignated_states(String designated_states) {
+        this.designated_states = designated_states;
+    }
+    
+    public String Patent.getEpctStatus() {
+        return this.epctStatus;
+    }
+    
+    public void Patent.setEpctStatus(String epctStatus) {
+        this.epctStatus = epctStatus;
+    }
+    
+    public String Patent.getEpctNotAvailableReason() {
+        return this.epctNotAvailableReason;
+    }
+    
+    public void Patent.setEpctNotAvailableReason(String epctNotAvailableReason) {
+        this.epctNotAvailableReason = epctNotAvailableReason;
+    }
+    
+    public Date Patent.getPriorityDate() {
+        return this.priorityDate;
+    }
+    
+    public void Patent.setPriorityDate(Date priorityDate) {
+        this.priorityDate = priorityDate;
+    }
+    
+    public Date Patent.getPCT_publishedDate() {
+        return this.PCT_publishedDate;
+    }
+    
+    public void Patent.setPCT_publishedDate(Date PCT_publishedDate) {
+        this.PCT_publishedDate = PCT_publishedDate;
+    }
+    
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_bcs_p3s_model_Business" object="${business}" path="/businesses" z="LTX2F8CZGqUSM7TC0VB9nHj9nXM=">
+        <field:display field="businessNumber" id="s_com_bcs_p3s_model_Business_businessNumber" object="${business}" z="FkAzjffgVfyGhCtH/mCbODH7NMc="/>
+        <field:display field="businessPin" id="s_com_bcs_p3s_model_Business_businessPin" object="${business}" z="lSuJXyhgqezmXcBVvHp5OXLB26A="/>
+        <field:display field="businessName" id="s_com_bcs_p3s_model_Business_businessName" object="${business}" z="XFTXcyQ9sfwCUAFOYqkXEhvo9tg="/>
+        <field:display field="phoneNumber" id="s_com_bcs_p3s_model_Business_phoneNumber" object="${business}" z="hpWJKgn3wKqQh+4+Q3NG2yoHi8E="/>
+        <field:display field="timezone" id="s_com_bcs_p3s_model_Business_timezone" object="${business}" z="3pyQ7uDrCEkRVSYv4IC8cd8OevI="/>
+        <field:display field="street" id="s_com_bcs_p3s_model_Business_street" object="${business}" z="gLzWsKvmEvQEymf6ll1V/j+7ZWk="/>
+        <field:display field="city" id="s_com_bcs_p3s_model_Business_city" object="${business}" z="epH4CUqRA1OC3niWiDAxDfGHuFM="/>
+        <field:display field="USstate" id="s_com_bcs_p3s_model_Business_USstate" object="${business}" z="umUEYoxAg1Kfe589T6P6tb+N0RI="/>
+        <field:display field="zip" id="s_com_bcs_p3s_model_Business_zip" object="${business}" z="kOmkzVMNNAi9jm3GLYF/qsm84QM="/>
+        <field:display field="billingStreet" id="s_com_bcs_p3s_model_Business_billingStreet" object="${business}" z="WEaPJQU4R/pkSkSbCNzqJrCxCd8="/>
+        <field:display field="billingCity" id="s_com_bcs_p3s_model_Business_billingCity" object="${business}" z="IcUpczvOMpUzrrq3VIgClxNyZeU="/>
+        <field:display field="billingState" id="s_com_bcs_p3s_model_Business_billingState" object="${business}" z="bgkZkC/6kz8/pWk48eP6VjXxsAY="/>
+        <field:display field="billingZip" id="s_com_bcs_p3s_model_Business_billingZip" object="${business}" z="gbyoP1c9w2N+wsvXgh7Rh3iEkwM="/>
+    </page:show>
+</div>

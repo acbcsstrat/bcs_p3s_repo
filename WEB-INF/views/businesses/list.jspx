@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_bcs_p3s_model_Business" items="${businesses}" z="eXR8y7c8MrjiUuDNs7IuV6C84kg=">
+        <table:table data="${businesses}" id="l_com_bcs_p3s_model_Business" path="/businesses" z="TXqass2VZDME0xUCGdoDSDyajO0=">
+            <table:column id="c_com_bcs_p3s_model_Business_businessNumber" property="businessNumber" z="QcS2ZCvW97clVwqJN+59AjlJ0S8="/>
+            <table:column id="c_com_bcs_p3s_model_Business_businessPin" property="businessPin" z="VG0nl7uq45N06qiSZLOufRUtEyo="/>
+            <table:column id="c_com_bcs_p3s_model_Business_businessName" property="businessName" z="pfxasYXKJ9M8MfG71VvMjkR0jNc="/>
+            <table:column id="c_com_bcs_p3s_model_Business_phoneNumber" property="phoneNumber" z="WmtdYky2/Nz+CwOA4XOtbYW5Blo="/>
+            <table:column id="c_com_bcs_p3s_model_Business_timezone" property="timezone" z="jrUrmSEk6u1raIiJM1veeXSRABY="/>
+            <table:column id="c_com_bcs_p3s_model_Business_street" property="street" z="raKOIzkLTA+mAjOsFiE/K+HNwh0="/>
+        </table:table>
+    </page:list>
+</div>

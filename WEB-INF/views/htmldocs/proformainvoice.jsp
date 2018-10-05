@@ -359,7 +359,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		            Account Number:
 		            </td>
 		            <td>
-		              <%=data.getBankDetails().getAccount1Number() %>
+		              <%=data.getBankDetails().getAccount1AcctNumber() %>
 		            </td>
 		          </tr>
 		          <tr>
@@ -439,7 +439,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 		            Account Number:
 		            </td>
 		            <td>
-		              <%=data.getBankDetails().getAccount2Number() %>
+		              <%=data.getBankDetails().getAccount2AcctNumber() %>
 		            </td>
 		          </tr>
 		          <tr>
@@ -506,6 +506,8 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
           Please ensure you use our Transaction ID as your payment reference.
           <br/>
           Patents cannot be renewed by our service if the Transaction ID is missing or incorrectly quoted.
+          <br/>
+          All services are provided subject to our agreed Terms.
         </div>
       </font></td>
     </tr>
