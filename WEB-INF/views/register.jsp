@@ -12,7 +12,7 @@
   		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	  	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	  	<link rel="stylesheet" type="text/css" href="dist/main.css">
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>        
 
@@ -66,7 +66,7 @@
        			<div id="initialRegistration">
        				<div class="row">
               			<div class="col-xl-8 offset-xl-2">
-              				<form name="register" id="registerForm" class="form" data-parsley-validate="">													
+              				<form name="register" id="registerForm" class="form" data-parsley-validate="">
 								<div class="form-section m-b-sm">
 									<div class="form-group row">
 										<div class="col-md-12 col-lg-12 col-xl-12">
