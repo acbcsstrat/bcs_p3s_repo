@@ -68,7 +68,7 @@ function selectPhaseService(){
 						phase: {
 			                title: 'Black',
 			                bgClass: 'bg-phase-black',
-			                nextBgClass: 'bg-white',
+			                nextBgClass: 'bg-phase-white',
 			                index: 4
 						}									
 												
