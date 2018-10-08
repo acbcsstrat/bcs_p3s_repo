@@ -6,9 +6,10 @@ WEB-INF/layouts
 WEB-INF/lib
 WEB-INF/spring
 WEB-INF/tags
+WEB-INF/i18n
+WEB-INF/web.xml
+WEB-INF/views/*.jsp
 node_modules
 dist/
-app/views/
 package-lock.json
-package.json
 WEB-INF/views/htmldocs
