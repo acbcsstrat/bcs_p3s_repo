@@ -10,8 +10,8 @@ function patentsRestService($http, $q) {
         fetchAllPatents: fetchAllPatents,
         updatePatent: updatePatent,
         savePatent: savePatent,
-        deletePatent: deletePatent
-        // fetchRenewalHistory: fetchRenewalHistory
+        deletePatent: deletePatent,
+        fetchCostAnalysis: fetchCostAnalysis
     };
 
     return factory;
@@ -74,20 +74,23 @@ function patentsRestService($http, $q) {
         return deferred.promise;
     };
 
-    // function fetchRenewalHistory(id) {
+    function fetchCostAnalysis(id) {
+        
+        var deferred = $q.defer();
+         $http.get(ppdomain+'rest-cost-analysis/'+id)
+            .then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while fetching cost analysis');
+                deferred.reject(errResponse);
+            }
+        );
 
-    //     var deferred = $q.defer();
-    //     $http.get(ppdomain+'rest-renewal-history/'+id)
-    //         .then(
-    //         function (response) {
-    //             deferred.resolve(response.data);
-    //         },
-    //         function(errResponse){
-    //             console.error('Error while fetching renewal history');
-    //             deferred.reject(errResponse);
-    //         }
-    //     );
-    //     return deferred.promise;
-    // };
+        return deferred.promise;
+        
+    };
+
 }
 
