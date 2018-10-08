@@ -47,7 +47,7 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 
 	if(patents.length > 0) {
 		patents.forEach(function(data){
-			costAnalysisService.fetchRenewalCa(data.id)
+			patentsRestService.fetchCostAnalysis(data.id)
 			.then(
 				function(response, i){
         			if(data.renewalStatus == 'Show price' || data.renewalStatus == 'Too late to renew') {
