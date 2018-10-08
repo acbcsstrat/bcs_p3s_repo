@@ -242,7 +242,7 @@ public class PatentStatusEngine extends Universal {
 				newPatentData.setActiveRenewalYear(patent.getRenewalYear());
 				newPatentData.setCurrentRenewalStatus(patent.getRenewalStatus());*/
 				
-				RenewalFeeUI nextStageFeeUI = null; // zaphod 
+				RenewalFeeUI nextStageFeeUI = null;
 				//if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(renewalInfo.getCurrentRenewalStatus())) { //If renewal status is Show price then only we need to calculate the next stage price
 					//nextStageFeeUI = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate()); 
 					RenewalFee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(renewalInfo), combinedFee.getP3sFee(), combinedFee.getEpoRenewalFee(), combinedFee.getFxRate()); 

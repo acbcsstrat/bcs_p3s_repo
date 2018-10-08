@@ -2,8 +2,8 @@ package com.bcs.p3s.enump3s;
 
 public class EPCTnotAvailableReasonEnum extends P3SAbstractEnum {
 	
-    public static final String NATURALPERSON			= "NaturalPerson"; 
-    public static final String AMENDED					= "Amended";
+    public static final String NATURALPERSON		= "NaturalPerson"; 
+    public static final String AMENDED				= "Amended";
     public static final String DOCSREQUIRED			= "DocsRequired";
 
 

@@ -69,9 +69,12 @@ public class Patent {
     @Size(max = 25)
     private String shortTitle;
 
-    /**
-     * updated on overnight scrape
-     */
+    /** 
+     * updated on overnight EPO scrape
+     * vmpi12: 1 of the 17 values. 
+     * For E-PCT must be #17 = 'The international publication has been made' 
+     * This value also determines vmpi13 - i.e. Stage = Filing, Prosecution , ..
+    */
     @NotNull
     private String epoPatentStatus;
 
@@ -145,12 +148,15 @@ public class Patent {
     */
     private String internationalSearchAuthority;
     
-    /** mpi09: comma-separated 2character states. Typically about 30
+    /** mpi09: comma-separated 2character states. Typically about 30. Tolerate spaces.
     */
     private String designated_states;
     
-    /** vmpi12: From the 17 values. 
-     * For E-PCT must be 'The international publication has been made' 
+    /** 
+     * Our P3S E-PCT status. 1 of the 11 values from 
+     * T:\PatentPlace\pp-release-2.1\Specifications\Fees and Status Values\180807b Status Values - GRID.xlsx 
+     * Values from Form1200StatusEnum
+     * Will follow the field of same name in the latest Epct record (if any)
      * See also vmpi13
     */
     private String epctStatus;

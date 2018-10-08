@@ -155,11 +155,26 @@ public class Payment {
 
     /**
      */
-    @NotNull
+    //@NotNull Post v1, this NotNull needed be removed
     //Previously was FetchType.EAGER :: Changed to LAZY as it returns children multiple times
     @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private List<Renewal> renewals = new ArrayList<Renewal>();
 
+    /**
+     * Added for v2.1 :  E-PCT / Form1200
+     */
+    @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
+    private List<Epct> epcts = new ArrayList<Epct>();
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // DIY finder
     // Approach: All renewals in a transaction must be from the same business
     public static List<Payment> findPaymentsByBusiness(Business business) {
