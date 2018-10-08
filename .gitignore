@@ -8,7 +8,8 @@ WEB-INF/spring
 WEB-INF/tags
 WEB-INF/i18n
 WEB-INF/web.xml
-WEB-INF/views/*.jsp
+/WEB-INF/views/*
+!/WEB-INF/views/*.jsp
 node_modules
 dist/
 package-lock.json
