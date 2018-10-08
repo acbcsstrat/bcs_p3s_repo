@@ -77,12 +77,12 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
         if (p !== '' || undefined) {
             user.newPassword = p;
         }
-        
+
         userService.updateUser(user)
         .then(
             function(response){  
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modal.successfully-updated-profile.tpl.htm',
+                    templateUrl: 'app/templates/modals/modal.successfully-updated-profile.tpl.htm',
                     appendTo: undefined,
                     controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 
