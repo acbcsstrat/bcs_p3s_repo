@@ -6,7 +6,7 @@ function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunk
 
     var vm = this;
 
-    vm.manualProcess = manualProcess;
+    // vm.manualProcess = manualProcess; NOT REQUIRED FOR RELEASE 1
     vm.chkValidStates = chkValidStates;
     vm.chkExtStates = chkExtStates;
     vm.submitForm1200 = submitForm1200;
@@ -210,55 +210,55 @@ function form1200questionnaireCtrl(patent, $scope, $stateParams, $timeout, chunk
         vm.formData.extensionStatesUI =  vm.questionsParam.extensionStatesUI;
     }
 
-    function manualProcess(value, question) {
+    // function manualProcess(value, question) { NOT NEEDED FOR RELEASE 1
 
-        if(value == true && question == 'amendments') {
+    //     if(value == true && question == 'amendments') {
 
-            var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modals/modal.manual-processing-amendments.tpl.htm',
-                appendTo: undefined,
-                controllerAs: '$ctrl',
-                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+    //         var modalInstance = $uibModal.open({
+    //             templateUrl: 'app/templates/modals/modal.manual-processing-amendments.tpl.htm',
+    //             appendTo: undefined,
+    //             controllerAs: '$ctrl',
+    //             controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
 
-                    vm.proceedMsgAmend  = true;
-                    this.dismissModal = function () {
-                        $uibModalInstance.close();
-                    };
+    //                 vm.proceedMsgAmend  = true;
+    //                 this.dismissModal = function () {
+    //                     $uibModalInstance.close();
+    //                 };
 
-                    this.ok = function () {
-                        $state.go('portfolio', {manual: true}, {reload: true});
-                    };
-
-
-                }]
-            });
-        } else {
-            vm.proceedMsgAmend = false;
-        }
-
-        if(value == true && question == 'documents') {
-            var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modals/modal.manual-processing-documents.tpl.htm',
-                appendTo: undefined,
-                controllerAs: '$ctrl',
-                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
-
-                    vm.proceedMsgDocs  = true;
-                    this.dismissModal = function () {
-                        $uibModalInstance.close();
-                    };
-
-                    this.ok = function () {
-                        $state.go('portfolio', {manual: true}, {reload: true});
-                    };
+    //                 this.ok = function () {
+    //                     $state.go('portfolio', {manual: true}, {reload: true});
+    //                 };
 
 
-                }]
-            });            
-        } else {
-            vm.proceedMsgDocs = false;
-        }
+    //             }]
+    //         });
+    //     } else {
+    //         vm.proceedMsgAmend = false;
+    //     }
 
-    }          
+    //     if(value == true && question == 'documents') {
+    //         var modalInstance = $uibModal.open({
+    //             templateUrl: 'app/templates/modals/modal.manual-processing-documents.tpl.htm',
+    //             appendTo: undefined,
+    //             controllerAs: '$ctrl',
+    //             controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+
+    //                 vm.proceedMsgDocs  = true;
+    //                 this.dismissModal = function () {
+    //                     $uibModalInstance.close();
+    //                 };
+
+    //                 this.ok = function () {
+    //                     $state.go('portfolio', {manual: true}, {reload: true});
+    //                 };
+
+
+    //             }]
+    //         });            
+    //     } else {
+    //         vm.proceedMsgDocs = false;
+    //     }
+
+    // }          
 
 }

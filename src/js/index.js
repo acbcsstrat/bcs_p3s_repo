@@ -70,7 +70,7 @@ require("app/controllers/patent.europct.ctrl.js");
 require("app/controllers/patent.patentCostAnalysis.ctrl.js");
 require("app/controllers/patent.patentInfo.ctrl.js");
 require("app/controllers/patent.patentItem.ctrl.js");
-require("app/controllers/patent.patentRenewals.ctrl.js");
+// require("app/controllers/patent.patentRenewals.ctrl.js");
 require("app/controllers/patent.renewal.ctrl.js");
 require("app/controllers/renewal.renewalInfo.ctrl.js");
 require("app/controllers/renewal.renewalHistory.ctrl.js");
