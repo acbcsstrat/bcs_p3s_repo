@@ -1,5 +1,5 @@
 <div class="modal-header d-flex flex-column align-items-center justify-content-center">
-	<span class="modal-cross cursor-pointer" ng-click="dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+	<span class="modal-cross cursor-pointer" data-ng-click="dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
 	<div class="m-b-sm">
 		<img src="assets/imgs/icons/modal/alert_icon.png" alt="success icon">	
 	</div>
@@ -9,6 +9,6 @@
 	<p class="font-h4">It looks like you're trying to cancel this transaction.  If you meant to do this select 'Yes', otherwise select 'No', and then 'Place this order' to confirm this order.</p>
 </div>
 <div class="modal-footer d-flex align-items-center justify-content-center">
-	<button class="btn btn--lg btn-portal pill-radius bg-phase-red font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center m-r-md" ng-click="cancel()">No</button>
-	<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center" ng-click="cancelTrans()">Yes</button>
+	<button class="btn btn--lg btn-portal pill-radius bg-phase-red font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center m-r-md" data-ng-click="cancel()">No</button>
+	<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center" data-ng-click="cancelTrans()">Yes</button>
 </div>

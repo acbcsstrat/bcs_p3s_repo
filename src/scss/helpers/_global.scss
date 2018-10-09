@@ -62,7 +62,7 @@ div.cursor-help { cursor: help; }
 
 .ul-bullet-free { list-style-type: none; padding: 0; }
 
-.border-none { border: none; }
+.border-none { border: none!important; }
 .border-t-none { border-top: none!important; }
 
 .inline-link:hover { text-decoration: underline; color: $black; }
