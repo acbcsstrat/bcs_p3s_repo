@@ -162,7 +162,7 @@
             </div>
         
 
-            <div class="col-xl-6 hidden-cxl p-l-none">
+            <div class="col-xl-6 p-l-none">
                 <div class="content-panel__body">
                     <div class="m-b-sm">
                         <div class="row">
@@ -292,7 +292,7 @@
     <div class="content-panel border-t-none m-b-sm">
         <div class="content-panel__head bg-white border-grey-xs--btm">
             <div class="row d-flex align-items-center">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
                         <span class="font-weight-bold">EPO Status:</span> 
@@ -302,25 +302,7 @@
                         <span data-ng-if="$ctrl.fetchRenewal.serviceStatus === 'Show price'">Open for renewal</span>
                     </p>
                 </div>
-                <div class="col-md-5" data-ng-if="$ctrl.fetchRenewal.serviceStatus == 'Show price'">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.fetchRenewal.progressBar + '%'}">
-                                <span class="font-h4 font-weight-medium nowrap" data-ng-class="(item.currentStageColour == 'Green' ? 'txt-phase-green': '') + '' + (item.currentStageColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.currentStageColour == 'Red' ? 'txt-phase-red': '') + '' + (item.currentStageColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.currentStageColour == 'Black' ? 'txt-phase-black': '')">$ {{$ctrl.fetchRenewal.currentStageCostUSD | number: 2 }}</span>
-                            </div>
-                            <div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.fetchRenewal.progressBar) - 1)  + '%'}">
-                                <span data-ng-if="$ctrl.fetchRenewal.currentStageColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="(item.currentStageColour == 'Green' ? 'txt-phase-green': '') + '' + (item.currentStageColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.currentStageColour == 'Red' ? 'txt-phase-red': '') + '' + (item.currentStageColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.currentStageColour == 'Black' ? 'txt-phase-black': '')">$ {{$ctrl.fetchRenewal.nextStageCostUSD}}</span>
-                                <span data-ng-if="$ctrl.fetchRenewal.currentStageColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.fetchRenewal.currentStageColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Black' ? 'bg-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.fetchRenewal.progressBar">{{$ctrl.fetchRenewal.progressBar}}%</uib-bar></uib-progress>
-                        </div>
-                    </div>
-                </div>
-                <div data-ng-class="($ctrl.fetchRenewal.serviceStatus == 'Show price' ? 'col-md-3': 'col-md-8')">
+                <div class="col-md-6">
                     <div data-ng-if="$ctrl.fetchRenewal.serviceStatus !== 'Show price'" class="d-flex flex-column align-items-end">
                         <p class="font-weight-bold font-h4">Next Stage:</p>
                         <p class="font-weight-medium font-h4">
@@ -329,7 +311,7 @@
                             <span data-ng-if="$ctrl.fetchRenewal.serviceStatus === 'Way too late to renew'" class="txt-phase-red">Renewal lapsed</span>
                             <span data-ng-if="$ctrl.fetchRenewal.serviceStatus === 'Too late to renew'" class="txt-phase-red">Call <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerName"></span> on <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerPhone"></span></span>
                         </p>
-                    </div>                                              
+                    </div>
                     <div data-ng-if="$ctrl.fetchRenewal.serviceStatus == 'Show price'" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-bold">Next stage: </span> 
@@ -337,7 +319,19 @@
                         </p>
                         <p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.fetchRenewal.costBandEndDateUI}}</p>
                     </div>
-                </div>                      
+                </div>
+                <div class="col-md-12" data-ng-if="$ctrl.fetchRenewal.serviceStatus == 'Show price'">
+                    <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.fetchRenewal.progressBar + '%'}">
+                        <span class="font-h4 font-weight-medium nowrap" data-ng-class="(item.currentStageColour == 'Green' ? 'txt-phase-green': '') + '' + (item.currentStageColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.currentStageColour == 'Red' ? 'txt-phase-red': '') + '' + (item.currentStageColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.currentStageColour == 'Black' ? 'txt-phase-black': '')">$ {{$ctrl.fetchRenewal.currentStageCostUSD | number: 2 }}</span>
+                    </div>
+                    <div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.fetchRenewal.progressBar) - 1)  + '%'}">
+                        <span data-ng-if="$ctrl.fetchRenewal.currentStageColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="(item.currentStageColour == 'Green' ? 'txt-phase-green': '') + '' + (item.currentStageColour == 'Amber' ? 'txt-phase-amber': '') + '' + (item.currentStageColour == 'Red' ? 'txt-phase-red': '') + '' + (item.currentStageColour == 'Blue' ? 'txt-phase-blue': '') + '' + (item.currentStageColour == 'Black' ? 'txt-phase-black': '')">$ {{$ctrl.fetchRenewal.nextStageCostUSD}}</span>
+                        <span data-ng-if="$ctrl.fetchRenewal.currentStageColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.fetchRenewal.currentStageColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Black' ? 'bg-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.fetchRenewal.progressBar">{{$ctrl.fetchRenewal.progressBar}}%</uib-bar></uib-progress>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -452,129 +446,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-cxl-6">
-                <div class="content-panel">
-                    <div class="content-panel__body bg-white">
-                        <div class="m-b-sm">
-                            <div class="row">
-                                <div class="col-md-12 d-flex justify-content-between m-b-sm">
-                                    <h4 class="font-weight-medium font-h4">FX Rate Impact</h4>
-                                    <p class="font-weight-medium font-h4">Today's Rate: <span class="txt-phase-green">1.83</span></p>
-                                </div>  
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 d-flex justify-content-between">
-                                    <p class="font-weight-medium font-h4">Yesterday: <span class="txt-phase-red">1.801</span></p>
-                                    <p class="font-weight-medium font-h4">Last Week: <span class="txt-phase-red">1.798</span></p>
-                                    <p class="font-weight-medium font-h4">Last Month: <span class="txt-phase-red">1.777</span></p>
-                                </div>
-                            </div>                  
-                        </div>
-                        <div class="row border-grey-xs--btm m-b-sm">
-                            <div class="col-md-12">
-                                <div class="row m-b-sm border-grey-xs--btm">
-                                    <div class="col-md-3 offset-xl-4">
-                                        <p class="font-h4 font-weight-medium m-b-xs text-center">USD</p>
-                                    </div>
-                                    <div class="col-md-3 offset-xl-2">
-                                        <p class="font-h4 font-weight-medium m-b-xs text-center">EUR</p>
-                                    </div>
-                                </div>
-                                <div class="row m-b-sm">
-                                    <div class="col-md-4">
-                                        <p class="font-weight-medium font-h4">Today:</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="text-center font-h4">$ {{($ctrl.patent.renewalFeeUI.subTotalUSD | number: 2) || '0.00'}}</p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        
-                                    </div>                              
-                                    <div class="col-md-3">
-                                        <p class="text-center font-h4">&euro; {{($ctrl.patent.renewalFeeUI.subTotalEUR | number: 2) || '0.00'}}</p>
-                                    </div>
-                                </div>                          
-                                <div class="row m-b-sm">
-                                    <div class="col-md-4">
-                                        <p class="font-weight-medium font-h4">Yesterday:</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="text-center font-h4">$ {{($ctrl.patent.renewalFeeUI.subTotalUSDYesterday | number: 2) || '0.00'}}</p>
-                                    </div>
-                                    <div class="col-md-2">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="text-center font-h4">&euro; {{($ctrl.patent.renewalFeeUI.subTotalEURYesterday | number: 2) || '0.00'}}</p>
-                                    </div>                                                                                              
-                                </div>
-                                <div class="row m-b-sm">
-                                    <div class="col-md-4">
-                                        <p class="font-weight-medium font-h4">Last week:</p>            
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="text-center font-h4">$ {{($ctrl.patent.renewalFeeUI.subTotalUSDLastWeek | number: 2) || '0.00'}}</p>
-                                    </div>
-                                    <div class="col-md-2">
-                                    </div>                              
-                                    <div class="col-md-3">
-                                        <p class="text-center font-h4">&euro; {{($ctrl.patent.renewalFeeUI.subTotalEURLastWeek | number: 2) || '0.00'}}</p>
-                                    </div>                                              
-                                </div>
-                                <div class="row m-b-sm">
-                                    <div class="col-md-4">
-                                        <p class="font-weight-medium font-h4">Last month:</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="text-center font-h4">$ {{($ctrl.patent.renewalFeeUI.subTotalUSDLastMonth | number: 2) || '0.00'}}</p>
-                                    </div>
-                                    <div class="col-md-2">
-                                    </div>                              
-                                    <div class="col-md-3">
-                                        <p class="text-center font-h4">&euro; {{($ctrl.patent.renewalFeeUI.subTotalEURLastMonth | number: 2) || '0.00'}}</p>
-                                    </div>                                              
-                                </div>
-                                <div class="row m-b-sm">
-                                    <div class="col-md-4">
-                                        <p class="font-weight-bold font-h4">4 week variation:</p>   
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="font-h4 text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
-                                            <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
-                                            <i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i>
-                                            $ {{($ctrl.patentFx.getFx().fourWeekVariationUSD | number: 2)  || '0.00'}}</p>      
-                                    </div>
-                                    <div class="col-md-2">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="font-h4 text-center" data-ng-class="$ctrl.patentFx.getFx().variationSave ? 'txt-phase-green': 'txt-phase-red'">
-                                            <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patentFx.getFx().variationSave"></i>
-                                            <i class="fa fa-caret-up fa-sm" data-ng-if="!$ctrl.patentFx.getFx().variationSave"></i> 
-                                            &euro; {{($ctrl.patentFx.getFx().fourWeekVariationEUR | number: 2)  || '0.00'}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- row end -->
-                        <div class="row d-flex justify-content-end">
-                            <div class="col-md-6 d-flex justify-content-end">
-                                <div data-ng-if="$ctrl.fetchRenewal.serviceStatus == 'Show price'">
-                                    <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-                                    </ngcart-addtocart>
-                                </div>
-                                <div data-ng-if="$ctrl.fetchRenewal.serviceStatus == ('Payment in progress' || 'EPO Instructed')">
-                                    <button type="button" class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-                                        <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
-                                    </button>
-                                </div>
-                                <div data-ng-if="$ctrl.fetchRenewal.serviceStatus == 'Renewal in place'">
-                                    <div class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-                                        <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Renewal</a>
-                                    </div>
-                                </div>                                          
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>            
         </div><!-- row end -->
     </div>
     
