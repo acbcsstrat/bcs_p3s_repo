@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_bcs_p3s_model_Business" modelAttribute="business" path="/businesses" versionField="Version" z="MfqGWl2zDB1n75BffOejw7uDaE0=">
+        <field:input field="businessNumber" id="c_com_bcs_p3s_model_Business_businessNumber" required="true" z="zZe22g6Y7/RQ3rsOVHgMi8+dpSY="/>
+        <field:input field="businessPin" id="c_com_bcs_p3s_model_Business_businessPin" max="9999" min="100" required="true" validationMessageCode="field_invalid_integer" z="ccW5jTbmIJMGpONvcAhSc0TaBJc="/>
+        <field:input field="businessName" id="c_com_bcs_p3s_model_Business_businessName" required="true" z="C0UeZ8pokL8HcA7prKXLdlSYjpk="/>
+        <field:textarea field="phoneNumber" id="c_com_bcs_p3s_model_Business_phoneNumber" required="true" z="PRMw/49xRDlKwB14+QG0zOUj+uQ="/>
+        <field:input field="timezone" id="c_com_bcs_p3s_model_Business_timezone" required="true" z="DfromEkXbkZNhbDLXyeiNSNu8Fs="/>
+        <field:input field="street" id="c_com_bcs_p3s_model_Business_street" required="true" z="GQsENLNY26P9FfLlD9zTHUIeap8="/>
+        <field:input field="city" id="c_com_bcs_p3s_model_Business_city" required="true" z="oW9KIvAi3lY21ogZqm5J+cnVPqY="/>
+        <field:input field="USstate" id="c_com_bcs_p3s_model_Business_USstate" required="true" z="o+UMHEGTz0D9xrROIZB/OMnvHRQ="/>
+        <field:input field="zip" id="c_com_bcs_p3s_model_Business_zip" required="true" z="AEXPnF1laqO6nSfbshT/eUSdUCY="/>
+        <field:input field="billingStreet" id="c_com_bcs_p3s_model_Business_billingStreet" required="true" z="PKXQfaZdP3fD2kY1n8eVNDVrxJk="/>
+        <field:input field="billingCity" id="c_com_bcs_p3s_model_Business_billingCity" required="true" z="3ynVowHJ8Xee0XGPWVzpGCzQo4k="/>
+        <field:input field="billingState" id="c_com_bcs_p3s_model_Business_billingState" required="true" z="9Fe7bYODrgYPZMfEfAXXqCrnJY4="/>
+        <field:input field="billingZip" id="c_com_bcs_p3s_model_Business_billingZip" required="true" z="B63KeKxxm47nQPP+12/V70gaBKY="/>
+    </form:update>
+</div>

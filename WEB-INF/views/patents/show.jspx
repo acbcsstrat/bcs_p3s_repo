@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_bcs_p3s_model_Patent" object="${patent}" path="/patents" z="LH411g5XdQX7R8zz9Z086kl+GXU=">
+        <field:display field="EP_ApplicationNumber" id="s_com_bcs_p3s_model_Patent_EP_ApplicationNumber" object="${patent}" z="dj5dd3L51lwBNFqPvIxiFCbBn9A="/>
+        <field:display field="title" id="s_com_bcs_p3s_model_Patent_title" object="${patent}" z="pFKJ7DQECgvxD4yBK259w0xB/mk="/>
+        <field:display date="true" dateTimePattern="${patent_internationalfilingdate_date_format}" field="internationalFilingDate" id="s_com_bcs_p3s_model_Patent_internationalFilingDate" object="${patent}" z="DHZEf2rJKFO1aHr+1n6cUc6y0hE="/>
+        <field:display field="business" id="s_com_bcs_p3s_model_Patent_business" object="${patent}" z="nabaSr6kFPFmhvUBny5zOhKjC9g="/>
+        <field:display field="primaryApplicantName" id="s_com_bcs_p3s_model_Patent_primaryApplicantName" object="${patent}" z="YC+/fjNbkxzegcOCQo3lmeLKnMM="/>
+        <field:display field="clientRef" id="s_com_bcs_p3s_model_Patent_clientRef" object="${patent}" z="1tHUDUF9jbYjgAvuoame7C1Gb+g="/>
+        <field:display field="shortTitle" id="s_com_bcs_p3s_model_Patent_shortTitle" object="${patent}" z="UpJnnJbZP2bhZ3sqJ9Bc7jU9Ttc="/>
+        <field:display field="epoPatentStatus" id="s_com_bcs_p3s_model_Patent_epoPatentStatus" object="${patent}" z="mZbYnpxRgvuooG6KC+uRfN9sw4Y="/>
+        <field:display date="true" dateTimePattern="${patent_lastreneweddateexepo_date_format}" field="lastRenewedDateExEpo" id="s_com_bcs_p3s_model_Patent_lastRenewedDateExEpo" object="${patent}" z="dL0n6bFa4Hhtiat5vfKwsvM6QT4="/>
+        <field:display field="lastRenewedYearEpo" id="s_com_bcs_p3s_model_Patent_lastRenewedYearEpo" object="${patent}" z="KOvUddqlwumLWVdyM53F64HF8FE="/>
+        <field:display field="renewalYear" id="s_com_bcs_p3s_model_Patent_renewalYear" object="${patent}" z="FVPTZlG1UCezyEkQVuOI1nMNsI8="/>
+        <field:display field="renewalStatus" id="s_com_bcs_p3s_model_Patent_renewalStatus" object="${patent}" z="YKdPBkpaPZ9BoOKxCvp/kf7r2Lo="/>
+        <field:display field="EP_PublicationNumber" id="s_com_bcs_p3s_model_Patent_EP_PublicationNumber" object="${patent}" z="Es+5wNK9oxHBgphePEbiD1yLauE="/>
+        <field:display field="ipcCodes" id="s_com_bcs_p3s_model_Patent_ipcCodes" object="${patent}" z="070sxPFF89Zdw108Nz13zYZYnH0="/>
+        <field:display field="representative" id="s_com_bcs_p3s_model_Patent_representative" object="${patent}" z="E+Ix48gywZ2RjkdhAv2LNMBbbCI="/>
+        <field:display field="checkDigit" id="s_com_bcs_p3s_model_Patent_checkDigit" object="${patent}" z="zp91NZ1cxqU6NyqIjCbLjXjkMmk="/>
+        <field:display field="internationalFilingLang" id="s_com_bcs_p3s_model_Patent_internationalFilingLang" object="${patent}" z="G5FhGyLP1uHN/9a8zAKR5ZyymRc="/>
+        <field:display field="PCT_applicationNumber" id="s_com_bcs_p3s_model_Patent_PCT_applicationNumber" object="${patent}" z="L7CCjqdfo1ZXxerRNt+O8QdCyxI="/>
+        <field:display field="PCT_publicationNumber" id="s_com_bcs_p3s_model_Patent_PCT_publicationNumber" object="${patent}" z="shFwjg/RQmryyI+xFvCONj24vyE="/>
+        <field:display field="internationalSearchAuthority" id="s_com_bcs_p3s_model_Patent_internationalSearchAuthority" object="${patent}" z="yy+Cz5IPhuw5aIypqr1ZBdkCjiA="/>
+        <field:display field="designated_states" id="s_com_bcs_p3s_model_Patent_designated_states" object="${patent}" z="0+B1PkHNk8Y28tg3bgZXaxd2GdI="/>
+        <field:display field="epctStatus" id="s_com_bcs_p3s_model_Patent_epctStatus" object="${patent}" z="178d97FnvcFVbMBQXW3qnXr9Qlk="/>
+        <field:display field="epctNotAvailableReason" id="s_com_bcs_p3s_model_Patent_epctNotAvailableReason" object="${patent}" z="5KTmNRDmhlLinBxCNPPGB3KvrkU="/>
+        <field:display date="true" dateTimePattern="${patent_prioritydate_date_format}" field="priorityDate" id="s_com_bcs_p3s_model_Patent_priorityDate" object="${patent}" z="Q2l+PbvTMDRME25MVPycBdGqr6U="/>
+        <field:display date="true" dateTimePattern="${patent_pct_publisheddate_date_format}" field="PCT_publishedDate" id="s_com_bcs_p3s_model_Patent_PCT_publishedDate" object="${patent}" z="oxGGnAmUCXdVVjlTqDrq//Z/VV0="/>
+    </page:show>
+</div>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_bcs_p3s_model_P3SUser" modelAttribute="p3SUser" path="/p3susers" versionField="Version" z="SUCX9UvWH9rgAoU8YXYtdJqTYe0=">
+        <field:input field="firstName" id="c_com_bcs_p3s_model_P3SUser_firstName" required="true" z="9jmNF88YruQil0G/IM7dtYitRMI="/>
+        <field:input field="lastName" id="c_com_bcs_p3s_model_P3SUser_lastName" required="true" z="WnJPxSj9cjstUZR+mfEuEwGL03I="/>
+        <field:input field="emailAddress" id="c_com_bcs_p3s_model_P3SUser_emailAddress" required="true" validationMessageCode="field_invalid_email" z="cMxbqspFRaiHjkDYxGsTw6RlLsA="/>
+        <field:input field="status" id="c_com_bcs_p3s_model_P3SUser_status" required="true" z="vSw+g5vv8x3lSL2s2O+kxkOOfxw="/>
+        <field:checkbox field="isEmailNotification" id="c_com_bcs_p3s_model_P3SUser_isEmailNotification" z="0CzCGvKyNqSjb7yXqv9N7Fxoigc="/>
+        <field:select field="business" id="c_com_bcs_p3s_model_P3SUser_business" itemValue="id" items="${businesses}" path="/businesses" required="true" z="3rzd2GtFrMwtsKiPPCQMezi1/7Y="/>
+        <field:input field="userrole" id="c_com_bcs_p3s_model_P3SUser_userrole" required="true" z="r1+m5cYMa9Wm0TB6iDdnJnVrebA="/>
+        <field:input field="password" id="c_com_bcs_p3s_model_P3SUser_password" required="true" z="UubTlHazpZwXAPjeeC++ZLdiU6Q="/>
+        <field:textarea field="avatar_blob" id="c_com_bcs_p3s_model_P3SUser_avatar_blob" z="JF20xdnBThL3fykrlkBzAvbwlP0="/>
+        <field:datetime dateTimePattern="${p3SUser_createddate_date_format}" field="createdDate" id="c_com_bcs_p3s_model_P3SUser_createdDate" required="true" z="5RoCu8vWSApgj4WfgrQaC5W77Jk="/>
+        <field:select field="loginMessagesToInhibit" id="c_com_bcs_p3s_model_P3SUser_loginMessagesToInhibit" itemValue="id" items="${loginmessages}" multiple="true" path="/loginmessages" required="true" z="wI00Eej4n/6tqb9xxwgq0Ca97BA="/>
+    </form:update>
+</div>
