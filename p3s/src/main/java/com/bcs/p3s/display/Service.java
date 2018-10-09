@@ -5,6 +5,16 @@ import java.util.Date;
 
 import com.bcs.p3s.util.date.DateUtil;
 
+/**
+ * v2.1 introduces the concept of each portfolio item containing a list of services.
+ * Each service provides data that the FE may need to display on the Portfolio view.
+ * 
+ * It's an oversimplification to regard each service as being something what we can sell now, for this patent.
+ *  That view is flawed as we sometimes need provide a Service, to show status values, 
+ *  	even when we know we cannot sell (say 'too late', or 'already in progress')
+ *  
+ *  For v2.1 Any PortfolioUI will have either 1 or 0 Services. Any Service will be a Form1200 or a Renewal
+ */
 public class Service {
 	
 	private String serviceType;
@@ -15,7 +25,19 @@ public class Service {
 	private BigDecimal nextStageCostUSD;
 	private Date costBandEndDate;
 	private String failedReason;
+
 	
+	
+	
+	// Getter/setters that return String version of typed fields - for UI convenience
+
+	public String getCostBandEndDateUI() {
+		String res = (new DateUtil()).dateToUSStringWithDayOfWeek(this.costBandEndDate);
+		return res;
+	}
+
+	// Ordinary getters/setters
+
 	public String getServiceType() {
 		return serviceType;
 	}
@@ -64,10 +86,4 @@ public class Service {
 	public void setFailedReason(String failedReason) {
 		this.failedReason = failedReason;
 	}
-	
-	public String getCostBandEndDateUI() {
-		String res = (new DateUtil()).dateToUSStringWithDayOfWeek(this.costBandEndDate);
-		return res;
-	}
-
 }

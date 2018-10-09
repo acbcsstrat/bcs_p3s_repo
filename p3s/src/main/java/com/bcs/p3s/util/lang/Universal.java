@@ -20,7 +20,10 @@ import com.bcs.p3s.util.log.Loggable;
  **/
 public class Universal extends BcsLogger implements Loggable {
 
-	
+
+	protected String CLASSNAME = this.getClass().getName() + " "; 
+
+
 	public boolean isEmpty(String val) {
 		if (val==null || val.trim().length()==0) return true;
 		return false;

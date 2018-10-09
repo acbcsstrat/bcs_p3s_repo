@@ -4,8 +4,6 @@ import com.bcs.p3s.util.lang.Universal;
 
 public abstract class P3SAbstractEnum extends Universal {
 
-	protected String CLASSNAME = this.getClass().getName() + " "; 
-
     protected String value;
 
     
