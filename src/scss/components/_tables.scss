@@ -1,8 +1,9 @@
 #scrollable-area { /*modules*/ /*components*/ /*_tables.scss*  ADD CLASS INSTAD OF SELECTING WITH ID*/ 
   margin: auto;
   width: 100%;
-  max-height: 450px;
+  max-height: 250px;
   overflow-y: scroll;  /*<!-- here is what is important-->*/
+  overflow-x: hidden;
 }
 
 /*modules*/ /*components*/ /*_tables.scss*/ //CHANGE CLASSES USED IN VIEWS
