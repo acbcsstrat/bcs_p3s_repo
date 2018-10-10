@@ -169,6 +169,7 @@
 .secondary-view-nav__nav-link {
   cursor: pointer;
   background: $white;
+  display: inline-block;
   border: 1px solid $border;
   -webkit-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
   -o-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
