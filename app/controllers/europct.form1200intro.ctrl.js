@@ -15,6 +15,7 @@ function form1200IntroCtrl($scope, patent, $http, $state, form1200Service) {
         form1200Service.fetchQuestions(id)
         .then(
             function(response){
+                console.log(response)
                 if(response) {
                     $state.go('portfolio.patent.euro-pct.form1200.questionnaire', {questions: response}, {reload: false});
                 }

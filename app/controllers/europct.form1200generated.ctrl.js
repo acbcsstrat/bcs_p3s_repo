@@ -1,10 +1,12 @@
 angular.module('ppApp').controller('form1200GeneratedCtrl', form1200GeneratedCtrl);
 
-form1200GeneratedCtrl.$inject = ['$scope', 'patent', '$http', '$state', '$stateParams', 'euroPctService', '$timeout', '$uibModal'];
+form1200GeneratedCtrl.$inject = ['$scope', '$rootScope','patent', '$http', '$state', '$stateParams', 'euroPctService', '$timeout', '$uibModal'];
 
-function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euroPctService, $timeout, $uibModal) {
+function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $stateParams, euroPctService, $timeout, $uibModal) {
 
     var vm = this;
+
+    $rootScope.page = 'Form 1200 Generating';
 
     vm.patent = patent;
     vm.deleteApplication = deleteApplication;
@@ -16,8 +18,14 @@ function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euro
     // var fetchForm1200 = fetchForm1200;
 
     vm.$onInit = function() {
-        form1200Generating();
-        fetchForm1200();
+
+        if($stateParams.form1200 === '') {
+            $state.go('portfolio', {}, {reload: true});
+        } else {
+            form1200Generating();
+            fetchForm1200();           
+        }
+        
     }
 
     function form1200Generating() {
@@ -34,8 +42,7 @@ function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euro
 
         })
 
-    } 
-
+    }
 
     function deleteApplication(id) {    
         euroPctService.deleteApplication(id)
@@ -122,6 +129,7 @@ function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euro
             function(response){
 
                 if(response.patents[0].form1200PdfUrl !== '' || response.patents[0].form1200PdfUrl !== null) {
+                    $rootScope.page = 'Form 1200 Generated';
                     vm.form1200 = response.patents[0];
                 } else {
                     $timeout(function(){
@@ -132,7 +140,7 @@ function form1200GeneratedCtrl($scope, patent, $http, $state, $stateParams, euro
             },
             function(errResponse){
                 console.log('Error generating form 1200')
-                $state.go('portfolio', {reload: false})
+                // $state.go('portfolio', {reload: false})
             }
         )
     }
