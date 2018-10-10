@@ -12,7 +12,7 @@
                         <span data-ng-if="$ctrl.fetchRenewal.serviceStatus === 'Show price'">Open for renewal</span>
                     </p>
                 </div>
-                <div class="col-xl-5" data-ng-if="$ctrl.fetchRenewal.serviceStatus == 'Show price'">
+                <div class="col-xl-5"> <!-- data-ng-if="$ctrl.fetchRenewal.serviceStatus == 'Show price'"-->
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.fetchRenewal.progressBar + '%'}">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-ng-class="($ctrl.fetchRenewal.serviceStatus == 'Show price' ? 'col-xl-3': 'col-xl-8')">
+                <div class="col-xl-3"><!--data-ng-class="($ctrl.fetchRenewal.serviceStatus == 'Show price' ? 'col-xl-3': 'col-xl-8')"-->
                     <div data-ng-if="$ctrl.fetchRenewal.serviceStatus !== 'Show price'" class="d-flex flex-column align-items-end">
                         <p class="font-weight-medium font-h4">Next Stage:</p>
                         <p class="font-weight-medium font-h4">
@@ -54,9 +54,7 @@
             <div class="col-xl-6 col-cxl-6 border-grey-xs--right p-r-none">
                 <div class="content-panel__body">
                     <div class="m-b-md">
-                        <div class="m-b-sm">
-                            <h4 class="font-weight-medium">Notifications</h4>
-                        </div>
+                        <h4 class="font-weight-medium m-b-xs">Notifications</h4>
                         <p>Simply select the colour and time frame to receive email notifications for this patent prior to each stage. You can select as many or few as you want.</p>
                     </div>
                     <div class="row m-b-sm">
@@ -329,7 +327,7 @@
                         <span data-ng-if="$ctrl.fetchRenewal.currentStageColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 m-t-xs">
                     <uib-progress class="pill-radius progress-bar-tall" data-ng-class="($ctrl.fetchRenewal.currentStageColour == 'Green' ? 'bg-phase-amber': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Amber' ? 'bg-phase-red': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Red' ? 'bg-phase-blue': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Blue' ? 'bg-phase-black': '') + '' + ($ctrl.fetchRenewal.currentStageColour == 'Black' ? 'bg-white': '')"><uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.fetchRenewal.progressBar">{{$ctrl.fetchRenewal.progressBar}}%</uib-bar></uib-progress>
                 </div>
             </div>
