@@ -211,16 +211,16 @@
     @include padding-mixin(1.5rem 1rem);
   }
 
-  .btn-default .t-data__btn-portal, 
-  .btn-default ngcart-addtocart .t-data__btn-portal {
+  .t-data__btn-portal, 
+  ngcart-addtocart .t-data__btn-portal {
     background: none;
     padding: 0;
     border-radius: none;
   }
 
-  .btn-default > .t-data__btn-portal a.btn__link,
-  .btn-default > .t-data__btn-portal a.btn__link:not([href]):not([tabindex]), 
-  .btn-default > ngcart-addtocart > .t-data__btn-portal > .btn__link { color:#000; }
+  .t-data__btn-portal a.btn__link, 
+  .t-data__btn-portal a.btn__link:not([href]):not([tabindex]), 
+  ngcart-addtocart >.t-data__btn-portal >.btn__link { color:#000; }
 
   .btn-default ngcart-addtocart.t-data__btn-portal .btn-portal:active {
     background: none;
@@ -234,11 +234,11 @@
     min-height: 230px;
   }
 
-  .btn-default .t-data__btn-portal:hover,  .btn-default .t-data__btn-portal:active, 
-  .btn-default ngcart-addtocart button.t-data__btn-portal a,
-  .btn-default ngcart-addtocart button.t-data__btn-portal button,
-  .btn-default ngcart-addtocart.t-data__btn-portal:not([disabled]) button:hover, 
-  .btn-default ngcart-addtocart.t-data__btn-portal:not([disabled]) a:hover { color: #000!important; text-decoration: underline; opacity: 1; }
+  // .btn-default .t-data__btn-portal:hover,  .btn-default .t-data__btn-portal:active, 
+  // .btn-default ngcart-addtocart button.t-data__btn-portal a,
+  // .btn-default ngcart-addtocart button.t-data__btn-portal button,
+  // .btn-default ngcart-addtocart.t-data__btn-portal:not([disabled]) button:hover, 
+  // .btn-default ngcart-addtocart.t-data__btn-portal:not([disabled]) a:hover { color: #000; text-decoration: underline; opacity: 1; }
 
   .widget-panel .widget-panel__head { padding: 1.2rem 2.5rem ; height: 54px; }
   .widget-panel .widget-panel__body { padding: 2.5rem 2.5rem ; }

@@ -131,10 +131,10 @@
                                 <table data-ng-if="patent.serviceList.length == 1">
                                     <tr>
                                         <td class="t-data__td t-data__w15">
-                                            <div class="d-flex justify-content-center btn-default" data-ng-repeat="item in patent.serviceList">
+                                            <div class="d-flex justify-content-center" data-ng-repeat="item in patent.serviceList">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
-                                                    <button data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejeted' || item.serviceStatus == 'Payment failed'" type="button" class="btn btn--default pill-radius bg-phase-green t-data__btn-portal" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">
-                                                        <a class="btn__link btn__link--white btn--lg">Generate Form 1200</a>
+                                                    <button data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejeted' || item.serviceStatus == 'Payment failed'" type="button" class="btn btn-block t-data__btn-portal pill-radius bg-phase-green cartbtn d-flex align-items-center justify-content-center" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">
+                                                        <a class="btn__link btn--lg btn__link--white">Generate Form 1200</a>
                                                     </button>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
                                                         <ngcart-addtocart id="{{patent.id}}" class="cartbtn w-100" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
@@ -152,7 +152,7 @@
                                 <table data-ng-if="patent.serviceList.length > 1">
                                     <tr data-ng-repeat="item in patent.serviceList">
                                         <td class="t-data__td t-data__w15">
-                                            <div class="d-flex justify-content-center btn-default">
+                                            <div class="d-flex justify-content-center">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
                                                     <button data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejeted' || item.serviceStatus == 'Payment failed'" type="button" class="btn btn--default pill-radius bg-phase-green t-data__btn-portal" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">
                                                         <a class="btn__link btn__link--white btn--lg">Generate Form 1200</a>
