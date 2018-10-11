@@ -1,12 +1,12 @@
-<div class="modal-header d-flex flex-column align-items-center justify-content-center">
+<div class="modal-header p-b-none m-b-xs d-flex flex-column align-items-center justify-content-center">
 	<span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
-	<div class="m-b-sm">
+	<div class="m-b-xs">
 		<img src="assets/imgs/icons/modal/modal_success_icon.png" alt="found patent icon">	
 	</div>
-	<p class="font-h3 txt-phase-green font-weight-medium">Adding Patent</p>
+	<p class="font-h3 font-weight-medium">Adding Patent</p>
 </div>
 <div class="modal-body d-flex flex-column align-items-center justify-content-center">
-	<p class="font-h4">Add Patent Application <span class="font-weight-medium">{{$ctrl.queriedPatent.patentApplicationNumber}}</span>?</p>
+	<p class="font-body w-100 text-center">Add Patent Application <span class="font-weight-medium">{{$ctrl.queriedPatent.patentApplicationNumber}}</span>?</p>
 </div>
 <div class="modal-footer d-flex align-items-center justify-content-center">
 	<button class="btn btn--lg btn-portal pill-radius bg-phase-red font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center m-r-md" data-ng-click="$ctrl.cancelAdd()">No</button>
