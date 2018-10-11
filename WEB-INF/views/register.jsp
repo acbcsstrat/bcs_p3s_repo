@@ -226,7 +226,7 @@
 	   						<div class="row">
 	   							<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
 									<h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
-	   								<p class="font-body text-center w-100">We were unable to register your details. Please try again. If it's still a problem then please let us know : support@ip.place</p>
+	   								<p class="font-body text-center w-100">We were unable to register your details. Please try <a class="inline-link font-weight-medium" href="/p3sweb/register">registering</a> again. If it's still a problem then please let us know : support@ip.place</p>
 	   								<p class="font-body">Do you need support? Contact us through our <a class="inline-link font-weight-medium" id="supportLink">website</a></p>
 	   							</div>
 	   						</div>
@@ -673,7 +673,9 @@
     						$('#register-success').delay(520).fadeIn(500);
     					},
     					error:function(errResponse) {
-    						$('#initialRegistration, divQn').fadeOut(500);	
+                            $('#registerForm')[0].reset();
+                            $('#companyCodeForm')[0].reset();
+    						$('#initialRegistration, divQn, register-intro').fadeOut(500);	
     						$('#register-failure').delay(520).fadeIn(500);						
     					}
     				});
