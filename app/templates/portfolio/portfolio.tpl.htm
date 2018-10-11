@@ -137,12 +137,12 @@
                                                         <a class="btn__link btn--lg btn__link--white">Generate Form 1200</a>
                                                     </button>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
-                                                        <ngcart-addtocart id="{{patent.id}}" class="cartbtn w-100" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                                        <ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                                         </ngcart-addtocart>
-                                                    </div>                        
+                                                    </div>
                                                 </div>
                                                 <div data-ng-if="item.serviceType == 'Renewal'">
-                                                    <ngcart-addtocart id="{{patent.id}}" class="cartbtn w-100" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
+                                                    <ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
                                                     </ngcart-addtocart>
                                                 </div>                                    
                                             </div>
