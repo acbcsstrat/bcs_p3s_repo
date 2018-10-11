@@ -65,9 +65,10 @@
                                     <button type="button" class="btn btn--default bg-phase-green pill-radius m-r-sm" data-ng-click="$ctrl.editApplication($ctrl.patent.id)">
                                         <a class="btn__link btn__link--white btn--lg">Edit application</a>
                                     </button>
-                                    <button type="button" class="btn btn--default bg-phase-green pill-radius">
-                                        <a class="btn__link btn__link--white btn--lg">Add to cart</a>
-                                    </button>
+                                    <div>
+                                        <ngcart-addtocart id="{{$ctrl.patent.id}}" name="service.renewal" price="5555" quantity="1" quantity-max="10" data="patent"> <!--secret to different button labels checkngcartdirective.js-->
+                                        </ngcart-addtocart>
+                                    </div>     
                                 </div>
                             </div>
                         </div>
