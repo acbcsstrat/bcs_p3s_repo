@@ -747,7 +747,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			//only sending the next Renewal Year window open date
 			caData = costEngines.getNextPhasesInfo(allDates);
 		}
-		else if(RenewalStatusEnum.SHOW_PRICE .equalsIgnoreCase(patent.getRenewalStatus()) || RenewalStatusEnum.IN_PROGRESS .equalsIgnoreCase(patent.getRenewalStatus())
+		else if(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(patent.getRenewalStatus()) || RenewalStatusEnum.PAYMENT_IN_PROGRESS.equalsIgnoreCase(patent.getRenewalStatus())
 					|| RenewalStatusEnum.EPO_INSTRUCTED .equalsIgnoreCase(patent.getRenewalStatus())){
 			//DISPLAY TODAYS AMOUNT STRAIGHT AWAY
 			caData = costEngines.getAllPhasesInfo(allDates);
@@ -834,7 +834,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 @Override	
 public PatentUI populateDataToPatentUI(Patent patent){
 		
-		String err = PREFIX+"populateDataToPatentUI(patentUI) ";
+		String err = PREFIX+"populateDataToPatentUI(patent) ";
 		boolean patentFound = false;
 		
 		

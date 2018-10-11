@@ -1,5 +1,6 @@
 package com.bcs.p3s.enump3s;
 
+// v2.1: Could perhaps be renamed to ColourEnum, as colours also used for other products 
 public class RenewalColourEnum extends P3SAbstractEnum {
 
     public static final String GREEN = "Green";
@@ -19,7 +20,7 @@ public class RenewalColourEnum extends P3SAbstractEnum {
                 String sofar = null;
                 if (colour.equalsIgnoreCase(RenewalColourEnum.GREEN)) sofar = RenewalColourEnum.GREEN;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.AMBER)) sofar = RenewalColourEnum.AMBER;  
-                if (colour.equalsIgnoreCase("Yellow")) sofar = RenewalColourEnum.AMBER;  
+                if (colour.equalsIgnoreCase("Yellow")) sofar = RenewalColourEnum.AMBER;  // support manual mismatch
                 if (colour.equalsIgnoreCase(RenewalColourEnum.RED)) sofar = RenewalColourEnum.RED;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.BLUE)) sofar = RenewalColourEnum.BLUE;  
                 if (colour.equalsIgnoreCase(RenewalColourEnum.BLACK)) sofar = RenewalColourEnum.BLACK;  

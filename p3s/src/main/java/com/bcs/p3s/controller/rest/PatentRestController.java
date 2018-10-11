@@ -270,7 +270,11 @@ public class PatentRestController extends Universal {
 			 * Added later 06/02/2018 Prevent user from deleting a patent when there is any COMPLETED Renewal being made via P3S
 			 */
 			Patent deletePatent = patentService.findById(id);
-			if(RenewalStatusEnum.IN_PROGRESS.equals(deletePatent.getRenewalStatus()) || RenewalStatusEnum.EPO_INSTRUCTED.equals(deletePatent.getRenewalStatus())){
+
+
+			
+			
+			if (RenewalStatusEnum.isInProgress(deletePatent.getRenewalStatus())) {
 				log().debug("User tries to delete a patent with an ongoing payment. Aborted it");
 				 return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
 			}

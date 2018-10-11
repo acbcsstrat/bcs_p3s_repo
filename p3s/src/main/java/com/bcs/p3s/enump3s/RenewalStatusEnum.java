@@ -10,7 +10,7 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
 
     public static final String RENEWAL_IN_PLACE			= "Renewal in place"; 
     public static final String SHOW_PRICE				= "Show price";
-    public static final String IN_PROGRESS				= "Payment in progress";
+    public static final String PAYMENT_IN_PROGRESS		= "Payment in progress";
     public static final String EPO_INSTRUCTED           = "EPO Instructed";
     //public static final String ABANDONED				= "Abandoned"; // No longer supported
     /**
@@ -18,7 +18,7 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
      * WAY_TOO_LATE means customer CANNOT RENEW for the current patent year
      */
     public static final String TOO_LATE					= "Too late to renew";
-    public static final String WAY_TOO_LATE					= "Way too late to renew";
+    public static final String WAY_TOO_LATE				= "Way too late to renew";
     public static final String NO_RENEWAL_NEEDED= "No renewal needed";
 
 
@@ -38,9 +38,11 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
             || status.equalsIgnoreCase("SHOW_PRICE")) 
         			sofar = RenewalStatusEnum.SHOW_PRICE;  
 
-        if (status.equalsIgnoreCase(RenewalStatusEnum.IN_PROGRESS)
-                || status.equalsIgnoreCase("IN_PROGRESS")) 
-        			sofar = RenewalStatusEnum.IN_PROGRESS;  
+        if (status.equalsIgnoreCase(RenewalStatusEnum.PAYMENT_IN_PROGRESS)
+                || status.equalsIgnoreCase("PAYMENT IN PROGRESS") 
+                || status.equalsIgnoreCase("IN_PROGRESS") 
+        		|| status.equalsIgnoreCase("IN PROGRESS"))// support variants for oct2018 rename IN_PROGRESS to PAYMENT_IN_PROGRESS 
+        			sofar = RenewalStatusEnum.PAYMENT_IN_PROGRESS;  
         
         if (status.equalsIgnoreCase(RenewalStatusEnum.EPO_INSTRUCTED)
                 || status.equalsIgnoreCase("EPO_INSTRUCTED")) 
@@ -70,4 +72,14 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
         }
     }
 
+    
+    
+    public static boolean isInProgress(RenewalStatusEnum status) {
+    	return (PAYMENT_IN_PROGRESS.equals(status) || EPO_INSTRUCTED.equals(status));
+    }
+    public static boolean isInProgress(String asString) {
+    	RenewalStatusEnum renewalStatusEnum = new RenewalStatusEnum(asString);
+    	return isInProgress(renewalStatusEnum);
+    }
+    
 }

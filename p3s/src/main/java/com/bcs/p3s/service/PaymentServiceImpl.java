@@ -698,7 +698,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			}
 		}
 		
-		renewal.setRenewalStatus(RenewalStatusEnum.IN_PROGRESS);
+		renewal.setRenewalStatus(RenewalStatusEnum.PAYMENT_IN_PROGRESS);
 		renewal.setRenewalAttemptsMade(P3SPropertyNames.Renewal_Attempts_Constant_In_Payment_Commit);
 		return renewal;
 	}

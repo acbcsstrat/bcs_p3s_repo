@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,11 @@ import com.bcs.p3s.session.PostLoginSessionBean;
 
 @Service("PortfolioService")
 public class PortfolioServiceImpl extends ServiceAuthorisationTools implements PortfolioService {
+
+	public PortfolioServiceImpl(HttpSession session) {
+		super();
+		this.session = session;
+	}
 
 
 	// Start of - the methods which implement the prototypes in the Interface
@@ -44,7 +50,8 @@ public class PortfolioServiceImpl extends ServiceAuthorisationTools implements P
 			portfolioUI.setEpeStage(
 					StageManager.determineStage(patent.getEpoPatentStatus()));
 			portfolioUI.setServiceList(
-					serviceManager.getServicesForPatent(patent));
+					serviceManager.getServicesForPatent(patent, session));
+					// 'session' needed (temporarily?) for accessing prices & dates (for the Service entities)
 			patentUIs.add(portfolioUI);
 		}
 		return patentUIs; 

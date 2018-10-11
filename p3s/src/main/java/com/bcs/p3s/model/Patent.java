@@ -100,8 +100,9 @@ public class Patent {
     private Integer renewalYear;
 
     /**
-     * Enum: RenewalStatusEnum :WARNING: This duplicates Renewal:renewalStatus
-     * calculated via overnight processing engine
+     * Enum: RenewalStatusEnum :
+     * NOTE: This mimics Renewal:renewalStatus
+     * which is calculated via overnight processing engine
      */
     @NotNull
     private String renewalStatus;
@@ -161,9 +162,13 @@ public class Patent {
     */
     private String epctStatus;
     
-    /** Will be null unless E-PCT is not available
-     * The possible codes are specified in the (FE/BE) API
+    /** Will only be populated if epctStatus is EPCT_AVAILABLE or EPCT_REJECTED
+     * 
+     * The possible codes are specified in the (FE/BE) API 
      * See EPCTnotAvailableReasonEnum
+     * 
+     * if epctStatus is EPCT_AVAILABLE, the reason explains why an E-PCT application cannot be started  
+     * if epctStatus is EPCT_REJECTED,  the reason explains why the E-PCT application started earlier, failed. 
     */
     private String epctNotAvailableReason;
 

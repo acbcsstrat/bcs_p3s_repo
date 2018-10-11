@@ -1,6 +1,7 @@
 package com.bcs.p3s.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,6 +15,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 
 
 
@@ -167,4 +170,13 @@ public class Epct {
 
     
     
+    /**
+     * @return either null or the One Epct associated with this patent
+     */
+    public static Epct findEpctByPatent(Patent patent) {
+    	if (patent==null) throw new P3SRuntimeException("Epct:findEpctByPatent() passed null");
+    	List<Epct> epcts = (findEpctsByPatent(patent, "createdDate", "ASC")).getResultList(); // "id" is not available to use "createdDate"
+    	if (epcts==null || epcts.size()==0) return null;
+    	else return epcts.get(epcts.size()-1);
+    }
 }

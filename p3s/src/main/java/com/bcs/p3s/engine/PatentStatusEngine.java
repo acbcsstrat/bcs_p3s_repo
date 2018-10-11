@@ -107,7 +107,7 @@ public class PatentStatusEngine extends Universal {
 				else if(renewalInfo.getActiveRenewalYear() == patent.getLastRenewedYearEpo()){
 					renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 				}
-				else if(RenewalStatusEnum.IN_PROGRESS.equals(patent.getRenewalStatus()) || RenewalStatusEnum.EPO_INSTRUCTED.equals(patent.getRenewalStatus())){
+				else if(RenewalStatusEnum.isInProgress(patent.getRenewalStatus())) {
 					renewalInfo.setCurrentRenewalStatus(patent.getRenewalStatus());
 				}
 				else{
@@ -147,7 +147,7 @@ public class PatentStatusEngine extends Universal {
 					renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 				}
 				else if(renewalInfo.getActiveRenewalYear() == patent.getLastRenewedYearEpo()+1){
-					if(RenewalStatusEnum.IN_PROGRESS.equals(patent.getRenewalStatus()) || RenewalStatusEnum.EPO_INSTRUCTED.equals(patent.getRenewalStatus())){
+					if(RenewalStatusEnum.isInProgress(patent.getRenewalStatus())) {
 						log().debug("Renewal status is "+ patent.getRenewalStatus()+". ie, a renewal already in progress for the patent");
 						getCurrentPhaseAndStatus(renewalInfo);
 						//overwrite the status to status already in DB

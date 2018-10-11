@@ -1,6 +1,7 @@
 package com.bcs.p3s.engine;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.display.Service;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
+import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.form1200.CreateListOfStates;
 import com.bcs.p3s.util.lang.Universal;
 
@@ -157,11 +159,12 @@ public class DummyForm1200Engine extends Universal {
 	
 	/**
 	 * Form1200, xxxx
+	 * created 181009 - NEARLY redundant the day after
 	 */
 	public Service dummyF1200Service_variant1() {
 		
 		Service service = new Service();
-		service.setServiceType("Form1200");
+		service.setServiceType(P3SProductTypeEnum.FORM1200);
 		service.setServiceStatus("Epct available");
 		service.setCurrentStageColour("Green");
 		service.setNextStageColour("Amber");
@@ -174,21 +177,31 @@ public class DummyForm1200Engine extends Universal {
 	
 	/**
 	 * Renewal, xxxx
+	 * created 181009 - redundant the day after
 	 */
-	public Service dummyRenewalService_variant1() {
-		
-		Service service = new Service();
-		service.setServiceType("Renewal");
-		service.setServiceStatus("Show price");
-		service.setCurrentStageColour("Green");
-		service.setNextStageColour("Amber");
-		service.setCurrentStageCostUSD(new BigDecimal("2000.40"));
-		service.setNextStageCostUSD(new BigDecimal("2400.48"));
-		service.setCostBandEndDate(new Date("12/30/2018"));
-		service.setFailedReason(null);
-		
-		return service;
+//	public Service dummyRenewalService_variant1() {
+//		
+//		Service service = new Service();
+//		service.setServiceType("Renewal");
+//		service.setServiceStatus("Show price");
+//		service.setCurrentStageColour("Green");
+//		service.setNextStageColour("Amber");
+//		service.setCurrentStageCostUSD(new BigDecimal("2000.40"));
+//		service.setNextStageCostUSD(new BigDecimal("2400.48"));
+//		service.setCostBandEndDate(new Date("12/30/2018"));
+//		service.setFailedReason(null);
+//		
+//		return service;
+//	}
+	
+	// Calc RED/AMBER start date needs the spreadsheet calendars lookup (3days & 3days) - FOR NOW - ignore s/s/weekends/oliday - hardcode 5calendardays & 5calendardays 
+	public LocalDate getEpctRedStartDate(LocalDate ld31monthsAfter) {
+		return ld31monthsAfter.minusDays(5L);
 	}
+	public LocalDate getEpctAmberStartDate(LocalDate ld31monthsAfter) {
+		return ld31monthsAfter.minusDays(10L);
+	}
+	
 	
 	
 }
