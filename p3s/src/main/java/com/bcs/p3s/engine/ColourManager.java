@@ -19,7 +19,7 @@ public class ColourManager extends Universal {
 	 * @param the product type being used - as a P3SProductTypeEnum String
 	 * @return the appropriate RenewalColourEnum.toString()
 	 */
-	public String whatColourComesNext(
+	public static String whatColourComesNext(
 			String existingRenewalColourEnum, String p3SProductTypeEnum) {
 		
 		// Ignore param checking. Enums take care othe that
@@ -37,7 +37,7 @@ public class ColourManager extends Universal {
 				case RenewalColourEnum.BLUE:		next = RenewalColourEnum.BLACK; break;
 				case RenewalColourEnum.BLACK:		next = RenewalColourEnum.BLACK; break;
 				case RenewalColourEnum.GREY:		next = RenewalColourEnum.GREY; break;
-				default:							fail(failMsg);							
+				default:							sFail(failMsg);							
 			}
 		}
 
@@ -46,15 +46,15 @@ public class ColourManager extends Universal {
 				case RenewalColourEnum.GREEN:		next = RenewalColourEnum.AMBER; break;
 				case RenewalColourEnum.AMBER:		next = RenewalColourEnum.RED; break;
 				case RenewalColourEnum.RED:			next = RenewalColourEnum.GREY; break;
-				case RenewalColourEnum.BLUE:		fail(failMsg);
-				case RenewalColourEnum.BLACK:		fail(failMsg);
+				case RenewalColourEnum.BLUE:		sFail(failMsg);
+				case RenewalColourEnum.BLACK:		sFail(failMsg);
 				case RenewalColourEnum.GREY:		next = RenewalColourEnum.GREY; break;
-				default:							fail(failMsg);							
+				default:							sFail(failMsg);							
 			}
 		}
 
-		else fail(failMsg);
-		if (next==null) fail(failMsg);
+		else sFail(failMsg);
+		if (next==null) sFail(failMsg);
 		
 		return next;
 	}

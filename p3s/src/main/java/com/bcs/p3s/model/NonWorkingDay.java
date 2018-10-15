@@ -7,6 +7,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
+import org.springframework.roo.addon.tostring.RooToString;
 
 /**
  * Instances of this class indicate which days should not/maybe not be included in the T+n banking day calculations, 
@@ -14,6 +17,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * 
  *  See NonWorkingDayLocalityEnum for valid locality values
  */
+@RooJavaBean
+@RooToString
+@RooJpaActiveRecord
 public class NonWorkingDay {
 
     /**

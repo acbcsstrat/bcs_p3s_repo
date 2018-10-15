@@ -1,5 +1,7 @@
 package com.bcs.p3s.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -121,7 +123,7 @@ public class Epct {
 	@NotNull
 	protected Integer drawingsEndPage;
 	
-    /**
+    /** AC181015 this may be redundant, as we'd always calculate? acTidy
      */
     @NotNull
     protected Boolean isYear3RenewalDue;
@@ -179,4 +181,20 @@ public class Epct {
     	if (epcts==null || epcts.size()==0) return null;
     	else return epcts.get(epcts.size()-1);
     }
+    
+    public List<String> extensionStatesAsList() {
+    	if (extensionStates==null || extensionStates.trim().length()==0) return new ArrayList<String>();
+    	return Arrays.asList(extensionStates.split(","));
+    }
+    public int countExtensionStates() {
+    	return extensionStatesAsList().size();
+    }
+    public List<String> validationStatesAsList() {
+    	if (validationStates==null || validationStates.trim().length()==0) return new ArrayList<String>();
+    	return  Arrays.asList(extensionStates.split(","));
+    }
+    public int countValidationStates() {
+    	return validationStatesAsList().size();
+    }
+
 }

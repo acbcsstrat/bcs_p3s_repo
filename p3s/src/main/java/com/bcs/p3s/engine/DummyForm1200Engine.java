@@ -161,19 +161,19 @@ public class DummyForm1200Engine extends Universal {
 	 * Form1200, xxxx
 	 * created 181009 - NEARLY redundant the day after
 	 */
-	public Service dummyF1200Service_variant1() {
-		
-		Service service = new Service();
-		service.setServiceType(P3SProductTypeEnum.FORM1200);
-		service.setServiceStatus("Epct available");
-		service.setCurrentStageColour("Green");
-		service.setNextStageColour("Amber");
-		service.setCurrentStageCostUSD(new BigDecimal("12200.40"));
-		service.setNextStageCostUSD(new BigDecimal("14640.48"));
-		service.setCostBandEndDate(new Date("25/01/2019"));
-		service.setFailedReason(null);
-		return service;
-	}
+//	public Service dummyF1200Service_variant1() {				acTidy acRedundant
+//		
+//		Service service = new Service();
+//		service.setServiceType(P3SProductTypeEnum.FORM1200);
+//		service.setServiceStatus("Epct available");
+//		service.setCurrentStageColour("Green");
+//		service.setNextStageColour("Amber");
+//		service.setCurrentStageCostUSD(new BigDecimal("12200.40"));
+//		service.setNextStageCostUSD(new BigDecimal("14640.48"));
+//		service.setCostBandEndDate(new Date("25/01/2019"));
+//		service.setFailedReason(null);
+//		return service;
+//	}
 	
 	/**
 	 * Renewal, xxxx

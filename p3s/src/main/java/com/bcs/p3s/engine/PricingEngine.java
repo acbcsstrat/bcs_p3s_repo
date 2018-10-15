@@ -40,7 +40,30 @@ public class PricingEngine extends Universal {
 		return effectiveFee;
 	}
 	
+
+	/**
+	 * Do the sum : times by (100+percentage) / 100
+	 */
+	public BigDecimal increaseByPercentage(BigDecimal existing, BigDecimal percentage) {
+		if (existing==null || percentage==null) return null;
+
+		BigDecimal oneHundred = new BigDecimal(100);
+		BigDecimal numerator = oneHundred.add(percentage);
+		BigDecimal answer = existing.multiply(numerator).divide(oneHundred);
+		return answer;
+	}
+	/**
+	 * Do the sum : times by percentage / 100
+	 */
+	public BigDecimal multiplyByPercentage(BigDecimal existing, BigDecimal percentage) {
+		if (existing==null || percentage==null) return null;
+
+		BigDecimal oneHundred = new BigDecimal(100);
+		BigDecimal answer = existing.multiply(percentage).divide(oneHundred);
+		return answer;
+	}
 	
+		
 	protected P3SFeeSole applyDiscount(P3SFeeSole standardFee, DiscountPercent agreedDiscount) {
 		String err = PREFIX + " applyDiscount() : ";
 		if (standardFee==null || agreedDiscount==null) fail(err+" passed a null"); 

@@ -572,7 +572,7 @@ public class CostAnalysisDataEngine extends Universal{
 			log().debug("Patent renewal year < 3 , so set the Renewal Year to 3 which is the nearest");
 			epoRenewalFee.setRenewalYear(3);
 		}
-		epoRenewalFee = EpoRenewalFee.findEpoRenewalFeesByRenewalYear(epoRenewalFee);
+		epoRenewalFee = EpoRenewalFee.findEpoRenewalFeesByRenewalYear(epoRenewalFee.getRenewalYear());
 		
 		combinedFee.setP3sFee(p3sFee);
 		combinedFee.setEpoRenewalFee(epoRenewalFee);

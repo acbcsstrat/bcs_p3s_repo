@@ -3,6 +3,7 @@ package com.bcs.p3s.display;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.util.date.DateUtil;
 
 /**
@@ -19,10 +20,10 @@ public class Service {
 	
 	private String serviceType;
 	private String serviceStatus;
-	private String currentStageColour;
-	private String nextStageColour;
-	private BigDecimal currentStageCostUSD;
-	private BigDecimal nextStageCostUSD;
+	private String currentStageColour = RenewalColourEnum.GREY;
+	private String nextStageColour = RenewalColourEnum.GREY;
+	private BigDecimal currentStageCostUSD = new BigDecimal("0.0");
+	private BigDecimal nextStageCostUSD = new BigDecimal("0.0");
 	private Date costBandEndDate;
 	private String failedReason;
 

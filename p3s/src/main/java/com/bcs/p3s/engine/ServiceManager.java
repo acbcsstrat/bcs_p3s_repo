@@ -1,8 +1,6 @@
 package com.bcs.p3s.engine;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -23,11 +21,7 @@ import com.bcs.p3s.wrap.PatentExtendedData;
  */
 public class ServiceManager extends Universal {
 
-//    public static final String TYPE_FORM1200				= "Form1200"; 
-//    public static final String TYPE_RENEWAL					= "Renewal";
-// superceded by P3SProductTypeEnum - but is seemingly unused anyway !
-    
-	// param session can be ditched once/if we stop using the session
+	// param 'session' can be ditched once/if we stop using the session
     public List<Service> getServicesForPatent(Patent patent, HttpSession session) {
     	String err = CLASSNAME + "getServicesForPatent() : ";
     	List<Service> services = new ArrayList<Service>();
@@ -37,48 +31,14 @@ public class ServiceManager extends Universal {
     	if (StageManager.isInFiling(patent.getEpoPatentStatus())) {
     		// Unconditionally provide 1 Service, detailing current Form1200 Status
     		
-    		// dummy details - for now
-    		DummyForm1200Engine dummy = new DummyForm1200Engine();
-    		service = dummy.dummyF1200Service_variant1();
-// OR    		
-
-    		service.setServiceType(P3SProductTypeEnum.FORM1200);
-
-    		
-    		
-    		
-    		// ONCE I'VE WRITTEN IT - USE 
-    		// service = EpctEngine.determineForm1200Service(patent);
-    		// or if not statis
-    		// EpctEngine epctEngine = new EpctEngine();
-    		// epctEngine.determineForm1200Service(patent);
-
-    		
-    		
-  // from dummy    		
-//    		service.setServiceStatus("Epct available");
-//    		service.setCurrentStageColour("Green");
-//    		service.setNextStageColour("Amber");
-//    		service.setCurrentStageCostUSD(new BigDecimal("12200.40"));
-//    		service.setNextStageCostUSD(new BigDecimal("14640.48"));
-//    		service.setCostBandEndDate(new Date("25/01/2019"));
-//    		service.setFailedReason(null);
-
-    		
-    		
-    		
+    		EpctEngine epctEngine = new EpctEngine(patent);
+    		service = epctEngine.determineForm1200Service();
     		
     		services.add(service);
     	}
     	else if (StageManager.isInProsecution(patent.getEpoPatentStatus())) {
     		// Can we sell a renewal ?
     		// v2.1 will provide either 0 or 1 Service
-    		
-//    		// dummy details - for now
-//    		DummyForm1200Engine dummy = new DummyForm1200Engine();
-//    		service = dummy.dummyRenewalService_variant1();
-// OR    		
-    		// To access REAL data, (avoiding dummy)
 
     		//  for now - re-use existing (calculation intensive (session)) mechanism
  
@@ -94,8 +54,7 @@ public class ServiceManager extends Universal {
 	    		service.setServiceStatus(patent.getRenewalStatus());
 	    		service.setCurrentStageColour(colourNow);
 	
-	    		ColourManager colourManager = new ColourManager();
-	    		service.setNextStageColour(colourManager.whatColourComesNext(
+	    		service.setNextStageColour(ColourManager.whatColourComesNext(
 	    				colourNow, P3SProductTypeEnum.RENEWAL));
 	    		
 	    		service.setCurrentStageCostUSD(patentUI.getCurrentRenewalCost());

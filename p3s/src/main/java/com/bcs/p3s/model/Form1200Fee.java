@@ -82,21 +82,21 @@ public class Form1200Fee {
      * May be Zero
      */
     @NotNull
-    protected BigDecimal claimsFee1_EUR;
+    protected BigDecimal totalClaimsFee1_EUR;
 
     /**
      * Fee payable for each Claim #51 and thereafter
      * May be Zero
      */
     @NotNull
-    protected BigDecimal claimsFee2_EUR;
+    protected BigDecimal totalClaimsFee2_EUR;
 
     /**
      * Additional filing fee for each page in excess of 35 pages
      * May be Zero
      */
     @NotNull
-    protected BigDecimal excessPageFee_EUR;
+    protected BigDecimal totalExcessPageFee_EUR;
 
     /**
      * The Year3 renewal fee (are rules determining if this must/can be paid)
@@ -113,12 +113,14 @@ public class Form1200Fee {
 
     /**
      * May be Zero
+     * Note: Setting this >0 signals calcTotalFee() to recalculate this - zaph +below
      */
     @NotNull
     protected BigDecimal expressFee_USD;
 
     /**
      * May be Zero
+     * Note: Setting this >0 signals calcTotalFee() to recalculate this
      */
     @NotNull
     protected BigDecimal urgentFee_USD;
@@ -160,4 +162,25 @@ public class Form1200Fee {
     	return form1200Fee;
     }
     
+    
+    public BigDecimal  calcTotalOfEuroFees() {
+    	BigDecimal euroTotal = new BigDecimal("0.0");
+
+    	euroTotal = nvlAdd(euroTotal, filingFee_EUR);
+    	euroTotal = nvlAdd(euroTotal, supplementarySearchFee_EUR);
+    	euroTotal = nvlAdd(euroTotal, designationStatesFee_EUR);
+    	euroTotal = nvlAdd(euroTotal, totalExtensionStatesFee_EUR);
+    	euroTotal = nvlAdd(euroTotal, totalValidationStatesFee_EUR);
+    	euroTotal = nvlAdd(euroTotal, examinationFee_EUR);
+ 		euroTotal = nvlAdd(euroTotal, totalClaimsFee1_EUR);
+ 		euroTotal = nvlAdd(euroTotal, totalClaimsFee2_EUR);
+ 		euroTotal = nvlAdd(euroTotal, totalExcessPageFee_EUR);
+ 		euroTotal = nvlAdd(euroTotal, renewalFee_EUR);
+
+ 		return euroTotal;
+    }
+    protected BigDecimal nvlAdd(BigDecimal total, BigDecimal item) {
+    	if (item == null) return total;
+    	else return total.add(item);
+    }
 }

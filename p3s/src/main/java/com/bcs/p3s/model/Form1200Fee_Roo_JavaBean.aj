@@ -65,28 +65,28 @@ privileged aspect Form1200Fee_Roo_JavaBean {
         this.examinationFee_EUR = examinationFee_EUR;
     }
     
-    public BigDecimal Form1200Fee.getClaimsFee1_EUR() {
-        return this.claimsFee1_EUR;
+    public BigDecimal Form1200Fee.getTotalClaimsFee1_EUR() {
+        return this.totalClaimsFee1_EUR;
     }
     
-    public void Form1200Fee.setClaimsFee1_EUR(BigDecimal claimsFee1_EUR) {
-        this.claimsFee1_EUR = claimsFee1_EUR;
+    public void Form1200Fee.setTotalClaimsFee1_EUR(BigDecimal totalClaimsFee1_EUR) {
+        this.totalClaimsFee1_EUR = totalClaimsFee1_EUR;
     }
     
-    public BigDecimal Form1200Fee.getClaimsFee2_EUR() {
-        return this.claimsFee2_EUR;
+    public BigDecimal Form1200Fee.getTotalClaimsFee2_EUR() {
+        return this.totalClaimsFee2_EUR;
     }
     
-    public void Form1200Fee.setClaimsFee2_EUR(BigDecimal claimsFee2_EUR) {
-        this.claimsFee2_EUR = claimsFee2_EUR;
+    public void Form1200Fee.setTotalClaimsFee2_EUR(BigDecimal totalClaimsFee2_EUR) {
+        this.totalClaimsFee2_EUR = totalClaimsFee2_EUR;
     }
     
-    public BigDecimal Form1200Fee.getExcessPageFee_EUR() {
-        return this.excessPageFee_EUR;
+    public BigDecimal Form1200Fee.getTotalExcessPageFee_EUR() {
+        return this.totalExcessPageFee_EUR;
     }
     
-    public void Form1200Fee.setExcessPageFee_EUR(BigDecimal excessPageFee_EUR) {
-        this.excessPageFee_EUR = excessPageFee_EUR;
+    public void Form1200Fee.setTotalExcessPageFee_EUR(BigDecimal totalExcessPageFee_EUR) {
+        this.totalExcessPageFee_EUR = totalExcessPageFee_EUR;
     }
     
     public BigDecimal Form1200Fee.getRenewalFee_EUR() {

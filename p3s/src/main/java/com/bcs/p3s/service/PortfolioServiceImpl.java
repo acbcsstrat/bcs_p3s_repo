@@ -8,14 +8,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PortfolioUI;
-import com.bcs.p3s.engine.DummyForm1200Engine;
 import com.bcs.p3s.engine.ServiceManager;
 import com.bcs.p3s.engine.StageManager;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.session.PostLoginSessionBean;
 
 
 @Service("PortfolioService")

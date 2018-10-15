@@ -43,6 +43,21 @@ public class Universal extends BcsLogger implements Loggable {
     	throw new P3SRuntimeException(message,e);
     }
 
+    // static variants
+    public static void sFail(String message) {
+    	Universal local = new Universal(); // Not thread-safe, but doesn't matter
+    	local.fail(message);
+	}
+    public static void sFail(String message, Exception e) {
+    	Universal local = new Universal();
+    	local.fail(message, e);
+	}
+    
+    
+    
+    
+    
+    
     
     public void logErrorAndContinue(String message) {
     	logInternalError().error(message);

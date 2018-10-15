@@ -3,8 +3,6 @@
  */
 package com.bcs.p3s.controller.rest;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.engine.DummyForm1200Engine;
 import com.bcs.p3s.service.PortfolioService;

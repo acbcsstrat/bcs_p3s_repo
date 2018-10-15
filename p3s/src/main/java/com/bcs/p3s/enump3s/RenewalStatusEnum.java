@@ -26,7 +26,7 @@ public class RenewalStatusEnum extends P3SAbstractEnum {
     // Constructor - Which verifies the value provided
     public RenewalStatusEnum(String status)  
     {
-        if (status==null) fail("RenewalStatusEnum constructor passed null");
+        if (status==null) fail(CLASSNAME+"constructor passed null");
 
         String sofar = null;
         

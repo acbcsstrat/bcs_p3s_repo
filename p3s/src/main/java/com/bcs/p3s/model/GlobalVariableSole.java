@@ -61,7 +61,7 @@ public class GlobalVariableSole {
 		List<GlobalVariableSole> allGVS = GlobalVariableSole.findAllGlobalVariableSoles();
 		if (allGVS==null || allGVS.size()!=1) {
 			Universal universal = new Universal();
-			universal.logInternalError().fatal("GlobalVariableSole: No Sole GlobalVariableSole record");
+			universal.logInternalError().fatal("findOnlyGlobalVariableSole(): No Sole GlobalVariableSole record");
 		}
 		GlobalVariableSole globalVariableSole = allGVS.get(0); 
         

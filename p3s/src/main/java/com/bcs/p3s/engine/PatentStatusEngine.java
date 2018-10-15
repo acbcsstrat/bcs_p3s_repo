@@ -134,7 +134,7 @@ public class PatentStatusEngine extends Universal {
 						renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 					}
 					else{
-						//renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE);
+						//renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE);//zaph not 
 						getCurrentPhaseAndStatus(renewalInfo);
 					}
 				}
@@ -146,19 +146,30 @@ public class PatentStatusEngine extends Universal {
 				else if(renewalInfo.getActiveRenewalYear() == patent.getLastRenewedYearEpo()){
 					renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 				}
-				else if(renewalInfo.getActiveRenewalYear() == patent.getLastRenewedYearEpo()+1){
-					if(RenewalStatusEnum.isInProgress(patent.getRenewalStatus())) {
-						log().debug("Renewal status is "+ patent.getRenewalStatus()+". ie, a renewal already in progress for the patent");
-						getCurrentPhaseAndStatus(renewalInfo);
-						//overwrite the status to status already in DB
-						renewalInfo.setCurrentRenewalStatus(patent.getRenewalStatus());
-					}
-					else{
-						//No change to status required
-						//renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE);
-						getCurrentPhaseAndStatus(renewalInfo);
-						log().debug("Renewal status is "+ patent.getRenewalStatus() +". Changed patent status to " + renewalInfo.getCurrentRenewalStatus());
-					}
+
+
+				// acTidy - 181012 Merin code was as below, which, upon ADD PATENT (seems the only time it's invoked)
+				//  crashed where indicated, as neither patent (nor renewalInfo) knew the renewalSatus at that point (is null NPE)
+				//    so amended. Logically needed the 2nd condition, unconditionally
+				//				else if(renewalInfo.getActiveRenewalYear() == patent.getLastRenewedYearEpo()+1){
+				//		===>		if(RenewalStatusEnum.isInProgress(patent.getRenewalStatus())) {
+				//						log().debug("Renewal status is "+ patent.getRenewalStatus()+". ie, a renewal already in progress for the patent");
+				//						getCurrentPhaseAndStatus(renewalInfo);
+				//						//overwrite the status to status already in DB
+				//						renewalInfo.setCurrentRenewalStatus(patent.getRenewalStatus());
+				//					}
+				//					else{
+				//						//No change to status required
+				//						//renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE);
+				//						getCurrentPhaseAndStatus(renewalInfo);
+				//						log().debug("Renewal status is "+ patent.getRenewalStatus() +". Changed patent status to " + renewalInfo.getCurrentRenewalStatus());
+				//					}
+				// so that code is now ..
+				else if(renewalInfo.getActiveRenewalYear() == patent.getLastRenewedYearEpo()+1) {
+					getCurrentPhaseAndStatus(renewalInfo);
+					// here,  patent.getRenewalStatus() is still null, so zaphod
+					patent.setRenewalStatus(renewalInfo.getCurrentRenewalStatus());
+					log().debug("AddingPatent: renewalInfo.getCurrentRenewalStatus()="+ renewalInfo.getCurrentRenewalStatus() +"  and patent.getRenewalStatus()=" + patent.getRenewalStatus());
 				}
 				else{
 					renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.WAY_TOO_LATE);

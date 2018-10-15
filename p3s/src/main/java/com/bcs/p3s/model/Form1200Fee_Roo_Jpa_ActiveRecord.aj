@@ -14,7 +14,7 @@ privileged aspect Form1200Fee_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Form1200Fee.entityManager;
     
-    public static final List<String> Form1200Fee.fieldNames4OrderClauseFilter = java.util.Arrays.asList("epct", "filingFee_EUR", "supplementarySearchFee_EUR", "designationStatesFee_EUR", "totalExtensionStatesFee_EUR", "totalValidationStatesFee_EUR", "examinationFee_EUR", "claimsFee1_EUR", "claimsFee2_EUR", "excessPageFee_EUR", "renewalFee_EUR", "processingFee_USD", "expressFee_USD", "urgentFee_USD", "fxRate", "subTotal_USD");
+    public static final List<String> Form1200Fee.fieldNames4OrderClauseFilter = java.util.Arrays.asList("epct", "filingFee_EUR", "supplementarySearchFee_EUR", "designationStatesFee_EUR", "totalExtensionStatesFee_EUR", "totalValidationStatesFee_EUR", "examinationFee_EUR", "totalClaimsFee1_EUR", "totalClaimsFee2_EUR", "totalExcessPageFee_EUR", "renewalFee_EUR", "processingFee_USD", "expressFee_USD", "urgentFee_USD", "fxRate", "subTotal_USD");
     
     public static final EntityManager Form1200Fee.entityManager() {
         EntityManager em = new Form1200Fee().entityManager;

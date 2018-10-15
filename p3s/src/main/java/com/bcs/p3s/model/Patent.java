@@ -8,7 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 
 import javax.validation.constraints.NotNull;
+
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -204,6 +208,13 @@ public class Patent {
     private List<Notification> notifications = new ArrayList<Notification>();
      */
 
+
+    public int countDesignatedstates() {
+    	if (designated_states==null || designated_states.trim().length()==0) return 0;
+    	List<String> eachDesignatedState = Arrays.asList(designated_states.split(","));
+    	return eachDesignatedState.size();
+    }
+    
 
     // Setters pushed to support P3S 'Enums'
 

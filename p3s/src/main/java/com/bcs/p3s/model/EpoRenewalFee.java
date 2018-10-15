@@ -29,11 +29,11 @@ public class EpoRenewalFee {
     @NotNull
     private BigDecimal extensionFee_EUR;
     
-    public static EpoRenewalFee findEpoRenewalFeesByRenewalYear(EpoRenewalFee epoRenewalFee) {
+    public static EpoRenewalFee findEpoRenewalFeesByRenewalYear(Integer epoRenewalYear) {
     	//new EpoFee();
 		EntityManager em = EpoRenewalFee.entityManager();
 		TypedQuery<EpoRenewalFee> query = em.createQuery("SELECT o FROM EpoRenewalFee AS o WHERE o.renewalYear = :renewalYear", EpoRenewalFee.class);
-		query.setParameter("renewalYear", epoRenewalFee.getRenewalYear());
+		query.setParameter("renewalYear", epoRenewalYear);
         return query.getSingleResult();
     }
     
