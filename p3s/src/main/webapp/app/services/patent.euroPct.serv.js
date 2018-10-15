@@ -5,26 +5,80 @@ euroPctService.$inject = ['$q', '$http'];
 function euroPctService($q, $http) {
 
     var factory = {
-        fetchForm1200: fetchForm1200
+        generateForm1200: generateForm1200,
+        deleteApplication: deleteApplication,
+        editApplication: editApplication,
+        updateNotifications: updateNotifications
     }
 
-    function fetchForm1200() {
-        
+    function generateForm1200(data) {
+
         var deferred = $q.defer();
 
-        $http.get('assets/dev_json/patents.json')
+        $http.post(ppdomain+'rest-form1200/'+data)
         .then(
             function(response){
-                deferred.resolve(response.data);
+                deferred.resolve(response.data)
             },
-            function(errResponse) {
-                deferred.reject(errResponse.data);
+            function(errResponse){
+                deferred.reject(errResponse.data)
             }
         )
 
-        return deferred.promise
+        return deferred.promise;
 
     }
+
+    function updateNotifications(id) {
+
+        var deferred = $q.defer()
+
+        $http.put(ppdomain+'rest-epct-notifications/'+id)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                deferred.reject(errResponse.data)
+            }
+        )
+
+        return deferred.promise;
+    }        
+
+    function deleteApplication(id) {
+            
+        var deferred = $q.defer()
+
+        $http.delete(ppdomain+'rest-start-form1200/'+id)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                deferred.reject(errResponse.data)
+            }
+        )
+
+        return deferred.promise;
+    }
+
+    function editApplication(id) {
+            
+        var deferred = $q.defer()
+
+        $http.put(ppdomain+'rest-start-form1200/'+id)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                deferred.reject(errResponse.data)
+            }
+        )
+
+        return deferred.promise;
+    }    
 
     return factory;
 

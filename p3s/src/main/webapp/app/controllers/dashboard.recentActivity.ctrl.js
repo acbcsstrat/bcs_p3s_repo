@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('recentActivityCtrl', recentActivityCtrl);
 
-recentActivityCtrl.$inject = ['patents', 'transactionHistory', 'currentTransactions', 'calculateService', 'patentsRestService'];
+recentActivityCtrl.$inject = ['patents', 'transactionHistory', 'currentTransactions', 'calculateService', 'patentsRestService', 'coreService'];
 
-function recentActivityCtrl(patents, transactionHistory, currentTransactions, calculateService, patentsRestService) {
+function recentActivityCtrl(patents, transactionHistory, currentTransactions, calculateService, patentsRestService, coreService) {
 
 	var vm = this;
 
@@ -30,12 +30,27 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 
 	vm.activeMenu = vm.activityNotifications[0].activity;
 
-	if(patents) {
+	vm.$onInit = function() {
+
+        coreService.ppContact()
+        .then(
+            function(response){
+                vm.partnerName = response.partnerName;
+                vm.partnerPhone = response.partnerPhone;
+            },
+            function(errResponse){
+
+            }
+        )
+
+	}
+
+	if(patents.length > 0) {
 		patents.forEach(function(data){
 			patentsRestService.fetchCostAnalysis(data.id)
 			.then(
 				function(response, i){
-        			if(data.renewalStatus == 'Show price') {
+        			if(data.renewalStatus == 'Show price' || data.renewalStatus == 'Too late to renew') {
         				var hours = calculateService.calculateHours(data.costBandColour, response);
     					if(calculateService.recentActivity(hours)) {
     						vm.recentStageArr.push(data);
@@ -49,7 +64,7 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 		})
 	}
 
-	if(currentTransactions) {
+	if(currentTransactions.length > 0) {
 		currentTransactions.forEach(function(data){
 			var hours =  date - data.lastUpdatedDate;
 			var recentTrans  = calculateService.recentActivity(hours);
@@ -59,7 +74,7 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 		});	
 	}
 
-	if(transactionHistory) {
+	if(transactionHistory.length > 0) {
 		transactionHistory.forEach(function(data){
 			var hours =  date - data.lastUpdatedDate;
 			var recentRenewal = calculateService.recentActivity(hours);			

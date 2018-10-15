@@ -12,7 +12,7 @@
       <link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
       <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+      <link rel="stylesheet" type="text/css" href="dist/main.css">
 
       <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
@@ -72,7 +72,7 @@
                <form name="forgotPassForm" id="forgotPassForm" class="form" data-parsley-validate="">                                     
                   <div class="row m-b-sm">
                      <div class="col-md-12">
-                        <input name="emailAddress" class="form-control pill-radius font-body m-b-xs" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-trigger="change" data-parsley-required="true">
+                        <input name="emailAddress" class="form-control font-body pill-radius" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-trigger="change" data-parsley-required="true">
                      </div>
                   </div>
                   <div class="row m-b-sm">
@@ -82,8 +82,8 @@
                   </div>
                   <div class="row m-b-sm">
                       <div class="col-md-12 col-lg-12 col-xl-12"> 
-                        <div class="btn-default">
-                           <input type="Submit" id="btnSubmit" value="Reset Password" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer" disabled="disabled">
+                        <div class="btn-submit">
+                           <input type="Submit" id="btnSubmit" value="Reset Password" class="btn btn-block btn--lg btn-submit--check bg-phase-green pill-radius m-r-sm" disabled="disabled">
                         </div>
                      </div>
                   </div>

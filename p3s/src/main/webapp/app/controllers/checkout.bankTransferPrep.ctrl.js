@@ -23,7 +23,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 		function openCancelTransModal() {
 
 			var modalInstance = $uibModal.open({
-				templateUrl: 'app/templates/modal.cancel-transaction.tpl.htm',
+				templateUrl: 'app/templates/modals/modal.cancel-transaction.tpl.htm',
 				appendTo: undefined,
 				controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 
@@ -50,7 +50,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 			
 			vm.commitTransferBtn = true; //prevent double click
 
-			bankTransferCommitService.commitTransfer(order)
+			bankTransferCommitService.commitTransfer(order) //SERVICE HANDLES STATE.GO
 			.then(
 	            function(response){
 	            	order = response.data;
@@ -58,7 +58,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	            function(errResponse){
 	            	if(errResponse) {
 						var modalInstance = $uibModal.open({
-							templateUrl: 'app/templates/modal.commit-error.tpl.htm',
+							templateUrl: 'app/templates/modals/modal.commit-error.tpl.htm',
 							appendTo: undefined,
 							controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 

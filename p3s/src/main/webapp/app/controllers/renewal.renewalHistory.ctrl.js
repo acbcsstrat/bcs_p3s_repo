@@ -1,12 +1,12 @@
 angular.module('ppApp').controller('renewalHistoryCtrl', renewalHistoryCtrl);
 
-renewalHistoryCtrl.$inject = ['renewal', 'patent', 'chunkDataService']
+renewalHistoryCtrl.$inject = ['patent', 'renewal', 'chunkDataService']
 
-function renewalHistoryCtrl(renewal, patent, chunkDataService) {
+function renewalHistoryCtrl(patent, renewal, chunkDataService) {
 
     var vm = this;
 
-    vm.renewal = renewal;
     vm.patent = patent;
+    vm.renewal = []; //set value to array for view purposes
 
 }

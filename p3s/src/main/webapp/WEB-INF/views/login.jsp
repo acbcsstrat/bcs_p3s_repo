@@ -5,29 +5,42 @@
 
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      
+
       <base href="/p3sweb/">
-	  
+
       <link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700" rel="stylesheet">
 
       <link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-      <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+      <link rel="stylesheet" type="text/css" href="dist/main.css">
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>      
 
       <title>Patent Place</title>
-      
+
+      <style id="antiClickjack">body{display:none !important;}</style>
+
+      <script type="text/javascript">
+
+         if(self === top) {
+            var antiClickjack = document.getElementById("antiClickjack");
+            antiClickjack.parentNode.removeChild(antiClickjack);
+         } else {
+            top.location = self.location;
+         }
+
+      </script>
+
    </head>
 
    <body class="bg-light-grey2">
       <div class="container-pre-app d-flex justify-content-center align-items-center">
-         <div class="container-pre-app__center-box-40 p-a-sm border">
-            <div class="content-panel">
-               <div class="text-center">
+         <div class="container-pre-app__center-box-40 p-a-sm">
+            <div class="content-panel border-none">
+               <div class="content-panel__head">
                   <div class="row">
                      <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
                         <div class="m-b-md">
@@ -49,13 +62,13 @@
                            </div>
                            <div class="form-group row m-b-sm">
                               <div class="col-md-12">
-                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
+                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true" autocomplete="off">
                               </div>
                            </div>
                            <div class="form-group d-flex justify-content-center flex-column m-b-sm">
-                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red">The username and password do not match our records. Please try again.</p>
-                              <div class="btn-default">
-                                 <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
+                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red"></p>
+                              <div class="btn-submit">
+                                 <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn-block btn--lg btn-submit--check bg-phase-green pill-radius m-r-sm">
                               </div>
                            </div>
                         </form>
@@ -86,15 +99,21 @@
          
          var url = window.location.href;
 
-         $('#loginMessage').hide();
-
          function loginErrorFn () {
-            $('#loginMessage').show();
+            $('#loginMessage').css('display', 'block');
+            $('#loginMessage').html('The username and password do not match our records. Please try again.');
+            
          }
 
-         if(url.indexOf('login_error') >= 0) {
-            loginErrorFn();
-         }
+         $(function(){
+
+            $('#loginMessage').css('display', 'none');
+
+            if(url.indexOf('login_error') >= 0) {
+               loginErrorFn();
+            }
+
+         })
 
          window.Parsley.addValidator('validateName', {
             validateString: function(value) {
@@ -103,7 +122,7 @@
                }
             },
             messages: {
-                en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.',
+                en: 'Only letters, numbers, \', - and spaces are valid charcters in this field.'
             }
          });
 

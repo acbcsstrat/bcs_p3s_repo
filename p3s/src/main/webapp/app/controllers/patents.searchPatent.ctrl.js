@@ -18,7 +18,6 @@ function searchPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, se
 		searchPatentService.findPatent(patentNo)
 		.then(
 			function(response) {
-				console.log(response)
 				if(response.status == 204 && response.data == '') {
 					vm.queriedPatent = null;
 					$state.go('search-patent', {}, {reload: false});

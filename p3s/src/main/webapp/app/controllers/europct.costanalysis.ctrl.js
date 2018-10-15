@@ -1,9 +1,11 @@
 angular.module('ppApp').controller('euroPctCostAnalysisCtrl', euroPctCostAnalysisCtrl);
 
-euroPctCostAnalysisCtrl.$inject = ['patent']
+euroPctCostAnalysisCtrl.$inject = ['patent', 'ca']
 
-function euroPctCostAnalysisCtrl(patent) {
+function euroPctCostAnalysisCtrl(patent, ca) {
 
     var vm = this;
+
+    vm.ca = ca;
 
 }

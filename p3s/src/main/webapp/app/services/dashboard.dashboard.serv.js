@@ -6,8 +6,7 @@ function dashboardService($http, $q) {
 
     var factory = {
         getMessages: getMessages,
-        supressMessages: supressMessages,
-        fetchCostAnalysis: fetchCostAnalysis
+        supressMessages: supressMessages
     };
 
     return factory;
@@ -28,23 +27,7 @@ function dashboardService($http, $q) {
         return deferred.promise;
     };
 
-    function fetchCostAnalysis(id) {
-        
-        var deferred = $q.defer();
-         $http.get(ppdomain+'rest-cost-analysis/'+id)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                console.error('Error while fetching cost analysis');
-                deferred.reject(errResponse);
-            }
-        );
 
-        return deferred.promise;
-        
-    };
 
     function supressMessages(id) {
         var deferred = $q.defer();
