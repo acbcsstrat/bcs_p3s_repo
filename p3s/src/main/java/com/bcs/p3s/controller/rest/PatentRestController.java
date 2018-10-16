@@ -2,20 +2,16 @@ package com.bcs.p3s.controller.rest;
  
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
-import javax.swing.event.PopupMenuListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,18 +24,16 @@ import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
-import com.bcs.p3s.engine.PostLoginDataEngine;
-import com.bcs.p3s.engine.GenericProcessingEngine;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.NotificationMapping;
-//import com.bcs.p3s.controller.web.User;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
-import com.bcs.p3s.wrap.PatentExtendedData;
- 
+
+
+
 @RestController
 @Configuration
 @ComponentScan("com.bcs.p3s")
@@ -93,7 +87,8 @@ public class PatentRestController extends Universal {
     // Search EPO for a patent match on the ApplicationNumber entered
 	@RequestMapping(value = "/rest-search-patents/{patentApplicationNumber:.+}", method = RequestMethod.GET) 
 	public ResponseEntity<PatentUI> searchEpoForPatent(@PathVariable("patentApplicationNumber") String patentApplicationNumber) {
-		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
+		String handle = CLASSNAME + " : /rest-search-patents/ searchEpoForPatent("+patentApplicationNumber+") ";
+		log().debug("invoked "+handle);
 		PatentUI patentUI = null;
 		boolean isFound = false;
 		String checkDigit = null;
@@ -136,11 +131,11 @@ public class PatentRestController extends Universal {
 		}
 		
 	  	if(patentUI == null) {
-	  		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent("+patentApplicationNumber+") found no match");
+	  		log().debug("EPO didn't recognise patent entered by user. "+handle);
 	  		return new ResponseEntity<PatentUI>(HttpStatus.NOT_FOUND); //You many decide to return HttpStatus.NO_CONTENT
 	  	}
 	  	else{
-	  		log().debug("PatentRestController : /rest-search-patents/ searchEpoForPatent("+patentApplicationNumber+") found match = " + (patentUI != null));
+	  		log().debug("EPO DID recognise patent entered by user. "+handle);
 	  		return new ResponseEntity<PatentUI>(patentUI, HttpStatus.OK);
 	  	}
 	}

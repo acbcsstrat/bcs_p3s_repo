@@ -3,7 +3,6 @@
  */
 package com.bcs.p3s.scrape.model;
 
-import java.util.Date;
 import java.util.List;
 
 /**

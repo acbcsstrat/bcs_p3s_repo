@@ -37,6 +37,7 @@ public class Form1200Controller extends Universal {
 	protected String PREFIX = this.getClass().getName() + " : "; 
 
 	//Implements API section 2.1 - Start Form1200 data entry
+	// i.e. when user CHOOSES to start the Form1200 questionairre
     @RequestMapping(value = "/rest-start-form1200/{id}", method = RequestMethod.GET)
     public ResponseEntity<StartForm1200Api21UI> startForm1200(@PathVariable("id") long id) {
     	

@@ -213,4 +213,32 @@ public class Form1200Record {
 	}
 
 	
+	
+	
+	// Convenience methods
+
+	//public boolean isAnyIsrEp() {
+	//	if (getAllSearchReports()==null) return false;
+	//	for (SearchReports sr : getAllSearchReports()) {
+	//		if (sr.isIsrEp()) return true;
+	//	}
+	//	return false;
+	//}
+	//public String getAnyIsrEpElseNull() {
+	//	if (getAllSearchReports()==null) return null;
+	//	for (SearchReports sr : getAllSearchReports()) {
+	//		if (sr.isIsrEp()) return sr.combinedCode();
+	//	}
+	//	return null;
+	//}
+	public String getAnyIsrEpElseFirst() {
+		if (getAllSearchReports()==null || getAllSearchReports().size()==0) return null;
+		String bestSofar = null;
+		for (SearchReports sr : getAllSearchReports()) {
+			if (sr.isIsrEp()) return sr.combinedCode();
+			if (bestSofar==null) bestSofar = sr.combinedCode();
+		}
+		return bestSofar;
+	}
+
 }

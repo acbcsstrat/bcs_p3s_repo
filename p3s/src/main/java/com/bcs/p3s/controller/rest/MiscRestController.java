@@ -1,18 +1,13 @@
 
 package com.bcs.p3s.controller.rest;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
-import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
-import javax.xml.transform.TransformerException;
 
-import org.junit.internal.runners.TestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,29 +15,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.display.LoginMessageUI;
 import com.bcs.p3s.display.PartnerDetailsUI;
-/*import com.bcs.p3s.docs.PDFGenerators;
-import com.bcs.p3s.docs.TestMethods;
-import com.bcs.p3s.docs.pojo.BillToAddress;
-import com.bcs.p3s.docs.pojo.Invoice;
-import com.bcs.p3s.docs.pojo.PatentX;*/
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
-import com.bcs.p3s.model.LoginMessage;
-import com.bcs.p3s.model.Patent;
-import com.bcs.p3s.scrape.model.Claims;
+//import com.bcs.p3s.scrape.model.Claims;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.service.MiscService;
-import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
+
 
 /**
  * Miscellaneous REST Controller that accepts any generic request/s
@@ -144,19 +131,23 @@ public class MiscRestController extends Universal{
   //------------------------------ --------------------------------------------
   
 //------------ Below are the scraping methods for FORM1200 -----------
-  /**
-   * Single request to get all claims for the patent
-   * @param patentPublicationNumber
-   * @return String[] of claims
-   */
-  @RequestMapping(value="/patent-claims/{patentPublicationNumber:.+}", method = RequestMethod.GET)
-  public ResponseEntity<Claims> getPatentClaims(@PathVariable("patentPublicationNumber") String patentPublicationNumber){
-	  
-	  Claims claims = new Claims();
-	  
-	  claims = miscService.getClaims(patentPublicationNumber);
-	  return new ResponseEntity<Claims>(claims, HttpStatus.OK);
-  }
+
+//  AC 16/10/2018 Summer2018: Claims scraping not sufficiently reliable for automated use.
+//  Currently not required. So comment out - but don't remove - this call
+//  & leave the code below it active, Likely useful in futire
+//  /**
+//   * Single request to get all claims for the patent
+//   * @param patentPublicationNumber
+//   * @return String[] of claims
+//   */
+//  @RequestMapping(value="/patent-claims/{patentPublicationNumber:.+}", method = RequestMethod.GET)
+//  public ResponseEntity<Claims> getPatentClaims(@PathVariable("patentPublicationNumber") String patentPublicationNumber){
+//	  
+//	  Claims claims = new Claims();
+//	  
+//	  claims = miscService.getClaims(patentPublicationNumber);
+//	  return new ResponseEntity<Claims>(claims, HttpStatus.OK);
+//  }
   
   /**
    * Request that encapsulates all EPO data required for Form1200
@@ -187,19 +178,22 @@ public class MiscRestController extends Universal{
 	  
 	  return new ResponseEntity<Form1200Record>(form1200, HttpStatus.OK);
   }
+
   
-  /**
-   * Single request to get the Abstract text for the patent in English
-   * @param patentPublicationNumber
-   * @return String 
-   */
-  @RequestMapping(value="/patent-abstract/{patentPublicationNumber:.+}", method = RequestMethod.GET)
-  public ResponseEntity<String> getPatentAbstract(@PathVariable("patentPublicationNumber") String patentPublicationNumber){
-	  
-	  String abstractTxt = null;
-	  
-	  abstractTxt = miscService.readAbstract(patentPublicationNumber);
-	  return new ResponseEntity<String>(abstractTxt, HttpStatus.OK);
-  }
+//  AC 16/10/2018 Abstract currently not required. So comment out - but don't remove - this call
+//  & leave the code below it active, Likely useful in futire
+//  /**
+//   * Single request to get the Abstract text for the patent in English
+//   * @param patentPublicationNumber
+//   * @return String 
+//   */
+//  @RequestMapping(value="/patent-abstract/{patentPublicationNumber:.+}", method = RequestMethod.GET)
+//  public ResponseEntity<String> getPatentAbstract(@PathVariable("patentPublicationNumber") String patentPublicationNumber){
+//	  
+//	  String abstractTxt = null;
+//	  
+//	  abstractTxt = miscService.readAbstract(patentPublicationNumber);
+//	  return new ResponseEntity<String>(abstractTxt, HttpStatus.OK);
+//  }
 
 }

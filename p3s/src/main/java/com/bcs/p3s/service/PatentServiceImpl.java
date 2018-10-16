@@ -39,6 +39,7 @@ import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Renewal;
+import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.scrape.service.EPOAccess;
 import com.bcs.p3s.scrape.service.EPOAccessImpl;
 import com.bcs.p3s.security.SecurityUtil;
@@ -174,6 +175,11 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			postSession.setExtendedPatentUI(allData);
 		}
 		session.setAttribute("postSession", postSession);
+		
+		// PatentPlace v2.1 - Now scrape EPO data for Form1200 data, & add to patent
+		Form1200Record form1200 = epo.readEPORegisterForForm1200(patentApplicationNumber);
+		if(form1200 == null) return null;
+		combinePatentDetails(patent, form1200);
 		
 		patentUI = populateDataToPatentUI(patent);
 		return patentUI;
@@ -947,7 +953,6 @@ public PatentUI populateDataToPatentUI(Patent patent){
 
 	@Override
 	public boolean isPatentFoundForBusiness(String patentApplicationNumber, PostLoginSessionBean postSession) {
-		// TODO Auto-generated method stub
 		String msg = PREFIX+" isPatentFoundForBusiness("+ patentApplicationNumber +") ";
 		boolean isFound = false;
 		log().debug(msg + " invoked ");
@@ -970,11 +975,10 @@ public PatentUI populateDataToPatentUI(Patent patent){
 
 	@Override
 	public String truncateAndStoreCheckDigit(String patentApplicationNumber) {
-		// TODO Auto-generated method stub
 		String checkDigit = null;
 		int len = patentApplicationNumber.length();
 		int index = patentApplicationNumber.indexOf(".");
-		if(len == index){
+		if(len == index || index == -1) {
 			log().error("EP Application Numbered entered without a check digit");
 			return checkDigit;
 		}
@@ -984,4 +988,13 @@ public PatentUI populateDataToPatentUI(Patent patent){
 	}
 
 
+	// Start of internal methods
+	protected void combinePatentDetails(Patent patent, Form1200Record form1200) {
+		Form1200Service form1200ServiceImpl = new Form1200ServiceImpl(); 
+		form1200ServiceImpl.combineEpoPatentDetails(patent, form1200);
+	}
+
+	
+	
+	
 }

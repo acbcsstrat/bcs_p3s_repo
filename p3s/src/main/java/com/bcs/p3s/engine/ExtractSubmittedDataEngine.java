@@ -9,7 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Notification;
@@ -17,11 +16,8 @@ import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
-import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
-import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
-import com.bcs.p3s.wrap.BankTransferPreCommitDetails;
 import com.bcs.p3s.wrap.InBasket;
 
 /**
@@ -275,6 +271,38 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   	 */
 			   	if ("ipcCodes".equals(key.trim())) patent.setIpcCodes(value);
 			   	if ("representative".equals(key.trim())) patent.setRepresentative(value);
+			   	
+			   	// Added for v2.1 - E-PCT / Form1200
+			   	
+			   	if ("internationalFilingLang".equals(key.trim())) patent.setInternationalFilingLang(value);
+			   	if ("PCT_applicationNumber".equals(key.trim())) patent.setPCT_applicationNumber(value);	
+			   	if ("PCT_publicationNumber".equals(key.trim())) patent.setPCT_publicationNumber(value);
+			   	if ("internationalSearchAuthority".equals(key.trim())) patent.setInternationalSearchAuthority(value);
+			   	if ("designated_states".equals(key.trim())) patent.setDesignated_states(value);
+			   	if ("epctStatus".equals(key.trim())) patent.setEpctStatus(value);
+			   	if ("epctNotAvailableReason".equals(key.trim())) patent.setEpctNotAvailableReason(value);
+			   	if ("priorityDate".equals(key.trim())) {
+			   		Date itch = null;
+			   		if (ob instanceof Long) {
+				   		itch = new Date((Long) ob);
+			   		} 
+			   		else {
+			   			Long when = new Long((String) ob);
+			   			itch = new Date(when);
+			   		}
+			   		patent.setPriorityDate(itch);
+			   	}
+			   	if ("PCT_publishedDate".equals(key.trim())) {
+			   		Date itch = null;
+			   		if (ob instanceof Long) {
+				   		itch = new Date((Long) ob);
+			   		} 
+			   		else {
+			   			Long when = new Long((String) ob);
+			   			itch = new Date(when);
+			   		}
+			   		patent.setPCT_publishedDate(itch);
+			   	}
 			   	
 		   	}
 	   		

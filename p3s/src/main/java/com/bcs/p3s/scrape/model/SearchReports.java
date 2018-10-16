@@ -33,5 +33,17 @@ public class SearchReports {
 	}
 	
 	
-
+	/**
+	 * if 'isr/EP' (i.e. if it was the EPO who was engaged to perform the international search)
+	 * then the form1200 fees are reduced
+	 * @return true if isr/EP
+	 */
+	public boolean isIsrEp() {
+		if (searchType==null || office==null) return false;
+		return (searchType.equals("isr") && office.equals("EP"));
+	}
+	public String combinedCode() {
+		return searchType+"/"+office;
+	}
+	
 }

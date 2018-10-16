@@ -131,7 +131,9 @@ public class PatentUI extends Patent {
 		this.setDesignated_states(patent.getDesignated_states());
 		this.setEpctStatus(patent.getEpctStatus());
 		this.setEpctNotAvailableReason(patent.getEpctNotAvailableReason());
-		
+		this.setIpcCodes(patent.getIpcCodes());
+		this.setPriorityDate(patent.getPriorityDate());
+		this.setPCT_publishedDate(patent.getPCT_publishedDate());
 		
 		allNotificationUIs =createNotificationUIs(patent.getId(),SecurityUtil.getMyUser().getId());
 

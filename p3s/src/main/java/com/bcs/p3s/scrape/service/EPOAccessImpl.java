@@ -7,7 +7,6 @@ import java.io.StringWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -28,11 +27,11 @@ import com.bcs.p3s.scrape.model.Events;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.scrape.model.IPClassification;
 import com.bcs.p3s.scrape.model.Record;
+import com.bcs.p3s.scrape.model.SearchReports;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.date.DateUtil;
-import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.util.scrape.OPSReader;
 import com.bcs.p3s.enump3s.EPOSearchTypeEnum;
@@ -50,9 +49,11 @@ import com.bcs.p3s.scrape.digesters.ReadSearchReports;
 import com.bcs.p3s.scrape.digesters.RecordDetails;
 import com.bcs.p3s.scrape.digesters.Response;
 
+
+
 public class EPOAccessImpl  extends Universal implements EPOAccess{
 	
-	protected String PREFIX = this.getClass().getName() + " : "; 
+	protected String PREFIX = CLASSNAME + " : "; 
 	private final String ADDRESS_DELIMITER = ",";
 
 	@Override
@@ -77,17 +78,17 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        SAXParser sp = spfac.newSAXParser();
 	          
 	        Record record = new Record();
+	        
 	        digesters.add(new RecordDetails(record));
 	        digesters.add(new ReadApplicant(record));
 	        digesters.add(new ReadRenewalInfo(record));
 	        digesters.add(new ReadAgent(record));
 	        digesters.add(new ReadIPC(record));
-	           
+	        
 	        String scrapeData = reader.readEPO(search_url);
 	        
 	        if(scrapeData == null){
-	        	log().debug("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
-	        	log().fatal("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
+	        	log().warn("Search to EPO with application number[" +patentApplicationNumber +"] resulted in NO DATA");
 	        	return null;
 	        }
 	        
@@ -97,7 +98,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        Response response = new Response();
 	        response.setContent(scrapeData);
 	        
-	        System.out.println("Response : " + response.getContent());
+	        log().debug("EPO Response to "+msg+" is : " + response.getContent());
 	        for(DigesterElements digest: digesters){
 	    		
 	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
@@ -243,7 +244,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        Response response = new Response();
 	        response.setContent(scrapeData);
 	        
-	        System.out.println("Response : " + response.getContent());
+	        log().debug("EPO Response to "+msg+" is : " + response.getContent());
 	        for(DigesterElements digest: digesters){
 	    		
 	        	InputSource iss = new InputSource(new java.io.StringReader(response.getContent()));
@@ -507,7 +508,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 			base_url = reader.getGenericProperty(P3SPropertyNames.REGISTER_BASE_URL); 
 			type = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_TYPE_APPLICATION); 
 			format = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_FORMAT_EPODOC); 
-			result = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_RESULT_BIBLIO); 
+			result = reader.getGenericProperty(P3SPropertyNames.EPO_SCRAPE_RESULT_BIBLIO); // This is the only difference from REGISTER_RETRIEVAL_RENEWAL
 				
 			url = base_url.concat(type).concat(delimiter).concat(format).concat(delimiter).concat(patentNumber).concat(delimiter).concat(result);
 		}
@@ -534,6 +535,10 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		form1200.setAgents(findRecentAgentsInfo(record.getAgentData()));
 		//form1200.setPublicationNumber(record.getPatentPublicationNumber());
 		//form1200.setPublishedDate(record.get);
+
+        // ac 181015 1737 got to here
+		
+		
 		return form1200;
 	}
 	
