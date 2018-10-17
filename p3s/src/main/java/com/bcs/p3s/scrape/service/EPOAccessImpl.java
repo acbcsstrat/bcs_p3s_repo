@@ -536,9 +536,6 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		//form1200.setPublicationNumber(record.getPatentPublicationNumber());
 		//form1200.setPublishedDate(record.get);
 
-        // ac 181015 1737 got to here
-		
-		
 		return form1200;
 	}
 	

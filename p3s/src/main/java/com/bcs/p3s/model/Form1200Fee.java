@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -130,6 +131,7 @@ public class Form1200Fee {
      * How many USD does P3S charge to buy a EUR
      */
     @NotNull
+    @Column(precision = 12, scale = 6)
     protected BigDecimal fxRate;
 
     /**

@@ -167,7 +167,7 @@ public class PatentStatusEngine extends Universal {
 				// so that code is now ..
 				else if(renewalInfo.getActiveRenewalYear() == patent.getLastRenewedYearEpo()+1) {
 					getCurrentPhaseAndStatus(renewalInfo);
-					// here,  patent.getRenewalStatus() is still null, so zaphod
+					// here,  patent.getRenewalStatus() is still null, so set it
 					patent.setRenewalStatus(renewalInfo.getCurrentRenewalStatus());
 					log().debug("AddingPatent: renewalInfo.getCurrentRenewalStatus()="+ renewalInfo.getCurrentRenewalStatus() +"  and patent.getRenewalStatus()=" + patent.getRenewalStatus());
 				}

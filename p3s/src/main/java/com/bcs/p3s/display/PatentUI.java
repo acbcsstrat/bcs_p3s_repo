@@ -8,22 +8,15 @@ import java.util.List;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.servlet.ServletContext;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
-import com.bcs.p3s.engine.PostLoginDataEngine;
-import com.bcs.p3s.enump3s.PaymentStatusEnum;
-import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
-import com.bcs.p3s.service.PatentService;
-import com.bcs.p3s.service.PatentServiceImpl;
-import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.PatentExtendedData;
@@ -31,7 +24,8 @@ import com.bcs.p3s.wrap.PatentExtendedData;
 
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 
- * 
+ *
+ * Below: an old v1 comment
  * ITEMS HEREIN NEEDING EXTERNAL SETTING (i.e. cannot be (reliably) set by this class):
  * 	CurrentRenewalCostUSD
  * 	CostBandEndDate
@@ -44,7 +38,8 @@ import com.bcs.p3s.wrap.PatentExtendedData;
  *   all the required data for the 'view patent' page.
  *   Hence this extended class contains all the notifications, et al
  * 
- * 
+ *   October2018 : This class sunstantially extended for v2.1
+ *   
  * @author andyc
  *
  */
@@ -57,26 +52,26 @@ public class PatentUI extends Patent {
 	//PatentService patentService = new PatentServiceImpl();
 	
 	
-    private BigDecimal currentRenewalCostUSD;
+    protected BigDecimal currentRenewalCostUSD;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MMM-dd-yyyy")
-    private Date costBandEndDate;
+    protected Date costBandEndDate;
 
-    private BigDecimal renewalCostNextStageUSD;
+    protected BigDecimal renewalCostNextStageUSD;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MMM-dd-yyyy")
-    private Date renewalDueDate;
+    protected Date renewalDueDate;
 
-    private String costBandColour;  
+    protected String costBandColour;  
     
     /**
      * To support FE on the property name change from patentApplicationNumber to EP_ApplicationNumber
      */
-    private String patentApplicationNumber;
-    private String patentPublicationNumber;
-    private Date filingDate;
+    protected String patentApplicationNumber;
+    protected String patentPublicationNumber;
+    protected Date filingDate;
 
 	/*private BigDecimal currentRenewalFeeEUR;
 	private BigDecimal currentExtensionFeeEUR;
@@ -94,7 +89,7 @@ public class PatentUI extends Patent {
 	private BigDecimal currentTotalUSD;
 	private BigDecimal fxRate;*/
     
-    private RenewalFeeUI renewalFeeUI;
+    protected RenewalFeeUI renewalFeeUI;
 
     
 	List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 
 import com.bcs.p3s.model.RenewalFee;
+import com.bcs.p3s.util.currency.CurrencyUtil;
 
 
 
@@ -91,13 +92,13 @@ public class RenewalFeeUI {
 	}*/
 
 	
-	
+
+
 	public BigDecimal dollarsToEuro(BigDecimal dollars) {
-		if (dollars==null || fxRate==null || (fxRate.compareTo(BigDecimal.ZERO) == 0)) return null;
-		BigDecimal euros = dollars.divide(fxRate, 2, BigDecimal.ROUND_HALF_UP);
-		return euros;
+		CurrencyUtil currencyUtil = new CurrencyUtil();
+		return currencyUtil.dollarsToEuro(dollars, fxRate);
 	}
-	
+
 
 	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // acToDo 01-sep-2017
 
