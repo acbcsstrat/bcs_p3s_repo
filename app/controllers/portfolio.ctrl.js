@@ -7,114 +7,140 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     var vm = this;
 
     $rootScope.page = 'Portfolio'; 
+    
+    vm.statuses = {
+      topLevelStatus: [
+        {name: 'All Patents'}, 
+        {name: 'Action Available'}, 
+        {name: 'No Action Available'}
+      ],
+      serviceStatus: [
+        {name: 'All Patents', checked: true }, 
+        {name: 'Regional Renewals', checked: false }, 
+        {name: 'Euro-PCT', checked: false }
+      ],
+      europctStatus: [
+        {name: 'Ready for E-PCT', checked: false }, 
+        {name: 'Form 1200 generating', checked: false }, 
+        {name: 'Form 1200 saved', checked: false }, 
+        {name: 'In Progress', checked: false }
+      ],
+      renewalStatus: [
+        {name: 'No Renewal Needed', checked: false }, 
+        {name: 'Not Open for Renewal', checked: false }, 
+        {name: 'Renewal In Place', checked: false }, 
+        {name: 'Open for Renewal', checked: false }, 
+        {name: 'Payment in Progress', checked: false }, 
+        {name: 'Lapsed', checked: false }
+      ],
+      actionStatus: [
+        {name: 'Epct available'},
+        {name: 'Epct saved'}, 
+        {name: 'Form 1200 saved'}, 
+        {name: 'Epct rejected'}, 
+        {name: 'Show price'}, 
+        {name: 'Open for Renewal'}, 
+        {name: 'Form 1200 generating'}
+      ]
+    }
 
     vm.rowSelect = rowSelect;
-    // vm.displayPatents = displayPatents;
     vm.portfolioData = patents;
     vm.updateCategory = updateCategory;
-    console.log(vm.portfolioData)
-    vm.filterTopLevelCat = [  
-      {name: 'All Patents'},
-      {name: 'Action Available'},
-      {name: 'No Action Available'}
-    ]    
-
-    var serviceArr = ['All Patents', 'Regional Renewals', 'Euro-PCT'];
-    var europctArr = ['Ready for E-PCT', 'Form 1200 generating', 'Form 1200 saved', 'In Progress'];
-    var renewalArr = ['No Renewal Needed', 'Not Open for Renewal', 'Renewal In Place', 'Open for Renewal', 'Payment in Progress', 'Lapsed'];
-
-    var actionStatus = ['Epct available', 'Epct saved', 'Form 1200 saved', 'In Progress', 'Epct rejected', 'Show price', 'Open for Renewal'];
+    vm.panelActive = true;
+    vm.selectedItem = vm.statuses.serviceStatus[0].name;
 
     vm.filterSecondLevelCat = [
       {
         title: 'Services',
         statuses: (function() {
-          return chunkDataService.chunkData(serviceArr, 4);    
+          return chunkDataService.chunkData(arrayOfNames(vm.statuses.serviceStatus), 4);    
         }())
       },
       {
         title: 'Euro-PCT',
-        statuses: (function() {
-          return chunkDataService.chunkData(europctArr, 4);    
+        statuses: (function() {     
+          return chunkDataService.chunkData(arrayOfNames(vm.statuses.europctStatus), 4);    
         }())
       },
       {
         title: 'Renewal',
         statuses: (function() {
-          return chunkDataService.chunkData(renewalArr, 4);    
+            
+          return chunkDataService.chunkData(arrayOfNames(vm.statuses.renewalStatus), 4);    
         }())
       }
     ]
 
-    $scope.panelActive = true;
+    function arrayOfNames(array) {
+      var arr = [];
+      array.forEach(function(item){
+        arr.push(item)
+      })
+      return arr;
+    }  
 
-    $scope.selectedItem = {}
+    console.log(vm.filterSecondLevelCat)
+    
+    function checkAction(item) {
+      var found = false;
+      vm.statuses.actionStatus.forEach(function(i){
+        if(i.name == item) {
+          found = true;
+        }
+      })
+      return found;
+    }
 
-    $scope.selectedItem = vm.filterTopLevelCat[0];
-
-    function displayContent(modal) {
+    function updateData(obj) {
 
       var data = [];
 
-      if(modal.name == 'Action Available') {
-        vm.portfolioData.forEach(function(item){
-          item.serviceList.filter(function(status){
-            console.log(status)
-            if(actionStatus.includes(status.serviceStatus)) {
-              console.log(item)
-              data.push(item)
+      if(obj == 'Action Available') {
+        for(var i = 0; i < patents.length; i++) {
+          for(var j = 0; j < patents[i].serviceList.length; j++) {
+            console.log(checkAction(patents[i].serviceList[j].serviceStatus))
+            if(checkAction(patents[i].serviceList[j].serviceStatus)) {
+              data.push(patents[i])
             }
-          })
-        })
+          }
+        }
       }
 
-      if(modal.name == 'No Action Available') {
-        vm.portfolioData.forEach(function(item){
-          item.serviceList.filter(function(status){
-            if(!actionStatus.includes(status.serviceStatus)) {
-              console.log(item)
-              data.push(item)
-            }
-          })
-        })
-      }      
-      // console.log(data)
       return data;
 
     }
 
-    function updateCategory(model) {
+    function updateCategory(obj, position) {
       vm.portfolioData = patents;
-      if(model.name == 'All Patents') {
-
-        vm.portfolioData = patents;
-      } else {
-
-        vm.portfolioData = displayContent(model)
+      if(typeof position === 'undefined') {
+        if(obj.name == 'All Patents') {
+          vm.portfolioData = patents;
+        } else {
+          vm.portfolioData = updateData(obj.name);
+        }
       }
 
-       
+        // if(vm.statuses.serviceStatus.includes(obj.name)) {
+        //   // console.log(item, model, index)
+        //   vm.filterSecondLevelCat[0].statuses[0].forEach(function(subscription, i) {
+        //     if(index !== i) {
+        //       // $scope.teststatus.checked = false;
+        //     }
+        //     // if()
+        //   })
+        //   // checked. = false;
+        // }
+      
+
     }
 
-
-    // vm.$onInit = function() {
-
-    // }
-    
-    // function addItem(patents) { //using for testing two services
-
-    //     patents[3].serviceList[1] = patents[2].serviceList[0];
-
-    //     return patents
-
-    // }
-
-    $timeout(function() {
+    $timeout(function(){
       vm.animate = true;
     }, 300);    
 
-    angular.element(function () {
-        vm.patentsLoaded = true;
+    angular.element(function(){
+      vm.patentsLoaded = true;
     });
 
     vm.date = new Date();    
