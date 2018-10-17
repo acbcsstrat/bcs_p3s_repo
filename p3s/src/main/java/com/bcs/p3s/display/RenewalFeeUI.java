@@ -9,7 +9,7 @@ import com.bcs.p3s.util.currency.CurrencyUtil;
 
 
 
-public class RenewalFeeUI {
+public class RenewalFeeUI extends FeeCurrencyComponents {
 	
 	private BigDecimal renewalFeeEUR;
     
@@ -94,13 +94,30 @@ public class RenewalFeeUI {
 	
 
 
+	
+	
 	public BigDecimal dollarsToEuro(BigDecimal dollars) {
 		CurrencyUtil currencyUtil = new CurrencyUtil();
 		return currencyUtil.dollarsToEuro(dollars, fxRate);
 	}
 
+	// Implement the 2 abstract methods from supertype
+	public void setDollarComponentUSD() {
+		BigDecimal totalling = processingFeeUSD; 
+		totalling = safeAddition(totalling, expressFeeUSD);
+		totalling = safeAddition(totalling, urgentFeeUSD);
+		totalling = safeAddition(totalling, latePayPenaltyUSD);
+		dollarComponentUSD = totalling;
+	}
+	public void setEuroComponentEUR() {
+		BigDecimal totalling = renewalFeeEUR; 
+		totalling = safeAddition(totalling, extensionFeeEUR);
+		euroComponentEUR = totalling; 
+	}
 
-	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // acToDo 01-sep-2017
+
+	
+	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // acToDo 01-sep-2017 {intention still valid 17-oct-2018}
 
 	public BigDecimal getRenewalFee_EUR() {
 		return renewalFeeEUR;

@@ -12,7 +12,7 @@ import com.bcs.p3s.util.currency.CurrencyUtil;
  * However, here many fields here have been renamed by the API document
  *
  */
-public class Form1200FeeUI {
+public class Form1200FeeUI extends FeeCurrencyComponents {
 
 	// This class <i>could</i> extend Form1200Fee, but given the risk of exposing epct&onweard data 
 	// and the fact that most fields need renaming, will implement the slow, explicit way.
@@ -109,7 +109,29 @@ public class Form1200FeeUI {
 	}
 
 	
-	
+	// Implement the 2 abstract methods from supertype
+	public void setDollarComponentUSD() {
+		BigDecimal totalling = processingFeeUSD; 
+		totalling = safeAddition(totalling, expressFeeUSD);
+		totalling = safeAddition(totalling, urgentFeeUSD);
+		//totalling = safeAddition(totalling, latePayPenaltyUSD);
+		dollarComponentUSD = totalling;
+	}
+	public void setEuroComponentEUR() {
+		BigDecimal totalling = filingFeeEUR; 
+		totalling = safeAddition(totalling, supplementarySearchFeeEUR);
+		totalling = safeAddition(totalling, designationFeeEUR);
+		totalling = safeAddition(totalling, validationFeeEUR);
+		totalling = safeAddition(totalling, extensionFeeEUR);
+		totalling = safeAddition(totalling, examinationFeeEUR);
+		totalling = safeAddition(totalling, claimsFee1EUR);
+		totalling = safeAddition(totalling, claimsFee2EUR);
+		totalling = safeAddition(totalling, renewalFeeEUR);
+		totalling = safeAddition(totalling, excessPageFeeEUR);
+		euroComponentEUR = totalling; 
+	}
+
+
 	// Ordinary getters/setters
 	
 	public BigDecimal getSupplementarySearchFeeEUR() {
