@@ -17,6 +17,7 @@ import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.lang.P3SAuthorisationException;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -183,7 +184,7 @@ public class ServiceAuthorisationTools extends Universal {
 		String eMsg = "*** [failMalicious]   "+msg+" ***  (user "+checkThisIsMy().getUser().getId().longValue()+")  ***";
 		System.out.println(eMsg);
 		logM().fatal(eMsg);
-		throw new RuntimeException(eMsg);
+		throw new P3SAuthorisationException(eMsg);
 	}
 	
 	// End of   : Failure Handling utils

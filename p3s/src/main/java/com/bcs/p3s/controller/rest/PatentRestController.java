@@ -22,6 +22,7 @@ import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -81,7 +82,56 @@ public class PatentRestController extends Universal {
  
 
     
-    //------------------- Search EPO for a Patent - with view to - ADD that patent --------------------------------------------------
+    //------------------- Get PatentInfor for a specified Patent --------------------------------------------------
+    
+    // Implements API section 3.2 of the v2.1 API
+    // new for v2.1
+    // Get all details about the specified patent
+	@RequestMapping(value = "/rest-patent/{id}", method = RequestMethod.GET) 
+	public ResponseEntity<PatentV2UI> assemblePatentInfo(@PathVariable("id") long id) {
+		String handle = CLASSNAME + " : /rest-patent/ assemblePatentInfo("+id+") ";
+		log().debug("invoked "+handle);
+		PatentV2UI patentV2UI = null;
+
+
+// zaphod - below may be needed		
+//		PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		
+		try {
+			Patent existingPatent = patentService.findById(id);
+			if (existingPatent == null) {
+				logM().info("Specified patent not exist or available. : "+handle);
+			} else {
+				
+				
+				
+				// Populate the PatentV2UI
+				patentV2UI = patentService.getPatentInfo(id, session);
+
+			
+			
+				
+				// wip - got to here 
+
+			
+			
+			
+			
+			}
+		} catch (Exception e) {
+			
+			// zaph - there may yet be EXPECTED errors to be causght herer
+			
+			
+			logErrorAndContinue("Controller caught unexpected failure : "+handle, e);
+		  	return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		if (patentV2UI==null) return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.INTERNAL_SERVER_ERROR);
+	  	return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.OK);
+	}
+		
+		
+	//------------------- Search EPO for a Patent - with view to - ADD that patent --------------------------------------------------
     
     // Implements API section 2.2
     // Search EPO for a patent match on the ApplicationNumber entered

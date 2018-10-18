@@ -10,7 +10,7 @@ public class PortfolioUI {
 	private String shortTitle;
 	private String epoStatus;
 	private String epeStage;
-	private List<Service> serviceList;
+	private List<P3SService> serviceList;
 	
 	
 	public Long getId() {
@@ -49,10 +49,10 @@ public class PortfolioUI {
 	public void setEpeStage(String epeStage) {
 		this.epeStage = epeStage;
 	}
-	public List<Service> getServiceList() {
+	public List<P3SService> getServiceList() {
 		return serviceList;
 	}
-	public void setServiceList(List<Service> serviceList) {
+	public void setServiceList(List<P3SService> serviceList) {
 		this.serviceList = serviceList;
 	}
 	

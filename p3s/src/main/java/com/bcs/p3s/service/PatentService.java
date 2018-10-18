@@ -2,11 +2,14 @@ package com.bcs.p3s.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
@@ -105,6 +108,9 @@ public interface PatentService {
 	
 	public String truncateAndStoreCheckDigit(String patentApplicationNumber);
 	
+	public PatentV2UI getPatentInfo(long id, HttpSession session);   // new for v2.1
+
+		
 //	Patent findById(long id);
 //	
 //	Patent findByName(String name);

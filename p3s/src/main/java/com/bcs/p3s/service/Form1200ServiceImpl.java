@@ -5,11 +5,26 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
+import com.bcs.p3s.display.CostAnalysisData;
+import com.bcs.p3s.display.Form1200FeeUI;
+import com.bcs.p3s.display.NotificationUI;
+import com.bcs.p3s.display.P3SService;
+import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.display.PatentV2UI;
+import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.engine.DummyForm1200Engine;
+import com.bcs.p3s.engine.EpctEngine;
+import com.bcs.p3s.engine.ServiceManager;
+import com.bcs.p3s.enump3s.P3SProductTypeEnum;
+import com.bcs.p3s.enump3s.RenewalColourEnum;
+import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.util.date.DateUtil;
@@ -20,6 +35,13 @@ import com.bcs.p3s.util.lang.P3SException;
 public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Form1200Service {
 
 	protected String PREFIX = this.getClass().getName() + " : "; 
+
+	
+	public Form1200ServiceImpl(HttpSession session) {
+		super();
+		this.session = session;
+	}
+
 
 	@Override
 	public StartForm1200Api21UI getForm1200QuestionData(long patentID) {
@@ -74,6 +96,84 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	}
 
 	
+	/**
+	 * Populate <i>that part</i> of a PatentV2UI that is possible from here
+	 * 
+	 * This also calculates Renewal stuff - which SHOULDN'T be in this Form1200 class. acTodo
+	 */
+	@Override
+	public void populatePatentInfo(PatentV2UI patentV2UI, HttpSession session) {
+		String handle = CLASSNAME+" : populatePatentInfo() ";
+		log().debug(handle+"invoked for patent "+patentV2UI.getId());
+		
+    	// fields to populate:
+				
+    	// portfolioUI
+		PortfolioServiceImpl portfolioServiceImpl = new PortfolioServiceImpl(session);
+    	ServiceManager serviceManager = new ServiceManager(); 
+		PortfolioUI portfolioUI = portfolioServiceImpl.createPortfolioUIforPatent(patentV2UI, serviceManager, session);
+		patentV2UI.setPortfolioUI(portfolioUI);
+	
+		// form1200PdfUrl 
+		String form1200PdfUrl = null;  // existing simile is: "invoiceUrl":"/p3sweb/invoice/34"
+		Epct epct = Epct.findEpctByPatent(patentV2UI);
+		if (epct!=null && epct.getForm1200()!=null) {
+			// Thanksgiving change
+			form1200PdfUrl = null;  // hardcode. Until we have a (Blob) to provide
+			patentV2UI.setForm1200PdfUrl(form1200PdfUrl);
+		}
+		
+		// renewalStageProgress & form1200StageProgress.   Integer percentage from last colour-change to next. Not used if in Grey
+		P3SService renewalService = null;
+		P3SService form1200Service = null;
+		patentV2UI.setRenewalStageProgress(0);
+		patentV2UI.setForm1200StageProgress(0);
+		List<P3SService> services = portfolioUI.getServiceList();
+		//if (services==null) fail(handle+"services can be empty, but must not be null. Failed!");
+		for (P3SService service : services) {
+			String serviceType = service.getServiceType();
+			if (P3SProductTypeEnum.RENEWAL.equalsIgnoreCase(serviceType)) {
+				// Renewal
+				renewalService = service;
+		    	PatentServiceImpl patentServiceImpl = new PatentServiceImpl(session);
+		    	CostAnalysisData cad = patentServiceImpl.getCostAnalysisData(patentV2UI.getId());
+		    	Date startDate = shorttermGetCostbandSTARTdate(cad);
+				Date endDate = service.getCostBandEndDate();
+				int percentageElapsed = calcIntegerPercentageBetween2Dates(startDate, endDate);
+				patentV2UI.setRenewalStageProgress(percentageElapsed);
+			} else if (P3SProductTypeEnum.FORM1200.equalsIgnoreCase(serviceType)) {
+				// Form1200
+				form1200Service = service;
+				EpctEngine epctEngine = new EpctEngine(patentV2UI);
+				Date startDate = epctEngine.getCostStartEndDate();
+				Date endDate = service.getCostBandEndDate();
+				int percentageElapsed = calcIntegerPercentageBetween2Dates(startDate, endDate);
+				patentV2UI.setForm1200StageProgress(percentageElapsed);
+			}
+		}
+		
+		// form1200FeeUI		// null unless Form1200 sale is viable
+		if (form1200Service!=null) {
+			Form1200FeeUI form1200FeeUI = null;
+			// if (epct!=null) could use existing. But it might be out of date. So calc anyway
+			EpctEngine epctEngine = new EpctEngine(patentV2UI);
+			form1200FeeUI = new Form1200FeeUI(epctEngine.getFee());
+			patentV2UI.setForm1200FeeUI(form1200FeeUI);
+		}
+		
+		// renewalNotificationUIs
+		patentV2UI.setRenewalNotificationUIs(patentV2UI.getNotificationUIs());
+		
+		// form1200NotificationUIs
+		List<NotificationUI> form1200NotificationUIs = new ArrayList<NotificationUI>(); 
+		// Thanksgiving approach - implement later
+		patentV2UI.setForm1200NotificationUIs(form1200NotificationUIs);
+
+	}
+
+		
+		
+	
 	
 	
 	
@@ -115,5 +215,53 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		}
 		return grow;
 	}
+
+	
+	// Internal methods
+	
+	protected int calcIntegerPercentageBetween2Dates(Date pastDate, Date futureDate) {
+		String handle = CLASSNAME+":calcIntegerPercentageBetween2Dates ";
+		if (pastDate==null || futureDate==null) fail(handle+"PASSED A NULL. "+(pastDate==null)+","+(futureDate==null));
+		Date now = new Date();
+		long clicksStart = pastDate.getTime();
+		long clicksNow   = now.getTime();
+		long clicksEnd   = futureDate.getTime();
+		if (clicksNow < clicksStart || clicksEnd < clicksNow) fail(handle+"BAD ORDERING:"+pastDate+","+futureDate);
+		
+		long elapsed = clicksNow - clicksStart;
+		long range = clicksEnd - clicksStart;
+		long lngPercent = (elapsed * 100L)	 / range; 
+		
+		return (int) lngPercent;
+	}
+
+	/**
+	 * ShortTerm - as this relies on v1 calculation and storage mechanisms, which MAY be superceded after v2.1
+	 * (This created for v2.1)
+	 * .. and if this is to remain, it likely shouldn't be here ...   acTodo
+	 * 
+	 * Note: If current colour is grey, result is irrelevant, unreliable (& may be null)
+	 */
+	protected Date shorttermGetCostbandSTARTdate(CostAnalysisData cad) {
+		// CostAnalysisData provides colour & all dates
+		// so read the colour, & pick out the appropriate start date
+		if (cad==null || cad.getCurrentcostBand()==null) return null;
+
+		String colourNow = cad.getCurrentcostBand();
+		if (RenewalColourEnum.GREY.equals(colourNow)) return null;
+		
+		switch (colourNow) {
+		  case RenewalColourEnum.GREEN:		return cad.getGreenStartDate();
+		  case RenewalColourEnum.AMBER:		return cad.getGreenStartDate();
+		  case RenewalColourEnum.RED:		return cad.getGreenStartDate();
+		  case RenewalColourEnum.BLUE:		return cad.getGreenStartDate();
+		  case RenewalColourEnum.BLACK:		return cad.getGreenStartDate();
+		}
+		
+		fail(CLASSNAME+":shorttermGetCostbandSTARTdate has failed ...");
+		// Shouln't get here
+		return null;
+	}
+
 
 }

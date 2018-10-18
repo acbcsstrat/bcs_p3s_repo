@@ -6,6 +6,8 @@ import java.util.Date;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.util.date.DateUtil;
 
+// This class formerly called Service (as defined by the API document). But that clashed with the Spring class
+
 /**
  * v2.1 introduces the concept of each portfolio item containing a list of services.
  * Each service provides data that the FE may need to display on the Portfolio view.
@@ -16,7 +18,7 @@ import com.bcs.p3s.util.date.DateUtil;
  *  
  *  For v2.1 Any PortfolioUI will have either 1 or 0 Services. Any Service will be a Form1200 or a Renewal
  */
-public class Service {
+public class P3SService {
 	
 	private String serviceType;
 	private String serviceStatus;

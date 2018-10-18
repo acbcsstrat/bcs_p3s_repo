@@ -56,8 +56,6 @@ public class Epct {
     /**
      * Holds the PDF, once created
      */
-//    @OneToOne(optional = true) zapp
-//    protected Form1200 form1200;  
     @OneToOne
     protected Form1200 form1200;
 

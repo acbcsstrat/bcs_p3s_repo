@@ -19,16 +19,21 @@ import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.CostAnalysisData;
+import com.bcs.p3s.display.Form1200FeeUI;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.display.PatentV2UI;
+import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.engine.CostAnalysisDataEngine;
 import com.bcs.p3s.engine.PatentStatusEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
+import com.bcs.p3s.engine.ServiceManager;
+import com.bcs.p3s.engine.StageManager;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
@@ -837,8 +842,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	/**
 	 * This method called to fetch extended patent data from 
 	 */
-@Override	
-public PatentUI populateDataToPatentUI(Patent patent){
+	@Override	
+	public PatentUI populateDataToPatentUI(Patent patent){
 		
 		String err = PREFIX+"populateDataToPatentUI(patent) ";
 		boolean patentFound = false;
@@ -987,10 +992,36 @@ public PatentUI populateDataToPatentUI(Patent patent){
 		return checkDigit;
 	}
 
+	// new for v2.1
+	public PatentV2UI getPatentInfo(long id, HttpSession session) { // session needed temporarily, whilst reuse existing v1 calculations 
 
+		String err = PREFIX+"getPatentInfo("+id+") ";
+		checkThisIsMyPatent(id, err);
+		log().debug(err+" invoked ");
+		PatentV2UI patentV2UI = null; 
+		
+		try{
+	    	Patent patent = Patent.findPatent(id);
+			PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+	    	patentV2UI = new PatentV2UI(patent, postSession.getExtendedPatentUI());
+
+			Form1200ServiceImpl form1200ServiceImpl = new Form1200ServiceImpl(session);
+			form1200ServiceImpl.populatePatentInfo(patentV2UI, session);
+	    	
+		}
+		catch(Exception e){
+			logErrorAndContinue("Service caught unexpected failure : "+PREFIX+":getPatentInfo("+id+")", e);
+		}
+		return patentV2UI;
+	}
+	
+	
+	
+	
 	// Start of internal methods
+	
 	protected void combinePatentDetails(Patent patent, Form1200Record form1200) {
-		Form1200Service form1200ServiceImpl = new Form1200ServiceImpl(); 
+		Form1200Service form1200ServiceImpl = new Form1200ServiceImpl(null);
 		form1200ServiceImpl.combineEpoPatentDetails(patent, form1200);
 	}
 

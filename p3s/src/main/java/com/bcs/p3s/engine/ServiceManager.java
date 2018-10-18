@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.bcs.p3s.display.PatentUI;
-import com.bcs.p3s.display.Service;
+import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -22,12 +22,12 @@ import com.bcs.p3s.wrap.PatentExtendedData;
 public class ServiceManager extends Universal {
 
 	// param 'session' can be ditched once/if we stop using the session
-    public List<Service> getServicesForPatent(Patent patent, HttpSession session) {
+    public List<P3SService> getServicesForPatent(Patent patent, HttpSession session) {
     	String err = CLASSNAME + "getServicesForPatent() : ";
-    	List<Service> services = new ArrayList<Service>();
+    	List<P3SService> services = new ArrayList<P3SService>();
     	if (patent==null) return services;
     	
-		Service service = new Service();
+		P3SService service = new P3SService();
     	if (StageManager.isInFiling(patent.getEpoPatentStatus())) {
     		// Unconditionally provide 1 Service, detailing current Form1200 Status
     		

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.bcs.p3s.display.PortfolioUI;
-import com.bcs.p3s.display.Service;
+import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.form1200.CreateListOfStates;
@@ -32,8 +32,8 @@ public class DummyForm1200Engine extends Universal {
 		portfolioUI.setEpoStatus("The international publication has been made");
 		portfolioUI.setEpeStage("Filing");
 		
-		List<Service> availableServices = new ArrayList<Service>();
-		Service service = new Service();
+		List<P3SService> availableServices = new ArrayList<P3SService>();
+		P3SService service = new P3SService();
 		service.setServiceType("Form1200");
 		service.setServiceStatus("Epct available");
 		service.setCurrentStageColour("Green");
@@ -56,8 +56,8 @@ public class DummyForm1200Engine extends Universal {
 		portfolioUI.setEpoStatus("The international publication has been made");
 		portfolioUI.setEpeStage("Filing");
 		
-		availableServices = new ArrayList<Service>();
-		service = new Service();
+		availableServices = new ArrayList<P3SService>();
+		service = new P3SService();
 		service.setServiceType("Form1200");
 		service.setServiceStatus("Epct saved");
 		service.setCurrentStageColour("Green");
@@ -80,8 +80,8 @@ public class DummyForm1200Engine extends Universal {
 		portfolioUI.setEpoStatus("The international publication has been made");
 		portfolioUI.setEpeStage("Filing");
 		
-		availableServices = new ArrayList<Service>();
-		service = new Service();
+		availableServices = new ArrayList<P3SService>();
+		service = new P3SService();
 		service.setServiceType("Form1200");
 		service.setServiceStatus("Epct not available");
 		service.setCurrentStageColour("Grey");
@@ -104,8 +104,8 @@ public class DummyForm1200Engine extends Universal {
 		portfolioUI.setEpoStatus("Examination in progress");
 		portfolioUI.setEpeStage("Prosecution");
 		
-		availableServices = new ArrayList<Service>();
-		service = new Service();
+		availableServices = new ArrayList<P3SService>();
+		service = new P3SService();
 		service.setServiceType("Renewal");
 		service.setServiceStatus("Show price");
 		service.setCurrentStageColour("Green");

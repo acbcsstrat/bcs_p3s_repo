@@ -6,7 +6,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
-import com.bcs.p3s.display.Service;
+import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
@@ -55,7 +55,9 @@ public class EpctEngine extends Universal {
 	boolean isRenewalFeeChosen = false;
 	BigDecimal nextColourTotal_USD;
 	
+	Date costBandStartDate; // late addition - zaphod - use or remove
 	
+
 	// Start of public methods
 
 	// Constructor - prepares data for the specified Patent
@@ -71,11 +73,11 @@ public class EpctEngine extends Universal {
 	 * @param patent in Filing stage
 	 * @return Service object
 	 */
-	public Service determineForm1200Service() {
+	public P3SService determineForm1200Service() {
     	String err = CLASSNAME + "determineForm1200Service() : ";
 
     	
-    	Service service = new Service();
+    	P3SService service = new P3SService();
     	
     	
 //    	DummyForm1200Engine dummy = new DummyForm1200Engine(); // acRedundant
@@ -92,6 +94,12 @@ public class EpctEngine extends Universal {
     	
     	return service;
 	}
+	
+	
+	public Date getCostStartEndDate() {
+		return costBandStartDate;
+	}
+	
 	
 	// End of public methods
 
@@ -226,19 +234,23 @@ public class EpctEngine extends Universal {
 		currentColour = RenewalColourEnum.GREY;
 		if (isTodayWithinDateRange(greenStartDate, amberStartDate)) {
 			currentColour = RenewalColourEnum.GREEN;
+			costBandStartDate = greenStartDate;
 			costBandEndDate = amberStartDate;
 		}
 		if (isTodayWithinDateRange(amberStartDate, redStartDate)) {
 			currentColour = RenewalColourEnum.AMBER;
+			costBandStartDate = amberStartDate;
 			costBandEndDate = redStartDate;
 		}
 		if (isTodayWithinDateRange(redStartDate, redEndDate)) {
 			currentColour = RenewalColourEnum.RED;
+			costBandStartDate = redStartDate;
 			costBandEndDate = redEndDate;
 		}
 		// Below for very-last-day boundary-condition. How get RedEnd as LocalDate. It's ld31monthsAfter 
 		if (ldToday.isEqual(ld31monthsAfter)) {
 			currentColour = RenewalColourEnum.RED;
+			costBandStartDate = redStartDate;
 			costBandEndDate = redEndDate;
 		}
 
@@ -376,4 +388,16 @@ public class EpctEngine extends Universal {
 	
 	// End of internal methods
 
+	
+	
+	
+	// Ordinary getters
+
+	public Form1200Fee getFee() {
+		return fee;
+	}
+	
+	
+	
+	
 }

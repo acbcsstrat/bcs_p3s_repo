@@ -34,27 +34,37 @@ public class PortfolioServiceImpl extends ServiceAuthorisationTools implements P
 		checkNoActionRequired(err);
 
 		ServiceManager serviceManager = new ServiceManager(); 
-		List<PortfolioUI> patentUIs = new ArrayList<PortfolioUI>();
+		List<PortfolioUI> portfolioUIs = new ArrayList<PortfolioUI>();
 
 		List<Patent> patents = listAllPatentsForMyBusiness();
 		for (Patent patent: patents) {
-			PortfolioUI portfolioUI = new PortfolioUI();
-			portfolioUI.setId(patent.getId());
-			portfolioUI.setEP_ApplicationNumber(patent.getEP_ApplicationNumber());
-			portfolioUI.setClientRef(patent.getClientRef());
-			portfolioUI.setShortTitle(patent.getShortTitle());
-			portfolioUI.setEpoStatus(patent.getEpoPatentStatus());
-			portfolioUI.setEpeStage(
-					StageManager.determineStage(patent.getEpoPatentStatus()));
-			portfolioUI.setServiceList(
-					serviceManager.getServicesForPatent(patent, session));
-					// 'session' needed (temporarily?) for accessing prices & dates (for the Service entities)
-			patentUIs.add(portfolioUI);
+			PortfolioUI portfolioUI = createPortfolioUIforPatent(patent, serviceManager, session);
+			portfolioUIs.add(portfolioUI);
 		}
-		return patentUIs; 
+		return portfolioUIs; 
+	}
+
+	
+	public PortfolioUI createPortfolioUIforPatent(Patent patent, ServiceManager serviceManager, HttpSession session) 
+	{
+		if (patent==null) return null;
+		PortfolioUI portfolioUI = new PortfolioUI();
+		portfolioUI.setId(patent.getId());
+		portfolioUI.setEP_ApplicationNumber(patent.getEP_ApplicationNumber());
+		portfolioUI.setClientRef(patent.getClientRef());
+		portfolioUI.setShortTitle(patent.getShortTitle());
+		portfolioUI.setEpoStatus(patent.getEpoPatentStatus());
+		portfolioUI.setEpeStage(
+				StageManager.determineStage(patent.getEpoPatentStatus()));
+		portfolioUI.setServiceList(
+				serviceManager.getServicesForPatent(patent, session));
+				// 'session' needed (temporarily?) for accessing prices & dates (for the Service entities)
+		return portfolioUI;
 	}
 
 
+	
+	
 	// End of - the methods which implement the prototypes in the Interface
 	
 
@@ -76,4 +86,5 @@ public class PortfolioServiceImpl extends ServiceAuthorisationTools implements P
 		return patents;
 	}
 
+	
 }
