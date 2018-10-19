@@ -39,13 +39,16 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
     private BigDecimal latePayPenaltyEUR;
     private BigDecimal subTotalEUR;
     
-
     private String feeActiveDate;
 
+    protected CostHistoryUI costHistoryUI;
+
 	
 	
-	public RenewalFeeUI(RenewalFee fee){
-		
+	public RenewalFeeUI(RenewalFee fee) {
+
+		// Map RenewalFee fields to equivalent fields here. 
+
 		this.setRenewalFeeEUR(fee.getRenewalFee_EUR());
 		this.setExtensionFeeEUR(fee.getExtensionFee_EUR());
 		this.setProcessingFeeUSD(fee.getProcessingFee_USD());
@@ -64,6 +67,10 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
 		this.setLatePayPenaltyEUR(dollarsToEuro(latePayPenaltyUSD));
 		this.setSubTotalEUR(dollarsToEuro(subTotalUSD));
 
+		// Populate costHistoryUI
+		setDollarComponentUSD();
+		setEuroComponentEUR();
+		costHistoryUI = new CostHistoryUI(this);
 	}
 
 
@@ -288,6 +295,12 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
 		this.feeActiveDate = feeActiveDate;
 	}
 
+	public CostHistoryUI getCostHistoryUI() {
+		return costHistoryUI;
+	}
+	public void setCostHistoryUI(CostHistoryUI costHistoryUI) {
+		this.costHistoryUI = costHistoryUI;
+	}
 
 	
 

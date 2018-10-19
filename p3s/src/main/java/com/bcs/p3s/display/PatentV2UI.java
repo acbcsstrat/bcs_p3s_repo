@@ -52,11 +52,11 @@ public class PatentV2UI extends PatentUI {
 	// Getter/setters that return String version of typed fields - for UI convenience
 
 	public String getInternationalFilingDateUI() {
-		String res = (new DateUtil()).dateToUSStringWithDayOfWeek(this.getInternationalFilingDate());
+		String res = (new DateUtil()).dateToUSStringWithoutDayOfWeek(this.getInternationalFilingDate());
 		return res;
 	}
 	public String getPriorityDateUI() {
-		String res = (new DateUtil()).dateToUSStringWithDayOfWeek(this.getPriorityDate());
+		String res = (new DateUtil()).dateToUSStringWithoutDayOfWeek(this.getPriorityDate());
 		return res;
 	}
 

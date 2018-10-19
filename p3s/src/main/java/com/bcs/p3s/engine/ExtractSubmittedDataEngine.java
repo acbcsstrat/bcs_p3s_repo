@@ -280,7 +280,10 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   	if ("internationalSearchAuthority".equals(key.trim())) patent.setInternationalSearchAuthority(value);
 			   	if ("designated_states".equals(key.trim())) patent.setDesignated_states(value);
 			   	if ("epctStatus".equals(key.trim())) patent.setEpctStatus(value);
-			   	if ("epctNotAvailableReason".equals(key.trim())) patent.setEpctNotAvailableReason(value);
+			   	if ("epctNotAvailableReason".equals(key.trim())) {
+			   		// This field is not set (conciously) by the user. Set empty until determined otherwise
+			   		patent.setEpctNotAvailableReason("");
+			   	}
 			   	if ("priorityDate".equals(key.trim())) {
 			   		Date itch = null;
 			   		if (ob instanceof Long) {

@@ -2,10 +2,10 @@ package com.bcs.p3s.display;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-
 import com.bcs.p3s.model.Form1200Fee;
 import com.bcs.p3s.util.currency.CurrencyUtil;
+
+
 
 /**
  * As usual (for *UI classes) is a wrapper around the named class. 
@@ -46,7 +46,7 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 	protected BigDecimal subTotalEUR;
 	protected BigDecimal fxRate;
     protected BigDecimal subTotalUSD;
-	protected BigDecimal costHistoryUI;
+	protected CostHistoryUI costHistoryUI;
 	
 
 	
@@ -55,7 +55,6 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 	public Form1200FeeUI(Form1200Fee fee){
 
 		// Map form1200Fee fields to <i>similar</i> names here (as specified by API) 
-		// NOTE: costHistoryUI remains null until set
 
 		this.setSupplementarySearchFeeEUR(fee.getSupplementarySearchFee_EUR());
 		this.setDesignationFeeEUR(fee.getDesignationStatesFee_EUR());
@@ -92,6 +91,11 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 
 		this.setSubTotalEUR(dollarsToEuro(subTotalUSD));
 
+		
+		// Populate costHistoryUI
+		setDollarComponentUSD();
+		setEuroComponentEUR();
+		costHistoryUI = new CostHistoryUI(this);
 	}
 
 
@@ -308,14 +312,12 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 	public void setSubTotalUSD(BigDecimal subTotalUSD) {
 		this.subTotalUSD = subTotalUSD;
 	}
-	public BigDecimal getCostHistoryUI() {
+	public CostHistoryUI getCostHistoryUI() {
 		return costHistoryUI;
 	}
-	public void setCostHistoryUI(BigDecimal costHistoryUI) {
+	public void setCostHistoryUI(CostHistoryUI costHistoryUI) {
 		this.costHistoryUI = costHistoryUI;
 	}
-	
-	
 
 }
 

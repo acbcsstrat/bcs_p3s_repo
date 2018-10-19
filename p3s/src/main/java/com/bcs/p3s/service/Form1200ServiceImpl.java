@@ -232,7 +232,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		long range = clicksEnd - clicksStart;
 		long lngPercent = (elapsed * 100L)	 / range; 
 		
-		return (int) lngPercent;
+		return ((Long) lngPercent).intValue();
 	}
 
 	/**

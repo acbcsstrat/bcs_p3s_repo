@@ -93,36 +93,16 @@ public class PatentRestController extends Universal {
 		log().debug("invoked "+handle);
 		PatentV2UI patentV2UI = null;
 
-
-// zaphod - below may be needed		
-//		PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
-		
 		try {
 			Patent existingPatent = patentService.findById(id);
 			if (existingPatent == null) {
 				logM().info("Specified patent not exist or available. : "+handle);
 			} else {
-				
-				
-				
 				// Populate the PatentV2UI
 				patentV2UI = patentService.getPatentInfo(id, session);
-
-			
-			
-				
-				// wip - got to here 
-
-			
-			
-			
-			
 			}
 		} catch (Exception e) {
-			
-			// zaph - there may yet be EXPECTED errors to be causght herer
-			
-			
+			// acToDo - there may yet be EXPECTED errors to be caught here
 			logErrorAndContinue("Controller caught unexpected failure : "+handle, e);
 		  	return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
