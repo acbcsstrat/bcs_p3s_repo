@@ -1,6 +1,7 @@
 package com.bcs.p3s.display;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -38,15 +39,21 @@ public class CostHistoryUI {
 
 		populateHistoricRates();
 
-		setSubTotalEURYesterday( (fees.getDollarComponentUSD().divide(fxRateYesterday) ).add(fees.getEuroComponentEUR()));
+		BigDecimal ddollars = fees.getDollarComponentUSD();
+		BigDecimal rateYest = fxRateYesterday;
+		BigDecimal eeuros = fees.getEuroComponentEUR();
+		BigDecimal operand = ddollars;
+		operand = operand.divide(rateYest,2,RoundingMode.HALF_UP);
+		operand = operand.add(eeuros);
+		
+		setSubTotalEURYesterday( (fees.getDollarComponentUSD().divide(fxRateYesterday,2,RoundingMode.HALF_UP) ).add(fees.getEuroComponentEUR()));
 		setSubTotalUSDYesterday(fees.getDollarComponentUSD().add( fees.getEuroComponentEUR().multiply(fxRateYesterday) ));
 		
-		setSubTotalEURLastWeek( (fees.getDollarComponentUSD().divide(fxRateLastWeek) ).add(fees.getEuroComponentEUR()));
+		setSubTotalEURLastWeek( (fees.getDollarComponentUSD().divide(fxRateLastWeek,2,RoundingMode.HALF_UP) ).add(fees.getEuroComponentEUR()));
 		setSubTotalUSDLastWeek(fees.getDollarComponentUSD().add( fees.getEuroComponentEUR().multiply(fxRateLastWeek) ));
 		
-		setSubTotalEURLastMonth( (fees.getDollarComponentUSD().divide(fxRateLastMonth) ).add(fees.getEuroComponentEUR()));
+		setSubTotalEURLastMonth( (fees.getDollarComponentUSD().divide(fxRateLastMonth,2,RoundingMode.HALF_UP) ).add(fees.getEuroComponentEUR()));
 		setSubTotalUSDLastMonth(fees.getDollarComponentUSD().add( fees.getEuroComponentEUR().multiply(fxRateLastMonth) ));
-
 	}
 
 	
@@ -114,7 +121,7 @@ public class CostHistoryUI {
 		return historicRateOrNull;
 	}
 	protected void protectAgainstMissingDayRates() {
-		// Shouldn't ever happen, but might.
+		// Shouldn't ever happen, but might (& will on dev PCs)
 		// So actions here are Least-Worst fix (don't break site, don't show outlandish data)
 		if (isRateEmpty(fxRateYesterday) && isRateEmpty(fxRateLastWeek)) {
 			fxRateYesterday = GlobalVariableSole.findOnlyGlobalVariableSole().getCurrent_P3S_rate();
