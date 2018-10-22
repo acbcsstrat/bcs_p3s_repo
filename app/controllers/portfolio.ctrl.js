@@ -8,7 +8,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     $rootScope.page = 'Portfolio'; 
     console.log(patents)
-    vm.statuses = {
+    vm.statuses = { //obj sent to function
       topLevelStatus: [
         {name: 'All Patents'}, 
         {name: 'Action Available'}, 
@@ -47,7 +47,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     vm.rowSelect = rowSelect;
     vm.portfolioData = patents;
-    vm.updateCategory = updateCategory;
+    vm.selectCategory = selectCategory;
     vm.updateSelection = updateSelection;
     vm.panelActive = true;
     vm.selectedItem = vm.statuses.topLevelStatus[0].name;
@@ -75,33 +75,30 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       }
     ]
 
-    // var categoryStatus = 'All Patents';
-
-    
     var checkedFilterArray = vm.statuses.serviceStatus.concat(vm.statuses.serviceStatus, vm.statuses.europctStatus, vm.statuses.renewalStatus);
-    
 
-    function updateCategory(obj) {
+    function selectCategory(obj) {
       if(obj.name == 'All Patents') {
         // categoryStatus = 'All Patents';
         vm.portfolioData = patents;
         checkedFilterArray.forEach(function(item) {
           item.checked = false;
         })
-      } else {
+        return;
+      } 
 
-        var actionStatusStrings = vm.statuses.actionStatus.map(item => item.name);
+      var actionStatusStrings = vm.statuses.actionStatus.map(item => item.name);
 
-        vm.portfolioData = patents.filter(function(el){
-          return el.serviceList.find(item => {
-            if(obj.name == 'Action Available') {
-              return actionStatusStrings.includes(item.serviceStatus);
-            } else {
-              return !actionStatusStrings.includes(item.serviceStatus);
-            }
-          });
-        })
-      }
+      vm.portfolioData = patents.filter(function(el){
+        return el.serviceList.find(item => {
+          if(obj.name == 'Action Available') {
+            return actionStatusStrings.includes(item.serviceStatus);
+          } else {
+            return !actionStatusStrings.includes(item.serviceStatus);
+          }
+        });
+      })
+      
     }
 
     function checkChecked() {
@@ -110,53 +107,75 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       }).map(item => item.checkName);
     }
 
+    function updateData(data) { //TO BE CONTINUED
+      vm.portfolioData = data;
+    }
+
+    var noneChecked = function(array) {
+      return checkChecked().find(function(item){
+        return checked = array.includes(item) === true ? true : false;
+      })
+
+    }
+
     function updateSelection(obj, position) {
-      console.log(obj)
+
       vm.selectedItem = null;
-      var serviceStatusArray = vm.statuses.serviceStatus.map(item => item.name);
+      var data;
+      var serviceStatusArray = vm.statuses.serviceStatus.map(item => item.checkName);
       var renewalStatusArray = vm.statuses.renewalStatus.map(item => item.checkName);
       var epctStatusArray = vm.statuses.europctStatus.map(item => item.checkName);
-      if(obj.checked === true) { //CHECKED
-        if(serviceStatusArray.includes(obj.name)) { //SERVICE TYPE
-          vm.portfolioData = patents.filter(function(el){
-            return el.serviceList.find(function(item){
-              if(checkChecked().includes(item.serviceStatus)){
-                console.log('what')
-                return checkChecked().includes(item.serviceStatus)
-              } else {
-                console.log('hello')
-                return item.serviceType == 'Form1200';
-              }
-            })
-          })
-          // vm.portfolioData = vm.portfolioData.filter(function(el){
-          //   return el.serviceList.find(function(item){
-          //     return checkChecked().includes(item.serviceStatus)
-          //   })
-          // })          
-        } 
-
-        else { //STATUSES 
-          vm.portfolioData = patents.filter(function(el){
-            return el.serviceList.find(function(item){
-              return checkChecked().includes(item.serviceStatus)
-            })
-          })
-        }
-      } else { // UN-CHECKED
-        console.log('shouldnt be hit')
-        console.log(checkChecked())
-        if(checkChecked().length === 0) {
-          vm.portfolioData = patents;
-        } else {
-          vm.portfolioData = patents.filter(function(el){ 
-            return el.serviceList.find(function(item){
-              console.log(item)
-              return checkChecked().includes(item.serviceStatus)
-            })
-          })
-        }
+      var statusesArray = epctStatusArray.concat(renewalStatusArray);
+      // console.log(statusesArray)
+      if(checkChecked().length === 0) {
+        vm.portfolioData = patents;
+        return;
       }
+
+      console.log(noneChecked(statusesArray))
+
+      if(serviceStatusArray.includes(obj.checkName)) {
+
+        if(noneChecked(statusesArray) === undefined) { //if no checkboxes are checked
+          console.log('top')
+          data = patents.filter(function(el){
+            return el.serviceList.filter(function(item){
+              return checkChecked().includes(item.serviceType)
+            }).length
+          })
+          
+        } else { //if statuses are checked 
+           console.log('top first else')
+          data = patents.filter(function(el){
+            return el.serviceList.filter(function(item){
+              return checkChecked().includes(item.serviceStatus)
+            }).length
+          })          
+        }
+      } else {
+        console.log('top else')
+        data = patents.filter(function(el){
+          return el.serviceList.filter(function(item){
+            return checkChecked().includes(item.serviceStatus)
+          }).length
+        })
+
+
+      }
+
+      if(epctStatusArray.includes(obj.checkName)){
+        console.log('bottom')
+        if(noneChecked(epctStatusArray) === undefined && vm.statuses.serviceStatus[1].checked === true) {
+          data = patents.filter(function(el){
+            return el.serviceList.filter(function(item){
+              return checkChecked().includes(item.serviceType)
+            }).length
+          })
+        }
+
+      }
+      
+      updateData(data); 
 
     }
 
