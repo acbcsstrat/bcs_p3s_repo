@@ -29,6 +29,7 @@ import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Renewal;
+import com.bcs.p3s.service.Form1200ServiceImpl;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
@@ -82,7 +83,7 @@ public class PatentRestController extends Universal {
  
 
     
-    //------------------- Get PatentInfor for a specified Patent --------------------------------------------------
+    //------------------- Get PatentInfo for a specified Patent --------------------------------------------------
     
     // Implements API section 3.2 of the v2.1 API
     // new for v2.1
@@ -195,6 +196,11 @@ public class PatentRestController extends Universal {
 			Patent patent = data.extractPatentFromAddPatentForm(obby); 
 			//calculate the extended data again
 			
+			// Set E-PCT status settings as appropriate
+			Form1200ServiceImpl form1200ServiceImpl = new Form1200ServiceImpl(session);
+			form1200ServiceImpl.calcEpctStatuss(patent);
+			
+			
 			log().info("A patent with application number[" + patent.getEP_ApplicationNumber() +"] having a status as " + patent.getEpoPatentStatus() + " being added");
 		   	//patent.persist();
 			newPatent = patent.persist();
@@ -215,7 +221,7 @@ public class PatentRestController extends Universal {
 				log().fatal("PatentRestController : /rest-patents/ savePatent() failed for patent " + patent);
 			}
 			
-			patentUIs = patentService.persistAndCalculateFee(patent);
+			patentUIs = patentService.persistAndCalculateFee(patent);  // misnomer - doesn't persist
 	  		
 		   	
 		   	

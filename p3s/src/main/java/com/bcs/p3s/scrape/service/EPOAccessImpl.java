@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.openqa.selenium.remote.RemoteWebDriver.When;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -27,7 +28,6 @@ import com.bcs.p3s.scrape.model.Events;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.scrape.model.IPClassification;
 import com.bcs.p3s.scrape.model.Record;
-import com.bcs.p3s.scrape.model.SearchReports;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
@@ -352,9 +352,19 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		patent.setTitle(record.getTitle());
 		findLatestRenewalInfo(record.getEvents(),patent);
 		//findPrimaryApplicantName(record.getApplicants(),patent);
-		patent.setPrimaryApplicantName(findRecentApplicantsInfo(record.getApplicantsData()).getListApplicants().get(0).getApplicantName());
+
+		//patent.setPrimaryApplicantName( (namedApplicants.size()==0) ? "" : namedApplicants.get(0).getApplicantName());
+		// There may be no applicant named! Avoid exception. Set to ""
+		List<Applicants> anyApplicants = findRecentApplicantsInfo(record.getApplicantsData()).getListApplicants();
+		patent.setPrimaryApplicantName( (anyApplicants==null) ? "" : anyApplicants.get(0).getApplicantName());
+		
 		patent.setIpcCodes(findLatestIPCCodes(record.getIpcCodes()).getIpcCodes());
-		patent.setRepresentative(formatAgentDetails(findRecentAgentsInfo(record.getAgentData()).getListAgents().get(0)));
+
+		// patent.setRepresentative(formatAgentDetails(findRecentAgentsInfo(record.getAgentData()).getListAgents().get(0)));
+		List<Agent> anyAgents = findRecentAgentsInfo(record.getAgentData()).getListAgents();
+		patent.setRepresentative( (anyAgents==null) ? "" : formatAgentDetails(anyAgents.get(0)));
+		
+		
 		/*if(!(record.getRepresentativesList().size() == 0)){
 			if(record.getRepresentativesList().size() > 1)
 				findRecentRepresentativeInfo(record.getRepresentativesList(),patent);
@@ -568,6 +578,7 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		ApplicantData recentApplicantsData = new ApplicantData();
 		
 		try {
+			if (allApplicants.size() == 0) return new ApplicantData(); // empty
 			
 			if(allApplicants.size() == 1){
 				recentApplicantsData = allApplicants.get(0);
@@ -612,7 +623,8 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		AgentData recentAgentsData = new AgentData();
 		
 		try {
-			
+			if(allAgents.size() == 0) return new AgentData(); // empty
+
 			if(allAgents.size() == 1){
 				recentAgentsData = allAgents.get(0);
 				return recentAgentsData;

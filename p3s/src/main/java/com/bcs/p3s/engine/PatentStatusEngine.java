@@ -4,14 +4,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
@@ -20,7 +17,6 @@ import com.bcs.p3s.model.CalendarColour;
 import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.PatentStatusNoRenewalNeeded;
-import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.CombinedFee;
@@ -134,7 +130,7 @@ public class PatentStatusEngine extends Universal {
 						renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 					}
 					else{
-						//renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE);//zaph not 
+						renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE); // acToDo: This had been commented out. Why? Keep watch.  
 						getCurrentPhaseAndStatus(renewalInfo);
 					}
 				}

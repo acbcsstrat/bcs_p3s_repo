@@ -7,10 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.bcs.p3s.display.P3SService;
+import com.bcs.p3s.display.PatentV2UI;
+import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
-import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.EpoRenewalFee;
 import com.bcs.p3s.model.Form1200Fee;
@@ -27,7 +28,11 @@ import com.bcs.p3s.util.lang.Universal;
 public class EpctEngine extends Universal {
 
 	public static final String EPO_SA = "isr/EP";
-	
+	public static final String ACCEPTABLE_APPLICATION_LANGUAGE = "en";
+	public static final String[] UNACCEPTABLE_IPC_CODE_PREFIXES = 
+		{ "A61", "A99", "C01", "C05", "C06", "C07", "C08", "C12", "C40", "C99" };
+		// Specification from slide ERPA01 in pp-release-2.1.v4.2.pptx
+
 	
 	Patent patent;
 	Epct epct;						// likely not exist
@@ -55,12 +60,22 @@ public class EpctEngine extends Universal {
 	boolean isRenewalFeeChosen = false;
 	BigDecimal nextColourTotal_USD;
 	
-	Date costBandStartDate; // late addition - zaphod - use or remove
+	Date costBandStartDate;
 	
 
 	// Start of public methods
 
-	// Constructor - prepares data for the specified Patent
+	// 
+	/**
+	 * Constructor - prepares data for the specified Patent
+
+	 * @param patent The class provided affects processing.
+	 *  If a Patent object, processing is orientated towards populating the Patent for persisting to the dB - 
+	 *   i.e. includes add-patent/first-time-only processing
+	 *   Whereas if the class is a supertype of Patent, then first-time-only processing may be skipped, 
+	 *   instead calculation (of <i>this</i> classes' properties) for UI data, occurs.
+	 *  Slight difference. The majority of processing is common to both. 
+	 */
 	public EpctEngine(Patent patent) {
 		doConstructorProcessing(patent);
 	}
@@ -75,14 +90,9 @@ public class EpctEngine extends Universal {
 	 */
 	public P3SService determineForm1200Service() {
     	String err = CLASSNAME + "determineForm1200Service() : ";
-
     	
     	P3SService service = new P3SService();
     	
-    	
-//    	DummyForm1200Engine dummy = new DummyForm1200Engine(); // acRedundant
-//		service = dummy.dummyF1200Service_variant1();
-
 		service.setServiceType(P3SProductTypeEnum.FORM1200);
 		service.setServiceStatus(epctStatus);
 		if (currentColour!=null) service.setCurrentStageColour(currentColour);
@@ -109,6 +119,11 @@ public class EpctEngine extends Universal {
 
 	// Start of internal methods
 
+	/**
+	 * If invoked with a PatentV2UI, this is for UI, so may  need pricing & further date
+	 * else not
+	 * @param patent
+	 */
 	protected void doConstructorProcessing(Patent patent) {
 		// Populate members, as appropriate
 
@@ -123,7 +138,7 @@ public class EpctEngine extends Universal {
     	calcEffectivePriorityDate();
     	calcTooEarlyLate();
     	calcEpctStatus();
-    	if (isPricingAndDatesNeeded) {
+    	if (isPricingAndDatesNeeded && patent instanceof PatentV2UI) {
     		calcDatesAndColour();
     		calcPrice();
     	}
@@ -137,11 +152,11 @@ public class EpctEngine extends Universal {
 	protected void calcTooEarlyLate() {
 		ldToday = LocalDate.now();
 		ldEffectivePriority = effectivePriorityDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		log().fatal("EffectivePriorityDate = "+ldEffectivePriority.toString());
+		log().debug("calc f1200 dates: EffectivePriorityDate = "+ldEffectivePriority.toString());
 
 		// Date at 18 months
 		ld18monthsAfter =  ldEffectivePriority.plusMonths(18L);
-		log().fatal("18month date = "+ld18monthsAfter.toString());
+		log().debug("calc f1200 dates: 18month date = "+ld18monthsAfter.toString());
 		if (ldToday.isBefore(ld18monthsAfter)) {
 			isTooEarly = true;
 			return;
@@ -150,7 +165,7 @@ public class EpctEngine extends Universal {
 		// Date at 31 months
 		ld31monthsAfter =  ldEffectivePriority.plusMonths(31L);
 		ld31monthsAfter =  ld31monthsAfter.minusDays(1L);  // Cautious. Unsure of EPO rule
-		log().fatal("18month date = "+ld31monthsAfter.toString());
+		log().debug("calc f1200 dates: 31month date = "+ld31monthsAfter.toString());
 		if (ldToday.isAfter(ld31monthsAfter)) {
 			isTooLate = true;
 			return;
@@ -158,14 +173,16 @@ public class EpctEngine extends Universal {
 
 	}
 	protected void calcEpctStatus() {
-		// For each Form1200StatusEnum value, in correct order, determine if current & if needed, set isPricingAndDatesNeeded
+		// For each Form1200StatusEnum value, in appropriate order, 
+		//  determine which status value is appropriate, & if needed, set isPricingAndDatesNeeded
 
-		if (isTooEarly) epctStatus = Form1200StatusEnum.TOO_EARLY;
-		else if (isTooLate) epctStatus = Form1200StatusEnum.TOO_LATE;
-
-		else if (Form1200StatusEnum.EPCT_NOT_AVAILABLE.equalsIgnoreCase(patent.getEpctStatus()))
+		String notAcceptableReason = epctNoGoReason(patent);
+		if (notAcceptableReason != null) {
+			patent.setEpctNotAvailableReason(notAcceptableReason);
 			epctStatus = Form1200StatusEnum.EPCT_NOT_AVAILABLE;
-
+		}
+		else if (isTooEarly) epctStatus = Form1200StatusEnum.TOO_EARLY;
+		else if (isTooLate) epctStatus = Form1200StatusEnum.TOO_LATE;
 		else if (isMatchStatusInEitherObject(Form1200StatusEnum.ERROR))
 			epctStatus = Form1200StatusEnum.ERROR;
 		else if (isMatchStatusInEitherObject(Form1200StatusEnum.PAYMENT_IN_PROGRESS))
@@ -174,6 +191,7 @@ public class EpctEngine extends Universal {
 			epctStatus = Form1200StatusEnum.COMPLETED;
 		else if (isMatchStatusInEitherObject(Form1200StatusEnum.EPCT_REJECTED)) {
 			epctStatus = Form1200StatusEnum.EPCT_REJECTED;
+			if (isEmpty(patent.getEpctNotAvailableReason())) logErrorAndContinue("Status=Rejected, yet REASON is empty. Patent="+patent.getId());
 			isPricingAndDatesNeeded = true;
 		}
 		else if (isMatchStatusInEitherObject(Form1200StatusEnum.EPCT_BEING_GENERATED)) {
@@ -188,14 +206,12 @@ public class EpctEngine extends Universal {
 			epctStatus = Form1200StatusEnum.PAYMENT_FAILED;
 			isPricingAndDatesNeeded = true;
 		}
-		
-		// Which leaves EPCT_AVAILABLE. As we've already checked tooEarly/tooLate, we can now trust this 
-		else if (Form1200StatusEnum.EPCT_AVAILABLE.equalsIgnoreCase(patent.getEpctStatus())) {
+		else {
+			// If none of above triggered, status must be EPCT_AVAILABLE
 			epctStatus = Form1200StatusEnum.EPCT_AVAILABLE;
 			isPricingAndDatesNeeded = true;
 		}
-
-		else fail(CLASSNAME+"calcEpctStatus() FAILED TO MATCH existing epct status");
+		patent.setEpctStatus(epctStatus);
 	}
 	protected boolean isMatchStatusInEitherObject(String statusString) { // Trust statusString not to be Null
 		boolean match = false;
@@ -384,7 +400,46 @@ public class EpctEngine extends Universal {
 		else if (nextColour.equals(RenewalColourEnum.RED)) totalUSD = totalUSD.add(fee.getUrgentFee_USD()); 
 		nextColourTotal_USD = totalUSD;
 	}
+	
+
+	/**
+	 * If E-PCT is permanently not-available for this patent, indicate the reason.
+	 *  
+	 * @return null (indicating E-PCT may be possible), 
+	 * or a String to be persisted to patent.epctNotAvailableReason. Will be a EPCTnotAvailableReasonEnum terminal value.
+	 * 
+	 * When a patent is created, there are two possible reasons why PatentPlace will 
+	 * NOT offer an E-PCT:
+	 * - Application Language is not English
+	 * - IPC code is not in an acceptable range
+	 */
+	public String epctNoGoReason(Patent patent) {
+		if (patent==null) return null;
 		
+		String lang = patent.getInternationalFilingLang(); 
+		if ((isEmpty(lang)) ||  ! ACCEPTABLE_APPLICATION_LANGUAGE.equalsIgnoreCase(lang)) {
+			return EPCTnotAvailableReasonEnum.NOT_ENGLISH;
+		}
+		
+		String allPatentCodes = patent.getIpcCodes();
+		if (isEmpty(allPatentCodes)) return EPCTnotAvailableReasonEnum.BAD_IPC_CODE;
+		String[] allCodesFromThisPatent = allPatentCodes.split(",");
+		boolean foundMatch = false;
+		log().debug("About to test if IPC codes ("+allPatentCodes+") match any Unacceptable codes");
+		for (String aCodeFromThisPatent : allCodesFromThisPatent) {
+			String code = aCodeFromThisPatent.trim();
+			for (int ii=0; ii<UNACCEPTABLE_IPC_CODE_PREFIXES.length; ii++) {
+				String nogoPrefix = UNACCEPTABLE_IPC_CODE_PREFIXES[ii];
+				log().debug("     cf full = "+aCodeFromThisPatent+"   -   nogo = "+nogoPrefix);
+				if (aCodeFromThisPatent.startsWith(nogoPrefix)) { foundMatch=true; break; }
+			}
+			if (foundMatch==true) break; 
+		}
+		if (foundMatch==true) return EPCTnotAvailableReasonEnum.BAD_IPC_CODE;
+		
+		return null;
+	}
+
 	
 	// End of internal methods
 
@@ -396,8 +451,12 @@ public class EpctEngine extends Universal {
 	public Form1200Fee getFee() {
 		return fee;
 	}
-	
-	
-	
+
+	public boolean isRenewalFeeMandated() {
+		return isRenewalFeeMandated;
+	}
+	public boolean isRenewalFeeOptional() {
+		return isRenewalFeeOptional;
+	}
 	
 }

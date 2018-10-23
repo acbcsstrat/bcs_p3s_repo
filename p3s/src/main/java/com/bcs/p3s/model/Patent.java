@@ -149,7 +149,8 @@ public class Patent {
     */
     private String PCT_publicationNumber;
     
-    /** mpi11: search-type then office. For E-PCT, must be 'isr/EP'
+    /** mpi11: search-type then office. For E-PCT, must be 'isr/EP' to avoid search fee
+     *         + if office is not EP, then show the 'conditional Question 6' (slide ERPA01 in powerpoint)
     */
     private String internationalSearchAuthority;
     
@@ -216,10 +217,17 @@ public class Patent {
     }
     
 
-    // Setters pushed to support P3S 'Enums'
-
+    // Setter pushed to support P3S 'Enums'
     public void setRenewalStatus(String renewalStatus) {
     	this.renewalStatus = (new RenewalStatusEnum(renewalStatus)).toString();
+    }
+
+    // Getter to get the search office Only
+    public String getInternationalSearchOffice() {
+    	try {
+    		String office = internationalSearchAuthority.substring(1+internationalSearchAuthority.indexOf('/'));
+        	return office;
+    	} catch (IndexOutOfBoundsException | NullPointerException oob) { return null; }
     }
 
     

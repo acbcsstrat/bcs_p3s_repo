@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -175,7 +176,15 @@ public class Epct {
      */
     public static Epct findEpctByPatent(Patent patent) {
     	if (patent==null) throw new P3SRuntimeException("Epct:findEpctByPatent() passed null");
-    	List<Epct> epcts = (findEpctsByPatent(patent, "createdDate", "ASC")).getResultList(); // "id" is not available to use "createdDate"
+    	
+    	// avoid the Hibernate message : save the transient instance before flushing
+    	if (patent.getId()==null) return null; // Patent not persisted, so there cannot be any persisted Epct's
+
+	    Patent existingPatent = Patent.findPatent(patent.getId());
+	    if (existingPatent==null) return null;
+
+	    List<Epct> epcts = (findEpctsByPatent(existingPatent, "createdDate", "ASC")).getResultList(); // "id" is not available so use "createdDate"
+    	
     	if (epcts==null || epcts.size()==0) return null;
     	else return epcts.get(epcts.size()-1);
     }

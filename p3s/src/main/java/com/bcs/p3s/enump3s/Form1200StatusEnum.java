@@ -80,5 +80,9 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
         }
     }
 
-
+    public boolean canInitiateForm1200() {
+    	return (value.equals(EPCT_AVAILABLE)
+    			|| value.equals(EPCT_REJECTED)
+    			|| value.equals(PAYMENT_FAILED));
+    }
 }

@@ -289,7 +289,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   		if (ob instanceof Long) {
 				   		itch = new Date((Long) ob);
 			   		} 
-			   		else {
+			   		else if (ob instanceof String) {
 			   			Long when = new Long((String) ob);
 			   			itch = new Date(when);
 			   		}

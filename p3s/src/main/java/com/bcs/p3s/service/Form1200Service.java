@@ -28,4 +28,13 @@ public interface Form1200Service {
 	 */
 	public void populatePatentInfo(PatentV2UI patentV2UI, HttpSession session);
 
+
+	/**
+	 * A much simpler variant of populatePatentInfo
+	 * This purely calculates Patent epct status values. Used for persistence, not *UI
+	 * @param patent
+	 */
+	public void calcEpctStatuss(Patent patent);
+
+	
 }

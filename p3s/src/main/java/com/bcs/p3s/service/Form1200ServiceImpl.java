@@ -15,15 +15,16 @@ import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.Form1200FeeUI;
 import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.P3SService;
-import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.engine.DummyForm1200Engine;
 import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.ServiceManager;
+import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
+import com.bcs.p3s.form1200.CreateListOfStates;
 import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.model.Form1200Record;
@@ -34,7 +35,7 @@ import com.bcs.p3s.util.lang.P3SException;
 @Service("Form1200Service")
 public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Form1200Service {
 
-	protected String PREFIX = this.getClass().getName() + " : "; 
+	protected String PREFIX = CLASSNAME + " : "; 
 
 	
 	public Form1200ServiceImpl(HttpSession session) {
@@ -44,22 +45,33 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 
 
 	@Override
-	public StartForm1200Api21UI getForm1200QuestionData(long patentID) {
+	public StartForm1200Api21UI getForm1200QuestionData(long patentId) {
+		String err = PREFIX+"getForm1200QuestionData("+patentId+") ";
+		checkForm1200isViable(patentId, err);
+		
+		StartForm1200Api21UI questionData = new StartForm1200Api21UI();
+		Patent patent = Patent.findPatent(patentId);
 
-		String err = PREFIX+"getForm1200QuestionData("+patentID+") ";
+		questionData.setEP_ApplicationNumber(patent.getEP_ApplicationNumber());
+		questionData.setClientRef(patent.getClientRef());
 
-		// NOT below yet - fails = as nno link to my business
-//		checkForm1200isViable(patentID, err);
-		// acTodo - this and ALL OTHER check* methods need review (re not throw exceptions, & how signal back to controller to return error)
-		
-		
-		DummyForm1200Engine dummyEngine = new DummyForm1200Engine();
-		StartForm1200Api21UI questionData = dummyEngine.getDummyForm1200QuestionData(patentID);
-		
+		boolean isOfficeEP = false;
+		String office = patent.getInternationalSearchOffice();
+		if (office!=null && office.equals("EP")) isOfficeEP = true;
+		questionData.setShowOptionalQuestion(isOfficeEP);
+				
+		EpctEngine epctEngine = new EpctEngine(patent);
+		questionData.setIsYear3RenewalDue(epctEngine.isRenewalFeeOptional());
+
+		questionData.setExtensionStatesUI(CreateListOfStates.generateListOfExtensionStates());
+		questionData.setValidationStatesUI(CreateListOfStates.generateListOfValidationStates());
+
 		return questionData;
 	}
 
-
+	/**
+	 * Add Form1200 details from a Form1200Record into the appropriate fields in the Patent object
+	 */
 	@Override
 	public void combineEpoPatentDetails(Patent patent, Form1200Record form1200) {
 		if (patent==null || form1200==null) { patent=null; return; }
@@ -74,8 +86,13 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 			// not used : inventors 
 			// not used : agents 
 			checkDateStrSame(patent.getInternationalFilingDate(), form1200.getFilingDate(), "filingDate");
-			dteDebug = new DateUtil().stringToDate( form1200.getPriorityDate() );
-			 patent.setPriorityDate(dteDebug);
+
+			//dteDebug = new DateUtil().stringToDate( form1200.getPriorityDate() ); //NPE
+			String priorityDateOrNull = form1200.getPriorityDate();
+			dteDebug = null;
+			if (priorityDateOrNull !=null) dteDebug = new DateUtil().stringToDate(priorityDateOrNull);
+			patent.setPriorityDate(dteDebug);
+
 			patent.setInternationalFilingLang(form1200.getFilingLang());
 			checkStrSame(patent.getEP_PublicationNumber(), form1200.getEP_PublicationNumber(), "EPpubNum");
 			patent.setPCT_applicationNumber(form1200.getPCT_AppNumber());
@@ -124,7 +141,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		}
 		
 		// renewalStageProgress & form1200StageProgress.   Integer percentage from last colour-change to next. Not used if in Grey
-		P3SService renewalService = null;
+		//P3SService renewalService = null;
 		P3SService form1200Service = null;
 		patentV2UI.setRenewalStageProgress(0);
 		patentV2UI.setForm1200StageProgress(0);
@@ -134,10 +151,10 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 			String serviceType = service.getServiceType();
 			if (P3SProductTypeEnum.RENEWAL.equalsIgnoreCase(serviceType)) {
 				// Renewal
-				renewalService = service;
-		    	PatentServiceImpl patentServiceImpl = new PatentServiceImpl(session);
-		    	CostAnalysisData cad = patentServiceImpl.getCostAnalysisData(patentV2UI.getId());
-		    	Date startDate = shorttermGetCostbandSTARTdate(cad);
+				//renewalService = service;
+				PatentServiceImpl patentServiceImpl = new PatentServiceImpl(session);
+				CostAnalysisData cad = patentServiceImpl.getCostAnalysisData(patentV2UI.getId());
+				Date startDate = shorttermGetCostbandSTARTdate(cad);
 				Date endDate = service.getCostBandEndDate();
 				int percentageElapsed = calcIntegerPercentageBetween2Dates(startDate, endDate);
 				patentV2UI.setRenewalStageProgress(percentageElapsed);
@@ -173,7 +190,18 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 
 		
 		
+	/**
+	 * A much simpler variant of populatePatentInfo
+	 * This purely calculates Patent epct settings - for persistence (cf *UI)
+	 * @param patent - The contents of which will be updated
+	 */
+	@Override
+	public void calcEpctStatuss(Patent patent) {
+		new EpctEngine(patent);
+		// That will have set the 2 patent E-PCT status values  
+	}
 	
+	// End of public methods
 	
 	
 	
@@ -187,6 +215,10 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	 * @param logTitle A title for this specific test. Is logged. maybe null
 	 */
 	protected void checkStrSame(String str1, String str2, String logTitle) {
+		if (str1==null || str2==null) { 
+			log().info(CLASSNAME+" : passed NULL to checkStrSame("+str1+", "+str2+", "+logTitle+")");
+			return;
+		}
 		try {
 			if ( ! str1.trim().equalsIgnoreCase(str2.trim())) {
 				throw new P3SException("str1!=str2");

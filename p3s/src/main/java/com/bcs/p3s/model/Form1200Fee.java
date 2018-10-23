@@ -114,7 +114,7 @@ public class Form1200Fee {
 
     /**
      * May be Zero
-     * Note: Setting this >0 signals calcTotalFee() to recalculate this - zaph +below
+     * Note: Setting this >0 signals calcTotalFee() to recalculate this - +below : 181023 AC suspect this redundant. calcTotalFee not exist. Can find no mention. Keep Watch. acTodo
      */
     @NotNull
     protected BigDecimal expressFee_USD;

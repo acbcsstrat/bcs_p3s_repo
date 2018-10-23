@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
+import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
@@ -77,13 +79,10 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 	
 	protected void checkForm1200isViable(long id, String err) {
-
-		// YET TO BE WRITTEN. acTodo 180816: NONE of these check* methods are throwing exceptions, & hence correctly signalling controllers to return an error
-		
 		checkThisIsMyPatent(id, err);
-
+		checkPatendIsOpenForForm1200(id, err);
 	}
-	
+
 
 	
 	
@@ -137,7 +136,7 @@ public class ServiceAuthorisationTools extends Universal {
 	protected void checkNotNull(Object ob, String err) {
 		err += "  [on checkNotNull]";
 		if (ob==null) 
-																		failInternalError(err); 
+																	failInternalError(err); 
 	}
 	
 	protected void checkEPNumberFormat(String str, String err) {
@@ -163,14 +162,33 @@ public class ServiceAuthorisationTools extends Universal {
 		// Limit? Currently are exactly 10, but big review seems likely. 5 seems safeest.
 		if (numNotificationUIs < 5 )								failInternalError(err+" [patentUI has only "+numNotificationUIs+" notificationUIs]"); 
 	}
-	
-	
-	
-	
+
+	// Client can only invoke if status & reason values are appropriate. SafteyCheck
+	protected void checkPatendIsOpenForForm1200(long patentId, String err) {
+		err += "  [on checkPatendIsOpenForForm1200]";
+		Patent p = Patent.findPatent(patentId);
+		String statusStr = p.getEpctStatus();
+		String reasonStr = p.getEpctNotAvailableReason();
+		boolean statusIsBad = true;
+		if (notEmpty(statusStr)) {
+			Form1200StatusEnum statusEnum = new Form1200StatusEnum(statusStr);
+			statusIsBad = ! statusEnum.canInitiateForm1200();
+		}
+		boolean reasonIsBad = false;
+		if (notEmpty(reasonStr)) {
+			EPCTnotAvailableReasonEnum reasonEnum = new EPCTnotAvailableReasonEnum(reasonStr);
+			if (reasonEnum.isNotAvailableReasonTerminal()) reasonIsBad = true;
+		}
+		if (statusIsBad || reasonIsBad)		failMalicious(err); 
+	}
+
+
 	
 	// End of   : Lower Level tools
 	
 
+	
+	
 	// Start of : Failure Handling utils
 
 	protected void failInternalError(String msg) {

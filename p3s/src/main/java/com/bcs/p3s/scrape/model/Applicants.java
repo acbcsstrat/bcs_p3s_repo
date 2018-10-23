@@ -1,14 +1,5 @@
 package com.bcs.p3s.scrape.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.EntityManager;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
-
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
-
 
 public class Applicants {
 	
