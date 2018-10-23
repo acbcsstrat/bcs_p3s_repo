@@ -29,7 +29,7 @@ import com.bcs.p3s.util.lang.Universal;
 @RestController
 @Configuration
 @ComponentScan("com.bcs.p3s")
-public class Form1200Controller extends Universal {
+public class Form1200RestController extends Universal {
 
 	@Autowired
     Form1200Service form1200Service;
