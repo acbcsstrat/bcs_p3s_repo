@@ -7,12 +7,13 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     var vm = this;
 
     $rootScope.page = 'Portfolio';
-    vm.rowSelect = rowSelect;
     vm.portfolioData = patents;
-    vm.selectCategory = selectCategory;
-    vm.updateSelection = updateSelection;
+    vm.rowSelect = rowSelect;
+    // vm.selectCategory = selectCategory;
+    vm.updateStatus = updateStatus;
+    vm.updateCategory = updateCategory;
     vm.date = new Date();   
-    vm.selectFilters = selectFilters;
+    // vm.selectFilters = selectFilters;
     vm.panelActive = true;
     var selectedItem = 'All Patents';     
 
@@ -26,9 +27,9 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
  
     vm.statuses = { //obj sent to function
       topLevelStatus: [
-        {name: 'All Patents'}, 
-        {name: 'Action Available'}, 
-        {name: 'No Action Available'}
+        {name: 'All Patents', checkName: 'All patents', checked: false }, 
+        {name: 'Action Available', checkName: 'Action available', checked: false }, 
+        {name: 'No Action Available', checkName: 'No action available', checked: false }
       ],
       serviceStatus: [
         {name: 'Regional Renewals', checkName: 'Renewal', checked: false }, 
@@ -82,36 +83,55 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       }
     ]
 
+    // function noneChecked(array) {
+    //   var contains;
+    //   checkChecked().find(function(item){
+    //     if(array.includes(item)) {
+    //       contains = true;
+    //     }
+    //   })
+    //   return contains;
+    // }
+
+
+    // function selectFilters(filterType) {
+      
+    //   vm.selectedOption = vm.statuses.topLevelStatus[0];
+      
+    //   if(filterType === 'selectAll') {
+    //     checkedFilterArray.forEach(function(item) {
+    //       item.checked = true;
+    //     })
+    //   } else {
+    //     checkedFilterArray.forEach(function(item) {
+    //       item.checked = false;
+    //     })
+    //   }
+
+    //   updateData(patents)
+
+    // }
+
+
+
+    vm.selectedOption = vm.statuses.topLevelStatus[0]; 
+
     var checkedFilterArray = vm.statuses.serviceStatus.concat(vm.statuses.serviceStatus, vm.statuses.europctStatus, vm.statuses.renewalStatus);
-    var availablePatents = patents;
+    var actionStatusStrings = vm.statuses.actionStatus.map(item => item.name);
+    var serviceStatusArray = vm.statuses.serviceStatus.map(item => item.checkName);
+    var selectedCategory = 'All patents';
+    var dataAvailable = patents;
 
-    function selectCategory(obj) {
 
-      availablePatents = patents;
-      selectedItem = obj.name;
 
-      if(obj.name == 'All Patents') {
-        checkedFilterArray.forEach(function(item) {
-          item.checked = false;
-        })
-      } 
-
-      var actionStatusStrings = vm.statuses.actionStatus.map(item => item.name);
-
-      if(obj.name !== 'All Patents') {
-        availablePatents = patents.filter(function(el){
-          return el.serviceList.find(item => {
-            if(obj.name == 'Action Available') {
-              return actionStatusStrings.includes(item.serviceStatus);
-            } else {
-              return !actionStatusStrings.includes(item.serviceStatus);
-            }
-          });
-        })
-      }
-
-      updateSelection(availablePatents);
- 
+    function compare(arr){
+      const finalArray = [];
+      arr.forEach((e1)=>checkChecked().forEach((e2)=> {if(e1 === e2){
+           finalArray.push(e1)
+          }
+        }
+      ));
+      return finalArray;
     }
 
     function checkChecked() {
@@ -122,89 +142,84 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     function updateData(data) { //TO BE CONTINUED
       vm.portfolioData = data;
-    }
+    }    
 
-    function noneChecked(array) {
-      return checkChecked().find(function(item){
-        return checked = array.includes(item) === true ? true : false;
-      })
-    }
-
-    function selectFilters(filterType) {
-      
-      vm.selectedOption = vm.statuses.topLevelStatus[0];
-      
-      if(filterType === 'selectAll') {
-        checkedFilterArray.forEach(function(item) {
-          item.checked = true;
+    function checkStatuses(dataAvailable) {
+      var finalArray = [];
+      dataAvailable.forEach(function(el){
+        el.serviceList.find(function(i){
+          if(checkChecked().includes(i.serviceStatus)) {
+            finalArray.push(el)
+          }
         })
-      } else {
+      })
+      updateData(finalArray)
+    }
+
+
+    function checkService(dataAvailable) {
+      return dataAvailable.filter(function(el){
+        return el.serviceList.find(function(i){
+          return checkChecked().includes(i.serviceType) //return all items that have a serviceType value contained within the checked array
+        })
+      })
+    }    
+
+    function updateCategory(obj, filteredPatents) {
+      
+      selectedCategory = obj.checkName;
+
+      if(selectedCategory == 'All patents') { //check category selected
+        dataAvailable = patents; //categorisedPatents = patents
         checkedFilterArray.forEach(function(item) {
           item.checked = false;
         })
+      } else {
+        dataAvailable = patents.filter(function(el){
+          return el.serviceList.find(item => {
+            if(obj.name == 'Action Available') {
+              return actionStatusStrings.includes(item.serviceStatus);
+            } else {
+              return !actionStatusStrings.includes(item.serviceStatus);
+            }
+          });
+        })
       }
 
-      updateData(patents)
+      if(checkChecked().length === 0) { //if no statuses are checked)
+        updateData(dataAvailable);
+      } else { //if a status is checked)
+        
+        dataAvailable.filter(function(el){
+          return el.serviceList.find(function(item){
+            return compare(serviceStatusArray).includes(item.serviceType); //check if
+          })
+        })
+
+        if(checkService(dataAvailable).length === 0) { //if no service is selected i.e. regional renewal, euro-pct
+          checkStatuses(dataAvailable)
+        } else { //if service is selected
+          checkStatuses(checkService(dataAvailable))
+        }
+
+      }
+    }
+
+    function updateStatus(obj, filteredPatents) {
+
+    
+          // if(serviceStatusArray.includes(obj.checkName) && noneChecked(statusesArray) === undefined) { //if  sevcie status and not checked
+          //   console.log('if service status and no items checked')
+          //   availablePatents = filteredPatents.filter(function(el){
+          //     return el.serviceList.filter(function(item){
+          //       return checkChecked().includes(item.serviceType)
+          //     }).length
+          //   })
+          // }
 
     }
 
-    function updateSelection(obj, position) {
 
-      if(selectedItem === 'All Patents') {
-        vm.selectedOption = null;
-      } 
-
-      var data;
-      var serviceStatusArray = vm.statuses.serviceStatus.map(item => item.checkName);
-      var renewalStatusArray = vm.statuses.renewalStatus.map(item => item.checkName);
-      var epctStatusArray = vm.statuses.europctStatus.map(item => item.checkName);
-      var statusesArray = epctStatusArray.concat(renewalStatusArray);
- 
-      if(checkChecked().length === 0) {
-        updateData(availablePatents)
-        return;
-      }
-
-      if(serviceStatusArray.includes(obj.checkName) && noneChecked(statusesArray) === undefined) {
-
-        data = availablePatents.filter(function(el){
-          return el.serviceList.filter(function(item){
-            return checkChecked().includes(item.serviceType)
-          }).length
-        })
-      }
-
-      if(!serviceStatusArray.includes(obj.checkName) || noneChecked(statusesArray) !== undefined) {
-        data = availablePatents.filter(function(el){
-          return el.serviceList.filter(function(item){
-            return checkChecked().includes(item.serviceStatus)
-          }).length
-        })
-      }
-
-      if(epctStatusArray.includes(obj.checkName)){ //form1200
-        if(noneChecked(epctStatusArray) === undefined && vm.statuses.serviceStatus[1].checked === true) {
-          data = availablePatents.filter(function(el){
-            return el.serviceList.filter(function(item){
-              return checkChecked().includes(item.serviceType)
-            }).length
-          })
-        }
-      }
-
-      if(renewalStatusArray.includes(obj.checkName)){ //form1200
-        if(noneChecked(renewalStatusArray) === undefined && vm.statuses.serviceStatus[0].checked === true) {
-          data = availablePatents.filter(function(el){
-            return el.serviceList.filter(function(item){
-              return checkChecked().includes(item.serviceType)
-            }).length
-          })
-        }
-      }
-
-      updateData(data); 
-
-    } 
 
     function displayPatents() { //resets view so only list patents displays
         $state.go('portfolio');
@@ -219,25 +234,5 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
         }
     };    
 
-    // function manualProcessingModal() {
-    //     $timeout(function(){
-    //         var modalInstance = $uibModal.open({
-    //             templateUrl: 'app/templates/modals/modal.submitted-manual-processing.tpl.htm',
-    //             appendTo: undefined,
-    //             scope: $scope,
-    //             controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
-
-    //                 $scope.dismissModal = function () {
-    //                     $uibModalInstance.close();
-    //                 };
-
-    //             }]
-    //         });
-    //     }, 500)
-    // }
-
-    // if($stateParams.actionRequest == 'manualProcessing') {
-    //     manualProcessingModal();
-    // }
 
 }
