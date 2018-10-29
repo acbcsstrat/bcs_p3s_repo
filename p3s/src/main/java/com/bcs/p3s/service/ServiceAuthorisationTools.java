@@ -10,6 +10,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.display.form1200.ExtensionStateUI;
+import com.bcs.p3s.display.form1200.PageDescriptionTool;
+import com.bcs.p3s.display.form1200.PageDescriptionUI;
+import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.model.LoginMessage;
@@ -83,9 +87,13 @@ public class ServiceAuthorisationTools extends Universal {
 		checkPatendIsOpenForForm1200(id, err);
 	}
 
-
-	
-	
+	protected void checkForm1200AsEntered4MissingData(long id, String err, long totalClaims, long totalPages, 
+			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI) 
+	{
+		checkThisIsMyPatent(id, err);
+		checkPatendIsOpenForForm1200(id, err);
+		check4MissingDataInForm1200Entry(id, err, totalClaims, totalPages, extensionStatesUI, validationStatesUI, pageDescriptionUI);
+	}
 	
 	
 	
@@ -182,7 +190,22 @@ public class ServiceAuthorisationTools extends Universal {
 		if (statusIsBad || reasonIsBad)		failMalicious(err); 
 	}
 
+	// Check for nulls where shouldn't be, etc
+	protected void check4MissingDataInForm1200Entry(long patentId, String err, long totalClaims, long totalPages, 
+			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI)
+	{
+		err += "  [on check4MissingDataInForm1200Entry] - ";
+		if (totalClaims<1)	failMalicious(err+"totalClaims"); 
+		if (totalPages<1)	failMalicious(err+"totalPages"); 
+		if (extensionStatesUI==null)	failMalicious(err+"extensionStatesUI is null"); 
+		if (validationStatesUI==null)	failMalicious(err+"validationStatesUI is null"); 
+		if (pageDescriptionUI==null)	failMalicious(err+"pageDescriptionUI is null"); 
+		if (pageDescriptionUI.size()!=3)	failMalicious(err+"pageDescriptionUI size is not 3");
+		PageDescriptionTool pageDescriptionTool = new PageDescriptionTool();
+		if ( ! pageDescriptionTool.confGot1ofEach(pageDescriptionUI)) failMalicious(err+"pageDescriptionUI not 1ofEach"); 
+	}
 
+	
 	
 	// End of   : Lower Level tools
 	

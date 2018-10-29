@@ -1,9 +1,14 @@
 package com.bcs.p3s.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import com.bcs.p3s.display.PatentV2UI;
+import com.bcs.p3s.display.form1200.ExtensionStateUI;
+import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
+import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.model.Form1200Record;
 
@@ -35,6 +40,21 @@ public interface Form1200Service {
 	 * @param patent
 	 */
 	public void calcEpctStatuss(Patent patent);
+
+	
+	/**
+	 * User has entered the Form1200 questions, & chosen to SAVE the E-PCT application, & thus generate the E-PCT review PDF
+	 * @param patentId
+	 * @param clientRef
+	 * @param totalClaims
+	 * @param isYear3RenewalPaying
+	 * @param totalPages
+	 * @param extensionStatesUI
+	 * @param validationStatesUI
+	 * @param pageDescriptionUI
+	 */
+	public void saveNewForm1200details(long  patentId, String clientRef, long totalClaims, boolean isYear3RenewalPaying, long totalPages, 
+			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI);
 
 	
 }

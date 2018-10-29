@@ -36,6 +36,8 @@ public class PatentV2UI extends PatentUI {
 	// Constructor - converting a Patent to a PatentUI
 	public PatentV2UI(Patent patent, List<PatentExtendedData> extendedDatas) {
 		super(patent, extendedDatas);
+		
+		//
 
 		
 	}

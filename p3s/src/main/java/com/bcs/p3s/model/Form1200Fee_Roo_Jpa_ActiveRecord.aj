@@ -62,12 +62,6 @@ privileged aspect Form1200Fee_Roo_Jpa_ActiveRecord {
     }
     
     @Transactional
-    public void Form1200Fee.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.persist(this);
-    }
-    
-    @Transactional
     public void Form1200Fee.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {

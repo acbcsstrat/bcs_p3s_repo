@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.CostAnalysisData;
@@ -17,15 +19,23 @@ import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.PortfolioUI;
+import com.bcs.p3s.display.form1200.ExtensionStateUI;
+import com.bcs.p3s.display.form1200.Form1200SavedData;
+import com.bcs.p3s.display.form1200.PageDescriptionEnum;
+import com.bcs.p3s.display.form1200.PageDescriptionTool;
+import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
+import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.engine.DummyForm1200Engine;
 import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.ServiceManager;
+import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
-import com.bcs.p3s.form1200.CreateListOfStates;
+import com.bcs.p3s.form1200.CountryStatesUtil;
 import com.bcs.p3s.model.Epct;
+import com.bcs.p3s.model.Form1200Fee;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.util.date.DateUtil;
@@ -63,8 +73,8 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		EpctEngine epctEngine = new EpctEngine(patent);
 		questionData.setIsYear3RenewalDue(epctEngine.isRenewalFeeOptional());
 
-		questionData.setExtensionStatesUI(CreateListOfStates.generateListOfExtensionStates());
-		questionData.setValidationStatesUI(CreateListOfStates.generateListOfValidationStates());
+		questionData.setExtensionStatesUI(CountryStatesUtil.generateListOfExtensionStates());
+		questionData.setValidationStatesUI(CountryStatesUtil.generateListOfValidationStates());
 
 		return questionData;
 	}
@@ -200,6 +210,134 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		new EpctEngine(patent);
 		// That will have set the 2 patent E-PCT status values  
 	}
+
+	
+	
+	
+	
+	
+	/**
+	 * User has entered the Form1200 questions, & chosen to SAVE the E-PCT application, & thus generate the E-PCT review PDF
+	 * @param patentId
+	 * @param clientRef
+	 * @param totalClaims
+	 * @param isYear3RenewalPaying
+	 * @param totalPages
+	 * @param extensionStatesUI
+	 * @param validationStatesUI
+	 * @param pageDescriptionUI
+	 */
+	@Override
+	public void saveNewForm1200details(long  patentId, String clientRef, long totalClaims, boolean isYear3RenewalPaying, long totalPages, 
+			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI) 
+	{
+		String err = PREFIX+"saveForm1200details("+patentId+") ";
+		log().debug(err+" invoked");
+		
+		checkForm1200AsEntered4MissingData(patentId, err, totalClaims, totalPages, extensionStatesUI, validationStatesUI, pageDescriptionUI);
+
+		// No exceptions anticipted, so pass any up to controller
+//		try {
+			Patent patent = Patent.findPatent(patentId);
+
+			// This methods need to: create Form1200Fee; create Epct, persist both & wire-up, then gen PDF, the gen table 2.2b data to return
+			
+			// Note: Ignore any existing E-PCT record. If it exists, would be a failed payment
+			
+			// Form1200Fee  : access the existing code for populating this
+		    PatentService patentService = new PatentServiceImpl(session);
+		    PatentV2UI patentV2UI = patentService.getPatentInfo(patentId, session);
+			EpctEngine epctEngine = new EpctEngine(patentV2UI);
+			Form1200Fee form1200Fee = epctEngine.getFee(); // this'll be correctly populated, even if a failed Epct exists
+	
+			// Now create a new Epct
+			Epct epct = new Epct();
+			
+			CountryStatesUtil countryStatesUtil = new CountryStatesUtil();
+			PageDescriptionTool pageDescriptionTool = new PageDescriptionTool();
+			// Cannot do this !
+			// The method listAbstractStates2commaSeparatedString(List<AbstractState>) in the type CountryStatesUtil is not applicable for the arguments (List<ExtensionStateUI>)
+			//epct.setExtensionStates(countryStatesUtil.listAbstractStates2commaSeparatedString(extensionStatesUI));
+
+			epct.setExtensionStates(countryStatesUtil.listExtensionStatesUI2commaSeparatedString(extensionStatesUI));
+			epct.setValidationStates(countryStatesUtil.listValidationStatesUI2commaSeparatedString(validationStatesUI));
+			epct.setTotalClaims( (int) totalClaims);			
+			epct.setTotalPages( (int) totalPages);
+
+			PageDescriptionUI descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Description);
+			epct.setDescriptionStartPage(new Integer(descFromTo.getTypeStart()));
+			epct.setDescriptionEndPage(new Integer(descFromTo.getTypeEnd()));
+
+			descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Claims);
+			epct.setClaimsStartPage(new Integer(descFromTo.getTypeStart()));
+			epct.setClaimsEndPage(new Integer(descFromTo.getTypeEnd()));
+
+			descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Drawings);
+			epct.setDrawingsStartPage(new Integer(descFromTo.getTypeStart()));
+			epct.setDrawingsEndPage(new Integer(descFromTo.getTypeEnd()));
+
+			boolean isYear3RenewalOptional = epctEngine.isRenewalFeeOptional();
+			boolean isPayingOptionalYr3Renewal = false;
+			if (isYear3RenewalOptional && isYear3RenewalPaying) isPayingOptionalYr3Renewal = true; 
+			epct.setIsYear3RenewalDue(isYear3RenewalOptional);
+			epct.setIsYear3RenewalPaying(isPayingOptionalYr3Renewal);
+			epct.setEpctSubmittedDate(null);
+			
+			epct.setEpctApplicationExpiryDate(epctEngine.getRedStartDate());
+			epct.setEpctStatus(Form1200StatusEnum.EPCT_BEING_GENERATED);
+
+			
+			// Persist. Do the 3+step / inc. wire
+			form1200Fee = form1200Fee.persist();
+			
+			epct.setPatent(patent);
+			epct.setForm1200Fee(form1200Fee);
+			epct.setForm1200(null);
+			epct = epct.persist();
+			
+			form1200Fee.setEpct(epct);
+			form1200Fee.merge();
+
+			patent.setEpctStatus(epct.getEpctStatus());
+			patent.setEpctNotAvailableReason(null);
+			patent.merge();
+
+			// generate the PDF
+			// This will be done by cron
+			
+			// -----------------------------------------------------------------------------------
+			// Prepare the table 2.2b data to return to FE
+			// Required data: patentId, EP_ApplicationNumber, form1200PdfUrl, form1200FeeUI. i.e. a Form1200SavedData
+			Form1200SavedData form1200SavedData = new Form1200SavedData();
+			form1200SavedData.setPatentId(patentId);
+			form1200SavedData.setEP_ApplicationNumber(patent.getEP_ApplicationNumber());
+			form1200SavedData.setForm1200PdfUrl(null); // It hasn't even Started being created yet
+			Form1200FeeUI form1200FeeUI = new Form1200FeeUI(form1200Fee);
+			form1200SavedData.setForm1200FeeUI(form1200FeeUI);
+			
+			
+//		} catch (Exception e) {
+//			// acToDo - there may yet be EXPECTED errors to be caught here
+//			logErrorAndContinue("Caught unexpected failure : "+err, e);
+//		  	//return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// End of public methods
 	

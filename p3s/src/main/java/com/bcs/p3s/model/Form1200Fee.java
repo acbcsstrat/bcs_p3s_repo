@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
@@ -185,4 +186,21 @@ public class Form1200Fee {
     	if (item == null) return total;
     	else return total.add(item);
     }
+
+
+    // Create this variant which returns the newly persisted item (with id)
+    @Transactional
+    public Form1200Fee persist() {  
+    	Form1200Fee form1200Fee = new Form1200Fee();  
+    	EntityManager em = this.entityManager();
+        em.persist(this);
+        form1200Fee = Form1200Fee.findForm1200Fee(this.getId());
+        return form1200Fee;
+    }
+	//    replaces the aj generated ...
+    //    @Transactional
+	//    public void Form1200Fee.persist() {
+	//        if (this.entityManager == null) this.entityManager = entityManager();
+	//        this.entityManager.persist(this);
+	//    }
 }

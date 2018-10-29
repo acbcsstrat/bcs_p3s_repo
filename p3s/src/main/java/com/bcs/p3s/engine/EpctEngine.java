@@ -52,6 +52,7 @@ public class EpctEngine extends Universal {
 	Date greenStartDate;
 	Date amberStartDate;
 	Date redStartDate;
+	//Date redStartDateMinus1;
 	Date redEndDate;
 	Date costBandEndDate;
 	String currentColour;
@@ -69,10 +70,10 @@ public class EpctEngine extends Universal {
 	/**
 	 * Constructor - prepares data for the specified Patent
 
-	 * @param patent The class provided affects processing.
+	 * @param patent The class-type provided determines what processing to perform.
 	 *  If a Patent object, processing is orientated towards populating the Patent for persisting to the dB - 
 	 *   i.e. includes add-patent/first-time-only processing
-	 *   Whereas if the class is a supertype of Patent, then first-time-only processing may be skipped, 
+	 *   Whereas if the class is a PatentV2UI, then first-time-only processing may be skipped, 
 	 *   instead calculation (of <i>this</i> classes' properties) for UI data, occurs.
 	 *  Slight difference. The majority of processing is common to both. 
 	 */
@@ -194,7 +195,8 @@ public class EpctEngine extends Universal {
 			if (isEmpty(patent.getEpctNotAvailableReason())) logErrorAndContinue("Status=Rejected, yet REASON is empty. Patent="+patent.getId());
 			isPricingAndDatesNeeded = true;
 		}
-		else if (isMatchStatusInEitherObject(Form1200StatusEnum.EPCT_BEING_GENERATED)) {
+		else if (isMatchStatusInEitherObject(Form1200StatusEnum.EPCT_BEING_GENERATED)
+				|| isMatchStatusInEitherObject(Form1200StatusEnum.AWAIT_PDF_TRIGGER)) {
 			epctStatus = Form1200StatusEnum.EPCT_BEING_GENERATED;
 			isPricingAndDatesNeeded = true;
 		}
@@ -230,6 +232,7 @@ public class EpctEngine extends Universal {
 		// Red is 3 days WORKING days before end. But for Thanksgiving implementation, choose simpler 5+5 CALENDAR days 
 		LocalDate ldRedStart =  ld31monthsAfter.minusDays(5L);
 		redStartDate = Date.from(ldRedStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		//redStartDateMinus1 = Date.from((ldRedStart.minusDays(1L)).atStartOfDay(ZoneId.systemDefault()).toInstant()); - acTidy
 		redEndDate = Date.from(ld31monthsAfter.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				
 		LocalDate ldAmberStart =  ldRedStart.minusDays(5L);
@@ -448,6 +451,12 @@ public class EpctEngine extends Universal {
 	
 	// Ordinary getters
 
+	public String getEpctStatus() {
+		return epctStatus;
+	}
+	public Date getRedStartDate() {
+		return redStartDate;
+	}
 	public Form1200Fee getFee() {
 		return fee;
 	}
@@ -458,5 +467,4 @@ public class EpctEngine extends Universal {
 	public boolean isRenewalFeeOptional() {
 		return isRenewalFeeOptional;
 	}
-	
 }

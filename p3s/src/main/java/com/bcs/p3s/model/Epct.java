@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,6 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 
@@ -123,12 +125,14 @@ public class Epct {
 	protected Integer drawingsEndPage;
 	
     /** AC181015 this may be redundant, as we'd always calculate? acTidy
+     * i.e renewal is Not mandated - but IS optional
      */
     @NotNull
     protected Boolean isYear3RenewalDue;
 
     /**
      * only matters if isYear3RenewalDue is true
+     * i.e. the fee IS Optional, and the customer chose to pay it
      */
     @NotNull
     protected Boolean isYear3RenewalPaying;
@@ -141,7 +145,8 @@ public class Epct {
     protected Date epctSubmittedDate;
 
     /**
-     * Date after which is too late to apply for E-PCT
+     * OBS Date after which is too late to apply for E-PCT - AC - amend this to ..
+     * Date from which is too late to apply for E-PCT
      */
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
@@ -204,4 +209,19 @@ public class Epct {
     	return validationStatesAsList().size();
     }
 
+    // Create this variant which returns the newly persisted item (with id)
+    @Transactional
+    public Epct persist() {  
+    	Epct epct = new Epct();  
+    	EntityManager em = this.entityManager();
+        em.persist(this);
+        epct = Epct.findEpct(this.getId());
+        return epct;
+    }
+	//    replaces the aj generated ...
+	//    @Transactional
+	//    public void Epct.persist() {
+	//        if (this.entityManager == null) this.entityManager = entityManager();
+	//        this.entityManager.persist(this);
+	//    }
 }

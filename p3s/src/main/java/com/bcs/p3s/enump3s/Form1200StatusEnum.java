@@ -13,6 +13,7 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     public static final String EPCT_NOT_AVAILABLE	= "Epct not available";
     public static final String EPCT_AVAILABLE		= "Epct available";
     public static final String EPCT_REJECTED		= "Epct rejected";
+    public static final String AWAIT_PDF_TRIGGER 	= "Await pdf trigger";    // Epct created but Cron not yet started generating PDF. May prove to be redundant. acTidy 
     public static final String EPCT_BEING_GENERATED	= "Epct being generated";
     public static final String EPCT_SAVED			= "Epct saved";
     public static final String PAYMENT_IN_PROGRESS	= "Payment in progress";

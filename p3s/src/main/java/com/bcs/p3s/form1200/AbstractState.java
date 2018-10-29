@@ -1,17 +1,20 @@
-package com.bcs.p3s.display.form1200;
+package com.bcs.p3s.form1200;
 
 /**
- * Holds Extension States (i.e. Countries)
- * Note: ExtensionStatesUI & ValidationStatesUI intentionally duplicate each other
- *
+ * Abstract state for 2character Country/States
+ *  as used for Form1200 processing
  */
-public class ValidationStatesUI {
-
+public abstract class AbstractState {
+	
 	public String stateCode;
 	public String stateName;
 	boolean isSelected;
 
 	
+	
+	
+	
+	// getters & setters
 	public String getStateCode() {
 		return stateCode;
 	}
@@ -30,5 +33,6 @@ public class ValidationStatesUI {
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
 	}
+	
 
 }

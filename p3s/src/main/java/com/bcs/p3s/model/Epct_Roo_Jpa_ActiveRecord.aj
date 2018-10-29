@@ -62,12 +62,6 @@ privileged aspect Epct_Roo_Jpa_ActiveRecord {
     }
     
     @Transactional
-    public void Epct.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.persist(this);
-    }
-    
-    @Transactional
     public void Epct.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {

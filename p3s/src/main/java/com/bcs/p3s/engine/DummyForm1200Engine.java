@@ -3,14 +3,17 @@ package com.bcs.p3s.engine;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.display.P3SService;
+import com.bcs.p3s.display.form1200.ExtensionStateUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
+import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
-import com.bcs.p3s.form1200.CreateListOfStates;
+import com.bcs.p3s.form1200.CountryStatesUtil;
 import com.bcs.p3s.util.lang.Universal;
 
 public class DummyForm1200Engine extends Universal {
@@ -150,8 +153,8 @@ public class DummyForm1200Engine extends Universal {
 		startForm1200Api21UI.setClientRef(thisPatent.getClientRef());
 		startForm1200Api21UI.setShowOptionalQuestion( ! isA);
 		startForm1200Api21UI.setIsYear3RenewalDue( ! isA);
-		startForm1200Api21UI.setExtensionStatesUI(CreateListOfStates.generateListOfExtensionStates());
-		startForm1200Api21UI.setValidationStatesUI(CreateListOfStates.generateListOfValidationStates());
+		startForm1200Api21UI.setExtensionStatesUI(CountryStatesUtil.generateListOfExtensionStates());
+		startForm1200Api21UI.setValidationStatesUI(CountryStatesUtil.generateListOfValidationStates());
 		
 		return startForm1200Api21UI;
 	}
@@ -204,4 +207,31 @@ public class DummyForm1200Engine extends Universal {
 	
 	
 	
+	
+	// tmp method until have real Pat FE delivering objects
+	public List<String> csStings2ist(String csv) {
+		//Remove whitespace and split by comma 
+        List<String> items = Arrays.asList(csv.split("\\s*,\\s*"));
+		return items;
+	}
+	public List<ExtensionStateUI> listStrStates2ExtnsStates(List<String> strList) {
+		List<ExtensionStateUI> extnStates = new ArrayList<ExtensionStateUI>();
+		ExtensionStateUI exnSt = null;
+		for (String str : strList) {
+			exnSt = new ExtensionStateUI(str);
+			extnStates.add(exnSt);
+		}
+		return extnStates;
+	}
+	public List<ValidationStateUI> listStrStates2ValidStates(List<String> strList) {
+		List<ValidationStateUI> vldStates = new ArrayList<ValidationStateUI>();
+		ValidationStateUI vldSt = null;
+		for (String str : strList) {
+			vldSt = new ValidationStateUI(str);
+			vldStates.add(vldSt);
+		}
+		return vldStates;
+	}
+
+
 }
