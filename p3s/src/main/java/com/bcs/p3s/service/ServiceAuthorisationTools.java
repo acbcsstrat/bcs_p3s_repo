@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
+import com.bcs.p3s.display.form1200.PageDescriptionEnum;
 import com.bcs.p3s.display.form1200.PageDescriptionTool;
 import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
@@ -202,7 +203,41 @@ public class ServiceAuthorisationTools extends Universal {
 		if (pageDescriptionUI==null)	failMalicious(err+"pageDescriptionUI is null"); 
 		if (pageDescriptionUI.size()!=3)	failMalicious(err+"pageDescriptionUI size is not 3");
 		PageDescriptionTool pageDescriptionTool = new PageDescriptionTool();
-		if ( ! pageDescriptionTool.confGot1ofEach(pageDescriptionUI)) failMalicious(err+"pageDescriptionUI not 1ofEach"); 
+		if ( ! pageDescriptionTool.confGot1ofEach(pageDescriptionUI)) failMalicious(err+"pageDescriptionUI not 1ofEach");
+		checkPageNumbersForSillies(totalPages, pageDescriptionUI, err);
+	}
+	protected void checkPageNumbersForSillies(long totalPages, List<PageDescriptionUI> pageDescriptionUIs, String err) {
+		err += "checkPageNumbersForSillies - ";
+		int totPages = (int) totalPages;
+		PageDescriptionTool pageDescriptionTool = new PageDescriptionTool();
+		PageDescriptionUI descriptionPages	= pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUIs, PageDescriptionEnum.Description);
+		PageDescriptionUI claimsPages		= pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUIs, PageDescriptionEnum.Claims);
+		PageDescriptionUI drawingsPages		= pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUIs, PageDescriptionEnum.Drawings);
+		int descStart = Integer.parseInt(descriptionPages.getTypeStart());
+		int descEnd = Integer.parseInt(descriptionPages.getTypeEnd());
+		int claimsStart = Integer.parseInt(claimsPages.getTypeStart());
+		int claimsEnd = Integer.parseInt(claimsPages.getTypeEnd());
+		int drgsStart = Integer.parseInt(drawingsPages.getTypeStart());
+		int drgsEnd = Integer.parseInt(drawingsPages.getTypeEnd());
+		if (descEnd>totPages || claimsEnd>totPages || drgsEnd>totPages) failMalicious(err+"SectionEndPage beyond end doc."); 
+		// check each range for overlaps
+		if ( 
+			   (isPageNumWithinRange(claimsStart, descStart, descEnd))
+			|| (isPageNumWithinRange(claimsEnd, descStart, descEnd))
+			|| (isPageNumWithinRange(drgsStart, descStart, descEnd))
+			|| (isPageNumWithinRange(drgsEnd, descStart, descEnd))
+			|| (isPageNumWithinRange(descStart, claimsStart, claimsEnd))
+			|| (isPageNumWithinRange(descEnd, claimsStart, claimsEnd))
+			|| (isPageNumWithinRange(drgsStart, claimsStart, claimsEnd))
+			|| (isPageNumWithinRange(drgsEnd, claimsStart, claimsEnd))
+			|| (isPageNumWithinRange(descStart, drgsStart, drgsEnd))
+			|| (isPageNumWithinRange(descEnd, drgsStart, drgsEnd))
+			|| (isPageNumWithinRange(claimsStart, drgsStart, drgsEnd))
+			|| (isPageNumWithinRange(claimsEnd, drgsStart, drgsEnd))
+		) failMalicious(err+"Section page numbers overlap.");
+	}
+	protected boolean isPageNumWithinRange(int pageNum, int rangeStart, int rangeEnd) {
+		return (pageNum>rangeStart && pageNum<rangeEnd);
 	}
 
 	

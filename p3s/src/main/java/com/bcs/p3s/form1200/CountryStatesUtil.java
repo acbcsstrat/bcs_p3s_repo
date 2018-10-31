@@ -72,28 +72,34 @@ public class CountryStatesUtil {
 	
 	
 	
-	public String listAbstractStates2commaSeparatedString(List<AbstractState> list) {
+	public String listSelectedAbstractStates2commaSeparatedString(List<AbstractState> list) {
 		if (list==null) return null;
-		if (list.size()==0) return "";
-		if (list.size()==1) return list.get(0).getStateCode();
-		String csv = list.get(0).getStateCode();
-		for (int ii = 1; ii<list.size(); ii++) {
-			csv += (","+list.get(ii).getStateCode());
+		// filter
+		List<AbstractState> selected = new ArrayList<AbstractState>();
+		for (AbstractState state : list) {
+			if (state.isSelected) selected.add(state);
+		}
+		// create comma separated list
+		if (selected.size()==0) return "";
+		if (selected.size()==1) return selected.get(0).getStateCode();
+		String csv = selected.get(0).getStateCode();
+		for (int ii = 1; ii<selected.size(); ii++) {
+			csv += (","+selected.get(ii).getStateCode());
 		}
 		return csv;
 	}
 
 	
-	// Surely, this should not be necessary ?
-	public String listExtensionStatesUI2commaSeparatedString(List<ExtensionStateUI> list) {
+	// Surely, this should not be necessary ? List<supertype> not compatible with List<type>
+	public String listSelectedExtensionStatesUI2commaSeparatedString(List<ExtensionStateUI> list) {
 		List<AbstractState> abs = new ArrayList<AbstractState>();
 		for (AbstractState state : list) abs.add(state);
-		return listAbstractStates2commaSeparatedString(abs);
+		return listSelectedAbstractStates2commaSeparatedString(abs);
 	}
-	public String listValidationStatesUI2commaSeparatedString(List<ValidationStateUI> list) {
+	public String listSelectedValidationStatesUI2commaSeparatedString(List<ValidationStateUI> list) {
 		List<AbstractState> abs = new ArrayList<AbstractState>();
 		for (AbstractState state : list) abs.add(state);
-		return listAbstractStates2commaSeparatedString(abs);
+		return listSelectedAbstractStates2commaSeparatedString(abs);
 	}
 
 

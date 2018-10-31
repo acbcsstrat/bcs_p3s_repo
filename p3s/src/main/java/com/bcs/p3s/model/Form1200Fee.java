@@ -1,7 +1,6 @@
 package com.bcs.p3s.model;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -188,6 +187,34 @@ public class Form1200Fee {
     }
 
 
+    /**
+     * Prior to persisting, certain fields may be null.
+     * But upon persisting (& in the FE contract), most fields cannot be null. If not set, they'll be Zero
+     * 
+     * Note: this Only changes null. It does NOT perform totals. a rate of zero may cause issues !
+     */
+    public void ensureNoNulls() {
+    	BigDecimal zero = BigDecimal.ZERO;
+    	if (filingFee_EUR==null) filingFee_EUR = zero; 
+    	if (supplementarySearchFee_EUR==null) supplementarySearchFee_EUR = zero; 
+    	if (designationStatesFee_EUR ==null) designationStatesFee_EUR  = zero; 
+    	if (totalExtensionStatesFee_EUR ==null) totalExtensionStatesFee_EUR  = zero; 
+    	if (totalValidationStatesFee_EUR==null) totalValidationStatesFee_EUR = zero; 
+    	if (examinationFee_EUR==null) examinationFee_EUR = zero; 
+    	if (totalClaimsFee1_EUR==null) totalClaimsFee1_EUR = zero; 
+    	if (totalClaimsFee2_EUR==null) totalClaimsFee2_EUR = zero; 
+    	if (totalExcessPageFee_EUR==null) totalExcessPageFee_EUR = zero; 
+    	if (renewalFee_EUR==null) renewalFee_EUR = zero; 
+    	if (processingFee_USD==null) processingFee_USD = zero; 
+    	if (expressFee_USD==null) expressFee_USD = zero; 
+    	if (urgentFee_USD==null) urgentFee_USD = zero; 
+    	if (subTotal_USD==null) subTotal_USD = zero; 
+    	if (subTotal_USD==null) subTotal_USD = zero; 
+    	if (fxRate==null) fxRate = zero; 
+    }
+
+    
+    
     // Create this variant which returns the newly persisted item (with id)
     @Transactional
     public Form1200Fee persist() {  

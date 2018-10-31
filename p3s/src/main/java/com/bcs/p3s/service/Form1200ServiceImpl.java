@@ -1,5 +1,6 @@
 package com.bcs.p3s.service;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,8 +10,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.CostAnalysisData;
@@ -26,16 +25,15 @@ import com.bcs.p3s.display.form1200.PageDescriptionTool;
 import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
-import com.bcs.p3s.engine.DummyForm1200Engine;
 import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.ServiceManager;
-import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.form1200.CountryStatesUtil;
 import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Form1200Fee;
+import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.util.date.DateUtil;
@@ -156,6 +154,8 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		patentV2UI.setRenewalStageProgress(0);
 		patentV2UI.setForm1200StageProgress(0);
 		List<P3SService> services = portfolioUI.getServiceList();
+		EpctEngine epctEngine = new EpctEngine(patentV2UI);
+		boolean e1200EngineCalcBandDates = false;
 		//if (services==null) fail(handle+"services can be empty, but must not be null. Failed!");
 		for (P3SService service : services) {
 			String serviceType = service.getServiceType();
@@ -171,8 +171,11 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 			} else if (P3SProductTypeEnum.FORM1200.equalsIgnoreCase(serviceType)) {
 				// Form1200
 				form1200Service = service;
-				EpctEngine epctEngine = new EpctEngine(patentV2UI);
-				Date startDate = epctEngine.getCostStartEndDate();
+				if ( ! e1200EngineCalcBandDates) {
+					epctEngine.calcEpctPersistPricingOnly(new Epct(), null);
+					e1200EngineCalcBandDates = true;
+				}
+				Date startDate = epctEngine.getCostStartDate();
 				Date endDate = service.getCostBandEndDate();
 				int percentageElapsed = calcIntegerPercentageBetween2Dates(startDate, endDate);
 				patentV2UI.setForm1200StageProgress(percentageElapsed);
@@ -183,7 +186,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		if (form1200Service!=null) {
 			Form1200FeeUI form1200FeeUI = null;
 			// if (epct!=null) could use existing. But it might be out of date. So calc anyway
-			EpctEngine epctEngine = new EpctEngine(patentV2UI);
+			//EpctEngine epctEngine = new EpctEngine(patentV2UI); reuse above - acTidy once proven safe
 			form1200FeeUI = new Form1200FeeUI(epctEngine.getFee());
 			patentV2UI.setForm1200FeeUI(form1200FeeUI);
 		}
@@ -198,7 +201,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 
 	}
 
-		
+
 		
 	/**
 	 * A much simpler variant of populatePatentInfo
@@ -207,7 +210,9 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	 */
 	@Override
 	public void calcEpctStatuss(Patent patent) {
-		new EpctEngine(patent);
+		EpctEngine epctEngine = new EpctEngine(patent);
+		
+		epctEngine.calcEpctStatusAndReason();
 		// That will have set the 2 patent E-PCT status values  
 	}
 
@@ -228,8 +233,8 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	 * @param pageDescriptionUI
 	 */
 	@Override
-	public void saveNewForm1200details(long  patentId, String clientRef, long totalClaims, boolean isYear3RenewalPaying, long totalPages, 
-			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI) 
+	public Form1200SavedData saveNewForm1200details(long  patentId, String clientRef, long totalClaims, boolean isYear3RenewalPaying, long totalPages, 
+			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI, P3SUser me) 
 	{
 		String err = PREFIX+"saveForm1200details("+patentId+") ";
 		log().debug(err+" invoked");
@@ -247,11 +252,15 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 			// Form1200Fee  : access the existing code for populating this
 		    PatentService patentService = new PatentServiceImpl(session);
 		    PatentV2UI patentV2UI = patentService.getPatentInfo(patentId, session);
-			EpctEngine epctEngine = new EpctEngine(patentV2UI);
-			Form1200Fee form1200Fee = epctEngine.getFee(); // this'll be correctly populated, even if a failed Epct exists
-	
-			// Now create a new Epct
+			EpctEngine epctEngine = new EpctEngine(patentV2UI); // This needs invoking here, to calculate dates PRIOR to populating epct. But don't invoke pricing until AFTER epct populated 
+
 			Epct epct = new Epct();
+//			BigDecimal optionalFxRate = null; moved later - after epct populated
+//			epctEngine.calcEpctPersistPricingOnly(epct, optionalFxRate);
+//			Form1200Fee form1200Fee = epctEngine.getFee(); // this'll be correctly populated, even if a failed Epct exists
+	
+//			// Now create a new Epct - acTidy  - once above proven
+//			Epct epct = new Epct();
 			
 			CountryStatesUtil countryStatesUtil = new CountryStatesUtil();
 			PageDescriptionTool pageDescriptionTool = new PageDescriptionTool();
@@ -259,8 +268,8 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 			// The method listAbstractStates2commaSeparatedString(List<AbstractState>) in the type CountryStatesUtil is not applicable for the arguments (List<ExtensionStateUI>)
 			//epct.setExtensionStates(countryStatesUtil.listAbstractStates2commaSeparatedString(extensionStatesUI));
 
-			epct.setExtensionStates(countryStatesUtil.listExtensionStatesUI2commaSeparatedString(extensionStatesUI));
-			epct.setValidationStates(countryStatesUtil.listValidationStatesUI2commaSeparatedString(validationStatesUI));
+			epct.setExtensionStates(countryStatesUtil.listSelectedExtensionStatesUI2commaSeparatedString(extensionStatesUI));
+			epct.setValidationStates(countryStatesUtil.listSelectedValidationStatesUI2commaSeparatedString(validationStatesUI));
 			epct.setTotalClaims( (int) totalClaims);			
 			epct.setTotalPages( (int) totalPages);
 
@@ -285,12 +294,26 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 			
 			epct.setEpctApplicationExpiryDate(epctEngine.getRedStartDate());
 			epct.setEpctStatus(Form1200StatusEnum.EPCT_BEING_GENERATED);
+			epct.setCreatedBy(me);
+			epct.setCreatedDate(new Date());
 
+//zaph zappp			
+			BigDecimal optionalFxRate = null;
+			epctEngine.calcEpctPersistPricingOnly(epct, optionalFxRate);
+			Form1200Fee form1200Fee = epctEngine.getFee(); // this'll be correctly populated, even if a failed Epct exists
+
+			
+			
+			
+			// Prepare for persist
+			form1200Fee.ensureNoNulls();
+			
 			
 			// Persist. Do the 3+step / inc. wire
 			form1200Fee = form1200Fee.persist();
 			
 			epct.setPatent(patent);
+			
 			epct.setForm1200Fee(form1200Fee);
 			epct.setForm1200(null);
 			epct = epct.persist();
@@ -321,6 +344,8 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 //			logErrorAndContinue("Caught unexpected failure : "+err, e);
 //		  	//return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.INTERNAL_SERVER_ERROR);
 //		}
+			
+		return form1200SavedData;
 	}
 	
 	

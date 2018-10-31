@@ -22,9 +22,9 @@ public class PageDescriptionTool {
 		boolean gotClaim = false;
 		boolean gotDrwgs = false;
 		for (PageDescriptionUI typ : pageDescriptionUIs) {
-			if (PageDescriptionEnum.Description.equals(typ)) gotDescr = true;
-			if (PageDescriptionEnum.Claims.equals(typ))      gotClaim = true;
-			if (PageDescriptionEnum.Drawings.equals(typ))    gotDrwgs = true;
+			if (PageDescriptionEnum.Description == typ.getType()) gotDescr = true;
+			if (PageDescriptionEnum.Claims == typ.getType())      gotClaim = true;
+			if (PageDescriptionEnum.Drawings == typ.getType())    gotDrwgs = true;
 		}
 		
 		return gotDescr && gotClaim && gotDrwgs; 

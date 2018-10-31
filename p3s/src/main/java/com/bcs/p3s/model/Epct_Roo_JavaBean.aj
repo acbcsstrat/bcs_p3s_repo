@@ -52,16 +52,8 @@ privileged aspect Epct_Roo_JavaBean {
         this.validationStates = validationStates;
     }
     
-    public Integer Epct.getTotalClaims() {
-        return this.totalClaims;
-    }
-    
     public void Epct.setTotalClaims(Integer totalClaims) {
         this.totalClaims = totalClaims;
-    }
-    
-    public Integer Epct.getTotalPages() {
-        return this.totalPages;
     }
     
     public void Epct.setTotalPages(Integer totalPages) {
@@ -116,16 +108,8 @@ privileged aspect Epct_Roo_JavaBean {
         this.drawingsEndPage = drawingsEndPage;
     }
     
-    public Boolean Epct.getIsYear3RenewalDue() {
-        return this.isYear3RenewalDue;
-    }
-    
     public void Epct.setIsYear3RenewalDue(Boolean isYear3RenewalDue) {
         this.isYear3RenewalDue = isYear3RenewalDue;
-    }
-    
-    public Boolean Epct.getIsYear3RenewalPaying() {
-        return this.isYear3RenewalPaying;
     }
     
     public void Epct.setIsYear3RenewalPaying(Boolean isYear3RenewalPaying) {

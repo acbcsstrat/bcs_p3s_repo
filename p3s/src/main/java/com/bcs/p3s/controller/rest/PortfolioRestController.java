@@ -58,7 +58,7 @@ public class PortfolioRestController extends Universal {
 	//Implements API section 3.1 - Get all patents' details for Portfolio page
     @RequestMapping(value = "/rest-patents-portfolio/", method = RequestMethod.GET)
     public ResponseEntity<List<PortfolioUI>> listPatentsForPortfolio() {
-    	log().debug(CLASSNAME+"listPatentsForPortfolio() invoked");
+    	log().debug(CLASSNAME+"/rest-patents-portfolio/  listPatentsForPortfolio() invoked");
     	
     	List<PortfolioUI> portfolioUIs = new ArrayList<PortfolioUI>();
     	

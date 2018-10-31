@@ -203,7 +203,7 @@ public class Epct {
     }
     public List<String> validationStatesAsList() {
     	if (validationStates==null || validationStates.trim().length()==0) return new ArrayList<String>();
-    	return  Arrays.asList(extensionStates.split(","));
+    	return  Arrays.asList(validationStates.split(","));
     }
     public int countValidationStates() {
     	return validationStatesAsList().size();
@@ -224,4 +224,51 @@ public class Epct {
 	//        if (this.entityManager == null) this.entityManager = entityManager();
 	//        this.entityManager.persist(this);
 	//    }
+
+
+
+
+
+
+//// push - tidy iof this approach adopted zaph
+//    public Integer Epct.getTotalClaims() {
+//        return this.totalClaims;
+//    }
+//    
+//    public Integer Epct.getTotalPages() {
+//        return this.totalPages;
+//    }
+//    
+//    public Boolean Epct.getIsYear3RenewalDue() {
+//        return this.isYear3RenewalDue;
+//    }
+    // & getIsYear3RenewalPaying
+
+    //	Avoid NPEs if an empty Epct is provided 
+    public Integer getTotalClaims() {
+    	if (this.totalClaims==null) return Integer.valueOf(0);
+    	else return this.totalClaims;
+    }
+    public Integer getTotalPages() {
+    	if (this.totalPages==null) return Integer.valueOf(0);
+    	else return this.totalPages;
+    }
+    public Boolean getIsYear3RenewalDue() {
+    	if (this.isYear3RenewalDue==null) return Boolean.valueOf(false);
+    	else return this.isYear3RenewalDue;
+    }
+    public Boolean getIsYear3RenewalPaying() {
+    	if (this.isYear3RenewalPaying==null) return Boolean.valueOf(false);
+    	else return this.isYear3RenewalPaying;
+    }
+
+
+
+
+
+
+
+
+
+
 }

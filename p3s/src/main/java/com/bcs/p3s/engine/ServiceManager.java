@@ -32,9 +32,10 @@ public class ServiceManager extends Universal {
     		// Unconditionally provide 1 Service, detailing current Form1200 Status
     		
     		EpctEngine epctEngine = new EpctEngine(patent);
-    		service = epctEngine.determineForm1200Service();
-    		
-    		services.add(service);
+    		if ( ! epctEngine.isNotAvailable) {
+	    		service = epctEngine.prepareForm1200Service();
+	    		services.add(service);
+    		}
     	}
     	else if (StageManager.isInProsecution(patent.getEpoPatentStatus())) {
     		// Can we sell a renewal ?

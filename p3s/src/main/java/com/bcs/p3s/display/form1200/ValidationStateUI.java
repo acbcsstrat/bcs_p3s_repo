@@ -12,10 +12,10 @@ import com.bcs.p3s.util.lang.P3SRuntimeException;
 public class ValidationStateUI extends AbstractState {
 
 	public ValidationStateUI(String code) {
-		if ("MA".equals(code)) { setStateCode(code); setStateName("Morocco"); setSelected(false); }
-		else if ("MD".equals(code)) { setStateCode(code); setStateName("The Republic of Moldova"); setSelected(false); }
-		else if ("TN".equals(code)) { setStateCode(code); setStateName("Tunisia"); setSelected(false); }
-		else if ("KH".equals(code)) { setStateCode(code); setStateName("Cambodia"); setSelected(false); }
+		if ("MA".equals(code)) { setStateCode(code); setStateName("Morocco"); setSelected(true); }
+		else if ("MD".equals(code)) { setStateCode(code); setStateName("The Republic of Moldova"); setSelected(true); }
+		else if ("TN".equals(code)) { setStateCode(code); setStateName("Tunisia"); setSelected(true); }
+		else if ("KH".equals(code)) { setStateCode(code); setStateName("Cambodia"); setSelected(true); }
 		else throw new P3SRuntimeException("ExtensionStatesUI passed bad code : "+code);	
 	}
 	public ValidationStateUI() { ; }  // retained for CountryStatesUtil
