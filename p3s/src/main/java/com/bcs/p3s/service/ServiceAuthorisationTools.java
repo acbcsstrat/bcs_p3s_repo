@@ -17,6 +17,7 @@ import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
+import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.LoginMessage;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
@@ -35,6 +36,8 @@ import com.bcs.p3s.util.lang.Universal;
  *  - ANY check*() method should be null-safe on all parameters
  *  - Any fail will log, syso(for good measure!), then throw a RuntimeException (to prevent further, damaged processing)
  *
+ *  And each Client method <i>should</i> VeryEarlyOn (ideally firstLine) call one of these check*() methods
+ *   (even if just checkNoActionRequired).  This is to simplify visual confirmation that one of these safety checks have been called
  */
 public class ServiceAuthorisationTools extends Universal {
 
@@ -96,6 +99,12 @@ public class ServiceAuthorisationTools extends Universal {
 		check4MissingDataInForm1200Entry(id, err, totalClaims, totalPages, extensionStatesUI, validationStatesUI, pageDescriptionUI);
 	}
 	
+	protected void checkForm1200isDeletable(long patentId, String err) 
+	{
+		Patent patent = checkThisIsMyPatent(patentId, err);
+		checkEpctisDeletable(patent, err);
+	}
+	
 	
 	
 	
@@ -135,11 +144,12 @@ public class ServiceAuthorisationTools extends Universal {
 																	failMalicious(err); 
 	}
 	
-	protected void checkThisIsMyPatent(Long id, String err) {
+	protected Patent checkThisIsMyPatent(Long id, String err) {
 		err += ("  [on checkThisIsMyPatent("+id+")]");
 		Patent p = Patent.findPatent(id);
 		if ( (p==null) || ! checkThisIsMy().getBusiness().getId().equals(p.getBusiness().getId())) 
-																	failMalicious(err); 
+																	failMalicious(err);
+		return p;
 	}
 	
 	protected void checkNotNull(Object ob, String err) {
@@ -240,6 +250,17 @@ public class ServiceAuthorisationTools extends Universal {
 		return (pageNum>rangeStart && pageNum<rangeEnd);
 	}
 
+
+	// Only valid if exists and status value(s?) are appropriate. SafteyCheck
+	protected void checkEpctisDeletable(Patent patent, String err) {
+		Epct epct = Epct.findEpctByPatent(patent);
+		if (epct==null)  failMalicious(err+"No such Epct exists.");
+		else {
+			String epctStatus = epct.getEpctStatus();
+			boolean isDeletable = Form1200StatusEnum.isDeletable(epctStatus);
+			if ( ! isDeletable) failMalicious(err+"Epct("+epct.getId()+" is NOT deletable.");
+		}
+	}	
 	
 	
 	// End of   : Lower Level tools

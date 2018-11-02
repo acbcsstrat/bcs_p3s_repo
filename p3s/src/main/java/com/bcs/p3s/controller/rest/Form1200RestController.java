@@ -28,7 +28,9 @@ import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.engine.DummyForm1200Engine;
+import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.P3SUser;
+import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.Form1200Service;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
@@ -417,32 +419,49 @@ public class Form1200RestController extends Universal {
 	//			return new ResponseEntity<Object>("summat", HttpStatus.INTERNAL_SERVER_ERROR);
 	//		}
 	
-		log().debug(CLASSNAME+"/rest-patents/ generateForm1200()   returning ...");
+			log().debug(CLASSNAME+"/rest-patents/ generateForm1200()   returning ...");
+		}
+		catch(Exception e) {
+			logErrorAndContinue(CLASSNAME+"/rest-patents/ generateForm1200() suffered exception",e);
+			return new ResponseEntity<Form1200SavedData>(form1200SavedData, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Form1200SavedData>(form1200SavedData, HttpStatus.OK);
 	}
-	catch(Exception e) {
-		logErrorAndContinue(CLASSNAME+"/rest-patents/ generateForm1200() suffered exception",e);
-		return new ResponseEntity<Form1200SavedData>(form1200SavedData, HttpStatus.INTERNAL_SERVER_ERROR);
+
+
+	//Implements API v2.1 section 2.3 - Delete FORM1200 application
+    @RequestMapping(value = "/rest-form1200/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteForm1200(@PathVariable("id") long id) {
+    	
+		String err = PREFIX+"/form1200/"+id+" DELETE deleteForm1200() : ";
+		log().debug(err+"invoked");
+
+		try {
+			form1200Service.deleteCurrentForm1200Data(id);
+		} catch (Exception e) {
+			logErrorAndContinue(err+"",e);
+	  		return new ResponseEntity<Object>(HttpStatus.METHOD_FAILURE ); //zaph-review // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
+		}
+
+		log().debug(err+"completed.");
+	  	return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+
+    
+    
+    
+    
+    
+	protected void fut(String msg) {
+		log().error("So this IS AS FAR AS WE ARE GETTING ");
+		log().error("************************************************************************************************");
 	}
-	return new ResponseEntity<Form1200SavedData>(form1200SavedData, HttpStatus.OK);
-}
-
-
-protected void fut(String msg) {
-	log().error("So this IS AS FAR AS WE ARE GETTING ");
-	log().error("************************************************************************************************");
-}
-protected void tellOb(Object o) {
-	log().error("");
-	log().error("(ob==null) = "+(o==null));
-	log().error("o.getClass().getName() = "+o.getClass().getName());
-	log().error("");
-}
-
-    
-    
-    
-
-
-    
+	protected void tellOb(Object o) {
+		log().error("");
+		log().error("(ob==null) = "+(o==null));
+		log().error("o.getClass().getName() = "+o.getClass().getName());
+		log().error("");
+	}
     
 }

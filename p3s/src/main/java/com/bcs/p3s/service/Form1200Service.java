@@ -58,5 +58,13 @@ public interface Form1200Service {
 	public Form1200SavedData saveNewForm1200details(long  patentId, String clientRef, long totalClaims, boolean isYear3RenewalPaying, long totalPages, 
 			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI, P3SUser me);
 
+	/**
+	 * Delete a persisted Epct
+	 * Can only delete Epcts where: no processing is in progress or has occurred
+	 * see Form1200StatusEnum.isDeletable
+	 * @param patentId
+	 */
+	public void deleteCurrentForm1200Data(long patentId);
+
 	
 }

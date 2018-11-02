@@ -32,6 +32,7 @@ import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.form1200.CountryStatesUtil;
 import com.bcs.p3s.model.Epct;
+import com.bcs.p3s.model.Form1200;
 import com.bcs.p3s.model.Form1200Fee;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
@@ -353,10 +354,32 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	
 	
 	
+	@Override
+	public void deleteCurrentForm1200Data(long patentId) {
+		
+		String err = PREFIX+"deleteCurrentForm1200Data("+patentId+") ";
+		checkForm1200isDeletable(patentId, err);
 	
+		Patent patent = Patent.findPatent(patentId);
+		Epct epct = Epct.findEpctByPatent(patent);
+
+		Form1200 form1200 = epct.getForm1200(); 
+		Form1200Fee form1200Fee = epct.getForm1200Fee(); 
+		
+		if (form1200 != null) {
+			form1200.remove();
+			//form1200.flush();
+			form1200 = null;
+		}
 	
-	
-	
+		form1200Fee.setEpct(null);
+		form1200Fee.merge();
+		
+		epct.remove();
+		form1200Fee.remove();
+
+		// acTodo: see if flushing is required
+	}
 	
 	
 	
@@ -411,8 +434,6 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		return grow;
 	}
 
-	
-	// Internal methods
 	
 	protected int calcIntegerPercentageBetween2Dates(Date pastDate, Date futureDate) {
 		String handle = CLASSNAME+":calcIntegerPercentageBetween2Dates ";

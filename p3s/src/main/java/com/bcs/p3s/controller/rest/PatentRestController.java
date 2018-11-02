@@ -181,10 +181,10 @@ public class PatentRestController extends Universal {
     // User has confirmed this is the correct patent. So persist it
 					// would like to use:	(@RequestBody PatentUI patentUI) {
 	@RequestMapping(value = "/rest-patents/", method = RequestMethod.POST) 
-	public ResponseEntity<List<PatentUI>> savePatent(@RequestBody Object obby) {
-		log().debug("PatentRestController : /rest-patents/ savePatent() invoked ");
+	public ResponseEntity<List<PatentUI>> saveNewPatent(@RequestBody Object obby) {
+		log().debug("PatentRestController : /rest-patents/ saveNewPatent() invoked ");
 		List<PatentUI> patentUIs = null;
-		System.out.println("PatentRestController : /rest-patents/ savePatent() invoked ");
+		System.out.println("PatentRestController : /rest-patents/ saveNewPatent() invoked ");
 		try {
 			System.out.println("PatentRestController : /rest-patents/ [POST] invoked - i.e. ADD Patent");
 	
@@ -212,13 +212,13 @@ public class PatentRestController extends Universal {
 			}
 		   	
 			if(!(newPatent == null)){
-				log().debug("PatentRestController : /rest-patents/ savePatent() completed.");
+				log().debug("PatentRestController : /rest-patents/ saveNewPatent() completed.");
 				log().info("A patent with application number[" + patent.getEP_ApplicationNumber() +"] being added by USER [user id:" + postSession.getUser().getId() +"]" );
 			}
 			//return ResponseEntity.ok().build();
 			else{
-				log().debug("PatentRestController : /rest-patents/ savePatent() failed.");
-				log().fatal("PatentRestController : /rest-patents/ savePatent() failed for patent " + patent);
+				log().debug("PatentRestController : /rest-patents/ saveNewPatent() failed.");
+				log().fatal("PatentRestController : /rest-patents/ saveNewPatent() failed for patent " + patent);
 			}
 			
 			patentUIs = patentService.persistAndCalculateFee(patent);  // misnomer - doesn't persist

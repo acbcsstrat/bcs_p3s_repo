@@ -38,7 +38,7 @@ import com.bcs.p3s.wrap.PatentExtendedData;
  *   all the required data for the 'view patent' page.
  *   Hence this extended class contains all the notifications, et al
  * 
- *   October2018 : This class sunstantially extended for v2.1
+ *   October2018 : This class substantially extended for v2.1
  *   
  * @author andyc
  *

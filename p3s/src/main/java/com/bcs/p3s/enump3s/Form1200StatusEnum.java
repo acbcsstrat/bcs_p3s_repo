@@ -86,4 +86,12 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     			|| value.equals(EPCT_REJECTED)
     			|| value.equals(PAYMENT_FAILED));
     }
+    // includeInAService() - Is not determined here. See isNotAvailable is EpctEngine
+
+    public static boolean isDeletable(String code) {
+    	// Consider: A persisted Epct (et al) can never be created for some status values
+    	return (EPCT_REJECTED.equalsIgnoreCase(code)
+    		 || AWAIT_PDF_TRIGGER.equalsIgnoreCase(code)
+    		 || EPCT_SAVED.equalsIgnoreCase(code));
+    }
 }
