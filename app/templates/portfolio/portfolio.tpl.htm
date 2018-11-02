@@ -28,30 +28,121 @@
         <div class="col-md-12">
             <div class="expandcollapse-item">
                 <div class="slideDown m-b-sm" data-ng-hide="$ctrl.panelActive">
-                    <div class="expand-collapse-content d-flex">
-                        <div class="filter-box">
-                            <div class="checkbox-container" data-ng-repeat="service in serviceGroup('serviceType')">
+                    <div class="expand-collapse-content">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="d-flex align-items-center">
+                                    <h4 class="font-body font-h4-title font-weight-bold m-r-lg">Service Type</h4>
+                                    <div class="panel-nav">
+                                        <ul class="nav panel-nav__list">
+                                            <li class="pill-radius panel-nav__list-item--plain panel-nav__list-item--fluid m-r-md" data-ng-click="activeFilterTab = 0;">Euro-PCT</li>
+                                            <li class="pill-radius panel-nav__list-item--plain panel-nav__list-item--fluid" data-ng-click="activeFilterTab = 1;">Regional Renewals</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <uib-tabset active="activeFilterTab" vertical="true" type="pills" class="flex-column">
+                            <uib-tab index="0" heading="renewals" data-ng-hide="true">
+                                <div class="row m-b-xs">
+                                    <div class="col-xl-6">
+                                        <div class="filter-box m-t-md">
+                                            <div class="row">
+                                                <div class="col-xl-2">
+                                                    <h4 class="font-body font-h4-title font-weight-bold">Euro-PCT</h4>
+                                                </div>
+                                                <div class="col-xl-9 d-flex">
+                                                    <div class="checkbox-container" data-ng-repeat="status in europctStatus('serviceStatus')">
+                                                        <label class="filter-container">
+                                                            <input type="checkbox" ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="filter-box m-t-md">
+                                            <div class="row">
+                                                <div class="col-xl-2">
+                                                    <h4 class="font-body font-h4-title font-weight-bold">Phase</h4>
+                                                </div>
+                                                <div class="col-xl-10 d-flex">
+                                                    <div class="checkbox-container" data-ng-repeat="status in epctStages('currentStageColour')">
+                                                        <label class="filter-container">
+                                                            <input type="checkbox" ng-model="filters.currentStageColour[status]"><span class="font-body">{{status}}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </uib-tab>
+                            <uib-tab index="1" heading="europct" data-ng-hide="true">
+                                <div class="row m-b-xs">
+                                    <div class="col-xl-6">
+                                        <div class="filter-box m-t-md">
+                                            <div class="row">
+                                                <div class="col-xl-2">  
+                                                     <h4 class="font-body font-h4-title font-weight-bold">Renewals</h4>
+                                                </div>
+                                                <div class="col-xl-9 d-flex">                                                
+                                                    <div class="checkbox-container" data-ng-repeat="status in renewalsStatus('serviceStatus')">
+                                                        <label class="filter-container">
+                                                            <input type="checkbox" ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                </div> 
+                                            </div>                                         
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="filter-box m-t-md">
+                                            <div class="row">
+                                                <div class="col-xl-2">                                            
+                                                    <h4 class="font-body font-h4-title font-weight-bold">Phase</h4>
+                                                </div>
+                                                <div class="col-xl-10 d-flex">
+                                                    <div class="checkbox-container" data-ng-repeat="status in renewalStages('currentStageColour')">
+                                                        <label class="filter-container">
+                                                            <input type="checkbox" ng-model="filters.currentStageColour[status]"><span class="font-body">{{status}}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+
+
+<!--                             <div class="checkbox-container" data-ng-repeat="service in serviceGroup('serviceType')">
                                 <label class="filter-container">
                                     <input type="checkbox" ng-model="filters.serviceType[service]"><span class="font-body">{{service}}</span>
                                     <span class="checkmark"></span>
                                 </label>
-                            </div>
-                        </div>
-                        <div class="filter-box">
-                            <div class="checkbox-container" data-ng-repeat="status in statusGroup('serviceStatus')" >
-                                <label class="filter-container">
-                                    <input type="checkbox" ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>                        
+                            </div> -->
+                        
+
+                             
                     </div>
                     <div class="expand-collapse-content border-t-none">
-                        <div class="row">
+                        <div class="row d-flex align-items-center">
                             <div class="col-md-6">
-                                <button data-ng-click="$ctrl.selectFilters('clearAll')" class="txt-phase-red btn-no-bg font-body font-weight-medium btn-underlined">Clear All Filters</button>
-                                <button data-ng-click="$ctrl.selectFilters('selectAll')" class="txt-phase-black btn-no-bg font-body font-weight-medium btn-underlined">Select All Filters</button>
-                            </div>                       
+                                <button data-ng-click="$ctrl.toggleAll($event, false)" class="txt-phase-red btn-no-bg font-body font-weight-medium btn-underlined">Clear All Filters</button>
+                                <button data-ng-click="$ctrl.toggleAll($event, true)" class="txt-phase-black btn-no-bg font-body font-weight-medium btn-underlined">Select All Filters</button>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="button" class="btn btn--default pill-radius bg-phase-red" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">
+                                    <a class="btn__link btn__link--white btn--lg">Close</a>
+                                </button>
+                            </div>                     
                         </div>
                     </div>
                 </div>
@@ -98,10 +189,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-ng-repeat="patent in portfolioData | filter:testFl | filter:filterPortfolio as Result">
+                        <tr data-ng-repeat="patent in portfolioData | filter:testFl | filter:filterPortfolio as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
                             <td class="t-data__td--ellipsis t-data__td t-data__w12">
                                 <span class="td-ellipsis">
-                                    <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-click="$ctrl.rowSelect" data-ng-attr-id="{{patent.id}}" data-ui-sref="portfolio.patent({patentId: patent.id})"></a>
+                                    <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.id}}" data-ui-sref="portfolio.patent({patentId: patent.id})"></a>
                                 </span>
                             </td>
                             <td class="t-data__td--ellipsis t-data__td t-data__w12 ellipsis-remove" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">
@@ -220,7 +311,5 @@
             </div>
         </div>
     </div>
-    <div class="animate-show">
-        <div data-ui-view class="m-b-xl"></div>
-    </div>
+    <div data-ui-view class="m-b-xl"></div>
 </div>

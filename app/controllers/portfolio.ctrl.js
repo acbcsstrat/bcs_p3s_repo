@@ -7,7 +7,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     var vm = this;
 
     $rootScope.page = 'Portfolio';
-    // vm.portfolioData = patents;
+    $scope.portfolioData = patents;
     vm.rowSelect = rowSelect;
 
     vm.date = new Date();   
@@ -19,43 +19,21 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       vm.animate = true;
     }, 300);
 
-    angular.element(function(){
-      vm.patentsLoaded = true;
-    });
- 
-    // console.log(patents);
+    var euroPctStatuses = [
+      'Epct available',
+      'Epct saved',
+      'Epct not available'
+    ]
 
-    // function fetchServiceData(serviceQuery) {
-    //   return patents.filter(function(el){
-    //     return el.serviceList.find(function(item){
-    //       return item.serviceType == serviceQuery;
-    //     })
-    //   })
-    // }
-
-    // var europctArray = fetchServiceData('Form1200')
-    // var renewalsArray = fetchServiceData('Renewal')
-
-    var uniqueItems = function (data, key) {
-        var result = [];
-            
-        for (var i = 0; i < data.length; i++) {
-            var value = data[i][key];
-     
-            if (result.indexOf(value) == -1) {
-                result.push(value);
-            }
-        
-        }
-        return result;
-    };    
+    var renewalStatuses = [
+      'Show price'
+    ]
 
     $scope.filters = {
       serviceType: {},
-      serviceStatus: {}
+      serviceStatus: {},
+      currentStageColour: {}
     }
-
-    $scope.portfolioData = patents;
 
     function uniqueArray(array) {
       return array.filter(function(item, pos, self) {
@@ -64,25 +42,72 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     }
 
     // $scope.statusGroup = $scope.getFieldsValues('serviceStatus');
-    $scope.serviceGroup = function(field){
+    // $scope.serviceGroup = function(field){
+    //   var result = [];
+    //   for(var i = 0; i < $scope.portfolioData.length; i++){
+    //       var patent = $scope.portfolioData[i];
+    //       if(patent.serviceList && patent.serviceList.length > 0){
+    //         for(var j = 0; j < patent.serviceList.length; j++){
+    //               result.push(patent.serviceList[j][field]);
+    //           }
+    //       }
+    //   }
+    //   return uniqueArray(result);  //check no duplicates
+    // };
+    console.log($scope.portfolioData)
+    $scope.epctStages = function(field, service) {
       var result = [];
       for(var i = 0; i < $scope.portfolioData.length; i++){
-          var patent = $scope.portfolioData[i];
+        var patent = $scope.portfolioData[i];
+        if(patent.serviceList && patent.serviceList.length > 0){
+          for(var j = 0; j < patent.serviceList.length; j++){
+            if(patent.serviceList[j].serviceType == 'Form1200') {
+              result.push(patent.serviceList[j][field])
+            }
+          }
+        }
+      }
+      return uniqueArray(result); //check no duplicates
+
+    }
+
+    $scope.renewalStages = function(field, service) {
+      var result = [];
+      for(var i = 0; i < $scope.portfolioData.length; i++){
+        var patent = $scope.portfolioData[i];
+        if(patent.serviceList && patent.serviceList.length > 0){
+          for(var j = 0; j < patent.serviceList.length; j++){
+            if(patent.serviceList[j].serviceType == 'Renewal') {
+              result.push(patent.serviceList[j][field])
+            }
+          }
+        }
+      }
+      return uniqueArray(result); //check no duplicates
+
+    }    
+
+    $scope.europctStatus = function(field){
+      var result = [];
+      for(var i = 0; i < $scope.portfolioData.length; i++){
+        var patent = $scope.portfolioData[i];
           if(patent.serviceList && patent.serviceList.length > 0){
             for(var j = 0; j < patent.serviceList.length; j++){
-                  result.push(patent.serviceList[j][field]);
+              if(euroPctStatuses.indexOf(patent.serviceList[j][field]) > -1)
+                result.push(patent.serviceList[j][field]);
               }
           }
       }
-      return uniqueArray(result);  //check no duplicates
+      return uniqueArray(result); //check no duplicates
     };
 
-    $scope.statusGroup = function(field){
+    $scope.renewalsStatus = function(field){
       var result = [];
       for(var i = 0; i < $scope.portfolioData.length; i++){
           var patent = $scope.portfolioData[i];
           if(patent.serviceList && patent.serviceList.length > 0){
             for(var j = 0; j < patent.serviceList.length; j++){
+              if(renewalStatuses.indexOf(patent.serviceList[j][field]) > -1)
                   result.push(patent.serviceList[j][field]);
               }
           }
@@ -91,39 +116,33 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     };
 
     $scope.testFl = function(el){
-        for(var filter in $scope.filters){
-            var filterArray = [];
-            for(var i in $scope.filters[filter]){
-                if($scope.filters[filter][i]) filterArray.push(i);
-            }
-            for(var i = 0; i < el.serviceList.length; i++) {
-                if(filterArray.length > 0 && filterArray.indexOf(el.serviceList[i][filter]) === -1) return false;
-            }     
+      for(var filter in $scope.filters){
+        var filterArray = [];
+        for(var i in $scope.filters[filter]){
+          if($scope.filters[filter][i]) filterArray.push(i); //if property in filter object returns true, push to filterArray
         }
-        return true;
+        for(var i = 0; i < el.serviceList.length; i++) {
+          if(filterArray.length > 0 && filterArray.indexOf(el.serviceList[i][filter]) === -1) return false;
+        }
+      }
+      return true; 
     };   
 
-    // $scope.testFl2 = function(el){
-    //     var filterArray = [];
-    //     for(var i in $scope.filters.location){
-    //         if($scope.filters.location[i]) filterArray.push(i);
-    //     }
-    //     return filterArray.length > 0 && filterArray.indexOf(el.location) === -1 ? false : true;
-    // };
-
-     // console.log(patent)
-
-    this.toggleAll = function($event, includeAll) { //used for clear or select all
-      filters.forEach(function(filterCategory) {      
-        filterCategory.options.forEach(function(option) {
-          option.IsIncluded = includeAll;
-        });
-      });    
+    vm.toggleAll = function($event, includeAll) { //used for clear or select all
+      console.log(includeAll)
+      for(var filter in $scope.filters) {
+        if($scope.filters.hasOwnProperty(filter)) {
+          
+          for(var i in $scope.filters[filter]) {
+            $scope.filters.serviceStatus[i] = includeAll;
+          }
+        }
+      };    
     };
 
-    // function displayPatents() { //resets view so only list patents displays
-    //     $state.go('portfolio');
-    // };
+    function displayPatents() { //resets view so only list patents displays
+        $state.go('portfolio');
+    };
 
     function rowSelect(event){
         vm.patentInfoContent = true;
