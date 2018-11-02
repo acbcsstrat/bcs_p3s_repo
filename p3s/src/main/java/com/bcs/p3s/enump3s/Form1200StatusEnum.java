@@ -94,4 +94,9 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     		 || AWAIT_PDF_TRIGGER.equalsIgnoreCase(code)
     		 || EPCT_SAVED.equalsIgnoreCase(code));
     }
+    public static boolean isRejectable(String code) {
+    	// Consider: A persisted Epct (et al) can never be created for some status values
+    	return (EPCT_REJECTED.equalsIgnoreCase(code)
+    		 || EPCT_SAVED.equalsIgnoreCase(code));
+    }
 }

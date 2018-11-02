@@ -105,6 +105,12 @@ public class ServiceAuthorisationTools extends Universal {
 		checkEpctisDeletable(patent, err);
 	}
 	
+	protected void checkForm1200isRejectable(long patentId, String err) 
+	{
+		Patent patent = checkThisIsMyPatent(patentId, err);
+		checkEpctisRejectable(patent, err);
+	}
+	
 	
 	
 	
@@ -251,7 +257,7 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 
 
-	// Only valid if exists and status value(s?) are appropriate. SafteyCheck
+	// Only valid if exists and status value is appropriate. SafteyCheck
 	protected void checkEpctisDeletable(Patent patent, String err) {
 		Epct epct = Epct.findEpctByPatent(patent);
 		if (epct==null)  failMalicious(err+"No such Epct exists.");
@@ -261,6 +267,17 @@ public class ServiceAuthorisationTools extends Universal {
 			if ( ! isDeletable) failMalicious(err+"Epct("+epct.getId()+" is NOT deletable.");
 		}
 	}	
+
+	// Only valid if epct-not-exist, OR exists and status value is appropriate. SafteyCheck
+	protected void checkEpctisRejectable(Patent patent, String err) {
+		Epct epct = Epct.findEpctByPatent(patent);
+		if (epct!=null) {
+			String epctStatus = epct.getEpctStatus();
+			boolean isDeletable = Form1200StatusEnum.isDeletable(epctStatus);
+//			if ( ! isDeletable) failMalicious(err+"Epct("+epct.getId()+" is NOT deletable.");
+		}
+	}	
+	
 	
 	
 	// End of   : Lower Level tools

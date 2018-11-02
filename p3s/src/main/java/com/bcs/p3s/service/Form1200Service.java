@@ -67,4 +67,13 @@ public interface Form1200Service {
 	public void deleteCurrentForm1200Data(long patentId);
 
 	
+	/**
+	 * User is entering question answers, and has entered 1 of the 3 Rejectable answers.
+	 * Persist as appropriate
+	 * @param patentId
+	 * @param fail_reason One of the 3 permitted reasons (see EPCTnotAvailableReasonEnum)
+	 */
+	public void rejectCurrentForm1200(long patentId, String fail_reason);
+
+	
 }

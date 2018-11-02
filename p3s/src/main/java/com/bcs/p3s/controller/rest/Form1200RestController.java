@@ -14,12 +14,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
 import com.bcs.p3s.display.form1200.Form1200SavedData;
@@ -31,6 +33,7 @@ import com.bcs.p3s.engine.DummyForm1200Engine;
 import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.service.Form1200Service;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
@@ -440,12 +443,35 @@ public class Form1200RestController extends Universal {
 			form1200Service.deleteCurrentForm1200Data(id);
 		} catch (Exception e) {
 			logErrorAndContinue(err+"",e);
-	  		return new ResponseEntity<Object>(HttpStatus.METHOD_FAILURE ); //zaph-review // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
+	  		return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR ); //zaph-review // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
 		}
 
 		log().debug(err+"completed.");
 	  	return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
+
+	//Implements API v2.1 section 2.5 - Reject FORM1200 application
+    @RequestMapping(value="/rest-reject-form1200/{patent_id},{fail_reason}", method = RequestMethod.GET)
+    public ResponseEntity<Form1200Record> rejectForm1200(@PathVariable long patent_id, @PathVariable String fail_reason){
+    	// Usage: User is entering question answers, and has entered 1 of the 3 Rejectable answers.
+    	// Immediately update Patent, and possibly Epct, records as appropriate.
+    	// Removes risk: Existing Epct. User has told us is not valid. If we don't immediately persist this, we are at risk of .
+    	
+		String err = PREFIX+"/rest-reject-form1200/"+patent_id+", "+fail_reason+"  REJECT rejectForm1200() : ";
+		log().debug(err+"invoked");
+
+		try {
+			form1200Service.rejectCurrentForm1200(patent_id,fail_reason);
+		} catch (Exception e) {
+			logErrorAndContinue(err+"",e);
+	  		return new ResponseEntity<Form1200Record>(HttpStatus.INTERNAL_SERVER_ERROR ); //zaph-review // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
+		}
+
+		log().debug(err+"completed.");
+	  	return new ResponseEntity<Form1200Record>(HttpStatus.OK);
+    }
+
 
 
     

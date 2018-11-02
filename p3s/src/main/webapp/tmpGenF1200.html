@@ -2,9 +2,8 @@
 tmpDev page to invoke API : 2.2	Generate & Save FORM1200 
 <p/>
 
+Form for Generate/SAVE EPCT / Form1200:
 <form action="/p3sweb/rest-form1200-tmpGenF1200/" method="post">
-
-
 
 Patent_ID<input type="number" value="141" name="Patent_ID" />
 <br/>
@@ -32,10 +31,27 @@ drgs<input type="String" value="9" name="drgsStart" /><input type="String" value
 
 <p/>
 <input type="submit" name="submit" />
-
-    
+   
 </form>
+End of Form
+<p/>
+&nbsp;
+<p/>
 
+
+
+
+
+For REJECT : issue command having form
+<br/>
+<a href="http://localhost:8080/p3sweb/rest-reject-form1200/141,NaturalPerson">
+http://localhost:8080/p3sweb/rest-reject-form1200/141,NaturalPerson
+</a>
+<br/> where params are patent_id and fail_reason.
+<br/> fail_reason is 1 of :&nbsp;&nbsp;&nbsp;NaturalPerson&nbsp;&nbsp;&nbsp;Amended&nbsp;&nbsp;&nbsp;DocsRequired
+<p/>
+&nbsp;
+<p/>
 
 
 </body></html>

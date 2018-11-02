@@ -27,6 +27,7 @@ import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.ServiceManager;
+import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
@@ -351,9 +352,6 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	
 	
 	
-	
-	
-	
 	@Override
 	public void deleteCurrentForm1200Data(long patentId) {
 		
@@ -379,6 +377,31 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		form1200Fee.remove();
 
 		// acTodo: see if flushing is required
+	}
+	
+	
+	
+	@Override
+	public void rejectCurrentForm1200(long patentId, String fail_reason) {
+		
+		String err = PREFIX+"rejectCurrentForm1200("+patentId+", "+fail_reason+") ";
+		checkForm1200isRejectable(patentId, err);
+	
+		Patent patent = Patent.findPatent(patentId);
+		Epct epct = Epct.findEpctByPatent(patent);
+
+		EPCTnotAvailableReasonEnum reason = new EPCTnotAvailableReasonEnum(fail_reason);
+		if (reason.isNotAvailableReasonTerminal())
+			failMalicious(err+"("+patentId+","+fail_reason+") passed a Terminal reason");
+		
+		if (epct != null) {
+			epct.setEpctStatus(Form1200StatusEnum.EPCT_REJECTED);
+			epct.merge();
+		}
+
+		patent.setEpctStatus(Form1200StatusEnum.EPCT_REJECTED);
+		patent.setEpctNotAvailableReason(reason.toString());
+		patent.merge();
 	}
 	
 	
