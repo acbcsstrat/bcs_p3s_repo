@@ -8,6 +8,10 @@ html, body {
   background: #f1f2f2;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 html { font-size: 62.5%; }
 
 * { box-sizing: border-box; }

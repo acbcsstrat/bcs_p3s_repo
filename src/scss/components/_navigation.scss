@@ -76,6 +76,7 @@
   }
   .panel-nav__list-item--plain {
     border: 1px solid $border;
+    cursor: pointer;
     color: $black;
     .nav-link {
       color: $black;
@@ -346,48 +347,3 @@
   border: none;  
   color: $white;
 }
-
-//main nav
-//access nav
-//primary state nav
-//secondary state nav
-
-//panel-tabs
-
-    // <nav class="navbar secondary-state-nav">
-    //   <ul class="navbar-nav secondary-state-nav__list">
-    //     <li>
-    //       <a>Patent Info</a>
-    //     </li>
-    //   </ul>
-    // </nav>
-
-// .panel-tabs
-// > .panel-tabs-item
-// > .panel-tabs-item--green
-// > .panel-tabs-item--black
-// > .pa-lg
-
-// .pill-radius 
-// .panel-nav__list-item 
-// .panel-nav__nav-link--fluid 
-// .panel-nav__list-item--plain 
-// .panel-nav__list-item--green 
-// .uib-tab .nav-item 
-
-// pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black
-
-// .bg-phase-blue
-// .pill-radius 
-// .pa-md
-// .panel-nav__list-item 
-// .panel-nav__list-item--num 
-// .font-weight-medium 
-
-// .pill-radius 
-// .panel-nav__list-item 
-// .panel-nav__nav-link--fluid 
-// .panel-nav__list-item--plain 
-// .panel-nav__list-item--green 
-// .uib-tab 
-// .nav-item

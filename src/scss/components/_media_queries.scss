@@ -309,9 +309,9 @@ md-sidenav {
   overflow: visible;
 }
 
-select.form-control:not([size]):not([multiple]) {
-  height: auto!important;
-}
+// select.form-control:not([size]):not([multiple]) { REMOVED AS CAUSING CSS ERROR WITH PORTFOLIO FILTER. REVIEW AGAIN
+//   height: auto!important;
+// }
 
 .ng-table th.sortable.sort-asc, .ng-table th.sortable.sort-desc {
   background-color: #f5f5f5; 

@@ -17,12 +17,6 @@
   } 
 }
 
-.btn-no-bg--green {
-  -webkit-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
-  -o-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
-  transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
-}
-
 .btn--default {
   -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out;
   -o-transition: opacity .2s ease-in-out, background .2s ease-in-out;
@@ -88,6 +82,21 @@
   color: $white; 
 }
 
+.btn-no-bg {
+  background: none;
+  border: 0;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.btn-underlined {
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .uib-btn--lg {
   &:not(.active):hover { 
     @extend %btn-opacity;
@@ -99,3 +108,4 @@
     @include opacity(1) 
   }
 }
+
