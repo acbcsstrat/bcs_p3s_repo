@@ -13,5 +13,5 @@
 # !/WEB-INF/views/*.jsp
 # WEB-INF/views/htmldocs
 node_modules
-dist/
+# dist/
 package-lock.json
