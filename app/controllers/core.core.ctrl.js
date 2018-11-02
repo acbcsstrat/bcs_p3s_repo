@@ -5,13 +5,12 @@ coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageServ
 function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService) {
 
 	var vm = this;
+ 
 
 	var urgentResponse = [];
 	var systemResponse = [];
 	var patentsFound = true;
 	var userTimedOut = false;
-	// vm.checkedMessages = checkedMessages;
-	// vm.supresssMessages = supresssMessages;
 	var messageArr = [];
 
 	$scope.$on('IdleStart', function() {
@@ -49,24 +48,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
       	}
 
 	});
-
-	function fetchPatents() {
-
-		patentsRestService.fetchAllPatents()
-		.then(
-			function(response){
-				if(response.length === 0) {
-					patentsFound = false;
-				}
-			},
-			function(errResponse){
-				console.log(errResponse)
-			}
-		)
-
-	}
-
-	fetchPatents();
 
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
