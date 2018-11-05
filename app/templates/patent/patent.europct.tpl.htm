@@ -1,0 +1,33 @@
+<div class="content-panel bg-white">   
+    <div class="content-panel__head">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <nav class="navbar secondary-view-nav">
+                    <ul class="navbar-nav secondary-view-nav__list">
+                        <li class="secondary-view-nav__nav-item" data-ng-init="euroPct.activePatentItemMenu = 'Euro-PCT Info'" data-ng-click="euroPct.activePatentItemMenu = 'Euro-PCT Info'">
+                            <a class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ui-sref="portfolio.patent.euro-pct.info"  data-ng-class="{active : euroPct.activePatentItemMenu == 'Euro-PCT Info'}">Euro-PCT Info</a>
+                        </li>
+                        <li class="secondary-view-nav__nav-item" data-ng-click="euroPct.activePatentItemMenu = 'Form 1200'">
+                            <a class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ui-sref="portfolio.patent.euro-pct.form1200.intro" data-ng-class="{active : euroPct.activePatentItemMenu == 'Form 1200'}">Form 1200</a><!--change back t0 intro-->
+                        </li>
+                        <li class="secondary-view-nav__nav-item" data-ng-click="euroPct.activePatentItemMenu = 'Cost Analysis'">
+                           <a class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ui-sref="portfolio.patent.euro-pct.cost-analysis"  data-ng-class="{active : euroPct.activePatentItemMenu == 'Cost Analysis'}">Cost Analysis</a>
+                        </li> 
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div ui-view></div>
+<!--     <uib-tabset type="pills" active="euroPct.activeSelectedTab">
+        <uib-tab heading="Euro-PCT Info" index="0" data-ng-hide="true"> -->
+
+<!--         </uib-tab>
+        <uib-tab heading="Form 1200" index="1" data-ng-hide="true">
+            <div ui-view="form1200"></div>
+        </uib-tab>
+        <uib-tab heading="Cost Analysis" index="2" data-ng-hide="true">
+            <div ui-view="euroPctCostAnalysis"></div>
+        </uib-tab>
+    </uib-tabset> -->

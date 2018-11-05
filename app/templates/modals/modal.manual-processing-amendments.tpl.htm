@@ -1,0 +1,18 @@
+<div class="modal-header p-b-none m-b-xs d-flex flex-column align-items-center justify-content-center">
+    <span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+    <div class="m-b-xs">
+        <img src="assets/imgs/icons/modal/alert_icon.png" alt="alert icon">   
+    </div>
+    <p class="font-h3 font-weight-medium">Amendments made</p>
+</div>
+<div class="modal-body d-flex flex-column align-items-center justify-content-center">
+    <p class="font-body w-100 text-center">Because you've made amendments to your application we can't process your application automatically. If you contact us: : support@ip.place, we'll be able to help offline.</p>
+</div>
+<div class="modal-footer d-flex align-items-center justify-content-center">
+    <button class="btn pill-radius btn--default bg-phase-green pill-radius m-r-sm" type="button" data-ng-click="$ctrl.ok()">
+        <a class="btn__link btn__link btn--lg">OK</a>
+    </button>    
+    <button class="btn pill-radius btn--default bg-phase-red pill-radius m-r-sm" type="button" data-ng-click="$ctrl.dismissModal()">
+        <a class="btn__link btn__link btn--lg">Cancel</a>
+    </button>
+</div>
