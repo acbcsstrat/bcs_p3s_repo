@@ -1,0 +1,23 @@
+.closed-sidenav { /*layout*/ /*layout*/ /*_sidenav.scss*/
+  min-height: 100%;
+  position: fixed;
+  width: 75px;
+}
+
+.closed-sidenav .nav-item, 
+.closed-sidenav .nav-link { width: 100%; } /*layout*/ /*layout*/ /*_sidenav.scss*/
+
+.closed-sidenav .nav-link { padding: 1.5rem 0; } /*layout*/ /*layout*/ /*_sidenav.scss*/
+
+.closed-sidenav .nav-link {  /*layout*/ /*layout*/ /*_sidenav.scss*/
+    -webkit-transition: background 0.2s ease-in-out;
+    -o-transition: background 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out;
+}
+
+.closed-sidenav .nav-link:hover { background: #484848; }/*layout*/ /*layout*/ /*_sidenav.scss*/
+.closed-sidenav .active .nav-link i { margin-right: -0.3rem; }/*layout*/ /*layout*/ /*_sidenav.scss*/
+.closed-sidenav .active .nav-link { /*layout*/ /*layout*/ /*_sidenav.scss*/
+  background: #484848; 
+  border-right: 3px solid #4EAA5A;
+}

@@ -7,9 +7,15 @@ angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ng
 
 angular.module('ppApp').run(startUpRun)
 
+<<<<<<< HEAD
 startUpRun.$inject = ['Idle', 'userService', '$rootScope', 'moment', '$timeout'];
 
 function startUpRun(Idle, userService, $rootScope, moment, $timeout) {
+=======
+startUpRun.$inject = ['Idle', 'userService', '$rootScope', '$timeout'];
+
+function startUpRun(Idle, userService, $rootScope, $timeout) {
+>>>>>>> origin/fe-branch-v2.2
 
     $rootScope.page = '';
 
@@ -23,6 +29,7 @@ function startUpRun(Idle, userService, $rootScope, moment, $timeout) {
         }
     )
 
+<<<<<<< HEAD
     function timeZoneClocks() {
 
         var utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
@@ -37,6 +44,8 @@ function startUpRun(Idle, userService, $rootScope, moment, $timeout) {
 
     timeZoneClocks()
 
+=======
+>>>>>>> origin/fe-branch-v2.2
     Idle.watch();
 
 };

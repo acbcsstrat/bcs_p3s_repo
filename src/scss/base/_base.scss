@@ -1,0 +1,119 @@
+html, body { 
+  height: 100%;
+  width: 100%;
+  overflow-y: auto; 
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  overflow-x: hidden;
+  background: #f1f2f2;
+}
+
+body {
+  overflow-y: scroll;
+}
+
+html { font-size: 62.5%; }
+
+* { box-sizing: border-box; }
+
+a { color: #212121; }
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6, 
+p {
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  margin: 0 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/*div { z-index: 1; }
+*/
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6, 
+p, 
+li, 
+button, 
+a, 
+input, 
+table, 
+td, 
+th { 
+  font-family: $font-body!important; 
+}
+
+p, 
+li, 
+button, 
+a, 
+input, 
+table, 
+td, 
+th,
+label { 
+  font-size: $font-normal; 
+}
+
+label { margin-bottom: 0; }
+
+table {
+  width: 100%;
+  border-spacing:0;
+  margin:0;
+}
+
+/*table.slider-table { width: 99%; }*/
+
+thead {
+  background: #fff;
+  margin-top: 0;
+  width: 100%;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  padding: 0;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+  -moz-box-shadow:    inset 0 0 0 1000px #fff;
+  -webkit-box-shadow: inset 0 0 0 1000px #fff;
+  box-shadow:         inset 0 0 0 1000px #fff;
+}
+
+input[type=checkbox], input[type=radio] {
+  vertical-align: middle;
+}
+
+a {
+  &:hover {
+    color: #000;
+  }
+  &:focus {
+      text-decoration: none;
+      color: #212121;
+  }
+}
+
+button {
+
+  &:disabled, &[disabled], &[disabled] a {
+    cursor: not-allowed!important;
+  }
+
+}
+
