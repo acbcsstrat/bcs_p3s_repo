@@ -6,13 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -226,7 +223,30 @@ public class Epct {
 	//    }
 
 
-
+    // Epct has no 'activePaymentId (& may Renewal shouldn't).
+    // Provide equivalent, (without circular data)
+    // NOT SCALABLE - is this needed ?  acToDo. Could improve by using business
+    public Payment findActivePaymentId() {
+    	// Implementation Note: An epct will never be associated with 
+    	Payment candidate = null;
+    	long myId = this.getId();
+    	long bestPayMatch = -1;
+    	List<Payment> allPayments = Payment.findAllPayments();
+    	for (Payment pay : allPayments) {
+    		List<Epct> paymentEpcts = pay.getEpcts();
+    		for (Epct anEpct : paymentEpcts) {
+    			if (anEpct.getId()==myId) {
+    				long thisPaymentId = pay.getId();
+    				if (thisPaymentId>bestPayMatch) {
+    					bestPayMatch = thisPaymentId; 
+    					candidate = pay;
+    				}
+    				break;
+    			}
+    		}
+    	}
+    	return candidate;
+    }
 
 
 
@@ -244,6 +264,13 @@ public class Epct {
 //    }
     // & getIsYear3RenewalPaying
 
+    
+    
+    
+    
+    
+    // Special getters
+    
     //	Avoid NPEs if an empty Epct is provided 
     public Integer getTotalClaims() {
     	if (this.totalClaims==null) return Integer.valueOf(0);

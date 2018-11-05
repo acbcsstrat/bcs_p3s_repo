@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.docs.InvoiceProcessingEngine;
 import com.bcs.p3s.docs.email.P3sEmail;
@@ -19,6 +20,8 @@ import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.engine.CommitToRenewalEngine;
 import com.bcs.p3s.engine.PaymentTimingEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
+import com.bcs.p3s.engine.ServiceManager;
+import com.bcs.p3s.engine.StageManager;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -369,12 +372,15 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			List<PatentExtendedData> sessionData = pLoginSession.getExtendedPatentUI();
 			for(PatentExtendedData eachSessionData : sessionData){
 				if(patentIds.contains(eachSessionData.getPatentId())){
-					latestCalculatedCost = latestCalculatedCost.add(eachSessionData.getCurrentRenewalCost());
+					if (eachSessionData.getCurrentRenewalCost() != null) { // added for v2.1, (if no renewal)
+						latestCalculatedCost = latestCalculatedCost.add(eachSessionData.getCurrentRenewalCost());
+					}
 				}
 			}
 
 			basketContents.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 		}
+		// v2.1 Existing above will have calculated renewal costs. If E-PCT costs, see below xx()
 		
 
 		List<PatentExtendedData> extendedData = pLoginSession.getExtendedPatentUI();
@@ -382,6 +388,32 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		for (Long patid : patentIds) {
 			Patent patent = Patent.findPatent(patid);
 			if (patent==null) logInternalError().fatal("PaymentServiceImpl populateBasketContents (for showBasketContents) given invalid PatentID of "+patid);
+
+			// zapzap zaphod
+			//dsffhadkjhf
+			
+			
+			
+			ServiceManager serviceManager = new ServiceManager();
+			boolean isEpct = StageManager.isInFiling(patent.getEpoPatentStatus());
+			if (isEpct) {
+				List<P3SService> services = serviceManager.getServicesForPatent(patent, null); // Can provide null if no renewals
+				for (P3SService service : services) {
+					
+				}
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			PatentUI pui = new PatentUI(patent, extendedData);
 			basketContents.getOrderedPatentUIs().add(pui);
 		}

@@ -2,6 +2,8 @@ package com.bcs.p3s.controller.rest;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -11,8 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bcs.p3s.display.form1200.ExtensionStateUI;
+import com.bcs.p3s.display.form1200.Form1200SavedData;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Patent;
@@ -39,6 +44,26 @@ public class PaymentRestController extends Universal {
 
     //------------------- Price up Basket contents --------------------------------------------------
 
+    // tmp workaround for dev testing when FE code not availabe
+    @RequestMapping(value = "/rest-basket-tmpHtmlFormTester/", method = RequestMethod.POST)
+    public ResponseEntity<BasketContents> showBasketContentstmpHtmlFormTester(@RequestParam("patentIds") String csv) {
+    	log().debug("PaymentRestController : /rest-basket-tmpHtmlFormTester/ showBasketContentstmpHtmlFormTester("+csv+") invoked.  ");
+    	
+    	List<String> items = Arrays.asList(csv.split("\\s*,\\s*"));
+    	//List<Long> longList = new ArrayList<Long>();
+    	List<Integer> longList = new ArrayList<Integer>();
+		for (String str : items) {
+			///Long lll = new Long(str);
+			Integer iii = new Integer(str);
+			longList.add(iii);
+		}
+    	LinkedHashMap<String,Object> obby = new LinkedHashMap<String,Object>();
+    	obby.put("elements", longList);
+    	return showBasketContents(obby);
+    }
+
+    	
+    	
     // Implements API section 4.1
     // Provide details for display in the Show Basket page
     @RequestMapping(value = "/rest-basket/", method = RequestMethod.POST)
@@ -46,7 +71,7 @@ public class PaymentRestController extends Universal {
 
     	log().debug("PaymentRestController : /rest-basket/ showBasketContents() invoked.  ");
     	
-    	if ( ! (obby instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("PaymentRestController : /rest-basket/ showBasketContents() NOT passed String");
+    	if ( ! (obby instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("PaymentRestController : /rest-basket/ showBasketContents() NOT passed LinkedHashMap<?, ?>");
     	
     	BasketContents basketContents = null;
     	boolean err = false;

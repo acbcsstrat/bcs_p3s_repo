@@ -1,24 +1,14 @@
 package com.bcs.p3s.display;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.apache.commons.digester.ExtendedBaseRules;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.bcs.p3s.enump3s.McFailCodeEnum;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
+import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Invoice;
-import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
-import com.bcs.p3s.service.PatentService;
-import com.bcs.p3s.service.PatentServiceImpl;
 import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.service.TransactionServiceImpl;
 import com.bcs.p3s.util.config.P3SPropertyException;
@@ -60,6 +50,7 @@ public class PaymentUI extends Payment {
     private String lastUpdatedDateUI;
     private String invoiceUrl;
     private List<RenewalUI> renewalUIs = new ArrayList<RenewalUI>();
+    private List<EpctUI> epctUIs = new ArrayList<EpctUI>();
 
 	
     
@@ -99,7 +90,9 @@ public class PaymentUI extends Payment {
 		this.setBillingAddressCity(payment.getBillingAddressCity());
 		this.setBillingAddressState(payment.getBillingAddressState());
 		this.setBillingAddressZip(payment.getBillingAddressZip());
-		this.setRenewals(null);   // Don't need Renewals, Just RenewalUIs
+// suspect below 2 MUST be set AFTER the below loops
+//		this.setRenewals(null);   // Don't need Renewals, Just RenewalUIs
+//		this.setEpcts(null);
 		//everytime when sending paymentUI to FE make fx_target to null -- hide the value from user
 		this.setFxTarget(null);
 		
@@ -118,13 +111,40 @@ public class PaymentUI extends Payment {
 			//aRenUI.getFee().setRenewal(null); 
 			// now remove data that doesn't break anything - but which is large, and we just don't need it
 			//aRenUI.getPatentUI().setNotifications(null);
-			aRenUI.getPatentUI().setNotificationUIs(null);
+
+			
+			// aRenUI.getPatentUI().setNotificationUIs(null); remember that notifications DID hang off Patent. is now renewal & epct. So this'll break renewal notifications too 
 			
 			this.getRenewalUIs().add(aRenUI);
 			// Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo
 			//System.out.println("Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo");
 		}
 
+	
+		
+//		do epctUIs
+		List<Epct> epcts =  payment.getEpcts();
+		for (Epct anEpct : epcts) {
+			// Remove unwant data that would break the JSON
+			EpctUI anEpctUI = new EpctUI(anEpct,sessionData);
+			anEpctUI.setPatent(null);
+			//anEpctUI.setActivePaymentId(null); // not needed - as not exist
+			//aRenUI.getFee().setRenewal(null); 
+			// now remove data that doesn't break anything - but which is large, and we just don't need it
+			//aRenUI.getPatentUI().setNotifications(null);
+
+			//anEpctUI.getPatentUI().setNotificationUIs(null);  // he
+			
+			this.getEpctUIs().add(anEpctUI);
+			// Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo
+			//System.out.println("Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo");
+		}
+
+		// acTodo  -cf above - can these be above the 2 loops?
+		this.setRenewals(null);   // Don't need Renewals, Just RenewalUIs
+		this.setEpcts(null);
+
+		
 //		patentUI.setCurrentRenewalCost(new BigDecimal("1.11")); // acTidy
 //		patentUI.setCostBandEndDate(nowPlusNdays(2));
 //		patentUI.setRenewalCostNextStage(new BigDecimal("1111111.11"));
@@ -233,7 +253,16 @@ public class PaymentUI extends Payment {
 	public void setRenewalUIs(List<RenewalUI> renewalUIs) {
 		this.renewalUIs = renewalUIs;
 	}
+	public List<EpctUI> getEpctUIs() {
+		return epctUIs;
+	}
+	public void setEpctUIs(List<EpctUI> epctUIs) {
+		this.epctUIs = epctUIs;
+	}
 
+	
+	
+	
 	
 //	public BigDecimal getCurrentRenewalCost() {
 //		return currentRenewalCost;
@@ -266,6 +295,12 @@ public class PaymentUI extends Payment {
 //	public void setRenewalDueDate(Date renewalDueDate) {
 //		this.renewalDueDate = renewalDueDate;
 //	}
+
+
+
+
+
+
 
 	public boolean isEmpty(String val) {
 		if (val==null || val.trim().length()==0) return true;

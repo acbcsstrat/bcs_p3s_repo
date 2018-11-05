@@ -215,7 +215,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		EpctEngine epctEngine = new EpctEngine(patent);
 		
 		epctEngine.calcEpctStatusAndReason();
-		// That will have set the 2 patent E-PCT status values  
+		// That will have set the 2 patent E-PCT status values, as appropriate  
 	}
 
 	

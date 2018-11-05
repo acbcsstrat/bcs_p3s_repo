@@ -14,13 +14,11 @@ public class PaymentTypeEnum extends P3SAbstractEnum {
         String sofar = null;
         
         if (paymentType.equalsIgnoreCase(PaymentTypeEnum.STANDARD_PAYMENT)
-            || paymentType.equalsIgnoreCase("STANDARD_PAYMENT")
-            || paymentType.equalsIgnoreCase("STANDARD PAYMENT")) 
+            || paymentType.equalsIgnoreCase("STANDARD_PAYMENT")) 
         			sofar = PaymentTypeEnum.STANDARD_PAYMENT;  
 
         if (paymentType.equalsIgnoreCase(PaymentTypeEnum.PENALTY_PAYMENT)
-            || paymentType.equalsIgnoreCase("PENALTY_PAYMENT")
-            || paymentType.equalsIgnoreCase("PENALTY PAYMENT")) 
+            || paymentType.equalsIgnoreCase("PENALTY_PAYMENT")) 
         			sofar = PaymentTypeEnum.PENALTY_PAYMENT;  
 
         			

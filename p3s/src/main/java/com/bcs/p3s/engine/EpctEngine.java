@@ -90,9 +90,19 @@ public class EpctEngine extends Universal {
 	 * @param patent The patent being processed
 	 */
 	public EpctEngine(Patent patent) {
-		doAllDateCalculations(patent);
 		
-		//doConstructorProcessing(patent);  acZaph
+
+		// Check for No-Hopers first
+    	if ( ( ! StageManager.isInFiling(patent.getEpoPatentStatus())) 
+    	  || (isEpctNotAvailableReasonTerminal()) )
+    	{
+    		patent.setEpctStatus(Form1200StatusEnum.EPCT_NOT_AVAILABLE);
+    		isNotAvailable = true;
+    	}
+		this.patent = patent;
+		if (isNotAvailable) return;
+
+    	doAllDateCalculations(patent);
 	}
 
 	
@@ -104,6 +114,9 @@ public class EpctEngine extends Universal {
 //		 calcEpctStatus();
 //	 }
 	 public void calcEpctStatusAndReason() {
+
+		 if (isNotAvailable) return; // E=PCT Status will already have been set
+		 
 		 String reallyBad = epctNoGoReason();  // Hopefully is null
 		 patent.setEpctNotAvailableReason(reallyBad);
 		 calcEpctStatus();
@@ -207,15 +220,6 @@ public class EpctEngine extends Universal {
 		this.patent = patent;
     	String err = CLASSNAME + "doAllDateCalculations() : ";
     	if (patent==null) fail(err+" passed patent==null");
-
-    	if ( ! StageManager.isInFiling(patent.getEpoPatentStatus())) fail(
-    			err+" passed patent "+patent.getId()+" which is NOT IN FILING STAGE");
-    	
-    	if (isEpctNotAvailableReasonTerminal()) {
-    		patent.setEpctStatus(Form1200StatusEnum.EPCT_NOT_AVAILABLE);
-    		isNotAvailable = true;
-    		return;
-    	}
     	
     	// Perform the unconditional calculations. Mostly dates
     	

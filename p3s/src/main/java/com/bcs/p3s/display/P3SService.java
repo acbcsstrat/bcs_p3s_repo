@@ -15,7 +15,7 @@ import com.bcs.p3s.util.date.DateUtil;
  * It's an oversimplification to regard each service as being something what we can sell now, for this patent.
  *  That view is flawed as we sometimes need provide a Service, to show status values, 
  *  	even when we know we cannot sell (say 'too late', or 'already in progress')
- *  
+ *  patent
  *  For v2.1 Any PortfolioUI will have either 1 or 0 Services. Any Service will be a Form1200 or a Renewal
  */
 public class P3SService {
