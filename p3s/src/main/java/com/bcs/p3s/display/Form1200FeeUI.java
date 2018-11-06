@@ -72,6 +72,7 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 		this.setUrgentFeeUSD(fee.getUrgentFee_USD());
 		this.setSubTotalUSD(fee.getSubTotal_USD());
 		this.setFxRate(fee.getFxRate());
+		checkRateFeasable(fee.getFxRate());
 				
 		// Calculate the other fields
 		this.setProcessingFeeEUR(dollarsToEuro(processingFeeUSD));

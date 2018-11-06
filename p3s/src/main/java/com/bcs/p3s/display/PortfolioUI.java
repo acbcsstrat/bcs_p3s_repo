@@ -10,6 +10,9 @@ public class PortfolioUI {
 	private String shortTitle;
 	private String epoStatus;
 	private String epeStage;
+	private String serviceStatus;  // Tmp fix: Portfolio has no data to distinguish RenewalInPlace vs RenewalNotNeeded etc (as no Service, as nothing to sell)
+								// Hence Pat 181106 requests this tmp fix: provide patent:renewalStatus or patent:epctStatus – depending upon Stage
+								// Tmp, because will need amending once we can sell >1 item per patent (v2.3ish?)
 	private List<P3SService> serviceList;
 	
 	
@@ -49,14 +52,17 @@ public class PortfolioUI {
 	public void setEpeStage(String epeStage) {
 		this.epeStage = epeStage;
 	}
+	public String getServiceStatus() {
+		return serviceStatus;
+	}
+	public void setServiceStatus(String serviceStatus) {
+		this.serviceStatus = serviceStatus;
+	}
 	public List<P3SService> getServiceList() {
 		return serviceList;
 	}
 	public void setServiceList(List<P3SService> serviceList) {
 		this.serviceList = serviceList;
 	}
-	
-	
-	
 
 }

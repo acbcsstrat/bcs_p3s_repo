@@ -54,8 +54,9 @@ public class PortfolioServiceImpl extends ServiceAuthorisationTools implements P
 		portfolioUI.setClientRef(patent.getClientRef());
 		portfolioUI.setShortTitle(patent.getShortTitle());
 		portfolioUI.setEpoStatus(patent.getEpoPatentStatus());
-		portfolioUI.setEpeStage(
-				StageManager.determineStage(patent.getEpoPatentStatus()));
+		String currentStage = StageManager.determineStage(patent.getEpoPatentStatus()); 
+		portfolioUI.setEpeStage(currentStage);
+		portfolioUI.setServiceStatus(getServiceStatusForThisStage(currentStage,patent));
 		portfolioUI.setServiceList(
 				serviceManager.getServicesForPatent(patent, session));
 				// 'session' needed (temporarily?) for accessing prices & dates (for the Service entities)
@@ -84,6 +85,12 @@ public class PortfolioServiceImpl extends ServiceAuthorisationTools implements P
 		log().debug(err+" invoked for business "+myBusiness.getId()+" ret Qty "+patents.size());
 
 		return patents;
+	}
+
+	protected String getServiceStatusForThisStage(String stage, Patent patent) { 
+		if (patent==null) return null;
+		if (StageManager.FILING.equals(stage)) return patent.getEpctStatus();
+		else return patent.getRenewalStatus();
 	}
 
 	

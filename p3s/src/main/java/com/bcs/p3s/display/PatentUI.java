@@ -91,6 +91,8 @@ public class PatentUI extends Patent {
     
     protected RenewalFeeUI renewalFeeUI;
 
+	protected Form1200FeeUI form1200FeeUI;
+    
     
 	List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
 
@@ -255,9 +257,15 @@ public class PatentUI extends Patent {
 	public RenewalFeeUI getRenewalFeeUI() {
 		return renewalFeeUI;
 	}
-
 	public void setRenewalFeeUI(RenewalFeeUI renewalFeeUI) {
 		this.renewalFeeUI = renewalFeeUI;
+	}
+
+	public Form1200FeeUI getForm1200FeeUI() {
+		return form1200FeeUI;
+	}
+	public void setForm1200FeeUI(Form1200FeeUI form1200FeeUI) {
+		this.form1200FeeUI = form1200FeeUI;
 	}
 	
 	

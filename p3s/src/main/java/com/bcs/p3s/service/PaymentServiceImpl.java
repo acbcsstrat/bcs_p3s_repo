@@ -18,6 +18,7 @@ import com.bcs.p3s.docs.email.P3sEmail;
 import com.bcs.p3s.docs.email.P3sEmailFactory;
 import com.bcs.p3s.docs.email.template.EmailTemplates;
 import com.bcs.p3s.engine.CommitToRenewalEngine;
+import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.PaymentTimingEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.engine.ServiceManager;
@@ -26,6 +27,8 @@ import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.Epct;
+import com.bcs.p3s.model.Form1200Fee;
 import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.P3SUser;
@@ -349,6 +352,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	
 	protected void populateBasketContents(BasketContents basketContents, List<Long> patentIds) {
 
+		String err = CLASSNAME+".populateBasketContents() : ";
 		basketContents.setOrderedPatentUIs(new ArrayList<PatentUI>());
 		
 		/**
@@ -369,52 +373,61 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		
 		if(!(pLoginSession.getExtendedPatentUI() == null) ){
 			
+			// Here, v1 code loops by stored data (for renewals), rather than by patentIds. Retain v2.1, whilst it works
 			List<PatentExtendedData> sessionData = pLoginSession.getExtendedPatentUI();
 			for(PatentExtendedData eachSessionData : sessionData){
 				if(patentIds.contains(eachSessionData.getPatentId())){
-					if (eachSessionData.getCurrentRenewalCost() != null) { // added for v2.1, (if no renewal)
+					if (eachSessionData.getCurrentRenewalCost() != null) { // This line: added for v2.1, (if no renewal)
 						latestCalculatedCost = latestCalculatedCost.add(eachSessionData.getCurrentRenewalCost());
+						basketContents.addRenewalFeesToBreakdownTotals(eachSessionData); // This line: added for v2.1, as breakdown totals is new to BE
 					}
 				}
 			}
 
 			basketContents.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 		}
-		// v2.1 Existing above will have calculated renewal costs. If E-PCT costs, see below xx()
+		// v2.1 Existing(mostly) above will have calculated renewal costs. If E-PCT costs, see below xx() zaph
 		
 
 		List<PatentExtendedData> extendedData = pLoginSession.getExtendedPatentUI();
 		
+		// Above has calculated Renew fees. Now do Epct fees
 		for (Long patid : patentIds) {
 			Patent patent = Patent.findPatent(patid);
 			if (patent==null) logInternalError().fatal("PaymentServiceImpl populateBasketContents (for showBasketContents) given invalid PatentID of "+patid);
 
-			// zapzap zaphod
-			//dsffhadkjhf
-			
-			
-			
+			// If have form1200s in basket, add their pricing
 			ServiceManager serviceManager = new ServiceManager();
 			boolean isEpct = StageManager.isInFiling(patent.getEpoPatentStatus());
 			if (isEpct) {
-				List<P3SService> services = serviceManager.getServicesForPatent(patent, null); // Can provide null if no renewals
-				for (P3SService service : services) {
-					
+
+				
+//				List<P3SService> services = serviceManager.getServicesForPatent(patent, null); // Can provide null as epct. not renewal
+//				for (P3SService service : services) { // will be one or zero services
+//					BigDecimal thisForm1200ServiceCostUSD = service.getCurrentStageCostUSD();
+//					BigDecimal newTotal = basketContents.getTotalCostUSD().add(thisForm1200ServiceCostUSD);
+//					basketContents.setTotalCostUSD(newTotal);
+//					// this approach was ok when only needed service. But now need cost breakdown. Will have call epctEngine anyway - so skip the above
+	    		// Unconditionally provide 1 Service, detailing current Form1200 Status
+
+				
+	    		EpctEngine epctEngine = new EpctEngine(patent);
+	    		Epct epct = new Epct(); // expect this to e redundant VERY soon 181106
+	    		Form1200Fee form1200Fee = epctEngine.calcEpctPersistPricingOnly(epct, null); 
+	    		
+	    		if (epctEngine.isNotAvailable()) log().error(err+"Epct.isNotAvailable should not exist in the basket !");
+	    		else {
+	    			basketContents.addEpctFeesToBreakdownTotals(form1200Fee);
+	    			
+	    			BigDecimal thisEpctCostUSD = form1200Fee.getSubTotal_USD();  
+					BigDecimal newTotal = basketContents.getTotalCostUSD().add(thisEpctCostUSD);
+					basketContents.setTotalCostUSD(newTotal);
 				}
 			}
 			
+			PatentUI pui = new PatentUI(patent, extendedData); // PatentUI has no record of individual Form1200 fees, so no processing needed here
+			pui.setNotificationUIs(null); // Inhibit unwanted large data (&redundant data?)
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			PatentUI pui = new PatentUI(patent, extendedData);
 			basketContents.getOrderedPatentUIs().add(pui);
 		}
 

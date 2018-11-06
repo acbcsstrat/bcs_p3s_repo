@@ -56,6 +56,7 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
 		this.setUrgentFeeUSD(fee.getUrgentFee_USD());
 		//this.setLatePayPenaltyUSD(fee.getLatePayPenalty_USD());
 		this.setFxRate(fee.getFxRate());
+		checkRateFeasable(fee.getFxRate());
 		this.setSubTotalUSD(fee.getSubTotal_USD());
 		
 		this.setRenewalFeeUSD((fee.getRenewalFee_EUR().multiply(fee.getFxRate())).setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -121,6 +122,7 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
 		totalling = safeAddition(totalling, extensionFeeEUR);
 		euroComponentEUR = totalling; 
 	}
+
 
 
 	

@@ -135,6 +135,8 @@ public class Form1200Fee {
     protected BigDecimal fxRate;
 
     /**
+     * Total of all fees for this E-PCT (both EUR & USD) expressed in USD
+     * 
      * >0
      */
     @NotNull
@@ -208,7 +210,6 @@ public class Form1200Fee {
     	if (processingFee_USD==null) processingFee_USD = zero; 
     	if (expressFee_USD==null) expressFee_USD = zero; 
     	if (urgentFee_USD==null) urgentFee_USD = zero; 
-    	if (subTotal_USD==null) subTotal_USD = zero; 
     	if (subTotal_USD==null) subTotal_USD = zero; 
     	if (fxRate==null) fxRate = zero; 
     }

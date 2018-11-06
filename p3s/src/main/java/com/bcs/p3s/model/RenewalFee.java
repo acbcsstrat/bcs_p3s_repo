@@ -58,6 +58,7 @@ public class RenewalFee {
     private BigDecimal fxRate;
 
     /**
+     * Total of all fees for this Renewal (both EUR & USD) expressed in USD
      */
     @NotNull
     private BigDecimal subTotal_USD;

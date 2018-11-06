@@ -90,7 +90,7 @@ public class EpctEngine extends Universal {
 	 * @param patent The patent being processed
 	 */
 	public EpctEngine(Patent patent) {
-		
+		this.patent = patent;
 
 		// Check for No-Hopers first
     	if ( ( ! StageManager.isInFiling(patent.getEpoPatentStatus())) 
@@ -396,7 +396,7 @@ public class EpctEngine extends Universal {
 	}
 
 
-	protected Form1200Fee calcEpctEntityOnlyPricing(Epct unpersistedEpct, BigDecimal optionalFxRate) {
+	protected Form1200Fee calcEpctEntityOnlyPricing(Epct unpersistedEpct, BigDecimal optionalFxRate) {  //possibly a misnomer - dunnit dop ALL pricing now? - zaph
 		// Provide correct Form1200Fee data for persisting
 		String err = CLASSNAME+" : calcEpctEntityOnlyPricing(epct,"+optionalFxRate+")";
 		if (unpersistedEpct==null) fail(err+" passed null Epct");
@@ -541,7 +541,7 @@ public class EpctEngine extends Universal {
 		fee.setSubTotal_USD(totalUSD);
 		fee.setFxRate(fxRate);
 	}
-	
+
 
 	// This will only be called after the 'fee' property has been freshly calculated - so can be relied upon (& should not be disrupted!)
 	// if current is red, set Zero (As we don't send BigDecimals as null)
