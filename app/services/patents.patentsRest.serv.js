@@ -4,14 +4,15 @@ patentsRestService.$inject = ['$http', '$q'];
 
 function patentsRestService($http, $q) {
 
-    var REST_SERVICE_URI = ppdomain+'rest-patents-portfolio/'; 
+    var REST_SERVICE_URI = ppdomain+'rest-patents/'; 
 
     var factory = {
         fetchAllPatents: fetchAllPatents,
         updatePatent: updatePatent,
         savePatent: savePatent,
         deletePatent: deletePatent,
-        fetchCostAnalysis: fetchCostAnalysis
+        fetchCostAnalysis: fetchCostAnalysis,
+        fetchPatentItem: fetchPatentItem
     };
 
     return factory;
@@ -19,7 +20,7 @@ function patentsRestService($http, $q) {
     function fetchAllPatents() {
     
         var deferred = $q.defer();
-         $http.get(REST_SERVICE_URI)
+         $http.get(ppdomain+'rest-patents-portfolio/')
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -32,6 +33,23 @@ function patentsRestService($http, $q) {
 
         return deferred.promise;
     };
+
+    function fetchPatentItem(id) {
+    
+        var deferred = $q.defer();
+         $http.get(ppdomain+'rest-patent/'+ id)
+            .then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while fetching patents');
+                deferred.reject(errResponse);
+            }
+        );
+
+        return deferred.promise;
+    };    
 
     function updatePatent(patent, id) {
         
@@ -50,8 +68,9 @@ function patentsRestService($http, $q) {
 
     function savePatent(patent) {
         var deferred= $q.defer();
-        $http.post(REST_SERVICE_URI, patent)
+        $http.post(ppdomain+'rest-patents/', patent)
             .then(function(response){
+                console.log(response)
                 deferred.resolve(response.data);
             }, function(errResponse) {
                 deferred.reject(errResponse);

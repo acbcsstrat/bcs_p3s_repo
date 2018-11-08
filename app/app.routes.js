@@ -91,16 +91,14 @@ function appRoutes($stateProvider) {
             templateUrl: 'app/templates/patent/patent.patent-item.tpl.htm',
             controller: 'patentItemCtrl',
             controllerAs: '$ctrl',
-            url: '/{patentId}/:patentHref',
+            url: '/{patentId}',
             resolve: {
-                patent: ['patents', '$stateParams', function(patents, $stateParams) {
-                    return patents.find(function(patent){
+                patent: ['patents', '$stateParams', 'patentsRestService', function(patents, $stateParams, patentsRestService) {
+                    var match = patents.find(function(patent){
                         return patent.id == $stateParams.patentId;
                     })
+                    return patentsRestService.fetchPatentItem(match.id);
                 }]
-            },
-            params: {
-                patentHref: null
             }
         })
         .state('portfolio.patent.patent-info', {
