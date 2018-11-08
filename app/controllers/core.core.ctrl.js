@@ -5,20 +5,14 @@ coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageServ
 function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService) {
 
 	var vm = this;
-<<<<<<< HEAD
-=======
- 
->>>>>>> origin/fe-branch-v2.2
 
 	var urgentResponse = [];
 	var systemResponse = [];
 	var patentsFound = true;
 	var userTimedOut = false;
-<<<<<<< HEAD
 	// vm.checkedMessages = checkedMessages;
 	// vm.supresssMessages = supresssMessages;
-=======
->>>>>>> origin/fe-branch-v2.2
+
 	var messageArr = [];
 
 	$scope.$on('IdleStart', function() {
@@ -57,27 +51,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	});
 
-<<<<<<< HEAD
-	function fetchPatents() {
-
-		patentsRestService.fetchAllPatents()
-		.then(
-			function(response){
-				if(response.length === 0) {
-					patentsFound = false;
-				}
-			},
-			function(errResponse){
-				console.log(errResponse)
-			}
-		)
-
-	}
-
-	fetchPatents();
-
-=======
->>>>>>> origin/fe-branch-v2.2
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modals/modal.welcome-message.tpl.htm',

@@ -53,10 +53,6 @@
     "@babel/core": "^7.0.0-beta.55",
     "@babel/preset-env": "^7.0.0-beta.55",
     "@babel/runtime": "^7.0.0-beta.55",
-<<<<<<< HEAD
-=======
-    "@ng-bootstrap/ng-bootstrap": "^3.3.0",
->>>>>>> origin/fe-branch-v2.2
     "@palmabit/angular-cookie-law": "^0.4.1",
     "@uirouter/angularjs": "^1.0.16",
     "angular": "^1.6.10",
@@ -78,20 +74,12 @@
     "moment": "^2.22.1",
     "moment-timezone": "^0.5.16",
     "ng-idle": "^1.3.2",
-<<<<<<< HEAD
-=======
-    "ngx-bootstrap": "^3.0.1",
->>>>>>> origin/fe-branch-v2.2
     "ngx-cookie": "^3.0.1",
     "ngx-slick-carousel": "^0.2.7",
     "nvd3": "^1.8.6",
     "owl.carousel": "^2.3.4",
     "slick-carousel": "^1.8.1",
-<<<<<<< HEAD
-    "tether": "^1.4.4"
-=======
     "tether": "^1.4.4",
     "ui-bootstrap4": "^3.0.5"
->>>>>>> origin/fe-branch-v2.2
   }
 }
