@@ -6,12 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.docs.InvoiceProcessingEngine;
 import com.bcs.p3s.docs.email.P3sEmail;
@@ -23,6 +19,7 @@ import com.bcs.p3s.engine.PaymentTimingEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.engine.ServiceManager;
 import com.bcs.p3s.engine.StageManager;
+import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -42,6 +39,7 @@ import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.email.EmailSender;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
 import com.bcs.p3s.wrap.BankTransferPreCommitDetails;
@@ -52,6 +50,9 @@ import com.bcs.p3s.wrap.PatentExtendedData;
 @Service("PaymentService")
 public class PaymentServiceImpl extends ServiceAuthorisationTools implements PaymentService {
 
+	// Observation: Are invoking EpctEngine several times. MAY benefit for call once and distribute ...
+	
+	
 	/*@Autowired
 	HttpSession session;*/
 
@@ -160,15 +161,17 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	public BankTransferPostCommitDetails showBankTransferPostCommitDetails(InBasket basket) {
 
 		String err = PREFIX+"showBankTransferPostCommitDetails() ";
+		log().debug(err+" invoked ");
+
+		checkNotNull(basket, err+"A");
+		checkAreMyPatents(basket.getPatentIds(), err);
+		checkNotNull(basket.getExpectedCost(), err+"B");
+		check4ValidSellablePatentStatusv2_1(basket, err);
+
 		Payment currentPayment = new Payment();
 		BigDecimal latestCalculatedCost = new BigDecimal("0.0");
 		List<RenewalFee> committedFee = new ArrayList<RenewalFee>();
-		//checkAreMyPatents(patentIds, err);
-		checkAreMyPatents(basket.getPatentIds(), err);
-		//checkNotNull(totalCostUSDin, err);
-		checkNotNull(basket.getExpectedCost(), err);
 		List<Long> patentIdsInThisTransaction = new ArrayList<Long>(); 
-		log().debug(err+" invoked ");
 	
 		PostLoginDataEngine recalculateEngine = new PostLoginDataEngine();
 		BankTransferPostCommitDetails bankTransferPostCommitDetails = new BankTransferPostCommitDetails();
@@ -191,15 +194,35 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			pLoginSession = recalculateEngine.getExtendedPatentData(pLoginSession);
 			
 			//add up the cost for the patents in the basket
-			
-			if(!(pLoginSession.getExtendedPatentUI() == null) ){
-				
+			if(pLoginSession.getExtendedPatentUI()==null) fail(err+"pLoginSession.getExtendedPatentUI() == null"); 
+			else {
 				List<PatentExtendedData> sessionData = pLoginSession.getExtendedPatentUI();
-				for(PatentExtendedData eachSessionData : sessionData){
+				for(PatentExtendedData eachSessionData : sessionData) {
 					if(basket.getPatentIds().contains(eachSessionData.getPatentId())) {
-						latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost());
-						committedFee.add(eachSessionData.getFee());
-						patentIdsInThisTransaction.add(eachSessionData.getPatentId());
+						if (isThisPatentaRenewal(eachSessionData.getPatentId())) { // safety exclusion added for form1200
+							latestCalculatedCost = latestCalculatedCost.add(eachSessionData.getCurrentRenewalCost());
+							committedFee.add(eachSessionData.getFee());
+							patentIdsInThisTransaction.add(eachSessionData.getPatentId());
+						}
+					}
+				}
+				// That v1 code will have calculated for renewals. Now form1200s
+				
+				List<Long> basketPatentIds = basket.getPatentIds();
+				for (Long patentId : basketPatentIds) {
+					Patent patent = Patent.findPatent(patentId);
+					if (patent==null) fail(err+" List<Long> basketPatentIds  contains non-existent patent : "+patentId);
+					// Filter to just form1200s (as have done renewals above)
+					boolean isEpct = StageManager.isInFiling(patent.getEpoPatentStatus());
+					if (isEpct) {
+						EpctEngine epctEngine = new EpctEngine(patent);
+						Epct epct = new Epct(); // expect this to e redundant VERY soon 181106 - acTidy
+						Form1200Fee form1200Fee = epctEngine.calcEpctPersistPricingOnly(epct, null); 
+						BigDecimal totF1200costUSD = form1200Fee.getSubTotal_USD();
+						
+						latestCalculatedCost = latestCalculatedCost.add(totF1200costUSD);
+						// committedFee - not applicable here - will do equiv ...
+						patentIdsInThisTransaction.add(patentId);
 					}
 				}
 				bankTransferPostCommitDetails.setTotalCostUSD(latestCalculatedCost);
@@ -216,9 +239,10 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				err += "Expected Total Price differs from calculated. Expected="+expected.toString()+"  calculated="+calculated.toString();
 				logM().warn(err);
 				logInternalError().warn(err);
-				// Abort or Continue (=ignore). Choose (fro initial development) CONTINUE. so no exception
+				// Abort or Continue (=ignore). Choose (for initial development) CONTINUE. so no exception
 				
 				bankTransferPostCommitDetails.setWarningMessage(PRICE_CHANGED);
+				return bankTransferPostCommitDetails;
 			}
 			
 			/**
@@ -239,7 +263,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			 * 	i. Create proforma invoice
 			 *  j. Send booking email & proforma invoice to customer by email 
 			 */ 
-			//log().warn("**** Booking made - but p3s cannot yet create an Proform Invoice (or any PDF) to email");
+			//log().warn("**** Booking made - but p3s cannot yet create an Proforma Invoice (or any PDF) to email");
 			
 
 			sendProformaInvoiceEmail(bankTransferPostCommitDetails, patentIdsInThisTransaction);
@@ -264,7 +288,10 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			System.out.println("PaymentServiceImpl showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			throw new RuntimeException(e);
+			//throw new RuntimeException(e);
+			
+			// this SHOULD make above code redundant
+			throw new P3SRuntimeException("PaymentServiceImpl showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ", e);
 		}
 		return bankTransferPostCommitDetails;
 	}
@@ -284,6 +311,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	
 	protected void sendProformaInvoiceEmail(BankTransferPostCommitDetails commitTransaction
 				, List<Long> patentIdsInThisTransaction) {
+
 		log().debug("Send Proforma Invoice");
 		String err = PREFIX+"sendProformaInvoiceEmail : ";
 		if (commitTransaction==null || patentIdsInThisTransaction==null) {
@@ -324,12 +352,10 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			send(email, recipient);
 		}
 		catch (RuntimeException rte) {
-			logErrorAndContinue(err+"Error preparing ProformaInvoice email. Now rethrow",rte);
-			throw rte;
+			//logErrorAndContinue(err+"Error preparing ProformaInvoice email. Now rethrow",rte);
+			throw new P3SRuntimeException("Error preparing ProformaInvoice email. Now rethrow",rte);
 		}
-
 	}
-
 	
 	protected void send(P3sEmail email, String recipient) {
 		log().debug("send() proforma to "+recipient);
@@ -532,7 +558,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	
 	protected Payment commitTransaction(BankTransferPostCommitDetails commitTransaction, List<RenewalFee> fee){
 		
-		String msg = PREFIX+"commitTransaction("+commitTransaction+","+fee+ ") ";
+		String msg = PREFIX+"\ncommitTransaction("+commitTransaction+", \n\n& fee"+fee+ ") ";
 		Invoice invoice = new Invoice();
 		Payment payment = new Payment();
 		RenewalFee currentRenewalFee = null;
@@ -544,149 +570,198 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		log().debug(msg +" invoked ");
 		
 		List<Renewal> renewal_payment = new ArrayList<Renewal>();
+		List<Epct> epct_payment = new ArrayList<Epct>();
+
 		List<PatentUI> orderedPatents = commitTransaction.getOrderedPatentUIs();
 //a.Insert into invoice (Temporary - some fields incomplete, but need it persisted to have it's ID)
 		invoice = invoiceEngine.populateProformaInvoiceData(commitTransaction); 
-//		if(!(invoice == null)){ - lot of acTidy around here - once proven
-			currentInvoice = invoice.persist();
-			if(currentInvoice == null){
-				dbSuccess = false;
-				log().error("Invoice Table persistence failed " + msg);
-				fail("Invoice Table persistence failed " + msg);
-				//return payment;
-			}
-			else {
-//				Invoice newInvoice = Invoice.findInvoice(invoice.getId());
-//				newInvoice.merge();
-				
-				log().debug("Persisted Invoice Table. " + msg + "and returned invoice details with id as " + invoice.getId()
-				+ ", Invoice Number "+invoice.getInvoiceNumber());  // at this point, InvoiceNumber will be null !!
-			}
-				//payment.setLatestInvoice(currentInvoice);
-//		}
+
+		currentInvoice = invoice.persist();
+		if(currentInvoice == null){
+			dbSuccess = false;
+			log().error("Invoice Table persistence failed " + msg);
+			fail("Invoice Table persistence failed " + msg);
+			//return payment;
+		}
+		else {
+			//Invoice newInvoice = Invoice.findInvoice(invoice.getId());
+			//newInvoice.merge();
+			log().debug("Persisted Invoice Table. " + msg + "\nand returned invoice details with id as " + currentInvoice.getId()
+			+ ", Invoice Number "+invoice.getInvoiceNumber());  // at this point, InvoiceNumber will be 'Empty'
+		}
 		
-//		else{
-//			dbSuccess = false;
-//			log().debug("Invoice Table persistence failed " + msg);
-//			log().error("Invoice Table persistence failed " + msg);
-//			return payment;
-//		}
 		
 //b.Insert into Payment
 		payment = populatePaymentData(commitTransaction);
 		payment.setLatestInvoice(currentInvoice);
 
-		// payment:P3S_TransRef cannot be sut until after the payment is persisted
+		// payment:P3S_TransRef cannot be set until after the payment is persisted
 		
-		//		if(!(payment == null)){
-			currentPayment = payment.persist();
+		currentPayment = payment.persist();
 
-			if(currentPayment == null){
-				dbSuccess = false;
-				log().error("Payment Table persistence failed " + msg);
-				fail("Payment Table persistence failed " + msg);
-				//return payment;
-			}
-			log().debug("Persisted Payment Table successfully " + msg + "and returned payment details with id as " + currentPayment.getId());
-			
+		if(currentPayment == null){
+			dbSuccess = false;
+			log().error("Payment Table persistence failed " + msg);
+			fail("Payment Table persistence failed " + msg);
+		}
+		log().debug("Persisted Payment Table successfully " + msg + "and returned payment details with id as " + currentPayment.getId());
+		
 //			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
 //			String p3sTransRef = commitToRenewal.generateP3sTransRef(currentPayment); cannot gen yet. paymentID not yet exist
 //			currentPayment.setP3S_TransRef(p3sTransRef);
-			currentPayment.merge();
-			logChangeOfStatus().debug("Transaction ["+currentPayment.getId()+"] created with " + orderedPatents.size() +" patents ");
-			
-			//setting the generated p3s Ref to BankTransferPostCommitDetails - this object we are sending back to FE for displaying on final Payment page
-			commitTransaction.setP3sTransRef(currentPayment.getP3S_TransRef());
-//		}
+		// currentPayment.merge(); // inhibit because pointless
+		logChangeOfStatus().debug("Transaction ["+currentPayment.getId()+"] created with " + orderedPatents.size() +" patents ");
 		
 
 //c.Update the new Invoice and Payment with details now available
-//		if(!(currentInvoice == null)){
 
-			currentPayment = Payment.findPayment(currentPayment.getId());
-			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
-			String p3sTransRef = commitToRenewal.generateP3sTransRef(currentPayment);
-//			String p3sRef = invoiceEngine.generateP3sTransactionNumber(currentPayment); - new but immediately redundant 
-			currentPayment.setP3S_TransRef(p3sTransRef);
-			currentPayment.merge();
-			logChangeOfStatus().debug("Transaction ["+currentPayment.getId()+"] " + currentPayment.getP3S_TransRef() + " updated with " + orderedPatents.size() +" patents ");
+		currentPayment = Payment.findPayment(currentPayment.getId());
+		CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();
+		String p3sTransRef = commitToRenewal.generateP3sTransRef(currentPayment);
+		currentPayment.setP3S_TransRef(p3sTransRef);
+		currentPayment.merge();
+		logChangeOfStatus().debug("Transaction ["+currentPayment.getId()+"] " + currentPayment.getP3S_TransRef() + " updated with " + orderedPatents.size() +" patents ");
 
-			// set remaining Invoice details
-			String invoiceNumber = invoiceEngine.generateProFormaInvoiceNumber(currentPayment); 
-			Invoice newInvoice = Invoice.findInvoice(currentInvoice.getId());
-			newInvoice.setInvoiceNumber(invoiceNumber);
-			newInvoice.setPayment(currentPayment);
-			newInvoice.merge(); 
-			log().debug("Invoice table ["+newInvoice.getId()+"]updated with payment id as "+ currentPayment.getId());
+		// set remaining Invoice details
+		String invoiceNumber = invoiceEngine.generateProFormaInvoiceNumber(currentPayment); 
+		Invoice newInvoice = Invoice.findInvoice(currentInvoice.getId());
+		newInvoice.setInvoiceNumber(invoiceNumber);
+		newInvoice.setPayment(currentPayment);
+		newInvoice.merge(); 
+		log().debug("Invoice table ["+newInvoice.getId()+"]updated with payment id as "+ currentPayment.getId());
 
-			// commitTransaction lacks the new P3sRef
-			commitTransaction.setP3sTransRef(p3sTransRef);
-			//		}
+		// setting the generated p3s Ref to BankTransferPostCommitDetails - this object we are sending back to FE for displaying on final Payment page
+		commitTransaction.setP3sTransRef(p3sTransRef);
 
 
 		/**
 		 * Each transaction may have multiple patents. So loop through each in orderedPatentIds and get the details from session
 		 */
 		
-//d. Insert into Fee Table
+//d. Insert into Fee Table & e. Insert into Renewal 
+
 		for(PatentUI eachPatent : orderedPatents){
+			if (isThisPatentaRenewal(eachPatent.getId())) {
+		
+				// d(i). Insert into Fee table - For Renwals
+	
+				//Renewal renewal = new Renewal();
+				//renewal = populateRenewalData(commitTransaction,eachPatent);
+				//if(!(fee == null)){
+				//	currentRenewalFee = renewal.getRenewalFee().persist();
+				//	if(currentRenewalFee == null){
+				//		dbSuccess = false;
+				//		log().error("Fee Table persistence failed. currentFee=null " + msg);
+				//		return payment;
+				//	}
+				//	log().debug("Persisted Fee Table successfully " + msg);
+				//}
+				//else{
+				//	dbSuccess = false;
+				//	log().error("Fee Table persistence failed. fee=null " + msg);
+				//	return payment;
+				//}
 			
-			Renewal renewal = new Renewal();
-			renewal = populateRenewalData(commitTransaction,eachPatent);
-			if(!(fee == null)){
-				currentRenewalFee = renewal.getRenewalFee().persist();
-				if(currentRenewalFee == null){
-					dbSuccess = false;
-					log().error("Fee Table persistence failed. currentFee=null " + msg);
-					return payment;
+				Renewal renewal = new Renewal();
+				renewal = populateRenewalData(commitTransaction,eachPatent);
+				if(fee == null) { dbSuccess = false; fail("Renewal Fee Table persistence failed. fee=null " + msg); }
+				else {
+					currentRenewalFee = renewal.getRenewalFee().persist();
+					if(currentRenewalFee == null){
+						dbSuccess = false;
+						log().error("Fee Table persistence failed. currentFee=null " + msg);
+						return payment;
+					}
+					log().debug("Persisted Fee Table successfully " + msg);
 				}
-				log().debug("Persisted Fee Table successfully " + msg);
-			}
-			else{
-				dbSuccess = false;
-				log().error("Fee Table persistence failed. fee=null " + msg);
-				return payment;
-			}
 			
-//e.Insert into Renewal
+				// e(i). Insert into Renewal table - For Renewals
 			
-			renewal.setActivePaymentId(currentPayment);
-			renewal.setRenewalFee(currentRenewalFee);
-			currentRenewal = renewal.persist();
-			currentRenewalFee.setRenewal(currentRenewal);
-			renewal_payment.add(currentRenewal);
-			log().debug("Persisted Renewal Table successfully " + msg + "and returned renewal details with id as " + renewal.getId());
-			
-			if(currentRenewal == null){
-				dbSuccess = false;
-				log().debug("Renewal Table persistence failed " + msg);
-				log().error("Renewal Table persistence failed " + msg);
-				return payment;
-			}
-		
-		}
-//f.Update payment_renewal table
-		if(!(renewal_payment == null)){
-			payment.setRenewals(renewal_payment);
-			payment.merge();
-			log().debug("payment_renewals join table persisted with "+ renewal_payment.size() +" renewal(s)");
-		}
-//g.Update currentFee Table with currentRenewal
-		if(!(currentRenewalFee == null)){
-			currentRenewalFee.merge();
-			log().debug("Fee table updated with renewal id as "+ currentRenewal.getId());
-		}
-		
-		
-//h. Update Patent table for all ordered Patents
-		if(dbSuccess){
-			for(PatentUI eachPatent : orderedPatents){
+				renewal.setActivePaymentId(currentPayment);
+				renewal.setRenewalFee(currentRenewalFee);
+				currentRenewal = renewal.persist();
+				currentRenewalFee.setRenewal(currentRenewal);
+				
+				// merge currentRenewalFee here rather than in g
+				currentRenewalFee.merge();
+				
+				renewal_payment.add(currentRenewal);
+				log().debug("Persisted Renewal Table successfully " + msg + "and returned renewal details with id as " + renewal.getId());
+				
+				if(currentRenewal == null){
+					dbSuccess = false;
+					log().debug("Renewal Table persistence failed " + msg);
+					log().error("Renewal Table persistence failed " + msg);
+					fail("Renewal Table persistence failed " + msg);
+					//return payment;
+				}
+				
+				// h(i) update patent with new renewal status
 				Patent patent = Patent.findPatent(eachPatent.getId());
 				patent.setRenewalStatus(currentRenewal.getRenewalStatus());
 				patent.merge();
 			}
-			
-		}
+			else 
+			{ // is a form1200 item
+
+				// d(ii). Insert into Form1200Fee table - For form1200
+				// e(ii). Insert into Epct table - For form1200
+				
+				// Here, v2.1 E-PCT (aka Form1200) behaviour differs from v1 Renewals. Here the entities are already persisted
+				// But the Fee needs recalculating and the Epct a minor update & the epct-status updating
+				Epct epct = Epct.findEpctByPatent(eachPatent);
+
+	    		EpctEngine epctEngine = new EpctEngine(eachPatent);
+				Form1200Fee newInmemoryForm1200Fee = epctEngine.calcEpctPersistPricingOnly(epct, null); 
+				newInmemoryForm1200Fee.setEpct(epct);
+				Form1200Fee redundantForm1200Fee = epct.getForm1200Fee();
+				epct_payment.add(epct);
+
+				// Do the persistence merry-go-round, Updating the Epct along the way
+				Form1200Fee newPersistedForm1200Fee = newInmemoryForm1200Fee.persist();
+				epct.setForm1200Fee(newPersistedForm1200Fee);
+				epct.setEpctStatus(Form1200StatusEnum.PAYMENT_IN_PROGRESS);
+				epct.merge();
+
+				// redundantForm1200Fee.remove(); - Cannot yet delete. `p3s_v2`.`form1200fee`, CONSTRAINT `FK_4nnv416nt7isy0ps94xlccvgx` FOREIGN KEY (`epct`) REFERENCES `epct` (`id`))
+				// Reasoning: redundantForm1200Fee erroneously believes that IT is that target of epct.form1200fee which is a NotNull field in epct. Hence redundantForm1200Fee cannot be deleted.
+				redundantForm1200Fee.setEpct(null);
+				redundantForm1200Fee.merge();
+				redundantForm1200Fee.remove();
+				
+				// h(ii) update patent with new epct status
+				Patent patent = Patent.findPatent(eachPatent.getId());
+				patent.setEpctStatus(epct.getEpctStatus());
+				patent.merge();
+			}
+		}  // End of: for(PatentUI eachPatent : orderedPatents){
+
+//f.Update payment_renewals & payment_epcts tables
+		if (renewal_payment==null || epct_payment==null) fail(msg+" renewal_payment or epct_payment is null");
+		currentPayment = Payment.findPayment(currentPayment.getId());
+		currentPayment.setRenewals(renewal_payment);
+		currentPayment.setEpcts(epct_payment);
+		currentPayment.merge();
+		log().debug("payment_renewals & payment_epcts join tables persisted with "+ renewal_payment.size() +" renewal(s) "+ epct_payment.size() +" epct(s)");
+		
+		
+//g.Update currentFee Table with currentRenewal
+		// This was v1 code. Yet if multiple renewals, this is AFTER the loop. At best, would have be unreliable .. So merge in proper place - in 'd'
+		//if(!(currentRenewalFee == null)){
+		//	currentRenewalFee.merge();
+		//	log().debug("Fee table updated with renewal id as "+ currentRenewal.getId());
+		//}
+		
+		
+//h. Update Patent table for all ordered Patents
+		// as per above - below existing code was after loop - too late !. moved above, so this is redundant
+//		if(dbSuccess){
+//			for(PatentUI eachPatent : orderedPatents){
+//				Patent patent = Patent.findPatent(eachPatent.getId());
+//				patent.setRenewalStatus(currentRenewal.getRenewalStatus());
+//				patent.merge();
+//			}
+//		}
 
 		
 		return payment;
@@ -707,21 +782,25 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		payment.setP3S_TransRef(bankTransferPostCommitDetails.getP3sTransRef());
 		//MP to remove below line later ::::: IMP!!!!!!!!!!
 		//payment.setMC_TransRef("TEMP_REF");  //initial insert this will be null
+		payment.setMC_TransRef(null);
 		payment.setTransType(PaymentTypeEnum.STANDARD_PAYMENT);  // any Payment created by p3sWEB is std. It's cron that would create penalty payments
 		payment.setInitiatedByUserId(user);
 		payment.setTransStartDate(bankTransferPostCommitDetails.getDateNowLocalTime());
 		payment.setTransTargetEndDate(bankTransferPostCommitDetails.getTransTargetEndDate());
-		payment.setFxTarget(bankTransferPostCommitDetails.getFxTarget());
 		payment.setLatestTransStatus(PaymentStatusEnum.INITIATED);
 		payment.setLastUpdatedDate(Calendar.getInstance().getTime());
 		payment.setHasFailed(false); //when insert to payments initially
 		payment.setFailureReason(null);
+		// latestInvoice - not set yet
 		payment.setTransAmount_USD(bankTransferPostCommitDetails.getTotalCostUSD());
 		payment.setIsBillingAddressSame(true); //hardcoded.Need to be changed once UI send the data..missing in API 4.1
 		payment.setBillingAddressCity(bankTransferPostCommitDetails.getBillingCity());
 		payment.setBillingAddressState(bankTransferPostCommitDetails.getBillingState());
 		payment.setBillingAddressStreet(bankTransferPostCommitDetails.getBillingStreet());
 		payment.setBillingAddressZip(bankTransferPostCommitDetails.getBillingZip());
+		payment.setSentToMc(null);
+		payment.setMC_failCode(null); 
+		payment.setFxTarget(bankTransferPostCommitDetails.getFxTarget());
 		return payment;
 	}
 	
@@ -748,6 +827,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		return renewal;
 	}
 	
+	
 
 	protected String deriveInvoiceUrl(Payment currentPayment) {
 		if (currentPayment==null) return null;
@@ -768,6 +848,19 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		return url;
 	}
 
+	
+	// v2.1 is often many times over making this check. Rewrite in future - acTodo
+	boolean isThisPatentaRenewal(long patentId) { // ie distinguish between Renewal and Form1200 items
+		Patent patent = Patent.findPatent(patentId);
+		if (patent==null) fail("PaymentServiceImpl : isThisPatentaRenewal("+patentId+") doesn't exist !");
+		boolean isRenewal = StageManager.isInProsecution(patent.getEpoPatentStatus());
+		return isRenewal;
+	}
+	
+	
+	
+	
+	
 	// End of - Support methods - NOT exposed through the interface
 
 }

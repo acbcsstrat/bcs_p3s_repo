@@ -39,7 +39,7 @@ public class InvoiceProcessingEngine extends Universal {
 //		invoice.setFilename("dummyInvoiceNumber1.pdf");
 //		invoice.setInvoiceTemplateId("template1");
 		//dummy values end
-		
+		invoice.setLatePayPenalty_USD(null);
 		return invoice;
 	}
 

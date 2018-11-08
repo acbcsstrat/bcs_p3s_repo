@@ -401,7 +401,7 @@ public class EpctEngine extends Universal {
 		String err = CLASSNAME+" : calcEpctEntityOnlyPricing(epct,"+optionalFxRate+")";
 		if (unpersistedEpct==null) fail(err+" passed null Epct");
 		
-		epct = unpersistedEpct; // azaph damaging - overwrites real with empty
+		epct = unpersistedEpct; // azaph damaging - overwrites real with empty - even if works, seem pointless (other then ensure no NPE..?)
 		if (optionalFxRate==null) {
 			GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
 			fxRate = glob.getCurrent_P3S_rate();

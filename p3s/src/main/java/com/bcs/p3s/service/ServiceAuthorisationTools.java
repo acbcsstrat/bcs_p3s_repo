@@ -1,8 +1,5 @@
 package com.bcs.p3s.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -15,18 +12,18 @@ import com.bcs.p3s.display.form1200.PageDescriptionEnum;
 import com.bcs.p3s.display.form1200.PageDescriptionTool;
 import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
+import com.bcs.p3s.engine.StageManager;
 import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Epct;
-import com.bcs.p3s.model.LoginMessage;
-import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
-import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.P3SAuthorisationException;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.InBasket;
 
 /**
  * Provides tools to simplify authorisation checks, 
@@ -72,7 +69,8 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 	
 	protected void checkAreMyPatents(List<Long> patentIds, String err) {
-		checkNotNull(patentIds, err);
+		checkNotNull(patentIds, err+" checkAreMyPatents null");
+		if (patentIds.size()==0) failMalicious(err+" checkAreMyPatents SIZE=0 listIsEmpty");
 		for (Long patentId : patentIds) {
 			checkThisIsMyPatent(patentId, err);
 		}
@@ -111,6 +109,15 @@ public class ServiceAuthorisationTools extends Universal {
 		checkEpctisRejectable(patent, err);
 	}
 	
+	protected void checkNotNull(Object ob, String err) {
+		err += "  [on checkNotNull]";
+		if (ob==null) 
+																	failInternalError(err); 
+	}
+	
+	protected void check4ValidSellablePatentStatusv2_1(InBasket basket, String err) {
+		checkSub4ValidSellablePatentStatusv2_1(basket, err);
+	}
 	
 	
 	
@@ -156,12 +163,6 @@ public class ServiceAuthorisationTools extends Universal {
 		if ( (p==null) || ! checkThisIsMy().getBusiness().getId().equals(p.getBusiness().getId())) 
 																	failMalicious(err);
 		return p;
-	}
-	
-	protected void checkNotNull(Object ob, String err) {
-		err += "  [on checkNotNull]";
-		if (ob==null) 
-																	failInternalError(err); 
 	}
 	
 	protected void checkEPNumberFormat(String str, String err) {
@@ -277,6 +278,49 @@ public class ServiceAuthorisationTools extends Universal {
 //			if ( ! isDeletable) failMalicious(err+"Epct("+epct.getId()+" is NOT deletable.");
 		}
 	}	
+	
+
+	// Check each patent for valid renewable OR form1200-able status
+	// named 'v2.1' as relies on only sellable products being Renewal or form1200
+	protected void checkSub4ValidSellablePatentStatusv2_1(InBasket basket, String err) {
+		err += "checkSub4ValidSellablePatentStatusv2_1 : ";
+		boolean failed = false;
+		// StageManager stageManager = new StageManager(); 
+		for (Long patentId : basket.getPatentIds()) {
+			Patent patent = Patent.findPatent(patentId);
+			if (StageManager.isInProsecution(patent.getEpoPatentStatus())) {
+				// {this relocated from PaymentRestController  v1 181107}
+				// * Precheck before committing payment : to avoid duplicate payments for same patents from different users of same company
+				// * CHECK :- CHECK WHETHER ALL THE PATENTS ADDED TO THE BASKET IS HAVING A STATUS AS SHOW_PRICE
+				//
+//	    		List<Long> addedPatentIds = basketContents.getPatentIds();
+//	    		if(!(addedPatentIds.isEmpty())){
+//	    			for(Long eachId : addedPatentIds){
+//	    				Patent patent = Patent.findPatent(eachId);
+	    				if(!(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(patent.getRenewalStatus()))) {
+//	    					log().debug("Patent[" +patent.getId() +"] added to basket has got a RENEWAL STATUS NOT EQUALS SHOW_PRICE. Abort the Payment request.");
+//	    					return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.BAD_REQUEST);  // Pat to display respective error message
+	    					failMalicious(err+"Renewal patentId("+patent.getId()+") is NOT status SHOW_PRICE- is "+patent.getRenewalStatus()); 
+	    				}
+//	    			}
+//	    		}
+			}
+			else
+			{
+				Form1200StatusEnum form1200StatusEnum = new Form1200StatusEnum(patent.getEpctStatus()); 
+				if ( ! form1200StatusEnum.canSellForm1200()) {
+					failMalicious(err+"E-PCT patentId("+patent.getId()+") is NOT in sellable status - is "+patent.getEpctStatus());
+				}
+			}
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -6,9 +6,9 @@ To:</td><td>[FIRSTNAME] [LASTNAME]</td></tr>
 </table>
 <p/>
 
-Thank you for creating transaction [TRANSACTION_REFERENCE] for renewing patent[PATENT_PLURALITY_S] :
+Thank you for creating transaction [TRANSACTION_REFERENCE] for your patent[PATENT_PLURALITY_S] :
 <table class="tblpatents3colinvemail">
-[THREECOL_TABLE_OF_PATENTS]<tr><td></td><td>[PATENT_APPLICATION_NUMBER]</td><td>[SHORT_TITLE]</td></tr>
+[THREECOL_TABLE_OF_PATENTS]<tr><td>&nbsp;&nbsp;&nbsp;[PATENT_TRANSACTION_TYPE]&nbsp;&nbsp;&nbsp;&nbsp;</td><td>[PATENT_APPLICATION_NUMBER]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>[SHORT_TITLE]</td></tr>
 </table>
 <p/>
 

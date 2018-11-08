@@ -5,6 +5,7 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bcs.p3s.engine.StageManager;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 
 import javax.validation.constraints.NotNull;
@@ -210,7 +211,12 @@ public class Patent {
      */
 
 
-    public int countDesignatedstates() {
+	public boolean isThisPatentaRenewal() { // v2.1 : ie distinguish between Renewal and Form1200 items
+		boolean isRenewal = StageManager.isInProsecution(epoPatentStatus);
+		return isRenewal;
+	}
+
+	public int countDesignatedstates() {
     	if (designated_states==null || designated_states.trim().length()==0) return 0;
     	List<String> eachDesignatedState = Arrays.asList(designated_states.split(","));
     	return eachDesignatedState.size();

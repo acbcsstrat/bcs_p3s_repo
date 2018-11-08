@@ -98,5 +98,13 @@ public interface P3SPropertyNames {
 	public static final String EPO_SCRAPE_RESULT_BIBLIO_PROCEDURAL = "epo_scrape_result_bibio_procedural";
 	public static final String EPO_SCRAPE_RESULT_ABSTRACT = "epo_scrape_result_abstract";
 
+	// Form1200 / Euro-PCT properties 
+	public static final String RENEWAL_NAME = "renewal_name"; // Renewal or Annuity
+	public static final String EPCT_FULLNAME = "epct_fullname";
+	public static final String EPCT_SHORTNAME = "epct_shortname";  // Euro-PCT / EP-PCT / E-PCT / EPCT ..
+	public static final String EPCT_REPRESENTATIVE_CODE = "epct_representative_code"; // either leave empty or set to PP or IP or PI
+	
+	
+	
 	
 }

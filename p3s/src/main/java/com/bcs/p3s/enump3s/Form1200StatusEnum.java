@@ -88,6 +88,12 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     }
     // includeInAService() - Is not determined here. See isNotAvailable is EpctEngine
 
+    public boolean canSellForm1200() {
+    	return (value.equals(AWAIT_PDF_TRIGGER)
+    			|| value.equals(EPCT_BEING_GENERATED)
+    			|| value.equals(EPCT_SAVED));
+    }
+
     public static boolean isDeletable(String code) {
     	// Consider: A persisted Epct (et al) can never be created for some status values
     	return (EPCT_REJECTED.equalsIgnoreCase(code)

@@ -33,6 +33,7 @@ public interface Injectables {
 
 	// Patent and renewal timing details
 	String TIME_BEFORE_CHANGE_PHRASE = "TIME_BEFORE_CHANGE_PHRASE";  // e.g. "2 weeks"
+	String PATENT_TRANSACTION_TYPE = "PATENT_TRANSACTION_TYPE";
 	String PATENT_APPLICATION_NUMBER = "PATENT_APPLICATION_NUMBER";
 	String PATENT_TITLE = "PATENT_TITLE";
 	String SHORT_TITLE = "SHORT_TITLE";

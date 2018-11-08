@@ -68,7 +68,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("CCP007".equals(host)) {
 			// path = defaultpath; // now redundant, but shows purpose of defaultpath 
 			// path = "C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";	// If running from war 	
-			path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse
+			//path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse - v1
+			path = "C:/gitrepos/github/project-repo/p3s_web_v2.1/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse - v1
 		}
 		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
@@ -137,7 +138,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 
 		if ("CCP007".equals(host) ) {
 			// C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/
-			path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/";
+			path = "C:/gitrepos/github/project-repo/p3s_web_v2.1/p3s/src/main/resources/";
 		}
 
 		if (path==null) {

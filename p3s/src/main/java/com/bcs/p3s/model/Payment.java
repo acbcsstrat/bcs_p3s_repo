@@ -107,7 +107,8 @@ public class Payment {
     private Boolean hasFailed;
 
     /**
-     * If transaction fails, holds 1 of the 3 codes agreed with Moneycorp
+     * If transaction fails, holds 1 of the 3 codes agreed with Moneycorp : 
+     * see P3SAbstractEnum
      */
     private String MC_failCode;
 
@@ -221,7 +222,9 @@ public class Payment {
     }
     
     public void setMC_failCode(String MC_failCode) {
-    	this.MC_failCode = (new McFailCodeEnum(MC_failCode)).toString();
+    	if (MC_failCode==null) this.MC_failCode = null; 
+    	else
+    		this.MC_failCode = (new McFailCodeEnum(MC_failCode)).toString();
     }
 
     

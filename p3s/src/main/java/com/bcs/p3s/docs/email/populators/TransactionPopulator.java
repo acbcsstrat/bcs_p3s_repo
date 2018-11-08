@@ -12,6 +12,7 @@ import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 import com.bcs.p3s.wrap.TwoColRecord;
 
@@ -270,14 +271,27 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		String subtemplate;
 		if (currentLine.length()>repeatingLineStart) subtemplate = currentLine.substring(repeatingLineStart+1);
 		else subtemplate = currentLine; 
-		
+
+		P3SPropertyReader reader;
+		String renewalTitle = null; 
+		String epctTitle = null;
+		try {
+			reader = new P3SPropertyReader();
+			renewalTitle = reader.getGenericProperty(P3SPropertyNames.RENEWAL_NAME); 
+			epctTitle = reader.getGenericProperty(P3SPropertyNames.EPCT_FULLNAME);
+		} catch (P3SPropertyException e) {
+			throw new P3SRuntimeException("P3SPropertyException whilst reading properties",e);
+		}
+
 		for (Patent patent : data.getPatents()) {
 			currentLine = subtemplate;
 			// use existing, unused, fields, but update on each loop/patent 
-			log().debug("acDebug TransactionPopulator 243: (data==null)="+(data==null)+"  (patent==null)="+(patent==null)); // discard once no longer populated with dodgy patent.getID(1L) - acTodo
+			//log().debug("acDebug TransactionPopulator processRepeatingPatents 289: (data==null)="+(data==null)+"  (patent==null)="+(patent==null)); // discard once no longer populated with dodgy patent.getID(1L) - acTodo
+			data.setPatentTransactionType((patent.isThisPatentaRenewal() ? renewalTitle : epctTitle)+" : ");
 			data.setPatentApplicationNumber(patent.getEP_ApplicationNumber());
 			data.setPatentShortTitle(patent.getShortTitle());
 			data.setPatentTitle(patent.getTitle());
+			injectPATENT_TRANSACTION_TYPE();
 			injectPATENT_APPLICATION_NUMBER();
 			injectSHORT_TITLE();
 			injectPATENT_TITLE();

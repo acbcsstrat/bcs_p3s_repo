@@ -28,6 +28,7 @@ public class P3sEmailData {
 	
 	// Patent and renewal timing details
 	String timeBeforeChangePhrase;
+	String patentTransactionType;
 	String patentApplicationNumber;
 	String patentTitle;
 	String patentShortTitle;
@@ -120,6 +121,12 @@ public class P3sEmailData {
 	}
 	public void setTimeBeforeChangePhrase(String timeBeforeChangePhrase) {
 		this.timeBeforeChangePhrase = timeBeforeChangePhrase;
+	}
+	public String getPatentTransactionType() {
+		return patentTransactionType;
+	}
+	public void setPatentTransactionType(String patentTransactionType) {
+		this.patentTransactionType = patentTransactionType;
 	}
 	public String getPatentApplicationNumber() {
 		return patentApplicationNumber;

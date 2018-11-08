@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bcs.p3s.display.form1200.ExtensionStateUI;
-import com.bcs.p3s.display.form1200.Form1200SavedData;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
-import com.bcs.p3s.enump3s.RenewalStatusEnum;
-import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.service.PaymentServiceImpl;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
@@ -44,22 +40,19 @@ public class PaymentRestController extends Universal {
 
     //------------------- Price up Basket contents --------------------------------------------------
 
-    // tmp workaround for dev testing when FE code not availabe
+    // tmp workaround for dev testing when FE code not available
     @RequestMapping(value = "/rest-basket-tmpHtmlFormTester/", method = RequestMethod.POST)
     public ResponseEntity<BasketContents> showBasketContentstmpHtmlFormTester(@RequestParam("patentIds") String csv) {
     	log().debug("PaymentRestController : /rest-basket-tmpHtmlFormTester/ showBasketContentstmpHtmlFormTester("+csv+") invoked.  ");
-    	
     	List<String> items = Arrays.asList(csv.split("\\s*,\\s*"));
-    	//List<Long> longList = new ArrayList<Long>();
     	List<Integer> longList = new ArrayList<Integer>();
 		for (String str : items) {
-			///Long lll = new Long(str);
-			Integer iii = new Integer(str);
+			Integer iii = new Integer(str.trim());
 			longList.add(iii);
 		}
     	LinkedHashMap<String,Object> obby = new LinkedHashMap<String,Object>();
     	obby.put("elements", longList);
-    	return showBasketContents(obby);
+    	return showBasketContents(obby);  // call the REAL controller method (just below), now we've assembled params as required 
     }
 
     	
@@ -153,6 +146,26 @@ public class PaymentRestController extends Universal {
        
     //------------------- Checkout - Bank Transfer prior to Commit --------------------------------------------------
 
+    // tmp workaround for dev testing when FE code not available
+    @RequestMapping(value = "/rest-committed-banktransfer-tmpHtmlFormTester/", method = RequestMethod.POST)
+    public ResponseEntity<BankTransferPostCommitDetails> showBankTransferPostCommitDetailstmpHtmlFormTester(@RequestParam("patentIds") String csv
+    		, @RequestParam("totCost") String strTotCost) {
+    	log().debug("PaymentRestController : /rest-committed-banktransfer-tmpHtmlFormTester/ showBankTransferPostCommitDetailstmpHtmlFormTester("+csv+") invoked.  ");
+    	List<String> items = Arrays.asList(csv.split("\\s*,\\s*"));
+    	List<Integer> longList = new ArrayList<Integer>();
+    	LinkedHashMap<String,Object> obby = new LinkedHashMap<String,Object>();
+		for (String str : items) { longList.add(new Integer(str)); }
+    	obby.put("patent_ids", longList);
+    	obby.put("totalCostUSD", new Double(strTotCost));
+    	obby.put("isBillingAddressSame", "false"); // suspect this is ignored
+    	obby.put("billingStreet", "Threadneedle Street");
+    	obby.put("billingCity", "London");
+    	obby.put("billingState", "CA");
+    	obby.put("billingZip", "54321");
+    	return showBankTransferPostCommitDetails(obby);  // call the REAL controller method (just below), now we've assembled params as required 
+    }
+
+    	
     // Implements API section 4.3
     // Provide details for display in the have-just-Commited-to-bank-transfer page
     // BankTransferPostCommitDetails name as because the user just commit to the payment even though at back end it is not yet committed
@@ -172,28 +185,15 @@ public class PaymentRestController extends Universal {
 */
     		basketContents = new ExtractSubmittedDataEngine().getBasketContentsPreCommitForm(obby);
     		
-    		/**
-    		 * Precheck before committing payment : to avoid duplicate payments for same patents from different users of same company
-    		 * CHECK :- CHECK WHETHER ALL THE PATENTS ADDED TO THE BASKET IS HAVING A STATUS AS SHOW_PRICE
-    		 */
-    		List<Long> addedPatentIds = basketContents.getPatentIds();
-    		if(!(addedPatentIds.isEmpty())){
-    			for(Long eachId : addedPatentIds){
-    				Patent patent = Patent.findPatent(eachId);
-    				if(!(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(patent.getRenewalStatus()))){
-    					log().debug("Patent[" +patent.getId() +"] added to basket has got a RENEWAL STATUS NOT EQUALS SHOW_PRICE. Abort the Payment request.");
-    					return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.BAD_REQUEST);  // Pat to display respective error message
-    				}
-    			}
-    		}
-    		
 			bankTransferPostCommitDetails = paymentService.showBankTransferPostCommitDetails(basketContents);
-			
+
     	} catch (Exception e) {
-    		fail("PaymentRestController showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ",e);
-			
-			bankTransferPostCommitDetails = new BankTransferPostCommitDetails(); // to avoid compile error!
-		}
+//    		fail("PaymentRestController showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ",e);
+//			bankTransferPostCommitDetails = new BankTransferPostCommitDetails(); // to avoid compile error!
+
+    		logErrorAndContinue("PaymentRestController showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ",e);
+			bankTransferPostCommitDetails = null;
+    	}
 
 		log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() returning. Content follows (unless bad)");
     	// Check WarningMessage (if present, is a failure)
@@ -206,6 +206,7 @@ public class PaymentRestController extends Universal {
     			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     	}
 		if (bankTransferPostCommitDetails!=null){
+			log().debug("COMMITment call /rest-committed-banktransfer/ appears to have succeeded. bankTransferPostCommitDetails.toString() follows:");
 			log().debug(bankTransferPostCommitDetails.toString());
 			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);
 		}

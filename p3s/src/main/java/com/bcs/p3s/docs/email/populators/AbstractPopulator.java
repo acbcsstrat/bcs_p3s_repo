@@ -126,6 +126,11 @@ public abstract class AbstractPopulator extends Universal implements PopulatorIn
 		currentLine = newString;
 		return (currentLine.indexOf(SQUAREOPEN)!=-1);
 	}
+	protected boolean injectPATENT_TRANSACTION_TYPE() {
+		String newString = currentLine.replace(assembleTag(Injectables.PATENT_TRANSACTION_TYPE), data.getPatentTransactionType());
+		currentLine = newString;
+		return (currentLine.indexOf(SQUAREOPEN)!=-1);
+	}
 	protected boolean injectPATENT_APPLICATION_NUMBER() {
 		String newString = currentLine.replace(assembleTag(Injectables.PATENT_APPLICATION_NUMBER), data.getPatentApplicationNumber());
 		currentLine = newString;
