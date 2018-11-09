@@ -3,16 +3,16 @@
         <div class="content-panel__head border-grey-xs--btm">
             <div class="row d-flex align-items-center">
                 <div class="col-xl-4">
-                    <p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
+                    <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
-                        <span class="font-weight-bold">Renewal Status:</span> 
+                        <span class="font-weight-medium">Renewal Status:</span> 
                         <span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.epoPatentStatus}}</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to Renew</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">Renewal lapsed</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Show price'">Open for renewal</span>
                     </p>
                 </div>
-                <div class="col-xl-5"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
+                <div class="col-xl-5" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
@@ -32,9 +32,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3"><!--data-ng-class="($ctrl.patent.renewalStatus == 'Show price' ? 'col-xl-3': 'col-xl-8')"-->
+                <div class="col-xl-3" data-ng-class="($ctrl.patent.renewalStatus == 'Show price' ? 'col-xl-3': 'col-xl-8')">
                     <div data-ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="d-flex flex-column align-items-end">
-                        <p class="font-weight-medium font-h4">Next Stage:</p>
+                        <p class="font-weight-medium font-h4 m-b-xs">Service Status:</p>
                         <p class="font-weight-medium font-h4">
                             <span data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" class="txt-phase-amber">{{$ctrl.patent.renewalStatus}}</span>
                             <span data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed' || $ctrl.patent.renewalStatus == 'Open for renewal' || $ctrl.patent.renewalStatus == 'Renewal in place'" class="txt-phase-green">{{$ctrl.patent.renewalStatus}}</span>
@@ -162,7 +162,17 @@
             </div>
 
             <div class="col-xl-6 p-l-none">
-                <div class="content-panel__body">
+                <div class="content-panel__body h-100 d-flex align-items-center" data-ng-if="$ctrl.patent.renewalFeeUI === null">
+                    <div class="row bg-no-chart">
+                        <div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
+                            <div class="d-flex justify-content-center align-items-center flex-column">
+                                <p class="h4 font-weight-medium text-center">No service is currently available</p>      
+                                <p class="font-body text-center">When a service does become available, all FX and fee information will be displayed in this panel.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-panel__body" data-ng-if="$ctrl.patent.renewalFeeUI !== null">
                     <div class="m-b-sm">
                         <div class="row">
                             <div class="col-xl-12 d-flex justify-content-between m-b-sm">
@@ -292,9 +302,9 @@
         <div class="content-panel__head bg-white border-grey-xs--btm">
             <div class="row d-flex align-items-center">
                 <div class="col-md-6">
-                    <p class="font-h4 m-b-xs"><span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
+                    <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
-                        <span class="font-weight-bold">EPO Status:</span> 
+                        <span class="font-weight-medium">EPO Status:</span> 
                         <span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.renewalStatus}}</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to Renew</span>
                         <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">Renewal lapsed</span>
@@ -303,8 +313,8 @@
                 </div>
                 <div class="col-md-6">
                     <div data-ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="d-flex flex-column align-items-end">
-                        <p class="font-weight-bold font-h4">Next Stage:</p>
-                        <p class="font-weight-medium font-h4">
+                        <p class="font-weight-medium font-h4 m-b-xs">Next Stage:</p>
+                        <p class="font-body font-h4">
                             <span data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" class="txt-phase-amber">{{$ctrl.patent.renewalStatus}}</span>
                             <span data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed' || $ctrl.patent.renewalStatus == 'Open for renewal' || $ctrl.patent.renewalStatus == 'Renewal in place'" class="txt-phase-green">{{$ctrl.patent.renewalStatus}}</span>
                             <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'" class="txt-phase-red">Renewal lapsed</span>
@@ -453,7 +463,17 @@
         <div class="row">
             <div class="col-md-8 col-lg-6">
                 <div class="content-panel">
-                    <div class="content-panel__body bg-white">
+                    <div class="content-panel__body bg-white h-100 d-flex align-items-center" data-ng-if="$ctrl.patent.renewalFeeUI === null">
+                        <div class="row bg-no-chart">
+                            <div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
+                                <div class="d-flex justify-content-center align-items-center flex-column">
+                                    <p class="h4 font-weight-medium text-center">No service is currently available</p>      
+                                    <p class="font-body text-center">When a service does become available, all FX and fee information will be displayed in this panel.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="content-panel__body bg-white" data-ng-if="$ctrl.patent.renewalFeeUI !== null">
                         <div class="m-b-sm">
                             <div class="row">
                                 <div class="col-md-12 d-flex justify-content-between m-b-sm">
