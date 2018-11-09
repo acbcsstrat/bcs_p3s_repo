@@ -249,22 +249,6 @@ public class Epct {
     }
 
 
-
-//// push - tidy iof this approach adopted zaph
-//    public Integer Epct.getTotalClaims() {
-//        return this.totalClaims;
-//    }
-//    
-//    public Integer Epct.getTotalPages() {
-//        return this.totalPages;
-//    }
-//    
-//    public Boolean Epct.getIsYear3RenewalDue() {
-//        return this.isYear3RenewalDue;
-//    }
-    // & getIsYear3RenewalPaying
-
-    
     
     
     

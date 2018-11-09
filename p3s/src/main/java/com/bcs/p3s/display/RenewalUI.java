@@ -104,13 +104,12 @@ public class RenewalUI extends Renewal {
 		renewal.getActivePaymentId().setInitiatedByUserId(null);
 		this.setActivePaymentId(renewal.getActivePaymentId());
 		
-		//set patent to null use only patentUI
-		
 		PatentUI pui = new PatentUI(this.getPatent(),extendedDatas);
+		//set patent & others to null, to avoid sending large, unwanted, potentially confusing data to FE
 		this.setPatent(null);
 		pui.setBusiness(null);
-		//pui.setNotifications(null);
-		pui.setNotificationUIs(null);
+		pui.setRenewalNotificationUIs(null);
+		
 		
 		// NOte: - at 170726, devt is not able to set following fields - so use DummyDataEngine - acTidy
 		//System.out.println("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");

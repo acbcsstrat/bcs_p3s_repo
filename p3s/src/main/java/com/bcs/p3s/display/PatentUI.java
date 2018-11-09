@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
@@ -94,7 +97,8 @@ public class PatentUI extends Patent {
 	protected Form1200FeeUI form1200FeeUI;
     
     
-	List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
+	List<NotificationUI> allRenewalNotificationUIs = new ArrayList<NotificationUI>();
+	List<NotificationUI> allEpctNotificationUIs = new ArrayList<NotificationUI>();
 
 
 	// Constructor - converting a Patent to a PatentUI
@@ -132,7 +136,9 @@ public class PatentUI extends Patent {
 		this.setPriorityDate(patent.getPriorityDate());
 		this.setPCT_publishedDate(patent.getPCT_publishedDate());
 		
-		allNotificationUIs =createNotificationUIs(patent.getId(),SecurityUtil.getMyUser().getId());
+		long myUserId = SecurityUtil.getMyUser().getId();
+		allRenewalNotificationUIs = assembleAllNotificationUIs(patent.getId(), myUserId, NotificationProductTypeEnum.RENEWAL);
+		allEpctNotificationUIs = assembleAllNotificationUIs(patent.getId(), myUserId, NotificationProductTypeEnum.EPCT);
 
 		//SETTING REMAINING FROM EXTENDED DATA ARGUMENT PASSED
 		if(! (extendedDatas == null) ){
@@ -162,22 +168,56 @@ public class PatentUI extends Patent {
 				}
 			}
 		}
-	}
+	} // End of Constructor
+
+	
+	
+	/**
+	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications (for this patent, user & productType),
+	 *  and, for each, whether it is on or off.
+	 * NotificationMappings just holds those that are ON.
+	 * 
+	 * Approach used below: Get ALL into a Collection. Then update those that are ON. Then sort.
+	 * Sorted by display order
+	 * @param patent_id
+	 * @param user_id
+	 * @param productType a NotificationProductTypeEnum value as a String
+	 * @return	All possible NotificationUIs, each indicating if onn or off
+	 */
+	public synchronized List<NotificationUI> assembleAllNotificationUIs(Long patent_id, Long user_id, String productType) {
+		if (patent_id==null || patent_id==0 || user_id==null || user_id==0 || productType==null) return null;
+
+		
+
+		List<NotificationMapping> allOnNotificationMappings = NotificationMapping.findAllOnNotifications(patent_id, user_id);
+		Set<Long> ONs = new HashSet<>();
+		for (NotificationMapping nm : allOnNotificationMappings) {
+			ONs.add(nm.getNotification_id());
+		}
+		
+		List<NotificationUI> result = new ArrayList<NotificationUI>();		
+		List<Notification> allNotifications = Notification.findAllNotificationsByProductType(productType.toString());
+		NotificationUI notificationUI = null;
+		for (Notification notification : allNotifications) {
+			notificationUI = new NotificationUI(notification);
+
+			Long notificationId = notification.getId();
+			if (ONs.contains(notificationId)) {
+				notificationUI.setIsOn(true);
+			}
+
+			result.add(notificationUI);
+		}
+		return result;
+	}	
+	
+
+	
+	
 	
 	// Getter/setters requiring special processing
 
 
-	public List<NotificationUI> getNotificationUIs() {
-		return this.allNotificationUIs;
-	}
-	public void setNotificationUIs(List<NotificationUI> allNotificationUIs) {
-		// Hardly ever needed. See createNotificationUIs()
-		this.allNotificationUIs = allNotificationUIs;
-	}
-
-	
-	
-	
 	// Getter/setters that return String version of typed fields - for UI convenience
 	public String getLastRenewedDateExEpoUI() {
 		String res = (new DateUtil()).dateToUSStringWithDayOfWeek(this.getLastRenewedDateExEpo());
@@ -200,12 +240,12 @@ public class PatentUI extends Patent {
 	
 	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // acToDo 01-sep-2017
 
-	public BigDecimal getCurrentRenewalCost() {
-		return currentRenewalCostUSD;
-	}
-	public BigDecimal getRenewalCostNextStage() {
-		return renewalCostNextStageUSD;
-	}
+//	public BigDecimal getCurrentRenewalCost() {
+//		return currentRenewalCostUSD;
+//	}
+//	public BigDecimal getRenewalCostNextStage() {
+//		return renewalCostNextStageUSD;
+//	}
 	
 	// End of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification.
 	
@@ -268,8 +308,6 @@ public class PatentUI extends Patent {
 		this.form1200FeeUI = form1200FeeUI;
 	}
 	
-	
-
 	public String getPatentApplicationNumber() {
 		return patentApplicationNumber;
 	}
@@ -277,8 +315,6 @@ public class PatentUI extends Patent {
 	public void setPatentApplicationNumber(String EP_ApplicationNumber) {
 		this.patentApplicationNumber = EP_ApplicationNumber;
 	}
-	
-	
 
 	public String getPatentPublicationNumber() {
 		return patentPublicationNumber;
@@ -296,73 +332,20 @@ public class PatentUI extends Patent {
 		this.filingDate = internationalFilingDate;
 	}
 
-	/**
-	 * The JSON file for PatentUI (i.e. the *UI) needs ALL the notifications - and, for each, whether it is on or off.
-	 * patent.notifications just holds those that are ON.
-	 * 
-	 * Approach used below: Get ALL into SortSet. Replace those that are ON.
-	 * Sorted by display order
-	 * @param notifications
-	 */
-	public synchronized List<NotificationUI> createNotificationUIs(Long patent_id,Long user_id) {
-
-		//String err = PREFIX+"createNotificationUIs() ";
-		//checkNoActionRequired(err);  // because such data is not sensitive. Is anonymous
-
-		//log().debug(err+" invoked ");
-		
-		List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
-		List<Notification> allOnNotifications = new ArrayList<Notification>();
-		
-		// Assemble ALL notificationUIs (identifiable by ID)
-		//List<Notification> allNotifications = Notification.findAllNotifications();
-		List<Notification> allNotifications = Notification.findAllNotifications();
-		if(!(patent_id == null)){
-			allOnNotifications = new NotificationMapping().getAllPatentNotificationsForUser(patent_id, user_id);
-		}
-		else{
-			for(Notification notification : allNotifications){
-				if(notification.getDefaultOn())
-					allOnNotifications.add(notification);
-			}
-		}
-		
-		for (Notification anotification : allNotifications) {
-			NotificationUI notificationUI = new NotificationUI(anotification);
-			allNotificationUIs.add(notificationUI);
-		}
-
-		// In below code:
-		//  indexOf relies on equals() in NotificationUI
-		//  Sorting relies on compareTo() in NotificationUI
-		
-		
-		// Switch ON as appropriate
-		for (Notification notification : allOnNotifications) { // i.e. each ON notification
-			NotificationUI matchTarget = new NotificationUI(notification);
-
-			// find existing match, & switch on
-			int imatch = allNotificationUIs.indexOf(matchTarget);
-//			if (imatch == -1) fail("NotificationUI handling has failed.");
-			if (imatch == -1) {
-				Universal universal = new Universal();
-				universal.fail("NotificationUI handling has failed.");
-			}
-			NotificationUI match = allNotificationUIs.get(imatch);
-			match.setIsOn(true);
-		}
-
-		// Sort of displayOrder (for UI convenience)
-		Collections.sort(allNotificationUIs);
-		
-//		System.out.println("acdebug - *ALL* notificationUIs after processing");
-//		for (NotificationUI notificationUI : allNotificationUIs) {
-//			System.out.println("          "+notificationUI.getId()+",   "+notificationUI.getIsOn()+",   "+notificationUI.getDisplayOrder()+",    "+notificationUI.getTitle());
-//		}
-		return allNotificationUIs;
+	public List<NotificationUI> getRenewalNotificationUIs() {
+		return allRenewalNotificationUIs;
 	}
-	
-	
-	
-	
+
+	public void setRenewalNotificationUIs(List<NotificationUI> allRenewalNotificationUIs) {
+		this.allRenewalNotificationUIs = allRenewalNotificationUIs;
+	}
+
+	public List<NotificationUI> getEpctNotificationUIs() {
+		return allEpctNotificationUIs;
+	}
+
+	public void setEpctNotificationUIs(List<NotificationUI> allEpctNotificationUIs) {
+		this.allEpctNotificationUIs = allEpctNotificationUIs;
+	}
+
 }

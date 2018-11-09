@@ -1,9 +1,6 @@
 package com.bcs.p3s.display;
 
-import javax.validation.constraints.NotNull;
-
 import com.bcs.p3s.model.Notification;
-import com.bcs.p3s.model.Patent;
 
 /**
  * All *.UI classes should start with this line. See package-info.java for an explanation of these *UI classes 

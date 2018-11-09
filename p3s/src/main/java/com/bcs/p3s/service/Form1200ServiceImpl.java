@@ -194,12 +194,12 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		}
 		
 		// renewalNotificationUIs
-		patentV2UI.setRenewalNotificationUIs(patentV2UI.getNotificationUIs());
+		patentV2UI.setRenewalNotificationUIs(patentV2UI.getRenewalNotificationUIs());
 		
 		// form1200NotificationUIs
 		List<NotificationUI> form1200NotificationUIs = new ArrayList<NotificationUI>(); 
 		// Thanksgiving approach - implement later
-		patentV2UI.setForm1200NotificationUIs(form1200NotificationUIs);
+		patentV2UI.setEpctNotificationUIs(form1200NotificationUIs);
 
 	}
 
@@ -242,110 +242,94 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		log().debug(err+" invoked");
 		
 		checkForm1200AsEntered4MissingData(patentId, err, totalClaims, totalPages, extensionStatesUI, validationStatesUI, pageDescriptionUI);
-
 		// No exceptions anticipted, so pass any up to controller
-//		try {
-			Patent patent = Patent.findPatent(patentId);
 
-			// This methods need to: create Form1200Fee; create Epct, persist both & wire-up, then gen PDF, the gen table 2.2b data to return
-			
-			// Note: Ignore any existing E-PCT record. If it exists, would be a failed payment
-			
-			// Form1200Fee  : access the existing code for populating this
-		    PatentService patentService = new PatentServiceImpl(session);
-		    PatentV2UI patentV2UI = patentService.getPatentInfo(patentId, session);
-			EpctEngine epctEngine = new EpctEngine(patentV2UI); // This needs invoking here, to calculate dates PRIOR to populating epct. But don't invoke pricing until AFTER epct populated 
+		Patent patent = Patent.findPatent(patentId);
 
-			Epct epct = new Epct();
-//			BigDecimal optionalFxRate = null; moved later - after epct populated
-//			epctEngine.calcEpctPersistPricingOnly(epct, optionalFxRate);
-//			Form1200Fee form1200Fee = epctEngine.getFee(); // this'll be correctly populated, even if a failed Epct exists
-	
-//			// Now create a new Epct - acTidy  - once above proven
-//			Epct epct = new Epct();
-			
-			CountryStatesUtil countryStatesUtil = new CountryStatesUtil();
-			PageDescriptionTool pageDescriptionTool = new PageDescriptionTool();
-			// Cannot do this !
-			// The method listAbstractStates2commaSeparatedString(List<AbstractState>) in the type CountryStatesUtil is not applicable for the arguments (List<ExtensionStateUI>)
-			//epct.setExtensionStates(countryStatesUtil.listAbstractStates2commaSeparatedString(extensionStatesUI));
+		// This methods need to: create Form1200Fee; create Epct, persist both & wire-up, then gen PDF, the gen table 2.2b data to return
+		
+		// Note: Ignore any existing E-PCT record. If it exists, would be a failed payment
+		
+		// Form1200Fee  : access the existing code for populating this
+	    PatentService patentService = new PatentServiceImpl(session);
+	    PatentV2UI patentV2UI = patentService.getPatentInfo(patentId, session);
+		EpctEngine epctEngine = new EpctEngine(patentV2UI); // This needs invoking here, to calculate dates PRIOR to populating epct. But don't invoke pricing until AFTER epct populated 
 
-			epct.setExtensionStates(countryStatesUtil.listSelectedExtensionStatesUI2commaSeparatedString(extensionStatesUI));
-			epct.setValidationStates(countryStatesUtil.listSelectedValidationStatesUI2commaSeparatedString(validationStatesUI));
-			epct.setTotalClaims( (int) totalClaims);			
-			epct.setTotalPages( (int) totalPages);
+		Epct epct = new Epct();
+		
+		CountryStatesUtil countryStatesUtil = new CountryStatesUtil();
+		PageDescriptionTool pageDescriptionTool = new PageDescriptionTool();
+		// Cannot do this !
+		// The method listAbstractStates2commaSeparatedString(List<AbstractState>) in the type CountryStatesUtil is not applicable for the arguments (List<ExtensionStateUI>)
+		//epct.setExtensionStates(countryStatesUtil.listAbstractStates2commaSeparatedString(extensionStatesUI));
 
-			PageDescriptionUI descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Description);
-			epct.setDescriptionStartPage(new Integer(descFromTo.getTypeStart()));
-			epct.setDescriptionEndPage(new Integer(descFromTo.getTypeEnd()));
+		epct.setExtensionStates(countryStatesUtil.listSelectedExtensionStatesUI2commaSeparatedString(extensionStatesUI));
+		epct.setValidationStates(countryStatesUtil.listSelectedValidationStatesUI2commaSeparatedString(validationStatesUI));
+		epct.setTotalClaims( (int) totalClaims);			
+		epct.setTotalPages( (int) totalPages);
 
-			descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Claims);
-			epct.setClaimsStartPage(new Integer(descFromTo.getTypeStart()));
-			epct.setClaimsEndPage(new Integer(descFromTo.getTypeEnd()));
+		PageDescriptionUI descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Description);
+		epct.setDescriptionStartPage(new Integer(descFromTo.getTypeStart()));
+		epct.setDescriptionEndPage(new Integer(descFromTo.getTypeEnd()));
 
-			descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Drawings);
-			epct.setDrawingsStartPage(new Integer(descFromTo.getTypeStart()));
-			epct.setDrawingsEndPage(new Integer(descFromTo.getTypeEnd()));
+		descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Claims);
+		epct.setClaimsStartPage(new Integer(descFromTo.getTypeStart()));
+		epct.setClaimsEndPage(new Integer(descFromTo.getTypeEnd()));
 
-			boolean isYear3RenewalOptional = epctEngine.isRenewalFeeOptional();
-			boolean isPayingOptionalYr3Renewal = false;
-			if (isYear3RenewalOptional && isYear3RenewalPaying) isPayingOptionalYr3Renewal = true; 
-			epct.setIsYear3RenewalDue(isYear3RenewalOptional);
-			epct.setIsYear3RenewalPaying(isPayingOptionalYr3Renewal);
-			epct.setEpctSubmittedDate(null);
-			
-			epct.setEpctApplicationExpiryDate(epctEngine.getRedStartDate());
-			epct.setEpctStatus(Form1200StatusEnum.EPCT_BEING_GENERATED);
-			epct.setCreatedBy(me);
-			epct.setCreatedDate(new Date());
+		descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Drawings);
+		epct.setDrawingsStartPage(new Integer(descFromTo.getTypeStart()));
+		epct.setDrawingsEndPage(new Integer(descFromTo.getTypeEnd()));
 
-//zaph zappp			
-			BigDecimal optionalFxRate = null;
-			epctEngine.calcEpctPersistPricingOnly(epct, optionalFxRate);
-			Form1200Fee form1200Fee = epctEngine.getFee(); // this'll be correctly populated, even if a failed Epct exists
+		boolean isYear3RenewalOptional = epctEngine.isRenewalFeeOptional();
+		boolean isPayingOptionalYr3Renewal = false;
+		if (isYear3RenewalOptional && isYear3RenewalPaying) isPayingOptionalYr3Renewal = true; 
+		epct.setIsYear3RenewalDue(isYear3RenewalOptional);
+		epct.setIsYear3RenewalPaying(isPayingOptionalYr3Renewal);
+		epct.setEpctSubmittedDate(null);
+		
+		epct.setEpctApplicationExpiryDate(epctEngine.getRedStartDate());
+		epct.setEpctStatus(Form1200StatusEnum.EPCT_BEING_GENERATED);
+		epct.setCreatedBy(me);
+		epct.setCreatedDate(new Date());
 
-			
-			
-			
-			// Prepare for persist
-			form1200Fee.ensureNoNulls();
-			
-			
-			// Persist. Do the 3+step / inc. wire
-			form1200Fee = form1200Fee.persist();
-			
-			epct.setPatent(patent);
-			
-			epct.setForm1200Fee(form1200Fee);
-			epct.setForm1200(null);
-			epct = epct.persist();
-			
-			form1200Fee.setEpct(epct);
-			form1200Fee.merge();
+		BigDecimal optionalFxRate = null;
+		epctEngine.calcEpctPersistPricingOnly(epct, optionalFxRate);
+		Form1200Fee form1200Fee = epctEngine.getFee(); // this'll be correctly populated, even if a failed Epct exists
+		
+		
+		// Prepare for persist
+		form1200Fee.ensureNoNulls();
+		
+		
+		// Persist. Do the 3+step / inc. wire
+		form1200Fee = form1200Fee.persist();
+		
+		epct.setPatent(patent);
+		
+		epct.setForm1200Fee(form1200Fee);
+		epct.setForm1200(null);
+		epct = epct.persist();
+		
+		form1200Fee.setEpct(epct);
+		form1200Fee.merge();
 
-			patent.setEpctStatus(epct.getEpctStatus());
-			patent.setEpctNotAvailableReason(null);
-			patent.merge();
+		patent.setEpctStatus(epct.getEpctStatus());
+		patent.setEpctNotAvailableReason(null);
+		patent.merge();
 
-			// generate the PDF
-			// This will be done by cron
+		// generate the PDF
+		// This will be done by cron
+		
+		// -----------------------------------------------------------------------------------
+		// Prepare the table 2.2b data to return to FE
+		// Required data: patentId, EP_ApplicationNumber, form1200PdfUrl, form1200FeeUI. i.e. a Form1200SavedData
+		Form1200SavedData form1200SavedData = new Form1200SavedData();
+		form1200SavedData.setPatentId(patentId);
+		form1200SavedData.setEP_ApplicationNumber(patent.getEP_ApplicationNumber());
+		form1200SavedData.setForm1200PdfUrl(null); // It hasn't even Started being created yet
+		Form1200FeeUI form1200FeeUI = new Form1200FeeUI(form1200Fee);
+		form1200SavedData.setForm1200FeeUI(form1200FeeUI);
 			
-			// -----------------------------------------------------------------------------------
-			// Prepare the table 2.2b data to return to FE
-			// Required data: patentId, EP_ApplicationNumber, form1200PdfUrl, form1200FeeUI. i.e. a Form1200SavedData
-			Form1200SavedData form1200SavedData = new Form1200SavedData();
-			form1200SavedData.setPatentId(patentId);
-			form1200SavedData.setEP_ApplicationNumber(patent.getEP_ApplicationNumber());
-			form1200SavedData.setForm1200PdfUrl(null); // It hasn't even Started being created yet
-			Form1200FeeUI form1200FeeUI = new Form1200FeeUI(form1200Fee);
-			form1200SavedData.setForm1200FeeUI(form1200FeeUI);
-			
-			
-//		} catch (Exception e) {
-//			// acToDo - there may yet be EXPECTED errors to be caught here
-//			logErrorAndContinue("Caught unexpected failure : "+err, e);
-//		  	//return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
 			
 		return form1200SavedData;
 	}

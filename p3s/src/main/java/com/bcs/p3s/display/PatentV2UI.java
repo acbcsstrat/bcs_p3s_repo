@@ -27,8 +27,8 @@ public class PatentV2UI extends PatentUI {
 	
 	protected Form1200FeeUI form1200FeeUI;		// null unless Form1200 sale is viable
 	
-	protected List<NotificationUI> renewalNotificationUIs;
-	protected List<NotificationUI> form1200NotificationUIs;
+//	protected List<NotificationUI> renewalNotificationUIs;
+//	protected List<NotificationUI> form1200NotificationUIs;
 	
 	
 	
@@ -96,18 +96,18 @@ public class PatentV2UI extends PatentUI {
 	public void setForm1200FeeUI(Form1200FeeUI form1200FeeUI) {
 		this.form1200FeeUI = form1200FeeUI;
 	}
-	public List<NotificationUI> getRenewalNotificationUIs() {
-		return renewalNotificationUIs;
-	}
-	public void setRenewalNotificationUIs(List<NotificationUI> renewalNotificationUIs) {
-		this.renewalNotificationUIs = renewalNotificationUIs;
-	}
-	public List<NotificationUI> getForm1200NotificationUIs() {
-		return form1200NotificationUIs;
-	}
-	public void setForm1200NotificationUIs(List<NotificationUI> form1200NotificationUIs) {
-		this.form1200NotificationUIs = form1200NotificationUIs;
-	}
+//	public List<NotificationUI> getRenewalNotificationUIs() {
+//		return renewalNotificationUIs;
+//	}
+//	public void setRenewalNotificationUIs(List<NotificationUI> renewalNotificationUIs) {
+//		this.renewalNotificationUIs = renewalNotificationUIs;
+//	}
+//	public List<NotificationUI> getForm1200NotificationUIs() {
+//		return form1200NotificationUIs;
+//	}
+//	public void setForm1200NotificationUIs(List<NotificationUI> form1200NotificationUIs) {
+//		this.form1200NotificationUIs = form1200NotificationUIs;
+//	}
 	
 	
 }

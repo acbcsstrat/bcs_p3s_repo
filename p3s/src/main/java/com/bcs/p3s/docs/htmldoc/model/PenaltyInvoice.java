@@ -7,6 +7,7 @@ import com.bcs.p3s.engine.PricingEngine;
 import com.bcs.p3s.enump3s.InvoiceStatusEnum;
 import com.bcs.p3s.enump3s.InvoiceTypeEnum;
 import com.bcs.p3s.enump3s.McFailCodeEnum;
+import com.bcs.p3s.enump3s.PaymentTypeEnum;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.P3SFeeSole;
@@ -32,6 +33,7 @@ public class PenaltyInvoice extends AbstractInvoice {
 	public PenaltyInvoice(Invoice invoice) {
 		super(invoice); // provides more than needed
 		bankDetails = new BankTransferPaymentDetails();
+		transactionType = PaymentTypeEnum.PENALTY_PAYMENT;
 
 		// Now add/update certain data
 		failReason = invoice.getPayment().getFailureReason();

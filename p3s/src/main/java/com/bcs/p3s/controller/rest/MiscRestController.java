@@ -89,7 +89,7 @@ public class MiscRestController extends Universal{
 			   log().error("User info in session is null");
 			   return;
 		   }
-		   miscService.suppressLoginMessages(suppressMessages, postSession.getUser());
+		   miscService.suppressLoginMessages(suppressMessages, postSession);
 		  
 	   }
 	   catch(Exception e){

@@ -25,9 +25,9 @@ import com.bcs.p3s.util.lang.Universal;
  * 
  * Upon creation, performs all date calculation, which also provides the Year3 renewal booleans.
  * Thereafter, offers:
+ *  calcEpctStatusAndReason()
  *  calcEpctPersistPricingOnly()
- *  calcAllEpctPricing()	A superset of the above.
- *  calcEpctStatusAndReason
+ *  prepareForm1200Service()
  */
 public class EpctEngine extends Universal {
 
@@ -78,14 +78,7 @@ public class EpctEngine extends Universal {
 	 * Thereafter offers methods:
 	 * - calcEpctStatusAndReason()
 	 * - calcEpctPersistPricingOnly()
-	 * - // ??   zaph calcAllEpctPricing()
-	 * - prepareForm1200Service()
-	 * - 
-	 * - 
-	 * - 
-	 * - 
-	 * - 
-	 * - 
+	 * - prepareForm1200Service() 		[Prepares the Service object. Calculates further prices]
 	 * 
 	 * @param patent The patent being processed
 	 */
@@ -110,9 +103,6 @@ public class EpctEngine extends Universal {
 	
 	
 	
-//	 public void calcEpctStatusOnly() {
-//		 calcEpctStatus();
-//	 }
 	 public void calcEpctStatusAndReason() {
 
 		 if (isNotAvailable) return; // E=PCT Status will already have been set
@@ -134,20 +124,6 @@ public class EpctEngine extends Universal {
 	 }
 
 	 
-	 public void calcAllEpctPricing(Epct epctProvided, BigDecimal optionalFxRate) {
-		 
-		 // tmp stash that result
-		 Form1200Fee priceNow = calcEpctPersistPricingOnly(epctProvided, optionalFxRate);
-		 //calcRemainingEpctPricing(epctProvided, optionalFxRate);
-		 //Form1200Fee priceNext = calcNextColourPrice(priceNow);
-		 
-		 // what to return .. - zaph
-		 
-		 
-		 fail("***** NOT YET WRITTEN !!!!! *****"); 
-	 }
-
-	 
 
 	 /**
 	 * Generates the Form1200 Service object for a patent in Filing stage
@@ -158,12 +134,11 @@ public class EpctEngine extends Universal {
     	//String err = CLASSNAME + "prepareForm1200Service() : ";
     	
     	// Service needs current AND next, colour AND price. So calc ..
-    	//calcEpctStatusAndReason(); zaph  crashes at below check: (fee==null || fee.getSubTotal_USD()==null)");
 		
 		// Don't recalcuate pricing if already been done
 		if (fee==null) calcEpctPersistPricingOnly(new Epct(), null);
     	
-		// acTodo - some short term checks
+		// some short term checks
 		if (currentColour==null) fail("currentColour==null");
 		if (nextColour==null) fail("nextColour==null");
 		if (fee==null || fee.getSubTotal_USD()==null) fail("(fee==null || fee.getSubTotal_USD()==null)");
@@ -222,8 +197,6 @@ public class EpctEngine extends Universal {
     	if (patent==null) fail(err+" passed patent==null");
     	
     	// Perform the unconditional calculations. Mostly dates
-    	
-
     	calcEffectivePriorityDate();
     	calcTooEarlyLate();
 
@@ -234,14 +207,8 @@ public class EpctEngine extends Universal {
     	
     	// End of unconditional processing
     	
-//    	if (isPricingAndDatesNeeded && patent instanceof PatentV2UI) {  zaph
-//    		calcDatesAndColour();
-//    		calcPrice();
-//    	}
-
-	
-	
 	}
+
 	
 	protected void calcEffectivePriorityDate() {
 		// If there is no PriorityDate, use International Filing Date : mpi05
@@ -348,16 +315,6 @@ public class EpctEngine extends Universal {
 		LocalDate ldAmberStart =  ldRedStart.minusDays(5L);
 		amberStartDate = Date.from(ldAmberStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-//		// Determine if Year3 renewal fee is : Mandated, Optional or NotYetAvailable
-//		// For E-PCT applications, Year3 renewal can be paid 6 months before due. (Usually 3)
-//		LocalDate ld1andHalfYears =  ldEffectivePriority.plusMonths(18L);
-//		LocalDate ld2Years =  ldEffectivePriority.plusYears(2L);
-//		// boolean default values (all false) indicate NotYetAvailable
-//		int safetyNetDays = 11; // Need avoid taking order when optional, yet by time we instruct EPO, has become mandatory.
-//		  // Based on: T+3 +weekend +1nonWorkingDay(ignore Xmas), +valueDate, +day we instruct, +1 (for > becomes =>), +2 safety.
-//		if (ldToday.plusDays(safetyNetDays).isAfter(ld2Years))  isRenewalFeeMandated = true;
-//		else if (ldToday.isAfter(ld1andHalfYears)) isRenewalFeeOptional = true;
-
 		
 		// what is current colour & next colour
 		currentColour = RenewalColourEnum.GREY;
@@ -396,12 +353,13 @@ public class EpctEngine extends Universal {
 	}
 
 
-	protected Form1200Fee calcEpctEntityOnlyPricing(Epct unpersistedEpct, BigDecimal optionalFxRate) {  //possibly a misnomer - dunnit dop ALL pricing now? - zaph
+	// 'Only' in as much as only calculates fields needed for persisting. For further prices, as needed by FE, see prepareForm1200Service()
+	protected Form1200Fee calcEpctEntityOnlyPricing(Epct unpersistedEpct, BigDecimal optionalFxRate) {
 		// Provide correct Form1200Fee data for persisting
 		String err = CLASSNAME+" : calcEpctEntityOnlyPricing(epct,"+optionalFxRate+")";
 		if (unpersistedEpct==null) fail(err+" passed null Epct");
 		
-		epct = unpersistedEpct; // azaph damaging - overwrites real with empty - even if works, seem pointless (other then ensure no NPE..?)
+		epct = unpersistedEpct; // overwrites potentially real object with empty - even if works, seem pointless (other then ensure no NPE..?) - acTodo
 		if (optionalFxRate==null) {
 			GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
 			fxRate = glob.getCurrent_P3S_rate();
@@ -508,19 +466,13 @@ public class EpctEngine extends Universal {
 	}
 	protected void calcStageCprices(BigDecimal fxRate) {
 		// epct MAY be null
-//		// Here, get Rate, Calc USD prices, & set the total
-//		GlobalVariableSole globalSole = GlobalVariableSole.findOnlyGlobalVariableSole();
-//		BigDecimal rate = globalSole.getCurrent_P3S_rate();
-  //		BigDecimal epoFeesInUSD = fee.calcTotalOfEuroFees().multiply(rate);
+		// Here, get Rate, Calc USD prices, & set the total
 	
 		// Calculate the USD fees
 		PricingEngine pricingEngine = new PricingEngine();
 		P3SFeeSole p3sEffectiveFees = pricingEngine.getEffectiveP3sFees(patent.getBusiness());
 		fee.setProcessingFee_USD(p3sEffectiveFees.getProcessingFee_USD());
 
-//		BigDecimal tmp = new BigDecimal("0.0");
-//		fee.setExpressFee_USD(tmp);
-//		fee.setUrgentFee_USD(tmp);
 		BigDecimal totUsd = fee.calcTotalOfEuroFees().multiply(fxRate);
 		if (currentColour.equals(RenewalColourEnum.AMBER)) { 
 			BigDecimal riskUplift = totUsd.multiply(p3sEffectiveFees.getExpressFee_Percent()).divide(new BigDecimal(100.0));
@@ -534,9 +486,6 @@ public class EpctEngine extends Universal {
 		
 		
 		// Calc USD total for current colour
-//		BigDecimal totalUSD = epoFeesInUSD;
-//		if (currentColour.equals(RenewalColourEnum.AMBER)) totalUSD = totalUSD.add(fee.getExpressFee_USD()); 
-//		else if (currentColour.equals(RenewalColourEnum.RED)) totalUSD = totalUSD.add(fee.getUrgentFee_USD()); 
 		BigDecimal totalUSD = totUsd.add(fee.getProcessingFee_USD()).add(fee.getExpressFee_USD()).add(fee.getUrgentFee_USD()); 
 		fee.setSubTotal_USD(totalUSD);
 		fee.setFxRate(fxRate);
@@ -566,204 +515,6 @@ public class EpctEngine extends Universal {
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-// OBS zaph !!!!!!!!!!!!!!! - inc into calc fee
-//	/**
-//	 * Same as populateForm1200Fee, then adjusts pricing for next stage
-//	 * if current is red, returns null
-//	 * @param fxRate
-//	 * @return
-//	 */
-//	protected Form1200Fee calcNextColourPrice(Form1200Fee currentColourFee) {
-//		if (currentColourFee==null) return null;
-//		// Prior processing WILL have set fxRate by now
-//		Form1200Fee nextColourFee = null;
-//		BigDecimal totUsd = currentColourFee.calcTotalOfEuroFees().multiply(fxRate);
-//		PricingEngine pricingEngine = new PricingEngine();
-//		P3SFeeSole p3sEffectiveFees = pricingEngine.getEffectiveP3sFees(patent.getBusiness());
-//		if (currentColour.equals(RenewalColourEnum.GREEN)) {
-//			nextColourFee = fee;
-//			// Increase price by express fee
-//			BigDecimal riskUplift = totUsd.multiply(p3sEffectiveFees.getExpressFee_Percent()).divide(new BigDecimal(100.0));
-//			nextColourFee.setExpressFee_USD(riskUplift);
-//			BigDecimal totalUSD = totUsd.add(nextColourFee.getProcessingFee_USD()).add(nextColourFee.getExpressFee_USD()); 
-//			nextColourFee.setSubTotal_USD(totalUSD);
-//		}
-//		if (currentColour.equals(RenewalColourEnum.AMBER)) {
-//			nextColourFee = fee;
-//			// Ignore Express, add Urgent
-//			BigDecimal riskUplift = totUsd.multiply(p3sEffectiveFees.getUrgentFee_Percent()).divide(new BigDecimal(100.0));
-//			nextColourFee.setUrgentFee_USD(riskUplift);
-//			//BigDecimal existingExpressFee = fee.getExpressFee_USD(); zaph
-//			nextColourFee.setExpressFee_USD(zero);
-//			BigDecimal totalUSD = totUsd.add(nextColourFee.getProcessingFee_USD()).add(nextColourFee.getUrgentFee_USD()); 
-//			nextColourFee.setSubTotal_USD(totalUSD);
-//		}
-//		
-//		if (nextColourFee!=null) nextColourTotal_USD = nextColourFee.getSubTotal_USD(); 
-//		
-//		return nextColourFee;
-//	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-//	protected void calcRemainingEpctPricing(Epct epctProvided, BigDecimal optionalFxRate) {
-//		zaph
-//		
-//		
-//		
-//		
-//		xxx 
-//	}
-
-	
-	
-	
-	
-	
-	
-//	protected void ZAPHcalcPrice() {
-//		// Pricing is 3 stage.	(a) Eur prices we can calculate PRIOR to asking the questions (i.e. before EPCT being persisted), 
-//		//						(b) Eur due to question answers,  
-//		//						(c) USD fees 
-//		// Then do the math
-//
-//		fee = new Form1200Fee(); // Used for convenience. Will not be persisted.
-//		OtherEpoFeeSole epoEpctFees = OtherEpoFeeSole.findOnlyOtherEpoFeeSole();
-//
-//		// Stage (a) fees
-//		calcStageAprices(epoEpctFees);
-//		
-//		
-//		// Stage (b) fees
-//		if (epct!=null) {
-//			calcStageBprices(epoEpctFees);
-//		}
-//		
-//		// Stage (c) fees
-//		calcStageCprices();
-//	}
-//	protected void ZAPHcalcStageAprices(OtherEpoFeeSole epoEpctFees) {
-//		fee.setFilingFee_EUR(epoEpctFees.getFilingFee_EUR());
-//
-//		if ( ! EPO_SA.equals(patent.getInternationalSearchAuthority()))
-//			fee.setSupplementarySearchFee_EUR(epoEpctFees.getSupplementarySearchFee_EUR());
-//
-//		fee.setDesignationStatesFee_EUR(epoEpctFees.getDesignationStatesFee_EUR());
-//		fee.setExaminationFee_EUR(epoEpctFees.getExaminationFee_EUR());
-//	}
-//	protected void ZAPHcalcStageBprices(OtherEpoFeeSole epoEpctFees) {
-//		// Can rely on epct NOT being null
-//		
-//		// Extension States and Validation States
-//		BigDecimal tmp = new BigDecimal("0.0"); 
-//		List<String> extensionStates = epct.extensionStatesAsList();
-//		for (String aState : extensionStates) {
-//			if ("BA".equals(aState)) tmp = tmp.add(epoEpctFees.getExtensionFee_BA_EUR());   // Yes, I know ...
-//			if ("ME".equals(aState)) tmp = tmp.add(epoEpctFees.getExtensionFee_ME_EUR());
-//		}
-//		fee.setTotalExtensionStatesFee_EUR(tmp);
-//
-//		tmp = new BigDecimal("0.0"); 
-//		List<String> validationStates = epct.validationStatesAsList();
-//		for (String aState : validationStates) {
-//			if ("MA".equals(aState)) tmp = tmp.add(epoEpctFees.getValidationFee_MA_EUR());
-//			if ("MD".equals(aState)) tmp = tmp.add(epoEpctFees.getValidationFee_MD_EUR());
-//			if ("TN".equals(aState)) tmp = tmp.add(epoEpctFees.getValidationFee_TN_EUR());
-//			if ("KH".equals(aState)) tmp = tmp.add(epoEpctFees.getValidationFee_KH_EUR());
-//		}
-//		fee.setTotalValidationStatesFee_EUR(tmp);
-//
-//		// Number of Claims
-//		int numClaims = epct.getTotalClaims();
-//
-//		tmp = new BigDecimal("0.0"); 
-//		int mid36 = numClaims - 14;
-//		if (mid36 > 36) mid36 = 36;
-//		if (mid36 > 0) {
-//			tmp = epoEpctFees.getClaimsFee1_EUR().multiply(new BigDecimal(mid36));
-//		}
-//		fee.setTotalClaimsFee1_EUR(tmp);
-//
-//		tmp = new BigDecimal("0.0"); 
-//		int over50s = numClaims - 50;
-//		if (over50s > 0) {
-//			tmp = epoEpctFees.getClaimsFee2_EUR().multiply(new BigDecimal(over50s));
-//		}
-//		fee.setTotalClaimsFee2_EUR(tmp);
-//
-//		// Excess pages fee
-//		int numExcessPages = epct.getTotalPages() - 35;
-//		tmp = epoEpctFees.getExcessPagesFee_EUR().multiply(new BigDecimal(numExcessPages));
-//		fee.setTotalExcessPageFee_EUR(tmp);
-//		
-//		// Renewal Fee
-//		boolean payYear3Renewal = false;
-//		if (isRenewalFeeMandated) payYear3Renewal = true;
-//		if (isRenewalFeeOptional && epct.getIsYear3RenewalPaying()) payYear3Renewal = true;
-//		if (payYear3Renewal) {
-//			EpoRenewalFee year3fee = EpoRenewalFee.findEpoRenewalFeesByRenewalYear(3);
-//			fee.setRenewalFee_EUR(year3fee.getRenewalFee_EUR());
-//		}
-//	}
-//	protected void ZAPHcalcStageCprices() {
-//		// epct MAY be null
-//		// Here, get Rate, Calc USD proces, & set the total
-//		GlobalVariableSole globalSole = GlobalVariableSole.findOnlyGlobalVariableSole();
-//		BigDecimal rate = globalSole.getCurrent_P3S_rate();
-//		BigDecimal epoFeesInUSD = fee.calcTotalOfEuroFees().multiply(rate);
-//	
-//		// Processing Fee
-//		PricingEngine pricingEngine = new PricingEngine();
-//		P3SFeeSole p3sEffectiveFees = pricingEngine.getEffectiveP3sFees(patent.getBusiness());
-//		fee.setProcessingFee_USD(p3sEffectiveFees.getProcessingFee_USD());
-//
-//		// Calc express & urgent fees, if relevant for Current colour OR Next colour
-//		String nextColour = ColourManager.whatColourComesNext(currentColour, P3SProductTypeEnum.FORM1200);
-//		if (currentColour.equals(RenewalColourEnum.GREEN) || currentColour.equals(RenewalColourEnum.AMBER)) {
-//			fee.setExpressFee_USD(pricingEngine.multiplyByPercentage(epoFeesInUSD, p3sEffectiveFees.getExpressFee_Percent()));
-//		}
-//		if (currentColour.equals(RenewalColourEnum.AMBER) || currentColour.equals(RenewalColourEnum.RED)) {
-//			fee.setUrgentFee_USD(pricingEngine.multiplyByPercentage(epoFeesInUSD, p3sEffectiveFees.getUrgentFee_Percent()));
-//		}
-//
-//		// Calc USD total for current colour
-//		BigDecimal totalUSD = epoFeesInUSD;
-//		if (currentColour.equals(RenewalColourEnum.AMBER)) totalUSD = totalUSD.add(fee.getExpressFee_USD()); 
-//		else if (currentColour.equals(RenewalColourEnum.RED)) totalUSD = totalUSD.add(fee.getUrgentFee_USD()); 
-//		fee.setSubTotal_USD(totalUSD);
-//		
-//		// Calc USD total for next colour
-//		totalUSD = epoFeesInUSD;
-//		if (nextColour.equals(RenewalColourEnum.AMBER)) totalUSD = totalUSD.add(fee.getExpressFee_USD()); 
-//		else if (nextColour.equals(RenewalColourEnum.RED)) totalUSD = totalUSD.add(fee.getUrgentFee_USD()); 
-//		nextColourTotal_USD = totalUSD;
-//	}
-	
-
-	
-//	protected BigDecimal getNextColourCost() {
-//
-//	xxx zaph
-//	
-//		return zero;
-//	}
 	
 	
 	/**

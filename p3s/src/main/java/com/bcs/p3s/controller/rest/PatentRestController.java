@@ -25,6 +25,7 @@ import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
+import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
@@ -245,6 +246,7 @@ public class PatentRestController extends Universal {
 	//
 	// Note !
 	// The patentUI parameter MAY be provided as a PatentUI, or more likely a LinkedHashMap, so, here, accept either
+	// v2.1 : No longer receives notificationUIs parameter (tho no change to code in this class)
 	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.PUT) 
 	public ResponseEntity<PatentUI> updatePatent(@PathVariable("id") long id, @RequestBody Object untypedPatentUI) {
 		
@@ -281,8 +283,45 @@ public class PatentRestController extends Universal {
    }
     
 	
+    //------------------- Update Renewal Notifications --------------------------------------------------------
 	
+    // Implements v2.1 API section 6.1 Update Renewal Notifications
+	@RequestMapping(value = "/rest-renewal-notifications/{id}", method = RequestMethod.PUT) 
+	public ResponseEntity<PatentUI> ctrlUpdateRenewalNotifications(@PathVariable("id") long id, @RequestBody Object objListNotificationUIs) {
+		
+		log().debug("PatentRestController : /rest-renewal-notifications/"+id+" ctrlUpdateRenewalNotifications() invoked");
+		if (objListNotificationUIs!=null) log().debug("  param objListNotificationUIs is of type " + objListNotificationUIs.getClass().getName());
+		
+		try {
+			patentService.srvUpdateTypedNotifications(id, objListNotificationUIs, NotificationProductTypeEnum.RENEWAL);
+		} catch (Exception e) {
+			logErrorAndContinue("PatentRestController : /rest-renewal-notifications/"+id+" ctrlUpdateRenewalNotifications() failed",e);
+	  		return new ResponseEntity<PatentUI>(HttpStatus.NOT_FOUND); //You many decide to return HttpStatus.NO_CONTENT
+		}
+
+  		return new ResponseEntity<PatentUI>(HttpStatus.OK);
+	}
+
 	
+    //------------------- Update E-PCT Notifications --------------------------------------------------------
+	
+    // Implements v2.1 API section 6.2 Update Euro-PCT Notifications
+	@RequestMapping(value = "/rest-epct-notifications/{id}", method = RequestMethod.PUT) 
+	public ResponseEntity<PatentUI> ctrlUpdateEpctNotifications(@PathVariable("id") long id, @RequestBody Object objListNotificationUIs) {
+		
+		log().debug("PatentRestController : /rest-epct-notifications/"+id+" ctrlUpdateEpctNotifications() invoked");
+		if (objListNotificationUIs!=null) log().debug("  param objListNotificationUIs is of type " + objListNotificationUIs.getClass().getName());
+		
+		try {
+			patentService.srvUpdateTypedNotifications(id, objListNotificationUIs, NotificationProductTypeEnum.EPCT);
+		} catch (Exception e) {
+			logErrorAndContinue("PatentRestController : /rest-epct-notifications/"+id+" ctrlUpdateEpctNotifications() failed",e);
+	  		return new ResponseEntity<PatentUI>(HttpStatus.NOT_FOUND); //You many decide to return HttpStatus.NO_CONTENT
+		}
+
+  		return new ResponseEntity<PatentUI>(HttpStatus.OK);
+	}
+
 	
 	//------------------- Delete a Patent --------------------------------------------------------
 

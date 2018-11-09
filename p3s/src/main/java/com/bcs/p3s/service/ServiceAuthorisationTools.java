@@ -17,6 +17,7 @@ import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.Epct;
+import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
@@ -65,7 +66,7 @@ public class ServiceAuthorisationTools extends Universal {
 		checkThisIsMyPatent(id, err);
 		checkNotNull(patentUI, err);
 		checkIsTrue((patentUI.getId().longValue()==id), err);
-		checkPatentUIhasNotificationUIs(patentUI, err);
+		// checkPatentUIhasNotificationUIs(patentUI, err);  // from v2.1, Notifications NOT provided with updatePatent. So disable this
 	}
 	
 	protected void checkAreMyPatents(List<Long> patentIds, String err) {
@@ -120,6 +121,9 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 	
 	
+	protected P3SUser getMyUser() {
+		return checkThisIsMy().getUser();
+	}
 	
 	// End of   : Higher Level tools
 	
@@ -175,19 +179,19 @@ public class ServiceAuthorisationTools extends Universal {
 	
 	protected void checkIsTrue(boolean errorIfFalse, String err) {
 		err += "  [on checkIsTrue]";
-		if (errorIfFalse==false) 
-																	failInternalError(err); 
+		if (errorIfFalse==false) failInternalError(err); 
 	}
 	protected void checkIsFalse(boolean otherWay, String err) { checkIsTrue( ! otherWay, err); }
-	
-	/** Any PatentUI should have (about) 10 NotificationUIs */
-	protected void checkPatentUIhasNotificationUIs(PatentUI patentUI, String err) {
-		if (patentUI==null) 										failInternalError(err+" [patentUI isNull]");
-		if (patentUI.getNotificationUIs()==null) 					failInternalError(err+" [patentUI has null notificationUIs]");
-		int numNotificationUIs = patentUI.getNotificationUIs().size();
-		// Limit? Currently are exactly 10, but big review seems likely. 5 seems safeest.
-		if (numNotificationUIs < 5 )								failInternalError(err+" [patentUI has only "+numNotificationUIs+" notificationUIs]"); 
-	}
+
+	// from v2.1, Notifications NOT provided with updatePatent. So disable this
+	///** Any PatentUI should have (about) 10 NotificationUIs */
+	//protected void checkPatentUIhasNotificationUIs(PatentUI patentUI, String err) {
+	//	if (patentUI==null) 										failInternalError(err+" [patentUI isNull]");
+	//	if (patentUI.getNotificationUIs()==null) 					failInternalError(err+" [patentUI has null notificationUIs]");
+	//	int numNotificationUIs = patentUI.getNotificationUIs().size();
+	//	// Limit? Currently are exactly 10, but big review seems likely. 5 seems safeest.
+	//	if (numNotificationUIs < 5 )								failInternalError(err+" [patentUI has only "+numNotificationUIs+" notificationUIs]"); 
+	//}
 
 	// Client can only invoke if status & reason values are appropriate. SafteyCheck
 	protected void checkPatendIsOpenForForm1200(long patentId, String err) {
@@ -284,8 +288,6 @@ public class ServiceAuthorisationTools extends Universal {
 	// named 'v2.1' as relies on only sellable products being Renewal or form1200
 	protected void checkSub4ValidSellablePatentStatusv2_1(InBasket basket, String err) {
 		err += "checkSub4ValidSellablePatentStatusv2_1 : ";
-		boolean failed = false;
-		// StageManager stageManager = new StageManager(); 
 		for (Long patentId : basket.getPatentIds()) {
 			Patent patent = Patent.findPatent(patentId);
 			if (StageManager.isInProsecution(patent.getEpoPatentStatus())) {
@@ -293,17 +295,17 @@ public class ServiceAuthorisationTools extends Universal {
 				// * Precheck before committing payment : to avoid duplicate payments for same patents from different users of same company
 				// * CHECK :- CHECK WHETHER ALL THE PATENTS ADDED TO THE BASKET IS HAVING A STATUS AS SHOW_PRICE
 				//
-//	    		List<Long> addedPatentIds = basketContents.getPatentIds();
-//	    		if(!(addedPatentIds.isEmpty())){
-//	    			for(Long eachId : addedPatentIds){
-//	    				Patent patent = Patent.findPatent(eachId);
+				//List<Long> addedPatentIds = basketContents.getPatentIds();
+				//if(!(addedPatentIds.isEmpty())){
+				//	for(Long eachId : addedPatentIds){
+				//		Patent patent = Patent.findPatent(eachId);
 	    				if(!(RenewalStatusEnum.SHOW_PRICE.equalsIgnoreCase(patent.getRenewalStatus()))) {
-//	    					log().debug("Patent[" +patent.getId() +"] added to basket has got a RENEWAL STATUS NOT EQUALS SHOW_PRICE. Abort the Payment request.");
-//	    					return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.BAD_REQUEST);  // Pat to display respective error message
+							//log().debug("Patent[" +patent.getId() +"] added to basket has got a RENEWAL STATUS NOT EQUALS SHOW_PRICE. Abort the Payment request.");
+							//return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.BAD_REQUEST);  // Pat to display respective error message
 	    					failMalicious(err+"Renewal patentId("+patent.getId()+") is NOT status SHOW_PRICE- is "+patent.getRenewalStatus()); 
 	    				}
-//	    			}
-//	    		}
+				//	}
+				//}
 			}
 			else
 			{
@@ -315,13 +317,6 @@ public class ServiceAuthorisationTools extends Universal {
 			
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	// End of   : Lower Level tools
@@ -346,24 +341,5 @@ public class ServiceAuthorisationTools extends Universal {
 	}
 	
 	// End of   : Failure Handling utils
-	
-	/*public boolean checkMessageForThisUser(List<Long> messagesID){
-		
-		boolean isAnyMaliciousData = false;
-		List<LoginMessage> messages = SecurityUtil.getMyUser().getLoginMessagesToDisplay();
-		List<Long> msgIds = new ArrayList<Long>();
-		for(LoginMessage msg : messages){
-			msgIds.add(msg.getId());
-		}
-		
-		for (Long id : messagesID){
-			if(!(msgIds.contains(id))){
-				isAnyMaliciousData = true;
-				failMalicious("checkMessageForThisUser() found a malicious message Id being passed");
-			}
-		}
-		return isAnyMaliciousData;
-	}*/
-
 	
 }

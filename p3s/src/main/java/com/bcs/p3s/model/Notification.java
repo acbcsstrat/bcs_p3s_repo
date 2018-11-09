@@ -1,4 +1,5 @@
 package com.bcs.p3s.model;
+
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -58,6 +59,18 @@ public class Notification {
     
     public static List<Notification> findAllNotifications() {
     	return findNotifications().getResultList();
+    }
+
+    /**
+     * @param requiredProductType see NotificationProductTypeEnum
+     * @return List<Notification>
+     */
+    public static List<Notification> findAllNotificationsByProductType(String requiredProductType) {
+        EntityManager em = Notification.entityManager();
+        TypedQuery<Notification> q = em.createQuery("SELECT o FROM Notification AS o WHERE product_type = :product_type", Notification.class);
+        q.setParameter("product_type", requiredProductType);
+        List<Notification> q_list = q.getResultList();
+    	return q_list ;
     }
 
 

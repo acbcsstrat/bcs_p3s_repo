@@ -34,7 +34,6 @@ public abstract class AbstractInvoice extends Universal {
 	public AbstractInvoice(Invoice invoice) {
 		if (invoice==null) fail("AbstractInvoice constructor given null");
 		eType = invoice.getInvoiceType();
-		transactionType = BANK_TRANSFER;  // acToDo  zaph
 		DateUtil dateUtil = new DateUtil();
 		docDate = dateUtil.dateToUSStringWithoutDayOfWeek(invoice.getIssueDate());
 		Payment payment = invoice.getPayment();

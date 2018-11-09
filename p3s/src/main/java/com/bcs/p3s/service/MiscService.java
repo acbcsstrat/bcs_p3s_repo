@@ -19,7 +19,7 @@ public interface MiscService {
 
 	public LoginMessageUI findAllLoginMessagesForUser(PostLoginSessionBean pLoginBean);
 	
-	public void suppressLoginMessages(List<Long> id, P3SUser user);
+	public void suppressLoginMessages(List<Long> id, PostLoginSessionBean postSession);
 	
 	//------------ Below are the scraping methods for FORM1200 -----------
 	public Form1200Record readEPOForForm1200(String patentPublicationNumber);

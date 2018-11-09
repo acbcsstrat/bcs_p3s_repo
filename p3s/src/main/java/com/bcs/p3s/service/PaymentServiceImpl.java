@@ -412,8 +412,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 
 			basketContents.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 		}
-		// v2.1 Existing(mostly) above will have calculated renewal costs. If E-PCT costs, see below xx() zaph
-		
+
+		// v2.1 Existing(mostly) above code (ie v1) will have calculated renewal costs. If E-PCT costs, see below 
 
 		List<PatentExtendedData> extendedData = pLoginSession.getExtendedPatentUI();
 		
@@ -423,19 +423,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			if (patent==null) logInternalError().fatal("PaymentServiceImpl populateBasketContents (for showBasketContents) given invalid PatentID of "+patid);
 
 			// If have form1200s in basket, add their pricing
-			ServiceManager serviceManager = new ServiceManager();
 			boolean isEpct = StageManager.isInFiling(patent.getEpoPatentStatus());
 			if (isEpct) {
-
-				
-//				List<P3SService> services = serviceManager.getServicesForPatent(patent, null); // Can provide null as epct. not renewal
-//				for (P3SService service : services) { // will be one or zero services
-//					BigDecimal thisForm1200ServiceCostUSD = service.getCurrentStageCostUSD();
-//					BigDecimal newTotal = basketContents.getTotalCostUSD().add(thisForm1200ServiceCostUSD);
-//					basketContents.setTotalCostUSD(newTotal);
-//					// this approach was ok when only needed service. But now need cost breakdown. Will have call epctEngine anyway - so skip the above
-	    		// Unconditionally provide 1 Service, detailing current Form1200 Status
-
 				
 	    		EpctEngine epctEngine = new EpctEngine(patent);
 	    		Epct epct = new Epct(); // expect this to e redundant VERY soon 181106
@@ -452,7 +441,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			}
 			
 			PatentUI pui = new PatentUI(patent, extendedData); // PatentUI has no record of individual Form1200 fees, so no processing needed here
-			pui.setNotificationUIs(null); // Inhibit unwanted large data (&redundant data?)
+			pui.setRenewalNotificationUIs(null); // Inhibit unwanted large data (&redundant data?)
+			pui.setEpctNotificationUIs(null); // I assume this wanted too .. acToDo
 			
 			basketContents.getOrderedPatentUIs().add(pui);
 		}
@@ -643,7 +633,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		for(PatentUI eachPatent : orderedPatents){
 			if (isThisPatentaRenewal(eachPatent.getId())) {
 		
-				// d(i). Insert into Fee table - For Renwals
+				// d(i). Insert into Fee table - For Renewals
 	
 				//Renewal renewal = new Renewal();
 				//renewal = populateRenewalData(commitTransaction,eachPatent);

@@ -3,6 +3,7 @@ package com.bcs.p3s.docs.htmldoc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bcs.p3s.enump3s.PaymentTypeEnum;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
@@ -16,6 +17,7 @@ public class ProformaInvoice extends AbstractInvoice {
 	public ProformaInvoice(Invoice invoice) {
 		super(invoice);
 		bankDetails = new BankTransferPaymentDetails();
+		transactionType = PaymentTypeEnum.STANDARD_PAYMENT;
 		
 		List<Renewal> renewals = invoice.getPayment().getRenewals();
 		int ii = 1;

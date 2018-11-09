@@ -77,7 +77,15 @@ public interface PatentService {
 	 */
 	public Patent flexibleUpdatePatent(long id, Object untypedPatentUI) ;
 
-	
+
+	/**
+	 * For a Patent, replace existing Notifications of specified type with the specified Notifications
+	 * @param id
+	 * @param objListNotificationUIs
+	 * @param productType see NotificationProductTypeEnum
+	 */
+	public void srvUpdateTypedNotifications(long id, Object objListNotificationUIs, String productType);
+
 	/**
 	 * Get the current FX Rate
 	 * @return a fully populated FxRateCurrentUI containing the current rate (and last rate)

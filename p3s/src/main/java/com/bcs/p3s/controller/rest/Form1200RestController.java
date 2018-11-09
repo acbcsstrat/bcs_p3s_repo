@@ -443,7 +443,7 @@ public class Form1200RestController extends Universal {
 			form1200Service.deleteCurrentForm1200Data(id);
 		} catch (Exception e) {
 			logErrorAndContinue(err+"",e);
-	  		return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR ); //zaph-review // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
+	  		return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR ); // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
 		}
 
 		log().debug(err+"completed.");
@@ -465,7 +465,7 @@ public class Form1200RestController extends Universal {
 			form1200Service.rejectCurrentForm1200(patent_id,fail_reason);
 		} catch (Exception e) {
 			logErrorAndContinue(err+"",e);
-	  		return new ResponseEntity<Form1200Record>(HttpStatus.INTERNAL_SERVER_ERROR ); //zaph-review // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
+	  		return new ResponseEntity<Form1200Record>(HttpStatus.INTERNAL_SERVER_ERROR ); //Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
 		}
 
 		log().debug(err+"completed.");

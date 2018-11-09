@@ -58,7 +58,7 @@ public class ServiceManager extends Universal {
 	    		service.setNextStageColour(ColourManager.whatColourComesNext(
 	    				colourNow, P3SProductTypeEnum.RENEWAL));
 	    		
-	    		service.setCurrentStageCostUSD(patentUI.getCurrentRenewalCost());
+	    		service.setCurrentStageCostUSD(patentUI.getCurrentRenewalCostUSD());
 	    		service.setNextStageCostUSD(patentUI.getRenewalCostNextStageUSD());
 	    		service.setCostBandEndDate(patentUI.getCostBandEndDate());
 	    		service.setFailedReason(null);

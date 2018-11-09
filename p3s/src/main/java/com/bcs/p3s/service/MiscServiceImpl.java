@@ -23,6 +23,7 @@ import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.model.Claims;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.scrape.service.EPOAccessImpl;
+import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.date.DateUtil;
@@ -37,7 +38,7 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 	final String[] urgentColors = {RenewalColourEnum.AMBER, RenewalColourEnum.RED , RenewalColourEnum.BLACK};
 
 	@Override
-	public LoginMessageUI findAllLoginMessagesForUser(PostLoginSessionBean pLoginBean){
+	public LoginMessageUI findAllLoginMessagesForUser(PostLoginSessionBean pLoginBean) {
 		
 	/**
 	 * Includes 2 sections
@@ -92,11 +93,12 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 }
 	
 	@Override
-	public void suppressLoginMessages(List<Long> ids, P3SUser user){
+	public void suppressLoginMessages(List<Long> ids, PostLoginSessionBean postSession){
 		
 		String msg = "suppressLoginMessages()";
 		log().debug(msg + " invoked for messages ids :: " + ids.toString());
 		boolean isAnyMaliciousData = false;
+		P3SUser user = postSession.getUser();
 		
 		if(ids.isEmpty()){
 			log().debug(msg + " invoked with no messages being selected. No processing required this time");
@@ -105,13 +107,14 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 		
 		//check whether the extracted ids are relevant to the user - checking for malicious ids being sent over
 		//isAnyMaliciousData = checkMessageForThisUser(ids);
+		isAnyMaliciousData = checkForRogueIds(ids, postSession);
 		if(isAnyMaliciousData)
 		{
 			log().debug(msg + " invoked with MALICIOUS DATA");
 			return;
 		}
 		  
-		List<LoginMessage> allMessages = user.getLoginMessagesToInhibit();
+		List<LoginMessage> allMessages = postSession.getUser().getLoginMessagesToInhibit();
 		
 		/** Change of logic: mapping table to store inhibited messages for the user starts **/
 		 
@@ -193,6 +196,27 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 		
 		return activeSystemMessages;
 		
+	}
+
+	// Been Requested Not to show certain login messages. Check Ids provided are valid (low importance)
+	public boolean checkForRogueIds(List<Long> messagesID, PostLoginSessionBean postSession) {
+		boolean isAnyMaliciousData = false;
+		//List<LoginMessage> messages = SecurityUtil.getMyUser().getLoginMessagesToDisplay();
+		LoginMessageUI bundle = findAllLoginMessagesForUser(postSession);
+		List<LoginMessage> messages = bundle.getSystemMessages();
+		
+		List<Long> msgIds = new ArrayList<Long>();
+		for(LoginMessage msg : messages){
+			msgIds.add(msg.getId());
+		}
+		
+		for (Long id : messagesID){
+			if(!(msgIds.contains(id))){
+				isAnyMaliciousData = true;
+				failMalicious("checkMessageForThisUser() found a malicious message Id being passed");
+			}
+		}
+		return isAnyMaliciousData;
 	}
 	
 	
