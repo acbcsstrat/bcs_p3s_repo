@@ -1,41 +1,5 @@
 angular.module('ppApp').controller('portfolioCtrl', portfolioCtrl);
 
-<<<<<<< HEAD
-portfolioCtrl.$inject = ['patents', '$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal'];
-
-function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal) {
-
-    var vm = this;
-
-    $rootScope.page = 'Portfolio'; 
-
-    vm.rowSelect = rowSelect;
-    vm.displayPatents = displayPatents;
-    vm.portfolioData = patents;
-
-    // vm.$onInit = function() {
-
-    //     vm.portfolioData = addItem(patents)
-    // }
-    
-    // function addItem(patents) { //using for testing two services
-
-    //     patents[3].serviceList[1] = patents[2].serviceList[0];
-
-    //     return patents
-
-    // }
-
-    $timeout(function() {
-      vm.animate = true;
-    }, 300);    
-
-    angular.element(function () {
-        vm.patentsLoaded = true;
-    });
-
-    vm.date = new Date();    
-=======
 portfolioCtrl.$inject = ['patents', '$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter'];
 
 function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter) {
@@ -77,6 +41,8 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       })
     }
 
+    console.log(patents)
+
     // $scope.statusGroup = $scope.getFieldsValues('serviceStatus');
     // $scope.serviceGroup = function(field){
     //   var result = [];
@@ -90,7 +56,6 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     //   }
     //   return uniqueArray(result);  //check no duplicates
     // };
-    console.log($scope.portfolioData)
     $scope.epctStages = function(field, service) {
       var result = [];
       for(var i = 0; i < $scope.portfolioData.length; i++){
@@ -152,11 +117,13 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     };
 
     $scope.testFl = function(el){
+
       for(var filter in $scope.filters){
         var filterArray = [];
         for(var i in $scope.filters[filter]){
           if($scope.filters[filter][i]) filterArray.push(i); //if property in filter object returns true, push to filterArray
         }
+
         for(var i = 0; i < el.serviceList.length; i++) {
           if(filterArray.length > 0 && filterArray.indexOf(el.serviceList[i][filter]) === -1) return false;
         }
@@ -175,69 +142,18 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
         }
       };    
     };
->>>>>>> origin/fe-branch-v2.2
 
     function displayPatents() { //resets view so only list patents displays
         $state.go('portfolio');
     };
 
-    function rowSelect(event){
-        vm.patentInfoContent = true;
+    function rowSelect(event, patent){
         if(!$(event.target).hasClass('cartbtn')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].id; //gets data from data-id
-            $state.go('portfolio.patent.patent-info', {patentId: patentId});
+            $state.go('portfolio.patent', {patentId: patent.id});
         }
     };    
 
-<<<<<<< HEAD
-    function manualProcessingModal() {
-        $timeout(function(){
-            var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modals/modal.submitted-manual-processing.tpl.htm',
-                appendTo: undefined,
-                scope: $scope,
-                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
-
-                    $scope.dismissModal = function () {
-                        $uibModalInstance.close();
-                    };
-
-                }]
-            });
-        }, 500)
-    }
-
-    if($stateParams.actionRequest == 'manualProcessing') {
-        manualProcessingModal();
-    }
-
-      // $scope.oneAtATime = true;
-
-      // $scope.groups = [
-      //   {
-      //     title: 'Dynamic Group Header - 1',
-      //     content: 'Dynamic Group Body - 1'
-      //   },
-      //   {
-      //     title: 'Dynamic Group Header - 2',
-      //     content: 'Dynamic Group Body - 2'
-      //   }
-      // ];
-
-      // $scope.items = ['Item 1', 'Item 2', 'Item 3'];
-
-      // $scope.addItem = function() {
-      //   var newItemNo = $scope.items.length + 1;
-      //   $scope.items.push('Item ' + newItemNo);
-      // };
-
-      // $scope.status = {
-      //   isCustomHeaderOpen: false,
-      //   isFirstOpen: true,
-      //   isFirstDisabled: false
-      // };
-=======
->>>>>>> origin/fe-branch-v2.2
 
 }
