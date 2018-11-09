@@ -130,6 +130,9 @@
   cursor: pointer;
   line-height: $line-none;
   font-size: $font-normal;
+  -webkit-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
+  -o-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
+  transition: background .2s ease-in-out, border  .2s ease-in-out, color .2s ease-in-out;  
   @include padding-mixin(0.5rem 1.5rem);
   @include list-item(7.5rem, 8rem);
   &:hover { 
@@ -169,6 +172,7 @@
 .primary-view-nav__list-item-a, 
 .secondary-view-nav__nav-link {
   cursor: pointer;
+  text-transform: uppercase;
   background: $white;
   display: inline-block;
   border: 1px solid $border;
@@ -189,8 +193,8 @@
 
 .primary-view-nav__list-item-a {
   @include padding-mixin(0.5rem 3rem);
-  line-height: $line-h3;
-  font-size: $font-h3;
+  line-height: $line-h4;
+  font-size: $font-h4;
   margin-right: 1.5rem;
 
   &:hover {
@@ -294,43 +298,26 @@
   } 
 }
 
-.primary-view-nav__list-item.active {
+.primary-view-nav__list-item-a.active {
+
   > .primary-view-nav__list-item-a {
     @include list-item-transition;
     font-weight: medium; 
-    background: $green; 
-    border: 1px solid $green; 
+    background: $black; 
+    border: 1px solid $black; 
     color: #fff;
-  }
-}
+  }  
 
-.primary-view-nav__list-item-a.active {
   @include list-item-transition;
   font-weight: medium; 
   background: $green; 
   border: 1px solid $green; 
   color: #fff;
-  > .primary-view-nav__link { 
-    color: #fff; font-weight: 500;
-  }
   &:active { 
     background: $dark-green; 
     border: 1px solid $dark-green; 
     color: #fff; 
     opacity: 1!important; 
-  }
-  &:active .primary-view-nav__link { 
-    color: #fff; 
-    opacity: 1; 
-  }
-  &.active:active .primary-view-nav__link { 
-    color: #fff; 
-    opacity: 1; 
-  }  
-  &:hover {
-    .primary-view-nav__link { 
-      @include opacity(1); 
-    }
   }
 }
 
