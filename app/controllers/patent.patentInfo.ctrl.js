@@ -24,7 +24,7 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
     if(organiseTextService.actionStatus(patent.renewalStatus)) {
         vm.statusesAvailable.push(organiseTextService.uiStatus(patent.renewalStatus))
     }
-    console.log(patent)
+    console.log(vm.statusesAvailable)
     vm.$onInit = function() {
         if(patent.renewalFeeUI !== null) {
             var renewFee = patent.renewalFeeUI;
