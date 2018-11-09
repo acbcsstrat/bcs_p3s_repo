@@ -53,7 +53,6 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $scope, $state, $timeout, 
 					case 'Black':
 						item.savings =  'N/A';
 						item.renewBefore = 'N/A';
-
 				}
 				return item;
 			}
@@ -161,7 +160,7 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $scope, $state, $timeout, 
             callback: function(d, e) {
             	d3.selectAll('.nvd3 .nv-bar rect').attr("rx", 15);
             }
-        }    	
+        }
 
     }
 
@@ -220,9 +219,9 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $scope, $state, $timeout, 
 
 	function loadChart() {
 		$timeout(function(){
-             var evt = document.createEvent('UIEvents');
-             evt.initUIEvent('resize', true, false, window, 0);
-             window.dispatchEvent(evt);
+            var evt = document.createEvent('UIEvents');
+            evt.initUIEvent('resize', true, false, window, 0);
+            window.dispatchEvent(evt);
 		}, 20)
 	}
 
