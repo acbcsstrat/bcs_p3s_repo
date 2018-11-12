@@ -7,6 +7,7 @@ require("app/app.config.js");
 require("app/app.routes.js");
 
 require('app/directives/app.dir.js');
+require('app/directives/form1200.dir.js');
 require('app/directives/checkout.dir.js');
 require('app/directives/current-transactions.transactions.dir.js');
 require('app/directives/patents.list-patents.dir.js');
