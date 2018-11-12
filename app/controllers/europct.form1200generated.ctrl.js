@@ -17,6 +17,8 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
     vm.costData = $stateParams.form1200.form1200FeeUI;
     // var fetchForm1200 = fetchForm1200;
 
+    console.log($stateParams)
+
     vm.$onInit = function() {
 
         if($stateParams.form1200 === '') {

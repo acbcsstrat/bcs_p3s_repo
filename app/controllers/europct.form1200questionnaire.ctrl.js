@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('form1200questionnaireCtrl', form1200questionnaireCtrl);
 
-form1200questionnaireCtrl.$inject = ['patent', '$scope', '$rootScope', '$stateParams', '$timeout', 'chunkDataService', '$state', '$uibModal', 'euroPctService'];
+form1200questionnaireCtrl.$inject = ['patent', '$scope', '$rootScope', '$stateParams', '$timeout', 'chunkDataService', '$state', '$uibModal', 'form1200Service'];
 
-function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $timeout, chunkDataService, $state, $uibModal, euroPctService) {
+function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $timeout, chunkDataService, $state, $uibModal, form1200Service) {
 
     var vm = this;
 
@@ -16,13 +16,8 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
     vm.cancel1200 = cancel1200;
     vm.formData = {};
     vm.loading = true;
+    vm.patentsLoaded = false;
     vm.entityAccepted = false;
-
-
-    angular.element(function () {
-        vm.loading = false;
-        vm.patentsLoaded = true;         
-    });    
 
     vm.confirmEntity = {
         index: 0,
@@ -120,8 +115,12 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         } 
     }
 
+    function init() {
 
-    vm.$onInit = function () {
+        if(patent.form1200FeeUI === null) {
+            vm.loading = false;
+            vm.patentsLoaded = true;
+        }
 
         if(vm.questionsParam.length === 0) {
             $state.go('portfolio.patent.euro-pct.form1200.intro');
@@ -168,6 +167,8 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         }
 
     }
+
+    init();
 
     function cancel1200() {
         var modalInstance = $uibModal.open({
@@ -224,10 +225,15 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         vm.formData.pageDescriptionsUI = arr;
         vm.formData.EP_ApplicationNumber = patent.ep_ApplicationNumber;
 
-        $timeout(function(){
-            $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: vm.formData}, {reload: false})
-        }, 300)
+        form1200Service.submitForm1200(patent.id, vm.formData)
+        .then(
+            function(response){
+                $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response}, {reload: false})
+            },
+            function(errResponse){
 
+            }
+        )
     }
 
     function chkValidStates(item, index) {
