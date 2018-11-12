@@ -137,8 +137,17 @@ public class EpctUI extends Epct {
 			//		this.setExtensionStates(null);
 			//		this.setValidationStates(null);
 		DummyForm1200Engine dummy = new DummyForm1200Engine();
-		String extsnStatesCSV = this.getExtensionStates();
-		String validStatesCSV = this.getValidationStates();
+//		String extsnStatesCSV = this.getExtensionStates();
+//		String validStatesCSV = this.getValidationStates();
+
+		String extsnStatesCSV = epct.getExtensionStates();
+		String validStatesCSV = epct.getValidationStates();
+		
+		
+		
+		
+		
+		
 		extensionStatesUI = dummy.listStrStates2ExtnsStates(dummy.csStings2ist(extsnStatesCSV)); // this 'dummy' code might actually become real ? / valid
 		validationStatesUI = dummy.listStrStates2ValidStates(dummy.csStings2ist(validStatesCSV));
 		//private String activePaymentId	

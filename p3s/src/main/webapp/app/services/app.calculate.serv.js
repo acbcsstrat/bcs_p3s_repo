@@ -6,8 +6,7 @@ function calculateService($q, $timeout, patentsRestService, fxService) {
 
 	var factory = {
 		calculateHours: calculateHours,
-		recentActivity: recentActivity,
-		phaseProgress: phaseProgress
+		recentActivity: recentActivity
 	};
 
 	return factory;
@@ -60,47 +59,5 @@ function calculateService($q, $timeout, patentsRestService, fxService) {
         }
 
     } //recentActivity end
-
-	function calculateProgress(start, end) {
-
-		var today = new Date().getTime();
-
-		var total = end - start;
-		var progress = today - start;
-
-		return Math.round(((progress) / (total)) * 100);
-
-	}    
-
-    function phaseProgress(data, i) {
-	
-		patentsRestService.fetchCostAnalysis(data.id)
-		.then(
-			function(response) {
-                switch(response.currentcostBand) {
-                    case 'Green':
-						return data.progressBar = calculateProgress(response.greenStartDate, response.amberStartDate);
-					break;
-					case 'Amber':
-						return data.progressBar = calculateProgress(response.amberStartDate, response.redStartDate);
-					break;
-					case 'Red':
-						return data.progressBar = calculateProgress(response.redStartDate, response.blueStartDate);
-					break;
-					case 'Blue':
-						return data.progressBar = calculateProgress(response.blueStartDate, response.blackStartDate);
-					break;
-					case 'Black':
-						if(data.renewalStatus == 'Show price') {
-							return data.progressBar = calculateProgress(response.blackStartDate, response.blackPhoneUpStart);
-						} 							
-				}
-			},
-			function(errResponse) {
-				// body...
-			}
-		)
-
-    } //phaseProgress
 
 }

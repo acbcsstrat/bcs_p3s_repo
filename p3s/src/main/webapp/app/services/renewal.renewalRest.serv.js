@@ -28,11 +28,11 @@ function renewalRestService($http, $q) {
 
     };
 
-    function updateNotifications(id) {
+    function updateNotifications(list, id) {
 
         var deferred = $q.defer();
 
-        $http.get(ppdomain+'rest-renewal-notifications/'+id)
+        $http.put(ppdomain+'rest-renewal-notifications/'+id, list)
         .then(
             function(response){
                 deferred.resolve(response.data);

@@ -148,40 +148,49 @@
                                         <div class="form-group row">
                                             <label for="totalPages" class="col-xl-8 col-form-label font-body">Please enter the total number of pages</label>
                                             <div class="col-xl-4">
-                                                <input type="text" name="totalPages" class="form-control" data-ng-change="$ctrl.formData.totalPages = totalPages" data-ng-model="totalPages" required>
+                                                <input type="text" name="totalPages" id="totalPages" class="form-control" data-ng-change="$ctrl.formData.totalPages = totalPages" data-ng-model="totalPages" validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalPages.$error.validNumber && form1200Form.totalPages.$dirty">Only numbers are valid charcters in this field.</p>  
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="totalClaims" class="col-xl-8 col-form-label font-body">Please enter the total number of claim</label>
                                             <div class="col-xl-4">
-                                                <input type="text" name="totalClaims" class="form-control" data-ng-change="$ctrl.formData.totalClaims = totalClaims" data-ng-model="totalClaims" required>
+                                                <input type="text" name="totalClaims" class="form-control" data-ng-change="$ctrl.formData.totalClaims = totalClaims" data-ng-model="totalClaims" validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>                                                  
+
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-xl-6 col-form-label font-body">Please enter start and end pages of claims</label>
                                             <div class="col-xl-3">
-                                                <input type="text" name="claimsStart" class="form-control" data-ng-model="$ctrl.pageDetailsData.claims.typeStart" required>
+                                                <input type="text" name="claimsStart" class="form-control" data-ng-model="$ctrl.pageDetailsData.claims.typeStart" validate-numbers required validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsStart.$error.validNumber && form1200Form.claimsStart.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>
                                             <div class="col-xl-3">
-                                                <input type="text" name="claimsEnd" class="form-control" data-ng-model="$ctrl.pageDetailsData.claims.typeEnd" required>
+                                                <input type="text" name="claimsEnd" class="form-control" data-ng-model="$ctrl.pageDetailsData.claims.typeEnd" validate-numbers required validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.validNumber && form1200Form.claimsEnd.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>                                        
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-xl-6 col-form-label font-body">Please enter start and end pages of descriptions</label>
                                             <div class="col-xl-3">
-                                                <input type="text" name="descStart" class="form-control" data-ng-model="$ctrl.pageDetailsData.description.typeStart" required>
+                                                <input type="text" name="descStart" class="form-control" data-ng-model="$ctrl.pageDetailsData.description.typeStart" validate-numbers  validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.validNumber && form1200Form.descStart.$dirty">Only numbers are valid charcters in this field.</p>                                                     
                                             </div>
                                             <div class="col-xl-3">
-                                                <input type="text" name="descEnd" class="form-control" data-ng-model="$ctrl.pageDetailsData.description.typeEnd" required>
+                                                <input type="text" name="descEnd" class="form-control" data-ng-model="$ctrl.pageDetailsData.description.typeEnd" validate-numbers  validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.validNumber && form1200Form.descEnd.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>                                        
                                         </div>
                                         <div class="form-group row">
                                             <label for="claimsStart" class="col-xl-6 col-form-label font-body">Please enter start and end pages of drawings</label>
                                             <div class="col-xl-3">
-                                                <input type="text" name="drawingStart" class="form-control" data-ng-model="$ctrl.pageDetailsData.drawings.typeStart" required>
+                                                <input type="text" name="drawingStart" class="form-control" data-ng-model="$ctrl.pageDetailsData.drawings.typeStart" validate-numbers  validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.validNumber && form1200Form.drawingStart.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>
                                             <div class="col-xl-3">
-                                                <input type="text" name="drawingEnd" class="form-control" data-ng-model="$ctrl.pageDetailsData.drawings.typeEnd" required>
+                                                <input type="text" name="drawingEnd" class="form-control" data-ng-model="$ctrl.pageDetailsData.drawings.typeEnd" validate-numbers  validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.validNumber && form1200Form.drawingEnd.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>                                        
                                         </div>                                                                     
                                         <div class="row m-t-sm">
@@ -217,6 +226,8 @@
                             </uib-tab>
                         </uib-tabset>
                     </form>
+                </div><!--form end-->
+                <div class="content-panel__head bg-white border-grey-xs--top">
                     <div class="row">
                         <div class="col-md-12">
                             <button type="button" class="btn pill-radius btn--default bg-phase-red pill-radius m-r-xs" data-ng-click="$ctrl.cancel1200()">
@@ -224,7 +235,7 @@
                             </button>                       
                         </div>
                     </div>
-                </div><!--form end-->
+                </div>
             </div>
         </div>
     </div>

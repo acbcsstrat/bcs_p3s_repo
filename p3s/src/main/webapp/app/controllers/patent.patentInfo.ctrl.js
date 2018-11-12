@@ -1,39 +1,87 @@
 angular.module('ppApp').controller('patentInfoCtrl', patentInfoCtrl);
 
-patentInfoCtrl.$inject = ['$scope', 'patent', '$rootScope', '$state', '$timeout', '$location', '$anchorScroll', 'fxCalculationService', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService']
+patentInfoCtrl.$inject = ['$scope', 'patent', '$state', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService']
 
-function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location, $anchorScroll, fxCalculationService, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService) {
+function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService) {
 
     var vm = this;
 
     vm.patent = patent;
-    vm.directToRenewal = directToRenewal;
+    vm.dirFeeBreakdown = dirFeeBreakdown;
     vm.fetchItemTransaction = fetchItemTransaction;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.updatePatent = updatePatent;
     vm.editItem = editItem;
     vm.doneEditing = doneEditing;
+    vm.getStatus = getStatus;
+    // vm.currentStatus = currentStatus;
     vm.editing=[];
+    vm.statusesAvailable = [];
+    
+    if(organiseTextService.actionStatus(patent.epctStatus)) {
+        vm.statusesAvailable.push(patent.epctStatus)
+    }
+    if(organiseTextService.actionStatus(patent.renewalStatus)) {
+        vm.statusesAvailable.push(patent.renewalStatus)
+    }
+
+    function getStatus(text) {
+        return organiseTextService.uiStatus(text);
+    }
 
     vm.$onInit = function() {
-        if(patent) {
-            // fxCalculationService.setFx(patent);
-            // vm.patentFx = fxCalculationService;
-            coreService.ppContact()
-            .then(
-                function(response){
-                    vm.partnerName = response.partnerName;
-                    vm.partnerPhone = response.partnerPhone;
-                },
-                function(errResponse){
-
+        if(patent.renewalFeeUI !== null) {
+            var renewFee = patent.renewalFeeUI;
+            renewFee.officialFeesUSD = (function(){
+                var total = 0;
+                total += renewFee.renewalFeeUSD;
+                if(renewFee.extensionFeeUSD !== null) {
+                    total += renewFee.extensionFeeUSD;
                 }
-            )
+                return total;
+            }())
+            renewFee.officialFeesEUR = (function(){
+                var total = 0;
+                total += renewFee.renewalFeeEUR;
+                if(renewFee.extensionFeeEUR !== null) {
+                    total += renewFee.extensionFeeEUR;
+                }
+                return total;
+            }())
+            renewFee.ppFeesUSD = (function(){
+                var total = 0;
+                total += renewFee.processingFeeUSD;
+                if(renewFee.expressFeeUSD !== null) {
+                    total += renewFee.expressFeeUSD;
+                }
+                if(renewFee.latePayPenaltyUSD !== null) {
+                    total += renewFee.latePayPenaltyUSD;
+                }
+                if(renewFee.urgentFeeUSD !== null) {
+                    total += renewFee.urgentFeeUSD
+                }
+                return total;
+            }())
+            renewFee.ppFeesEUR = (function(){
+                var total = 0;
+                total += renewFee.processingFeeEUR;
+                if(renewFee.expressFeeEUR !== null) {
+                    total += renewFee.expressFeeEUR;
+                }
+                if(renewFee.latePayPenaltyEUR !== null) {
+                    total += renewFee.latePayPenaltyEUR;
+                }
+                if(renewFee.urgentFeeEUR) {
+                    total += renewFee.urgentFeeEUR
+                }
+                return total;
+            }())            
+            
         }
     }
 
-    function directToRenewal() {
+    function dirFeeBreakdown() {
         $state.go('portfolio.patent.renewal.info', {}, {reload: false}); //REVISE TO SEE IF MORE EFFICIENT WAY
     };
 
@@ -69,9 +117,9 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
         );
     };    
 
-    function updatePatent(id) {
+    function updatePatent(patent) {
 
-        patentsRestService.updatePatent(patent, id)
+        patentsRestService.updatePatent(patent, patent.id)
         .then(
             function(response){
                 updatePatentSuccess();
@@ -93,6 +141,7 @@ function patentInfoCtrl($scope, patent, $rootScope, $state, $timeout, $location,
 
                 this.dismissModal = function() {
                     $uibModalInstance.close();
+                    $state.reload()
                 };
 
             }]

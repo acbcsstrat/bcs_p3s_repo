@@ -175,25 +175,42 @@ public class Payment {
     
     
     
+    // superceded by below
+	//// DIY finder
+	//// Approach: All renewals in a transaction must be from the same business
+	//public static List<Payment> findPaymentsByBusiness(Business business) {
+	//    if (business == null) return null;
+	//    List<Payment> result = new ArrayList<Payment>();
+	//    List<Payment> everyonesPayments = Payment.findAllPayments();
+	//    for (Payment someonesPayment : everyonesPayments) {
+	//        Renewal rrr = null;
+	//        Patent ppp = null;
+	//        Business bbb = null;
+	//        List<Renewal> someonesRenewals = someonesPayment.getRenewals();
+	//        if (someonesRenewals.size() > 0) rrr = someonesRenewals.get(0);
+	//        if (rrr != null) ppp = rrr.getPatent();
+	//        if (ppp != null) {
+	//            bbb = ppp.getBusiness();
+	//            if (bbb != null && (bbb.getId() == business.getId())) {
+	//                result.add(someonesPayment);
+	//            }
+	//        }
+	//    }
+	//    return result;
+	//}
     
     // DIY finder
-    // Approach: All renewals in a transaction must be from the same business
+    // Approach: For ALL payments, Use Payment:initiatedByUser, locate users business, compare
     public static List<Payment> findPaymentsByBusiness(Business business) {
         if (business == null) return null;
         List<Payment> result = new ArrayList<Payment>();
         List<Payment> everyonesPayments = Payment.findAllPayments();
         for (Payment someonesPayment : everyonesPayments) {
-            Renewal rrr = null;
-            Patent ppp = null;
-            Business bbb = null;
-            List<Renewal> someonesRenewals = someonesPayment.getRenewals();
-            if (someonesRenewals.size() > 0) rrr = someonesRenewals.get(0);
-            if (rrr != null) ppp = rrr.getPatent();
-            if (ppp != null) {
-                bbb = ppp.getBusiness();
-                if (bbb != null && (bbb.getId() == business.getId())) {
-                    result.add(someonesPayment);
-                }
+        	P3SUser aUser = someonesPayment.initiatedByUserId;
+        	long thisPaymentsBusinessId = aUser.getBusiness().getId();
+        	
+            if (thisPaymentsBusinessId == business.getId()) {
+                result.add(someonesPayment);
             }
         }
         return result;

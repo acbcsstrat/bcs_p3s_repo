@@ -12,6 +12,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	var userTimedOut = false;
 	// vm.checkedMessages = checkedMessages;
 	// vm.supresssMessages = supresssMessages;
+
 	var messageArr = [];
 
 	$scope.$on('IdleStart', function() {
@@ -49,24 +50,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
       	}
 
 	});
-
-	function fetchPatents() {
-
-		patentsRestService.fetchAllPatents()
-		.then(
-			function(response){
-				if(response.length === 0) {
-					patentsFound = false;
-				}
-			},
-			function(errResponse){
-				console.log(errResponse)
-			}
-		)
-
-	}
-
-	fetchPatents();
 
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
