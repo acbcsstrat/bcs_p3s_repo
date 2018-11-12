@@ -14,17 +14,22 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
     vm.updatePatent = updatePatent;
     vm.editItem = editItem;
     vm.doneEditing = doneEditing;
+    vm.getStatus = getStatus;
     // vm.currentStatus = currentStatus;
     vm.editing=[];
     vm.statusesAvailable = [];
     
     if(organiseTextService.actionStatus(patent.epctStatus)) {
-        vm.statusesAvailable.push(organiseTextService.uiStatus(patent.epctStatus))
+        vm.statusesAvailable.push(patent.epctStatus)
     }
     if(organiseTextService.actionStatus(patent.renewalStatus)) {
-        vm.statusesAvailable.push(organiseTextService.uiStatus(patent.renewalStatus))
+        vm.statusesAvailable.push(patent.renewalStatus)
     }
-    console.log(vm.statusesAvailable)
+
+    function getStatus(text) {
+        return organiseTextService.uiStatus(text);
+    }
+
     vm.$onInit = function() {
         if(patent.renewalFeeUI !== null) {
             var renewFee = patent.renewalFeeUI;

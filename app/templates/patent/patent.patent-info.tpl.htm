@@ -16,12 +16,10 @@
 							Services available:<br>
 						</p>
 						<p class="font-h4">
-							<span class="txt-phase-green" data-ng-repeat="service in $ctrl.statusesAvailable">
-								<span data-ng-if="service == 'Open for Renewal'">Regional Renewal</span>
+							<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
+								<span class="txt-phase-green">{{$ctrl.getStatus(service)}}</span>
 								<span data-ng-if="$ctrl.statusesAvailable > 1">, </span>
-
 							</span>
-							
 						</p>
 			    	</div>
 			    	<div data-ng-if="$ctrl.statusesAvailable.length === 0">

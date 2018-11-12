@@ -14,10 +14,10 @@
 						<a class="pill-radius secondary-view-nav__nav-link" data-ui-sref-active="{'active': 'portfolio.patent.patent-info'}" data-ui-sref="portfolio.patent.patent-info">Patent Info</a><!-- {} acts as ng-class condition to add state if active state is portfolio.patent.patent-info or portfolio.patent.euro-pct and any of their child states-->
 					</li>
 					<li class="secondary-view-nav__nav-item" data-ng-click="$ctrl.activePatentItemMenu = 'Cost Analysis'; $ctrl.loadChart()">
-						<a class="pill-radius secondary-view-nav__nav-link" data-ui-sref-active="{'active': 'portfolio.patent.euro-pct'}" data-ui-sref="portfolio.patent.euro-pct.info">Euro-PCT</a>
+						<a class="pill-radius secondary-view-nav__nav-link" data-ui-sref-active="{'active': 'portfolio.patent.euro-pct'}" data-ui-sref="portfolio.patent.euro-pct.info">Euro-PCT</a> <!--add   data-ng-disabled="$ctrl.serviceAvailable('Form1200')"-->
 					</li>
 					<li class="secondary-view-nav__nav-item" data-ng-click="$ctrl.activePatentItemMenu = 'Renewal History'">
-						<a class="pill-radius secondary-view-nav__nav-link" data-ui-sref-active="{'active': 'portfolio.patent.renewal'}" data-ui-sref="portfolio.patent.renewal.info">Renewal</a>
+						<a class="pill-radius secondary-view-nav__nav-link"  data-ui-sref-active="{'active': 'portfolio.patent.renewal'}" data-ng-disabled="$ctrl.serviceAvailable('Renewal')" data-ui-sref="portfolio.patent.renewal.info">Renewal</a>
 					</li>
 				</ul>
 			</nav>
