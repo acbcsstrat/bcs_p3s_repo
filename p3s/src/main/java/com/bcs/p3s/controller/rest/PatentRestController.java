@@ -2,7 +2,10 @@ package com.bcs.p3s.controller.rest;
  
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
@@ -16,17 +19,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
+import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalUI;
+import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
+import com.bcs.p3s.display.form1200.Form1200SavedData;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
+import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Renewal;
@@ -205,13 +213,18 @@ public class PatentRestController extends Universal {
 			log().info("A patent with application number[" + patent.getEP_ApplicationNumber() +"] having a status as " + patent.getEpoPatentStatus() + " being added");
 		   	//patent.persist();
 			newPatent = patent.persist();
-			
-			List<NotificationMapping> mappings = data.extractNotificationsFromAddPatentForm(newPatent, obby);
-			
-			for(NotificationMapping eachMapping : mappings){
-				eachMapping.persist();
+
+			// Set the Default email notifications for all products (Renewals and Form1200)
+			List<Notification> allNotifications = Notification.findAllNotifications();
+			Long newPatentId = newPatent.getId();
+			Long userId = postSession.getUser().getId();
+			for (Notification notification : allNotifications) {
+				if (notification.getDefaultOn()==true) {
+					NotificationMapping notificationMapping = new NotificationMapping(newPatentId, userId, notification.getId());
+					notificationMapping.persist();
+				}
 			}
-		   	
+
 			if(!(newPatent == null)){
 				log().debug("PatentRestController : /rest-patents/ saveNewPatent() completed.");
 				log().info("A patent with application number[" + patent.getEP_ApplicationNumber() +"] being added by USER [user id:" + postSession.getUser().getId() +"]" );
@@ -236,12 +249,14 @@ public class PatentRestController extends Universal {
 
    }
 
-	
 
 	
     //------------------- Update a Patent --------------------------------------------------------
 	
-    // Implements API section 2.4
+    // Implements v2.1 API section 1.3
+    // Update Patent: Customer is permitted to change 2 things: shortTitle, clientRef
+	//
+    // Formerly (v1) Implements API section 2.4
     // Update Patent: Customer is permitted to change 3 things: shortTitle, clientRef and which Notifications
 	//
 	// Note !
@@ -304,7 +319,59 @@ public class PatentRestController extends Universal {
 
 	
     //------------------- Update E-PCT Notifications --------------------------------------------------------
-	
+
+	// Temporary test call for testing /rest-form1200-tmpGenF1200/ prior to the new FE being available
+    @RequestMapping(value = "/rest-form1200-tmpGenF1200-tmpv21/", method = RequestMethod.POST)
+    public ResponseEntity<PatentUI> ctrlUpdateEpctNotificationsTMPv21(
+    		  @RequestParam("patentId") String strPatentId
+      		, @RequestParam("val1") String val1 
+    		, @RequestParam("val2") String val2 
+    		, @RequestParam("val3") String val3 
+    		, @RequestParam("val4") String val4 ) { 
+	    		
+    	long patentId = new Long(strPatentId);
+    	LinkedHashMap<String, List<NotificationUI>> objListNotificationUIs = new LinkedHashMap<String, List<NotificationUI>>();
+    	List<NotificationUI> buiList = new ArrayList<NotificationUI>();
+    	
+    	// patentService.srvUpdateTypedNotifications ONLY uses Notification.Id & productType - so only need populate that
+    	if (notEmpty(val1)) {
+    		Notification notification = new Notification();
+    		notification.setId(new Long(val1));
+    		notification.setProductType(NotificationProductTypeEnum.EPCT);
+    		buiList.add(new NotificationUI(notification));
+    	}
+    	if (notEmpty(val2)) {
+    		Notification notification = new Notification();
+    		notification.setId(new Long(val2));
+    		notification.setProductType(NotificationProductTypeEnum.EPCT);
+    		buiList.add(new NotificationUI(notification));
+    	}
+    	if (notEmpty(val3)) {
+    		Notification notification = new Notification();
+    		notification.setId(new Long(val3));
+    		notification.setProductType(NotificationProductTypeEnum.EPCT);
+    		buiList.add(new NotificationUI(notification));
+    	}
+    	if (notEmpty(val4)) {
+    		Notification notification = new Notification();
+    		notification.setId(new Long(val4));
+    		notification.setProductType(NotificationProductTypeEnum.EPCT);
+    		buiList.add(new NotificationUI(notification));
+    	}
+    	objListNotificationUIs.put("notificationUIs", buiList);
+		
+		try {
+			patentService.srvUpdateTypedNotifications(patentId, objListNotificationUIs, NotificationProductTypeEnum.EPCT);
+		} catch (Exception e) {
+			logErrorAndContinue("PatentRestController : /rest-form1200-tmpGenF1200-tmpv21/ ctrlUpdateEpctNotificationsTMPv21() failed",e);
+	  		return new ResponseEntity<PatentUI>(HttpStatus.NOT_FOUND);
+		}
+		log().debug("tmp dev ctrlUpdateEpctNotificationsTMPv21() completed ok");
+  		return new ResponseEntity<PatentUI>(HttpStatus.OK);
+    }
+
+    		
+    		
     // Implements v2.1 API section 6.2 Update Euro-PCT Notifications
 	@RequestMapping(value = "/rest-epct-notifications/{id}", method = RequestMethod.PUT) 
 	public ResponseEntity<PatentUI> ctrlUpdateEpctNotifications(@PathVariable("id") long id, @RequestBody Object objListNotificationUIs) {
@@ -370,38 +437,51 @@ public class PatentRestController extends Universal {
   
 	//------------------- Fetch FX rate --------------------------------------------------------
 
-		    // Implements API section 2.6
-		    @RequestMapping(value = "/rest-fxrate/", method = RequestMethod.GET)
-		    public ResponseEntity<FxRateCurrentUI> getFxRate() {
-		    	System.out.println("PatentRestController : /rest-fxrate/ invoked ");
+    // Implements API section 2.6
+    @RequestMapping(value = "/rest-fxrate/", method = RequestMethod.GET)
+    public ResponseEntity<FxRateCurrentUI> getFxRate() {
+    	System.out.println("PatentRestController : /rest-fxrate/ invoked ");
 
-		    	FxRateCurrentUI fxRateCurrentUI = patentService.getCurrentFxRate();
-		    	
-		        return new ResponseEntity<FxRateCurrentUI>(fxRateCurrentUI, HttpStatus.OK);
-		    }
-			
+    	FxRateCurrentUI fxRateCurrentUI = patentService.getCurrentFxRate();
+    	
+        return new ResponseEntity<FxRateCurrentUI>(fxRateCurrentUI, HttpStatus.OK);
+    }
+	
 
-		    // Implements API section 2.9
-		    @RequestMapping(value = "/rest-fxrates/{period}", method = RequestMethod.GET)
-		    public ResponseEntity<List<FxRateUI>> getFxRate(@PathVariable("period") String period) {
-		    	System.out.println("PatentRestController : /rest-fxrates/"+period+" invoked ");
+    // Implements API section 2.9
+    @RequestMapping(value = "/rest-fxrates/{period}", method = RequestMethod.GET)
+    public ResponseEntity<List<FxRateUI>> getFxRate(@PathVariable("period") String period) {
+    	System.out.println("PatentRestController : /rest-fxrates/"+period+" invoked ");
 
-				List<FxRateUI> history = patentService.getFxRateHistory(period);
-		    	
-		        return new ResponseEntity<List<FxRateUI>>(history, HttpStatus.OK);
-		    }
-			
-		
+		List<FxRateUI> history = patentService.getFxRateHistory(period);
+    	
+        return new ResponseEntity<List<FxRateUI>>(history, HttpStatus.OK);
+    }
+	
 
-	//-------------------- Fetch Cost Analysis Data ----------------------------------------------
-		  @RequestMapping(value = "/rest-cost-analysis/{id}", method = RequestMethod.GET)    
-		    public ResponseEntity<CostAnalysisData> getCAData(@PathVariable("id") long id) {
-		    	
-		    	log().debug("PatentRestController : /rest-cost-analysis/ invoked ");
-		    	//check whether id is null
-		    	CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(id);
-		    	return new ResponseEntity<CostAnalysisData>(costAnalysisData, HttpStatus.OK);
-		    }
+
+	//-------------------- Fetch Cost Analysis Data (For Renewals) -----------------------------------------
+    @RequestMapping(value = "/rest-cost-analysis/{id}", method = RequestMethod.GET)    
+    public ResponseEntity<CostAnalysisData> getCAData(@PathVariable("id") long id) {
+    	
+    	log().debug("PatentRestController : /rest-cost-analysis/ invoked (for Renewals)");
+    	//check whether id is null
+    	CostAnalysisData costAnalysisData = patentService.getCostAnalysisData(id);
+    	return new ResponseEntity<CostAnalysisData>(costAnalysisData, HttpStatus.OK);
+    }
+    
+    
+	//-------------------- Fetch Cost Analysis Data (For Form1200) -----------------------------------------
+    @RequestMapping(value = "/rest-form1200-cost-analysis/{id}", method = RequestMethod.GET)    
+    public ResponseEntity<CostAnalysisDataForm1200> getForm1200CostAnalysisData(@PathVariable("id") long id) {
+    	
+    	log().debug("PatentRestController : /rest-form1200-cost-analysis/("+id+") invoked (for Form1200)");
+    	//check whether id is null
+    	CostAnalysisDataForm1200 costAnalysisDataForm1200 = null;
+    	// patentService.getCostAnalysisData(id);  zaphod
+
+    	return new ResponseEntity<CostAnalysisDataForm1200>(costAnalysisDataForm1200, HttpStatus.OK);
+    }
 		    
 		    
 	//---------------------Fetch Renewal History ------------------------------------------------

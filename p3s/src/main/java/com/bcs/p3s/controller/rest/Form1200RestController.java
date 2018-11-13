@@ -191,9 +191,9 @@ public class Form1200RestController extends Universal {
 		try {
 		
 		
-			// Here - don't know what format data arriving will have. Best guidance from path is something like
-	//		ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
-	//		Patent patent = data.extractPatentFromAddPatentForm(obby); 
+			// Here - don't know what format data arriving will have. Best guidance from past is something like
+			//ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
+			//Patent patent = data.extractPatentFromAddPatentForm(obby); 
 			// so proceed cautiously
 	
 			log().debug("(obby==null) = "+(obby==null));
@@ -212,9 +212,6 @@ public class Form1200RestController extends Universal {
 				List<ExtensionStateUI> extensionStatesUI = null; 
 				List<ValidationStateUI> validationStatesUI = null;
 				List<PageDescriptionUI> pageDescriptionUI = null;
-				
-				
-				
 				
 				
 				if ( ! (obby instanceof LinkedHashMap<?,?>)) fut("AINT LinkedHashMap<String, Object>"); else {
@@ -315,7 +312,7 @@ public class Form1200RestController extends Universal {
 														}
 													}
 												}
-												log().debug("  If by wildest strect of imaginination - still alive here .. leave this item & move on");
+												log().debug("  If by wildest strect of imaginination - still alive here .. leave this item & move on"); // zaph
 												break;
 	
 	
@@ -323,105 +320,11 @@ public class Form1200RestController extends Universal {
 							default: 	fut("Switch statement hit default !!!");
 										tellOb(ob);
 							            break;
-						}
-				}
-	
-				int ii = 7;
-									
-				
-			}
-		}			
+						}  // end of : switch
+					}  // end of for loop
+				} // end of : IS a LinkedHashMap
+			} // end of: Object not null			
 					
-					
-					
-					
-	//			    public ResponseEntity<Object> generateForm1200tmpGenF1200(
-	//		    			  @RequestParam("Patent_ID") long  patentId
-	//			    		, @RequestParam("clientRef") String clientRef 
-	//			    		, @RequestParam("totalClaims") long totalClaims
-	//			    		, @RequestParam(value = "isYear3RenewalPaying", required = false) boolean isYear3RenewalPaying  
-	//			    		, @RequestParam("totalPages") long totalPages  
-	////			    		, @RequestParam("") Object extensionStatesUI   
-	////			    		, @RequestParam("") Object validationStatesUI
-	////			    		, @RequestParam("") Object pageDescriptionUI
-	//
-	//			    	// accept 2+6 strings
-	//			    		, @RequestParam("extsnStatesCSV") String extsnStatesCSV
-	//			    		, @RequestParam("validStatesCSV") String validStatesCSV
-	//			    		, @RequestParam("descStart") String descStart
-	//			    		, @RequestParam("descEnd") String descEnd
-	//			    		, @RequestParam("claimsStart") String claimsStart
-	//			    		, @RequestParam("claimsEnd") String claimsEnd
-	//			    		, @RequestParam("drgsStart") String drgsStart
-	//			    		, @RequestParam("drgsEnd") String drgsEnd
-	//		    		) {
-	//		    	// Note isYear3RenewalPaying is marked optional NOT because the question is conditional, but because HTML form doesn't send unchecked checkboxes
-	//
-	//				log().debug(PREFIX+"/rest-form1200-tmpGenF1200/ generateForm1200tmpGenF1200() invoked");
-	
-					
-					
-					
-					
-					
-					
-					
-					
-				
-				
-			
-			
-			
-	//		log().debug("str 1 is "+patentId);
-	//		log().debug("str 2 is "+clientRef);
-	//		log().debug("str 3 is "+ totalClaims );
-	//		log().debug("str 4 is "+  isYear3RenewalPaying);
-	//		log().debug("str 5 is "+  totalPages);
-	//		log().debug("extsnStatesCSV is "+  extsnStatesCSV);
-	//		log().debug("validStatesCSV is "+  validStatesCSV);
-	//		log().debug("desc <> is "+  descStart+ ", "+descEnd);
-	//		log().debug("clms <> is "+  claimsStart+ ", "+claimsEnd);
-	//		log().debug("drgs <> is "+  drgsStart+ ", "+drgsEnd);
-	//    	
-	//
-	//		
-	//		log().debug(CLASSNAME+"/rest-patents/ generateForm1200() invoked. ");
-	//		
-	//		try{
-	//			// do stuff
-	//
-	//			List<ExtensionStatesUI> extensionStatesUI = null; 
-	//			List<ValidationStatesUI> validationStatesUI = null;
-	//			List<PageDescriptionUI> pageDescriptionUI = new ArrayList<PageDescriptionUI>();
-	//
-	//			DummyForm1200Engine dummy = new DummyForm1200Engine();
-	//			extensionStatesUI = dummy.listStrStates2ExtnsStates(dummy.csStings2ist(extsnStatesCSV));
-	//			validationStatesUI = dummy.listStrStates2ValidStates(dummy.csStings2ist(validStatesCSV));
-	//			
-	//			PageDescriptionUI aPageDescriptionUI = null;
-	//			aPageDescriptionUI = new PageDescriptionUI(PageDescriptionEnum.Description, descStart, descEnd);
-	//			pageDescriptionUI.add(aPageDescriptionUI);
-	//			aPageDescriptionUI = new PageDescriptionUI(PageDescriptionEnum.Claims, claimsStart, claimsEnd);
-	//			pageDescriptionUI.add(aPageDescriptionUI);
-	//			aPageDescriptionUI = new PageDescriptionUI(PageDescriptionEnum.Drawings, drgsStart, drgsEnd);
-	//			pageDescriptionUI.add(aPageDescriptionUI);
-	//			
-	//
-	//			// EoW 181026 - got to here
-	//			
-	//			
-	//			
-	//			
-	//			
-	//			
-	//			
-	//			log().debug(CLASSNAME+"/rest-patents/ generateForm1200()   returning ...");
-	//		}
-	//		catch(Exception e){
-	//			logErrorAndContinue(CLASSNAME+"/rest-patents/ generateForm1200() suffered exception",e);
-	//			return new ResponseEntity<Object>("summat", HttpStatus.INTERNAL_SERVER_ERROR);
-	//		}
-	
 			log().debug(CLASSNAME+"/rest-patents/ generateForm1200()   returning ...");
 		}
 		catch(Exception e) {

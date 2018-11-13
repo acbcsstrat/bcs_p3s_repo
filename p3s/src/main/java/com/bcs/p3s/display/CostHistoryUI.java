@@ -8,15 +8,22 @@ import java.util.Date;
 
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.GlobalVariableSole;
+import com.bcs.p3s.util.currency.CurrencyUtil;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 
 /**
  * Created for v2.1, as such data will (eventually) no longer be calculated for ALL patents on login.
  *
+ * Note: This is a *UI object, to RATE values provided will have already been inverted 
+ * - i.e. WhatEurosDoes1DollarBuy - i.e. = ~0.8
+ *  
+ * v2.1 - Nov2018 - This is currently the ONLY place in the application where calculations are performed on the WhatEurosDoes1DollarBuy rate
+ *  rather than the  dollarsfor1EuroRate
+ *  
  */
 public class CostHistoryUI {
 
-	// Reminder: rate is num USD needed to buy 1 EUR
+	// Reminder: rate HEREis num USD needed to buy 1 EUR
 	
 	protected BigDecimal fxRateYesterday;
 	protected BigDecimal subTotalEURYesterday;
@@ -39,58 +46,17 @@ public class CostHistoryUI {
 
 		populateHistoricRates();
 
-		BigDecimal ddollars = fees.getDollarComponentUSD();
-		BigDecimal rateYest = fxRateYesterday;
-		BigDecimal eeuros = fees.getEuroComponentEUR();
-		BigDecimal operand = ddollars;
-		operand = operand.divide(rateYest,2,RoundingMode.HALF_UP);
-		operand = operand.add(eeuros);
+		// Reminder: Rate inverted to usual usage
+		setSubTotalEURYesterday( (fees.getDollarComponentUSD().multiply(fxRateYesterday) ).add(fees.getEuroComponentEUR()));
+		setSubTotalUSDYesterday(fees.getDollarComponentUSD().add( fees.getEuroComponentEUR().divide(fxRateYesterday,2,RoundingMode.HALF_UP) ));
 		
-		setSubTotalEURYesterday( (fees.getDollarComponentUSD().divide(fxRateYesterday,2,RoundingMode.HALF_UP) ).add(fees.getEuroComponentEUR()));
-		setSubTotalUSDYesterday(fees.getDollarComponentUSD().add( fees.getEuroComponentEUR().multiply(fxRateYesterday) ));
+		setSubTotalEURLastWeek( (fees.getDollarComponentUSD().multiply(fxRateLastWeek) ).add(fees.getEuroComponentEUR()));
+		setSubTotalUSDLastWeek(fees.getDollarComponentUSD().add( fees.getEuroComponentEUR().divide(fxRateLastWeek,2,RoundingMode.HALF_UP) ));
 		
-		setSubTotalEURLastWeek( (fees.getDollarComponentUSD().divide(fxRateLastWeek,2,RoundingMode.HALF_UP) ).add(fees.getEuroComponentEUR()));
-		setSubTotalUSDLastWeek(fees.getDollarComponentUSD().add( fees.getEuroComponentEUR().multiply(fxRateLastWeek) ));
-		
-		setSubTotalEURLastMonth( (fees.getDollarComponentUSD().divide(fxRateLastMonth,2,RoundingMode.HALF_UP) ).add(fees.getEuroComponentEUR()));
-		setSubTotalUSDLastMonth(fees.getDollarComponentUSD().add( fees.getEuroComponentEUR().multiply(fxRateLastMonth) ));
+		setSubTotalEURLastMonth( (fees.getDollarComponentUSD().multiply(fxRateLastMonth) ).add(fees.getEuroComponentEUR()));
+		setSubTotalUSDLastMonth(fees.getDollarComponentUSD().add( fees.getEuroComponentEUR().divide(fxRateLastMonth,2,RoundingMode.HALF_UP) ));
 	}
 
-	
-//	// Redundant less-convenient constructor
-//	/**
-//	 * Creates a costHistoryUI for the given cost components.
-//	 * Note: dollarComponentUSD and euroComponentEUR have different <i>values</i>, which should be <i>added</i> together.
-//	 * 
-//	 * @param dollarComponentUSD The Dollar component of the overall fee, expressed in USD
-//	 * @param euroComponentEUR The Euro component of the overall fee, expressed in EUR
-//	 * @param rateToday The number of USD needed to buy 1 EUR
-//	 * @param rateYesterday
-//	 * @param rateLastWeek
-//	 * @param rateLastMonth
-//	 */
-//	public costHistoryUI(BigDecimal dollarComponentUSD, BigDecimal euroComponentEUR, 
-//			BigDecimal rateToday, BigDecimal rateYesterday, BigDecimal rateLastWeek, BigDecimal rateLastMonth) 
-//	{
-//		if (dollarComponentUSD==null || euroComponentEUR==null 
-//				|| rateToday==null || rateYesterday==null || rateLastWeek==null || rateLastMonth==null) 
-//		{
-//			throw new P3SRuntimeException("costHistoryUI passed a null : "
-//					+dollarComponentUSD+", "+euroComponentEUR+", "+rateToday+", "+rateYesterday+", "+rateLastWeek+", "+rateLastMonth);
-//		}
-//		
-//		setSubTotalEURYesterday( (dollarComponentUSD.divide(rateYesterday) ).add(euroComponentEUR));
-//		setSubTotalUSDYesterday(dollarComponentUSD.add( euroComponentEUR.multiply(rateYesterday) ));
-//		
-//		setSubTotalEURLastWeek( (dollarComponentUSD.divide(rateLastWeek) ).add(euroComponentEUR));
-//		setSubTotalUSDLastWeek(dollarComponentUSD.add( euroComponentEUR.multiply(rateLastWeek) ));
-//		
-//		setSubTotalEURLastMonth( (dollarComponentUSD.divide(rateLastMonth) ).add(euroComponentEUR));
-//		setSubTotalUSDLastMonth(dollarComponentUSD.add( euroComponentEUR.multiply(rateLastMonth) ));
-//
-//	} acTidy
-
-	
 	
 	
 	// Internal methods
@@ -106,11 +72,26 @@ public class CostHistoryUI {
 		Date weekAgo = Date.from(ldWeekAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date monthAgo = Date.from(ldMonthAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		
-		setFxRateYesterday(getHistoricRateOrNull(yesterday));
-		setFxRateLastWeek(getHistoricRateOrNull(weekAgo));
-		setFxRateLastMonth(getHistoricRateOrNull(monthAgo));
+		// Set as WhatEurosDoes1DollarBuy rate
+		BigDecimal disRate = getSafeRate(yesterday);
+		setFxRateYesterday(CurrencyUtil.invertRate(disRate));
+		disRate = getSafeRate(weekAgo);
+		setFxRateLastWeek(CurrencyUtil.invertRate(disRate));
+		disRate = getSafeRate(monthAgo);
+		setFxRateLastMonth(CurrencyUtil.invertRate(disRate));
+		
 		protectAgainstMissingDayRates();
 	}
+	protected BigDecimal getSafeRate(Date when) { // Avoid nulls due to missing rate history data (which will occur on DEV PCs)
+		BigDecimal result = getHistoricRateOrNull(when);
+		if (result==null) result = GlobalVariableSole.findOnlyGlobalVariableSole().getCurrent_P3S_rate();
+		return result;
+	}
+	/**
+	 * Provides the 'usual' dollarsfor1EuroRate rate
+	 * @param historicDate
+	 * @return
+	 */
 	protected BigDecimal getHistoricRateOrNull(Date historicDate) {
 		// Protect against missing day rates (shouldn't happen, but possible)
 		BigDecimal historicRateOrNull = null;

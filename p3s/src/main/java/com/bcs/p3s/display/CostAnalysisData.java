@@ -2,11 +2,12 @@ package com.bcs.p3s.display;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.TreeMap;
 
-import com.bcs.p3s.model.RenewalFee;
-
+/**
+ * CostAnalysis data for a Renewal
+ *
+ */
 public class CostAnalysisData {
 	
 	private Date greenStartDate;

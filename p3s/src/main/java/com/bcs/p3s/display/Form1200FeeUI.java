@@ -14,7 +14,7 @@ import com.bcs.p3s.util.currency.CurrencyUtil;
  */
 public class Form1200FeeUI extends FeeCurrencyComponents {
 
-	// This class <i>could</i> extend Form1200Fee, but given the risk of exposing epct&onweard data 
+	// This class <i>could</i> extend Form1200Fee, but given the risk of exposing epct&onward data 
 	// and the fact that most fields need renaming, will implement the slow, explicit way.
 	
 	protected BigDecimal supplementarySearchFeeEUR;
@@ -56,6 +56,8 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 
 		// Map form1200Fee fields to <i>similar</i> names here (as specified by API) 
 
+		BigDecimal dollarsfor1EuroRate = fee.getFxRate(); // how-many-dollars-to-buy-one-Euro
+		
 		this.setSupplementarySearchFeeEUR(fee.getSupplementarySearchFee_EUR());
 		this.setDesignationFeeEUR(fee.getDesignationStatesFee_EUR());
 		this.setValidationFeeEUR(fee.getTotalValidationStatesFee_EUR());
@@ -71,26 +73,28 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 		this.setExpressFeeUSD(fee.getExpressFee_USD());
 		this.setUrgentFeeUSD(fee.getUrgentFee_USD());
 		this.setSubTotalUSD(fee.getSubTotal_USD());
-		this.setFxRate(fee.getFxRate());
-		checkRateFeasable(fee.getFxRate());
+		this.setFxRate(CurrencyUtil.invertRate(dollarsfor1EuroRate));  // For FE. WhatEurosDoes1DollarBuy - i.e. = ~0.8
+		checkRateFeasable(dollarsfor1EuroRate);
 				
 		// Calculate the other fields
-		this.setProcessingFeeEUR(dollarsToEuro(processingFeeUSD));
-		this.setExpressFeeEUR(dollarsToEuro(expressFeeUSD));
-		this.setUrgentFeeEUR(dollarsToEuro(urgentFeeUSD));
+		CurrencyUtil currencyUtil = new CurrencyUtil();
+		
+		this.setProcessingFeeEUR(currencyUtil.dollarsToEuro(processingFeeUSD, dollarsfor1EuroRate));
+		this.setExpressFeeEUR(currencyUtil.dollarsToEuro(expressFeeUSD, dollarsfor1EuroRate));
+		this.setUrgentFeeEUR(currencyUtil.dollarsToEuro(urgentFeeUSD, dollarsfor1EuroRate));
 
-		this.setSupplementarySearchFeeUSD(euroToDollars(supplementarySearchFeeEUR));
-		this.setDesignationFeeUSD(euroToDollars(designationFeeEUR));
-		this.setExtensionFeeUSD(euroToDollars(extensionFeeEUR));
-		this.setValidationFeeUSD(euroToDollars(validationFeeEUR));
-		this.setExaminationFeeUSD(euroToDollars(examinationFeeEUR));
-		this.setFilingFeeUSD(euroToDollars(filingFeeEUR));
-		this.setClaimsFee1USD(euroToDollars(claimsFee1EUR));
-		this.setClaimsFee2USD(euroToDollars(claimsFee2EUR));
-		this.setRenewalFeeUSD(euroToDollars(renewalFeeEUR));
-		this.setExcessPageFeeUSD(euroToDollars(excessPageFeeEUR));
+		this.setSupplementarySearchFeeUSD(currencyUtil.euroToDollars(supplementarySearchFeeEUR, dollarsfor1EuroRate));
+		this.setDesignationFeeUSD(currencyUtil.euroToDollars(designationFeeEUR, dollarsfor1EuroRate));
+		this.setExtensionFeeUSD(currencyUtil.euroToDollars(extensionFeeEUR, dollarsfor1EuroRate));
+		this.setValidationFeeUSD(currencyUtil.euroToDollars(validationFeeEUR, dollarsfor1EuroRate));
+		this.setExaminationFeeUSD(currencyUtil.euroToDollars(examinationFeeEUR, dollarsfor1EuroRate));
+		this.setFilingFeeUSD(currencyUtil.euroToDollars(filingFeeEUR, dollarsfor1EuroRate));
+		this.setClaimsFee1USD(currencyUtil.euroToDollars(claimsFee1EUR, dollarsfor1EuroRate));
+		this.setClaimsFee2USD(currencyUtil.euroToDollars(claimsFee2EUR, dollarsfor1EuroRate));
+		this.setRenewalFeeUSD(currencyUtil.euroToDollars(renewalFeeEUR, dollarsfor1EuroRate));
+		this.setExcessPageFeeUSD(currencyUtil.euroToDollars(excessPageFeeEUR, dollarsfor1EuroRate));
 
-		this.setSubTotalEUR(dollarsToEuro(subTotalUSD));
+		this.setSubTotalEUR(currencyUtil.dollarsToEuro(subTotalUSD, dollarsfor1EuroRate));
 
 		
 		// Populate costHistoryUI
@@ -104,15 +108,6 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 	
 	// local methods
 	
-	public BigDecimal dollarsToEuro(BigDecimal dollars) {
-		CurrencyUtil currencyUtil = new CurrencyUtil();
-		return currencyUtil.dollarsToEuro(dollars, fxRate);
-	}
-	public BigDecimal euroToDollars(BigDecimal euros) {
-		CurrencyUtil currencyUtil = new CurrencyUtil();
-		return currencyUtil.euroToDollars(euros, fxRate);
-	}
-
 	
 	// Implement the 2 abstract methods from supertype
 	public void setDollarComponentUSD() {

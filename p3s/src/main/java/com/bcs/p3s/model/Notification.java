@@ -57,6 +57,10 @@ public class Notification {
         return q;
     }
     
+    /**
+     * ALL notifications, regardless of type (Renewal or Form1200) regardless of whether On or Off
+     * @return notifications
+     */
     public static List<Notification> findAllNotifications() {
     	return findNotifications().getResultList();
     }

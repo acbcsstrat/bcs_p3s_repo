@@ -320,83 +320,84 @@ public class ExtractSubmittedDataEngine extends Universal {
 	}
 
 
-public List<NotificationMapping> extractNotificationsFromAddPatentForm(Patent patent,Object obby) {
-		
-		List<NotificationMapping> mappings = new ArrayList<NotificationMapping>();
-		
-		
-		try {
-
-		   	LinkedHashMap<String, Object> newPatentHashMap = (LinkedHashMap<String, Object>) obby; 
-		   	Set<String> keys = newPatentHashMap.keySet();
-
-		   	for (String key : keys) {
-			   	String displayable = "";
-			   	Object tmp = newPatentHashMap.get(key);
-			   	if (tmp!=null) { 
-			   		displayable = tmp.toString();
-			   	}
-		   	}
-		   	
-		   	
-		   	// Process fields, one by one
-		   	String value = "nevernever";
-		   	LinkedHashMap<String, Object> notificationObjects = new LinkedHashMap<String, Object>();
-		   	
-		   	
-		   	for (String key : keys) {
-		
-				if ("notificationUIs".equals(key.trim())) {
-				   	Object nob = newPatentHashMap.get(key); 
-		
-				   	ArrayList<Object> nobmap = (ArrayList<Object>) nob;
-				   	
-				   	for (Object nobkeyOb : nobmap) {
-				   		String nobkey = nobkeyOb.toString(); 
-		
-				   		LinkedHashMap<String, Object> jsonNotificationFields = (LinkedHashMap<String, Object>) nobkeyOb;
-					   	
-				   		long nid = (Integer) jsonNotificationFields.get("id");
-		
-					   	Object defaultVal = jsonNotificationFields.get("defaultOn");
-					   	Boolean onSoFar = (Boolean) defaultVal;
-					   	
-					   	Object ison = jsonNotificationFields.get("isOn");
-				   		
-					   	// Here's the devious bit
-					   	// isOn is usually true or false. But If it is 0, this indicates it's been inverted (at least once - assume once)
-					   	if (ison instanceof Integer) {
-					   		onSoFar = ! onSoFar ;
-					   	}
-					   	
-					   	Boolean isOn = (Boolean) ison;
-					   	
-					   	if(!isOn){
-					   		onSoFar = false ;
-					   	}
-					 
-					   	// & now - if selected - add to the ON list
-					   	if (isOn) {
-					   		NotificationMapping eachMapping = new NotificationMapping();
-					   		eachMapping.setNotification_id(nid);
-					   		eachMapping.setPatent_id(patent.getId());
-					   		eachMapping.setUser_id(SecurityUtil.getMyUser().getId());
-					   		mappings.add(eachMapping);
-					   	}
-				   	}
-				   	
-		
-				   	
-				   	
-				}
-		   	}
-		}
-		catch(Exception e){
-			
-		}
-		
-		return mappings;
-	}
+	// This method Obsolete from v2.1 (as AddPatent no longer sets the email switches)
+//	public List<NotificationMapping> OBSextractNotificationsFromAddPatentForm(Patent patent,Object obby) {  // zaph
+//		
+//		List<NotificationMapping> mappings = new ArrayList<NotificationMapping>();
+//		
+//		
+//		try {
+//
+//		   	LinkedHashMap<String, Object> newPatentHashMap = (LinkedHashMap<String, Object>) obby; 
+//		   	Set<String> keys = newPatentHashMap.keySet();
+//
+//		   	for (String key : keys) {
+//			   	String displayable = "";
+//			   	Object tmp = newPatentHashMap.get(key);
+//			   	if (tmp!=null) { 
+//			   		displayable = tmp.toString();
+//			   	}
+//		   	}
+//		   	
+//		   	
+//		   	// Process fields, one by one
+//		   	String value = "nevernever";
+//		   	LinkedHashMap<String, Object> notificationObjects = new LinkedHashMap<String, Object>();
+//		   	
+//		   	
+//		   	for (String key : keys) {
+//		
+//				if ("notificationUIs".equals(key.trim())) {
+//				   	Object nob = newPatentHashMap.get(key); 
+//		
+//				   	ArrayList<Object> nobmap = (ArrayList<Object>) nob;
+//				   	
+//				   	for (Object nobkeyOb : nobmap) {
+//				   		String nobkey = nobkeyOb.toString(); 
+//		
+//				   		LinkedHashMap<String, Object> jsonNotificationFields = (LinkedHashMap<String, Object>) nobkeyOb;
+//					   	
+//				   		long nid = (Integer) jsonNotificationFields.get("id");
+//		
+//					   	Object defaultVal = jsonNotificationFields.get("defaultOn");
+//					   	Boolean onSoFar = (Boolean) defaultVal;
+//					   	
+//					   	Object ison = jsonNotificationFields.get("isOn");
+//				   		
+//					   	// Here's the devious bit
+//					   	// isOn is usually true or false. But If it is 0, this indicates it's been inverted (at least once - assume once)
+//					   	if (ison instanceof Integer) {
+//					   		onSoFar = ! onSoFar ;
+//					   	}
+//					   	
+//					   	Boolean isOn = (Boolean) ison;
+//					   	
+//					   	if(!isOn){
+//					   		onSoFar = false ;
+//					   	}
+//					 
+//					   	// & now - if selected - add to the ON list
+//					   	if (isOn) {
+//					   		NotificationMapping eachMapping = new NotificationMapping();
+//					   		eachMapping.setNotification_id(nid);
+//					   		eachMapping.setPatent_id(patent.getId());
+//					   		eachMapping.setUser_id(SecurityUtil.getMyUser().getId());
+//					   		mappings.add(eachMapping);
+//					   	}
+//				   	}
+//				   	
+//		
+//				   	
+//				   	
+//				}
+//		   	}
+//		}
+//		catch(Exception e){
+//			
+//		}
+//		
+//		return mappings;
+//	}
 	
 
 

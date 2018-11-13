@@ -189,7 +189,7 @@ public class PatentUI extends Patent {
 
 		
 
-		List<NotificationMapping> allOnNotificationMappings = NotificationMapping.findAllOnNotifications(patent_id, user_id);
+		List<NotificationMapping> allOnNotificationMappings = NotificationMapping.findAllOnNotificationMappings(patent_id, user_id);
 		Set<Long> ONs = new HashSet<>();
 		for (NotificationMapping nm : allOnNotificationMappings) {
 			ONs.add(nm.getNotification_id());

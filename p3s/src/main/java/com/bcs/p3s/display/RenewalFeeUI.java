@@ -49,24 +49,28 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
 
 		// Map RenewalFee fields to equivalent fields here. 
 
+		BigDecimal dollarsfor1EuroRate = fee.getFxRate(); // how-many-dollars-to-buy-one-Euro
+
 		this.setRenewalFeeEUR(fee.getRenewalFee_EUR());
 		this.setExtensionFeeEUR(fee.getExtensionFee_EUR());
 		this.setProcessingFeeUSD(fee.getProcessingFee_USD());
 		this.setExpressFeeUSD(fee.getExpressFee_USD());
 		this.setUrgentFeeUSD(fee.getUrgentFee_USD());
 		//this.setLatePayPenaltyUSD(fee.getLatePayPenalty_USD());
-		this.setFxRate(fee.getFxRate());
-		checkRateFeasable(fee.getFxRate());
+		this.setFxRate(CurrencyUtil.invertRate(dollarsfor1EuroRate));		// For FE. WhatEurosDoes1DollarBuy - i.e. = ~0.8
+		checkRateFeasable(dollarsfor1EuroRate);
 		this.setSubTotalUSD(fee.getSubTotal_USD());
 		
 		this.setRenewalFeeUSD((fee.getRenewalFee_EUR().multiply(fee.getFxRate())).setScale(2, BigDecimal.ROUND_HALF_UP));
 		this.setExtensionFeeUSD((fee.getExtensionFee_EUR().multiply(fee.getFxRate())).setScale(2, BigDecimal.ROUND_HALF_UP));
 
-		this.setProcessingFeeEUR(dollarsToEuro(processingFeeUSD));
-		this.setExpressFeeEUR(dollarsToEuro(expressFeeUSD));
-		this.setUrgentFeeEUR(dollarsToEuro(urgentFeeUSD));
-		this.setLatePayPenaltyEUR(dollarsToEuro(latePayPenaltyUSD));
-		this.setSubTotalEUR(dollarsToEuro(subTotalUSD));
+		CurrencyUtil currencyUtil = new CurrencyUtil();
+
+		this.setProcessingFeeEUR(currencyUtil.dollarsToEuro(processingFeeUSD, dollarsfor1EuroRate));
+		this.setExpressFeeEUR(currencyUtil.dollarsToEuro(expressFeeUSD, dollarsfor1EuroRate));
+		this.setUrgentFeeEUR(currencyUtil.dollarsToEuro(urgentFeeUSD, dollarsfor1EuroRate));
+		this.setLatePayPenaltyEUR(currencyUtil.dollarsToEuro(latePayPenaltyUSD, dollarsfor1EuroRate));
+		this.setSubTotalEUR(currencyUtil.dollarsToEuro(subTotalUSD, dollarsfor1EuroRate));
 
 		// Populate costHistoryUI
 		setDollarComponentUSD();
@@ -75,39 +79,6 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
 	}
 
 
-	
-	
-	/*public FeeUI(BigDecimal renewalFeeEUR, BigDecimal extensionFeeEUR, BigDecimal renewalFeeUSD,
-			BigDecimal extensionFeeUSD, BigDecimal processingFeeUSD, BigDecimal expressFeeUSD,
-			BigDecimal urgentFeeUSD, BigDecimal latePayPenaltyUSD, BigDecimal fxRate, BigDecimal subTotalUSD) {
-		super();
-		this.renewalFeeEUR = renewalFeeEUR;
-		this.extensionFeeEUR = extensionFeeEUR;
-		this.renewalFeeUSD = renewalFeeUSD;
-		this.extensionFeeUSD = extensionFeeUSD;
-		this.processingFeeUSD = processingFeeUSD;
-		this.expressFeeUSD = expressFeeUSD;
-		this.urgentFeeUSD = urgentFeeUSD;
-		this.latePayPenaltyUSD = latePayPenaltyUSD;
-		this.fxRate = fxRate;
-		this.subTotalUSD = subTotalUSD;
-		
-		this.setProcessingFeeEUR(dollarsToEuro(processingFeeUSD));
-		this.setExpressFeeEUR(dollarsToEuro(expressFeeUSD));
-		this.setUrgentFeeEUR(dollarsToEuro(urgentFeeUSD));
-		this.setLatePayPenaltyEUR(dollarsToEuro(latePayPenaltyUSD));
-		this.setSubTotalEUR(dollarsToEuro(subTotalUSD));
-	}*/
-
-	
-
-
-	
-	
-	public BigDecimal dollarsToEuro(BigDecimal dollars) {
-		CurrencyUtil currencyUtil = new CurrencyUtil();
-		return currencyUtil.dollarsToEuro(dollars, fxRate);
-	}
 
 	// Implement the 2 abstract methods from supertype
 	public void setDollarComponentUSD() {

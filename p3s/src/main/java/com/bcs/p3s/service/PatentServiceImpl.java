@@ -14,6 +14,7 @@ import java.util.TreeMap;
 
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.orm.jpa.JpaSystemException;
@@ -301,7 +302,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			/**
 			 * SEPARATELY DELETE ALL THE MAPPINGS FOR THAT PATENT
 			 */
-			NotificationMapping.deleteMappingsForPatent(patent.getId());
+			NotificationMapping.deleteAllMappingsForPatent(patent.getId());
 
 			/**
 			 * FINALLY ITS SAFE TO DELETE THE PATENT
@@ -392,7 +393,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	// FE provides (LinkedHashMap etc..)
 	public void srvUpdateTypedNotifications(long patentId, Object objListNotificationUIs, String productType) {
 
-		String err = PREFIX + "srvUpdateTypedNotifications(" + patentId + ") ";
+		String err = PREFIX + "srvUpdateTypedNotifications(" + patentId + ",obj,"+productType+") ";
 		log().debug(err + " invoked ");
 
 		checkThisIsMyPatent(patentId, err);
@@ -437,22 +438,29 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			// Remember: NotificationMapping only exist for ON notifications
 
 			P3SUser me = SecurityUtil.getMyUser();
-			List<NotificationMapping> existingMappings = NotificationMapping.findAllOnNotifications(patentId,
-					me.getId());
+
+			// Can now perform a further check on the data submitted. Data consistency.
+			checkNotificationsAreValidSet(newNotificationUIs, productType, err);
+			
+			
+			
+			List<NotificationMapping> existingMappings = NotificationMapping.findAllOnNotificationMappings(patentId, me.getId());
 			// & already got: List<NotificationUI> newNotificationUIs
 
-			List<Long> existingNotificationIds = new ArrayList<Long>();
+			List<Long> existingNotificationIdsForProductType = new ArrayList<Long>();
 			for (NotificationMapping mapping : existingMappings) {
-				existingNotificationIds.add(mapping.getNotification_id());
+				Notification notification = Notification.findNotification(mapping.getNotification_id()); 
+				if (notification.getProductType().equals(productType))
+					existingNotificationIdsForProductType.add(mapping.getNotification_id());
 			}
 
 			List<NotificationMapping> notificationMappingsToCreate = new ArrayList<NotificationMapping>();
 			for (NotificationUI nui : newNotificationUIs) {
 				Long thisLong = nui.getId();
 				NotificationMapping nnm = new NotificationMapping(patentId, me.getId(), thisLong);
-				if (existingNotificationIds.contains(thisLong)) {
+				if (existingNotificationIdsForProductType.contains(thisLong)) {
 					// already got it, so remove from delete list
-					existingMappings.remove(thisLong);
+					existingNotificationIdsForProductType.remove(thisLong);
 				} else {
 					// Is new, so add to create list
 					notificationMappingsToCreate.add(nnm);
@@ -460,7 +468,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			}
 
 			// Now make the db changes
-			NotificationMapping.deleteMappings(existingMappings);
+			//NotificationMapping.deleteNotificationMappings(existingNotificationIdsForProductType);
+			NotificationMapping.deleteNotificationMappingsByNotification(existingNotificationIdsForProductType, patentId, me.getId());
 			NotificationMapping.addMappings(notificationMappingsToCreate);
 		}
 	}
@@ -568,9 +577,12 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				+ objects.getClass().getName());
 		List<Object> objectList = (List<Object>) objects;
 		log().debug(CLASSNAME + "extractNotificationUIs as List<Object>.  Size = " + objectList.size());
+		if (objectList.size()>0) {
 		log().debug(CLASSNAME + "extractNotificationUIs.  object type [objectList.get(0).getClass().getName()] = "
 				+ objectList.get(0).getClass().getName());
+		}
 		log().debug(CLASSNAME + "extractNotificationUIs RELIES on that type being NotificationUI");
+
 		NotificationUI aNotificationUI = null;
 		for (Object anObject : objectList) {
 			aNotificationUI = (NotificationUI) anObject;

@@ -197,9 +197,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		patentV2UI.setRenewalNotificationUIs(patentV2UI.getRenewalNotificationUIs());
 		
 		// form1200NotificationUIs
-		List<NotificationUI> form1200NotificationUIs = new ArrayList<NotificationUI>(); 
-		// Thanksgiving approach - implement later
-		patentV2UI.setEpctNotificationUIs(form1200NotificationUIs);
+		patentV2UI.setEpctNotificationUIs(patentV2UI.getEpctNotificationUIs());
 
 	}
 
@@ -259,7 +257,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		
 		CountryStatesUtil countryStatesUtil = new CountryStatesUtil();
 		PageDescriptionTool pageDescriptionTool = new PageDescriptionTool();
-		// Cannot do this !
+		// Cannot do this ! (Hence below workaround)
 		// The method listAbstractStates2commaSeparatedString(List<AbstractState>) in the type CountryStatesUtil is not applicable for the arguments (List<ExtensionStateUI>)
 		//epct.setExtensionStates(countryStatesUtil.listAbstractStates2commaSeparatedString(extensionStatesUI));
 

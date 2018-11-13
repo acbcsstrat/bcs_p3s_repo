@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
 import com.bcs.p3s.display.form1200.PageDescriptionEnum;
@@ -124,6 +125,12 @@ public class ServiceAuthorisationTools extends Universal {
 	protected P3SUser getMyUser() {
 		return checkThisIsMy().getUser();
 	}
+
+	// Check Notifications are all of the same type and have credible Notification.Id 
+	protected void checkNotificationsAreValidSet(List<NotificationUI> newNotificationUIs, String productType, String err) {
+		checkSubNotificationsAreValidSet(newNotificationUIs, productType, err);
+	}
+	
 	
 	// End of   : Higher Level tools
 	
@@ -317,7 +324,22 @@ public class ServiceAuthorisationTools extends Universal {
 			
 		}
 	}
+
 	
+	protected void checkSubNotificationsAreValidSet(List<NotificationUI> newNotificationUIs, String productType, String err) {
+		err += "checkSubNotificationsAreValidSet : ";
+		String failMsg = null;
+		if (newNotificationUIs==null || productType==null) failMsg = " : Passed 1+ null param";
+		else {
+			for (NotificationUI aNotificationUI : newNotificationUIs) {
+				Long aNotificationId = aNotificationUI.getId();
+				if (aNotificationId==null || (long) aNotificationId == 0) failMsg = "aNotificationId is not valid.";
+				if ( ! productType.equals(aNotificationUI.getProductType())) 
+						failMsg = "1+ aNotificationId of wrong type. Expected "+productType+", got "+aNotificationUI.getProductType();
+			}
+		}
+		if (failMsg!=null) failMalicious(err+" : newNotificationUIs are NOT a consistent set");
+	}
 	
 	// End of   : Lower Level tools
 	
