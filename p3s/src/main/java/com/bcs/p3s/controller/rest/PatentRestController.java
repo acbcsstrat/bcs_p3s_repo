@@ -475,11 +475,14 @@ public class PatentRestController extends Universal {
     @RequestMapping(value = "/rest-form1200-cost-analysis/{id}", method = RequestMethod.GET)    
     public ResponseEntity<CostAnalysisDataForm1200> getForm1200CostAnalysisData(@PathVariable("id") long id) {
     	
-    	log().debug("PatentRestController : /rest-form1200-cost-analysis/("+id+") invoked (for Form1200)");
-    	//check whether id is null
     	CostAnalysisDataForm1200 costAnalysisDataForm1200 = null;
-    	// patentService.getCostAnalysisData(id);  zaphod
-
+    	log().debug("PatentRestController : /rest-form1200-cost-analysis/("+id+") invoked (for Form1200)");
+		try {
+	    	costAnalysisDataForm1200 = patentService.getCostAnalysisDataForm1200(id, session);
+		} catch (Exception e) {
+			logErrorAndContinue("PatentRestController : /rest-form1200-cost-analysis/"+id+" getForm1200CostAnalysisData() failed",e);
+	  		return new ResponseEntity<CostAnalysisDataForm1200>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     	return new ResponseEntity<CostAnalysisDataForm1200>(costAnalysisDataForm1200, HttpStatus.OK);
     }
 		    

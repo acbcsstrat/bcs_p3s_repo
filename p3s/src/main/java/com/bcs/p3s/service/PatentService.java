@@ -11,6 +11,7 @@ import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalUI;
+import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -101,8 +102,9 @@ public interface PatentService {
 	 */
 	public List<FxRateUI> getFxRateHistory(String timeperiod); 
 
-
-	public CostAnalysisData getCostAnalysisData(long id);
+	public CostAnalysisData getCostAnalysisData(long id);  // For a Renewal
+	
+	public CostAnalysisDataForm1200 getCostAnalysisDataForm1200(long id, HttpSession session);  // For an E-PCT
 	
 	public List<RenewalUI> getRenewalHistory(long id);
 	

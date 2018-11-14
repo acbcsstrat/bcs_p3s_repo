@@ -46,7 +46,8 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 	protected BigDecimal subTotalEUR;
 	protected BigDecimal fxRate;
     protected BigDecimal subTotalUSD;
-	protected CostHistoryUI costHistoryUI;
+
+    protected CostHistoryUI costHistoryUI;
 	
 
 	
@@ -72,7 +73,7 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 		this.setProcessingFeeUSD(fee.getProcessingFee_USD());
 		this.setExpressFeeUSD(fee.getExpressFee_USD());
 		this.setUrgentFeeUSD(fee.getUrgentFee_USD());
-		this.setSubTotalUSD(fee.getSubTotal_USD());
+		this.setSubTotalUSD(fee.getSubTotal_USD().setScale(2,  BigDecimal.ROUND_HALF_UP));
 		this.setFxRate(CurrencyUtil.invertRate(dollarsfor1EuroRate));  // For FE. WhatEurosDoes1DollarBuy - i.e. = ~0.8
 		checkRateFeasable(dollarsfor1EuroRate);
 				

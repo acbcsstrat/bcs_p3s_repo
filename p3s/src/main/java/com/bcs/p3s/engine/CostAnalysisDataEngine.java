@@ -1,6 +1,7 @@
 package com.bcs.p3s.engine;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,6 +13,7 @@ import java.util.TreeMap;
 import javax.persistence.TypedQuery;
 
 import com.bcs.p3s.display.CostAnalysisData;
+import com.bcs.p3s.display.Form1200FeeUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
@@ -223,7 +225,7 @@ public class CostAnalysisDataEngine extends Universal{
 		BigDecimal blueCost = new BigDecimal(0);
 		BigDecimal blackCost = new BigDecimal(0);
 		
-		//below needs to be changed once MC starts sending daily rate files
+		//below line needs be commented once MC starts sending daily rate files
 		//BigDecimal fxRate = new BigDecimal(0.88);
 		
 		greenCost = epoRenewalFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD());
@@ -427,13 +429,29 @@ public class CostAnalysisDataEngine extends Universal{
 	 */
 	public TreeMap<Date,RenewalFeeUI> getLineChartData(CostAnalysisData caData, P3SFeeSole p3sFee, EpoRenewalFee epoRenewalFee){
 		
-		
 		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
 		TreeMap<Date, RenewalFeeUI> lineChart = new TreeMap<Date, RenewalFeeUI>();
 		
 		archivedRateList = getArchivedDataFor6Weeks();
 		lineChart = getAllRenewalFeeUI(archivedRateList,caData,p3sFee, epoRenewalFee);
 		
+		return lineChart;
+	}
+
+	
+	//public TreeMap<Date,RenewalFeeUI> get6weekLineChartDataForForm1200(CostAnalysisData caData, P3SFeeSole p3sFee, EpoRenewalFee epoRenewalFee){ zaph
+	public TreeMap<Date,BigDecimal> get7weekLineChartDataForForm1200(BigDecimal costNow) {
+
+		// Simplification: Ignore the USD component, as will always be small compared to total. 
+		// Hence cost history graph will exactly mimic the fxRate graph 
+		
+		List<ArchivedRate> weeklyRateHistory = null; // new ArrayList<ArchivedRate>();
+		TreeMap<Date, BigDecimal> lineChart = new TreeMap<Date, BigDecimal>();
+		
+		weeklyRateHistory = getArchivedDataFor6Weeks();
+		lineChart = get7weekForm1200CostComparison(weeklyRateHistory, costNow);
+		
+// zaph - maybe ok here		
 		return lineChart;
 	}
 	
@@ -467,7 +485,7 @@ public class CostAnalysisDataEngine extends Universal{
 	 * 		Date being the last 6 weeks
 	 * 		BigDecimal for corresponding fxRates
 	 */
-	public List<ArchivedRate> getArchivedDataFor6Weeks(){
+	public List<ArchivedRate> getArchivedDataFor6Weeks() {
 		
 		List<ArchivedRate> weeksRates = new ArrayList<ArchivedRate>();
 		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
@@ -516,6 +534,65 @@ public class CostAnalysisDataEngine extends Universal{
 			feeUI.setFeeActiveDate(utils.dateToUSStringWithTimeandZone(becameActiveDate));
 		    //lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(becameActiveDate), feeUI);
 			lineChart.put(becameActiveDate,feeUI);
+		}
+		
+		return lineChart;
+	}
+	
+	/**
+	 * As per getAllRenewalFeeUI() for Renewal
+	 * Calculate, given cost now, what the cost would have been for each of previous 6 weeks
+	 * @param rateHistory
+	 * @param costNow
+	 * @return
+	 */
+	public TreeMap<Date, BigDecimal> get7weekForm1200CostComparison(List<ArchivedRate> weeklyRateHistory , BigDecimal costNow) {
+		
+		TreeMap<Date, BigDecimal> lineChart = new TreeMap<Date, BigDecimal>();
+		if (weeklyRateHistory==null || costNow==null) {
+			fail("Oh Dear! - CostAnalysisDataEngine get7weekForm1200CostComparison passed a null ");
+			return lineChart;
+		}
+		
+		
+		//first entry as todays rate
+		Date today = new Date();
+		lineChart.put(today, costNow);
+		
+		
+		
+		
+		
+		
+//		Calendar calendar = Calendar.getInstance();
+//		
+		GlobalVariableSole current = GlobalVariableSole.findOnlyGlobalVariableSole();
+		BigDecimal fxRateToday = current.getCurrent_P3S_rate();
+//		RenewalFee todaysFee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoRenewalFee, fxRate);
+//		RenewalFeeUI feeUI = new RenewalFeeUI(todaysFee);
+//		feeUI.setFeeActiveDate(utils.dateToUSStringWithTimeandZone(calendar.getTime()));
+//		lineChart.put(calendar.getTime(),feeUI);
+		
+//		final long ONEDAY = 24 * 3600 * 1000;
+		for (ArchivedRate eachData : weeklyRateHistory) {
+
+			Date oldDate = eachData.getArchivedDate();
+			BigDecimal rateThen = eachData.getFxRate_P3s();
+			BigDecimal oldCost = costNow.multiply(rateThen).divide(fxRateToday, 2, RoundingMode.HALF_UP);
+					
+			
+//			RenewalFee renewalFee = new RenewalFee(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0),
+//					new BigDecimal(0.0),new BigDecimal(0.0));
+//		    BigDecimal fxValue = eachData.getFxRate_P3s();
+//		    renewalFee = getCurrentPhaseCost(caData.getCurrentcostBand(), p3sFee, epoRenewalFee, fxValue);
+//		    //NOW POPULATE FEEUI 
+//		    feeUI = new RenewalFeeUI(renewalFee);
+//			// To convert archived date to active date, substract one day (isGoodEnuf)
+//			Date becameActiveDate = new Date( eachData.getArchivedDate().getTime() - ONEDAY );
+//			// formerly: lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(eachData.getActiveFromDate()), feeUI);
+//			feeUI.setFeeActiveDate(utils.dateToUSStringWithTimeandZone(becameActiveDate));
+//		    //lineChart.put(utils.dateToUSStringWithDayOfWeekandTimeandZone(becameActiveDate), feeUI);
+			lineChart.put(oldDate, oldCost);  // zaph acTidy
 		}
 		
 		return lineChart;

@@ -94,6 +94,17 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     			|| value.equals(EPCT_SAVED));
     }
 
+    public boolean canCalcCostAnalysisData() {
+    	return (value.equals(TOO_EARLY)
+    	     || value.equals(EPCT_AVAILABLE)
+    	     || value.equals(EPCT_REJECTED)
+    	     || value.equals(AWAIT_PDF_TRIGGER)
+    	     || value.equals(EPCT_BEING_GENERATED)
+    	     || value.equals(EPCT_SAVED)
+    	     || value.equals(PAYMENT_IN_PROGRESS)
+    	     || value.equals(PAYMENT_FAILED));
+    }
+
     public static boolean isDeletable(String code) {
     	// Consider: A persisted Epct (et al) can never be created for some status values
     	return (EPCT_REJECTED.equalsIgnoreCase(code)

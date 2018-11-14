@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.CostAnalysisData;
 import com.bcs.p3s.display.Form1200FeeUI;
-import com.bcs.p3s.display.NotificationUI;
 import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.PortfolioUI;
+import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
 import com.bcs.p3s.display.form1200.Form1200SavedData;
 import com.bcs.p3s.display.form1200.PageDescriptionEnum;
@@ -129,7 +129,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	 * This also calculates Renewal stuff - which SHOULDN'T be in this Form1200 class. acTodo
 	 */
 	@Override
-	public void populatePatentInfo(PatentV2UI patentV2UI, HttpSession session) {
+	public EpctEngine populatePatentInfo(PatentV2UI patentV2UI, HttpSession session) {
 		String handle = CLASSNAME+" : populatePatentInfo() ";
 		log().debug(handle+"invoked for patent "+patentV2UI.getId());
 		
@@ -199,9 +199,37 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		// form1200NotificationUIs
 		patentV2UI.setEpctNotificationUIs(patentV2UI.getEpctNotificationUIs());
 
+		return epctEngine;
 	}
 
+	/**
+	 * as per (), but sets additional fields used for CostAnalysis
+	 */
+	@Override
+	public CostAnalysisDataForm1200 populatePatentInfoPlusCostAnalysis(CostAnalysisDataForm1200 caData, PatentV2UI patentV2UI, HttpSession session) {
+		String handle = CLASSNAME+" : populatePatentInfoPlusCostAnalysis() ";
+		log().debug(handle+"invoked for patent "+patentV2UI.getId());
+	
+		EpctEngine epctEngine = populatePatentInfo(patentV2UI, session);
 
+		caData.setGreenStartDate( epctEngine.getGreenStartDate() );
+		caData.setAmberStartDate( epctEngine.getAmberStartDate() );
+		caData.setRedStartDate( epctEngine.getRedStartDate() );
+		caData.setRedEndDate( epctEngine.getRedEndDate() );
+		
+		DateUtil dateUtil = new DateUtil();
+		caData.setGreenStartDateUI( dateUtil.dateToUSStringWithoutDayOfWeek(caData.getGreenStartDate()) );
+		caData.setAmberStartDateUI( dateUtil.dateToUSStringWithoutDayOfWeek(caData.getAmberStartDate()) );
+		caData.setRedStartDateUI( dateUtil.dateToUSStringWithoutDayOfWeek(caData.getRedStartDate()) );
+		caData.setRedEndDateUI( dateUtil.dateToUSStringWithoutDayOfWeek(caData.getRedEndDate()) );
+
+		Epct epct = new Epct();
+		epctEngine.calcEpctPersistPricingWithCostAnalysis(caData, epct, null);
+		
+		return caData;
+	}
+
+	
 		
 	/**
 	 * A much simpler variant of populatePatentInfo

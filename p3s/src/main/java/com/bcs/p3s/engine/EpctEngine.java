@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.bcs.p3s.display.P3SService;
+import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
@@ -50,7 +51,7 @@ public class EpctEngine extends Universal {
 	LocalDate ldEffectivePriority;
 	LocalDate ld18monthsAfter;
 	LocalDate ld31monthsAfter;
-	String epctStatus;
+	String epctStatus; // see Form1200StatusEnum
 	boolean isRenewalFeeMandated = false;
 	boolean isRenewalFeeOptional = false;
 //	boolean isPricingAndDatesNeeded = false;
@@ -69,7 +70,9 @@ public class EpctEngine extends Universal {
 	boolean isRenewalFeeChosen = false;
 	BigDecimal nextColourTotal_USD;
 	BigDecimal fxRate;
+	BigDecimal totFeePreUplift_USD;
 	
+	boolean calcPersistOnlyHasRun = false;
 
 	// Start of public methods
 
@@ -120,9 +123,57 @@ public class EpctEngine extends Universal {
 		if (isNotAvailable) return null; 
 		calcDatesAndColour(); // will have calc currentColour & nextColour
 		Form1200Fee newFee = calcEpctEntityOnlyPricing(unpersistedEpct, optionalFxRate);
+		calcPersistOnlyHasRun = true;
 		return newFee;
 	 }
 
+	 /**
+	  * A superset of calcEpctPersistPricingOnly() which also calculates some CostAnalysis data - zaph
+	  * calcEpctPersistPricingOnly() need not have been run first
+	  * @param unpersistedEpct
+	  * @param optionalFxRate
+	  * @return
+	  */
+//	 public Form1200Fee calcEpctPersistPricingWithCostAnalysis(Epct unpersistedEpct, BigDecimal optionalFxRate) {
+//		 boolean bypassNotavailable = false;
+//		 if (isNotAvailable) { // temporarily override the not-available-for-sale control, to calculate CostAnalysis stuff
+//			 bypassNotavailable = true;
+//			 isNotAvailable = false;
+//		 }
+//		 if ( ! calcPersistOnlyHasRun) calcEpctPersistPricingOnly(unpersistedEpct, optionalFxRate);
+//		 
+//------
+//
+//		if (bypassNotavailable) { isNotAvailable = true; bypassNotavailable = false; } // Restore status after temporary override
+//		
+//		return newFee;
+//	 }
+	 public void calcEpctPersistPricingWithCostAnalysis(CostAnalysisDataForm1200 caData, Epct unpersistedEpct, BigDecimal optionalFxRate) {
+		 
+		 if (! isNotAvailable) {
+			 Form1200StatusEnum form1200StatusEnum = new Form1200StatusEnum(epctStatus);
+			 if (form1200StatusEnum.canCalcCostAnalysisData()) {
+				 if ( ! calcPersistOnlyHasRun) {
+						calcDatesAndColour(); // will have calc currentColour & nextColour
+						Form1200Fee newFee = calcEpctEntityOnlyPricing(unpersistedEpct, optionalFxRate);
+				 }
+				 
+				 PricingEngine pricingEngine = new PricingEngine();
+				 P3SFeeSole p3sEffectiveFees = pricingEngine.getEffectiveP3sFees(patent.getBusiness());
+				 
+				 BigDecimal greenCostUsd = totFeePreUplift_USD; 
+				 BigDecimal amberCostUsd = totFeePreUplift_USD.add( totFeePreUplift_USD.multiply(p3sEffectiveFees.getExpressFee_Percent()).divide(new BigDecimal(100.0)) );
+				 BigDecimal redCostUsd = totFeePreUplift_USD.add( totFeePreUplift_USD.multiply(p3sEffectiveFees.getUrgentFee_Percent()).divide(new BigDecimal(100.0)) );
+
+				 caData.setGreenCost(greenCostUsd.setScale(2, BigDecimal.ROUND_HALF_UP));
+				 caData.setAmberCost(amberCostUsd.setScale(2, BigDecimal.ROUND_HALF_UP));
+				 caData.setRedCost(redCostUsd.setScale(2, BigDecimal.ROUND_HALF_UP));
+				
+				 caData.setCurrentcostBand(currentColour);
+
+			 }
+		 }
+	 }
 	 
 
 	 /**
@@ -159,6 +210,19 @@ public class EpctEngine extends Universal {
     	return service;
 	}
 
+	// Is it possible to assemble eher the data that CostAnalysisDataForm1200 needs?
+//	ie
+//	caData.setGreenCost( null );
+//	caData.setAmberCost( null );
+//	caData.setRedCost( null );
+//
+//	caData.setCurrentcostBand( null ); // see RenewalColourEnum
+
+	public void zaphodExperiment() {
+		
+	}
+	
+	
 	
 	
 	// End of public methods (apart from getters)
@@ -486,7 +550,9 @@ public class EpctEngine extends Universal {
 		
 		
 		// Calc USD total for current colour
-		BigDecimal totalUSD = totUsd.add(fee.getProcessingFee_USD()).add(fee.getExpressFee_USD()).add(fee.getUrgentFee_USD()); 
+
+		totFeePreUplift_USD = totUsd.add(fee.getProcessingFee_USD());
+		BigDecimal totalUSD = totFeePreUplift_USD.add(fee.getExpressFee_USD()).add(fee.getUrgentFee_USD()); 
 		fee.setSubTotal_USD(totalUSD);
 		fee.setFxRate(fxRate);
 	}
@@ -586,4 +652,25 @@ public class EpctEngine extends Universal {
 	public Date getCostStartDate() {
 		return costBandStartDate;
 	}
+
+
+
+
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx zaph
+	public Date getGreenStartDate() {
+		return greenStartDate;
+	}
+	public Date getAmberStartDate() {
+		return amberStartDate;
+	}
+
+	public Date getRedEndDate() {
+		return redEndDate;
+	}
+
+
+
+
+
 }

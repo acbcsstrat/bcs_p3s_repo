@@ -19,6 +19,7 @@ public class CurrencyUtil {
 	public BigDecimal euroToDollars(BigDecimal euros, BigDecimal fxRate) {
 		if (euros==null || fxRate==null || (fxRate.compareTo(BigDecimal.ZERO) <= 0)) return null;
 		BigDecimal dollars = euros.multiply(fxRate);
+		dollars = dollars.setScale(2, BigDecimal.ROUND_HALF_UP);
 		return dollars;
 	}
 	

@@ -1,6 +1,6 @@
 package com.bcs.p3s.enump3s;
 
-// v2.1: Could perhaps be renamed to ColourEnum, as colours also used for other products 
+// v2.1: Could perhaps be renamed to ColourEnum, as colours also used for other products - acToDo
 public class RenewalColourEnum extends P3SAbstractEnum {
 
     public static final String GREEN = "Green";

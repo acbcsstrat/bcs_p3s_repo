@@ -14,22 +14,25 @@ import java.util.TreeMap;
 
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.CostAnalysisData;
+import com.bcs.p3s.display.Form1200FeeUI;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
+import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.display.RenewalUI;
+import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.engine.CostAnalysisDataEngine;
+import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.PatentStatusEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
@@ -555,90 +558,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 
 	}
 
-	// End of - the methods which implement the prototypes in the Interface
-
 	
-	
-	
-	// Start of - Support methods - NOT exposed through the interface
-
-	/**
-	 * Data sent from FE via Json will usually appear as a LinkedHashMap This
-	 * attempts to extract List<NotificationUI> from an element of such
-	 * 
-	 * @param objects
-	 * @return
-	 */
-	protected List<NotificationUI> extractNotificationUIs(Object objects) {
-
-		List<NotificationUI> result = new ArrayList<NotificationUI>();
-		log().debug(CLASSNAME + "extractNotificationUIs invoked  (objects==null)=" + (objects == null));
-		log().debug(CLASSNAME + "extractNotificationUIs Hope param is List<Object> - it is : "
-				+ objects.getClass().getName());
-		List<Object> objectList = (List<Object>) objects;
-		log().debug(CLASSNAME + "extractNotificationUIs as List<Object>.  Size = " + objectList.size());
-		if (objectList.size()>0) {
-		log().debug(CLASSNAME + "extractNotificationUIs.  object type [objectList.get(0).getClass().getName()] = "
-				+ objectList.get(0).getClass().getName());
-		}
-		log().debug(CLASSNAME + "extractNotificationUIs RELIES on that type being NotificationUI");
-
-		NotificationUI aNotificationUI = null;
-		for (Object anObject : objectList) {
-			aNotificationUI = (NotificationUI) anObject;
-			result.add(aNotificationUI);
-		}
-		return result;
-	}
-
-	protected List<Patent> listAllPatentsForMyBusiness() {
-
-		String err = PREFIX + "listAllPatentsForMyBusiness() ";
-		checkNoActionRequired(err);
-
-		log().debug(err + " invoked ");
-
-		/** MP170620 Code changes for implementing session starts **/
-		List<Patent> patents = null;
-		if (session != null) {
-			PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
-
-			TypedQuery<Patent> tq_patents = Patent.findPatentsByBusiness(pLoginSession.getBusiness());
-			patents = tq_patents.getResultList();
-
-			System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() ret Qty " + patents.size());
-
-		} else
-			logInternalError().fatal("PatentServiceImpl : listAllPatentsForMyBusiness() has empty session");
-
-		/** MP170620 Code changes for implementing session ends **/
-
-		return patents;
-	}
-
-	protected int period2days(String timeperiod) {
-		int numdays = -1;
-		// week means 8 days and month means 35 days inorder to support FE's logic of
-		// fetching data - MP changed on 23/01/2018
-		// if ("week".equalsIgnoreCase(timeperiod)) return 7;
-		if ("week".equalsIgnoreCase(timeperiod))
-			return 8;
-		if ("fortnight".equalsIgnoreCase(timeperiod))
-			return 14;
-		// if ("month".equalsIgnoreCase(timeperiod)) return 30;
-		if ("month".equalsIgnoreCase(timeperiod))
-			return 35;
-		if ("quarter".equalsIgnoreCase(timeperiod))
-			return 91;
-		if ("halfyear".equalsIgnoreCase(timeperiod))
-			return 182;
-		if ("year".equalsIgnoreCase(timeperiod))
-			return 365;
-		return numdays;
-	}
-
-	// End of - Support methods - NOT exposed through the interface
-
 	@Override
 	public CostAnalysisData getCostAnalysisData(long id) {
 
@@ -859,6 +779,57 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		return caData;
 	}
 
+
+	
+	@Override
+	public CostAnalysisDataForm1200 getCostAnalysisDataForm1200(long id, HttpSession session) {
+
+		// Non optimal, quickest development, as pressure + whole structures-requirement have big review soon(hope). Nov2018
+		
+		String msg = PREFIX + "CostAnalysisDataForm1200(" + id + ") ";
+		log().debug(msg + " invoked for patent id " + id);
+
+		CostAnalysisDataForm1200 caData = new CostAnalysisDataForm1200();
+
+		// Start by copying what getPatentInfo does - & see what that gives us
+		PatentV2UI patentV2UI = null;
+		Patent patent = Patent.findPatent(id);
+		PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		patentV2UI = new PatentV2UI(patent, postSession.getExtendedPatentUI());
+
+		Form1200ServiceImpl form1200ServiceImpl = new Form1200ServiceImpl(session);
+		caData = form1200ServiceImpl.populatePatentInfoPlusCostAnalysis(caData, patentV2UI, session);
+
+		caData.setForm1200FeeUI(patentV2UI.getForm1200FeeUI());
+		
+		// GOT TO HERE		
+				
+
+		// zaphod - got to here
+		
+		
+		// populate the CostAnalysisDataForm1200
+		
+		// P3SService service = epctEngine.prepareForm1200Service();  // May not be necessary. cautious
+		
+		CostAnalysisDataEngine costEngine = new CostAnalysisDataEngine();
+		
+
+		//lineChart = costEngine.get6weekLineChartDataForForm1200(caData, combinedFee.getP3sFee(), combinedFee.getEpoRenewalFee());
+
+		Form1200FeeUI form1200FeeUI = patentV2UI.getForm1200FeeUI();
+		BigDecimal feeNow = form1200FeeUI.getSubTotalUSD();
+		if (feeNow==null) feeNow = BigDecimal.ZERO; // hopefully never needed
+		
+		TreeMap<Date,BigDecimal> form12006weekChartData = costEngine.get7weekLineChartDataForForm1200(feeNow);
+		caData.setLineChart( form12006weekChartData );
+
+		return caData;
+	}
+	
+	
+	
+
 	@Override
 	public List<RenewalUI> getRenewalHistory(long id) {
 		// TODO Auto-generated method stub
@@ -934,6 +905,93 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		return patentUI;
 	}
 
+	
+	// End of - the methods which implement the prototypes in the Interface
+
+	
+	
+	
+	// Start of - Support methods - NOT exposed through the interface
+
+	/**
+	 * Data sent from FE via Json will usually appear as a LinkedHashMap This
+	 * attempts to extract List<NotificationUI> from an element of such
+	 * 
+	 * @param objects
+	 * @return
+	 */
+	protected List<NotificationUI> extractNotificationUIs(Object objects) {
+
+		List<NotificationUI> result = new ArrayList<NotificationUI>();
+		log().debug(CLASSNAME + "extractNotificationUIs invoked  (objects==null)=" + (objects == null));
+		log().debug(CLASSNAME + "extractNotificationUIs Hope param is List<Object> - it is : "
+				+ objects.getClass().getName());
+		List<Object> objectList = (List<Object>) objects;
+		log().debug(CLASSNAME + "extractNotificationUIs as List<Object>.  Size = " + objectList.size());
+		if (objectList.size()>0) {
+		log().debug(CLASSNAME + "extractNotificationUIs.  object type [objectList.get(0).getClass().getName()] = "
+				+ objectList.get(0).getClass().getName());
+		}
+		log().debug(CLASSNAME + "extractNotificationUIs RELIES on that type being NotificationUI");
+
+		NotificationUI aNotificationUI = null;
+		for (Object anObject : objectList) {
+			aNotificationUI = (NotificationUI) anObject;
+			result.add(aNotificationUI);
+		}
+		return result;
+	}
+
+	protected List<Patent> listAllPatentsForMyBusiness() {
+
+		String err = PREFIX + "listAllPatentsForMyBusiness() ";
+		checkNoActionRequired(err);
+
+		log().debug(err + " invoked ");
+
+		/** MP170620 Code changes for implementing session starts **/
+		List<Patent> patents = null;
+		if (session != null) {
+			PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+
+			TypedQuery<Patent> tq_patents = Patent.findPatentsByBusiness(pLoginSession.getBusiness());
+			patents = tq_patents.getResultList();
+
+			System.out.println("PatentServiceImpl : listAllPatentsForMyBusiness() ret Qty " + patents.size());
+
+		} else
+			logInternalError().fatal("PatentServiceImpl : listAllPatentsForMyBusiness() has empty session");
+
+		/** MP170620 Code changes for implementing session ends **/
+
+		return patents;
+	}
+
+	protected int period2days(String timeperiod) {
+		int numdays = -1;
+		// week means 8 days and month means 35 days inorder to support FE's logic of
+		// fetching data - MP changed on 23/01/2018
+		// if ("week".equalsIgnoreCase(timeperiod)) return 7;
+		if ("week".equalsIgnoreCase(timeperiod))
+			return 8;
+		if ("fortnight".equalsIgnoreCase(timeperiod))
+			return 14;
+		// if ("month".equalsIgnoreCase(timeperiod)) return 30;
+		if ("month".equalsIgnoreCase(timeperiod))
+			return 35;
+		if ("quarter".equalsIgnoreCase(timeperiod))
+			return 91;
+		if ("halfyear".equalsIgnoreCase(timeperiod))
+			return 182;
+		if ("year".equalsIgnoreCase(timeperiod))
+			return 365;
+		return numdays;
+	}
+
+	// End of - Support methods - NOT exposed through the interface
+
+
+	
 	@Override
 	public List<PatentUI> persistAndCalculateFee(Patent patent) {
 
