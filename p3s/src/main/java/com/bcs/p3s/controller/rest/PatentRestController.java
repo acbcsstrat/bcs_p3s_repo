@@ -2,10 +2,10 @@ package com.bcs.p3s.controller.rest;
  
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
@@ -30,7 +30,6 @@ import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
-import com.bcs.p3s.display.form1200.Form1200SavedData;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -41,6 +40,7 @@ import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.service.Form1200ServiceImpl;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.currency.CurrencyUtil;
 import com.bcs.p3s.util.lang.Universal;
 
 
@@ -60,7 +60,9 @@ public class PatentRestController extends Universal {
     //------------------- Retrieve All Patents (For this Business) --------------------------------------------------
      
     // Implements API section 2.1 - Get all patents for this business
-    @RequestMapping(value = "/rest-patents/", method = RequestMethod.GET)
+    
+    // v2.1 - this now DANGEROUS - are reputably not needed, so Rate likely not inverted - so renames OBS to disable
+    @RequestMapping(value = "/rest-patents-OBS/", method = RequestMethod.GET)
     public ResponseEntity<List<PatentUI>> listAllPatentUIsForBusiness() {
 		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() invoked. ");
 		List<PatentUI> patentUIs = null;
@@ -444,18 +446,31 @@ public class PatentRestController extends Universal {
 
     	FxRateCurrentUI fxRateCurrentUI = patentService.getCurrentFxRate();
     	
+    	// v2.1 - these rates now need inverting
+    	fxRateCurrentUI.getCurrentFXRate().setRate(CurrencyUtil.invertRate(fxRateCurrentUI.getCurrentFXRate().getRate()));
+    	fxRateCurrentUI.getLastFXRate().setRate(CurrencyUtil.invertRate(fxRateCurrentUI.getLastFXRate().getRate()));
+    	
         return new ResponseEntity<FxRateCurrentUI>(fxRateCurrentUI, HttpStatus.OK);
     }
 	
 
-    // Implements API section 2.9
+    // Implements API section 2.9 
+    // v2.1 - invert the Rate !
     @RequestMapping(value = "/rest-fxrates/{period}", method = RequestMethod.GET)
     public ResponseEntity<List<FxRateUI>> getFxRate(@PathVariable("period") String period) {
     	System.out.println("PatentRestController : /rest-fxrates/"+period+" invoked ");
 
 		List<FxRateUI> history = patentService.getFxRateHistory(period);
     	
-        return new ResponseEntity<List<FxRateUI>>(history, HttpStatus.OK);
+		// Invert each rate Here (for safety, keeping all 'normal' rates below controllers as non-inverted)
+		List<FxRateUI> invertedHistory = new ArrayList<FxRateUI>();
+		for (FxRateUI stdRate : history) {
+			BigDecimal invertedRate = CurrencyUtil.invertRate(stdRate.getRate());
+			FxRateUI inverted = new FxRateUI(invertedRate, stdRate.getRateActiveDate());
+			invertedHistory.add(inverted);
+		}
+		
+        return new ResponseEntity<List<FxRateUI>>(invertedHistory, HttpStatus.OK);
     }
 	
 

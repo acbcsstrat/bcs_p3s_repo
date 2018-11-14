@@ -38,7 +38,13 @@ public interface Form1200Service {
 	 */
 	public EpctEngine populatePatentInfo(PatentV2UI patentV2UI, HttpSession session);
 
-	//zaph
+	/**
+	 * As above populatePatentInfo(), but also populates some of the provided CostAnalysisDataForm1200
+	 * @param caData
+	 * @param patentV2UI
+	 * @param session
+	 * @return
+	 */
 	public CostAnalysisDataForm1200 populatePatentInfoPlusCostAnalysis(CostAnalysisDataForm1200 caData, PatentV2UI patentV2UI, HttpSession session);
 
 	

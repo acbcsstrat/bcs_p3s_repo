@@ -321,7 +321,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 
 
 	// This method Obsolete from v2.1 (as AddPatent no longer sets the email switches)
-//	public List<NotificationMapping> OBSextractNotificationsFromAddPatentForm(Patent patent,Object obby) {  // zaph
+//	public List<NotificationMapping> OBSextractNotificationsFromAddPatentForm(Patent patent,Object obby) {  // acTidy
 //		
 //		List<NotificationMapping> mappings = new ArrayList<NotificationMapping>();
 //		

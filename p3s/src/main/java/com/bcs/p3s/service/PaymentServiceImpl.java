@@ -17,7 +17,6 @@ import com.bcs.p3s.engine.CommitToRenewalEngine;
 import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.PaymentTimingEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
-import com.bcs.p3s.engine.ServiceManager;
 import com.bcs.p3s.engine.StageManager;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
@@ -216,8 +215,10 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 					boolean isEpct = StageManager.isInFiling(patent.getEpoPatentStatus());
 					if (isEpct) {
 						EpctEngine epctEngine = new EpctEngine(patent);
-						Epct epct = new Epct(); // expect this to e redundant VERY soon 181106 - acTidy zaph
-						Form1200Fee form1200Fee = epctEngine.calcEpctPersistPricingOnly(null, null); 
+						
+						Epct optionalEpctNotWantedHere = null;
+						Form1200Fee form1200Fee = epctEngine.calcEpctPersistPricingOnly(optionalEpctNotWantedHere); 
+
 						BigDecimal totF1200costUSD = form1200Fee.getSubTotal_USD();
 						
 						latestCalculatedCost = latestCalculatedCost.add(totF1200costUSD);
@@ -427,8 +428,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			if (isEpct) {
 				
 	    		EpctEngine epctEngine = new EpctEngine(patent);
-	    		Epct epct = new Epct(); // expect this to e redundant VERY soon 181106 zaph
-	    		Form1200Fee form1200Fee = epctEngine.calcEpctPersistPricingOnly(null, null); 
+				Epct optionalEpctNotWantedHere = null;
+	    		Form1200Fee form1200Fee = epctEngine.calcEpctPersistPricingOnly(optionalEpctNotWantedHere); 
 	    		
 	    		if (epctEngine.isNotAvailable()) log().error(err+"Epct.isNotAvailable should not exist in the basket !");
 	    		else {
@@ -703,7 +704,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				if (epct==null) fail(CLASSNAME+".commitTransaction fails on patent("+eachPatent.getId()+") : findActiveEpctByPatent() returned null");
 
 	    		EpctEngine epctEngine = new EpctEngine(eachPatent);
-				Form1200Fee newInmemoryForm1200Fee = epctEngine.calcEpctPersistPricingOnly(null, null); //  Don't pass in epct here. Is already persisted. zaph
+				Epct optionalEpctNotWantedHere = null;
+				Form1200Fee newInmemoryForm1200Fee = epctEngine.calcEpctPersistPricingOnly(optionalEpctNotWantedHere); //  Don't pass in epct here. Is already persisted.
 				newInmemoryForm1200Fee.setEpct(epct);
 				Form1200Fee redundantForm1200Fee = epct.getForm1200Fee();
 				epct_payment.add(epct);

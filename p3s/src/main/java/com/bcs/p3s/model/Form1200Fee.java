@@ -191,7 +191,6 @@ public class Form1200Fee {
     	if (item != null) return item;
     	else {
     		BigDecimal zero = BigDecimal.ZERO;
-    		// zero.setScale(2); // has no effect ! zaph
     		return zero;
     	}
     }

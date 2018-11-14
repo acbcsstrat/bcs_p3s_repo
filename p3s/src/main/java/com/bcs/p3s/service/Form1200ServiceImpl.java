@@ -1,6 +1,5 @@
 package com.bcs.p3s.service;
 
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -174,7 +173,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 				// Form1200
 				form1200Service = service;
 				if ( ! e1200EngineCalcBandDates) {
-					epctEngine.calcEpctPersistPricingOnly(null, null);
+					epctEngine.calcEpctPersistPricingOnly(null);
 					e1200EngineCalcBandDates = true;
 				}
 				Date startDate = epctEngine.getCostStartDate();
@@ -223,8 +222,8 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		caData.setRedStartDateUI( dateUtil.dateToUSStringWithoutDayOfWeek(caData.getRedStartDate()) );
 		caData.setRedEndDateUI( dateUtil.dateToUSStringWithoutDayOfWeek(caData.getRedEndDate()) );
 
-		Epct epct = new Epct();
-		epctEngine.calcEpctPersistPricingWithCostAnalysis(caData, epct, null);
+		Epct optionalParamNotWantedHere = null;
+		epctEngine.calcEpctPersistPricingWithCostAnalysis(caData, optionalParamNotWantedHere);
 		
 		return caData;
 	}
@@ -318,8 +317,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		epct.setCreatedBy(me);
 		epct.setCreatedDate(new Date());
 
-		BigDecimal optionalFxRate = null;
-		epctEngine.calcEpctPersistPricingOnly(epct, optionalFxRate);
+		epctEngine.calcEpctPersistPricingOnly(epct);
 		Form1200Fee form1200Fee = epctEngine.getFee(); // this'll be correctly populated, even if a failed Epct exists
 		
 		

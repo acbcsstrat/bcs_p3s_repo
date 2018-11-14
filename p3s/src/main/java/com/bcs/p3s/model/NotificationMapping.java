@@ -64,7 +64,7 @@ public class NotificationMapping {
 
 
 	// zaph - hellofaCleanup required here - once notification calls proven
-	// blat this once -- ..  zaph 
+	// blat this once -- ..   
 	//	/**
 //	 * 'All' means filtered for this patent, this user and this notification.productType
 //	 * 'On' is a reminder that NotificationMappings only hold 'ON' notifications
@@ -128,7 +128,7 @@ public class NotificationMapping {
 //	}
 	
 	
-	// zaph called from: PatentServiceImpl line 416
+	// acTidy - called from: PatentServiceImpl line 416
 	// SURELY - THIS IS A DUPLICATE OF THE ABOVE !!
 //	public List<NotificationMapping> getAllNotificationMappingsForUser(Long patent_id,Long user_id){
 //		
@@ -148,7 +148,7 @@ public class NotificationMapping {
 	
 
 	// WAS getAllNotificationsForPatentForANYusers - used when Delete patent - so instead v2.1 create below 
-	// zaph called from: PatentServiceImpl line 416
+	// acTidy called from: PatentServiceImpl line 416
 		// SURELY - THIS IS A DUPLICATE OF THE ABOVE !!
 	//		//	public List<NotificationMapping> getAllNotificationsForPatentForANYusers(Long patent_id) {
 //		

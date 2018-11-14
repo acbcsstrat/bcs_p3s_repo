@@ -35,17 +35,17 @@ public class EPCTnotAvailableReasonEnum extends P3SAbstractEnum {
         
         if (status.equalsIgnoreCase(EPCTnotAvailableReasonEnum.NOT_ENGLISH)
                 || status.equalsIgnoreCase("NOTENGLISH") 
-        		|| status.equalsIgnoreCase("NOT ENGLISH")) 
+                || status.equalsIgnoreCase("NOT_ENGLISH")) 
             			sofar = EPCTnotAvailableReasonEnum.NOT_ENGLISH;  
 
         if (status.equalsIgnoreCase(EPCTnotAvailableReasonEnum.BAD_IPC_CODE)
                 || status.equalsIgnoreCase("BADIPCCODE") 
-        		|| status.equalsIgnoreCase("BAD IPC CODE")) 
+                || status.equalsIgnoreCase("BAD_IPC_CODE")) 
             			sofar = EPCTnotAvailableReasonEnum.BAD_IPC_CODE;  
 
         if (status.equalsIgnoreCase(EPCTnotAvailableReasonEnum.NATURAL_PERSON)
                 || status.equalsIgnoreCase("NATURALPERSON") 
-                || status.equalsIgnoreCase("NATURAL PERSON")) 
+                || status.equalsIgnoreCase("NATURAL_PERSON")) 
             			sofar = EPCTnotAvailableReasonEnum.NATURAL_PERSON;  
 
         if (status.equalsIgnoreCase(EPCTnotAvailableReasonEnum.AMENDED)
@@ -54,7 +54,7 @@ public class EPCTnotAvailableReasonEnum extends P3SAbstractEnum {
 
         if (status.equalsIgnoreCase(EPCTnotAvailableReasonEnum.DOCS_REQUIRED)
                 || status.equalsIgnoreCase("DOCSREQUIRED") 
-                || status.equalsIgnoreCase("DOCS REQUIRED")) 
+                || status.equalsIgnoreCase("DOCS_REQUIRED")) 
             			sofar = EPCTnotAvailableReasonEnum.DOCS_REQUIRED;  
 
         			

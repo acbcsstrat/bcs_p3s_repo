@@ -24,7 +24,6 @@ import com.bcs.p3s.display.Form1200FeeUI;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
-import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalDates;
@@ -32,7 +31,6 @@ import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.engine.CostAnalysisDataEngine;
-import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.PatentStatusEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
@@ -619,7 +617,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			 * Calculate the actual renewal due date and window close and open dates --
 			 * method call here
 			 */
-		/*
+		/* zaph huge cleanup here once proven ...
 		 * log().debug("Renewal In Place status for the patent");
 		 * 
 		 * //check whether the renewal has been done from our system TypedQuery<Renewal>
@@ -800,24 +798,10 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		Form1200ServiceImpl form1200ServiceImpl = new Form1200ServiceImpl(session);
 		caData = form1200ServiceImpl.populatePatentInfoPlusCostAnalysis(caData, patentV2UI, session);
 
-		caData.setForm1200FeeUI(patentV2UI.getForm1200FeeUI());
-		
-		// GOT TO HERE		
-				
-
-		// zaphod - got to here
-		
-		
-		// populate the CostAnalysisDataForm1200
-		
-		// P3SService service = epctEngine.prepareForm1200Service();  // May not be necessary. cautious
+		Form1200FeeUI form1200FeeUI = patentV2UI.getForm1200FeeUI();
+		caData.setForm1200FeeUI(form1200FeeUI);
 		
 		CostAnalysisDataEngine costEngine = new CostAnalysisDataEngine();
-		
-
-		//lineChart = costEngine.get6weekLineChartDataForForm1200(caData, combinedFee.getP3sFee(), combinedFee.getEpoRenewalFee());
-
-		Form1200FeeUI form1200FeeUI = patentV2UI.getForm1200FeeUI();
 		BigDecimal feeNow = form1200FeeUI.getSubTotalUSD();
 		if (feeNow==null) feeNow = BigDecimal.ZERO; // hopefully never needed
 		

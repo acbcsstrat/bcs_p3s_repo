@@ -14,7 +14,7 @@ import com.bcs.p3s.util.lang.P3SRuntimeException;
 /**
  * Created for v2.1, as such data will (eventually) no longer be calculated for ALL patents on login.
  *
- * Note: This is a *UI object, to RATE values provided will have already been inverted 
+ * Note: This is a *UI object, so RATE values provided will have already been inverted 
  * - i.e. WhatEurosDoes1DollarBuy - i.e. = ~0.8
  *  
  * v2.1 - Nov2018 - This is currently the ONLY place in the application where calculations are performed on the WhatEurosDoes1DollarBuy rate
