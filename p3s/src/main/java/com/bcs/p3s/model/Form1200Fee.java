@@ -187,6 +187,14 @@ public class Form1200Fee {
     	if (item == null) return total;
     	else return total.add(item);
     }
+    protected BigDecimal nvlZero(BigDecimal item) {
+    	if (item != null) return item;
+    	else {
+    		BigDecimal zero = BigDecimal.ZERO;
+    		// zero.setScale(2); // has no effect ! zaph
+    		return zero;
+    	}
+    }
 
 
     /**
@@ -231,4 +239,28 @@ public class Form1200Fee {
 	//        if (this.entityManager == null) this.entityManager = entityManager();
 	//        this.entityManager.persist(this);
 	//    }
+
+
+	// Getters for fields that Could be null
+
+    public BigDecimal getTotalExtensionStatesFee_EUR() {
+        return nvlZero(this.totalExtensionStatesFee_EUR);
+    }
+    public BigDecimal getTotalValidationStatesFee_EUR() {
+        return nvlZero(this.totalValidationStatesFee_EUR);
+    }
+    public BigDecimal getTotalClaimsFee1_EUR() {
+        return nvlZero(this.totalClaimsFee1_EUR);
+    }
+    public BigDecimal getTotalClaimsFee2_EUR() {
+        return nvlZero(this.totalClaimsFee2_EUR);
+    }
+    public BigDecimal getTotalExcessPageFee_EUR() {
+        return nvlZero(this.totalExcessPageFee_EUR);
+    }
+    public BigDecimal getRenewalFee_EUR() {
+        return nvlZero(this.renewalFee_EUR);
+    }
+
+
 }

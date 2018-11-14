@@ -131,6 +131,7 @@ public class Form1200RestController extends Universal {
 		log().debug(CLASSNAME+"/rest-patents/ generateForm1200() invoked. ");
 		
 		Form1200SavedData form1200SavedData = null;
+    	LinkedHashMap<String,Object> obby = new LinkedHashMap<String,Object>();
 		try{
 			// do stuff
 
@@ -156,21 +157,33 @@ public class Form1200RestController extends Universal {
 			
 			// EoW 181026 - got to here
 			
-			// make the service call - with many params
-			form1200SavedData = form1200Service.saveNewForm1200details(
-									patentId, clientRef, totalClaims, isYear3RenewalPaying, totalPages, 
-									extensionStatesUI, validationStatesUI, pageDescriptionUI, me);
-
+//			// make the service call - with many params
+//			form1200SavedData = form1200Service.saveNewForm1200details(
+//									patentId, clientRef, totalClaims, isYear3RenewalPaying, totalPages, 
+//									extensionStatesUI, validationStatesUI, pageDescriptionUI, me);
+// thats cheating - do it properly
+			
+	    	obby.put("Patent_ID", patentId);
+	    	obby.put("clientRef", clientRef);
+	    	obby.put("totalClaims", totalClaims);
+	    	obby.put("isYear3RenewalPaying", isYear3RenewalPaying);
+	    	obby.put("totalPages", totalPages);
+	    	obby.put("extensionStatesUI", extensionStatesUI);
+	    	obby.put("validationStatesUI", validationStatesUI);
+	    	obby.put("pageDescriptionUI", pageDescriptionUI);
 			
 			
 			
-			log().debug(PREFIX+"/rest-form1200-tmpGenF1200/ generateForm1200tmpGenF1200() returning ...");
+			log().debug(PREFIX+"/rest-form1200-tmpGenF1200/ generateForm1200tmpGenF1200() returning ... ooby");
 		}
 		catch(Exception e) {
 			logErrorAndContinue(CLASSNAME+"/rest-patents/ generateForm1200() suffered exception",e);
 			return new ResponseEntity<Form1200SavedData>(form1200SavedData, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<Form1200SavedData>(form1200SavedData, HttpStatus.OK);
+		//return new ResponseEntity<Form1200SavedData>(form1200SavedData, HttpStatus.OK);
+
+		// Now call the REAL controller
+    	return generateForm1200(obby);
     }
 
 
@@ -197,23 +210,22 @@ public class Form1200RestController extends Universal {
 			// so proceed cautiously
 	
 			log().debug("(obby==null) = "+(obby==null));
+
+			// Declare the items to be received
+			long  patentId = 0;
+			String clientRef = null; 
+			long totalClaims = 0;
+			boolean isYear3RenewalPaying = false; 
+			long totalPages = 0;
+			List<ExtensionStateUI> extensionStatesUI = null; 
+			List<ValidationStateUI> validationStatesUI = null;
+			List<PageDescriptionUI> pageDescriptionUI = null;
+
 			if (obby==null) fut("isNull"); else {
 				log().debug("object is of type  "+obby.getClass().getName());
 				log().debug("object is of type  "+obby.getClass().getName());
 				log().debug("hoping for : LinkedHashMap<String, Object>)");
 	
-				
-				// Declare the items to be received
-				long  patentId;
-				String clientRef; 
-				long totalClaims;
-				boolean isYear3RenewalPaying = false; 
-				long totalPages;
-				List<ExtensionStateUI> extensionStatesUI = null; 
-				List<ValidationStateUI> validationStatesUI = null;
-				List<PageDescriptionUI> pageDescriptionUI = null;
-				
-				
 				if ( ! (obby instanceof LinkedHashMap<?,?>)) fut("AINT LinkedHashMap<String, Object>"); else {
 					log().debug("Attempting cast to LinkedHashMap<String, Object>");
 					LinkedHashMap<String, Object> newHashMap = (LinkedHashMap<String, Object>) obby;
@@ -258,7 +270,7 @@ public class Form1200RestController extends Universal {
 												break;
 	
 							case "extensionStatesUI":	tellOb(ob);
-												if (ob instanceof List<?>) {
+												if (ob instanceof List<?>) { // ALL this needs tidy once proven
 													// hooray
 													log().debug("hooray (i hope)");
 													extensionStatesUI = (List<ExtensionStateUI>) ob;
@@ -284,16 +296,10 @@ public class Form1200RestController extends Universal {
 												break;
 	
 							case "validationStatesUI":	tellOb(ob);
-														log().debug("validationStatesUI - not gonna bother HERE");
-														break;
-												
-							case "pageDescriptionUI":	tellOb(ob);
-												log().debug("pageDescriptionUI - is crude copy of extensionStatesUI");
-	
-												if (ob instanceof List<?>) {
+												if (ob instanceof List<?>) { // ALL this needs tidy once proven
 													// hooray
 													log().debug("hooray (i hope)");
-													extensionStatesUI = (List<ExtensionStateUI>) ob;
+													validationStatesUI = (List<ValidationStateUI>) ob;
 												} else {
 													log().debug("more work ..");
 													if ( ! (ob instanceof List<?>) ) { 
@@ -303,7 +309,35 @@ public class Form1200RestController extends Universal {
 															else log().debug("ob tostring yields : "+ob.toString());
 														}
 													}
-													else if ( ! (ob instanceof LinkedHashMap<?,?>) ) { fut("extensionStatesUI : oh dear ..."); } else {
+													else if ( ! (ob instanceof LinkedHashMap<?,?>) ) { fut("validationStatesUI : oh dear ..."); } else {
+														log().debug("Heavens! - what would the keys be");
+														LinkedHashMap<String,Object> arhggg = ( LinkedHashMap<String,Object>) ob;
+														//Set<String> oKey = arhggg.keySet();
+														for (String ooKey : arhggg.keySet()) {
+															log().debug("    heavenly key is : "+ ooKey);
+														}
+													}
+												}
+												log().debug("  If by wildest strect of imaginination - still alive here .. leave this item & move on");
+												break;
+												
+							case "pageDescriptionUI":	tellOb(ob);
+												log().debug("pageDescriptionUI - is crude copy of extensionStatesUI");
+	
+												if (ob instanceof List<?>) {
+													// hooray
+													log().debug("hooray (i hope)");
+													pageDescriptionUI = (List<PageDescriptionUI>) ob;
+												} else {
+													log().debug("more work ..");
+													if ( ! (ob instanceof List<?>) ) { 
+														log().debug("ho hum - LIST the list");
+														for (Object oo : (List<Object>) ob) {
+															if (oo instanceof String) log().debug("this list item string is "+ (String) oo);
+															else log().debug("ob tostring yields : "+ob.toString());
+														}
+													}
+													else if ( ! (ob instanceof LinkedHashMap<?,?>) ) { fut("pageDescriptionUI : oh dear ..."); } else {
 														log().debug("Heavens! - what would the keys be");
 														LinkedHashMap<String,Object> arhggg = ( LinkedHashMap<String,Object>) ob;
 														//Set<String> oKey = arhggg.keySet();
@@ -325,6 +359,18 @@ public class Form1200RestController extends Universal {
 				} // end of : IS a LinkedHashMap
 			} // end of: Object not null			
 					
+
+			// whoami
+			PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+			P3SUser me = pLoginSession.getUser();
+
+			// make the service call - with many params
+			form1200SavedData = form1200Service.saveNewForm1200details(
+									patentId, clientRef, totalClaims, isYear3RenewalPaying, totalPages, 
+									extensionStatesUI, validationStatesUI, pageDescriptionUI, me);
+
+			
+			
 			log().debug(CLASSNAME+"/rest-patents/ generateForm1200()   returning ...");
 		}
 		catch(Exception e) {
