@@ -117,12 +117,16 @@ public class EpctEngine extends Universal {
 	 
 	 /**
 	  * Ensures that fee (a Form1200Fee) is fully populated, ready for persisting
+	  * @param optionalUnpersistedEpct Optional, provided there is no persisted Epct
 	  * @param optionalFxRate if null, this class accesses the db. Otherwise, a db access is avoided
 	  */
-	 public Form1200Fee calcEpctPersistPricingOnly(Epct unpersistedEpct, BigDecimal optionalFxRate) {
+	 public Form1200Fee calcEpctPersistPricingOnly(Epct optionalUnpersistedEpct, BigDecimal optionalFxRate) { // zaphod - this 2nd param NEVER USED - remove it
 		if (isNotAvailable) return null; 
+		if (optionalUnpersistedEpct!=null && epct!=null) 
+			fail(CLASSNAME+".calcEpctPersistPricingOnly : Epct param mismatch. Both unpersisted("+optionalUnpersistedEpct.getId()+" and persisted("+epct.getId()+") exist.");
+		
 		calcDatesAndColour(); // will have calc currentColour & nextColour
-		Form1200Fee newFee = calcEpctEntityOnlyPricing(unpersistedEpct, optionalFxRate);
+		Form1200Fee newFee = calcEpctEntityOnlyPricing(optionalUnpersistedEpct, optionalFxRate);
 		calcPersistOnlyHasRun = true;
 		return newFee;
 	 }
@@ -147,7 +151,7 @@ public class EpctEngine extends Universal {
 //		if (bypassNotavailable) { isNotAvailable = true; bypassNotavailable = false; } // Restore status after temporary override
 //		
 //		return newFee;
-//	 }
+//	 } zaph
 	 public void calcEpctPersistPricingWithCostAnalysis(CostAnalysisDataForm1200 caData, Epct unpersistedEpct, BigDecimal optionalFxRate) {
 		 
 		 if (! isNotAvailable) {
@@ -187,7 +191,7 @@ public class EpctEngine extends Universal {
     	// Service needs current AND next, colour AND price. So calc ..
 		
 		// Don't recalcuate pricing if already been done
-		if (fee==null) calcEpctPersistPricingOnly(new Epct(), null);
+		if (fee==null) calcEpctPersistPricingOnly(null, null);
     	
 		// some short term checks
 		if (currentColour==null) fail("currentColour==null");
@@ -264,7 +268,7 @@ public class EpctEngine extends Universal {
     	calcEffectivePriorityDate();
     	calcTooEarlyLate();
 
-    	epct = Epct.findEpctByPatent(patent);  // may be null
+    	epct = Epct.findActiveEpctByPatent(patent);  // may be null
     	calcEpctStatus();
 
     	calcYear3RenewalBooleans();
@@ -418,12 +422,23 @@ public class EpctEngine extends Universal {
 
 
 	// 'Only' in as much as only calculates fields needed for persisting. For further prices, as needed by FE, see prepareForm1200Service()
-	protected Form1200Fee calcEpctEntityOnlyPricing(Epct unpersistedEpct, BigDecimal optionalFxRate) {
+	protected Form1200Fee calcEpctEntityOnlyPricing(Epct optionalUnpersistedEpct, BigDecimal optionalFxRate) {
 		// Provide correct Form1200Fee data for persisting
-		String err = CLASSNAME+" : calcEpctEntityOnlyPricing(epct,"+optionalFxRate+")";
-		if (unpersistedEpct==null) fail(err+" passed null Epct");
+
 		
-		epct = unpersistedEpct; // overwrites potentially real object with empty - even if works, seem pointless (other then ensure no NPE..?) - acTodo
+//		zaph
+//		String upEpctId = (conditionalUnpersistedEpct==null) ? "null" : "unpersistedEpct-"+conditionalUnpersistedEpct.getId(); // expect null
+//		String err = CLASSNAME+" : calcEpctEntityOnlyPricing("+upEpctId+", "+optionalFxRate+")";
+//		
+//		Epct persistedEpct = Epct.findActiveEpctByPatent(patent);
+//		boolean unpersistedExists = (conditionalUnpersistedEpct!=null); 
+//		boolean persistedExists = (persistedEpct!=null);
+//		if (unpersistedExists==persistedExists) fail(err+" epct param mismatch. unpersisted"+unpersistedExists+"-E"+upEpctId+" vs persisted"+persistedExists+"-P"+patent.getId());
+		
+		if (optionalUnpersistedEpct!=null) epct = optionalUnpersistedEpct;
+		
+		
+	//zaph	epct = (unpersistedExists) ? conditionalUnpersistedEpct : persistedEpct;
 		if (optionalFxRate==null) {
 			GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
 			fxRate = glob.getCurrent_P3S_rate();
@@ -470,6 +485,8 @@ public class EpctEngine extends Universal {
 	}
 	protected void calcStageBprices(OtherEpoFeeSole epoEpctFees) {
 		// Can rely on epct NOT being null
+		// CanNOT rely on epct NOT being null = =zaph
+		if (epct==null) return;
 		
 		// Extension States and Validation States
 		BigDecimal tmp = new BigDecimal("0.0"); 

@@ -116,4 +116,11 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     	return (EPCT_REJECTED.equalsIgnoreCase(code)
     		 || EPCT_SAVED.equalsIgnoreCase(code));
     }
+    public static boolean isInactive(String code) { // Inactive (rightNow) so can be ignored for all purpose
+    	return (TOO_EARLY.equalsIgnoreCase(code)
+       		 || TOO_LATE.equalsIgnoreCase(code)
+    		 || EPCT_NOT_AVAILABLE.equalsIgnoreCase(code)
+    		 || PAYMENT_FAILED.equalsIgnoreCase(code)
+    		 || COMPLETED.equalsIgnoreCase(code));
+    }
 }

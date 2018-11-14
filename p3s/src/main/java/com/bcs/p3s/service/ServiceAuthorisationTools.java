@@ -271,7 +271,7 @@ public class ServiceAuthorisationTools extends Universal {
 
 	// Only valid if exists and status value is appropriate. SafteyCheck
 	protected void checkEpctisDeletable(Patent patent, String err) {
-		Epct epct = Epct.findEpctByPatent(patent);
+		Epct epct = Epct.findActiveEpctByPatent(patent);
 		if (epct==null)  failMalicious(err+"No such Epct exists.");
 		else {
 			String epctStatus = epct.getEpctStatus();
@@ -282,12 +282,8 @@ public class ServiceAuthorisationTools extends Universal {
 
 	// Only valid if epct-not-exist, OR exists and status value is appropriate. SafteyCheck
 	protected void checkEpctisRejectable(Patent patent, String err) {
-		Epct epct = Epct.findEpctByPatent(patent);
-		if (epct!=null) {
-			String epctStatus = epct.getEpctStatus();
-			boolean isDeletable = Form1200StatusEnum.isDeletable(epctStatus);
-//			if ( ! isDeletable) failMalicious(err+"Epct("+epct.getId()+" is NOT deletable.");
-		}
+		boolean isRejectable = Form1200StatusEnum.isRejectable(patent.getEpctStatus());
+		if ( ! isRejectable) failMalicious(err+"Patent("+patent.getId()+" is NOT EpctRejectable.");
 	}	
 	
 

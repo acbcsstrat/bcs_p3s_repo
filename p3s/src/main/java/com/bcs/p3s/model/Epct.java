@@ -18,6 +18,7 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 
 
@@ -176,7 +177,7 @@ public class Epct {
     /**
      * @return either null or the One Epct associated with this patent
      */
-    public static Epct findEpctByPatent(Patent patent) {
+    public static Epct findActiveEpctByPatent(Patent patent) {
     	if (patent==null) throw new P3SRuntimeException("Epct:findEpctByPatent() passed null");
     	
     	// avoid the Hibernate message : save the transient instance before flushing
@@ -187,8 +188,15 @@ public class Epct {
 
 	    List<Epct> epcts = (findEpctsByPatent(existingPatent, "createdDate", "ASC")).getResultList(); // "id" is not available so use "createdDate"
     	
-    	if (epcts==null || epcts.size()==0) return null;
-    	else return epcts.get(epcts.size()-1);
+    	if (epcts==null || epcts.size()==0) 
+    		return null;
+    	else {
+    		Epct latestEpct = epcts.get(epcts.size()-1);
+    		if (Form1200StatusEnum.isInactive(latestEpct.getEpctStatus())) 
+    			return null;
+    		else 
+    			return latestEpct;
+    	}
     }
     
     public List<String> extensionStatesAsList() {

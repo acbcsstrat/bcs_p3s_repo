@@ -143,7 +143,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	
 		// form1200PdfUrl 
 		String form1200PdfUrl = null;  // existing simile is: "invoiceUrl":"/p3sweb/invoice/34"
-		Epct epct = Epct.findEpctByPatent(patentV2UI);
+		Epct epct = Epct.findActiveEpctByPatent(patentV2UI);
 		if (epct!=null && epct.getForm1200()!=null) {
 			// Thanksgiving change
 			form1200PdfUrl = null;  // hardcode. Until we have a (Blob) to provide
@@ -174,7 +174,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 				// Form1200
 				form1200Service = service;
 				if ( ! e1200EngineCalcBandDates) {
-					epctEngine.calcEpctPersistPricingOnly(new Epct(), null);
+					epctEngine.calcEpctPersistPricingOnly(null, null);
 					e1200EngineCalcBandDates = true;
 				}
 				Date startDate = epctEngine.getCostStartDate();
@@ -369,7 +369,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		checkForm1200isDeletable(patentId, err);
 	
 		Patent patent = Patent.findPatent(patentId);
-		Epct epct = Epct.findEpctByPatent(patent);
+		Epct epct = Epct.findActiveEpctByPatent(patent);
 
 		Form1200 form1200 = epct.getForm1200(); 
 		Form1200Fee form1200Fee = epct.getForm1200Fee(); 
@@ -398,7 +398,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		checkForm1200isRejectable(patentId, err);
 	
 		Patent patent = Patent.findPatent(patentId);
-		Epct epct = Epct.findEpctByPatent(patent);
+		Epct epct = Epct.findActiveEpctByPatent(patent);
 
 		EPCTnotAvailableReasonEnum reason = new EPCTnotAvailableReasonEnum(fail_reason);
 		if (reason.isNotAvailableReasonTerminal())
