@@ -95,8 +95,6 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
       <td width="300" align="left" valign="top">
         <b>DATE:</b> <%=data.getDocDate() %>
         <br/><b>INVOICE NO:</b> <%=data.getInvoiceNumber()%>
-        <%-- <br/><b>EXCHANGE RATE:</b>
-        <br/><%=data.getFxRateUsdPerEur()%> USD = 1 EUR --%>
       </td>
     </tr>
   </table>

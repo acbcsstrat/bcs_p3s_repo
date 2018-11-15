@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
@@ -130,7 +131,7 @@ public class PatentUI extends Patent {
 		this.setPCT_publicationNumber(patent.getPCT_publicationNumber());
 		this.setInternationalSearchAuthority(patent.getInternationalSearchAuthority());
 		this.setDesignated_states(patent.getDesignated_states());
-		this.setEpctStatus(patent.getEpctStatus());
+		this.setEpctStatus(Form1200StatusEnum.statusForUI(patent.getEpctStatus()));
 		this.setEpctNotAvailableReason(patent.getEpctNotAvailableReason());
 		this.setIpcCodes(patent.getIpcCodes());
 		this.setPriorityDate(patent.getPriorityDate());

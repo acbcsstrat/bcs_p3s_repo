@@ -313,7 +313,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		epct.setEpctSubmittedDate(null);
 		
 		epct.setEpctApplicationExpiryDate(epctEngine.getRedStartDate());
-		epct.setEpctStatus(Form1200StatusEnum.EPCT_BEING_GENERATED);
+		epct.setEpctStatus(Form1200StatusEnum.AWAIT_PDF_GEN_START);
 		epct.setCreatedBy(me);
 		epct.setCreatedDate(new Date());
 

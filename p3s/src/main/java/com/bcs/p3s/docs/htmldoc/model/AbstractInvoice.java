@@ -5,10 +5,13 @@ import java.util.List;
 
 import com.bcs.p3s.enump3s.InvoiceTypeEnum;
 import com.bcs.p3s.model.RenewalFee;
+import com.bcs.p3s.model.Epct;
+import com.bcs.p3s.model.Form1200Fee;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
+import com.bcs.p3s.util.currency.CurrencyUtil;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.Universal;
 
@@ -30,6 +33,7 @@ public abstract class AbstractInvoice extends Universal {
 	protected String moneyToArriveBy;
 	protected String totalUsdPayable;
 	protected String fxRateUsdPerEur;
+	protected String fxRateEurPerUsd;
 	
 	public AbstractInvoice(Invoice invoice) {
 		if (invoice==null) fail("AbstractInvoice constructor given null");
@@ -43,7 +47,7 @@ public abstract class AbstractInvoice extends Universal {
 		totalUsdPayable = payment.getTransAmount_USD().toString();
 		ourAddress = new PostalAddressAndHyperlink(); // Default constructor defaults to our address
 		clientAddress = clientAddress(payment);
-		fxRateUsdPerEur = getRateUsdPerEur(payment);
+		setBothRates(payment);
 	}
 
 	
@@ -75,16 +79,37 @@ public abstract class AbstractInvoice extends Universal {
 		return suffix;
 	}
 	
-	protected String getRateUsdPerEur(Payment payment) {
+	protected void setBothRates(Payment payment) {
 		// Rate stored in Fee. There may be multiple Fees per transaction, but all will have the same rate
 		String rate = "";
+		BigDecimal fxRateBD = null;
+		
 		List<Renewal> renewals = payment.getRenewals();
-		RenewalFee aFee = renewals.get(0).getRenewalFee();
-		BigDecimal fxRateBD = aFee.getFxRate().setScale(5, BigDecimal.ROUND_HALF_UP);
+		if (renewals.size()>0) {
+			RenewalFee aFee = renewals.get(0).getRenewalFee();
+			fxRateBD = aFee.getFxRate().setScale(5, BigDecimal.ROUND_HALF_UP);
+		}
+		else 
+		{
+			List<Epct> epcts = payment.getEpcts();
+			if (epcts.size()>0) {
+				Form1200Fee fFee = epcts.get(0).getForm1200Fee();
+				fxRateBD = fFee.getFxRate().setScale(5, BigDecimal.ROUND_HALF_UP);
+			}
+			else fail("Payment("+payment.getId()+") has neither renewals nor epct. Impossible for v2.1");
+		}
 		rate = fxRateBD.toString();
-		return rate;
-	}
+
+		String eurPerUsd = ""; // Empty is better than stackDump!
+		if (fxRateBD.compareTo(BigDecimal.ZERO)>0) {
+			BigDecimal inverted = CurrencyUtil.invertRate(fxRateBD);
+			eurPerUsd = inverted.toString();
+		}
+		
 	
+		fxRateUsdPerEur = rate;
+		fxRateEurPerUsd = eurPerUsd; 
+	}
 	
 	
 	// Getters
@@ -115,5 +140,7 @@ public abstract class AbstractInvoice extends Universal {
 	public String getFxRateUsdPerEur() {
 		return fxRateUsdPerEur;
 	}
-	
+	public String getFxRateEurPerUsd() {
+		return fxRateEurPerUsd;
+	}
 }

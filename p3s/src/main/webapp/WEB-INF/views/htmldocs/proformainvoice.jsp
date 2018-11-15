@@ -98,7 +98,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
         <b>DATE:</b> <%=data.getDocDate() %>
         <br/><b>INVOICE NO:</b> <%=data.getInvoiceNumber()%>
         <br/><b>EXCHANGE RATE:</b>
-        <br/><%=data.getFxRateUsdPerEur()%> USD = 1 EUR
+        <br/>1 USD = <%=data.getFxRateEurPerUsd()%> EUR
         <p/>
         <font color="red"><b>IMPORTANT:</b></font>
         <br/>Our service is conditional on funds
@@ -505,7 +505,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
         <div align="center">
           Please ensure you use our Transaction ID as your payment reference.
           <br/>
-          Patents cannot be renewed by our service if the Transaction ID is missing or incorrectly quoted.
+          We cannot progress your patents if the Transaction ID is missing or incorrectly quoted.
           <br/>
           All services are provided subject to our agreed Terms.
         </div>

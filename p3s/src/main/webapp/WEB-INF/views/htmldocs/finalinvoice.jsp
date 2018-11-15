@@ -111,7 +111,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
         <b>DATE:</b> <%=data.getDocDate() %>
         <br/><b>INVOICE NO:</b> <%=data.getInvoiceNumber()%>
         <br/><b>EXCHANGE RATE:</b>
-        <br/><%=data.getFxRateUsdPerEur()%> USD = 1 EUR
+        <br/>1 USD = <%=data.getFxRateEurPerUsd()%> EUR
         <p/>
       </td>
     </tr>

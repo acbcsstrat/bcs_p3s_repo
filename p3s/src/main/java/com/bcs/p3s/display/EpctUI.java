@@ -28,7 +28,7 @@ import com.bcs.p3s.wrap.PatentExtendedData;
  */
 public class EpctUI extends Epct {
 
-	// Additional UI members go here
+	// Additional UI members go here - acTidy
 
 //    private String renewalDueDateUI;
 //    private String certificateUrl;

@@ -13,7 +13,7 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     public static final String EPCT_NOT_AVAILABLE	= "Epct not available";
     public static final String EPCT_AVAILABLE		= "Epct available";
     public static final String EPCT_REJECTED		= "Epct rejected";
-    public static final String AWAIT_PDF_TRIGGER 	= "Await pdf trigger";    // Epct created but Cron not yet started generating PDF. May prove to be redundant. acTidy 
+    public static final String AWAIT_PDF_GEN_START 	= "Await pdf gen start";    // Epct created but Cron not yet started generating PDF. May yet prove to be redundant. 
     public static final String EPCT_BEING_GENERATED	= "Epct being generated";
     public static final String EPCT_SAVED			= "Epct saved";
     public static final String PAYMENT_IN_PROGRESS	= "Payment in progress";
@@ -49,6 +49,10 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
         if (status.equalsIgnoreCase(Form1200StatusEnum.EPCT_REJECTED)
                 || status.equalsIgnoreCase("EPCT_REJECTED")) 
             			sofar = Form1200StatusEnum.EPCT_REJECTED;
+
+        if (status.equalsIgnoreCase(Form1200StatusEnum.AWAIT_PDF_GEN_START)
+                || status.equalsIgnoreCase("AWAIT_PDF_GEN_START")) 
+            			sofar = Form1200StatusEnum.AWAIT_PDF_GEN_START;
 
         if (status.equalsIgnoreCase(Form1200StatusEnum.EPCT_BEING_GENERATED)
                 || status.equalsIgnoreCase("EPCT_BEING_GENERATED")) 
@@ -89,7 +93,7 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     // includeInAService() - Is not determined here. See isNotAvailable is EpctEngine
 
     public boolean canSellForm1200() {
-    	return (value.equals(AWAIT_PDF_TRIGGER)
+    	return (value.equals(AWAIT_PDF_GEN_START)
     			|| value.equals(EPCT_BEING_GENERATED)
     			|| value.equals(EPCT_SAVED));
     }
@@ -98,7 +102,7 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     	return (value.equals(TOO_EARLY)
     	     || value.equals(EPCT_AVAILABLE)
     	     || value.equals(EPCT_REJECTED)
-    	     || value.equals(AWAIT_PDF_TRIGGER)
+    	     || value.equals(AWAIT_PDF_GEN_START)
     	     || value.equals(EPCT_BEING_GENERATED)
     	     || value.equals(EPCT_SAVED)
     	     || value.equals(PAYMENT_IN_PROGRESS)
@@ -108,20 +112,24 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     public static boolean isDeletable(String code) {
     	// Consider: A persisted Epct (et al) can never be created for some status values
     	return (EPCT_REJECTED.equalsIgnoreCase(code)
-    		 || AWAIT_PDF_TRIGGER.equalsIgnoreCase(code)
+    		 || AWAIT_PDF_GEN_START.equalsIgnoreCase(code)
     		 || EPCT_SAVED.equalsIgnoreCase(code));
     }
     public static boolean isRejectable(String code) {
     	return (EPCT_AVAILABLE.equalsIgnoreCase(code)
            		|| EPCT_REJECTED.equalsIgnoreCase(code)
-           		|| AWAIT_PDF_TRIGGER.equalsIgnoreCase(code)
+           		|| AWAIT_PDF_GEN_START.equalsIgnoreCase(code)
            		|| EPCT_SAVED.equalsIgnoreCase(code));
     }
-    public static boolean isInactive(String code) { // Inactive (rightNow) so can be ignored for all purpose
+    public static boolean isInactive(String code) { // Epct is Inactive (rightNow) so can be ignored for all purpose
     	return (TOO_EARLY.equalsIgnoreCase(code)
        		 || TOO_LATE.equalsIgnoreCase(code)
     		 || EPCT_NOT_AVAILABLE.equalsIgnoreCase(code)
     		 || PAYMENT_FAILED.equalsIgnoreCase(code)
     		 || COMPLETED.equalsIgnoreCase(code));
+    }
+    public static String statusForUI(String rawStatus) { // Don't show FE the awaitingCron message.
+    	if (AWAIT_PDF_GEN_START.equals(rawStatus)) return EPCT_BEING_GENERATED;
+    	else return rawStatus;
     }
 }

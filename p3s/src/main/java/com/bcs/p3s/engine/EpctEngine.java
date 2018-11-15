@@ -189,7 +189,8 @@ public class EpctEngine extends Universal {
     	P3SService service = new P3SService();
     	
 		service.setServiceType(P3SProductTypeEnum.FORM1200);
-		service.setServiceStatus(epctStatus);
+		service.setServiceStatus(Form1200StatusEnum.statusForUI(epctStatus));
+		
 		if (currentColour!=null) service.setCurrentStageColour(currentColour);  // acTidy !!
 		if (nextColour!=null) service.setNextStageColour(nextColour);
 		service.setCurrentStageCostUSD(fee.getSubTotal_USD());
@@ -302,9 +303,11 @@ public class EpctEngine extends Universal {
 			epctStatus = Form1200StatusEnum.EPCT_REJECTED;
 			if (isEmpty(patent.getEpctNotAvailableReason())) logErrorAndContinue("Status=Rejected, yet REASON is empty. Patent="+patent.getId());
 		}
-		else if (isMatchStatusInEitherObject(Form1200StatusEnum.EPCT_BEING_GENERATED)
-				|| isMatchStatusInEitherObject(Form1200StatusEnum.AWAIT_PDF_TRIGGER)) {
+		else if (isMatchStatusInEitherObject(Form1200StatusEnum.EPCT_BEING_GENERATED)) {
 			epctStatus = Form1200StatusEnum.EPCT_BEING_GENERATED;
+		}
+		else if (isMatchStatusInEitherObject(Form1200StatusEnum.AWAIT_PDF_GEN_START)) {
+			epctStatus = Form1200StatusEnum.AWAIT_PDF_GEN_START;
 		}
 		else if (isMatchStatusInEitherObject(Form1200StatusEnum.EPCT_SAVED)) {
 			epctStatus = Form1200StatusEnum.EPCT_SAVED;
