@@ -14,10 +14,10 @@
 <aspect name="com.bcs.p3s.model.PatentDataOnDemand_Roo_DataOnDemand"/>
 <aspect name="com.bcs.p3s.model.PaymentDataOnDemand_Roo_Configurable"/>
 <aspect name="com.bcs.p3s.model.RenewalIntegrationTest_Roo_IntegrationTest"/>
-<aspect name="com.bcs.p3s.model.InvoiceDataOnDemand_Roo_Configurable"/>
 <aspect name="com.bcs.p3s.model.ArchivedRateIntegrationTest_Roo_IntegrationTest"/>
-<aspect name="com.bcs.p3s.model.CertificateIntegrationTest_Roo_Configurable"/>
+<aspect name="com.bcs.p3s.model.InvoiceDataOnDemand_Roo_Configurable"/>
 <aspect name="com.bcs.p3s.model.DiscountPercentDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="com.bcs.p3s.model.CertificateIntegrationTest_Roo_Configurable"/>
 <aspect name="com.bcs.p3s.model.BusinessIntegrationTest_Roo_IntegrationTest"/>
 <aspect name="com.bcs.p3s.model.P3SUserDataOnDemand_Roo_Configurable"/>
 <aspect name="com.bcs.p3s.model.LoginMessageIntegrationTest_Roo_IntegrationTest"/>
@@ -50,8 +50,8 @@
 <aspect name="com.bcs.p3s.model.GlobalVariableSoleDataOnDemand_Roo_DataOnDemand"/>
 <aspect name="com.bcs.p3s.model.GlobalVariableSoleIntegrationTest_Roo_Configurable"/>
 <aspect name="com.bcs.p3s.model.LoginMessageDataOnDemand_Roo_Configurable"/>
-<aspect name="com.bcs.p3s.model.FeeDataOnDemand_Roo_DataOnDemand"/>
 <aspect name="com.bcs.p3s.model.FeeIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="com.bcs.p3s.model.FeeDataOnDemand_Roo_DataOnDemand"/>
 <aspect name="com.bcs.p3s.model.LoginMessageDataOnDemand_Roo_DataOnDemand"/>
 <aspect name="com.bcs.p3s.model.DiscountPercentDataOnDemand_Roo_Configurable"/>
 <aspect name="com.bcs.p3s.model.CertificateIntegrationTest_Roo_IntegrationTest"/>
