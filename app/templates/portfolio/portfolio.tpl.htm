@@ -9,13 +9,13 @@
                 <input type="text" class="form-control pill-radius" name="clientRefFilter" data-ng-model="filterPortfolio.clientRef" placeholder="Client Ref" autocomplete="off">
             </div>
         </div>
-<!--         <div class="offset-lg-4 col-lg-2 col-xl-2 offset-xl-4">
+        <div class="offset-lg-4 col-lg-2 col-xl-2 offset-xl-4">
             <div class="input-group">
                 <select class="pill-radius form-control font-body" data-ng-options="item for item in $ctrl.patentActionStatuses" data-ng-model="item.selectedOption" data-ng-change="$ctrl.updateCategory(item.selectedOption)">
                 </select>
                 
             </div>
-        </div> -->
+        </div>
         <div class="col-md-4 col-lg-2 col-xl-2">
             <button type="button" class="btn btn--lg pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Advanced Search</button>
         </div>
@@ -39,7 +39,7 @@
                         </div>
                         <uib-tabset active="activeFilterTab" vertical="true" type="pills" class="flex-column">
                             <uib-tab index="0" heading="renewals" data-ng-hide="true">
-                                <div class="row m-b-xs">
+                                <div class="row m-b-xs" data-ng-if="europctStatus('serviceStatus').length !== 0">
                                     <div class="col-xl-6">
                                         <div class="filter-box m-t-md">
                                             <div class="row">
@@ -74,10 +74,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
+                                <div class="row m-t-md" data-ng-if="europctStatus('serviceStatus').length === 0">
+                                    <div class="col-xl-12 text-center">
+                                        <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
+                                    </div>
+                                </div> 
                             </uib-tab>
                             <uib-tab index="1" heading="europct" data-ng-hide="true">
-                                <div class="row m-b-xs">
+                                <div class="row m-b-xs" data-ng-if="renewalsStatus('serviceStatus').length !== 0">
                                     <div class="col-xl-6">
                                         <div class="filter-box m-t-md">
                                             <div class="row">
@@ -113,6 +118,11 @@
                                         </div>
                                     </div>                                    
                                 </div>
+                                <div class="row m-t-md" data-ng-if="renewalsStatus('serviceStatus').length === 0">
+                                    <div class="col-xl-12 text-center">
+                                        <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
+                                    </div>
+                                </div>                                 
                             </uib-tab>
                         </uib-tabset>
 

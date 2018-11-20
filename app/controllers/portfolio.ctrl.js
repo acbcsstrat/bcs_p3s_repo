@@ -173,14 +173,10 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
             for(var i in $scope.filters[filter]){
                 if($scope.filters[filter][i]) filterArray.push(i.toLowerCase()); //if property in filter object returns true, push to filterArray
             }
-            console.log(filterArray)
             if(el.serviceList && el.serviceList.length > 0) {
                 for(var i = 0; i < el.serviceList.length; i++) {            
                     var notUiText = organiseTextService.uiStatus(el.serviceList[i][filter])
-                    // console.log(el.serviceList[i][filter])
-                    // console.log(organiseTextService.uiStatus(el.serviceList[i][filter]))
                     if(notUiText !== undefined || typeof notUiText !== 'undefined') {
-                      
                         if(filterArray.length > 0 && filterArray.indexOf(notUiText.toLowerCase()) === -1) {
                           return false;
                         }
@@ -190,19 +186,14 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
                       }
                     }
                 }
-              
             } else { //to handle items that dont have a sevice 
                 if(filterArray.length > 0 && filterArray.indexOf(el.serviceStatus.toLowerCase()) === -1) {
                   
                   return false;
-                } else {
-                  console.log(el)
                 }
             }
-             
         }
         return true;
-      
     };   
 
     vm.toggleAll = function($event, includeAll) { //used for clear or select all
