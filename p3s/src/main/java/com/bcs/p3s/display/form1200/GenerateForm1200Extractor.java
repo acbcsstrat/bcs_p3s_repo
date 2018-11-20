@@ -201,6 +201,7 @@ public class GenerateForm1200Extractor extends Universal {
 											}
 											//generateForm1200DataIn.pageDescriptionUI = (List<PageDescriptionUI>) ob;
 											generateForm1200DataIn.setPageDescriptionsUI(pageDescriptionUIs);
+											log().debug("   ********  NullWatch  *********  atVERYSetPoint : set to  "+ (pageDescriptionUIs==null) );
 										} else {
 											log().debug("Is NOT a List. so more reporting, but NOT attempt populate ...........................");
 											if (ob instanceof String) { 
@@ -216,6 +217,9 @@ public class GenerateForm1200Extractor extends Universal {
 											}
 										}
 										log().debug(" finished processing "+thisElement+".  Where data was saved depends on what happened ....");
+
+										log().debug("   ********  NullWatch  *********  atSetPoint : PageDescriptionsUI==null is  "+(generateForm1200DataIn.getPageDescriptionsUI()==null) );
+
 										break;
 									} catch (Exception e) {
 										String eMsg = "Suffered exception whilst processing "+thisElement+". e.Msg="+e.getMessage()+"     eType+"+e.getClass().getName();
@@ -233,6 +237,8 @@ public class GenerateForm1200Extractor extends Universal {
 			} // end of : IS a LinkedHashMap
 		} // end of: Object not null			
 		
+		log().debug("   ********  NullWatch  *********  late set : PageDescriptionsUI==null is  "+(generateForm1200DataIn.getPageDescriptionsUI()==null) );
+
 		return generateForm1200DataIn;
 	}
 	

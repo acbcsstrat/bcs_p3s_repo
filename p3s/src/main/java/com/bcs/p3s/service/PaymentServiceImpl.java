@@ -121,6 +121,9 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				List<PatentExtendedData> sessionData = pLoginSession.getExtendedPatentUI();
 				for(PatentExtendedData eachSessionData : sessionData){
 					if(basket.getPatentIds().contains(eachSessionData.getPatentId())){
+						
+						log().debug("181120 crashes here upon leave basket for epct");
+						
 						latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost());
 					}
 				}

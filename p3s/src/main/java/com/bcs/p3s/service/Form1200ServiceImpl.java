@@ -384,6 +384,9 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		
 	//	checkForm1200AsEntered4MissingData(patentId, err, totalClaims, totalPages, extensionStatesUI, validationStatesUI, pageDescriptionUI);
 
+		log().debug("   ********  NullWatch  *********  early saveNewForm1200details - preCheck : PageDescriptionsUI==null is  "+(generateForm1200DataIn.getPageDescriptionsUI()==null) );
+
+		
 		checkForm1200AsEntered4MissingData(generateForm1200DataIn.getPatentId(), err, generateForm1200DataIn.getTotalClaims(),
 				generateForm1200DataIn.getTotalPages(), generateForm1200DataIn.getExtensionStatesUI(), generateForm1200DataIn.getValidationStatesUI(),
 				generateForm1200DataIn.getPageDescriptionsUI() );

@@ -220,7 +220,7 @@ public class Form1200RestController extends Universal {
 			GenerateForm1200Extractor extractor = new GenerateForm1200Extractor();
 			GenerateForm1200DataIn generateForm1200DataIn = extractor.extractGenerateForm1200DataIn(obby, strictAPI);
 
-		
+			log().debug("   ********  NullWatch  *********  mid : PageDescriptionsUI==null is  "+(generateForm1200DataIn.getPageDescriptionsUI()==null) );
 		
 		
 //			// Here - don't know what format data arriving will have. Best guidance from past is something like
