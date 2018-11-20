@@ -12,11 +12,8 @@
 } 
 
 .form-control, .btn { 
-  font-size: 1.3rem; 
-}
-
-.form-control {
-    line-height: 1.5rem;
+  font-size: $font-normal; 
+  line-height: $line-none;
 }
 
 .nav-link {

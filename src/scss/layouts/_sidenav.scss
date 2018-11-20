@@ -1,7 +1,8 @@
 .closed-sidenav { /*layout*/ /*layout*/ /*_sidenav.scss*/
   min-height: 100%;
   position: fixed;
-  width: 75px;
+  width: 55px;
+  background: $grey-dark;
 }
 
 .closed-sidenav .nav-item, 

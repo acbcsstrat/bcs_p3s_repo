@@ -1,4 +1,4 @@
-%primary-view-nav__list,  { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
+.panel-nav, .view-nav { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
   list-style-type: none;
   padding: 0;
   display: -webkit-box;
@@ -10,76 +10,81 @@
   flex-wrap: wrap; /* nowrap if you only want one row */
 }
 
-.secondary-view-nav__list {
-  @extend %primary-view-nav__list;
-}
-.panel-nav__list {
-  @extend %primary-view-nav__list;
-  .nav-tabs {
-    border: none;
-    display: flex;
-    -webkit-display-flex: flex;
-    -ms-display-flex: flex;
-    -moz-webkit-flex: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-}
-/*think of new naming convention. whats difference between them? not obvious*/
-.panel-nav__list-item {
-  color: #fff;
-  font-size: $font-normal;
-  cursor: pointer;
-  @include margin-mixin(0 1rem 0 0);
-  @include list-item-transition;
-  &:last-child {
-    margin-right: 0;
-  }
-  &:not([disabled]):hover { 
-    @include list-item-hover; 
-  }
-  &:hover {
-    .panel-nav__link { 
-      @include hover-white; 
+.view-nav {
+  
+  .view-nav__item {
+    border: 1px solid $border;
+    font-weight: 500;
+    background: $grey;
+    font-size: $font-h3;
+    cursor: pointer;
+    @include padding-mixin(0.2rem 3rem);
+    -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    -o-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    text-decoration: none;
+    text-transform: uppercase;
+    &[disabled] {
+      color: $white;
+      cursor: not-allowed;
+    }
+    &:not([disabled]):hover {
+      box-shadow: 0 0 1px $black;
+    }
+    &.active {
+      color: $white; 
+      background: $grey-dark;
     }
   }
-  &:active { 
-    color: #fff; 
-    opacity: 1!important;     
-    @include opacity(1); 
-  }  
-  &:not([disabled]):active { 
-    @include opacity(1); 
-  } 
-} /*modules*/ /*components*/ /*_navigation.scss*/ /*OR REMOVE CLASS AND ADD CLASSES TO VIEW?*/ //ADD CLASS TO LI ITEMS
+}
 
+.panel-nav {
+  width: 100%;
+  &.active {
 
-
-.panel-nav__li--txt-white {
-  color: $white;
-  .nav-link {
-    color: $white;
   }
+
+// .secondary-view-nav__list {
+//   @extend %primary-view-nav__list;
+// }
+// .panel-nav__list {
+//   @extend %primary-view-nav__list;
+//   .nav-tabs {
+//     border: none;
+//     display: flex;
+//     -webkit-display-flex: flex;
+//     -ms-display-flex: flex;
+//     -moz-webkit-flex: flex;
+//     justify-content: space-between;
+//     width: 100%;
+//   }
+// }
+/*think of new naming convention. whats difference between them? not obvious*/
+.panel-nav__list-item {
+  color: $grey-dark;
+  font-size: $font-normal;
+  cursor: pointer;
+  line-height: $line-none;
+  @include margin-mixin(0 1rem 0 0);
+  @include padding-mixin(0.2rem 3rem);
+  -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out;
+  -o-transition: opacity .2s ease-in-out, background .2s ease-in-out;
+  transition: opacity .2s ease-in-out, background .2s ease-in-out;
+  &.list-item--plain {
+    border: 1px solid $border;
+    cursor: pointer;
+    color: $black;
+  }
+} /*modules*/ /*components*/ /*_navigation.scss*/ /*OR REMOVE CLASS AND ADD CLASSES TO VIEW?*/ //ADD CLASS TO LI ITEMS
 }
 
 .panel-nav__list {
-  width: 100%;
+  
   .panel-nav__list-item--green.active {
 
     color: $white;
     .nav-link {
       color: $white;
-    }
-    .nav-link:hover {
-      color: $white;
-    }
-  }
-  .panel-nav__list-item--plain {
-    border: 1px solid $border;
-    cursor: pointer;
-    color: $black;
-    .nav-link {
-      color: $black;
     }
     .nav-link:hover {
       color: $white;
