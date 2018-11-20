@@ -23,15 +23,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
 import com.bcs.p3s.display.form1200.Form1200SavedData;
+import com.bcs.p3s.display.form1200.GenerateForm1200DataIn;
+import com.bcs.p3s.display.form1200.GenerateForm1200Extractor;
 import com.bcs.p3s.display.form1200.PageDescriptionEnum;
 import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.engine.DummyForm1200Engine;
+import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.service.Form1200Service;
 import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -195,165 +201,195 @@ public class Form1200RestController extends Universal {
 
 		log().debug(PREFIX+"/form1200/ generateForm1200() invoked");
 
-
-		Form1200SavedData form1200SavedData = null;
+		// Read 'strict/tolerant' param from property file
+		boolean strictAPI = true; 
 		try {
+			P3SPropertyReader reader = new P3SPropertyReader();
+			String strTolerant = reader.getGenericProperty(P3SPropertyNames.TOLERATE_FE_DATA_MISMATCH);
+			if ("true".equalsIgnoreCase(strTolerant)) strictAPI = false;
+		} catch (P3SPropertyException e) {
+			fail(PREFIX+"generateForm1200() property read failed : TOLERATE_FE_DATA_MISMATCH",e);
+		}
+
+
 		
 		
-			// Here - don't know what format data arriving will have. Best guidance from past is something like
-			//ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
-			//Patent patent = data.extractPatentFromAddPatentForm(obby); 
-			// so proceed cautiously
-	
-			log().debug("(obby==null) = "+(obby==null));
+		Form1200SavedData form1200SavedData = null;  // forwardlooking rename? - GenerateForm1200DataOut
+		
+		try {
 
-			// Declare the items to be received
-			long  patentId = 0;
-			String clientRef = null; 
-			long totalClaims = 0;
-			boolean isYear3RenewalPaying = false; 
-			long totalPages = 0;
-			List<ExtensionStateUI> extensionStatesUI = null; 
-			List<ValidationStateUI> validationStatesUI = null;
-			List<PageDescriptionUI> pageDescriptionUI = null;
+			GenerateForm1200Extractor extractor = new GenerateForm1200Extractor();
+			GenerateForm1200DataIn generateForm1200DataIn = extractor.extractGenerateForm1200DataIn(obby, strictAPI);
 
-			if (obby==null) fut("isNull"); else {
-				log().debug("object is of type  "+obby.getClass().getName());
-				log().debug("object is of type  "+obby.getClass().getName());
-				log().debug("hoping for : LinkedHashMap<String, Object>)");
-	
-				if ( ! (obby instanceof LinkedHashMap<?,?>)) fut("AINT LinkedHashMap<String, Object>"); else {
-					log().debug("Attempting cast to LinkedHashMap<String, Object>");
-					LinkedHashMap<String, Object> newHashMap = (LinkedHashMap<String, Object>) obby;
-					log().debug("still alive after cast");
-	
-					log().debug("First LIST all elements - then attempt extarct");
-					log().debug("so LIST ...");
-					for (String str : newHashMap.keySet()) {
-						log().debug("   ... item ... = "+str);
-						log().debug("                                of type: "+str.getClass().getName());
-						
-					}
-	
-					log().debug("  ...  \n\n\n\n ...");
-					log().debug("Now attempt process - loop EACH - attempt id in turn");
-	
-					Object ob;
-					for (String thisElement : newHashMap.keySet()) {
-						log().debug("   ... item ... = "+thisElement);
-					
-						ob = newHashMap.get(thisElement);
-						
-						switch (thisElement) {
-							case "Patent_ID":	tellOb(ob);
-												patentId = (Long) ob;
-												break;
-	
-							case "clientRef":	tellOb(ob);
-												clientRef = (String) ob;
-												break;
-	
-							case "totalClaims":	tellOb(ob);
-												totalClaims= (Long) ob;
-												break;
-	
-							case "isYear3RenewalPaying":	tellOb(ob);
-												isYear3RenewalPaying= (Boolean) ob;
-												break;
-	
-							case "totalPages":	tellOb(ob);
-												totalPages= (Long) ob;
-												break;
-	
-							case "extensionStatesUI":	tellOb(ob);
-												if (ob instanceof List<?>) { // ALL this needs tidy once proven
-													// hooray
-													log().debug("hooray (i hope)");
-													extensionStatesUI = (List<ExtensionStateUI>) ob;
-												} else {
-													log().debug("more work ..");
-													if ( ! (ob instanceof List<?>) ) { 
-														log().debug("ho hum - LIST the list");
-														for (Object oo : (List<Object>) ob) {
-															if (oo instanceof String) log().debug("this list item string is "+ (String) oo);
-															else log().debug("ob tostring yields : "+ob.toString());
-														}
-													}
-													else if ( ! (ob instanceof LinkedHashMap<?,?>) ) { fut("extensionStatesUI : oh dear ..."); } else {
-														log().debug("Heavens! - what would the keys be");
-														LinkedHashMap<String,Object> arhggg = ( LinkedHashMap<String,Object>) ob;
-														//Set<String> oKey = arhggg.keySet();
-														for (String ooKey : arhggg.keySet()) {
-															log().debug("    heavenly key is : "+ ooKey);
-														}
-													}
-												}
-												log().debug("  If by wildest strect of imaginination - still alive here .. leave this item & move on");
-												break;
-	
-							case "validationStatesUI":	tellOb(ob);
-												if (ob instanceof List<?>) { // ALL this needs tidy once proven
-													// hooray
-													log().debug("hooray (i hope)");
-													validationStatesUI = (List<ValidationStateUI>) ob;
-												} else {
-													log().debug("more work ..");
-													if ( ! (ob instanceof List<?>) ) { 
-														log().debug("ho hum - LIST the list");
-														for (Object oo : (List<Object>) ob) {
-															if (oo instanceof String) log().debug("this list item string is "+ (String) oo);
-															else log().debug("ob tostring yields : "+ob.toString());
-														}
-													}
-													else if ( ! (ob instanceof LinkedHashMap<?,?>) ) { fut("validationStatesUI : oh dear ..."); } else {
-														log().debug("Heavens! - what would the keys be");
-														LinkedHashMap<String,Object> arhggg = ( LinkedHashMap<String,Object>) ob;
-														//Set<String> oKey = arhggg.keySet();
-														for (String ooKey : arhggg.keySet()) {
-															log().debug("    heavenly key is : "+ ooKey);
-														}
-													}
-												}
-												log().debug("  If by wildest strect of imaginination - still alive here .. leave this item & move on");
-												break;
-												
-							case "pageDescriptionUI":	tellOb(ob);
-												log().debug("pageDescriptionUI - is crude copy of extensionStatesUI");
-	
-												if (ob instanceof List<?>) {
-													// hooray
-													log().debug("hooray (i hope)");
-													pageDescriptionUI = (List<PageDescriptionUI>) ob;
-												} else {
-													log().debug("more work ..");
-													if ( ! (ob instanceof List<?>) ) { 
-														log().debug("ho hum - LIST the list");
-														for (Object oo : (List<Object>) ob) {
-															if (oo instanceof String) log().debug("this list item string is "+ (String) oo);
-															else log().debug("ob tostring yields : "+ob.toString());
-														}
-													}
-													else if ( ! (ob instanceof LinkedHashMap<?,?>) ) { fut("pageDescriptionUI : oh dear ..."); } else {
-														log().debug("Heavens! - what would the keys be");
-														LinkedHashMap<String,Object> arhggg = ( LinkedHashMap<String,Object>) ob;
-														//Set<String> oKey = arhggg.keySet();
-														for (String ooKey : arhggg.keySet()) {
-															log().debug("    heavenly key is : "+ ooKey);
-														}
-													}
-												}
-												log().debug("  If by wildest strect of imaginination - still alive here .. leave this item & move on"); // zaph
-												break;
-	
-	
-												
-							default: 	fut("Switch statement hit default !!!");
-										tellOb(ob);
-							            break;
-						}  // end of : switch
-					}  // end of for loop
-				} // end of : IS a LinkedHashMap
-			} // end of: Object not null			
+		
+		
+		
+//			// Here - don't know what format data arriving will have. Best guidance from past is something like
+//			//ExtractSubmittedDataEngine data = new ExtractSubmittedDataEngine();
+//			//Patent patent = data.extractPatentFromAddPatentForm(obby); 
+//			// so proceed cautiously
+//	
+//			log().debug("(obby==null) = "+(obby==null));
+//
+//			// Declare the items to be received
+//			long  patentId = 0;
+//			String clientRef = null; 
+//			long totalClaims = 0;
+//			boolean isYear3RenewalPaying = false; 
+//			long totalPages = 0;
+//			List<ExtensionStateUI> extensionStatesUI = null; 
+//			List<ValidationStateUI> validationStatesUI = null;
+//			List<PageDescriptionUI> pageDescriptionUI = null;
+//
+//			if (obby==null) fut("isNull"); else {
+//				log().debug("object is of type  "+obby.getClass().getName());
+//				log().debug("object is of type  "+obby.getClass().getName());
+//				log().debug("hoping for : LinkedHashMap<String, Object>)");
+//	
+//				if ( ! (obby instanceof LinkedHashMap<?,?>)) fut("AINT LinkedHashMap<String, Object>"); else {
+//					log().debug("Attempting cast to LinkedHashMap<String, Object>");
+//					LinkedHashMap<String, Object> newHashMap = (LinkedHashMap<String, Object>) obby;
+//					log().debug("still alive after cast");
+//	
+//					log().debug("First LIST all elements - then attempt extarct");
+//					log().debug("so LIST *keyS* ...");
+//					for (String str : newHashMap.keySet()) {
+//						log().debug("   ... item ... = "+str);
+//						log().debug("                                of type: "+str.getClass().getName());
+//						
+//					}
+//	
+//					log().debug("  ...  \n\n\n\n ...");
+//					log().debug("Now attempt process - loop EACH - attempt id in turn");
+//	
+//					Object ob;
+//					for (String thisElement : newHashMap.keySet()) {
+//						log().debug("   ... item ... = "+thisElement);
+//					
+//						ob = newHashMap.get(thisElement);
+//						
+//						switch (thisElement) {
+//							case "Patent_ID":	tellOb(ob);
+//												patentId = caaastInteger(ob);
+//												break;
+//	
+//							case "clientRef":	tellOb(ob);
+//												clientRef = caaastString(ob);
+//												break;
+//	
+//							case "totalClaims":	tellOb(ob);
+//												totalClaims= caaastInteger(ob);
+//												break;
+//	
+//							case "isYear3RenewalPaying":	tellOb(ob);
+//												isYear3RenewalPaying= caaastBoolean(ob);
+//												break;
+//	
+//							case "totalPages":	tellOb(ob);
+//												totalPages= caaastInteger(ob);
+//												break;
+//	
+//							case "extensionStatesUI":	tellOb(ob);
+//							try {
+//												if (ob instanceof List<?>) { // ALL this needs tidy once proven
+//													// hooray
+//													log().debug("hooray (i hope)");
+//													extensionStatesUI = (List<ExtensionStateUI>) ob;
+//												} else {
+//													log().debug("more work ..");
+//													if ( ! (ob instanceof List<?>) ) { 
+//														log().debug("ho hum - LIST the list");
+//														for (Object oo : (List<Object>) ob) {
+//															if (oo instanceof String) log().debug("this list item string is "+ (String) oo);
+//															else log().debug("ob tostring yields : "+ob.toString());
+//														}
+//													}
+//													else if ( ! (ob instanceof LinkedHashMap<?,?>) ) { fut("extensionStatesUI : oh dear ..."); } else {
+//														log().debug("Heavens! - what would the keys be");
+//														LinkedHashMap<String,Object> arhggg = ( LinkedHashMap<String,Object>) ob;
+//														//Set<String> oKey = arhggg.keySet();
+//														for (String ooKey : arhggg.keySet()) {
+//															log().debug("    heavenly key is : "+ ooKey);
+//														}
+//													}
+//												}
+//												log().debug("  If by wildest strect of imaginination - still alive here .. leave this item & move on");
+//												break;
+//							} catch (Exception e) {
+//								log().error("SWALLOWED exception whilst casting extensionStatesUI");
+//							}
+//	
+//							case "validationStatesUI":	tellOb(ob);
+//							try {
+//												if (ob instanceof List<?>) { // ALL this needs tidy once proven
+//													// hooray
+//													log().debug("hooray (i hope)");
+//													validationStatesUI = (List<ValidationStateUI>) ob;
+//												} else {
+//													log().debug("more work ..");
+//													if ( ! (ob instanceof List<?>) ) { 
+//														log().debug("ho hum - LIST the list");
+//														for (Object oo : (List<Object>) ob) {
+//															if (oo instanceof String) log().debug("this list item string is "+ (String) oo);
+//															else log().debug("ob tostring yields : "+ob.toString());
+//														}
+//													}
+//													else if ( ! (ob instanceof LinkedHashMap<?,?>) ) { fut("validationStatesUI : oh dear ..."); } else {
+//														log().debug("Heavens! - what would the keys be");
+//														LinkedHashMap<String,Object> arhggg = ( LinkedHashMap<String,Object>) ob;
+//														//Set<String> oKey = arhggg.keySet();
+//														for (String ooKey : arhggg.keySet()) {
+//															log().debug("    heavenly key is : "+ ooKey);
+//														}
+//													}
+//												}
+//												log().debug("  If by wildest strect of imaginination - still alive here .. leave this item & move on");
+//												break;
+//							} catch (Exception e) {
+//								log().error("SWALLOWED exception whilst casting validationStatesUI");
+//							}
+//												
+//							case "pageDescriptionUI":	tellOb(ob);
+//								try {
+//												log().debug("pageDescriptionUI - is crude copy of extensionStatesUI");
+//	
+//												if (ob instanceof List<?>) {
+//													// hooray
+//													log().debug("hooray (i hope)");
+//													pageDescriptionUI = (List<PageDescriptionUI>) ob;
+//												} else {
+//													log().debug("more work ..");
+//													if ( ! (ob instanceof List<?>) ) { 
+//														log().debug("ho hum - LIST the list");
+//														for (Object oo : (List<Object>) ob) {
+//															if (oo instanceof String) log().debug("this list item string is "+ (String) oo);
+//															else log().debug("ob tostring yields : "+ob.toString());
+//														}
+//													}
+//													else if ( ! (ob instanceof LinkedHashMap<?,?>) ) { fut("pageDescriptionUI : oh dear ..."); } else {
+//														log().debug("Heavens! - what would the keys be");
+//														LinkedHashMap<String,Object> arhggg = ( LinkedHashMap<String,Object>) ob;
+//														//Set<String> oKey = arhggg.keySet();
+//														for (String ooKey : arhggg.keySet()) {
+//															log().debug("    heavenly key is : "+ ooKey);
+//														}
+//													}
+//												}
+//												log().debug("  If by wildest strect of imaginination - still alive here .. leave this item & move on"); // zaph
+//												break;
+//								} catch (Exception e) {
+//									log().error("SWALLOWED exception whilst casting pageDescriptionUI");
+//								}
+//	
+//	
+//												
+//							default: 	fut("Switch statement hit default !!!");
+//										tellOb(ob);
+//							            break;
+//						}  // end of : switch
+//					}  // end of for loop
+//				} // end of : IS a LinkedHashMap
+//			} // end of: Object not null			
 					
 
 			// whoami
@@ -361,10 +397,19 @@ public class Form1200RestController extends Universal {
 			P3SUser me = pLoginSession.getUser();
 
 			// make the service call - with many params
-			form1200SavedData = form1200Service.saveNewForm1200details(
-									patentId, clientRef, totalClaims, isYear3RenewalPaying, totalPages, 
-									extensionStatesUI, validationStatesUI, pageDescriptionUI, me);
 
+			try {
+//				form1200SavedData = form1200Service.saveNewForm1200details(
+//										patentId, clientRef, totalClaims, isYear3RenewalPaying, totalPages, 
+//										extensionStatesUI, validationStatesUI, pageDescriptionUI, me);
+
+				form1200SavedData = form1200Service.saveNewForm1200details(generateForm1200DataIn, me);
+			
+			} catch (Exception e) {
+				// another zaphod swallow fro FE
+				log().error("SWALLOWED exception whilst PROCESSING the data entered");
+				log().error("exception was ",e);
+			}
 			
 			
 			log().debug(CLASSNAME+"/rest-patents/ generateForm1200()   returning ...");
@@ -429,10 +474,61 @@ public class Form1200RestController extends Universal {
 		log().error("************************************************************************************************");
 	}
 	protected void tellOb(Object o) {
-		log().error("");
-		log().error("(ob==null) = "+(o==null));
-		log().error("o.getClass().getName() = "+o.getClass().getName());
-		log().error("");
+		log().info("");
+		log().info("(ob==null) = "+(o==null));
+		log().info("o.getClass().getName() = "+o.getClass().getName());
+		if (o instanceof String) log().info("    isString, so val is: "+(String) o);
+		log().info("");
 	}
-    
+    protected String caaastString(Object o) {
+    	String ret = "unset";
+    	if (o instanceof String) {
+    		try {
+    			ret = (String) o;
+    		} catch (Exception e) {
+    			log().error("caaastString suffered excepion. SWALLOWING");
+    			log().error("exception was",e);
+    			ret = "Cast FAILED";
+    		}
+    	} 
+    	else {
+    		ret = "It WASN'T A STRING !!!";
+    		log().error("It WASN'T A STRING !!!");
+    	}
+    	return ret;
+    }
+    protected Integer caaastInteger(Object o) {
+    	Integer ret = new Integer("-1");
+    	if (o instanceof Integer) {
+    		try {
+    			ret = (Integer) o;
+    		} catch (Exception e) {
+    			log().error("caaastInteger suffered excepion. SWALLOWING");
+    			log().error("exception was",e);
+    			ret = new Integer("-2");
+    		}
+    	} 
+    	else {
+    		ret = new Integer("-3");
+    		log().error("It WASN'T An Integer !!!");
+    	}
+    	return ret;
+    }
+    protected Boolean caaastBoolean(Object o) {
+    	Boolean ret = false;
+    	if (o instanceof Boolean) {
+    		try {
+    			ret = (Boolean) o;
+    		} catch (Exception e) {
+    			log().error("caaastBoolean suffered excepion. SWALLOWING");
+    			log().error("exception was",e);
+    			ret = false;
+    		}
+    	} 
+    	else {
+    		ret = true;
+    		log().error("It WASN'T A Boolean !!! ...,");
+    	}
+    	return ret;
+    }
 }

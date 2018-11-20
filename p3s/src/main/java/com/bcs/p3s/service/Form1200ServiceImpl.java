@@ -19,6 +19,7 @@ import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
 import com.bcs.p3s.display.form1200.Form1200SavedData;
+import com.bcs.p3s.display.form1200.GenerateForm1200DataIn;
 import com.bcs.p3s.display.form1200.PageDescriptionEnum;
 import com.bcs.p3s.display.form1200.PageDescriptionTool;
 import com.bcs.p3s.display.form1200.PageDescriptionUI;
@@ -39,6 +40,7 @@ import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.P3SException;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 
 
 @Service("Form1200Service")
@@ -248,6 +250,119 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	
 	
 	
+//	/**
+//	 * User has entered the Form1200 questions, & chosen to SAVE the E-PCT application, & thus generate the E-PCT review PDF
+//	 * @param patentId
+//	 * @param clientRef
+//	 * @param totalClaims
+//	 * @param isYear3RenewalPaying
+//	 * @param totalPages
+//	 * @param extensionStatesUI
+//	 * @param validationStatesUI
+//	 * @param pageDescriptionUI
+//	 */
+//	@Override
+//	public Form1200SavedData saveNewForm1200details(long  patentId, String clientRef, long totalClaims, boolean isYear3RenewalPaying, long totalPages, 
+//			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI, P3SUser me) 
+//	{
+//		String err = PREFIX+"saveForm1200details("+patentId+") ";
+//		log().debug(err+" invoked");
+//		
+//		checkForm1200AsEntered4MissingData(patentId, err, totalClaims, totalPages, extensionStatesUI, validationStatesUI, pageDescriptionUI);
+//		// No exceptions anticipted, so pass any up to controller
+//
+//		Patent patent = Patent.findPatent(patentId);
+//
+//		// This methods need to: create Form1200Fee; create Epct, persist both & wire-up, then gen PDF, the gen table 2.2b data to return
+//		
+//		// Note: Ignore any existing E-PCT record. If it exists, would be a failed payment
+//		
+//		// Form1200Fee  : access the existing code for populating this
+//	    PatentService patentService = new PatentServiceImpl(session);
+//	    PatentV2UI patentV2UI = patentService.getPatentInfo(patentId, session);
+//		EpctEngine epctEngine = new EpctEngine(patentV2UI); // This needs invoking here, to calculate dates PRIOR to populating epct. But don't invoke pricing until AFTER epct populated 
+//
+//		Epct epct = new Epct();
+//		
+//		CountryStatesUtil countryStatesUtil = new CountryStatesUtil();
+//		PageDescriptionTool pageDescriptionTool = new PageDescriptionTool();
+//		// Cannot do this ! (Hence below workaround)
+//		// The method listAbstractStates2commaSeparatedString(List<AbstractState>) in the type CountryStatesUtil is not applicable for the arguments (List<ExtensionStateUI>)
+//		//epct.setExtensionStates(countryStatesUtil.listAbstractStates2commaSeparatedString(extensionStatesUI));
+//
+//		epct.setExtensionStates(countryStatesUtil.listSelectedExtensionStatesUI2commaSeparatedString(extensionStatesUI));
+//		epct.setValidationStates(countryStatesUtil.listSelectedValidationStatesUI2commaSeparatedString(validationStatesUI));
+//		epct.setTotalClaims( (int) totalClaims);			
+//		epct.setTotalPages( (int) totalPages);
+//
+//		PageDescriptionUI descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Description);
+//		epct.setDescriptionStartPage(new Integer(descFromTo.getTypeStart()));
+//		epct.setDescriptionEndPage(new Integer(descFromTo.getTypeEnd()));
+//
+//		descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Claims);
+//		epct.setClaimsStartPage(new Integer(descFromTo.getTypeStart()));
+//		epct.setClaimsEndPage(new Integer(descFromTo.getTypeEnd()));
+//
+//		descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Drawings);
+//		epct.setDrawingsStartPage(new Integer(descFromTo.getTypeStart()));
+//		epct.setDrawingsEndPage(new Integer(descFromTo.getTypeEnd()));
+//
+//		boolean isYear3RenewalOptional = epctEngine.isRenewalFeeOptional();
+//		boolean isPayingOptionalYr3Renewal = false;
+//		if (isYear3RenewalOptional && isYear3RenewalPaying) isPayingOptionalYr3Renewal = true; 
+//		epct.setIsYear3RenewalDue(isYear3RenewalOptional);
+//		epct.setIsYear3RenewalPaying(isPayingOptionalYr3Renewal);
+//		epct.setEpctSubmittedDate(null);
+//		
+//		epct.setEpctApplicationExpiryDate(epctEngine.getRedStartDate());
+//		epct.setEpctStatus(Form1200StatusEnum.AWAIT_PDF_GEN_START);
+//		epct.setCreatedBy(me);
+//		epct.setCreatedDate(new Date());
+//
+//		epctEngine.calcEpctPersistPricingOnly(epct);
+//		Form1200Fee form1200Fee = epctEngine.getFee(); // this'll be correctly populated, even if a failed Epct exists
+//		
+//		
+//		// Prepare for persist
+//		form1200Fee.ensureNoNulls();
+//		
+//		
+//		// Persist. Do the 3+step / inc. wire
+//		form1200Fee = form1200Fee.persist();
+//		
+//		epct.setPatent(patent);
+//		
+//		epct.setForm1200Fee(form1200Fee);
+//		epct.setForm1200(null);
+//		epct = epct.persist();
+//		
+//		form1200Fee.setEpct(epct);
+//		form1200Fee.merge();
+//
+//		patent.setEpctStatus(epct.getEpctStatus());
+//		patent.setEpctNotAvailableReason(null);
+//		patent.merge();
+//
+//		// generate the PDF
+//		// This will be done by cron
+//		
+//		// -----------------------------------------------------------------------------------
+//		// Prepare the table 2.2b data to return to FE
+//		// Required data: patentId, EP_ApplicationNumber, form1200PdfUrl, form1200FeeUI. i.e. a Form1200SavedData
+//		Form1200SavedData form1200SavedData = new Form1200SavedData();
+//		form1200SavedData.setPatentId(patentId);
+//		form1200SavedData.setEP_ApplicationNumber(patent.getEP_ApplicationNumber());
+//		form1200SavedData.setForm1200PdfUrl(null); // It hasn't even Started being created yet
+//		Form1200FeeUI form1200FeeUI = new Form1200FeeUI(form1200Fee);
+//		form1200SavedData.setForm1200FeeUI(form1200FeeUI);
+//			
+//			
+//		return form1200SavedData;
+//	}
+
+	
+	
+	// zaph below copy of above
 	/**
 	 * User has entered the Form1200 questions, & chosen to SAVE the E-PCT application, & thus generate the E-PCT review PDF
 	 * @param patentId
@@ -260,15 +375,23 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	 * @param pageDescriptionUI
 	 */
 	@Override
-	public Form1200SavedData saveNewForm1200details(long  patentId, String clientRef, long totalClaims, boolean isYear3RenewalPaying, long totalPages, 
-			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI, P3SUser me) 
+	public Form1200SavedData saveNewForm1200details(GenerateForm1200DataIn generateForm1200DataIn, P3SUser me)
 	{
-		String err = PREFIX+"saveForm1200details("+patentId+") ";
+		if (generateForm1200DataIn==null || me==null) throw new P3SRuntimeException("passed a null!");
+		
+		String err = PREFIX+"saveForm1200details("+generateForm1200DataIn.getPatentId()+") ";
 		log().debug(err+" invoked");
 		
-		checkForm1200AsEntered4MissingData(patentId, err, totalClaims, totalPages, extensionStatesUI, validationStatesUI, pageDescriptionUI);
-		// No exceptions anticipted, so pass any up to controller
+	//	checkForm1200AsEntered4MissingData(patentId, err, totalClaims, totalPages, extensionStatesUI, validationStatesUI, pageDescriptionUI);
 
+		checkForm1200AsEntered4MissingData(generateForm1200DataIn.getPatentId(), err, generateForm1200DataIn.getTotalClaims(),
+				generateForm1200DataIn.getTotalPages(), generateForm1200DataIn.getExtensionStatesUI(), generateForm1200DataIn.getValidationStatesUI(),
+				generateForm1200DataIn.getPageDescriptionUI() );
+		
+		
+		// No exceptions anticipted, so pass any up to controller
+		
+		long patentId = generateForm1200DataIn.getPatentId();
 		Patent patent = Patent.findPatent(patentId);
 
 		// This methods need to: create Form1200Fee; create Epct, persist both & wire-up, then gen PDF, the gen table 2.2b data to return
@@ -288,11 +411,12 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		// The method listAbstractStates2commaSeparatedString(List<AbstractState>) in the type CountryStatesUtil is not applicable for the arguments (List<ExtensionStateUI>)
 		//epct.setExtensionStates(countryStatesUtil.listAbstractStates2commaSeparatedString(extensionStatesUI));
 
-		epct.setExtensionStates(countryStatesUtil.listSelectedExtensionStatesUI2commaSeparatedString(extensionStatesUI));
-		epct.setValidationStates(countryStatesUtil.listSelectedValidationStatesUI2commaSeparatedString(validationStatesUI));
-		epct.setTotalClaims( (int) totalClaims);			
-		epct.setTotalPages( (int) totalPages);
+		epct.setExtensionStates(countryStatesUtil.listSelectedExtensionStatesUI2commaSeparatedString(generateForm1200DataIn.getExtensionStatesUI()));
+		epct.setValidationStates(countryStatesUtil.listSelectedValidationStatesUI2commaSeparatedString(generateForm1200DataIn.getValidationStatesUI()));
+		epct.setTotalClaims( (int) generateForm1200DataIn.getTotalClaims());			
+		epct.setTotalPages( (int) generateForm1200DataIn.getTotalPages());
 
+		List<PageDescriptionUI> pageDescriptionUI = generateForm1200DataIn.getPageDescriptionUI();
 		PageDescriptionUI descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Description);
 		epct.setDescriptionStartPage(new Integer(descFromTo.getTypeStart()));
 		epct.setDescriptionEndPage(new Integer(descFromTo.getTypeEnd()));
@@ -307,7 +431,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 
 		boolean isYear3RenewalOptional = epctEngine.isRenewalFeeOptional();
 		boolean isPayingOptionalYr3Renewal = false;
-		if (isYear3RenewalOptional && isYear3RenewalPaying) isPayingOptionalYr3Renewal = true; 
+		if (isYear3RenewalOptional && generateForm1200DataIn.isYear3RenewalPaying()) isPayingOptionalYr3Renewal = true; 
 		epct.setIsYear3RenewalDue(isYear3RenewalOptional);
 		epct.setIsYear3RenewalPaying(isPayingOptionalYr3Renewal);
 		epct.setEpctSubmittedDate(null);
@@ -357,6 +481,18 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 			
 		return form1200SavedData;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

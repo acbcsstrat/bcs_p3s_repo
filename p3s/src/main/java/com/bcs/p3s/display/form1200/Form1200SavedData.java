@@ -3,6 +3,8 @@ package com.bcs.p3s.display.form1200;
 import com.bcs.p3s.display.Form1200FeeUI;
 
 /**
+ * An object to hold the v2.1 API 2.2 (Generate & Save FORM1200) Outgoing Response data
+ * 
  * Collects together the data to send back to the FE when the customer has 
  * completed entering the form1200 questions - & pressed the save/generatePdf button
  * 

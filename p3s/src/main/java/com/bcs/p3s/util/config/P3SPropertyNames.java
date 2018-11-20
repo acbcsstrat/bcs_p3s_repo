@@ -106,5 +106,6 @@ public interface P3SPropertyNames {
 	
 	
 	
-	
+	// Dev properties 
+	public static final String TOLERATE_FE_DATA_MISMATCH = "tolerate_fe_data_mismatch"; // Below can be tmp true to aid FE & BEcontroller dev (security checks remain)
 }

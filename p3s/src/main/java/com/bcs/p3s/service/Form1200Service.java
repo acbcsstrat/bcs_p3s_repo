@@ -8,6 +8,7 @@ import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
 import com.bcs.p3s.display.form1200.Form1200SavedData;
+import com.bcs.p3s.display.form1200.GenerateForm1200DataIn;
 import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
@@ -69,9 +70,13 @@ public interface Form1200Service {
 	 * @param validationStatesUI
 	 * @param pageDescriptionUI
 	 */
-	public Form1200SavedData saveNewForm1200details(long  patentId, String clientRef, long totalClaims, boolean isYear3RenewalPaying, long totalPages, 
-			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI, P3SUser me);
+//	public Form1200SavedData saveNewForm1200details(long  patentId, String clientRef, long totalClaims, boolean isYear3RenewalPaying, long totalPages, 
+//			List<ExtensionStateUI> extensionStatesUI, List<ValidationStateUI> validationStatesUI, List<PageDescriptionUI> pageDescriptionUI, P3SUser me);
+	
+	public Form1200SavedData saveNewForm1200details(GenerateForm1200DataIn generateForm1200DataIn, P3SUser me);
 
+	
+	
 	/**
 	 * Delete a persisted Epct
 	 * Can only delete Epcts where: no processing is in progress or has occurred
