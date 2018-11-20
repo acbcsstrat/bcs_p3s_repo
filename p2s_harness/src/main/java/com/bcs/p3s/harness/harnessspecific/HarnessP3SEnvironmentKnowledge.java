@@ -33,7 +33,8 @@ public class HarnessP3SEnvironmentKnowledge extends BcsLogger {
 		if ("CCP007".equals(host) ) {
 			// C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/
 			//path = "C:/gitrepos/github/project-repo/cron/cron/src/main/resources/";
-			path = "C:/dev64/maven.1520878637375/p3s/src/main/resources/";
+			//path = "C:/dev64/maven.1520878637375/p3s/src/main/resources/";
+			path = "C:/gitrepos/github/project-repo/p3s_harness_v2.1/p2s_harness/src/main/resources/";  
 		}
 		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/harness/WEB-INF/classes/";

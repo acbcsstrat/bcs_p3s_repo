@@ -19,7 +19,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 
 	public static final String DATABASECONFIGFILENAME = "database.properties";
 	public static final String BUILDINFO_FILENAME = "buildinfo.properties";
-	public              String P3S_PROPERTYFILE_FILENAME = "p3s.properties";
+	public              String P3S_PROPERTYFILE_FILENAME = "harness.properties";
 
 //	public static final String PROPERTYFILENAME = "PatentExpressway.properties";
 //	public static final String PROPERTYFILEDEFAULTLOCATION = "/utils";
@@ -68,7 +68,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// path = defaultpath; // now redundant, but shows purpose of defaultpath 
 			// path = "C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";	// If running from war 	
 			//path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse
-			path = "C:/dev64/maven.1520878637375/p2s_harness/src/main/resources/META-INF/spring/";  
+			//path = "C:/dev64/maven.1520878637375/p2s_harness/src/main/resources/META-INF/spring/";  
+			path = "C:/gitrepos/github/project-repo/p3s_harness_v2.1/p2s_harness/src/main/resources/META-INF/spring/";  
 		}
 		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
@@ -145,7 +146,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("CCP007".equals(host) ) {
 			// C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/
 			//path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/";
-			path = "C:/dev64/maven.1520878637375/p2s_harness/src/main/resources/";
+			//path = "C:/dev64/maven.1520878637375/p2s_harness/src/main/resources/";
+			path = "C:/gitrepos/github/project-repo/p3s_harness_v2.1/p2s_harness/src/main/resources/";  
 		}
 		if ("nodea".equals(host) || "nodeb".equals(host)) {
 			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/";
