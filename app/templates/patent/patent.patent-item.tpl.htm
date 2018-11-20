@@ -1,0 +1,27 @@
+<div data-ng-show="$ctrl.loading" class="animate-show">
+	<div class="row m-b-md">
+		<div class="col-xl-12 text-center">
+			<img src="assets/imgs/icons/spinner-loader.gif">
+		</div>
+	</div>
+</div>
+<div data-ng-show="$ctrl.patentLoaded" class="animate-show">
+	<div class="row m-b-md">
+		<div class="col-xl-12">
+			<nav class="navbar secondary-view-nav">
+				<ul class="navbar-nav secondary-view-nav__list">
+					<li class="secondary-view-nav__nav-item" data-ng-click="$ctrl.activePatentItemMenu = 'Patent Info'">
+						<a class="pill-radius secondary-view-nav__nav-link" data-ui-sref-active="{'active': 'portfolio.patent.patent-info'}" data-ui-sref="portfolio.patent.patent-info">Patent Info</a><!-- {} acts as ng-class condition to add state if active state is portfolio.patent.patent-info or portfolio.patent.euro-pct and any of their child states-->
+					</li>
+					<li class="secondary-view-nav__nav-item" data-ng-click="$ctrl.activePatentItemMenu = 'Cost Analysis'; $ctrl.loadChart()">
+						<a class="pill-radius secondary-view-nav__nav-link" data-ui-sref-active="{'active': 'portfolio.patent.euro-pct'}" data-ui-sref="portfolio.patent.euro-pct.info">Euro-PCT</a> <!--add   data-ng-disabled="$ctrl.serviceAvailable('Form1200')"-->
+					</li>
+					<li class="secondary-view-nav__nav-item" data-ng-click="$ctrl.activePatentItemMenu = 'Renewal History'">
+						<a class="pill-radius secondary-view-nav__nav-link"  data-ui-sref-active="{'active': 'portfolio.patent.renewal'}" data-ng-disabled="$ctrl.serviceAvailable('Renewal')" data-ui-sref="portfolio.patent.renewal.info">Renewal</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<div ui-view></div>
+</div>
