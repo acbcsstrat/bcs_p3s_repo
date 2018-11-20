@@ -34,6 +34,7 @@ function organiseTextService(coreService) {
 
     var availableStatuses = [
         {text: 'Show price', uiText: 'Open for Renewal'},
+        {text: 'Renewal in place', uiText: 'Renewal In Place'},
         {text: 'No renewal needed', uiText: 'No Renewal Needed'},
         {text: 'EPO Instructed', uiText: 'EPO Instructed'},
         {text: 'Payment in progress', uiText: 'Payment in Progress'},
