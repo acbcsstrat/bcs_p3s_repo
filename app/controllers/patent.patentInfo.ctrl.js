@@ -7,7 +7,7 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
     var vm = this;
 
     vm.patent = patent;
-    vm.dirFeeBreakdown = dirFeeBreakdown;
+    // vm.dirFeeBreakdown = dirFeeBreakdown;
     vm.fetchItemTransaction = fetchItemTransaction;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
@@ -15,10 +15,10 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
     vm.editItem = editItem;
     vm.doneEditing = doneEditing;
     vm.getStatus = getStatus;
-    // vm.currentStatus = currentStatus;
+
     vm.editing=[];
     vm.statusesAvailable = [];
-    
+
     if(organiseTextService.actionStatus(patent.epctStatus)) {
         vm.statusesAvailable.push(patent.epctStatus)
     }
@@ -30,60 +30,133 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
         return organiseTextService.uiStatus(text);
     }
 
+    console.log(patent)
+
     vm.$onInit = function() {
+        patent.availableFee = {};
+ 
         if(patent.renewalFeeUI !== null) {
-            var renewFee = patent.renewalFeeUI;
-            renewFee.officialFeesUSD = (function(){
+            patent.availableFee.savings = (function(){
+                return patent.portfolioUI.serviceList[0].nextStageCostUSD - patent.portfolioUI.serviceList[0].currentStageCostUSD;
+            }())
+            patent.availableFee.costBandEndDateUI = patent.portfolioUI.serviceList[0].costBandEndDateUI;  
+            patent.availableFee.title = 'Regional Renewal';
+            patent.availableFee.costHistoryUI = patent.renewalFeeUI.costHistoryUI;
+            patent.availableFee.fxRate = patent.renewalFeeUI.fxRate;
+            patent.availableFee.subTotalUSD = patent.renewalFeeUI.subTotalUSD;
+            patent.availableFee.subTotalEUR = patent.renewalFeeUI.subTotalEUR;    
+            patent.availableFee.officialFeesUSD = (function(){
                 var total = 0;
-                total += renewFee.renewalFeeUSD;
-                if(renewFee.extensionFeeUSD !== null) {
-                    total += renewFee.extensionFeeUSD;
+                total += patent.renewalFeeUI.renewalFeeUSD;
+                if(patent.renewalFeeUI.extensionFeeUSD !== 0) {
+                    total += patent.renewalFeeUI.extensionFeeUSD;
                 }
                 return total;
             }())
-            renewFee.officialFeesEUR = (function(){
+            patent.availableFee.officialFeesEUR = (function(){
                 var total = 0;
-                total += renewFee.renewalFeeEUR;
-                if(renewFee.extensionFeeEUR !== null) {
-                    total += renewFee.extensionFeeEUR;
+                total += patent.renewalFeeUI.renewalFeeEUR;
+                if(patent.renewalFeeUI.extensionFeeEUR !== 0) {
+                    total += patent.renewalFeeUI.extensionFeeEUR;
                 }
                 return total;
             }())
-            renewFee.ppFeesUSD = (function(){
+           patent.availableFee.ppFeesUSD = (function(){
                 var total = 0;
-                total += renewFee.processingFeeUSD;
-                if(renewFee.expressFeeUSD !== null) {
-                    total += renewFee.expressFeeUSD;
+                total += patent.renewalFeeUI.processingFeeUSD;
+                if(patent.renewalFeeUI.expressFeeUSD !== 0) {
+                    total += patent.renewalFeeUI.expressFeeUSD;
                 }
-                if(renewFee.latePayPenaltyUSD !== null) {
-                    total += renewFee.latePayPenaltyUSD;
+                if(patent.renewalFeeUI.latePayPenaltyUSD !== 0) {
+                    total += patent.renewalFeeUI.latePayPenaltyUSD;
                 }
-                if(renewFee.urgentFeeUSD !== null) {
-                    total += renewFee.urgentFeeUSD
+                if(patent.renewalFeeUI.urgentFeeUSD !== 0) {
+                    total += patent.renewalFeeUI.urgentFeeUSD
                 }
                 return total;
             }())
-            renewFee.ppFeesEUR = (function(){
+            patent.availableFee.ppFeesEUR = (function(){
                 var total = 0;
-                total += renewFee.processingFeeEUR;
-                if(renewFee.expressFeeEUR !== null) {
-                    total += renewFee.expressFeeEUR;
+                total += patent.renewalFeeUI.processingFeeEUR;
+                if(patent.renewalFeeUI.expressFeeEUR !== 0) {
+                    total += patent.renewalFeeUI.expressFeeEUR;
                 }
-                if(renewFee.latePayPenaltyEUR !== null) {
-                    total += renewFee.latePayPenaltyEUR;
+                if(patent.renewalFeeUI.latePayPenaltyEUR !== 0) {
+                    total += patent.renewalFeeUI.latePayPenaltyEUR;
                 }
-                if(renewFee.urgentFeeEUR) {
-                    total += renewFee.urgentFeeEUR
+                if(patent.renewalFeeUI.urgentFeeEUR !== 0) {
+                    total += patent.renewalFeeUI.urgentFeeEUR
                 }
                 return total;
-            }())            
-            
+            }())
         }
+
+        if(patent.form1200FeeUI !== null) {
+            patent.availableFee.savings = (function(){
+                return patent.portfolioUI.serviceList[0].nextStageCostUSD - patent.portfolioUI.serviceList[0].currentStageCostUSD;
+            }())
+            patent.availableFee.costBandEndDateUI = patent.portfolioUI.serviceList[0].costBandEndDateUI;             
+            patent.availableFee.title = 'Form 1200';
+            patent.availableFee.costHistoryUI = patent.form1200FeeUI.costHistoryUI;
+            patent.availableFee.fxRate = patent.form1200FeeUI.fxRate;
+            patent.availableFee.subTotalUSD = patent.form1200FeeUI.subTotalUSD;
+            patent.availableFee.subTotalEUR = patent.form1200FeeUI.subTotalEUR;
+            patent.availableFee.costBandEndDate = patent.form1200FeeUI.subTotalEUR;
+            patent.availableFee.officialFeesUSD = (function(){
+                var total = 0;
+                total += patent.form1200FeeUI.filingFeeUSD;
+                total += patent.form1200FeeUI.examinationFeeUSD;
+                total += patent.form1200FeeUI.supplementarySearchFeeUSD;
+                total += patent.form1200FeeUI.designationFeeUSD;
+                if(patent.form1200FeeUI.extensionFeeUSD !== 0) {
+                    total += patent.form1200FeeUI.extensionFeeUSD;
+                }
+                return total;
+            }())
+            patent.availableFee.officialFeesEUR = (function(){
+                var total = 0;
+                total += patent.form1200FeeUI.filingFeeEUR;
+                total += patent.form1200FeeUI.examinationFeeEUR;
+                total += patent.form1200FeeUI.supplementarySearchFeeEUR;
+                total += patent.form1200FeeUI.designationFeeEUR;            
+                if(patent.form1200FeeUI.extensionFeeEUR !== 0) {
+                    total += patent.form1200FeeUI.extensionFeeEUR;
+                }
+                return total;
+            }())
+            patent.availableFee.ppFeesUSD = (function(){
+                var total = 0;
+                total += patent.form1200FeeUI.processingFeeUSD;
+                if(patent.form1200FeeUI.expressFeeUSD !== 0) {
+                    console.log('hello')                    
+                    total += patent.form1200FeeUI.expressFeeUSD;
+                }
+                if(patent.form1200FeeUI.urgentFeeUSD !== 0) {
+                    console.log('hello')                    
+                    total += patent.form1200FeeUI.urgentFeeUSD
+                }
+                return total;
+            }())
+            patent.availableFee.ppFeesEUR = (function(){
+                var total = 0;
+                total += patent.form1200FeeUI.processingFeeEUR;
+                if(patent.form1200FeeUI.expressFeeEUR !== 0) {
+                    console.log('hello')
+                    total += patent.form1200FeeUI.expressFeeEUR;
+                }
+                if(patent.form1200FeeUI.urgentFeeEUR !== 0) {
+                    console.log('hello')                    
+                    total += patent.form1200FeeUI.urgentFeeEUR;
+                }
+                return total;
+            }())  
+            
+        }        
     }
 
-    function dirFeeBreakdown() {
-        $state.go('portfolio.patent.renewal.info', {}, {reload: false}); //REVISE TO SEE IF MORE EFFICIENT WAY
-    };
+    // function dirFeeBreakdown() {
+    //     $state.go('portfolio.patent.renewal.info', {}, {reload: false}); //REVISE TO SEE IF MORE EFFICIENT WAY
+    // };
 
     function fetchItemTransaction(id) {
         currentTransactionsService.fetchCurrentTransactions()
