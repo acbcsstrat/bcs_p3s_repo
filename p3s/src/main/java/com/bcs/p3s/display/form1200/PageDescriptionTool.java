@@ -1,5 +1,6 @@
 package com.bcs.p3s.display.form1200;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.bcs.p3s.util.lang.P3SRuntimeException;
@@ -44,6 +45,13 @@ public class PageDescriptionTool {
 		throw new P3SRuntimeException(" No match found for rqd = "+requiredType);
 	}
 	
-	
+	public static PageDescriptionUI extractPageDescriptionUI(LinkedHashMap<String, Object> asMap) {
+		String typeStart = (String) asMap.get("typeStart");
+		String typeEnd =   (String) asMap.get("typeEnd");
+		String rawType =      (String) asMap.get("type");
+		PageDescriptionEnum pde = PageDescriptionEnum.getPageDescriptionEnum(rawType);
+		PageDescriptionUI pdui = new PageDescriptionUI(pde, typeStart, typeEnd); 
+		return pdui;
+	}
 	
 }

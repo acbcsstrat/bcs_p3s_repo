@@ -15,7 +15,7 @@ public class GenerateForm1200DataIn {
 	protected int totalPages;
 	protected List<ExtensionStateUI> extensionStatesUI;
 	protected List<ValidationStateUI>  validationStatesUI;
-	protected List<PageDescriptionUI> pageDescriptionUI;
+	protected List<PageDescriptionUI> pageDescriptionsUI;
 	
 	
 	
@@ -63,10 +63,10 @@ public class GenerateForm1200DataIn {
 	public void setValidationStatesUI(List<ValidationStateUI> validationStatesUI) {
 		this.validationStatesUI = validationStatesUI;
 	}
-	public List<PageDescriptionUI> getPageDescriptionUI() {
-		return pageDescriptionUI;
+	public List<PageDescriptionUI> getPageDescriptionsUI() {
+		return pageDescriptionsUI;
 	}
-	public void setPageDescriptionUI(List<PageDescriptionUI> pageDescriptionUI) {
-		this.pageDescriptionUI = pageDescriptionUI;
+	public void setPageDescriptionsUI(List<PageDescriptionUI> pageDescriptionUI) {
+		this.pageDescriptionsUI = pageDescriptionUI;
 	}
 }

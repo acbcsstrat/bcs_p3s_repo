@@ -1,5 +1,6 @@
 package com.bcs.p3s.display.form1200;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -69,7 +70,12 @@ public class GenerateForm1200Extractor extends Universal {
 					ob = obHashMap.get(thisElement);
 					
 					switch (thisElement) {
-						case "Patent_ID":	generateForm1200DataIn.patentId = castInteger(ob, thisElement);
+						//case "Patent_ID":	generateForm1200DataIn.patentId = castInteger(ob, thisElement);
+						case "id":			generateForm1200DataIn.patentId = castInteger(ob, thisElement);
+											break;
+
+						case "EP_ApplicationNumber":	
+											// IGNORE. use 'id' (=patentId)
 											break;
 
 						case "clientRef":	generateForm1200DataIn.clientRef = castString(ob, thisElement);
@@ -97,7 +103,16 @@ public class GenerateForm1200Extractor extends Universal {
 													Object obListElement = oblist.get(0);
 													log().debug("The 1st element in the "+thisElement+"list is of type "+obListElement.getClass().getName());
 												}
-												generateForm1200DataIn.extensionStatesUI = (List<ExtensionStateUI>) ob;
+												List<ExtensionStateUI> extensionStateUIs = new ArrayList<ExtensionStateUI>();
+												LinkedHashMap<String,Object> tmp = null;
+												for (Object obItem : oblist) {
+													tmp = (LinkedHashMap<String,Object>) obItem;
+													ExtensionStateUI esUi = new ExtensionStateUI();
+													esUi.extractStateUI(tmp);
+													extensionStateUIs.add(esUi);
+												}
+												//generateForm1200DataIn.extensionStatesUI = (List<ExtensionStateUI>) ob; //fails later
+												generateForm1200DataIn.extensionStatesUI = extensionStateUIs;
 											} else {
 												log().debug("Is NOT a List. so more reporting, but NOT attempt populate ...........................");
 												if (ob instanceof String) { 
@@ -132,7 +147,16 @@ public class GenerateForm1200Extractor extends Universal {
 												Object obListElement = oblist.get(0);
 												log().debug("The 1st element in the "+thisElement+"list is of type "+obListElement.getClass().getName());
 											}
-											generateForm1200DataIn.validationStatesUI = (List<ValidationStateUI>) ob;
+											List<ValidationStateUI> validationStateUIs = new ArrayList<ValidationStateUI>();
+											LinkedHashMap<String,Object> tmp = null;
+											for (Object obItem : oblist) {
+												tmp = (LinkedHashMap<String,Object>) obItem;
+												ValidationStateUI vsUi = new ValidationStateUI();
+												vsUi.extractStateUI(tmp);
+												validationStateUIs.add(vsUi);
+											}
+											//generateForm1200DataIn.validationStatesUI = (List<ValidationStateUI>) ob; /fails later
+											generateForm1200DataIn.validationStatesUI = validationStateUIs;
 										} else {
 											log().debug("Is NOT a List. so more reporting, but NOT attempt populate ...........................");
 											if (ob instanceof String) { 
@@ -155,7 +179,7 @@ public class GenerateForm1200Extractor extends Universal {
 										else throw new P3SRuntimeException(eMsg, e);
 									}
 											
-						case "pageDescriptionUI":	
+						case "pageDescriptionsUI":	
 									try {
 										if (ob instanceof List<?>) { // ALL this needs tidy once proven
 											// hooray
@@ -167,7 +191,16 @@ public class GenerateForm1200Extractor extends Universal {
 												Object obListElement = oblist.get(0);
 												log().debug("The 1st element in the "+thisElement+"list is of type "+obListElement.getClass().getName());
 											}
-											generateForm1200DataIn.pageDescriptionUI = (List<PageDescriptionUI>) ob;
+	
+											List<PageDescriptionUI> pageDescriptionUIs = new ArrayList<PageDescriptionUI>();
+											LinkedHashMap<String,Object> tmp = null;
+											for (Object obItem : oblist) {
+												tmp = (LinkedHashMap<String,Object>) obItem;
+												PageDescriptionUI pdui = PageDescriptionTool.extractPageDescriptionUI( tmp ); 
+												pageDescriptionUIs.add(pdui);
+											}
+											//generateForm1200DataIn.pageDescriptionUI = (List<PageDescriptionUI>) ob;
+											generateForm1200DataIn.setPageDescriptionsUI(pageDescriptionUIs);
 										} else {
 											log().debug("Is NOT a List. so more reporting, but NOT attempt populate ...........................");
 											if (ob instanceof String) { 
@@ -191,7 +224,7 @@ public class GenerateForm1200Extractor extends Universal {
 									}
 										
 
-						default: 	log().warn(CLASSNAME+".extractGenerateForm1200DataIn()  Switch statement hit default !!!");
+						default: 	log().warn(CLASSNAME+".extractGenerateForm1200DataIn()  Switch statement hit default !!!   Not recognised param '"+thisElement+"'");
 						            break;
 					}  // end of : switch
 				}  // end of for loop
@@ -219,38 +252,41 @@ public class GenerateForm1200Extractor extends Universal {
 	}
 	
 	protected String castString(Object o, String msg) {
-		verbose("castString invoked for "+msg);
 		String ret = "unset";
 		if (o instanceof String) {
 			ret = (String) o;
 		} 
 		else {
+			verbose("castString invoked for "+msg);
 			failed("castString() : Object "+msg+" was NOT of type String. Was : "+((o==null) ? "null" : o.getClass().getName()));
 		}
+		verbose("castString invoked for "+msg+"     Result was '"+ret+"'");
 		return ret;
 	}
 	protected Integer castInteger(Object o, String msg) {
-		verbose("castInteger invoked for "+msg);
 		Integer ret = new Integer("-1");
 		if (o instanceof Integer) {
 			ret = (Integer) o;
 		} 
 		else {
+			verbose("castInteger invoked for "+msg);
 			String sMsg = ""; if (o instanceof String) sMsg="It WAS a String!  val is '"+(String) o+"'";
 			failed("castInteger() : Object "+msg+" was NOT of type Integer. Was : "+((o==null) ? "null" : o.getClass().getName())+sMsg);
 		}
+		verbose("castInteger invoked for "+msg+"     Result was '"+ret+"'");
 		return ret;
 	}
 	protected Boolean castBoolean(Object o, String msg) {
-		verbose("castBoolean invoked for "+msg);
 		Boolean ret = false;
 		if (o instanceof Boolean) {
 			ret = (Boolean) o;
 		} 
 		else {
+			verbose("castBoolean invoked for "+msg);
 			String sMsg = ""; if (o instanceof String) sMsg="It WAS a String!  val is '"+(String) o+"'";
 			failed("castBoolean() : Object "+msg+" was NOT of type Boolean. Was : "+((o==null) ? "null" : o.getClass().getName())+sMsg);
 		}
+		verbose("castBoolean invoked for "+msg+"     Result was '"+ret+"'");
 		return ret;
 	}
 

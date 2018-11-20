@@ -30,7 +30,6 @@ import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.engine.DummyForm1200Engine;
-import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.service.Form1200Service;
@@ -406,7 +405,7 @@ public class Form1200RestController extends Universal {
 				form1200SavedData = form1200Service.saveNewForm1200details(generateForm1200DataIn, me);
 			
 			} catch (Exception e) {
-				// another zaphod swallow fro FE
+				// another zaphod swallow for FE
 				log().error("SWALLOWED exception whilst PROCESSING the data entered");
 				log().error("exception was ",e);
 			}

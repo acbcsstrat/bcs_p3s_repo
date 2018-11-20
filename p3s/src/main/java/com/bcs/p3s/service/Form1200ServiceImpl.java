@@ -386,7 +386,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 
 		checkForm1200AsEntered4MissingData(generateForm1200DataIn.getPatentId(), err, generateForm1200DataIn.getTotalClaims(),
 				generateForm1200DataIn.getTotalPages(), generateForm1200DataIn.getExtensionStatesUI(), generateForm1200DataIn.getValidationStatesUI(),
-				generateForm1200DataIn.getPageDescriptionUI() );
+				generateForm1200DataIn.getPageDescriptionsUI() );
 		
 		
 		// No exceptions anticipted, so pass any up to controller
@@ -416,7 +416,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		epct.setTotalClaims( (int) generateForm1200DataIn.getTotalClaims());			
 		epct.setTotalPages( (int) generateForm1200DataIn.getTotalPages());
 
-		List<PageDescriptionUI> pageDescriptionUI = generateForm1200DataIn.getPageDescriptionUI();
+		List<PageDescriptionUI> pageDescriptionUI = generateForm1200DataIn.getPageDescriptionsUI();
 		PageDescriptionUI descFromTo = pageDescriptionTool.getPageDescriptionUIofType(pageDescriptionUI, PageDescriptionEnum.Description);
 		epct.setDescriptionStartPage(new Integer(descFromTo.getTypeStart()));
 		epct.setDescriptionEndPage(new Integer(descFromTo.getTypeEnd()));
@@ -436,7 +436,14 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		epct.setIsYear3RenewalPaying(isPayingOptionalYr3Renewal);
 		epct.setEpctSubmittedDate(null);
 		
+//		// Here, EpctEngine has not calculated the RedStartDate
+//		// Calling calcEpctPersistPricingOnly() incurs far more processing than required. Go with it for now
+//		epctEngine.calcEpctPersistPricingOnly(epct);
+
+		
+		epctEngine.calcDatesAndColourOnly();  // to calc RedStartDate
 		epct.setEpctApplicationExpiryDate(epctEngine.getRedStartDate());
+		
 		epct.setEpctStatus(Form1200StatusEnum.AWAIT_PDF_GEN_START);
 		epct.setCreatedBy(me);
 		epct.setCreatedDate(new Date());

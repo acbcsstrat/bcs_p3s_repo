@@ -29,6 +29,13 @@ import com.bcs.p3s.util.lang.Universal;
  *  calcEpctStatusAndReason()
  *  calcEpctPersistPricingOnly()
  *  prepareForm1200Service()
+ *  
+ *  This list should match that just before the constructor (Ultimately replacing it)
+ *  
+ *  181120 When Form1200ServiceImpl:441 requests redStatrt ahd to calcEpctPersistPricingOnly
+ *   is overkill. Perhaps IN FUTURE ? provide that more easily (ie included in constructor, or a simple method?
+ *  
+ *  
  */
 public class EpctEngine extends Universal {
 
@@ -83,6 +90,8 @@ public class EpctEngine extends Universal {
 	 * - calcEpctPersistPricingOnly()
 	 * - calcEpctPersistPricingWithCostAnalysis()
 	 * - prepareForm1200Service() 		[Prepares the Service object. Calculates further prices]
+	 * - calcDatesAndColourOnly()  [calcDatesAndColour() is also called by calcEpctPersistPricingOnly]
+	 * 
 	 * 
 	 * @param patent The patent being processed
 	 */
@@ -199,6 +208,11 @@ public class EpctEngine extends Universal {
 		service.setFailedReason(patent.getEpctNotAvailableReason());
 		
     	return service;
+	}
+
+	
+	public void calcDatesAndColourOnly() {
+		calcDatesAndColour();
 	}
 
 	

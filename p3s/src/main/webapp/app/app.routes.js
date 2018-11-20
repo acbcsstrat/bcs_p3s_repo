@@ -109,6 +109,9 @@ function appRoutes($stateProvider) {
         .state('portfolio.patent.euro-pct', {
             abstract: true,
             templateUrl: 'app/templates/patent/patent.europct.tpl.htm',
+            params: {
+                navigation: 'portfolio'
+            }            
         })
         .state('portfolio.patent.euro-pct.info', {
             templateUrl: 'app/templates/europct/europct.info.tpl.htm',

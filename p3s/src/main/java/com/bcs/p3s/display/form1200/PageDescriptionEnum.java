@@ -7,9 +7,10 @@ public enum PageDescriptionEnum {
 	Drawings; 
 
 	
-	public PageDescriptionEnum getPageDescriptionEnum(String value) {
-		PageDescriptionEnum pageDescriptionEnum = PageDescriptionEnum.valueOf(value);
-		return pageDescriptionEnum;
+	public static PageDescriptionEnum getPageDescriptionEnum(String value) {
+		//PageDescriptionEnum pageDescriptionEnum = PageDescriptionEnum.valueOf(value);
+		//return pageDescriptionEnum; - make threadsafe
+		return PageDescriptionEnum.valueOf(value);
 	}
 	
 }

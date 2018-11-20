@@ -1,5 +1,10 @@
 package com.bcs.p3s.form1200;
 
+import java.util.LinkedHashMap;
+
+import com.bcs.p3s.display.form1200.PageDescriptionEnum;
+import com.bcs.p3s.display.form1200.PageDescriptionUI;
+
 /**
  * Abstract state for 2character Country/States
  *  as used for Form1200 processing
@@ -12,6 +17,16 @@ public abstract class AbstractState {
 
 	
 	
+	public void extractStateUI(LinkedHashMap<String, Object> asMap) {
+		String strStateCode = (String) asMap.get("stateCode");
+		String strStateName = (String) asMap.get("stateName");
+		//String strSelected  = (String) asMap.get("selected");
+		//Boolean boolSelected = new Boolean(strSelected); 
+		Boolean boolSelected = (Boolean) asMap.get("selected");
+		stateCode = strStateCode;
+		stateName = strStateName;
+		isSelected = boolSelected;
+	}
 	
 	
 	// getters & setters
