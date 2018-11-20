@@ -15,8 +15,9 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
     vm.questionsParam =  $stateParams.questions; //questions passed from form1200.intro
     vm.cancel1200 = cancel1200;
     vm.formData = {};
-    vm.loading = true;
-    vm.patentsLoaded = false;
+    vm.formData.isYear3RenewalPaying = false;
+    // vm.loading = true;
+    // vm.patentsLoaded = false;
     vm.entityAccepted = false;
 
     vm.confirmEntity = {
@@ -220,18 +221,21 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
     }
 
     function submitForm1200(data) {
-
+        // console.log(data)
         var arr = sortPageDetails(data);
         vm.formData.pageDescriptionsUI = arr;
         vm.formData.EP_ApplicationNumber = patent.ep_ApplicationNumber;
-
-        form1200Service.submitForm1200(patent.id, vm.formData)
+        vm.formData.id = patent.id
+        vm.formData.totalClaims = parseInt(vm.formData.totalClaims);
+        vm.formData.totalPages = parseInt(vm.formData.totalPages);
+        form1200Service.submitForm1200(vm.formData)
         .then(
             function(response){
+                // console.log(response)
                 $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response}, {reload: false})
             },
             function(errResponse){
-
+                console.log(errResponse)
             }
         )
     }

@@ -20,13 +20,13 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
     console.log($stateParams)
 
     vm.$onInit = function() {
-
-        if($stateParams.form1200 === '') {
-            $state.go('portfolio', {}, {reload: true});
-        } else {
+        console.log($stateParams)
+        // if($stateParams.form1200 === '') {
+        //     $state.go('portfolio', {}, {reload: true});
+        // } else {
             form1200Generating();
             fetchForm1200();           
-        }
+        // }
         
     }
 
