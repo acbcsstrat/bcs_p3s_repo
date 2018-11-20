@@ -47,8 +47,9 @@
 	   <authentication-provider>
             <!--   
             	DISABLE encrypted passwords during Development -->
+            <!-- 
             	<password-encoder ref="bcryptEncoder"/>
-            <!-- -->
+            -->
 		<jdbc-user-service data-source-ref="dataSource"
  
 		   users-by-username-query="

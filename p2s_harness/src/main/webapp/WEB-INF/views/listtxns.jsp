@@ -116,7 +116,7 @@ CHECK: Press <i>Refresh</i> hyperlink, Status should have changed. Also login to
 Press the <i>Followon after EPO Instructed</i> button.
 </li>
 <li>
-(This immediately updates the patent status(s)) 
+(This immediately updates the <b>patent</b> status(s)) 
 </li>
 <li>
 The change is now complete. Login to app & verify. 
@@ -128,7 +128,8 @@ Now wait (days) for the EPO to publish the renewals, whereupon certificate email
 <p/>
 Note: that <i>P3S: EPO Instructed</i> is the ONLY dropdown value you should use in a Production environment. 
 
- 
+<p/>
+<I>dev note: <a href="swappatentnumber.jsp">devPage</a></I> 
 
 
 
