@@ -194,7 +194,7 @@ public class NotificationEngine extends Universal{
 		rDates =  new RenewalDatesEngine().getRenewalDates(patent);
 			
 		if(rDates == null){
-			log().error("Renewal Dates calculation failed for patent[" + patent.getId() +"] with finling dates as " + patent.getFilingDate());
+			log().error("Renewal Dates calculation failed for patent[" + patent.getId() +"] with finling dates as " + patent.getInternationalFilingDate());
 			return colourDates;
 		}
 			
@@ -241,7 +241,7 @@ public class NotificationEngine extends Universal{
 			Calendar calendar = Calendar.getInstance();
 			Long patent_id = eachMapping.getPatent_id();
 			Patent patent = Patent.findPatent(patent_id);
-			calendar.setTime(patent.getFilingDate());
+			calendar.setTime(patent.getInternationalFilingDate());
 			int month = calendar.get(Calendar.MONTH);
 			if(month == 0)
 				janList.add(eachMapping);
@@ -268,7 +268,7 @@ public class NotificationEngine extends Universal{
 			else if(month == 11)
 				decList.add(eachMapping);
 			else
-				log().error("[Patent-"+ patent_id +"] Error calculating filing month for filing Date " + patent.getFilingDate() +".Obtained month as " + month);
+				log().error("[Patent-"+ patent_id +"] Error calculating filing month for filing Date " + patent.getInternationalFilingDate() +".Obtained month as " + month);
 			
 		}
 		

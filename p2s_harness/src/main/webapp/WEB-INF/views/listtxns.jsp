@@ -107,7 +107,7 @@ To indicate that the EPO has been instructed to renew all patents in a transacti
 For that transaction, select <i>P3S: EPO Instructed</i> from the dropdown, then press the Submit button 
 </li>
 <li>
-(This immediately (well, 20 seconds+) updates the Transaction status, but not yet the status of associated patents) 
+(This immediately (well, 20 seconds+) updates the Transaction status, but <b>not yet</b> the status of associated patents) 
 </li>
 <li>
 CHECK: Press <i>Refresh</i> hyperlink, Status should have changed. Also login to app & view Transaction and Patent(s) status

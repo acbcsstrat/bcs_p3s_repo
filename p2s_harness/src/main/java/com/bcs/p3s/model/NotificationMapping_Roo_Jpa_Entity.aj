@@ -24,6 +24,10 @@ privileged aspect NotificationMapping_Roo_Jpa_Entity {
     @Column(name = "version")
     private Integer NotificationMapping.version;
     
+    public NotificationMapping.new() {
+        super();
+    }
+
     public Long NotificationMapping.getId() {
         return this.id;
     }

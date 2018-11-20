@@ -3,15 +3,14 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.CertificateDataOnDemand;
-import com.bcs.p3s.model.Fee;
-import com.bcs.p3s.model.FeeDataOnDemand;
+import com.bcs.p3s.model.Certificate;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.PatentDataOnDemand;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.PaymentDataOnDemand;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.model.RenewalDataOnDemand;
+import com.bcs.p3s.model.RenewalFee;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,21 +36,16 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
     PaymentDataOnDemand RenewalDataOnDemand.paymentDataOnDemand;
     
     @Autowired
-    CertificateDataOnDemand RenewalDataOnDemand.certificateDataOnDemand;
-    
-    @Autowired
-    FeeDataOnDemand RenewalDataOnDemand.feeDataOnDemand;
-    
-    @Autowired
     PatentDataOnDemand RenewalDataOnDemand.patentDataOnDemand;
     
     public Renewal RenewalDataOnDemand.getNewTransientRenewal(int index) {
         Renewal obj = new Renewal();
         setActivePaymentId(obj, index);
-        setFee(obj, index);
+        setCertificate(obj, index);
         setPatent(obj, index);
         setRenewalAttemptsMade(obj, index);
         setRenewalDueDate(obj, index);
+        setRenewalFee(obj, index);
         setRenewalPeriod(obj, index);
         setRenewalStatus(obj, index);
         setRenewalYear(obj, index);
@@ -63,9 +57,9 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
         obj.setActivePaymentId(activePaymentId);
     }
     
-    public void RenewalDataOnDemand.setFee(Renewal obj, int index) {
-        Fee fee = feeDataOnDemand.getRandomFee();
-        obj.setFee(fee);
+    public void RenewalDataOnDemand.setCertificate(Renewal obj, int index) {
+        Certificate certificate = null;
+        obj.setCertificate(certificate);
     }
     
     public void RenewalDataOnDemand.setPatent(Renewal obj, int index) {
@@ -81,6 +75,11 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
     public void RenewalDataOnDemand.setRenewalDueDate(Renewal obj, int index) {
         Date renewalDueDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setRenewalDueDate(renewalDueDate);
+    }
+    
+    public void RenewalDataOnDemand.setRenewalFee(Renewal obj, int index) {
+        RenewalFee renewalFee = null;
+        obj.setRenewalFee(renewalFee);
     }
     
     public void RenewalDataOnDemand.setRenewalPeriod(Renewal obj, int index) {

@@ -50,7 +50,7 @@ public class RenewalUI extends Renewal {
     private String certificateUrl;
     private String invoiceUrl;
     private PatentUI patentUI;
-    private FeeUI feeUI;
+    private RenewalFeeUI feeUI;
 
     
     
@@ -107,8 +107,8 @@ public class RenewalUI extends Renewal {
 		}
 
 		//Get the FeeUI
-		FeeUI feeUI = new FeeUI(renewal.getFee());
-		this.setFee(null);
+		RenewalFeeUI feeUI = new RenewalFeeUI(renewal.getRenewalFee());
+		this.setRenewalFee(null);
 		this.setFeeUI(feeUI);
 		
 		//Get the paymentUI details
@@ -195,11 +195,11 @@ public class RenewalUI extends Renewal {
 		this.patentUI = patentUI;
 	}
 
-	public FeeUI getFeeUI() {
+	public RenewalFeeUI getFeeUI() {
 		return feeUI;
 	}
 
-	public void setFeeUI(FeeUI feeUI) {
+	public void setFeeUI(RenewalFeeUI feeUI) {
 		this.feeUI = feeUI;
 	}
 	

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.bcs.p3s.enump3s.InvoiceTypeEnum;
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Payment;
@@ -80,7 +80,7 @@ public abstract class AbstractInvoice extends Universal {
 		// Rate stored in Fee. There may be multiple Fees per transaction, but all will have the same rate
 		String rate = "";
 		List<Renewal> renewals = payment.getRenewals();
-		Fee aFee = renewals.get(0).getFee();
+		RenewalFee aFee = renewals.get(0).getRenewalFee();
 		BigDecimal fxRateBD = aFee.getFxRate().setScale(5, BigDecimal.ROUND_HALF_UP);
 		rate = fxRateBD.toString();
 		return rate;

@@ -8,7 +8,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.RenewalFee;
 
 /**
  * Created for storing non DB data being calculated prior to display the dash board
@@ -24,7 +24,7 @@ public class PatentExtendedData {
 	
 	private BigDecimal currentRenewalCost;
 	
-	private Fee fee;
+	private RenewalFee fee;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MMM-dd-yyyy")
@@ -70,11 +70,11 @@ public class PatentExtendedData {
 
 	
 
-	public Fee getFee() {
+	public RenewalFee getFee() {
 		return fee;
 	}
 
-	public void setFee(Fee fee) {
+	public void setFee(RenewalFee fee) {
 		this.fee = fee;
 	}
 

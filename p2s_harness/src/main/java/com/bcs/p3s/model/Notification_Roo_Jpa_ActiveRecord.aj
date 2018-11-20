@@ -14,7 +14,7 @@ privileged aspect Notification_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Notification.entityManager;
     
-    public static final List<String> Notification.fieldNames4OrderClauseFilter = java.util.Arrays.asList("title", "defaultOn", "displayOrder", "emailTemplateId", "costbandcolor", "notificationName");
+    public static final List<String> Notification.fieldNames4OrderClauseFilter = java.util.Arrays.asList("title", "defaultOn", "displayOrder", "emailTemplateId", "costbandcolor", "notificationName", "productType");
     
     public static final EntityManager Notification.entityManager() {
         EntityManager em = new Notification().entityManager;

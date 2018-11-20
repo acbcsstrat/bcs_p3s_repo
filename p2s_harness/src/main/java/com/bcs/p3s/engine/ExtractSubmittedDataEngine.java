@@ -189,7 +189,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   	Object ob = newPatentHashMap.get(key);
 			   	if (ob instanceof String) value = (String) ob;
 			   	
-			   	if ("patentApplicationNumber".equals(key.trim())) patent.setPatentApplicationNumber(value);
+			   	if ("patentApplicationNumber".equals(key.trim())) patent.setEP_ApplicationNumber(value);
 			   	if ("title".equals(key.trim())) patent.setTitle(value);
 			   	if ("filingDate".equals(key.trim())) {
 			   		Date itch = null;
@@ -200,7 +200,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   			Long when = new Long((String) ob);
 			   			itch = new Date(when);
 			   		}
-			   		patent.setFilingDate(itch);
+			   		patent.setInternationalFilingDate(itch);
 			   	}
 	
 			   	if ("business".equals(key.trim())) {
@@ -219,7 +219,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   		patent.setShortTitle(value);
 			   		if (ob==null || "NO DATA".equals(value)) patent.setShortTitle("");
 			   	}
-			   	if ("patentPublicationNumber".equals(key.trim())) patent.setPatentPublicationNumber(value);
+			   	if ("patentPublicationNumber".equals(key.trim())) patent.setEP_PublicationNumber(value);
 			   	
 			   	
 			   	if ("renewalYear".equals(key.trim())) {

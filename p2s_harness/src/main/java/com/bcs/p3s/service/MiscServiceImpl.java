@@ -52,7 +52,7 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 		}
 		
 		LoginMessageUI loginMessages = new LoginMessageUI();
-		List<LoginMessage> allSystemMessages = pLoginBean.getUser().getLoginMessagesToDisplay();
+		List<LoginMessage> allSystemMessages = pLoginBean.getUser().getLoginMessagesToInhibit();
 		List<LoginMessage> systemMessages = new ArrayList<LoginMessage>();
 		//List<LoginMessageUI> loginMessagesUI = new ArrayList<LoginMessageUI>();
 		Calendar today = Calendar.getInstance();
@@ -101,7 +101,7 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 			return;
 		}
 		  
-		List<LoginMessage> allMessages = user.getLoginMessagesToDisplay();
+		List<LoginMessage> allMessages = user.getLoginMessagesToInhibit();
 		
 		for(Long id : ids){
 			for(LoginMessage eachMsg : allMessages){
@@ -113,7 +113,7 @@ public class MiscServiceImpl extends ServiceAuthorisationTools implements MiscSe
 			}
 		}
 		
-		user.setLoginMessagesToDisplay(allMessages);
+		user.setLoginMessagesToInhibit(allMessages);
 		user.merge();
 		log().debug("Suppressed messages from user " + ids.toString());
 		return;

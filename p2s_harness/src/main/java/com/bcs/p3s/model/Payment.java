@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bcs.p3s.enump3s.McFailCodeEnum;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
-import com.bcs.p3s.util.lang.Universal;
-
 import javax.validation.constraints.NotNull;
 import javax.persistence.OneToOne;
 import java.util.Date;
@@ -109,7 +107,8 @@ public class Payment {
     private Boolean hasFailed;
 
     /**
-     * If transaction fails, holds 1 of the 3 codes agreed with Moneycorp
+     * If transaction fails, holds 1 of the 3 codes agreed with Moneycorp : 
+     * see P3SAbstractEnum
      */
     private String MC_failCode;
 
@@ -157,32 +156,62 @@ public class Payment {
 
     /**
      */
-    @NotNull
+    //@NotNull Post v1, this NotNull needed be removed
     //Previously was FetchType.EAGER :: Changed to LAZY as it returns children multiple times
     @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private List<Renewal> renewals = new ArrayList<Renewal>();
 
+    /**
+     * Added for v2.1 :  E-PCT / Form1200
+     */
+    @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
+    private List<Epct> epcts = new ArrayList<Epct>();
+
+    
+    
+    
+    
+    
+    
+    
+    
+    // superceded by below
+	//// DIY finder
+	//// Approach: All renewals in a transaction must be from the same business
+	//public static List<Payment> findPaymentsByBusiness(Business business) {
+	//    if (business == null) return null;
+	//    List<Payment> result = new ArrayList<Payment>();
+	//    List<Payment> everyonesPayments = Payment.findAllPayments();
+	//    for (Payment someonesPayment : everyonesPayments) {
+	//        Renewal rrr = null;
+	//        Patent ppp = null;
+	//        Business bbb = null;
+	//        List<Renewal> someonesRenewals = someonesPayment.getRenewals();
+	//        if (someonesRenewals.size() > 0) rrr = someonesRenewals.get(0);
+	//        if (rrr != null) ppp = rrr.getPatent();
+	//        if (ppp != null) {
+	//            bbb = ppp.getBusiness();
+	//            if (bbb != null && (bbb.getId() == business.getId())) {
+	//                result.add(someonesPayment);
+	//            }
+	//        }
+	//    }
+	//    return result;
+	//}
+    
     // DIY finder
-    // Approach: All renewals in a transaction must be from the same business
+    // Approach: For ALL payments, Use Payment:initiatedByUser, locate users business, compare
     public static List<Payment> findPaymentsByBusiness(Business business) {
         if (business == null) return null;
         List<Payment> result = new ArrayList<Payment>();
         List<Payment> everyonesPayments = Payment.findAllPayments();
         for (Payment someonesPayment : everyonesPayments) {
-            Renewal rrr = null;
-            Patent ppp = null;
-            Business bbb = null;
-            List<Renewal> someonesRenewals = someonesPayment.getRenewals();
-            
-            if (someonesRenewals.size() > 0) rrr = someonesRenewals.get(0);
-            if (rrr != null) ppp = rrr.getPatent();
-            if (ppp != null) {
-                bbb = ppp.getBusiness();
-                if (bbb != null && (bbb.getId() == business.getId())) {
-                    result.add(someonesPayment);
-                }
+        	P3SUser aUser = someonesPayment.initiatedByUserId;
+        	long thisPaymentsBusinessId = aUser.getBusiness().getId();
+        	
+            if (thisPaymentsBusinessId == business.getId()) {
+                result.add(someonesPayment);
             }
-
         }
         return result;
     }
@@ -210,7 +239,9 @@ public class Payment {
     }
     
     public void setMC_failCode(String MC_failCode) {
-    	this.MC_failCode = (new McFailCodeEnum(MC_failCode)).toString();
+    	if (MC_failCode==null) this.MC_failCode = null; 
+    	else
+    		this.MC_failCode = (new McFailCodeEnum(MC_failCode)).toString();
     }
 
     

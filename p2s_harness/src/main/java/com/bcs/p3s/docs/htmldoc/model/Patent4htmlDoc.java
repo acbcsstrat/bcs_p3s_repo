@@ -2,7 +2,7 @@ package com.bcs.p3s.docs.htmldoc.model;
 
 import java.math.BigDecimal;
 
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.util.date.DateUtil;
@@ -32,14 +32,14 @@ public class Patent4htmlDoc extends Universal {
 	public Patent4htmlDoc (Renewal renewal) {
 		Patent patent = renewal.getPatent();
 		DateUtil dateUtil = new DateUtil();
-		Fee fee = renewal.getFee();
+		RenewalFee fee = renewal.getRenewalFee();
 		BigDecimal rate = fee.getFxRate();
 		
-		this.applicationNumber = patent.getPatentApplicationNumber();
+		this.applicationNumber = patent.getEP_ApplicationNumber();
 		this.clientRef = patent.getClientRef();
 		this.shortName = patent.getShortTitle();
 		this.title = patent.getTitle();
-		this.filingDate = dateUtil.dateToUSStringWithoutDayOfWeek(patent.getFilingDate());
+		this.filingDate = dateUtil.dateToUSStringWithoutDayOfWeek(patent.getInternationalFilingDate());
 		this.officialRenewalFeeUsd = eurToUsd(fee.getRenewalFee_EUR(), rate).toString();
 		this.officialExtensionFeeUsd = eurToUsd(fee.getExtensionFee_EUR(), rate).toString();
 		this.processingFeeUsd = fee.getProcessingFee_USD().toString();

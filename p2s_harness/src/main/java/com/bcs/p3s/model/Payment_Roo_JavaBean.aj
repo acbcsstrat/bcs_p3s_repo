@@ -3,6 +3,7 @@
 
 package com.bcs.p3s.model;
 
+import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Payment;
@@ -163,6 +164,14 @@ privileged aspect Payment_Roo_JavaBean {
     
     public void Payment.setRenewals(List<Renewal> renewals) {
         this.renewals = renewals;
+    }
+    
+    public List<Epct> Payment.getEpcts() {
+        return this.epcts;
+    }
+    
+    public void Payment.setEpcts(List<Epct> epcts) {
+        this.epcts = epcts;
     }
     
 }

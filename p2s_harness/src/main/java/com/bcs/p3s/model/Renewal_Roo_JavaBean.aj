@@ -4,10 +4,10 @@
 package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.Certificate;
-import com.bcs.p3s.model.Fee;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
+import com.bcs.p3s.model.RenewalFee;
 import java.util.Date;
 
 privileged aspect Renewal_Roo_JavaBean {
@@ -28,12 +28,12 @@ privileged aspect Renewal_Roo_JavaBean {
         this.activePaymentId = activePaymentId;
     }
     
-    public Fee Renewal.getFee() {
-        return this.fee;
+    public RenewalFee Renewal.getRenewalFee() {
+        return this.renewalFee;
     }
     
-    public void Renewal.setFee(Fee fee) {
-        this.fee = fee;
+    public void Renewal.setRenewalFee(RenewalFee renewalFee) {
+        this.renewalFee = renewalFee;
     }
     
     public Certificate Renewal.getCertificate() {

@@ -29,6 +29,9 @@ public class GlobalVariableSole {
     
     /**
      * actual P3S FX Rate EUR->USD
+     * 
+     * Note: RATE figures at BE (Back-End) and in dB & from MC are how-many-dollars-to-buy-one-Euro
+     *  whereas Rate figures provided to the FE are WhatEurosDoes1DollarBuy (i.e. inverted)
      */
     @NotNull
     @Column(precision = 12, scale = 6)
@@ -61,7 +64,7 @@ public class GlobalVariableSole {
 		List<GlobalVariableSole> allGVS = GlobalVariableSole.findAllGlobalVariableSoles();
 		if (allGVS==null || allGVS.size()!=1) {
 			Universal universal = new Universal();
-			universal.logInternalError().fatal("GlobalVariableSole: No Sole GlobalVariableSole record");
+			universal.logInternalError().fatal("findOnlyGlobalVariableSole(): No Sole GlobalVariableSole record");
 		}
 		GlobalVariableSole globalVariableSole = allGVS.get(0); 
         

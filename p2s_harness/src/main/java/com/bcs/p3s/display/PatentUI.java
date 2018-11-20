@@ -87,7 +87,7 @@ public class PatentUI extends Patent {
 	private BigDecimal currentTotalUSD;
 	private BigDecimal fxRate;*/
     
-    private FeeUI feeUI;
+    private RenewalFeeUI feeUI;
 
     
 	List<NotificationUI> allNotificationUIs = new ArrayList<NotificationUI>();
@@ -99,11 +99,11 @@ public class PatentUI extends Patent {
 		this.setId(patent.getId());
 		this.setVersion(patent.getVersion());
 		
-		this.setPatentApplicationNumber(patent.getPatentApplicationNumber());
+		this.setEP_ApplicationNumber(patent.getEP_ApplicationNumber());
 		this.setTitle(patent.getTitle());
-		this.setFilingDate(patent.getFilingDate());
+		this.setInternationalFilingDate(patent.getInternationalFilingDate());
 		this.setPrimaryApplicantName(patent.getPrimaryApplicantName());
-		this.setPatentPublicationNumber(patent.getPatentPublicationNumber());
+		this.setEP_PublicationNumber(patent.getEP_PublicationNumber());
 		this.setClientRef(patent.getClientRef());
 		this.setShortTitle(patent.getShortTitle());
 		this.setEpoPatentStatus(patent.getEpoPatentStatus());
@@ -142,7 +142,7 @@ public class PatentUI extends Patent {
 
 					// Set all the *costUSD & *costEUR fields
 					if (extendedData.getFee()!=null) {
-						FeeUI feeUI = new FeeUI(extendedData.getFee());
+						RenewalFeeUI feeUI = new RenewalFeeUI(extendedData.getFee());
 						this.setFeeUI(feeUI);
 					}
 					break;
@@ -171,7 +171,7 @@ public class PatentUI extends Patent {
 		return res;
 	}
 	public String getFilingDateUI() {
-		String res = (new DateUtil()).dateToUSStringWithDayOfWeek(this.getFilingDate());
+		String res = (new DateUtil()).dateToUSStringWithDayOfWeek(this.getInternationalFilingDate());
 		return res;
 	}
 	public String getCostBandEndDateUI() {
@@ -241,11 +241,11 @@ public class PatentUI extends Patent {
 		this.costBandColour = costBandColour;
 	}
 
-	public FeeUI getFeeUI() {
+	public RenewalFeeUI getFeeUI() {
 		return feeUI;
 	}
 
-	public void setFeeUI(FeeUI feeUI) {
+	public void setFeeUI(RenewalFeeUI feeUI) {
 		this.feeUI = feeUI;
 	}
 
@@ -271,7 +271,9 @@ public class PatentUI extends Patent {
 		//List<Notification> allNotifications = Notification.findAllNotifications();
 		List<Notification> allNotifications = Notification.findAllNotifications();
 		if(!(patent_id == null)){
-			allOnNotifications = new NotificationMapping().getAllPatentNotificationsForUser(patent_id, user_id);
+// This is * HARNESS * so this *UI code for Notifications is unused Legacy - so just avoid this error 
+//			allOnNotifications = new NotificationMapping().getAllPatentNotificationsForUser(patent_id, user_id);
+			allOnNotifications = new ArrayList<Notification>();
 		}
 		else{
 			for(Notification notification : allNotifications){

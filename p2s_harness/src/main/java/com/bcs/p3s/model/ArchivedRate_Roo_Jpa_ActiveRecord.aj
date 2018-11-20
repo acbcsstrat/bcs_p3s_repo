@@ -26,10 +26,6 @@ privileged aspect ArchivedRate_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT COUNT(o) FROM ArchivedRate o", Long.class).getSingleResult();
     }
     
-    public static List<ArchivedRate> ArchivedRate.findAllArchivedRates() {
-        return entityManager().createQuery("SELECT o FROM ArchivedRate o", ArchivedRate.class).getResultList();
-    }
-    
     public static List<ArchivedRate> ArchivedRate.findAllArchivedRates(String sortFieldName, String sortOrder) {
         String jpaQuery = "SELECT o FROM ArchivedRate o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {

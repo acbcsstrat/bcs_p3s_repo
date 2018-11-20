@@ -273,7 +273,7 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 			currentLine = subtemplate;
 			// use existing, unused, fields, but update on each loop/patent 
 			log().debug("acDebug TransactionPopulator 243: (data==null)="+(data==null)+"  (patent==null)="+(patent==null)); // discard once no longer populated with dodgy patent.getID(1L) - acTodo
-			data.setPatentApplicationNumber(patent.getPatentApplicationNumber());
+			data.setPatentApplicationNumber(patent.getEP_ApplicationNumber());
 			data.setPatentShortTitle(patent.getShortTitle());
 			data.setPatentTitle(patent.getTitle());
 			injectPATENT_APPLICATION_NUMBER();

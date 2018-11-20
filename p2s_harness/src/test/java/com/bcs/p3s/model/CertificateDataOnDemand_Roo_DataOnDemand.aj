@@ -5,7 +5,6 @@ package com.bcs.p3s.model;
 
 import com.bcs.p3s.model.Certificate;
 import com.bcs.p3s.model.CertificateDataOnDemand;
-import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.model.RenewalDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ privileged aspect CertificateDataOnDemand_Roo_DataOnDemand {
         setDocPath(obj, index);
         setFilename(obj, index);
         setIssueDate(obj, index);
-        setRenewal(obj, index);
+        setRenewedOnDateExEpo(obj, index);
         return obj;
     }
     
@@ -61,9 +60,9 @@ privileged aspect CertificateDataOnDemand_Roo_DataOnDemand {
         obj.setIssueDate(issueDate);
     }
     
-    public void CertificateDataOnDemand.setRenewal(Certificate obj, int index) {
-        Renewal renewal = renewalDataOnDemand.getSpecificRenewal(index);
-        obj.setRenewal(renewal);
+    public void CertificateDataOnDemand.setRenewedOnDateExEpo(Certificate obj, int index) {
+        Date renewedOnDateExEpo = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        obj.setRenewedOnDateExEpo(renewedOnDateExEpo);
     }
     
     public Certificate CertificateDataOnDemand.getSpecificCertificate(int index) {

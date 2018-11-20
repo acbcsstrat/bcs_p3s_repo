@@ -8,7 +8,11 @@ import com.bcs.p3s.model.BusinessDataOnDemand;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.P3SUserDataOnDemand;
 import java.security.SecureRandom;
+import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -30,7 +34,9 @@ privileged aspect P3SUserDataOnDemand_Roo_DataOnDemand {
     
     public P3SUser P3SUserDataOnDemand.getNewTransientP3SUser(int index) {
         P3SUser obj = new P3SUser();
+        setAvatar_blob(obj, index);
         setBusiness(obj, index);
+        setCreatedDate(obj, index);
         setEmailAddress(obj, index);
         setFirstName(obj, index);
         setIsEmailNotification(obj, index);
@@ -41,9 +47,19 @@ privileged aspect P3SUserDataOnDemand_Roo_DataOnDemand {
         return obj;
     }
     
+    public void P3SUserDataOnDemand.setAvatar_blob(P3SUser obj, int index) {
+        Blob avatar_blob = null;
+        obj.setAvatar_blob(avatar_blob);
+    }
+    
     public void P3SUserDataOnDemand.setBusiness(P3SUser obj, int index) {
         Business business = businessDataOnDemand.getRandomBusiness();
         obj.setBusiness(business);
+    }
+    
+    public void P3SUserDataOnDemand.setCreatedDate(P3SUser obj, int index) {
+        Date createdDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        obj.setCreatedDate(createdDate);
     }
     
     public void P3SUserDataOnDemand.setEmailAddress(P3SUser obj, int index) {

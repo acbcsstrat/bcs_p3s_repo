@@ -26,7 +26,7 @@ import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import com.bcs.p3s.display.CostAnalysisData;
-import com.bcs.p3s.display.FeeUI;
+import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.display.FxRateCurrentUI;
 import com.bcs.p3s.display.FxRateUI;
 import com.bcs.p3s.display.NotificationUI;
@@ -43,8 +43,8 @@ import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.DiscountPercent;
-import com.bcs.p3s.model.EpoFee;
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.EpoRenewalFee;
+import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
@@ -311,8 +311,9 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 	    	/**
 	    	 * SEPARATELY DELETE ALL THE MAPPINGS FOR THAT PATENT
 	    	 */
-	    	
-	    	List<NotificationMapping> allPatentNotifications = new NotificationMapping().getAllNotificationForPatent(id);
+	    	// This is * HARNESS * - this is unused legacy code - so bypass this non-compile
+	    	//List<NotificationMapping> allPatentNotifications = new NotificationMapping().getAllNotificationForPatent(id);
+	    	List<NotificationMapping> allPatentNotifications = new ArrayList<NotificationMapping>();
 			for(NotificationMapping eachMapping : allPatentNotifications){
 				eachMapping.remove();
 			}
@@ -415,8 +416,9 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			/**
 			 * DELETE EXISTING NOTIFICATION MAPPING FOR THE PATENT FOR CURRENT USER
 			 */
-			
-			List<NotificationMapping> allOnNotifications = new NotificationMapping().getAllNotificationMappingsForUser(updatedPatent.getId(), SecurityUtil.getMyUser().getId());
+			//This is * HARNESS * - this is unused legacy code - so bypass this non-compile
+			//List<NotificationMapping> allOnNotifications = new NotificationMapping().getAllNotificationMappingsForUser(updatedPatent.getId(), SecurityUtil.getMyUser().getId());
+			List<NotificationMapping> allOnNotifications = new ArrayList<NotificationMapping>();
 			for(NotificationMapping eachMapping : allOnNotifications){
 				eachMapping.remove();
 			}
@@ -622,8 +624,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		RenewalDates allDates = new RenewalDates();
 		Patent patent = Patent.findPatent(id);
-		System.out.println("Got the new patent with filing date as " + patent.getFilingDate());
-		log().debug("Queried database for patent id " + id+" and got hte filing date as " + patent.getFilingDate());
+		System.out.println("Got the new patent with filing date as " + patent.getInternationalFilingDate());
+		log().debug("Queried database for patent id " + id+" and got hte filing date as " + patent.getInternationalFilingDate());
 		
 		/** 
 		 * Checking whether patent year > 20
@@ -770,8 +772,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 			caData.setCurrentcostBand(costEngines.getCurrentPhase(caData));
 			//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
-			Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
-			caData.setFee(new FeeUI(fee));
+			RenewalFee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
+			caData.setFee(new RenewalFeeUI(fee));
 		}
 		
 		else if(RenewalStatusEnum.TOO_LATE .equalsIgnoreCase(patent.getRenewalStatus())){
@@ -779,8 +781,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			caData = costEngines.getAllCosts(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
 			caData.setCurrentcostBand(RenewalColourEnum.GREEN);
 			//caData.setFee(costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate()));
-			Fee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
-			caData.setFee(new FeeUI(fee));
+			RenewalFee fee = costEngines.getCurrentPhaseCost(caData.getCurrentcostBand(),combinedFee.getP3sFee(),combinedFee.getEpoFee(),combinedFee.getFxRate());
+			caData.setFee(new RenewalFeeUI(fee));
 		}
 		
 		// ELSE THE STATUS WILL BE LIKE NO_RENEWAL_NEEDED :- DISABLE CA BUTTON ON THESE CASES
@@ -796,7 +798,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		 * GET THE LINE CHART INFO - NOW GETTING LAST 6 WEEKS INCLUDING TODAYS RATE HISTORY
 		 * 
 		 */
-		TreeMap<Date, FeeUI> lineChart = new TreeMap<Date, FeeUI>();
+		TreeMap<Date, RenewalFeeUI> lineChart = new TreeMap<Date, RenewalFeeUI>();
 		//List<FxRateUI> history = getFxRateHistory("week");
 		lineChart = costEngines.getLineChartData(caData,combinedFee.getP3sFee(),combinedFee.getEpoFee());
 		caData.setLineChart(lineChart);
@@ -982,9 +984,9 @@ public PatentUI populateDataToPatentUI(Patent patent){
 		log().debug(msg + " invoked ");
 		TypedQuery<Patent> patents = Patent.findPatentsByBusiness(postSession.getBusiness());
 		for(Patent patent : patents.getResultList()){
-			if(patentApplicationNumber.equals(patent.getPatentApplicationNumber())){
+			if(patentApplicationNumber.equals(patent.getEP_ApplicationNumber())){
 				log().debug("Duplicate for the patent for the business. Patent Number[" + patentApplicationNumber + "] already exist for the business. "
-						+ "		Patent id[" +patent.getId() +"] and application number[" + patent.getPatentApplicationNumber() +"]" );
+						+ "		Patent id[" +patent.getId() +"] and application number[" + patent.getEP_ApplicationNumber() +"]" );
 				isFound = true;
 			}
 		}

@@ -163,7 +163,7 @@ public class PatentRestController extends Universal {
 			Patent patent = data.extractPatentFromAddPatentForm(obby); 
 			//calculate the extended data again
 			
-			log().info("A patent with application number[" + patent.getPatentApplicationNumber() +"] having a status as " + patent.getEpoPatentStatus() + " being added");
+			log().info("A patent with application number[" + patent.getEP_ApplicationNumber() +"] having a status as " + patent.getEpoPatentStatus() + " being added");
 		   	//patent.persist();
 			newPatent = patent.persist();
 			
@@ -175,7 +175,7 @@ public class PatentRestController extends Universal {
 		   	
 			if(!(newPatent == null)){
 				log().debug("PatentRestController : /rest-patents/ savePatent() completed.");
-				log().info("A patent with application number[" + patent.getPatentApplicationNumber() +"] being added by USER [user id:" + postSession.getUser().getId() +"]" );
+				log().info("A patent with application number[" + patent.getEP_ApplicationNumber() +"] being added by USER [user id:" + postSession.getUser().getId() +"]" );
 			}
 			//return ResponseEntity.ok().build();
 			else{

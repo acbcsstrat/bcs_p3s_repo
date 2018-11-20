@@ -2,10 +2,7 @@ package com.bcs.p3s.display;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.TreeMap;
-
-import com.bcs.p3s.model.Fee;
 
 public class CostAnalysisData {
 	
@@ -43,14 +40,14 @@ public class CostAnalysisData {
 	/**
 	 * FEE BREAKDOWN
 	 */
-	private FeeUI fee;
+	private RenewalFeeUI fee;
 	
 	
 	/**
 	 * LINE CHART DATA
 	 * @return HashMap
 	 */
-	TreeMap<Date,FeeUI> lineChart;
+	TreeMap<Date,RenewalFeeUI> lineChart;
 	
 	public Date getGreenStartDate() {
 		return greenStartDate;
@@ -236,19 +233,19 @@ public class CostAnalysisData {
 		this.extraTextCost = extraTextCost;
 	}
 
-	public FeeUI getFee() {
+	public RenewalFeeUI getFee() {
 		return fee;
 	}
 
-	public void setFee(FeeUI fee) {
+	public void setFee(RenewalFeeUI fee) {
 		this.fee = fee;
 	}
 
-	public TreeMap<Date, FeeUI> getLineChart() {
+	public TreeMap<Date, RenewalFeeUI> getLineChart() {
 		return lineChart;
 	}
 
-	public void setLineChart(TreeMap<Date, FeeUI> lineChart) {
+	public void setLineChart(TreeMap<Date, RenewalFeeUI> lineChart) {
 		this.lineChart = lineChart;
 	}
 	

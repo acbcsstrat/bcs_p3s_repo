@@ -99,7 +99,7 @@ public class ReminderColourOpenPopulator extends AbstractPopulator implements In
 		data.setCompanyName(company.getBusinessName());
 
 		// 2of3: retrieve patent details
-		data.setPatentApplicationNumber(patent.getPatentApplicationNumber());
+		data.setPatentApplicationNumber(patent.getEP_ApplicationNumber());
 //		data.setPatentTitle(patent.getTitle());
 //		data.setPatentShortTitle(patent.getShortTitle());
 //		data.setPatentClientRef(patent.getClientRef());
@@ -107,7 +107,7 @@ public class ReminderColourOpenPopulator extends AbstractPopulator implements In
 		
 		TwoColRecord a2colRecord = null;
 		List<TwoColRecord> patentDetails = new ArrayList<TwoColRecord>();
-		a2colRecord = new TwoColRecord("Application Number", patent.getPatentApplicationNumber());
+		a2colRecord = new TwoColRecord("Application Number", patent.getEP_ApplicationNumber());
 		patentDetails.add(a2colRecord);
 		a2colRecord = new TwoColRecord("Patent Title", patent.getTitle());
 		patentDetails.add(a2colRecord);

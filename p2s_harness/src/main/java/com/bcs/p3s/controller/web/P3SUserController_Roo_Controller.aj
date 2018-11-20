@@ -11,6 +11,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import org.joda.time.format.DateTimeFormat;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,7 @@ privileged aspect P3SUserController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String P3SUserController.show(@PathVariable("id") Long id, Model uiModel) {
+        addDateTimeFormatPatterns(uiModel);
         uiModel.addAttribute("p3suser", P3SUser.findP3SUser(id));
         uiModel.addAttribute("itemId", id);
         return "p3susers/show";
@@ -50,6 +53,7 @@ privileged aspect P3SUserController_Roo_Controller {
         } else {
             uiModel.addAttribute("p3susers", P3SUser.findAllP3SUsers(sortFieldName, sortOrder));
         }
+        addDateTimeFormatPatterns(uiModel);
         return "p3susers/list";
     }
     
@@ -69,8 +73,13 @@ privileged aspect P3SUserController_Roo_Controller {
         return "redirect:/p3susers";
     }
     
+    void P3SUserController.addDateTimeFormatPatterns(Model uiModel) {
+        uiModel.addAttribute("p3SUser_createddate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+    }
+    
     void P3SUserController.populateEditForm(Model uiModel, P3SUser p3SUser) {
         uiModel.addAttribute("p3SUser", p3SUser);
+        addDateTimeFormatPatterns(uiModel);
         uiModel.addAttribute("businesses", Business.findAllBusinesses());
         uiModel.addAttribute("loginmessages", LoginMessage.findAllLoginMessages());
     }

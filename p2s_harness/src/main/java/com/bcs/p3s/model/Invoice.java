@@ -9,6 +9,8 @@ import com.bcs.p3s.enump3s.InvoiceTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 
 import javax.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -80,6 +82,10 @@ public class Invoice {
      */
     //@NotNull - AC18dec2017 - remove NotNulls as PDFs don't yet exist. (Indeed - may never?)
     private String invoiceTemplateId;
+    
+    /**
+     */
+    private BigDecimal latePayPenalty_USD;
 
     
 

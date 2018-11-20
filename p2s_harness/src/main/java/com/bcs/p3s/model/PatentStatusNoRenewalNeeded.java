@@ -8,7 +8,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord(finders = { "findPatentStatusNoRenewalNeededsByStatusText_OPS" })
+@RooJpaActiveRecord(finders = { "findPatentStatusNoRenewalNeededsByStatusText_OPS" , "findPatentStatusNoRenewalNeededsByStatusText_EPO" })
 public class PatentStatusNoRenewalNeeded {
 	
 	/**

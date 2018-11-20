@@ -77,4 +77,7 @@ public class ArchivedRate {
         return mostRecent;
     }
 
+    public static List<ArchivedRate> findAllArchivedRates() {
+        return entityManager().createQuery("SELECT o FROM ArchivedRate o", ArchivedRate.class).getResultList();
+    }
 }

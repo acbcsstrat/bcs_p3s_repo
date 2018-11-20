@@ -3,9 +3,9 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.EpoFee;
 import com.bcs.p3s.model.EpoFeeDataOnDemand;
 import com.bcs.p3s.model.EpoFeeIntegrationTest;
+import com.bcs.p3s.model.EpoRenewalFee;
 import java.util.Iterator;
 import java.util.List;
 import javax.validation.ConstraintViolation;
@@ -30,80 +30,80 @@ privileged aspect EpoFeeIntegrationTest_Roo_IntegrationTest {
     EpoFeeDataOnDemand EpoFeeIntegrationTest.dod;
     
     @Test
-    public void EpoFeeIntegrationTest.testCountEpoFees() {
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to initialize correctly", dod.getRandomEpoFee());
-        long count = EpoFee.countEpoFees();
-        Assert.assertTrue("Counter for 'EpoFee' incorrectly reported there were no entries", count > 0);
+    public void EpoFeeIntegrationTest.testCountEpoRenewalFees() {
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to initialize correctly", dod.getRandomEpoRenewalFee());
+        long count = EpoRenewalFee.countEpoRenewalFees();
+        Assert.assertTrue("Counter for 'EpoRenewalFee' incorrectly reported there were no entries", count > 0);
     }
     
     @Test
-    public void EpoFeeIntegrationTest.testFindEpoFee() {
-        EpoFee obj = dod.getRandomEpoFee();
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to initialize correctly", obj);
+    public void EpoFeeIntegrationTest.testFindEpoRenewalFee() {
+        EpoRenewalFee obj = dod.getRandomEpoRenewalFee();
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to initialize correctly", obj);
         Long id = obj.getId();
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to provide an identifier", id);
-        obj = EpoFee.findEpoFee(id);
-        Assert.assertNotNull("Find method for 'EpoFee' illegally returned null for id '" + id + "'", obj);
-        Assert.assertEquals("Find method for 'EpoFee' returned the incorrect identifier", id, obj.getId());
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to provide an identifier", id);
+        obj = EpoRenewalFee.findEpoRenewalFee(id);
+        Assert.assertNotNull("Find method for 'EpoRenewalFee' illegally returned null for id '" + id + "'", obj);
+        Assert.assertEquals("Find method for 'EpoRenewalFee' returned the incorrect identifier", id, obj.getId());
     }
     
     @Test
-    public void EpoFeeIntegrationTest.testFindAllEpoFees() {
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to initialize correctly", dod.getRandomEpoFee());
-        long count = EpoFee.countEpoFees();
-        Assert.assertTrue("Too expensive to perform a find all test for 'EpoFee', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<EpoFee> result = EpoFee.findAllEpoFees();
-        Assert.assertNotNull("Find all method for 'EpoFee' illegally returned null", result);
-        Assert.assertTrue("Find all method for 'EpoFee' failed to return any data", result.size() > 0);
+    public void EpoFeeIntegrationTest.testFindAllEpoRenewalFees() {
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to initialize correctly", dod.getRandomEpoRenewalFee());
+        long count = EpoRenewalFee.countEpoRenewalFees();
+        Assert.assertTrue("Too expensive to perform a find all test for 'EpoRenewalFee', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
+        List<EpoRenewalFee> result = EpoRenewalFee.findAllEpoRenewalFees();
+        Assert.assertNotNull("Find all method for 'EpoRenewalFee' illegally returned null", result);
+        Assert.assertTrue("Find all method for 'EpoRenewalFee' failed to return any data", result.size() > 0);
     }
     
     @Test
-    public void EpoFeeIntegrationTest.testFindEpoFeeEntries() {
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to initialize correctly", dod.getRandomEpoFee());
-        long count = EpoFee.countEpoFees();
+    public void EpoFeeIntegrationTest.testFindEpoRenewalFeeEntries() {
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to initialize correctly", dod.getRandomEpoRenewalFee());
+        long count = EpoRenewalFee.countEpoRenewalFees();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<EpoFee> result = EpoFee.findEpoFeeEntries(firstResult, maxResults);
-        Assert.assertNotNull("Find entries method for 'EpoFee' illegally returned null", result);
-        Assert.assertEquals("Find entries method for 'EpoFee' returned an incorrect number of entries", count, result.size());
+        List<EpoRenewalFee> result = EpoRenewalFee.findEpoRenewalFeeEntries(firstResult, maxResults);
+        Assert.assertNotNull("Find entries method for 'EpoRenewalFee' illegally returned null", result);
+        Assert.assertEquals("Find entries method for 'EpoRenewalFee' returned an incorrect number of entries", count, result.size());
     }
     
     @Test
     public void EpoFeeIntegrationTest.testFlush() {
-        EpoFee obj = dod.getRandomEpoFee();
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to initialize correctly", obj);
+        EpoRenewalFee obj = dod.getRandomEpoRenewalFee();
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to initialize correctly", obj);
         Long id = obj.getId();
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to provide an identifier", id);
-        obj = EpoFee.findEpoFee(id);
-        Assert.assertNotNull("Find method for 'EpoFee' illegally returned null for id '" + id + "'", obj);
-        boolean modified =  dod.modifyEpoFee(obj);
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to provide an identifier", id);
+        obj = EpoRenewalFee.findEpoRenewalFee(id);
+        Assert.assertNotNull("Find method for 'EpoRenewalFee' illegally returned null for id '" + id + "'", obj);
+        boolean modified =  dod.modifyEpoRenewalFee(obj);
         Integer currentVersion = obj.getVersion();
         obj.flush();
-        Assert.assertTrue("Version for 'EpoFee' failed to increment on flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        Assert.assertTrue("Version for 'EpoRenewalFee' failed to increment on flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
     public void EpoFeeIntegrationTest.testMergeUpdate() {
-        EpoFee obj = dod.getRandomEpoFee();
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to initialize correctly", obj);
+        EpoRenewalFee obj = dod.getRandomEpoRenewalFee();
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to initialize correctly", obj);
         Long id = obj.getId();
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to provide an identifier", id);
-        obj = EpoFee.findEpoFee(id);
-        boolean modified =  dod.modifyEpoFee(obj);
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to provide an identifier", id);
+        obj = EpoRenewalFee.findEpoRenewalFee(id);
+        boolean modified =  dod.modifyEpoRenewalFee(obj);
         Integer currentVersion = obj.getVersion();
-        EpoFee merged = obj.merge();
+        EpoRenewalFee merged = obj.merge();
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
-        Assert.assertTrue("Version for 'EpoFee' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
+        Assert.assertTrue("Version for 'EpoRenewalFee' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
     public void EpoFeeIntegrationTest.testPersist() {
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to initialize correctly", dod.getRandomEpoFee());
-        EpoFee obj = dod.getNewTransientEpoFee(Integer.MAX_VALUE);
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to provide a new transient entity", obj);
-        Assert.assertNull("Expected 'EpoFee' identifier to be null", obj.getId());
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to initialize correctly", dod.getRandomEpoRenewalFee());
+        EpoRenewalFee obj = dod.getNewTransientEpoRenewalFee(Integer.MAX_VALUE);
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to provide a new transient entity", obj);
+        Assert.assertNull("Expected 'EpoRenewalFee' identifier to be null", obj.getId());
         try {
             obj.persist();
         } catch (final ConstraintViolationException e) {
@@ -115,19 +115,19 @@ privileged aspect EpoFeeIntegrationTest_Roo_IntegrationTest {
             throw new IllegalStateException(msg.toString(), e);
         }
         obj.flush();
-        Assert.assertNotNull("Expected 'EpoFee' identifier to no longer be null", obj.getId());
+        Assert.assertNotNull("Expected 'EpoRenewalFee' identifier to no longer be null", obj.getId());
     }
     
     @Test
     public void EpoFeeIntegrationTest.testRemove() {
-        EpoFee obj = dod.getRandomEpoFee();
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to initialize correctly", obj);
+        EpoRenewalFee obj = dod.getRandomEpoRenewalFee();
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to initialize correctly", obj);
         Long id = obj.getId();
-        Assert.assertNotNull("Data on demand for 'EpoFee' failed to provide an identifier", id);
-        obj = EpoFee.findEpoFee(id);
+        Assert.assertNotNull("Data on demand for 'EpoRenewalFee' failed to provide an identifier", id);
+        obj = EpoRenewalFee.findEpoRenewalFee(id);
         obj.remove();
         obj.flush();
-        Assert.assertNull("Failed to remove 'EpoFee' with identifier '" + id + "'", EpoFee.findEpoFee(id));
+        Assert.assertNull("Failed to remove 'EpoRenewalFee' with identifier '" + id + "'", EpoRenewalFee.findEpoRenewalFee(id));
     }
     
 }

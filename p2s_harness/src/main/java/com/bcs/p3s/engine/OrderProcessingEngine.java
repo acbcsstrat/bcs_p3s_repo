@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import com.bcs.p3s.display.FeeUI;
+import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
-import com.bcs.p3s.model.Fee;
+import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
@@ -107,14 +107,14 @@ public class OrderProcessingEngine extends Universal{
 		List<Renewal> renewals = q.getResultList();
 		
 		for(Renewal renewal : renewals){
-			TypedQuery<Fee> qFees = Fee.findFeesByRenewal(renewal) ;
+			TypedQuery<RenewalFee> qFees = RenewalFee.findRenewalFeesByRenewal(renewal) ;
 			if(!(qFees.getResultList().size() == 1)){
 				log().fatal("OneToOneRelationship between Fee and Renewal got broken for renewal id "+ renewal.getId());
 				return toEPO_USD;
 			}
 			
-			Fee fee= qFees.getSingleResult();
-			FeeUI feeUI = new FeeUI(fee);
+			RenewalFee fee= qFees.getSingleResult();
+			RenewalFeeUI feeUI = new RenewalFeeUI(fee);
 			toEPO_USD = toEPO_USD.add(feeUI.getRenewalFee_USD().add(feeUI.getExtensionFee_USD()));
 		}
 		return toEPO_USD;
