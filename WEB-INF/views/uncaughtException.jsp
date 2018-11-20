@@ -64,19 +64,5 @@ Thus far, such errors are mostly caused by out-of-date data in the database.
     </c:if>
   </util:panel>
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
-		
 </body>
 </html>

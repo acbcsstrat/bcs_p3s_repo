@@ -1,0 +1,69 @@
+.app-container {     /*layout*/ /*layout*/ /*_layout.scss */
+  padding: 0 0;
+  width: -webkit-calc(100% - 125px)!important;
+  width: -moz-calc(100% - 125px)!important;
+  width: calc(100% - 125px)!important;
+  left: 100px;
+  position: absolute;
+  max-width: 140rem;
+}
+
+/*RETHINK ALL OF THE CONTAINERS BELOW*/
+.container-content-40 { width: 30%; max-width: 40rem;  }  /*layout*/ /*layout /* _layout.scss */ /*rethink to see if anything can be done in sass*/
+
+.container-pre-app  {  width: 90%!important; margin: 0 auto; height: 100%;  }
+.container-pre-app__center-box-40 { width: 30%; min-width: 45rem; }
+.container-pre-app__center-box-70 { width: 70%; }
+
+.w-50 { width: 50%; } /*modules*/ /*components*/ /*_layout.scss*/
+
+.inline-container { display: inline-block; }
+
+.position-bottom { position: absolute; bottom: 0 } /*modules*/ /*components*/ /*_layout.scss*/
+
+.z-index-1 { z-index: 1; } /*modules*/ /*components*/ /*_layout.scss*/
+
+.bg-info-icon, 
+.bg-no-chart, 
+.bg-no-data { /*modules*/ /*components*/ /*_layout.scss*/
+  position: relative;
+  overflow: hidden;
+  height: 20rem; //swappred from min-height due to IE11
+  z-index: 1;
+}
+
+.bg-info-icon:after { /*modules*/ /*components*/ /*_layout.scss*/
+  content: url(../../p3sweb/assets/imgs/icons/info_icon.png);
+  position: absolute;
+  bottom: -4px;
+  right: -1px;
+  z-index: -1;
+}
+
+.bg-no-data:after { /*modules*/ /*components*/ /*_layout.scss*/
+  content:'';
+  position: absolute;
+  bottom: 0;
+  margin: 0 auto;
+  top:0;
+  left:0;
+  right:0;
+  background: url(../../p3sweb/assets/imgs/icons/chart_icon.png) no-repeat center center;
+  background-size: contain;
+  width: 100%;
+  z-index: -1;
+}
+
+.bg-no-chart:after { /*modules*/ /*components*/ /*_layout.scss*/
+    content:'';
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto;
+    top:0;
+    left:0;
+    right:0;
+    background: url(../../p3sweb/assets/imgs/icons/chart_icon.png) no-repeat center center;
+    background-size: contain;
+    width: 100%;
+    z-index: -1;
+}
