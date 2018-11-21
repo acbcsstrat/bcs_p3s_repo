@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('euroPctInfoCtrl', euroPctInfoCtrl);
 
-euroPctInfoCtrl.$inject = ['patent', '$timeout', 'chunkDataService', 'patent', 'euroPctService', '$uibModal', 'organiseTextService'];
+euroPctInfoCtrl.$inject = ['patent', '$timeout', 'chunkDataService', 'euroPctService', '$uibModal', 'organiseTextService', 'organiseColourService'];
 
-function euroPctInfoCtrl(patent, $timeout, chunkDataService, patent, euroPctService, $uibModal, organiseTextService) {
+function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $uibModal, organiseTextService, organiseColourService) {
 
     var vm = this;
 
@@ -12,8 +12,14 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, patent, euroPctServ
     vm.updateNotifications = updateNotifications;
     vm.getStatus = getStatus;
     vm.checkActionStatus = checkActionStatus;
-    // vm.displayNotifications = displayNotifications;
-    console.log(patent)
+    vm.getCurrColour = getCurrColour;
+    vm.displayNotifications = displayNotifications;
+
+    function getCurrColour(colour, type) {
+        // console.log(colour, type)
+        // console.log(organiseColourService.getCurrColour(colour, type))
+        return organiseColourService.getCurrColour(colour, type);
+    }
 
     function checkActionStatus(text){
        return organiseTextService.actionStatus(text)
@@ -148,28 +154,22 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, patent, euroPctServ
 
     }        
 
-    // $timeout(function() {
-    //     vm.displayNotifications('Green');
-    // }, 100);    
+    $timeout(function() {
+        vm.displayNotifications('Green');
+    }, 100);    
 
-    // function displayNotifications(phase) {  //migrate to renewalCtrl
-    //     vm.notifications = chunkDataService.chunkData(phaseNotifications(phase), 6);
-    // };
+    function displayNotifications(phase) {  //migrate to renewalCtrl
+        vm.notifications = chunkDataService.chunkData(phaseNotifications(phase), 6);
+    };
 
-    // function phaseNotifications(phase) { //migrate to renewalCtrl
+    function phaseNotifications(phase) { //migrate to renewalCtrl
+        // console.log(phaseNotifications)
+        return patent.epctNotificationUIs.filter(function(data){
+            console.log(data)
+            return data.costbandcolor == phase;
+        });
 
-    //     var notificationsArr = notificationUIs;
-    //     var notifications = [];
-
-    //     notificationsArr.forEach(function(data){
-    //         if(data.costbandcolor == phase) {
-    //             notifications.push(data);
-    //         }
-    //     });
-
-    //     return notifications;
-
-    // }
-
+    }
+    console.log(vm.displayNotifications('Green'))
 
 }
