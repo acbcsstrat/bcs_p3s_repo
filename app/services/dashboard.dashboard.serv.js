@@ -6,7 +6,10 @@ function dashboardService($http, $q) {
 
     var factory = {
         getMessages: getMessages,
-        supressMessages: supressMessages
+        supressMessages: supressMessages,
+        setPatent: setPatent,
+        getPatent: getPatent,
+        currentPatent: ''
     };
 
     return factory;
@@ -42,5 +45,13 @@ function dashboardService($http, $q) {
         );
         return deferred.promise;
     };
+
+    function setPatent(patent) {
+        factory.currentPatent = patent;
+    }
+
+    function getPatent() {
+        return factory.currentPatent;
+    }
 
 };

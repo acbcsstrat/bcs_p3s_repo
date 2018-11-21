@@ -1,34 +1,24 @@
 angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
 
-renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'fxCalculationService', 'currentTransactionsService', 'patentsService']
+renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'currentTransactionsService', 'patentsService', 'dashboardService']
 
-function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, fxCalculationService, currentTransactionsService, patentsService) {
+function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, currentTransactionsService, patentsService, dashboardService) {
 
 	var vm = this;
 
 	vm.renewalfxTimeframe = 'Today';
-	vm.patentFx = fxCalculationService;
-	vm.fxPeriodActive = fxPeriodActive;
 	vm.fetchItemRenewal = fetchItemRenewal;
 	vm.fetchItemTransaction = fetchItemTransaction;
+	$scope.$on('updateCost', function(e, o){
+      	var patent = dashboardService.getPatent();
+      	if(patent.renewalFeeUI !== null) {
+      		vm.serviceCost = patent.renewalFeeUI;
+      	} else {
+      		vm.serviceCost = patent.form1200FeeUI;
+      	}
+	})
 
-	function fxPeriodActive(fxActive) {
 
-		switch(fxActive) {
-			case 0:
-				vm.renewalfxTimeframe = 'Today';
-			break;
-			case 1:
-				vm.renewalfxTimeframe = 'Yesterday';
-			break;
-			case 2:
-				vm.renewalfxTimeframe = 'Last Week';
-			break;
-			case 3:
-				vm.renewalfxTimeframe = 'Last Mth';											
-		}
-
-	};
 
 	function fetchItemRenewal() { //direct user to renewal tab in patents
 		patentsService.activePatentItemMenu();

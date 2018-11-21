@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
 
-renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'fxCalculationService']
+renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'dashboardService']
 
-function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, fxCalculationService) {
+function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, dashboardService) {
 
 	var vm = this;
 
@@ -27,11 +27,10 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
 	    		vm.currentIndex = currentSlide;
         		vm.currIndexForTitle = (currentSlide + 1);
         		vm.selectedPatent = vm.selectedPhase.getPhase().patents[vm.currentIndex];
-        		
-        		if(vm.selectedPatent) {
-        			if(vm.selectedPatent.feeUI) {
-						fxCalculationService.setFx(vm.selectedPatent)
-        			}
+        		if(vm.selectedPatent !== null) {
+					dashboardService.setPatent(vm.selectedPatent)
+                    $scope.$emit('updatePatent');
+        			
         		}
         	},
         	init: function (event, slick) {
@@ -41,12 +40,10 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
     } //slick end
 
 	$scope.$on('updatePhase', function(e, o){
-        console.log(o.phase)
 		setPhaseFn(o.phase)
 	})
 
 	function setPhase(phase) {
-
 		setPhaseFn(phase)
         $scope.$emit('phaseChange', {phase: phase})        
 	}    

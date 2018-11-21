@@ -18,4 +18,8 @@ function dashboardCtrl ($scope, $state, $timeout, $rootScope) {
         $scope.$broadcast('updatePhase', {phase: o.phase});
     })
 
+    $scope.$on('updatePatent', function(e, o){
+        $scope.$broadcast('updateCost');
+    })    
+
 }
