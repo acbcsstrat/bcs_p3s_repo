@@ -8,21 +8,24 @@ function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPha
 
 	vm.selectedPhase = selectPhaseService;
 	vm.setPhase = setPhase;
+	
 
  	$scope.$on('updatePhase', function(e, o){
  		$timeout(function(){
 	    	$scope.activeTab = selectPhaseService.getPhase().phase.index;
  		})
   	});
-
-	if(patents) {
+ 	// console.log(patents.length)
+	if(patents.length > 0) {
 		var sortedPatentData = patentPhasesService.phases(patents); //sorts patents into phases and calculate progress
 		vm.setPhase('green');
 	}
 
 	function setPhase(phase) {
-		$scope.$emit('phaseChange', {phase: phase});
+
+		console.log(phase, sortedPatentData)
 		selectPhaseService.setPhase(phase, sortedPatentData); //set current phase being displayed
+		$scope.$emit('phaseChange', {phase: phase});		
 	}
 
 }

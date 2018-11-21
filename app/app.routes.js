@@ -16,10 +16,10 @@ function appRoutes($stateProvider) {
                 }],
                 currentTransactions: ['currentTransactionsService', function(currentTransactionsService) {
                     return currentTransactionsService.fetchCurrentTransactions();
-                }],                       
-                fxRatesWeek: ['fxService', function(fxService) {
-                    return fxService.fetchFxWeek();
-                }],
+                }],                    
+                // fxRatesWeek: ['fxService', function(fxService) {
+                //     return fxService.fetchFxWeek();
+                // }],
                 fxRatesMonth: ['fxService', function(fxService) {
                     return fxService.fetchFxMonth();
                 }]                       

@@ -7,7 +7,7 @@ function selectPhaseService(){
 		selectedPhase: '',
 
 		setPhase: function(phase, data) {
-
+			console.log(data)
 			switch(phase) {
 				case 'green':
 
