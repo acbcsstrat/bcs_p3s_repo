@@ -247,7 +247,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 						patentIdsInThisTransaction.add(patentId);
 					}
 				}
-				bankTransferPostCommitDetails.setTotalCostUSD(latestCalculatedCost);
+				bankTransferPostCommitDetails.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 			}
 			/*//finally generate the p3sTransRef // acTidy
 			CommitToRenewalEngine commitToRenewal = new CommitToRenewalEngine();

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bcs.p3s.display.PaymentUI;
 import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
  
 @RestController
 public class TransactionRestController extends Universal {
@@ -36,7 +37,8 @@ public class TransactionRestController extends Universal {
     		paymentUIs = transactionService.listCurrentTransactionsForBusiness();
     		numTxns = paymentUIs.size();
 		} catch (Exception e) {
-			fail("Exception in "+err,e);
+			logErrorAndContinue("Exception in "+err,e);
+			return new ResponseEntity<List<PaymentUI>>(paymentUIs, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     	
 		log().debug(err+"returning "+numTxns+" transactions.");
@@ -57,7 +59,8 @@ public class TransactionRestController extends Universal {
 		try {
 			paymentUIs = transactionService.listHistoricTransactionsForBusiness();
 		} catch (Exception e) {
-			fail("Exception in "+err,e);
+			logErrorAndContinue("Exception in "+err,e);
+			return new ResponseEntity<List<PaymentUI>>(paymentUIs, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     	
 		log().debug(err+"returning "+paymentUIs.size()+" transactions.");
