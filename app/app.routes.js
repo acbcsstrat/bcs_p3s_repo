@@ -128,7 +128,7 @@ function appRoutes($stateProvider) {
             controllerAs: '$ctrl'
         })
         .state('portfolio.patent.euro-pct.form1200.questionnaire', {
-            url: 'form-1200-questionnaire/',
+            url: '/form-1200-questionnaire/',
             views: {
                 "@": {
                     templateUrl: 'app/templates/europct/europct.form1200.questionnaire.tpl.htm',
@@ -141,7 +141,7 @@ function appRoutes($stateProvider) {
             }            
         })
         .state('portfolio.patent.euro-pct.form1200.generated', {
-            url: 'form-1200-generated/',
+            url: '/form-1200-generated/',
             views: {
                 "@": {
                     templateUrl: 'app/templates/europct/europct.form1200.generated.tpl.htm',
