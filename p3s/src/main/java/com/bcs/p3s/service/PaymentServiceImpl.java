@@ -38,6 +38,7 @@ import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.email.EmailSender;
+import com.bcs.p3s.util.lang.P3SPriceException;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
 import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
@@ -139,7 +140,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			
 			BigDecimal calculated = latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP);
 			
-			if ( ! doesExpectedEqualCalculated(expected, calculated)) {
+			if ( ! doesExpectedEqualCalculated(expected, calculated, "Checkout")) {
 				err += "Expected Total Price differs from calculated. Expected="+expected.toString()+"  calculated="+calculated.toString();
 				logM().warn(err);
 				logInternalError().warn(err);
@@ -155,7 +156,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 //    	}
 		return bankTransferCheckoutPreCommit;
 	}
-	protected boolean doesExpectedEqualCalculated(BigDecimal expected, BigDecimal calculated) {
+	protected boolean doesExpectedEqualCalculated(BigDecimal expected, BigDecimal calculated, String src) {
+		log().warn("doesExpectedEqualCalculated(e,c) invoked with "+expected+", "+calculated+"..");
 		if (expected==null || calculated==null) return false;
 		boolean allOk = true;
 		if (expected.compareTo(calculated) != 0) {
@@ -165,7 +167,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			// If this triggers, we <i>could</i> setScale() on both first. But SHOULD NOT be necessary
 			if (expected.subtract(calculated).abs().compareTo(new BigDecimal("0.01")) <= 0) {
 				// Phew - we can avoid an awful mess
-				log().warn("Checkout nearly rejected an expected/calc mismatch: "+expected.toString()+", "+calculated.toString()+"   FIX THIS !");
+				log().warn(src + " nearly rejected an expected/calc mismatch: "+expected.toString()+", "+calculated.toString()+"   FIX THIS !");
 				allOk = true;
 			}
 		}
@@ -194,7 +196,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		PostLoginDataEngine recalculateEngine = new PostLoginDataEngine();
 		BankTransferPostCommitDetails bankTransferPostCommitDetails = new BankTransferPostCommitDetails();
 		
-		try {
+//		try {
 			
 			//not p3sTRansRef this time
 			populateBankTransferPostCommitDetails(bankTransferPostCommitDetails, basket);
@@ -255,14 +257,15 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			// Check that expected price matches calculated
 			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_HALF_UP);
 			BigDecimal calculated = bankTransferPostCommitDetails.getTotalCostUSD().setScale(2, BigDecimal.ROUND_HALF_UP);
-			if (expected.compareTo(calculated) != 0) {
-				err += "Expected Total Price differs from calculated. Expected="+expected.toString()+"  calculated="+calculated.toString();
+			//if (expected.compareTo(calculated) != 0) {
+			if ( ! doesExpectedEqualCalculated(expected, calculated, "Commit")) {
+
+				bankTransferPostCommitDetails.setWarningMessage(PRICE_CHANGED);
+
+				err += "[@Commit] Expected Total Price differs from calculated. Expected="+expected.toString()+"  calculated="+calculated.toString();
 				logM().warn(err);
 				logInternalError().warn(err);
-				// Abort or Continue (=ignore). Choose (for initial development) CONTINUE. so no exception
-				
-				bankTransferPostCommitDetails.setWarningMessage(PRICE_CHANGED);
-				return bankTransferPostCommitDetails;
+				throw new P3SPriceException(err);
 			}
 			
 			/**
@@ -301,18 +304,18 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 				err += "Order not created. Payment is null from commitTransaction(" + bankTransferPostCommitDetails +"," + committedFee +")";
 				logInternalError().error(err);
 			}
-			
-		}
-		catch (Exception e) {
-			// this catch here as (a) cannot yet PROVE this code *&* (b) cannot trust exception to appear if thrown
-			System.out.println("PaymentServiceImpl showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			//throw new RuntimeException(e);
-			
-			// this SHOULD make above code redundant
-			throw new P3SRuntimeException("PaymentServiceImpl showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ", e);
-		}
+
+//		}
+//		catch (Exception e) {
+//			// this catch here as (a) cannot yet PROVE this code *&* (b) cannot trust exception to appear if thrown
+//			System.out.println("PaymentServiceImpl showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
+//			System.out.println(e.getMessage());
+//			e.printStackTrace();
+//			//throw new RuntimeException(e);
+//			
+//			// this SHOULD make above code redundant
+//			throw new P3SRuntimeException("PaymentServiceImpl showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ", e);
+//		}
 		return bankTransferPostCommitDetails;
 	}
 

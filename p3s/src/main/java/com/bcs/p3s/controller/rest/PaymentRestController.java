@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.service.PaymentServiceImpl;
+import com.bcs.p3s.util.lang.P3SPriceException;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
@@ -170,53 +171,31 @@ public class PaymentRestController extends Universal {
     // BankTransferPostCommitDetails name as because the user just commit to the payment even though at back end it is not yet committed
     @RequestMapping(value = "/rest-committed-banktransfer/", method = RequestMethod.POST)
     public ResponseEntity<BankTransferPostCommitDetails> showBankTransferPostCommitDetails(@RequestBody Object obby) {
-
-    	log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() invoked.  ");
-
+    	
+    	String msg = "PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() ";
+    	log().debug(msg+"invoked.  ");
+    	String warningMessage = null;
+    	
     	if ( ! (obby instanceof LinkedHashMap<?, ?>)) throw new P3SRuntimeException("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() NOT passed String");
     	
     	InBasket basketContents = new InBasket();
     	BankTransferPostCommitDetails bankTransferPostCommitDetails = null;
     	try {
     		
-    		/*DummyDataEngine dummy = new DummyDataEngine();  // acTidy
-    		Api4dotXdataFromGETworkaround tmp = dummy.getApi43data( (String) obby );
-*/
     		basketContents = new ExtractSubmittedDataEngine().getBasketContentsPreCommitForm(obby);
     		
 			bankTransferPostCommitDetails = paymentService.showBankTransferPostCommitDetails(basketContents);
 
+    	} catch (P3SPriceException pricing) {
+    		logErrorAndContinue(msg+"Suffered PRICING EXCEPTION ",pricing);
+    		return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.CONFLICT);
     	} catch (Exception e) {
-//    		fail("PaymentRestController showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ",e);
-//			bankTransferPostCommitDetails = new BankTransferPostCommitDetails(); // to avoid compile error!
-
-    		logErrorAndContinue("PaymentRestController showBankTransferPostCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION ",e);
-			bankTransferPostCommitDetails = null;
-    	}
-
-		log().debug("PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() returning. Content follows (unless bad)");
-    	// Check WarningMessage (if present, is a failure)
-    	if (bankTransferPostCommitDetails!=null && bankTransferPostCommitDetails.getWarningMessage()!=null) {
-    		String warnMsg = bankTransferPostCommitDetails.getWarningMessage(); 
-    		log().debug("Renewal Commit FAILED. WarningMessage is set. Is : "+warnMsg);
-    		if (PaymentServiceImpl.PRICE_CHANGED.equals(warnMsg))
-    			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.CONFLICT);
-    		else
-    			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-    	}
-		if (bankTransferPostCommitDetails!=null){
-			log().debug("COMMITment call /rest-committed-banktransfer/ appears to have succeeded. bankTransferPostCommitDetails.toString() follows:");
-			log().debug(bankTransferPostCommitDetails.toString());
-			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);
-		}
-		else{
-			log().debug("Error retrieving Post Commit Details.");
-			log().error("Error retrieving details.");
+    		logErrorAndContinue(msg+"Suffered UNEXPECTED EXCEPTION ",e);
 			return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
+    	}
+
+		log().debug("COMMITment call /rest-committed-banktransfer/ appears to have succeeded. bankTransferPostCommitDetails.toString() follows: \n"+bankTransferPostCommitDetails.toString());
+		return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);
     }
-   
-    
 
 }
