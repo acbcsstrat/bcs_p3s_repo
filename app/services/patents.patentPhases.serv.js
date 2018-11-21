@@ -10,6 +10,7 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService, patent
 
 			var patentArr = [];
 			patents.forEach(function(el){
+				console.log('el', el)
 				patentsRestService.fetchPatentItem(el.id)
 				.then(
 					function(response){
@@ -39,11 +40,9 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService, patent
 			}	
 
 			$timeout(function(){
-				if(patentArr !== null) {
-					// console.log('what')
-
+				if(patentArr.length > 0) {
 					patentArr.forEach(function(item) {
-					
+
 						var service = item.renewalFeeUI !== null ? item.renewalStatus : item.epctStatus;
 
 						if(organiseTextService.actionStatus(service)) {
@@ -75,7 +74,8 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService, patent
 					
 				}
 				
-			})
+			}, 1000)
+			console.log('phases', phases)
 			return phases;
 		}
 
