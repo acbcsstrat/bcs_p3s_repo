@@ -45,7 +45,7 @@
     background: $red;
     color: $white;
   }
-  &:not([disabled]):hover {
+  &:not([disabled]):hover, &:not([disabled]):focus  {
     box-shadow: 0 0 1px $black;
   }
   

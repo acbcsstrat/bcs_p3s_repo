@@ -1,6 +1,7 @@
 .panel-nav, .view-nav { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
   list-style-type: none;
   padding: 0;
+  margin: 0;
   display: -webkit-box;
   display: -moz-box;
   display: -webkit-flex;
@@ -11,14 +12,14 @@
 }
 
 .view-nav {
-  
   .view-nav__item {
     border: 1px solid $border;
-    font-weight: 500;
+    font-weight: 400;
     background: $grey;
     font-size: $font-h3;
     cursor: pointer;
-    @include padding-mixin(0.2rem 3rem);
+    line-height: $line-none;
+    @include padding-mixin(0.7rem 3rem);
     -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
     -o-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
     transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
@@ -28,8 +29,8 @@
       color: $white;
       cursor: not-allowed;
     }
-    &:not([disabled]):hover {
-      box-shadow: 0 0 1px $black;
+    &:not([disabled]):hover, &:not([disabled]):focus {
+      box-shadow: 0 0 1px $grey-dark;
     }
     &.active {
       color: $white; 
@@ -40,133 +41,124 @@
 
 .panel-nav {
   width: 100%;
-  &.active {
+  .panel-nav__list-item {
+    color: $grey-dark;
+    font-size: $font-h4;
+    cursor: pointer;
+    line-height: $line-none;
+    text-decoration: none;
+    text-transform: uppercase;
+    @include margin-mixin(0 1rem 0 0);
+    @include padding-mixin(0.5rem 3rem);
+    -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    -o-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    &.list-item--plain {
+      border: 1px solid $border;
+      cursor: pointer;
+      color: $black;
+    }
+    &:not([disabled]):hover {
+      box-shadow: 0 0 1px  $grey-dark;
+    }
+    &.active {
+      background: $grey;
+    }
+    // &.list-item--fluid {
+    //   @include padding-mixin(0.5rem 3rem);
+    // }
+  } /*modules*/ /*components*/ /*_navigation.scss*/ /*OR REMOVE CLASS AND ADD CLASSES TO VIEW?*/ //ADD CLASS TO LI ITEMS
+}
 
-  }
-
-// .secondary-view-nav__list {
-//   @extend %primary-view-nav__list;
-// }
 // .panel-nav__list {
-//   @extend %primary-view-nav__list;
-//   .nav-tabs {
-//     border: none;
-//     display: flex;
-//     -webkit-display-flex: flex;
-//     -ms-display-flex: flex;
-//     -moz-webkit-flex: flex;
-//     justify-content: space-between;
-//     width: 100%;
+  
+//   .panel-nav__list-item--green.active {
+
+//     color: $white;
+//     .nav-link {
+//       color: $white;
+//     }
+//     .nav-link:hover {
+//       color: $white;
+//     }
+//   }
+
+// }
+
+// .panel-nav__list-item--sm {
+//   @include list-item(7.5rem, 9.5rem)
+//   @include padding-mixin(0.5rem 1.5rem);    
+// }
+
+// .panel-nav__list-item--md {
+//   @include list-item(10.5rem, 10.5rem);
+//   @include padding-mixin(0.5rem 1.5rem);
+// }
+
+// .panel-nav__list-item--md-nav {
+//   .nav-link {
+//     @include list-item(10.5rem, 10.5rem);
+//     @include padding-mixin(0.5rem 1.5rem);
 //   }
 // }
-/*think of new naming convention. whats difference between them? not obvious*/
-.panel-nav__list-item {
-  color: $grey-dark;
-  font-size: $font-normal;
-  cursor: pointer;
-  line-height: $line-none;
-  @include margin-mixin(0 1rem 0 0);
-  @include padding-mixin(0.2rem 3rem);
-  -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out;
-  -o-transition: opacity .2s ease-in-out, background .2s ease-in-out;
-  transition: opacity .2s ease-in-out, background .2s ease-in-out;
-  &.list-item--plain {
-    border: 1px solid $border;
-    cursor: pointer;
-    color: $black;
-  }
-} /*modules*/ /*components*/ /*_navigation.scss*/ /*OR REMOVE CLASS AND ADD CLASSES TO VIEW?*/ //ADD CLASS TO LI ITEMS
-}
 
-.panel-nav__list {
-  
-  .panel-nav__list-item--green.active {
+// .panel-nav__list-item--fluid {
+//   @include padding-mixin(0.5rem 3rem);
+// }
 
-    color: $white;
-    .nav-link {
-      color: $white;
-    }
-    .nav-link:hover {
-      color: $white;
-    }
-  }
+// .panel-nav__nav-link--fluid {
+//   .nav-link {
+//     @include padding-mixin(0.5rem 3rem);
+//   } 
+// }
 
-}
+// .panel-nav__list-item--num {
+//   @include list-item-transition;
+//   @include list-item(7.5rem, 9.5rem);
+//   &:hover {
+//     @include list-item-hover; 
+//   }
+//   &:active { 
+//     @include opacity(1); 
+//   }  
+// }
 
-.panel-nav__list-item--sm {
-  @include list-item(7.5rem, 9.5rem)
-  @include padding-mixin(0.5rem 1.5rem);    
-}
+// .panel-nav__list-item--notifications {
+//   cursor: pointer;
+//   line-height: $line-none;
+//   font-size: $font-normal;
+//   -webkit-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
+//   -o-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
+//   transition: background .2s ease-in-out, border  .2s ease-in-out, color .2s ease-in-out;  
+//   @include padding-mixin(0.5rem 1.5rem);
+//   @include list-item(7.5rem, 8rem);
+//   &:hover { 
+//     color: $white; 
+//   }  
+// }
 
-.panel-nav__list-item--md {
-  @include list-item(10.5rem, 10.5rem);
-  @include padding-mixin(0.5rem 1.5rem);
-}
+// .secondary-view-nav__list { 
+//   .secondary-view-nav__nav-item {
+//     margin-right: 1.5rem;
+//     &:last-child {
+//       margin-right: 0;
+//     }
+//   }
 
-.panel-nav__list-item--md-nav {
-  .nav-link {
-    @include list-item(10.5rem, 10.5rem);
-    @include padding-mixin(0.5rem 1.5rem);
-  }
-}
+// }
 
-.panel-nav__list-item--fluid {
-  @include padding-mixin(0.5rem 3rem);
-}
-
-.panel-nav__nav-link--fluid {
-  .nav-link {
-    @include padding-mixin(0.5rem 3rem);
-  } 
-}
-
-.panel-nav__list-item--num {
-  @include list-item-transition;
-  @include list-item(7.5rem, 9.5rem);
-  &:hover {
-    @include list-item-hover; 
-  }
-  &:active { 
-    @include opacity(1); 
-  }  
-}
-
-.panel-nav__list-item--notifications {
-  cursor: pointer;
-  line-height: $line-none;
-  font-size: $font-normal;
-  -webkit-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
-  -o-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
-  transition: background .2s ease-in-out, border  .2s ease-in-out, color .2s ease-in-out;  
-  @include padding-mixin(0.5rem 1.5rem);
-  @include list-item(7.5rem, 8rem);
-  &:hover { 
-    color: $white; 
-  }  
-}
-
-.secondary-view-nav__list { 
-  .secondary-view-nav__nav-item {
-    margin-right: 1.5rem;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-}
-
-.secondary-view-nav__nav-link { 
-  line-height: $line-h4;
-  font-size: $font-h4;
-  @include padding-mixin(0.5rem 3rem);
-  margin-right: 1.5rem;
-  &:last-child {
-    margin-right: 0;
-  }
-  &:hover {
-    text-decoration: none;
-  }  
-} /*needed? rename to view*/ /*rename view-tabs_li-item*/
+// .secondary-view-nav__nav-link { 
+//   line-height: $line-h4;
+//   font-size: $font-h4;
+//   @include padding-mixin(0.5rem 3rem);
+//   margin-right: 1.5rem;
+//   &:last-child {
+//     margin-right: 0;
+//   }
+//   &:hover {
+//     text-decoration: none;
+//   }  
+// } /*needed? rename to view*/ /*rename view-tabs_li-item*/
 
 // .secondary-view-nav__link {
 //   display: block; 
@@ -174,168 +166,168 @@
 
 // }
 
-.primary-view-nav__list-item-a, 
-.secondary-view-nav__nav-link {
-  cursor: pointer;
-  text-transform: uppercase;
-  background: $white;
-  display: inline-block;
-  border: 1px solid $border;
-  -webkit-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
-  -o-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
-  transition: background .2s ease-in-out, border  .2s ease-in-out, color .2s ease-in-out;
-}  
+// .primary-view-nav__list-item-a, 
+// .secondary-view-nav__nav-link {
+//   cursor: pointer;
+//   text-transform: uppercase;
+//   background: $white;
+//   display: inline-block;
+//   border: 1px solid $border;
+//   -webkit-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
+//   -o-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
+//   transition: background .2s ease-in-out, border  .2s ease-in-out, color .2s ease-in-out;
+// }  
 
-.secondary-view-nav__nav-link.active { 
-    @include list-item-transition; 
-} 
+// .secondary-view-nav__nav-link.active { 
+//     @include list-item-transition; 
+// } 
 
-.primary-view-nav__list-item {
-  &:last-child {
-    margin-right: 0;
-  }  
-}
+// .primary-view-nav__list-item {
+//   &:last-child {
+//     margin-right: 0;
+//   }  
+// }
 
-.primary-view-nav__list-item-a {
-  @include padding-mixin(0.5rem 3rem);
-  line-height: $line-h4;
-  font-size: $font-h4;
-  margin-right: 1.5rem;
+// .primary-view-nav__list-item-a {
+//   @include padding-mixin(0.5rem 3rem);
+//   line-height: $line-h4;
+//   font-size: $font-h4;
+//   margin-right: 1.5rem;
 
-  &:hover {
-    text-decoration: none;
-    .primary-view-nav__link { //add class to link
-      @include hover-white;
-    }
-  } 
-  &:not(.disabled):not(.active):hover { 
-    @include list-item-hover; 
-  }  
-  &:active {
-    text-decoration: none;
-    background: $dark-green; 
-    border: 1px solid $dark-green; 
-    color: #fff; 
-    opacity: 1; 
-  }
-  &[disabled]:hover, &[disabled]:active {
-    background: #fff; 
-    border: 1px solid #dbdbdb; 
-    opacity: .65; 
-    color: $blacktxt;
-  }
-}
+//   &:hover {
+//     text-decoration: none;
+//     .primary-view-nav__link { //add class to link
+//       @include hover-white;
+//     }
+//   } 
+//   &:not(.disabled):not(.active):hover { 
+//     @include list-item-hover; 
+//   }  
+//   &:active {
+//     text-decoration: none;
+//     background: $dark-green; 
+//     border: 1px solid $dark-green; 
+//     color: #fff; 
+//     opacity: 1; 
+//   }
+//   &[disabled]:hover, &[disabled]:active {
+//     background: #fff; 
+//     border: 1px solid #dbdbdb; 
+//     opacity: .65; 
+//     color: $blacktxt;
+//   }
+// }
 
-.panel-nav__notification-list {
-  .panel-nav__list-item--notifications {
-    margin-right: 1.5rem;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
+// .panel-nav__notification-list {
+//   .panel-nav__list-item--notifications {
+//     margin-right: 1.5rem;
+//     &:last-child {
+//       margin-right: 0;
+//     }
+//   }
 
-}
+// }
 
-/*notification-nav*/
-.panel-nav__notification-list-item--green-notification,
-.panel-nav__notification-list-item--amber-notification,
-.panel-nav__notification-list-item--red-notification,
-.panel-nav__notification-list-item--blue-notification,
-.panel-nav__notification-list-item--black-notification {
-  &:hover:not(.active), &.active {
-    color: $white;
-  }
-}
+// /*notification-nav*/
+// .panel-nav__notification-list-item--green-notification,
+// .panel-nav__notification-list-item--amber-notification,
+// .panel-nav__notification-list-item--red-notification,
+// .panel-nav__notification-list-item--blue-notification,
+// .panel-nav__notification-list-item--black-notification {
+//   &:hover:not(.active), &.active {
+//     color: $white;
+//   }
+// }
 
-.panel-nav__notification-list-item--green-notification { 
-  color: $green;
-  border: 2px solid $green;
-  &:hover, &.active {
-    background: $green;
-  } 
-}
-.panel-nav__notification-list-item--amber-notification { 
-  color: $amber;
-  border: 2px solid $amber;
-  &:hover, &.active  {
-    background: $amber;
-  } 
-}
-.panel-nav__notification-list-item--red-notification { 
-  color: $red;
-  border: 2px solid $red;
-  &:hover, &.active  {
-    background: $red;
-  } 
-}
-.panel-nav__notification-list-item--blue-notification {
-  color: $blue;
-  border: 2px solid $blue; 
-  &:hover, &.active  {
-    background: $blue;
-  } 
-}
-.panel-nav__notification-list-item--black-notification {
-  color: $black;
-  border: 2px solid $black; 
-  &:hover, &.active {
-    background: $black;
-  } 
-}
+// .panel-nav__notification-list-item--green-notification { 
+//   color: $green;
+//   border: 2px solid $green;
+//   &:hover, &.active {
+//     background: $green;
+//   } 
+// }
+// .panel-nav__notification-list-item--amber-notification { 
+//   color: $amber;
+//   border: 2px solid $amber;
+//   &:hover, &.active  {
+//     background: $amber;
+//   } 
+// }
+// .panel-nav__notification-list-item--red-notification { 
+//   color: $red;
+//   border: 2px solid $red;
+//   &:hover, &.active  {
+//     background: $red;
+//   } 
+// }
+// .panel-nav__notification-list-item--blue-notification {
+//   color: $blue;
+//   border: 2px solid $blue; 
+//   &:hover, &.active  {
+//     background: $blue;
+//   } 
+// }
+// .panel-nav__notification-list-item--black-notification {
+//   color: $black;
+//   border: 2px solid $black; 
+//   &:hover, &.active {
+//     background: $black;
+//   } 
+// }
 
-.primary-view-nav__list-item-a, .secondary-view-nav__nav-link--green, .panel-nav__list-item--green {
-  &:hover, &.active { 
-    background: $green; 
-    color: $white; 
-    border: 1px solid $green; 
-    a.nav-link {
-      color: #fff;
-    }
-  }
+// .primary-view-nav__list-item-a, .secondary-view-nav__nav-link--green, .panel-nav__list-item--green {
+//   &:hover, &.active { 
+//     background: $green; 
+//     color: $white; 
+//     border: 1px solid $green; 
+//     a.nav-link {
+//       color: #fff;
+//     }
+//   }
 
-}
+// }
 
-.secondary-view-nav__nav-link--black {
-   &:hover, &.active { 
-    background: $black; 
-    color: $white; 
-    border: 1px solid $black; 
-  } 
-}
+// .secondary-view-nav__nav-link--black {
+//    &:hover, &.active { 
+//     background: $black; 
+//     color: $white; 
+//     border: 1px solid $black; 
+//   } 
+// }
 
-.primary-view-nav__list-item-a.active {
+// .primary-view-nav__list-item-a.active {
 
-  > .primary-view-nav__list-item-a {
-    @include list-item-transition;
-    font-weight: medium; 
-    background: $black; 
-    border: 1px solid $black; 
-    color: #fff;
-  }  
+//   > .primary-view-nav__list-item-a {
+//     @include list-item-transition;
+//     font-weight: medium; 
+//     background: $black; 
+//     border: 1px solid $black; 
+//     color: #fff;
+//   }  
 
-  @include list-item-transition;
-  font-weight: medium; 
-  background: $green; 
-  border: 1px solid $green; 
-  color: #fff;
-  &:active { 
-    background: $dark-green; 
-    border: 1px solid $dark-green; 
-    color: #fff; 
-    opacity: 1!important; 
-  }
-}
+//   @include list-item-transition;
+//   font-weight: medium; 
+//   background: $green; 
+//   border: 1px solid $green; 
+//   color: #fff;
+//   &:active { 
+//     background: $dark-green; 
+//     border: 1px solid $dark-green; 
+//     color: #fff; 
+//     opacity: 1!important; 
+//   }
+// }
 
-.panel-nav__list-item.active { 
-  &:not([disabled]):active { 
-    @include opacity(1); 
-  }
-} 
+// .panel-nav__list-item.active { 
+//   &:not([disabled]):active { 
+//     @include opacity(1); 
+//   }
+// } 
 
-.nav__nav-link { @include padding-mixin(0 0 0 0); } //add class name
+// .nav__nav-link { @include padding-mixin(0 0 0 0); } //add class name
 
-.panel-nav__list-item.active { 
-  font-weight: 500; 
-  border: none;  
-  color: $white;
-}
+// .panel-nav__list-item.active { 
+//   font-weight: 500; 
+//   border: none;  
+//   color: $white;
+// }
