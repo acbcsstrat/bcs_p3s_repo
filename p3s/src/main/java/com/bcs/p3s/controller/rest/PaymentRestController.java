@@ -125,20 +125,19 @@ public class PaymentRestController extends Universal {
 			e.printStackTrace(new PrintWriter(errors));
 			log().error("Stacktrace was: "+errors.toString());
 			
-			bankTransferPreCommitDetails = new BankTransferPreCommitDetails(); // to avoid compile error!
+			//bankTransferPreCommitDetails = new BankTransferPreCommitDetails(); // to avoid compile error!
+			bankTransferPreCommitDetails = null;
 		}
 
   	
 		log().debug("PaymentRestController : /rest-prepare-banktransfer/ showBankTransferPreCommitDetails() returning. Content follows (unless null)");
-		if (bankTransferPreCommitDetails!=null){
-			log().debug(bankTransferPreCommitDetails.toString());
-			return new ResponseEntity<BankTransferPreCommitDetails>(bankTransferPreCommitDetails, HttpStatus.OK);
-		}
-		
-		else{
-			log().debug("Error retrieving Pre Commit details.");
+		if (bankTransferPreCommitDetails==null) {
 			log().error("Error retrieving Pre Commit details.");
 			return new ResponseEntity<BankTransferPreCommitDetails>(bankTransferPreCommitDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		else{
+			log().debug(bankTransferPreCommitDetails.toString());
+			return new ResponseEntity<BankTransferPreCommitDetails>(bankTransferPreCommitDetails, HttpStatus.OK);
 		}
 			
     }

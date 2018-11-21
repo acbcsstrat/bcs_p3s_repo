@@ -99,7 +99,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 		PostLoginDataEngine recalculateEngine = new PostLoginDataEngine();
 		BankTransferPreCommitDetails bankTransferCheckoutPreCommit = new BankTransferPreCommitDetails();
 		
-		try {
+//		try {
 			//populateBankTransferPreCommitDetails(bankTransferCheckoutPreCommit, basket.getPatentIds());
 
 			/**
@@ -127,34 +127,50 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 						latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost());
 					}
 				}
-				bankTransferCheckoutPreCommit.setTotalCostUSD(latestCalculatedCost);
+				bankTransferCheckoutPreCommit.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 			}
 			
 			
 			bankTransferCheckoutPreCommit = populateBankTransferPreCommitDetails(bankTransferCheckoutPreCommit, basket);
+
 			// Check that expected price matches calculated
 			BigDecimal expected = basket.getExpectedCost().setScale(2, BigDecimal.ROUND_HALF_UP);
 			//BigDecimal calculated = bankTransferCheckoutPreCommit.getTotalCostUSD().setScale(2, BigDecimal.ROUND_HALF_UP);
 			
 			BigDecimal calculated = latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP);
 			
-			if (expected.compareTo(calculated) != 0) {
+			if ( ! doesExpectedEqualCalculated(expected, calculated)) {
 				err += "Expected Total Price differs from calculated. Expected="+expected.toString()+"  calculated="+calculated.toString();
 				logM().warn(err);
 				logInternalError().warn(err);
-				// Abort or Continue (=ignore). Choose (fro initial development) CONTINUE. so no exception   acToDo
+				throw new P3SRuntimeException(err);
 			}
-		}
-		catch (Exception e) {
-    		// this catch here as (a) cannot yet PROVE this code *&* (b) cannot trust exception to appear if thrown
-    		System.out.println("PaymentServiceImpl showBankTransferPreCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			throw new RuntimeException(e);
-    	}
+//		}  // acTidy
+//		catch (Exception e) {
+//    		// this catch here as (a) cannot yet PROVE this code *&* (b) cannot trust exception to appear if thrown
+//    		System.out.println("PaymentServiceImpl showBankTransferPreCommitDetails() SUFFERED WATCHDOG WRAPPER EXCEPTION "); // acTidy once exception logging issue fixed
+//			System.out.println(e.getMessage());
+//			e.printStackTrace();
+//			throw new RuntimeException(e);
+//    	}
 		return bankTransferCheckoutPreCommit;
 	}
-
+	protected boolean doesExpectedEqualCalculated(BigDecimal expected, BigDecimal calculated) {
+		if (expected==null || calculated==null) return false;
+		boolean allOk = true;
+		if (expected.compareTo(calculated) != 0) {
+			allOk = false; // Oh Dear. Prices NOT the same
+			
+			// BUT - lets check - just in case the mismatch is one cent or less. Shouldn't happen, but huge problem if it can
+			// If this triggers, we <i>could</i> setScale() on both first. But SHOULD NOT be necessary
+			if (expected.subtract(calculated).abs().compareTo(new BigDecimal("0.01")) <= 0) {
+				// Phew - we can avoid an awful mess
+				log().warn("Checkout nearly rejected an expected/calc mismatch: "+expected.toString()+", "+calculated.toString()+"   FIX THIS !");
+				allOk = true;
+			}
+		}
+		return allOk;
+	}
 	
 	
 
@@ -440,8 +456,8 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	    			
 	    			BigDecimal thisEpctCostUSD = form1200Fee.getSubTotal_USD();  
 					BigDecimal newTotal = basketContents.getTotalCostUSD().add(thisEpctCostUSD);
-					basketContents.setTotalCostUSD(newTotal);
-				}
+					basketContents.setTotalCostUSD(newTotal.setScale(2, BigDecimal.ROUND_HALF_UP));
+	    		}
 			}
 			
 			PatentUI pui = new PatentUI(patent, extendedData); // PatentUI has no record of individual Form1200 fees, so no processing needed here
