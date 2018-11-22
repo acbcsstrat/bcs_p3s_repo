@@ -43,11 +43,11 @@
   width: 100%;
   .panel-nav__list-item {
     color: $grey-dark;
-    font-size: $font-h4;
+    font-size: $font-body;
     cursor: pointer;
     line-height: $line-none;
     text-decoration: none;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     @include margin-mixin(0 1rem 0 0);
     @include padding-mixin(0.5rem 3rem);
     -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
@@ -63,6 +63,50 @@
     }
     &.active {
       background: $grey;
+    }
+    &.list-item--colour {
+      background: none;
+      &.green {
+        border: 2px solid $green;
+        color: $green;
+        &.active {
+          background: $green;
+          color: $white;
+        }
+      }
+      &.amber {
+        border: 2px solid $amber;
+        color: $amber;
+        &.active {
+          background: $amber;
+          color: $white;
+        }        
+      }
+      &.red {
+        border: 2px solid $red;
+        color: $red;
+        &.active {
+          background: $red;
+          color: $white;
+        }        
+      }
+      &.blue {
+        border: 2px solid $blue;
+        color: $blue;
+        &.active {
+          background: $blue;
+          color: $white;
+        }        
+      }
+      &.black {
+        border: 2px solid $black;
+        color: $black;    
+        &.active {            
+          background: $black;
+          color: $white;
+        }
+      }
+      
     }
     // &.list-item--fluid {
     //   @include padding-mixin(0.5rem 3rem);

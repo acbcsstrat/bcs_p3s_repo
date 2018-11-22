@@ -29,15 +29,12 @@
   background: $grey;
   font-size: $font-normal;  
   font-weight: 500;
+  color: $grey-dark;
   -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
   -o-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
   transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
   &.btn--lg { @include padding-mixin(0.5rem 3rem) } 
-  &.btn--green {
-    background: $green;
-    color: $white;
-  }
-  &.btn--green {
+  &.btn--green, {
     background: $green;
     color: $white;
   }  
@@ -60,10 +57,6 @@
 
 .t-data .t-data__btn-portal { min-width: 183.48px; } //required from ngCart
 
-.btn--white {
-  color: $white; 
-}
-
 .btn-no-bg {
   background: none;
   border: 0;
@@ -78,16 +71,3 @@
     text-decoration: none;
   }
 }
-
-// .uib-btn--lg {
-// //   &:not(.active):hover { 
-// //     @extend %btn-opacity;
-// //   }
-// // }
-
-// // .user-utils__icon-link { 
-// //   &:active { 
-// //     @include opacity(1) 
-// //   }
-// }
-
