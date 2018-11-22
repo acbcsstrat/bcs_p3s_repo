@@ -195,11 +195,12 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		}
 		
 		// renewalNotificationUIs
-		patentV2UI.setRenewalNotificationUIs(patentV2UI.getRenewalNotificationUIs());
+		//patentV2UI.setRenewalNotificationUIs(patentV2UI.getRenewalNotificationUIs()); // remove. pointless. 
 		
 		// form1200NotificationUIs
-		patentV2UI.setEpctNotificationUIs(patentV2UI.getEpctNotificationUIs());
-
+		//patentV2UI.setEpctNotificationUIs(patentV2UI.getEpctNotificationUIs()); // remove. pointless. 
+		// acTidy of above. HOPEFULLY  renewalNotificationUIs & form1200NotificationUIs are already populated zaph
+		
 		return epctEngine;
 	}
 

@@ -404,40 +404,48 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		if (objListNotificationUIs == null)
 			fail("objListNotificationUIs is null");
 		else
-			log().debug("objListNotificationUIs is of type: " + objListNotificationUIs.getClass().getName());
+			log().debug("objListNotificationUIs is of type: " + objListNotificationUIs.getClass().getName()+" : from "+err);
 
-		if (!(objListNotificationUIs instanceof LinkedHashMap))
-			fail(err + " srvUpdateRenewalNotifications passed unexpected objectType = "
+		if (!(objListNotificationUIs instanceof List))  // is ArrayList. Would be LinkedHashMap if >1 payload
+			fail(err + " passed unexpected objectType = "
 					+ objListNotificationUIs.getClass().getName());
 		else {
-			LinkedHashMap<Object, ?> data = (LinkedHashMap<Object, ?>) objListNotificationUIs;
 
-			log().debug(CLASSNAME + "srvUpdateRenewalNotifications has determined top object IS LinkedHashMap");
-			log().debug(CLASSNAME + "srvUpdateRenewalNotifications : NOW LIST ALL KEYS"); // acDebug
-			Set<Object> ppp = data.keySet();
-			for (Object ooo : ppp) {
-				String sss = "NotString";
-				if (ooo instanceof String)
-					sss = (String) ooo;
-				else
-					sss = "NotString: is: " + ooo.getClass().getName();
-				log().debug(CLASSNAME + "srvUpdateRenewalNotifications : Key:  " + sss);
+			//log().debug(CLASSNAME + "srvUpdateRenewalNotifications has determined top object IS ArrayList");
+			//log().debug(CLASSNAME + "srvUpdateRenewalNotifications : NOW LIST ALL KEYS"); // acDebug
+			//Set<Object> ppp = data.keySet();
+			//for (Object ooo : ppp) {
+			//	String sss = "NotString";
+			//	if (ooo instanceof String)
+			//		sss = (String) ooo;
+			//	else
+			//		sss = "NotString: is: " + ooo.getClass().getName();
+			//	log().debug(CLASSNAME + "srvUpdateRenewalNotifications : Key:  " + sss);
+			//}
+			//log().debug(CLASSNAME
+			//		+ "srvUpdateRenewalNotifications : That was all the keys. Hope was one callewd 'notificationUIs'");
+			//
+			//Object obb = data.get("notificationUIs");
+			//List<NotificationUI> newNotificationUIs = extractNotificationUIs(obb);
+			//log().warn("NEED THIS: notificationUIs.size() = " + newNotificationUIs.size()
+			//		+ "    nEEDED : If OnOnly, we must NOT assert 5+ items");
+			//// if (notificationUIs.size() < 5 ) failInternalError(err+" [only
+			//// "+notificationUIs.size()+" notificationUIs provided. Should be 5+]");
+			//// unless we only get the ON ones ....
+			//
+			//// Assemble all existing mappings and all new-mappings specified. From these,
+			//// cancel overlaps, and prepare mappingsToDelete & mappingsToCreate
+			//// Remember: NotificationMapping only exist for ON notifications
+
+			List<Object> arrObj = (List<Object>) objListNotificationUIs;
+			List<NotificationUI> newNotificationUIs = new ArrayList<NotificationUI>();
+			for (Object ooo : arrObj) {
+				if (ooo instanceof NotificationUI) newNotificationUIs.add( (NotificationUI) ooo );
+				else fail("Given a List, but not List<NotificationUI>. 1st item is "+ooo.getClass().getName()+"    : from "+err);
 			}
-			log().debug(CLASSNAME
-					+ "srvUpdateRenewalNotifications : That was all the keys. Hope was one callewd 'notificationUIs'");
-
-			Object obb = data.get("notificationUIs");
-			List<NotificationUI> newNotificationUIs = extractNotificationUIs(obb);
-			log().warn("NEED THIS: notificationUIs.size() = " + newNotificationUIs.size()
-					+ "    nEEDED : If OnOnly, we must NOT assert 5+ items");
-			// if (notificationUIs.size() < 5 ) failInternalError(err+" [only
-			// "+notificationUIs.size()+" notificationUIs provided. Should be 5+]");
-			// unless we only get the ON ones ....
-
-			// Assemble all existing mappings and all new-mappings specified. From these,
-			// cancel overlaps, and prepare mappingsToDelete & mappingsToCreate
-			// Remember: NotificationMapping only exist for ON notifications
-
+			
+			
+			
 			P3SUser me = SecurityUtil.getMyUser();
 
 			// Can now perform a further check on the data submitted. Data consistency.
