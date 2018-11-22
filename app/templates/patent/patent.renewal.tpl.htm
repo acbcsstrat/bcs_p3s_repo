@@ -2,16 +2,16 @@
     <div class="content-panel__head">
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <nav class="navbar secondary-view-nav">
-                    <ul class="navbar-nav secondary-view-nav__list">
-                        <li class="secondary-view-nav__nav-item" data-ng-init="renewal.activePatentItemMenu = 'Renewal Info'" data-ng-click="renewal.activePatentItemMenu = 'Renewal Info'" >
-                            <a class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ui-sref="portfolio.patent.renewal.info" data-ng-class="{active : renewal.activePatentItemMenu === 'Renewal Info'}">Renewal Info</a>
+                <nav>
+                    <ul class="view-nav">
+                        <li class="m-r-sm">
+                            <a class="view-nav__item pill-radius" data-ui-sref-active="active" data-ui-sref="portfolio.patent.renewal.info">Renewal Info</a>
                         </li>
-                        <li class="secondary-view-nav__nav-item" data-ng-click="renewal.activePatentItemMenu = 'Renewal History'">
-                            <a class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ui-sref="portfolio.patent.renewal.history" data-ng-class="{active : renewal.activePatentItemMenu === 'Renewal History'}">Renewal History</a>
+                        <li class="m-r-sm">
+                            <a class="view-nav__item pill-radius" data-ui-sref-active="active" data-ui-sref="portfolio.patent.renewal.history">Renewal History</a>
                         </li>
-                        <li class="secondary-view-nav__nav-item" data-ng-click="renewal.activePatentItemMenu = 'Cost Analysis'">
-                            <a class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ui-sref="portfolio.patent.renewal.cost-analysis" data-ng-class="{active : renewal.activePatentItemMenu === 'Cost Analysis'}">Cost Analysis</a>
+                        <li class="m-r-sm">
+                            <a class="view-nav__item pill-radius" data-ui-sref-active="active" data-ui-sref="portfolio.patent.renewal.cost-analysis">Cost Analysis</a>
                         </li> 
                     </ul>
                 </nav>  
