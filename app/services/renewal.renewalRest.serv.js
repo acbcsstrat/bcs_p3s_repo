@@ -12,7 +12,7 @@ function renewalRestService($http, $q) {
     function fetchHistory(id) {
 
         var deferred = $q.defer();
-        console.log(id)
+
         $http.get(ppdomain+'rest-renewal-history/'+id)
         .then(
             function(response) {

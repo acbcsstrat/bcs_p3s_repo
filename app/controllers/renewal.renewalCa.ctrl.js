@@ -5,7 +5,7 @@ renewalCaCtrl.$inject = ['patent','ca', '$timeout', 'chunkDataService', 'costAna
 function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisService) {
 
     var vm = this;
-    console.log(patent)
+
     if(typeof ca !== 'undefined' || ca !== null ) {
         
         vm.ca = ca;
@@ -47,14 +47,16 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
                         return d3.time.format('%x')(new Date(d));
                         
                     },
-                    tickPadding: 20      
+                    tickPadding: 20,
+                    showMaxMin: true
                 },
                 yAxis: {
                     tickFormat: function(d){
                         return '$ ' + d3.format('.02f')(d);
                     },
                     showMaxMin: false,
-                    tickPadding: 20
+                    tickPadding: 20,
+                    showMaxMin: true
                 },
                 callback: function(d, e) {
                     d3.selectAll('.nvd3 .nv-bar rect').attr("rx", 15);
@@ -87,7 +89,6 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
                 useInteractiveGuideline: true,
                 xAxis: {
                     tickFormat: function (d, i) {
-                        console.log(d3.time.format('%x')(new Date(d)))
                         return d3.time.format('%x')(new Date(d));
                     },
                     showMaxMin: true,
@@ -99,7 +100,7 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
                         return '$ ' + d3.format('.00f')(d);
                     },
                     showMaxMin: true,
-                    showMaxMin: false,
+                    // showMaxMin: false,
                     tickPadding: 20
                 },
                 tooltip: {

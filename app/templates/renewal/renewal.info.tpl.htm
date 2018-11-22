@@ -2,29 +2,24 @@
     <div class="content-panel bg-white border-t-none">
         <div class="content-panel__head border-grey-xs--btm">
             <div class="row d-flex align-items-center">
-                <div class="col-xl-4">
+                <div class="col-xl-3">
                     <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
                         <span class="font-weight-medium">Renewal Status:</span> 
-                        <span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.epoPatentStatus}}</span>
-                        <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to Renew</span>
-                        <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">Renewal lapsed</span>
-                        <span data-ng-if="$ctrl.patent.renewalStatus === 'Show price'">Open for renewal</span>
+                        <span data-ng-bind="$ctrl.getStatus($ctrl.patent.renewalStatus)">
                     </p>
                 </div>
-                <div class="col-xl-5" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
+                <div class="col-xl-6" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
                                 <span class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.patent.costBandColour, 'text')">$ {{$ctrl.patent.renewalFeeUI.subTotalUSD | number: 2 }}</span>
                             </div>
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.patent.renewalStageProgress) - 1)  + '%'}">
-                                <span data-ng-if="$ctrl.patent.nextStageColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.nextStageColour()[0], 'text')">$ {{$ctrl.patent.renewalFeeUI.subTotalUSD}}</span>
+                                <span data-ng-if="$ctrl.patent.nextStageColour !== 'Black'" class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.nextStageColour()[0], 'text')">$ {{$ctrl.patent.portfolioUI.serviceList[0].nextStageCostUSD}}</span>
                                 <span data-ng-if="$ctrl.patent.nextStageColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-xl-12">
                             <uib-progress class="pill-radius progress-bar-tall" data-ng-class="$ctrl.getNextColour($ctrl.patent.costBandColour, 'bg')">
                                 <uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.renewalStageProgress">{{$ctrl.patent.renewalStageProgress}}%</uib-bar>
@@ -32,16 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-ng-class="($ctrl.patent.renewalStatus == 'Show price' ? 'col-xl-3': 'col-xl-8')">
-                    <div data-ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="d-flex flex-column align-items-end">
-                        <p class="font-weight-medium font-h4 m-b-xs">Service Status:</p>
-                        <p class="font-weight-medium font-h4">
-                            <span data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" class="txt-phase-amber">{{$ctrl.patent.renewalStatus}}</span>
-                            <span data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed' || $ctrl.patent.renewalStatus == 'Open for renewal' || $ctrl.patent.renewalStatus == 'Renewal in place'" class="txt-phase-green">{{$ctrl.patent.renewalStatus}}</span>
-                            <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'" class="txt-phase-red">Renewal lapsed</span>
-                            <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'" class="txt-phase-red">Call <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerName"></span> on <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerPhone"></span></span>
-                        </p>
-                    </div>                                              
+                <div class="col-xl-3">
                     <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-bold">Next stage: </span> 
@@ -49,7 +35,7 @@
                         </p>
                         <p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
                     </div>
-                </div>                      
+                </div>
             </div>
         </div>
         <div class="row">
@@ -59,27 +45,22 @@
                         <h4 class="font-weight-medium m-b-xs">Notifications</h4>
                         <p>Simply select the colour and time frame to receive email notifications for this patent prior to each stage. You can select as many or few as you want.</p>
                     </div>
-                    <div class="row m-b-sm">
+                    <div class="row m-b-xs">
                         <div class="col-xl-12 d-flex align-items-center justify-content-between">
                             <h4 class="font-h4 font-weight-medium">Selected</h4>
-<!--                                        <div class="pill-radius pill-tabs btn--lg"  data-ng-style="{ 'background': $ctrl.colourPhaseTitle.color}">
-                                <span class="font-weight-medium">{{$ctrl.colourPhaseTitle.title}} Stage</span>
-                            </div> -->
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
-                            <div class="panel-nav">
-                                <ul class="nav panel-nav__notification-list">
-                                    <li class="panel-nav__notification-list-item--green-notification panel-nav__list-item--notifications pill-radius active d-flex justify-content-center align-items-center m-b-xs" data-ng-init="activeNotificationTabXl = 0;" data-ng-click="activeNotificationTabXl = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTabXl == 0, 'txt-phase-green': activeNotificationTabXl !== 0}">Green</li>
-                                    <li class="panel-nav__notification-list-item--amber-notification pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTabXl = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTabXl == 1, 'txt-phase-amber': activeNotificationTabXl !== 1}">Amber</li>
-                                    <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTabXl = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTabXl == 2, 'txt-phase-red': activeNotificationTabXl !== 2}">Red</li>
-                                    <li class="panel-nav__notification-list-item--blue-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTabXl = 3; $ctrl.displayNotifications('Blue');" data-ng-class="{'active bg-phase-blue': activeNotificationTabXl == 3, 'txt-phase-blue': activeNotificationTabXl !== 3}">Blue</li>
-                                    <li class="panel-nav__notification-list-item--black-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTabXl = 4; $ctrl.displayNotifications('Black');" data-ng-class="{'active bg-phase-black': activeNotificationTabXl == 4, 'txt-phase-black': activeNotificationTabXl !== 4}">Black</li>
-                                </ul>
-                            </div>
+                            <ul class="panel-nav">
+                                <li class="panel-nav__list-item list-item--colour pill-radius green m-b-xs" data-ng-init="activeNotificationTabXl = 0;" data-ng-click="activeNotificationTabXl = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active': activeNotificationTabXl == 0}">Green</li>
+                                <li class="panel-nav__list-item list-item--colour pill-radius amber m-b-xs" data-ng-click="activeNotificationTabXl = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active': activeNotificationTabXl == 1}">Amber</li>
+                                <li class="panel-nav__list-item list-item--colour pill-radius red m-b-xs" data-ng-click="activeNotificationTabXl = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active': activeNotificationTabXl == 2}">Red</li>
+                                <li class="panel-nav__list-item list-item--colour pill-radius blue m-b-xs" data-ng-click="activeNotificationTabXl = 3; $ctrl.displayNotifications('Blue');" data-ng-class="{'active ': activeNotificationTabXl == 3}">Blue</li>
+                                <li class="panel-nav__list-item list-item--colour pill-radius black m-b-xs" data-ng-click="activeNotificationTabXl = 4; ctrl.displayNotifications('Black');" data-ng-class="{'active': activeNotificationTabXl == 4}">Black</li>
+                            </ul>
                         </div>
-                        <div class="col-xl-12">
+                        <div class="col-xl-12 m-t-sm">
                             <uib-tabset active="activeNotificationTabXl" vertical="true" type="pills" class="flex-column">
                                 <uib-tab index="0" heading="Green" data-ng-hide="true">
                                     <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
@@ -153,9 +134,7 @@
                 <div class="content-panel__head border-grey-xs--top">
                     <div class="row">
                         <div class="col-xl-12 d-flex">
-                            <div class="btn-submit">
-                                <input type="submit" id="submit" class="btn btn--lg btn-submit--check bg-phase-green pill-radius m-r-sm" value="Save" data-ng-click="$ctrl.updateRenewalNotifications($ctrl.patent, $ctrl.patent.id)">                                   
-                            </div>
+                            <button class="btn btn--lg btn--green pill-radius" value="Save" data-ng-click="$ctrl.updateRenewalNotifications($ctrl.patent, $ctrl.patent.id)">Save</button>
                         </div>
                     </div>
                 </div>
@@ -268,27 +247,22 @@
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                                         <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
                                         <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
-                                        &euro; {{($ctrl.patent.subTotalEUR % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth | number: 2)  || '0.00'}}</p>
+                                        &euro; {{($ctrl.patent.subTotalEUR % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth | number: 2)  || '0.00'}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div> <!-- row end -->
                     <div class="row d-flex justify-content-end">
-                        <div class="col-xl-6 d-flex justify-content-end">
-                            <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-                                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.renewalFeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+                        <div class="col-xl-12">
+                            <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus)" class="d-flex justify-content-end">
+                                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.renewalFeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
                                 </ngcart-addtocart>
+                                <a class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Fee Breakdown</a>
                             </div>
                             <div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')">
-                                <button type="button" class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-                                    <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</a>
-                                </button>
-                            </div>
-                            <div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'">
-                                <div class="btn btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-                                    <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemRenewal()" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})">View Renewal</a>
-                                </div>
-                            </div>                                          
+                                <button type="button" class="btn btn--lg btn--green" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
+                            </div>                                       
                         </div>
                     </div>
                 </div> <!-- col-xl-6 END -->                
@@ -304,23 +278,11 @@
                 <div class="col-md-6">
                     <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
-                        <span class="font-weight-medium">EPO Status:</span> 
-                        <span data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew' && $ctrl.patent.renewalStatus !== 'Way too late to renew' && $ctrl.patent.renewalStatus !== 'Show price'">{{$ctrl.patent.renewalStatus}}</span>
-                        <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'">Call to Renew</span>
-                        <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'">Renewal lapsed</span>
-                        <span data-ng-if="$ctrl.patent.renewalStatus === 'Show price'">Open for renewal</span>
+                        <span class="font-weight-medium">Renewal Status:</span> 
+                        <span data-ng-bind="$ctrl.getStatus($ctrl.patent.renewalStatus)">
                     </p>
                 </div>
                 <div class="col-md-6">
-                    <div data-ng-if="$ctrl.patent.renewalStatus !== 'Show price'" class="d-flex flex-column align-items-end">
-                        <p class="font-weight-medium font-h4 m-b-xs">Next Stage:</p>
-                        <p class="font-body font-h4">
-                            <span data-ng-if="$ctrl.patent.renewalStatus == 'Payment in progress'" class="txt-phase-amber">{{$ctrl.patent.renewalStatus}}</span>
-                            <span data-ng-if="$ctrl.patent.renewalStatus == 'No renewal needed' || $ctrl.patent.renewalStatus == 'Open for renewal' || $ctrl.patent.renewalStatus == 'Renewal in place'" class="txt-phase-green">{{$ctrl.patent.renewalStatus}}</span>
-                            <span data-ng-if="$ctrl.patent.renewalStatus === 'Way too late to renew'" class="txt-phase-red">Renewal lapsed</span>
-                            <span data-ng-if="$ctrl.patent.renewalStatus === 'Too late to renew'" class="txt-phase-red">Call <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerName"></span> on <span class="font-weight-bold txt-phase-black" data-ng-bind="$ctrl.partnerPhone"></span></span>
-                        </p>
-                    </div>
                     <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-bold">Next stage: </span> 
@@ -361,17 +323,16 @@
                             <div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-between m-b-xs">
                                 <h4 class="font-h4 font-weight-medium">Selected</h4>
                             </div>
-                            <div class="col-md-12 col-lg-7 m-b-xs">
+                            <div class="col-md-12 col-lg-8 m-b-xs">
                                 <div class="panel-nav">
                                     <ul class="nav panel-nav__notification-list d-flex justify-content-start">
-                                        <li class="panel-nav__notification-list-item--green-notification panel-nav__list-item--notifications pill-radius active d-flex justify-content-center align-items-center m-b-xs m-r-sm" data-ng-init="activeNotificationTabMd = 0;" data-ng-click="activeNotificationTabMd = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTabMd == 0, 'txt-phase-green': activeNotificationTabMd !== 0}">Green</li>
-                                        <li class="panel-nav__notification-list-item--amber-notification pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs m-r-sm" data-ng-click="activeNotificationTabMd = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTabMd == 1, 'txt-phase-amber': activeNotificationTabMd !== 1}">Amber</li>
-
-                                        <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTabMd = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTabMd == 2, 'txt-phase-red': activeNotificationTabMd !== 2}">Red</li>
-
-                                        <li class="panel-nav__notification-list-item--blue-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTabMd = 3; $ctrl.displayNotifications('Blue');" data-ng-class="{'active bg-phase-blue': activeNotificationTabMd == 3, 'txt-phase-blue': activeNotificationTabMd !== 3}">Blue</li>
-
-                                       <li class="panel-nav__notification-list-item--black-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTabMd = 4; $ctrl.displayNotifications('Black');" data-ng-class="{'active bg-phase-black': activeNotificationTabMd == 4, 'txt-phase-black': activeNotificationTabMd !== 4}">Black</li>                                      
+                                        <ul class="panel-nav">
+                                            <li class="panel-nav__list-item list-item--colour pill-radius green m-b-xs" data-ng-init="activeNotificationTabMd = 0;" data-ng-click="activeNotificationTabMd = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active': activeNotificationTabMd == 0}">Green</li>
+                                            <li class="panel-nav__list-item list-item--colour pill-radius amber m-b-xs" data-ng-click="activeNotificationTabMd = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active': activeNotificationTabMd == 1}">Amber</li>
+                                            <li class="panel-nav__list-item list-item--colour pill-radius red m-b-xs" data-ng-click="activeNotificationTabMd = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active': activeNotificationTabMd == 2}">Red</li>
+                                            <li class="panel-nav__list-item list-item--colour pill-radius blue m-b-xs" data-ng-click="activeNotificationTabMd = 3; $ctrl.displayNotifications('Blue');" data-ng-class="{'active ': activeNotificationTabMd == 3}">Blue</li>
+                                            <li class="panel-nav__list-item list-item--colour pill-radius black m-b-xs" data-ng-click="activeNotificationTabMd = 4; ctrl.displayNotifications('Black');" data-ng-class="{'active': activeNotificationTabMd == 4}">Black</li>
+                                        </ul>                                      
                                     </ul>
                                 </div>
                             </div>
@@ -449,9 +410,7 @@
                     <div class="content-panel__head border-grey-xs--top">
                         <div class="row">
                             <div class="col-xl-12 d-flex">
-                                <div class="btn-submit">
-                                    <input type="submit" id="submit" class="btn btn--lg btn-submit--check bg-phase-green pill-radius m-r-sm" value="Save" data-ng-click="$ctrl.updateRenewalNotifications($ctrl.patent.id)">                                   
-                                </div>
+                                <input type="submit" id="submit" class="btn btn--lg btn--green pill-radius" value="Save" data-ng-click="$ctrl.updateRenewalNotifications($ctrl.patent.id)">                                   
                             </div>
                         </div>
                     </div>
@@ -461,7 +420,7 @@
     </div>
     
         <div class="row">
-            <div class="col-md-8 col-lg-6">
+            <div class="col-md-8 col-lg-7">
                 <div class="content-panel">
                     <div class="content-panel__body bg-white h-100 d-flex align-items-center" data-ng-if="$ctrl.patent.renewalFeeUI === null">
                         <div class="row bg-no-chart">
