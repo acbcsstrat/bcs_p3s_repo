@@ -212,12 +212,12 @@
                                             <span data-ng-if="item.serviceStatus == 'Too late'">Too late</span>
                                             <div data-ng-if="$ctrl.actionStatus(item.serviceStatus)">
                                                 <p data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                <i class="fa fa-arrow-right fa-lg" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
+                                                <i class="fa fa-chevron-right fa-lg" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
                                                 <p data-ng-class="$ctrl.getCurrColour(item.nextStageColour, 'text')" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                             </div>
                                             <div data-ng-if="$ctrl.actionStatus(item.serviceStatus)" class="d-md-flex d-lg-none flex-column">
                                                 <p data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                <i class="fa fa-arrow-down fa" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
+                                                <i class="fa fa-chevron-down fa" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
                                                 <p data-ng-class="$ctrl.getCurrColour(item.nextStageColour, 'text')" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                             </div>                                            
                                         </td>
@@ -231,12 +231,12 @@
                                             <span data-ng-if="item.serviceStatus == 'Too late'">E-PCT deadline passed</span>
                                             <div data-ng-if="$ctrl.actionStatus(item.serviceStatus)" class="d-md-none d-lg-flex justify-content-between align-items-center">
                                                 <p data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                <i class="fa fa-arrow-right fa-lg" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
+                                                <i class="fa fa-chevron-right fa-lg" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
                                                 <p data-ng-class="$ctrl.getCurrColour(item.nextStageColour, 'text')" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                             </div>
                                             <div data-ng-if="$ctrl.actionStatus(item.serviceStatus)" class="d-md-flex d-lg-none flex-column">
                                                 <p data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                <i class="fa fa-arrow-down fa" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
+                                                <i class="fa fa-chevron-down fa" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
                                                 <p data-ng-class="$ctrl.getCurrColour(item.nextStageColour, 'text')">$ {{item.nextStageCostUSD | number: 2}}</p>
                                             </div>                                            
                                         </td>
