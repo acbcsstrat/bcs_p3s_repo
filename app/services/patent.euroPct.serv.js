@@ -29,11 +29,11 @@ function euroPctService($q, $http) {
 
     }
 
-    function updateNotifications(id) {
+    function updateNotifications(id, list) {
 
         var deferred = $q.defer()
 
-        $http.put(ppdomain+'rest-epct-notifications/'+id)
+        $http.put(ppdomain+'rest-epct-notifications/'+id, list)
         .then(
             function(response){
                 deferred.resolve(response.data)

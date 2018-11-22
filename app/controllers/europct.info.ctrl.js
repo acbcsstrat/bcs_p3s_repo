@@ -54,7 +54,7 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
     }    
 
     function updateNotifications(id) {
-        euroPctService.updateNotifications(id)
+        euroPctService.updateNotifications(id, patent.form1200NotificationUIs)
         .then(
             function(response){
                 updateNotificationsSuccess();
@@ -63,7 +63,6 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
                 updateNotificationsError(errResponse);
             }
         )
-
     };
 
     function deleteApplicationSuccess() {
@@ -165,11 +164,9 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
     function phaseNotifications(phase) { //migrate to renewalCtrl
         // console.log(phaseNotifications)
         return patent.epctNotificationUIs.filter(function(data){
-            console.log(data)
             return data.costbandcolor == phase;
         });
 
     }
-    console.log(vm.displayNotifications('Green'))
 
 }
