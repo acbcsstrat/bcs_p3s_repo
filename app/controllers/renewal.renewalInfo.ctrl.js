@@ -17,7 +17,6 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
     vm.actionStatus = actionStatus;
 
     function updateRenewalNotifications(patent, id) {
-        console.log(patent.renewalNotificationUIs, id)
         renewalRestService.updateNotifications(patent.renewalNotificationUIs, id)
         .then(
             function(response){
@@ -101,7 +100,6 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
         var notifications = [];
 
         return patent.renewalNotificationUIs.filter(function(data){
-            console.log(data)
             return data.costbandcolor == phase;
         });
 

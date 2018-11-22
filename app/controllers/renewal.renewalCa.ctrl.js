@@ -5,7 +5,7 @@ renewalCaCtrl.$inject = ['patent','ca', '$timeout', 'chunkDataService', 'costAna
 function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisService) {
 
     var vm = this;
-
+    console.log(ca)
     if(typeof ca !== 'undefined' || ca !== null ) {
         
         vm.ca = ca;
@@ -173,7 +173,7 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
                 }
             ]
 
-        }    
+        }
 
         function loadChart() {
             $timeout(function(){
