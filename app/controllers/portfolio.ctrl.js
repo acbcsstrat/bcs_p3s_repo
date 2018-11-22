@@ -31,12 +31,11 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       'Renewal in place'
     ]
 
-    vm.patentActionStatuses = [
-      'All Patents',
-      'No Action Available',
-      'Action Available'
-    ]    
-
+    vm.patentActionStatuses = {
+      'value': 'All Patents',
+      'values': ['All Patents', 'No Action Available', 'Action Available']
+    }
+  
     $scope.filters = {
       // patentCategory: {},
       
@@ -96,7 +95,8 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     }
 
-    $scope.epctStages = function(field, service) {
+    $scope.epctStages = function(field) {
+      console.log(field)
       var result = [];
       for(var i = 0; i < $scope.portfolioData.length; i++){
         var patent = $scope.portfolioData[i];
@@ -112,13 +112,12 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     }
 
-    $scope.renewalStages = function(field, service) {
+    $scope.renewalStages = function(field) {
       var result = [];
       for(var i = 0; i < $scope.portfolioData.length; i++){
         var patent = $scope.portfolioData[i];
         if(patent.serviceList && patent.serviceList.length > 0){
           for(var j = 0; j < patent.serviceList.length; j++){
-            // console.log(field, service)
             if(patent.serviceList[j].serviceType == 'Renewal') {
               result.push(patent.serviceList[j][field])
             }
@@ -166,6 +165,8 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       }
       return uniqueArray(result); //check no duplicates
     };
+
+    console.log($scope.filters)
 
     $scope.testFl = function(el){
         for(var filter in $scope.filters){

@@ -1,23 +1,23 @@
 <patentnav></patentnav>
 <div class="animate-show">    
     <div class="form-group row m-b-sm">
-        <div class="col-md-4 col-lg-2 col-xl-2">
+        <div class="col-md-3 col-lg-3 col-xl-2">
             <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">
         </div>
-        <div class="col-md-4 col-lg-2 col-xl-2">
+        <div class="col-md-3 col-lg-3 col-xl-2">
             <div class="input-group">
                 <input type="text" class="form-control pill-radius" name="clientRefFilter" data-ng-model="filterPortfolio.clientRef" placeholder="Client Ref" autocomplete="off">
             </div>
         </div>
-        <div class="offset-lg-4 col-lg-2 col-xl-2 offset-xl-4">
+        <div class="col-md-3 col-lg-3 col-xl-2 offset-xl-4">
             <div class="input-group">
-                <select class="pill-radius form-control font-body" data-ng-options="item for item in $ctrl.patentActionStatuses" data-ng-model="item.selectedOption" data-ng-change="$ctrl.updateCategory(item.selectedOption)">
+                <select class="pill-radius form-control font-body" data-ng-options="item for item in $ctrl.patentActionStatuses.values" data-ng-model="$ctrl.patentActionStatuses.value" data-ng-change="$ctrl.updateCategory($ctrl.patentActionStatuses.value)">
                 </select>
                 
             </div>
         </div>
-        <div class="col-md-4 col-lg-2 col-xl-2">
-            <button type="button" class="btn btn--lg pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Advanced Search</button>
+        <div class="col-md-3 col-lg-3 col-xl-2">
+            <button type="button" class="btn btn--lg btn-block pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Advanced Search</button>
         </div>
     </div>
 
@@ -43,13 +43,13 @@
                                     <div class="col-xl-6">
                                         <div class="filter-box m-t-md">
                                             <div class="row">
-                                                <div class="col-xl-2">
+                                                <div class="col-md-2 col-xl-2">
                                                     <h4 class="font-body font-h4-title font-weight-bold">Euro-PCT</h4>
                                                 </div>
-                                                <div class="col-xl-9 d-flex">
+                                                <div class="col-md-9 col-xl-9 d-flex">
                                                     <div class="checkbox-container" data-ng-repeat="status in europctStatus('serviceStatus')">
                                                         <label class="filter-container">
-                                                            <input type="checkbox" ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
+                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>
@@ -57,16 +57,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-6">
+                                    <div class="col-xl-6" data-ng-if="epctStages('currentStageColour').length !== 0">
                                         <div class="filter-box m-t-md">
                                             <div class="row">
-                                                <div class="col-xl-2">
+                                                <div class="col-md-2 col-xl-2">
                                                     <h4 class="font-body font-h4-title font-weight-bold">Phase</h4>
                                                 </div>
-                                                <div class="col-xl-10 d-flex">
+                                                <div class="col-md-10 col-xl-10 d-flex">
                                                     <div class="checkbox-container" data-ng-repeat="status in epctStages('currentStageColour')">
                                                         <label class="filter-container">
-                                                            <input type="checkbox" ng-model="filters.currentStageColour[status]"><span class="font-body">{{status}}</span>
+                                                            <input type="checkbox" data-ng-model="filters.currentStageColour[status]"><span class="font-body">{{status}}</span>
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>
@@ -86,13 +86,13 @@
                                     <div class="col-xl-6">
                                         <div class="filter-box m-t-md">
                                             <div class="row">
-                                                <div class="col-xl-2">  
-                                                     <h4 class="font-body font-h4-title font-weight-bold">Renewals</h4>
+                                                <div class="col-md-2 col-xl-2">  
+                                                     <h4 class="font-body font-weight-bold">Renewals</h4>
                                                 </div>
-                                                <div class="col-xl-9 d-flex">                                                
+                                                <div class="col-md-9 col-xl-9 d-flex">                                                
                                                     <div class="checkbox-container" data-ng-repeat="status in renewalsStatus('serviceStatus')">
                                                         <label class="filter-container">
-                                                            <input type="checkbox" ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
+                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>
@@ -100,16 +100,16 @@
                                             </div>                                         
                                         </div>
                                     </div>
-                                    <div class="col-xl-6">
+                                    <div class="col-xl-6" data-ng-if="renewalStages('currentStageColour').length !== 0">
                                         <div class="filter-box m-t-md">
                                             <div class="row">
-                                                <div class="col-xl-2">                                            
-                                                    <h4 class="font-body font-h4-title font-weight-bold">Phase</h4>
+                                                <div class="col-md-2 col-xl-2">                                            
+                                                    <h4 class="font-body font-weight-bold">Phase</h4>
                                                 </div>
-                                                <div class="col-xl-10 d-flex">
+                                                <div class="col-md-10 col-xl-10 d-flex">
                                                     <div class="checkbox-container" data-ng-repeat="status in renewalStages('currentStageColour')">
                                                         <label class="filter-container">
-                                                            <input type="checkbox" ng-model="filters.currentStageColour[status]"><span class="font-body">{{status}}</span>
+                                                            <input type="checkbox" data-ng-model="filters.currentStageColour[status]"><span class="font-body">{{status}}</span>
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>
@@ -125,28 +125,15 @@
                                 </div>                                 
                             </uib-tab>
                         </uib-tabset>
-
-
-<!--                             <div class="checkbox-container" data-ng-repeat="service in serviceGroup('serviceType')">
-                                <label class="filter-container">
-                                    <input type="checkbox" ng-model="filters.serviceType[service]"><span class="font-body">{{service}}</span>
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div> -->
-                        
-
-                             
                     </div>
                     <div class="expand-collapse-content border-t-none">
                         <div class="row d-flex align-items-center">
                             <div class="col-md-6">
                                 <button data-ng-click="$ctrl.toggleAll($event, false)" class="txt-phase-red btn-no-bg font-body font-weight-medium btn-underlined">Clear All Filters</button>
-                                <button data-ng-click="$ctrl.toggleAll($event, true)" class="txt-phase-black btn-no-bg font-body font-weight-medium btn-underlined">Select All Filters</button>
+<!--                                 <button data-ng-click="$ctrl.toggleAll($event, true)" class="txt-phase-black btn-no-bg font-body font-weight-medium btn-underlined">Select All Filters</button> -->
                             </div>
                             <div class="col-md-6 text-right">
-                                <button type="button" class="btn btn--default pill-radius bg-phase-red" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">
-                                    <a class="btn__link btn__link--white btn--lg">Close</a>
-                                </button>
+                                <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Close</button>
                             </div>                     
                         </div>
                     </div>
