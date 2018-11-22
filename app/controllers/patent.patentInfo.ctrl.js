@@ -33,6 +33,11 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
     console.log(patent)
 
     vm.$onInit = function() {
+        if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) {
+            patent.availableFee = null;
+            return;
+        }
+        
         patent.availableFee = {};
  
         if(patent.renewalFeeUI !== null) {
@@ -127,12 +132,10 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
             patent.availableFee.ppFeesUSD = (function(){
                 var total = 0;
                 total += patent.form1200FeeUI.processingFeeUSD;
-                if(patent.form1200FeeUI.expressFeeUSD !== 0) {
-                    console.log('hello')                    
+                if(patent.form1200FeeUI.expressFeeUSD !== 0) {                 
                     total += patent.form1200FeeUI.expressFeeUSD;
                 }
-                if(patent.form1200FeeUI.urgentFeeUSD !== 0) {
-                    console.log('hello')                    
+                if(patent.form1200FeeUI.urgentFeeUSD !== 0) {                  
                     total += patent.form1200FeeUI.urgentFeeUSD
                 }
                 return total;
@@ -141,11 +144,9 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
                 var total = 0;
                 total += patent.form1200FeeUI.processingFeeEUR;
                 if(patent.form1200FeeUI.expressFeeEUR !== 0) {
-                    console.log('hello')
                     total += patent.form1200FeeUI.expressFeeEUR;
                 }
-                if(patent.form1200FeeUI.urgentFeeEUR !== 0) {
-                    console.log('hello')                    
+                if(patent.form1200FeeUI.urgentFeeEUR !== 0) {                  
                     total += patent.form1200FeeUI.urgentFeeEUR;
                 }
                 return total;

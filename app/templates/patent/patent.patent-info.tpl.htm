@@ -103,7 +103,7 @@
 				</div>
 			</div>
 			<div class="col-xl-6 p-l-none">
-				<div class="content-panel__body h-100 d-flex align-items-center" data-ng-if="$ctrl.patent.renewalFeeUI === null && $ctrl.patent.form1200FeeUI === null">
+				<div class="content-panel__body h-100 d-flex align-items-center justify-content-center" data-ng-if="$ctrl.patent.renewalFeeUI === null && $ctrl.patent.form1200FeeUI === null">
 					<div class="row bg-no-chart">
 						<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
 							<div class="d-flex justify-content-center align-items-center flex-column">
@@ -223,13 +223,20 @@
 								</p>			
 						    </div>
 						    <div class="col-md-6 col-lg-6 text-right">
-								<p class="font-h4 font-weight-medium m-b-xs">
-									Services available:<br>
-								</p>
-								<p class="font-h4">
-									<span class="font-weight-medium txt-phase-green" data-ng-if="$ctrl.statusesAvailable > 0" data-ng-repeat="service in $ctrl.statusesAvailable">{{service}}<span data-ng-if="$ctrl.statusesAvailable > 1">, </span></span>
-									<span data-ng-if="$ctrl.statusesAvailable === 0">None</span>
-								</p>
+						    	<div data-ng-if="$ctrl.statusesAvailable.length > 0">
+									<p class="font-h4 font-weight-medium m-b-xs">
+										Services available:<br>
+									</p>
+									<p class="font-h4">
+										<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
+											<span class="txt-phase-green">{{$ctrl.getStatus(service)}}</span>
+											<span data-ng-if="$ctrl.statusesAvailable > 1">, </span>
+										</span>
+									</p>
+						    	</div>
+						    	<div data-ng-if="$ctrl.statusesAvailable.length === 0">
+						    		<p class="font-h4 font-weight-medium">No services available</p>
+						    	</div>
 						    </div>
 					    </div>
 				    </div>					
