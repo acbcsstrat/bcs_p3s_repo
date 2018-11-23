@@ -9,7 +9,6 @@ function basketService($http, $q){
 		var REST_SERVICE_URI = ppdomain+'rest-basket/';
 		
 		factory.fetchBasketPatents = function(ids) {
-
 			var deferred = $q.defer();
 
 			$http.post(REST_SERVICE_URI, ids)

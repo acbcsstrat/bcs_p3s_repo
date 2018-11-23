@@ -37,21 +37,6 @@ angular.module('ngCart.fulfilment', [])
             .then(
                 function(response){
                     deferred.resolve(response.data);
-
-                    var updatedPatentObj = {
-                        totalCostUSD: response.data.totalCostUSD,
-                        dateNowLocalTime: response.data.dateNowLocalTimeUI,
-                        transTargetEndDateUI:response.data.transTargetEndDateUI,
-                        patents: (function(){
-                            var patentAppNos = [];
-                            response.data.orderedPatentUIs.forEach(function(patent){
-                                patentAppNos.push(patent.patentApplicationNumber);
-                            });
-                            return patentAppNos;
-                        }()),
-                        totalPatents: response.data.orderedPatentUIs.length
-                    };
-                    $state.go('bank-transfer-preparation', {orderObj:order,patentObj:updatedPatentObj});
                 },
                 function(errResponse){  
                     deferred.reject(errResponse);
