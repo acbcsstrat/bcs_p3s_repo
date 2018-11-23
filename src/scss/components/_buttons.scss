@@ -5,27 +5,8 @@
 .btn-no-bg .btn-no-bg--green:focus { color: #53ab58; } /*modules*/ /*components*/ /*_buttons.scss*/
 .btn-no-bg .btn-no-bg--green:hover { background: #53ab58; color: $white;} /* modules*/ /*components*/ /*_buttons.scss*/
 
-
-
-// %btn-opacity { @include opacity(0.85); color: $white; }
-
-// .btn-submit {
-//   .btn-submit--check {
-//     background-color: $green;
-//     background-position: right 18px center;
-//     color: $white;
-//   }
-// }
-
-// .btn-cancel {
-//   .btn-error--cross {
-//     background-color: $red; 
-//     background-position: right 18px center;
-//     color: $white;
-//   }
-// }
-
-.btn {
+ // a:not([href]):not([tabindex])
+.btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
   background: $grey;
   font-size: $font-normal;  
   font-weight: 500;
@@ -45,13 +26,6 @@
   &:not([disabled]):hover, &:not([disabled]):focus  {
     box-shadow: 0 0 1px $black;
   }
-  
-  // &.focus, &:focus { 
-  //   box-shadow: none!important;
-  // }
-  // &:not([disabled]):not(.t-data__btn-portal):hover, &:not([disabled]):hover,  &:hover {
-  //    @extend %btn-opacity;
-  // }
 
 }
 
