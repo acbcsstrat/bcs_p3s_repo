@@ -274,7 +274,7 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
         patentsRestService.deletePatent(id)
         .then(
             function(){
-                $state.go('patents', {}, {reload: true})
+                $state.go('portfolio', {}, {reload: true})
                 .then(function(){
                     $timeout(function(){
                         patentsRestService.fetchAllPatents()
