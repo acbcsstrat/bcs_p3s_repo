@@ -1,5 +1,7 @@
 package com.bcs.p3s.enump3s;
 
+// This file is common to all products (web, cron, harness)
+
 /**
  * The values that may appear in Epct.epctStatus
  *
@@ -21,6 +23,9 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     public static final String COMPLETED			= "Completed";
     public static final String ERROR				= "Error";
 
+    // For internal development and/or testing ONLY
+    public static final String SIMULATE_F1200_COMPLETION	= "Simulate f1200 completion";  // Such that Epo appears to indicate Euro-PCT is successfully completed
+    
 
     // Constructor - Which verifies the value provided
     public Form1200StatusEnum(String status)  
