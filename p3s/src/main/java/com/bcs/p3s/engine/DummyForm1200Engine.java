@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Check;
+
 import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
@@ -212,6 +214,7 @@ public class DummyForm1200Engine extends Universal {
 	public List<String> csStings2ist(String csv) {
 		//Remove whitespace and split by comma 
         List<String> items = Arrays.asList(csv.split("\\s*,\\s*"));
+        if (isEmpty(csv)) items = new ArrayList<String>(); // Safety Check. Ensure list is EMPTY
 		return items;
 	}
 	public List<ExtensionStateUI> listStrStates2ExtnsStates(List<String> strList) {
