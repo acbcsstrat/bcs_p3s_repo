@@ -32,7 +32,7 @@
 	</div>
 	<div class="row m-b-md">
 		<div class="col-md-12 col-lg-12 col-xl-12" data-ng-show="$ctrl.tableData.length === 0">
-			<div class="bg-white p-a-sm">
+			<div class="bg-white content-panel p-a-sm">
 				<p class="font-body font-weight-medium">There are currently no active transactions</p>
 			</div>
 		</div>
@@ -74,7 +74,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						    <tr data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {renewalUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {renewalUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
+						    <tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {renewalUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {renewalUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
 						        <td class="t-data__td--ellipsis t-data__td t-data__w15">
 						        	<span class="td-ellipsis">
 										<a class="t-data__a" data-ui-sref="current-transactions.current-transaction-item({transId: item.id})">{{item.p3S_TransRef}}</a>
@@ -120,7 +120,7 @@
 						        </td>      				                 
 						    </tr>
 						 	<tr data-ng-show="Result.length==0">
-						 		<td colspan="7">
+						 		<td class="t-data__td  text-left" colspan="7">
 						 			No Results Found
 						 		</td>
 						 	</tr>						    						
