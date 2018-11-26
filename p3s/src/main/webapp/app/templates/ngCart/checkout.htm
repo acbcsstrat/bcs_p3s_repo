@@ -32,7 +32,7 @@
                                 <p class="font-weight-medium font-body">Official Fees</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{renewalFee | number:2 }}</p>
+                                <p class="font-body text-right">$ {{(summary.fees.officialFeeUSD | number:2) || '0.00'}}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -40,7 +40,7 @@
                                 <p class="font-weight-medium font-body">Processing Fees</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{processingFee | number:2 }}</p>
+                                <p class="font-body text-right">$ {{(summary.fees.processingFee | number:2) || '0.00' }}</p>
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                                 <p class="font-weight-medium font-body">EPO Surcharges</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{extensionFee | number:2 }}</p>
+                                <p class="font-body text-right">$ {{(summary.fees.extensionFee | number:2) || '0.00' }}</p>
                             </div>
                         </div>
                         <div class="row">                         
@@ -58,7 +58,7 @@
                                 <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{urgentFee | number:2 }}</p>
+                                <p class="font-body text-right">$ {{(summary.fees.urgentFee | number:2) || '0.00'}}</p>
                             </div> 
                         </div>
                     </div>  
@@ -70,7 +70,7 @@
                                     <p class="font-weight-medium font-body">Official Fees</p>                        
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{renewalFee | number:2 }}</p>
+                                    <p class="font-body">$ {{(summary.fees.renewalFee | number:2) || '0.00'}}</p>
                                 </div>                               
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                     <p class="font-weight-medium font-body">Processing Fees</p>
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{processingFee | number:2 }}</p>
+                                    <p class="font-body">$ {{(summary.fees.processingFee | number:2) || '0.00'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                     <p class="font-weight-medium font-body">EPO Surcharges</p>                        
                                 </div>                  
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{extensionFee | number:2 }}</p>
+                                    <p class="font-body">$ {{(summary.fees.extensionFee | number:2) || '0.00'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                     <p class="font-weight-medium font-body">Express Fees</p>                        
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{expressFee | number:2 }}</p>
+                                    <p class="font-body">$ {{(summary.fees.expressFee | number:2) || '0.00'}}</p>
                                 </div> 
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                                     <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{urgentFee | number:2 }}</p>
+                                    <p class="font-body">$ {{(summary.fees.urgentFee | number:2) || '0.00'}}</p>
                                 </div> 
                             </div>
                         </div>                        
@@ -124,7 +124,7 @@
                             <p class="font-weight-medium font-h4">Total:</p> 
                         </div>
                         <div class="col-xl-4">
-                            <p class="font-weight-medium font-h4">$ {{ totalCost | number:2 }}</p>
+                            <p class="font-weight-medium font-h4">$ {{(summary.fees. totalCost | number:2) || '0.00'}}</p>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                     <div class="row">
                         <div class="col-md-12 d-flex">
                             <p class="font-weight-medium font-h4 m-r-sm">Total:</p> 
-                            <p class="font-weight-medium font-h4">$ {{ totalCost | number:2 }}</p>                       
+                            <p class="font-weight-medium font-h4">$ {{(summary.fees. totalCost | number:2) || '0.00'}}</p>                       
                         </div>
                     </div>
                 </div>                

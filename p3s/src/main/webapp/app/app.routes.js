@@ -16,10 +16,10 @@ function appRoutes($stateProvider) {
                 }],
                 currentTransactions: ['currentTransactionsService', function(currentTransactionsService) {
                     return currentTransactionsService.fetchCurrentTransactions();
-                }],                       
-                fxRatesWeek: ['fxService', function(fxService) {
-                    return fxService.fetchFxWeek();
-                }],
+                }],                    
+                // fxRatesWeek: ['fxService', function(fxService) {
+                //     return fxService.fetchFxWeek();
+                // }],
                 fxRatesMonth: ['fxService', function(fxService) {
                     return fxService.fetchFxMonth();
                 }]                       
@@ -111,7 +111,12 @@ function appRoutes($stateProvider) {
             templateUrl: 'app/templates/patent/patent.europct.tpl.htm',
             params: {
                 navigation: 'portfolio'
-            }            
+            },
+            resolve: {
+                ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
+                    return costAnalysisService.fetchEuroPctCa(patent.id);  
+                }]
+            }
         })
         .state('portfolio.patent.euro-pct.info', {
             templateUrl: 'app/templates/europct/europct.info.tpl.htm',
@@ -128,7 +133,7 @@ function appRoutes($stateProvider) {
             controllerAs: '$ctrl'
         })
         .state('portfolio.patent.euro-pct.form1200.questionnaire', {
-            url: 'form-1200-questionnaire/',
+            url: '/form-1200-questionnaire/',
             views: {
                 "@": {
                     templateUrl: 'app/templates/europct/europct.form1200.questionnaire.tpl.htm',
@@ -141,7 +146,7 @@ function appRoutes($stateProvider) {
             }            
         })
         .state('portfolio.patent.euro-pct.form1200.generated', {
-            url: 'form-1200-generated/',
+            url: '/form-1200-generated/',
             views: {
                 "@": {
                     templateUrl: 'app/templates/europct/europct.form1200.generated.tpl.htm',
@@ -156,12 +161,7 @@ function appRoutes($stateProvider) {
         .state('portfolio.patent.euro-pct.cost-analysis', {
             templateUrl: 'app/templates/europct/europct.costanalysis.tpl.htm',
             controller: 'euroPctCostAnalysisCtrl',
-            controllerAs: '$ctrl',
-            resolve: {
-                ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
-                    return costAnalysisService.fetchRenewalCa(patent.id);  
-                }]
-            }            
+            controllerAs: '$ctrl'
         })        
         .state('portfolio.patent.renewal', {
             abstract: true,

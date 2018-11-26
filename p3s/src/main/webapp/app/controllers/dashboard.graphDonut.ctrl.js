@@ -6,13 +6,12 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 
 	var vm = this;
 
-	if(patents) {
-
+	if(patents.length > 0) {
+		console.log('hello')
 		vm.patents = patents;
-		vm.patentData = patentPhasesService.phases(patents); //fetch all patents
-
-		$timeout(function() {
-
+		vm.patentData = patentPhasesService.phases(patents);
+		$timeout(function() { //required to load correct size of donut graph in view
+			// vm.patentData = patentPhasesService.phases(patents);
       		vm.donutOptions = {
 	            chart: {
 	                type: 'pieChart',	
@@ -36,11 +35,11 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 
 								var key = e.data.key;
 
+								selectPhaseService.setPhase(key, vm.patentData);
+
 								$timeout(function(){ //timeout needed to reset carousel content. Colour key emit however is not encapsulated within a timeout method
 									$scope.$emit('phaseChange', {phase: key})
-								}, 10)
-
-								selectPhaseService.setPhase(key, vm.patentData);
+								}, 10)								
 
 		                      	switch(key) {
 			                      	case 'green':
@@ -107,7 +106,9 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 	        	}
 	        ]
 
-  		}, 200);
+	
+
+  		}, 1500);
 
 	} //if patents end	
 }

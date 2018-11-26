@@ -34,10 +34,10 @@ function organiseTextService(coreService) {
 
     var availableStatuses = [
         {text: 'Show price', uiText: 'Open for Renewal'},
+        {text: 'Renewal in place', uiText: 'Renewal In Place'},
         {text: 'No renewal needed', uiText: 'No Renewal Needed'},
         {text: 'EPO Instructed', uiText: 'EPO Instructed'},
         {text: 'Payment in progress', uiText: 'Payment in Progress'},
-        {text: 'Too late to renew', uiText: 'Call '+partnerName+' on '+partnerPhone},
         {text: 'Too early', uiText: 'Too Early'},
         {text: 'Too late', uiText: 'Too Late'},
         {text: 'Way too late to renew', uiText: 'LAPSED'},

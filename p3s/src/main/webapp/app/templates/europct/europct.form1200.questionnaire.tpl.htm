@@ -11,16 +11,16 @@
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="content-panel__body bg-white">
                     <div class="m-t-sm m-b-md">
-                        <div class="nav panel-nav__list justify-content-center">
-                            <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-init="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-click="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-class="{'active': $ctrl.activeTab == 0}">{{$ctrl.confirmEntity.title()}}</button>
-                            <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.amendments.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.amendments.index}" data-ng-disabled="!$ctrl.confirmEntityChecked">{{$ctrl.amendments.title()}}</button>
+                        <div class="panel-nav">
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-init="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-click="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-class="{'active': $ctrl.activeTab == 0}">{{$ctrl.confirmEntity.title()}}</button>
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.activeTab = $ctrl.amendments.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.amendments.index}" data-ng-disabled="!$ctrl.confirmEntityChecked">{{$ctrl.amendments.title()}}</button>
 
-                            <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.documents.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.documents.index}" data-ng-if="$ctrl.documents.active" data-ng-disabled="!$ctrl.amendmentsChecked">{{$ctrl.documents.title()}}</button>
-                            <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.extAndValid.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.extAndValid.index}" data-ng-disabled="!$ctrl.documentsChecked">{{$ctrl.extAndValid.title()}}</button>
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.activeTab = $ctrl.documents.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.documents.index}" data-ng-if="$ctrl.documents.active" data-ng-disabled="!$ctrl.amendmentsChecked">{{$ctrl.documents.title()}}</button>
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.activeTab = $ctrl.extAndValid.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.extAndValid.index}" data-ng-disabled="!$ctrl.documentsChecked">{{$ctrl.extAndValid.title()}}</button>
 
-                            <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.reference.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.reference.index}" data-ng-disabled="!$ctrl.extAndValidChecked">{{$ctrl.reference.title()}}</button> 
-                            <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-click="$ctrl.activeTab = $ctrl.confirmPages.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.confirmPages.index}" data-ng-disabled="!$ctrl.referenceChecked">{{$ctrl.confirmPages.title()}}</button>
-                            <button class="pill-radius panel-nav__list-item panel-nav__list-item--fluid panel-nav__list-item--plain panel-nav__list-item--green font-weight-medium" data-ng-if="$ctrl.renewal.active" data-ng-click="$ctrl.activeTab = $ctrl.renewal.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.renewal.index}" data-ng-disabled="!$ctrl.confirmPagesChecked">{{$ctrl.renewal.title()}}</button>
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.activeTab = $ctrl.reference.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.reference.index}" data-ng-disabled="!$ctrl.extAndValidChecked">{{$ctrl.reference.title()}}</button> 
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.activeTab = $ctrl.confirmPages.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.confirmPages.index}" data-ng-disabled="!$ctrl.referenceChecked">{{$ctrl.confirmPages.title()}}</button>
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-if="$ctrl.renewal.active" data-ng-click="$ctrl.activeTab = $ctrl.renewal.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.renewal.index}" data-ng-disabled="!$ctrl.confirmPagesChecked">{{$ctrl.renewal.title()}}</button>
                         </div>
                     </div>
                     <form name="form1200Form" novalidate>
@@ -35,10 +35,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12 d-flex justify-content-end">
-
-                                                <button class="btn pill-radius btn--default bg-phase-green pill-radius" data-ng-disabled="!$ctrl.confirmEntityModel" data-ng-click="$ctrl.confirmEntity.fn()" type="button">
-                                                    <a class="btn__link btn__link btn--lg">Next</a>
-                                                </button>
+                                                <button class="btn btn--green btn--lg pill-radius" data-ng-disabled="!$ctrl.confirmEntityModel" data-ng-click="$ctrl.confirmEntity.fn()" type="button">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -55,9 +52,7 @@
                                         <div class="row">
                                             <div class="col-md-12 d-flex justify-content-end align-items-center">
                                                 <p data-ng-show="$ctrl.proceedMsgAmend" class="txt-phase-red font-weight-medium m-r-sm">Cannot proceed if amendments have been made. Uncheck the checkbox if no amendements have been made.</p>
-                                                <button class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-disabled="$ctrl.confirmAmendmentsModel" data-ng-click="$ctrl.amendments.fn()">
-                                                    <a class="btn__link btn__link btn--lg">Next</a>
-                                                </button>
+                                                <button class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="$ctrl.confirmAmendmentsModel" data-ng-click="$ctrl.amendments.fn()">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -67,16 +62,14 @@
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="form-group">
-                                            <label for="documents" class="font-weight-medium"><span class="font-weight-medium">Additional copies of the document cited in the supplementary European search report are requested</span>                                         
+                                            <label for="documents" class="font-weight-medium"><span class="font-weight-medium">Additional copies of the document cited in the supplementary European search report are requested</span>
                                                 <input type="checkbox" name="documents" data-ng-model="$ctrl.documentsModel" data-ng-change="$ctrl.manualProcess($ctrl.documentsModel, 'documents')" class="m-l-xs">
                                             </label>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12 d-flex justify-content-end align-items-center">
                                                 <p data-ng-show="$ctrl.proceedMsgDocs" class="txt-phase-red font-weight-medium m-r-sm">Cannot proceed if additional documents are required have been made. Uncheck the checkbox if no additional documents are required.</p>                                            
-                                                <button class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-disabled="$ctrl.documentsModel" data-ng-click="$ctrl.documents.fn()">
-                                                    <a class="btn__link btn__link btn--lg">Next</a>
-                                                </button>
+                                                <button class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="$ctrl.documentsModel" data-ng-click="$ctrl.documents.fn()">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +94,7 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <h4 class="m-b-xs font-weight-medium">Validation states</h4>
-                                        <div class="row m-b-sm">
+                                        <div class="row">
                                             <div class="col-md-6" data-ng-repeat="item in $ctrl.questionsParam.validationStatesUI track by $index">
                                                 <div class="m-b-sm"> 
                                                     <label for="item.abbr">
@@ -113,11 +106,9 @@
                                         </div>
                                     </div>                                
                                     <div class="col-xl-12">
-                                        <div class="row m-t-sm">
+                                        <div class="row">
                                             <div class="col-md-12 d-flex justify-content-end">
-                                                <button class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-click="$ctrl.extAndValid.fn()">
-                                                    <a class="btn__link btn__link btn--lg">Next</a>
-                                                </button>
+                                                <button class="btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.extAndValid.fn()">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -127,16 +118,14 @@
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="form-row">
-                                            <div class="form-group col-xl-4">
+                                            <div class="form-group col-md-6 col-lg-4 col-xl-4">
                                                 <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant’s or representatives reference: </label>
-                                                <input type="text" name="reference" class="form-control" class="m-l-xs" data-ng-init="$ctrl.formData.clientRef = $ctrl.questionsParam.clientRef" data-ng-model="$ctrl.formData.clientRef" required>
+                                                <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-init="$ctrl.formData.clientRef = $ctrl.questionsParam.clientRef" data-ng-model="$ctrl.formData.clientRef" required>
                                             </div>
                                         </div>
                                         <div class="row m-t-sm">
                                             <div class="col-md-12 d-flex justify-content-end">
-                                                <button class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-click="$ctrl.reference.fn()" data-ng-disabled="!$ctrl.formData.clientRef">
-                                                    <a class="btn__link btn--lg">Next</a>
-                                                </button>
+                                                <button class="btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn()" data-ng-disabled="!$ctrl.formData.clientRef">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -146,61 +135,56 @@
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="form-group row">
-                                            <label for="totalPages" class="col-xl-8 col-form-label font-body">Please enter the total number of pages</label>
-                                            <div class="col-xl-4">
-                                                <input type="text" name="totalPages" id="totalPages" class="form-control" data-ng-change="$ctrl.formData.totalPages = totalPages" data-ng-model="totalPages" validate-numbers required>
+                                            <label for="totalPages" class="col-md-4 col-xl-3 col-form-label font-body">Please enter the total number of pages</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="totalPages" id="totalPages" class="form-control pill-radius" data-ng-change="$ctrl.formData.totalPages = totalPages" data-ng-model="totalPages" validate-numbers required>
                                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalPages.$error.validNumber && form1200Form.totalPages.$dirty">Only numbers are valid charcters in this field.</p>  
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="totalClaims" class="col-xl-8 col-form-label font-body">Please enter the total number of claim</label>
-                                            <div class="col-xl-4">
-                                                <input type="text" name="totalClaims" class="form-control" data-ng-change="$ctrl.formData.totalClaims = totalClaims" data-ng-model="totalClaims" validate-numbers required>
-                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>                                                  
-
+                                            <label for="totalClaims" class="col-md-4 col-xl-3 col-form-label font-body">Please enter the total number of claim</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="totalClaims" class="form-control pill-radius" data-ng-change="$ctrl.formData.totalClaims = totalClaims" data-ng-model="totalClaims" validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-xl-6 col-form-label font-body">Please enter start and end pages of claims</label>
-                                            <div class="col-xl-3">
-                                                <input type="text" name="claimsStart" class="form-control" data-ng-model="$ctrl.pageDetailsData.claims.typeStart" validate-numbers required validate-numbers required>
+                                            <label class="col-md-4 col-xl-3 col-form-label font-body">Please enter start and end pages of claims</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="claimsStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.claims.typeStart" validate-numbers required validate-numbers required>
                                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsStart.$error.validNumber && form1200Form.claimsStart.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>
-                                            <div class="col-xl-3">
-                                                <input type="text" name="claimsEnd" class="form-control" data-ng-model="$ctrl.pageDetailsData.claims.typeEnd" validate-numbers required validate-numbers required>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="claimsEnd" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.claims.typeEnd" validate-numbers required validate-numbers required>
                                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.validNumber && form1200Form.claimsEnd.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>                                        
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-xl-6 col-form-label font-body">Please enter start and end pages of descriptions</label>
-                                            <div class="col-xl-3">
-                                                <input type="text" name="descStart" class="form-control" data-ng-model="$ctrl.pageDetailsData.description.typeStart" validate-numbers  validate-numbers required>
+                                            <label class="col-md-4 col-xl-3 col-form-label font-body">Please enter start and end pages of descriptions</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="descStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.description.typeStart" validate-numbers  validate-numbers required>
                                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.validNumber && form1200Form.descStart.$dirty">Only numbers are valid charcters in this field.</p>                                                     
                                             </div>
-                                            <div class="col-xl-3">
-                                                <input type="text" name="descEnd" class="form-control" data-ng-model="$ctrl.pageDetailsData.description.typeEnd" validate-numbers  validate-numbers required>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="descEnd" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.description.typeEnd" validate-numbers  validate-numbers required>
                                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.validNumber && form1200Form.descEnd.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>                                        
                                         </div>
                                         <div class="form-group row">
-                                            <label for="claimsStart" class="col-xl-6 col-form-label font-body">Please enter start and end pages of drawings</label>
-                                            <div class="col-xl-3">
-                                                <input type="text" name="drawingStart" class="form-control" data-ng-model="$ctrl.pageDetailsData.drawings.typeStart" validate-numbers  validate-numbers required>
+                                            <label for="claimsStart" class="col-md-4 col-xl-3 col-form-label font-body">Please enter start and end pages of drawings</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="drawingStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.drawings.typeStart" validate-numbers  validate-numbers required>
                                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.validNumber && form1200Form.drawingStart.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>
-                                            <div class="col-xl-3">
-                                                <input type="text" name="drawingEnd" class="form-control" data-ng-model="$ctrl.pageDetailsData.drawings.typeEnd" validate-numbers  validate-numbers required>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="drawingEnd" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.drawings.typeEnd" validate-numbers  validate-numbers required>
                                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.validNumber && form1200Form.drawingEnd.$dirty">Only numbers are valid charcters in this field.</p>                                                  
                                             </div>                                        
                                         </div>                                                                     
                                         <div class="row m-t-sm">
                                             <div class="col-md-12 d-flex justify-content-end">
-                                                <button type="submit" id="submit" class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">
-                                                    <a class="btn__link btn--lg">Generate form</a>
-                                                </button>
-                                                <button type="button" class="btn pill-radius btn--default bg-phase-green pill-radius" data-ng-if="$ctrl.renewal.active" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.confirmPages.fn()">
-                                                    <a class="btn__link btn--lg">Next</a>
-                                                </button>
+                                                <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate form</button>
+                                                <button type="button" class="btn btn--green btn--lg pill-radius" data-ng-if="$ctrl.renewal.active" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.confirmPages.fn()">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -218,9 +202,7 @@
                                 </div>
                                 <div class="row m-t-sm">
                                     <div class="col-md-12 d-flex justify-content-end">
-                                        <button type="submit" id="submit" class="btn pill-radius btn--default bg-phase-green pill-radius" type="button" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">
-                                            <a class="btn__link btn--lg">Generate form</a>
-                                        </button>
+                                        <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate form</button>
                                     </div>
                                 </div>                            
                             </uib-tab>
@@ -230,9 +212,7 @@
                 <div class="content-panel__head bg-white border-grey-xs--top">
                     <div class="row">
                         <div class="col-md-12">
-                            <button type="button" class="btn pill-radius btn--default bg-phase-red pill-radius m-r-xs" data-ng-click="$ctrl.cancel1200()">
-                                <a class="btn__link btn--lg">Cancel Application</a>
-                            </button>                       
+                            <button type="button" class="btn btn--red btn--lg pill-radius" data-ng-click="$ctrl.cancel1200()">Cancel Application</button>                       
                         </div>
                     </div>
                 </div>

@@ -1,34 +1,29 @@
 angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
 
-renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'fxCalculationService', 'currentTransactionsService', 'patentsService']
+renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'currentTransactionsService', 'patentsService', 'dashboardService', 'selectPhaseService']
 
-function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, fxCalculationService, currentTransactionsService, patentsService) {
+function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, currentTransactionsService, patentsService, dashboardService, selectPhaseService) {
 
 	var vm = this;
 
 	vm.renewalfxTimeframe = 'Today';
-	vm.patentFx = fxCalculationService;
-	vm.fxPeriodActive = fxPeriodActive;
 	vm.fetchItemRenewal = fetchItemRenewal;
 	vm.fetchItemTransaction = fetchItemTransaction;
 
-	function fxPeriodActive(fxActive) {
+	$scope.$on('updateCost', function(e, o){
+      	var patent = dashboardService.getPatent();
+      	if(patent.renewalFeeUI !== null) {
+      		vm.serviceCost = patent.renewalFeeUI;
+      	} else {
+      		vm.serviceCost = patent.form1200FeeUI;
+      	}
+	})
 
-		switch(fxActive) {
-			case 0:
-				vm.renewalfxTimeframe = 'Today';
-			break;
-			case 1:
-				vm.renewalfxTimeframe = 'Yesterday';
-			break;
-			case 2:
-				vm.renewalfxTimeframe = 'Last Week';
-			break;
-			case 3:
-				vm.renewalfxTimeframe = 'Last Mth';											
-		}
-
-	};
+	$scope.$on('updatePhase', function(e, o){
+ 		if(selectPhaseService.getPhase().patents.length === 0) {
+ 			vm.serviceCost = null;
+ 		}
+  	});
 
 	function fetchItemRenewal() { //direct user to renewal tab in patents
 		patentsService.activePatentItemMenu();
@@ -40,11 +35,8 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 			function(response) {
 				response.forEach(function(data) {
 					const transId = data.id;
-
 					data.renewalUIs.forEach(function(data, i) {
-
 						if(data.patentUI.id == id) {
-
 							$state.go('current-transactions.current-transaction-item',{transId: transId})
 							.then(
 								function(response){

@@ -1,89 +1,81 @@
 angular.module('ppApp').factory('patentPhasesService', patentPhasesService);
 
-patentPhasesService.$inject = ['$timeout', '$q', '$rootScope', 'calculateService']
+patentPhasesService.$inject = ['$timeout', '$q', '$rootScope', 'calculateService', 'patentsRestService', 'organiseTextService']
 
-function patentPhasesService ($timeout, $q, $rootScope, calculateService) {
+function patentPhasesService ($timeout, $q, $rootScope, calculateService, patentsRestService, organiseTextService) {
 	
 	var factory = {};
 
 		factory.phases = function(patents) {
 
-			if(patents) {
+			var patentArr = [];
+			patents.forEach(function(el){
+				patentsRestService.fetchPatentItem(el.id)
+				.then(
+					function(response){
+						patentArr.push(response)
+					},
+					function(){
 
-				var phases = {
-					greenRenewals: [],
-					redRenewals: [],
-					amberRenewals: [],
-					blueRenewals: [],
-					blackRenewals: [],
-					greyRenewals: [],
-					allRenewals: [],
-					totalRenewals: function() {
-						if(patents) {
-							return this.greenRenewals.concat(this.amberRenewals, this.redRenewals, this.amberRenewals, this.blueRenewals, this.blackRenewals, this.greyRenewals).length// totalRenewals: 
-						} else {
-							return 0;
-						}
+					}
+				)
+			})
+
+			var phases = {
+				greenRenewals: [],
+				redRenewals: [],
+				amberRenewals: [],
+				blueRenewals: [],
+				blackRenewals: [],
+				greyRenewals: [],
+				allRenewals: [],
+				totalRenewals: function() {
+					if(patents.length > 0) {
+						return this.greenRenewals.concat(this.amberRenewals, this.redRenewals, this.amberRenewals, this.blueRenewals, this.blackRenewals, this.greyRenewals).length// totalRenewals: 
+					} else {
+						return 0;
 					}
 				}
+			}	
 
-				patents.forEach(function(item) {
+			$timeout(function(){
+				if(patentArr.length > 0) {
+					patentArr.forEach(function(item) {
 
-					phases.allRenewals.push(item); //purpose of all tab in list patents
+						var service = item.renewalFeeUI !== null ? item.renewalStatus : item.epctStatus;
 
-					if(item.renewalStatus !== 'Renewal in place' && item.renewalStatus !== 'Too late to renew' && item.renewalStatus !== 'No renewal needed'  && item.renewalStatus !== 'Way too late to renew') {
+						if(organiseTextService.actionStatus(service)) {
 
-						switch(item.costBandColour) {
-							case 'Green':
-								item.nextStage = 'Amber';
-								phases.greenRenewals.push(item);
-							break;
-							case 'Amber':
-								item.nextStage = 'Red'
-								phases.amberRenewals.push(item);
-							break;
-							case 'Red':
-								item.nextStage = 'Blue'
-								phases.redRenewals.push(item);
-							break;
-							case 'Blue':
-								item.nextStage = 'Black'
-								phases.blueRenewals.push(item);
-							break;
-							case 'Black':
-								item.nextStage = 'LAPSE'
-								phases.blackRenewals.push(item);
-							break;
-							
+							switch(item.portfolioUI.serviceList[0].currentStageColour) {
+								case 'Green':
+									phases.greenRenewals.push(item);
+								break;
+								case 'Amber':
+									phases.amberRenewals.push(item);
+								break;
+								case 'Red':
+									phases.redRenewals.push(item);
+								break;
+								case 'Blue':
+									phases.blueRenewals.push(item);
+								break;
+								case 'Black':
+									item.nextStage = 'LAPSE'
+									phases.blackRenewals.push(item);
+								break;
+								
+							}
+						} else {
+							phases.greyRenewals.push(item);
 						}
-					} else {
-						phases.greyRenewals.push(item);
-					}
-				});
-
-
-				$timeout(function() {
-					phases.greenRenewals.forEach(function(data, i){
-						data.progressBar = calculateService.phaseProgress(data, i);
 					});
-					phases.amberRenewals.forEach(function(data, i){
-						data.progressBar = calculateService.phaseProgress(data, i);
-					});
-					phases.redRenewals.forEach(function(data, i){
-						data.progressBar = calculateService.phaseProgress(data, i);
-					});
-					phases.blueRenewals.forEach(function(data, i){
-						data.progressBar = calculateService.phaseProgress(data, i);
-					});
-					phases.blackRenewals.forEach(function(data, i){
-						data.progressBar = calculateService.phaseProgress(data, i);
-					});												
-				}, 200);
+					// console.log(phases)
+					
+				}
+				
+			}, 1000)
 
-				return phases;
-
-			}
-
+			return phases;
 		}
 
 	return factory;

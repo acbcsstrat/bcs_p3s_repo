@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('portfolioCtrl', portfolioCtrl);
 
-portfolioCtrl.$inject = ['patents', '$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService'];
+portfolioCtrl.$inject = ['patents', '$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService', 'organiseColourService'];
 
-function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService) {
+function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService) {
 
     var vm = this;
 
@@ -12,6 +12,9 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.date = new Date();   
     vm.updateCategory = updateCategory;
     vm.panelActive = true; 
+    vm.getStatus = getStatus;
+    vm.getCurrColour = getCurrColour;
+    vm.actionStatus = actionStatus;
 
     $timeout(function(){
       vm.animate = true;
@@ -28,17 +31,30 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       'Renewal in place'
     ]
 
-    vm.patentActionStatuses = [
-      'All Patents',
-      'No Action Available',
-      'Action Available'
-    ]    
-
+    vm.patentActionStatuses = {
+      'value': 'All Patents',
+      'values': ['All Patents', 'No Action Available', 'Action Available']
+    }
+  
     $scope.filters = {
-      patentCategory: {},
-      serviceType: {},
+      // patentCategory: {},
+      
       serviceStatus: {},
+      serviceType: {},
       currentStageColour: {}
+    }
+
+    function actionStatus(text) {
+      return organiseTextService.actionStatus(text);
+    }
+
+    function getStatus(text) {
+
+      return organiseTextService.getStatus(text);
+    }
+
+    function getCurrColour(color, type) {
+      return organiseColourService.getCurrColour(color, type)
     }
 
     function uniqueArray(array) {
@@ -65,14 +81,11 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       if(status === 'Action Available') {
         $scope.portfolioData = patents.filter(function(el){
           if(el.serviceList && el.serviceList.length > 0) {
-            console.log(organiseTextService.actionStatus(el.serviceList[0].serviceStatus))
             return organiseTextService.actionStatus(el.serviceList[0].serviceStatus)
-            
           }
         })
       }
       if(status === 'No Action Available') {
-
         $scope.portfolioData = patents.filter(function(el){
           if(el.serviceList.length === 0) {
             return el;
@@ -82,7 +95,8 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     }
 
-    $scope.epctStages = function(field, service) {
+    $scope.epctStages = function(field) {
+      console.log(field)
       var result = [];
       for(var i = 0; i < $scope.portfolioData.length; i++){
         var patent = $scope.portfolioData[i];
@@ -98,13 +112,12 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     }
 
-    $scope.renewalStages = function(field, service) {
+    $scope.renewalStages = function(field) {
       var result = [];
       for(var i = 0; i < $scope.portfolioData.length; i++){
         var patent = $scope.portfolioData[i];
         if(patent.serviceList && patent.serviceList.length > 0){
           for(var j = 0; j < patent.serviceList.length; j++){
-            // console.log(field, service)
             if(patent.serviceList[j].serviceType == 'Renewal') {
               result.push(patent.serviceList[j][field])
             }
@@ -123,7 +136,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
           if(patent.serviceList && patent.serviceList.length > 0){
             for(var j = 0; j < patent.serviceList.length; j++){
               if(euroPctStatuses.indexOf(patent.serviceList[j][field]) > -1) 
-                result.push(organiseTextService.uiStatus(patent.serviceList[j][field])) //organistTextservice required as UI text and backend text are being mixed
+                result.push(organiseTextService.uiStatus(patent.serviceList[j][field])) //organisetTextservice required as UI text and backend text are being mixed
               }
           } else { //if not servicelist
               if(euroPctStatuses.indexOf(patent.serviceStatus) > -1) {
@@ -153,31 +166,35 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       return uniqueArray(result); //check no duplicates
     };
 
+    console.log($scope.filters)
+
     $scope.testFl = function(el){
-
-      for(var filter in $scope.filters){
-        var filterArray = [];
-        for(var i in $scope.filters[filter]){
-            if($scope.filters[filter][i]) filterArray.push(i.toLowerCase()); //if property in filter object returns true, push to filterArray
-        }
-
-        if(el.serviceList && el.serviceList.length > 0) {
-          for(var i = 0; i < el.serviceList.length; i++) {            
-              var notUiText = organiseTextService.uiStatus(el.serviceList[i][filter])
-              if(notUiText !== undefined || typeof notUiText !== 'undefined') {
-                if(filterArray.length > 0 && filterArray.indexOf(notUiText.toLowerCase()) === -1) {
+        for(var filter in $scope.filters){
+            var filterArray = [];
+            for(var i in $scope.filters[filter]){
+                if($scope.filters[filter][i]) filterArray.push(i.toLowerCase()); //if property in filter object returns true, push to filterArray
+            }
+            if(el.serviceList && el.serviceList.length > 0) {
+                for(var i = 0; i < el.serviceList.length; i++) {            
+                    var notUiText = organiseTextService.uiStatus(el.serviceList[i][filter])
+                    if(notUiText !== undefined || typeof notUiText !== 'undefined') {
+                        if(filterArray.length > 0 && filterArray.indexOf(notUiText.toLowerCase()) === -1) {
+                          return false;
+                        }
+                    } else {
+                      if(filterArray.length > 0 && filterArray.indexOf(el.serviceList[i][filter].toLowerCase()) === -1) { //if servicetype or colour
+                          return false;
+                      }
+                    }
+                }
+            } else { //to handle items that dont have a sevice 
+                if(filterArray.length > 0 && filterArray.indexOf(el.serviceStatus.toLowerCase()) === -1) {
+                  
                   return false;
                 }
-              }
-          }
-          
-        } else { //to handle items that dont have a sevice 
-            if(filterArray.length > 0 && filterArray.indexOf(el.serviceStatus.toLowerCase()) === -1) {
-              return false;
-            } 
-        }      
-        return true; 
-      }
+            }
+        }
+        return true;
     };   
 
     vm.toggleAll = function($event, includeAll) { //used for clear or select all

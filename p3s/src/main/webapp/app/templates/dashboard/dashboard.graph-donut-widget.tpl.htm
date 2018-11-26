@@ -3,7 +3,7 @@
 		<h3 class="font-h3 font-weight-bold">Total Renewals</h3>
 	</div>
 	<div class="widget-panel__body">
-		<div class="row" data-ng-if="$ctrl.patents">
+		<div class="row">
 			<div class="col-md-12 col-lg-8 col-xl-8">
 				<nvd3 options="$ctrl.donutOptions" data="$ctrl.donutData" class="with-transitions"></nvd3>
 				<div class="donut-inner">
@@ -25,10 +25,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="row h-100 bg-no-data d-flex" data-ng-if="!$ctrl.patents">
+<!-- 		<div class="row h-100 bg-no-data d-flex" data-ng-if="!$ctrl.patents">
 	    	<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
 	    		<p class="font-body font-weight-bold">There is no data to display as no patents have been added.</p>
 	    	</div>
-    	</div>
+    	</div> -->
 	</div>
 </div>

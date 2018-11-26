@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalInfoCtrl', renewalInfoCtrl);
 
-renewalInfoCtrl.$inject = ['$scope', 'patent', '$state', '$timeout', 'chunkDataService', 'renewalRestService', '$uibModal', 'organiseColourService'];
+renewalInfoCtrl.$inject = ['$scope', 'patent', '$state', '$timeout', 'chunkDataService', 'renewalRestService', '$uibModal', 'organiseColourService', 'organiseTextService'];
 
-function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, renewalRestService, $uibModal, organiseColourService) {
+function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, renewalRestService, $uibModal, organiseColourService, organiseTextService) {
 
     var vm = this;
 
@@ -12,15 +12,12 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
     vm.fetchRenewal = patent.renewalFeeUI;
     vm.getCurrColour = getCurrColour;
     vm.getNextColour = getNextColour;
-    vm.nextStageColour = nextStageColour;
-    vm.submitt = submitt;
-
-    function submitt(item) {
-        console.log(item)
-    }
+    // vm.nextStageColour = nextStageColour;
+    vm.getStatus = getStatus;
+    vm.actionStatus = actionStatus;
 
     function updateRenewalNotifications(patent, id) {
-        renewalRestService.updateNotifications(patent.notificationUIs, id)
+        renewalRestService.updateNotifications(patent.renewalNotificationUIs, id)
         .then(
             function(response){
                 updateNotificationsSuccess();
@@ -31,11 +28,11 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
         )
     }
 
-    function nextStageColour() {
-        return patent.portfolioUI.serviceList.map(function(el){
-            return el.nextStageColour;
-        })
-    }
+    // function nextStageColour() {
+    //     return patent.portfolioUI.serviceList.map(function(el){
+    //         return el.nextStageColour;
+    //     })
+    // }
 
     function getCurrColour(colour, item){
         return organiseColourService.getCurrColour(colour, item);
@@ -45,6 +42,14 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
     function getNextColour(colour, item){
         return organiseColourService.getNextColour(colour, item);
     }
+
+    function getStatus(text) {
+        return organiseTextService.uiStatus(text);
+    }
+
+    function actionStatus(text) {
+        return organiseTextService.actionStatus(text);
+    }    
 
     function updateNotificationsSuccess() {
 
@@ -94,10 +99,9 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
 
         var notifications = [];
 
-        return patent.notificationUIs.filter(function(data){
+        return patent.renewalNotificationUIs.filter(function(data){
             return data.costbandcolor == phase;
         });
-
 
     }
 

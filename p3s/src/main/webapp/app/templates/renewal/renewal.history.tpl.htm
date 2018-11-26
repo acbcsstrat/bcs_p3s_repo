@@ -97,23 +97,6 @@
 </div>
 <div class="d-xl-none">
 	<div class="content-panel border-t-none">
-		<div class="content-panel__head border-t-none bg-white">
-			<div class="row">
-				<div class="col-md-6 col-lg-2">
-					<h4 class="font-weight-bold font-h4 m-b-xs">App No.</h4>
-					<p class="font-h4">{{$ctrl.patent.patentApplicationNumber}}</p>
-				</div>
-				<div class="col-md-6 col-lg-3 text-md-right text-lg-left">
-					<h4 class="font-weight-bold font-h4 m-b-xs">Client Ref</h4>
-					<p class="font-h4" data-ng-if="$ctrl.patent.clientRef !== ''">{{$ctrl.patent.clientRef}}</p>
-					<p class="font-h4" data-ng-if="$ctrl.patent.clientRef == ''">[No client description provided]</p>
-				</div>
-				<div class="col-md-12 col-lg-7 text-lg-right md-m-t-sm">
-					<h4 class="font-weight-bold font-h4 m-b-xs">Description</h4>
-					<p class="font-h4">{{$ctrl.patent.title}}</p>
-				</div>
-			</div>
-		</div>
 		<div data-ng-if="$ctrl.renewal.length == 0">
 	    	<div class="content-panel__body border-t-none bg-white">
 				<div class="row">
