@@ -1,18 +1,22 @@
 angular.module('ppApp').controller('colourKeyCtrl', colourKeyCtrl);
 
-colourKeyCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService'];
+colourKeyCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'organiseColourService'];
 
-function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService) {
+function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, organiseColourService) {
 
 	var vm = this;
 
 	vm.selectedPhase = selectPhaseService;
 	vm.setPhase = setPhase;
-	
+	vm.getCurrColour = getCurrColour;
+
+	function getCurrColour(phase, type) {
+		return organiseColourService.getCurrColour(phase, type);
+	}
 
  	$scope.$on('updatePhase', function(e, o){
  		$timeout(function(){
-	    	$scope.activeTab = selectPhaseService.getPhase().phase.index;
+	    	$scope.activeTab = selectPhaseService.getPhase().index;
  		})
   	});
  	// console.log(patents.length)
@@ -22,8 +26,6 @@ function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPha
 	}
 
 	function setPhase(phase) {
-
-		console.log(phase, sortedPatentData)
 		selectPhaseService.setPhase(phase, sortedPatentData); //set current phase being displayed
 		$scope.$emit('phaseChange', {phase: phase});		
 	}
