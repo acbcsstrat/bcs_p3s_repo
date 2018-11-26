@@ -9,12 +9,7 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 	if(patents.length > 0) {
 		console.log('hello')
 		vm.patents = patents;
-		var patenttest;
-		$timeout(function(){
-			patenttest = patentPhasesService.phases(patents);
-
-		}, 500)
-		vm.patentData
+		vm.patentData = patentPhasesService.phases(patents);
 		$timeout(function() { //required to load correct size of donut graph in view
 			// vm.patentData = patentPhasesService.phases(patents);
       		vm.donutOptions = {
@@ -81,39 +76,39 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 	        vm.donutData = [
 	        	{
 	        		key: 'green', 
-	        		y: patenttest.greenRenewals.length,
+	        		y: vm.patentData.greenRenewals.length,
 	        		color: '#53ab58'
 	        	},
 	        	{
 	        		key: 'amber', 
-	        		y: 4,
+	        		y: vm.patentData.amberRenewals.length,
 	        		color: '#f9b233'
 	        	},
 	        	{
 	        		key: 'red', 
-	        		y: 2,
+	        		y: vm.patentData.redRenewals.length,
 	        		color: '#e30613'
 	        	},
 	        	{
 	        		key: 'blue',
-	        		y: 1,
+	        		y: vm.patentData.blueRenewals.length,
 	        		color: '#0097ce'
 	        	},
 	        	{
 	        		key: 'black', 
-	        		y: 1,
+	        		y: vm.patentData.blackRenewals.length,
 	        		color: '#3c3c3b'
 	        	},
 	        	{
 	        		key: 'grey', 
-	        		y: patenttest.greyRenewals.length,
+	        		y: vm.patentData.greyRenewals.length,
 	        		color: '#dbdbdb'
 	        	}
 	        ]
 
 	
 
-  		}, 1000);
+  		}, 1500);
 
 	} //if patents end	
 }
