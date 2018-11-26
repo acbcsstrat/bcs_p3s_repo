@@ -1,0 +1,32 @@
+.widget-panel, 
+.content-panel { /*modules*/ /*components*/ /*_panels.scss*/
+  position: relative;
+  z-index: 0;
+  border: 1px solid $border;
+}
+
+.widget-panel .widget-panel__body { padding: 3rem 3rem ; } 
+.widget-panel .widget-panel__head { padding: 1.5rem 3rem ;}
+
+.content-panel .content-panel__body { padding: 2rem 3rem; }
+.content-panel .content-panel__head { padding: 2rem 3rem; } 
+
+.widget-panel .widget-panel__head { height: 59px; } 
+.widget-row-top .widget-panel { min-height: 100%; } 
+.widget-row-middle .widget-panel { min-height: 300px; } /*layout*/ /*pages*/ /*dashboard*/ /*_panels.scss*/
+.widget-panel--max {  max-height: 450px; overflow-y: auto; overflow-x: hidden;} /*layout*/ /*pages*/ /*dashboard*/ /*_panels.scss*/
+.content-panel, .widget-panel {  /*layout*/ /*pages*/ /*dashboard*/ /*_panels.scss*/
+  -webkit-transition: height 4s ease-in-out;
+  -o-transition: height 4s ease-in-out;
+  transition: height 4s ease-in-out;
+}
+
+// .widget-panel li { /*layout*/ /*pages*/ /*dashboard*/ /*_panels.scss*/
+//     -webkit-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
+//     -o-transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
+//     transition: background .2s ease-in-out, border .2s ease-in-out, color .2s ease-in-out;
+// }
+
+// .widget-panel li.active { font-weight: medium; background: #53ab58; border: 1px solid #53ab58;  color: #fff;}
+
+// .widget-panel .active .nav-link { color: #fff;}

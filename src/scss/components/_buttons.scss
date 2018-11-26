@@ -1,0 +1,47 @@
+// .btn--reg-table { @include padding-mixin(0.7rem 0) } /*modules*/ /*components*/ /*_buttons.scss*/
+// .btn--reg { @include padding-mixin(0.5rem 1.5rem) } /*modules*/ /*components*/ /*_buttons.scss*/
+/*modules*/ /*components*/ /*_buttons.scss*/
+// .uib-btn--lg a { @include padding-mixin(0.5rem 3rem) } /*modules*/ /*components*/ /*_buttons.scss*/
+.btn-no-bg .btn-no-bg--green:focus { color: #53ab58; } /*modules*/ /*components*/ /*_buttons.scss*/
+.btn-no-bg .btn-no-bg--green:hover { background: #53ab58; color: $white;} /* modules*/ /*components*/ /*_buttons.scss*/
+
+ // a:not([href]):not([tabindex])
+.btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
+  background: $grey;
+  font-size: $font-normal;  
+  font-weight: 500;
+  color: $grey-dark;
+  -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+  -o-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+  transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+  &.btn--lg { @include padding-mixin(0.5rem 3rem) } 
+  &.btn--green, {
+    background: $green;
+    color: $white;
+  }  
+  &.btn--red {
+    background: $red;
+    color: $white;
+  }
+  &:not([disabled]):hover, &:not([disabled]):focus  {
+    box-shadow: 0 0 2px $grey-dark;
+  }
+
+}
+
+.t-data .t-data__btn-portal { min-width: 183.48px; } //required from ngCart
+
+.btn-no-bg {
+  background: none;
+  border: 0;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.btn-underlined {
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
