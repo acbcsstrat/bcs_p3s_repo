@@ -406,7 +406,7 @@ public class ExtractSubmittedDataEngine extends Universal {
 	/**
 	 * @param commaSeparatedListOfIntegerNumbers eg: patent_id[1,2] - this format because UI cannot send an anonymous array
 	 * @return List<Long>
-	 */
+	 */  // may be rendered obsolete by the temporary extractBasketRequestPatentIds()
 	public List<Long> commaSeparatedListOfIntegerNumbersStrToListLongs(LinkedHashMap<String, Object> listOfIds) {
 		// Created for development testing of Payments: API action 4.1, 4.2, 4.3.
 		
@@ -455,6 +455,41 @@ public class ExtractSubmittedDataEngine extends Universal {
 		System.out.println(err+" completed. "+listOfIds+" has "+result.size()+" items.");
 		
 		return result;
+	}
+	// This intended to be a flexible ie temporary variant of commaSeparatedListOfIntegerNumbersStrToListLongs
+	public List<Long> extractBasketRequestPatentIds(Object obby) {
+		log().debug("Obb is of type "+obby.getClass().getName());
+		// expecting List<Integer> but accept List<Long> & LinkedHashMap
+		List<Long> listOfLongs = new ArrayList<Long>();
+		List<Object> listOfNumbers = null;
+		if ( obby instanceof LinkedHashMap<?, ?>) {
+			LinkedHashMap<?,?> lhm = (LinkedHashMap<String, Object>) obby;
+			Set<String> keys = (Set<String>) lhm.keySet();
+			String aKey = null;
+			for (String str : keys) { log().info("extractBasketRequestPatentIds SET contains element: "+str); aKey=str; }
+			// what name to use
+			listOfNumbers = (List<Object>) lhm.get(aKey);
+		}
+		else if ( obby instanceof List<?>) {
+			listOfNumbers = (List<Object>) obby;
+			int ii=-1;
+			for (Object obj : listOfNumbers) {
+				if ( obj instanceof Integer) {
+					ii = (Integer) obj;
+					listOfLongs.add((long) ii);
+				}
+				else if (obj instanceof Long) 
+					listOfLongs.add((Long) obj);
+				else log().fatal("extractBasketRequestPatentIds run  got List - dat all ");
+			}
+		}
+		else if ( obby instanceof String) {
+			throw new P3SRuntimeException("extractBasketRequestPatentIds cannot handle STRING : "+(String) obby);
+		}
+		else throw new P3SRuntimeException("extractBasketRequestPatentIds run out of options.");
+		
+		log().debug("extractBasketRequestPatentIds returning list of size "+listOfLongs.size());
+		return listOfLongs;
 	}
 
 	/*
