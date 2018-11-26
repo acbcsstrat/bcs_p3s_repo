@@ -10,7 +10,6 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService, patent
 
 			var patentArr = [];
 			patents.forEach(function(el){
-				console.log('el', el)
 				patentsRestService.fetchPatentItem(el.id)
 				.then(
 					function(response){
@@ -75,7 +74,7 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService, patent
 				}
 				
 			}, 1000)
-			console.log('phases', phases)
+
 			return phases;
 		}
 
