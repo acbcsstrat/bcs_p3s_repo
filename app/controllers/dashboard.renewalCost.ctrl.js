@@ -1,14 +1,15 @@
 angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
 
-renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'currentTransactionsService', 'patentsService', 'dashboardService']
+renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'currentTransactionsService', 'patentsService', 'dashboardService', 'selectPhaseService']
 
-function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, currentTransactionsService, patentsService, dashboardService) {
+function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, currentTransactionsService, patentsService, dashboardService, selectPhaseService) {
 
 	var vm = this;
 
 	vm.renewalfxTimeframe = 'Today';
 	vm.fetchItemRenewal = fetchItemRenewal;
 	vm.fetchItemTransaction = fetchItemTransaction;
+
 	$scope.$on('updateCost', function(e, o){
       	var patent = dashboardService.getPatent();
       	if(patent.renewalFeeUI !== null) {
@@ -18,7 +19,11 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
       	}
 	})
 
-
+	$scope.$on('updatePhase', function(e, o){
+ 		if(selectPhaseService.getPhase().patents.length === 0) {
+ 			vm.serviceCost = null;
+ 		}
+  	});
 
 	function fetchItemRenewal() { //direct user to renewal tab in patents
 		patentsService.activePatentItemMenu();
@@ -30,11 +35,8 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 			function(response) {
 				response.forEach(function(data) {
 					const transId = data.id;
-
 					data.renewalUIs.forEach(function(data, i) {
-
 						if(data.patentUI.id == id) {
-
 							$state.go('current-transactions.current-transaction-item',{transId: transId})
 							.then(
 								function(response){
