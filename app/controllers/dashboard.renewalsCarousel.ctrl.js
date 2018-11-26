@@ -1,16 +1,28 @@
 angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
 
-renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'dashboardService']
+renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'dashboardService', 'organiseColourService']
 
-function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, dashboardService) {
+function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, dashboardService, organiseColourService) {
 
 	var vm = this;
 
 	vm.phaseLoaded = true;
-	vm.sortedPatentData = patentPhasesService.phases(patents);
+    $timeout(function(){
+	   vm.sortedPatentData = patentPhasesService.phases(patents);
+    }, 1000)
 	vm.setPhase = setPhase;
 	vm.selectedPhase = selectPhaseService;
     vm.date = new Date();
+    vm.getCurrColour = getCurrColour;
+    vm.getNextColour = getNextColour;
+
+    function getCurrColour(phase, type) {
+        return organiseColourService.getCurrColour(phase, type)
+    }
+
+    function getNextColour(phase, type) {
+        return organiseColourService.getNextColour(phase, type)
+    }
 
 	vm.currentIndex = 0;
     vm.slickConfig = {

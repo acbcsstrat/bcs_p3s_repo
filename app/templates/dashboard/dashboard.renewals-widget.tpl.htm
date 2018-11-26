@@ -2,17 +2,19 @@
 	<div class="widget-panel__head border-grey-xs--btm d-flex flex-column justify-content-center">
 		<div class="row d-flex align-items-center">
 			<div class="col-md-3 col-lg-3 col-xl-3">
-				<h3 class="font-h3 m-r-sm font-weight-bold">Renewals</h3>
+				<h3 class="font-h3 m-r-sm font-weight-bold">Services</h3>
 			</div>
 			<div class="col-md-9 col-lg-9 col-lg-9">
-				<ul class="nav panel-nav font-body no-line-height d-flex justify-content-end">
-					<li class="bg-phase-green pill-radius btn--reg panel-nav__list-item panel-nav__list-item--num font-weight-medium" data-ng-init="activeTab = 0" data-ng-click="activeTab = 0; $ctrl.setPhase('green')" data-ng-hide="activeTab == 0">({{$ctrl.sortedPatentData.greenRenewals.length}})</li>
-					<li class="bg-phase-amber pill-radius btn--reg panel-nav__list-item panel-nav__list-item--num font-weight-medium" data-ng-click="activeTab = 1; $ctrl.setPhase('amber')" data-ng-hide="activeTab == 1">({{$ctrl.sortedPatentData.amberRenewals.length}})</li>
-					<li class="bg-phase-red pill-radius btn--reg panel-nav__list-item panel-nav__list-item--num font-weight-medium" data-ng-click="activeTab = 2; $ctrl.setPhase('red')" data-ng-hide="activeTab == 2">({{$ctrl.sortedPatentData.redRenewals.length}})</li>
-					<li class="bg-phase-blue pill-radius btn--reg panel-nav__list-item panel-nav__list-item--num font-weight-medium" data-ng-click="activeTab = 3; $ctrl.setPhase('blue')" data-ng-hide="activeTab == 3">({{$ctrl.sortedPatentData.blueRenewals.length}})</li>
-					<li class="bg-phase-black pill-radius btn--reg panel-nav__list-item panel-nav__list-item--num font-weight-medium" data-ng-click="activeTab = 4; $ctrl.setPhase('black')" data-ng-hide="activeTab == 4">({{$ctrl.sortedPatentData.blackRenewals.length}})</li>
-					<li class="bg-phase-grey pill-radius btn--reg panel-nav__list-item panel-nav__list-item--num font-weight-medium" data-ng-click="activeTab = 5; $ctrl.setPhase('grey')" data-ng-hide="true">({{$ctrl.sortedPatentData.greyRenewals.length}})</li>								
-				</ul>
+				<nav>
+					<ul class="panel-nav d-flex justify-content-end">
+						<li class="bg-phase-green pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-init="activeTab = 0" data-ng-click="activeTab = 0; $ctrl.setPhase('green')" data-ng-hide="activeTab == 0">({{$ctrl.sortedPatentData.greenRenewals.length}})</li>
+						<li class="bg-phase-amber pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 1; $ctrl.setPhase('amber')" data-ng-hide="activeTab == 1">({{$ctrl.sortedPatentData.amberRenewals.length}})</li>
+						<li class="bg-phase-red pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 2; $ctrl.setPhase('red')" data-ng-hide="activeTab == 2">({{$ctrl.sortedPatentData.redRenewals.length}})</li>
+						<li class="bg-phase-blue pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 3; $ctrl.setPhase('blue')" data-ng-hide="activeTab == 3">({{$ctrl.sortedPatentData.blueRenewals.length}})</li>
+						<li class="bg-phase-black pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 4; $ctrl.setPhase('black')" data-ng-hide="activeTab == 4">({{$ctrl.sortedPatentData.blackRenewals.length}})</li>
+						<li class="bg-phase-grey pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 5; $ctrl.setPhase('grey')" data-ng-hide="true">({{$ctrl.sortedPatentData.greyRenewals.length}})</li>								
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</div>
@@ -20,8 +22,8 @@
 		<uib-tabset type="pills" class="pills">
 		    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body" data-ng-hide="true">
 	            <div class="slick-container"  data-ng-if="$ctrl.selectedPhase.getPhase().patents.length" class="animate-show">
-	            	<div class="tr-border slick-header" data-ng-class="$ctrl.selectedPhase.getPhase().phase.bgClass">
-        				<h4 class="font-weight-medium text-center font-h4 txt-white"><span data-ng-bind="$ctrl.selectedPhase.getPhase().phase.title"></span> Renewal <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.selectedPhase.getPhase().patents.length}}</h4>
+	            	<div class="tr-border slick-header" data-ng-class="$ctrl.getCurrColour($ctrl.selectedPhase.getPhase().phase, 'bg')">
+        				<h4 class="font-weight-medium text-center font-h4 txt-white"><span data-ng-bind="$ctrl.selectedPhase.getPhase().phase"></span> Renewal <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.selectedPhase.getPhase().patents.length}}</h4>
         			</div>					            	
 				    <slick data="$ctrl.selectedPhase.getPhase().patents" settings="$ctrl.slickConfig" data-ng-if="$ctrl.phaseLoaded">
 				        <div data-ng-repeat="item in $ctrl.selectedPhase.getPhase().patents">
@@ -34,7 +36,7 @@
 					            		<td class="t-data__td td-border-nb">
 					            			<div class="d-flex justify-content-between">
 							            		<p><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'MM-dd-yy'}}</p>
-												<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.selectedPhase.getPhase().phase.bgClass"></div>	
+												<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getCurrColour($ctrl.selectedPhase.getPhase().phase, 'bg')"></div>	
 						            		</div>
 					            		</td>
 					            	</tr>
@@ -43,7 +45,7 @@
 					            		<td class="t-data__td no-border-er text-left">
 					            			<div class="d-flex justify-content-between">
 					            				<p><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'MM-dd-yy'}}</p>
-					            				<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.selectedPhase.getPhase().phase.nextBgClass"></div>	
+					            				<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getNextColour($ctrl.selectedPhase.getPhase().phase, 'bg')"></div>	
 					            			</div>
 					            		</td>
 					            	</tr>
@@ -53,7 +55,7 @@
 					            		</td>
 					            		<td class="t-data__td td-border-nt">
 					            			<div class="progress-phase">
-							            		<uib-progress class="pill-radius" data-ng-class="$ctrl.selectedPhase.getPhase().phase.nextBgClass"><uib-bar class="pill-radius" value="item.progressBar"></uib-bar></uib-progress>
+							       				<uib-progress class="pill-radius" data-ng-class="$ctrl.getNextColour($ctrl.selectedPhase.getPhase().phase, 'bg')"><uib-bar class="pill-radius" value="item.renewalStageProgress || item.form1200StageProgress"></uib-bar></uib-progress>
 							            	</div>	
 					            		</td>							            		
 					            	</tr>
