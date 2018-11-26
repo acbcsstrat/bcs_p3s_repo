@@ -158,6 +158,21 @@ public class MiscRestController extends Universal{
   public ResponseEntity<Form1200Record> getPatentDetailsForForm1200(@PathVariable("patentApplicationNumber") String patentApplicationNumber){
 	  
 	  String msg = "getPatentDetailsForForm1200("+patentApplicationNumber+")";
+	  
+	  
+	  
+	  logAttention("SEEMINGLY UNUSED call has been invoked - see below");
+	  log().fatal("This call seems redundant. Not in v2.1 API - is it EVER invoked? - "+CLASSNAME+" : "+msg);
+	  log().fatal("*********************************************************************************************");
+	  log().fatal("*********************************************************************************************");
+	  log().fatal("*********************************************************************************************");
+	  log().fatal("*********************************************************************************************");
+	  log().fatal("*********************************************************************************************");
+	  log().fatal("*********************************************************************************************");
+	  
+	  
+	  
+	  
 	  Form1200Record form1200 = new Form1200Record();
 	  log().debug(msg +" invoked");
 	  

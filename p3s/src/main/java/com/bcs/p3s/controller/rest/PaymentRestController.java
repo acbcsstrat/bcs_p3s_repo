@@ -195,6 +195,8 @@ public class PaymentRestController extends Universal {
     	}
 
 		log().debug("COMMITment call /rest-committed-banktransfer/ appears to have succeeded. bankTransferPostCommitDetails.toString() follows: \n"+bankTransferPostCommitDetails.toString());
+		log().debug("END of toString of bankTransferPostCommitDetails");
+		log().debug("COMMITment call /rest-committed-banktransfer/ Completed");
 		return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);
     }
 
