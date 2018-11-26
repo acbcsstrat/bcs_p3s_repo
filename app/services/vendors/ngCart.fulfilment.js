@@ -45,6 +45,7 @@ angular.module('ngCart.fulfilment', [])
 
             return deferred.promise;
         };
+
  }]);
 
 

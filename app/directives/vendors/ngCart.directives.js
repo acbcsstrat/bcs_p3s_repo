@@ -85,7 +85,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
     };
 }])
 
-.directive('ngcartCheckout', ['ngCart', 'ngCartItem', 'basketService', 'patentsRestService', '$rootScope', '$timeout', function(ngCart, ngCartItem, basketService, patentsRestService, $rootScope, $timeout){
+.directive('ngcartCheckout', ['ngCart', 'ngCartItem', 'basketService', 'patentsRestService', '$rootScope', '$timeout',  '$state', function(ngCart, ngCartItem, basketService, patentsRestService, $rootScope, $timeout,  $state){
     return {
         restrict : 'E',
         scope: {
@@ -93,10 +93,10 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             settings:'=',
             ngModel: '='
         },
-        controller : ('CartController', ['$scope', 'ngCart', 'fulfilmentProvider', 'basketService', function($scope, ngCart, fulfilmentProvider, basketService) {
+        controller : ('CartController', ['$scope', 'ngCart', 'fulfilmentProvider', 'basketService','$state', function($scope, ngCart, fulfilmentProvider, basketService, $state) {
 
             $scope.ngCart = ngCart;
-            console.log($scope.ngCart.getCart().items[0].getData())
+            var productData = ngCart.$cart.items;
             $scope.checkout = function () {
 
                 var patent_ids = [];
@@ -114,26 +114,13 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                     dateNowLocalTime :null
                 };
 
+                var billingDetails = $scope.summary.billingDetails;
                 fulfilmentProvider.setService($scope.service);
                 fulfilmentProvider.setSettings($scope.settings);
-                fulfilmentProvider.checkout(patentObj, $scope.billingDetails)
-                    .then(function (response, status, headers, config, $state, $timeout) {
-                            $rootScope.$broadcast('ngCart', response);
-
-                            var updatedPatentObj = {
-                                totalCostUSD: response.data.totalCostUSD,
-                                dateNowLocalTime: response.data.dateNowLocalTimeUI,
-                                transTargetEndDateUI:response.data.transTargetEndDateUI,
-                                patents: (function(){
-                                    var patentAppNos = [];
-                                    response.data.orderedPatentUIs.forEach(function(patent){
-                                        patentAppNos.push(patent.patentApplicationNumber);
-                                    });
-                                    return patentAppNos;
-                                }()),
-                                totalPatents: response.data.orderedPatentUIs.length
-                            };
-                            $state.go('bank-transfer-preparation', {orderObj:order,patentObj:updatedPatentObj});                            
+                fulfilmentProvider.checkout(patentObj)
+                    .then(function (data, status, headers, config) {
+                            data.billingDetails = billingDetails;
+                            $state.go('bank-transfer-preparation', {orderObj:data}, {reload: false});                            
                         },
                         function (data, status, headers, config) {
                             $rootScope.$broadcast('ngCart:checkout_failed', {
@@ -146,14 +133,20 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
         }]),
         link: function(scope, element, attrs) {
 
-            var items = ngCart.getItems();
-            var cartArr = items.map(function(el){
-                return el._id
-            })
+            var cartArr = [];
+            var cartItems = ngCart.getItems();
+
+            cartItems.forEach(function(currentValue, index, array){
+                cartArr.push(currentValue._id);
+            });
+
+            var idObj = {
+                patent_id: cartArr
+            };
 
             $rootScope.$on('ngCart:itemRemoved', function() {
                 // fetchBasketPatents(cartArr);
-                scope.summary.totalPatents = $scope.summary.totalPatents - 1; //a quick fix
+                scope.summary.totalPatents = scope.summary.totalPatents - 1; //a quick fix
             });
 
             function calcSummary(response) {
@@ -164,17 +157,17 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                     extensionFeeUSD: 0,
                     urgentFeeUSD: 0,
                     expressFeeUSD: 0,
-                    totalCost: 0,
+                    totalCostUSD: 0
                 }
 
-                response.forEach(function(el){
-                    console.log(el)
+                response.forEach(function(el){  
                     if(el.renewalFeeUI !== null) {
                         obj.officialFeeUSD += el.renewalFeeUI.renewalFeeUSD;
                         obj.processingFeeUSD += el.renewalFeeUI.processingFeeUSD;
                         obj.extensionFeeUSD += el.renewalFeeUI.extensionFeeUSD;
                         obj.expressFeeUSD += el.renewalFeeUI.expressFeeUSD;
                         obj.urgentFeeUSD += el.renewalFeeUI.urgentFeeUSD;
+                        obj.totalCostUSD += el.renewalFeeUI.subTotalUSD;
                     }
                     if(el.form1200FeeUI !== null) {
                         obj.officialFeeUSD += el.renewalFeeUI.designationFeeUSD;
@@ -187,30 +180,32 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                         obj.extensionFeeUSD += el.renewalFeeUI.extensionFeeUSD;
                         obj.expressFeeUSD += el.renewalFeeUI.expressFeeUSD;
                         obj.urgentFeeUSD += el.renewalFeeUI.urgentFeeUSD; 
+                        obj.totalCostUSD += el.renewalFeeUI.subTotalUSD;
                     }
 
                 })
                 return obj;
             }
 
-            fetchBasketPatents(cartArr);
+            fetchBasketPatents(idObj);
 
             function fetchBasketPatents(obj) {
                 basketService.fetchBasketPatents(obj)
                 .then(
                     function(response){
-                        console.log(response)
-                        var patentArr = response.orderedPatentUIs;
-
-                        scope.billingDetails = {
-                            billingStreet: response.billingStreet,
-                            billingCity: response.billingCity,
-                            billingState: response.billingState,
-                            billingZip: response.billingZip,
-                        }
                         scope.summary = {
+                            firstName: response.firstName,
+                            lastName: response.lastName,
+                            billingDetails: {
+                                billingStreet: response.billingStreet,
+                                billingCity: response.billingCity,
+                                billingState: response.billingState,
+                                billingZip: response.billingZip,
+                            },
                             date: response.dateNowLocalTimeUI,
-                            fees: calcSummary(response),
+                            fees: (function(){
+                               return calcSummary(response.orderedPatentUIs);
+                            }()),
                             totalPatents: response.orderedPatentUIs.length,
                         };
                     },

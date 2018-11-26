@@ -7,18 +7,21 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	var vm = this;
 
 	$rootScope.page = 'Confirm Order';
-	
-	vm.patentObj = $stateParams.patentObj;	
-	//object passed as a params through app/assets/js/gCart.fulfilment.js
-	if(vm.patentObj === null) { //if page is refreshed when on bank prepration page
-		$state.go('patents'); //direct user to patents
+
+	vm.orderObj = $stateParams.orderObj;
+	console.log(vm.orderObj )
+	if(vm.orderObj == '') { //if page is refreshed when on bank prepration page
+		$state.go('portfolio', {reload: true}); //direct user to patents
 	} else {
 
-		var order = $stateParams.orderObj;
+		vm.orderObj.patentNos = (function(){
+			return vm.orderObj.orderedPatentUIs.map(function(el) {
+				return el.ep_ApplicationNumber;
+			})
+		}())
 
 		vm.openCancelTransModal = openCancelTransModal;
-		vm.commitTransfer = commitTransfer;
-		order.totalCostUSD = $stateParams.patentObj.totalCostUSD;		
+		vm.commitTransfer = commitTransfer;	
 
 		function openCancelTransModal() {
 
@@ -34,7 +37,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 				  	$scope.cancelTrans = function () {
 				  		ngCart.empty();
 				    	$uibModalInstance.close();
-				    	$state.go('patents');
+				    	$state.go('portfolio');
 				  	};
 
 				  	$scope.cancel = function() {
@@ -50,10 +53,11 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 			
 			vm.commitTransferBtn = true; //prevent double click
 
-			bankTransferCommitService.commitTransfer(order) //SERVICE HANDLES STATE.GO
+			bankTransferCommitService.commitTransfer(vm.orderObj) //SERVICE HANDLES STATE.GO
 			.then(
 	            function(response){
-	            	order = response.data;
+	            	console.log(response)
+	            	$state.go('bank-transfer-success', {orderObj: response});
 	            },
 	            function(errResponse){
 	            	if(errResponse) {
