@@ -133,7 +133,11 @@ public class Form1200StatusEnum extends P3SAbstractEnum {
     		 || PAYMENT_FAILED.equalsIgnoreCase(code)
     		 || COMPLETED.equalsIgnoreCase(code));
     }
-    public static String statusForUI(String rawStatus) { // Don't show FE the awaitingCron message.
+    /**
+     * Don't show FE the awaitingCron message.
+     * Note: Is safe - even if given an unrecognised (ie Non-Form1200) status value
+     */
+    public static String statusForUI(String rawStatus) {
     	if (AWAIT_PDF_GEN_START.equals(rawStatus)) return EPCT_BEING_GENERATED;
     	else return rawStatus;
     }

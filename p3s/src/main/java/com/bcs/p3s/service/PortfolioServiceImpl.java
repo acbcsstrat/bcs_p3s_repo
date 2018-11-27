@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.engine.ServiceManager;
 import com.bcs.p3s.engine.StageManager;
+import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Patent;
 
@@ -56,7 +57,8 @@ public class PortfolioServiceImpl extends ServiceAuthorisationTools implements P
 		portfolioUI.setEpoStatus(patent.getEpoPatentStatus());
 		String currentStage = StageManager.determineStage(patent.getEpoPatentStatus()); 
 		portfolioUI.setEpeStage(currentStage);
-		portfolioUI.setServiceStatus(getServiceStatusForThisStage(currentStage,patent));
+		String rawStatus = getServiceStatusForThisStage(currentStage,patent); 
+		portfolioUI.setServiceStatus( Form1200StatusEnum.statusForUI(rawStatus) ); // Is safe - even if not a Form1200 status
 		portfolioUI.setServiceList(
 				serviceManager.getServicesForPatent(patent, session));
 				// 'session' needed (temporarily?) for accessing prices & dates (for the Service entities)
