@@ -131,9 +131,11 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
       <th align="left">
         <b>ORDERED BY:</b>
       </th>
+<!--  
       <th align="left">
         <b>TRANSACTION TYPE:</b>
       </th>
+-->
       <th align="left">
         <b>TRANSACTION ID:</b>
       </th>
@@ -145,9 +147,11 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
       <td>
         <%=data.getClientAddress().getPersonName() %>
       </td>
+<!--        
       <td>
         <%=data.getTransactionType()%>
       </td>
+-->
       <td>
         <%= data.getTransactionReference()%>
       </td>
@@ -194,6 +198,14 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
           </tr>
           <tr>
             <td>
+              <b>YOUR DESCRIPTION:</b>
+            </td>
+            <td>
+              <%=patent.getShortName() %>
+            </td>
+          </tr>
+          <tr>
+            <td>
               <b>YOUR CLIENT REF:</b>
             </td>
             <td>
@@ -232,17 +244,19 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
               Official Fee
             </td>
             <td width="20%" align="right">
-              $<%=patent.getOfficialRenewalFeeUsd() %>
+              $<%=patent.getOfficialFeeUsd() %>
             </td>
           </tr>
+<!--  
           <tr>
             <td>
               EPO Extension Fee
             </td>
             <td align="right">
-              $<%=patent.getOfficialExtensionFeeUsd() %>
+              $< % = patent.getOfficialExtensionFeeUsd() % >
             </td>
           </tr>
+-->          
           <tr>
             <td>
               Processing Fee

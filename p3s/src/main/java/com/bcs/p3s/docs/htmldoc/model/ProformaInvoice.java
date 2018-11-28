@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bcs.p3s.enump3s.PaymentTypeEnum;
+import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Invoice;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.wrap.BankTransferPaymentDetails;
@@ -20,11 +21,21 @@ public class ProformaInvoice extends AbstractInvoice {
 		transactionType = PaymentTypeEnum.STANDARD_PAYMENT;
 		
 		List<Renewal> renewals = invoice.getPayment().getRenewals();
-		int ii = 1;
+		List<Epct> epcts = invoice.getPayment().getEpcts();
+		int productCounter = 0;
+		int numProducts = renewals.size() + epcts.size();
+		
 		for (Renewal renewal : renewals) {
 			Patent4htmlDoc patent4hd = new Patent4htmlDoc(renewal);
-			patent4hd.setNumberInList(Integer.valueOf(ii++).toString());
-			patent4hd.setListSize(Integer.valueOf(renewals.size()).toString());
+			patent4hd.setNumberInList(Integer.valueOf(++productCounter).toString());
+			patent4hd.setListSize(Integer.valueOf(numProducts).toString());
+			patents.add(patent4hd);
+		}
+
+		for (Epct epct : epcts) {
+			Patent4htmlDoc patent4hd = new Patent4htmlDoc(epct);
+			patent4hd.setNumberInList(Integer.valueOf(++productCounter).toString());
+			patent4hd.setListSize(Integer.valueOf(numProducts).toString());
 			patents.add(patent4hd);
 		}
 	}
