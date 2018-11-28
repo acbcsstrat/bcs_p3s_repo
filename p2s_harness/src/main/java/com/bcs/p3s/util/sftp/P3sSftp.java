@@ -75,6 +75,24 @@ public class P3sSftp extends Universal {
 			this.fx_un  = propertyReader.getGenericProperty(P3SPropertyNames.BCS_FX_SFTP_SITE_USERNAME);
 			this.fx_pwd = (new SftpUtils()).getKey(global.getMoneycorpKey());
 			this.fx_key = propertyReader.getGenericProperty(P3SPropertyNames.BCS_FX_SFTP_SITE_SECURE_FINGERPRINT);
+		} else if ("tomcatb".equals(which_sftp_service)) {
+			// Retrieve access details for the BCS SFTP site
+			this.fx_url = propertyReader.getGenericProperty(P3SPropertyNames.TOMB_FX_SFTP_SITE_URL);
+			this.fx_un  = propertyReader.getGenericProperty(P3SPropertyNames.TOMB_FX_SFTP_SITE_USERNAME);
+			this.fx_pwd = (new SftpUtils()).getKey(global.getMoneycorpKey());
+			this.fx_key = propertyReader.getGenericProperty(P3SPropertyNames.TOMB_FX_SFTP_SITE_SECURE_FINGERPRINT);
+		} else if ("tomcatu".equals(which_sftp_service)) {
+			// Retrieve access details for the BCS SFTP site
+			this.fx_url = propertyReader.getGenericProperty(P3SPropertyNames.TOMU_FX_SFTP_SITE_URL);
+			this.fx_un  = propertyReader.getGenericProperty(P3SPropertyNames.TOMU_FX_SFTP_SITE_USERNAME);
+			this.fx_pwd = (new SftpUtils()).getKey(global.getMoneycorpKey());
+			this.fx_key = propertyReader.getGenericProperty(P3SPropertyNames.TOMU_FX_SFTP_SITE_SECURE_FINGERPRINT);
+		} else if ("tomcatv".equals(which_sftp_service)) {
+			// Retrieve access details for the BCS SFTP site
+			this.fx_url = propertyReader.getGenericProperty(P3SPropertyNames.TOMV_FX_SFTP_SITE_URL);
+			this.fx_un  = propertyReader.getGenericProperty(P3SPropertyNames.TOMV_FX_SFTP_SITE_USERNAME);
+			this.fx_pwd = (new SftpUtils()).getKey(global.getMoneycorpKey());
+			this.fx_key = propertyReader.getGenericProperty(P3SPropertyNames.TOMV_FX_SFTP_SITE_SECURE_FINGERPRINT);
 		}
 		else throw new P3SPropertyException("Missing cron property : WHICH_SFTP_SITE of "+P3SPropertyNames.WHICH_FX_SFTP_SITE);
 	}

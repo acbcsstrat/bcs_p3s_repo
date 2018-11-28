@@ -50,6 +50,15 @@ public interface P3SPropertyNames {
 	public static final String BCS_FX_SFTP_SITE_URL = "bcs_fx_url";
 	public static final String BCS_FX_SFTP_SITE_USERNAME = "bcs_fx_un";
 	public static final String BCS_FX_SFTP_SITE_SECURE_FINGERPRINT = "bcs_fx_key";
+	public static final String TOMB_FX_SFTP_SITE_URL = "tomb_fx_url";
+	public static final String TOMB_FX_SFTP_SITE_USERNAME = "tomb_fx_un";
+	public static final String TOMB_FX_SFTP_SITE_SECURE_FINGERPRINT = "tomb_fx_key";
+	public static final String TOMU_FX_SFTP_SITE_URL = "tomu_fx_url";
+	public static final String TOMU_FX_SFTP_SITE_USERNAME = "tomu_fx_un";
+	public static final String TOMU_FX_SFTP_SITE_SECURE_FINGERPRINT = "tomu_fx_key";
+	public static final String TOMV_FX_SFTP_SITE_URL = "tomv_fx_url";
+	public static final String TOMV_FX_SFTP_SITE_USERNAME = "tomv_fx_un";
+	public static final String TOMV_FX_SFTP_SITE_SECURE_FINGERPRINT = "tomv_fx_key";
 
 
 	// host web URL + support
