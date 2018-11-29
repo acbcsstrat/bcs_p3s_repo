@@ -2,8 +2,8 @@
 // .btn--reg { @include padding-mixin(0.5rem 1.5rem) } /*modules*/ /*components*/ /*_buttons.scss*/
 /*modules*/ /*components*/ /*_buttons.scss*/
 // .uib-btn--lg a { @include padding-mixin(0.5rem 3rem) } /*modules*/ /*components*/ /*_buttons.scss*/
-.btn-no-bg .btn-no-bg--green:focus { color: #53ab58; } /*modules*/ /*components*/ /*_buttons.scss*/
-.btn-no-bg .btn-no-bg--green:hover { background: #53ab58; color: $white;} /* modules*/ /*components*/ /*_buttons.scss*/
+// .btn-no-bg .btn-no-bg--green:focus { color: #53ab58; } /*modules*/ /*components*/ /*_buttons.scss*/
+// .btn-no-bg .btn-no-bg--green:hover { background: #53ab58; color: $white;} /* modules*/ /*components*/ /*_buttons.scss*/
 
  // a:not([href]):not([tabindex])
 .btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
@@ -39,9 +39,25 @@
   }
 }
 
+.btn--bordered {
+  background: none;
+  &.green {
+    border: 2px solid $green;
+    color: $green;
+    &:not([disabled]):hover {
+      background: $green;
+      color: $white;
+    }
+    &.txt-black {
+      color: $black;
+    }
+  }  
+}
+
 .btn-underlined {
   text-decoration: underline;
   &:hover {
     text-decoration: none;
   }
 }
+
