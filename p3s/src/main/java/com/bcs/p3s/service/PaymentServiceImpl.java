@@ -488,6 +488,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			
 			basketContents.getOrderedPatentUIs().add(pui);
 		}
+		basketContents.setScaleOfTotals();
 
 	    P3SUser p3sUser = pLoginSession.getUser();
 	    Business business = pLoginSession.getBusiness();

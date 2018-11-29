@@ -94,6 +94,14 @@ public class BasketContents extends Universal {
 	}
 
 	
+	public void setScaleOfTotals() {
+		totalOfficialFeesUSD = totalOfficialFeesUSD.setScale(2, BigDecimal.ROUND_HALF_UP);
+		totalProcessingFeesUSD = totalProcessingFeesUSD.setScale(2, BigDecimal.ROUND_HALF_UP);
+		totalExpressFeesUSD = totalExpressFeesUSD.setScale(2, BigDecimal.ROUND_HALF_UP);
+		totalUrgentFeesUSD = totalUrgentFeesUSD.setScale(2, BigDecimal.ROUND_HALF_UP);
+
+		totalCostUSD = totalCostUSD.setScale(2, BigDecimal.ROUND_HALF_UP);
+	}
 	
 	// convenience, for debugging & logging
 	public String toString() {
