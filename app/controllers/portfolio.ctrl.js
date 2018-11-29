@@ -5,7 +5,6 @@ portfolioCtrl.$inject = ['patents', '$scope', '$state', '$stateParams','$rootSco
 function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService) {
 
     var vm = this;
-
     $rootScope.page = 'Portfolio';
     $scope.portfolioData = patents;
     vm.rowSelect = rowSelect;
@@ -15,30 +14,20 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.getStatus = getStatus;
     vm.getCurrColour = getCurrColour;
     vm.actionStatus = actionStatus;
+    vm.toggleAll = toggleAll;
 
     $timeout(function(){
       vm.animate = true;
     }, 300);
 
-    var euroPctStatuses = [
-      'Epct available',
-      'Epct saved',
-      'Epct not available'
-    ]
-
-    var renewalStatuses = [
-      'Show price',
-      'Renewal in place'
-    ]
-
+    var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available'];
+    var renewalStatuses = ['Show price', 'Renewal in place'];
     vm.patentActionStatuses = {
       'value': 'All Patents',
       'values': ['All Patents', 'No Action Available', 'Action Available']
     }
   
     $scope.filters = {
-      // patentCategory: {},
-      
       serviceStatus: {},
       serviceType: {},
       currentStageColour: {}
@@ -50,7 +39,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     function getStatus(text) {
 
-      return organiseTextService.getStatus(text);
+      return organiseTextService.uiStatus(text);
     }
 
     function getCurrColour(color, type) {
@@ -96,7 +85,6 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     }
 
     $scope.epctStages = function(field) {
-      console.log(field)
       var result = [];
       for(var i = 0; i < $scope.portfolioData.length; i++){
         var patent = $scope.portfolioData[i];
@@ -166,8 +154,6 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       return uniqueArray(result); //check no duplicates
     };
 
-    console.log($scope.filters)
-
     $scope.testFl = function(el){
         for(var filter in $scope.filters){
             var filterArray = [];
@@ -197,29 +183,36 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
         return true;
     };   
 
-    vm.toggleAll = function($event, includeAll) { //used for clear or select all
-      for(var filter in $scope.filters) {
-        if($scope.filters.hasOwnProperty(filter)) {
-          
-          for(var i in $scope.filters[filter]) {
-            $scope.filters.serviceStatus[i] = includeAll;
-            $scope.filters.currentStageColour[i] = includeAll;            
-          }
-        }
-      };    
-    };
-
-    function displayPatents() { //resets view so only list patents displays
-        $state.go('portfolio');
+    function toggleAll($event, includeAll) { //used for clear or select all
+        for(var filter in $scope.filters) {
+            if($scope.filters.hasOwnProperty(filter)) {
+                for(var i in $scope.filters[filter]) {
+                    $scope.filters.serviceStatus[i] = includeAll;
+                    $scope.filters.currentStageColour[i] = includeAll;            
+                }
+            }
+        };    
     };
 
     function rowSelect(event, patent){
         if(!$(event.target).hasClass('cartbtn')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].id; //gets data from data-id
-            $state.go('portfolio.patent', {patentId: patent.id});
+            $state.go('portfolio.patent', {patentId: patent.id}, {reload: true});
         }
-    };    
+        if($(event.target).hasClass('cartbtn')) {
+            for(var i = 0; i < patent.serviceList.length; i++) {
+                var status = patent.serviceList[i].serviceStatus;
+                if(status == 'Epct available') {
+                  $state.go('portfolio.patent', {patentId: patent.id} , {reload:true});
+                  $timeout(function(){
+                      $state.go('portfolio.patent.euro-pct.form1200.intro', {patentId: patent.id} , {reload:false});
+                  }, 300)
+                } 
+            }
+        }
+
+    };
 
 
 }
