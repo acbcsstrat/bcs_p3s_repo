@@ -30,8 +30,6 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
         return organiseTextService.uiStatus(text);
     }
 
-    console.log(patent)
-
     vm.$onInit = function() {
         if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) {
             patent.availableFee = null;
