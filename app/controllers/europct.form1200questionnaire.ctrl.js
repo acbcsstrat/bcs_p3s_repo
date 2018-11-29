@@ -221,17 +221,18 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
     }
 
     function submitForm1200(data) {
-        // console.log(data)
+        // console.log(vm.formData)
         var arr = sortPageDetails(data);
         vm.formData.pageDescriptionsUI = arr;
-        vm.formData.EP_ApplicationNumber = patent.ep_ApplicationNumber;
+        // vm.formData.ep_ApplicationNumber = patent.ep_ApplicationNumber;
         vm.formData.id = patent.id
         vm.formData.totalClaims = parseInt(vm.formData.totalClaims);
         vm.formData.totalPages = parseInt(vm.formData.totalPages);
+        // vm.formData
         form1200Service.submitForm1200(vm.formData)
         .then(
             function(response){
-                // console.log(response)
+                console.log(response)
                 $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response}, {reload: false})
             },
             function(errResponse){
