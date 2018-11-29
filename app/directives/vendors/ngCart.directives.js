@@ -169,7 +169,9 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                         obj.urgentFeeUSD += el.renewalFeeUI.urgentFeeUSD;
                         obj.totalCostUSD += el.renewalFeeUI.subTotalUSD;
                     }
+                    console.log('should hit', response)
                     if(el.form1200FeeUI !== null) {
+                        console.log('hello')
                         obj.officialFeeUSD += el.renewalFeeUI.designationFeeUSD;
                         obj.officialFeeUSD += el.renewalFeeUI.examinationFeeUSD;
                         obj.officialFeeUSD += el.renewalFeeUI.excessPageFeeUSD;
@@ -193,6 +195,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 basketService.fetchBasketPatents(obj)
                 .then(
                     function(response){
+                        console.log(response)
                         scope.summary = {
                             firstName: response.firstName,
                             lastName: response.lastName,
