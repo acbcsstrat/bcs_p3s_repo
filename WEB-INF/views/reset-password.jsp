@@ -74,7 +74,7 @@
 								<input type="password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
 							</div>
 						</div>
-						<input type="Submit" value="Reset Password" class="btn btn-block pill-radius bg-phase-green font-body txt-white font-weight-medium cursor-pointer">
+						<input type="Submit" value="Reset Password" class="btn btn-block btn--lg btn--green pill-radius">
 					</form>   	          			
           		</div>
 				<div id="resetPassSuccess" class="hide-before">
@@ -88,9 +88,7 @@
 	   						</div>
 	   						<div class="row">
 	   							<div class="col-md-8 offset-md-2">
-   									<div class="btn-default m-t-sm">
-	   									<a class="btn btn-block btn-success btn--lg pill-radius font-body font-weight-medium txt-white" href="/p3sweb/login">Go to Login</a>
-	   								</div>
+   									<a class="btn btn-block btn--lg btn--green pill-radius m-t-sm" href="/p3sweb/login">Go to Login</a>
 	   							</div>
 	   						</div>
    						</div>
@@ -107,9 +105,7 @@
 	   						</div>
                             <div class="row">
                                 <div class="col-md-8 offset-md-2">
-                                    <div class="btn-default m-t-sm">
-                                        <a class="btn btn-block btn-success btn--lg pill-radius font-body font-weight-medium txt-white" href="/p3sweb/login">Go to Login</a>
-                                    </div>
+                                    <a class="btn btn-block btn--lg btn--green pill-radius m-t-sm" href="/p3sweb/login">Go to Login</a>
                                 </div>
                             </div>                            
 	   					</div>
