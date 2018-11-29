@@ -205,9 +205,9 @@
                                 <table data-ng-if="patent.serviceList.length > 1">
                                     <tr data-ng-repeat="item in patent.serviceList">
                                         <td class="t-data__td t-data__w15 border-grey-xs--left">
-                                            <span data-ng-if="item.serviceStatus == 'Epct not available'">E-PCT not Available</span>
-                                            <span data-ng-if="item.serviceStatus == 'Too early'">Too early</span>
-                                            <span data-ng-if="item.serviceStatus == 'Too late'">Too late</span>
+                                            <div data-ng-if="!$ctrl.actionStatus(item.serviceStatus)">
+                                                <span data-ng-bind="$ctrl.getStatus(item.serviceStatus)"></span>
+                                            </div>
                                             <div data-ng-if="$ctrl.actionStatus(item.serviceStatus)">
                                                 <p data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
                                                 <i class="fa fa-chevron-right fa-lg" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
@@ -224,9 +224,9 @@
                                 <table data-ng-if="patent.serviceList.length == 1">
                                     <tr>
                                         <td data-ng-repeat="item in patent.serviceList">
-                                            <span data-ng-if="item.serviceStatus == 'Epct not available'">E-PCT not available</span>
-                                            <span data-ng-if="item.serviceStatus == 'Too early'">E-PCT process not ready</span>
-                                            <span data-ng-if="item.serviceStatus == 'Too late'">E-PCT deadline passed</span>
+                                            <div data-ng-if="!$ctrl.actionStatus(item.serviceStatus)">
+                                                <span data-ng-bind="$ctrl.getStatus(item.serviceStatus)"></span>
+                                            </div>
                                             <div data-ng-if="$ctrl.actionStatus(item.serviceStatus)" class="d-md-none d-lg-flex justify-content-between align-items-center">
                                                 <p data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
                                                 <i class="fa fa-chevron-right fa-lg" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
@@ -240,21 +240,21 @@
                                         </td>
                                     </tr>
                                 </table>
-                            </td>
+                            </td><!--service status-->
                             <td class="t-data__td t-data__w20">
                                 <table data-ng-if="patent.serviceList.length == 1">
                                     <tr>
                                         <td>
-                                            <div class="d-flex justify-content-center" data-ng-repeat="item in patent.serviceList">
+                                            <div class="d-flex justify-content-center btn-underline-select" data-ng-repeat="item in patent.serviceList">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
-                                                    <button data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejeted' || item.serviceStatus == 'Payment failed'" type="button" class="btn btn--lg btn--green cartbtn pill-radius" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200</button>
+                                                    <button data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejeted' || item.serviceStatus == 'Payment failed'" type="button" class="btn-no-bg btn-underlined cartbtn">Generate Form 1200</button>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
-                                                        <ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                                        <ngcart-addtocart id="{{patent.id}}" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                                         </ngcart-addtocart>
                                                     </div>
                                                 </div>
                                                 <div data-ng-if="item.serviceType == 'Renewal'">
-                                                    <ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
+                                                    <ngcart-addtocart id="{{patent.id}}" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
                                                     </ngcart-addtocart>
                                                 </div>                                    
                                             </div>
