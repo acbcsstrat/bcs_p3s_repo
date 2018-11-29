@@ -29,7 +29,8 @@ function organiseTextService(coreService) {
         {text: 'Epct saved', uiText: 'Euro-PCT Saved'},
         {text: 'Epct being generated', uiText: 'Euro-PCT Generating'},
         {text: 'EPO Instructed', uiText: 'EPO Instructed'},
-        {text: 'Too late to renew', uiText: 'Call '+partnerName+' on '+partnerPhone},    
+        {text: 'Too late to renew', uiText: 'Call '+partnerName+' on '+partnerPhone},
+        {text: 'Await pdf gen start', uiText: 'Euro-PCT Generating'}        
     ]
 
     var availableStatuses = [
@@ -45,6 +46,7 @@ function organiseTextService(coreService) {
         {text: 'Epct not available', uiText: 'Manual Processing Only'},
         {text: 'Epct saved', uiText: 'Euro-PCT Saved'},
         {text: 'Epct being generated', uiText: 'Euro-PCT Generating'},
+        {text: 'Await pdf gen start', uiText: 'Euro-PCT Generating'},
         {text: 'EPO Instructed', uiText: 'EPO Instructed'},
         {text: 'Too late to renew', uiText: 'Call '+partnerName+' on '+partnerPhone},
     ]          
