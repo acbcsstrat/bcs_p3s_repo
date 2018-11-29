@@ -64,9 +64,9 @@ function appRoutes($stateProvider) {
                     templateUrl: 'app/templates/dashboard/dashboard.recent-activity-widget.tpl.htm',
                     controller: 'recentActivityCtrl',
                     controllerAs: '$ctrl'
-                }            
+                }
             }
-        })    
+        })
         .state('profile', {
             url: '/profile',
             templateUrl: 'app/templates/user/user.user-profile.tpl.htm',
@@ -277,8 +277,7 @@ function appRoutes($stateProvider) {
             controller: 'bankTransferPrepCtrl',
             controllerAs: '$ctrl',
             params: {
-                orderObj: null,
-                patentObj: null
+                orderObj: null
             }
         })
         .state('bank-transfer-success', {

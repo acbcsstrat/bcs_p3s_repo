@@ -31,20 +31,23 @@ angular.module('ngCart.fulfilment', [])
                 totalCostUSD: patent.totalCostUSD,
                 patent_ids: patent.patent_ids
             };
-            
+            console.log(obj)
             var deferred = $q.defer();
             $http.post('http://localhost:8080/p3sweb/rest-prepare-banktransfer/', obj)
             .then(
                 function(response){
+                    console.log(response)
                     deferred.resolve(response.data);
                 },
-                function(errResponse){  
+                function(errResponse){
+                    console.log(errResponse)
                     deferred.reject(errResponse);
                 }
             );
 
             return deferred.promise;
         };
+
  }]);
 
 

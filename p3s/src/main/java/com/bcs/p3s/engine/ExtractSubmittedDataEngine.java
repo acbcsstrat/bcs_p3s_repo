@@ -469,6 +469,23 @@ public class ExtractSubmittedDataEngine extends Universal {
 			for (String str : keys) { log().info("extractBasketRequestPatentIds SET contains element: "+str); aKey=str; }
 			// what name to use
 			listOfNumbers = (List<Object>) lhm.get(aKey);
+
+			int kk=-1;
+			for (Object obj : listOfNumbers) {
+				if ( obj instanceof Integer) {
+					kk = (Integer) obj;
+					listOfLongs.add((long) kk);
+				}
+				else if (obj instanceof Long) 
+					listOfLongs.add((Long) obj);
+				else if (obj instanceof String) {
+					Long lngObj = new Long( (String) obj);
+					listOfLongs.add(lngObj);
+				}
+				else log().fatal("extractBasketRequestPatentIds run  got List - dat all {ex Linkedhashmop}" +obj.getClass().getName());
+			}
+
+			
 		}
 		else if ( obby instanceof List<?>) {
 			listOfNumbers = (List<Object>) obby;
@@ -602,8 +619,10 @@ public class ExtractSubmittedDataEngine extends Universal {
 		   	LinkedHashMap<String, Object> basketObject = (LinkedHashMap<String, Object>) obby; 
 		   	List<String> keys = new ArrayList<String>(basketObject.keySet());
 		   	
+	   		log().debug("  'flexible' logging. CommitPurchase(assumed). Passed below keys:   thisFrom "+CLASSNAME+":getBasketContentsPreCommitForm()");
 		   	for(String key : keys){
-		   		
+		   		log().debug("       thisKey is : "+key);
+
 		   		Object obValue = basketObject.get(key);
 		   		String strValue = null;
 				if(obValue instanceof String)
@@ -680,6 +699,60 @@ public class ExtractSubmittedDataEngine extends Universal {
 		   			}
 		   			basket.setPatentIds(orderedPatentIds);;
 			   	}
+
+		   	
+		   		log().debug("Another 'flexible' - should FE data not be packaged as expected. NOW basket.getBillingStreet() = "+basket.getBillingStreet() );
+		   		if (basket.getBillingStreet()==null || isEmpty(basket.getBillingStreet())) {
+			   		log().debug("   invoking another workaround - billingAddr dets NOT at top level - hope they are in an object called billingDetails");
+			   		if("billingDetails".equals(key.trim())){
+				   		log().debug("   so far so good - IS an obj called "+key);
+				   		Object subObj = basketObject.get(key);
+				   		log().debug("     xx subObj of type "+subObj.getClass().getName());
+
+					   	LinkedHashMap<String, Object> subItems = (LinkedHashMap<String, Object>) subObj; 
+				   		List<String> subkeys = new ArrayList<String>(subItems.keySet());
+
+				   		// here - code copied verbatim from above) : nbar key -> xkey & obValue & strValue
+		   			   	for(String xkey : subkeys){
+		   			   		log().debug("       thisXKey is : "+xkey);
+
+		   			   		Object xobValue = subItems.get(xkey);
+		   			   		String xstrValue = null;
+		   					if(xobValue instanceof String)
+		   			   			xstrValue = (String)xobValue;
+		   			   		
+		   			   		if("billingStreet".equals(xkey.trim())){
+		   		   				basket.setBillingStreet(xstrValue);
+		   			   		}
+		   			   		
+		   			   		if("billingCity".equals(xkey.trim())){
+		   		   				basket.setBillingCity(xstrValue);
+		   			   		}
+		   			   		
+		   			   		if("billingState".equals(xkey.trim())){
+		   		   				basket.setBillingState(xstrValue);
+		   			   		}
+		   			   		
+		   			   		if("billingZip".equals(xkey.trim())){
+
+		   		   				String strZip = "";
+		   			   			if(xobValue instanceof String){
+		   			   				strZip = (String) xobValue;
+		   			   			}
+		   			   			else if(xobValue instanceof Double || xobValue instanceof Integer){ // This should be redundant now zip is a String. acTidy
+		   			   				try {
+		   			   					logErrorAndContinue("This code should be redundant now zip is a String. Remove code once proven unused");
+		   			   					strZip = xobValue.toString();
+		   			   				} catch (NumberFormatException nfe) { // FE should prevent this. If occurs, survive
+		   			   					logErrorAndContinue("xxBasket Billing Zipcode held non-numeric value : "+xobValue.toString());
+		   			   				}
+		   			   			}
+		   		   				basket.setBillingZip(strZip);
+		   			   		}
+		   			   	} // End of loop thu SUB-keys
+			   		}  // End of: if GROUP key is called billingDetails
+		   		} // End of : billingAddr missing - resort to subKey ...
+
 		   	}
 		   	
 		}

@@ -82,8 +82,7 @@
                   </div>
                   <div class="row m-b-sm">
                       <div class="col-md-12 col-lg-12 col-xl-12"> 
-                        <div class="btn-submit">
-                           <input type="Submit" id="btnSubmit" value="Reset Password" class="btn btn-block btn--lg btn-submit--check bg-phase-green pill-radius m-r-sm" disabled="disabled">
+                        <input type="Submit" id="btnSubmit" value="Reset Password" class="btn btn-block btn--lg btn--green pill-radius" disabled="disabled">
                         </div>
                      </div>
                   </div>

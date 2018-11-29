@@ -1,34 +1,35 @@
 angular.module('ppApp').controller('form1200GeneratedCtrl', form1200GeneratedCtrl);
 
-form1200GeneratedCtrl.$inject = ['$scope', '$rootScope','patent', '$http', '$state', '$stateParams', 'euroPctService', '$timeout', '$uibModal'];
+form1200GeneratedCtrl.$inject = ['$scope', '$rootScope','patent', '$http', '$state', '$stateParams', 'euroPctService', '$timeout', '$uibModal', 'form1200Service'];
 
-function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $stateParams, euroPctService, $timeout, $uibModal) {
+function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $stateParams, euroPctService, $timeout, $uibModal, form1200Service) {
 
     var vm = this;
 
     $rootScope.page = 'Form 1200 Generating';
 
-    vm.patent = patent;
+    vm.form1200;
     vm.deleteApplication = deleteApplication;
     vm.editApplication = editApplication; 
     vm.portfolioDir = portfolioDir;
     vm.loadingQuestions = false;
-    vm.form1200 = {};
     vm.costData = $stateParams.form1200.form1200FeeUI;
     // var fetchForm1200 = fetchForm1200;
 
-    console.log($stateParams)
 
-    vm.$onInit = function() {
         console.log($stateParams)
         // if($stateParams.form1200 === '') {
         //     $state.go('portfolio', {}, {reload: true});
         // } else {
-            form1200Generating();
-            fetchForm1200();           
+        
         // }
         
+    function init() {
+        form1200Generating();
+        checkForm1200();   
     }
+
+    init();
 
     function form1200Generating() {
 
@@ -125,24 +126,20 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
 
     }
 
-    function fetchForm1200() {
-        euroPctService.generateForm1200($stateParams.form1200)
+    function checkForm1200() {
+        console.log($stateParams.form1200)
+        form1200Service.submitForm1200($stateParams.form1200)
         .then(
             function(response){
+                console.log(response)
 
-                if(response.patents[0].form1200PdfUrl !== '' || response.patents[0].form1200PdfUrl !== null) {
-                    $rootScope.page = 'Form 1200 Generated';
-                    vm.form1200 = response.patents[0];
-                } else {
-                    $timeout(function(){
-                        fetchForm1200();
-                    }, 10000)
-                }
+                $rootScope.page = 'Form 1200 Generated';
+                vm.form1200 = response;
+
 
             },
             function(errResponse){
                 console.log('Error generating form 1200')
-                // $state.go('portfolio', {reload: false})
             }
         )
     }

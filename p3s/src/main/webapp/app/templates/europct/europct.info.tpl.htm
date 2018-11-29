@@ -77,15 +77,15 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
-                            <div class="panel-nav">
-                                <ul class="nav panel-nav__notification-list d-flex justify-content-start">
-                                    <li class="panel-nav__notification-list-item--green-notification panel-nav__list-item--notifications pill-radius active d-flex justify-content-center align-items-center m-b-xs m-r-sm" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
-                                    <li class="panel-nav__notification-list-item--amber-notification pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs m-r-sm" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
+                            <nav>
+                                <ul class="panel-nav">
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius green m-b-xs" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius amber m-b-xs" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
                                     <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li>
                                 </ul>
-                            </div>
+                            </nav>
                         </div>
-                        <div class="col-xl-12">
+                        <div class="col-xl-12 m-t-sm">
                             <uib-tabset active="activeNotificationTab" vertical="true" type="pills" class="flex-column">
                                 <uib-tab index="0" heading="Green" data-ng-hide="true">
                                     <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
@@ -113,7 +113,7 @@
                                         </div>
                                     </div>
                                 </uib-tab>
-                                <uib-tab index="2" heading="Red" data-ng-hide="true">
+<!--                                 <uib-tab index="2" heading="Red" data-ng-hide="true">
                                     <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
                                         <div class="col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
                                             {{item.title}}
@@ -125,7 +125,7 @@
                                             </div>
                                         </div>
                                     </div>                                  
-                                </uib-tab>
+                                </uib-tab> -->
                             </uib-tabset>
                         </div>
                     </div>

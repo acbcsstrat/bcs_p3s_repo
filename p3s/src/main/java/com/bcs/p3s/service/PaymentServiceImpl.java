@@ -125,12 +125,31 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 						
 						log().debug("181120 crashes here upon leave basket for epct");
 						
-						latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost());
+						//latestCalculatedCost = latestCalculatedCost .add(eachSessionData.getCurrentRenewalCost()); // This line crashed 181129 upon checkout
+						BigDecimal currentRenewalCost = eachSessionData.getCurrentRenewalCost();
+						if (currentRenewalCost!=null)
+							latestCalculatedCost = latestCalculatedCost .add(currentRenewalCost);
+						else log().warn("******* Just avoided crash - but MISSING pricing (f1200?");
 					}
 				}
-				bankTransferCheckoutPreCommit.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP));
+				// v2.1 UTTER BODGE starts here (as long stated : pricing / storage / whole design needs rewrite)
+				// above latestCalculatedCost lacks f1200 costs, yet they are needed immediately below. Need rapid workaround
+				BasketContents tmpBasketContents = new BasketContents();
+				List<Long> patentIdInBasket = basket.getPatentIds();
+				log().debug("181129 workaround to recalc checkout basket cost has patentIdInBasket of (below) : ");
+				for (long lng : patentIdInBasket) log().debug("    this Long is : "+lng);
+				populateBasketContents(tmpBasketContents, patentIdInBasket);
+
+				BigDecimal NEWlatestCalculatedCost = tmpBasketContents.getTotalCostUSD();
+				log().debug("181129 workaround to recalc checkout basket cost has calculated : "+NEWlatestCalculatedCost);
+
+				NEWlatestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP);
+				bankTransferCheckoutPreCommit.setTotalCostUSD(NEWlatestCalculatedCost);
+				latestCalculatedCost = NEWlatestCalculatedCost;
+				// v2.1 UTTER BODGE Ends here
+				//bankTransferCheckoutPreCommit.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 			}
-			
+			logAttention("Checkout got renewal costs - NOT f1200s - not yet written - PaymentServiceImpl BankTransferPreCommitDetails");
 			
 			bankTransferCheckoutPreCommit = populateBankTransferPreCommitDetails(bankTransferCheckoutPreCommit, basket);
 

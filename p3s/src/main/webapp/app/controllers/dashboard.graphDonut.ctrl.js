@@ -7,7 +7,6 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 	var vm = this;
 
 	if(patents.length > 0) {
-		console.log('hello')
 		vm.patents = patents;
 		vm.patentData = patentPhasesService.phases(patents);
 		$timeout(function() { //required to load correct size of donut graph in view

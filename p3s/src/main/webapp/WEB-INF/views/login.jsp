@@ -67,21 +67,19 @@
                            </div>
                            <div class="form-group d-flex justify-content-center flex-column m-b-sm">
                               <p id="loginMessage" class="m-b-sm font-body txt-phase-red"></p>
-                              <div class="btn-submit">
-                                 <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn-block btn--lg btn-submit--check bg-phase-green pill-radius m-r-sm">
-                              </div>
+                              <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn--lg btn--green pill-radius">
                            </div>
                         </form>
                         <div class="row m-b-sm">
                            <div class="col-md-12 text-center">
-                              <a href="/p3sweb/forgot-password" class="font-body text-center txt-black inline-link">Forgot Password?</a>
+                              <a href="/p3sweb/forgot-password" class="btn-no-bg font-weight-medium btn-underlined">Forgot Password?</a>
                            </div>
                         </div>
                         <div class="row">
                            <div class="col-md-12 d-flex justify-content-between align-items-center">
                               <p class="font-body">Don't have an account?</p>
                               <div class="btn-no-bg">
-                                 <a class="btn btn--lg btn-no-bg--green green-notification pill-radius txt-phase-green font-weight-medium font-body" href="/p3sweb/register">Register</a>
+                                 <a class="btn btn--lg btn--bordered green txt-black pill-radius" href="/p3sweb/register">Register</a>
                               </div>
                            </div>
                         </div>
