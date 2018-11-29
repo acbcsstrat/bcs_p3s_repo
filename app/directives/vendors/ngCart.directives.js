@@ -169,20 +169,18 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                         obj.urgentFeeUSD += el.renewalFeeUI.urgentFeeUSD;
                         obj.totalCostUSD += el.renewalFeeUI.subTotalUSD;
                     }
-                    console.log('should hit', response)
                     if(el.form1200FeeUI !== null) {
-                        console.log('hello')
-                        obj.officialFeeUSD += el.renewalFeeUI.designationFeeUSD;
-                        obj.officialFeeUSD += el.renewalFeeUI.examinationFeeUSD;
-                        obj.officialFeeUSD += el.renewalFeeUI.excessPageFeeUSD;
-                        obj.officialFeeUSD += el.renewalFeeUI.filingFeeUSD;
-                        obj.officialFeeUSD += el.renewalFeeUI.supplementarySearchFeeUSD
-                        obj.officialFeeUSD += el.renewalFeeUI.validationFeeUSD;                       
-                        obj.processingFeeUSD += el.renewalFeeUI.processingFeeUSD;
-                        obj.extensionFeeUSD += el.renewalFeeUI.extensionFeeUSD;
-                        obj.expressFeeUSD += el.renewalFeeUI.expressFeeUSD;
-                        obj.urgentFeeUSD += el.renewalFeeUI.urgentFeeUSD; 
-                        obj.totalCostUSD += el.renewalFeeUI.subTotalUSD;
+                        obj.officialFeeUSD += el.form1200FeeUI.designationFeeUSD;
+                        obj.officialFeeUSD += el.form1200FeeUI.examinationFeeUSD;
+                        obj.officialFeeUSD += el.form1200FeeUI.excessPageFeeUSD;
+                        obj.officialFeeUSD += el.form1200FeeUI.filingFeeUSD;
+                        obj.officialFeeUSD += el.form1200FeeUI.supplementarySearchFeeUSD
+                        obj.officialFeeUSD += el.form1200FeeUI.validationFeeUSD;                       
+                        obj.processingFeeUSD += el.form1200FeeUI.processingFeeUSD;
+                        obj.extensionFeeUSD += el.form1200FeeUI.extensionFeeUSD;
+                        obj.expressFeeUSD += el.form1200FeeUI.expressFeeUSD;
+                        obj.urgentFeeUSD += el.form1200FeeUI.urgentFeeUSD; 
+                        obj.totalCostUSD += el.form1200FeeUI.subTotalUSD;
                     }
 
                 })
