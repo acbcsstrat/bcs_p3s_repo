@@ -1,0 +1,54 @@
+.li-green > span:before, 
+.li-amber > span:before, 
+.li-red > span:before, 
+.li-blue > span:before, 
+.li-black > span:before, 
+.li-grey > span:before { /*modules*/ /*components*/ /*_lists.scss*/
+  font-family: 'Fontawesome';
+  margin-right: 10px;
+} 
+
+.li-green > span:before { /*modules*/ /*components*/ /*_lists.scss*/
+  content: '\f0c8'; 
+  color: #53ab58;
+}
+.li-amber > span:before { /*modules*/ /*components*/ /*_lists.scss*/
+  content: '\f0c8'; 
+  color: #f9b233;
+}
+.li-red > span:before { /*modules*/ /*components*/ /*_lists.scss*/
+  content: '\f0c8'; 
+  color: #e30613;
+}
+.li-blue > span:before { /*modules*/ /*components*/ /*_lists.scss*/
+  content: '\f0c8'; 
+  color: #0097ce;
+}
+.li-black > span:before { /*modules*/ /*components*/ /*_lists.scss*/
+  content: '\f0c8'; 
+  color: #3c3c3b;
+}
+.li-grey > span:before { /*modules*/ /*components*/ /*_lists.scss*/
+  content: '\f0c8'; 
+  color: grey;
+}
+
+.phase-rectangle { /*modules*/ /*pages*/ /*_dashboard.scss*/
+  display: block;
+  width: 35px;
+  height: 20px;
+}
+
+.donut-inner { z-index: -1; } /*component*/ /*pages*/ /*_dashboard.scss*/
+.donut-inner { /*component*/ /*pages*/ /*_dashboard.scss*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -24.5px;
+    margin-left: -17.5px;
+    text-align: center;
+}
+.donut-inner h4 { /*component*/ /*pages*/ /*_dashboard.scss*/
+   margin-bottom: 5px;
+   margin-top: 0;
+}
