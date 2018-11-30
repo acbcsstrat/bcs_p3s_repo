@@ -70,12 +70,8 @@
 							<div class="row m-t-sm">
 								<div class="col-md-12 col-lg-12 col-xl-12">
 									<div class="d-flex align-items-center">
-										<button class="btn bg-phase-red pill-radius font-weight-medium d-flex align-items-center m-r-sm" type="button" data-ng-click="$ctrl.openCancelSearchModal()">
-											<a href="" class="btn__link btn__link--white btn--lg">Cancel</a>
-										</button>
-										<button class="btn bg-phase-green pill-radius font-weight-medium m-r-sm d-flex align-items-center" data-ng-click="$ctrl.openConfirmModal($ctrl.patent)" data-ng-disabled="!searchPatentForm.$valid" type="submit">
-											<a href="" class="btn__link btn__link--white btn--lg">Add patent</a>
-										</button>									
+										<button class="btn btn--lg btn--red pill-radius m-r-sm" type="button" data-ng-click="$ctrl.openCancelSearchModal()">Cancel</button>
+										<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.openConfirmModal($ctrl.patent)" data-ng-disabled="!searchPatentForm.$valid" type="submit">Add patent</button>
 									</div>		
 								</div>
 							</div>						
