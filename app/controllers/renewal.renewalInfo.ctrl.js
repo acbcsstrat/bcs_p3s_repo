@@ -16,6 +16,8 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
     vm.getStatus = getStatus;
     vm.actionStatus = actionStatus;
 
+    console.log(patent)
+
     function updateRenewalNotifications(patent, id) {
         renewalRestService.updateNotifications(patent.renewalNotificationUIs, id)
         .then(
