@@ -1,0 +1,4 @@
+<button data-ng-hide="inCart()" data-ng-if="attrs.name == 'service.renewal'" class="btn-no-bg btn-underlined cartbtn" data-ng-click="ngCart.addItem(id, name, price, q, data)">Add Renewal</button>
+<button data-ng-hide="inCart()" data-ng-if="attrs.name == 'service.form1200'" class="btn-no-bg btn-underlined cartbtn" data-ng-click="ngCart.addItem(id, name, price, q, data)">Add form 1200</button>
+<button data-ng-show="inCart()" class="btn-no-bg btn-underlined cartbtn" data-ng-click="ngCart.removeItemById(id)">Remove</button>	
+

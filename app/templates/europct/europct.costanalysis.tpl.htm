@@ -1,0 +1,287 @@
+<div class="content-panel d-none d-xl-block border-t-none">
+    <div class="bg-white">
+        <div class="content-panel__body">
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <ul class="panel-nav">
+                                <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.loadChart(); activeChart = 0;" data-ng-class="{active : activeChart == 0}">Stage Cost Chart</li>
+                                <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.loadChart(); activeChart = 1;" data-ng-class="{active : activeChart == 1}">FX Chart</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 text-xs-left">
+                            <uib-tabset type="pills" active="activeChart">
+                                <uib-tab heading="Stage Cost Chart" classes="btn btn-primary" index="0" data-ng-hide="true">
+                                    <div data-ng-if="$ctrl.patent.form1200FeeUI === null">
+                                        <div class="content-panel__body bg-white">
+                                            <div class="row">
+                                                <div class="col-xl-12">
+                                                    <div class="d-flex align-items-center justify-content-center h-100 z-index-1">
+                                                        <div class="d-flex justify-content-center bg-no-chart align-items-center flex-column">
+                                                            <p class="h4 font-weight-medium">Sorry</p>
+                                                            <p class="h4 font-weight-medium text-center">No Renewal Information Available</p>
+                                                            <p class="h4 font-weight-medium">Status: <span class="txt-phase-green" data-ng-bind="$ctrl.patent.renewalStatus"></span></p>
+                                                            <div class="m-b-sm"></div>
+                                                            <p class="font-body text-center">Renewal information will be displayed here when the renewal window for the patent opens again</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-ng-if="$ctrl.patent.form1200FeeUI !== null">
+                                        <nvd3 options="$ctrl.barOptions" data="$ctrl.barData" class="with-transitions"></nvd3>
+                                    </div>
+                                </uib-tab>
+                                <uib-tab heading="FX Chart" classes="btn btn-primary" index="1" data-ng-hide="true">
+                                    <div data-ng-if="!$ctrl.patent.form1200FeeUI">
+                                        <div class="content-panel__body bg-white">
+                                            <div class="row">
+                                                <div class="col-xl-12">
+                                                    <div class="d-flex align-items-center justify-content-center h-100 z-index-1">
+                                                        <div class="d-flex justify-content-center bg-no-chart align-items-center flex-column">
+                                                            <p class="h4 font-weight-medium">Sorry</p>
+                                                            <p class="h4 font-weight-medium text-center">No Renewal Information Available</p>
+                                                            <p class="h4 font-weight-medium">Status: <span class="txt-phase-green" data-ng-bind="$ctrl.patent.renewalStatus"></span></p>
+                                                            <div class="m-b-sm"></div>
+                                                            <p class="font-body text-center">Renewal information will be displayed here when the renewal window for the patent opens again</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                              
+                                    <div data-ng-if="$ctrl.patent.form1200FeeUI">
+                                        <nvd3 options="$ctrl.lineOptions" data="$ctrl.lineData" class="with-transitions"></nvd3>
+                                    </div>
+                                </uib-tab>
+                            </uib-tabset>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 d-flex flex-column justify-content-around">
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-xl-6">
+                            <h4 class="font-weight-medium font-h4">Cost breakdown</h4>
+                        </div>
+                        <div class="col-xl-6">
+                            <p class="font-h4" data-ng-if="$ctrl.patent.form1200FeeUI">1 USD = {{$ctrl.patent.form1200FeeUI.fxRate}} EUR</p>
+                        </div>  
+                    </div>
+                    <div class="m-t-md">
+                        <table class="t-data t-data--no-border">
+                            <thead class="t-data_td--b-border">
+                                <tr class="t-data__row t-data__head">
+                                    <th class="t-data__th no-border-eb"></th>
+                                    <th class="t-data__th font-weight-medium">USD</th>
+                                    <th class="t-data__th font-weight-medium">EUR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="t-data__td font-weight-medium text-left">Official EPO fee</td>
+                                    <td class="t-data__td">$ {{($ctrl.patent.form1200FeeUI.officialFeeUSD | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td">€ {{($ctrl.patent.form1200FeeUI.officialFeeEUR | number:2) || '0.00'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="t-data__td font-weight-medium text-left">Processing fee</td>
+                                    <td class="t-data__td">$ {{($ctrl.patent.form1200FeeUI.processingFeeUSD | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td">€ {{($ctrl.patent.form1200FeeUI.processingFeeEUR | number:2) || '0.00'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="t-data__td font-weight-medium text-left">Extension Fee</td>
+                                    <td class="t-data__td">$ {{($ctrl.patent.form1200FeeUI.extensionFeeUSD | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td">€ {{($ctrl.patent.form1200FeeUI.extensionFeeEUR | number:2) || '0.00'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="t-data__td font-weight-medium text-left">Express Fee</td>
+                                    <td class="t-data__td">$ {{($ctrl.patent.form1200FeeUI.expressFeeUSD | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td">€ {{($ctrl.patent.form1200FeeUI.expressFeeEUR | number:2) || '0.00'}}</td>
+                                </tr>
+                                <tr class="t-data_td--b-borde">
+                                    <td class="t-data__td font-weight-medium text-left">Urgent Fee</td>
+                                    <td class="t-data__td">€ {{($ctrl.patent.form1200FeeUI.urgentFeeUSD | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td">$ {{($ctrl.patent.form1200FeeUI.urgentFeeEUR | number:2) || '0.00'}}</td>
+                                </tr>
+                                <tr class="t-data_td--b-border">
+                                    <td class="t-data__td font-weight-medium text-left">Total</td>
+                                    <td class="t-data__td font-weight-medium">$ {{($ctrl.patent.form1200FeeUI.subTotalUSD | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td font-weight-medium">€ {{($ctrl.patent.form1200FeeUI.subTotalEUR | number:2) || '0.00'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row m-t-md m-b-xs">
+                        <div class="col-xl-12 d-flex justify-content-between align-items-end">
+                            <div>
+                                <p class="font-h3 font-weight-bold m-b-xs">Save: <span class="txt-phase-green">$ {{$ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth - $ctrl.patent.form1200FeeUI.subTotalUSD}}</span></p>
+                                <p class="font-body">Renew before: <span class="font-weight-bold">{{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 d-flex justify-content-end align-items-end">              
+                            <button type="button" class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center"data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)"> Transaction</button>
+                            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" data-ng-if="$ctrl.actionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== 'Payment in progress'" name="service.form1200" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent"></ngcart-addtocart>
+                        </div>          
+                    </div> <!-- row end-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="d-xl-none">
+        <div class="content-panel m-b-md">
+            <div class="content-panel__body bg-white">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="view-tabs m-b-md">
+                                    <ul class="nav chart-pills">
+                                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ng-click="$ctrl.loadChart(); activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" data-ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
+                                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ng-click="$ctrl.loadChart(); activeChart = 1; $ctrl.chartActive = 'FX Chart'; $ctrl.loadLineChart" data-ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
+                                    </ul>
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 text-xs-left">
+                                <uib-tabset type="pills" active="activeChart">
+                                    <uib-tab heading="Stage Cost Chart" classes="btn btn-primary" index="0" data-ng-hide="true">
+                                        <div data-ng-if="$ctrl.patent.form1200FeeUI">
+                                            <nvd3 options="$ctrl.barOptions" data="$ctrl.barData" class="with-transitions"></nvd3>
+                                        </div>
+                                        <div data-ng-if="!$ctrl.patent.form1200FeeUI">
+                                            <div class="content-panel__body bg-white">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <div class="d-flex align-items-center justify-content-center h-100 z-index-1">
+                                                            <div class="d-flex justify-content-center bg-no-chart align-items-center flex-column">
+                                                                <p class="h4 font-weight-medium">Sorry</p>
+                                                                <p class="h4 font-weight-medium text-center">No Renewal Information Available</p>
+                                                                <p class="h4 font-weight-medium">Status: <span class="txt-phase-green" data-ng-bind="$ctrl.patent.renewalStatus"></span></p>            
+                                                                <div class="m-b-sm"></div>
+                                                                <p class="font-body text-center">Renewal information will be displayed here when the renewal window for the patent opens again</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                              
+                                    </uib-tab>
+                                    <uib-tab heading="FX Chart" classes="btn btn-primary" index="1" data-ng-hide="true">
+                                        <div data-ng-if="$ctrl.patent.form1200FeeUI">
+                                            <nvd3 options="$ctrl.lineOptions" data="$ctrl.lineData" class="with-transitions"></nvd3>
+                                        </div>
+                                        <div data-ng-if="!$ctrl.patent.form1200FeeUI">
+                                            <div class="content-panel__body bg-white">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <div class="d-flex align-items-center justify-content-center h-100 z-index-1">
+                                                            <div class="d-flex justify-content-center bg-no-chart align-items-center flex-column">
+                                                                <p class="h4 font-weight-medium">Sorry</p>
+                                                                <p class="h4 font-weight-medium text-center">No Renewal Information Available</p>
+                                                                <p class="h4 font-weight-medium">Status: <span class="txt-phase-green" data-ng-bind="$ctrl.patent.renewalStatus"></span></p>
+                                                                <div class="m-b-sm"></div>
+                                                                <p class="font-body text-center">Renewal information will be displayed here when the renewal window for the patent opens again</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                              
+                                    </uib-tab>
+                                </uib-tabset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-panel">
+            <div class="content-panel__body bg-white">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-md-6 col-lg-6">
+                                <h4 class="font-weight-medium font-h4">Cost breakdown</h4>
+                            </div>
+                            <div class="col-md-6 col-lg-6 text-right">
+                                <p class="font-h4" data-ng-if="$ctrl.patent.form1200FeeUI">1 USD = {{$ctrl.patent.form1200FeeUI.fxRate}} EUR</p>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-lg-8">
+                        <table class="t-data t-data--no-border">
+                            <thead class="t-data_td--no-border">
+                                <tr class="t-data__th t-data_td--b-border">
+                                    <td class="t-data_td--b-border"></td>
+                                    <td class="font-h4 font-weight-medium">EUR</td>
+                                    <td class="font-h4 font-weight-medium">USD</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="t-data__td font-weight-medium text-left">Official fee</td>
+                                    <td class="t-data__td">€ {{($ctrl.patent.form1200FeeUI.renewalFeeEUR | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td">$ {{($ctrl.patent.form1200FeeUI.renewalFeeUSD | number:2) || '0.00'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="t-data__td font-weight-medium text-left">Processing fee</td>
+                                    <td class="t-data__td no-border">€ {{($ctrl.patent.form1200FeeUI.processingFeeEUR | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td no-border">$ {{($ctrl.patent.form1200FeeUI.processingFeeUSD | number:2) || '0.00'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="t-data__td font-weight-medium text-left">Extension Fee</td>
+                                    <td class="t-data__td no-border">€ {{($ctrl.patent.form1200FeeUI.extensionFeeEUR | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td no-border">$ {{($ctrl.patent.form1200FeeUI.extensionFeeUSD | number:2) || '0.00'}}</td>
+                                </tr>       
+                                <tr class="t-data_td--b-border">
+                                    <td class="t-data__td font-weight-medium text-left">Urgent Fee</td>
+                                    <td class="t-data__td no-border">€ {{($ctrl.patent.form1200FeeUI.urgentFeeUSD | number:2) || '0.00'}}</td>
+                                    <td class="t-data__td no-border">$ {{($ctrl.patent.form1200FeeUI.urgentFeeEUR | number:2) || '0.00'}}</td>
+                                </tr>                                                       
+                                <tr class="p-b-none t-data_td--b-border">
+                                    <td class="t-data__td font-weight-medium text-left">Total</td>
+                                    <td class="t-data__td font-weight-medium">€ {{($ctrl.patent.form1200FeeUI.subTotalEUR  | number:2)  || '0.00'}}</td>
+                                    <td class="t-data__td font-weight-medium">$ {{($ctrl.patent.form1200FeeUI.subTotalUSD | number:2)  || '0.00'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>                                
+                    </div>
+                    <div class="col-md-4 col-lg-4 d-flex flex-column justify-content-end">
+                        <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="m-b-xs">
+                            <p class="font-h3 font-weight-bold m-b-xs">Save: </p>
+                            <p class="font-h3 txt-phase-green m-b-xs font-weight-medium">$ {{$ctrl.patent.form1200FeeUI.bandSaving().savings}}</p>
+                            <p class="font-body">Renew before: {{$ctrl.patent.form1200FeeUI.bandSaving().renewBefore | date: dd-mm-yy}}</p>
+                        </div>
+                        <div class="w-100">
+                            <div data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn-default">
+                                <button type="button" class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+                                    <a class="btn__link btn__link--white btn--lg" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction <img src="assets/imgs/icons/view_transaction_icon.png" alt="transaction icon" class="m-l-xs"></a>
+                                </button>
+                            </div>
+                            <div data-ng-if="$ctrl.patent.renewalStatus == 'Renewal in place'" class="btn-default">
+                                <div class="btn btn-block btn--white btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
+                                    <a class="btn__link btn__link--white btn--lg" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()">View Renewal <img src="assets/imgs/icons/view_renewal_icon.png" alt="patent renewal icon" class="m-l-xs"></a>
+                                </div>
+                            </div>                                                                      
+                            <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="btn-default">
+                                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.currentRenewalCost}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+                                </ngcart-addtocart>
+                            </div>
+                        </div>
+                    </div>      
+                </div> <!-- row end-->
+            </div>
+        </div>
+    </div>
+</div>
