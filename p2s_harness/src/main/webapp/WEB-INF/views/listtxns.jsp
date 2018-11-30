@@ -94,9 +94,9 @@ Server time: ${timeStr}
 <p/>
 &nbsp;
 <p/>
-<a href="/harness/listtxns">Refresh</a>
+<a href="/p3sharness/listtxns">Refresh</a>
 <p/>
-<a href="/harness/logout">logout</a>
+<a href="/p3sharness/logout">logout</a>
 <p/>
 &nbsp;
 <p/>

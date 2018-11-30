@@ -122,7 +122,7 @@ app.component('currentTransactions', {
       		if(!$(event.target).hasClass('cartbtn')) {
 	      		var id = ($($(event.currentTarget).find('a')));
 	      		var patentId = id[0].hash;
-	      		window.location = 'http://localhost:8080/harness/index.htm'+patentId;
+	      		window.location = 'http://localhost:8080/p3sharness/index.htm'+patentId;
       		}
       	};
 	}

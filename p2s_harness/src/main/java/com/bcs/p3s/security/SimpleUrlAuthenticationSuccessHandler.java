@@ -92,7 +92,7 @@ public class SimpleUrlAuthenticationSuccessHandler extends Universal implements 
  
         
         if (isUser) {
-            // return "/harness.html";
+            // return "/p3sharness.html";
             return "/listtxns";
         } 
         /*else if (isAdmin) {

@@ -6,7 +6,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       
-      <base href="/harness/">
+      <base href="/p3sharness/">
 	  
       <link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700" rel="stylesheet">
 
@@ -64,7 +64,7 @@
                         </form>
                         <div class="row m-b-sm">
                            <div class="col-md-12 text-center">
-<!--                               <a href="/harness/forgot-password" class="font-body text-center txt-black inline-link">Forgot Password?</a>  -->
+<!--                               <a href="/p3sharness/forgot-password" class="font-body text-center txt-black inline-link">Forgot Password?</a>  -->
                            </div>
                         </div>
 <!--  
@@ -72,7 +72,7 @@
                            <div class="col-md-12 d-flex justify-content-between align-items-center">
                               <p class="font-body">Don't have an account?</p>
                               <div class="btn-no-bg">
-                                 <a class="btn btn--lg btn-no-bg--green green-notification pill-radius txt-phase-green font-weight-medium font-body" href="/harness/register">Register</a>
+                                 <a class="btn btn--lg btn-no-bg--green green-notification pill-radius txt-phase-green font-weight-medium font-body" href="/p3sharness/register">Register</a>
                               </div>
                            </div>
                         </div>

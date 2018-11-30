@@ -40,9 +40,9 @@
 		<p/>
 		&nbsp;
 		<p/>
-		To view Transactions - click <a href="/harness/listtxns">here</a>
+		To view Transactions - click <a href="/p3sharness/listtxns">here</a>
 		<p/>
-		<a href="http://localhost:8080/harness/logout">logout</a>
+		<a href="http://localhost:8080/p3sharness/logout">logout</a>
 
 	</body>
 	

@@ -104,7 +104,7 @@
 
       	<script>
 
-      		var domain = 'http://localhost:8080/harness/';
+      		var domain = 'http://localhost:8080/p3sharness/';
 
 			$(document).ready(function() {
 				$(document).on('submit', '#resetPassForm', function(e){

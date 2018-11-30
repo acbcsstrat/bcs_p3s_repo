@@ -295,7 +295,7 @@
 
       	<script>
 
-			var domain = 'http://localhost:8080/harness/';
+			var domain = 'http://localhost:8080/p3sharness/';
 
 			$(function () {
 			  	var $sections = $('.form-section');
@@ -619,7 +619,7 @@
 				var dataString = $('#companyCodeForm').serializeArray();
 				$.ajax({
 					type: 'POST',
-					//url: 'http://localhost:8080/harness/register/rest-subsequent-user-step1/'+dataString,
+					//url: 'http://localhost:8080/p3sharness/register/rest-subsequent-user-step1/'+dataString,
 					url: domain + 'register/rest-subsequent-user-step1/',
 					data: dataString,
 				    dataType: 'json',
