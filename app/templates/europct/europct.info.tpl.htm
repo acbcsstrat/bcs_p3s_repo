@@ -255,12 +255,14 @@
                     </div> <!-- row end -->
                     <div class="row">
                         <div class="col-xl-12 d-flex justify-content-end">
-                            <div data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)" class="d-flex">
-                                <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-r-sm">View Fee Breakdown</a>         
+                            <div data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== 'Epct available'" class="d-flex">       
                                 <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
                                 </ngcart-addtocart>
                                 <button type="button" class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
-                            </div>                                      
+                            </div>
+                            <div data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)">
+                                <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-r-sm">View Fee Breakdown</a>
+                            </div>                               
                         </div>
                     </div>
                 </div> <!-- col-xl-6 END -->                
@@ -527,13 +529,15 @@
                         </div>
                     </div> <!-- row end -->
                     <div class="row">
-                        <div class="col-xl-12 d-flex justify-content-end">
-                            <div data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)" class="d-flex">
-                                <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-r-sm">View Fee Breakdown</a>         
+                        <div class="col-md-12 d-flex justify-content-end">
+                            <div data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== 'Epct available'" class="d-flex">
                                 <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
                                 </ngcart-addtocart>
                                 <button type="button" class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
-                            </div>                                      
+                            </div>
+                            <div data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)">
+                                <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-r-sm">View Fee Breakdown</a>
+                            </div>                                                             
                         </div>
                     </div>
                 </div>
