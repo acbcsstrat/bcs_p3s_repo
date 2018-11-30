@@ -29,6 +29,7 @@ public class ProformaInvoice extends AbstractInvoice {
 			Patent4htmlDoc patent4hd = new Patent4htmlDoc(renewal);
 			patent4hd.setNumberInList(Integer.valueOf(++productCounter).toString());
 			patent4hd.setListSize(Integer.valueOf(numProducts).toString());
+			patent4hd.setServiceType("Renewal");
 			patents.add(patent4hd);
 		}
 
@@ -36,6 +37,7 @@ public class ProformaInvoice extends AbstractInvoice {
 			Patent4htmlDoc patent4hd = new Patent4htmlDoc(epct);
 			patent4hd.setNumberInList(Integer.valueOf(++productCounter).toString());
 			patent4hd.setListSize(Integer.valueOf(numProducts).toString());
+			patent4hd.setServiceType("Euro-PCT");
 			patents.add(patent4hd);
 		}
 	}

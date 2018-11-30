@@ -228,6 +228,10 @@ public class GenerateForm1200Extractor extends Universal {
 									}
 										
 
+						case "form1200PdfUrl":	// No reason why form1200PdfUrl should be sent, but has been seen. IGNORE
+											log().debug("Been sent unwanted form1200PdfUrl field. Ignoring. Value is : "+thisElement+" .. "+(thisElement instanceof String));
+											break;
+
 						default: 	log().warn(CLASSNAME+".extractGenerateForm1200DataIn()  Switch statement hit default !!!   Not recognised param '"+thisElement+"'");
 						            break;
 					}  // end of : switch

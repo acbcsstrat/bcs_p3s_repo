@@ -133,6 +133,7 @@ public class EpctEngine extends Universal {
 		if (isNotAvailable) return null; 
 		if (optionalUnpersistedEpct!=null && epct!=null) 
 			fail(CLASSNAME+".calcEpctPersistPricingOnly : Epct param mismatch. Both unpersisted("+optionalUnpersistedEpct.getId()+" and persisted("+epct.getId()+") exist.");
+		// Above error occured 181130 when FE allowed start create new EPCT when an active one already exists. FE 'saw' erroneous cached? epctstatus of epct-available
 		
 		calcDatesAndColour(); // will have calc currentColour & nextColour
 		Form1200Fee newFee = calcEpctEntityOnlyPricing(optionalUnpersistedEpct);

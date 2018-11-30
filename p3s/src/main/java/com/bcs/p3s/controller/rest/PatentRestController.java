@@ -31,12 +31,15 @@ import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
+import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
+import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Renewal;
+import com.bcs.p3s.service.Form1200Service;
 import com.bcs.p3s.service.Form1200ServiceImpl;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
@@ -394,6 +397,14 @@ public class PatentRestController extends Universal {
 	
 	//------------------- Delete a Patent --------------------------------------------------------
 
+	// tmp for testing
+	@RequestMapping(value = "/rest-patents-deltest/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Patent> deletePatentDeltest(@PathVariable("id") long id) {
+		log().debug("PatentRestController : /rest-patents-deltest/ deletePatentDeltest() invoked ");
+		log().debug(" with patent id = "+id);
+		return deletePatent(id);
+	}
+	
     // Implements API section 2.5
     // User has confirmed this is the correct patent. So persist it
 	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.DELETE)
@@ -414,17 +425,36 @@ public class PatentRestController extends Universal {
 			
 			
 			if (RenewalStatusEnum.isInProgress(deletePatent.getRenewalStatus())) {
-				log().debug("User tries to delete a patent with an ongoing payment. Aborted it");
-				 return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
+				log().debug("User tries to delete a patent with an ongoing payment. Abort");
+				return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
 			}
 			
 			TypedQuery<Renewal> q = Renewal.findRenewalsByPatent(deletePatent);
 	    	List<Renewal> renewals = q.getResultList();
 	    	if(!(renewals.isEmpty())){
-	    		log().debug("User tries to delete a patent with a past Renewal being made via P3S. Aborted it");
-				 return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
+	    		log().debug("User tries to delete a patent with a past Renewal being made via P3S. Abort");
+				return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
 	    	}
 			
+			TypedQuery<Epct> q1200 = Epct.findEpctsByPatent(deletePatent);
+	    	List<Epct> epcts = q1200.getResultList(); // Any Epct - whether 'active' or not. (Cos non-active are Penalty, so cannot be deleted)
+
+	    	// An existing Epct MAY be deleteable. Check & abort if not
+	    	if (epcts.size() > 0) {
+		    	for (Epct epct : epcts) {
+					String epctStatus = epct.getEpctStatus();
+					boolean isDeletable = Form1200StatusEnum.isDeletable(epctStatus);
+		    		if (isDeletable==false) {
+			    		log().debug("User tries to delete a patent with an Undeletable Epct. Abort");
+						return new ResponseEntity<Patent>(HttpStatus.NOT_MODIFIED);  //Pat to display error message on the page based on this value
+		    		}
+		    	}
+		    	// so Can, and should, delete
+		    	Form1200Service form1200Service = new Form1200ServiceImpl(session);
+		    	form1200Service.deleteCurrentForm1200Data(id);
+	    	}
+
+	    	// Now delete the patent
 		    patentService.deletePatentById(id);
 		}
 		catch(Exception e){

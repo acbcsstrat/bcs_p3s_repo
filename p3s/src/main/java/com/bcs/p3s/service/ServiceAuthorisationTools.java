@@ -276,7 +276,7 @@ public class ServiceAuthorisationTools extends Universal {
 		else {
 			String epctStatus = epct.getEpctStatus();
 			boolean isDeletable = Form1200StatusEnum.isDeletable(epctStatus);
-			if ( ! isDeletable) failMalicious(err+"Epct("+epct.getId()+" is NOT deletable.");
+			if ( ! isDeletable) failMalicious(err+"Epct("+epct.getId()+") is NOT deleteable. eSts="+epctStatus);
 		}
 	}	
 

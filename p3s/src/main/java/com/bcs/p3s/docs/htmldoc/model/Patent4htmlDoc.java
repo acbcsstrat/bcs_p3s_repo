@@ -22,6 +22,7 @@ public class Patent4htmlDoc extends Universal {
 	protected String shortName;
 	protected String title;
 	protected String filingDate;
+	protected String serviceType;
 	protected String officialFeeUsd;  // Formerly officialRenewalFeeUsd.   v2.1 No longer just Renewals
 	//protected String officialExtensionFeeUsd; // (Briefly?) Redundant from v2.1 ALL EPO fees are 'Official' fees
 	protected String processingFeeUsd;
@@ -166,6 +167,12 @@ public class Patent4htmlDoc extends Universal {
 	}
 	public String getTotalFeeForPatentUsd() {
 		return totalFeeForPatentUsd;
+	}
+	public String getServiceType() {
+		return serviceType;
+	}
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
 	}
 	
 }
