@@ -4,11 +4,9 @@
 		<img src="assets/imgs/icons/modal/alert_icon.png" alt="success icon">	
 	</div>
 	<p class="font-h3 font-weight-medium">Cancel Transaction</p>
-</div>
-<div class="modal-body d-flex flex-column align-items-center justify-content-center">
 	<p class="font-body w-100 text-center">It looks like you're trying to cancel this transaction.  If you meant to do this select 'Yes', otherwise select 'No', and then 'Place this order' to confirm this order.</p>
-</div>
-<div class="modal-footer d-flex align-items-center justify-content-center">
-	<button class="btn btn--lg btn-portal pill-radius bg-phase-red font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center m-r-md" data-ng-click="cancel()">No</button>
-	<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center" data-ng-click="cancelTrans()">Yes</button>
+    <div class="d-flex">
+        <button class="btn btn--lg btn--red pill-radius m-r-md"  data-ng-click="cancel()">No</button>
+    	<button class="btn btn--lg btn--green pill-radius " data-ng-click="cancelTrans()">Yes</button>
+    </div>
 </div>
