@@ -441,6 +441,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			List<NotificationUI> newNotificationUIs = new ArrayList<NotificationUI>();
 			for (Object ooo : arrObj) {
 				if (ooo instanceof NotificationUI) newNotificationUIs.add( (NotificationUI) ooo );
+				else if (ooo instanceof LinkedHashMap) { tryExtractNotificationUI(ooo, newNotificationUIs); }
 				else fail("Given a List, but not List<NotificationUI>. 1st item is "+ooo.getClass().getName()+"    : from "+err);
 			}
 			
@@ -482,6 +483,75 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			NotificationMapping.addMappings(notificationMappingsToCreate);
 		}
 	}
+	protected void tryExtractNotificationUI(Object ooo, List<NotificationUI> newNotificationUIs) {
+		String err = CLASSNAME+" :tryExtractNotificationUI()  : ";
+		// This is development - being 'flexible' - acTidy once we know what to expect
+		// Firstly - list whatever content ooo has
+		log().debug("  The elements within the LinkedHashfollow: ");
+		LinkedHashMap<?, ?> data = (LinkedHashMap<?, ?>) ooo;
+		Set<Object> obKeys = (Set<Object>) data.keySet();
+		for (Object obKey : obKeys) { 
+			if (obKey instanceof String) { 
+				String str = (String) obKey;
+				log().debug("    The TITLE of this key is "+str);
+				Object val = data.get(str);
+				log().debug("    key("+str+") has value of type "+val.getClass().getName());
+				if (val instanceof String) log().debug("    key("+str+") has Str value of "+ (String) val);
+				if (val instanceof Integer) log().debug("    key("+str+") has Int value of "+ (Integer) val);
+				if (val instanceof Long) log().debug("    key("+str+") has Lng value of "+ (Long) val);
+				if (val instanceof Double) log().debug("    key("+str+") has Dbl value of "+ (Double) val);
+				if (val instanceof Boolean) log().debug("    key("+str+") has Bln value of "+ (Boolean) val);
+				if (val instanceof Number) log().debug("    key("+str+") has Num value of "+ (Number) val);
+			} else log().error("      Even the TITLE of this key isnt a string. Its a "+obKey.getClass().getName());
+		}
+
+		// Now attempt extract the data. Avoid Crash if fails - zaph
+		try {
+			NotificationUI notificationUI = new NotificationUI(new Notification());
+			Set<String> strKeys = (Set<String>) data.keySet(); 
+			Object ob = null;
+			for (String thisElement : strKeys) {
+				log().debug("   ... processing item ... = "+thisElement);
+				ob = data.get(thisElement);
+				
+				try {
+				switch (thisElement) {
+					case "title":	String strTitle = (String) ob;
+									log().debug("             setting title to "+strTitle);
+									notificationUI.setTitle(strTitle);
+									break;
+	
+					case "isOn":	Boolean blIsOn = (Boolean) ob;
+									log().debug("             setting isOn to "+blIsOn);
+									notificationUI.setIsOn(blIsOn);
+									break;	
+
+					case "id":		Long lngId = (Long) ob;
+									log().debug("             setting id to "+lngId);
+									notificationUI.setId(lngId);
+									break;
+
+					case "notificationName":	String strNotificationName = (String) ob;
+									log().debug("             setting notificationName to "+strNotificationName);
+									notificationUI.setNotificationName(strNotificationName);
+									break;
+
+					case "productType":	String strProductType = (String) ob;
+									log().debug("             setting productType to "+strProductType);
+									notificationUI.setProductType(strProductType);
+									break;
+					
+					default:		log().warn("Hit Default with key="+thisElement+"     from "+err);
+
+				}
+				} catch (Exception e) { logErrorAndContinue("Crash whilst casting/extracting notification data : from "+err, e); }
+			}
+			newNotificationUIs.add( notificationUI );
+		} catch (Exception e) { logErrorAndContinue("Crash whilst casting/extracting notification data (Compiler says unreachable): from "+err, e); }
+	}
+	
+	
+	
 
 	public FxRateCurrentUI getCurrentFxRate() {
 
