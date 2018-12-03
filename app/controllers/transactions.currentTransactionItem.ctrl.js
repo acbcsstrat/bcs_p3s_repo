@@ -1,9 +1,9 @@
 angular.module('ppApp').controller('currentTransactionItemCtrl', currentTransactionItemCtrl);
 
-currentTransactionItemCtrl.$inject = ['currentTransactionItem', 'currentTransactionsService', '$scope']
+currentTransactionItemCtrl.$inject = ['currentTransactionItem', 'currentTransactionsService', '$scope'];
 
 function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsService, $scope) {
-	
+
 	var vm = this;
 
 	$scope.$watch('$parent.filter', function(n, o){ //watch filter in parent state to display selected patent
@@ -17,9 +17,16 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 	});
 
 	var currTransStatus = currentTransactionItem.latestTransStatus;
-	vm.currentTransactionItem = currentTransactionItem;
+	vm.currentTransactionItem = currentTransactionItem;	
+	vm.currentTransactionItem.service = currentTransactionItem.epctUIs.concat(currentTransactionItem.renewalUIs)
+	
+	for(var i = 0; i < vm.currentTransactionItem.service.length; i++) {
+		var item = vm.currentTransactionItem.service[i];
+		item.serviceType = item.renewalFeeUI.length !== 0 ? 'Regional Renewal' : 'Form 1200';
+		item.serviceFeeUI = item.renewalFeeUI.length !== 0 ? item.renewalFeeUI : item.form1200FeeUI;
+	}
+
 	vm.checkProgress = checkProgress;
-	vm.renewalProgress = currentTransactionsService.renewalProgress(currTransStatus);
 	vm.patents = [];	
 	vm.transStatus = [
 		{
@@ -73,13 +80,11 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 		}
 	];
 
+	// console.log(vm.currentTransactionItem)
+
 	vm.$onInit = function() {
 
-		currentTransactionItem.renewalUIs.forEach(function(value, index, array){
-			vm.patents.push(value);
-	 	});
-
-		switch(currTransStatus) { //add current transaction progress value to scope
+		switch(currentTransactionItem.latestTransStatus) { //add current transaction progress value to scope
 			case 'Initiated':
 				vm.transactionProgress = 0;
 			break;
