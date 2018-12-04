@@ -6,26 +6,8 @@ function mainNavService(){
   		name: 'Dashboard',
   		type: 'link',
   		state: 'dashboard',
-  		icon: 'assets/imgs/icons/menu/menu_dashboard_icon_sm.png'
-		}];
-    // sections.push({
-    //   name: 'Portfolio',
-    //   type: 'link',
-    //   state: 'portfolio',
-    //   icon: 'assets/imgs/icons/menu/menu_portfolio_icon_sm.png'
-    // })    
-    // sections.push({
-    //   name: 'EPE',
-    //   type: 'toggle',
-    //   pages: [
-    //     {
-    //       name: 'Form 1200 Generator',
-    //       type: 'link',
-    //       state: 'epeForm'
-    //     }
-    //   ],
-    //   icon: 'assets/imgs/icons/menu/menu_erp_icon_sm.png'
-    // })        
+  		icon: 'fas fa-tachometer-alt font-h1'
+		}];    
   	sections.push({
   		name: 'Portfolio',
   		type: 'toggle',
@@ -41,7 +23,7 @@ function mainNavService(){
 				  state: 'search-patent'
 		    }
 		  ],
-		  icon: 'assets/imgs/icons/menu/menu_patent_icon_sm.png'
+		  icon: 'fas fa-folder-open font-h1'
     })
 
   	sections.push({
@@ -60,7 +42,7 @@ function mainNavService(){
             type: 'link',
         }
       ],
-      icon: 'assets/imgs/icons/menu/menu_transaction_icon_sm.png'
+      icon: 'far fa-credit-card font-h1'
 	})
      
      	// console.log(sections)
