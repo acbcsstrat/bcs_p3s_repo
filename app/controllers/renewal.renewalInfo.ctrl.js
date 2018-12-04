@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalInfoCtrl', renewalInfoCtrl);
 
-renewalInfoCtrl.$inject = ['$scope', 'patent', '$state', '$timeout', 'chunkDataService', 'renewalRestService', '$uibModal', 'organiseColourService', 'organiseTextService'];
+renewalInfoCtrl.$inject = ['$scope', 'patent', '$state', '$timeout', '$location', '$anchorScroll', 'chunkDataService', 'renewalRestService', '$uibModal', 'organiseColourService', 'organiseTextService', 'currentTransactionsService'];
 
-function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, renewalRestService, $uibModal, organiseColourService, organiseTextService) {
+function renewalInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScroll, chunkDataService, renewalRestService, $uibModal, organiseColourService, organiseTextService, currentTransactionsService) {
 
     var vm = this;
 
@@ -12,13 +12,14 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
     vm.fetchRenewal = patent.renewalFeeUI;
     vm.getCurrColour = getCurrColour;
     vm.getNextColour = getNextColour;
-    // vm.nextStageColour = nextStageColour;
     vm.getStatus = getStatus;
     vm.actionStatus = actionStatus;
+    vm.fetchItemTransaction = fetchItemTransaction;
 
     console.log(patent)
 
     function updateRenewalNotifications(patent, id) {
+        console.log(patent, id)
         renewalRestService.updateNotifications(patent.renewalNotificationUIs, id)
         .then(
             function(response){
@@ -29,12 +30,6 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
             }
         )
     }
-
-    // function nextStageColour() {
-    //     return patent.portfolioUI.serviceList.map(function(el){
-    //         return el.nextStageColour;
-    //     })
-    // }
 
     function getCurrColour(colour, item){
         return organiseColourService.getCurrColour(colour, item);
@@ -70,6 +65,39 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, chunkDataService, ren
         });
 
     }
+
+    function fetchItemTransaction(id) {
+        currentTransactionsService.fetchCurrentTransactions()
+        .then(
+            function(response) {
+
+                    var transaction = response.filter(function(el){
+                        return el.renewalUIs.find(function(item) {
+                            return item.patentUI.id === id;
+                        })
+                    })
+
+                    if(transaction !== undefined || typeof transaction !== 'undefined') {
+                        $state.go('current-transactions.current-transaction-item',{transId: transaction[0].id}) //if match, go current-transaction-item
+                        .then(
+                            function(response){
+                                $timeout(function() {
+                                    $location.hash('currTransAnchor'); 
+                                    $anchorScroll();  //scroll to anchor href
+                                }, 300);
+                            },
+                            function(errResponse){
+                                console.log(errResponse);
+                            }
+                        );
+                    }
+          
+            },
+            function(errResponse) {
+                console.log(errResponse);
+            }
+        );
+    };        
 
     function updateNotificationsError() {
 
