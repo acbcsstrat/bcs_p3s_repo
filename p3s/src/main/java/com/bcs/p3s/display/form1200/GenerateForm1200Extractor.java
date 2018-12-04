@@ -64,6 +64,7 @@ public class GenerateForm1200Extractor extends Universal {
 				verbose("  ...  \n\n\n\n ...");
 				verbose("Start of : Now attempt extract EACH in turn");
 				Object ob;
+				Integer backstopPatentId = -1;
 				for (String thisElement : obHashMap.keySet()) {
 					verbose("   ... item ... = "+thisElement);
 				
@@ -73,7 +74,9 @@ public class GenerateForm1200Extractor extends Universal {
 						//case "Patent_ID":	generateForm1200DataIn.patentId = castInteger(ob, thisElement);
 						case "id":			generateForm1200DataIn.patentId = castInteger(ob, thisElement);
 											break;
-
+						case "Patent_ID":	backstopPatentId = castInteger(ob, thisElement); // Shouldn't be needed, but is
+											break;
+											
 						case "EP_ApplicationNumber":	
 											// IGNORE. use 'id' (=patentId)
 											break;
@@ -238,6 +241,9 @@ public class GenerateForm1200Extractor extends Universal {
 				}  // end of for loop
 				verbose("End of : Now attempt extract EACH in turn");
 
+				if (generateForm1200DataIn.getPatentId()==0) generateForm1200DataIn.setPatentId(backstopPatentId);  // Safety check
+				if (generateForm1200DataIn.getPatentId()<1) log().error("Gonna fail : PatentId = "+generateForm1200DataIn.getPatentId()+"  from extractGenerateForm1200DataIn()");
+				
 			} // end of : IS a LinkedHashMap
 		} // end of: Object not null			
 		

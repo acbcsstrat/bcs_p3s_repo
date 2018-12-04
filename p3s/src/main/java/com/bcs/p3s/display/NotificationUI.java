@@ -85,4 +85,9 @@ public class NotificationUI extends Notification  implements Comparable<Notifica
         NotificationUI offeredNotificationUI = (NotificationUI) o;
         return this.getId() == offeredNotificationUI.getId();
     }
+
+	public String toString() {
+		String str = "["+getId()+"] isOn="+isOn+"  typ="+getProductType()+"   '"+getTitle()+"' cbc="+getCostbandcolor();
+		return str;
+	}
 }

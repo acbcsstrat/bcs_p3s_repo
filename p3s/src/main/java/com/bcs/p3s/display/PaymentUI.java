@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.bcs.p3s.enump3s.McFailCodeEnum;
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
+import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Invoice;
+import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
-import com.bcs.p3s.service.TransactionService;
-import com.bcs.p3s.service.TransactionServiceImpl;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
@@ -41,7 +41,8 @@ public class PaymentUI extends Payment {
 
 //    @Autowired
 //    PatentService patentService;  //Service which will do all data retrieval/manipulation work
-	TransactionService transactionService = new TransactionServiceImpl();
+//	TransactionService transactionService = new TransactionServiceImpl();
+// 181204 tmp disable above - suspect cause of horror bug. Wasn't - but seems redundant. acTidy
 	
 	// Additional UI members go here
 
@@ -63,9 +64,13 @@ public class PaymentUI extends Payment {
 		this.setP3S_TransRef(payment.getP3S_TransRef());  // (payment
 		this.setMC_TransRef(null); // See JavaDoc for Payment:MC_TransRef
 		this.setTransType(payment.getTransType());
-		//set password of initiatedByUserId as null
-		payment.getInitiatedByUserId().setPassword(null);
-		this.setInitiatedByUserId(payment.getInitiatedByUserId());
+
+		//this.setInitiatedByUserId(payment.getInitiatedByUserId());  // this ONE line causes the horror bug - Because of BLOB
+		// So
+		P3SUser user = payment.getInitiatedByUserId();
+		makeUserDataSafeForFE(user);		
+		this.setInitiatedByUserId(user);
+		
 		this.setTransStartDate(payment.getTransStartDate());
 		this.setTransTargetEndDate(payment.getTransTargetEndDate());
 		this.setLastUpdatedDate(payment.getLastUpdatedDate());
@@ -187,7 +192,27 @@ public class PaymentUI extends Payment {
 	
 	
 
-	
+	/**
+	 * About to serialise the P3SUser for [JSON] sending to FE. 
+	 * But P3SUser contains secure data (& the mugshot Blob (which breaks the JSON!))
+	 * Hence, make that data safe for release to the FE
+	 */
+	protected void makeUserDataSafeForFE(P3SUser user) {
+		String empty = "";
+		user.setPassword(empty);
+		user.setAvatar_blob(null);
+		user.setEmailAddress(empty);
+		user.setStatus(empty);
+		user.setBusiness(new Business());
+		user.setUserrole(empty);
+		user.setLoginMessagesToInhibit(null);
+		Business business = user.getBusiness();
+		if (business != null) {
+			business.setBusinessNumber(empty);
+			business.setBusinessPin(0);
+		}
+	}
+
 	
 	// Getter/setters requiring special processing
 
@@ -308,3 +333,4 @@ public class PaymentUI extends Payment {
 	}
 
 }
+

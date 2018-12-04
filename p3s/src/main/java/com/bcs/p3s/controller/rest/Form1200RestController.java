@@ -4,6 +4,7 @@ package com.bcs.p3s.controller.rest;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -68,6 +69,8 @@ public class Form1200RestController extends Universal {
     	
 		log().debug(PREFIX+"/rest-start-form1200/"+id+" startForm1200()");
 
+		detectAnyRogueDoubleSubmit(id);
+		
 		StartForm1200Api21UI startForm1200Api21UI = null;
 		try {
 			startForm1200Api21UI = form1200Service.getForm1200QuestionData(id);
@@ -530,4 +533,19 @@ public class Form1200RestController extends Universal {
     	}
     	return ret;
     }
+
+    // Start of detectAnyRogueDoubleSubmit
+    // Dec2018 - seems FE submits valid request on /rest-start-form1200/{id} - then almost immediatly sunmits an invalid
+    // DETECT if happens, * log
+    protected void detectAnyRogueDoubleSubmit(long id) {
+    	long timelast = laststart;
+    	long timenow = (new Date()).getTime();
+    	laststart = timenow; 
+    	long diff = timenow-timelast;
+    	String msg = "detectAnyRogueDoubleSubmit requests "+(diff/1000)+" seconds apart for /rest-start-form1200/";
+    	if (diff<30000) log().warn(msg);
+    	else log().debug(msg);
+    }
+    protected static long laststart = 0;
+    // End of detectAnyRogueDoubleSubmit
 }

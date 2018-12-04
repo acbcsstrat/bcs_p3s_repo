@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bcs.p3s.display.PaymentUI;
 import com.bcs.p3s.service.TransactionService;
 import com.bcs.p3s.util.lang.Universal;
-import com.bcs.p3s.wrap.BankTransferPostCommitDetails;
  
 @RestController
 public class TransactionRestController extends Universal {

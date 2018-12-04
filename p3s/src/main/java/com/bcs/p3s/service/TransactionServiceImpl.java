@@ -90,6 +90,14 @@ public class TransactionServiceImpl extends ServiceAuthorisationTools implements
 		List<PaymentUI> paymentUIs = new ArrayList<PaymentUI>();
 		for (Payment transaction : payments) {
 			PaymentUI payui = new PaymentUI(transaction,sessionData); 
+	    	//start of gash
+			payui.setRenewalUIs(null);
+			payui.setEpctUIs(null);
+			
+			payui.setRenewals(null);
+			payui.setEpcts(null);
+	    	
+	    	// end of gash
 			paymentUIs.add(payui);
 		}
 		// AC 170726 - right now, unable to fully populate PatentUI - needs thos extra 4 fields - acToDo

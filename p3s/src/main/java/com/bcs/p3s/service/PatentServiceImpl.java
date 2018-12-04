@@ -494,18 +494,22 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			if (obKey instanceof String) { 
 				String str = (String) obKey;
 				log().debug("    The TITLE of this key is "+str);
-				Object val = data.get(str);
-				log().debug("    key("+str+") has value of type "+val.getClass().getName());
-				if (val instanceof String) log().debug("    key("+str+") has Str value of "+ (String) val);
-				if (val instanceof Integer) log().debug("    key("+str+") has Int value of "+ (Integer) val);
-				if (val instanceof Long) log().debug("    key("+str+") has Lng value of "+ (Long) val);
-				if (val instanceof Double) log().debug("    key("+str+") has Dbl value of "+ (Double) val);
-				if (val instanceof Boolean) log().debug("    key("+str+") has Bln value of "+ (Boolean) val);
-				if (val instanceof Number) log().debug("    key("+str+") has Num value of "+ (Number) val);
+				Object val = data.get(str);  // for notificationName, val is null, causing NPE
+				if (val==null) log().warn("val (for key "+str+"); is NULL !!");
+				else {
+					log().debug("    key("+str+") has value of type "+val.getClass().getName());
+					if (val instanceof String) log().debug("    key("+str+") has Str value of "+ (String) val);
+					if (val instanceof Integer) log().debug("    key("+str+") has Int value of "+ (Integer) val);
+					if (val instanceof Long) log().debug("    key("+str+") has Lng value of "+ (Long) val);
+					if (val instanceof Double) log().debug("    key("+str+") has Dbl value of "+ (Double) val);
+					if (val instanceof Boolean) log().debug("    key("+str+") has Bln value of "+ (Boolean) val);
+					if (val instanceof Number) log().debug("    key("+str+") has Num value of "+ (Number) val);
+				}
 			} else log().error("      Even the TITLE of this key isnt a string. Its a "+obKey.getClass().getName());
 		}
 
 		// Now attempt extract the data. Avoid Crash if fails - zaph
+		boolean backstopIsOnReceived = false;
 		try {
 			NotificationUI notificationUI = new NotificationUI(new Notification());
 			Set<String> strKeys = (Set<String>) data.keySet(); 
@@ -524,6 +528,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 					case "isOn":	Boolean blIsOn = (Boolean) ob;
 									log().debug("             setting isOn to "+blIsOn);
 									notificationUI.setIsOn(blIsOn);
+									backstopIsOnReceived = true;
 									break;	
 
 					case "id":		Long lngId = (Long) ob;
@@ -546,6 +551,11 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				}
 				} catch (Exception e) { logErrorAndContinue("Crash whilst casting/extracting notification data : from "+err, e); }
 			}
+
+			// Tmp dev check
+			if (!backstopIsOnReceived) notificationUI.setIsOn(true); // so we get SOMETHING
+			log().debug("Just assemebled from FE a NotificationUI. Is "+notificationUI.toString());
+			
 			newNotificationUIs.add( notificationUI );
 		} catch (Exception e) { logErrorAndContinue("Crash whilst casting/extracting notification data (Compiler says unreachable): from "+err, e); }
 	}
