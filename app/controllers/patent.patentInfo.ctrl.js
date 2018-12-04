@@ -19,6 +19,8 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
     vm.editing=[];
     vm.statusesAvailable = [];
 
+    console.log(patent)
+
     if(organiseTextService.actionStatus(patent.epctStatus)) {
         vm.statusesAvailable.push(patent.epctStatus)
     }
@@ -153,35 +155,32 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
         }        
     }
 
-    // function dirFeeBreakdown() {
-    //     $state.go('portfolio.patent.renewal.info', {}, {reload: false}); //REVISE TO SEE IF MORE EFFICIENT WAY
-    // };
-
     function fetchItemTransaction(id) {
         currentTransactionsService.fetchCurrentTransactions()
         .then(
             function(response) {
-                response.forEach(function(data) {
-                    
-                    var transaction = data.renewalUIs.find(function(data, i) {
-                        return data.patentUI.id == id;
-                    })
 
-                    if(transaction) {
-                        $state.go('current-transactions.current-transaction-item',{transId: transaction}) //if match, go current-transaction-item
-                        .then(
-                            function(response){
-                                $timeout(function() {
-                                    $location.hash('currTransAnchor'); 
-                                    $anchorScroll();  //scroll to anchor href
-                                }, 300);
-                            },
-                            function(errResponse){
-                                console.log(errResponse);
-                            }
-                        );
-                    }
-                });
+                var transaction = response.filter(function(el){
+                    return el.renewalUIs.find(function(item) {
+                        return item.patentUI.id === id;
+                    })
+                })
+
+                if(transaction !== undefined || typeof transaction !== 'undefined') {
+                    $state.go('current-transactions.current-transaction-item',{transId: transaction[0].id}) //if match, go current-transaction-item
+                    .then(
+                        function(response){
+                            $timeout(function() {
+                                $location.hash('currTransAnchor'); 
+                                $anchorScroll();  //scroll to anchor href
+                            }, 300);
+                        },
+                        function(errResponse){
+                            console.log(errResponse);
+                        }
+                    );
+                }
+
             },
             function(errResponse) {
                 console.log(errResponse);
