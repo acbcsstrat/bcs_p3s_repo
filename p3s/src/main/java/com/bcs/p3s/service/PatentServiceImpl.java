@@ -440,8 +440,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			List<Object> arrObj = (List<Object>) objListNotificationUIs;
 			List<NotificationUI> newNotificationUIs = new ArrayList<NotificationUI>();
 			for (Object ooo : arrObj) {
-				if (ooo instanceof NotificationUI) newNotificationUIs.add( (NotificationUI) ooo );
-				else if (ooo instanceof LinkedHashMap) { tryExtractNotificationUI(ooo, newNotificationUIs); }
+				if (ooo instanceof NotificationUI && ((NotificationUI)  ooo).getIsOn() ) newNotificationUIs.add( (NotificationUI) ooo );
+				else if (ooo instanceof LinkedHashMap) { tryExtractOnNotificationUI(ooo, newNotificationUIs); }
 				else fail("Given a List, but not List<NotificationUI>. 1st item is "+ooo.getClass().getName()+"    : from "+err);
 			}
 			
@@ -483,8 +483,8 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			NotificationMapping.addMappings(notificationMappingsToCreate);
 		}
 	}
-	protected void tryExtractNotificationUI(Object ooo, List<NotificationUI> newNotificationUIs) {
-		String err = CLASSNAME+" :tryExtractNotificationUI()  : ";
+	protected void tryExtractOnNotificationUI(Object ooo, List<NotificationUI> newNotificationUIs) {
+		String err = CLASSNAME+" :tryExtractOnNotificationUI()  : ";
 		// This is development - being 'flexible' - acTidy once we know what to expect
 		// Firstly - list whatever content ooo has
 		log().debug("  The elements within the LinkedHashfollow: ");
@@ -531,7 +531,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 									backstopIsOnReceived = true;
 									break;	
 
-					case "id":		Long lngId = (Long) ob;
+					case "id":		Long lngId = intLongObj2long(ob);
 									log().debug("             setting id to "+lngId);
 									notificationUI.setId(lngId);
 									break;
@@ -556,8 +556,27 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			if (!backstopIsOnReceived) notificationUI.setIsOn(true); // so we get SOMETHING
 			log().debug("Just assemebled from FE a NotificationUI. Is "+notificationUI.toString());
 			
-			newNotificationUIs.add( notificationUI );
+
+			if (notificationUI.getIsOn()) { 
+				newNotificationUIs.add( notificationUI ); 
+			}
 		} catch (Exception e) { logErrorAndContinue("Crash whilst casting/extracting notification data (Compiler says unreachable): from "+err, e); }
+	}
+	protected long intLongObj2long(Object ob) {
+		long result = 0;
+		if (ob instanceof Long) result = (Long) ob;
+		else if (ob instanceof Integer) {
+			int intOb = (Integer) ob;
+			result = intOb;
+		}
+		else if (ob instanceof String) {
+			result = Long.valueOf((String) ob);
+		}
+		else {
+			log().error("intLongObj2long() given incompatible :  (ob==null)="+(ob==null)+"   from "+CLASSNAME);
+			log().error("intLongObj2long() & ob was of type "+ob.getClass().getName());
+		}
+		return result;
 	}
 	
 	
