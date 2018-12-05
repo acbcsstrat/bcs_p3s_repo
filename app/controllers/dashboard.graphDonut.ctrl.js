@@ -107,7 +107,7 @@ function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectP
 
 	
 
-  		}, 1500);
+  		}, 2000);
 
 	} //if patents end	
 }

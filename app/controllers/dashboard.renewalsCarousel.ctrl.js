@@ -9,7 +9,7 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
 	vm.phaseLoaded = true;
     $timeout(function(){
 	   vm.sortedPatentData = patentPhasesService.phases(patents);
-    }, 1000)
+    }, 2000)
 	vm.setPhase = setPhase;
 	vm.selectedPhase = selectPhaseService;
     vm.date = new Date();
