@@ -63,7 +63,7 @@ public class NotificationMapping {
 	}
 
 
-	// zaph - hellofaCleanup required here - once notification calls proven
+	// z a p h - hellofaCleanup required here - once notification calls proven
 	// blat this once -- ..   
 	//	/**
 //	 * 'All' means filtered for this patent, this user and this notification.productType

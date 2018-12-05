@@ -21,6 +21,7 @@ Server time: ${timeStr}
 
 <% List<Txn> txn = null; %>
 
+<b>Transactions</b>
 <table border="1">
 <c:forEach items="${txns}" var="txn">
 	<form action="changestatus" method="POST" >							
@@ -35,7 +36,9 @@ Server time: ${timeStr}
 				${txn.lname} 
 			</td>
 			<td>
-				${txn.p3sref} 
+				<a href="/p3sharness/listtxnproducts?p3sref=${txn.p3sref}">
+				${txn.p3sref}
+				</a> 
 			</td>
 			<td>
 				${txn.createdate} 

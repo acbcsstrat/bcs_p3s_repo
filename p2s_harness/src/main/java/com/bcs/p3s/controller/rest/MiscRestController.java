@@ -2,19 +2,19 @@
 package com.bcs.p3s.controller.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.transform.TransformerException;
 
-import org.junit.internal.runners.TestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,16 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.display.LoginMessageUI;
-/*import com.bcs.p3s.docs.PDFGenerators;
-import com.bcs.p3s.docs.TestMethods;
-import com.bcs.p3s.docs.pojo.BillToAddress;
-import com.bcs.p3s.docs.pojo.Invoice;
-import com.bcs.p3s.docs.pojo.PatentX;*/
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
-import com.bcs.p3s.model.LoginMessage;
-import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.model.Form1200;
 import com.bcs.p3s.service.MiscService;
-import com.bcs.p3s.service.PaymentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;

@@ -2,10 +2,8 @@ package com.bcs.p3s.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import com.bcs.p3s.enump3s.PaymentStatusEnum;
-import com.bcs.p3s.enump3s.TxnNextStateEnum;
 
 public class Txn {
 
@@ -34,7 +32,7 @@ public class Txn {
 		SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
 		this.createdate = format.format(dteCreated);
 		
-		this.numpatents = ""+pay.getRenewals().size();
+		this.numpatents = ""+pay.getRenewals().size()+", "+pay.getEpcts().size();
 		
 		this.status = pay.getMC_failCode();
 		if (this.status==null) {
