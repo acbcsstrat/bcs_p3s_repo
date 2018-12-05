@@ -31,7 +31,7 @@
                     <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-bold">Next stage: </span> 
-                            <span data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')">{{$ctrl.patent.portfolioUI.serviceList[0].nextStageColour}}</span>
+                            <span data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">{{$ctrl.patent.portfolioUI.serviceList[0].nextStageColour}}</span>
                         </p>
                         <p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</p>
                     </div>
@@ -237,15 +237,16 @@
                                 </div>
                                 <div class="col-xl-3">
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalUSD <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
-                                        <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>
+                                        <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD < $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>
                                         <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>                                        
-                                        $ {{($ctrl.patent.subTotalUSD % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2)  || '0.00'}}</p>      
+                                        $ {{($ctrl.patent.subTotalUSD % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2)  || '0.00'}}
+                                    </p>
                                 </div>
                                 <div class="col-xl-2">
                                 </div>
                                 <div class="col-xl-3">
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth ? 'txt-phase-green': 'txt-phase-red'">
-                                        <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
+                                        <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR < $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
                                         <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
                                         &euro; {{($ctrl.patent.subTotalEUR % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth | number: 2)  || '0.00'}}
                                     </p>
@@ -260,7 +261,7 @@
                                 </ngcart-addtocart>
                                 <a class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent.renewal.cost-analysis">View Fee Breakdown</a>
                             </div>
-                            <button type="button" class="btn btn--lg btn--green" data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                                     
+                            <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                                     
                         </div>
                     </div>
                 </div> <!-- col-xl-6 END -->                
@@ -283,10 +284,10 @@
                 <div class="col-md-6">
                     <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
                         <p class="font-h4 m-b-xs">
-                            <span class="font-weight-bold">Next stage: </span> 
+                            <span class="font-weight-medium">Next stage: </span> 
                             <span data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">{{$ctrl.patent.portfolioUI.serviceList[0].nextStageColour}}</span>
                         </p>
-                        <p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
+                        <p class="font-h4"><span class="font-weight-medium">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
                     </div>
                 </div>
                 <div class="col-md-12 m-t-sm" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
