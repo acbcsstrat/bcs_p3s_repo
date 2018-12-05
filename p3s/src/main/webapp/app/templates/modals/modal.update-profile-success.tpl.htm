@@ -1,13 +1,9 @@
-<div class="modal-header p-b-none m-b-xs d-flex flex-column align-items-center justify-content-center">
-	<span class="modal-cross cursor-pointer" data-ng-click="dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
-	<div class="m-b-xs">
-		<img src="assets/imgs/icons/modal/modal_success_icon.png" alt="updated icon">	
-	</div>
+<div class="modal-header d-flex flex-column align-items-center justify-content-center">
+    <span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+    <div class="m-b-sm">
+        <i class="fas fa-check-circle fa-4x txt-phase-green"></i>   
+    </div>
 	<p class="font-h3 font-weight-medium">Success</p>
-</div>
-<div class="modal-body d-flex flex-column align-items-center justify-content-center">
-	<p class="font-body w-100 text-center">We've saved the updates you've made to your profile.</p>
-</div>
-<div class="modal-footer d-flex align-items-center justify-content-center">
-	<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body txt-white d-flex align-items-center justify-content-center" data-ng-click="dismissModal()">Dismiss</button>
+	<p class="font-body w-100 text-center m-b-sm m-t-xs">We've saved the updates you've made to your profile.</p>
+	<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.dismissModal()">Dismiss</button>
 </div>

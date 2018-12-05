@@ -146,48 +146,8 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
             $rootScope.$on('ngCart:itemRemoved', function() {
                 // fetchBasketPatents(cartArr);
-                scope.summary.totalPatents = scope.summary.totalPatents - 1; //a quick fix
+                scope.summary.totalPatents = ngCart.getItems().length;
             });
-
-            function calcSummary(response) {
-
-                var obj = {
-                    officialFeeUSD: 0,
-                    processingFeeUSD: 0,
-                    extensionFeeUSD: 0,
-                    urgentFeeUSD: 0,
-                    expressFeeUSD: 0,
-                    totalCostUSD: 0
-                }
-
-                response.forEach(function(el){  
-                    if(el.renewalFeeUI !== null) {
-                        obj.officialFeeUSD += el.renewalFeeUI.renewalFeeUSD;
-                        obj.processingFeeUSD += el.renewalFeeUI.processingFeeUSD;
-                        obj.extensionFeeUSD += el.renewalFeeUI.extensionFeeUSD;
-                        obj.expressFeeUSD += el.renewalFeeUI.expressFeeUSD;
-                        obj.urgentFeeUSD += el.renewalFeeUI.urgentFeeUSD;
-                        obj.totalCostUSD += el.renewalFeeUI.subTotalUSD;
-                    }
-                    console.log('should hit', response)
-                    if(el.form1200FeeUI !== null) {
-                        console.log('hello')
-                        obj.officialFeeUSD += el.renewalFeeUI.designationFeeUSD;
-                        obj.officialFeeUSD += el.renewalFeeUI.examinationFeeUSD;
-                        obj.officialFeeUSD += el.renewalFeeUI.excessPageFeeUSD;
-                        obj.officialFeeUSD += el.renewalFeeUI.filingFeeUSD;
-                        obj.officialFeeUSD += el.renewalFeeUI.supplementarySearchFeeUSD
-                        obj.officialFeeUSD += el.renewalFeeUI.validationFeeUSD;                       
-                        obj.processingFeeUSD += el.renewalFeeUI.processingFeeUSD;
-                        obj.extensionFeeUSD += el.renewalFeeUI.extensionFeeUSD;
-                        obj.expressFeeUSD += el.renewalFeeUI.expressFeeUSD;
-                        obj.urgentFeeUSD += el.renewalFeeUI.urgentFeeUSD; 
-                        obj.totalCostUSD += el.renewalFeeUI.subTotalUSD;
-                    }
-
-                })
-                return obj;
-            }
 
             fetchBasketPatents(idObj);
 
@@ -195,7 +155,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 basketService.fetchBasketPatents(obj)
                 .then(
                     function(response){
-                        console.log(response)
                         scope.summary = {
                             firstName: response.firstName,
                             lastName: response.lastName,
@@ -206,10 +165,14 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                                 billingZip: response.billingZip,
                             },
                             date: response.dateNowLocalTimeUI,
-                            fees: (function(){
-                               return calcSummary(response.orderedPatentUIs);
-                            }()),
-                            totalPatents: response.orderedPatentUIs.length,
+                            fees: {
+                                totalProcessingFeesUSD: response.totalProcessingFeesUSD,
+                                totalExpressFeesUSD: response.totalExpressFeesUSD,
+                                totalUrgentFeesUSD: response.totalUrgentFeesUSD,
+                                totalOfficialFeesUSD: response.totalOfficialFeesUSD,
+                                totalCostUSD: response.totalCostUSD
+                            },
+                            totalPatents: response.orderedPatentUIs.length
                         };
                     },
                     function(errResponse){

@@ -1,62 +1,67 @@
 angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
 
-renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'currentTransactionsService', 'patentsService', 'dashboardService', 'selectPhaseService']
+renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'currentTransactionsService', 'patentsService', 'dashboardService', 'selectPhaseService', 'organiseTextService']
 
-function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, currentTransactionsService, patentsService, dashboardService, selectPhaseService) {
+function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, currentTransactionsService, patentsService, dashboardService, selectPhaseService,  organiseTextService) {
 
 	var vm = this;
 
-	vm.renewalfxTimeframe = 'Today';
-	vm.fetchItemRenewal = fetchItemRenewal;
+	vm.fxTimeFrame = 'Today';
 	vm.fetchItemTransaction = fetchItemTransaction;
+	vm.patent = dashboardService.getPatent();
+    vm.actionStatus = actionStatus;
+
+    function actionStatus(text) {
+        return organiseTextService.actionStatus(text)
+    }
 
 	$scope.$on('updateCost', function(e, o){
-      	var patent = dashboardService.getPatent();
-      	if(patent.renewalFeeUI !== null) {
-      		vm.serviceCost = patent.renewalFeeUI;
-      	} else {
-      		vm.serviceCost = patent.form1200FeeUI;
-      	}
+    	vm.patent = dashboardService.getPatent();
+    	if(vm.patent.renewalFeeUI !== null) {
+    		vm.patent.serviceCost = vm.patent.renewalFeeUI;
+    	} else {
+    		vm.patent.serviceCost = vm.patent.form1200FeeUI;
+    	}
 	})
 
+
 	$scope.$on('updatePhase', function(e, o){
- 		if(selectPhaseService.getPhase().patents.length === 0) {
- 			vm.serviceCost = null;
- 		}
-  	});
+        if(selectPhaseService.getPhase().patents.length === 0) {
+ 		    vm.serviceCost = null;
+		}
+	});
 
-	function fetchItemRenewal() { //direct user to renewal tab in patents
-		patentsService.activePatentItemMenu();
-	};
+    function fetchItemTransaction(id) {
+        currentTransactionsService.fetchCurrentTransactions()
+        .then(
+            function(response) {
 
-	function fetchItemTransaction(id) { //direct user to transaction item
-		currentTransactionsService.fetchCurrentTransactions()
-		.then(
-			function(response) {
-				response.forEach(function(data) {
-					const transId = data.id;
-					data.renewalUIs.forEach(function(data, i) {
-						if(data.patentUI.id == id) {
-							$state.go('current-transactions.current-transaction-item',{transId: transId})
-							.then(
-								function(response){
-									$timeout(function() {
-										$location.hash('currTransAnchor');
-									  	$anchorScroll();
-									}, 300);
-								},
-								function(errResponse){
-									console.log(errResponse);
-								}
-							);								
-						}
-					});
-				});
-			},
-			function(errResponse) {
-				// console.log(errResponse);
-			}
-		);
-	};
+                var transaction = response.filter(function(el){
+                    return el.renewalUIs.find(function(item) {
+                        return item.patentUI.id === id;
+                    })
+                })
+
+                if(transaction !== undefined || typeof transaction !== 'undefined') {
+                    $state.go('current-transactions.current-transaction-item',{transId: transaction[0].id}) //if match, go current-transaction-item
+                    .then(
+                        function(response){
+                            $timeout(function() {
+                                $location.hash('currTransAnchor'); 
+                                $anchorScroll();  //scroll to anchor href
+                            }, 300);
+                        },
+                        function(errResponse){
+                            console.log(errResponse);
+                        }
+                    );
+                }
+
+            },
+            function(errResponse) {
+                console.log(errResponse);
+            }
+        );
+    };    
 
 }

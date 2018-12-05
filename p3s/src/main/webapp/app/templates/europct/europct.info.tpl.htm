@@ -81,7 +81,7 @@
                                 <ul class="panel-nav">
                                     <li class="panel-nav__list-item list-item--colour-border pill-radius green m-b-xs" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
                                     <li class="panel-nav__list-item list-item--colour-border pill-radius amber m-b-xs" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
-                                    <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li>
+<!--                                     <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li> -->
                                 </ul>
                             </nav>
                         </div>
@@ -255,12 +255,11 @@
                     </div> <!-- row end -->
                     <div class="row">
                         <div class="col-xl-12 d-flex justify-content-end">
-                            <div data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)" class="d-flex">
-                                <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-r-sm">View Fee Breakdown</a>         
-                                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-                                </ngcart-addtocart>
-                                <button type="button" class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
-                            </div>                                      
+                            <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn-no-bg btn-underlined cartbtn" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200</a>
+                            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'">
+                            </ngcart-addtocart>
+                            <button type="button" class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== 'Epct available'">View Transaction</button>
+                            <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)">View Fee Breakdown</a>
                         </div>
                     </div>
                 </div> <!-- col-xl-6 END -->                
@@ -348,13 +347,13 @@
                                 <h4 class="font-h4 font-weight-medium">Selected</h4>
                             </div>
                             <div class="col-md-6 col-lg-7 m-b-xs">
-                                <div class="panel-nav">
-                                    <ul class="nav panel-nav__notification-list d-flex justify-content-start">
-                                        <li class="panel-nav__notification-list-item--green-notification panel-nav__list-item--notifications pill-radius active d-flex justify-content-center align-items-center m-b-xs m-r-sm" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
-                                        <li class="panel-nav__notification-list-item--amber-notification pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs m-r-sm" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
-                                        <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li>
+                                <nav>
+                                    <ul class="panel-nav">
+                                        <li class="panel-nav__list-item list-item--colour-border pill-radius green m-b-xs" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
+                                        <li class="panel-nav__list-item list-item--colour-border pill-radius amber m-b-xs" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
+<!--                                         <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li> -->
                                     </ul>
-                                </div>
+                                </nav>
                             </div>
                             <div class="col-md-12 col-lg-7">
                                 <uib-tabset active="activeNotificationTab" vertical="true" type="pills" class="flex-column">
@@ -384,7 +383,7 @@
                                             </div>
                                         </div>                                  
                                     </uib-tab>
-                                    <uib-tab index="2" heading="Red" data-ng-hide="true">
+<!--                                     <uib-tab index="2" heading="Red" data-ng-hide="true">
                                         <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
                                             <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
                                                 {{item.title}}
@@ -396,7 +395,7 @@
                                                 </div>
                                             </div>
                                         </div>                                  
-                                    </uib-tab>
+                                    </uib-tab> -->
                                 </uib-tabset>
                             </div>
                         </div>
@@ -527,13 +526,12 @@
                         </div>
                     </div> <!-- row end -->
                     <div class="row">
-                        <div class="col-xl-12 d-flex justify-content-end">
-                            <div data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)" class="d-flex">
-                                <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-r-sm">View Fee Breakdown</a>         
-                                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-                                </ngcart-addtocart>
-                                <button type="button" class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
-                            </div>                                      
+                        <div class="col-md-12 d-flex justify-content-end">
+                            <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn-no-bg btn-underlined cartbtn" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200</a>
+                            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'">
+                            </ngcart-addtocart>
+                            <button type="button" class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== 'Epct available'">View Transaction</button>
+                            <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)">View Fee Breakdown</a>
                         </div>
                     </div>
                 </div>

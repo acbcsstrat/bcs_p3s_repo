@@ -50,7 +50,7 @@ function euroPctService($q, $http) {
             
         var deferred = $q.defer()
 
-        $http.delete(ppdomain+'rest-start-form1200/'+id)
+        $http.delete(ppdomain+'rest-form1200/'+id)
         .then(
             function(response){
                 deferred.resolve(response.data)
@@ -67,7 +67,7 @@ function euroPctService($q, $http) {
             
         var deferred = $q.defer()
 
-        $http.put(ppdomain+'rest-start-form1200/'+id)
+        $http.put(ppdomain+'rest-form1200/'+id)
         .then(
             function(response){
                 deferred.resolve(response.data)

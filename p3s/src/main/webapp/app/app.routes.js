@@ -112,6 +112,8 @@ function appRoutes($stateProvider) {
             params: {
                 navigation: 'portfolio'
             },
+            controller: 'euroPctCtrl',
+            controllerAs: '$ctrl',
             resolve: {
                 ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
                     return costAnalysisService.fetchEuroPctCa(patent.id);  

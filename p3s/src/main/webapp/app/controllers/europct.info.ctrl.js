@@ -30,15 +30,33 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
     }
 
     function deleteApplication(id) {    
-        euroPctService.deleteApplication(id)
-        .then(
-            function(response){
-                deleteApplicationSuccess();
-            },
-            function(errResponse){
-                deleteApplicationError(errResponse);
-            }
-        )
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.modal.commit-delete.euro-pct.tpl.htm', //create html for notifications update success
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', function($uibModalInstance){
+                this.dismissModal = function () {
+                    $uibModalInstance.close();
+                };
+
+                this.deleteApplication = function() {
+                    euroPctService.deleteApplication(id)
+                    .then(
+                        function(response){
+                            deleteApplicationSuccess();
+                        },
+                        function(errResponse){
+                            deleteApplicationError(errResponse);
+                        }
+                    )
+                }
+
+                // $state.go('portfolio.patent', {patentId: patent.id}, {reload: true}); //go to patent info on successful deletion
+            }]
+
+        });        
+
     }
 
     function editApplication(id) {    

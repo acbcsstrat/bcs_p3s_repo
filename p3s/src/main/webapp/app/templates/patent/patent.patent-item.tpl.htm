@@ -6,21 +6,23 @@
 	</div>
 </div>
 <div data-ng-show="$ctrl.patentLoaded" class="animate-show">
-	<div class="row m-b-md">
+	<div class="row">
 		<div class="col-xl-12">
-			<nav>
-				<ul class="view-nav">
-					<li class="m-r-sm">
-						<a class="view-nav__item pill-radius" data-ui-sref-active="{'active': 'portfolio.patent.patent-info'}" data-ui-sref="portfolio.patent.patent-info">Patent Info</a><!-- {} acts as ng-class condition to add state if active state is portfolio.patent.patent-info or portfolio.patent.euro-pct and any of their child states-->
-					</li>
-					<li class="m-r-sm">
-						<a class="view-nav__item pill-radius" data-ui-sref-active="{'active': 'portfolio.patent.euro-pct'}" data-ui-sref="portfolio.patent.euro-pct.info" data-ng-disabled="$ctrl.serviceAvailable('Form1200')">Euro-PCT</a> <!--add   data-ng-disabled="$ctrl.serviceAvailable('Form1200')"-->
-					</li>
-					<li>
-						<a class="view-nav__item pill-radius"  data-ui-sref-active="{'active': 'portfolio.patent.renewal'}" data-ng-disabled="$ctrl.serviceAvailable('Renewal')" data-ui-sref="portfolio.patent.renewal.info">Renewal</a>
-					</li>
-				</ul>
-			</nav>
+			<div class="content-panel border-b-none">
+				<nav>
+					<ul class="view-nav-secondary">
+						<li class="m-r-sm">
+							<a class="view-nav__item" data-ui-sref-active="{'active': 'portfolio.patent.patent-info'}" data-ui-sref="portfolio.patent.patent-info">Patent Info</a><!-- {} acts as ng-class condition to add state if active state is portfolio.patent.patent-info or portfolio.patent.euro-pct and any of their child states-->
+						</li>
+						<li class="m-r-sm">
+							<a class="view-nav__item" data-ui-sref-active="{'active': 'portfolio.patent.euro-pct'}" data-ui-sref="portfolio.patent.euro-pct.info" data-ng-disabled="$ctrl.serviceAvailable('Form1200')">Euro-PCT</a> <!--add   data-ng-disabled="$ctrl.serviceAvailable('Form1200')"-->
+						</li>
+						<li>
+							<a class="view-nav__item"  data-ui-sref-active="{'active': 'portfolio.patent.renewal'}" data-ng-disabled="$ctrl.serviceAvailable('Renewal')" data-ui-sref="portfolio.patent.renewal.info">Renewal</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
 		</div>
 	</div>
 	<div ui-view></div>

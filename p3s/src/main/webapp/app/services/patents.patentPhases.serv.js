@@ -36,7 +36,7 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService, patent
 						return 0;
 					}
 				}
-			}	
+			}
 
 			$timeout(function(){
 				if(patentArr.length > 0) {
@@ -73,7 +73,7 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService, patent
 					
 				}
 				
-			}, 1000)
+			}, 1500)
 
 			return phases;
 		}

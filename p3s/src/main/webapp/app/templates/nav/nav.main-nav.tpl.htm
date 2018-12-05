@@ -53,36 +53,30 @@
     <div layout="column" class="closed-sidenav bg-phase-grey">
 	  	<div class="text-center w-100 p-tb-35">
 	  		<a ui-sref="dashboard">
-	  			<img width="40" src="assets/imgs/logos/pp_icon.png">
+	  			<img width="35" src="assets/imgs/logos/pp_icon.png">
 	  		</a>
-	    </div>		
+	    </div>
 	    <div data-ng-click="toggleLeft()" class="btn p-tb-sm btn--green">
-	    	<img class="d-none d-xl-inline-block" src="assets/imgs/icons/menu/menu_menu_icon.png">
-	    	<img class="d-xl-none" src="assets/imgs/icons/menu/menu_menu_icon_sm.png">
-	    </div>		    
+	    	<i class="fas fa-bars fa-2x d-none d-xl-inline-block"></i>
+	    	<i class="fas fa-bars fa-1x d-xl-none d-lg-inline-block"></i>
+	    </div>
 		<ul class="nav flex-column">
 			<li class="nav-item" ui-sref-active="active white-nav-a">
 				<a class="nav-link p-tb-md txt-white d-flex justify-content-center align-items-center" ui-sref="dashboard">
-					<img class="d-none d-xl-block" src="assets/imgs/icons/menu/menu_dashboard_icon.png">
-					<img class="d-xl-none" src="assets/imgs/icons/menu/menu_dashboard_icon_sm.png">
+					<i class="fas fa-tachometer-alt fa-2x d-none d-xl-block"></i>
+					<i class="fas fa-tachometer-alt fa-1x d-xl-none"></i>
 				</a>
 			</li>
 			<li class="nav-item" ui-sref-active="active white-nav-a">
 				<a class="nav-link p-tb-md txt-white d-flex justify-content-center align-items-center" ui-sref="portfolio">
-					<img class="d-none d-xl-block" src="assets/imgs/icons/menu/menu_portfolio_icon.png">
-					<img class="d-xl-none" src="assets/imgs/icons/menu/menu_portfolio_icon_sm.png">
+					<i class="fas fa-folder-open fa-2x d-none d-xl-block"></i>
+					<i class="fas fa-folder-open fa-1x d-xl-none d-lg-inline-block"></i>
 				</a>
 			</li>			
-<!-- 			<li class="nav-item" ui-sref-active="active white-nav-a">
-				<a class="nav-link p-tb-md txt-white d-flex justify-content-center align-items-center" ui-sref="patents">
-					<img class="d-none d-xl-block" src="assets/imgs/icons/menu/menu_patent_icon.png">
-					<img class="d-xl-none" src="assets/imgs/icons/menu/menu_patent_icon_sm.png">
-				</a>
-			</li> -->
 			<li class="nav-item" ui-sref-active="active white-nav-a">
 				<a class="nav-link p-tb-md txt-white d-flex justify-content-center align-items-center" ui-sref="current-transactions">
-					<img class="d-none d-xl-block" src="assets/imgs/icons/menu/menu_transaction_icon.png">
-					<img class="d-xl-none" src="assets/imgs/icons/menu/menu_transaction_icon_sm.png">
+					<i class="far fa-credit-card fa-2x d-none d-xl-block"></i>
+					<i class="far fa-credit-card fa-1x d-xl-none d-lg-inline-block"></i>
 				</a>
 			</li>
 		</ul>

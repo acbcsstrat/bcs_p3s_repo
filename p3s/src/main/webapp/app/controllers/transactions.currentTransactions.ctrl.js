@@ -13,7 +13,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
     }, 300);
 
 	vm.tableData = currentTransactions;
-    console.log(vm.tableData )
+    // console.log(vm.tableData )
 	vm.patentAppData = { defaultSelect: null };
   	vm.clientRefData = { defaultSelect: null };
    	vm.sortType  = sortType; // set the default sort type

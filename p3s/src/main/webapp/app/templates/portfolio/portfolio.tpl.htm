@@ -235,7 +235,7 @@
                                             <div data-ng-if="$ctrl.actionStatus(item.serviceStatus)" class="d-md-flex d-lg-none flex-column">
                                                 <p data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
                                                 <i class="fa fa-chevron-down fa" data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')"></i>
-                                                <p data-ng-class="$ctrl.getCurrColour(item.nextStageColour, 'text')">$ {{item.nextStageCostUSD | number: 2}}</p>
+                                                <p data-ng-class="$ctrl.getCurrColour(item.nextStageColour, 'text')" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                             </div>                                            
                                         </td>
                                     </tr>
@@ -245,9 +245,9 @@
                                 <table data-ng-if="patent.serviceList.length == 1">
                                     <tr>
                                         <td>
-                                            <div class="d-flex justify-content-center btn-underline-select" data-ng-repeat="item in patent.serviceList">
+                                            <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.serviceList">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
-                                                    <button data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejeted' || item.serviceStatus == 'Payment failed'" type="button" class="btn-no-bg btn-underlined cartbtn">Generate Form 1200</button>
+                                                    <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn-no-bg btn-underlined cartbtn" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200</a>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
                                                         <ngcart-addtocart id="{{patent.id}}" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                                         </ngcart-addtocart>
@@ -266,8 +266,8 @@
                                         <td class="t-data__td t-data__w15">
                                             <div class="d-flex justify-content-center">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
-                                                    <button data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejeted' || item.serviceStatus == 'Payment failed'" type="button" class="btn btn--default pill-radius bg-phase-green t-data__btn-portal" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200
-                                                    </button>
+                                                    <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--default pill-radius bg-phase-green t-data__btn-portal" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200
+                                                    </a>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
                                                         <ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                                         </ngcart-addtocart>

@@ -24,7 +24,7 @@ function addPatentCtrl($state, $stateParams, $rootScope, $timeout, $location, $a
 					$state.go('search-patent', {}, {reload: true});
 				}
 
-				this.cancel = function() {
+				this.dismissModal = function() {
 					$uibModalInstance.close();
 				}
 

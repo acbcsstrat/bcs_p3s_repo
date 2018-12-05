@@ -9,7 +9,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	$rootScope.page = 'Confirm Order';
 
 	vm.orderObj = $stateParams.orderObj;
-	console.log(vm.orderObj )
+
 	if(vm.orderObj == '') { //if page is refreshed when on bank prepration page
 		$state.go('portfolio', {reload: true}); //direct user to patents
 	} else {
@@ -28,20 +28,17 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 			var modalInstance = $uibModal.open({
 				templateUrl: 'app/templates/modals/modal.cancel-transaction.tpl.htm',
 				appendTo: undefined,
-				controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
+				controllerAs: '$ctrl',
+				controller: ['$uibModalInstance', function($uibModalInstance) {
 
-				  	$scope.dismissModal = function () {
+				  	this.dismissModal = function () {
 				    	$uibModalInstance.close();
 				  	};
 
-				  	$scope.cancelTrans = function () {
+				  	this.cancelTrans = function () {
 				  		ngCart.empty();
 				    	$uibModalInstance.close();
 				    	$state.go('portfolio');
-				  	};
-
-				  	$scope.cancel = function() {
-				  		$uibModalInstance.dismiss('cancel');
 				  	};
 
 				}]
@@ -56,26 +53,39 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 			bankTransferCommitService.commitTransfer(vm.orderObj) //SERVICE HANDLES STATE.GO
 			.then(
 	            function(response){
-	            	console.log(response)
 	            	$state.go('bank-transfer-success', {orderObj: response});
 	            },
 	            function(errResponse){
-	            	if(errResponse) {
+	            	if(errResponse.status === 500) {
 						var modalInstance = $uibModal.open({
 							templateUrl: 'app/templates/modals/modal.commit-error.tpl.htm',
 							appendTo: undefined,
-							controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
+           					controllerAs: '$ctrl',							
+							controller: ['$uibModalInstance', function($uibModalInstance) {
 
-							  	$scope.dismissModal = function () {
+							  	this.dismissModal = function () {
 							    	$uibModalInstance.close();
+							    	$state.go('portfolio', {reload: true})
 							  	};
 
-							  	$scope.cancel = function() {
-							  		$uibModalInstance.dismiss('cancel');
-							  	};
 							}]
 						});
 					}
+	            	if(errResponse.status === 409) {
+						var modalInstance = $uibModal.open({
+							templateUrl: 'app/templates/modals/modal.commit-error-price.tpl.htm',
+							appendTo: undefined,
+           					controllerAs: '$ctrl',								
+							controller: ['$uibModalInstance', function($uibModalInstance) {
+
+							  	this.dismissModal = function () {
+							    	$uibModalInstance.close();
+							    	$state.go('portfolio', {reload: true})							    	
+							  	};
+
+							}]
+						});
+					}					
 	            }
 	        );	            
 		};

@@ -32,7 +32,7 @@
                                 <p class="font-weight-medium font-body">Official Fees</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{(summary.fees.officialFeeUSD | number:2) || '0.00'}}</p>
+                                <p class="font-body text-right">$ {{(summary.fees.totalOfficialFeesUSD | number:2) || '0.00'}}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -40,17 +40,17 @@
                                 <p class="font-weight-medium font-body">Processing Fees</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{(summary.fees.processingFeeUSD | number:2) || '0.00' }}</p>
+                                <p class="font-body text-right">$ {{(summary.fees.totalProcessingFeesUSD | number:2) || '0.00' }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 d-xl-none">
                         <div class="row m-b-md">
                             <div class="col-md-6">
-                                <p class="font-weight-medium font-body">EPO Surcharges</p>                        
+                                <p class="font-weight-medium font-body">Express Fee</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{(summary.fees.extensionFeeUSD | number:2) || '0.00' }}</p>
+                                <p class="font-body text-right">$ {{(summary.fees.totalExpressFeesUSD | number:2) || '0.00' }}</p>
                             </div>
                         </div>
                         <div class="row">                         
@@ -58,10 +58,10 @@
                                 <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{(summary.fees.urgentFeeUSD | number:2) || '0.00'}}</p>
+                                <p class="font-body text-right">$ {{(summary.fees.totalUrgentFeesUSD | number:2) || '0.00'}}</p>
                             </div> 
                         </div>
-                    </div>  
+                    </div>
 
                     <div class="col-xl-12 d-none d-xl-block">
                         <div class="m-b-md">
@@ -70,7 +70,7 @@
                                     <p class="font-weight-medium font-body">Official Fees</p>                        
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{(summary.fees.officialFeeUSD | number:2) || '0.00'}}</p>
+                                    <p class="font-body">$ {{(summary.fees.totalOfficialFeesUSD | number:2) || '0.00'}}</p>
                                 </div>                               
                             </div>
                         </div>
@@ -80,17 +80,7 @@
                                     <p class="font-weight-medium font-body">Processing Fees</p>
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{(summary.fees.processingFeeUSD | number:2) || '0.00'}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-b-md">
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <p class="font-weight-medium font-body">EPO Surcharges</p>                        
-                                </div>                  
-                                <div class="col-xl-4">
-                                    <p class="font-body">$ {{(summary.fees.extensionFeeUSD | number:2) || '0.00'}}</p>
+                                    <p class="font-body">$ {{(summary.fees.totalProcessingFeesUSD | number:2) || '0.00'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +90,7 @@
                                     <p class="font-weight-medium font-body">Express Fees</p>                        
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{(summary.fees.expressFeeUSD | number:2) || '0.00'}}</p>
+                                    <p class="font-body">$ {{(summary.fees.totalExpressFeesUSD | number:2) || '0.00'}}</p>
                                 </div> 
                             </div>
                         </div>
@@ -110,7 +100,7 @@
                                     <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{(summary.fees.urgentFeeUSD | number:2) || '0.00'}}</p>
+                                    <p class="font-body">$ {{(summary.fees.totalUrgentFeesUSD | number:2) || '0.00'}}</p>
                                 </div> 
                             </div>
                         </div>                        

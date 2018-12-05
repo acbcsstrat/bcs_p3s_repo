@@ -1,13 +1,9 @@
-<div class="modal-header p-b-none m-b-xs d-flex flex-column align-items-center justify-content-center">
-	<span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
-	<div class="m-b-xs">
-		<img src="assets/imgs/icons/modal/alert_icon.png" alt="found patent icon">	
-	</div>
+<div class="modal-header d-flex flex-column align-items-center justify-content-center">
+    <span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+    <div class="m-b-sm">
+        <i class="far fa-times-circle fa-4x txt-phase-red"></i>
+    </div>
 	<p class="font-h3 font-weight-medium">Error</p>
-</div>
-<div class="modal-body d-flex flex-column align-items-center justify-content-center">
-	<p class="font-body w-100 text-center">We've encoutered a problem removing that patent from the system. Please try again. If it's still a problem then please let us know: support@ip.place</p>
-</div>
-<div class="modal-footer d-flex align-items-center justify-content-center">
-	<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center m-r-md" data-ng-click="$ctrl.dismissModal()">Dismiss</button>
+	<p class="font-body w-100 text-center m-b-sm m-t-xs">We've encoutered a problem removing that patent from the system. Please try again. If it's still a problem then please let us know: support@ip.place</p>
+	<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.dismissModal()">Dismiss</button>
 </div>
