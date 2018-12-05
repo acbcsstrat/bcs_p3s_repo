@@ -1,4 +1,4 @@
-.panel-nav, .view-nav { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
+.panel-nav, .view-nav,.view-nav-secondary { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -35,6 +35,35 @@
     &.active {
       color: $white; 
       background: $grey-dark;
+    }
+  }
+}
+
+
+.view-nav-secondary {
+  .view-nav__item {
+    border: none;
+    font-weight: 400;
+    background: $white;
+    font-size: $font-h3;
+    cursor: pointer;
+    line-height: $line-none;
+    @include padding-mixin(1.5rem 3rem);
+    -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    -o-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    text-decoration: none;
+    text-transform: uppercase;
+    &[disabled] {
+      color: $white;
+      cursor: not-allowed;
+    }
+    // &:not([disabled]):hover, &:not([disabled]):focus {
+    //   background: 
+    // }
+    &.active {
+      border-bottom: 3px solid $black; 
+      // background: $grey-dark;
     }
   }
 }
