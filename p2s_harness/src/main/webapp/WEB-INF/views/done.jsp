@@ -20,6 +20,7 @@
 		</div>
 
 <p/>
+Raspberry = ${returnto}
 
 		<p/>
 		&nbsp;
@@ -40,8 +41,19 @@
 		<p/>
 		&nbsp;
 		<p/>
-		To view Transactions - click <a href="/p3sharness/listtxns">here</a>
+		To view Transactions (Top menu) - click <a href="/p3sharness/listtxns">here</a>
 		<p/>
+		<c:if test = "${returnto != null}">
+		Return to :
+			 <c:if test = "${returnto == 'listepcts'}">
+				<a href="/p3sharness/listepcts">Euro-PCTs</a> (Pre Commit)
+			</c:if>
+		<p/>
+		</c:if>
+		<c:if test = "${TxnRef != null}">
+		To view Products for Txn ${TxnRef} (2nd menu) - click <a href="/p3sharness/listtxnproducts?p3sref=${TxnRef} }">here</a>
+		<p/>
+		</c:if>
 		<a href="http://localhost:8080/p3sharness/logout">logout</a>
 
 	</body>

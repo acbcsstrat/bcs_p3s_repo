@@ -106,9 +106,14 @@ Server time: ${timeStr}
 		<th>
 			Status 
 		</th>
-		<th>
+<!--  
+		<th colspan="2">
 			Options 
 		</th>
+		<th>
+		   Upload PDF
+		</th>
+-->
 		<th>
 		   BlobId
 		</th>
@@ -134,10 +139,8 @@ Server time: ${timeStr}
 			<td>
 				${product.existingStatus} 
 			</td>
-			<td>
 <!-- 
-				<c:set var = "salary" scope = "session" value = "${2000*2}"/>
- -->
+			<td>
 				<c:if test = "${product.dropdowns != null}">
 					<select name="nextstate">
 					  ${product.dropdowns}
@@ -145,21 +148,25 @@ Server time: ${timeStr}
 				</c:if>
 			</td>
 			<td>
-				<a href="/p3sharness/form1200PDF?form1200id=${product.blobId}">${product.blobId}</a> 
+				<input type="hidden" name="productType" value="epct" /> 
+				<input type="hidden" name="productId" value="${product.productId}" /> 
+				<input type="submit" name="Submit" id="sub-${txnName}-${epct.id}" onclick=" this.form.submit(); " /> 
 			</td>
 			<td>
-				<input type="hidden" name="productType" value="epct" /> 
-				<input type="hidden" name="productId" value="${epct.id}" /> 
-				<input type="submit" name="Submit" id="sub-${txnName}-${epct.id}" onclick=" this.form.submit(); " /> 
+				<a href="/p3sharness/pdfuploadform.jsp?epctId=3">upload</a> 
+			</td>
+ -->
+			<td>
+				<a href="/p3sharness/form1200PDF?form1200id=${product.blobId}">${product.blobId}</a> 
 			</td>
 	    </tr>
 	</form>
 </c:forEach>
-
+upload HARDCODED TO EPCT 3
 
 </table>
 
-
+<!-- 
 <table>
   <tr>
     <td>
@@ -184,7 +191,7 @@ Server time: ${timeStr}
     </td>
   </tr>
 </table>
-
+ -->
 
 <p/>
 

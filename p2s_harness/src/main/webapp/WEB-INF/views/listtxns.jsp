@@ -99,6 +99,8 @@ Server time: ${timeStr}
 <p/>
 <a href="/p3sharness/listtxns">Refresh</a>
 <p/>
+<a href="/p3sharness/listepcts">List Uncommitted Euro-PCTs</a>
+<p/>
 <a href="/p3sharness/logout">logout</a>
 <p/>
 &nbsp;

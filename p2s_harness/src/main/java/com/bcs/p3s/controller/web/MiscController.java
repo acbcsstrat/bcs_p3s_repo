@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.TxnProduct;
 import com.bcs.p3s.docs.email.EmailDevTest;
+import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.TxnNextStateEnum;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Epct;
@@ -124,8 +125,8 @@ public class MiscController extends Universal implements Form1200HarnessConstant
 		epctoptions += "<option value=\""+AWAIT_PDF_GEN_START+"\">"+AWAIT_PDF_GEN_START+"</option>";
 		epctoptions += "<option value=\""+EPCT_BEING_GENERATED+"\">"+EPCT_BEING_GENERATED+"</option>";
 		epctoptions += "<option value=\""+EPCT_SAVED+"\">"+EPCT_SAVED+"</option>";
-		epctoptions += "<option value=\""+UPLOAD_PDF+"\">"+UPLOAD_PDF+"</option>";
-		epctoptions += "<option value=\""+VIEW_PDF+"\">"+VIEW_PDF+"</option>";
+		//epctoptions += "<option value=\""+UPLOAD_PDF+"\">"+UPLOAD_PDF+"</option>";
+		//epctoptions += "<option value=\""+VIEW_PDF+"\">"+VIEW_PDF+"</option>";
 		uiModel.addAttribute("epctoptions", epctoptions);
 		
 		uiModel.addAttribute("timeStr", timeStr());
@@ -151,8 +152,32 @@ public class MiscController extends Universal implements Form1200HarnessConstant
 			products.add(product);
 		}
 		uiModel.addAttribute("products", products);
+		uiModel.addAttribute("timeStr", timeStr());
 		
 		return "listtxnproducts";
+    }
+
+	
+	
+    @RequestMapping(value="/listepcts", method = RequestMethod.GET, produces = "text/html")
+    public String listepcts(Model uiModel) {
+		String err = "MiscController :: listepcts()  ";
+		log().debug(err+"invoked");
+
+		// Get ALL Epcts that are not yet committed
+		List<Epct> allEpcts = Epct.findAllEpcts();
+		List<Epct> epcts = new ArrayList<Epct>();
+		for (Epct epct : allEpcts) {
+			String epctStatus = epct.getEpctStatus();
+			Form1200StatusEnum f12enum = new Form1200StatusEnum(epctStatus);
+			if (f12enum.canSellForm1200()) epcts.add(epct);
+			
+			;
+		}
+		uiModel.addAttribute("epcts", epcts);
+		uiModel.addAttribute("timeStr", timeStr());
+		
+		return "listepcts";
     }
 
 	
@@ -185,21 +210,50 @@ public class MiscController extends Universal implements Form1200HarnessConstant
     }
 
 	
-	
-	@RequestMapping(value="/changeproductstatus", method = RequestMethod.POST, produces = "text/html")
-    public String changeproductstatus(Model uiModel, String productType, String productId, String nextstate) {
-		String loc = "MiscController :: changeproductstatus() : productType="+productType+"  productId="+productId+"   and new status is "+nextstate+"  : ";
+	// glue : to connect a *Servlet to a jsp page
+	@RequestMapping(value="/dun", method = RequestMethod.GET, produces = "text/html")
+    public String dun(Model uiModel, HttpServletRequest request) {
+		String loc = "MiscController :: dun () : ";
 		log().debug(loc+"invoked ");;
 		
-		if ("epct".equals(productType)) {
-			Form1200HarnessService form1200HarnessService = new Form1200HarnessService();
-			form1200HarnessService.processEpctCommand(productId, nextstate);
-		}
-		else log().error("Change ionvoked, yet not appropriate for productId="+productId+" :    from "+loc);
+		String retto = request.getParameter("returnto");
+		log().debug(loc+"invoked with returnto = "+retto);;
+		
+		uiModel.addAttribute("returnto", retto); 
 		
         return "done";
     }
 
+	
+	
+	//@RequestMapping(value="/changeproductstatus", method = RequestMethod.POST, produces = "text/html")
+	//public String changeproductstatus(Model uiModel, String productType, String productId, String nextstate) {
+	//	String loc = "MiscController :: changeproductstatus() : productType="+productType+"  productId="+productId+"   and new status is "+nextstate+"  : ";
+	//	log().debug(loc+"invoked ");;
+	//	
+	//	if ("epct".equals(productType)) {
+	//		Form1200HarnessService form1200HarnessService = new Form1200HarnessService();
+	//		form1200HarnessService.processEpctCommand(productId, nextstate, uiModel);
+	//	}
+	//	else log().error("Change ionvoked, yet not appropriate for productId="+productId+" :    from "+loc);
+	//	//uiModel.addAttribute("TxnRef", txnName);  // would love to - but need Payment
+	//
+	//    return "done";
+	//}
+
+	
+	@RequestMapping(value="/changeepctstatus", method = RequestMethod.POST, produces = "text/html")
+    public String changeepctstatus(Model uiModel, String epctId, String nextstate) {
+		String loc = "MiscController :: changeepctstatus() : epctId="+epctId+"   and new status is "+nextstate+"  : ";
+		log().debug(loc+"invoked ");;
+		
+		Form1200HarnessService form1200HarnessService = new Form1200HarnessService();
+		form1200HarnessService.processEpctCommand(epctId, nextstate, uiModel);
+		
+		uiModel.addAttribute("returnto", "listepcts"); 
+        return "done";
+    }
+	
 	
 	
 	@RequestMapping(value="/writemc", method = RequestMethod.GET, produces = "text/html")
