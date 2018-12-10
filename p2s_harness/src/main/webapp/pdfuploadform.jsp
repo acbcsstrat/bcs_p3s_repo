@@ -21,8 +21,10 @@ Parameter myparam: <%= request.getParameter("epctId") %>
     <form method="post" action="PdfUploadServlet" enctype="multipart/form-data">
         Select file to upload: 
         <input type="file" name="file" size="60" accept=".pdf" /><br/>
-        MakeHiddenSoon: 
-        <input type="text" name="epctid" value="<%= request.getParameter("epctId") %>" /><br/>
+<!--  
+        MakeHiddenSoon: make hidden soon
+        --> 
+        <input type="hidden" name="epctid" value="<%= request.getParameter("epctId") %>" /><br/>
          
         <br /> <input type="submit" value="Upload" />
     </form>

@@ -369,39 +369,58 @@ public class MiscController extends Universal implements Form1200HarnessConstant
 	   
 	   //------------------------------ view form1200 PDF from Blob --------------------------------------------
 	   
-		@RequestMapping(value = "/form1200PDF", method = RequestMethod.GET)
-		public void form1200PdfImage(@RequestParam(value = "form1200id", required = false) Long form1200id, 
+		@RequestMapping(value = "/form1200Pdf", method = RequestMethod.GET, produces = "application/pdf")
+		public void streamForm1200Pdf(@RequestParam(value = "epctId", required = false) Long epctId, 
 				HttpServletResponse response,HttpServletRequest request) throws ServletException, IOException {
 
-			String err = CLASSNAME+"/form1200PDF  ";
-			log().debug(err + "invoked  : form1200id = "+form1200id);
+			String err = CLASSNAME+"streamForm1200Pdf() /form1200PDF  ";
+			log().debug(err + "invoked  : epctId = "+epctId);
 
-			byte[] bytearray = new byte[1048576]; // 1MB. Plenty big for 10k resized Avatars
+			
+			// zaph - TODO HERE - check rqst is Authorised pre providing the data !!
+			
+			
+			byte[] bytearray = new byte[4194304]; // 4MB. = Current size limit
 
+			Blob blobby = null;
 			try {
-				Form1200 form1200 = Form1200.findForm1200(form1200id);
-				Blob blobby = form1200.getPdfBlob();
+				Epct epct = Epct.findEpct(epctId);
+				if (epct != null) {
+					Form1200 form1200 = epct.getForm1200();
+					if (form1200 != null) {
+						blobby = form1200.getPdfBlob();
+					}
+				}
 
 				if (blobby==null) {
-						log().warn(err+" IS NO f1200 PDF IN dB FOR ID "+form1200id);
-						response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+						log().warn(err+" IS NO f1200 PDF IN dB FOR Epct ID "+epctId);
+						response.setContentType("application/pdf");
 						response.getOutputStream().write(bytearray,0,0); 
 				} else {
 					int size=0;
 					InputStream sImage = blobby.getBinaryStream();
 					while( (size=sImage.read(bytearray)) != -1 ) {
 						log().debug(err+" in loop reading f1200 pdf. Size this loop is "+size);
-
-						response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+	
+						response.setContentType("application/pdf");
+						
+						//response.setHeader("Content-Disposition", "attachment;filename=".concat(String.valueOf(destFileName)));
+						response.setHeader("Content-Disposition", "attachment;filename="+"Harry_B.pdf");
+						
 						response.getOutputStream().write(bytearray,0,size); 
 					}
 				}
 
+				
+				// zaph - how set filename ??
+				
+				
+				
 				response.getOutputStream().close();
 			    //log().debug(PREFIX+" AFTER loop. size NOW = "+size);
 			}
 			catch(Exception ex) {
-				logInternalError().error(err+"Error retrieving f1200 pdf. Rqst was id "+form1200id, ex);
+				logInternalError().error(err+"Error retrieving f1200 pdf. Rqst was Epct id "+epctId, ex);
 			}
 		}
 

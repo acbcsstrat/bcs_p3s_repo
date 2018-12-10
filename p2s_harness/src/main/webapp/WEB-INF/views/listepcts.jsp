@@ -87,7 +87,7 @@ Server time: ${timeStr}
 			</td>
 			<td>
 				<c:if test = "${epct.form1200 != null}">
-					viewPdf= ${epct.form1200.id}
+					<a href="/p3sharness/form1200Pdf?epctId=${epct.id}" download target="_blank">viewPdf</a>
 				</c:if>
 			</td>
 			<td>
