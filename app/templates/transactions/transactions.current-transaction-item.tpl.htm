@@ -1,0 +1,198 @@
+<div class="row m-b-md">
+	<div class="col-md-12 col-lg-12 col-xl-12">
+		<nav>
+			<ul class="view-nav">
+				<li class="view-nav__item pill-radius active"  data-ng-click="activeSelectedTab = 0">Transaction Details</li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<div class="content-panel">
+	<div class="bg-white">
+		<uib-tabset type="pills" active="activeSelectedTab">
+			<uib-tab heading="Transaction Details" index="0" data-ng-hide="true">
+				<div class="content-panel__head border-grey-xs--btm">
+					<div class="row d-flex align-items-center">
+						<div class="col-md-6 col-lg-6 col-xl-2">
+							<p class="font-weight-bold font-h4">Transaction ID</p>
+							<p class="font-h4" data-ng-bind="$ctrl.currentTransactionItem.p3S_TransRef"></p>
+						</div>
+						<div class="col-md-6 col-lg-6 col-xl-2 text-md-right text-lg-right text-xl-left">
+							<p class="font-weight-bold font-h4">Transaction Initated</p>
+							<p class="font-h4">{{$ctrl.currentTransactionItem.transStartDate | date: 'MM/dd/yy'}}</p>
+						</div>
+						<div class="col-md-12 col-lg-12 col-xl-8 text-right">
+<!-- 							<p class="font-weight-bold font-h4 d-none d-xl-block">{{$ctrl.currentTransactionItem.latestTransStatus}}</p> -->
+							<div data-ng-class="($ctrl.transaction.hasFailed !== true ? 'success' : 'failed')">
+								<div class="steps">
+								    <ul id="progressTracker" class="steps-container d-flex justify-content-between">
+								        <li data-ng-repeat="li in $ctrl.transStatus track by $index" data-ng-init="$ctrl.checkProgress()" data-ng-class="(li.complete == true ? 'complete': '') + '' + (li.active == true ? 'active': '')"> 
+								            <div class="step font-body cursor-help" tooltip-placement="{{li.position}}" uib-tooltip="{{li.tip}}" tooltip-class="trackerStep">
+								                <div class="step-image"><span></span></div>
+								                <div class="step-current"><span>{{li.status}}</span></div>
+								            </div>
+								        </li>
+								    </ul>
+								    <div class="step-bar" data-ng-style="{ 'width': $ctrl.transactionProgress + '%' }"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="currTransAnchor"></div>
+				<div data-ng-repeat="transaction in $ctrl.currentTransactionItem.service | filter: transactionsFilter" class="border-grey-xs--btm">
+					<div class="content-panel__body">
+						<div class="row">
+							<div class="col-md-12 col-lg-6 col-xl-6 md-m-b-md">
+								<div class="d-none d-lg-block m-b-sm">
+									<p class="font-weight-bold font-h4 m-b-xs">Service: <span class="font-weight-normal" data-ng-bind="transaction.serviceType"></span></p>
+									<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
+									<p class="font-weight-bold font-h4 m-b-xs">Client Ref: 
+										<span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span>
+										<span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey">[No client description provided]</span>
+									</p>
+									<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>
+								</div>
+								<div class="d-none d-sm-none d-md-block d-lg-none">
+									<div class="p-b-sm">
+										<div class="row">
+											<div class="col-md-6">
+												<p class="font-weight-bold font-h4 m-b-xs">Service: <span class="font-weight-normal" data-ng-bind="transaction.serviceType"></span></p>
+											</div>
+											<div class="col-md-6">
+												<p class="font-weight-bold font-h4 m-b-xs">App No:
+													<span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span>
+												</p>
+											</div>
+											<div class="col-md-6">
+												<p class="font-weight-bold font-h4 m-b-xs">Client Ref:
+													<span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span>
+													<span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey" >[No client description provided]</span>
+												</p>
+											</div>
+											<div class="col-md-6">
+												<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="border-grey-xs--btm border-grey-xs--top p-tb-sm m-b-sm">
+									<div class="d-none d-md-none d-lg-block">
+										<div class="row m-b-sm">
+											<div class="col-md-6">
+												<p class="font-weight-bold font-body">Official fee: </p>
+											</div>
+											<div class="col-md-6">
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalOfficialFeesUSD || '0.00') | number: 2}}</p>
+											</div>
+										</div>
+										<div class="row m-b-sm">
+											<div class="col-md-6">
+												<p class="font-weight-bold font-body">Processing fee: </p>
+											</div>
+											<div class="col-md-6">
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalProcessingFeesUSD || '0.00') | number: 2}}</p>
+											</div>
+										</div>
+										<div class="row m-b-sm">
+											<div class="col-md-6">
+												<p class="font-weight-bold font-body">Express fee: </p>
+											</div>
+											<div class="col-md-6">
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalExpressFeesUSD || '0.00') | number: 2}}</p>
+											</div>
+										</div>
+										<div class="row">		
+											<div class="col-md-6">
+												<p class="font-weight-bold font-body">Urgent clearance fee: </p>
+											</div>
+											<div class="col-md-6">
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalUrgentFeesUSD || '0.00') | number: 2}}</p>
+											</div>	
+										</div>
+									</div>
+									<div class="d-none d-sm-none d-md-block d-lg-none">
+										<div class="row">
+											<div class="col-md-3 md-m-b-xs">
+												<p class="font-weight-bold font-body">Official fee: </p>
+											</div>
+											<div class="col-md-3">
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalOfficialFeesUSD || '0.00') | number: 2}}</p>
+											</div>
+											<div class="col-md-3">
+												<p class="font-weight-bold font-body">Processing fee: </p>
+											</div>
+											<div class="col-md-3">
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalProcessingFeesUSD || '0.00') | number: 2}}</p>
+											</div>
+											<div class="col-md-3">
+												<p class="font-weight-bold font-body">Express fee: </p>
+											</div>
+											<div class="col-md-3">
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalExpressFeesUSD || '0.00') | number: 2}}</p>
+											</div>												
+											<div class="col-md-3">
+												<p class="font-weight-bold font-body">Urgent clearance fee: </p>
+											</div>
+											<div class="col-md-3">
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalUrgentFeesUSD || '0.00') | number: 2}}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-1 col-lg-6 col-xl-6">
+										<p class="font-weight-bold">Total: </p>
+									</div>
+									<div class="col-md-2 col-lg-6 col-xl-6">
+										<p>$ {{(transaction.serviceFeeUI.subTotalUSD || '0.00') | number: 2}}</p>
+									</div>	
+								</div>
+							</div>					
+							<div class="col-md-12 col-lg-6 col-xl-6 text-xs-center">
+								<div class="content-panel__body bg-light-grey2 bg-info-icon">
+									<div class="progress-trans">
+										<p class="font-h4 font-weight-bold m-b-sm" data-ng-bind="transaction.renewalStatus"></p>
+										<div data-ng-if="transaction.renewalStatus == 'Payment in progress'">
+											<div class="progress-tracker m-b-sm">
+												<uib-progress>
+													<uib-bar class="bg-phase-green pill-radius tracker-item" value="33" max="100"></uib-bar>
+												</uib-progress>
+											</div>
+											<div class="m-b-sm">
+												<p class="font-body">This is the process between asking us to complete a transaction and us sending the money to the EPO.  We send an instruction to our payment partner who book the currency exchange transaction.  Once we receive the money it's exchanged and sent on directly to the EPO.</p>
+											</div>
+										</div>
+										<div data-ng-if="transaction.renewalStatus == 'EPO Instructed'"">
+											<div class="progress-tracker m-b-sm">
+												<uib-progress>
+													<uib-bar class="bg-phase-green pill-radius tracker-item" value="66" max="100"></uib-bar>
+												</uib-progress>
+											</div>											
+											<div class="m-b-sm">
+												<p class="font-body">This means that we've asked the EPO to complete the transaction. We're now just waiting for them to action this.</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div data-ng-if="transaction.certificateUrl" class="m-t-sm w-100">
+								<div class="col-xl-12 d-flex justify-content-end">
+									<a data-ng-href="{{$ctrl.currentTransactionItem.certificateUrl}}" class="btn btn--lg btn--green pill-radius" target="_blank">Certificate</a>
+								</div>
+							</div>		
+						</div>
+					</div>
+				</div>
+				<div class="content-panel__body">
+					<div class="row">
+						<div class="col-xl-12 d-flex align-items-center justify-content-end">
+							<a data-ng-href="{{$ctrl.currentTransactionItem.invoiceUrl}}" class="btn btn--lg btn--green pill-radius" target="_blank">Invoice</a>
+						</div>						
+					</div>
+				</div>
+			</uib-tab>
+		</uib-tabset>
+	</div>
+</div>
