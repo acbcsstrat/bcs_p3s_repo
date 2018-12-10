@@ -20,8 +20,8 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       vm.animate = true;
     }, 300);
 
-    var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available'];
-    var renewalStatuses = ['Show price', 'Renewal in place'];
+    var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available', 'Epct being generated', 'Payment in progress', 'EPO instructed', 'Too early', 'Too late'];
+    var renewalStatuses = ['Show price', 'Renewal in place', 'No renewal needed', 'Payment in progress', 'EPO instructed', 'Too late to renew', 'Way too late to renew'];
     vm.patentActionStatuses = {
       'value': 'All Patents',
       'values': ['All Patents', 'No Action Available', 'Action Available']
@@ -54,50 +54,53 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     function updateCategory(status) {
 
-      for(var filter in $scope.filters) {
-        if($scope.filters.hasOwnProperty(filter)) {
-          
-          for(var i in $scope.filters[filter]) {
-            $scope.filters.serviceStatus[i] = false;
-            $scope.filters.currentStageColour[i] = false;
-          }
-        }
-      };    
+        for(var filter in $scope.filters) {
+            if($scope.filters.hasOwnProperty(filter)) {
+                for(var i in $scope.filters[filter]) {
+                  $scope.filters.serviceStatus[i] = false;
+                  $scope.filters.currentStageColour[i] = false;
+                }
+            }
+        };
 
-      if(status === 'All Patents') {
-        $scope.portfolioData = patents;
-      }
-      if(status === 'Action Available') {
-        $scope.portfolioData = patents.filter(function(el){
-          if(el.serviceList && el.serviceList.length > 0) {
-            return organiseTextService.actionStatus(el.serviceList[0].serviceStatus)
-          }
-        })
-      }
-      if(status === 'No Action Available') {
-        $scope.portfolioData = patents.filter(function(el){
-          if(el.serviceList.length === 0) {
-            return el;
-          }
-        })
-      }      
+        if(status === 'All Patents') {
+            $scope.portfolioData = patents;
+        }
+
+        if(status === 'Action Available') {
+            $scope.portfolioData = patents.filter(function(el){
+                if(el.serviceList && el.serviceList.length > 0) {
+                    return organiseTextService.actionStatus(el.serviceList[0].serviceStatus)
+                }
+            })
+        }
+
+        if(status === 'No Action Available') {
+            $scope.portfolioData = patents.filter(function(el){
+                if(el.serviceList.length === 0) {
+                    return el;
+                }
+                if(el.serviceList && el.serviceList.length > 0) {
+                    return !organiseTextService.actionStatus(el.serviceList[0].serviceStatus)
+                }
+            })
+        }      
 
     }
 
     $scope.epctStages = function(field) {
-      var result = [];
-      for(var i = 0; i < $scope.portfolioData.length; i++){
-        var patent = $scope.portfolioData[i];
-        if(patent.serviceList && patent.serviceList.length > 0){
-          for(var j = 0; j < patent.serviceList.length; j++){
-            if(patent.serviceList[j].serviceType == 'Form1200') {
-              result.push(patent.serviceList[j][field])
+        var result = [];
+        for(var i = 0; i < $scope.portfolioData.length; i++){
+            var patent = $scope.portfolioData[i];
+            if(patent.serviceList && patent.serviceList.length > 0){
+                for(var j = 0; j < patent.serviceList.length; j++){
+                    if(patent.serviceList[j].serviceType == 'Form1200') {
+                        result.push(patent.serviceList[j][field])
+                    }
+                }
             }
-          }
         }
-      }
-      return uniqueArray(result); //check no duplicates
-
+        return uniqueArray(result); //check no duplicates
     }
 
     $scope.renewalStages = function(field) {
@@ -120,15 +123,15 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     $scope.europctStatus = function(field){
       var result = [];
       for(var i = 0; i < $scope.portfolioData.length; i++){
-        var patent = $scope.portfolioData[i];
+          var patent = $scope.portfolioData[i];
           if(patent.serviceList && patent.serviceList.length > 0){
-            for(var j = 0; j < patent.serviceList.length; j++){
-              if(euroPctStatuses.indexOf(patent.serviceList[j][field]) > -1) 
-                result.push(organiseTextService.uiStatus(patent.serviceList[j][field])) //organisetTextservice required as UI text and backend text are being mixed
+              for(var j = 0; j < patent.serviceList.length; j++){
+                  if(euroPctStatuses.indexOf(patent.serviceList[j][field]) > -1) 
+                      result.push(organiseTextService.uiStatus(patent.serviceList[j][field])) //organisetTextservice required as UI text and backend text are being mixed
               }
           } else { //if not servicelist
               if(euroPctStatuses.indexOf(patent.serviceStatus) > -1) {
-                result.push(organiseTextService.uiStatus(patent.serviceStatus));
+                  result.push(organiseTextService.uiStatus(patent.serviceStatus));
               }
           }
           
@@ -155,6 +158,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     };
 
     $scope.testFl = function(el){
+        
         for(var filter in $scope.filters){
             var filterArray = [];
             for(var i in $scope.filters[filter]){
@@ -164,16 +168,17 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
                 for(var i = 0; i < el.serviceList.length; i++) {            
                     var notUiText = organiseTextService.uiStatus(el.serviceList[i][filter])
                     if(notUiText !== undefined || typeof notUiText !== 'undefined') {
-                        if(filterArray.length > 0 && filterArray.indexOf(notUiText.toLowerCase()) === -1) {
+                      
+                        if(filterArray.length > 0 && filterArray.indexOf(notUiText.toLowerCase()) === -1) { //not part of filter options
                           return false;
                         }
                     } else {
-                      if(filterArray.length > 0 && filterArray.indexOf(el.serviceList[i][filter].toLowerCase()) === -1) { //if servicetype or colour
-                          return false;
-                      }
+                        if(filterArray.length > 0 && filterArray.indexOf(el.serviceList[i][filter].toLowerCase()) === -1) { //not part of filter options if servicetype or colour
+                            return false;
+                        }
                     }
                 }
-            } else { //to handle items that dont have a sevice 
+            } else { //to handle items that dont have a service 
                 if(filterArray.length > 0 && filterArray.indexOf(el.serviceStatus.toLowerCase()) === -1) {
                   
                   return false;
