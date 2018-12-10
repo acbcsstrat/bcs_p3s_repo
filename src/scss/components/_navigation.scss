@@ -25,12 +25,14 @@
     transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
     text-decoration: none;
     text-transform: uppercase;
+    border: 1px solid transparent;    
     &[disabled] {
       color: $white;
       cursor: not-allowed;
     }
     &:not([disabled]):hover, &:not([disabled]):focus {
-      box-shadow: 0 0 1px $grey-dark;
+      box-shadow: 0 0 2px 1px $grey-dark;
+
     }
     &.active {
       color: $white; 
@@ -41,8 +43,12 @@
 
 
 .view-nav-secondary {
+  background: $white;
   .view-nav__item {
-    border: none;
+    // border-top: 1px solid $grey;
+    border-right: 1px solid $grey;
+    border-left: 1px solid $grey;
+    border-bottom: 3px solid $white; 
     font-weight: 400;
     background: $white;
     font-size: $font-h3;
@@ -58,12 +64,8 @@
       color: $white;
       cursor: not-allowed;
     }
-    // &:not([disabled]):hover, &:not([disabled]):focus {
-    //   background: 
-    // }
     &.active {
       border-bottom: 3px solid $black; 
-      // background: $grey-dark;
     }
   }
 }
@@ -77,6 +79,7 @@
         line-height: $line-none;
         text-decoration: none;
         // text-transform: uppercase;
+        
         margin-right: 1rem;
         @include padding-mixin(0.5rem 3rem);
         -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
@@ -94,7 +97,8 @@
             color: $black;
         }
         &:not([disabled]):hover {
-          box-shadow: 0 0 2px  $grey-dark;
+            border: 1px solid transparent;
+            box-shadow: 0 0 2px  $grey-dark;
         }
         &.active {
           background: $grey;
@@ -103,6 +107,7 @@
           color: $white;
         }
         &.list-item--colour-border {
+          border: 1px solid transparent;
           background: none;
           &.green {
             border: 2px solid $green;
