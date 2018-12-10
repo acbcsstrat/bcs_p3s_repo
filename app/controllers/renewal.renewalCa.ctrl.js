@@ -5,7 +5,7 @@ renewalCaCtrl.$inject = ['patent','ca', '$timeout', 'chunkDataService', 'costAna
 function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisService) {
 
     var vm = this;
-    console.log(ca)
+
     if(typeof ca !== 'undefined' || ca !== null ) {
         
         vm.ca = ca;
@@ -39,7 +39,7 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
                 stacked: true,
                 duration: 500,
                 multibar: {
-                  groupSpacing: 0.4
+                    groupSpacing: 0.4
                 },            
                 xAxis: {
                     showMaxMin: true,
@@ -93,7 +93,8 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
                     },
                     showMaxMin: true,
                     rotateLabels: -30,
-                    tickPadding: 20                
+                    tickPadding: 20,
+                    ticks: 4        
                 },
                 yAxis: {
                     tickFormat: function(d){
