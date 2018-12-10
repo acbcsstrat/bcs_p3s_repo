@@ -16,7 +16,7 @@
     color: $white;
   }
   &:not([disabled]):hover, &:not([disabled]):focus  {
-    box-shadow: 0 0 2px $grey-dark;
+    box-shadow: 0 0 2px 1px $grey-dark;
   }
 
 }
@@ -98,7 +98,7 @@
     color: $white;
   }
   &:not([disabled]):hover, &:not([disabled]):focus  {
-    box-shadow: 0 0 2px $grey-dark;
+    box-shadow: 0 0 2px 1px $grey-dark;
   }
 
 }
