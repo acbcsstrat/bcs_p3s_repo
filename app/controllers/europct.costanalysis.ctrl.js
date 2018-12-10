@@ -70,7 +70,8 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
                         
                     },
                     tickPadding: 20,
-                    showMaxMin: true
+                    showMaxMin: true,
+                    ticks: 8
                 },
                 yAxis: {
                     tickFormat: function(d){
@@ -81,7 +82,7 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
                     showMaxMin: true
                 },
                 callback: function(d, e) {
-                    d3.selectAll('.nvd3 .nv-bar rect').attr("rx", 15);
+                    d3.selectAll('.nvd3 .nv-bar rect').attr("rx", 25);
                 }
             }
         }
@@ -144,7 +145,7 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
         }
 
         function barData() {
-
+            // console.log(ca)
             var barChartArr = [], label = [], data = [];
             for (var property in ca) {
                 if (ca.hasOwnProperty(property)) {
@@ -160,7 +161,6 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
 
             for (var i = 0; label.length && i < data.length; i++) {
                 barChartArr[i] = [label[i], data[i]]; //pairs the items from two arrays into a single array in the new array
-                console.log(barChartArr[i])
             }
 
             barChartArr.reverse();
