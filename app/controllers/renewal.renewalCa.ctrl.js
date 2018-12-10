@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalCaCtrl', renewalCaCtrl);
 
-renewalCaCtrl.$inject = ['patent','ca', '$timeout', 'chunkDataService', 'costAnalysisService'];
+renewalCaCtrl.$inject = ['patent','ca', '$timeout', 'chunkDataService', 'costAnalysisService', 'currentTransactionsService'];
 
-function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisService) {
+function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisService, currentTransactionsService) {
 
     var vm = this;
 
@@ -11,7 +11,8 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
         vm.ca = ca;
         vm.patent = patent;
         vm.barData = barData;
-        vm.loadChart = loadChart;   
+        vm.loadChart = loadChart;
+        vm.fetchItemTransaction = fetchItemTransaction;
         vm.barOptions = {
             chart: {
                 type: 'multiBarHorizontalChart',
@@ -187,6 +188,40 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
         $timeout(function(){
             init();
         }, 100)
+
+        function fetchItemTransaction(id) {
+            console.log(id)
+            currentTransactionsService.fetchCurrentTransactions()
+            .then(
+                function(response) {
+                    console.log(response)
+                    var transaction = response.filter(function(el){
+                        return el.renewalUIs.find(function(item) {
+                            return item.patentUI.id === id;
+                        })
+                    })
+
+                    if(transaction !== undefined || typeof transaction !== 'undefined') {
+                        $state.go('current-transactions.current-transaction-item',{transId: transaction[0].id}) //if match, go current-transaction-item
+                        .then(
+                            function(response){
+                                $timeout(function() {
+                                    $location.hash('currTransAnchor'); 
+                                    $anchorScroll();  //scroll to anchor href
+                                }, 300);
+                            },
+                            function(errResponse){
+                                console.log(errResponse);
+                            }
+                        );
+                    }
+
+                },
+                function(errResponse) {
+                    console.log(errResponse);
+                }
+            );
+        };            
     }
 
 }
