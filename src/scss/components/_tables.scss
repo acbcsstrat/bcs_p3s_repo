@@ -63,13 +63,13 @@
 
 .t-data .t-data__th {
   vertical-align: middle;
-  text-align: center;
-  @include padding-mixin(1.5rem 2.5rem);
+  text-align: left;
+  @include padding-mixin(1rem 2rem);
 }
 
 .t-data .t-data__td {
   vertical-align: middle;
-  text-align: center;
+  text-align: left;
   @include padding-mixin(1rem 2rem);
 }
 
