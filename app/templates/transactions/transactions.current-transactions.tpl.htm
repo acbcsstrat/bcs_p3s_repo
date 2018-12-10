@@ -74,35 +74,35 @@
 							</tr>
 						</thead>
 						<tbody>
-						    <tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {renewalUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {renewalUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
+						    <tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {serviceUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {serviceUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
 						        <td class="t-data__td--ellipsis t-data__td t-data__w15">
 						        	<span class="td-ellipsis">
 										<a class="t-data__a" data-ui-sref="current-transactions.current-transaction-item({transId: item.id})">{{item.p3S_TransRef}}</a>
 						        	</span>
 						        </td>
 						        <td class="t-data__td t-data__w13">
-									{{item.renewalUIs.length}}
+									{{item.serviceUIs.length}}
 						        </td>
 						        <td class="t-data__td--ellipsis t-data__td t-data__w15">
-									<span data-ng-if="item.renewalUIs.length === 1" data-ng-repeat="patent in item.renewalUIs">
+									<span data-ng-if="item.serviceUIs.length === 1" data-ng-repeat="patent in item.serviceUIs">
 										<span data-ng-if="patent.patentUI.patentApplicationNumber.length">
 											<span class="td-ellipsis txt-grey">
 												{{patent.patentUI.patentApplicationNumber}}
 											</span>
 										</span>
 									</span>
-									<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.renewalUIs" data-ng-model="$ctrl.patentAppData.defaultSelect" data-ng-change="$ctrl.transactionListFilter($ctrl.patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
+									<select data-ng-if="item.serviceUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.serviceUIs" data-ng-model="$ctrl.patentAppData.defaultSelect" data-ng-change="$ctrl.transactionListFilter($ctrl.patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
 										<option value="">Multiple</option>
 									</select>
 						        </td>
 						        <td class="t-data__td--ellipsis t-data__td t-data__w15" data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
-									<span data-ng-if="item.renewalUIs.length == 1;" data-ng-repeat="ref in item.renewalUIs">
+									<span data-ng-if="item.serviceUIs.length == 1;" data-ng-repeat="ref in item.serviceUIs">
 										<span data-ng-if="ref.patentUI.clientRef === ''" data-ng-init="$ctrl.noClientRef()">
 											<span class="td-ellipsis txt-grey">[No client reference provided]</span>
 										</span>
 										<span data-ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>
 									</span>
-									<select data-ng-if="item.renewalUIs.length > 1" data-ng-options="item.patentUI.clientRef for item in item.renewalUIs" data-ng-model="$ctrl.clientRefData.defaultSelect" class="pill-radius form-control font-body" data-ng-change="$ctrl.transactionListFilter($ctrl.clientRefData.defaultSelect, 'clientRefFilter', item.id)">
+									<select data-ng-if="item.serviceUIs.length > 1" data-ng-options="item.patentUI.clientRef for item in item.serviceUIs" data-ng-model="$ctrl.clientRefData.defaultSelect" class="pill-radius form-control font-body" data-ng-change="$ctrl.transactionListFilter($ctrl.clientRefData.defaultSelect, 'clientRefFilter', item.id)">
 										<option value="">Multiple</option>
 									</select>
 						        </td>

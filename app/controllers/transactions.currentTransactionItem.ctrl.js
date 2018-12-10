@@ -18,16 +18,15 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 
 	var currTransStatus = currentTransactionItem.latestTransStatus;
 	vm.currentTransactionItem = currentTransactionItem;	
-	vm.currentTransactionItem.service = currentTransactionItem.epctUIs.concat(currentTransactionItem.renewalUIs)
-	
-	for(var i = 0; i < vm.currentTransactionItem.service.length; i++) {
-		var item = vm.currentTransactionItem.service[i];
-		item.serviceType = item.renewalFeeUI.length !== 0 ? 'Regional Renewal' : 'Form 1200';
-		item.serviceFeeUI = item.renewalFeeUI.length !== 0 ? item.renewalFeeUI : item.form1200FeeUI;
+
+	for(var i = 0; i < vm.currentTransactionItem.serviceUIs.length; i++) {
+		var item = vm.currentTransactionItem.serviceUIs[i];
+		item.serviceType = item.patentUI.renewalFeeUI.length !== 0 ? 'Regional Renewal' : 'Form 1200';
+		item.serviceFeeUI = item.patentUI.renewalFeeUI.length !== 0 ? item.renewalFeeUI : item.form1200FeeUI;
 	}
 
 	vm.checkProgress = checkProgress;
-	vm.patents = [];	
+	vm.patents = [];
 	vm.transStatus = [
 		{
 			status: 'Initiated', 

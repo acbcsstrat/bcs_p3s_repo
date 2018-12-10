@@ -231,6 +231,7 @@ function appRoutes($stateProvider) {
             controllerAs: '$ctrl',
             resolve: {
                 currentTransactionItem: ['currentTransactions', '$stateParams', function(currentTransactions, $stateParams) {
+                    console.log(currentTransactions)
                     return currentTransactions.find(function(transaction){
                         return transaction.id == $stateParams.transId;
                     })
