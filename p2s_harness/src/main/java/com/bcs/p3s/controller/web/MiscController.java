@@ -380,6 +380,10 @@ public class MiscController extends Universal implements Form1200HarnessConstant
 			// zaph - TODO HERE - check rqst is Authorised pre providing the data !!
 			
 			
+			// Prepare filename
+			String pdfFilename = null;
+
+			
 			byte[] bytearray = new byte[4194304]; // 4MB. = Current size limit
 
 			Blob blobby = null;
@@ -397,22 +401,18 @@ public class MiscController extends Universal implements Form1200HarnessConstant
 						response.setContentType("application/pdf");
 						response.getOutputStream().write(bytearray,0,0); 
 				} else {
+					pdfFilename = epct.getPatent().getEP_ApplicationNumber()+"_PPform1200.pdf";
 					int size=0;
 					InputStream sImage = blobby.getBinaryStream();
 					while( (size=sImage.read(bytearray)) != -1 ) {
 						log().debug(err+" in loop reading f1200 pdf. Size this loop is "+size);
-	
 						response.setContentType("application/pdf");
-						
-						//response.setHeader("Content-Disposition", "attachment;filename=".concat(String.valueOf(destFileName)));
-						response.setHeader("Content-Disposition", "attachment;filename="+"Harry_B.pdf");
-						
+						response.setHeader("Content-Disposition", "attachment;filename="+pdfFilename);
 						response.getOutputStream().write(bytearray,0,size); 
 					}
 				}
 
 				
-				// zaph - how set filename ??
 				
 				
 				
