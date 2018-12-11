@@ -17,7 +17,6 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScr
     vm.fetchItemTransaction = fetchItemTransaction;
 
     function updateRenewalNotifications(patent, id) {
-        console.log(patent, id)
         renewalRestService.updateNotifications(patent.renewalNotificationUIs, id)
         .then(
             function(response){
