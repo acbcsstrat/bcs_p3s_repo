@@ -173,7 +173,7 @@ function appRoutes($stateProvider) {
                     return costAnalysisService.fetchRenewalCa(patent.id);  
                 }],
                 renewal: ['renewalRestService', '$stateParams', 'patent', function(renewalRestService, $stateParams, patent){
-                        return renewalRestService.fetchHistory(patent.id);
+                    return renewalRestService.fetchHistory(patent.id);
                 }]                   
             }            
         })
@@ -231,7 +231,6 @@ function appRoutes($stateProvider) {
             controllerAs: '$ctrl',
             resolve: {
                 currentTransactionItem: ['currentTransactions', '$stateParams', function(currentTransactions, $stateParams) {
-                    console.log(currentTransactions)
                     return currentTransactions.find(function(transaction){
                         return transaction.id == $stateParams.transId;
                     })
