@@ -25,12 +25,12 @@
 	      	 			</a>
 		      	 	</div>
 	      	 		<div class="d-flex justify-content-center align-items-center">
-	      	 			<a class="nav-link d-flex justify-content-center align-items-center inline-link" ui-sref="profile">
-			      	 		<p class="font-h4 font-weight-bold">{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</p>
+	      	 			<a class="nav-link nav-link--white d-flex justify-content-center align-items-center font-h4 font-weight-bold" ui-sref="profile">
+			      	 		{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}
 		      	 		</a>
 	      	 		</div>
 	      	 		<div class="d-flex justify-content-center align-items-center">
-		      	 		<p class="txt-white font-body text-center">{{$ctrl.user.business.businessName}}</p>
+		      	 		<span class="font-body text-center">{{$ctrl.user.business.businessName}}</span>
 		      	 	</div>
 	      	 	</div>
 	      	 	<div layout="column" class=" d-flex justify-content-center">
