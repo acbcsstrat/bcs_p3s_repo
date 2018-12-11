@@ -17,14 +17,12 @@ import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.PortfolioUI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
-import com.bcs.p3s.display.form1200.ExtensionStateUI;
 import com.bcs.p3s.display.form1200.Form1200SavedData;
 import com.bcs.p3s.display.form1200.GenerateForm1200DataIn;
 import com.bcs.p3s.display.form1200.PageDescriptionEnum;
 import com.bcs.p3s.display.form1200.PageDescriptionTool;
 import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
-import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.ServiceManager;
 import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
@@ -146,8 +144,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		String form1200PdfUrl = null;  // existing simile is: "invoiceUrl":"/p3sweb/invoice/34"
 		Epct epct = Epct.findActiveEpctByPatent(patentV2UI);
 		if (epct!=null && epct.getForm1200()!=null) {
-			// Thanksgiving change
-			form1200PdfUrl = null;  // hardcode. Until we have a (Blob) to provide
+			form1200PdfUrl = "/p3sweb/download.pdf?epctId="+epct.getId();
 			patentV2UI.setForm1200PdfUrl(form1200PdfUrl);
 		}
 		

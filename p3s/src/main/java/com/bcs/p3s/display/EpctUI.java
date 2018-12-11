@@ -1,6 +1,5 @@
 package com.bcs.p3s.display;
 
-import java.util.Date;
 import java.util.List;
 
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
@@ -11,7 +10,6 @@ import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
-import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.wrap.PatentExtendedData;
 
 /**
@@ -112,7 +110,7 @@ public class EpctUI extends Epct {
 		Payment activePaymentId = epct.findActivePaymentId();
 		//if(renewal.getActivePaymentId().getLatestInvoice() != null) {
 		if(activePaymentId != null) {
-			String url = "KKKKKKKKkkk";
+			String url = "";
 			if (context!=null) {
 				url = context + "/invoice/" + activePaymentId.getId().toString(); 
 			}
@@ -153,12 +151,11 @@ public class EpctUI extends Epct {
 		//private String activePaymentId	
 
 		
-		//	private String form1200PdfUrl;						// from form1200
-		//Get the invoice form1200PdfUrl
+		// Get the form1200PdfUrl
 		if(this.getForm1200() != null) {
-			String url = "KKKKKKKKkkk";
+			String url = "";
 			if (context!=null) {
-				url = context + "/form1200/" + this.getForm1200().getId().toString(); 
+				url = context + "/download.pdf?epctId=" + this.getId(); 
 			}
 			this.setForm1200PdfUrl(url);
 		}
@@ -166,7 +163,7 @@ public class EpctUI extends Epct {
 		
 		
 		
-		//Get the paymentUI details
+		//Get the paymentUI details  - acTidy
 //		renewal.getActivePaymentId().setRenewals(null);
 //		renewal.getActivePaymentId().setLatestInvoice(null);
 //		renewal.getActivePaymentId().setInitiatedByUserId(null);
