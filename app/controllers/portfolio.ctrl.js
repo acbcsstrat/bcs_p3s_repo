@@ -15,6 +15,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.getCurrColour = getCurrColour;
     vm.actionStatus = actionStatus;
     vm.toggleAll = toggleAll;
+    vm.generateForm1200 = generateForm1200
 
     $timeout(function(){
       vm.animate = true;
@@ -50,6 +51,10 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       return array.filter(function(item, pos, self) {
         return self.indexOf(item) == pos;
       })
+    }
+
+    function generateForm1200(id) {
+      $state.go('portfolio.patent.euro-pct.form1200.intro', {patenId: id}, {reload: true})
     }
 
     function updateCategory(status) {
