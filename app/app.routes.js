@@ -191,7 +191,7 @@ function appRoutes($stateProvider) {
             templateUrl: 'app/templates/renewal/renewal.cost-analysis.tpl.htm',
             controller: 'renewalCaCtrl',
             controllerAs: '$ctrl'
-        })               
+        })
         .state('search-patent', {
             url: '/search-patent',
             templateUrl: 'app/templates/patents/patents.search-patent.tpl.htm',
