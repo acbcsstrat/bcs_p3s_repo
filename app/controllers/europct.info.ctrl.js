@@ -16,8 +16,6 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
     vm.displayNotifications = displayNotifications;
 
     function getCurrColour(colour, type) {
-        // console.log(colour, type)
-        // console.log(organiseColourService.getCurrColour(colour, type))
         return organiseColourService.getCurrColour(colour, type);
     }
 
@@ -36,6 +34,7 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
+
                 this.dismissModal = function () {
                     $uibModalInstance.close();
                 };
@@ -51,12 +50,9 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
                         }
                     )
                 }
-
                 // $state.go('portfolio.patent', {patentId: patent.id}, {reload: true}); //go to patent info on successful deletion
             }]
-
-        });        
-
+        });
     }
 
     function editApplication(id) {    
@@ -72,7 +68,7 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
     }    
 
     function updateNotifications(id) {
-        euroPctService.updateNotifications(id, patent.form1200NotificationUIs)
+        euroPctService.updateNotifications(id, patent.epctNotificationUIs)
         .then(
             function(response){
                 updateNotificationsSuccess();
