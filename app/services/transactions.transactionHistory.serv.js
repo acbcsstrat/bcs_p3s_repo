@@ -19,7 +19,11 @@ function transactionHistoryService($http, $q) {
 		$http.get(REST_SERVICE_URI)
 		.then(
 			function(response){
-				deferred.resolve(response.data);
+                response.data.forEach(function(el){
+                    console.log(el)
+                    el.serviceUIs = el.renewalUIs.concat(el.epctUIs)
+                })
+                deferred.resolve(response.data);
 			},
 			function(errResponse){
 				deferred.resolve(errResponse);
@@ -38,7 +42,7 @@ function transactionHistoryService($http, $q) {
     		case 'Initiated':
     			renewalProgress = 14;
     		break;
-    		case 'Pending':
+    		case 'Awaiting Funds':
     			renewalProgress = 28;
 			break;
     		case 'Funds Received':
