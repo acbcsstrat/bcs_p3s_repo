@@ -135,6 +135,8 @@ public class ServiceAuthorisationTools extends Universal {
 	// End of   : Higher Level tools
 	
 	
+	
+	
 	// Start of : Lower Level tools
 
 	// Singleton for session info - not Singleton anymore

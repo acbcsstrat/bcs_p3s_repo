@@ -13,6 +13,7 @@ import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.engine.EpctEngine;
+import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.model.Form1200Record;
@@ -93,6 +94,16 @@ public interface Form1200Service {
 	 * @param fail_reason One of the 3 permitted reasons (see EPCTnotAvailableReasonEnum)
 	 */
 	public void rejectCurrentForm1200(long patentId, String fail_reason);
+
+	
+	/**
+	 * Created to access the Form1200 PDF Blob, but available to all
+	 * Provides the usual access authorisation checks
+	 *  
+	 * @param epctId
+	 * @return An Epct (or null)
+	 */
+	public Epct findEpct(long epctId);
 
 	
 }

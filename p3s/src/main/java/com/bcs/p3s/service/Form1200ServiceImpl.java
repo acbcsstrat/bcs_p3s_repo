@@ -559,8 +559,26 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		patent.merge();
 	}
 	
+
 	
-	
+	/**
+	 * Created to access the Form1200 PDF Blob, but available to all
+	 * Provides the usual access authorisation checks
+	 *  
+	 * @param epctId
+	 * @return An Epct (or null)
+	 */
+	@Override
+	public Epct findEpct(long epctId) {
+
+		Epct epct = Epct.findEpct(epctId);
+		if (epct==null) { log().error("findEpct("+epctId+") yields null. from "+CLASSNAME); return null; }
+		
+		checkThisIsMyPatent(epct.getPatent().getId(), "from findEpct("+epctId+") in "+CLASSNAME);
+		
+		return epct;
+	}
+
 	
 	
 	
