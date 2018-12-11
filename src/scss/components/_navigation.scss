@@ -20,19 +20,18 @@
     cursor: pointer;
     line-height: $line-none;
     @include padding-mixin(0.7rem 3rem);
-    -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
-    -o-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
-    transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
     text-decoration: none;
     text-transform: uppercase;
-    border: 1px solid transparent;    
+    // border: 1px solid transparent;    
     &[disabled] {
       color: $white;
       cursor: not-allowed;
     }
     &:not([disabled]):hover, &:not([disabled]):focus {
-      box-shadow: 0 0 2px 1px $grey-dark;
-
+      box-shadow: 0 0 2px .01px $grey-dark;
     }
     &.active {
       color: $white; 
@@ -55,9 +54,9 @@
     cursor: pointer;
     line-height: $line-none;
     @include padding-mixin(1.5rem 3rem);
-    -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
-    -o-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
-    transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
     text-decoration: none;
     text-transform: uppercase;
     &[disabled] {
@@ -78,13 +77,12 @@
         cursor: pointer;
         line-height: $line-none;
         text-decoration: none;
-        // text-transform: uppercase;
-        
+        background: $white;
         margin-right: 1rem;
         @include padding-mixin(0.5rem 3rem);
-        -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
-        -o-transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
-        transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+        -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
         &:last-child {
             margin-right: 0;
         }
@@ -98,7 +96,7 @@
         }
         &:not([disabled]):hover {
             border: 1px solid transparent;
-            box-shadow: 0 0 2px  $grey-dark;
+            box-shadow: 0 0 2px .01px $grey-dark;
         }
         &.active {
           background: $grey;
@@ -152,6 +150,9 @@
           
         }
         &[disabled] {
+          border: $grey-dark;
+          color: $grey;
+          background: $grey-dark;
           color: $white;
           cursor: not-allowed;
         }
