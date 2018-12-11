@@ -84,7 +84,7 @@
 												<p class="font-weight-bold font-body">Official fee: </p>
 											</div>
 											<div class="col-md-6">
-												<p class="font-body">$ {{(transaction.serviceFeeUI.totalOfficialFeesUSD || '0.00') | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalOfficialFeeUSD || '0.00') | number: 2}}</p>
 											</div>
 										</div>
 										<div class="row m-b-sm">
@@ -92,7 +92,7 @@
 												<p class="font-weight-bold font-body">Processing fee: </p>
 											</div>
 											<div class="col-md-6">
-												<p class="font-body">$ {{(transaction.serviceFeeUI.totalProcessingFeesUSD || '0.00') | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.processingFeeUSD || '0.00') | number: 2}}</p>
 											</div>
 										</div>
 										<div class="row m-b-sm">
@@ -100,7 +100,7 @@
 												<p class="font-weight-bold font-body">Express fee: </p>
 											</div>
 											<div class="col-md-6">
-												<p class="font-body">$ {{(transaction.serviceFeeUI.totalExpressFeesUSD || '0.00') | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.expressFeeUSD || '0.00') | number: 2}}</p>
 											</div>
 										</div>
 										<div class="row">		
@@ -108,7 +108,7 @@
 												<p class="font-weight-bold font-body">Urgent clearance fee: </p>
 											</div>
 											<div class="col-md-6">
-												<p class="font-body">$ {{(transaction.serviceFeeUI.totalUrgentFeesUSD || '0.00') | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.urgentFeeUSD || '0.00') | number: 2}}</p>
 											</div>	
 										</div>
 									</div>
@@ -118,25 +118,25 @@
 												<p class="font-weight-bold font-body">Official fee: </p>
 											</div>
 											<div class="col-md-3">
-												<p class="font-body">$ {{(transaction.serviceFeeUI.totalOfficialFeesUSD || '0.00') | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.officialFeeUSD || '0.00') | number: 2}}</p>
 											</div>
 											<div class="col-md-3">
 												<p class="font-weight-bold font-body">Processing fee: </p>
 											</div>
 											<div class="col-md-3">
-												<p class="font-body">$ {{(transaction.serviceFeeUI.totalProcessingFeesUSD || '0.00') | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.ProcessingFeeUSD || '0.00') | number: 2}}</p>
 											</div>
 											<div class="col-md-3">
 												<p class="font-weight-bold font-body">Express fee: </p>
 											</div>
 											<div class="col-md-3">
-												<p class="font-body">$ {{(transaction.serviceFeeUI.totalExpressFeesUSD || '0.00') | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.expressFeeUSD || '0.00') | number: 2}}</p>
 											</div>												
 											<div class="col-md-3">
 												<p class="font-weight-bold font-body">Urgent clearance fee: </p>
 											</div>
 											<div class="col-md-3">
-												<p class="font-body">$ {{(transaction.serviceFeeUI.totalUrgentFeesUSD || '0.00') | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.urgentFeeUSD || '0.00') | number: 2}}</p>
 											</div>
 										</div>
 									</div>
@@ -153,8 +153,8 @@
 							<div class="col-md-12 col-lg-6 col-xl-6 text-xs-center">
 								<div class="content-panel__body bg-light-grey2 bg-info-icon">
 									<div class="progress-trans">
-										<p class="font-h4 font-weight-bold m-b-sm" data-ng-bind="transaction.renewalStatus"></p>
-										<div data-ng-if="transaction.renewalStatus == 'Payment in progress'">
+										<p class="font-h4 font-weight-bold m-b-sm" data-ng-bind="transaction.renewalStatus || transaction.form1200Status"></p>
+										<div data-ng-if="transaction.renewalStatus == 'Payment in progress' || transaction.form1200Status == 'Payment in progress'">
 											<div class="progress-tracker m-b-sm">
 												<uib-progress>
 													<uib-bar class="bg-phase-green pill-radius tracker-item" value="33" max="100"></uib-bar>
@@ -164,7 +164,7 @@
 												<p class="font-body">This is the process between asking us to complete a transaction and us sending the money to the EPO.  We send an instruction to our payment partner who book the currency exchange transaction.  Once we receive the money it's exchanged and sent on directly to the EPO.</p>
 											</div>
 										</div>
-										<div data-ng-if="transaction.renewalStatus == 'EPO Instructed'"">
+										<div data-ng-if="transaction.renewalStatus == 'EPO Instructed' || transaction.form1200Status == 'EPO Instructed'">
 											<div class="progress-tracker m-b-sm">
 												<uib-progress>
 													<uib-bar class="bg-phase-green pill-radius tracker-item" value="66" max="100"></uib-bar>
