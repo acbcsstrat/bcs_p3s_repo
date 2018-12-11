@@ -160,14 +160,14 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
         .then(
             function(response) {
 
-                var transaction = response.filter(function(el){
-                    return el.renewalUIs.find(function(item) {
+                var match = response.filter(function(el){
+                    return el.serviceUIs.find(function(item){
                         return item.patentUI.id === id;
                     })
                 })
 
-                if(transaction !== undefined || typeof transaction !== 'undefined') {
-                    $state.go('current-transactions.current-transaction-item',{transId: transaction[0].id}) //if match, go current-transaction-item
+                if(match !== undefined || typeof match !== 'undefined') {
+                    $state.go('current-transactions.current-transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
                     .then(
                         function(response){
                             $timeout(function() {
