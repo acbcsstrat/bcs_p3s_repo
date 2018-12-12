@@ -30,7 +30,7 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
     function deleteApplication(id) {    
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.modal.commit-delete.euro-pct.tpl.htm', //create html for notifications update success
+            templateUrl: 'app/templates/modals/modal.commit-delete-europct.tpl.htm', //create html for notifications update success
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
