@@ -74,7 +74,9 @@ public class GenerateForm1200Extractor extends Universal {
 						//case "Patent_ID":	generateForm1200DataIn.patentId = castInteger(ob, thisElement);
 						case "id":			generateForm1200DataIn.patentId = castInteger(ob, thisElement);
 											break;
-						case "Patent_ID":	backstopPatentId = castInteger(ob, thisElement); // Shouldn't be needed, but is
+						case "Patent_ID":	// Patent_ID Shouldn't be needed, but is
+											if (ob instanceof Integer) backstopPatentId = castInteger(ob, thisElement); 
+											if (ob instanceof Long) backstopPatentId = ((Long) ob).intValue(); 
 											break;
 											
 						case "EP_ApplicationNumber":	
@@ -84,14 +86,16 @@ public class GenerateForm1200Extractor extends Universal {
 						case "clientRef":	generateForm1200DataIn.clientRef = castString(ob, thisElement);
 											break;
 
-						case "totalClaims":	generateForm1200DataIn.totalClaims = castInteger(ob, thisElement);
+						case "totalClaims":	if (ob instanceof Integer) generateForm1200DataIn.totalClaims = castInteger(ob, thisElement);
+											if (ob instanceof Long) generateForm1200DataIn.totalClaims = ((Long) ob).intValue();
 											break;
 
 						case "isYear3RenewalPaying":	
 											generateForm1200DataIn.isYear3RenewalPaying = castBoolean(ob, thisElement);
 											break;
 
-						case "totalPages":	generateForm1200DataIn.totalPages = castInteger(ob, thisElement);
+						case "totalPages":	if (ob instanceof Integer) generateForm1200DataIn.totalPages = castInteger(ob, thisElement);
+											if (ob instanceof Long) generateForm1200DataIn.totalPages = ((Long) ob).intValue();
 											break;
 
 						case "extensionStatesUI":	
@@ -109,10 +113,16 @@ public class GenerateForm1200Extractor extends Universal {
 												List<ExtensionStateUI> extensionStateUIs = new ArrayList<ExtensionStateUI>();
 												LinkedHashMap<String,Object> tmp = null;
 												for (Object obItem : oblist) {
-													tmp = (LinkedHashMap<String,Object>) obItem;
 													ExtensionStateUI esUi = new ExtensionStateUI();
-													esUi.extractStateUI(tmp);
-													extensionStateUIs.add(esUi);
+													if (obItem instanceof LinkedHashMap<?,?>) {
+														tmp = (LinkedHashMap<String,Object>) obItem;
+														esUi.extractStateUI(tmp);
+														extensionStateUIs.add(esUi);
+													}
+													else if (obItem instanceof ExtensionStateUI) {
+														esUi = (ExtensionStateUI) obItem;
+														extensionStateUIs.add(esUi);
+													}
 												}
 												//generateForm1200DataIn.extensionStatesUI = (List<ExtensionStateUI>) ob; //fails later
 												generateForm1200DataIn.extensionStatesUI = extensionStateUIs;
@@ -153,10 +163,16 @@ public class GenerateForm1200Extractor extends Universal {
 											List<ValidationStateUI> validationStateUIs = new ArrayList<ValidationStateUI>();
 											LinkedHashMap<String,Object> tmp = null;
 											for (Object obItem : oblist) {
-												tmp = (LinkedHashMap<String,Object>) obItem;
 												ValidationStateUI vsUi = new ValidationStateUI();
-												vsUi.extractStateUI(tmp);
-												validationStateUIs.add(vsUi);
+												if (obItem instanceof LinkedHashMap<?,?>) {
+													tmp = (LinkedHashMap<String,Object>) obItem;
+													vsUi.extractStateUI(tmp);
+													validationStateUIs.add(vsUi);
+												}
+												else if (obItem instanceof ValidationStateUI) {
+													vsUi = (ValidationStateUI) obItem;
+													validationStateUIs.add(vsUi);
+												}
 											}
 											//generateForm1200DataIn.validationStatesUI = (List<ValidationStateUI>) ob; /fails later
 											generateForm1200DataIn.validationStatesUI = validationStateUIs;
@@ -198,9 +214,15 @@ public class GenerateForm1200Extractor extends Universal {
 											List<PageDescriptionUI> pageDescriptionUIs = new ArrayList<PageDescriptionUI>();
 											LinkedHashMap<String,Object> tmp = null;
 											for (Object obItem : oblist) {
-												tmp = (LinkedHashMap<String,Object>) obItem;
-												PageDescriptionUI pdui = PageDescriptionTool.extractPageDescriptionUI( tmp ); 
-												pageDescriptionUIs.add(pdui);
+												if (obItem instanceof LinkedHashMap<?,?>) {
+													tmp = (LinkedHashMap<String,Object>) obItem;
+													PageDescriptionUI pdui = PageDescriptionTool.extractPageDescriptionUI( tmp ); 
+													pageDescriptionUIs.add(pdui);
+												}
+												else if (obItem instanceof PageDescriptionUI) {
+													PageDescriptionUI pdui = (PageDescriptionUI) obItem;
+													pageDescriptionUIs.add(pdui);
+												}
 											}
 											//generateForm1200DataIn.pageDescriptionUI = (List<PageDescriptionUI>) ob;
 											generateForm1200DataIn.setPageDescriptionsUI(pageDescriptionUIs);

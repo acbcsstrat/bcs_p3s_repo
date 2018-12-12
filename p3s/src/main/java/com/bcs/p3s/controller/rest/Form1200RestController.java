@@ -174,7 +174,8 @@ public class Form1200RestController extends Universal {
 	    	obby.put("totalPages", totalPages);
 	    	obby.put("extensionStatesUI", extensionStatesUI);
 	    	obby.put("validationStatesUI", validationStatesUI);
-	    	obby.put("pageDescriptionUI", pageDescriptionUI);
+	    	//obby.put("pageDescriptionUI", pageDescriptionUI);
+	    	obby.put("pageDescriptionsUI", pageDescriptionUI);
 			
 			
 			
@@ -428,7 +429,7 @@ public class Form1200RestController extends Universal {
     @RequestMapping(value = "/rest-form1200/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteForm1200(@PathVariable("id") long id) {
     	
-		String err = PREFIX+"/form1200/"+id+" DELETE deleteForm1200() : ";
+		String err = PREFIX+"/form1200/"+id+" DELETE deleteForm1200(patentId="+id+") : ";
 		log().debug(err+"invoked");
 
 		try {
