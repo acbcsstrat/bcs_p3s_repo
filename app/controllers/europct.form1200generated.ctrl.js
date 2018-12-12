@@ -9,7 +9,7 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
     $rootScope.page = 'Form 1200 Generating';
 
     vm.patent = patent;
-    vm.form1200;
+    // vm.form1200;
     vm.deleteApplication = deleteApplication;
     vm.editApplication = editApplication; 
     vm.portfolioDir = portfolioDir;
@@ -18,7 +18,7 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
 
     function init() {
         form1200Generating();
-        // checkForm1200();   
+        checkForm1200();   
     }
 
     init();
@@ -118,23 +118,21 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
 
     }
 
-    // function checkForm1200() {
-    //     console.log($stateParams.form1200)
-    //     form1200Service.submitForm1200($stateParams.form1200)
-    //     .then(
-    //         function(response){
-    //             console.log(response)
-
-    //             $rootScope.page = 'Form 1200 Generated';
-    //             vm.form1200 = response;
-
-
-    //         },
-    //         function(errResponse){
-    //             console.log('Error generating form 1200')
-    //         }
-    //     )
-    // }
+    function checkForm1200() {
+        if($stateParams.form1200 !== null) {
+            form1200Service.submitForm1200($stateParams.form1200)
+            .then(
+                function(response){
+                    console.log(response)
+                    $rootScope.page = 'Form 1200 Generated';
+                    vm.form1200 = response;
+                },
+                function(errResponse){
+                    console.log('Error generating form 1200')
+                }
+            )
+        }
+    }
 
     function portfolioDir() {
         $state.go('portfolio', {}, {reload: true});
