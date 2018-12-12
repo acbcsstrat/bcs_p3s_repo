@@ -1,33 +1,10 @@
-.btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
-  background: $grey;
-  font-size: $font-normal;  
-  font-weight: 500;
-  color: $grey-dark;
-  -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-  -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-  transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-  &.btn--lg { @include padding-mixin(0.5rem 3rem) } 
-  &.btn--green, {
-    background: $green;
-    color: $white;
-  }  
-  &.btn--red {
-    background: $red;
-    color: $white;
-  }
-  &:not([disabled]):hover, &:not([disabled]):focus  {
-    box-shadow: 0 0 2px .01px $grey-dark;
-  }
-
-}
-
 .btn-underlined-selector { //required for addtocart buttons in table. Rest styles
   .btn:not(add) {
     &.cartbtn:before {
       content: ''!important;
     }    
   }
-  .btn {
+  .btn, .btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
     text-decoration: underline;
     border: 0;
     background: none;
@@ -70,8 +47,30 @@
   }
 }
 
+// .btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
+//   background: $grey;
+//   font-size: $font-normal;  
+//   font-weight: 500;
+//   color: $grey-dark;
+//   -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+//   -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+//   transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+//   &.btn--lg { @include padding-mixin(0.5rem 3rem) } 
+//   &.btn--green, {
+//     background: $green;
+//     color: $white;
+//   }  
+//   &.btn--red {
+//     background: $red;
+//     color: $white;
+//   }
+//   &:not([disabled]):hover, &:not([disabled]):focus  {
+//     box-shadow: 0 0 2px .01px $grey-dark;
+//   }
+
+// }
+
 .btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
-  background: $grey;
   font-size: $font-normal;  
   font-weight: 500;
   color: $grey-dark;
@@ -88,7 +87,11 @@
     &.cartbtn:before {
       content: 'Remove '
     }
-  }  
+  }
+  &.btn--plain {
+    background: $grey;
+    border: 1px solid $border;
+  }
   &.btn--green, {
     background: $green;
     color: $white;
