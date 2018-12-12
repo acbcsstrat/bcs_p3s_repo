@@ -19,6 +19,9 @@ function currentTransactionsService($http, $q) {
 		$http.get(REST_SERVICE_URI)
 		.then(
 			function(response){
+                response.data.forEach(function(el){
+                    el.serviceUIs = el.renewalUIs.concat(el.epctUIs)
+                })
 				deferred.resolve(response.data);
 			},
 			function(errResponse){

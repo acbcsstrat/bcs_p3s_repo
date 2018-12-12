@@ -15,12 +15,13 @@ public abstract class FeeCurrencyComponents extends Universal {
 
 	protected BigDecimal dollarComponentUSD = BigDecimal.ZERO;	// The Dollar component of the overall fee, expressed in USD
 	protected BigDecimal euroComponentEUR   = BigDecimal.ZERO;	// The Euro component of the overall fee, expressed in EUR
-
+	protected BigDecimal currentOfficialFeeUSD   = BigDecimal.ZERO;	// The Euro component of the overall fee, expressed in USD (see comment below)
+	
 	
 	// abstract methods
 
 	public abstract void setDollarComponentUSD();
-	public abstract void setEuroComponentEUR();
+	public abstract void setEuroComponentEUR(BigDecimal rate); // This now sets euroComponentEUR AND currentOfficialFeeUSD. Rate param is a reminder of this  
 
 	
 	// methods
@@ -41,6 +42,15 @@ public abstract class FeeCurrencyComponents extends Universal {
 		return getEuroComponentEUR().multiply(rate);
 	}
 	
+	// 181211 Pat requests further items: currentOfficialFeeEUR & currentOfficialFeeUSD. Implement as extra one property & getters (+ required code change). Implement latter by duplicate getter for euroComponentEUR 
+
+	
+	
+	// Special Getter
+	public BigDecimal getCurrentOfficialFeeEUR() {
+		return euroComponentEUR;
+	}
+	
 	
 	// Ordinary getters. (Setters are abstract)
 
@@ -49,6 +59,9 @@ public abstract class FeeCurrencyComponents extends Universal {
 	}
 	public BigDecimal getEuroComponentEUR() {
 		return euroComponentEUR;
+	}
+	public BigDecimal getCurrentOfficialFeeUSD() {
+		return currentOfficialFeeUSD;
 	}
 	
 }

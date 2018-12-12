@@ -18,36 +18,33 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 
 	var currTransStatus = currentTransactionItem.latestTransStatus;
 	vm.currentTransactionItem = currentTransactionItem;	
-	vm.currentTransactionItem.service = currentTransactionItem.epctUIs.concat(currentTransactionItem.renewalUIs)
-	
-	for(var i = 0; i < vm.currentTransactionItem.service.length; i++) {
-		var item = vm.currentTransactionItem.service[i];
-		item.serviceType = item.renewalFeeUI.length !== 0 ? 'Regional Renewal' : 'Form 1200';
-		item.serviceFeeUI = item.renewalFeeUI.length !== 0 ? item.renewalFeeUI : item.form1200FeeUI;
+	for(var i = 0; i < vm.currentTransactionItem.serviceUIs.length; i++) {
+		var item = vm.currentTransactionItem.serviceUIs[i];
+		item.serviceType = item.patentUI.renewalFeeUI !== null  ? 'Regional Renewal' : 'Form 1200';
+		item.serviceFeeUI = item.patentUI.renewalFeeUI !== null ? item.renewalFeeUI : item.form1200FeeUI;
 	}
-
 	vm.checkProgress = checkProgress;
-	vm.patents = [];	
+	vm.patents = [];
 	vm.transStatus = [
 		{
 			status: 'Initiated', 
 			active: false, 
 			complete: false,
-			tip: 'You\'ve checked out your basket on the Patent Place, and we\'re now doing our work in the background.  We will now send the request over to our payment partners Moneycorp, requesting that they book the currency exchange, and to expect a payment from you.',
+			tip: 'You\'ve checked out your basket on the Patent Place, and we\'re now doing our work in the background. We will now send the request over to our payment partners Moneycorp, requesting that they book the currency exchange, and to expect a payment from you.',
 			position: 'top-left'
 		}, 
 		{
 			status: 'Awaiting Funds', 
 			active: false, 
 			complete: false,
-			tip: 'MoneyCorp have booked the currency exchange, and are now waiting for your payment.  They\'ll expect the funds by the date and time specified, and for it to have the correct reference on it so that the payment can be matched to the transation.',
+			tip: 'MoneyCorp have booked the currency exchange, and are now waiting for your payment. They\'ll expect the funds by the date and time specified, and for it to have the correct reference on it so that the payment can be matched to the transation.',
 			position: 'top-left'
 		}, 
 		{
 			status: 'Funds Received', 
 			active: false, 
 			complete: false,
-			tip: 'MoneyCorp have received your payment and they\'re now completing the foreign exchange.  This happens the day after your funds were expected by MoneyCorp.',
+			tip: 'MoneyCorp have received your payment and they\'re now completing the foreign exchange. This happens the day after your funds were expected by MoneyCorp.',
 			position: 'top-left'
 		},
 		{
@@ -75,7 +72,7 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 			status: 'Completed', 
 			active: false, 
 			complete: false,
-			tip: 'We\'ve had confirmation that your patent has been successfully renewed by the EPO.  You can download copies of the renewal certificate and the invoice from the Transaction history tab under the Transactions menu.',
+			tip: 'We\'ve had confirmation that your patent has been successfully renewed by the EPO. You can download copies of the renewal certificate and the invoice from the Transaction history tab under the Transactions menu.',
 			position: 'top-right'
 		}
 	];

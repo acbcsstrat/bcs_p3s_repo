@@ -94,7 +94,6 @@ public class RenewalUI extends Renewal {
 
 		//Get the FeeUI
 		RenewalFeeUI renewalFeeUI = new RenewalFeeUI(renewal.getRenewalFee());
-		this.setRenewalFee(null); // Hide detail from frontend. Why?
 		this.setRenewalFeeUI(renewalFeeUI);
 		
 		
@@ -102,27 +101,19 @@ public class RenewalUI extends Renewal {
 		renewal.getActivePaymentId().setRenewals(null);
 		renewal.getActivePaymentId().setLatestInvoice(null);
 		renewal.getActivePaymentId().setInitiatedByUserId(null);
-		this.setActivePaymentId(renewal.getActivePaymentId());
+		this.setActivePaymentId(renewal.getActivePaymentId()); // Is this used by FE?
 		
 		PatentUI pui = new PatentUI(this.getPatent(),extendedDatas);
+
 		//set patent & others to null, to avoid sending large, unwanted, potentially confusing data to FE
 		this.setPatent(null);
 		pui.setBusiness(null);
 		pui.setRenewalNotificationUIs(null);
-		
-		
-		// NOte: - at 170726, devt is not able to set following fields - so use DummyDataEngine - acTidy
-		//System.out.println("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
-		//(new Universal()).log().debug("   RenewalUI constructor: acDebug acINCOMPLETE - at 170726, devt is not able to set following fields - so use DummyDataEngine");
-/*		 * 	CurrentRenewalCost
-		 * 	CostBandEndDate
-		 * 	RenewalCostNextStage
-		 * 	RenewalDueDate
-*/
-		/*DummyDataEngine dummyEngine = new DummyDataEngine();
-		dummyEngine.populateExtendedPatentFieldsWithDummyData(pui, this.getPatent());*/
-
 		this.setPatentUI(pui);
+		
+		// Finally, remove further LARGE unwanted inherited data (ie Renewal)
+		//this.setActivePaymentId(null);
+		this.setRenewalFee(null);
 	}
 
 

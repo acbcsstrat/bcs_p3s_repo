@@ -13,7 +13,6 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
     }, 300);
 
 	vm.tableData = currentTransactions;
-    // console.log(vm.tableData )
 	vm.patentAppData = { defaultSelect: null };
   	vm.clientRefData = { defaultSelect: null };
    	vm.sortType  = sortType; // set the default sort type
@@ -25,15 +24,17 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
    	vm.selectedSortType = 'p3S_TransRef';
    	fetchData();
 
-   	function fetchData() {
+    function fetchData() {
+
 		currentTransactions.forEach(function(data){
-			if(data.renewalUIs.length > 1) {
-				data.renewalUIs.map(function(o, i){ 
+			if(data.serviceUIs.length > 1) {
+				data.serviceUIs.map(function(o, i){ 
 					if(o.patentUI.clientRef == '') {
-						o.patentUI.clientRef = '[No Client Description Provided]'
+						o.patentUI.clientRef = '[No Client Reference Provided]'
 					}
 				})					
 			}
+
 		})    
 
 		currentTransactions.map(function(o, i){
@@ -89,6 +90,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 						data.renewalUIs.map(function(o, i){ 
 							arrayOrder.push(o.patentUI.clientRef);
 						})
+
 					})
 
 					arrayOrder.sort();
@@ -108,7 +110,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 								}
 							} else {
 								result.push(item)
-							}
+							}                  
 
 						})
 
@@ -132,6 +134,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 						data.renewalUIs.map(function(o, i){ 
 							arrayOrder.push(o.patentUI.patentApplicationNumber);
 						})
+                  
 					})
 
 					arrayOrder.sort();
@@ -152,7 +155,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 								}
 							} else {
 								result.push(item)
-							}
+							}                        
 
 						})
 
@@ -189,7 +192,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 	   					vm.tableData.sort(function(a, b){
 	   						var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
 	   						return renewalsB - renewalsA;
-	   					});
+	   					});        
 	   				} else {
 	   					if(vm.sortReverse === true) {
 		   					vm.tableData.sort(function(a, b){

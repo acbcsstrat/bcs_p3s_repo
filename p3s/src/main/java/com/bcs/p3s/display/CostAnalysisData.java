@@ -53,6 +53,17 @@ public class CostAnalysisData {
 	 */
 	TreeMap<Date,RenewalFeeUI> lineChart;
 	
+	
+	/**
+	 * Added 181212 to support currentOfficialFeeEUR & currentOfficialFeeUSD
+	 */
+	private BigDecimal currentOfficialFeeEUR = BigDecimal.ZERO;
+	private BigDecimal currentOfficialFeeUSD = BigDecimal.ZERO;
+	
+	
+	
+	
+	
 	public Date getGreenStartDate() {
 		return greenStartDate;
 	}
@@ -251,6 +262,22 @@ public class CostAnalysisData {
 
 	public void setLineChart(TreeMap<Date, RenewalFeeUI> lineChart) {
 		this.lineChart = lineChart;
+	}
+
+	public BigDecimal getCurrentOfficialFeeEUR() {
+		return currentOfficialFeeEUR;
+	}
+
+	public void setCurrentOfficialFeeEUR(BigDecimal currentOfficialFeeEUR) {
+		this.currentOfficialFeeEUR = currentOfficialFeeEUR;
+	}
+	
+	public BigDecimal getCurrentOfficialFeeUSD() {
+		return currentOfficialFeeUSD;
+	}
+
+	public void setCurrentOfficialFeeUSD(BigDecimal currentOfficialFeeUSD) {
+		this.currentOfficialFeeUSD = currentOfficialFeeUSD;
 	}
 	
 	

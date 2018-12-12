@@ -79,13 +79,13 @@
                         <div class="col-xl-12">
                             <nav>
                                 <ul class="panel-nav">
-                                    <li class="panel-nav__list-item list-item--colour-border pill-radius green m-b-xs" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
-                                    <li class="panel-nav__list-item list-item--colour-border pill-radius amber m-b-xs" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius green" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius amber" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
 <!--                                     <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li> -->
                                 </ul>
                             </nav>
                         </div>
-                        <div class="col-xl-12 m-t-sm">
+                        <div class="col-xl-12 m-t-xs">
                             <uib-tabset active="activeNotificationTab" vertical="true" type="pills" class="flex-column">
                                 <uib-tab index="0" heading="Green" data-ng-hide="true">
                                     <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
@@ -93,7 +93,7 @@
                                             {{item.title}}
                                             <div class="onoffswitch">
                                                 <label class="switch">
-                                                  <input type="checkbox" data-ng-model="item.defaultOn">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
                                                   <span class="slider round bg-phase-green"></span>
                                                 </label>
                                             </div>
@@ -106,7 +106,7 @@
                                             {{item.title}}
                                             <div class="onoffswitch">
                                                 <label class="switch">
-                                                  <input type="checkbox" data-ng-model="item.defaultOn">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
                                                   <span class="slider round bg-phase-amber"></span>
                                                 </label>
                                             </div>
@@ -119,7 +119,7 @@
                                             {{item.title}}
                                             <div class="onoffswitch">
                                                 <label class="switch">
-                                                  <input type="checkbox" data-ng-model="item.defaultOn">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
                                                   <span class="slider round bg-phase-red"></span>
                                                 </label>
                                             </div>
@@ -363,7 +363,7 @@
                                                 {{item.title}}
                                                 <div class="onoffswitch">
                                                     <label class="switch">
-                                                      <input type="checkbox" data-ng-model="item.defaultOn">
+                                                      <input type="checkbox" data-ng-model="item.isOn">
                                                       <span class="slider round bg-phase-green"></span>
                                                     </label>
                                                 </div>
@@ -376,7 +376,7 @@
                                                 {{item.title}}
                                                 <div class="onoffswitch">
                                                     <label class="switch">
-                                                      <input type="checkbox" data-ng-model="item.defaultOn">
+                                                      <input type="checkbox" data-ng-model="item.isOn">
                                                       <span class="slider round bg-phase-amber"></span>
                                                     </label>
                                                 </div>
@@ -389,7 +389,7 @@
                                                 {{item.title}}
                                                 <div class="onoffswitch">
                                                     <label class="switch">
-                                                      <input type="checkbox" data-ng-model="item.defaultOn">
+                                                      <input type="checkbox" data-ng-model="item.isOn">
                                                       <span class="slider round bg-phase-red"></span>
                                                     </label>
                                                 </div>

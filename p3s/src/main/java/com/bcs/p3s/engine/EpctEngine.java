@@ -208,6 +208,11 @@ public class EpctEngine extends Universal {
 		service.setCostBandEndDate(costBandEndDate); 
 		service.setFailedReason(patent.getEpctNotAvailableReason());
 		
+		service.setCurrentOfficialFeeEUR(fee.calcTotalOfEuroFees());
+		GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
+		fxRate = glob.getCurrent_P3S_rate();
+		service.setCurrentOfficialFeeUSD(service.getCurrentOfficialFeeEUR().multiply(fxRate));
+		
     	return service;
 	}
 
@@ -654,5 +659,5 @@ public class EpctEngine extends Universal {
 	public Date getRedEndDate() {
 		return redEndDate;
 	}
-
+	
 }

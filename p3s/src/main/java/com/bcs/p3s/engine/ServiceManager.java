@@ -1,5 +1,6 @@
 package com.bcs.p3s.engine;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import com.bcs.p3s.display.P3SService;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
+import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.Universal;
@@ -62,6 +64,12 @@ public class ServiceManager extends Universal {
 	    		service.setNextStageCostUSD(patentUI.getRenewalCostNextStageUSD());
 	    		service.setCostBandEndDate(patentUI.getCostBandEndDate());
 	    		service.setFailedReason(null);
+
+	    		// Add currentOfficialFeeEUR currentOfficialFeeUSD
+	    		service.setCurrentOfficialFeeEUR(patentUI.getTotalRenewalOfficialFeesEUR());
+	    		GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
+	    		BigDecimal fxRate = glob.getCurrent_P3S_rate();
+	    		service.setCurrentOfficialFeeUSD(service.getCurrentOfficialFeeEUR().multiply(fxRate));
 	
 	    		services.add(service);
     		}

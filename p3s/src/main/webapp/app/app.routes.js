@@ -173,7 +173,7 @@ function appRoutes($stateProvider) {
                     return costAnalysisService.fetchRenewalCa(patent.id);  
                 }],
                 renewal: ['renewalRestService', '$stateParams', 'patent', function(renewalRestService, $stateParams, patent){
-                        return renewalRestService.fetchHistory(patent.id);
+                    return renewalRestService.fetchHistory(patent.id);
                 }]                   
             }            
         })
@@ -191,7 +191,7 @@ function appRoutes($stateProvider) {
             templateUrl: 'app/templates/renewal/renewal.cost-analysis.tpl.htm',
             controller: 'renewalCaCtrl',
             controllerAs: '$ctrl'
-        })               
+        })
         .state('search-patent', {
             url: '/search-patent',
             templateUrl: 'app/templates/patents/patents.search-patent.tpl.htm',

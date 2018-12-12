@@ -189,8 +189,11 @@ public class EpctUI extends Epct {
 		dummyEngine.populateExtendedPatentFieldsWithDummyData(pui, this.getPatent());*/
 
 		//this.setPatentUI(pui);
-	}
 
+		
+		// Finally, remove LARGE unwanted inherited data (ie Epct)
+		// yet to adientify such
+	}
 
 
 	

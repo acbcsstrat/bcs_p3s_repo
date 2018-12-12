@@ -4,6 +4,7 @@
 package com.bcs.p3s.controller.rest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class PortfolioRestController extends Universal {
 	//Implements API section 3.1 - Get all patents' details for Portfolio page
     @RequestMapping(value = "/rest-patents-portfolio/", method = RequestMethod.GET)
     public ResponseEntity<List<PortfolioUI>> listPatentsForPortfolio() {
+    	long starttime = (new Date()).getTime();
     	log().debug(CLASSNAME+"/rest-patents-portfolio/  listPatentsForPortfolio() invoked");
     	
     	List<PortfolioUI> portfolioUIs = new ArrayList<PortfolioUI>();
@@ -71,8 +73,8 @@ public class PortfolioRestController extends Universal {
     		return new ResponseEntity<List<PortfolioUI>>(portfolioUIs, HttpStatus.INTERNAL_SERVER_ERROR);
     	}
 
-    	 return new ResponseEntity<List<PortfolioUI>>(portfolioUIs, HttpStatus.OK);
-    	
+    	log().debug(runtimeMsg(starttime, CLASSNAME+"/rest-patents-portfolio/  listPatentsForPortfolio()"));
+    	return new ResponseEntity<List<PortfolioUI>>(portfolioUIs, HttpStatus.OK);
     }
 
 }

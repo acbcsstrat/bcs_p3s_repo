@@ -3,6 +3,7 @@ package com.bcs.p3s.service;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -881,6 +882,32 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		// List<FxRateUI> history = getFxRateHistory("week");
 		lineChart = costEngines.getLineChartData(caData, combinedFee.getP3sFee(), combinedFee.getEpoRenewalFee());
 		caData.setLineChart(lineChart);
+
+		// add currentOfficialFeeEUR & currentOfficialFeeUSD. 
+		RenewalFeeUI renewalFeeUI = caData.getRenewalFee();
+		if (renewalFeeUI != null) {
+			log().info("patSerImpl 892 - renewalFeeUI is NOT Null. So: PlanA. (PatentId="+id+")");
+			log().debug("Got Renewal currentOfficialFeeEUR/USD of E"+renewalFeeUI.getCurrentOfficialFeeEUR()
+					+", $"+renewalFeeUI.getCurrentOfficialFeeUSD()+"   from "+msg);
+			caData.setCurrentOfficialFeeEUR(renewalFeeUI.getCurrentOfficialFeeEUR());
+			caData.setCurrentOfficialFeeUSD(renewalFeeUI.getCurrentOfficialFeeUSD());
+		}
+		else {
+			log().info("patSerImpl 892 - renewalFeeUI IS Null. So try extract officiALEurUsd from caData: PlanB. (PatentId="+id+")");
+			// Plan A relied on RenewalFeeUI - which is null. So now have caData.currentOfficialFeeEUR / USD
+			// caData.getCurrentOfficialFeeEUR() should already be populated.
+
+			GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
+			BigDecimal fxRate = glob.getCurrent_P3S_rate();
+			
+			BigDecimal intoUsd = caData.getCurrentOfficialFeeEUR().multiply(fxRate);
+			caData.setCurrentOfficialFeeUSD(intoUsd.setScale(2, RoundingMode.HALF_UP));
+		}
+		log().info("patSerImpl AFTER 892 (PatentId="+id+")    Got RENEWAL currentOfficialFeeEUR/USD of E"+caData.getCurrentOfficialFeeEUR()
+		+", $"+caData.getCurrentOfficialFeeUSD()+"   from "+msg);
+		
+		//		if (renewalFeeUI==null) log().error("HE LL patSerImpl 889 *IS* null (PatentId="+id); 
+		
 		return caData;
 	}
 
@@ -915,6 +942,10 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		TreeMap<Date,BigDecimal> form12006weekChartData = costEngine.get7weekLineChartDataForForm1200(feeNow);
 		caData.setLineChart( form12006weekChartData );
 
+		// add currentOfficialFeeEUR & currentOfficialFeeUSD. No action required, but log
+		log().debug("Got Epct currentOfficialFeeEUR/USD of E"+form1200FeeUI.getCurrentOfficialFeeEUR()
+				+", $"+form1200FeeUI.getCurrentOfficialFeeUSD()+"   from "+msg);
+		
 		return caData;
 	}
 	

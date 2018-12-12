@@ -15,13 +15,18 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+import com.bcs.p3s.engine.EpctEngine;
+import com.bcs.p3s.engine.StageManager;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
+import com.bcs.p3s.model.Form1200Fee;
+import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.util.date.DateUtil;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.PatentExtendedData;
 
@@ -94,7 +99,9 @@ public class PatentUI extends Patent {
 	private BigDecimal fxRate;*/
     
     protected RenewalFeeUI renewalFeeUI;
-
+    protected BigDecimal totalRenewalOfficialFeesEUR; // added for currentOfficialFeeEUR. Not nice.
+    protected BigDecimal totalRenewalOfficialFeesUSD;
+    
 	protected Form1200FeeUI form1200FeeUI;
     
     
@@ -160,14 +167,58 @@ public class PatentUI extends Patent {
 					this.setCostBandEndDate(extendedData.getCostBandEndDate());
 					this.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
 
+					
+					
+					
 					// Set all the *costUSD & *costEUR fields
 					if (extendedData.getFee()!=null) {
+												
 						RenewalFeeUI renewalFeeUI = new RenewalFeeUI(extendedData.getFee());
 						this.setRenewalFeeUI(renewalFeeUI);
-					}
+						
+						// yes, hereafter is an utter & frantic bodge
+						BigDecimal euroFees = extendedData.getFee().calcTotalOfEuroFees();
+						this.setTotalRenewalOfficialFeesEUR(euroFees);
+			    		GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
+			    		BigDecimal fxRate = glob.getCurrent_P3S_rate();
+			    		this.setTotalRenewalOfficialFeesUSD(euroFees.multiply(fxRate));
+					} 
+					else 
+					{
+						// IF is an EPCT - is valid 
+						if (StageManager.isInFiling(patent.getEpoPatentStatus()))
+						{
+							System.out.println(" PatentUi constructor - its an EPCT - can we get price ?");
+							if (Form1200StatusEnum.isInactive(patent.getEpctStatus())) {
+								// leave TotalRenewalOfficialFeesEUR / USD as zero
+								System.out.println(" PatentUi constructor - is an INACTIVE EPCT - so leave TotalRenewalOfficialFeesEUR / USD as zero");
+							}
+							else 
+							{
+								System.out.println(" PatentUi constructor - is an ACTIVE EPCT - so try get price");
+								// cobbled from ServiceManager line 36
+					    		EpctEngine epctEngine = new EpctEngine(patent);
+					    		if ( ! epctEngine.isNotAvailable()) {
+					    			P3SService unused = epctEngine.prepareForm1200Service();
+					    			Form1200Fee fee = epctEngine.getFee();
+					    			BigDecimal euroFees = fee.calcTotalOfEuroFees();
+
+									this.setTotalRenewalOfficialFeesEUR(euroFees);
+						    		GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
+						    		BigDecimal fxRate = glob.getCurrent_P3S_rate();
+						    		this.setTotalRenewalOfficialFeesUSD(euroFees.multiply(fxRate));
+					    		}
+							}
+						}
+						else
+						{
+							// is in prosecution - but no extendedData.getFee
+							System.out.println("More  HE LL -0 Renewal extendedData.getFee()==null PatentId="+patent.getId()+". Is OK if notActive - eg RenewalInPlace. IS="+patent.getRenewalStatus()+"      (PatentUI line217)");
+						}
+				} // End of : extendedData.getFee() or not
 					break;
-				}
-			}
+				} // End of : There IS extendedData for this item
+			} // END OF: FOR EACH PatentExtendedData
 		}
 	} // End of Constructor
 
@@ -347,6 +398,20 @@ public class PatentUI extends Patent {
 
 	public void setEpctNotificationUIs(List<NotificationUI> allEpctNotificationUIs) {
 		this.allEpctNotificationUIs = allEpctNotificationUIs;
+	}
+
+	public BigDecimal getTotalRenewalOfficialFeesEUR() {
+		return totalRenewalOfficialFeesEUR;
+	}
+	public void setTotalRenewalOfficialFeesEUR(BigDecimal totalRenewalOfficialFeesEUR) {
+		this.totalRenewalOfficialFeesEUR = totalRenewalOfficialFeesEUR;
+	}
+	
+	public BigDecimal getTotalRenewalOfficialFeesUSD() {
+		return totalRenewalOfficialFeesUSD;
+	}
+	public void setTotalRenewalOfficialFeesUSD(BigDecimal totalRenewalOfficialFeesUSD) {
+		this.totalRenewalOfficialFeesUSD = totalRenewalOfficialFeesUSD;
 	}
 
 }

@@ -16,10 +16,7 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScr
     vm.actionStatus = actionStatus;
     vm.fetchItemTransaction = fetchItemTransaction;
 
-    console.log(patent)
-
     function updateRenewalNotifications(patent, id) {
-        console.log(patent, id)
         renewalRestService.updateNotifications(patent.renewalNotificationUIs, id)
         .then(
             function(response){
@@ -71,26 +68,26 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScr
         .then(
             function(response) {
 
-                    var transaction = response.filter(function(el){
-                        return el.renewalUIs.find(function(item) {
-                            return item.patentUI.id === id;
-                        })
+                var match = response.filter(function(el){
+                    return el.serviceUIs.find(function(item){
+                        return item.patentUI.id === id;
                     })
+                })
 
-                    if(transaction !== undefined || typeof transaction !== 'undefined') {
-                        $state.go('current-transactions.current-transaction-item',{transId: transaction[0].id}) //if match, go current-transaction-item
-                        .then(
-                            function(response){
-                                $timeout(function() {
-                                    $location.hash('currTransAnchor'); 
-                                    $anchorScroll();  //scroll to anchor href
-                                }, 300);
-                            },
-                            function(errResponse){
-                                console.log(errResponse);
-                            }
-                        );
-                    }
+                if(match !== undefined || typeof match !== 'undefined') {
+                    $state.go('current-transactions.current-transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
+                    .then(
+                        function(response){
+                            $timeout(function() {
+                                $location.hash('currTransAnchor'); 
+                                $anchorScroll();  //scroll to anchor href
+                            }, 300);
+                        },
+                        function(errResponse){
+                            console.log(errResponse);
+                        }
+                    );
+                }
           
             },
             function(errResponse) {

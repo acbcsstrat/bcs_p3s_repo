@@ -408,7 +408,7 @@ public class Form1200RestController extends Universal {
 				form1200SavedData = form1200Service.saveNewForm1200details(generateForm1200DataIn, me);
 			
 			} catch (Exception e) {
-				// another zaphod swallow for FE
+				// another swallow for FE
 				log().error("SWALLOWED exception whilst PROCESSING the data entered");
 				log().error("exception was ",e);
 			}

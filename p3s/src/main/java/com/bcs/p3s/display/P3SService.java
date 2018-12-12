@@ -28,6 +28,8 @@ public class P3SService {
 	private BigDecimal nextStageCostUSD = new BigDecimal("0.0");
 	private Date costBandEndDate;
 	private String failedReason;
+	private BigDecimal currentOfficialFeeEUR = BigDecimal.ZERO;
+	private BigDecimal currentOfficialFeeUSD = BigDecimal.ZERO;
 
 	
 	
@@ -88,5 +90,17 @@ public class P3SService {
 	}
 	public void setFailedReason(String failedReason) {
 		this.failedReason = failedReason;
+	}
+	public BigDecimal getCurrentOfficialFeeEUR() {
+		return currentOfficialFeeEUR;
+	}
+	public void setCurrentOfficialFeeEUR(BigDecimal currentOfficialFeeEUR) {
+		this.currentOfficialFeeEUR = currentOfficialFeeEUR;
+	}
+	public BigDecimal getCurrentOfficialFeeUSD() {
+		return currentOfficialFeeUSD;
+	}
+	public void setCurrentOfficialFeeUSD(BigDecimal currentOfficialFeeUSD) {
+		this.currentOfficialFeeUSD = currentOfficialFeeUSD;
 	}
 }

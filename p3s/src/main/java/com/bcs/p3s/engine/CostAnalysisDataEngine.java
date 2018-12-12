@@ -178,6 +178,8 @@ public class CostAnalysisDataEngine extends Universal{
 			
 			else if (todaysDate.getTime().after(caData.getBlueStartDate()) && todaysDate.getTime().before(caData.getBlackStartDate())) {
 				caData.setCurrentcostBand(RenewalColourEnum.BLUE);
+				BigDecimal uplift = caData.getCurrentOfficialFeeEUR().multiply(new BigDecimal(1.5)); // cludge
+				caData.setCurrentOfficialFeeUSD(uplift.setScale(2, RoundingMode.HALF_UP));
 			}
 			
 			else if(todaysDate.getTime().equals(caData.getBlackStartDate())){
@@ -186,10 +188,14 @@ public class CostAnalysisDataEngine extends Universal{
 			
 			else if (todaysDate.getTime().after(caData.getBlackStartDate()) && todaysDate.getTime().before(caData.getBlackPhoneUpStart())) {
 				caData.setCurrentcostBand(RenewalColourEnum.BLACK);
+				BigDecimal uplift = caData.getCurrentOfficialFeeEUR().multiply(new BigDecimal(1.5));
+				caData.setCurrentOfficialFeeUSD(uplift.setScale(2, RoundingMode.HALF_UP));
 			}
 			
 			else if (todaysDate.getTime().equals(caData.getBlackPhoneUpStart()) || (todaysDate.getTime().after(caData.getBlackPhoneUpStart()) && todaysDate.getTime().before(caData.getBlackAllEnd()))) {
 				caData.setCurrentcostBand(RenewalColourEnum.BLACK);
+				BigDecimal uplift = caData.getCurrentOfficialFeeEUR().multiply(new BigDecimal(1.5));
+				caData.setCurrentOfficialFeeUSD(uplift.setScale(2, RoundingMode.HALF_UP));
 			}
 			
 			
@@ -230,6 +236,7 @@ public class CostAnalysisDataEngine extends Universal{
 		
 		greenCost = epoRenewalFee.getRenewalFee_EUR().multiply(fxRate).add(p3sFee.getProcessingFee_USD());
 		caMoreData.setGreenStageCost(greenCost.setScale(2, BigDecimal.ROUND_HALF_UP));
+		caMoreData.setCurrentOfficialFeeEUR(caMoreData.getGreenStageCost());
 		
 		amberCost = greenCost.add(greenCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 		

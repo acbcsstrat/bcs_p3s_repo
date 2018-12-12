@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -104,6 +105,7 @@ public class PatentRestController extends Universal {
     // Get all details about the specified patent
 	@RequestMapping(value = "/rest-patent/{id}", method = RequestMethod.GET) 
 	public ResponseEntity<PatentV2UI> assemblePatentInfo(@PathVariable("id") long id) {
+    	long starttime = (new Date()).getTime();
 		String handle = CLASSNAME + " : /rest-patent/ assemblePatentInfo("+id+") ";
 		log().debug("invoked "+handle);
 		PatentV2UI patentV2UI = null;
@@ -121,6 +123,8 @@ public class PatentRestController extends Universal {
 			logErrorAndContinue("Controller caught unexpected failure : "+handle, e);
 		  	return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
+		log().debug(runtimeMsg(starttime, handle));
 		if (patentV2UI==null) return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.INTERNAL_SERVER_ERROR);
 	  	return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.OK);
 	}

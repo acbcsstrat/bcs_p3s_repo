@@ -74,7 +74,7 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
 
 		// Populate costHistoryUI
 		setDollarComponentUSD();
-		setEuroComponentEUR();
+		setEuroComponentEUR(dollarsfor1EuroRate);
 		costHistoryUI = new CostHistoryUI(this);
 	}
 
@@ -88,10 +88,12 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
 		totalling = safeAddition(totalling, latePayPenaltyUSD);
 		dollarComponentUSD = totalling;
 	}
-	public void setEuroComponentEUR() {
+	public void setEuroComponentEUR(BigDecimal dollarsfor1EuroRate) {
 		BigDecimal totalling = renewalFeeEUR; 
 		totalling = safeAddition(totalling, extensionFeeEUR);
 		euroComponentEUR = totalling; 
+
+		currentOfficialFeeUSD = euroComponentEUR.multiply(dollarsfor1EuroRate);
 	}
 
 

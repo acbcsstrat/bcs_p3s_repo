@@ -4,6 +4,8 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bcs.p3s.util.lang.P3SRuntimeException;
+
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import javax.persistence.CascadeType;
@@ -88,4 +90,14 @@ public class RenewalFee {
 	    return fee;
 	  }
     
+	    public BigDecimal  calcTotalOfEuroFees() {
+	    	BigDecimal euroTotal = new BigDecimal("0.0");
+	    	if (renewalFee_EUR==null) throw new P3SRuntimeException("Goin' to Hell in a Handcart ...       renewalFee_EUR==null");
+
+	    	euroTotal = euroTotal.add(renewalFee_EUR);
+	    	if (extensionFee_EUR!=null) euroTotal = euroTotal.add(extensionFee_EUR); // if it aint null, its zero or valid
+
+	    	return euroTotal;
+	    }
+
 }

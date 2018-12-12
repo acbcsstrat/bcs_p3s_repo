@@ -4,6 +4,7 @@ package com.bcs.p3s.util.lang;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Date;
 
 import com.bcs.p3s.enump3s.P3SEnumException;
 import com.bcs.p3s.util.log.BcsLogger;
@@ -91,6 +92,19 @@ public class Universal extends BcsLogger implements Loggable {
     	log().fatal("                                                               ");
     }
 
+    /**
+     * A utility for Controllers
+     * @param startTime Time Controller was initially invoked
+     * @return Message to log, showing runtime duration in milliseconds
+     */
+    public String runtimeMsg(long startTime, String idInvokingMethod) {
+    	long mSruntime = (new Date()).getTime() - startTime;
+    	String msg = "Runtime "+mSruntime+" mS      from "+idInvokingMethod;
+    	return msg;
+    }
+    
+    
+    
     // Temporary - for Development:
     public void notYet(String msg) {
     	String message = "    *************  NOT YET IMPLEMENTED - So this will not work  ************* ";

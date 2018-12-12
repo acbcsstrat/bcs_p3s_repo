@@ -1,10 +1,10 @@
 <div class="row m-b-md">
 	<div class="col-md-12 col-lg-12 col-xl-12">
-		<div class="secondary-view-nav">
-			<ul class="nav secondary-view-nav__list">
-				<li class="pill-radius secondary-view-nav__nav-link secondary-view-nav__nav-link--green active"  data-ng-click="activeSelectedTab = 0">Transaction Details</li>
+		<nav>
+			<ul class="view-nav">
+				<li class="view-nav__item pill-radius active">Transaction Details</li>
 			</ul>
-		</div>
+		</nav>
 	</div>
 </div>
 
@@ -23,7 +23,7 @@
 							<p class="font-h4">{{$ctrl.transactionHistoryItem.transStartDate | date: 'MM/dd/yy'}}</p>
 						</div>
 						<div class="col-md-12 col-lg-12 col-xl-8 text-right">
-							<p class="font-weight-bold font-h4 d-none d-xl-block">{{$ctrl.transactionHistoryItem.latestTransStatus}}</p>
+<!-- 							<p class="font-weight-bold font-h4 d-none d-xl-block">{{$ctrl.transactionHistoryItem.latestTransStatus}}</p> -->
 							<div data-ng-class="($ctrl.transactionHistoryItem.hasFailed == true ? 'failed' : 'success')">
 								<div class="steps">
 								    <ul id="progressTracker" class="steps-container d-flex justify-content-between">
@@ -40,15 +40,21 @@
 						</div>
 					</div>
 				</div>
-				
-				<div data-ng-repeat="transaction in $ctrl.patents" class="border-grey-xs--btm">
+				<div data-ng-repeat="transaction in $ctrl.transactionHistoryItem.serviceUIs | filter: transactionsFilter" class="border-grey-xs--btm">
 					<div class="content-panel__body">
 						<div class="row">
 							<div class="col-md-12 col-lg-6 col-xl-6 md-m-b-md">
 								<div class="d-none d-lg-block m-b-sm">
-									<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
-									<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span><span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey">[No client description provided]</span></p>
-									<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>
+									<p class="font-weight-bold font-h4 m-b-xs">App No: 
+										<span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span>
+									</p>
+									<p class="font-weight-bold font-h4 m-b-xs">Client Ref: 
+										<span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span>
+										<span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey">[No client description provided]</span>
+									</p>
+									<p class="font-weight-bold font-h4">Description: 
+										<span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span>
+									</p>
 								</div>
 								<div class="d-none d-sm-none d-md-block d-lg-none">
 									<div class="p-b-sm">
@@ -57,10 +63,13 @@
 												<p class="font-weight-bold font-h4 m-b-xs">App No: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
 											</div>
 											<div class="col-md-6 text-right">
-												<p class="font-weight-bold font-h4 m-b-xs">Client Ref: <span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span><span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey">[No client description provided]</span></p>
+												<p class="font-weight-bold font-h4 m-b-xs">Client Ref: 
+													<span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span>
+													<span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey">[No client description provided]</span>
+												</p>
 											</div>
 											<div class="col-md-12">
-												<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>			
+												<p class="font-weight-bold font-h4">Description: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.title"></span></p>
 											</div>
 										</div>
 									</div>									
@@ -72,7 +81,7 @@
 												<p class="font-weight-bold font-body">Official fee: </p>
 											</div>
 											<div class="col-md-6">
-												<p class="font-body">$ {{transaction.feeUI.renewalFee_USD | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.totalOfficialFeeUSD || '0.00') | number: 2}}</p>
 											</div>
 										</div>
 										<div class="row m-b-sm">
@@ -80,15 +89,8 @@
 												<p class="font-weight-bold font-body">Processing fee: </p>
 											</div>
 											<div class="col-md-6">
-												<p class="font-body">$ {{transaction.feeUI.processingFee_USD | number: 2}}</p>
-											</div>
-										</div>
-										<div class="row m-b-sm">
-											<div class="col-md-6">
-												<p class="font-weight-bold font-body">EPO surcharge: </p>
-											</div>
-											<div class="col-md-6">
-												<p class="font-body">$ {{transaction.feeUI.extensionFee_USD | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.processingFeeUSD || '0.00') | number: 2}}</p>
+												
 											</div>
 										</div>
 										<div class="row m-b-sm">
@@ -96,15 +98,15 @@
 												<p class="font-weight-bold font-body">Express fee: </p>
 											</div>
 											<div class="col-md-6">
-												<p class="font-body">$ {{transaction.feeUI.expressFee_USD | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.expressFeeUSD || '0.00') | number: 2}}</p>
 											</div>
-										</div>										
+										</div>
 										<div class="row">		
 											<div class="col-md-6">
 												<p class="font-weight-bold font-body">Urgent clearance fee: </p>
 											</div>
 											<div class="col-md-6">
-												<p class="font-body">$ {{transaction.feeUI.urgentFee_USD | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.urgentFeeUSD || '0.00') | number: 2}}</p>
 											</div>	
 										</div>
 									</div>
@@ -114,32 +116,26 @@
 												<p class="font-weight-bold font-body">Official fee: </p>
 											</div>
 											<div class="col-md-3">
-												<p class="font-body">$ {{transaction.feeUI.renewalFee_USD | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.officialFeeUSD || '0.00') | number: 2}}</p>
 											</div>
 											<div class="col-md-3">
 												<p class="font-weight-bold font-body">Processing fee: </p>
 											</div>
 											<div class="col-md-3">
-												<p class="font-body">$ {{transaction.feeUI.processingFee_USD | number: 2}}</p>
-											</div>
-											<div class="col-md-3  m-b-xs">
-												<p class="font-weight-bold font-body">EPO surcharge: </p>
-											</div>
-											<div class="col-md-3">
-												<p class="font-body">$ {{transaction.feeUI.extensionFee_USD | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.ProcessingFeeUSD || '0.00') | number: 2}}</p>
 											</div>
 											<div class="col-md-3">
 												<p class="font-weight-bold font-body">Express fee: </p>
 											</div>
 											<div class="col-md-3">
-												<p class="font-body">$ {{transaction.feeUI.expressFee_USD | number: 2}}</p>
+												<p class="font-body">$ {{(transaction.serviceFeeUI.expressFeeUSD || '0.00') | number: 2}}</p>
 											</div>												
 											<div class="col-md-3">
 												<p class="font-weight-bold font-body">Urgent clearance fee: </p>
 											</div>
 											<div class="col-md-3">
-												<p class="font-body">$ {{transaction.feeUI.urgentFee_USD | number: 2}}</p>
-											</div>	
+												<p class="font-body">$ {{(transaction.serviceFeeUI.urgentFeeUSD || '0.00') | number: 2}}</p>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -148,7 +144,7 @@
 										<p class="font-weight-bold font-body">Total: </p>
 									</div>
 									<div class="col-md-9 col-lg-6 col-xl-6">
-										<p class="font-body">$ {{transaction.feeUI.subTotal_USD | number: 2}}</p>
+										<p>$ {{(transaction.serviceFeeUI.subTotalUSD || '0.00') | number: 2}}</p>
 									</div>	
 								</div>
 							</div>					
@@ -183,9 +179,7 @@
 				<div class="content-panel__body">
 					<div class="row">
 						<div class="col-xl-12 d-flex align-items-center justify-content-end">
-							<div class="btn-default">
-								<a data-ng-href="{{$ctrl.transactionHistoryItem.invoiceUrl}}"  class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center" target="_blank">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
-							</div>
+							<a data-ng-href="{{$ctrl.transactionHistoryItem.invoiceUrl}}"  class="btn btn--lg btn--green pill-radius" target="_blank">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
 						</div>						
 					</div>
 				</div>

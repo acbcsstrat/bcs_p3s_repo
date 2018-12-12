@@ -1,5 +1,6 @@
 package com.bcs.p3s.controller.rest;
  
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,6 +28,7 @@ public class TransactionRestController extends Universal {
     // v similar to below 3.2, but status must be neither of Completed nor Failed
     @RequestMapping(value = "/rest-current-transactions/", method = RequestMethod.GET)
     public ResponseEntity<List<PaymentUI>> listCurrentTransactionsForBusiness() {
+    	long starttime = (new Date()).getTime();
     	String err = "TransactionRestController : /rest-current-transactions/ listCurrentTransactionsForBusiness() ";
 		log().debug(err+"invoked.  ");
 		List<PaymentUI> paymentUIs = null;
@@ -41,6 +43,7 @@ public class TransactionRestController extends Universal {
 		}
     	
 		log().debug(err+"returning "+numTxns+" transactions.");
+    	log().debug(runtimeMsg(starttime, err));
         return new ResponseEntity<List<PaymentUI>>(paymentUIs, HttpStatus.OK);
     }
 
@@ -51,6 +54,7 @@ public class TransactionRestController extends Universal {
     // v similar to above 3.1, but status must be Completed or Failed
     @RequestMapping(value = "/rest-historic-transactions/", method = RequestMethod.GET)
     public ResponseEntity<List<PaymentUI>> listHistoricTransactionsForBusiness() {
+    	long starttime = (new Date()).getTime();
     	String err = "TransactionRestController : /rest-historic-transactions/ listHistoricTransactionsForBusiness() ";
     	log().debug(err+"invoked.  ");
 		List<PaymentUI> paymentUIs = null;
@@ -63,6 +67,7 @@ public class TransactionRestController extends Universal {
 		}
     	
 		log().debug(err+"returning "+paymentUIs.size()+" transactions.");
+    	log().debug(runtimeMsg(starttime, err));
         return new ResponseEntity<List<PaymentUI>>(paymentUIs, HttpStatus.OK);
     }
 

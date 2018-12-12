@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.service.PaymentService;
-import com.bcs.p3s.service.PaymentServiceImpl;
 import com.bcs.p3s.util.lang.P3SPriceException;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
@@ -173,7 +173,8 @@ public class PaymentRestController extends Universal {
     // BankTransferPostCommitDetails name as because the user just commit to the payment even though at back end it is not yet committed
     @RequestMapping(value = "/rest-committed-banktransfer/", method = RequestMethod.POST)
     public ResponseEntity<BankTransferPostCommitDetails> showBankTransferPostCommitDetails(@RequestBody Object obby) {
-    	
+    	long starttime = (new Date()).getTime();
+  	
     	String msg = "PaymentRestController : /rest-committed-banktransfer/ showBankTransferPostCommitDetails() ";
     	log().debug(msg+"invoked.  ");
     	String warningMessage = null;
@@ -199,6 +200,8 @@ public class PaymentRestController extends Universal {
 		log().debug("COMMITment call /rest-committed-banktransfer/ appears to have succeeded. bankTransferPostCommitDetails.toString() follows: \n"+bankTransferPostCommitDetails.toString());
 		log().debug("END of toString of bankTransferPostCommitDetails");
 		log().debug("COMMITment call /rest-committed-banktransfer/ Completed");
+
+    	log().debug(runtimeMsg(starttime, msg));
 		return new ResponseEntity<BankTransferPostCommitDetails>(bankTransferPostCommitDetails, HttpStatus.OK);
     }
 

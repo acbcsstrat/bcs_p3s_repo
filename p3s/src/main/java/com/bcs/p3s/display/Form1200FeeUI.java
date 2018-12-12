@@ -100,7 +100,7 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 		
 		// Populate costHistoryUI
 		setDollarComponentUSD();
-		setEuroComponentEUR();
+		setEuroComponentEUR(dollarsfor1EuroRate);
 		costHistoryUI = new CostHistoryUI(this);
 	}
 
@@ -118,7 +118,7 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 		//totalling = safeAddition(totalling, latePayPenaltyUSD);
 		dollarComponentUSD = totalling;
 	}
-	public void setEuroComponentEUR() {
+	public void setEuroComponentEUR(BigDecimal dollarsfor1EuroRate) {
 		BigDecimal totalling = filingFeeEUR; 
 		totalling = safeAddition(totalling, supplementarySearchFeeEUR);
 		totalling = safeAddition(totalling, designationFeeEUR);
@@ -130,6 +130,8 @@ public class Form1200FeeUI extends FeeCurrencyComponents {
 		totalling = safeAddition(totalling, renewalFeeEUR);
 		totalling = safeAddition(totalling, excessPageFeeEUR);
 		euroComponentEUR = totalling; 
+		
+		currentOfficialFeeUSD = euroComponentEUR.multiply(dollarsfor1EuroRate);
 	}
 
 

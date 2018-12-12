@@ -194,7 +194,7 @@
 						 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-r-sm" data-ng-if="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Renewal'" name="service.renewal" price="{{$ctrl.patent.renewalFeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
 	 							</ngcart-addtocart>
 	 						</div>
-	 						<div data-ng-if="$ctrl.patent.availableFee !== null && $ctrl.patent.epctStatus !== 'Payment in progress' && $ctrl.patent.epctStatus !== 'EPO Instructed' && $ctrl.patent.epctStatus !== 'Epct being generated'">
+	 						<div data-ng-if="$ctrl.patent.availableFee !== null && $ctrl.patent.epctStatus !== 'Payment in progress' && $ctrl.patent.epctStatus !== 'EPO Instructed' && $ctrl.patent.epctStatus !== 'Epct being generated' && $ctrl.patent.epctStatus !== 'Epct available'">
 						 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-r-sm" data-ng-if="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Form1200'" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
 	 							</ngcart-addtocart>	 											 		 							
 							</div>
@@ -419,7 +419,7 @@
 								 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-r-sm" data-ng-if="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Renewal'" name="service.renewal" price="{{$ctrl.patent.renewalFeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
 			 							</ngcart-addtocart>
 			 						</div>
-			 						<div data-ng-if="$ctrl.patent.availableFee !== null && $ctrl.patent.epctStatus !== 'Payment in progress' && $ctrl.patent.epctStatus !== 'EPO Instructed' && $ctrl.patent.epctStatus !== 'Epct being generated'">
+			 						<div data-ng-if="$ctrl.patent.availableFee !== null && $ctrl.patent.epctStatus !== 'Payment in progress' && $ctrl.patent.epctStatus !== 'EPO Instructed' && $ctrl.patent.epctStatus !== 'Epct being generated' && $ctrl.patent.epctStatus !== 'Epct available'">
 								 		<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-r-sm" data-ng-if="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Form1200'" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
 			 							</ngcart-addtocart>	 											 		 							
 									</div>

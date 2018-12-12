@@ -235,25 +235,28 @@ function patentCostAnalysisCtrl(patent, costAnalysis, $scope, $state, $timeout, 
 		currentTransactionsService.fetchCurrentTransactions()
 		.then(
 			function(response) {
-				response.forEach(function(data) {
-					const transId = data.id;
-					data.renewalUIs.forEach(function(data, i) {
-						if(data.patentUI.id == id) { //compare id submitted from view to all array items id
-							$state.go('current-transactions.current-transaction-item',{transId: transId}) //if match, go current-transaction-item
-							.then(
-								function(response){
-									$timeout(function() {
-										$location.hash('currTransAnchor'); 
-									  	$anchorScroll();  //scroll to anchor href
-									}, 300);
-								},
-								function(errResponse){
-									console.log(errResponse);
-								}
-							);
-						}
-					});
-				});
+
+                var match = response.filter(function(el){
+                    return el.serviceUIs.find(function(item){
+                        return item.patentUI.id === id;
+                    })
+                })
+
+                if(match !== undefined || typeof match !== 'undefined') {
+                    $state.go('current-transactions.current-transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
+                    .then(
+                        function(response){
+                            $timeout(function() {
+                                $location.hash('currTransAnchor'); 
+                                $anchorScroll();  //scroll to anchor href
+                            }, 300);
+                        },
+                        function(errResponse){
+                            console.log(errResponse);
+                        }
+                    );
+                }
+                
 			},
 			function(errResponse) {
 				console.log(errResponse);
