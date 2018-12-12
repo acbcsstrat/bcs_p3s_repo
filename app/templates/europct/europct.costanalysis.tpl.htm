@@ -1,14 +1,14 @@
 <div class="content-panel d-none d-xl-block border-t-none">
     <div class="bg-white">
         <div class="row">
-            <div data-ng-class="$ctrl.patent.form1200FeeUI === null ? 'col-xl-12' : 'col-xl-8'">
+            <div data-ng-class="$ctrl.patent.form1200FeeUI === null ? 'col-xl-12' : 'col-xl-7'">
                 <div class="content-panel__body">
                     <div class="row">
                         <div class="col-xl-12">
                             <nav>
                                 <ul class="panel-nav">
-                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.loadChart(); activeChart = 0;" data-ng-class="{active : activeChart == 0}">Stage Cost Chart</li>
-                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.loadChart(); activeChart = 1;" data-ng-class="{active : activeChart == 1}">FX Chart</li>
+                                    <li class="panel-nav__list-item list-item--plain pill-radius text-uppercase" data-ng-click="$ctrl.loadChart(); activeChart = 0;" data-ng-class="{active : activeChart == 0}">Stage Cost Chart</li>
+                                    <li class="panel-nav__list-item list-item--plain pill-radius text-uppercase" data-ng-click="$ctrl.loadChart(); activeChart = 1;" data-ng-class="{active : activeChart == 1}">FX Chart</li>
                                 </ul>
                             </nav>
                         </div>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div data-ng-if="$ctrl.patent.form1200FeeUI !== null" class="col-xl-4">
+            <div data-ng-if="$ctrl.patent.form1200FeeUI !== null" class="col-xl-5">
                 <div class="content-panel__body border-grey-xs--left h-100">
                     <div class="row d-flex justify-content-center align-items-center">
                         <div class="col-xl-6">
@@ -107,7 +107,7 @@
                                 <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.processingFeeEUR | number: 2) || '0.00'}}</p>
                             </div>
                         </div>
-                        <div class="row m-b-sm">
+<!--                         <div class="row m-b-sm">
                             <div class="col-xl-5">
                                 <p class="font-weight-medium">Extension fees:</p>
                             </div>
@@ -117,7 +117,7 @@
                             <div class="col-xl-3">
                                 <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.extensionFeeEUR | number: 2) || '0.00'}}</p>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
                                 <p class="font-weight-medium">Express fees:</p>
@@ -182,8 +182,8 @@
                         <div class="col-md-12 col-lg-12">
                             <nav>
                                 <ul class="panel-nav">
-                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.loadChart(); activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" data-ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
-                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.loadChart(); activeChart = 1; $ctrl.chartActive = 'FX Chart'; $ctrl.loadLineChart" data-ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
+                                    <li class="panel-nav__list-item list-item--plain pill-radius text-uppercase" data-ng-click="$ctrl.loadChart(); activeChart = 0; $ctrl.chartActive = 'Stage Cost Chart'" data-ng-class="{active : $ctrl.chartActive === 'Stage Cost Chart'}">Stage Cost Chart</li>
+                                    <li class="panel-nav__list-item list-item--plain pill-radius text-uppercase" data-ng-click="$ctrl.loadChart(); activeChart = 1; $ctrl.chartActive = 'FX Chart'; $ctrl.loadLineChart" data-ng-class="{active : $ctrl.chartActive === 'FX Chart'}">FX Chart</li>
                                 </ul>
                             </nav>  
                         </div>
@@ -258,56 +258,82 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8 col-lg-8">
-                    <table class="t-data t-data--no-border">
-                        <thead class="t-data_td--no-border">
-                            <tr class="t-data__th t-data_td--b-border">
-                                <td class="t-data_td--b-border"></td>
-                                <td class="font-h4 font-weight-medium">EUR</td>
-                                <td class="font-h4 font-weight-medium">USD</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="t-data__td font-weight-medium text-left">Official fee</td>
-                                <td class="t-data__td">€ {{($ctrl.patent.form1200FeeUI.renewalFeeEUR | number:2) || '0.00'}}</td>
-                                <td class="t-data__td">$ {{($ctrl.patent.form1200FeeUI.renewalFeeUSD | number:2) || '0.00'}}</td>
-                            </tr>
-                            <tr>
-                                <td class="t-data__td font-weight-medium text-left">Processing fee</td>
-                                <td class="t-data__td no-border">€ {{($ctrl.patent.form1200FeeUI.processingFeeEUR | number:2) || '0.00'}}</td>
-                                <td class="t-data__td no-border">$ {{($ctrl.patent.form1200FeeUI.processingFeeUSD | number:2) || '0.00'}}</td>
-                            </tr>
-                            <tr>
-                                <td class="t-data__td font-weight-medium text-left">Extension Fee</td>
-                                <td class="t-data__td no-border">€ {{($ctrl.patent.form1200FeeUI.extensionFeeEUR | number:2) || '0.00'}}</td>
-                                <td class="t-data__td no-border">$ {{($ctrl.patent.form1200FeeUI.extensionFeeUSD | number:2) || '0.00'}}</td>
-                            </tr>       
-                            <tr class="t-data_td--b-border">
-                                <td class="t-data__td font-weight-medium text-left">Urgent Fee</td>
-                                <td class="t-data__td no-border">€ {{($ctrl.patent.form1200FeeUI.urgentFeeUSD | number:2) || '0.00'}}</td>
-                                <td class="t-data__td no-border">$ {{($ctrl.patent.form1200FeeUI.urgentFeeEUR | number:2) || '0.00'}}</td>
-                            </tr>                                                       
-                            <tr class="p-b-none t-data_td--b-border">
-                                <td class="t-data__td font-weight-medium text-left">Total</td>
-                                <td class="t-data__td font-weight-medium">€ {{($ctrl.patent.form1200FeeUI.subTotalEUR  | number:2)  || '0.00'}}</td>
-                                <td class="t-data__td font-weight-medium">$ {{($ctrl.patent.form1200FeeUI.subTotalUSD | number:2)  || '0.00'}}</td>
-                            </tr>
-                        </tbody>
-                    </table>                                
-                </div>
-                <div class="col-md-4 col-lg-4 d-flex flex-column justify-content-end">
-                    <div data-ng-if="$ctrl.actionStatus($ctrl.patent.epctStatus)">
-                        <p class="font-h4 font-weight-medium m-b-xs">Save: <span class="txt-phase-green">$ {{($ctrl.patent.portfolioUI.serviceList[0].nextStageCostUSD - $ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD | number: 2) || '0.00'}}</span></p>
-                        <p class="font-body">Renew before: <span class="font-weight-bold">{{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</span></p>
+            <div class="col-md-8 col-lg-8">
+                    <div class="row">
+                        <div class="col-md-4 offset-md-4">
+                            <p class="font-h4 font-weight-medium m-b-xs text-center">USD</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="font-h4 font-weight-medium m-b-xs text-center">EUR</p>
+                        </div>
                     </div>
-                    <div class="w-100">
-                        <a class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')">View Transaction></a>
-                        <a class="btn btn--lg btn--green pill-radius" data-ui-sref="patents.patent({patentId: $ctrl.patent.id})" data-ng-click="$ctrl.fetchItemRenewal()"  data-ng-if="$ctrl.patent.epctStatus == 'Renewal in place'">View Renewal</a>
-                        <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn btn-block" name="patent_{{$ctrl.patent.id}}" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.epctStatus == 'Epct ready' || $ctrl.patent.epctStatus == 'Epct saved'">
+                    <div class=" m-b-sm border-grey-xs--btm"></div>                  
+                    <div class="row m-b-sm">
+                        <div class="col-md-4">
+                            <p class="font-weight-medium">Official EPO fee:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.officialFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.officialFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-4">
+                            <p class="font-weight-medium">Processing fees:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.processingFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.processingFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-4">
+                            <p class="font-weight-medium">Express fees:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.expressFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.expressFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-4">
+                            <p class="font-weight-medium">Urgent fees:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.urgentFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.urgentFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-4">
+                            <p class="font-weight-medium">Total:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.subTotalUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.subTotalEUR | number: 2) || '0.00'}}</p>
+                        </div>
+                    </div>                            
+                    <div class="border-grey-xs--btm"></div>                                    
+                </div>
+                <div class="col-md-4 col-lg-4 d-flex flex-column justify-content-end m-t-sm">
+                    <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+                        <p class="font-h4 font-weight-medium">Save: $ <span class="txt-phase-green">{{$ctrl.patent.renewalCostNextStageUSD - $ctrl.patent.currentRenewalCostUSD | number: 2}}</span></p>
+                        <p class="font-body m-b-xs">Renew before: <span class="font-weight-medium">{{$ctrl.patent.costBandEndDateUI}}</span></p>
+                        <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-t-sm" name="service.renewal" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
                         </ngcart-addtocart>
                     </div>
-                </div>      
+                    <button type="button" data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn btn--green btn--lg pill-radius m-t-sm" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                                                             
+                </div> 
             </div> <!-- row end-->
         </div>
     </div>
