@@ -44,12 +44,10 @@
 .view-nav-secondary {
   background: $white;
   .view-nav__item {
-    // border-top: 1px solid $grey;
     border-right: 1px solid $grey;
     border-left: 1px solid $grey;
     border-bottom: 3px solid $white; 
     font-weight: 400;
-    // background: $white;
     font-size: $font-h3;
     cursor: pointer;
     line-height: $line-none;
@@ -60,8 +58,10 @@
     text-decoration: none;
     text-transform: uppercase;
     &[disabled] {
-      color: $white;
+      color: $grey;
+      background: $grey-blocked;
       cursor: not-allowed;
+      border-bottom: $grey-blocked; 
     }
     &.active {
       border-bottom: 3px solid $black; 
