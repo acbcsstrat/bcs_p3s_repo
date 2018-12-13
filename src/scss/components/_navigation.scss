@@ -12,61 +12,61 @@
 }
 
 .view-nav {
-  .view-nav__item {
-    border: 1px solid $border;
-    font-weight: 400;
-    background: $grey;
-    font-size: $font-h3;
-    cursor: pointer;
-    line-height: $line-none;
-    @include padding-mixin(0.7rem 3rem);
-    -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-    -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-    transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-    text-decoration: none;
-    text-transform: uppercase;
-    // border: 1px solid transparent;    
-    &[disabled] {
-      color: $white;
-      cursor: not-allowed;
+    .view-nav__item {
+        border: 1px solid $border;
+        font-weight: 400;
+        background: $grey;
+        font-size: $font-h3;
+        cursor: pointer;
+        line-height: $line-none;
+        @include padding-mixin(0.7rem 3rem);
+        -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        text-decoration: none;
+        text-transform: uppercase;
+        // border: 1px solid transparent;    
+        &[disabled] {
+            color: $white;
+            cursor: not-allowed;
+        }
+        &:not([disabled]):hover, &:not([disabled]):focus {
+            box-shadow: 0 0 2px .01px $grey-dark;
+        }
+        &.active {
+            color: $white; 
+            background: $grey-dark;
+        }
     }
-    &:not([disabled]):hover, &:not([disabled]):focus {
-      box-shadow: 0 0 2px .01px $grey-dark;
-    }
-    &.active {
-      color: $white; 
-      background: $grey-dark;
-    }
-  }
 }
 
 
 .view-nav-secondary {
-  background: $white;
-  .view-nav__item {
-    border-right: 1px solid $grey;
-    border-left: 1px solid $grey;
-    border-bottom: 3px solid $white; 
-    font-weight: 400;
-    font-size: $font-h3;
-    cursor: pointer;
-    line-height: $line-none;
-    @include padding-mixin(1.5rem 3rem);
-    -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-    -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-    transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-    text-decoration: none;
-    text-transform: uppercase;
-    &[disabled] {
-      color: $grey;
-      background: $grey-blocked;
-      cursor: not-allowed;
-      border-bottom: $grey-blocked; 
+    background: $white;
+    .view-nav__item {
+        border-right: 1px solid $grey;
+        border-left: 1px solid $grey;
+        border-bottom: 3px solid $white; 
+        font-weight: 400;
+        font-size: $font-h3;
+        cursor: pointer;
+        line-height: $line-none;
+        @include padding-mixin(1.5rem 3rem);
+        -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        text-decoration: none;
+        text-transform: uppercase;
+        &[disabled] {
+            color: $grey;
+            background: $grey-blocked;
+            cursor: not-allowed;
+            border-bottom: 3px solid $grey-blocked; 
+        }
+        &.active {
+            border-bottom: 3px solid $black; 
+        }
     }
-    &.active {
-      border-bottom: 3px solid $black; 
-    }
-  }
 }
 
 .panel-nav {
