@@ -15,7 +15,7 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
     vm.doneEditing = doneEditing;
     vm.getStatus = getStatus;
 
-    vm.editing=[];
+    vm.editing = [];
     vm.statusesAvailable = [];
 
     if(organiseTextService.actionStatus(patent.epctStatus)) {
@@ -60,8 +60,6 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
             
         }        
     }
-
-    console.log(vm.patent)
 
     function fetchItemTransaction(id) {
         currentTransactionsService.fetchCurrentTransactions()
