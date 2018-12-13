@@ -8,8 +8,8 @@ function euroPctCtrl(patent) {
 
     vm.form1200Available = form1200Available;
 
-    function form1200Available(item) {
-        if(patent.portfolioUI.epctStatus == 'Epct rejected' && patent.portfolioUI.epctStatus == 'Epct available') {
+    function form1200Available() {
+        if(patent.epctStatus == 'Epct rejected' || patent.epctStatus == 'Epct available') {
             return false;
         }
         return true;
