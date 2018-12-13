@@ -84,21 +84,21 @@
                                 <p class="font-h4 font-weight-medium m-b-xs text-center">EUR</p>
                             </div>
                         </div>
-                        <div class=" m-b-sm border-grey-xs--btm"></div>                  
+                        <div class="m-b-sm border-grey-xs--btm"></div>                  
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
-                                <p class="font-weight-medium">Official EPO Fee:</p>
+                                <p class="font-weight-medium">Official Fee:</p>
                             </div>
                             <div class="col-xl-4">
-                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.officialTotalFeeUSD | number: 2) || '0.00'}}</p>
+                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
                             </div>
                             <div class="col-xl-3">
-                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.officialTotalFeeEUR | number: 2) || '0.00'}}</p>
+                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.currentOfficialFeeEUR | number: 2) || '0.00'}}</p>
                             </div>
                         </div>
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
-                                <p class="font-weight-medium">Processing fees:</p>
+                                <p class="font-weight-medium">Processing fee:</p>
                             </div>
                             <div class="col-xl-4">
                                 <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.processingFeeUSD | number: 2) || '0.00'}}</p>
@@ -120,7 +120,7 @@
                         </div> -->
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
-                                <p class="font-weight-medium">Express fees:</p>
+                                <p class="font-weight-medium">Express fee:</p>
                             </div>
                             <div class="col-xl-4">
                                 <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.expressFeeUSD | number: 2) || '0.00'}}</p>
@@ -131,7 +131,7 @@
                         </div>
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
-                                <p class="font-weight-medium">Urgent fees:</p>
+                                <p class="font-weight-medium">Urgent fee:</p>
                             </div>
                             <div class="col-xl-4">
                                 <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.urgentFeeUSD | number: 2) || '0.00'}}</p>
@@ -270,18 +270,18 @@
                     <div class=" m-b-sm border-grey-xs--btm"></div>                  
                     <div class="row m-b-sm">
                         <div class="col-md-4">
-                            <p class="font-weight-medium">Official EPO fee:</p>
+                            <p class="font-weight-medium">Official fee:</p>
                         </div>
                         <div class="col-md-4">
-                            <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.officialFeeUSD | number: 2) || '0.00'}}</p>
+                            <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
                         </div>
                         <div class="col-md-4">
-                            <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.officialFeeEUR | number: 2) || '0.00'}}</p>
+                            <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.currentOfficialFeeEUR | number: 2) || '0.00'}}</p>
                         </div>
                     </div>
                     <div class="row m-b-sm">
                         <div class="col-md-4">
-                            <p class="font-weight-medium">Processing fees:</p>
+                            <p class="font-weight-medium">Processing fee:</p>
                         </div>
                         <div class="col-md-4">
                             <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.processingFeeUSD | number: 2) || '0.00'}}</p>
@@ -292,7 +292,7 @@
                     </div>
                     <div class="row m-b-sm">
                         <div class="col-md-4">
-                            <p class="font-weight-medium">Express fees:</p>
+                            <p class="font-weight-medium">Express fee:</p>
                         </div>
                         <div class="col-md-4">
                             <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.expressFeeUSD | number: 2) || '0.00'}}</p>
@@ -303,7 +303,7 @@
                     </div>
                     <div class="row m-b-sm">
                         <div class="col-md-4">
-                            <p class="font-weight-medium">Urgent fees:</p>
+                            <p class="font-weight-medium">Urgent fee:</p>
                         </div>
                         <div class="col-md-4">
                             <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.urgentFeeUSD | number: 2) || '0.00'}}</p>

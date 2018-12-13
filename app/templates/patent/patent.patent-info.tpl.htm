@@ -149,12 +149,12 @@
 							<p class="font-weight-medium">Official Fees:</p>
 						</div>
 						<div class="col-xl-3">
-							<p class="text-center">$ {{($ctrl.patent.availableFee.officialFeesUSD | number: 2) || '0.00'}}</p>
+							<p class="text-center">$ {{($ctrl.patent.availableFee.fee.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
 						</div>
 						<div class="col-xl-2">
 						</div>
 						<div class="col-xl-3">
-							<p class="text-center">&euro; {{($ctrl.patent.availableFee.officialFeesEUR | number: 2) || '0.00'}}</p>
+							<p class="text-center">&euro; {{($ctrl.patent.availableFee.fee.currentOfficialFeeEUR | number: 2) || '0.00'}}</p>
 						</div>
 					</div>
 					<div class="row m-b-sm">
@@ -162,12 +162,12 @@
 							<p class="font-weight-medium">Patent Place Fees:</p>
 						</div>
 						<div class="col-xl-3">
-							<p class="text-center">$ {{($ctrl.patent.availableFee.ppFeesUSD | number: 2) || '0.00'}}</p>
+							<p class="text-center">$ {{($ctrl.patent.availableFee.fee.ppFeesUSD | number: 2) || '0.00'}}</p>
 						</div>
 						<div class="col-xl-2">
 						</div>
 						<div class="col-xl-3">
-							<p class="text-center">&euro; {{($ctrl.patent.availableFee.ppFeesEUR | number: 2) || '0.00'}}</p>
+							<p class="text-center">&euro; {{($ctrl.patent.availableFee.fee.ppFeesEUR | number: 2) || '0.00'}}</p>
 						</div>
 					</div>
 					<div class="row m-b-sm">
@@ -175,12 +175,12 @@
 							<p class="font-weight-medium">Total:</p>			
 						</div>
 						<div class="col-xl-3">
-							<p class="text-center">$ {{($ctrl.patent.availableFee.subTotalUSD | number: 2) || '0.00'}}</p>
+							<p class="text-center">$ {{($ctrl.patent.availableFee.fee.subTotalUSD | number: 2) || '0.00'}}</p>
 						</div>
 						<div class="col-xl-2">
 						</div>
 						<div class="col-xl-3">
-							<p class="text-center">&euro; {{($ctrl.patent.availableFee.subTotalEUR | number: 2) || '0.00'}}</p>
+							<p class="text-center">&euro; {{($ctrl.patent.availableFee.fee.subTotalEUR | number: 2) || '0.00'}}</p>
 						</div>
 					</div>
 					<div class=" m-b-sm border-grey-xs--btm"></div>
@@ -373,13 +373,13 @@
 								<p class="font-weight-medium">Official Fees:</p>
 							</div>
 							<div class="col-md-3">
-								<p class="text-center">$ {{($ctrl.patent.availableFee.officialFeesUSD | number: 2) || '0.00'}}</p>
+								<p class="text-center">$ {{($ctrl.patent.availableFee.fee.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
 							</div>
 							<div class="col-md-2">
 								
 							</div>
 							<div class="col-md-3">
-								<p class="text-center">&euro; {{($ctrl.patent.availableFee.officialFeesUSD | number: 2) || '0.00'}}</p>
+								<p class="text-center">&euro; {{($ctrl.patent.availableFee.fee.currentOfficialFeeEUR | number: 2) || '0.00'}}</p>
 							</div>
 						</div>							
 						<div class="row m-b-sm">
@@ -387,12 +387,12 @@
 								<p class="font-weight-medium">Patent Place Fees:</p>
 							</div>
 							<div class="col-md-3">
-								<p class="text-center">$ {{($ctrl.patent.availableFee.ppFeesUSD | number: 2) || '0.00'}}</p>
+								<p class="text-center">$ {{($ctrl.patent.availableFee.fee.ppFeesUSD | number: 2) || '0.00'}}</p>
 							</div>
 							<div class="col-md-2">
 							</div>
 							<div class="col-md-3">
-								<p class="text-center">&euro; {{($ctrl.patent.availableFee.ppFeesEUR | number: 2) || '0.00'}}</p>
+								<p class="text-center">&euro; {{($ctrl.patent.availableFee.fee.ppFeesEUR | number: 2) || '0.00'}}</p>
 							</div>																								
 						</div>
 						<div class="row m-b-sm">
@@ -400,12 +400,12 @@
 								<p class="font-weight-medium">Total:</p>			
 							</div>
 							<div class="col-md-3">
-								<p class="text-center">$ {{($ctrl.patent.availableFee.subTotalUSD | number: 2) || '0.00'}}</p>
+								<p class="text-center">$ {{($ctrl.patent.availableFee.fee.subTotalUSD | number: 2) || '0.00'}}</p>
 							</div>
 							<div class="col-md-2">
 							</div>								
 							<div class="col-md-3">
-								<p class="text-center">&euro; {{($ctrl.patent.availableFee.subTotalEUR | number: 2) || '0.00'}}</p>
+								<p class="text-center">&euro; {{($ctrl.patent.availableFee.fee.subTotalEUR | number: 2) || '0.00'}}</p>
 							</div>
 						</div>
 						<div class="m-b-sm border-grey-xs--btm"></div>

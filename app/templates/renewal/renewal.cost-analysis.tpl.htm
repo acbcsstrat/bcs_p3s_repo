@@ -87,18 +87,18 @@
 						<div class=" m-b-sm border-grey-xs--btm"></div>                  
 						<div class="row m-b-sm">
 							<div class="col-xl-5">
-								<p class="font-weight-medium">Official EPO Fee:</p>
+								<p class="font-weight-medium">Official Fee:</p>
 							</div>
 							<div class="col-xl-4">
-								<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</p>
+								<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
 							</div>
 							<div class="col-xl-3">
-								<p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.renewalFeeEUR | number: 2) || '0.00'}}</p>
+								<p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.currentOfficialFeeEUR | number: 2) || '0.00'}}</p>
 							</div>
 						</div>
 						<div class="row m-b-sm">
 							<div class="col-xl-5">
-								<p class="font-weight-medium">Processing fees:</p>
+								<p class="font-weight-medium">Processing fee:</p>
 							</div>
 							<div class="col-xl-4">
 								<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.processingFeeUSD | number: 2) || '0.00'}}</p>
@@ -120,7 +120,7 @@
 						</div> -->
 						<div class="row m-b-sm">
 							<div class="col-xl-5">
-								<p class="font-weight-medium">Express fees:</p>
+								<p class="font-weight-medium">Express fee:</p>
 							</div>
 							<div class="col-xl-4">
 								<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.expressFeeUSD | number: 2) || '0.00'}}</p>
@@ -131,7 +131,7 @@
 						</div>
 						<div class="row m-b-sm">
 							<div class="col-xl-5">
-								<p class="font-weight-medium">Urgent fees:</p>
+								<p class="font-weight-medium">Urgent fee:</p>
 							</div>
 							<div class="col-xl-4">
 								<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.urgentFeeUSD | number: 2) || '0.00'}}</p>
@@ -266,18 +266,18 @@
 					<div class=" m-b-sm border-grey-xs--btm"></div>                  
 					<div class="row m-b-sm">
 						<div class="col-md-4">
-							<p class="font-weight-medium">Official EPO fee:</p>
+							<p class="font-weight-medium">Official fee:</p>
 						</div>
 						<div class="col-md-4">
-							<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.officialFeeUSD | number: 2) || '0.00'}}</p>
+							<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
 						</div>
 						<div class="col-md-4">
-							<p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.officialFeeEUR | number: 2) || '0.00'}}</p>
+							<p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.currentOfficialFeeEUR | number: 2) || '0.00'}}</p>
 						</div>
 					</div>
 					<div class="row m-b-sm">
 						<div class="col-md-4">
-							<p class="font-weight-medium">Processing fees:</p>
+							<p class="font-weight-medium">Processing fee:</p>
 						</div>
 						<div class="col-md-4">
 							<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.processingFeeUSD | number: 2) || '0.00'}}</p>
@@ -288,7 +288,7 @@
 					</div>
 					<div class="row m-b-sm">
 						<div class="col-md-4">
-							<p class="font-weight-medium">Express fees:</p>
+							<p class="font-weight-medium">Express fee:</p>
 						</div>
 						<div class="col-md-4">
 							<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.expressFeeUSD | number: 2) || '0.00'}}</p>
@@ -299,7 +299,7 @@
 					</div>
 					<div class="row m-b-sm">
 						<div class="col-md-4">
-							<p class="font-weight-medium">Urgent fees:</p>
+							<p class="font-weight-medium">Urgent fee:</p>
 						</div>
 						<div class="col-md-4">
 							<p class="text-center">$ {{($ctrl.patent.renewalFeeUI.urgentFeeUSD | number: 2) || '0.00'}}</p>
