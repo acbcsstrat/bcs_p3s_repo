@@ -1,0 +1,164 @@
+.panel-nav, .view-nav,.view-nav-secondary { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* nowrap if you only want one row */
+}
+
+.view-nav {
+  .view-nav__item {
+    border: 1px solid $border;
+    font-weight: 400;
+    background: $grey;
+    font-size: $font-h3;
+    cursor: pointer;
+    line-height: $line-none;
+    @include padding-mixin(0.7rem 3rem);
+    -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    text-decoration: none;
+    text-transform: uppercase;
+    // border: 1px solid transparent;    
+    &[disabled] {
+      color: $white;
+      cursor: not-allowed;
+    }
+    &:not([disabled]):hover, &:not([disabled]):focus {
+      box-shadow: 0 0 2px .01px $grey-dark;
+    }
+    &.active {
+      color: $white; 
+      background: $grey-dark;
+    }
+  }
+}
+
+
+.view-nav-secondary {
+  background: $white;
+  .view-nav__item {
+    // border-top: 1px solid $grey;
+    border-right: 1px solid $grey;
+    border-left: 1px solid $grey;
+    border-bottom: 3px solid $white; 
+    font-weight: 400;
+    // background: $white;
+    font-size: $font-h3;
+    cursor: pointer;
+    line-height: $line-none;
+    @include padding-mixin(1.5rem 3rem);
+    -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+    text-decoration: none;
+    text-transform: uppercase;
+    &[disabled] {
+      color: $white;
+      cursor: not-allowed;
+    }
+    &.active {
+      border-bottom: 3px solid $black; 
+    }
+  }
+}
+
+.panel-nav {
+    width: 100%;
+    .panel-nav__list-item {
+        color: $grey-dark;
+        font-size: $font-body;
+        cursor: pointer;
+        line-height: $line-none;
+        text-decoration: none;
+        
+        margin-right: 1rem;
+        @include padding-mixin(0.5rem 3rem);
+        -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+        &:last-child {
+            margin-right: 0;
+        }
+        &.list-item--sm-pad {
+            @include padding-mixin(0.5rem 1.5rem);
+        }
+        &.list-item--plain {
+            background: $white;
+            border: 1px solid $border;
+            cursor: pointer;
+            color: $black;
+        }
+        &:not([disabled]):hover {
+            // border: 1px solid transparent;
+            box-shadow: 0 0 2px .01px $grey-dark;
+        }
+        &.active {
+          background: $grey;
+        }
+        &.list-item--colour { //accompany element with bg-colour in view
+          color: $white;
+        }
+        &.list-item--colour-border {
+          border: 1px solid transparent;
+          background: none;
+          &.green {
+            border: 2px solid $green;
+            color: $green;
+            &.active {
+              background: $green;
+              color: $white;
+            }
+          }
+          &.amber {
+            border: 2px solid $amber;
+            color: $amber;
+            &.active {
+              background: $amber;
+              color: $white;
+            }        
+          }
+          &.red {
+            border: 2px solid $red;
+            color: $red;
+            &.active {
+              background: $red;
+              color: $white;
+            }        
+          }
+          &.blue {
+            border: 2px solid $blue;
+            color: $blue;
+            &.active {
+              background: $blue;
+              color: $white;
+            }        
+          }
+          &.black {
+            border: 2px solid $black;
+            color: $black;    
+            &.active {            
+              background: $black;
+              color: $white;
+            }
+          }
+          
+        }
+        &[disabled] {
+          border: $grey-dark;
+          color: $grey;
+          background: $grey-dark;
+          color: $white;
+          cursor: not-allowed;
+        }
+        // &.list-item--fluid {
+        //   @include padding-mixin(0.5rem 3rem);
+        // }
+      } /*modules*/ /*components*/ /*_navigation.scss*/ /*OR REMOVE CLASS AND ADD CLASSES TO VIEW?*/ //ADD CLASS TO LI ITEMS
+}

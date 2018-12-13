@@ -1,0 +1,18 @@
+.modal-cross { /*modules*/ /*components*/ /*_modal.scss*/
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-top: 5px; /*change when correct image is provided*/
+}
+
+.bar-phase { width: 100%; } /*modules*/ /*components*/ /*_modal.scss*/
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal-backdrop .fade .in { opacity: 0.5 !important; }
+.modal-backdrop.fade { opacity: 0.5 !important; }
