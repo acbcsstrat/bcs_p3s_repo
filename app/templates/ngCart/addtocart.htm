@@ -1,0 +1,4 @@
+<button data-ng-hide="inCart()" data-ng-if="attrs.name == 'service.renewal'" class="btn btn--lg btn--green pill-radius cartbtn add" data-ng-click="ngCart.addItem(id, name, price, q, data)">Renewal</button>
+<button data-ng-hide="inCart()" data-ng-if="attrs.name == 'service.form1200'" class="btn btn--lg btn--green pill-radius cartbtn add" data-ng-click="ngCart.addItem(id, name, price, q, data)">Form 1200</button>
+<button data-ng-show="inCart()" class="btn btn--lg btn--red pill-radius cartbtn remove" data-ng-click="ngCart.removeItemById(id)" data-ng-if="attrs.name == 'service.renewal'">Renewal</button>
+<button data-ng-show="inCart()" class="btn btn--lg btn--red pill-radius cartbtn remove" data-ng-click="ngCart.removeItemById(id)" data-ng-if="attrs.name == 'service.form1200'">Form 1200</button>

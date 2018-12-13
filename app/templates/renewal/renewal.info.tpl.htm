@@ -1,0 +1,549 @@
+<div class="d-none d-xl-block">   
+    <div class="content-panel bg-white border-t-none">
+        <div class="content-panel__head border-grey-xs--btm">
+            <div class="row d-flex align-items-center">
+                <div class="col-xl-3">
+                    <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
+                    <p class="font-h4">
+                        <span class="font-weight-medium">Renewal Status:</span> 
+                        <span data-ng-bind="$ctrl.getStatus($ctrl.patent.renewalStatus)">
+                    </p>
+                </div>
+                <div class="col-xl-6" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
+                                <span class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')">$ {{$ctrl.patent.renewalFeeUI.subTotalUSD | number: 2 }}</span>
+                            </div>
+                            <div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.patent.renewalStageProgress) - 1)  + '%'}">
+                                <span class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">$ {{$ctrl.patent.portfolioUI.serviceList[0].nextStageCostUSD}}</span>
+<!--                                 <span data-ng-if="$ctrl.patent.portfolioUI.serviceList[0].nextStageColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span> -->
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="$ctrl.getNextColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'bg')">
+                                <uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.renewalStageProgress">{{$ctrl.patent.renewalStageProgress || '1'}}%</uib-bar>
+                            </uib-progress>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
+                        <p class="font-h4 m-b-xs">
+                            <span class="font-weight-bold">Next stage: </span> 
+                            <span data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">{{$ctrl.patent.portfolioUI.serviceList[0].nextStageColour}}</span>
+                        </p>
+                        <p class="font-h4"><span class="font-weight-bold">Occurs: </span> {{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-cxl-6 border-grey-xs--right p-r-none">
+                <div class="content-panel__body">
+                    <div class="m-b-md">
+                        <h4 class="font-weight-medium m-b-xs">Notifications</h4>
+                        <p>Simply select the colour and time frame to receive email notifications for this patent prior to each stage. You can select as many or few as you want.</p>
+                    </div>
+                    <div class="row m-b-xs">
+                        <div class="col-xl-12 d-flex align-items-center justify-content-between">
+                            <h4 class="font-h4 font-weight-medium">Selected</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <ul class="panel-nav">
+                                <li class="panel-nav__list-item list-item--colour-border pill-radius green m-b-xs" data-ng-init="activeNotificationTabXl = 0;" data-ng-click="activeNotificationTabXl = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active': activeNotificationTabXl == 0}">Green</li>
+                                <li class="panel-nav__list-item list-item--colour-border pill-radius amber m-b-xs" data-ng-click="activeNotificationTabXl = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active': activeNotificationTabXl == 1}">Amber</li>
+                                <li class="panel-nav__list-item list-item--colour-border pill-radius red m-b-xs" data-ng-click="activeNotificationTabXl = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active': activeNotificationTabXl == 2}">Red</li>
+                                <li class="panel-nav__list-item list-item--colour-border pill-radius blue m-b-xs" data-ng-click="activeNotificationTabXl = 3; $ctrl.displayNotifications('Blue');" data-ng-class="{'active ': activeNotificationTabXl == 3}">Blue</li>
+                                <li class="panel-nav__list-item list-item--colour-border pill-radius black m-b-xs" data-ng-click="activeNotificationTabXl = 4; $ctrl.displayNotifications('Black');" data-ng-class="{'active': activeNotificationTabXl == 4}">Black</li>
+                            </ul>
+                        </div>
+                        <div class="col-xl-12 m-t-sm">
+                            <uib-tabset active="activeNotificationTabXl" vertical="true" type="pills" class="flex-column">
+                                <uib-tab index="0" heading="Green" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
+                                        <div class="col-cxl-3 col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-green"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                                <uib-tab index="1" heading="Amber" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
+                                        <div class="col-cxl-3 col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-amber"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                </uib-tab>
+                                <uib-tab index="2" heading="Red" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
+                                        <div class="col-cxl-3 col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-red"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                </uib-tab>
+                                <uib-tab index="3" heading="Blue" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
+                                        <div class="col-cxl-3 col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-blue"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                </uib-tab>
+                                <uib-tab index="4" heading="Black" data-ng-hide="true">
+                                    <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">    
+                                        <div class="col-cxl-3 col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                            {{item.title}}
+                                            <div class="onoffswitch">
+                                                <label class="switch">
+                                                  <input type="checkbox" data-ng-model="item.isOn">
+                                                  <span class="slider round bg-phase-black"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                </uib-tab>  
+                            </uib-tabset>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-panel__head border-grey-xs--top">
+                    <div class="row">
+                        <div class="col-xl-12 d-flex">
+                            <button class="btn btn--lg btn--green pill-radius" value="Save" data-ng-click="$ctrl.updateRenewalNotifications($ctrl.patent, $ctrl.patent.id)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 p-l-none">
+                <div class="content-panel__body h-100 d-flex align-items-center" data-ng-if="$ctrl.patent.renewalFeeUI === null">
+                    <div class="row bg-no-chart">
+                        <div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
+                            <div class="d-flex justify-content-center align-items-center flex-column">
+                                <p class="h4 font-weight-medium text-center">No service is currently available</p>      
+                                <p class="font-body text-center">When a service does become available, all FX and fee information will be displayed in this panel.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-panel__body" data-ng-if="$ctrl.patent.renewalFeeUI !== null">
+                    <div class="m-b-sm">
+                        <div class="row">
+                            <div class="col-xl-12 d-flex justify-content-between m-b-sm">
+                                <h4 class="font-weight-medium font-h4">FX Rate Impact</h4>
+                                <p class="font-weight-medium font-h4">Today's Rate: <span data-ng-bind="$ctrl.patent.renewalFeeUI.fxRate"></span></p>
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 d-flex justify-content-between">
+                                <p class="font-weight-medium font-h4">Yesterday: <span data-ng-class="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateYesterday >= $ctrl.patent.renewalFeeUI.fxRate ? 'txt-phase-green': 'txt-phase-red'" data-ng-bind="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateYesterday"></span></p>
+                                <p class="font-weight-medium font-h4">Last Week: <span data-ng-class="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateLastWeek >= $ctrl.patent.renewalFeeUI.fxRate ? 'txt-phase-green': 'txt-phase-red'" data-ng-bind="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateLastWeek"></span></p>
+                                <p class="font-weight-medium font-h4">Last Month: <span data-ng-class="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateLastMonth >= $ctrl.patent.renewalFeeUI.fxRate ? 'txt-phase-green': 'txt-phase-red'" data-ng-bind="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateLastMonth"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-xl-3 offset-xl-4">
+                                    <p class="font-h4 font-weight-medium m-b-xs text-center">USD</p>
+                                </div>
+                                <div class="col-xl-3 offset-xl-2">
+                                    <p class="font-h4 font-weight-medium m-b-xs text-center">EUR</p>
+                                </div>
+                            </div>
+                            <div class="border-grey-xs--btm m-b-sm m-l-none"></div>
+                            <div class="row m-b-sm">
+                                <div class="col-xl-4">
+                                    <p class="font-weight-medium font-body">Today:</p>
+                                </div>
+                                <div class="col-xl-3">
+                                    <p class="text-center font-body">$ {{($ctrl.patent.renewalFeeUI.subTotalUSD | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-xl-2">
+                                    
+                                </div>                              
+                                <div class="col-xl-3">
+                                    <p class="text-center font-body">&euro; {{($ctrl.patent.renewalFeeUI.subTotalEUR | number: 2) || '0.00'}}</p>
+                                </div>
+                            </div>                          
+                            <div class="row m-b-sm">
+                                <div class="col-xl-4">
+                                    <p class="font-weight-medium font-body">Yesterday:</p>
+                                </div>
+                                <div class="col-xl-3">
+                                    <p class="text-center font-body">$ {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDYesterday | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-xl-2">
+                                </div>
+                                <div class="col-xl-3">
+                                    <p class="text-center font-body">&euro; {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURYesterday | number: 2) || '0.00'}}</p>
+                                </div>                                                                                              
+                            </div>
+                            <div class="row m-b-sm">
+                                <div class="col-xl-4">
+                                    <p class="font-weight-medium font-body">Last week:</p>            
+                                </div>
+                                <div class="col-xl-3">
+                                    <p class="text-center font-body">$ {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastWeek | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-xl-2">
+                                </div>                              
+                                <div class="col-xl-3">
+                                    <p class="text-center font-body">&euro; {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastWeek | number: 2) || '0.00'}}</p>
+                                </div>                                              
+                            </div>
+                            <div class="row m-b-sm">
+                                <div class="col-xl-4">
+                                    <p class="font-weight-medium font-body">Last month:</p>
+                                </div>
+                                <div class="col-xl-3">
+                                    <p class="text-center font-body">$ {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-xl-2">
+                                </div>                              
+                                <div class="col-xl-3">
+                                    <p class="text-center font-body">&euro; {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth | number: 2) || '0.00'}}</p>
+                                </div>                                              
+                            </div>
+                            <div class="row m-b-sm">
+                                <div class="col-xl-4">
+                                    <p class="font-weight-medium font-body">4 week variation:</p>   
+                                </div>
+                                <div class="col-xl-3">
+                                    <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalUSD <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
+                                        <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD < $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>
+                                        <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>                                        
+                                        $ {{($ctrl.patent.subTotalUSD % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2)  || '0.00'}}
+                                    </p>
+                                </div>
+                                <div class="col-xl-2">
+                                </div>
+                                <div class="col-xl-3">
+                                    <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth ? 'txt-phase-green': 'txt-phase-red'">
+                                        <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR < $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
+                                        <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
+                                        &euro; {{($ctrl.patent.subTotalEUR % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth | number: 2)  || '0.00'}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- row end -->
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-xl-12">
+                            <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus)" class="d-flex justify-content-end">
+                                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.renewalFeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+                                </ngcart-addtocart>
+                                <a class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent.renewal.cost-analysis">View Fee Breakdown</a>
+                            </div>
+                            <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                                     
+                        </div>
+                    </div>
+                </div> <!-- col-xl-6 END -->                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-xl-none">
+    <div class="content-panel border-t-none m-b-sm">
+        <div class="content-panel__head bg-white border-grey-xs--btm">
+            <div class="row d-flex align-items-center">
+                <div class="col-md-6">
+                    <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
+                    <p class="font-h4">
+                        <span class="font-weight-medium">Renewal Status:</span> 
+                        <span data-ng-bind="$ctrl.getStatus($ctrl.patent.renewalStatus)">
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
+                        <p class="font-h4 m-b-xs">
+                            <span class="font-weight-medium">Next stage: </span> 
+                            <span data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">{{$ctrl.patent.portfolioUI.serviceList[0].nextStageColour}}</span>
+                        </p>
+                        <p class="font-h4"><span class="font-weight-medium">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
+                    </div>
+                </div>
+                <div class="col-md-12 m-t-sm" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
+                    <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
+                        <span class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')">$ {{$ctrl.patent.renewalFeeUI.subTotalUSD | number: 2 }}</span>
+                    </div>
+                    <div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.patent.renewalStageProgress) - 1)  + '%'}">
+                        <span class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">$ {{$ctrl.patent.renewalCostNextStageUSD}}</span>
+<!--                         <span data-ng-if="$ctrl.patent.costBandColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span> -->
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <uib-progress class="pill-radius progress-bar-tall" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'bg')">
+                        <uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.renewalStageProgress">{{$ctrl.patent.renewalStageProgress || '1'}}%</uib-bar>
+                    </uib-progress>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bg-white">
+                    <div class="content-panel__body">
+                        <div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
+                            <div class="col-md-12 col-lg-7">
+                                <div class="m-b-xs">
+                                    <h4 class="font-weight-medium font-h4">Notifications</h4>
+                                </div>
+                                <p>Simply select the colour and time frame to receive email notifications for this patent prior to each stage. You can select as many or few as you want.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 d-flex align-items-center justify-content-between m-b-xs">
+                                <h4 class="font-h4 font-weight-medium">Selected</h4>
+                            </div>
+                            <div class="col-md-12 col-lg-8 m-b-xs">
+                                <div class="panel-nav">
+                                    <ul class="nav panel-nav__notification-list d-flex justify-content-start">
+                                        <ul class="panel-nav">
+                                            <li class="panel-nav__list-item list-item--colour-border pill-radius green m-b-xs" data-ng-init="activeNotificationTabMd = 0;" data-ng-click="activeNotificationTabMd = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active': activeNotificationTabMd == 0}">Green</li>
+                                            <li class="panel-nav__list-item list-item--colour-border pill-radius amber m-b-xs" data-ng-click="activeNotificationTabMd = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active': activeNotificationTabMd == 1}">Amber</li>
+                                            <li class="panel-nav__list-item list-item--colour-border pill-radius red m-b-xs" data-ng-click="activeNotificationTabMd = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active': activeNotificationTabMd == 2}">Red</li>
+                                            <li class="panel-nav__list-item list-item--colour-border pill-radius blue m-b-xs" data-ng-click="activeNotificationTabMd = 3; $ctrl.displayNotifications('Blue');" data-ng-class="{'active ': activeNotificationTabMd == 3}">Blue</li>
+                                            <li class="panel-nav__list-item list-item--colour-border pill-radius black m-b-xs" data-ng-click="activeNotificationTabMd = 4; ctrl.displayNotifications('Black');" data-ng-class="{'active': activeNotificationTabMd == 4}">Black</li>
+                                        </ul>                                      
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-7">
+                                <uib-tabset active="activeNotificationTabMd" vertical="true" type="pills" class="flex-column">
+                                    <uib-tab index="0" heading="Green" data-ng-hide="true">
+                                        <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
+                                            <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                                {{item.title}}
+                                                <div class="onoffswitch">
+                                                    <label class="switch">
+                                                      <input type="checkbox" data-ng-model="item.isOn">
+                                                      <span class="slider round bg-phase-green"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </uib-tab>
+                                    <uib-tab index="1" heading="Amber" data-ng-hide="true">
+                                        <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
+                                            <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                                {{item.title}}
+                                                <div class="onoffswitch">
+                                                    <label class="switch">
+                                                      <input type="checkbox" data-ng-model="item.isOn">
+                                                      <span class="slider round bg-phase-amber"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>                                  
+                                    </uib-tab>
+                                    <uib-tab index="2" heading="Red" data-ng-hide="true">
+                                        <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
+                                            <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                                {{item.title}}
+                                                <div class="onoffswitch">
+                                                    <label class="switch">
+                                                      <input type="checkbox" data-ng-model="item.isOn">
+                                                      <span class="slider round bg-phase-red"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </uib-tab>
+                                    <uib-tab index="3" heading="Blue" data-ng-hide="true">
+                                        <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
+                                            <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                                {{item.title}}
+                                                <div class="onoffswitch">
+                                                    <label class="switch">
+                                                      <input type="checkbox" data-ng-model="item.isOn">
+                                                      <span class="slider round bg-phase-blue"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>                                  
+                                    </uib-tab>
+                                    <uib-tab index="4" heading="Black" data-ng-hide="true">
+                                        <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
+                                            <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
+                                                {{item.title}}
+                                                <div class="onoffswitch">
+                                                    <label class="switch">
+                                                      <input type="checkbox" data-ng-model="item.isOn">
+                                                      <span class="slider round bg-phase-black"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>                                  
+                                    </uib-tab>                                                                       
+                                </uib-tabset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-panel__head border-grey-xs--top">
+                        <div class="row">
+                            <div class="col-xl-12 d-flex">
+                                <input type="submit" id="submit" class="btn btn--lg btn--green pill-radius" value="Save" data-ng-click="$ctrl.updateRenewalNotifications($ctrl.patent.id)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- row end -->
+    </div>
+    
+        <div class="row">
+            <div class="col-md-8 col-lg-7">
+                <div class="content-panel">
+                    <div class="content-panel__body bg-white h-100 d-flex align-items-center" data-ng-if="$ctrl.patent.renewalFeeUI === null">
+                        <div class="row bg-no-chart">
+                            <div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
+                                <div class="d-flex justify-content-center align-items-center flex-column">
+                                    <p class="h4 font-weight-medium text-center">No service is currently available</p>      
+                                    <p class="font-body text-center">When a service does become available, all FX and fee information will be displayed in this panel.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="content-panel__body bg-white" data-ng-if="$ctrl.patent.renewalFeeUI !== null">
+                        <div class="m-b-sm">
+                            <div class="row">
+                                <div class="col-md-12 d-flex justify-content-between m-b-sm">
+                                    <h4 class="font-weight-medium font-h4">FX Rate Impact</h4>
+                                    <p class="font-weight-medium font-h4">Today's Rate: <span data-ng-bind="$ctrl.patent.renewalFeeUI.fxRate">1.83</span></p>
+                                </div>  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 d-flex justify-content-between">
+                                    <p class="font-weight-medium font-h4">Yesterday: <span data-ng-class="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateYesterday >= $ctrl.patent.renewalFeeUI.fxRate ? 'txt-phase-green': 'txt-phase-red'" data-ng-bind="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateYesterday"></span></p>
+                                    <p class="font-weight-medium font-h4">Last Week: <span data-ng-class="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateLastWeek >= $ctrl.patent.renewalFeeUI.fxRate ? 'txt-phase-green': 'txt-phase-red'" data-ng-bind="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateLastWeek"></span></p>
+                                    <p class="font-weight-medium font-h4">Last Month: <span data-ng-class="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateLastMonth >= $ctrl.patent.renewalFeeUI.fxRate ? 'txt-phase-green': 'txt-phase-red'" data-ng-bind="$ctrl.patent.renewalFeeUI.costHistoryUI.fxRateLastMonth"></span></p>
+                                </div>
+                            </div>                  
+                        </div>
+                        <div class="row border-grey-xs--btm m-b-sm">
+                            <div class="col-md-12">
+                                <div class="row m-b-sm border-grey-xs--btm">
+                                    <div class="col-md-3 offset-xl-4">
+                                        <p class="font-h4 font-weight-medium m-b-xs text-center">USD</p>
+                                    </div>
+                                    <div class="col-md-3 offset-xl-2">
+                                        <p class="font-h4 font-weight-medium m-b-xs text-center">EUR</p>
+                                    </div>
+                                </div>
+                                <div class="row m-b-sm">
+                                    <div class="col-md-4">
+                                        <p class="font-weight-medium font-h4">Today:</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="text-center font-h4">$ {{($ctrl.patent.renewalFeeUI.subTotalUSD | number: 2) || '0.00'}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        
+                                    </div>                              
+                                    <div class="col-md-3">
+                                        <p class="text-center font-h4">&euro; {{($ctrl.patent.renewalFeeUI.subTotalEUR | number: 2) || '0.00'}}</p>
+                                    </div>
+                                </div>                          
+                                <div class="row m-b-sm">
+                                    <div class="col-md-4">
+                                        <p class="font-weight-medium font-h4">Yesterday:</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="text-center font-h4">$ {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDYesterday | number: 2) || '0.00'}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="text-center font-h4">&euro; {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURYesterday | number: 2) || '0.00'}}</p>
+                                    </div>                                                                                              
+                                </div>
+                                <div class="row m-b-sm">
+                                    <div class="col-md-4">
+                                        <p class="font-weight-medium font-h4">Last week:</p>            
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="text-center font-h4">$ {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastWeek | number: 2) || '0.00'}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>                              
+                                    <div class="col-md-3">
+                                        <p class="text-center font-h4">&euro; {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastWeek | number: 2) || '0.00'}}</p>
+                                    </div>                                              
+                                </div>
+                                <div class="row m-b-sm">
+                                    <div class="col-md-4">
+                                        <p class="font-weight-medium font-h4">Last month:</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="text-center font-h4">$ {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2) || '0.00'}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>                              
+                                    <div class="col-md-3">
+                                        <p class="text-center font-h4">&euro; {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth | number: 2) || '0.00'}}</p>
+                                    </div>                                              
+                                </div>
+                                <div class="row m-b-sm">
+                                    <div class="col-md-4">
+                                        <p class="font-weight-medium font-h4">4 week variation:</p>   
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalUSD <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
+                                            <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>
+                                            <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>                                        
+                                            $ {{($ctrl.patent.subTotalUSD % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2)  || '0.00'}}</p>    
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth ? 'txt-phase-green': 'txt-phase-red'">
+                                            <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
+                                            <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
+                                            &euro; {{($ctrl.patent.subTotalEUR % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth | number: 2)  || '0.00'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- row end -->
+                        <div class="row d-flex justify-content-end">
+                            <div class="col-md-6 d-flex justify-content-end">
+                                <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus)" class="d-flex justify-content-end">
+                                    <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.renewalFeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
+                                    </ngcart-addtocart>
+                                    <a class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent.renewal.cost-analysis">View Fee Breakdown</a>
+                                </div>
+                                <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
