@@ -427,11 +427,11 @@ public class Form1200RestController extends Universal {
     
     
 	// this is TMP for DELETING an epct - until FE provides a control for this
-	@RequestMapping(value = "/rest-form1200-tmpDeleteF1200/{epctId}", method = RequestMethod.GET)
-    public ResponseEntity<Object> tmpDeleteTmpForm1200(@PathVariable("epctId") long epctId) {
+	@RequestMapping(value = "/rest-form1200-tmpDeleteF1200/{patent_id}", method = RequestMethod.GET)
+    public ResponseEntity<Object> tmpDeleteTmpForm1200(@PathVariable("patent_id") long patent_id) {
     	
-		log().debug(PREFIX+"/rest-form1200-tmpDeleteF1200/"+epctId+" tmpDeleteTmpForm1200()  invoked");
-		return deleteForm1200(epctId);
+		log().debug(PREFIX+"/rest-form1200-tmpDeleteF1200/"+patent_id+" [patentId] tmpDeleteTmpForm1200()  invoked");
+		return deleteForm1200(patent_id);
 	}
     		
     		

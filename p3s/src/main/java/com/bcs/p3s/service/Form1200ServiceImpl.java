@@ -528,7 +528,12 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		Form1200 form1200 = epct.getForm1200(); 
 		Form1200Fee form1200Fee = epct.getForm1200Fee(); 
 		
+		// start the 3-step
 		if (form1200 != null) {
+			epct.setForm1200(null);
+			epct.merge();
+			epct = Epct.findActiveEpctByPatent(patent);
+			
 			form1200.remove();
 			//form1200.flush();
 			form1200 = null;
