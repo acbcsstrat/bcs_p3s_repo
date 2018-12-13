@@ -88,9 +88,11 @@ public class EpctUI extends Epct {
 
 		// For urls - read the website context 
 		String context = null;
+		String urlBase = null;
 		try {
 			P3SPropertyReader reader = new P3SPropertyReader();
 			context = reader.getGenericProperty(P3SPropertyNames.P3S_WEB_CONTEXT); 
+			urlBase = reader.getESProperty(P3SPropertyNames.P3S_WEB_TOMCAT_URL_BASE);
 		} catch (P3SPropertyException e) {
 			System.out.println("EpctUI constructor : property read failed");
 			e.printStackTrace();
@@ -154,8 +156,8 @@ public class EpctUI extends Epct {
 		// Get the form1200PdfUrl
 		if(this.getForm1200() != null) {
 			String url = "";
-			if (context!=null) {
-				url = context + "/download.pdf?epctId=" + this.getId(); 
+			if (urlBase!=null) {
+				url = urlBase + "download.pdf?epctId=" + this.getId();
 			}
 			this.setForm1200PdfUrl(url);
 		}

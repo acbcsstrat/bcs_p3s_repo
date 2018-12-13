@@ -39,15 +39,25 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         title: function() {
            return 'Q.'+(this.index+1)+'';
         },
-        activeTabFn: function() {
-            return this.index+1;
-        },
-        fn: function(){
-            vm.activeTab = this.activeTabFn();
-            vm.amendmentsChecked = true;
-            if(!vm.documents.active) {
-                vm.documentsChecked = true;
+        activeTabFn: function(dir) {
+            if(dir === 'prev') {
+                return this.index-1;
+            } else {
+               if(!vm.documents.active) {
+                    vm.documentsChecked = true;
+                }                
+                return this.index+1;
             }
+            
+        },
+        fn: function(event){
+            var btn = angular.element(event.currentTarget)
+            if(btn.hasClass('prev')) {
+                vm.activeTab = this.activeTabFn('prev');
+            } else {
+                vm.activeTab = this.activeTabFn('next');
+            }
+            vm.amendmentsChecked = true;
         }
     }
 
@@ -57,12 +67,22 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         title: function() {
            return 'Q.'+(this.index+1)+'';
         },
-        activeTabFn: function() {
-            return this.index+1;
+        activeTabFn: function(dir) {
+            if(dir === 'prev') {
+                return this.index-1;
+            } else {             
+                vm.documentsChecked = true;
+                return this.index+1;
+            }
         },        
-        fn: function() {
-            vm.activeTab = this.activeTabFn();
-            vm.documentsChecked = true;
+        fn: function(event) {
+            var btn = angular.element(event.currentTarget)            
+            if(btn.hasClass('prev')) {
+                vm.activeTab = this.activeTabFn('prev');
+            } else {
+                vm.activeTab = this.activeTabFn('next');
+            }            
+           
         }
     }
 
@@ -71,12 +91,21 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         title: function() {
            return 'Q.'+(this.index+1)+'';
         },
-        activeTabFn: function() {
-            return this.index+1;
+        activeTabFn: function(dir) {
+            if(dir === 'prev') {
+                return this.index-1;
+            } else {
+                vm.extAndValidChecked = true;                        
+                return this.index+1;
+            }
         },        
-        fn: function() {
-            vm.activeTab = this.activeTabFn();
-            vm.extAndValidChecked = true;
+        fn: function(event) {
+            var btn = angular.element(event.currentTarget);
+            if(btn.hasClass('prev')) {
+                vm.activeTab = this.activeTabFn('prev');
+            } else { 
+                vm.activeTab = this.activeTabFn('next');
+            }
         }
     }
 
@@ -85,12 +114,21 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         title: function() {
            return 'Q.'+(this.index+1)+'';
         },
-        activeTabFn: function() {
-            return this.index+1;
+        activeTabFn: function(dir) {
+            if(dir === 'prev') {
+                return this.index-1;
+            } else {           
+                vm.referenceChecked = true; 
+                return this.index+1;
+            }
         },
-        fn: function() {
-            vm.activeTab = this.activeTabFn();
-            vm.referenceChecked = true;
+        fn: function(event) {
+            var btn = angular.element(event.currentTarget);
+            if(btn.hasClass('prev')) {
+                vm.activeTab = this.activeTabFn('prev');
+            } else { 
+                vm.activeTab = this.activeTabFn('next');
+            }
         }               
     }
 
@@ -99,13 +137,22 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         title: function() {
            return 'Q.'+(this.index+1)+'';
         },
-        activeTabFn: function() {
-            return this.index+1;
+        activeTabFn: function(dir) {
+            if(dir === 'prev') {
+                return this.index-1;
+            } else { 
+                vm.confirmPagesChecked = true;
+                return this.index+1;
+            }            
         },
-        fn: function() {
-            vm.activeTab = this.activeTabFn();
-            vm.confirmPagesChecked = true;
-        }           
+        fn: function(event) {
+            var btn = angular.element(event.currentTarget);
+            if(btn.hasClass('prev')) {
+                vm.activeTab = this.activeTabFn('prev');
+            } else { 
+                vm.activeTab = this.activeTabFn('next');
+            }
+        }
     }
 
     vm.renewal = {
@@ -113,7 +160,24 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         index: 5,
         title: function() {
            return 'Q.'+(this.index+1)+'';
-        } 
+        },
+        activeTabFn: function(dir) {
+            if(dir === 'prev') {
+                console.log(dir)
+                return this.index-1;
+            } else { 
+                console.log(dir)
+                return this.index+1;
+            }            
+        },        
+        fn: function(event) {
+            var btn = angular.element(event.currentTarget);
+            if(btn.hasClass('prev')) {
+                vm.activeTab = this.activeTabFn('prev');
+            } else { 
+                vm.activeTab = this.activeTabFn('next');
+            }
+        }        
     }
 
     function init() {
@@ -152,7 +216,7 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
                     }
                 }
 
-                if(questions.showOptionalQuestion()) {
+                if(questions.showOptionalQuestion()) { //if extra question is included, extend index of other quesitons
                     vm.documents.active = true;
                     vm.extAndValid.index++;
                     vm.reference.index++;
@@ -221,24 +285,21 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
     }
 
     function submitForm1200(data) {
-        // console.log(vm.formData)
         var arr = sortPageDetails(data);
         vm.formData.pageDescriptionsUI = arr;
-        // vm.formData.ep_ApplicationNumber = patent.ep_ApplicationNumber;
         vm.formData.id = patent.id
         vm.formData.totalClaims = parseInt(vm.formData.totalClaims);
         vm.formData.totalPages = parseInt(vm.formData.totalPages);
-        // vm.formData
-        form1200Service.submitForm1200(vm.formData)
-        .then(
-            function(response){
-                console.log(response)
-                $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response}, {reload: false})
-            },
-            function(errResponse){
-                console.log(errResponse)
-            }
-        )
+        // form1200Service.submitForm1200(vm.formData)
+        // .then(
+        //     function(response){
+        //         console.log(response)
+        $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: vm.formData}, {reload: false})
+        //     },
+        //     function(errResponse){
+        //         console.log(errResponse)
+        //     }
+        // )
     }
 
     function chkValidStates(item, index) {
@@ -262,7 +323,10 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
     function manualProcess(value, question) {// NOT NEEDED FOR RELEASE 1
 
         if(value === true && question == 'amendments') {
-
+            vm.documentsChecked = false;
+            vm.extAndValidChecked = false;
+            vm.referenceChecked = false;
+            vm.confirmPagesChecked = false;
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/templates/modals/modal.manual-processing-amendments.tpl.htm',
                 appendTo: undefined,

@@ -16,48 +16,95 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
         vm.barOptions = {
             chart: {
                 type: 'multiBarHorizontalChart',
-                height: 350,
-                margin : {
-                    top: 20,
-                    right: 50,
-                    bottom: 70,
-                    left: 90
-                },
-                duration: 500,
+                barColor: ["#3c3c3b", "#0097ce", "#e30613", "#f9b233", "#53ab58"],
                 tooltip: {
                   hideDelay: 0
+                },                 
+                height: 300,
+                showControls: false,
+                showValues: true,
+                showLegend: false,
+                stacked: true,
+                duration: 500,
+                margin: {
+                    left: 70,
+                    right: 10
                 },
-                barColor: ["#3c3c3b", "#0097ce", "#e30613", "#f9b233", "#53ab58"],     
                 x: function(d){
                     return d[0];
                 },
                 y: function(d){
                     return d[1];
                 },
-                showControls: false,
-                showValues: true,
-                showLegend: false,
-                stacked: true,
-                duration: 500,
                 multibar: {
                     groupSpacing: 0.4
-                },            
+                },
                 xAxis: {
-                    showMaxMin: true,
+                    showMaxMin: false,
+                    axisLabelDistance: 0,
+                    staggerLabels: false,
+                    rotateLabels: 0,
+                    rotateYLabel: true,
+                    axisLabel: null,
+                    height: 60,
+                    ticks: null,
+                    width: 2000,
+                    margin: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                    },
+                    duration: 250,
+                    orient: 'left',
+                    tickValues: null,
+                    tickSubdivide: 0,
+                    tickSize: 6,
+                    tickPadding: 5,
+                    domain: [
+                        0,
+                        1
+                    ],
+                    range: [
+                        0,
+                        1
+                    ],             
                     tickFormat: function (d, i) {
                         return d3.time.format('%x')(new Date(d));
-                        
-                    },
-                    tickPadding: 20,
-                    showMaxMin: true
+                    }
                 },
                 yAxis: {
+                    showMaxMin: true,
+                    axisLabelDistance: 20,
+                    staggerLabels: false,
+                    rotateLabels: 0,
+                    rotateYLabel: true,
+                    height: 60,
+                    ticks: null,
+                    width: 75,
+                    margin: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                    },
+                    duration: 250,
+                    orient: 'bottom',
+                    tickValues: null,
+                    tickSubdivide: 0,
+                    tickSize: 6,
+                    tickPadding: 3,
+                    domain: [
+                        0,
+                        1
+                    ],
+                    range: [
+                        0,
+                        1
+                    ],                 
                     tickFormat: function(d){
                         return '$ ' + d3.format('.02f')(d);
-                    },
-                    showMaxMin: false,
-                    tickPadding: 20,
-                    showMaxMin: true
+                    }
                 },
                 callback: function(d, e) {
                     d3.selectAll('.nvd3 .nv-bar rect').attr("rx", 15);
@@ -70,10 +117,10 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
                 type: 'lineChart',
                 height: 350,
                 margin : {
-                    top: 20,
+                    top: 30,
                     right: 50,
-                    bottom: 70,
-                    left: 80
+                    bottom: 30,
+                    left: 50
                 },
                 clipEdge: false,
                 duration: 500,
@@ -92,18 +139,65 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
                     tickFormat: function (d, i) {
                         return d3.time.format('%x')(new Date(d));
                     },
+                    axisLabelDistance: 20,
+                    staggerLabels: false,
+                    rotateLabels: 0,
+                    rotateYLabel: true,
                     showMaxMin: true,
-                    rotateLabels: -30,
-                    tickPadding: 20,
-                    ticks: 4        
+                    height: 60,
+                    ticks: null,
+                    width: 75,
+                    margin: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                    },
+                    duration: 250,
+                    orient: 'bottom',
+                    tickValues: null,
+                    tickSubdivide: 0,
+                    tickSize: 6,
+                    tickPadding: 10,
+                    domain: [
+                        0,
+                        1
+                    ],
+                    range: [
+                        0,
+                        1
+                    ]           
                 },
                 yAxis: {
                     tickFormat: function(d){
                         return '$ ' + d3.format('.00f')(d);
                     },
+                    axisLabelDistance: 20,
+                    rotateLabels: 0,
+                    rotateYLabel: true,
                     showMaxMin: true,
-                    // showMaxMin: false,
-                    tickPadding: 20
+                    height: 60,
+                    width: 75,
+                    margin: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: -30
+                    },
+                    duration: 250,
+                    orient: 'left',
+                    tickValues: null,
+                    tickSubdivide: 0,
+                    tickSize: 6,
+                    tickPadding: 10,
+                    domain: [
+                        0,
+                        1
+                    ],
+                    range: [
+                        0,
+                        1
+                    ]
                 },
                 tooltip: {
                     keyFormatter: function(d) {
@@ -118,7 +212,6 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
                 showYAxis: true
             }
         }
-
         function init() {
             loadChart();
         }

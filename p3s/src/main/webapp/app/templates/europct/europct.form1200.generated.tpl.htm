@@ -1,17 +1,16 @@
 <div class="row">
-    <div class="col-xl-6">
-        <div class="content-panel bg-white border-t-none">
+    <div class="col-md-7 col-xl-6">
+        <div class="content-panel bg-white">
             <div class="content-panel__head bg-white border-grey-xs--btm">
                 <div class="row">
                     <div class="col-md-12 col-lg-6 col-xl-12 d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <h4 class="font-h4 m-r-sm" data-ng-if="!$ctrl.form1200.form1200PdfUrl">Generating Form 1200</h4>
                             <h4 class="font-h4" data-ng-if="$ctrl.form1200.form1200PdfUrl">Review Form 1200</h4>
-                            <img src="assets/imgs/icons/ajax-loader.gif" data-ng-if="!$ctrl.form1200.form1200PdfUrl">
+                            <!-- <img src="assets/imgs/icons/ajax-loader.gif" data-ng-if="!$ctrl.form1200.form1200PdfUrl"> -->
                         </div>
                         <div class="row" data-ng-if="$ctrl.form1200.form1200PdfUrl">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn--lg btn--green pill-radius">Open</button>
                                 <button type="button" class="btn btn--lg btn--green pill-radius">Download</button>
                             </div>
                         </div>
@@ -27,64 +26,93 @@
                 </div>
                 <div class="row m-b-md">
                     <div class="col-xl-12 d-flex justify-content-between">
-                        <p class="font-h4 font-weight-medium">Yesterday's: <span data-ng-bind="$ctrl.form1200.form1200FeeUI.costHistoryUI.fxRateYesterday"></span></p>
-                        <p class="font-h4 font-weight-medium">Last Week's: <span data-ng-bind="$ctrl.form1200.form1200FeeUI.costHistoryUI.fxRateLastWeek"></span></p>
-                        <p class="font-h4 font-weight-medium">Last Mth's: <span data-ng-bind="$ctrl.form1200.form1200FeeUI.costHistoryUI.fxRateLastMonth"></span></p>
+                        <p class="font-h4 font-weight-medium">Yesterday's: <span data-ng-class="$ctrl.form1200.form1200FeeUI.costHistoryUI.fxRateYesterday >= $ctrl.form1200.form1200FeeUI.fxRate ? 'txt-phase-green': 'txt-phase-red'" data-ng-bind="$ctrl.form1200.form1200FeeUI.costHistoryUI.fxRateYesterday"></span></p>
+                        <p class="font-h4 font-weight-medium">Last Week's: <span data-ng-class="$ctrl.form1200.form1200FeeUI.costHistoryUI.fxRateLastWeek >= $ctrl.form1200.form1200FeeUI.fxRate ? 'txt-phase-green': 'txt-phase-red'" data-ng-bind="$ctrl.form1200.form1200FeeUI.costHistoryUI.fxRateLastWeek"></span></p>
+                        <p class="font-h4 font-weight-medium">Last Mth's: <span data-ng-class="$ctrl.form1200.form1200FeeUI.costHistoryUI.fxRateLastMonth >= $ctrl.form1200.form1200FeeUI.fxRate ? 'txt-phase-green': 'txt-phase-red'" data-ng-bind="$ctrl.form1200.form1200FeeUI.costHistoryUI.fxRateLastMonth"></span></p>
                     </div>
                 </div>
-                <div class="row border-grey-xs--btm m-b-sm">
+                <div class="row">
                     <div class="col-xl-12">
                         <h4 class="h4">Cost Breakdown</h4>
                     </div>
                 </div>
+                <div class="border-grey-xs--btm m-b-sm m-t-xs"></div>
                 <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>Filing Fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.filingFeeUSD) || '0.00'"></span></p>
                     </div> 
+                </div>
+                <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>Examination fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.examinationFeeUSD) || '0.00'"></span></p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>Supplmentary search fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.supplementarySearchFeeUSD | number: 2) || '0.00'"></span></p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>1st Claim Fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.claimsFee1USD) || '0.00'"></span></p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>2st Claim Fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.claimsFee2USD) || '0.00'"></span></p>
-                    </div>                             
+                    </div>
+                </div>
+                <div class="row">                          
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>Designation fee:</p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.designationFeeUSD) || '0.00'"></span></p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>Validation Fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.validationFeeUSD) || '0.00'"></span></p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>Excess Page Fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.excessPageFeeUSD) || '0.00'"></span></p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>Processing Fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.processingFeeUSD) || '0.00'"></span></p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>Urgent Fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.urgentFeeUSD) || '0.00'"></span></p>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-xl-12 d-flex justify-content-between m-b-xs">
                         <p>Express Fee: </p>
                         <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.expressFeeUSD) || '0.00'"></span></p>
-                    </div>                              
+                    </div>
+                </div>
+                <div class="border-grey-xs--btm m-b-sm m-t-xs"></div>
+                <div class="row">
+                    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
+                        <p class="font-weight-medium font-h4">Total: </p>
+                        <p class="font-weight-medium font-h4">$ <span data-ng-bind="($ctrl.form1200.form1200FeeUI.expressFeeUSD) || '0.00'"></span></p>
+                    </div>                                     
                 </div>
             </div>
-            <div class="content-panel__head border-grey-xs--top">
+            
+<!--             <div class="content-panel__head border-grey-xs--top">
                 <div class="row">
                     <div class="col-xl-12 d-flex justify-content-end">
                         <button type="button" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl"  class="btn btn--lg btn--red pill-radius m-r-sm" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete application</button>
@@ -92,7 +120,7 @@
                         <button type="button"  class="btn btn--lg btn--green pill-radius" data-ng-disabled="!$ctrl.form1200.form1200PdfUrl">Add to cart</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="content-panel__head border-grey-xs--top">
                 <div class="row">
                     <div class="col-xl-12 d-flex justify-content-end">

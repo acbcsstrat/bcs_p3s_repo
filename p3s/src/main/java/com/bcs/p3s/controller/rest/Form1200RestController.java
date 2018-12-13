@@ -424,8 +424,18 @@ public class Form1200RestController extends Universal {
 		return new ResponseEntity<Form1200SavedData>(form1200SavedData, HttpStatus.OK);
 	}
 
-
-	//Implements API v2.1 section 2.3 - Delete FORM1200 application
+    
+    
+	// this is TMP for DELETING an epct - until FE provides a control for this
+	@RequestMapping(value = "/rest-form1200-tmpDeleteF1200/{epctId}", method = RequestMethod.GET)
+    public ResponseEntity<Object> tmpDeleteTmpForm1200(@PathVariable("epctId") long epctId) {
+    	
+		log().debug(PREFIX+"/rest-form1200-tmpDeleteF1200/"+epctId+" tmpDeleteTmpForm1200()  invoked");
+		return deleteForm1200(epctId);
+	}
+    		
+    		
+    //Implements API v2.1 section 2.3 - Delete FORM1200 application
     @RequestMapping(value = "/rest-form1200/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteForm1200(@PathVariable("id") long id) {
     	

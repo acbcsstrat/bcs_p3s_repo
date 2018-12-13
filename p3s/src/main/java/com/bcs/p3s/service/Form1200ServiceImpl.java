@@ -36,6 +36,9 @@ import com.bcs.p3s.model.Form1200Fee;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.scrape.model.Form1200Record;
+import com.bcs.p3s.util.config.P3SPropertyException;
+import com.bcs.p3s.util.config.P3SPropertyNames;
+import com.bcs.p3s.util.config.P3SPropertyReader;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.P3SException;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
@@ -141,10 +144,19 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		patentV2UI.setPortfolioUI(portfolioUI);
 	
 		// form1200PdfUrl 
-		String form1200PdfUrl = null;  // existing simile is: "invoiceUrl":"/p3sweb/invoice/34"
 		Epct epct = Epct.findActiveEpctByPatent(patentV2UI);
 		if (epct!=null && epct.getForm1200()!=null) {
-			form1200PdfUrl = "/p3sweb/download.pdf?epctId="+epct.getId();
+
+			String form1200PdfUrl = "";  // existing simile is: "invoiceUrl":"/p3sweb/invoice/34"
+			try {
+				P3SPropertyReader reader = new P3SPropertyReader();
+				form1200PdfUrl = reader.getESProperty(P3SPropertyNames.P3S_WEB_TOMCAT_URL_BASE);
+			} catch (P3SPropertyException e) {
+				log().error("Read P3S_WEB_TOMCAT_URL_BASE from property file failed, so form1200PdfUrl will be incomplete.", e);
+				// swallow & continue
+			}
+			//form1200PdfUrl = "/p3sweb/download.pdf?epctId="+epct.getId();
+			form1200PdfUrl += "download.pdf?epctId="+epct.getId();
 			patentV2UI.setForm1200PdfUrl(form1200PdfUrl);
 		}
 		
