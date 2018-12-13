@@ -76,15 +76,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	    		 	if(response.systemMessages.length > 0) {
 
-			            response.systemMessages.forEach(function(data){
-			                var dateFrom = data.displayFromDate; dateTo = data.displayToDate;
-			                if(date > dateFrom && date < dateTo) {
-			                    systemResponse.push(data)
-			                }
-			            })
-
-
-
 			            $timeout(function() {
 			                systemMessageModal()    
 			            }, 1000);
