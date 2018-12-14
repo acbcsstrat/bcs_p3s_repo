@@ -1,0 +1,79 @@
+.nav-pills .uib-tab { /*bootstrap*/
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -moz-align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+} 
+
+.form-control, .btn { 
+  font-size: $font-normal; 
+}
+
+.form-control {
+  line-height: 1.2rem;
+}
+
+.btn {
+  line-height: $line-none;
+}
+
+.nav-link {
+  padding: 0;
+}
+
+.btn {
+  padding-left: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  padding-top: 0;
+  border-radius: 0;
+}
+
+.table tr:first-child {
+  > td {
+    border-top: 0;
+  }
+} 
+
+uib-progress.progressblue { height: 3rem; }
+
+.table thead th { border-bottom: 1px solid #dee2e6!important; }
+
+.tab-content {
+  width: 100%;
+}
+
+.nav-tabs {
+  border: none!important;
+}
+
+// .modal-content { REMOVED TO FIX BUG WITH FULL WIDTH MDOAL IN IE11
+//   width: auto!important;
+// }
+
+.modal-open {
+    overflow: scroll;
+}
+
+.navbar {
+  padding: 0!important;
+}
+//   text-align: center;
+//   padding: 0!important;
+// uib-progress.progressblue { height: 3rem; }
+//   margin-right: -4px;
+// }
+ // .modal-dialog {
+//   display: inline-block;
+//   text-align: left;
+//   vertical-align: middle;
+// } 
+.modal-dialog {
+  height: 100%;
+} 
