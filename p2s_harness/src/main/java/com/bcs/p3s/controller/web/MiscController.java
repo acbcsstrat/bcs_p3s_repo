@@ -363,12 +363,7 @@ public class MiscController extends Universal implements Form1200HarnessConstant
 		return "blank";
 	}
 
-	// ------------------------------ view form1200 PDF from Blob
-	// --------------------------------------------
-
-//	@RequestMapping(value = "/form1200Pdf", method = RequestMethod.GET, produces = "application/pdf")
-//	public void streamForm1200Pdf(@RequestParam(required = true) Long epctId, @RequestParam(required = false) Boolean download,
-//			HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
+	// ------------------------------ view form1200 PDF from Blob  --------------------------------------------
 
 	/**
 	 * FE requests the prepared Form1200 PDF. Either to View (Default) or Download

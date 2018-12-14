@@ -43,8 +43,6 @@ Raspberry = ${returnto}
 		<p/>
 		&nbsp;
 		<p/>
-		To view Transactions (Top menu) - click <a href="/p3sharness/listtxns">here</a>
-		<p/>
 		<c:if test = "${returnto != null}">
 		Return to :
 			 <c:if test = "${returnto == 'listepcts'}">
@@ -56,6 +54,8 @@ Raspberry = ${returnto}
 		To view Products for Txn ${TxnRef} (2nd menu) - click <a href="/p3sharness/listtxnproducts?p3sref=${TxnRef} }">here</a>
 		<p/>
 		</c:if>
+		To view Transactions (Top menu) - click <a href="/p3sharness/listtxns">here</a>
+		<p/>
 		<a href="http://localhost:8080/p3sharness/logout">logout</a>
 
 	</body>

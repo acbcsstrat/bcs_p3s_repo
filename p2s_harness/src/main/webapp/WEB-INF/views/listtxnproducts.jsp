@@ -157,12 +157,12 @@ Server time: ${timeStr}
 			</td>
  -->
 			<td>
-				<a href="/p3sharness/form1200PDF?form1200id=${product.blobId}">${product.blobId}</a> 
+				<a href="/p3sharness/download.pdf?epctId=${product.blobId}">${product.blobId}</a> 
 			</td>
 	    </tr>
 	</form>
 </c:forEach>
-upload HARDCODED TO EPCT 3
+<!--   upload HARDCODED TO EPCT 3 -->
 
 </table>
 

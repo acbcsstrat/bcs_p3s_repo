@@ -133,65 +133,66 @@ public class P3SUserController {
 //	}
 //
 
-	   
+
+// 181214 seems THIS is an older redundant devt copy. comment-out THEN DELETE 
    //------------------------------ view form1200 PDF from Blob --------------------------------------------
-   
-	protected final String CLASSNAME = "P3SUserController";
-	
-	@RequestMapping(value = "/form1200Pdf", method = RequestMethod.GET, produces = "application/pdf")
-	public void streamForm1200Pdf(@RequestParam(value = "epctId", required = false) Long epctId, 
-			HttpServletResponse response,HttpServletRequest request) throws ServletException, IOException {
-
-		String err = CLASSNAME+"streamForm1200Pdf() /form1200PDF  ";
-		//log().debug(err + "invoked  : epctId = "+epctId);
-		System.out.println(err + "invoked  : epctId = "+epctId);
-
-		
-		// zaph - TODO HERE - check rqst is Authorised pre providing the data !!
-		
-		
-		byte[] bytearray = new byte[4194304]; // 4MB. = Current size limit
-
-		Blob blobby = null;
-		try {
-			Epct epct = Epct.findEpct(epctId);
-			if (epct != null) {
-				Form1200 form1200 = epct.getForm1200();
-				if (form1200 != null) {
-					blobby = form1200.getPdfBlob();
-				}
-			}
-
-			if (blobby==null) {
-					//log().warn(err+" IS NO f1200 PDF IN dB FOR Epct ID "+epctId);
-					System.out.println(err+" IS NO f1200 PDF IN dB FOR Epct ID "+epctId);
-					response.setContentType("application/pdf");
-					response.getOutputStream().write(bytearray,0,0); 
-			} else {
-				int size=0;
-				InputStream sImage = blobby.getBinaryStream();
-				while( (size=sImage.read(bytearray)) != -1 ) {
-					//log().debug(err+" in loop reading f1200 pdf. Size this loop is "+size);
-					System.out.println(err+" in loop reading f1200 pdf. Size this loop is "+size);
-
-					response.setContentType("application/pdf");
-					response.getOutputStream().write(bytearray,0,size); 
-				}
-			}
-
-			
-			// zaph - how set filename ??
-			
-			
-			
-			response.getOutputStream().close();
-		    //log().debug(PREFIX+" AFTER loop. size NOW = "+size);
-		}
-		catch(Exception ex) {
-			//logInternalError().error(err+"Error retrieving f1200 pdf. Rqst was Epct id "+epctId, ex);
-			System.out.println(err+"Error retrieving f1200 pdf. Rqst was Epct id "+epctId+"    Excpt="+ ex.getMessage());
-		}
-	}
+//   
+//	protected final String CLASSNAME = "P3SUserController";
+//	
+//	@RequestMapping(value = "/form1200Pdf", method = RequestMethod.GET, produces = "application/pdf")
+//	public void streamForm1200Pdf(@RequestParam(value = "epctId", required = false) Long epctId, 
+//			HttpServletResponse response,HttpServletRequest request) throws ServletException, IOException {
+//
+//		String err = CLASSNAME+"streamForm1200Pdf() /form1200PDF  ";
+//		//log().debug(err + "invoked  : epctId = "+epctId);
+//		System.out.println(err + "invoked  : epctId = "+epctId);
+//
+//		
+//		// zaph - TODO HERE - check rqst is Authorised pre providing the data !!
+//		
+//		
+//		byte[] bytearray = new byte[4194304]; // 4MB. = Current size limit
+//
+//		Blob blobby = null;
+//		try {
+//			Epct epct = Epct.findEpct(epctId);
+//			if (epct != null) {
+//				Form1200 form1200 = epct.getForm1200();
+//				if (form1200 != null) {
+//					blobby = form1200.getPdfBlob();
+//				}
+//			}
+//
+//			if (blobby==null) {
+//					//log().warn(err+" IS NO f1200 PDF IN dB FOR Epct ID "+epctId);
+//					System.out.println(err+" IS NO f1200 PDF IN dB FOR Epct ID "+epctId);
+//					response.setContentType("application/pdf");
+//					response.getOutputStream().write(bytearray,0,0); 
+//			} else {
+//				int size=0;
+//				InputStream sImage = blobby.getBinaryStream();
+//				while( (size=sImage.read(bytearray)) != -1 ) {
+//					//log().debug(err+" in loop reading f1200 pdf. Size this loop is "+size);
+//					System.out.println(err+" in loop reading f1200 pdf. Size this loop is "+size);
+//
+//					response.setContentType("application/pdf");
+//					response.getOutputStream().write(bytearray,0,size); 
+//				}
+//			}
+//
+//			
+//			// zaph - how set filename ??
+//			
+//			
+//			
+//			response.getOutputStream().close();
+//		    //log().debug(PREFIX+" AFTER loop. size NOW = "+size);
+//		}
+//		catch(Exception ex) {
+//			//logInternalError().error(err+"Error retrieving f1200 pdf. Rqst was Epct id "+epctId, ex);
+//			System.out.println(err+"Error retrieving f1200 pdf. Rqst was Epct id "+epctId+"    Excpt="+ ex.getMessage());
+//		}
+//	}
 
 
 		
