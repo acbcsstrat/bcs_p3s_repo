@@ -1,5 +1,7 @@
 <div class="content-panel modal-max">
-	<span class="modal-cross cursor-pointer" data-ng-click="urgentDismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+	<span class="modal-cross cursor-pointer" data-ng-click="$ctrl.urgentDismissModal()">
+		<i class="txt-grey fa fa-times fa-2x"></i>
+	</span>
 	<div class="modal-content--table">
 		<div class=" d-flex flex-column align-items-center justify-content-center content-panel__head">
 		    <div class="m-b-xs">
@@ -9,7 +11,7 @@
 			<p class="font-h4 font-weight-medium text-center">The following patents require your attention.</p>
 		</div>
 		<div class="content-panel__body p-b-none p-t-none">
-			<div data-ng-repeat="item in urgentPatents" class="d-flex flex-column align-items-center justify-content-center m-b-md">
+			<div data-ng-repeat="item in $ctrl.urgentPatents" class="d-flex flex-column align-items-center justify-content-center m-b-md">
 				<div class="row w-100">
 					<div class="col-md-12">
 						<table class="table t-data font-body">
@@ -48,7 +50,7 @@
 					</div>
 					<div class="col-md-6 p-l-none">
 						<div class="bar-phase bar-curr d-flex align-items-center justify-content-center" data-ng-class="(item.costBandColour == 'Green' ? 'bg-phase-amber': '') +' '+(item.costBandColour == 'Amber' ? 'bg-phase-red': '')+' '+(item.costBandColour == 'Red' ? 'bg-phase-blue': '')+' '+(item.costBandColour == 'Blue' ? 'bg-phase-black':'')">
-							<span class="txt-white font-body btn--reg ">Next Stage</span>
+							<span class="txt-white font-body btn--reg">Next Stage</span>
 						</div>
 					</div>					
 				</div>
@@ -56,7 +58,7 @@
 		</div>
 
 		<div class="modal-footer p-t-none d-flex align-items-center justify-content-center">
-			<button class="btn btn--lg btn-portal pill-radius bg-phase-green font-body no-line-height font-weight-medium txt-white d-flex align-items-center justify-content-center" data-ng-click="urgentOk()">Dismiss</button>
+			<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.urgentOk()">Dismiss</button>
 		</div>
 	</div>
 </div> 

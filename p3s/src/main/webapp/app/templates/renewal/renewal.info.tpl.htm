@@ -299,7 +299,7 @@
 <!--                         <span data-ng-if="$ctrl.patent.costBandColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span> -->
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 m-t-sm">
                     <uib-progress class="pill-radius progress-bar-tall" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'bg')">
                         <uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.renewalStageProgress">{{$ctrl.patent.renewalStageProgress || '1'}}%</uib-bar>
                     </uib-progress>

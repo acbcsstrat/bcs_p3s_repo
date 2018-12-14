@@ -57,11 +57,10 @@
                             <div data-ng-if="$ctrl.patent.epctStatus == 'Epct being generated'" class="d-flex justify-content-start align-items-center">
                                 <p>We are currently generating your Form 1200. When the document is ready, you will be able to download it here.</p>                       
                             </div>
-                            <div class="row">
+                            <div class="row" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
                                 <div class="col-md-12 d-flex justify-content-start">
-                                    <button type="button" class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'" download="$ctrl.patent.form1200PdfUrl">Download</button>                                    
-                                    <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
-<!--                                     <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.editApplication($ctrl.patent.id)">Edit application</button> -->
+                                    <button type="button" class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-href="localhost:8080/p3sweb/download.pdf?epctId=10" download="localhost:8080/p3sweb/download.pdf?epctId=10">Download</button>
+                                    <button type="button" class="btn btn--lg btn--red pill-radius"  data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
                                 </div>
                             </div>
                         </div>

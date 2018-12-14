@@ -10,9 +10,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	var systemResponse = [];
 	var patentsFound = true;
 	var userTimedOut = false;
-	// vm.checkedMessages = checkedMessages;
-	// vm.supresssMessages = supresssMessages;
-
 	var messageArr = [];
 
 	$scope.$on('IdleStart', function() {
@@ -34,30 +31,27 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 	  	closeModals();
 
-	    userTimedOut = true;  
-
-	    if (userTimedOut) {
-	     	ngCart.empty();
-	    	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
-	      	.then(
-	      		function(response){
-	      		  window.location.reload('http://localhost:8080/p3sweb/login');
-	      		},
-	          	function(errResponse) {
-	            	console.log(errResponse)
-	          	}    
-    		)    	
-      	}
-
+     	ngCart.empty();
+    	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
+      	.then(
+      		function(response){
+      		  	window.location.reload('http://localhost:8080/p3sweb/login');
+      		},
+          	function(errResponse) {
+            	console.log(errResponse)
+          	}    
+		)    	
+      	
 	});
 
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modals/modal.welcome-message.tpl.htm',
 			scope: $scope,
+			controllerAs:'$ctrl',
 			controller: ['$uibModalInstance', function($uibModalInstance) {
 
-		 	  	$scope.dismissWelcomeModal = function () {
+		 	  	this.dismissWelcomeModal = function () {
 			    	$uibModalInstance.close();
 			  	};
 			}]
@@ -80,16 +74,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 		    		var date = new Date().getTime();
 
-		    		 if(response.systemMessages.length > 0) {
-
-			            response.systemMessages.forEach(function(data){
-			                var dateFrom = data.displayFromDate; dateTo = data.displayToDate;
-			                if(date > dateFrom && date < dateTo) {
-			                    systemResponse.push(data)
-			                }
-			            })
-
-
+	    		 	if(response.systemMessages.length > 0) {
 
 			            $timeout(function() {
 			                systemMessageModal()    
@@ -145,19 +130,19 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
             templateUrl: 'app/templates/modals/modal.system-message.tpl.htm',
             scope: $scope,
             appendTo: undefined,
+            controllerAs: '$ctrl',
             controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
 
-                open = true;
-
-                $scope.systemMessage = {
+                this.systemMessage = {
                 	message:  message
                 }
 
-                $scope.systemOk = function () {
+                this.systemOk = function () {
                     $uibModalInstance.close();
                 };
 
-				$scope.checkedMessages = function(id, checked) {
+				this.checkedMessages = function(id, checked) {
+
 					if(checked) {
 						messageArr.push(id)
 						$scope.message = true;
@@ -171,7 +156,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 				}
 
-				$scope.supresssMessages = function() {
+				this.supresssMessages = function() {
 					dashboardService.supressMessages(messageArr)
 				} 	                
 
@@ -191,9 +176,10 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 			templateUrl: 'app/templates/modals/modal.urgent-message.tpl.htm',
 			scope: $scope,
 			appendTo: undefined,
+			controllerAs: '$ctrl',
 			controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
 
-				$scope.urgentPatents = message;
+				this.urgentPatents = message;
 
 		        coreService.ppContact()
 		        .then(
@@ -202,15 +188,15 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 		                $scope.partnerPhone = response.partnerPhone;
 		            },
 		            function(errResponse){
-
+		            	console.log(errResponse)
 		            }
 		        )
 
-		 	  	$scope.urgentOk = function () {
+		 	  	this.urgentOk = function () {
 			    	$uibModalInstance.close();
 			  	};
 
-			  	$scope.urgentDismissModal = function() {
+			  	this.urgentDismissModal = function() {
 			  		$uibModalInstance.dismiss();
 			  	};
 
