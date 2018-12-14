@@ -16,8 +16,6 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
     vm.cancel1200 = cancel1200;
     vm.formData = {};
     vm.formData.isYear3RenewalPaying = false;
-    // vm.loading = true;
-    // vm.patentsLoaded = false;
     vm.entityAccepted = false;
 
     vm.confirmEntity = {
