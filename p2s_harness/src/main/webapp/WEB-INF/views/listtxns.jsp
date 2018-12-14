@@ -134,8 +134,9 @@ Now wait (days) for the EPO to publish the renewals, whereupon certificate email
 Note: that <i>P3S: EPO Instructed</i> is the ONLY dropdown value you should use in a Production environment. 
 
 <p/>
+<!-- 
 <I>dev note: <a href="swappatentnumber.jsp">devPage</a></I> 
-
+ -->
 
 
 </body>
