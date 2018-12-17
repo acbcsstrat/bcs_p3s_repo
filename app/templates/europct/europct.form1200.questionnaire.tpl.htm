@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p data-ng-init="extStatesPanelActive = true" data-ng-click="extStatesPanelActive = !extStatesPanelActive" class="btn btn-underlined">What does this mean? 
+                                        <p data-ng-init="extStatesPanelActive = true" data-ng-click="extStatesPanelActive = !extStatesPanelActive" class="btn btn-underlined">Which countries are included? 
                                             <i class="fas fa-chevron-down fa-sm" data-ng-show="!extStatesPanelActive"></i>
                                             <i class="fas fa-chevron-right fa-sm" data-ng-show="extStatesPanelActive"></i>
                                         </p>  
@@ -180,7 +180,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row m-t-sm">           
+                                <div class="row m-t-sm">
                                     <div class="col-xl-12">
                                         <div class="row">
                                             <div class="col-md-12 d-flex justify-content-between">
@@ -196,8 +196,9 @@
                                     <div class="col-xl-12">
                                         <div class="form-row">
                                             <div class="form-group col-md-6 col-lg-4 col-xl-4">
-                                                <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant’s or representatives reference: </label>
-                                                <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-init="$ctrl.formData.clientRef = $ctrl.questionsParam.clientRef" data-ng-model="$ctrl.formData.clientRef" required>
+                                                <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant's or representatives reference: </label>
+                                                <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-model="$ctrl.formData.clientRef" required>
+                                                <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.maxlength && form1200Form.reference.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>                                                
                                             </div>
                                         </div>
                                     </div>
@@ -214,10 +215,10 @@
                                             </div>
                                         </div>
                                     </div>    
-                                </div>                                          
+                                </div>
                                 <div class="row m-t-sm">
                                     <div class="col-md-12 d-flex justify-content-between">
-                                        <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)">Previous</button>                                                
+                                        <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)">Previous</button>
                                         <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)" data-ng-disabled="!$ctrl.formData.clientRef">Next</button>
                                     </div>
                                 </div>
@@ -274,7 +275,7 @@
                                         </div>                                                                     
                                         <div class="row m-t-sm">
                                             <div class="col-md-12 d-flex justify-content-between">
-                                                <button type="button" class="prev btn btn--green btn--lg pill-radius" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.confirmPages.fn($event)">Previous</button>                                                
+                                                <button type="button" class="prev btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.confirmPages.fn($event)">Previous</button>                                                
                                                 <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate Form 1200</button>
                                                 <button type="button" class="btn btn--green btn--lg pill-radius" data-ng-if="$ctrl.renewal.active" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.confirmPages.fn($event)">Next</button>
                                             </div>
@@ -294,7 +295,7 @@
                                 </div>
                                 <div class="row m-t-sm">
                                     <div class="col-md-12 d-flex justify-content-between">
-                                        <button type="submit" id="submit" class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.renewal.fn($event)">Previous</button>                                        
+                                        <button type="submit" id="submit" class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.renewal.fn($event)">Previous</button>                                        
                                         <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate form</button>
                                     </div>
                                 </div>                            
