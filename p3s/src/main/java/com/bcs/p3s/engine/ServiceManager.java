@@ -36,6 +36,13 @@ public class ServiceManager extends Universal {
     		EpctEngine epctEngine = new EpctEngine(patent);
     		if ( ! epctEngine.isNotAvailable) {
 	    		service = epctEngine.prepareForm1200Service();
+
+	    		// This to investigate an AC claimed bug
+	    		log().info("service costs for f1200 patent "+patent.getId()+" follows:    ........"); // acTodo tidy way after 181217
+	    		log().info("currentStageCostUSD   = "+service.getCurrentStageCostUSD());
+	    		log().info("currentOfficialFeeEUR = "+service.getCurrentOfficialFeeEUR());
+	    	    log().info("currentOfficialFeeUSD = "+service.getCurrentOfficialFeeUSD());
+	    		
 	    		services.add(service);
     		}
     	}
