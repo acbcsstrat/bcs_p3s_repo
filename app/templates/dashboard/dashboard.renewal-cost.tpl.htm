@@ -101,7 +101,7 @@
 				 			<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.serviceCost.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
 			 				</ngcart-addtocart>
 						</div>
-						<div data-ng-if="$ctrl.actionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== ('Payment in progress' && 'EPO Instructed' && 'Epct being generated')" class="m-r-sm">
+						<div data-ng-if="$ctrl.actionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== ('Payment in progress' && 'EPO Instructed' && 'Epct being generated' && 'Epct available')" class="m-r-sm">
 				 			<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.serviceCost.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
 			 				</ngcart-addtocart>
 						</div>
@@ -245,7 +245,7 @@
 				 			<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.serviceCost.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
 			 				</ngcart-addtocart>
 						</div>
-						<div data-ng-if="$ctrl.actionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== ('Payment in progress' && 'EPO Instructed' && 'Epct being generated')" class="m-r-sm">
+						<div data-ng-if="$ctrl.actionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== ('Payment in progress' && 'EPO Instructed' && 'Epct being generated' && 'Epct available')" class="m-r-sm">
 				 			<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.serviceCost.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
 			 				</ngcart-addtocart>
 						</div>
