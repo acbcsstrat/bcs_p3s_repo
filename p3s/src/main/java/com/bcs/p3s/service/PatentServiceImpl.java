@@ -509,7 +509,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			} else log().error("      Even the TITLE of this key isnt a string. Its a "+obKey.getClass().getName());
 		}
 
-		// Now attempt extract the data. Avoid Crash if fails - zaph
+		// Now attempt extract the data. Avoid Crash if fails - acTodo z2.1
 		boolean backstopIsOnReceived = false;
 		try {
 			NotificationUI notificationUI = new NotificationUI(new Notification());
@@ -725,7 +725,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			 * Calculate the actual renewal due date and window close and open dates --
 			 * method call here
 			 */
-		/* zaph huge cleanup here once proven ...
+		/* acTodo z2.1 huge cleanup here once proven ...
 		 * log().debug("Renewal In Place status for the patent");
 		 * 
 		 * //check whether the renewal has been done from our system TypedQuery<Renewal>

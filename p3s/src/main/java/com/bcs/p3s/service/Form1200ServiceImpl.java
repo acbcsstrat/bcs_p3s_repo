@@ -208,7 +208,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		
 		// form1200NotificationUIs
 		//patentV2UI.setEpctNotificationUIs(patentV2UI.getEpctNotificationUIs()); // remove. pointless. 
-		// acTidy of above. HOPEFULLY  renewalNotificationUIs & form1200NotificationUIs are already populated zaph
+		// acTidy of above. HOPEFULLY  renewalNotificationUIs & form1200NotificationUIs are already populated acTodo z2.1
 		
 		return epctEngine;
 	}
@@ -372,7 +372,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 
 	
 	
-	// zaph below copy of above
+	// acTodo z2.1 below copy of above
 	/**
 	 * User has entered the Form1200 questions, & chosen to SAVE the E-PCT application, & thus generate the E-PCT review PDF
 	 * @param patentId

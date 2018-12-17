@@ -32,7 +32,7 @@ import com.bcs.p3s.util.lang.P3SRuntimeException;
  * See also: Form1200Fee & Form1200
  */
 
-// @RooJpaActiveRecord(finders = { "findEpctsByPatent" })  zapp
+// @RooJpaActiveRecord(finders = { "findEpctsByPatent" })  acTodo z2.1
 
 @RooJavaBean
 @RooToString

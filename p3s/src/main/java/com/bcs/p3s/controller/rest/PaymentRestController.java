@@ -120,7 +120,7 @@ public class PaymentRestController extends Universal {
     		
     		//get the ids from the object
     		
-    		log().debug("zaph monitor (paymentService==null) is "+(paymentService==null));
+    		log().debug("acTodo z2.1 monitor (paymentService==null) is "+(paymentService==null));
 			bankTransferPreCommitDetails = paymentService.showBankTransferPreCommitDetails(basketContents);
 
     	} catch (Exception e) {
