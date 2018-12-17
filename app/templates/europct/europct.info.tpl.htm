@@ -59,7 +59,7 @@
                             </div>
                             <div class="row" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
                                 <div class="col-md-12 d-flex justify-content-start">
-                                    <button type="button" class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-href="$ctrl.patent.form1200PdfUrl" download="$ctrl.patent.form1200PdfUrl">Download</button>
+                                    <a class="btn btn--lg btn--green pill-radius m-r-sm" href="$ctrl.patent.form1200PdfUrl" target="_blank" download="{{$ctrl.patent.form1200PdfUrl}}">Download</a>
                                     <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
                                 </div>
                             </div>
