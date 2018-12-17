@@ -87,7 +87,10 @@
                         <div class="m-b-sm border-grey-xs--btm"></div>                  
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
-                                <p class="font-weight-medium">Official Fee:</p>
+                                <p class="font-weight-medium">Official Fee: 
+<!--                                     <i class="fas fa-caret-down fa-lg" data-ng-if="!$ctrl.panelActive" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive"></i>
+                                    <i class="fas fa-caret-right fa-lg" data-ng-if="$ctrl.panelActive" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive"></i> -->
+                                </p>
                             </div>
                             <div class="col-xl-4">
                                 <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
@@ -95,6 +98,15 @@
                             <div class="col-xl-3">
                                 <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.currentOfficialFeeEUR | number: 2) || '0.00'}}</p>
                             </div>
+<!--                             <div class="col-xl-12" data-ng-init="$ctrl.panelActive = true" data-ng-hide="$ctrl.panelActive">
+                                <div class="expandcollapse-item">
+                                    <div class="slideDown m-b-sm" data-ng-hide="$ctrl.panelActive">
+                                        <div class="expand-collapse-content">
+                                            <p>Further content</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
                         </div>
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
