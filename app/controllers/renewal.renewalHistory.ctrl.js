@@ -7,6 +7,6 @@ function renewalHistoryCtrl(patent, renewal, chunkDataService) {
     var vm = this;
 
     vm.patent = patent;
-    vm.renewal = []; //set value to array for view purposes
+    vm.renewal = renewal; //set value to array for view purposes
 
 }
