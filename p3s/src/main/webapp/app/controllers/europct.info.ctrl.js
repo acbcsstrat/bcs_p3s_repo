@@ -44,9 +44,11 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
                     .then(
                         function(response){
                             deleteApplicationSuccess();
+                            $uibModalInstance.close();
                         },
                         function(errResponse){
                             deleteApplicationError(errResponse);
+                            $uibModalInstance.close();
                         }
                     )
                 }

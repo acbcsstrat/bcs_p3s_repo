@@ -1,11 +1,4 @@
-<!-- <div data-ng-show="$ctrl.loading" class="animate-show">
-    <div class="row m-b-md">
-        <div class="col-xl-12 text-center">
-            <img src="assets/imgs/icons/spinner-loader.gif">
-        </div>
-    </div>
-</div> -->
-<div class="animate-show">  
+<div class="animate-show">
     <div class="content-panel">
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
@@ -31,11 +24,24 @@
                                                 <input type="checkbox" name="entityCheck" data-ng-model="$ctrl.confirmEntityModel" data-ng-disabled="$ctrl.confirmEntityChecked" class="m-l-xs" required>
                                             </label>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12 d-flex justify-content-end">
-                                                <button class="btn btn--green btn--lg pill-radius" data-ng-disabled="!$ctrl.confirmEntityModel" data-ng-click="$ctrl.confirmEntity.fn()" type="button">Next</button>
+                                        <div class="row m-b-xs">
+                                            <div class="col-md-6">
+                                                <p data-ng-init="confirmEntityPanelActive = true" data-ng-click="confirmEntityPanelActive = !confirmEntityPanelActive" class="btn btn-underlined">What does this mean? 
+                                                    <i class="fas fa-chevron-down fa-sm" data-ng-show="!confirmEntityPanelActive"></i>
+                                                    <i class="fas fa-chevron-right fa-sm" data-ng-show="confirmEntityPanelActive"></i>
+                                                </p>
+                                            </div>    
+                                        </div>
+                                        <div class="expandcollapse-item">
+                                            <div class="slideDown m-b-sm" data-ng-hide="confirmEntityPanelActive">
+                                                <p>For more information about Rule 6(4) EPC then please <a class="btn btn-underlined" target="__blank" data-ng-href="https://www.epo.org/law-practice/legal-texts/html/epc/2016/e/r6.html">click here</a></p>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 d-flex justify-content-end">
+                                        <button class="btn btn--green btn--lg pill-radius" data-ng-disabled="!$ctrl.confirmEntityModel" data-ng-click="$ctrl.confirmEntity.fn()" type="button">Next</button>
                                     </div>
                                 </div>
                             </uib-tab>
@@ -52,15 +58,15 @@
                                             </label>                                            
                                             <p data-ng-show="$ctrl.proceedMsgAmend" class="txt-phase-red font-weight-medium m-t-xs">Cannot proceed if amendments have been made. Uncheck the checkbox if no amendements have been made.</p>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12 d-flex justify-content-between">
-                                                <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.amendments.fn($event)">Previous</button>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p data-ng-show="!$ctrl.confirmAmendmentsYesModel && !confirmAmendmentsNoModel" class="m-r-sm">(Please check one of the boxes)</p>
-                                                    <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="$ctrl.confirmAmendmentsYesModel || !$ctrl.confirmAmendmentsYesModel && !confirmAmendmentsNoModel" data-ng-click="$ctrl.amendments.fn($event)">Next</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.amendments.fn($event)">Previous</button>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p data-ng-show="!$ctrl.confirmAmendmentsYesModel && !confirmAmendmentsNoModel" class="m-r-sm">(Please check one of the boxes)</p>
+                                            <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="$ctrl.confirmAmendmentsYesModel || !$ctrl.confirmAmendmentsYesModel && !confirmAmendmentsNoModel" data-ng-click="$ctrl.amendments.fn($event)">Next</button>
 
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +118,69 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                                
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p data-ng-init="extStatesPanelActive = true" data-ng-click="extStatesPanelActive = !extStatesPanelActive" class="btn btn-underlined">Which countries are included? 
+                                            <i class="fas fa-chevron-down fa-sm" data-ng-show="!extStatesPanelActive"></i>
+                                            <i class="fas fa-chevron-right fa-sm" data-ng-show="extStatesPanelActive"></i>
+                                        </p>  
+                                        <div class="expandcollapse-item">
+                                            <div class="slideDown m-b-sm" data-ng-hide="extStatesPanelActive">
+                                                <p class="m-b-xs">The countries that are included by default are:</p>
+                                                <div class="d-flex">
+                                                    <ul>
+                                                        <li>Albania</li>
+                                                        <li>Austria</li>
+                                                        <li>Belgium</li>
+                                                        <li>Bulgaria</li>
+                                                        <li>Switzerland</li>
+                                                        <li>Cyprus</li>
+                                                        <li>Czech Republic</li>
+                                                        <li>Germany</li>
+                                                        <li>Denmark</li>
+                                                        <li>Estonia</li>
+                                                        <li>Spain</li>
+                                                        <li>Finland</li>
+                                                        <li>France</li>
+                                                    </ul>
+                                                    <ul>
+                                                        <li>United Kingdom</li>
+                                                        <li>Croatia</li>
+                                                        <li>Hungary</li>
+                                                        <li>Ireland</li>
+                                                        <li>Iceland</li>
+                                                        <li>Italy</li>
+                                                        <li>Liechtenstein</li>
+                                                        <li>Lithuania</li>
+                                                        <li>Luxembourg</li>
+                                                        <li>Latvia</li>
+                                                        <li>Monaco</li>
+                                                        <li>Former Yugoslav Republic of Macedonia</li>
+                                                        <li>Malta</li>
+                                                    </ul>
+                                                    <ul>
+                                                        <li>Netherlands</li>
+                                                        <li>Norway</li>
+                                                        <li>Poland</li>
+                                                        <li>Portugal</li>
+                                                        <li>Romania</li>
+                                                        <li>Serbia</li>
+                                                        <li>Sweden</li>
+                                                        <li>Slovenia</li>
+                                                        <li>Slovakia</li>
+                                                        <li>San Marino</li>
+                                                        <li>Turkey</li>
+                                                    </ul>
+                                                    <ul>
+                                                    </ul>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-t-sm">
                                     <div class="col-xl-12">
                                         <div class="row">
                                             <div class="col-md-12 d-flex justify-content-between">
@@ -128,16 +196,30 @@
                                     <div class="col-xl-12">
                                         <div class="form-row">
                                             <div class="form-group col-md-6 col-lg-4 col-xl-4">
-                                                <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant’s or representatives reference: </label>
-                                                <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-init="$ctrl.formData.clientRef = $ctrl.questionsParam.clientRef" data-ng-model="$ctrl.formData.clientRef" required>
+                                                <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant's or representatives reference: </label>
+                                                <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-model="$ctrl.formData.clientRef" required>
+                                                <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.maxlength && form1200Form.reference.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>                                                
                                             </div>
                                         </div>
-                                        <div class="row m-t-sm">
-                                            <div class="col-md-12 d-flex justify-content-between">
-                                                <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)">Previous</button>                                                
-                                                <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)" data-ng-disabled="!$ctrl.formData.clientRef">Next</button>
+                                    </div>
+                                </div>
+                                <div class="row m-b-xs">
+                                    <div class="col-md-6">
+                                        <p data-ng-init="referencePanelActive = true" data-ng-click="referencePanelActive = !referencePanelActive" class="btn btn-underlined">What does this mean? 
+                                            <i class="fas fa-chevron-down fa-sm" data-ng-show="!referencePanelActive"></i>
+                                            <i class="fas fa-chevron-right fa-sm" data-ng-show="referencePanelActive"></i>
+                                        </p>
+                                        <div class="expandcollapse-item">
+                                            <div class="slideDown m-b-sm" data-ng-hide="referencePanelActive">
+                                                <p>You can include any reference here that you want to appear on the Form 1200 as the applicant or representatives reference</p>
                                             </div>
                                         </div>
+                                    </div>    
+                                </div>
+                                <div class="row m-t-sm">
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)">Previous</button>
+                                        <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)" data-ng-disabled="!$ctrl.formData.clientRef">Next</button>
                                     </div>
                                 </div>
                             </uib-tab>
@@ -193,8 +275,8 @@
                                         </div>                                                                     
                                         <div class="row m-t-sm">
                                             <div class="col-md-12 d-flex justify-content-between">
-                                                <button type="button" class="prev btn btn--green btn--lg pill-radius" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.confirmPages.fn($event)">Previous</button>                                                
-                                                <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate form</button>
+                                                <button type="button" class="prev btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.confirmPages.fn($event)">Previous</button>                                                
+                                                <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate Form 1200</button>
                                                 <button type="button" class="btn btn--green btn--lg pill-radius" data-ng-if="$ctrl.renewal.active" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.confirmPages.fn($event)">Next</button>
                                             </div>
                                         </div>
@@ -213,7 +295,7 @@
                                 </div>
                                 <div class="row m-t-sm">
                                     <div class="col-md-12 d-flex justify-content-between">
-                                        <button type="submit" id="submit" class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.renewal.fn($event)">Previous</button>                                        
+                                        <button type="submit" id="submit" class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.renewal.fn($event)">Previous</button>                                        
                                         <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate form</button>
                                     </div>
                                 </div>                            

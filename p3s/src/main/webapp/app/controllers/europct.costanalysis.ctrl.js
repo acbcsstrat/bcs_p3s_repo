@@ -15,25 +15,10 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
     if(typeof ca !== 'undefined' || ca !== null ) {
 
         vm.ca = ca;
-        patent.form1200FeeUI.officialFeeUSD = (function() {
-           var total = 0;
-               total += patent.form1200FeeUI.designationFeeUSD;
-               total += patent.form1200FeeUI.examinationFeeUSD;
-               total += patent.form1200FeeUI.supplementarySearchFeeUSD
-               total += patent.form1200FeeUI.filingFeeUSD;
-           return total;
-        }())
-        patent.form1200FeeUI.officialFeeEUR = (function() {
-           var total = 0;
-               total += patent.form1200FeeUI.designationFeeEUR;
-               total += patent.form1200FeeUI.examinationFeeEUR;
-               total += patent.form1200FeeUI.supplementarySearchFeeEUR;
-               total += patent.form1200FeeUI.filingFeeEUR;
-           return total;
-        }())
         vm.patent = patent;
         vm.barData = barData;
         vm.loadChart = loadChart;
+        vm.breakdown = [];
         vm.barOptions = {
             chart: {
                 type: 'multiBarHorizontalChart',
@@ -236,6 +221,16 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
 
         function init() {
             loadChart();
+            sortAvailableFees();
+        }
+
+        function sortAvailableFees() {
+            console.log('what')
+            for(var property in ca.form1200FeeUI) {
+                if(ca.form1200FeeUI.hasOwnProperty(ca.form1200FeeUI)){
+                    console.log(ca.form1200FeeUI[property])
+                }
+            }
         }
 
         function barData() {

@@ -105,6 +105,17 @@ public class EpctEngine extends Universal {
     		patent.setEpctStatus(Form1200StatusEnum.EPCT_NOT_AVAILABLE);
     		isNotAvailable = true;
     	}
+
+    	// Check for any Completed Epct. If exists, don't try sell again!
+	    List<Epct> epcts = (Epct.findEpctsByPatent(patent)).getResultList(); // Will be zero or one
+	    for (Epct epct : epcts) {
+	    	String thisEpctStatus = epct.getEpctStatus(); // Shouldn't, but might, be null
+	    	if (Form1200StatusEnum.COMPLETED.equals(thisEpctStatus)) {
+	    		patent.setEpctStatus(Form1200StatusEnum.EPCT_NOT_AVAILABLE);
+	    		isNotAvailable = true;
+	    	}
+	    }
+    	
 		this.patent = patent;
 		if (isNotAvailable) return;
 
