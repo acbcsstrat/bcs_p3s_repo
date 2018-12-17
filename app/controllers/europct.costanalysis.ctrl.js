@@ -1,12 +1,13 @@
 angular.module('ppApp').controller('euroPctCostAnalysisCtrl', euroPctCostAnalysisCtrl);
 
-euroPctCostAnalysisCtrl.$inject = ['patent', 'ca', '$timeout', 'organiseTextService']
+euroPctCostAnalysisCtrl.$inject = ['patent', 'ca', '$timeout', '$state', 'organiseTextService', '$location', 'currentTransactionsService', '$anchorScroll']
 
-function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
+function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextService, $location, currentTransactionsService, $anchorScroll) {
 
     var vm = this;
 
     vm.actionStatus = actionStatus;
+    vm.fetchItemTransaction = fetchItemTransaction;
 
     function actionStatus(text) {
         return organiseTextService.actionStatus(text)
@@ -221,17 +222,48 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
 
         function init() {
             loadChart();
-            sortAvailableFees();
+            // sortAvailableFees();
         }
 
-        function sortAvailableFees() {
-            console.log('what')
-            for(var property in ca.form1200FeeUI) {
-                if(ca.form1200FeeUI.hasOwnProperty(ca.form1200FeeUI)){
-                    console.log(ca.form1200FeeUI[property])
+        function fetchItemTransaction(id) {
+            currentTransactionsService.fetchCurrentTransactions()
+            .then(
+                function(response) {
+
+                    var match = response.filter(function(el){
+                        return el.serviceUIs.find(function(item){
+                            return item.patentUI.id === id;
+                        })
+                    })
+
+                    if(match !== undefined || typeof match !== 'undefined') {
+                        $state.go('current-transactions.current-transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
+                        .then(
+                            function(response){
+                                $timeout(function() {
+                                    $location.hash('currTransAnchor'); 
+                                    $anchorScroll();  //scroll to anchor href
+                                }, 300);
+                            },
+                            function(errResponse){
+                                console.log(errResponse);
+                            }
+                        );
+                    }
+
+                },
+                function(errResponse) {
+                    console.log(errResponse);
                 }
-            }
-        }
+            );
+        };        
+
+        // function sortAvailableFees() {
+        //     for(var property in ca.form1200FeeUI) {
+        //         if(ca.form1200FeeUI.hasOwnProperty(ca.form1200FeeUI)){
+        //         }
+        //     }
+        // }
 
         function barData() {
             // console.log(ca)
