@@ -13,6 +13,8 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @RooJavaBean
 @RooToString
@@ -50,14 +52,23 @@ public class ArchivedRate {
         return theMostRecent;
     }
 
-    public static ArchivedRate findArchivedRateForDate(Date activeFromDate) {
+    public static ArchivedRate findArchivedRateForDate(Date historicRateDate) {
+    	if (historicRateDate==null) return null;
+
     	// Would like to use "SELECT o FROM ArchivedRate o order by o.activeFromDate desc limit 1";
-        String jpaQuery = "SELECT o FROM ArchivedRate o where o.activeFromDate  = :activeFromDate" ;
+
+    	// ArchivedRate.archivedDate indicates when the rate CEASED to be current.
+    	// So to get the archived rate for a given date, need: ArchivedRate.archivedDate = givenDate + 1day 
+    	LocalDateTime ltdPlusOne = LocalDateTime.from(historicRateDate.toInstant().atZone(ZoneId.of("UTC"))).plusDays(1);
+    	Date retiredFromDate = Date.from(ltdPlusOne.atZone(ZoneId.of("UTC")).toInstant());
+    	
+    	String jpaQuery = "SELECT o FROM ArchivedRate o where o.archivedDate  = :retiredFromDate" ;
 
         TypedQuery<ArchivedRate> query  = entityManager().createQuery(jpaQuery, ArchivedRate.class); 
-        query.setParameter("activeFromDate", activeFromDate);
+        query.setParameter("retiredFromDate", retiredFromDate);
 
-        return query.getSingleResult();
+        ArchivedRate ar = query.getSingleResult();
+        return ar;
     }
     
     //METHOD TO GET LAST 6 DAYS RATE

@@ -544,8 +544,11 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		
 		epct.remove();
 		form1200Fee.remove();
+		
+		patent.setEpctStatus(Form1200StatusEnum.EPCT_AVAILABLE);
+		patent.merge();
 
-		// acTodo: see if flushing is required
+		// Possibly flushing is required
 	}
 	
 	
