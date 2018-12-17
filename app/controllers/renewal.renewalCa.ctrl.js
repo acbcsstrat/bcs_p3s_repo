@@ -6,6 +6,8 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
 
     var vm = this;
 
+    vm.fetchItemTransaction = fetchItemTransaction;
+
     if(typeof ca !== 'undefined' || ca !== null ) {
         
         vm.ca = ca;
@@ -215,6 +217,39 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
         function init() {
             loadChart();
         }
+
+        function fetchItemTransaction(id) {
+            currentTransactionsService.fetchCurrentTransactions()
+            .then(
+                function(response) {
+
+                    var match = response.filter(function(el){
+                        return el.serviceUIs.find(function(item){
+                            return item.patentUI.id === id;
+                        })
+                    })
+
+                    if(match !== undefined || typeof match !== 'undefined') {
+                        $state.go('current-transactions.current-transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
+                        .then(
+                            function(response){
+                                $timeout(function() {
+                                    $location.hash('currTransAnchor'); 
+                                    $anchorScroll();  //scroll to anchor href
+                                }, 300);
+                            },
+                            function(errResponse){
+                                console.log(errResponse);
+                            }
+                        );
+                    }
+
+                },
+                function(errResponse) {
+                    console.log(errResponse);
+                }
+            );
+        };        
 
         function barData() {
 
