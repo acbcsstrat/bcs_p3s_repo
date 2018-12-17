@@ -59,8 +59,8 @@
                             </div>
                             <div class="row" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
                                 <div class="col-md-12 d-flex justify-content-start">
-                                    <button type="button" class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-href="localhost:8080/p3sweb/download.pdf?epctId=10" download="localhost:8080/p3sweb/download.pdf?epctId=10">Download</button>
-                                    <button type="button" class="btn btn--lg btn--red pill-radius"  data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
+                                    <button type="button" class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-href="$ctrl.patent.form1200PdfUrl" download="$ctrl.patent.form1200PdfUrl">Download</button>
+                                    <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -223,8 +223,8 @@
                                 <div class="col-xl-3">
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.form1200FeeUI.subTotalUSD <= $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                                         <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.form1200FeeUI.subTotalUSD < $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth"></i>
-                                        <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.form1200FeeUI.subTotalUSD > $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth"></i>                                        
-                                        $ {{($ctrl.patent.subTotalUSD % $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2)  || '0.00'}}
+                                        <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.form1200FeeUI.subTotalUSD > $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth"></i>       
+                                        $ {{($ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth - $ctrl.patent.form1200FeeUI.subTotalUSD | number: 2)  || '0.00'}}
                                     </p>      
                                 </div>
                                 <div class="col-xl-2">
@@ -233,7 +233,7 @@
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.form1200FeeUI.subTotalEUR <= $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                                         <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.form1200FeeUI.subTotalEUR < $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth"></i>
                                         <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.form1200FeeUI.subTotalEUR > $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth"></i>
-                                        &euro; {{($ctrl.patent.subTotalEUR % $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth | number: 2)  || '0.00'}}
+                                        &euro; {{($ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth - $ctrl.patent.form1200FeeUI.subTotalEUR | number: 2)  || '0.00'}}
                                     </p>
                                 </div>
                             </div>
@@ -499,7 +499,7 @@
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.form1200FeeUI.subTotalUSD <= $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                                         <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.form1200FeeUI.subTotalUSD < $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth"></i>
                                         <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.form1200FeeUI.subTotalUSD > $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth"></i>                                        
-                                        $ {{($ctrl.patent.subTotalUSD % $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2)  || '0.00'}}</p>      
+                                        $ {{($ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth - $ctrl.patent.form1200FeeUI.subTotalUSD | number: 2)  || '0.00'}}</p>      
                                 </div>
                                 <div class="col-md-2">
                                 </div>
@@ -507,7 +507,7 @@
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.form1200FeeUI.subTotalEUR <= $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                                         <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.form1200FeeUI.subTotalEUR < $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth"></i>
                                         <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.form1200FeeUI.subTotalEUR > $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth"></i>
-                                        &euro; {{($ctrl.patent.subTotalEUR % $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth | number: 2)  || '0.00'}}</p>
+                                        &euro; {{($ctrl.patent.form1200FeeUI.costHistoryUI.subTotalEURLastMonth - $ctrl.patent.form1200FeeUI.subTotalEUR | number: 2)  || '0.00'}}</p>
                                 </div>
                             </div>
                         </div>
