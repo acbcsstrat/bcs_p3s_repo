@@ -87,7 +87,7 @@
 					<p class="font-h4 font-weight-bold">Four week variation:</p> <!--lg-->
 				</div>
 				<div class="col-xl-4 text-right">
-                    <p class="font-h4 text-center" data-ng-class="$ctrl.patent.serviceCost.subTotalUSD <= $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
+                    <p class="font-h4 text-right" data-ng-class="$ctrl.patent.serviceCost.subTotalUSD <= $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                     	<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.serviceCost.subTotalUSD < $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
                     	<i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.serviceCost.subTotalUSD > $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
                     	$ {{($ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth - $ctrl.patent.serviceCost.subTotalUSD | number: 2)  || '0.00'}}
@@ -223,19 +223,6 @@
                     	<i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.serviceCost.subTotalUSD > $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
                     	$ {{($ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth - $ctrl.patent.serviceCost.subTotalUSD | number: 2)  || '0.00'}}
                 	</p>   
-				</div>
-			</div>
-			<div class="row m-b-xs">
-				<div class="col-md-12 col-lg-12 d-flex justify-content-center align-items-center">						
-					<div class="d-flex justify-content-between align-items-center">
-<!-- 						<div class="m-r-xs">
-							<div data-ng-if="$ctrl.patent.renewalStatus == 'Too late to renew'">
-								<i class="fa fa-phone fa-2x txt-phase-red"></i>
-							</div>						
-						</div>
-						<p data-ng-if="$ctrl.patent.renewalStatus !== 'Too late to renew'" class="font-body font-weight-bold">{{$ctrl.patent.renewalStatus}}</p>
-						<p data-ng-if="$ctrl.patent.renewalStatus == 'Too late to renew'" class="font-h4 font-weight-medium">Call to Renew (+44)1789-000-000</p> -->
-					</div>
 				</div>
 			</div>
 			<div class="row">
