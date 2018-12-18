@@ -32,6 +32,7 @@ import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
+import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -214,18 +215,39 @@ public class PatentRestController extends Universal {
 			Patent patent = data.extractPatentFromAddPatentForm(obby); 
 			//calculate the extended data again
 			
-			// Set E-PCT status settings as appropriate
-			Form1200ServiceImpl form1200ServiceImpl = new Form1200ServiceImpl(session);
-			form1200ServiceImpl.calcEpctStatuss(patent);
-			
-			
 			log().info("A patent with application number[" + patent.getEP_ApplicationNumber() +"] having a status as " + patent.getEpoPatentStatus() + " being added");
 		   	//patent.persist();
 			newPatent = patent.persist();
 
+			// Set E-PCT status settings as appropriate
+			// Note: this was previously being called just BEFORE the above patent.persist() - which caused a InvalidDataAccessApiUsageException 
+			Form1200ServiceImpl form1200ServiceImpl = new Form1200ServiceImpl(session);
+			form1200ServiceImpl.calcEpctStatuss(newPatent);
+
+			
+//			// zaphod idea
+			String uj = newPatent.getEpctNotAvailableReason();
+//			if (uj==null) log().error("BUGGER zaph"); else {
+				log().debug("not avail reason = "+uj);
+//				EPCTnotAvailableReasonEnum ih = new EPCTnotAvailableReasonEnum(uj);
+//				if (ih.isNotAvailableReasonTerminal()) {
+//					log().debug("HERE - cos terminal - should NOT be epct avail ..");
+////					Patent freshPatent = Patent.findPatent(newPatent.getId());
+////					freshPatent.setEpctStatus(Form1200StatusEnum.EPCT_NOT_AVAILABLE);
+//				}
+//			}
+//			log().debug("after ...");
+
+			
+			// Above may have updated patent Epct status' - so unconditionally update
+			Patent newerPatent = newPatent.merge();
+			
+
+			
+			
 			// Set the Default email notifications for all products (Renewals and Form1200)
 			List<Notification> allNotifications = Notification.findAllNotifications();
-			Long newPatentId = newPatent.getId();
+			Long newPatentId = newerPatent.getId();
 			Long userId = postSession.getUser().getId();
 			for (Notification notification : allNotifications) {
 				if (notification.getDefaultOn()==true) {
@@ -233,8 +255,10 @@ public class PatentRestController extends Universal {
 					notificationMapping.persist();
 				}
 			}
+			
+			
 
-			if(!(newPatent == null)){
+			if(!(newerPatent == null)){
 				log().debug("PatentRestController : /rest-patents/ saveNewPatent() completed.");
 				log().info("A patent with application number[" + patent.getEP_ApplicationNumber() +"] being added by USER [user id:" + postSession.getUser().getId() +"]" );
 			}
@@ -244,7 +268,7 @@ public class PatentRestController extends Universal {
 				log().fatal("PatentRestController : /rest-patents/ saveNewPatent() failed for patent " + patent);
 			}
 			
-			patentUIs = patentService.persistAndCalculateFee(patent);  // misnomer - doesn't persist
+			patentUIs = patentService.persistAndCalculateFee(newerPatent);  // misnomer - doesn't persist
 	  		
 		   	
 		   	

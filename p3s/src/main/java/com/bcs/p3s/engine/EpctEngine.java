@@ -106,6 +106,8 @@ public class EpctEngine extends Universal {
     		isNotAvailable = true;
     	}
 
+    	// Before re-order in client, this WAS being called during Add-Patent BEFORE THE PATENT IS PERSISTED which causes InvalidDataAccessApiUsageException from the getEpctStatus() call below
+
     	// Check for any Completed Epct. If exists, don't try sell again!
 	    List<Epct> epcts = (Epct.findEpctsByPatent(patent)).getResultList(); // Will be zero or one
 	    for (Epct epct : epcts) {
@@ -131,7 +133,10 @@ public class EpctEngine extends Universal {
 
 		 if (isNotAvailable) return; // E=PCT Status will already have been set
 		 
-		 String reallyBad = epctNoGoReason();  // Hopefully is null
+		 String reallyBad = epctNoGoReason();  // either null or Bad
+		 if (reallyBad!=null) {
+			 reasonIsTerminal = true;
+		 }
 		 patent.setEpctNotAvailableReason(reallyBad);
 		 calcEpctStatus();
 	 }
@@ -196,7 +201,8 @@ public class EpctEngine extends Universal {
     	//String err = CLASSNAME + "prepareForm1200Service() : ";
     	
     	// Service needs current AND next, colour AND price. So calc ..
-		
+		log().debug("zaph tmp debug");
+		if (patent==null) log().error("patent is null!!!"); else log().debug("patent ID is "+patent.getId());
 		// Don't recalcuate pricing if already been done
 		if (fee==null) calcEpctPersistPricingOnly(null);
     	
@@ -628,7 +634,7 @@ public class EpctEngine extends Universal {
 		
 		return null;
 	}
-
+	
 	
 	// End of internal methods
 
