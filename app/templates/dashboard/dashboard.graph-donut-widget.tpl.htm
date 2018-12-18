@@ -8,27 +8,22 @@
 				<nvd3 options="$ctrl.donutOptions" data="$ctrl.donutData" class="with-transitions"></nvd3>
 				<div class="donut-inner">
 					<h4 class="font-h4 font-weight-bold">Total</h4>
-					<span class="font-h2 font-weight-bold">{{$ctrl.patents.length}}</span>							
+					<span class="font-h2 font-weight-bold">{{$ctrl.patents.length || 0}}</span>							
 				</div>
 				<!--check whether it works when its back online-->
 			</div>
 			<div class="col-md-6 col-lg-4 col-xl-4 d-none d-md-none d-lg-block">
 				<div class="d-flex align-items-center h-100">
 					<ul class="nav flex-column font-h4">
-						<li class="li-green m-b-sm"><span>Green: <span data-ng-bind="$ctrl.patentData.greenRenewals.length"></span></span></li>
-						<li class="li-amber m-b-sm"><span>Amber: <span data-ng-bind="$ctrl.patentData.amberRenewals.length"></span></span></li>
-						<li class="li-red m-b-sm"><span>Red: <span data-ng-bind="$ctrl.patentData.redRenewals.length"></span></span></li>
-						<li class="li-blue m-b-sm"><span>Blue: <span data-ng-bind="$ctrl.patentData.blueRenewals.length"></span></span></li>
-						<li class="li-black m-b-sm"><span>Black: <span data-ng-bind="$ctrl.patentData.blackRenewals.length"></span></span></li>
-						<li class="li-grey m-b-sm"><span>Grey: <span data-ng-bind="$ctrl.patentData.greyRenewals.length"></span></span></li>
+						<li class="li-green m-b-sm"><span>Green: <span data-ng-bind="$ctrl.patentData.greenRenewals.length || 0"></span></span></li>
+						<li class="li-amber m-b-sm"><span>Amber: <span data-ng-bind="$ctrl.patentData.amberRenewals.length || 0"></span></span></li>
+						<li class="li-red m-b-sm"><span>Red: <span data-ng-bind="$ctrl.patentData.redRenewals.length || 0"></span></span></li>
+						<li class="li-blue m-b-sm"><span>Blue: <span data-ng-bind="$ctrl.patentData.blueRenewals.length || 0"></span></span></li>
+						<li class="li-black m-b-sm"><span>Black: <span data-ng-bind="$ctrl.patentData.blackRenewals.length || 0"></span></span></li>
+						<li class="li-grey m-b-sm"><span>Grey: <span data-ng-bind="$ctrl.patentData.greyRenewals.length || 0"></span></span></li>
 					</ul>
 				</div>
 			</div>
 		</div>
-<!-- 		<div class="row h-100 bg-no-data d-flex" data-ng-if="!$ctrl.patents">
-	    	<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
-	    		<p class="font-body font-weight-bold">There is no data to display as no patents have been added.</p>
-	    	</div>
-    	</div> -->
 	</div>
 </div>
