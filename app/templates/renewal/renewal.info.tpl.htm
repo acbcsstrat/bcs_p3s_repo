@@ -239,7 +239,7 @@
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalUSD <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                                         <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD < $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>
                                         <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>                                        
-                                        $ {{($ctrl.patent.subTotalUSD % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2)  || '0.00'}}
+                                        $ {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth - $ctrl.patent.subTotalUSD | number: 2)  || '0.00'}}
                                     </p>
                                 </div>
                                 <div class="col-xl-2">
@@ -248,7 +248,7 @@
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                                         <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR < $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
                                         <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
-                                        &euro; {{($ctrl.patent.subTotalEUR % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth | number: 2)  || '0.00'}}
+                                        &euro; {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth - $ctrl.patent.subTotalEUR | number: 2)  || '0.00'}}
                                     </p>
                                 </div>
                             </div>
@@ -518,7 +518,8 @@
                                         <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalUSD <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                                             <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>
                                             <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalUSD > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth"></i>                                        
-                                            $ {{($ctrl.patent.subTotalUSD % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth | number: 2)  || '0.00'}}</p>    
+                                            $ {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalUSDLastMonth - $ctrl.patent.subTotalUSD | number: 2)  || '0.00'}}
+                                        </p>    
                                     </div>
                                     <div class="col-md-2">
                                     </div>
@@ -526,7 +527,8 @@
                                         <p class="font-body text-center" data-ng-class="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth ? 'txt-phase-green': 'txt-phase-red'">
                                             <i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR <= $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
                                             <i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.renewalFeeUI.subTotalEUR > $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth"></i>
-                                            &euro; {{($ctrl.patent.subTotalEUR % $ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth | number: 2)  || '0.00'}}</p>
+                                            &euro; {{($ctrl.patent.renewalFeeUI.costHistoryUI.subTotalEURLastMonth - $ctrl.patent.subTotalEUR | number: 2)  || '0.00'}}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
