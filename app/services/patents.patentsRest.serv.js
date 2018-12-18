@@ -26,7 +26,6 @@ function patentsRestService($http, $q) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
-                console.log(errResponse)
                 console.error('Error while fetching patents');
                 deferred.reject(errResponse);
             }
@@ -71,7 +70,6 @@ function patentsRestService($http, $q) {
         var deferred= $q.defer();
         $http.post(ppdomain+'rest-patents/', patent)
             .then(function(response){
-                console.log(response)
                 deferred.resolve(response.data);
             }, function(errResponse) {
                 deferred.reject(errResponse);

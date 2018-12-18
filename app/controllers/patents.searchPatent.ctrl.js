@@ -30,7 +30,6 @@ function searchPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, se
 
 			},
 			function(errResponse) {
-				console.log(errResponse)
 				vm.queriedPatent = null;
 				switch(errResponse.status) {
 					case 400:
