@@ -71,7 +71,7 @@
                         <div class="col-xl-6">
                             <h4 class="font-weight-medium font-h4">Cost breakdown</h4>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-6 text-right">
                             <p class="font-h4" data-ng-if="$ctrl.patent.form1200FeeUI">1 EUR = {{$ctrl.patent.form1200FeeUI.fxRate}} USD</p>
                         </div>  
                     </div>
@@ -87,9 +87,8 @@
                         <div class="m-b-sm border-grey-xs--btm"></div>                  
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
-                                <p class="font-weight-medium">Official Fee: 
-<!--                                     <i class="fas fa-caret-down fa-lg" data-ng-if="!$ctrl.panelActive" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive"></i>
-                                    <i class="fas fa-caret-right fa-lg" data-ng-if="$ctrl.panelActive" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive"></i> -->
+                                <p class="font-weight-medium">Official Fee:
+                                    <i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !$ctrl.panelActive}" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive"></i>
                                 </p>
                             </div>
                             <div class="col-xl-4">
@@ -98,15 +97,123 @@
                             <div class="col-xl-3">
                                 <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.currentOfficialFeeEUR | number: 2) || '0.00'}}</p>
                             </div>
-<!--                             <div class="col-xl-12" data-ng-init="$ctrl.panelActive = true" data-ng-hide="$ctrl.panelActive">
+                            <div class="col-xl-12">
                                 <div class="expandcollapse-item">
-                                    <div class="slideDown m-b-sm" data-ng-hide="$ctrl.panelActive">
-                                        <div class="expand-collapse-content">
-                                            <p>Further content</p>
+                                    <div class="slideDown" data-ng-init="$ctrl.panelActive = true" data-ng-hide="$ctrl.panelActive" m-t-xs>
+                                        <div class="row m-b-sm m-t-xs">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Designation fee:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.designationFeeUSD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.designationFeeEUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
                                         </div>
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Examination fee:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.examinationFeeUSD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.examinationFeeEUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
+                                        </div>
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Excess Page fee:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.excessPageFeeUSD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.excessPageFeeEUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
+                                        </div>
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Filing fee:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.filingFeeUSD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.filingFeeEUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
+                                        </div>
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Renewal Fee:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.renewalFeeUSD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.renewalFeeEUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
+                                        </div>
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Supplmentary Search fee:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.supplementarySearchFeeUSD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.supplementarySearchFeeEUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
+                                        </div>
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Validation State fee:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.validationFeeUSD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.validationFeeEUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
+                                        </div>
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Extension State fee:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.extensionFeeEUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
+                                        </div>                                        
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Claims fee 1:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.claimsFee1USD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.claimsFee1EUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
+                                        </div>   
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-5">
+                                                <p class="font-weight-medium">Claims fee 2:</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.claimsFee2USD | number: 2) || '0.00'}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.claimsFee2EUR | number: 2) || '0.00'}}</p>
+                                            </div>                                                                                        
+                                        </div>                                                                                                
+                                        <div class="border-grey-xs--btm"></div> 
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
@@ -119,17 +226,6 @@
                                 <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.processingFeeEUR | number: 2) || '0.00'}}</p>
                             </div>
                         </div>
-<!--                         <div class="row m-b-sm">
-                            <div class="col-xl-5">
-                                <p class="font-weight-medium">Extension fees:</p>
-                            </div>
-                            <div class="col-xl-4">
-                                <p class="text-center">$ {{($ctrl.patent.form1200FeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
-                            </div>
-                            <div class="col-xl-3">
-                                <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.extensionFeeEUR | number: 2) || '0.00'}}</p>
-                            </div>
-                        </div> -->
                         <div class="row m-b-sm">
                             <div class="col-xl-5">
                                 <p class="font-weight-medium">Express fee:</p>

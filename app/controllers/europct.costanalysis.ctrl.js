@@ -222,7 +222,6 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextServi
 
         function init() {
             loadChart();
-            // sortAvailableFees();
         }
 
         function fetchItemTransaction(id) {
@@ -258,18 +257,11 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextServi
             );
         };        
 
-        // function sortAvailableFees() {
-        //     for(var property in ca.form1200FeeUI) {
-        //         if(ca.form1200FeeUI.hasOwnProperty(ca.form1200FeeUI)){
-        //         }
-        //     }
-        // }
-
         function barData() {
-            // console.log(ca)
+
             var barChartArr = [], label = [], data = [];
-            for (var property in ca) {
-                if (ca.hasOwnProperty(property)) {
+            for(var property in ca) {
+                if(ca.hasOwnProperty(property)) {
                     var dayData = ca[property];
                     if((property.includes('StartDate')) && (!property.includes ('UI'))) {
                         label.push(dayData);
@@ -305,7 +297,6 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextServi
                     var d = property.slice(8, 10)
                     var m = property.slice(5, 7)
                     var y = property.slice(0, 4)
-                    // console.log('epct',d, m , y)
                     var date = new Date(y, m, d).getTime();
                     lineDataArr.push([date, dayData]);
                 }
