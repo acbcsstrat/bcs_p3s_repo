@@ -145,7 +145,8 @@ public class MiscController extends Universal implements Form1200HarnessConstant
 			Form1200 form1200 = epct.getForm1200();
 			long blobId = -2L; // posit
 			if (form1200 != null) {
-				blobId = form1200.getId();
+				//blobId = form1200.getId();
+				blobId = epct.getId();
 				epct.setForm1200(null);
 			}
 			TxnProduct product = new TxnProduct("Euro-PCT", epct.getId(), patent.getEP_ApplicationNumber(),

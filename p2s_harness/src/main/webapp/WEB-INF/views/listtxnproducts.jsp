@@ -166,32 +166,6 @@ Server time: ${timeStr}
 
 </table>
 
-<!-- 
-<table>
-  <tr>
-    <td>
-		<form action="writemc" method="GET" >						
-			<input type="submit" name="writemc" value="Write MC SFTP"  /> 
-		</form>
-    </td>
-    <td>
-		<form action="readmc" method="GET" >						
-			<input type="submit" name="readmc" value="Read MC SFTP"  /> 
-		</form>
-    </td>
-    <td>
-		<form action="followon" method="GET" >						
-			<input type="submit" name="readmc" value="Followon after EPO Instructed"  /> 
-		</form>
-    </td>
-    <td>
-		<form action="readepo" method="GET" >						
-			<input type="submit" name="readmc" value="Read EPO latest"  /> 
-		</form>
-    </td>
-  </tr>
-</table>
- -->
 
 <p/>
 
