@@ -69,7 +69,7 @@ animation:*/
 }
 
 .slideDown {
-  max-height:30rem; //allows for dynamic heights
+  max-height:50rem; //allows for dynamic heights
   transition:max-height 0.35s ease-in;
   -webkit-transition: max-height 0.35s ease-in;
   overflow:hidden;
