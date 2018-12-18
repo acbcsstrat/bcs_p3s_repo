@@ -108,25 +108,25 @@
   }
 }
 
-// .btn-underlined {
-//   cursor: pointer;
-//   text-decoration: underline;
-//   &:hover {
-//     text-decoration: none;
-//   }
-// }
+.btn-underlined {
+  cursor: pointer;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
 
-// .btn--bordered {
-//   background: none;
-//   &.green {
-//     border: 2px solid $green;
-//     color: $green;
-//     &:not([disabled]):hover {
-//       background: $green;
-//       color: $white;
-//     }
-//     &.txt-black {
-//       color: $black;
-//     }
-//   }  
-// }
+.btn--bordered {
+  background: none;
+  &.green {
+    border: 2px solid $green;
+    color: $green;
+    &:not([disabled]):hover {
+      background: $green;
+      color: $white;
+    }
+    &.txt-black {
+      color: $black;
+    }
+  }  
+}
