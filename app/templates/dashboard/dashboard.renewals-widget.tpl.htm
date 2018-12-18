@@ -63,8 +63,8 @@
 				        	</table>
 				        </div>
 				    </slick>      	
-            	</div>	
-	            <div data-ng-show="$ctrl.selectedPhase.getPhase().patents.length === 0" class="row">
+            	</div>
+	            <div data-ng-show="$ctrl.selectedPhase.getPhase().patents.length === 0 || $ctrl.selectedPhase.getPhase() == ''" class="row">
 	            	<div class="col-md-12 d-flex justify-content-center z-index-1">
 	            		<div class="bg-no-data d-flex align-items-center justify-content-center">
                 			<p class="font-body font-weight-bold text-center">Currently there aren't any patents in this phase</p>
