@@ -51,6 +51,7 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 			.then(
 				function(response, i){
         			if(data.renewalStatus == 'Show price' || data.renewalStatus == 'Too late to renew' || data.epctStatus == 'Epct available' || data.epctStatus == 'Epct rejected' || data.epctStatus == 'Epct saved') {
+
         				var hours = calculateService.calculateHours(data.costBandColour, response);
     					if(calculateService.recentActivity(hours)) {
     						vm.recentStageArr.push(data);

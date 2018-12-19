@@ -62,7 +62,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
     init()
 
-
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modals/modal.welcome-message.tpl.htm',
@@ -118,11 +117,9 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 			);
 
 			$timeout(function() {
-                console.log('WHAT')
 			 	if(patentsFound === false) {
 			 		welcomeMessageModal();
 				}
-
 			}, 350);
 
 		} //if end
