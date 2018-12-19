@@ -15,9 +15,10 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
     vm.questionsParam =  $stateParams.questions; //questions passed from form1200.intro
     vm.cancel1200 = cancel1200;
     vm.formData = {};
+    vm.formData.clientRef = patent.clientRef;
     vm.formData.isYear3RenewalPaying = false;
     vm.entityAccepted = false;
-
+    console.log(patent)
     vm.confirmEntity = {
         index: 0,
         title: function() {
