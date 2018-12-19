@@ -157,7 +157,7 @@ Server time: ${timeStr}
 			</td>
  -->
 			<td>
-				<a href="/p3sharness/download.pdf?epctId=${product.blobId}">${product.blobId}</a> 
+				<a href="/p3sharness/download.pdf?epctId=${product.blobId}" target="_blank">${product.blobId}</a> 
 			</td>
 	    </tr>
 	</form>
