@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-xl-8">
+    	<div class="content-panel bg-white">
+	    	<div class="content-panel__body">
+				<form name="addPatentForm">
+					<div class="row">
+						<div class="col-md-12 col-lg-12 col-xl-12 m-b-sm">	
+							<table class="table t-data table-bordered">
+								<tbody>
+									<tr class="t-data__row">
+										<td class="col-form-label t-data__td font-weight-bold text-left">
+											Client Description:
+										</td>
+										<td class="t-data__td">
+							        		<input type="text" name="patentShortTitle" class="form-control" data-ng-maxlength="25" data-ng-model="$ctrl.patent.shortTitle">
+							        		<p class="txt-phase-red" data-ng-show="addPatentForm.patentShortTitle.$error.maxlength && addPatentForm.patentShortTitle.$dirty" required>The field exceeds the maximum value of 25 characters</p>
+										</td>
+									</tr>
+									<tr class="t-data__row">
+										<td class="col-form-label t-data__td font-weight-bold text-left">
+											Client Reference:
+										</td>
+										<td class="t-data__td">
+							        		<input type="text" name="patentClientRef" class="form-control" data-ng-maxlength="30" data-ng-model="$ctrl.patent.clientRef">
+							        		<p class="txt-phase-red" data-ng-show="addPatentForm.patentClientRef.$error.maxlength && addPatentForm.patentClientRef.$dirty">The field exceeds the maximum value of 30 characters</p>							        		
+										</td>
+									</tr>
+								 	<tr class="t-data__row">
+									    <td class="col-form-label t-data__td font-weight-bold text-left">
+									        <label class="col-form-label font-weight-bold">Primary Applicant Name:</label>
+								        </td>
+								        <td class="t-data__td">
+								        	<input type="text" name="primaryApplicantName" class="form-control border-none" data-ng-model="$ctrl.patent.primaryApplicantName" required readonly>
+								        </td>
+									</tr>
+									<tr class="t-data__row">
+									    <td class="col-form-label t-data__td font-weight-bold text-left">
+								    		<label class="col-form-label font-weight-bold">Application No:</label>
+							    		</td>
+							    		<td class="t-data__td">
+							    			<input type="text" name="filingDateUI" class="form-control border-none" data-ng-model="$ctrl.patent.patentApplicationNumber" required readonly>
+							    		</td>
+							    	</tr>
+							    	<tr class="t-data__row">
+									    <td class="col-form-label t-data__td font-weight-bold text-left">
+								    		<label class="col-form-label font-weight-bold">Publication No:</label>
+							    		</td>
+							    		<td class="t-data__td">
+							    			<input type="text" name="title" class="form-control border-none" data-ng-model="$ctrl.patent.patentPublicationNumber" required readonly>
+							    		</td>
+							    	</tr>
+							    	<tr class="t-data__row">
+									    <td class="col-form-label t-data__td font-weight-bold text-left">
+								    		<label class="col-form-label font-weight-bold">Title:</label>
+							    		</td>
+							    		<td class="t-data__td">
+							    			<input type="text" name="title" class="form-control border-none" data-ng-model="$ctrl.patent.title" required readonly>
+							    		</td>
+							    	</tr>
+							    	<tr class="t-data__row">
+									    <td class="col-form-label t-data__td font-weight-bold text-left">
+								    		<label class="col-form-label font-weight-bold">Filing Date:</label>
+							    		</td>
+							    		<td class="t-data__td">
+							    			<input type="text" name="title" class="form-control border-none" data-ng-model="$ctrl.patent.filingDateUI" required readonly>
+							    		</td>
+							    	</tr>
+								</tbody>
+							</table>
+							<div class="row m-t-sm">
+								<div class="col-md-12 col-lg-12 col-xl-12">
+									<div class="d-flex align-items-center">
+										<button class="btn btn--lg btn--red pill-radius m-r-sm" type="button" data-ng-click="$ctrl.openCancelSearchModal()">Cancel</button>
+										<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.openConfirmModal($ctrl.patent)" data-ng-disabled="!searchPatentForm.$valid" type="submit">Add patent</button>
+									</div>		
+								</div>
+							</div>						
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
