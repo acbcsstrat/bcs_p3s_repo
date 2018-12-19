@@ -224,25 +224,10 @@ public class PatentRestController extends Universal {
 			Form1200ServiceImpl form1200ServiceImpl = new Form1200ServiceImpl(session);
 			form1200ServiceImpl.calcEpctStatuss(newPatent);
 
-			
-//			// zaphod idea
-			String uj = newPatent.getEpctNotAvailableReason();
-//			if (uj==null) log().error("BUGGER zaph"); else {
-				log().debug("not avail reason = "+uj);
-//				EPCTnotAvailableReasonEnum ih = new EPCTnotAvailableReasonEnum(uj);
-//				if (ih.isNotAvailableReasonTerminal()) {
-//					log().debug("HERE - cos terminal - should NOT be epct avail ..");
-////					Patent freshPatent = Patent.findPatent(newPatent.getId());
-////					freshPatent.setEpctStatus(Form1200StatusEnum.EPCT_NOT_AVAILABLE);
-//				}
-//			}
-//			log().debug("after ...");
-
+			log().debug("newPatent: not avail reason = "+newPatent.getEpctNotAvailableReason()+"      epctStatus = "+newPatent.getEpctStatus());  // debugging aide
 			
 			// Above may have updated patent Epct status' - so unconditionally update
 			Patent newerPatent = newPatent.merge();
-			
-
 			
 			
 			// Set the Default email notifications for all products (Renewals and Form1200)

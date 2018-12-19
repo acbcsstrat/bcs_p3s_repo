@@ -53,6 +53,7 @@ public class ServiceManager extends Universal {
 
     		//  for now - re-use existing (calculation intensive (session)) mechanism
  
+    		log().debug(" patent id is "+patent.getId()+"   from "+err); // debugging aide
     		// Provide a 'Service' conditional on : we can sell a renewal, or are currently in progress
     		PatentUI patentUI = populateDataToPatentUI(patent, session);
     		String colourNow = patentUI.getCostBandColour();
@@ -77,7 +78,7 @@ public class ServiceManager extends Universal {
 	    		service.setCurrentOfficialFeeEUR(patentUI.getTotalRenewalOfficialFeesEUR());
 	    		GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
 	    		BigDecimal fxRate = glob.getCurrent_P3S_rate();
-	    		service.setCurrentOfficialFeeUSD(service.getCurrentOfficialFeeEUR().multiply(fxRate));
+	    		service.setCurrentOfficialFeeUSD(service.getCurrentOfficialFeeEUR().multiply(fxRate));  // NPE here until PostLoginDataEngine 181219 workaround
 	
 	    		services.add(service);
     		}

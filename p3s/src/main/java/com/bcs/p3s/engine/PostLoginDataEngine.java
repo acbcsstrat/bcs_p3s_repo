@@ -1,5 +1,6 @@
 package com.bcs.p3s.engine;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import com.bcs.p3s.display.CostAnalysisData;
+import com.bcs.p3s.display.PatentUI;
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
@@ -101,6 +103,25 @@ public class PostLoginDataEngine extends Universal{
 					FeeUI currentFeeUI = new FeeUI(currentfee);
 					Fee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoFee(), fee.getFxRate());
 					FeeUI nextStageFeeUI = new FeeUI(nextStageFee);*/
+
+					
+					// 181219 Prices for RED are absent! Even tho 'Too late to renew'. So reneable old code
+					try {
+						CombinedFee fee = caEngine.getFeeObj(patent);
+						RenewalFee currentfee = caEngine.getCurrentPhaseCost(currentPhase, fee.getP3sFee(), fee.getEpoRenewalFee(), fee.getFxRate());
+						RenewalFeeUI currentFeeUI = new RenewalFeeUI(currentfee);
+						RenewalFee nextStageFee = caEngine.getCurrentPhaseCost(getNextPhase(currentPhase), fee.getP3sFee(), fee.getEpoRenewalFee(), fee.getFxRate());
+						RenewalFeeUI nextStageFeeUI = new RenewalFeeUI(nextStageFee);
+						extendedData.setCurrentRenewalCost(currentFeeUI.getSubTotal_USD());
+						extendedData.setRenewalCostNextStage(nextStageFeeUI.getSubTotal_USD());
+					} catch (Exception e) {
+						log().error("181219 workaround crashed. Setting safe price for RED",e);
+						extendedData.setCurrentRenewalCost(PatentUI.HUGE_SAFE_DEFAULT_PRICE);
+						extendedData.setRenewalCostNextStage(PatentUI.HUGE_SAFE_DEFAULT_PRICE);
+					}
+					// 181219 end.
+					
+					
 					extendedData.setPatentId(patent.getId());
 					extendedData.setRenewalDueDate(renewalDates.getCurrentRenewalDueDate());
 					extendedData.setCurrentCostBand(caData.getCurrentcostBand());

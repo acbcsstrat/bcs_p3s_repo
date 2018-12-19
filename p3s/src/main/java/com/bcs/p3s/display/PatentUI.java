@@ -60,6 +60,9 @@ public class PatentUI extends Patent {
 //    PatentService patentService;  //Service which will do all data retrieval/manipulation work
 	//PatentService patentService = new PatentServiceImpl();
 	
+	public static final BigDecimal HUGE_SAFE_DEFAULT_PRICE = new BigDecimal(1000000); // OTT price is better than NPE
+	
+	
 	
     protected BigDecimal currentRenewalCostUSD;
 
@@ -144,12 +147,16 @@ public class PatentUI extends Patent {
 		this.setPriorityDate(patent.getPriorityDate());
 		this.setPCT_publishedDate(patent.getPCT_publishedDate());
 		
+		this.setTotalRenewalOfficialFeesEUR(HUGE_SAFE_DEFAULT_PRICE); // posit. If used, should be set below
+		
 		long myUserId = SecurityUtil.getMyUser().getId();
 		allRenewalNotificationUIs = assembleAllNotificationUIs(patent.getId(), myUserId, NotificationProductTypeEnum.RENEWAL);
 		allEpctNotificationUIs = assembleAllNotificationUIs(patent.getId(), myUserId, NotificationProductTypeEnum.EPCT);
 
 		//SETTING REMAINING FROM EXTENDED DATA ARGUMENT PASSED
-		if(! (extendedDatas == null) ){
+		if(extendedDatas == null) System.out.println("PatentUI constructor given null extendedDatas. Potential future NPE NullPointerException");
+		else 
+		{
 			for(PatentExtendedData extendedData : extendedDatas){
 				if(extendedData.getPatentId() == null){ // Happens within add-patent processing 
 					this.setRenewalDueDate(extendedData.getRenewalDueDate());
@@ -157,6 +164,7 @@ public class PatentUI extends Patent {
 					this.setCurrentRenewalCostUSD(extendedData.getCurrentRenewalCost());
 					this.setCostBandEndDate(extendedData.getCostBandEndDate());
 					this.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
+					// Potentially, TotalRenewalOfficialFeesEUR is needed here
 					break;
 				}
 				
