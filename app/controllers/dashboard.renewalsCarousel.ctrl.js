@@ -15,7 +15,8 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
     vm.date = new Date();
     vm.getCurrColour = getCurrColour;
     vm.getNextColour = getNextColour;
-
+    vm.selectedPatent = vm.selectedPhase.getPhase().patents[0];
+    console.log(vm.selectedPatent)
     function getCurrColour(phase, type) {
         return organiseColourService.getCurrColour(phase, type)
     }

@@ -25,10 +25,11 @@ function organiseTextService(coreService) {
 
     var actionableStatuses = [
         {text: 'Show price', uiTextl: 'Open for Renewal'},
+        {text: 'Epct rejected', uiTextl: 'Open for Renewal'},
         {text: 'Epct available', uiText: 'Euro-PCT Ready'},
         {text: 'Epct saved', uiText: 'Euro-PCT Saved'},
         {text: 'Epct being generated', uiText: 'Euro-PCT Generating'},
-        {text: 'EPO Instructed', uiText: 'EPO Instructed'},
+        {text: 'Epct not available', uiText: 'EPCT not available'},
         {text: 'Too late to renew', uiText: 'Call '+partnerName+' on '+partnerPhone},
         {text: 'Await pdf gen start', uiText: 'Euro-PCT Generating'}        
     ]

@@ -45,7 +45,7 @@
 					            		<td class="t-data__td no-border-er text-left">
 					            			<div class="d-flex justify-content-between">
 					            				<p><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'MM-dd-yy'}}</p>
-					            				<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getNextColour($ctrl.selectedPhase.getPhase().phase, 'bg')"></div>	
+					            				<div class="phase-rectangle m-r-lg" data-ng-if="portfolioUI" data-ng-class="$ctrl.getNextColour($ctrl.selectedPhase.getPhase().phase, 'bg')"></div>	
 					            			</div>
 					            		</td>
 					            	</tr>

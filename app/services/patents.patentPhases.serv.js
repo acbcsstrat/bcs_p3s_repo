@@ -43,9 +43,7 @@ function patentPhasesService ($timeout, $q, $rootScope, calculateService, patent
 					patentArr.forEach(function(item) {
 
 						var service = item.renewalFeeUI !== null ? item.renewalStatus : item.epctStatus;
-
 						if(organiseTextService.actionStatus(service)) {
-
 							switch(item.portfolioUI.serviceList[0].currentStageColour) {
 								case 'Green':
 									phases.greenRenewals.push(item);
