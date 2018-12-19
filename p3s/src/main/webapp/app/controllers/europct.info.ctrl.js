@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('euroPctInfoCtrl', euroPctInfoCtrl);
 
-euroPctInfoCtrl.$inject = ['patent', '$timeout', 'chunkDataService', 'euroPctService', '$uibModal', 'organiseTextService', 'organiseColourService'];
+euroPctInfoCtrl.$inject = ['patent', '$state', '$timeout', '$location', '$anchorScroll', 'chunkDataService', 'euroPctService', '$uibModal', 'organiseTextService', 'organiseColourService', 'currentTransactionsService'];
 
-function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $uibModal, organiseTextService, organiseColourService) {
+function euroPctInfoCtrl(patent, $state, $timeout, $location, $anchorScroll, chunkDataService, euroPctService, $uibModal, organiseTextService, organiseColourService, currentTransactionsService) {
 
     var vm = this;
 
@@ -14,6 +14,40 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
     vm.checkActionStatus = checkActionStatus;
     vm.getCurrColour = getCurrColour;
     vm.displayNotifications = displayNotifications;
+    vm.fetchItemTransaction = fetchItemTransaction;
+
+    function fetchItemTransaction(id) {
+        currentTransactionsService.fetchCurrentTransactions()
+        .then(
+            function(response) {
+
+                var match = response.filter(function(el){
+                    return el.serviceUIs.find(function(item){
+                        return item.patentUI.id === id;
+                    })
+                })
+
+                if(match !== undefined || typeof match !== 'undefined') {
+                    $state.go('current-transactions.current-transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
+                    .then(
+                        function(response){
+                            $timeout(function() {
+                                $location.hash('currTransAnchor'); 
+                                $anchorScroll();  //scroll to anchor href
+                            }, 300);
+                        },
+                        function(errResponse){
+                            console.log(errResponse);
+                        }
+                    );
+                }
+
+            },
+            function(errResponse) {
+                console.log(errResponse);
+            }
+        );
+    };  
 
     function getCurrColour(colour, type) {
         return organiseColourService.getCurrColour(colour, type);
@@ -45,6 +79,7 @@ function euroPctInfoCtrl(patent, $timeout, chunkDataService, euroPctService, $ui
                         function(response){
                             deleteApplicationSuccess();
                             $uibModalInstance.close();
+                            $state.reload();
                         },
                         function(errResponse){
                             deleteApplicationError(errResponse);

@@ -1,12 +1,13 @@
 angular.module('ppApp').controller('euroPctCostAnalysisCtrl', euroPctCostAnalysisCtrl);
 
-euroPctCostAnalysisCtrl.$inject = ['patent', 'ca', '$timeout', 'organiseTextService']
+euroPctCostAnalysisCtrl.$inject = ['patent', 'ca', '$timeout', '$state', 'organiseTextService', '$location', 'currentTransactionsService', '$anchorScroll']
 
-function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
+function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextService, $location, currentTransactionsService, $anchorScroll) {
 
     var vm = this;
 
     vm.actionStatus = actionStatus;
+    vm.fetchItemTransaction = fetchItemTransaction;
 
     function actionStatus(text) {
         return organiseTextService.actionStatus(text)
@@ -221,23 +222,46 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
 
         function init() {
             loadChart();
-            sortAvailableFees();
         }
 
-        function sortAvailableFees() {
-            console.log('what')
-            for(var property in ca.form1200FeeUI) {
-                if(ca.form1200FeeUI.hasOwnProperty(ca.form1200FeeUI)){
-                    console.log(ca.form1200FeeUI[property])
+        function fetchItemTransaction(id) {
+            currentTransactionsService.fetchCurrentTransactions()
+            .then(
+                function(response) {
+
+                    var match = response.filter(function(el){
+                        return el.serviceUIs.find(function(item){
+                            return item.patentUI.id === id;
+                        })
+                    })
+
+                    if(match !== undefined || typeof match !== 'undefined') {
+                        $state.go('current-transactions.current-transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
+                        .then(
+                            function(response){
+                                $timeout(function() {
+                                    $location.hash('currTransAnchor'); 
+                                    $anchorScroll();  //scroll to anchor href
+                                }, 300);
+                            },
+                            function(errResponse){
+                                console.log(errResponse);
+                            }
+                        );
+                    }
+
+                },
+                function(errResponse) {
+                    console.log(errResponse);
                 }
-            }
-        }
+            );
+        };        
 
         function barData() {
-            // console.log(ca)
+
             var barChartArr = [], label = [], data = [];
-            for (var property in ca) {
-                if (ca.hasOwnProperty(property)) {
+            for(var property in ca) {
+                if(ca.hasOwnProperty(property)) {
                     var dayData = ca[property];
                     if((property.includes('StartDate')) && (!property.includes ('UI'))) {
                         label.push(dayData);
@@ -273,7 +297,6 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, organiseTextService) {
                     var d = property.slice(8, 10)
                     var m = property.slice(5, 7)
                     var y = property.slice(0, 4)
-                    // console.log('epct',d, m , y)
                     var date = new Date(y, m, d).getTime();
                     lineDataArr.push([date, dayData]);
                 }

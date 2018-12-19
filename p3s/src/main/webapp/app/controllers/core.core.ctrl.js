@@ -44,6 +44,25 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
       	
 	});
 
+    function init() {
+
+        patentsRestService.fetchAllPatents()
+        .then(
+            function(response){
+                if(response.length === 0) {
+                    patentsFound = false;
+                }
+            },
+            function(errResponse){
+                console.log(errResponse)
+            }
+        )
+
+    }
+
+    init()
+
+
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modals/modal.welcome-message.tpl.htm',
@@ -99,7 +118,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 			);
 
 			$timeout(function() {
-
+                console.log('WHAT')
 			 	if(patentsFound === false) {
 			 		welcomeMessageModal();
 				}

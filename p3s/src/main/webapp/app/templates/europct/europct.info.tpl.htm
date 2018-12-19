@@ -53,13 +53,14 @@
                 <div class="content-panel__body">
                     <div class="row m-b-sm" data-ng-if="$ctrl.patent.epctStatus !== 'Epct available'"> <!-- add if condition to check data-ng-if application has been saved-->
                         <div class="col-xl-12 col-cxl-12">
-                            <h4 class="font-h4 font-weight-medium m-b-xs">Form 1200 Application</h4>
+                            <h4 class="font-weight-medium">Form 1200 Application</h4>
+                            <p class="m-b-xs">Your Form 1200 has been generated and is avaialble to download and view.</p>
                             <div data-ng-if="$ctrl.patent.epctStatus == 'Epct being generated'" class="d-flex justify-content-start align-items-center">
                                 <p>We are currently generating your Form 1200. When the document is ready, you will be able to download it here.</p>                       
                             </div>
                             <div class="row" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
                                 <div class="col-md-12 d-flex justify-content-start">
-                                    <a class="btn btn--lg btn--green pill-radius m-r-sm" href="$ctrl.patent.form1200PdfUrl" target="_blank" download="{{$ctrl.patent.form1200PdfUrl}}">Download</a>
+                                    <a class="btn btn--lg btn--green pill-radius m-r-sm" href="http://localhost:8080/p3sweb/download.pdf?epctId=16" target="_blank" download="{{$ctrl.patent.form1200PdfUrl}}">Download</a>
                                     <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
                                 </div>
                             </div>
@@ -218,7 +219,7 @@
                             </div>
                             <div class="row m-b-sm">
                                 <div class="col-xl-4">
-                                    <p class="font-weight-medium font-body">4 week variation:</p>   
+                                    <p class="font-weight-medium font-body">Four week variation:</p>   
                                 </div>
                                 <div class="col-xl-3">
                                     <p class="font-body text-center" data-ng-class="$ctrl.patent.form1200FeeUI.subTotalUSD <= $ctrl.patent.form1200FeeUI.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
@@ -266,7 +267,6 @@
                         <span>{{$ctrl.patent.epctStatus}}</span>
                     </p>
                 </div>
-
                 <div class="col-md-6">                                    
                     <div data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)" class="text-right">
                         <p class="font-h4 m-b-xs">
@@ -303,20 +303,16 @@
                 <div class="bg-white">
                     <div class="content-panel__body">
                         <div class="row m-b-sm" data-ng-if="$ctrl.patent.form1200PdfUrl !== null"> <!-- add if condition to check data-ng-if application has been saved-->
-                            <div class="col-xl-12 col-cxl-12">
-                                <h4 class="font-h4 font-weight-medium m-b-xs">Application</h4>
-                                <div class="row">
+                            <div class="col-md-12 col-md-12">
+                                <h4 class="font-h4 font-weight-medium m-b-xs">Form 1200 Application</h4>
+                                <p>Your Form 1200 has been generated and is avaialble to download and view.</p>
+                                <div data-ng-if="$ctrl.patent.epctStatus == 'Epct being generated'" class="d-flex justify-content-start align-items-center">
+                                    <p>We are currently generating your Form 1200. When the document is ready, you will be able to download it here.</p>                       
+                                </div>
+                                <div class="row" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
                                     <div class="col-md-12 d-flex justify-content-start">
-                                        <button type="button" class="btn btn--default bg-phase-red pill-radius m-r-sm" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">
-                                            <a class="btn__link btn__link--white btn--lg">Delete application</a>
-                                        </button>
-                                        <button type="button" class="btn btn--default bg-phase-green pill-radius m-r-sm" data-ng-click="$ctrl.editApplication($ctrl.patent.id)">
-                                            <a class="btn__link btn__link--white btn--lg">Edit application</a>
-                                        </button>
-                                        <div>
-                                            <ngcart-addtocart id="{{$ctrl.patent.id}}" name="service.renewal" price="5555" quantity="1" quantity-max="10" data="patent"> <!--secret to different button labels checkngcartdirective.js-->
-                                            </ngcart-addtocart>
-                                        </div>     
+                                        <a class="btn btn--lg btn--green pill-radius m-r-sm" href="http://localhost:8080/p3sweb/download.pdf?epctId=16" target="_blank" download="{{$ctrl.patent.form1200PdfUrl}}">Download</a>
+                                        <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -338,7 +334,6 @@
                                     <ul class="panel-nav">
                                         <li class="panel-nav__list-item list-item--colour-border pill-radius green m-b-xs" data-ng-init="activeNotificationTab = 0;" data-ng-click="activeNotificationTab = 0; $ctrl.displayNotifications('Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
                                         <li class="panel-nav__list-item list-item--colour-border pill-radius amber m-b-xs" data-ng-click="activeNotificationTab = 1; $ctrl.displayNotifications('Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li>
-<!--                                         <li class="panel-nav__notification-list-item--red-notification font-weight-medium pill-radius panel-nav__list-item--notifications d-flex justify-content-center align-items-center m-b-xs" data-ng-click="activeNotificationTab = 2; $ctrl.displayNotifications('Red');" data-ng-class="{'active bg-phase-red': activeNotificationTab == 2, 'txt-phase-red': activeNotificationTab !== 2}">Red</li> -->
                                     </ul>
                                 </nav>
                             </div>
@@ -370,26 +365,13 @@
                                             </div>
                                         </div>                                  
                                     </uib-tab>
-<!--                                     <uib-tab index="2" heading="Red" data-ng-hide="true">
-                                        <div class="row" data-ng-repeat="checkbox in $ctrl.notifications">
-                                            <div class="col-md-2 col-lg-2 text-center font-body" data-ng-repeat="item in checkbox">
-                                                {{item.title}}
-                                                <div class="onoffswitch">
-                                                    <label class="switch">
-                                                      <input type="checkbox" data-ng-model="item.isOn">
-                                                      <span class="slider round bg-phase-red"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>                                  
-                                    </uib-tab> -->
                                 </uib-tabset>
                             </div>
                         </div>
                     </div>
                     <div class="content-panel__head border-grey-xs--top">
                         <div class="row">
-                            <div class="col-xl-12">
+                            <div class="col-md-12">
                                 <input type="submit" id="submit" class="btn btn--lg btn--green pill-radius" value="Save" data-ng-click="$ctrl.updateNotifications($ctrl.patent.id)">
                             </div>
                         </div>

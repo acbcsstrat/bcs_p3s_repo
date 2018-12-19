@@ -92,7 +92,7 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
                 console.log(errResponse);
             }
         );
-    };    
+    };
 
     function updatePatent(patent) {
 
