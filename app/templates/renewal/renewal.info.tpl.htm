@@ -2,14 +2,14 @@
     <div class="content-panel bg-white border-t-none">
         <div class="content-panel__head border-grey-xs--btm">
             <div class="row d-flex align-items-center">
-                <div class="col-xl-3">
+                <div class="col-xl-4">
                     <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
                         <span class="font-weight-medium">Renewal Status:</span> 
                         <span data-ng-bind="$ctrl.getStatus($ctrl.patent.renewalStatus)">
                     </p>
                 </div>
-                <div class="col-xl-6" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
+                <div class="col-xl-5" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
