@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
 
-renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'dashboardService', 'organiseColourService']
+renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'dashboardService', 'organiseColourService', 'organiseTextService']
 
-function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, dashboardService, organiseColourService) {
+function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, dashboardService, organiseColourService, organiseTextService) {
 
 	var vm = this;
 
@@ -15,8 +15,13 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
     vm.date = new Date();
     vm.getCurrColour = getCurrColour;
     vm.getNextColour = getNextColour;
-    vm.selectedPatent = vm.selectedPhase.getPhase().patents[0];
-    console.log(vm.selectedPatent)
+
+    vm.getStatus = getStatus;
+
+    function getStatus(text) {
+        return organiseTextService.uiStatus(text)
+    }
+
     function getCurrColour(phase, type) {
         return organiseColourService.getCurrColour(phase, type)
     }

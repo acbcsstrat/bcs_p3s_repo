@@ -45,7 +45,7 @@
 					            		<td class="t-data__td no-border-er text-left">
 					            			<div class="d-flex justify-content-between">
 					            				<p><span class="font-weight-medium">Next Stage: </span>{{item.costBandEndDate | date:'MM-dd-yy'}}</p>
-					            				<div class="phase-rectangle m-r-lg" data-ng-if="portfolioUI" data-ng-class="$ctrl.getNextColour($ctrl.selectedPhase.getPhase().phase, 'bg')"></div>	
+					            				<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getNextColour($ctrl.selectedPhase.getPhase().phase, 'bg')"></div>	
 					            			</div>
 					            		</td>
 					            	</tr>
@@ -54,9 +54,13 @@
 					            			<span class="font-weight-medium">Due Date: </span>{{item.renewalDueDateUI}}
 					            		</td>
 					            		<td class="t-data__td td-border-nt">
-					            			<div class="progress-phase">
+					            			<div class="progress-phase" data-ng-if="item.portfolioUI.serviceList[0].currentStageColour !== 'Red' && item.portfolioUI.serviceList[0].currentStageColour !== 'Black'">
 							       				<uib-progress class="pill-radius" data-ng-class="$ctrl.getNextColour($ctrl.selectedPhase.getPhase().phase, 'bg')"><uib-bar class="pill-radius" value="item.renewalStageProgress || item.form1200StageProgress"></uib-bar></uib-progress>
 							            	</div>	
+					            			<div data-ng-if="item.portfolioUI.serviceList[0].currentStageColour == 'Red' || item.portfolioUI.serviceList[0].currentStageColour == 'Black'">
+							       				<p class="font-h4" data-ng-bind="$ctrl.getStatus(item.portfolioUI.serviceList[0].serviceStatus)"></p>
+					            				
+							            	</div>								            	
 					            		</td>							            		
 					            	</tr>
 				        		</tbody>
