@@ -18,14 +18,6 @@
  
   .hidden-cxl { display: none!important; }
 
-  .d-cxl-block { display: block!important; }
-
-  // .btn-error--cross {
-  //   padding-right: 3.51rem;
-  // }
-
-  .cxl-m-b-sm { margin-bottom: 1.5rem; }
-
   .btn--lg, .uib-btn--lg a { padding: 0.5rem 1.5rem }
 
   .col-cxl-1, .col-cxl-2, .col-cxl-3, .col-cxl-4, .col-cxl-5, .col-cxl-6, .col-cxl-7, .col-cxl-8, .col-cxl-12 {
@@ -163,9 +155,7 @@
   .font-h4 { font-size: 1.2rem; }
 
   .lg-m-b-sm { margin-bottom: 1.5rem }
-
   .lg-m-b-md { margin-bottom: 2.25rem }
-
   .lg-m-t-sm { margin-top: 1.5rem }
 
   .lg-point { 
@@ -211,44 +201,20 @@
     @include padding-mixin(1.5rem 1rem);
   }
 
-  .t-data__btn-portal, 
-  ngcart-addtocart .t-data__btn-portal {
-    background: none;
-    padding: 0;
-    border-radius: none;
-  }
-
-  .t-data__btn-portal a.btn__link, 
-  .t-data__btn-portal a.btn__link:not([href]):not([tabindex]), 
-  ngcart-addtocart >.t-data__btn-portal >.btn__link { color:#000; }
-
-  .btn-default ngcart-addtocart.t-data__btn-portal .btn-portal:active {
-    background: none;
-    padding: 0;
-    border-radius: none; 
-    border: none;
-    color: #000; 
-  }
 
   .widget-row-middle .widget-panel {
     min-height: 230px;
   }
 
-  // .btn-default .t-data__btn-portal:hover,  .btn-default .t-data__btn-portal:active, 
-  // .btn-default ngcart-addtocart button.t-data__btn-portal a,
-  // .btn-default ngcart-addtocart button.t-data__btn-portal button,
-  // .btn-default ngcart-addtocart.t-data__btn-portal:not([disabled]) button:hover, 
-  // .btn-default ngcart-addtocart.t-data__btn-portal:not([disabled]) a:hover { color: #000; text-decoration: underline; opacity: 1; }
-
   .widget-panel .widget-panel__head { padding: 1.2rem 2.5rem ; height: 54px; }
   .widget-panel .widget-panel__body { padding: 2.5rem 2.5rem ; }
   
-  .md-m-b-sm { margin-bottom: 1.5rem; }
-  .md-m-b-md { margin-bottom: 2.25rem; }
-  .md-m-t-sm { margin-top: 1.5rem; }
-  .md-m-b-xs { margin-bottom: 0.75rem; } 
+  .m-b-md-sm { margin-bottom: 1.5rem; }
+  .m-b-md-md { margin-bottom: 2.25rem; }
+  .m-t-md-sm { margin-top: 1.5rem; }
+  .m-b-md-xs { margin-bottom: 0.75rem; } 
 
-  .md-btn--lg { padding: 0.5rem 1rem!important; }
+  .m-r-none-md {margin-right: 0!important; }
 
   .md-point { 
     background:#DDD;
@@ -270,138 +236,20 @@
 
   .closed-sidenav { width: 60px!important; }
 
+  .btn-md-block {
+    width: 100%;
+    .btn {
+      width: 100%;
+    }
+  }  
+
 } 
 
 
 /*RESET USER-AGENT STYLES******************/
 
-.justify-content-between ul.nav-pills, 
-.justify-content-between .notification-pills { 
-  -webkit-justify-content: space-between;
-  -moz-justify-content: space-between;
-  justify-content: space-between; /*for uib elements*/ }
 
-/*.ng-table th.sortable.sort-asc, 
-.ng-table th.sortable.sort-desc {}*/
 
-.progress-trans .progress-bar, 
-.progress-phase .progress-bar { height: 1.5rem; }
-.progress-bar-tall { height: 2rem; line-height: 1.2rem; }
-.progress { margin-right: 2px; position: relative; border-radius: 20px; z-index: 0; }
-
-/*a.txt-black, 
-.txt-black a { color: #212121; }*/
-
-.nav-tabs .nav-link.active, 
-.nav-tabs .nav-link { border: none; }
-
-// .nav-link { padding: 0; }
-
-.white-nav-a a:visited, 
-.white-nav-a a:focus { color: #fff!important; } 
-
-.side-menu a:hover, 
-.side-menu a:focus { color: #fff; }
-
-.fa-1x { font-size: 1.8rem!important; }
-
-md-sidenav {
-  overflow: visible;
-}
-
-// select.form-control:not([size]):not([multiple]) { REMOVED AS CAUSING CSS ERROR WITH PORTFOLIO FILTER. REVIEW AGAIN
-//   height: auto!important;
-// }
-
-.ng-table th.sortable.sort-asc, .ng-table th.sortable.sort-desc {
-  background-color: #f5f5f5; 
-}
-
-.modal-dialog {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -moz-justify-content: space-between;    
-  justify-content: center;
-  min-height: 100%;  
-}
-
-.modal-header,
-.modal-body,
-.modal-footer {
-  padding-left: 5rem;
-  padding-right: 5rem;
-}
-
-/*.modal-content {
-  max-height: 50rem;
-  min-height: 50rem;
-  overflow: scroll;
-  overflow-x: hidden;
-}
-*/
-
-.modal-header {
-  border-bottom: 0;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-
-}
-
-.modal-body {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.modal-footer {
-  border-top: 0;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-.modal-footer>:not(:last-child) {
-  margin-right: 1.5rem;
-}
-
-.modal-body--multiple {
-  padding-left: 5rem;
-  padding-right: 5rem;  
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;  
-}
-
-.modal-header--multiple {
-  padding-left: 5rem;
-  padding-right: 5rem;  
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;  
-}
-
-.modal-content--multiple {
-  max-height: 300px;
-  overflow: auto;
-}
-
-.modal-content--table {
-  width: 500px;
-}
-
-.modal-max {
-  max-height: 600px;
-  overflow-y: scroll;
-}
-
-.btn-block+.btn-block { margin-top: 0px; }
-
-/*ngcart-addtocart .ng-hide {
-  transition: all 5s;
-  background: orange;
-}*/
 
 @media (min-width: 0px) {
   .modal-dialog {

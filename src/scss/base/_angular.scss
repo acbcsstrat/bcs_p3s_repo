@@ -33,3 +33,7 @@ input.ng-pristine {
   opacity: 1;
   display: block !important;
 }
+
+.ng-table th.sortable.sort-asc, .ng-table th.sortable.sort-desc {
+  background-color: #f5f5f5; 
+}

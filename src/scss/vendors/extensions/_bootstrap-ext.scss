@@ -53,10 +53,6 @@ uib-progress.progressblue { height: 3rem; }
   border: none!important;
 }
 
-// .modal-content { REMOVED TO FIX BUG WITH FULL WIDTH MDOAL IN IE11
-//   width: auto!important;
-// }
-
 .modal-open {
     overflow: scroll;
 }
@@ -64,16 +60,18 @@ uib-progress.progressblue { height: 3rem; }
 .navbar {
   padding: 0!important;
 }
-//   text-align: center;
-//   padding: 0!important;
-// uib-progress.progressblue { height: 3rem; }
-//   margin-right: -4px;
-// }
- // .modal-dialog {
-//   display: inline-block;
-//   text-align: left;
-//   vertical-align: middle;
-// } 
+
 .modal-dialog {
   height: 100%;
 } 
+
+.nav-tabs .nav-link.active, 
+.nav-tabs .nav-link { border: none; }
+
+.justify-content-between ul.nav-pills, 
+.justify-content-between .notification-pills { 
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between; /*for uib elements*/ }
+
+.btn-block+.btn-block { margin-top: 0px; }

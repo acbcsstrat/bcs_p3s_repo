@@ -67,3 +67,10 @@
     width: 100%;
     z-index: -1;
 }
+
+.side-menu a:hover, 
+.side-menu a:focus { color: #fff; }
+
+md-sidenav {
+  overflow: visible;
+}

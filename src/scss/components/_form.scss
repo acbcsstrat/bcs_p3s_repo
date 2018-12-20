@@ -76,13 +76,3 @@ input {
     border-radius: 50%; 
   } /*modules*/ /*components*/ /*_form.scss*/
 }
-
-.form-inline .input-h100, .form .input-h100 { height: 100%; } /*modules*/ /*components*/ /*_form.scss*/
-
-.form-section { /*modules*/ /*components*/ /*_form.scss*/
-  display: none;
-}
-
-.form-section.current { /*modules*/ /*components*/ /*_form.scss*/
-  display: inherit;
-}
