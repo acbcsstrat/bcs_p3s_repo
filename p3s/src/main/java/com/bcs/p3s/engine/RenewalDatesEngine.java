@@ -96,16 +96,16 @@ public class RenewalDatesEngine extends Universal{
 	        	CalendarColour colourDates = new CalendarColour();
 	        	TypedQuery<CalendarColour> allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 	        	if(allColourDates.getResultList().size() == 0){
-	        		log().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table");
-	        		logInternalError().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table");
+	        		log().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table A");
+	        		logInternalError().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table B");
 	        		return null;
 	        		
 	        	}
 	        	colourDates = allColourDates.getSingleResult();
 	        	//colourDates = new CalendarColourJDBC().findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 	        	if(colourDates == null){
-	        		log().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table");
-	        		logInternalError().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table");
+	        		log().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table C");
+	        		logInternalError().debug("No data available for renewal due date " + actualCurrentRenewalDate.getTime() + " in calendar_colour table D");
 	        		return null;
 	        	}
 	        	renewalStart.setTime(colourDates.getGreenStart());
@@ -151,8 +151,8 @@ public class RenewalDatesEngine extends Universal{
 		        	colourDates = new CalendarColour();
 		        	allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualYear3RenDue.getTime());
 		        	if(allColourDates.getResultList().size() == 0){
-		        		log().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table");
-		        		logInternalError().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table");
+		        		log().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table E");
+		        		logInternalError().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table F");
 		        		allDates.setRenewalYear(renewalYear);
 		        		allDates.setCurrentRenewalDueDate(actualYear3RenDue.getTime());
 		        		return allDates;
@@ -162,8 +162,8 @@ public class RenewalDatesEngine extends Universal{
 		        	//colourDates = new CalendarColourJDBC().findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 		        	
 		        	if(colourDates == null){
-		        		log().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table");
-		        		logInternalError().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table");
+		        		log().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table G");
+		        		logInternalError().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table H");
 		        		allDates.setRenewalYear(renewalYear);
 		        		allDates.setCurrentRenewalDueDate(actualYear3RenDue.getTime());
 		        		return allDates;
@@ -290,8 +290,8 @@ public class RenewalDatesEngine extends Universal{
 		        	colourDates = new CalendarColour();
 		        	allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualPrevRenewalDate.getTime());
 		        	if(allColourDates.getResultList().size() == 0){
-		        		log().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table");
-		        		logInternalError().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table");
+		        		log().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table I");
+		        		logInternalError().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table J");
 		        		//allDates.setRenewalYear(renewalYear);
 		        		return null;
 		        		
@@ -300,8 +300,8 @@ public class RenewalDatesEngine extends Universal{
 		    	   // colourDates = new CalendarColourJDBC().findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 		        	
 		        	if(colourDates == null){
-		        		log().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table");
-		        		logInternalError().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table");
+		        		log().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table K");
+		        		logInternalError().debug("No data available for renewal due date " + actualPrevRenewalDate.getTime() + " in calendar_colour table L");
 		        		return null;
 		        	}
 		        	
@@ -343,8 +343,8 @@ public class RenewalDatesEngine extends Universal{
 		        	colourDates = new CalendarColour();
 		        	allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualNextRenewalDate.getTime());
 		        	if(allColourDates.getResultList().size() == 0){
-		        		log().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table");
-		        		logInternalError().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table");
+		        		log().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table M");
+		        		logInternalError().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table N");
 		        		allDates.setRenewalYear(renewalYear);
 		        		log().debug("Patent is in Year "+ allDates.getRenewalYear() +" renewal period");
 		        		return allDates;
@@ -354,8 +354,8 @@ public class RenewalDatesEngine extends Universal{
 		        	
 		        	//colourDates = new CalendarColourJDBC().findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());
 		        	if(colourDates == null){
-		        		log().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table");
-		        		logInternalError().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table");
+		        		log().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table O");
+		        		logInternalError().debug("No data available for renewal due date " + actualNextRenewalDate.getTime() + " in calendar_colour table P");
 		        		allDates.setRenewalYear(renewalYear);
 		        		log().debug("Patent is in Year "+ allDates.getRenewalYear() +" renewal period");
 		        		return allDates;
