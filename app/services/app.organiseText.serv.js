@@ -10,8 +10,8 @@ function organiseTextService(coreService, $timeout) {
     }
 
     var actionableStatuses = [
-        {text: 'Show price', uiTextl: 'Open for Renewal'},
-        {text: 'Epct rejected', uiTextl: 'Euro-PCT Rejected'},
+        {text: 'Show price', uiText: 'Open for Renewal'},
+        {text: 'Epct rejected', uiText: 'Euro-PCT Rejected'},
         {text: 'Epct available', uiText: 'Euro-PCT Ready'},
         {text: 'Epct saved', uiText: 'Euro-PCT Saved'},
         {text: 'Epct being generated', uiText: 'Euro-PCT Generating'},
