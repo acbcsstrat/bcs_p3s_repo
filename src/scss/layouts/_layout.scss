@@ -74,3 +74,10 @@
 md-sidenav {
   overflow: visible;
 }
+
+.form-section.current {
+    display: inherit;
+}
+.form-section {
+    display: none;
+}
