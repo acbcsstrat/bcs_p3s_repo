@@ -48,11 +48,16 @@ function patentPhasesService ($timeout, $q,  $rootScope, calculateService, paten
 							break;
 							
 						}
-					} else if(item.portfolioUI.serviceList[0].currentStageColour == 'Red') { 
-						phases.redRenewals.push(item);
 					} else {
-						phases.greyRenewals.push(item);
-					}						
+						if(item.portfolioUI.serviceList.length === 0) {
+							phases.greyRenewals.push(item);
+						}
+						if(item.portfolioUI.serviceList.length > 0) {
+							if(item.portfolioUI.serviceList[0].currentStageColour == 'Red' ) {
+								phases.redRenewals.push(item);
+							}
+						}
+					} 			
 				});
 
 			}
