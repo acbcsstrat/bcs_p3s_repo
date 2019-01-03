@@ -85,6 +85,7 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 	}
 
 	function setActivityActiveTab (menuItem, index) {
+        vm.activeActivityTab = index;
 		vm.activeActivityTabResp = index; //needed for responsiveness
 		vm.activeMenu = menuItem;
 	};	    

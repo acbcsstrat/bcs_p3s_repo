@@ -9,9 +9,9 @@
 	</div>	
 	<div class="widget-panel__body d-none d-xl-block">
 			<ul class="panel-nav d-flex justify-content-between">
-				<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTabResp); $ctrl.activeActivityTabResp = item.index " data-ng-class="{active : $ctrl.activeMenu == item.activity}">{{item.activity}}</li>
+				<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTab); $ctrl.activeActivityTab = item.index " data-ng-class="{active : $ctrl.activeMenu == item.activity}">{{item.activity}}</li>
 			</ul>		
-			<uib-tabset class="panel-nav">
+			<uib-tabset class="panel-nav" active="$ctrl.activeActivityTab">
 				<uib-tab data-ng-hide="true">
 					<div class="widget-panel--max m-t-sm">
 						<div class="row bg-no-data m-t-lg" data-ng-if="$ctrl.recentStageArr.length === 0">
