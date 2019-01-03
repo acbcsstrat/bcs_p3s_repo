@@ -8,18 +8,38 @@ function appRoutes($stateProvider) {
         .state('dashboard', {
             url: '/dashboard',
             resolve: {
-                patents: ['patentsRestService', function(patentsRestService) {
-                    return patentsRestService.fetchAllPatents();
+                patents: ['patentsRestService', '$q', '$timeout', function(patentsRestService, $q, $timeout) {
+
+                    return patentsRestService.fetchAllPatents()
+                        .then(
+                            function(response){
+                                return response.map(function(item){
+                                   return item.id;
+                                 })
+                            }
+                        )
+                        .then(
+                            function(ids){
+                                var deferred = $q.defer();
+                                var nestedPatents = []
+                                angular.forEach(ids, function(id) {
+                                    nestedPatents.push(patentsRestService.fetchPatentItem(id));
+                                });                            
+                                $q.all(nestedPatents)
+                                .then(function(patent){
+                                    deferred.resolve(patent)
+                                })
+                                return deferred.promise;
+
+                            }
+                        )                   
                 }],
-                transactionHistory: ['transactionHistoryService', function(transactionHistoryService) {
+                transactionHistory: ['transactionHistoryService','patents', '$timeout', function(transactionHistoryService, patents, $timeout) {
                     return transactionHistoryService.fetchTransactionHistory();
                 }],
                 currentTransactions: ['currentTransactionsService', function(currentTransactionsService) {
                     return currentTransactionsService.fetchCurrentTransactions();
-                }],                    
-                // fxRatesWeek: ['fxService', function(fxService) {
-                //     return fxService.fetchFxWeek();
-                // }],
+                }],
                 fxRatesMonth: ['fxService', function(fxService) {
                     return fxService.fetchFxMonth();
                 }]                       

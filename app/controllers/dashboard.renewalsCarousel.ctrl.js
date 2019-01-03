@@ -7,9 +7,7 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
 	var vm = this;
 
 	vm.phaseLoaded = true;
-    $timeout(function(){
-	   vm.sortedPatentData = patentPhasesService.phases(patents);
-    }, 2000)
+	vm.sortedPatentData = patentPhasesService.phases(patents);
 	vm.setPhase = setPhase;
 	vm.selectedPhase = selectPhaseService;
     vm.date = new Date();
@@ -74,6 +72,4 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
 		}, 10);
 	}    
 
-	//renewal cost logic has to be included to accomodate for responsive design 
-	///////////////////////////////////////////////////////////////////////////
 }

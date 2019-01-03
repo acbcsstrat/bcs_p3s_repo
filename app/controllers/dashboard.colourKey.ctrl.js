@@ -19,7 +19,7 @@ function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPha
 	    	$scope.activeTab = selectPhaseService.getPhase().index;
  		})
   	});
- 	// console.log(patents.length)
+
 	if(patents.length > 0) {
 		var sortedPatentData = patentPhasesService.phases(patents); //sorts patents into phases and calculate progress
 		vm.setPhase('green');
