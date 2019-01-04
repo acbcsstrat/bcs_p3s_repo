@@ -10,10 +10,15 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 	vm.fetchItemTransaction = fetchItemTransaction;
 	vm.patent = dashboardService.getPatent();
     vm.actionStatus = actionStatus;
+    vm.paymentStatus = paymentStatus;
 
     function actionStatus(text) {
         return organiseTextService.actionStatus(text)
     }
+
+    function paymentStatus(text) {
+        return organiseTextService.paymentStatus(text)
+    }    
 
 	$scope.$on('updateCost', function(e, o){
     	vm.patent = dashboardService.getPatent();
