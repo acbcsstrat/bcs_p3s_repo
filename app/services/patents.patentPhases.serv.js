@@ -57,7 +57,7 @@ function patentPhasesService ($timeout, $q,  $rootScope, calculateService, paten
 								phases.redRenewals.push(item);
 							}
 							if(item.portfolioUI.serviceList[0].currentStageColour == 'Grey' ) {
-								phases.redRenewals.push(item);
+								phases.greyRenewals.push(item);
 							}							
 						}
 					} 			
