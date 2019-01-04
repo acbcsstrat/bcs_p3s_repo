@@ -54,15 +54,19 @@
 					            			<span class="font-weight-medium">Due Date: </span>{{item.renewalDueDateUI}}
 					            		</td>
 					            		<td class="t-data__td td-border-nt">
-					            			<div class="progress-phase">
+					            			<div class="progress-phase" data-ng-if="item.portfolioUI.serviceList[0].currentStageColour !== 'Red' && item.portfolioUI.serviceList[0].currentStageColour !== 'Black'">
 							       				<uib-progress class="pill-radius" data-ng-class="$ctrl.getNextColour($ctrl.selectedPhase.getPhase().phase, 'bg')"><uib-bar class="pill-radius" value="item.renewalStageProgress || item.form1200StageProgress"></uib-bar></uib-progress>
 							            	</div>	
+					            			<div data-ng-if="item.portfolioUI.serviceList[0].currentStageColour == 'Red' || item.portfolioUI.serviceList[0].currentStageColour == 'Black'">
+							       				<p class="font-h4" data-ng-bind="$ctrl.getStatus(item.portfolioUI.serviceList[0].serviceStatus)"></p>
+					            				
+							            	</div>								            	
 					            		</td>							            		
 					            	</tr>
 				        		</tbody>
 				        	</table>
 				        </div>
-				    </slick>      	
+				    </slick>
             	</div>
 	            <div data-ng-show="$ctrl.selectedPhase.getPhase().patents.length === 0 || $ctrl.selectedPhase.getPhase() == ''" class="row">
 	            	<div class="col-md-12 d-flex justify-content-center z-index-1">

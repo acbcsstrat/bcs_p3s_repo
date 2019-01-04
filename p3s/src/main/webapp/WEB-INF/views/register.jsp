@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col-xl-8 offset-xl-2">
                             <form name="register" id="registerForm" class="form" data-parsley-validate="">
-                                <div class="form-section m-b-sm">
+                                <div class="form-section current m-b-sm">
                                     <div class="form-group row">
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <input name="emailAddress" class="form-control pill-radius font-body" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">

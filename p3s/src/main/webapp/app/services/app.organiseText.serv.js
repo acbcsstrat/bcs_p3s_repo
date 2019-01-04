@@ -1,35 +1,22 @@
 angular.module('ppApp').service('organiseTextService', organiseTextService);
 
-organiseTextService.$inject = ['coreService'];
+organiseTextService.$inject = ['coreService', '$timeout'];
 
-function organiseTextService(coreService) {
+function organiseTextService(coreService, $timeout) {
     
     var factory = {
         uiStatus: uiStatus,
         actionStatus: actionStatus
     }
 
-    var partnerName, partnerPhone;
-
-    coreService.ppContact()
-    .then(
-        function(response){
-            partnerName = response.partnerName;
-            partnerPhone = response.partnerPhone;
-        },
-        function(errResponse){
-            partnerName = 'N/A';
-            partnerPhone = 'N/A';
-        }
-    )
-
     var actionableStatuses = [
-        {text: 'Show price', uiTextl: 'Open for Renewal'},
+        {text: 'Show price', uiText: 'Open for Renewal'},
+        {text: 'Epct rejected', uiText: 'Euro-PCT Rejected'},
         {text: 'Epct available', uiText: 'Euro-PCT Ready'},
         {text: 'Epct saved', uiText: 'Euro-PCT Saved'},
         {text: 'Epct being generated', uiText: 'Euro-PCT Generating'},
-        {text: 'EPO Instructed', uiText: 'EPO Instructed'},
-        {text: 'Too late to renew', uiText: 'Call '+partnerName+' on '+partnerPhone},
+        // {text: 'EPO Instructed', uiText: 'EPO Instructed'},
+        {text: 'Too late to renew', uiText: 'Call Pure Ideas Ltd on +44 1992 563964'},
         {text: 'Await pdf gen start', uiText: 'Euro-PCT Generating'}        
     ]
 
@@ -48,7 +35,7 @@ function organiseTextService(coreService) {
         {text: 'Epct being generated', uiText: 'Euro-PCT Generating'},
         {text: 'Await pdf gen start', uiText: 'Euro-PCT Generating'},
         {text: 'EPO Instructed', uiText: 'EPO Instructed'},
-        {text: 'Too late to renew', uiText: 'Call '+partnerName+' on '+partnerPhone},
+        {text: 'Too late to renew', uiText: 'Call Pure Ideas Ltd on +44 1992 563964'},
     ]          
 
     function uiStatus(text) {

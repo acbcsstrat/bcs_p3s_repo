@@ -27,9 +27,11 @@ public class P3SEnvironmentKnowledge extends Universal {
 	public static final String Hostnames[] = {
 			  "CCP020"					// Andy's Lenovo 
 			, "CCP007"					// Andy's Dell 
+			, "AVID-3580-022"			// Andy's NEW Dell 
 			, "avid-ox790-013"			// Merin's PC
 			// Pat's WAS "patrickwork" - now seems DESKTOP-H575IU3
 			, "DESKTOP-H575IU3"			// Patrick's PC
+			, "AVID-3590-026"			// Pat's NEW Dell 
 			, "reviewsystem"			// Tomacat-A (on Linode)
 			// YET TO INCLUDE: other Linux Hosts? Dev, Test, Demo & Production
 			, "tomcatb"					// Tomacat-B (on Linode). Clone of TomcatA, with postfix Nov17
@@ -62,6 +64,10 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// Original: path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
+		if ("AVID-3590-026".equals(host)) {
+			// 190102 best guess
+			path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+		}
 		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
@@ -70,6 +76,10 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// path = "C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";	// If running from war 	
 			//path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse - v1
 			path = "C:/gitrepos/github/project-repo/p3s_web_v2.1/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse - v1
+		}
+		if ("AVID-3580-022".equals(host)) {
+			// 190102 best guess
+			path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
 		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
@@ -128,6 +138,10 @@ public class P3SEnvironmentKnowledge extends Universal {
 			//path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
 			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sweb/WEB-INF/classes/";
 		}
+		if ("AVID-3590-026".equals(host) ) {
+			// 190102 best guess
+			path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/";
+		}
 		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";
 		}
@@ -139,6 +153,11 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("CCP007".equals(host) ) {
 			// C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/
 			path = "C:/gitrepos/github/project-repo/p3s_web_v2.1/p3s/src/main/resources/";
+		}
+		if ("AVID-3580-022".equals(host) ) {
+			// 190102 best guess
+			path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/";
+			//path = "C:/gitrepos/github/project-repo/p3s_web_v2.1/p3s/src/main/resources/";
 		}
 
 		if (path==null) {
@@ -156,7 +175,9 @@ public class P3SEnvironmentKnowledge extends Universal {
 	public static boolean isDeveloperPC() {
 		String host = Hostname.getHostname();
 		if ( ("CCP020".equals(host)) || ("avid-ox790-013".equals(host))
-		|| ("DESKTOP-H575IU3".equals(host)) || ("CCP007".equals(host)) ) {
+			|| ("DESKTOP-H575IU3".equals(host)) || ("CCP007".equals(host)) 
+			|| ("AVID-3580-022".equals(host)) || ("AVID-3590-026".equals(host))
+		) {
 			return true;
 		}
 		else return false;

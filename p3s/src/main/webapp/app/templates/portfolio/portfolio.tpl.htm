@@ -94,7 +94,7 @@
                                                 <div class="col-md-9 col-xl-9 d-flex">                                                
                                                     <div class="checkbox-container" data-ng-repeat="status in renewalsStatus('serviceStatus')">
                                                         <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
+                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body" data-ng-if="status">{{status}}</span>
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>

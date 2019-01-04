@@ -84,9 +84,10 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.update-profile-success.tpl.htm',
                     appendTo: undefined,
+                    controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$scope', function($uibModalInstance, $scope) {
 
-                        $scope.dismissModal = function() {
+                        this.dismissModal = function() {
                             $uibModalInstance.close();
                         };
 

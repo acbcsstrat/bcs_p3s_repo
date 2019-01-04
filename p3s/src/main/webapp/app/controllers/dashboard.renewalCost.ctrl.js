@@ -24,7 +24,6 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
     	}
 	})
 
-
 	$scope.$on('updatePhase', function(e, o){
         if(selectPhaseService.getPhase().patents.length === 0) {
  		    vm.patent.serviceCost = null;
