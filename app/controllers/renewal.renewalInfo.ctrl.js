@@ -14,6 +14,7 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScr
     vm.getNextColour = getNextColour;
     vm.getStatus = getStatus;
     vm.actionStatus = actionStatus;
+    vm.paymentStatus = paymentStatus;
     vm.fetchItemTransaction = fetchItemTransaction;
 
     function updateRenewalNotifications(patent, id) {
@@ -32,13 +33,16 @@ function renewalInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScr
         return organiseColourService.getCurrColour(colour, item);
     }
 
-
     function getNextColour(colour, item){
         return organiseColourService.getNextColour(colour, item);
     }
 
     function getStatus(text) {
         return organiseTextService.uiStatus(text);
+    }
+
+    function paymentStatus(text) {
+        return organiseTextService.paymentStatus(text);
     }
 
     function actionStatus(text) {
