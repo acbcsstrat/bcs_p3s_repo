@@ -1,0 +1,77 @@
+.nav-pills .uib-tab { /*bootstrap*/
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -moz-align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+} 
+
+.form-control, .btn { 
+  font-size: $font-normal; 
+}
+
+.form-control {
+  line-height: 1.2rem;
+}
+
+.btn {
+  line-height: $line-none;
+}
+
+.nav-link {
+  padding: 0;
+}
+
+.btn {
+  padding-left: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  padding-top: 0;
+  border-radius: 0;
+}
+
+.table tr:first-child {
+  > td {
+    border-top: 0;
+  }
+} 
+
+uib-progress.progressblue { height: 3rem; }
+
+.table thead th { border-bottom: 1px solid #dee2e6!important; }
+
+.tab-content {
+  width: 100%;
+}
+
+.nav-tabs {
+  border: none!important;
+}
+
+.modal-open {
+    overflow: scroll;
+}
+
+.navbar {
+  padding: 0!important;
+}
+
+.modal-dialog {
+  height: 100%;
+} 
+
+.nav-tabs .nav-link.active, 
+.nav-tabs .nav-link { border: none; }
+
+.justify-content-between ul.nav-pills, 
+.justify-content-between .notification-pills { 
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between; /*for uib elements*/ }
+
+.btn-block+.btn-block { margin-top: 0px; }
