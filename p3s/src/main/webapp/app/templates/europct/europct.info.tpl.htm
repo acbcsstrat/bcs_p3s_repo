@@ -60,7 +60,7 @@
                             </div>
                             <div class="row" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
                                 <div class="col-md-12 d-flex justify-content-start">
-                                    <a class="btn btn--lg btn--green pill-radius m-r-sm" href="http://localhost:8080/p3sweb/download.pdf?epctId=16" target="_blank" download="{{$ctrl.patent.form1200PdfUrl}}">Download</a>
+                                    <a class="btn btn--lg btn--green pill-radius m-r-sm" href="{{$ctrl.patent.form1200PdfUrl}}&download=true" target="_blank" download>Download</a>
                                     <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
                                 </div>
                             </div>
@@ -309,9 +309,9 @@
                                 <div data-ng-if="$ctrl.patent.epctStatus == 'Epct being generated'" class="d-flex justify-content-start align-items-center">
                                     <p>We are currently generating your Form 1200. When the document is ready, you will be able to download it here.</p>                       
                                 </div>
-                                <div class="row" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
+                                <div class="row m-t-xs" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
                                     <div class="col-md-12 d-flex justify-content-start">
-                                        <a class="btn btn--lg btn--green pill-radius m-r-sm" href="http://localhost:8080/p3sweb/download.pdf?epctId=16" target="_blank" download="{{$ctrl.patent.form1200PdfUrl}}">Download</a>
+                                        <a class="btn btn--lg btn--green pill-radius m-r-sm" href="{{$ctrl.patent.form1200PdfUrl}}&download=true" target="_blank" download>Download</a>
                                         <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
                                     </div>
                                 </div>
@@ -497,10 +497,10 @@
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-end">
                             <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn-no-bg btn-underlined cartbtn" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200</a>
-                            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'">
+                            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-l-sm" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'">
                             </ngcart-addtocart>
                             <button type="button" class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== 'Epct available'">View Transaction</button>
-                            <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)">View Fee Breakdown</a>
+                            <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)">View Fee Breakdown</a>
                         </div>
                     </div>
                 </div>

@@ -446,15 +446,21 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 			for(PatentExtendedData eachSessionData : sessionData){
 				if(patentIds.contains(eachSessionData.getPatentId())){
 					if (eachSessionData.getCurrentRenewalCost() != null) { // This line: added for v2.1, (if no renewal)
-						latestCalculatedCost = latestCalculatedCost.add(eachSessionData.getCurrentRenewalCost());
-						basketContents.addRenewalFeesToBreakdownTotals(eachSessionData); // This line: added for v2.1, as breakdown totals is new to BE
+						log().debug("doubleProcFee3 - checking is eachSessionData.getPatentId("+eachSessionData.getPatentId()+") is in prosecution - for user "+pLoginSession.getUser().getId());
+						try {
+							if ( StageManager.isInProsecution(Patent.findPatent(eachSessionData.getPatentId()).getEpoPatentStatus()) ) { // This line: also added for v2.1, to stop double counting (if a renewal exists (PaymentInProgress), for another patent (not in basket, not even for this customer!) it can contribute to the totals. Inhibit!
+								latestCalculatedCost = latestCalculatedCost.add(eachSessionData.getCurrentRenewalCost());
+								basketContents.addRenewalFeesToBreakdownTotals(eachSessionData); // This line: added for v2.1, as breakdown totals is new to BE
+							} else log().debug("doubleProcFee4 AVOIDed a doublecount...");
+						} catch (Exception e) { fail("doubleProcFee2 - oh dear",e); }
 					}
 				}
 			}
 
 			basketContents.setTotalCostUSD(latestCalculatedCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 		}
-
+		log().debug("doubleProcFee1 - procFee post renewal calc is "+basketContents.getTotalProcessingFeesUSD());
+		
 		// v2.1 Existing(mostly) above code (ie v1) will have calculated renewal costs. If E-PCT costs, see below 
 
 		List<PatentExtendedData> extendedData = pLoginSession.getExtendedPatentUI();

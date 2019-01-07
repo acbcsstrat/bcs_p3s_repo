@@ -89,6 +89,8 @@ public class PaymentRestController extends Universal {
 			err = true;
 		}
 
+		log().debug("doubleProcFee9 debug follows");
+		log().debug("totProcfee = "+basketContents.getTotalProcessingFeesUSD());
 		log().debug("PaymentRestController : /rest-basket/ showBasketContents() returning. Content follows (err="+err+")");
     	if (err) 
     		return new ResponseEntity<BasketContents>(basketContents, HttpStatus.INTERNAL_SERVER_ERROR);

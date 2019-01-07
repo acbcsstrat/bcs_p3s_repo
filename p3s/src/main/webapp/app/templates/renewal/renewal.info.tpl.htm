@@ -9,7 +9,7 @@
                         <span data-ng-bind="$ctrl.getStatus($ctrl.patent.renewalStatus)">
                     </p>
                 </div>
-                <div class="col-xl-5" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
+                <div class="col-xl-5" data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.renewalStatus)"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="col-xl-3">
-                    <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
+                    <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.renewalStatus)" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-bold">Next stage: </span> 
                             <span data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">{{$ctrl.patent.portfolioUI.serviceList[0].nextStageColour}}</span>
@@ -255,7 +255,7 @@
                         </div>
                     </div> <!-- row end -->
                     <div class="row d-flex justify-content-end">
-                        <div class="col-xl-12">
+                        <div class="col-xl-12 text-right">
                             <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus)" class="d-flex justify-content-end">
                                 <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.renewalFeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
                                 </ngcart-addtocart>
@@ -282,7 +282,7 @@
                     </p>
                 </div>
                 <div class="col-md-6">
-                    <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'" class="text-right">
+                    <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.renewalStatus)" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-medium">Next stage: </span> 
                             <span data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">{{$ctrl.patent.portfolioUI.serviceList[0].nextStageColour}}</span>
@@ -290,16 +290,16 @@
                         <p class="font-h4"><span class="font-weight-medium">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
                     </div>
                 </div>
-                <div class="col-md-12 m-t-sm" data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-                    <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
+                <div class="col-md-12 m-t-sm" data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.renewalStatus)">
+                    <div class="text-center inline-container" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
                         <span class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')">$ {{$ctrl.patent.renewalFeeUI.subTotalUSD | number: 2 }}</span>
                     </div>
-                    <div class="text-center inline-container m-b-xs" data-ng-style="{'width': ((100 - $ctrl.patent.renewalStageProgress) - 1)  + '%'}">
+                    <div class="text-center inline-container" data-ng-style="{'width': ((100 - $ctrl.patent.renewalStageProgress) - 1)  + '%'}">
                         <span class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">$ {{$ctrl.patent.renewalCostNextStageUSD}}</span>
 <!--                         <span data-ng-if="$ctrl.patent.costBandColour == 'Black'" class="font-h4 font-weight-medium nowrap">LAPSE</span> -->
                     </div>
                 </div>
-                <div class="col-md-12 m-t-sm">
+                <div class="col-md-12 m-t-xs">
                     <uib-progress class="pill-radius progress-bar-tall" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'bg')">
                         <uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.renewalStageProgress">{{$ctrl.patent.renewalStageProgress || '1'}}%</uib-bar>
                     </uib-progress>
