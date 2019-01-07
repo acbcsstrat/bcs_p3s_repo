@@ -155,7 +155,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 basketService.fetchBasketPatents(obj)
                 .then(
                     function(response){
-                        console.log(response)
                         scope.summary = {
                             firstName: response.firstName,
                             lastName: response.lastName,
