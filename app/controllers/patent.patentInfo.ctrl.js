@@ -18,22 +18,25 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
     vm.editing = [];
     vm.statusesAvailable = [];
 
-    if(organiseTextService.actionStatus(patent.epctStatus)) {
-        vm.statusesAvailable.push(patent.epctStatus)
-    }
-    if(organiseTextService.actionStatus(patent.renewalStatus)) {
-        vm.statusesAvailable.push(patent.renewalStatus)
-    }
+    console.log(patent)
+
 
     function getStatus(text) {
         return organiseTextService.uiStatus(text);
     }
 
     vm.$onInit = function() {
+        
         if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) {
             patent.availableFee = null;
             return;
         }
+
+        patent.portfolioUI.serviceList.forEach(function(el){
+            if(organiseTextService.actionStatus(el.serviceStatus)) {
+                vm.statusesAvailable.push(el.serviceStatus)
+            }
+        })
         
         patent.availableFee = {};
         patent.availableFee.costBandEndDateUI = patent.portfolioUI.serviceList[0].costBandEndDateUI;
