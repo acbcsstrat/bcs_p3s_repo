@@ -98,14 +98,23 @@
     max-width: 100%;
   }
 
-  .panel-nav .panel-nav__list-item--md, .panel-nav__list-item--md-nav .nav-link { min-width: 7.5rem; }
-  .panel-nav .panel-nav__list-item--num { min-width: 6.5rem; }
+/*  .panel-nav .panel-nav__list-item--md, .panel-nav__list-item--md-nav .nav-link { min-width: 7.5rem; }*/
+/*  .list-item--sm-pad { min-width: 6.5rem; }*/
 
 }
 
 @media screen and (max-width: 1200px) {
 
   $font-normal: 1rem !global;
+
+  .view-nav .view-nav__item {
+    font-size: 1.5rem;
+  }  
+
+  .panel-nav .panel-nav__list-item {
+    font-size: 1.2rem;
+  }
+  
 
   p, 
   li, 
@@ -116,8 +125,7 @@
   td, 
   th,
   label,
-  .form-control,
-  .panel-nav__list-item--notifications { 
+  .form-control { 
     font-size: $font-normal; 
   }
 
@@ -127,15 +135,6 @@
 
   .t-data, .t-data__td, .panel-nav__list-item, .btn {
     font-size: $font-normal;
-  }
-
-  .primary-view-nav__list-item-a {
-    font-size: 1.5rem;
-  }  
-
-  .secondary-view-nav__list-item,
-  .secondary-view-nav__nav-link {
-    font-size: 1.2rem;
   }
 
   .t-data__w8 { 
