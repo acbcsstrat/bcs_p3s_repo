@@ -21,6 +21,7 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
     }    
 
 	$scope.$on('updateCost', function(e, o){
+        vm.cartService = null;
     	vm.patent = dashboardService.getPatent();
     	if(vm.patent.renewalFeeUI !== null) {
             if(actionStatus(vm.patent.renewalStatus) && vm.patent.renewalStatus !== ('Payment in progress' && 'EPO Instructed')) {
