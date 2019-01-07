@@ -6,7 +6,8 @@ function organiseTextService(coreService, $timeout) {
     
     var factory = {
         uiStatus: uiStatus,
-        actionStatus: actionStatus
+        actionStatus: actionStatus,
+        paymentStatus: paymentStatus
     }
 
     var actionableStatuses = [
@@ -18,6 +19,11 @@ function organiseTextService(coreService, $timeout) {
         // {text: 'EPO Instructed', uiText: 'EPO Instructed'},
         {text: 'Too late to renew', uiText: 'Call Pure Ideas Ltd on +44 1992 563964'},
         {text: 'Await pdf gen start', uiText: 'Euro-PCT Generating'}        
+    ]
+
+    var paymentStatuses = [
+        {text: 'EPO Instructed', uiText: 'EPO Instructed'},
+        {text: 'Payment in progress', uiText: 'Payment in Progress'}
     ]
 
     var availableStatuses = [
@@ -38,6 +44,7 @@ function organiseTextService(coreService, $timeout) {
         {text: 'Too late to renew', uiText: 'Call Pure Ideas Ltd on +44 1992 563964'},
     ]          
 
+
     function uiStatus(text) {
 
         var uiText;
@@ -54,6 +61,19 @@ function organiseTextService(coreService, $timeout) {
 
         return uiText;
 
+    }
+
+    function paymentStatus(status) {
+        var match;
+
+        for(var i = 0;i < paymentStatuses.length; i++) {
+            if(paymentStatuses[i].text.indexOf(status) > -1) {
+                match = true;
+                break;
+            }
+            match = false;
+        }
+        return match;
     }
 
     function actionStatus(status) {

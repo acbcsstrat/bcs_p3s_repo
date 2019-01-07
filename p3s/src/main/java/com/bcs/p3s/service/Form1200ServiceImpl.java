@@ -25,6 +25,7 @@ import com.bcs.p3s.display.form1200.PageDescriptionUI;
 import com.bcs.p3s.display.form1200.StartForm1200Api21UI;
 import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.ServiceManager;
+import com.bcs.p3s.engine.StageManager;
 import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.P3SProductTypeEnum;
@@ -209,6 +210,19 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		// form1200NotificationUIs
 		//patentV2UI.setEpctNotificationUIs(patentV2UI.getEpctNotificationUIs()); // remove. pointless. 
 		// acTidy of above. HOPEFULLY  renewalNotificationUIs & form1200NotificationUIs are already populated acTodo z2.1
+		
+		// 190104 Late Bodge : FE has issues cos a NotEnglish epct data contains renewalFeeUI data. FE uses existance of such to decide 
+		// to show RENEWAL prices - whereas BE expected FE to use the newly requested Service objects.
+		// Immediate bodge. If patent in filing, set renewalFeeUI to null. Otherwise set form1200FeeUI null
+		if (StageManager.isInFiling(patentV2UI.getEpoPatentStatus())) {
+			log().debug("190104 for Patent "+patentV2UI.getId()+": is in filing, so setting renewalFeeUI to null");
+			patentV2UI.setRenewalFeeUI(null);
+		}
+		else
+		{
+			log().debug("190104 for Patent "+patentV2UI.getId()+": is in prosecution, so setting form1200FeeUI to null");
+			patentV2UI.setForm1200FeeUI(null);
+		}
 		
 		return epctEngine;
 	}

@@ -28,7 +28,7 @@ function patentPhasesService ($timeout, $q,  $rootScope, calculateService, paten
 			if(patents.length > 0) {
 				patents.forEach(function(item) {
 					var service = item.renewalFeeUI !== null ? item.renewalStatus : item.epctStatus;
-					if(organiseTextService.actionStatus(service)) {
+					if(organiseTextService.actionStatus(service) || organiseTextService.paymentStatus(service)) {
 						switch(item.portfolioUI.serviceList[0].currentStageColour) {
 							case 'Green':
 								phases.greenRenewals.push(item);
@@ -56,6 +56,9 @@ function patentPhasesService ($timeout, $q,  $rootScope, calculateService, paten
 							if(item.portfolioUI.serviceList[0].currentStageColour == 'Red' ) {
 								phases.redRenewals.push(item);
 							}
+							if(item.portfolioUI.serviceList[0].currentStageColour == 'Grey' ) {
+								phases.greyRenewals.push(item);
+							}							
 						}
 					} 			
 				});
