@@ -41,6 +41,10 @@
 	<td>Host</td>
 	<td>${hostname}</td>
  </tr>
+ <tr>
+	<td>P3S product version</td>
+	<td>v2.1</td>
+ </tr>
 </table>
 
 </body>

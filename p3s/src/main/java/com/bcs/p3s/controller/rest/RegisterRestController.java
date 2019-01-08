@@ -143,7 +143,7 @@ public class RegisterRestController extends Universal {
 				user.setIsEmailNotification(true);
 				user.setCreatedDate(Calendar.getInstance().getTime());
 				user.setBusiness(business);
-				// userService.encryptPassword(user); // disabled until near production
+				userService.encryptPassword(user); // disabled until near production
 				userService.createNewUser(user, business);
 			}
 			else{ //Error message :- Email address already exist
@@ -263,7 +263,7 @@ public class RegisterRestController extends Universal {
 				PreLoginSessionBean preSession = (PreLoginSessionBean) session.getAttribute("preSession");
 				business = preSession.getBusiness();   //getting business Info from session; ignoring user manipulations
 				user.setBusiness(business);
-				// userService.encryptPassword(user); // disabled until near production
+				userService.encryptPassword(user); // disabled until near production
 				userService.createSubUser(user);
 			}
 			else{
