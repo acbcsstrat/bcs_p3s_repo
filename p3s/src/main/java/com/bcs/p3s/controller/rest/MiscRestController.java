@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bcs.p3s.display.LoginMessageUI;
 import com.bcs.p3s.display.PartnerDetailsUI;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
+import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.P3SUser;
 //import com.bcs.p3s.scrape.model.Claims;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.service.MiscService;
@@ -61,11 +63,26 @@ public class MiscRestController extends Universal{
 	   
 	   String msg = "getAllLoginMessages()";
 	   log().debug(msg +" invoked :::");
-	   LoginMessageUI loginMessages = new LoginMessageUI();
 	   
 	   PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
+
+	   // Create Greppable *login* message to record logins (our best ability to record logins is this call)
+	   P3SUser user = postSession.getUser(); 
+	   if (user==null) {
+		   logErrorAndContinue("User is null. Cannot record logins. From  "+msg+"                             *login* ");
+	   }
+	   else
+	   {
+		   Business business= user.getBusiness();
+		   log().info("   ***** UserId "+5+" ["+user.getFirstName()+" "+user.getLastName()+"] has logged in. "
+		   + "BusinessId "+business.getId()+" ["+business.getBusinessName()+"]"+"                             *login* ");
+		   // Yields: 2019-01-08 10:03:56,954 INFO  STANDARD -    ***** UserId 5 [Andy Chapman] has logged in. BusinessId 35 [BoxClever Software]                             *login*   :: com.bcs.p3s.controller.rest.MiscRestController.getAllLoginMessages(MiscRestController.java:77)
+		   // use: alias logins='lg=/p3slogs/p3sweb_STANDARD_log.log;grep "*login*" ${lg}.6 ${lg}.5 ${lg}.4 ${lg}.3 ${lg}.2 ${lg}.1 ${lg} | cut -b-180 '
+	   }
+
 	   
-	   loginMessages = miscService.findAllLoginMessagesForUser(postSession);
+	   //LoginMessageUI loginMessages = new LoginMessageUI();
+	   LoginMessageUI loginMessages = miscService.findAllLoginMessagesForUser(postSession);
 	   
 	   return new ResponseEntity<LoginMessageUI>(loginMessages, HttpStatus.OK);
    }
