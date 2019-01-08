@@ -19,9 +19,10 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 	var currTransStatus = currentTransactionItem.latestTransStatus;
 	vm.currentTransactionItem = currentTransactionItem;	
 	for(var i = 0; i < vm.currentTransactionItem.serviceUIs.length; i++) {
+		console.log(vm.currentTransactionItem.serviceUIs[i])
 		var item = vm.currentTransactionItem.serviceUIs[i];
-		item.serviceType = item.patentUI.renewalFeeUI !== null  ? 'Regional Renewal' : 'Form 1200';
-		item.serviceFeeUI = item.patentUI.renewalFeeUI !== null ? item.renewalFeeUI : item.form1200FeeUI;
+		item.serviceType = item.renewalFeeUI ? 'Regional Renewal' : 'Form 1200';
+		item.serviceFeeUI = item.renewalFeeUI ? item.renewalFeeUI : item.form1200FeeUI;
 	}
 	vm.checkProgress = checkProgress;
 	vm.patents = [];
