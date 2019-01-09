@@ -84,6 +84,9 @@ public class P3SEnvironmentKnowledge extends Universal {
 		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
+		if ("nodea".equals(host) || "nodeb".equals(host)) {
+			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+		}
 		
 		if (path==null) {
 			logInternalError().warn("P3SEnvironmentKnowledge getDatabaseConfigFilespec given unexpected host : "+host);
@@ -158,6 +161,9 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// 190102 best guess
 			path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/";
 			//path = "C:/gitrepos/github/project-repo/p3s_web_v2.1/p3s/src/main/resources/";
+		}
+		if ("nodea".equals(host) || "nodeb".equals(host)) {
+			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/";
 		}
 
 		if (path==null) {
