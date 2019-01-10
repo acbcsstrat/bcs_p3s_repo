@@ -74,7 +74,7 @@ public class MiscRestController extends Universal{
 	   else
 	   {
 		   Business business= user.getBusiness();
-		   log().info("   ***** UserId "+5+" ["+user.getFirstName()+" "+user.getLastName()+"] has logged in. "
+		   log().info("   ***** UserId "+user.getId()+" ["+user.getFirstName()+" "+user.getLastName()+"] has logged in. "
 		   + "BusinessId "+business.getId()+" ["+business.getBusinessName()+"]"+"                             *login* ");
 		   // Yields: 2019-01-08 10:03:56,954 INFO  STANDARD -    ***** UserId 5 [Andy Chapman] has logged in. BusinessId 35 [BoxClever Software]                             *login*   :: com.bcs.p3s.controller.rest.MiscRestController.getAllLoginMessages(MiscRestController.java:77)
 		   // use: alias logins='lg=/p3slogs/p3sweb_STANDARD_log.log;grep "*login*" ${lg}.6 ${lg}.5 ${lg}.4 ${lg}.3 ${lg}.2 ${lg}.1 ${lg} | cut -b-180 '
