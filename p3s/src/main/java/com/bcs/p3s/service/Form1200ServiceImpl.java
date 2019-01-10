@@ -534,35 +534,51 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	public void deleteCurrentForm1200Data(long patentId) {
 		
 		String err = PREFIX+"deleteCurrentForm1200Data("+patentId+") ";
-		checkForm1200isDeletable(patentId, err);
-	
-		Patent patent = Patent.findPatent(patentId);
-		Epct epct = Epct.findActiveEpctByPatent(patent);
 
-		Form1200 form1200 = epct.getForm1200(); 
-		Form1200Fee form1200Fee = epct.getForm1200Fee(); 
+		// 190110 mitigate FE behaviour. FE offers this button even when not deleteable - causing a stackdump 
+		// Tmp fix is a try-catch here specifically to catch and suppress this error
+		// This (hopefully) temporary change made in both : ServiceAuthorisationTools/checkEpctisDeletable and Form1200ServiceImpl/deleteCurrentForm1200Data
+		try {
+
+			checkForm1200isDeletable(patentId, err);
 		
-		// start the 3-step
-		if (form1200 != null) {
-			epct.setForm1200(null);
-			epct.merge();
-			epct = Epct.findActiveEpctByPatent(patent);
+			Patent patent = Patent.findPatent(patentId);
+			Epct epct = Epct.findActiveEpctByPatent(patent);
+	
+			Form1200 form1200 = epct.getForm1200(); 
+			Form1200Fee form1200Fee = epct.getForm1200Fee(); 
 			
-			form1200.remove();
-			//form1200.flush();
-			form1200 = null;
-		}
+			// start the 3-step
+			if (form1200 != null) {
+				epct.setForm1200(null);
+				epct.merge();
+				epct = Epct.findActiveEpctByPatent(patent);
+				
+				form1200.remove();
+				//form1200.flush();
+				form1200 = null;
+			}
+		
+			form1200Fee.setEpct(null);
+			form1200Fee.merge();
+			
+			epct.remove();
+			form1200Fee.remove();
+			
+			patent.setEpctStatus(Form1200StatusEnum.EPCT_AVAILABLE);
+			patent.merge();
 	
-		form1200Fee.setEpct(null);
-		form1200Fee.merge();
-		
-		epct.remove();
-		form1200Fee.remove();
-		
-		patent.setEpctStatus(Form1200StatusEnum.EPCT_AVAILABLE);
-		patent.merge();
+			// Possibly flushing is required
 
-		// Possibly flushing is required
+		}
+		catch (P3SRuntimeException deletable) {
+			String bad = deletable.getMessage();
+			if ("Catch and keep quiet - as FE offers deletion of undeletable EPCT PFD".equals(bad)) {
+				log().warn("Tmp workaround to avoid stackdump when FE offers delete button for undeletable epct PDF");
+			}
+			else throw deletable;
+		}
+		
 	}
 	
 	

@@ -24,6 +24,7 @@ import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.P3SAuthorisationException;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.InBasket;
 
@@ -278,7 +279,12 @@ public class ServiceAuthorisationTools extends Universal {
 		else {
 			String epctStatus = epct.getEpctStatus();
 			boolean isDeletable = Form1200StatusEnum.isDeletable(epctStatus);
-			if ( ! isDeletable) failMalicious(err+"Epct("+epct.getId()+") is NOT deleteable. eSts="+epctStatus);
+
+			// if ( ! isDeletable) failMalicious(err+"Epct("+epct.getId()+") is NOT deleteable. eSts="+epctStatus);
+			// 190110 mitigate FE behaviour. Above line IS GOOD - but FE offers this button even when not deleteable - causing a stackdump 
+			// such stackdump AVOIDed below, but should be restored once FE fixed
+			// This (hopefully) temporary change made in both : ServiceAuthorisationTools/checkEpctisDeletable and Form1200ServiceImpl/deleteCurrentForm1200Data
+			if ( ! isDeletable) throw new P3SRuntimeException("Catch and keep quiet - as FE offers deletion of undeletable EPCT PFD");
 		}
 	}	
 
