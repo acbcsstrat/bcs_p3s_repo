@@ -42,7 +42,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 	 * Provides the filespec of the database property file on this host
 	 */
 	public final String getDatabaseConfigFilespec()  {
-		String defaultpath = "C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";  // Deafult PC tomcat
+		String defaultpath = "C:/utils/apache-tomcat-8.5.20/webapps/p3sharness/WEB-INF/classes/META-INF/spring/";  // Deafult PC tomcat
 		String path = null;
 		String host = Hostname.getHostname();
 		
@@ -50,7 +50,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 		// Logic: If Lenovo or Merin : is under eclipse, else Dell or Pat or TomcatA [or scrape]. 
 		if ("CCP020".equals(host)) {
 			// path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/META-INF/spring/"; 		// OBS: If running from eclipse. Oct17update - this is now Obsolete
-			// path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";	// If running from war 
+			// path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sharness/WEB-INF/classes/META-INF/spring/";	// If running from war 
 			path = "C:/gitrepos/github/project-repo/p3s/src/main/resources/META-INF/spring/";    		// If running from eclipse
 			// trying to commit this fix !
 		}
@@ -58,15 +58,15 @@ public class P3SEnvironmentKnowledge extends Universal {
 			path = "C:/MERIN/Documents/PatentPlace/P3S local repo/bcs_p3s_repo_final_final/p3s/src/main/resources/META-INF/spring/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
-			// Original: path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
-			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+			// Original: path = "C:/xampp/tomcat/webapps/p3sharness/WEB-INF/classes/META-INF/spring/";
+			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sharness/WEB-INF/classes/META-INF/spring/";
 		}
 		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
-			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+			path = "/opt/tomcat8/webapps/p3sharness/WEB-INF/classes/META-INF/spring/";
 		}
 		if ("CCP007".equals(host)) {
 			// path = defaultpath; // now redundant, but shows purpose of defaultpath 
-			// path = "C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";	// If running from war 	
+			// path = "C:/utils/apache-tomcat-8.5.20/webapps/p3sharness/WEB-INF/classes/META-INF/spring/";	// If running from war 	
 			//path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/META-INF/spring/"; // If running from eclipse
 			//path = "C:/dev64/maven.1520878637375/p2s_harness/src/main/resources/META-INF/spring/";  
 			path = "C:/gitrepos/github/project-repo/p3s_harness_v2.1/p2s_harness/src/main/resources/META-INF/spring/";  
@@ -75,7 +75,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			path = "/var/lib/tomcat8/webapps/p3sharness/WEB-INF/classes/META-INF/spring/";
 		}
 		if ("nodea".equals(host) || "nodeb".equals(host)) {
-			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+			path = "/opt/tomcat/latest/webapps/p3sharness/WEB-INF/classes/META-INF/spring/";
 		}
 		
 		if (path==null) {
@@ -121,36 +121,36 @@ public class P3SEnvironmentKnowledge extends Universal {
 	 * Provides the path of the main properties file folder on this host
 	 */
 	public String getMainPropertyFilePath()  {
-		String path = null; // "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/";  // UNUSED Default PC tomcat
+		String path = null; // "C:/utils/apache-tomcat-8.5.6/webapps/p3sharness/WEB-INF/classes/";  // UNUSED Default PC tomcat
 		String host = Hostname.getHostname();
 		
 		
 		// Logic: If Lenovo or Merin : is under eclipse, else Dell or Pat or TomcatA [or scrape]. 
 		if ("CCP020".equals(host)) {
 			//path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/";
-			path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/";
+			path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sharness/WEB-INF/classes/";
 		}
 		if ("avid-ox790-013".equals(host)) {
 			path = "C:/MERIN/Documents/PatentPlace/P3S local repo/bcs_p3s_repo_final_final/p3s/src/main/resources/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
-			//path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
-			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sweb/WEB-INF/classes/";
+			//path = "C:/xampp/tomcat/webapps/p3sharness/WEB-INF/classes/";
+			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sharness/WEB-INF/classes/";
 		}
 		if ("reviewsystem".equals(host) || "tomcatb".equals(host)) {
-			path = "/opt/tomcat8/webapps/p3sweb/WEB-INF/classes/";
+			path = "/opt/tomcat8/webapps/p3sharness/WEB-INF/classes/";
 		}
 		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sharness/WEB-INF/classes/";
 		}
 		if ("CCP007".equals(host) ) {
-			// C:/utils/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/
+			// C:/utils/apache-tomcat-8.5.20/webapps/p3sharness/WEB-INF/classes/
 			//path = "C:/gitrepos/github/project-repo/working-branch/p3s/src/main/resources/";
 			//path = "C:/dev64/maven.1520878637375/p2s_harness/src/main/resources/";
 			path = "C:/gitrepos/github/project-repo/p3s_harness_v2.1/p2s_harness/src/main/resources/";  
 		}
 		if ("nodea".equals(host) || "nodeb".equals(host)) {
-			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/";
+			path = "/opt/tomcat/latest/webapps/p3sharness/WEB-INF/classes/";
 		}
 
 		if (path==null) {
