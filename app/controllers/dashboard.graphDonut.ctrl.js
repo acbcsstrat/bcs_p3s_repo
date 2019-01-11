@@ -29,12 +29,12 @@ function graphDonutCtrl( $scope, $timeout, patentIds, patentPhasesService) {
 	                pie: {
 	                  	dispatch: {
 		                    elementClick: function(e) {
-
+		                    	
 								var key = e.data.key;
 
 								$timeout(function(){ //timeout needed to reset carousel content. Colour key emit however is not encapsulated within a timeout method
-							        patentPhasesService.setPatents(phase);
-							        $scope.$emit('phaseChange', {phase: phase})	
+							        patentPhasesService.setPatents(key);
+							        $scope.$emit('phaseChange', {phase: key})	
 								}, 10)
 
 	                    	}
