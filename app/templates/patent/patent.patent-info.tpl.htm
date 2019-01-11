@@ -162,12 +162,12 @@
 							<p class="font-weight-medium">Patent Place Fees:</p>
 						</div>
 						<div class="col-xl-3">
-							<p class="text-center">$ {{($ctrl.patent.availableFee.fee.ppFeesUSD | number: 2) || '0.00'}}</p>
+							<p class="text-center">$ {{($ctrl.patent.ppFees.USD | number: 2) || '0.00'}}</p>
 						</div>
 						<div class="col-xl-2">
 						</div>
 						<div class="col-xl-3">
-							<p class="text-center">&euro; {{($ctrl.patent.availableFee.fee.ppFeesEUR | number: 2) || '0.00'}}</p>
+							<p class="text-center">&euro; {{($ctrl.patent.ppFees.EUR | number: 2) || '0.00'}}</p>
 						</div>
 					</div>
 					<div class="row m-b-sm">
@@ -389,12 +389,12 @@
 								<p class="font-weight-medium">Patent Place Fees:</p>
 							</div>
 							<div class="col-md-3">
-								<p class="text-center">$ {{($ctrl.patent.availableFee.fee.ppFeesUSD | number: 2) || '0.00'}}</p>
+								<p class="text-center">$ {{($ctrl.patent.ppFeesUSD | number: 2) || '0.00'}}</p>
 							</div>
 							<div class="col-md-2">
 							</div>
 							<div class="col-md-3">
-								<p class="text-center">&euro; {{($ctrl.patent.availableFee.fee.ppFeesEUR | number: 2) || '0.00'}}</p>
+								<p class="text-center">&euro; {{($ctrl.patent.ppFeesEUR | number: 2) || '0.00'}}</p>
 							</div>																								
 						</div>
 						<div class="row m-b-sm">
