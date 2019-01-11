@@ -40,6 +40,7 @@ import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.service.Form1200Service;
 import com.bcs.p3s.service.Form1200ServiceImpl;
@@ -551,7 +552,162 @@ public class PatentRestController extends Universal {
 		    	log().debug("PatentRestController : /rest-renewal-history/ invoked ");
 		    	//check whether id is null
 		    	List<RenewalUI> renewalHistoryData = patentService.getRenewalHistory(id);
-		    	return new ResponseEntity<List<RenewalUI>>(renewalHistoryData, HttpStatus.OK);
+
+		    	// Start of RenewalHistory workaround
+		    	// Just 1 renewal yields about 3MB of JSON data. Seem browser aborts after 1M - so perform some radical cutdowns of this circular-data references
+		    	// Also - had found that 'patentUI' was populated, but 'patent' wasn't (Why the duplication?).
+
+		    	
+		    	log().info("zf9: start to investigate data returned. list size is "+renewalHistoryData.size());
+		    	if (renewalHistoryData.size()>0) {
+			    	log().info("zf9: examine first element "+""+""+""+""+"");
+			    	RenewalUI rury = renewalHistoryData.get(0);
+			    	log().info("zf9: still alive. "+""+""+""+""+"");
+			    	Payment activePaymentId = rury.getActivePaymentId();
+			    	log().info("zf9: still alive. "+""+""+"(activePaymentId==null ) = "+""+ (activePaymentId==null ) );
+			    	Patent patent = rury.getPatent();
+			    	log().info("zf9:  = "+"(patent==null ) = "+ (patent==null ) );
+			    	if (patent!=null) log().info("zf9:  and patentID = "+patent.getId());
+			    	PatentUI patentUI = rury.getPatentUI();
+			    	log().info("zf9:  = "+"(patentUI==null ) = "+ (patentUI==null ) );
+			    	if (patentUI!=null) log().info("zf9:  and patentUI.getID() = "+patentUI.getId() );
+		    		
+		    	}
+		    	
+		    	// try a quicj bodge
+		    	
+		    	List<RenewalUI> bodge = new ArrayList<RenewalUI>();
+		    	for (RenewalUI rury : renewalHistoryData) {
+		    		long patentId = rury.getPatentUI().getId(); 
+		    		Patent patent = Patent.findPatent(patentId);
+		    		rury.setPatent(patent);
+			    	
+			    	// sofar sogood - what next
+
+			    	// further bodge - make the data smaller
+			    	// IN PATENT & patebtUI - nullify : BUSINESS
+			    	// & in renewal - nullify : activePaymentId
+			    	rury.getPatent().setBusiness(null);
+			    	rury.getPatentUI().setBusiness(null);
+			    	
+			    	// rury.setActivePaymentId(null);  - too severe ?
+			    	////rury.getActivePaymentId().setRenewals(new ArrayList<Renewal>());
+			    	rury.getActivePaymentId().setEpcts(new ArrayList<Epct>());
+			    	rury.getActivePaymentId().setInitiatedByUserId(null);
+			    	//////rury.getActivePaymentId().setLatestInvoice(null);
+
+			    	// Why isn't the existing ActivePaymentId.renewals ok. record whats there
+			    	log().info("zf9: investigating the existing ActivePaymentId.renewals ");
+			    	Payment pay = rury.getActivePaymentId();
+			    	if (pay==null) log().info("zf9: pay is null ");
+			    	else {
+			    		log().info("zf9: pay id is "+pay.getId());
+			    		List<Renewal> kylo = pay.getRenewals();
+				    	if (kylo==null) log().info("zf9: pay kylo is null ");
+				    	else {
+				    		log().info("zf9: kylo is not null. is size "+kylo.size()+".      id of each renewal follows:");
+				    		for (Renewal miniRen : kylo) { log().info("zf9: .....    "+miniRen.getId()); }
+				    	}
+			    	}
+			    	
+			    	Payment rey = Payment.findPayment(pay.getId());
+		    		log().info("zf9: Created REY : id is "+rey.getId());
+		    		List<Renewal> bb8 = rey.getRenewals();
+			    	if (bb8==null) log().info("zf9: rey's bb8 is null ");
+			    	else {
+			    		log().info("zf9: bb8 is not null. is size "+bb8.size()+".      id of each renewal follows:");
+			    		for (Renewal miniRen : bb8) { log().info("zf9: .....    "+miniRen.getId()); }
+			    	}
+			    	log().info("zf9: end of debug ");
+			    	
+			    	// Wow. bb8 is NULL - not event empty - acTidy
+			    	// so give it an EMPTY renewals & see what happens ... 
+		    		List<Renewal> po = new ArrayList<Renewal>();
+		    		rey.setRenewals(po);
+			    	rury.setActivePaymentId(rey);
+			    	
+			    	
+			    	
+			    	
+			    	
+			    	
+//			    	// hereafter - attempts to provide payment with not-too-big renewal didnt help with the empty renewal fee proces
+//			    	// rebuild 'renewals' for the payment
+//			    	List<Renewal> rens = new ArrayList<Renewal>();
+//			    	Renewal ren = Renewal.findRenewal(1L);	//  <<---  note HARDCODE
+//		    	
+//			    	// above made the json MASSIVE again - so
+//			    	ren.getPatent().setBusiness(null);  // still huge, so look further ..
+//			    	ren.setActivePaymentId(null);
+//			    	ren.setPatent(null); //  as still too big
+//			    	ren.setRenewalFee(null); //  as not SO big - but appears go into infinite loop on renewal:renewalFee
+//			    	
+//			    	
+//			    	rens.add(ren);
+//			    	rury.getActivePaymentId().setRenewals(rens);
+			    	
+
+			    	bodge.add(rury);
+			    	log().info("zf9: re-bodged for patent #"+patentId);
+		    	}
+		    	
+		    	
+		    	
+//		    	log().info("zf9: & AFTER the bodge . siz e = "+bodge.size()  );
+//		    	if (bodge.size()>0) {
+//			    	log().info("zf9: examine first element "+""+""+""+""+"");
+//			    	RenewalUI rury = bodge.get(0);  //      <<<<---------   hardcode - first only
+//			    	Patent patent = rury.getPatent();
+//			    	log().info("zf9:  = "+"(patent==null ) = "+ (patent==null ) );
+//			    	if (patent!=null) log().info("zf9:  and patentID = "+patent.getId());
+//
+//		    	
+//			    	
+//			    	// further bodge - make the data smaller
+//			    	// IN PATENT & patebtUI - nullify : BUSINESS
+//			    	// & in renewal - nullify : activePaymentId
+//			    	rury.getPatent().setBusiness(null);
+//			    	rury.getPatentUI().setBusiness(null);
+//			    	
+//			    	// rury.setActivePaymentId(null);  - too severe ?
+//			    	////rury.getActivePaymentId().setRenewals(new ArrayList<Renewal>());
+//			    	rury.getActivePaymentId().setEpcts(new ArrayList<Epct>());
+//			    	rury.getActivePaymentId().setInitiatedByUserId(null);
+//			    	//////rury.getActivePaymentId().setLatestInvoice(null);
+//
+//			    	
+//			    	
+//			    	// hereafter - attempts to provide payment with not-too-big renewal didnt help with the empty renewal fee proces
+//			    	
+//			    	List<Renewal> rens = new ArrayList<Renewal>();
+//			    	Renewal ren = Renewal.findRenewal(1L);	//  <<---  note HARDCODE
+//		    	
+//			    	// above made the json MASSIVE again - so
+//			    	ren.getPatent().setBusiness(null);  // still huge, so look further ..
+//			    	ren.setActivePaymentId(null);
+//			    	ren.setPatent(null); //  as still too big
+//			    	ren.setRenewalFee(null); //  as not SO big - but appears go into infinite loop on renewal:renewalFee
+//			    	
+//			    	
+//			    	rens.add(ren);
+//			    	rury.getActivePaymentId().setRenewals(rens);
+//			    	
+//		    	}
+		    	
+
+		    	
+		    	
+		    	// End of RenewalHistory workaround
+		    	
+		    	
+		    	
+		    	
+		    	
+		    	
+		    	
+		    	
+		    	//return new ResponseEntity<List<RenewalUI>>(renewalHistoryData, HttpStatus.OK);
+		    	return new ResponseEntity<List<RenewalUI>>(bodge, HttpStatus.OK);
 		    }
 	
 	//------------------- next ... a Patent : ARE THERE ANY MORE ???  --------------------------------------------------------
