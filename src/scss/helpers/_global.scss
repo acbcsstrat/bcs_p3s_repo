@@ -118,3 +118,15 @@ div.cursor-help { cursor: help; }
 
 .point:last,
 .point-reg:last { margin:0 !important; }
+
+.screen-load {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen-load {
+  position: relative;
+  top: -54px;
+}

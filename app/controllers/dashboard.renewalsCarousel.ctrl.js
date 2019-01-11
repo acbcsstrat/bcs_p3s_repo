@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
 
-renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'dashboardService', 'organiseColourService', 'organiseTextService']
+renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'patentPhasesService', 'selectPhaseService', 'dashboardService', 'organiseColourService', 'organiseTextService']
 
-function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, dashboardService, organiseColourService, organiseTextService) {
+function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, selectPhaseService, dashboardService, organiseColourService, organiseTextService) {
 
 	var vm = this;
 
@@ -15,6 +15,10 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
     vm.getNextColour = getNextColour;
 
     vm.getStatus = getStatus;
+
+    function newPhases() {
+    	return patentPhasesService.newPhases()
+    }
 
     function getStatus(text) {
         return organiseTextService.uiStatus(text)
@@ -39,15 +43,16 @@ function renewalsCarouselCtrl($scope, $timeout, patents, patentPhasesService, se
 	    method: {},
 	    event: {
 	    	afterChange: function (event, slick, currentSlide, nextSlide) {
-	 
+
 	    		vm.currentIndex = currentSlide;
         		vm.currIndexForTitle = (currentSlide + 1);
         		vm.selectedPatent = vm.selectedPhase.getPhase().patents[vm.currentIndex];
+
         		if(vm.selectedPatent !== null) {
 					dashboardService.setPatent(vm.selectedPatent)
                     $scope.$emit('updatePatent');
-        			
         		}
+
         	},
         	init: function (event, slick) {
               	slick.slickGoTo(vm.currentIndex); // slide to correct index when init

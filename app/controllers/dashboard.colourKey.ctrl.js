@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('colourKeyCtrl', colourKeyCtrl);
 
-colourKeyCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService', 'organiseColourService'];
+colourKeyCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'patentPhasesService', 'selectPhaseService', 'organiseColourService'];
 
-function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPhaseService, organiseColourService) {
+function colourKeyCtrl($scope, $timeout, patentIds, patentPhasesService, selectPhaseService, organiseColourService) {
 
 	var vm = this;
 
@@ -20,8 +20,8 @@ function colourKeyCtrl($scope, $timeout, patents, patentPhasesService, selectPha
  		})
   	});
 
-	if(patents.length > 0) {
-		var sortedPatentData = patentPhasesService.phases(patents); //sorts patents into phases and calculate progress
+	if(patentIds.length > 0) {
+		var sortedPatentData = patentPhasesService.phases(patentIds); //sorts patents into phases and calculate progress
 		vm.setPhase('green');
 	}
 

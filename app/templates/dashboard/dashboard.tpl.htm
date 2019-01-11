@@ -1,4 +1,11 @@
-<div data-ng-show="$ctrl.animate" class="animate-show m-b-xl">
+<div data-ng-show="preloader" class="screen-load animate-show animate-hide">
+	<div class="row m-b-md">
+		<div class="col-xl-12 text-center">
+			<img src="assets/imgs/icons/spinner-loader.gif">
+		</div>
+	</div>
+</div>
+<div data-ng-hide="preloader" class="animate-show animate-hide m-b-xl">
 	<div class="row m-b-xl lg-m-b-md widget-row-top">
 		<div class="col-md-12 col-lg-12 col-xl-7 md-m-b-md lg-m-b-md">
 			<div ui-view="colourkeywidget" class="h-100"></div>
@@ -26,7 +33,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12 col-lg-12 col-xl-6">
-			<div ui-view="recentactivitywidget" class="h-100"></DIV>
+			<div ui-view="recentactivitywidget" class="h-100"></div0>
 		</div>
 	</div>
 </div>

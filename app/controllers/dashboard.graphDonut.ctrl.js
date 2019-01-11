@@ -1,16 +1,14 @@
 angular.module('ppApp').controller('graphDonutCtrl', graphDonutCtrl);
 
-graphDonutCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'selectPhaseService'];
+graphDonutCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'patentPhasesService', 'selectPhaseService'];
 
-function graphDonutCtrl( $scope, $timeout, patents, patentPhasesService, selectPhaseService) {
+function graphDonutCtrl( $scope, $timeout, patentIds, patentPhasesService, selectPhaseService) {
 
 	var vm = this;
 
-	if(patents.length > 0) {
-		vm.patents = patents;
-		vm.patentData = patentPhasesService.phases(patents);
+	if(patentIds.length > 0) {
+		vm.patentData = patentPhasesService.phases(patentIds);
 		$timeout(function() { //required to load correct size of donut graph in view
-			// vm.patentData = patentPhasesService.phases(patents);
       		vm.donutOptions = {
 	            chart: {
 	                type: 'pieChart',	

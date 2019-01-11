@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('recentActivityCtrl', recentActivityCtrl);
 
-recentActivityCtrl.$inject = ['patents', 'transactionHistory', 'currentTransactions', 'calculateService', 'patentsRestService', 'coreService'];
+recentActivityCtrl.$inject = ['patentIds', 'calculateService', 'patentsRestService', 'coreService', 'transactionHistoryService', 'currentTransactionsService'];
 
-function recentActivityCtrl(patents, transactionHistory, currentTransactions, calculateService, patentsRestService, coreService) {
+function recentActivityCtrl(patentIds, calculateService, patentsRestService, coreService, transactionHistoryService, currentTransactionsService) {
 
 	var vm = this;
 
@@ -28,6 +28,14 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 		}
 	]
 
+    var transactionHistory = (function() {
+        return transactionHistoryService.fetchTransactionHistory();
+    }())
+
+    var currentTransactions = (function() {
+        return currentTransactionsService.fetchCurrentTransactions();
+    }())
+
 	vm.activeMenu = vm.activityNotifications[0].activity;
 
 	vm.$onInit = function() {
@@ -45,9 +53,9 @@ function recentActivityCtrl(patents, transactionHistory, currentTransactions, ca
 
 	}
 
-	if(patents.length > 0) {
-		patents.forEach(function(data){
-			patentsRestService.fetchCostAnalysis(data.id)
+	if(patentIds.length > 0) {
+		patentIds.forEach(function(data){
+			patentsRestService.fetchCostAnalysis(data)
 			.then(
 				function(response, i){
         			if(data.renewalStatus == 'Show price' || data.renewalStatus == 'Too late to renew' || data.epctStatus == 'Epct available' || data.epctStatus == 'Epct rejected' || data.epctStatus == 'Epct saved') {

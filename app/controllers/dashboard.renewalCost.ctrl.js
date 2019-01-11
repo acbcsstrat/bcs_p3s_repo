@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
 
-renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patents', 'currentTransactionsService', 'patentsService', 'dashboardService', 'selectPhaseService', 'organiseTextService']
+renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll',  'currentTransactionsService', 'patentsService', 'dashboardService', 'selectPhaseService', 'organiseTextService']
 
-function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patents, currentTransactionsService, patentsService, dashboardService, selectPhaseService,  organiseTextService) {
+function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, currentTransactionsService, patentsService, dashboardService, selectPhaseService,  organiseTextService) {
 
 	var vm = this;
 
