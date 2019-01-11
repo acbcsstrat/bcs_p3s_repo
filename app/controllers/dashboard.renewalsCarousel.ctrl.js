@@ -9,7 +9,9 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 	vm.phaseLoaded = true;
 	vm.patentData = patentPhasesService.patentNumbers;
 	vm.setPatents = setPatents;
-	vm.patents = patentPhasesService.getPatents;
+    $timeout(function() {
+        vm.patents = patentPhasesService.getPatents;
+    }, 300);
     vm.patentsTotal = patentPhasesService.patentNumbers;
     vm.date = new Date();
     vm.getCurrColour = getCurrColour;
@@ -43,7 +45,10 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 
 	    		vm.currentIndex = currentSlide;
         		vm.currIndexForTitle = (currentSlide + 1);
-        		vm.selectedPatent = patentPhasesService.getPatent;
+                $timeout(function(){
+                    vm.selectedPatent = patentPhasesService.getPatent;
+                }, 30)
+        		
 
         		if(vm.selectedPatent !== null && patentPhasesService.getPatents !== null) {
 					patentPhasesService.setPatent(vm.patents[vm.currentIndex])
