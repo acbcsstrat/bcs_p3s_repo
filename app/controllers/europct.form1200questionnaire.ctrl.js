@@ -6,7 +6,7 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
 
     var vm = this;
 
-    vm.pageTitle.page = 'Form 1200 Questionnaire';
+    vm.pageTitle = 'Form 1200 Questionnaire';
 
     vm.manualProcess = manualProcess;// NOT REQUIRED FOR RELEASE 1
     vm.chkValidStates = chkValidStates;
