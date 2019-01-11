@@ -1,0 +1,47 @@
+<div class="alert alert-warning" role="alert" data-ng-show="ngCart.getTotalItems() === 0">
+    <span class="font-body">Your cart is empty</span>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive-md" data-ng-show="ngCart.getTotalItems() > 0">
+            <table class="table t-data t-data--border">
+                <thead>
+                    <tr class="font-body font-weight-bold">
+                        <th class="t-data__th text-left">Application No.</th>
+                        <th class="t-data__th text-left">Client Reference</th>
+                        <th class="t-data__th text-left">Client Description</th>
+                        <th class="t-data__th text-left">Amount</th>
+                        <th class="t-data__th text-left"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="t-data__tr" data-ng-repeat="item in ngCart.getCart().items track by $index">
+                        <td class="t-data__td">{{item.getData().ep_ApplicationNumber}}</td>
+                        <td class="t-data__td">
+                            <span data-ng-if="item.getData().clientRef == ''" class="txt-grey">[No client reference provided]</span>
+                            <span data-ng-if="item.getData().clientRef !== ''">{{item.getData().clientRef}}</span>
+                        </td>
+                        <td class="t-data__td">
+                            <span data-ng-if="item.getData().clientRef == ''" class="txt-grey">[No client description provided]</span>
+                            <span data-ng-if="item.getData().clientRef !== ''">{{item.getData().shortTitle}}</span>
+                        </td>
+
+                        <td class="t-data__td">$ {{item._price | number: 2}}</td>
+                        <td class="t-data__td">
+                            <button class="btn btn--lg btn--red pill-radius" data-ng-click="ngCart.removeItemById(item.getId())">
+                               Remove
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>        
+    </div>
+</div>
+
+<div class="row m-b-md m-t-md">
+    <div class="col-md-12 d-flex btn-default">
+        <a class="btn btn--lg btn--green pill-radius" data-ui-sref="portfolio">Add More Patents</a>
+    </div>
+</div>

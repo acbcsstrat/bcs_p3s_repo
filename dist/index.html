@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="dist/main.css">
+
+		<script type="text/javascript" src="dist/vendor.bundle.js"></script>
+		<script type="text/javascript" src="dist/app.bundle.js"></script>
+
+		<title>Patent Place</title>
+
+		<style id="antiClickjack">body{display:none !important;}</style>
+
+		<script type="text/javascript">
+			
+			if(self === top) {
+				var antiClickjack = document.getElementById("antiClickjack");
+				antiClickjack.parentNode.removeChild(antiClickjack)
+			} else {
+				top.location = self.location
+			}
+
+		</script>
+
+	</head>
+
+	<body detect-device data-ng-app="ppApp">
+		
+		<mainnav></mainnav>
+
+		<main class="app-container m-tb-xl h-100" data-ng-controller="coreCtrl">
+			<basketnav></basketnav>
+			<ui-view class="h-100"></ui-view>
+			<idle></idle>
+
+		</main>
+
+	</body>
+	
+</html>

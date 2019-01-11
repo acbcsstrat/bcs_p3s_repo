@@ -1,0 +1,87 @@
+<div data-ng-controller="mainNavCtrl">
+ 	<section flex>
+	    <md-sidenav class="md-sidenav-left bg-phase-grey " md-component-id="left" md-disable-backdrop md-whiteframe="3">
+	    	<div class="row">
+	    		<div class="col-md-12">
+			      	<div class="bg-phase-grey p-tb-sm">
+			      		<div class="row">
+					      	<div class="col-md-6 d-flex justify-content-center align-items-center">
+					      		<img src="assets/imgs/logos/pp_icon.png" alt="patent place icon small">
+					      	</div>
+					      	<div class="col-md-6 d-flex justify-content-center align-items-center">
+						        <md-button data-ng-click="toggleLeft()" class="d-flex justify-content-right align-items-center">
+					          		<img src="assets/imgs/icons/close_icon.png" alt="close menu icon">
+					        	</md-button>
+					      	</div>			      			
+			      		</div>
+			      	</div>	    			
+	    		</div>
+	    	</div>
+      	 	<md-content class="bg-phase-grey">
+	      	 	<div layout="column" class="p-pill-tabs m-b-sm p-a-sm">
+		      	 	<div class="d-flex justify-content-center align-items-center m-b-sm">
+		      	 		<a class="nav-link" ui-sref="profile">
+		      	 			<img src="assets/imgs/icons/user_icon.png">
+	      	 			</a>
+		      	 	</div>
+	      	 		<div class="d-flex justify-content-center align-items-center">
+	      	 			<a class="nav-link nav-link--white d-flex justify-content-center align-items-center font-h4 font-weight-bold" ui-sref="profile">
+			      	 		{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}
+		      	 		</a>
+	      	 		</div>
+	      	 		<div class="d-flex justify-content-center align-items-center">
+		      	 		<span class="font-body text-center">{{$ctrl.user.business.businessName}}</span>
+		      	 	</div>
+	      	 	</div>
+	      	 	<div layout="column" class=" d-flex justify-content-center">
+	      	 		<nav class="nav">
+						<ul class="side-menu w-100">
+							<li data-ng-repeat="section in $ctrl.menu.sections" class="font-body font-weight-medium" ui-sref-active="active" data-ng-class="{'parentActive' : $ctrl.isSectionSelected(section)}">
+	                        	<menu-link section="section" data-ng-if="section.type === 'link'"></menu-link>
+	        					<menu-toggle section="section" data-ng-if="section.type === 'toggle'" context="$ctrl"></menu-toggle>
+					        </li>
+						</ul>
+					</nav>
+				</div>
+			</md-content>
+			<div class="text-center position-bottom w-100 m-b-sm">
+				<img src="assets/imgs/logos/moneycorp_logo.png" alt="moneycorp icon">
+			</div>
+	    </md-sidenav>
+  	</section>
+  
+    <div layout="column" class="closed-sidenav bg-phase-grey">
+	  	<div class="text-center w-100 p-tb-35">
+	  		<a ui-sref="dashboard">
+	  			<img width="35" src="assets/imgs/logos/pp_icon.png">
+	  		</a>
+	    </div>
+	    <div data-ng-click="toggleLeft()" class="btn p-tb-sm btn--green">
+	    	<i class="fas fa-bars fa-2x d-none d-xl-inline-block"></i>
+	    	<i class="fas fa-bars fa-2x d-xl-none d-lg-inline-block"></i>
+	    </div>
+		<ul class="nav flex-column">
+			<li class="nav-item" ui-sref-active="active">
+				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" ui-sref="dashboard">
+					<i class="fas fa-tachometer-alt fa-2x d-none d-xl-block"></i>
+					<i class="fas fa-tachometer-alt fa-2x d-xl-none"></i>
+				</a>
+			</li>
+			<li class="nav-item" ui-sref-active="active">
+				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" ui-sref="portfolio">
+					<i class="fas fa-folder-open fa-2x d-none d-xl-block"></i>
+					<i class="fas fa-folder-open fa-2x d-xl-none d-lg-inline-block"></i>
+				</a>
+			</li>			
+			<li class="nav-item" ui-sref-active="active">
+				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" ui-sref="current-transactions">
+					<i class="far fa-credit-card fa-2x d-none d-xl-block"></i>
+					<i class="far fa-credit-card fa-2x d-xl-none d-lg-inline-block"></i>
+				</a>
+			</li>
+		</ul>
+		<div class="text-center position-bottom w-100 m-b-sm">
+			<img src="assets/imgs/logos/moneycorp-logo_small.png" alt="moneycorp icon">
+		</div>
+  	</div>
+</div>

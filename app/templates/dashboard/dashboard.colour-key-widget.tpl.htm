@@ -1,0 +1,44 @@
+<div class="widget-panel bg-white h-100">
+	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
+		<h3 class="font-h3 font-weight-bold">Colour Key</h3>
+		<h3 class="font-weight-medium font-h4 txt-white pill-radius p-default" data-ng-class="$ctrl.getCurrColour($ctrl.selectedPhase.getPhase().phase, 'bg')">{{$ctrl.selectedPhase.getPhase().phase}} Phase</h3>
+	</div>
+	<div class="widget-panel__body">
+		<div class="m-b-md">
+			<uib-tabset active="activeTab" type="pills">
+			    <uib-tab heading="Green" index="0" class="bg-phase-green font-body" data-ng-hide="true">
+					<p class="font-body">The Green Phase is the prime time before any deadline.  For example it's the first phase in the annuity cycle and starts when the renewal window opens 3 months before the renewal date, and closes when only 6 working days remain before the end of the period.  This is the most cost-effective time to renew.  It's also the prime time to apply for your ePCT to ensure it's completed before the deadline.</p>
+				</uib-tab>
+			    <uib-tab heading="Amber" index="1" data-ng-hide="true">
+					<p class="font-body">The Amber Phase starts on day 6 before the deadline and closes on day 4. We use priority exchange and payments methods during this time which attract a small premium.</p>
+				</uib-tab>
+			    <uib-tab heading="Red" index="2" data-ng-hide="true">				    	
+					<p class="font-body">The Red Phase is the final 3 working days before the deadline. We're not currently able to process orders through our web service at this time, but we can certainly help – you just need to give us a call</p>
+				</uib-tab>
+			    <uib-tab heading="Blue" index="3" data-ng-hide="true">
+					<p class="font-body">The Blue Phase starts on the day after the deadline (renewals only) and runs until the end of the 11th working days before the end of the 6 month extension period.</p>
+				</uib-tab>
+			    <uib-tab heading="Black" index="4" data-ng-hide="true">						    	
+					<p class="font-body">The Black Phase starts on the 10th day before the expiry of the renewals extension period, and runs until 21:00 UTC on the 6th day before the end of the extension period.</p>
+				</uib-tab>
+			    <uib-tab heading="Grey" index="5" data-ng-hide="true">
+					<p class="font-body">If patents show in the grey phase then there are not any actions available. This may be because the patent has already been renewed, or it may be that the renewal or ePCT window hasn’t opened yet. If you think you should be able to action a patent in this phase then please contact us.</p>
+				</uib-tab>
+			</uib-tabset>
+		</div>
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-xl-12">
+				<nav>
+					<ul class="panel-nav">
+						<li class="bg-phase-green pill-radius panel-nav__list-item list-item--colour" data-ng-click="activeTab = 0; $ctrl.setPatents('Green')">Green</li>
+						<li class="bg-phase-amber pill-radius panel-nav__list-item list-item--colour" data-ng-click="activeTab = 1; $ctrl.setPatents('Amber')">Amber</li>
+						<li class="bg-phase-red pill-radius panel-nav__list-item list-item--colour" data-ng-click="activeTab = 2; $ctrl.setPatents('Red')">Red</li>
+						<li class="bg-phase-blue pill-radius panel-nav__list-item list-item--colour" data-ng-click="activeTab = 3; $ctrl.setPatents('Blue')">Blue</li>
+						<li class="bg-phase-black pill-radius panel-nav__list-item list-item--colour" data-ng-click="activeTab = 4; $ctrl.setPatents('Black')">Black</li>
+						<li class="bg-phase-grey pill-radius panel-nav__list-item list-item--colour" data-ng-click="activeTab = 5; $ctrl.setPatents('Grey')">Grey</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>

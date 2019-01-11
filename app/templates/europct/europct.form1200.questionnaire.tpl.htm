@@ -1,0 +1,321 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="font-h1" data-ng-bind="$ctrl.pageTitle"></h1>
+    </div>
+</div>
+<div class="animate-show">
+    <div class="content-panel">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <div class="content-panel__body bg-white">
+                    <div class="m-t-sm m-b-md">
+                        <div class="panel-nav">
+                            <button class="pill-radius panel-nav__list-item list-item--plain" data-ng-init="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-click="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-class="{'active': $ctrl.activeTab == 0}">{{$ctrl.confirmEntity.title()}}</button>
+                            <button class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.activeTab = $ctrl.amendments.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.amendments.index}" data-ng-disabled="!$ctrl.confirmEntityChecked">{{$ctrl.amendments.title()}}</button>
+                            <button class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.activeTab = $ctrl.documents.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.documents.index}" data-ng-if="$ctrl.documents.active" data-ng-disabled="!$ctrl.amendmentsChecked">{{$ctrl.documents.title()}}</button>
+                            <button class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.activeTab = $ctrl.extAndValid.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.extAndValid.index}" data-ng-disabled="!$ctrl.documentsChecked">{{$ctrl.extAndValid.title()}}</button>
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.activeTab = $ctrl.reference.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.reference.index}" data-ng-disabled="!$ctrl.extAndValidChecked">{{$ctrl.reference.title()}}</button> 
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.activeTab = $ctrl.confirmPages.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.confirmPages.index}" data-ng-disabled="!$ctrl.referenceChecked">{{$ctrl.confirmPages.title()}}</button>
+                            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-if="$ctrl.renewal.active" data-ng-click="$ctrl.activeTab = $ctrl.renewal.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.renewal.index}" data-ng-disabled="!$ctrl.confirmPagesChecked">{{$ctrl.renewal.title()}}</button>
+                        </div>
+                    </div>
+                    <form name="form1200Form" novalidate>
+                        <uib-tabset active="$ctrl.activeTab">
+                            <uib-tab index="$ctrl.confirmEntity.index" data-ng-hide="true">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <label for="entityCheck"><span class="font-weight-medium">The/Each applicant hereby declares that he is an entity or a natural person under Rule 6(4) EPC.</span>
+                                                <input type="checkbox" name="entityCheck" data-ng-model="$ctrl.confirmEntityModel" data-ng-disabled="$ctrl.confirmEntityChecked" class="m-l-xs" required>
+                                            </label>
+                                        </div>
+                                        <div class="row m-b-xs">
+                                            <div class="col-md-6">
+                                                <p data-ng-init="confirmEntityPanelActive = true" data-ng-click="confirmEntityPanelActive = !confirmEntityPanelActive" class="btn btn-underlined">What does this mean? 
+                                                    <i class="fas fa-chevron-down fa-sm" data-ng-show="!confirmEntityPanelActive"></i>
+                                                    <i class="fas fa-chevron-right fa-sm" data-ng-show="confirmEntityPanelActive"></i>
+                                                </p>
+                                            </div>    
+                                        </div>
+                                        <div class="expandcollapse-item">
+                                            <div class="slideDown m-b-sm" data-ng-hide="confirmEntityPanelActive">
+                                                <p>For more information about Rule 6(4) EPC then please <a class="btn btn-underlined" target="__blank" data-ng-href="https://www.epo.org/law-practice/legal-texts/html/epc/2016/e/r6.html">click here</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 d-flex justify-content-end">
+                                        <button class="btn btn--green btn--lg pill-radius" data-ng-disabled="!$ctrl.confirmEntityModel" data-ng-click="$ctrl.confirmEntity.fn()" type="button">Next</button>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="$ctrl.amendments.index" data-ng-hide="true">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <span class="font-weight-medium m-r-sm font-body">Have any amendments been made to the claims?</span>
+                                            <label for="confirmAmendmentsYes" class="font-weight-medium m-r-sm">Yes
+                                                <input type="checkbox" name="confirmAmendmentsYes" data-ng-model="$ctrl.confirmAmendmentsYesModel" data-ng-change="$ctrl.manualProcess($ctrl.confirmAmendmentsYesModel, 'amendments')" data-ng-click="confirmAmendmentsNoModel = false" class="m-l-xs">
+                                            </label>
+                                            <label for="confirmAmendmentsNo" class="font-weight-medium">No
+                                                <input type="checkbox" name="confirmAmendmentsNo" data-ng-model="confirmAmendmentsNoModel" data-ng-change="$ctrl.manualProcess(false, 'amendments')" data-ng-click="$ctrl.confirmAmendmentsYesModel = false" class="m-l-xs">
+                                            </label>                                            
+                                            <p data-ng-show="$ctrl.proceedMsgAmend" class="txt-phase-red font-weight-medium m-t-xs">Cannot proceed if amendments have been made. Uncheck the checkbox if no amendements have been made.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.amendments.fn($event)">Previous</button>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p data-ng-show="!$ctrl.confirmAmendmentsYesModel && !confirmAmendmentsNoModel" class="m-r-sm">(Please check one of the boxes)</p>
+                                            <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="$ctrl.confirmAmendmentsYesModel || !$ctrl.confirmAmendmentsYesModel && !confirmAmendmentsNoModel" data-ng-click="$ctrl.amendments.fn($event)">Next</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="$ctrl.documents.index" data-ng-hide="true" data-ng-if="$ctrl.documents.active">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <label for="documents" class="font-weight-medium"><span class="font-weight-medium">Additional copies of the document cited in the supplementary European search report are requested</span>
+                                                <input type="checkbox" name="documents" data-ng-model="$ctrl.documentsModel" data-ng-change="$ctrl.manualProcess($ctrl.documentsModel, 'documents')" class="m-l-xs">
+                                                <p data-ng-show="$ctrl.proceedMsgDocs" class="txt-phase-red font-weight-medium m-t-xs">Cannot proceed if additional documents are required have been made. Uncheck the checkbox if no additional documents are required.</p>                                            
+                                            </label>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 d-flex justify-content-between">
+                                                <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.documents.fn($event)">Previous</button>
+                                                <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="$ctrl.documentsModel" data-ng-click="$ctrl.documents.fn($event)">Next</button>                                                
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </uib-tab>                        
+                            <uib-tab index="$ctrl.extAndValid.index" data-ng-hide="true"> <!--if ISA = to EP-->
+                                <div class="row">
+                                     <div class="col-xl-6">
+                                        <h4 class="m-b-xs font-weight-medium">Extension states</h4>
+                                        <div class="row m-b-sm">
+                                            <div class="col-md-6" data-ng-repeat="item in $ctrl.questionsParam.extensionStatesUI track by $index">
+                                                <div class="m-b-sm"> 
+                                                    <label for="item.abbr" class="m-r-xs">
+                                                        <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
+                                                    </label>
+                                                    <input type="checkbox" id="'{{item.name}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkExtStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <h4 class="m-b-xs font-weight-medium">Validation states</h4>
+                                        <div class="row">
+                                            <div class="col-md-6" data-ng-repeat="item in $ctrl.questionsParam.validationStatesUI track by $index">
+                                                <div class="m-b-sm"> 
+                                                    <label for="item.abbr" class="m-r-xs">
+                                                        <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
+                                                    </label>
+                                                    <input type="checkbox" id="'{{item.name}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkValidStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p data-ng-init="extStatesPanelActive = true" data-ng-click="extStatesPanelActive = !extStatesPanelActive" class="btn btn-underlined">Which countries are included? 
+                                            <i class="fas fa-chevron-down fa-sm" data-ng-show="!extStatesPanelActive"></i>
+                                            <i class="fas fa-chevron-right fa-sm" data-ng-show="extStatesPanelActive"></i>
+                                        </p>  
+                                        <div class="expandcollapse-item">
+                                            <div class="slideDown m-b-sm" data-ng-hide="extStatesPanelActive">
+                                                <p class="m-b-xs">The countries that are included by default are:</p>
+                                                <div class="d-flex">
+                                                    <ul>
+                                                        <li>Albania</li>
+                                                        <li>Austria</li>
+                                                        <li>Belgium</li>
+                                                        <li>Bulgaria</li>
+                                                        <li>Switzerland</li>
+                                                        <li>Cyprus</li>
+                                                        <li>Czech Republic</li>
+                                                        <li>Germany</li>
+                                                        <li>Denmark</li>
+                                                        <li>Estonia</li>
+                                                        <li>Spain</li>
+                                                        <li>Finland</li>
+                                                        <li>France</li>
+                                                    </ul>
+                                                    <ul>
+                                                        <li>United Kingdom</li>
+                                                        <li>Croatia</li>
+                                                        <li>Hungary</li>
+                                                        <li>Ireland</li>
+                                                        <li>Iceland</li>
+                                                        <li>Italy</li>
+                                                        <li>Liechtenstein</li>
+                                                        <li>Lithuania</li>
+                                                        <li>Luxembourg</li>
+                                                        <li>Latvia</li>
+                                                        <li>Monaco</li>
+                                                        <li>Former Yugoslav Republic of Macedonia</li>
+                                                        <li>Malta</li>
+                                                    </ul>
+                                                    <ul>
+                                                        <li>Netherlands</li>
+                                                        <li>Norway</li>
+                                                        <li>Poland</li>
+                                                        <li>Portugal</li>
+                                                        <li>Romania</li>
+                                                        <li>Serbia</li>
+                                                        <li>Sweden</li>
+                                                        <li>Slovenia</li>
+                                                        <li>Slovakia</li>
+                                                        <li>San Marino</li>
+                                                        <li>Turkey</li>
+                                                    </ul>
+                                                    <ul>
+                                                    </ul>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-t-sm">
+                                    <div class="col-xl-12">
+                                        <div class="row">
+                                            <div class="col-md-12 d-flex justify-content-between">
+                                                <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.extAndValid.fn($event)">Previous</button>
+                                                <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.extAndValid.fn($event)">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="$ctrl.reference.index" data-ng-hide="true">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6 col-lg-4 col-xl-4">
+                                                <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant's or representatives reference: </label>
+                                                <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-model="$ctrl.formData.clientRef" required>
+                                                <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.maxlength && form1200Form.reference.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-b-xs">
+                                    <div class="col-md-6">
+                                        <p data-ng-init="referencePanelActive = true" data-ng-click="referencePanelActive = !referencePanelActive" class="btn btn-underlined">What does this mean? 
+                                            <i class="fas fa-chevron-down fa-sm" data-ng-show="!referencePanelActive"></i>
+                                            <i class="fas fa-chevron-right fa-sm" data-ng-show="referencePanelActive"></i>
+                                        </p>
+                                        <div class="expandcollapse-item">
+                                            <div class="slideDown m-b-sm" data-ng-hide="referencePanelActive">
+                                                <p>You can include any reference here that you want to appear on the Form 1200 as the applicant or representatives reference</p>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                                <div class="row m-t-sm">
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)">Previous</button>
+                                        <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)" data-ng-disabled="!$ctrl.formData.clientRef">Next</button>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="$ctrl.confirmPages.index" data-ng-hide="true">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="form-group row">
+                                            <label for="totalPages" class="col-md-4 col-xl-3 col-form-label font-body">Please enter the total number of pages</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="totalPages" id="totalPages" class="form-control pill-radius" data-ng-change="$ctrl.formData.totalPages = totalPages" data-ng-model="totalPages" placeholder="Total Pages" validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalPages.$error.validNumber && form1200Form.totalPages.$dirty">Only numbers are valid charcters in this field.</p>  
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="totalClaims" class="col-md-4 col-xl-3 col-form-label font-body">Please enter the total number of claims</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="totalClaims" class="form-control pill-radius" data-ng-change="$ctrl.formData.totalClaims = totalClaims" data-ng-model="totalClaims" placeholder="Total Claims" validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-xl-3 col-form-label font-body">Please enter start and end pages of description</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="descStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.description.typeStart" placeholder="Start" validate-numbers  validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.validNumber && form1200Form.descStart.$dirty">Only numbers are valid charcters in this field.</p>                                                     
+                                            </div>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="descEnd" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.description.typeEnd" placeholder="End" validate-numbers validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.validNumber && form1200Form.descEnd.$dirty">Only numbers are valid charcters in this field.</p>                                                  
+                                            </div>                                        
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 col-xl-3 col-form-label font-body">Please enter the start and end pages of claims</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="claimsStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.claims.typeStart" placeholder="Start" validate-numbers required validate-numbers required>
+                                                <p class="font-body txt-phase-red"  placeholder="Start" data-ng-show="form1200Form.claimsStart.$error.validNumber && form1200Form.claimsStart.$dirty">Only numbers are valid charcters in this field.</p>                                                  
+                                            </div>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="claimsEnd" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.claims.typeEnd" placeholder="End" validate-numbers required validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.validNumber && form1200Form.claimsEnd.$dirty">Only numbers are valid charcters in this field.</p>                                                  
+                                            </div>                                        
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="claimsStart" class="col-md-4 col-xl-3 col-form-label font-body">Please enter start and end pages of drawings</label>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="drawingStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.drawings.typeStart" placeholder="Start" validate-numbers  validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.validNumber && form1200Form.drawingStart.$dirty">Only numbers are valid charcters in this field.</p>                                                  
+                                            </div>
+                                            <div class="col-md-4 col-lg-2 col-xl-2">
+                                                <input type="text" name="drawingEnd" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.drawings.typeEnd" placeholder="End" validate-numbers  validate-numbers required>
+                                                <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.validNumber && form1200Form.drawingEnd.$dirty">Only numbers are valid charcters in this field.</p>                                                  
+                                            </div>                                        
+                                        </div>                                                                     
+                                        <div class="row m-t-sm">
+                                            <div class="col-md-12 d-flex justify-content-between">
+                                                <button type="button" class="prev btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.confirmPages.fn($event)">Previous</button>                                                
+                                                <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate Form 1200</button>
+                                                <button type="button" class="btn btn--green btn--lg pill-radius" data-ng-if="$ctrl.renewal.active" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.confirmPages.fn($event)">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="$ctrl.renewal.index" data-ng-hide="true" data-ng-if="$ctrl.renewal.active">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <label for="renewal">We can see that the third year renewal can be renewed. Would you like to process the renewal in this transaction?
+                                                <input type="checkbox" name="renewal" data-ng-model="$ctrl.formData.isYear3RenewalPaying" class="m-l-xs">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-t-sm">
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <button type="submit" id="submit" class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.renewal.fn($event)">Previous</button>                                        
+                                        <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$error.required" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate form</button>
+                                    </div>
+                                </div>                            
+                            </uib-tab>
+                        </uib-tabset>
+                    </form>
+                </div><!--form end-->
+                <div class="content-panel__head bg-white border-grey-xs--top">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn--red btn--lg pill-radius" data-ng-click="$ctrl.cancel1200()">Cancel Application</button>                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
