@@ -1,0 +1,132 @@
+.btn-underlined-selector { //required for addtocart buttons in table. Rest styles
+  .btn:not(add) {
+    &.cartbtn:before {
+      content: ''!important;
+    }    
+  }
+  .btn, .btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
+    text-decoration: underline;
+    border: 0;
+    background: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+    &.cartbtn::after {
+      display: inline-block;
+      font-size: 2rem;
+      font-family: "Font Awesome 5 Free"; font-weight: 900;
+      text-decoration: none;
+      margin: 0 0 0 10px;
+      vertical-align:middle;
+    }
+    &.cartbtn.add::after {
+      content: "\f217";
+      color: $green;      
+    }
+    &.cartbtn.remove::after {
+      content: "\f218";
+      color: $red;      
+    }    
+    &.cartbtn:hover::after {
+      text-shadow: 0 0 2px $grey;
+    }
+    &:focus {
+      outline: 0;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+    &.btn--green, &.btn--red {
+      color: $black;
+      background: none;
+    }
+    &:not([disabled]):hover, &:not([disabled]):focus  {
+      box-shadow: none;
+    }    
+  }
+}
+
+.btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
+  font-size: $font-normal;  
+  font-weight: 500;
+  color: $grey-dark;
+  -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+  -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+  transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+  &.btn--lg { @include padding-mixin(0.5rem 3rem) } 
+  &:not(.remove) {
+    &.cartbtn:before {
+      content: 'Add '
+    }
+  }
+  &:not(.add) {
+    &.cartbtn:before {
+      content: 'Remove '
+    }
+  }
+  &.btn--plain {
+    background: $grey;
+    border: 1px solid $border;
+  }
+  &.btn--green, {
+    background: $green;
+    color: $white;
+  }  
+  &.btn--red {
+    background: $red;
+    color: $white;
+  }
+  &:not([disabled]):hover, &:not([disabled]):focus  {
+    box-shadow: 0 0 2px .01px $grey-dark;
+  }
+  &.btn-no-bg {
+    background: none;
+    border: 0;
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  &.btn-underlined {
+    text-decoration: underline;
+    vertical-align: baseline;
+    &:hover, &:focus {
+      box-shadow: none;
+      text-decoration: none;
+    }
+  }
+}
+
+.t-data .t-data__btn-portal { min-width: 183.48px; } //required from ngCart
+
+.btn-no-bg {
+  background: none;
+  border: 0;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.btn-underlined {
+  cursor: pointer;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.btn--bordered {
+  background: none;
+  &.green {
+    border: 2px solid $green;
+    color: $green;
+    &:not([disabled]):hover {
+      background: $green;
+      color: $white;
+    }
+    &.txt-black {
+      color: $black;
+    }
+  }  
+}

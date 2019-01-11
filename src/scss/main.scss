@@ -1,0 +1,45 @@
+
+@import "./helpers/_variables.scss";
+@import "./base/_reset.scss";
+@import "./base/_base.scss";
+
+@import "./vendors/angular-material/angular-material.scss";
+@import "./vendors/nvd3/build/nv.d3.css";
+// @import "./vendors/fontawesome-free/css";
+@import "./vendors/fontawesome-free/css/all.css";
+@import "./vendors/slick-carousel/slick/slick.scss";
+@import "./vendors/slick-carousel/slick/slick-theme.scss";
+@import "./vendors/extensions/_angularJS-materials-ext.scss";
+@import "./vendors/extensions/_bootstrap-ext.scss";
+@import "./vendors/extensions/_parsley-ext.scss";
+@import "./vendors/extensions/_nvd3.scss";
+@import "./vendors/_stepProgress.scss";
+
+@import "./base/_colours.scss";
+@import "./base/_typography.scss";
+@import "./base/_angular.scss";
+@import "./base/_js.scss";
+
+@import "./helpers/_mixins.scss";
+@import "./helpers/_global.scss";
+
+@import "./layouts/_layout.scss";
+@import "./layouts/_modal.scss";
+@import "./layouts/_panels.scss";
+@import "./layouts/_sidenav.scss";
+
+@import "./components/_buttons.scss";
+@import "./components/_form.scss";
+@import "./components/_navigation.scss";
+@import "./components/_progress-bar.scss";
+@import "./components/_shapes.scss";
+@import "./components/_tables.scss";
+@import "./components/_media_queries.scss";
+@import "./components/_transformations.scss";
+
+// @import "./layouts/_slick-carousel.scss";
+
+@import "./pages/_dashboard.scss";
+@import "./pages/_transactions.scss";
+@import "./pages/_user-profile.scss";
+@import "./pages/_portfolio.scss";
