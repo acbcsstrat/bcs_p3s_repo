@@ -25,64 +25,72 @@
 						<table class="t-data">
 							<thead>
 								<tr class="t-data__row">
-									<th class="font-h4 text-left font-weight-bold t-data__th" data-ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
+									<th class="font-h4 text-left font-weight-bold t-data__th t-data__w15" data-ng-click="$ctrl.sortType = 'renewalYear'; $ctrl.sortReverse = !$ctrl.sortReverse">Renewal Year
 										<span data-ng-show="$ctrl.sortType == 'renewalYear' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 										<span data-ng-show="$ctrl.sortType == 'renewalYear' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
 									</th>
-									<th class="font-h4 text-left font-weight-bold t-data__th" data-ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
+									<th class="font-h4 text-left font-weight-bold t-data__th t-data__w15" data-ng-click="$ctrl.sortType = 'dateRenewed'; $ctrl.sortReverse = !$ctrl.sortReverse">Date Renewed
 										<span data-ng-show="$ctrl.sortType == 'dateRenewed' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 										<span data-ng-show="$ctrl.sortType == 'dateRenewed' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
 									</th>
-									<th class="font-h4 text-left font-weight-bold t-data__th" data-ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
+									<th class="font-h4 text-left font-weight-bold t-data__th t-data__w35" data-ng-click="$ctrl.sortType = 'costBreakdown'; $ctrl.sortReverse = !$ctrl.sortReverse">Cost Breakdown
 										<span data-ng-show="$ctrl.sortType == 'costBreakdown' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>
 										<span data-ng-show="$ctrl.sortType == 'costBreakdown' && $ctrl.sortReverse" class="fa fa-caret-down"></span>
 									</th>
-									<th class="font-h4 text-left font-weight-bold">Downloads</th>
+									<th class="font-h4 text-left font-weight-bold t-data__w45">Downloads</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr class="t-data__row t-data_td--b-border" data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
-									<td class="t-data__td text-left align-top">Year <span data-ng-bind="renewal.renewalYear"></span></td>
-									<td class="t-data__td text-left align-top">{{renewal.certificate.renewedOnDateExEpo | date: 'MM/dd/yy'}}</td>
-									<td class="text-left align-top">
+									<td class="t-data__td text-left align-top t-data__w15">Year <span data-ng-bind="renewal.renewalYear"></span></td>
+									<td class="t-data__td text-left align-top t-data__w15">{{renewal.certificate.renewedOnDateExEpo | date: 'MM/dd/yy'}}</td>
+									<td class="text-left align-top t-data__w35">
 										<table class="t-data table-borderless">
-											<tr>
+											<tr class="t-data__row">
 												<td class="t-data__td text-left">Official fee:
-													<i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !$ctrl.panelActive[$index]}" data-ng-click="$ctrl.panelActive[$index] = !$ctrl.panelActive[$index]"></i>
+<!-- 													<i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !$ctrl.panelActive[$index]}" data-ng-click="$ctrl.panelActive[$index] = !$ctrl.panelActive[$index]"></i> -->
 												</td>
-												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>
-											</tr>
-			                                <div class="expandcollapse-item">
-			                                	<table data-ng-init="$ctrl.panelActive[$index] = true" data-ng-hide="$ctrl.panelActive[$index]" class="slideDown">
-			                                		<tr>
-			                                			<td class="t-data__td text-left">Renewal fee:</td>
-			                                			<td class="t-data__td text-left">$ {{($ctrl.patent.renewalFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</td>
-			                                		</tr>
-			                                		<tr>
-			                                			<td class="t-data__td text-left">Extension fee:</td>
-			                                			<td class="t-data__td text-left">$ {{($ctrl.patent.renewalFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</td>
-			                                		</tr>				                                		
-			                                	</table>
-			                                </div>
-											<tr>
-												<td class="t-data__td text-left">Processing fee:</td>
-												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.processingFeeUSD | number: 2) || '0.00'}}</td>
-											</tr>
-											<tr>
-												<td class="t-data__td text-left">Express fee:</td>
-												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.expressFeeUSD | number: 2) || '0.00'}}</td>
-											</tr>
-											<tr class="t-data_td--b-border">
-												<td class="t-data__td text-left">Urgent fee:</td>
-												<td class="t-data__td text-left ">$ {{(renewal.renewalFeeUI.urgentFeeUSD | number: 2) || '0.00'}}</td>
-											</tr>																								
-											<tr>
-												<td class="t-data__td text-left font-weight-bold">Total: </td>
-												<td class="t-data__td text-left font-weight-bold">$ {{renewal.renewalFeeUI.subTotalUSD | number: 2}}</td>
-											</tr>													
+												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}											
+<!-- 					                                <tr class="t-data__row">
+					                                	<td>
+							                                <div class="expandcollapse-item">
+							                                	<table data-ng-init="$ctrl.panelActive[$index] = true" data-ng-hide="$ctrl.panelActive[$index]" class="slideDown t-data table-borderless">
+							                                		<tbody>
+								                                		<tr>
+								                                			<td class="t-data__td text-left">Renewal fee:</td>
+								                                			<td class="t-data__td text-left">$ {{($ctrl.patent.renewalFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</td>
+								                                		</tr>
+								                                		<tr>
+								                                			<td class="t-data__td text-left">Extension fee:</td>
+								                                			<td class="t-data__td text-left">$ {{($ctrl.patent.renewalFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</td>
+								                                		</tr>
+							                                		</tbody>				                                		
+							                                	</table>
+							                                </div>
+					                                	</td>
+					                                </tr> -->
+													<tr class="t-data__row">
+														<td class="t-data__td text-left">Processing fee:</td>
+														<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.processingFeeUSD | number: 2) || '0.00'}}</td>
+													</tr>
+													<tr class="t-data__row">
+														<td class="t-data__td text-left">Express fee:</td>
+														<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.expressFeeUSD | number: 2) || '0.00'}}</td>
+													</tr>
+													<tr class="t-data_td--b-border t-data__row">
+														<td class="t-data__td text-left">Urgent fee:</td>
+														<td class="t-data__td text-left ">$ {{(renewal.renewalFeeUI.urgentFeeUSD | number: 2) || '0.00'}}</td>
+													</tr>																								
+													<tr class="t-data__row">
+														<td class="t-data__td text-left font-weight-bold">Total: </td>
+														<td class="t-data__td text-left font-weight-bold">$ {{renewal.renewalFeeUI.subTotalUSD | number: 2}}</td>
+													</tr>
+												</td>
+
+											</tr>												
 										</table>
 									</td>
-									<td class="t-data__td align-top">
+									<td class="t-data__td align-top t-data__w45">
 										<div class="row">
 											<div class="col-xl-12 d-flex align-items-center p-l-none">
 												<a class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-href="{{renewal.certificateUrl}}" target="_blank" data-ng-if="renewal.certificateUrl">Certificate
@@ -149,10 +157,10 @@
 										<table class="t-data table-borderless">
 											<tr>
 												<td class="t-data__td text-left">Official fee:
-													<i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !$ctrl.panelActiveMd[$index]}" data-ng-click="$ctrl.panelActiveMd[$index] = !$ctrl.panelActiveMd[$index]"></i>
+<!-- 													<i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !$ctrl.panelActiveMd[$index]}" data-ng-click="$ctrl.panelActiveMd[$index] = !$ctrl.panelActiveMd[$index]"></i> -->
 												</td>
 												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>
-				                                <div class="expandcollapse-item">
+<!-- 				                                <div class="expandcollapse-item">
 				                                    <div class="slideDown m-t-xs" data-ng-init="$ctrl.panelActiveMd[$index] = true" data-ng-hide="$ctrl.panelActive">
 				                                        <div class="row m-b-sm m-t-xs">
 				                                            <div class="col-xl-5">
@@ -178,7 +186,7 @@
 				                                        </div>                                                                                               
 				                                        <div class="border-grey-xs--btm"></div> 
 				                                    </div>
-				                                </div>												
+				                                </div>		 -->										
 											</tr>
 											<tr>
 												<td class="t-data__td text-left">Processing fee:</td>
@@ -192,7 +200,7 @@
 												<td class="t-data__td text-left">Urgent fee:</td>
 												<td class="t-data__td text-left ">$ {{(renewal.renewalFeeUI.urgentFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>																								
-											<tr class="t-data_td--b-border">
+											<tr>
 												<td class="t-data__td text-left font-weight-bold">Total: </td>
 												<td class="t-data__td text-left font-weight-bold">$ {{renewal.renewalFeeUI.subTotalUSD | number: 2}}</td>
 											</tr>													
