@@ -6,8 +6,6 @@ startUpRun.$inject = ['Idle', 'userService', '$rootScope', '$timeout'];
 
 function startUpRun(Idle, userService, $rootScope, $timeout) {
 
-    $rootScope.page = '';
-
     userService.fetchUser()
     .then(
         function(response){

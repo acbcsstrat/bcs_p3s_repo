@@ -4,7 +4,9 @@ basketCtrl.$inject = ['$rootScope'];
 
 function basketCtrl($rootScope) {
 
-   $rootScope.page = 'Basket';
+	var vm = this;
+
+   	vm.pageTitle = 'Basket';
 
 }
 

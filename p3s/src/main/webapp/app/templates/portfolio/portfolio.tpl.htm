@@ -1,3 +1,8 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="font-h1" data-ng-bind="$ctrl.pageTitle"></h1>
+    </div>
+</div>
 <patentnav></patentnav>
 <div class="animate-show">    
     <div class="form-group row m-b-sm">
@@ -154,10 +159,10 @@
                 <table class="table t-data t-data--border table-scroll" fixed-table-headers="scrollable-area">
                     <thead>
                         <tr class="t-data__row t-data__row--select t-data__head">
-                            <th class="t-data__th t-data__w12" data-ng-click="$ctrl.sortType('patentApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th t-data__w12" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>App No.</span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'patentApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
                             </th>
                             <th class="t-data__th t-data__w12" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>Client Ref</span>
@@ -172,7 +177,7 @@
                             <th class="t-data__th t-data__w15" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>EPO Status</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && !$ctrl.sortReverse" class="fa fa-caret-up"></span>     
+                                <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>     
                             </th>                            
                             <th class="t-data__th t-data__w25" data-ng-click="$ctrl.sortType('ppStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>Service Status</span>
@@ -183,7 +188,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-ng-repeat="patent in portfolioData | filter:testFl | filter:filterPortfolio as Result" data-ng-click="$ctrl.rowSelect($event, patent)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
+                        <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter:testFl | filter:filterPortfolio as Result" data-ng-click="$ctrl.rowSelect($event, patent)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
                             <td class="t-data__td--ellipsis t-data__td t-data__w12">
                                 <span class="td-ellipsis">
                                     <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.id}}" data-ui-sref="portfolio.patent({patentId: patent.id})"></a>

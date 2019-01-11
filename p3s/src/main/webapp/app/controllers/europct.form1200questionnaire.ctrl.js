@@ -6,7 +6,7 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
 
     var vm = this;
 
-    $rootScope.page = 'Form 1200 Questionnaire';
+    vm.pageTitle.page = 'Form 1200 Questionnaire';
 
     vm.manualProcess = manualProcess;// NOT REQUIRED FOR RELEASE 1
     vm.chkValidStates = chkValidStates;
@@ -18,7 +18,7 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
     vm.formData.clientRef = patent.clientRef;
     vm.formData.isYear3RenewalPaying = false;
     vm.entityAccepted = false;
-    console.log(patent)
+
     vm.confirmEntity = {
         index: 0,
         title: function() {

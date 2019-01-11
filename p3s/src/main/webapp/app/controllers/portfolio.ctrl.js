@@ -5,7 +5,7 @@ portfolioCtrl.$inject = ['patents', '$scope', '$state', '$stateParams','$rootSco
 function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService) {
 
     var vm = this;
-    $rootScope.page = 'Portfolio';
+    vm.pageTitle = 'Portfolio';
     $scope.portfolioData = patents;
     vm.rowSelect = rowSelect;
     vm.date = new Date();   
@@ -15,7 +15,10 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.getCurrColour = getCurrColour;
     vm.actionStatus = actionStatus;
     vm.toggleAll = toggleAll;
-    vm.generateForm1200 = generateForm1200
+    vm.generateForm1200 = generateForm1200;
+    vm.sortType = sortType;
+    vm.sortReverse  = false;
+    vm.selectedSortType = 'ep_ApplicationNumber';
 
     $timeout(function(){
       vm.animate = true;
@@ -223,6 +226,32 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
         }
 
     };
+
+    function sortType(column) {
+      console.log(column)
+      if(column == 'dueDate') {
+        vm.selectedSortType = (function() {
+
+          vm.sortDate = true;
+
+          if (vm.sortReverse === false) {
+            $scope.portfolioData.sort(function(a, b){
+              var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+              return dateB - dateA;
+            });
+          } else {
+            $scope.portfolioData.sort(function(a, b){
+              var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+              return dateB - dateA;
+            });
+          }
+          
+        }());
+      } else {
+        vm.sortDate = false; //resets column if not selected
+        vm.selectedSortType = column;
+      }
+    };    
 
 
 }

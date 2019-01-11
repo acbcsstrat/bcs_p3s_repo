@@ -3,13 +3,13 @@
 		<h3 class="font-h3 font-weight-bold">Recent Activity</h3>
 		<nav class="d-xl-none">
 			<ul class="panel-nav">
-				<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTabResp); $ctrl.activeActivityTabResp = item.index " data-ng-class="{active : $ctrl.activeMenu == item.activity}">{{item.activity}}</li>
+				<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTabResp); $ctrl.activeActivityTabResp = item.index; $ctrl.changeActivity(item.activity)" data-ng-class="{active : $ctrl.activeMenu == item.activity}">{{item.activity}}</li>
 			</ul>
 		</nav>
 	</div>	
 	<div class="widget-panel__body d-none d-xl-block">
 			<ul class="panel-nav d-flex justify-content-between">
-				<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTab); $ctrl.activeActivityTab = item.index " data-ng-class="{active : $ctrl.activeMenu == item.activity}">{{item.activity}}</li>
+				<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTab); $ctrl.activeActivityTab = item.index; $ctrl.changeActivity(item.activity)" data-ng-class="{active : $ctrl.activeMenu == item.activity}">{{item.activity}}</li>
 			</ul>		
 			<uib-tabset class="panel-nav" active="$ctrl.activeActivityTab">
 				<uib-tab data-ng-hide="true">

@@ -8,41 +8,12 @@ function appRoutes($stateProvider) {
         .state('dashboard', {
             url: '/dashboard',
             resolve: {
-                patents: ['patentsRestService', '$q', '$timeout', function(patentsRestService, $q, $timeout) {
-
-                    return patentsRestService.fetchAllPatents()
-                        .then(
-                            function(response){
-                                return response.map(function(item){
-                                   return item.id;
-                                 })
-                            }
-                        )
-                        .then(
-                            function(ids){
-                                var deferred = $q.defer();
-                                var nestedPatents = []
-                                angular.forEach(ids, function(id) {
-                                    nestedPatents.push(patentsRestService.fetchPatentItem(id));
-                                });                            
-                                $q.all(nestedPatents)
-                                .then(function(patent){
-                                    deferred.resolve(patent)
-                                })
-                                return deferred.promise;
-
-                            }
-                        )                   
-                }],
-                transactionHistory: ['transactionHistoryService','patents', '$timeout', function(transactionHistoryService, patents, $timeout) {
-                    return transactionHistoryService.fetchTransactionHistory();
-                }],
-                currentTransactions: ['currentTransactionsService', function(currentTransactionsService) {
-                    return currentTransactionsService.fetchCurrentTransactions();
+                patentIds: ['patentsRestService', '$q', '$timeout', function(patentsRestService, $q, $timeout) {
+                    return patentsRestService.fetchAllPatents();
                 }],
                 fxRatesMonth: ['fxService', function(fxService) {
                     return fxService.fetchFxMonth();
-                }]                       
+                }]      
             },
             views: {
                 '@': {
@@ -53,11 +24,11 @@ function appRoutes($stateProvider) {
                 'colourkeywidget@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.colour-key-widget.tpl.htm',
                     controller: 'colourKeyCtrl',
-                    controllerAs: '$ctrl'                
+                    controllerAs: '$ctrl'
                 },
                 'graphdonutwidget@dashboard': {
                     controller: 'graphDonutCtrl',
-                    controllerAs: '$ctrl',                
+                    controllerAs: '$ctrl',
                     templateUrl: 'app/templates/dashboard/dashboard.graph-donut-widget.tpl.htm',         
                 },
                 'renewalswidget@dashboard': {
@@ -68,7 +39,7 @@ function appRoutes($stateProvider) {
                 'fxrateswidget@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.renewal-cost.tpl.htm',
                     controller: 'renewalCostCtrl',
-                    controllerAs: '$ctrl'                
+                    controllerAs: '$ctrl'
                 },
                 'fxrateswidgetmd@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.renewal-cost.tpl.htm',
@@ -78,7 +49,7 @@ function appRoutes($stateProvider) {
                 'fxchartwidget@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.fxchart-widget.tpl.htm',
                     controller: 'fxChartCtrl',
-                    controllerAs: '$ctrl'
+                    controllerAs: '$ctrl',
                 },
                 'recentactivitywidget@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.recent-activity-widget.tpl.htm',

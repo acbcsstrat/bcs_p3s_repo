@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('fxChartCtrl', fxChartCtrl);
 
-fxChartCtrl.$inject = ['$scope', '$timeout', 'patents', 'patentPhasesService', 'fxRatesMonth'];
+fxChartCtrl.$inject = ['$scope', '$timeout', 'patentPhasesService', 'fxRatesMonth'];
 
-function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMonth) {
+function fxChartCtrl($scope, $timeout, patentPhasesService, fxRatesMonth) {
 
     var vm = this;
 
@@ -64,7 +64,7 @@ function fxChartCtrl($scope, $timeout, patents, patentPhasesService, fxRatesMont
             }
         }
 
-    }, 200);
+    }, 300);
 
     function lineData() {
 

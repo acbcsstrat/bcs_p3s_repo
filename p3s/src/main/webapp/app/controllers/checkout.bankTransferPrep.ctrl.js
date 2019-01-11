@@ -6,7 +6,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 
 	var vm = this;
 
-	$rootScope.page = 'Confirm Order';
+	vm.pageTitle = 'Confirm Order';
 
 	vm.orderObj = $stateParams.orderObj;
 

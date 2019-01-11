@@ -6,7 +6,7 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
 
     var vm = this;
 
-    $rootScope.page = 'Form 1200 Generating';
+    vm.pageTitle = 'Form 1200 Generating';
 
     vm.patent = patent;
     // vm.form1200;

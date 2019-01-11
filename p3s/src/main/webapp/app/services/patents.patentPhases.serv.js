@@ -2,72 +2,102 @@ angular.module('ppApp').factory('patentPhasesService', patentPhasesService);
 
 patentPhasesService.$inject = ['$timeout', '$q', '$rootScope', 'calculateService', 'patentsRestService', 'organiseTextService']
 
-function patentPhasesService ($timeout, $q,  $rootScope, calculateService, patentsRestService, organiseTextService) {
+function patentPhasesService($timeout, $q, $rootScope, calculateService, patentsRestService, organiseTextService) {
 	
-	var factory = {};
+	var factory = {
+		sortPatentNumbers: sortPatentNumbers,
+		patentNumbers: '',
+		setPatents: setPatents,
+		getIndex: '',
+		getPatents: '',
+		setPatent: setPatent,
+		getPatent: ''
+	};
 
-		factory.phases = function(patents) {
+		var obj = {
+			Green: [],
+			Amber: [],
+			Red: [],
+			Blue: [],
+			Black: [],
+			Grey: []
+		}
 
-			var phases = {
-				greenRenewals: [],
-				redRenewals: [],
-				amberRenewals: [],
-				blueRenewals: [],
-				blackRenewals: [],
-				greyRenewals: [],
-				allRenewals: [],
-				totalRenewals: function() {
-					if(patents.length > 0) {
-						return this.greenRenewals.concat(this.amberRenewals, this.redRenewals, this.amberRenewals, this.blueRenewals, this.blackRenewals, this.greyRenewals).length// totalRenewals: 
+		function sortPatentNumbers(patents) {
+
+			if(factory.getPatents === '' && patents.length !== factory.getPatents.length) {
+
+				var phase;
+
+				obj.Total = patents.length;
+
+				for(var i = 0; i < patents.length; i++) {
+					
+					var item =  patents[i].serviceList;
+
+					if(item.length !== 0) {
+						obj[item[0].currentStageColour].push(patents[i]);
 					} else {
-						return 0;
+						obj.Grey.push(patents[i]);
+					}
+				}
+
+				factory.patentNumbers = obj;
+				for(var property in obj) {
+					if(obj.hasOwnProperty(property)) {
+						if(obj[property].length > 0) {
+							phase = obj[property][0].serviceList[0].currentStageColour;
+							break;
+						}
+					}
+				}	
+
+				setPatents(phase)
+
+			}
+		}
+
+		function setPatents(phase){
+
+			var patents;
+
+			if(phase == 'Green') factory.getIndex = 0;
+			if(phase == 'Amber') factory.getIndex = 1;
+			if(phase == 'Red') factory.getIndex = 2;
+			if(phase == 'Blue') factory.getIndex = 3;
+			if(phase == 'Black') factory.getIndex = 4;
+			if(phase == 'Grey') factory.getIndex = 5;
+
+			for(var property in obj) {
+				if(obj.hasOwnProperty(property)){
+					patents = obj[phase];
+					if(patents.length > 0) {
+						if(patents[0].serviceList.length === 0) {
+							factory.getPatents = null;
+						} else {
+							factory.getPatents = patents;
+							factory.getPatent = patents[0].serviceList[0];
+						}
+					} else {
+						factory.getPatents = null;
+						factory.getPatent = null;
 					}
 				}
 			}
 
-			if(patents.length > 0) {
-				patents.forEach(function(item) {
-					var service = item.renewalFeeUI !== null ? item.renewalStatus : item.epctStatus;
-					if(organiseTextService.actionStatus(service) || organiseTextService.paymentStatus(service)) {
-						switch(item.portfolioUI.serviceList[0].currentStageColour) {
-							case 'Green':
-								phases.greenRenewals.push(item);
-							break;
-							case 'Amber':
-								phases.amberRenewals.push(item);
-							break;
-							case 'Red':
-								phases.redRenewals.push(item);
-							break;
-							case 'Blue':
-								phases.blueRenewals.push(item);
-							break;
-							case 'Black':
-								item.nextStage = 'LAPSE'
-								phases.blackRenewals.push(item);
-							break;
-							
-						}
-					} else {
-						if(item.portfolioUI.serviceList.length === 0) {
-							phases.greyRenewals.push(item);
-						}
-						if(item.portfolioUI.serviceList.length > 0) {
-							if(item.portfolioUI.serviceList[0].currentStageColour == 'Red' ) {
-								phases.redRenewals.push(item);
-							}
-							if(item.portfolioUI.serviceList[0].currentStageColour == 'Grey' ) {
-								phases.greyRenewals.push(item);
-							}							
-						}
-					} 			
-				});
+		}
 
+		function setPatent(patent) {
+			if(patent.serviceList.length > 0) {
+				patent.serviceList[0].id = patent.id;
+				factory.getPatent = patent.serviceList[0];
+			} else {
+				factory.getPatent = null;
 			}
 
-			return phases;
-
+			
 		}
+
 
 	return factory;
 

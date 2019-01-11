@@ -1,3 +1,9 @@
+<div class="row">
+	<div class="col-md-12">
+		<h1 class="font-h1" data-ng-bind="$ctrl.pageTitle"></h1>
+	</div>
+</div>
+
 <div class="m-b-xl">
 	<form name="userProfileForm" novalidate>
 		<div class="content-panel m-b-md">
@@ -208,7 +214,7 @@
 			</div> <!-- content panel body end-->
 		</div><!-- content panel end -->
 		<div class="row m-t-md">
-			<div class="col-md-4 offset-md-8 col-lg-4 offset-lg-8 offset-xl-10 col-xl-2 text-right">
+			<div class="col-md-12 text-right">
 				<button type="submit" id="submit" class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.updateUser(user, newPassword)" data-ng-disabled="userProfileForm.$invalid">Save Changes</button>
 			</div>
 		</div>
