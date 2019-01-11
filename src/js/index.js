@@ -15,10 +15,6 @@ require('app/directives/user.dir.js');
 require('app/directives/transactions.dir.js');
 require('app/directives/patents.search-patent.dir.js');
 
-// require('app/directives/checkout.dir.js');
-// require('app/directives/current-transactions.transactions.dir.js');
-// require('app/directives/patents.list-patents.dir.js');
-// require('app/directives/user.dir.js');
 require('app/directives/vendors/ngCart.directives.js');
 
 require("app/services/app.core.serv.js");
@@ -35,7 +31,6 @@ require("app/services/app.CostAnalysis.serv.js")
 require("app/services/checkout.bankTransferCommit.serv.js");
 require("app/services/checkout.basket.serv.js");
 require("app/services/dashboard.dashboard.serv.js");
-require("app/services/dashboard.selectPhase.serv.js");
 require("app/services/patent.euroPct.serv.js");
 require("app/services/europct.form1200.serv.js");
 require("app/services/patents.patentPhases.serv.js");
@@ -70,10 +65,8 @@ require("app/controllers/portfolio.ctrl.js");
 require("app/controllers/patents.addPatent.ctrl.js");
 require("app/controllers/patents.searchPatent.ctrl.js");
 require("app/controllers/patent.europct.ctrl.js");
-require("app/controllers/patent.patentCostAnalysis.ctrl.js");
 require("app/controllers/patent.patentInfo.ctrl.js");
 require("app/controllers/patent.patentItem.ctrl.js");
-// require("app/controllers/patent.patentRenewals.ctrl.js");
 require("app/controllers/patent.renewal.ctrl.js");
 require("app/controllers/renewal.renewalInfo.ctrl.js");
 require("app/controllers/renewal.renewalHistory.ctrl.js");
