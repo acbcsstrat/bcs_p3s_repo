@@ -9,7 +9,7 @@ function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentP
    	setPatents();
     
     vm.animate = false;
-    $rootScope.page = 'Dashboard';
+    vm.pageTitle = 'Dashboard';
     vm.date = new Date().getTime();
 
 	function setPatents() {

@@ -6,7 +6,7 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
 
     var vm = this;
 
-    $rootScope.page = 'Transaction History';
+    vm.pageTitle = 'Transaction History';
 
     $timeout(function() {
         vm.animate = true;

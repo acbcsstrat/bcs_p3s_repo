@@ -6,7 +6,7 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
 
     var vm = this;
 
-    $rootScope.page = 'Profile';
+    vm.pageTitle = 'Profile';
 
     $scope.newPassword = '';
     vm.updateTimezone = updateTimezone;

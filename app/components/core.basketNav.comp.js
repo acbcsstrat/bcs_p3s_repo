@@ -4,13 +4,12 @@ angular.module('ppApp').component('basketnav', {
 
 		var vm = this;
 
-	    vm.animate = false;
-
 	    $timeout(function() {
-	      	vm.animate = true;
+
         	vm.utcTime = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
-        	vm.estTime = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');	      
-	    }, 300);    
+        	vm.estTime = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
+	      	vm.animate = true;      
+	    }, 500);    
 
 		vm.empty = function() {
 			ngCart.empty();

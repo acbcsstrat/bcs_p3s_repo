@@ -5,7 +5,7 @@ portfolioCtrl.$inject = ['patents', '$scope', '$state', '$stateParams','$rootSco
 function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService) {
 
     var vm = this;
-    $rootScope.page = 'Portfolio';
+    vm.pageTitle = 'Portfolio';
     $scope.portfolioData = patents;
     vm.rowSelect = rowSelect;
     vm.date = new Date();   

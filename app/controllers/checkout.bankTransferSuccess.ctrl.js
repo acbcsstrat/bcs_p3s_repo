@@ -4,7 +4,9 @@ bankTransferSuccessCtrl.$inject = ['$scope', '$rootScope', '$stateParams']
 
 function bankTransferSuccessCtrl($scope, $rootScope, $stateParams) {
 
-	$rootScope.page = 'Bank Transfer Details';
+	var vm = this;
+
+	vm.pageTitle = 'Bank Transfer Details';
 
 	$scope.orderObj = $stateParams.orderObj;	
 

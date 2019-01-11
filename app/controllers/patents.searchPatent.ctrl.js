@@ -6,7 +6,7 @@ function searchPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, se
 
 	var vm = this;
 
-	$rootScope.page = 'Search for Patent';
+	vm.pageTitle = 'Search for Patent';
 
     $timeout(function() {
       vm.animate = true;

@@ -6,7 +6,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 
 	var vm = this;
 
-	$rootScope.page = 'Current Transactions';
+	vm.pageTitle = 'Current Transactions';
 
     $timeout(function() {
       	vm.animate = true;
