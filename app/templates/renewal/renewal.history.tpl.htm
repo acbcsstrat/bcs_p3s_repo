@@ -48,41 +48,37 @@
 										<table class="t-data table-borderless">
 											<tr>
 												<td class="t-data__td text-left">Official fee:</td>
-												<td class="t-data__td text-left">$ {{renewal.feeUI.renewalFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>
 											<tr>
 												<td class="t-data__td text-left">Processing fee:</td>
-												<td class="t-data__td text-left">$ {{renewal.feeUI.processingFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.processingFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>
 											<tr>
 												<td class="t-data__td text-left">Extension fee:</td>
-												<td class="t-data__td text-left">$ {{renewal.feeUI.extensionFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>
 											<tr>
 												<td class="t-data__td text-left">Express fee:</td>
-												<td class="t-data__td text-left">$ {{renewal.feeUI.expressFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.expressFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>
 											<tr class="t-data_td--b-border">
 												<td class="t-data__td text-left">Urgent fee:</td>
-												<td class="t-data__td text-left ">$ {{renewal.feeUI.urgentFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left ">$ {{(renewal.renewalFeeUI.urgentFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>																								
 											<tr class="t-data_td--b-border">
 												<td class="t-data__td text-left font-weight-bold">Total: </td>
-												<td class="t-data__td text-left font-weight-bold">$ {{renewal.feeUI.subTotalUSD | number: 2}}</td>
+												<td class="t-data__td text-left font-weight-bold">$ {{renewal.renewalFeeUI.subTotalUSD | number: 2}}</td>
 											</tr>													
 										</table>
 									</td>
 									<td class="t-data__td align-top">
 										<div class="row">
-											<div class="col-xl-6 d-flex align-items-center" data-ng-if="renewal.certificateUrl">
-												<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-								 					<a class="btn__link btn__link--white btn--lg" data-ng-href="{{renewal.certificateUrl}}" target="_blank">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
-								 				</button>
-											</div>
-											<div class="col-xl-6 d-flex align-items-center">
-												<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-								 					<a class="btn__link btn__link--white btn--lg" data-ng-href="{{renewal.invoiceUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
-												</button>
+											<div class="col-xl-12 d-flex align-items-center p-l-none">
+												<a class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-href="{{renewal.certificateUrl}}" target="_blank" data-ng-if="renewal.certificateUrl">Certificate
+								 				</a>
+												<a class="btn btn--lg btn--green pill-radius" data-ng-href="{{renewal.invoiceUrl}}" target="_blank">Invoice
+												</a>
 											</div>	
 										</div>
 									</td>
@@ -106,7 +102,7 @@
 								<p class="h4 font-weight-medium text-center">This patent has not yet been renewed through Patent Place</p>
 								<p class="h4 font-weight-medium">Status: <span class="txt-phase-green" data-ng-bind="$ctrl.patent.renewalStatus"></span></p>			
 								<div class="m-b-sm"></div>
-								<p class="font-body text-center">When you've renewed this patent through Patent Place you'll be able to download copies of the invioce and renewal certificates from here.</p>																					
+								<p class="font-body text-center">When you've renewed this patent through Patent Place you'll be able to download copies of the invioce and renewal certificates from here.</p>
 							</div>
 		    			</div>
 					</div>
@@ -142,44 +138,67 @@
 									<td class="text-left align-top">
 										<table class="t-data table-borderless">
 											<tr>
-												<td class="t-data__td text-left">Official fee:</td>
-												<td class="t-data__td text-left">$ {{renewal.feeUI.renewalFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left">Official fee:
+													<i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !$ctrl.panelActive}" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive"></i>
+												</td>
+												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>
+				                                <div class="expandcollapse-item">
+				                                    <div class="slideDown m-t-xs" data-ng-init="$ctrl.panelActive = true" data-ng-hide="$ctrl.panelActive">
+				                                        <div class="row m-b-sm m-t-xs">
+				                                            <div class="col-xl-5">
+				                                                <p class="font-weight-medium">Renewal fee:</p>
+				                                            </div>
+				                                            <div class="col-xl-4">
+				                                                <p class="text-center">$ {{($ctrl.patent.renewalFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</p>
+				                                            </div>
+				                                            <div class="col-xl-3">
+				                                                <p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.renewalFeeEUR | number: 2) || '0.00'}}</p>
+				                                            </div>                                                                                        
+				                                        </div>
+				                                        <div class="row m-b-sm">
+				                                            <div class="col-xl-5">
+				                                                <p class="font-weight-medium">Extension fee:</p>
+				                                            </div>
+				                                            <div class="col-xl-4">
+				                                                <p class="text-center">$ {{($ctrl.patent.renewalFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
+				                                            </div>
+				                                            <div class="col-xl-3">
+				                                                <p class="text-center">&euro; {{($ctrl.patent.renewalFeeUI.extensionFeeEUR | number: 2) || '0.00'}}</p>
+				                                            </div>                                                                                        
+				                                        </div>                                                                                               
+				                                        <div class="border-grey-xs--btm"></div> 
+				                                    </div>
+				                                </div>												
 											</tr>
 											<tr>
 												<td class="t-data__td text-left">Processing fee:</td>
-												<td class="t-data__td text-left">$ {{renewal.feeUI.processingFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.processingFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>
 											<tr>
 												<td class="t-data__td text-left">Extension fee:</td>
-												<td class="t-data__td text-left">$ {{renewal.feeUI.extensionFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>
 											<tr>
 												<td class="t-data__td text-left">Express fee:</td>
-												<td class="t-data__td text-left">$ {{renewal.feeUI.expressFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.expressFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>
 											<tr class="t-data_td--b-border">
 												<td class="t-data__td text-left">Urgent fee:</td>
-												<td class="t-data__td text-left ">$ {{renewal.feeUI.urgentFeeUSD | number: 2}}</td>
+												<td class="t-data__td text-left ">$ {{(renewal.renewalFeeUI.urgentFeeUSD | number: 2) || '0.00'}}</td>
 											</tr>																								
 											<tr class="t-data_td--b-border">
 												<td class="t-data__td text-left font-weight-bold">Total: </td>
-												<td class="t-data__td text-left font-weight-bold">$ {{renewal.feeUI.subTotalUSD | number: 2}}</td>
+												<td class="t-data__td text-left font-weight-bold">$ {{renewal.renewalFeeUI.subTotalUSD | number: 2}}</td>
 											</tr>													
 										</table>
 									</td>
 									<td class="t-data__td align-top">
-										<div class="row m-b-xs">
-											<div class="col-xl-6 d-flex align-items-center" data-ng-if="renewal.certificateUrl">
-												<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-								 					<a class="btn__link btn__link--white btn--lg" data-ng-href="{{renewal.certificateUrl}}" target="_blank">Certificate <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
-								 				</button>
-											</div>
-										</div>
 										<div class="row">
-											<div class="col-xl-6 d-flex align-items-center">
-												<button type="button" class="btn btn--white btn-block btn--default bg-phase-green pill-radius cartbtn d-flex align-items-center justify-content-center">
-								 					<a class="btn__link btn__link--white btn--lg" data-ng-href="{{renewal.invoiceUrl}}" target="_blank" class="btn btn--lg font-body font-weight-medium bg-phase-green pill-radius txt-white d-flex align-items-center d-flex align-items-center">Invoice <i class="fa fa-file-pdf-o fa-1x m-l-xs"></i></a>
-												</button>
+											<div class="col-md-12 d-flex align-items-center p-l-none">
+												<a class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-href="{{renewal.certificateUrl}}" target="_blank" data-ng-if="renewal.certificateUrl">Certificate
+								 				</a>
+												<a class="btn btn--lg btn--green pill-radius" data-ng-href="{{renewal.invoiceUrl}}" target="_blank">Invoice
+												</a>
 											</div>	
 										</div>
 									</td>
