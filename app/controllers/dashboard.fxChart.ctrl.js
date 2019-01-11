@@ -64,7 +64,7 @@ function fxChartCtrl($scope, $timeout, patentPhasesService, fxRatesMonth) {
             }
         }
 
-    });
+    }, 300);
 
     function lineData() {
 

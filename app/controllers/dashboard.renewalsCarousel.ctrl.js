@@ -1,24 +1,21 @@
 angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
 
-renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'patentPhasesService', 'selectPhaseService', 'dashboardService', 'organiseColourService', 'organiseTextService']
+renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'patentPhasesService', 'dashboardService', 'organiseColourService', 'organiseTextService']
 
-function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, selectPhaseService, dashboardService, organiseColourService, organiseTextService) {
+function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, dashboardService, organiseColourService, organiseTextService) {
 
 	var vm = this;
 
 	vm.phaseLoaded = true;
-	vm.sortedPatentData = patentPhasesService.phases(patents);
-	vm.setPhase = setPhase;
-	vm.selectedPhase = selectPhaseService;
+	vm.patentData = patentPhasesService.patentNumbers;
+	vm.setPatents = setPatents;
+	vm.patents = patentPhasesService.getPatents;
+    vm.patentsTotal = patentPhasesService.patentNumbers;
     vm.date = new Date();
     vm.getCurrColour = getCurrColour;
     vm.getNextColour = getNextColour;
 
     vm.getStatus = getStatus;
-
-    function newPhases() {
-    	return patentPhasesService.newPhases()
-    }
 
     function getStatus(text) {
         return organiseTextService.uiStatus(text)
@@ -46,10 +43,10 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 
 	    		vm.currentIndex = currentSlide;
         		vm.currIndexForTitle = (currentSlide + 1);
-        		vm.selectedPatent = vm.selectedPhase.getPhase().patents[vm.currentIndex];
+        		vm.selectedPatent = patentPhasesService.getPatent;
 
-        		if(vm.selectedPatent !== null) {
-					dashboardService.setPatent(vm.selectedPatent)
+        		if(vm.selectedPatent !== null && patentPhasesService.getPatents !== null) {
+					patentPhasesService.setPatent(vm.patents[vm.currentIndex])
                     $scope.$emit('updatePatent');
         		}
 
@@ -62,19 +59,23 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 
 	$scope.$on('updatePhase', function(e, o){
 		setPhaseFn(o.phase)
+        $scope.activeTab = patentPhasesService.getIndex;
 	})
 
-	function setPhase(phase) {
-		setPhaseFn(phase)
-        $scope.$emit('phaseChange', {phase: phase})        
-	}    
+    function setPatents(phase) {
+        patentPhasesService.setPatents(phase);
+        setPhaseFn(phase)
+        $scope.$emit('phaseChange', {phase: phase})
+    }
 
 	function setPhaseFn(phase) {
 		vm.phaseLoaded = false;
-		selectPhaseService.setPhase(phase, vm.sortedPatentData);
 		$timeout(function() {
+            vm.patents = patentPhasesService.getPatents;
+            vm.selectedPatent = patentPhasesService.getPatent;            
 			vm.phaseLoaded = true;
 		}, 10);
-	}    
+
+	}
 
 }
