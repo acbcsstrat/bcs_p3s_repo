@@ -260,6 +260,7 @@ public class RegisterRestController extends Universal {
 				user.setUserrole("user");
 				//setting email notification to true by default
 				user.setIsEmailNotification(true);
+				user.setCreatedDate(Calendar.getInstance().getTime());
 				PreLoginSessionBean preSession = (PreLoginSessionBean) session.getAttribute("preSession");
 				business = preSession.getBusiness();   //getting business Info from session; ignoring user manipulations
 				user.setBusiness(business);

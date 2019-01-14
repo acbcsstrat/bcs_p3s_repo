@@ -403,7 +403,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	{
 		if (generateForm1200DataIn==null || me==null) throw new P3SRuntimeException("passed a null!");
 		
-		String err = PREFIX+"saveForm1200details("+generateForm1200DataIn.getPatentId()+") ";
+		String err = PREFIX+"saveNewForm1200details("+generateForm1200DataIn.getPatentId()+") ";
 		log().debug(err+" invoked");
 		
 	//	checkForm1200AsEntered4MissingData(patentId, err, totalClaims, totalPages, extensionStatesUI, validationStatesUI, pageDescriptionUI);
@@ -438,6 +438,10 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		// The method listAbstractStates2commaSeparatedString(List<AbstractState>) in the type CountryStatesUtil is not applicable for the arguments (List<ExtensionStateUI>)
 		//epct.setExtensionStates(countryStatesUtil.listAbstractStates2commaSeparatedString(extensionStatesUI));
 
+		String clientRef = generateForm1200DataIn.getClientRef();
+		if (isEmpty(clientRef )) clientRef = ""; else if (clientRef.length()>15) fail(err+" clientRef TOO LONG: >15 : "+clientRef);
+		epct.setClientRef(clientRef);
+		
 		epct.setExtensionStates(countryStatesUtil.listSelectedExtensionStatesUI2commaSeparatedString(generateForm1200DataIn.getExtensionStatesUI()));
 		epct.setValidationStates(countryStatesUtil.listSelectedValidationStatesUI2commaSeparatedString(generateForm1200DataIn.getValidationStatesUI()));
 		epct.setTotalClaims( (int) generateForm1200DataIn.getTotalClaims());			

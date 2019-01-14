@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -172,6 +173,17 @@ public class Epct {
     protected Date createdDate;
 
 
+    /** 
+     * Form1200 'Applicant's or representative's reference'.
+     * 15 characters max (specify the EPO)
+     * We default to patent:client_ref - which is shortened to match.
+     * (This omitted so added late - January 2019)   
+    */
+    @NotNull
+    @Size(max = 15)
+    protected String clientRef;
+
+    
     
     
     /**
@@ -282,11 +294,10 @@ public class Epct {
     }
 
 
-
-
-
-
-
+    // setter temporarily added here until Roo next run - zaph    acTodo
+    public void setClientRef(String clientRef) {
+    	this.clientRef = clientRef;
+    }
 
 
 
