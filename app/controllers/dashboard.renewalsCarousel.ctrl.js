@@ -11,7 +11,9 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 	vm.setPatents = setPatents;
     $timeout(function() {
         vm.patents = patentPhasesService.getPatents;
+        console.log(vm.patents)
     });
+
     vm.patentsTotal = patentPhasesService.patentNumbers;
     vm.date = new Date();
     vm.getCurrColour = getCurrColour;
@@ -47,13 +49,12 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
         		vm.currIndexForTitle = (currentSlide + 1);
                 $timeout(function(){
                     vm.selectedPatent = patentPhasesService.getPatent;
-                    // console.log(vm.selectedPatent)
-                }, 500)
-        		
-        		if(vm.selectedPatent !== null && patentPhasesService.getPatents !== null) {
-					patentPhasesService.setPatent(vm.patents[vm.currentIndex])
-                    $scope.$emit('updatePatent');
-        		}
+            		if(vm.selectedPatent !== null && patentPhasesService.getPatents !== null) {
+    					patentPhasesService.setPatent(vm.patents[vm.currentIndex])
+                        $scope.$emit('updatePatent');
+            		}
+                }, 300)
+
 
         	},
         	init: function (event, slick) {
