@@ -14,7 +14,7 @@ privileged aspect Epct_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Epct.entityManager;
     
-    public static final List<String> Epct.fieldNames4OrderClauseFilter = java.util.Arrays.asList("patent", "form1200Fee", "form1200", "extensionStates", "validationStates", "totalClaims", "totalPages", "descriptionStartPage", "descriptionEndPage", "claimsStartPage", "claimsEndPage", "drawingsStartPage", "drawingsEndPage", "isYear3RenewalDue", "isYear3RenewalPaying", "epctSubmittedDate", "epctApplicationExpiryDate", "epctStatus", "createdBy", "createdDate");
+    public static final List<String> Epct.fieldNames4OrderClauseFilter = java.util.Arrays.asList("patent", "form1200Fee", "form1200", "extensionStates", "validationStates", "totalClaims", "totalPages", "descriptionStartPage", "descriptionEndPage", "claimsStartPage", "claimsEndPage", "drawingsStartPage", "drawingsEndPage", "isYear3RenewalDue", "isYear3RenewalPaying", "epctSubmittedDate", "epctApplicationExpiryDate", "epctStatus", "createdBy", "createdDate", "clientRef");
     
     public static final EntityManager Epct.entityManager() {
         EntityManager em = new Epct().entityManager;

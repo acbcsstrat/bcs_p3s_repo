@@ -156,4 +156,12 @@ privileged aspect Epct_Roo_JavaBean {
         this.createdDate = createdDate;
     }
     
+    public String Epct.getClientRef() {
+        return this.clientRef;
+    }
+    
+    public void Epct.setClientRef(String clientRef) {
+        this.clientRef = clientRef;
+    }
+    
 }

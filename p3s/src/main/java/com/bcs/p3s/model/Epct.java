@@ -294,11 +294,5 @@ public class Epct {
     }
 
 
-    // setter temporarily added here until Roo next run - zaph    acTodo
-    public void setClientRef(String clientRef) {
-    	this.clientRef = clientRef;
-    }
-
-
 
 }
