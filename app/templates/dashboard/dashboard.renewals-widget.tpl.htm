@@ -51,21 +51,23 @@
 					            			</div>
 					            		</td>
 					            	</tr>
-					            	<tr class="t-data__tr">
+<!-- 					            	<tr class="t-data__tr">
 					            		<td class="t-data__td td-border text-left border t-data__td-50">
 					            			<span class="font-weight-medium">Due Date: </span>{{item.serviceList[0].costBandEndDateUI}}
 					            		</td>
 					            		<td class="t-data__td td-border-nt">
 					            			<div class="progress-phase" data-ng-if="item.serviceList[0].currentStageColour !== 'Red' && item.serviceList[0].currentStageColour !== 'Black'">
 							       				<uib-progress class="pill-radius" data-ng-class="$ctrl.getNextColour(item.serviceList[0].currentStageColour, 'bg')">
+							       					
 							       					<uib-bar class="pill-radius" value="item.serviceList[0].renewalStageProgress || item.serviceList[0].form1200StageProgress"></uib-bar>
+							       					}
 							       				</uib-progress>
 							            	</div>	
 					            			<div data-ng-if="item.serviceList[0].currentStageColour == 'Red' || item.serviceList[0].currentStageColour == 'Black'">
 							       				<p class="font-h4" data-ng-bind="$ctrl.getStatus(item.serviceList[0].serviceStatus)"></p>
 							            	</div>								            	
 					            		</td>							            		
-					            	</tr>
+					            	</tr> -->
 				        		</tbody>
 				        	</table>
 				        </div>
