@@ -47,9 +47,8 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
         		vm.currIndexForTitle = (currentSlide + 1);
                 $timeout(function(){
                     vm.selectedPatent = patentPhasesService.getPatent;
-                }, 30)
+                }, 500)
         		
-
         		if(vm.selectedPatent !== null && patentPhasesService.getPatents !== null) {
 					patentPhasesService.setPatent(vm.patents[vm.currentIndex])
                     $scope.$emit('updatePatent');
