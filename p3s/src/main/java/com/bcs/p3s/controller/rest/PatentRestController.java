@@ -32,7 +32,6 @@ import com.bcs.p3s.display.PatentV2UI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
-import com.bcs.p3s.enump3s.EPCTnotAvailableReasonEnum;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
@@ -70,23 +69,21 @@ public class PatentRestController extends Universal {
     // v2.1 - this now DANGEROUS - are reputably not needed, so Rate likely not inverted - so renames OBS to disable
     @RequestMapping(value = "/rest-patents-OBS/", method = RequestMethod.GET)
     public ResponseEntity<List<PatentUI>> listAllPatentUIsForBusiness() {
-		log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() invoked. ");
+		String idh = CLASSNAME + "listAllPatentUIsForBusiness() : /rest-patents-OBS/ ";
+    	log().debug(idh+"invoked. ");
 		List<PatentUI> patentUIs = null;
 		
 		try{
-	    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) invoked ");
 	
 	    	PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
 	    	//postSession = patentService.populateSessionBean();
 	    	patentUIs = patentService.listAllPatentUIsForMyBusiness();
 	    	
-	    	System.out.println("PatentRestController : /rest-patents/ (get All Patents for Business) ret Qty "+patentUIs.size());
-	    	
-			log().debug("PatentRestController : /rest-patents/ listAllPatentUIsForBusiness() returning "+patentUIs.size()+" patents. "
+			log().debug(idh+" returning "+patentUIs.size()+" patents. "
 					+ "Set PatentUI from patents data fetched from DB");
 			
 			
-			log().debug("PatentRestController : /rest-patents/ getExtendedPatentData(patentUI) returning "+patentUIs.size()+" "
+			log().debug(idh+"  getExtendedPatentData(patentUI) returning "+patentUIs.size()+" "
 					+ "patents. Set extended fileds in PatentUI as well");
 		}
 		catch(Exception e){
@@ -145,7 +142,8 @@ public class PatentRestController extends Universal {
 		String checkDigit = null;
 		
 		try{
-			System.out.println("PatentRestController : /rest-search-patents/ searchEpoForPatent() invoked with param: "+patentApplicationNumber);
+			patentApplicationNumber = patentApplicationNumber.toUpperCase();
+			log().debug(handle+"invoked with param: "+patentApplicationNumber);
 			
 			/** Truncate check digit from EP application number entered **/
 			checkDigit = patentService.truncateAndStoreCheckDigit(patentApplicationNumber);
@@ -202,11 +200,11 @@ public class PatentRestController extends Universal {
 					// would like to use:	(@RequestBody PatentUI patentUI) {
 	@RequestMapping(value = "/rest-patents/", method = RequestMethod.POST) 
 	public ResponseEntity<List<PatentUI>> saveNewPatent(@RequestBody Object obby) {
-		log().debug("PatentRestController : /rest-patents/ saveNewPatent() invoked ");
+		String idh = CLASSNAME + "saveNewPatent() : /rest-patents/ ";
+		log().debug(idh+"invoked ");
 		List<PatentUI> patentUIs = null;
-		System.out.println("PatentRestController : /rest-patents/ saveNewPatent() invoked ");
 		try {
-			System.out.println("PatentRestController : /rest-patents/ [POST] invoked - i.e. ADD Patent");
+			//System.out.println("PatentRestController : /rest-patents/ [POST] invoked - i.e. ADD Patent");
 	
 			PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
 			
@@ -283,7 +281,8 @@ public class PatentRestController extends Universal {
 	// v2.1 : No longer receives notificationUIs parameter (tho no change to code in this class)
 	@RequestMapping(value = "/rest-patents/{id}", method = RequestMethod.PUT) 
 	public ResponseEntity<PatentUI> updatePatent(@PathVariable("id") long id, @RequestBody Object untypedPatentUI) {
-		
+		String idh = CLASSNAME + "updatePatent() : /rest-patents/ ";
+
 		log().debug("PatentRestController : /rest-patents/ updatePatent() [tolerant] invoked   -  untypedPppp  ");
 
 		PostLoginSessionBean postSession = (PostLoginSessionBean) session.getAttribute("postSession");
@@ -293,7 +292,7 @@ public class PatentRestController extends Universal {
 		try {
 			Patent existingPatent = patentService.findById(id);
 			if (existingPatent == null) {
-				System.out.println("Unable to update. Patent with id " + id + " not found");
+				log().debug("Unable to update. Patent with id " + id + " not found.  "+idh);
 			} else {
 				patentService.flexibleUpdatePatent(id, untypedPatentUI);
 			}
@@ -486,7 +485,8 @@ public class PatentRestController extends Universal {
     // Implements API section 2.6
     @RequestMapping(value = "/rest-fxrate/", method = RequestMethod.GET)
     public ResponseEntity<FxRateCurrentUI> getFxRate() {
-    	System.out.println("PatentRestController : /rest-fxrate/ invoked ");
+		String idh = CLASSNAME + "getFxRate() : /rest-fxrate/ ";
+    	log().debug(idh+"invoked ");
 
     	FxRateCurrentUI fxRateCurrentUI = patentService.getCurrentFxRate();
     	
@@ -502,7 +502,8 @@ public class PatentRestController extends Universal {
     // v2.1 - invert the Rate !
     @RequestMapping(value = "/rest-fxrates/{period}", method = RequestMethod.GET)
     public ResponseEntity<List<FxRateUI>> getFxRate(@PathVariable("period") String period) {
-    	System.out.println("PatentRestController : /rest-fxrates/"+period+" invoked ");
+		String idh = CLASSNAME + "getFxRate() : /rest-fxrates/ ";
+    	log().debug(idh+" ("+period+") invoked ");
 
 		List<FxRateUI> history = patentService.getFxRateHistory(period);
     	
