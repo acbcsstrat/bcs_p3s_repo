@@ -1,18 +1,18 @@
-<div class="bg-white widget-panel h-100 d-none d-xl-block">
-	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
+<div class="bg-white widget-panel d-none d-xl-flex flex-column">
+	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between flex-grow-0">
 		<h3 class="font-h3 font-weight-bold">Service Cost</h3>
 		<h4 class="pill-radius bg-phase-green txt-white font-body p-default" data-ng-if="$ctrl.fxTimeFrame" data-ng-bind="$ctrl.fxTimeFrame"></h4>
 	</div>
-	<div class="widget-panel__body h-100">
-		<div class="row bg-no-data" data-ng-if="!$ctrl.loading && !$ctrl.patent.serviceCost">
+	<div class="widget-panel__body d-flex justify-content-center flex-grow-1 flex-column">
+		<div class="row bg-no-data" data-ng-if="!$ctrl.loading && $ctrl.patent.serviceCostttt">
 			<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
 				<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 			</div>
 		</div>
-		<div data-ng-show="$ctrl.loading" class="animate-show h-100">
-			<div class="row h-100">
+		<div data-ng-show="$ctrl.loading" class="animate-show">
+			<div class="row">
 				<div class="col-xl-12 text-center">
-					<div class="d-flex justify-content-center align-items-center h-100">
+					<div class="d-flex justify-content-center align-items-center">
 						<img src="assets/imgs/icons/spinner-loader-sm.gif">
 					</div>
 				</div>
@@ -35,7 +35,7 @@
 								<p class="font-h2">€ {{$ctrl.patent.serviceCost.subTotalEUR | number: 2 }}</p>
 							</div>
 						</div>
-					</uib-tab>			
+					</uib-tab>
 					<uib-tab heading="Yesterday" class="font-body" data-ng-hide="true">
 						<div class="row">
 							<div class="col-xl-5 text-center">

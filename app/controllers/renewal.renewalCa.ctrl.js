@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalCaCtrl', renewalCaCtrl);
 
-renewalCaCtrl.$inject = ['patent','ca', '$timeout', 'chunkDataService', 'costAnalysisService', 'currentTransactionsService'];
+renewalCaCtrl.$inject = ['patent','ca', '$timeout', '$state', '$location', '$anchorScroll', 'chunkDataService', 'costAnalysisService', 'currentTransactionsService'];
 
-function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisService, currentTransactionsService) {
+function renewalCaCtrl(patent, ca, $timeout, $state, $location, $anchorScroll, chunkDataService, costAnalysisService, currentTransactionsService) {
 
     var vm = this;
 
@@ -318,11 +318,9 @@ function renewalCaCtrl(patent, ca, $timeout, chunkDataService, costAnalysisServi
         }, 100)
 
         function fetchItemTransaction(id) {
-            console.log(id)
             currentTransactionsService.fetchCurrentTransactions()
             .then(
                 function(response) {
-                    console.log(response)
                     var transaction = response.filter(function(el){
                         return el.renewalUIs.find(function(item) {
                             return item.patentUI.id === id;
