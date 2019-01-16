@@ -19,7 +19,6 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 	var currTransStatus = currentTransactionItem.latestTransStatus;
 	vm.currentTransactionItem = currentTransactionItem;	
 	for(var i = 0; i < vm.currentTransactionItem.serviceUIs.length; i++) {
-		console.log(vm.currentTransactionItem.serviceUIs[i])
 		var item = vm.currentTransactionItem.serviceUIs[i];
 		item.serviceType = item.renewalFeeUI ? 'Regional Renewal' : 'Form 1200';
 		item.serviceFeeUI = item.renewalFeeUI ? item.renewalFeeUI : item.form1200FeeUI;
@@ -77,8 +76,6 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 			position: 'top-right'
 		}
 	];
-
-	// console.log(vm.currentTransactionItem)
 
 	vm.$onInit = function() {
 
