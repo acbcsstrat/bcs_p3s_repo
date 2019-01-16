@@ -496,8 +496,8 @@ public class CostAnalysisDataEngine extends Universal{
 		List<ArchivedRate> archivedRateList = new ArrayList<ArchivedRate>();
 		archivedRateList = ArchivedRate.findAllArchivedRates();
 		Collections.reverse(archivedRateList);
-		int i = 6;
 		//GETTING THE 7th, 14th, 21st etc values from the list
+		int i = 7;  // actually gets 8, 15, 22 days ago, but as FE shows 'ArchivedDate' (ie the day after) the dats shown look correct. Set i=6 for correct amounts, but then FE shows wrong dates.
 		for(ArchivedRate eachDay : archivedRateList ){
 			if(weeksRates.size() >= 7){
 				break;

@@ -191,7 +191,7 @@
                         <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter:testFl | filter:filterPortfolio as Result" data-ng-click="$ctrl.rowSelect($event, patent)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
                             <td class="t-data__td--ellipsis t-data__td t-data__w12">
                                 <span class="td-ellipsis">
-                                    <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.id}}" data-ui-sref="portfolio.patent({patentId: patent.id})"></a>
+                                    <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.id}}"></a>
                                 </span>
                             </td>
                             <td class="t-data__td--ellipsis t-data__td t-data__w12 ellipsis-remove" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">

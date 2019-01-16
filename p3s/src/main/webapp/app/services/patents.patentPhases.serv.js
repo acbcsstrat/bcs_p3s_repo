@@ -45,8 +45,14 @@ function patentPhasesService($timeout, $q, $rootScope, calculateService, patents
 				factory.patentNumbers = obj;
 				for(var property in obj) {
 					if(obj.hasOwnProperty(property)) {
+
 						if(obj[property].length > 0) {
-							phase = obj[property][0].serviceList[0].currentStageColour;
+							if(obj[property][0].serviceList.length === 0) {
+								phase = 'Grey'
+							}
+							if(obj[property][0].serviceList.length > 0) {
+								phase = obj[property][0].serviceList[0].currentStageColour;
+							}
 							break;
 						}
 					}

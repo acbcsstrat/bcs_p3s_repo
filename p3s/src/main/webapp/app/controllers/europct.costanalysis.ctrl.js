@@ -290,14 +290,12 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextServi
         function lineData() {
 
             var lineDataArr = [];
-
             for (var property in ca.lineChart) { //change ca.lineChart
                 if (ca.lineChart.hasOwnProperty(property)) {
                     const dayData = ca.lineChart[property];
-                    var d = property.slice(8, 10)
-                    var m = property.slice(5, 7)
-                    var y = property.slice(0, 4)
-                    var date = new Date(y, m, d).getTime();
+                    var str = property.split("T").shift();
+                    var date = new Date(str).getTime();
+
                     lineDataArr.push([date, dayData]);
                 }
             }

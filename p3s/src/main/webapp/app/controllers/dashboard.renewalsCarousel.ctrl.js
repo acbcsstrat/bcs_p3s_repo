@@ -11,7 +11,6 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 	vm.setPatents = setPatents;
     $timeout(function() {
         vm.patents = patentPhasesService.getPatents;
-        console.log(vm.patents)
     });
 
     vm.patentsTotal = patentPhasesService.patentNumbers;
