@@ -123,7 +123,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
           }
         }
       }
-      // console.log(result)
+
       return uniqueArray(result); //check no duplicates
 
     }    
@@ -211,7 +211,8 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
         if(!$(event.target).hasClass('cartbtn')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].id; //gets data from data-id
-            $state.go('portfolio.patent', {patentId: patent.id}, {reload: true});
+              $state.go('portfolio.patent', {patentId: patent.id}, {reload: true})
+            
         }
         if($(event.target).hasClass('cartbtn')) {
             for(var i = 0; i < patent.serviceList.length; i++) {
@@ -228,7 +229,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     };
 
     function sortType(column) {
-      console.log(column)
+
       if(column == 'dueDate') {
         vm.selectedSortType = (function() {
 
