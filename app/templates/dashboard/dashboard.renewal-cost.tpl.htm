@@ -4,12 +4,12 @@
 		<h4 class="pill-radius bg-phase-green txt-white font-body p-default" data-ng-if="$ctrl.fxTimeFrame" data-ng-bind="$ctrl.fxTimeFrame"></h4>
 	</div>
 	<div class="widget-panel__body d-flex justify-content-center flex-grow-1 flex-column">
-		<div class="row bg-no-data" data-ng-if="!$ctrl.loading && $ctrl.patent.serviceCostttt">
+		<div class="row bg-no-data" data-ng-if="!$ctrl.loading && !$ctrl.patent.serviceCost">
 			<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
 				<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 			</div>
 		</div>
-		<div data-ng-show="$ctrl.loading" class="animate-show">
+		<div data-ng-show="$ctrl.loading && !$ctrl.patent.serviceCost" class="animate-show">
 			<div class="row">
 				<div class="col-xl-12 text-center">
 					<div class="d-flex justify-content-center align-items-center">
