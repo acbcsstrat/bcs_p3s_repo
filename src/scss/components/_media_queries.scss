@@ -107,9 +107,13 @@
 
   $font-normal: 1rem !global;
 
-  .view-nav .view-nav__item {
+  .view-nav .view-nav__item, .view-nav-secondary .view-nav__item {
     font-size: 1.5rem;
   }  
+
+  .view-nav-secondary .view-nav__item {
+    padding: 1rem 3rem;
+  }
 
   .panel-nav .panel-nav__list-item {
     font-size: 1.2rem;
@@ -187,6 +191,13 @@
 
 @media screen and (max-width: 992px) {
 
+  .app-guide-panel {
+    .modal-dialog {
+      max-width: 500px;
+      width: 500px;
+    }
+  }  
+
   .t-data__w13 { width: 8%; }
   .t-data__w15 { width: 20%; }
   .t-data__w10 { width: 16%; }
@@ -248,6 +259,13 @@
 /*RESET USER-AGENT STYLES******************/
 
 
+@media (min-width: 993px) {
+  .app-guide-panel {
+    .modal-dialog {
+      max-width: 750px;
+    }
+  }
+}
 
 
 @media (min-width: 0px) {
