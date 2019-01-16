@@ -9,7 +9,7 @@ function mainNavCtrl($scope, $rootScope, $mdSidenav, ngCart,  $timeout, coreServ
  	$scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
 
-    // $scope.openGuide = openGuide;
+    $scope.openGuide = openGuide;
 
     function buildToggler(componentId) {
       return function() {
@@ -17,10 +17,10 @@ function mainNavCtrl($scope, $rootScope, $mdSidenav, ngCart,  $timeout, coreServ
       };
     }
 
-    // function openGuide() {
-    // 	coreService.openAppGuide();
-    // 	$rootScope.$broadcast('appGuideOpen');
-    // }
+    function openGuide() {
+    	coreService.openAppGuide();
+    	$rootScope.$broadcast('appGuideOpen');
+    }
 
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({
