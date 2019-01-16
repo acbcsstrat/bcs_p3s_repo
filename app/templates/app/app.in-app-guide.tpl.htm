@@ -1,0 +1,96 @@
+<div class="app-guide">
+    <div class="app-guide__head text-left bg-phase-grey d-flex justify-content-between align-items-center">
+        <h2 class="font-h2 font-weight-medium txt-white">Patent Place Guide</h2>
+        <span class="cursor-pointer" data-ng-click="$ctrl.dismissWelcomeModal()"><i class="txt-white fa fa-times fa-2x"></i></span>
+    </div>
+    <div class="d-flex flex-column justify-content-center p-t-none">
+        <uib-tabset active="active" class="app-guide">
+            <uib-tab index="0" heading="Colour Key">
+                <div class="app-guide__body">
+                    <div class="row m-b-sm">
+                        <div class="col-md-12">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>                                
+                        </div>
+                    </div>
+
+                    <div class="row m-b-xs">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <nav>
+                                <ul class="panel-nav">
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius green m-b-xs active" data-ng-click="activeTab = 0;" data-ng-class="{'active': activeTab == 0}">Green</li>
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius amber m-b-xs" data-ng-click="activeTab = 1;" data-ng-class="{'active': activeTab == 1}">Amber</li>
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius red m-b-xs" data-ng-click="activeTab = 2;" data-ng-class="{'active': activeTab == 2}">Red</li>
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius blue m-b-xs" data-ng-click="activeTab = 3;" data-ng-class="{'active': activeTab == 3}">Blue</li>
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius black m-b-xs" data-ng-click="activeTab = 4;" data-ng-class="{'active': activeTab == 4}">Black</li>
+                                    <li class="panel-nav__list-item list-item--colour-border pill-radius grey m-b-xs" data-ng-click="activeTab = 5;" data-ng-class="{'active': activeTab == 5}">Grey</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <uib-tabset active="activeTab" type="pills">
+                        <uib-tab heading="Green" index="0" class="bg-phase-green font-body" data-ng-hide="true">
+                                <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> 3 months before renewal date - 6 working days before renewal date</p>
+                                <p class="font-body">The Green Phase is the first phase in the annuity cycle and starts when the renewal window opens 3 months before the renewal date, and closes when only 6 working days remain before the end of the period.  This is the most cost-effective time to renew.</p>
+                        </uib-tab>
+                        <uib-tab heading="Amber" index="1" data-ng-hide="true">
+                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> 6 working days before renewal date - 3 working days before renewal date</p>
+                            <p class="font-body">The Amber Phase starts on day 6 before the renewal date and closes on day 4. We use priority exchange and payments methods during this time which attract a small premium.</p>
+                        </uib-tab>
+                        <uib-tab heading="Red" index="2" data-ng-hide="true">
+                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> Final 3 days before renewal date</p>                              
+                            <p class="font-body">The Red Phase is the final 3 working days before the renewal date.  We’re not currently able to accept renewals through our web service at this time, but we can certainly help – you just need to give us a call.</p>
+                        </uib-tab>
+                        <uib-tab heading="Blue" index="3" data-ng-hide="true">
+                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> Day after renewal date - 10 working days before end of extension</p>
+                            <p class="font-body">The Blue Phase starts on the day after the renewal date and runs until the end of the 11th working days before the end of the 6 month extension period.</p>
+                        </uib-tab>
+                        <uib-tab heading="Black" index="4" data-ng-hide="true">
+                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> The period between 10 and 6 working days before the expiry of the extension period</p>                                
+                            <p class="font-body">The Black Phase starts on the 10th day before the expiry of the extension period, and runs until 21:00 UTC on the 6th day before the end of the extension period.</p>
+                        </uib-tab>
+                        <uib-tab heading="Grey" index="5" data-ng-hide="true">
+                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> During this period patents are not generally available for renewal</p>
+                            <p class="font-body">Generally patents are not renewable during this the Grey phase.  This may be because the patent has already been renewed, or it may be that the renewal window hasn’t opened yet.  If you think you should be able to renew a patent in this phase then please contact us.</p>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Portfolio">
+                <div class="app-guide__body">
+                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
+                    <ul>
+                        <li>Find information on the patent which is extracted from the EPO</li>
+                        <li>Access Renewal options and information (if appropriate)</li>
+                        <li>Access all Euro-PCT information and service such as generating a Form 1200</li>
+                        <li>Edit or delete patents on the system</li>
+                    </ul>
+                </div>
+            </uib-tab>
+            <uib-tab index="2" heading="Adding a Patent">
+                <div class="app-guide__body">
+                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
+                </div>
+            </uib-tab>
+            <uib-tab index="3" heading="Form 1200">
+                <div class="app-guide__body">
+                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
+                </div>
+            </uib-tab>
+            <uib-tab index="4" heading="Renewals">
+                <div class="app-guide__body">
+                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
+                </div>
+            </uib-tab>
+            <uib-tab index="5" heading="Scenario 1">
+                <div class="app-guide__body">
+                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
+                </div>
+            </uib-tab>         
+            <uib-tab index="6" heading="Scenario 2">
+                <div class="app-guide__body">
+                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
+                </div>
+            </uib-tab>                                                 
+        </uib-tabset>
+    </div>
+</div>
