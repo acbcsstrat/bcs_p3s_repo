@@ -7,8 +7,12 @@ function coreService($q, $timeout, fxService, $http) {
     var REST_SERVICE_URI = ppdomain+'partner-details/'; 
 
     var factory = {
-        ppContact: ppContact
+        ppContact: ppContact,
+        openAppGuide: openAppGuide,
+        appGuideOpen: false
     };
+
+    var appGuideOpen = true;
 
     function ppContact() {
         var deferred = $q.defer();
@@ -23,6 +27,11 @@ function coreService($q, $timeout, fxService, $http) {
         );
         return deferred.promise;
     }
+
+    function openAppGuide() {
+        return factory.appGuideOpen = !factory.appGuideOpen
+    }
+
     return factory;
 
 }

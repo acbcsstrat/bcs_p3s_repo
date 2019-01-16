@@ -11,6 +11,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	var patentsFound = true;
 	var userTimedOut = false;
 	var messageArr = [];
+	
 
 	$scope.$on('IdleStart', function() {
 		
@@ -44,6 +45,23 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
       	
 	});
 
+  	$scope.$on('appGuideOpen', function(){
+  		if(coreService.appGuideOpen === true) {
+			var modalInstance = $uibModal.open({
+				templateUrl: 'app/templates/app/app.in-app-guide.tpl.htm',
+				scope: $scope,
+				windowClass: 'app-guide-panel',
+				controllerAs:'$ctrl',
+				controller: ['$uibModalInstance', function($uibModalInstance) {
+
+			 	  	this.dismissWelcomeModal = function () {
+				    	$uibModalInstance.close();
+				  	};
+				}]
+			});
+  		}
+  	})
+
     function init() {
 
         patentsRestService.fetchAllPatents()
@@ -60,7 +78,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
     }
 
-    init()
+    init();
 
 	function welcomeMessageModal() {
 		var modalInstance = $uibModal.open({

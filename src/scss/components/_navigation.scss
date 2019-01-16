@@ -69,6 +69,40 @@
     }
 }
 
+.app-guide {
+    .nav-tabs {
+        border-top: 1px solid $grey!important; //!important overrides other overide for bootstraps nav-tabs border
+        border-bottom: 1px solid $grey!important;
+        .nav-item {
+            &[disabled] {
+                color: $grey;
+                background: $grey-blocked;
+                cursor: not-allowed;
+                border-bottom: 3px solid $grey-blocked; 
+            }
+            &.active {
+                border-bottom: 3px solid $black; 
+            }
+            .nav-link {          
+                border-right: 1px solid $grey;
+                border-left: 1px solid $grey;
+                border-bottom: 3px solid $white; 
+                font-weight: 400;
+                font-size: $font-h4;
+                cursor: pointer;
+                line-height: $line-none;
+                @include padding-mixin(1.5rem 3rem);
+                -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+                -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+                transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+
+
 .panel-nav {
     width: 100%;
     .panel-nav__list-item {
@@ -147,6 +181,14 @@
               background: $black;
               color: $white;
             }
+          }
+          &.grey {
+            border: 2px solid $grey-dark;
+            color: $grey-dark;    
+            &.active {            
+              background: $grey-dark;
+              color: $white;
+            }     
           }
           
         }

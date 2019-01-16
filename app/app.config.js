@@ -1,8 +1,8 @@
 angular.module('ppApp').config(appConfig);
 
-appConfig.$inject = ['$httpProvider', '$urlRouterProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'slickCarouselConfig', 'localStorageServiceProvider'];
+appConfig.$inject = ['$httpProvider', '$urlRouterProvider', '$uibModalProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'slickCarouselConfig', 'localStorageServiceProvider'];
 
-function appConfig($httpProvider, $urlRouterProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig, localStorageServiceProvider) {
+function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig, localStorageServiceProvider) {
 
     if (!$httpProvider.defaults.headers.get) {
         $httpProvider.defaults.headers.get = {};    
@@ -16,6 +16,10 @@ function appConfig($httpProvider, $urlRouterProvider, $compileProvider, $qProvid
     // extra
     // $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
     // $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';    
+
+    // $uibModalProvider.options.windowClass = 'show';
+    // $uibModalProvider.options.backdropClass = 'show';
+
 
     IdleProvider.idle(500);
     IdleProvider.timeout(30);
