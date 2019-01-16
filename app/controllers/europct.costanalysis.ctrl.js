@@ -144,7 +144,6 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextServi
                 useInteractiveGuideline: true,
                 xAxis: {
                     tickFormat: function (d, i) {
-                        console.log(d3.time.format('%x')(new Date(d)))
                         return d3.time.format('%x')(new Date(d));
                     },
                     axisLabelDistance: 20,
@@ -291,7 +290,6 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextServi
         function lineData() {
 
             var lineDataArr = [];
-            // console.log(ca.lineChart)
             for (var property in ca.lineChart) { //change ca.lineChart
                 if (ca.lineChart.hasOwnProperty(property)) {
                     const dayData = ca.lineChart[property];
