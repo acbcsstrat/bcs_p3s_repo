@@ -49,6 +49,7 @@ public class EpctEngine extends Universal {
 	
 	Patent patent;
 	Epct epct;		// likely not exist
+	EpctEngineAux aux;
 	boolean reasonIsTerminal = false;
 	boolean isNotAvailable = false;
 	Date effectivePriorityDate;
@@ -311,7 +312,8 @@ public class EpctEngine extends Universal {
 		ld31monthsAfter =  ldEffectivePriority.plusMonths(31L);
 		ld31monthsAfter =  ld31monthsAfter.minusDays(1L);  // Cautious. Unsure of EPO rule
 		log().debug("calc f1200 dates: 31month date = "+ld31monthsAfter.toString());
-		if (ldToday.isAfter(ld31monthsAfter)) {
+		//if (ldToday.isAfter(ld31monthsAfter)) {  caused crash if today IS the date
+		if ( ! ldToday.isBefore(ld31monthsAfter)) {  // '! Before' gives 'After' *OR* isToday
 			isTooLate = true;
     		isNotAvailable = true;
 			return;
@@ -386,15 +388,28 @@ public class EpctEngine extends Universal {
 		//  but cannot select patent unless EPO has published, so use the 18m date
 		greenStartDate = Date.from(ld18monthsAfter.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-		// Red is 3 days WORKING days before end. But for Thanksgiving implementation, choose simpler 5+5 CALENDAR days 
-		LocalDate ldRedStart =  ld31monthsAfter.minusDays(5L);
+		// Get Red & amber start dates
+		aux = new EpctEngineAux(ld31monthsAfter);
+		LocalDate ldAmberStart =  aux.getLdAmberStart();
+		LocalDate ldRedStart =  aux.getLdRedStart();
+		log().debug("patent# "+patent.getId()+" Epct amberStart "+ldAmberStart+" : redStartEpc "+ldRedStart+"   calc by EpctEngineAux");
+
+		
+		amberStartDate = Date.from(ldAmberStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		redStartDate = Date.from(ldRedStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		//redStartDateMinus1 = Date.from((ldRedStart.minusDays(1L)).atStartOfDay(ZoneId.systemDefault()).toInstant()); - acTidy
 		redEndDate = Date.from(ld31monthsAfter.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				
-		LocalDate ldAmberStart =  ldRedStart.minusDays(5L);
-		amberStartDate = Date.from(ldAmberStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
+		// below is the early Thanksgiving implementation. 5+5
+		//		// Red is 3 days WORKING days before end. But for Thanksgiving implementation, choose simpler 5+5 CALENDAR days 
+		//		LocalDate ldRedStart =  ld31monthsAfter.minusDays(5L);
+		//		redStartDate = Date.from(ldRedStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		//		//redStartDateMinus1 = Date.from((ldRedStart.minusDays(1L)).atStartOfDay(ZoneId.systemDefault()).toInstant()); - acTidy
+		//		redEndDate = Date.from(ld31monthsAfter.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		//				
+		//		LocalDate ldAmberStart =  ldRedStart.minusDays(5L);
+		//		amberStartDate = Date.from(ldAmberStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		//
 		
 		// what is current colour & next colour
 		currentColour = RenewalColourEnum.GREY;
