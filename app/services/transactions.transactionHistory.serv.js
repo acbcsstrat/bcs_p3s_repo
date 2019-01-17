@@ -20,7 +20,6 @@ function transactionHistoryService($http, $q) {
 		.then(
 			function(response){
                 response.data.forEach(function(el){
-                    console.log(el)
                     el.serviceUIs = el.renewalUIs.concat(el.epctUIs)
                 })
                 deferred.resolve(response.data);
