@@ -187,7 +187,7 @@
 					<div class="row">
 						<div class="col-xl-12 m-b-sm">
 							<p class="font-h3 font-weight-medium">Save: <span class="txt-phase-green">$ {{$ctrl.patent.availableFee.savings | number: 2}}</span></p>
-							<p>Renew before: <span class="font-weight-medium" data-ng-bind="$ctrl.patent.availableFee.costBandEndDateUI"></span></p>
+							<p>Instruct before: <span class="font-weight-medium" data-ng-bind="$ctrl.patent.availableFee.costBandEndDateUI"></span></p>
 						</div>
 						<div class="col-xl-12 d-flex justify-content-end align-items-center">
 							<div data-ng-if="$ctrl.patent.availableFee !== null && $ctrl.patent.renewalStatus !== 'Payment in progress' && $ctrl.patent.renewalStatus !== 'EPO Instructed'">
@@ -414,7 +414,7 @@
 							<div class="row">
 								<div class="col-md-6 m-b-sm">
 									<p class="font-h3 font-weight-medium">Save: <span class="txt-phase-green">$ {{($ctrl.patent.availableFee.savings | number: 2) || '0.00'}}</span></p>
-									<p>Renew before: <span class="font-weight-medium" data-ng-bind="$ctrl.patent.availableFee.costBandEndDateUI"></span></p>
+									<p>Instruct before: <span class="font-weight-medium" data-ng-bind="$ctrl.patent.availableFee.costBandEndDateUI"></span></p>
 								</div>
 								<div class="col-md-6 d-flex justify-content-end align-items-center">
 									<div data-ng-if="$ctrl.patent.availableFee !== null && $ctrl.patent.renewalStatus !== 'Payment in progress' && $ctrl.patent.renewalStatus !== 'EPO Instructed'">
