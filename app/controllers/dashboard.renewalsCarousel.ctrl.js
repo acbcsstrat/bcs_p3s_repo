@@ -47,6 +47,7 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
                     vm.currentIndex = currentSlide;
                     vm.currIndexForTitle = (currentSlide + 1);                    
                     vm.selectedPatent = patentPhasesService.getPatent;
+
             		if(vm.selectedPatent !== null && patentPhasesService.getPatents !== null) {
     					patentPhasesService.setPatent(vm.patents[vm.currentIndex])
                         $scope.$emit('updatePatent');
@@ -54,7 +55,7 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 
         	},
         	init: function (event, slick) {
-                slick.refresh()
+                slick.refresh();
                 vm.patents = patentPhasesService.getPatents;
               	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
             }
