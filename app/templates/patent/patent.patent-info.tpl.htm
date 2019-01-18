@@ -183,9 +183,9 @@
 							<p class="text-center">&euro; {{($ctrl.patent.availableFee.fee.subTotalEUR | number: 2) || '0.00'}}</p>
 						</div>
 					</div>
-					<div class=" m-b-sm border-grey-xs--btm"></div>
+					<div class="m-b-sm border-grey-xs--btm"></div>
 					<div class="row">
-						<div class="col-xl-12 m-b-sm">
+						<div class="col-xl-12 m-b-sm" data-ng-if="$ctrl.patent.availableFee.savings !== 0">
 							<p class="font-h3 font-weight-medium">Save: <span class="txt-phase-green">$ {{$ctrl.patent.availableFee.savings | number: 2}}</span></p>
 							<p>Instruct before: <span class="font-weight-medium" data-ng-bind="$ctrl.patent.availableFee.costBandEndDateUI"></span></p>
 						</div>
@@ -412,7 +412,7 @@
 						</div>
 						<div class="m-b-sm border-grey-xs--btm"></div>
 							<div class="row">
-								<div class="col-md-6 m-b-sm">
+								<div class="col-md-6 m-b-sm" data-ng-if="$ctrl.patent.availableFee.savings !== 0">
 									<p class="font-h3 font-weight-medium">Save: <span class="txt-phase-green">$ {{($ctrl.patent.availableFee.savings | number: 2) || '0.00'}}</span></p>
 									<p>Instruct before: <span class="font-weight-medium" data-ng-bind="$ctrl.patent.availableFee.costBandEndDateUI"></span></p>
 								</div>
