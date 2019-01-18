@@ -20,8 +20,8 @@ function transactionHistoryItemCtrl($scope, transactionHistoryItem, transactionH
 	vm.transactionHistoryItem = transactionHistoryItem;	
 	for(var i = 0; i < vm.transactionHistoryItem.serviceUIs.length; i++) {
 		var item = vm.transactionHistoryItem.serviceUIs[i];
-		item.serviceType = item.renewalFeeUI !== null  ? 'Regional Renewal' : 'Form 1200';
-		item.serviceFeeUI = item.renewalFeeUI !== null ? item.renewalFeeUI : item.form1200FeeUI;
+		item.serviceType = item.renewalFeeUI ? 'Regional Renewal' : 'Form 1200';
+		item.serviceFeeUI = item.renewalFeeUI ? item.renewalFeeUI : item.form1200FeeUI;
 	}
 	var currTransStatus = transactionHistoryItem.latestTransStatus;
 	vm.transactionHistoryItem = transactionHistoryItem;

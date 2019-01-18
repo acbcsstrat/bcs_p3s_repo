@@ -44,6 +44,9 @@ public class ServiceAuthorisationTools extends Universal {
 	@Autowired
 	HttpSession session;
 
+
+	public static String DELETE_WORKAROUND_MSG = "Catch and keep quiet - as FE offers deletion of undeletable EPCT PFD";
+	
 	
 	protected void authReminder() {
 		System.out.println("");
@@ -284,7 +287,7 @@ public class ServiceAuthorisationTools extends Universal {
 			// 190110 mitigate FE behaviour. Above line IS GOOD - but FE offers this button even when not deleteable - causing a stackdump 
 			// such stackdump AVOIDed below, but should be restored once FE fixed
 			// This (hopefully) temporary change made in both : ServiceAuthorisationTools/checkEpctisDeletable and Form1200ServiceImpl/deleteCurrentForm1200Data
-			if ( ! isDeletable) throw new P3SRuntimeException("Catch and keep quiet - as FE offers deletion of undeletable EPCT PFD");
+			if ( ! isDeletable) throw new P3SRuntimeException(DELETE_WORKAROUND_MSG);
 		}
 	}	
 

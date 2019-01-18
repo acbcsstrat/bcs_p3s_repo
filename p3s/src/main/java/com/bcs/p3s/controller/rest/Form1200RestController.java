@@ -34,10 +34,12 @@ import com.bcs.p3s.engine.DummyForm1200Engine;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.service.Form1200Service;
+import com.bcs.p3s.service.ServiceAuthorisationTools;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
 import com.bcs.p3s.util.config.P3SPropertyReader;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -444,9 +446,23 @@ public class Form1200RestController extends Universal {
 
 		try {
 			form1200Service.deleteCurrentForm1200Data(id);
-		} catch (Exception e) {
-			logErrorAndContinue(err+"",e);
-	  		return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR ); // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
+		}
+		catch (Exception e) {
+
+			// 190110 mitigate FE behaviour. FE offers this button even when not deleteable - causing an undesirable stackdump in logs (Such should only happen for genuine problems - not user mis-operation) 
+			// Tmp fix is a try-catch here specifically to catch and suppress this error
+			// This (hopefully) temporary change made in both : ServiceAuthorisationTools/checkEpctisDeletable and Form1200ServiceImpl/deleteCurrentForm1200Data
+			// Summary: Avoid stackdump in logs. But DO indicate fail to FE, such that FE can advise the user
+    		if ( (e instanceof P3SRuntimeException) && (ServiceAuthorisationTools.DELETE_WORKAROUND_MSG.equals(e.getMessage())) ) {
+   			
+    			log().warn("Tmp workaround to avoid log stackdump when FE offers delete button for undeletable epct PDF");
+    	  		return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR ); // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
+
+    		}
+    		else {
+    			logErrorAndContinue(err+"",e);
+    	  		return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR ); // Alternatives: NO_CONTENT, NOT_FOUND, BAD_REQUEST. METHOD_FAILURE
+    		}
 		}
 
 		log().debug(err+"completed.");

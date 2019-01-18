@@ -8,8 +8,8 @@ function coreService($q, $timeout, fxService, $http) {
 
     var factory = {
         ppContact: ppContact,
-        openAppGuide: openAppGuide,
-        appGuideOpen: false
+        // openAppGuide: openAppGuide,
+        // appGuideOpen: false
     };
 
     var appGuideOpen = true;
@@ -28,9 +28,9 @@ function coreService($q, $timeout, fxService, $http) {
         return deferred.promise;
     }
 
-    function openAppGuide() {
-        return factory.appGuideOpen = !factory.appGuideOpen
-    }
+    // function openAppGuide() {
+    //     return factory.appGuideOpen = !factory.appGuideOpen
+    // }
 
     return factory;
 

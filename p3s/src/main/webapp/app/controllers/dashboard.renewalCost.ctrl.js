@@ -11,7 +11,7 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
     vm.actionStatus = actionStatus;
     vm.paymentStatus = paymentStatus;
     vm.loading = true;
-    vm.noPatents = false;
+    vm.noPatents = true;
     vm.patent;
 
     function init() {
@@ -24,9 +24,11 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 
 
     $scope.$on('updateCost', function(e, o){
-
+        vm.noPatents = false;
+        vm.loading = true;
         if(patentPhasesService.getPatent !== null) {
             vm.cartService = null;
+
             var patentId =  patentPhasesService.getPatent.id;
 
             patentsRestService.fetchPatentItem(patentId)
