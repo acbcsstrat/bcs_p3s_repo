@@ -96,7 +96,7 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
                     arrayOrder.sort();
 
                     arrayOrder.forEach(function(key){
-                        // console.log(key)
+
                         var found = false;
 
                         vm.tableData = vm.tableData.filter(function(item){

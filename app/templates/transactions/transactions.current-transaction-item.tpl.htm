@@ -13,7 +13,7 @@
 		<uib-tabset type="pills" active="activeSelectedTab">
 			<uib-tab heading="Transaction Details" index="0" data-ng-hide="true">
 				<div class="content-panel__head border-grey-xs--btm">
-					<div class="row d-flex align-items-center m-b-sm">
+					<div class="row d-flex align-items-center">
 						<div class="col-md-6 col-lg-6 col-xl-2">
 							<p class="font-weight-bold font-h4">Transaction ID</p>
 							<p class="font-h4" data-ng-bind="$ctrl.currentTransactionItem.p3S_TransRef"></p>
@@ -174,6 +174,16 @@
 												<p class="font-body">This means that we've asked the EPO to complete the transaction. We're now just waiting for them to action this.</p>
 											</div>
 										</div>
+										<div data-ng-if="transaction.renewalStatus == 'Completed' || transaction.form1200Status == 'Completed'">
+											<div class="progress-tracker m-b-sm">
+												<uib-progress>
+													<uib-bar class="bg-phase-green pill-radius tracker-item" value="100" max="100"></uib-bar>
+												</uib-progress>
+											</div>											
+											<div class="m-b-sm">
+												<p class="font-body">We've had confirmation that the instruction has gone through. You can download a copy of the invoice or any relevant certificates, once the whole transaction is complete, from the transaction history.</p>
+											</div>
+										</div>										
 									</div>
 								</div>
 							</div>
