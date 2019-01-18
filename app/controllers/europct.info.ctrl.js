@@ -13,6 +13,7 @@ function euroPctInfoCtrl(patent, $state, $timeout, $location, $anchorScroll, chu
     vm.getStatus = getStatus;
     vm.checkActionStatus = checkActionStatus;
     vm.getCurrColour = getCurrColour;
+    vm.getNextColour = getNextColour;
     vm.displayNotifications = displayNotifications;
     vm.fetchItemTransaction = fetchItemTransaction;
 
@@ -52,6 +53,10 @@ function euroPctInfoCtrl(patent, $state, $timeout, $location, $anchorScroll, chu
     function getCurrColour(colour, type) {
         return organiseColourService.getCurrColour(colour, type);
     }
+
+    function getNextColour(colour, type) {
+        return organiseColourService.getNextColour(colour, type);
+    }    
 
     function checkActionStatus(text){
        return organiseTextService.actionStatus(text)
