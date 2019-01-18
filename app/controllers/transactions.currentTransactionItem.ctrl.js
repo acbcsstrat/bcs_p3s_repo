@@ -23,6 +23,7 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 		item.serviceType = item.renewalFeeUI ? 'Regional Renewal' : 'Form 1200';
 		item.serviceFeeUI = item.renewalFeeUI ? item.renewalFeeUI : item.form1200FeeUI;
 	}
+
 	vm.checkProgress = checkProgress;
 	vm.patents = [];
 	vm.transStatus = [
@@ -65,14 +66,14 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 			status: 'EPO Instructed', 
 			active: false, 
 			complete: false,
-			tip: 'Everything is in place, and we’ve instructed the EPO to renew the patent.',
+			tip: 'Everything is in place, and we’ve instructed the EPO.',
 			position: 'top-right'
 		},
 		{
 			status: 'Completed', 
 			active: false, 
 			complete: false,
-			tip: 'We\'ve had confirmation that your patent has been successfully renewed by the EPO. You can download copies of the renewal certificate and the invoice from the Transaction history tab under the Transactions menu.',
+			tip: 'We\'ve had confirmation that your transaction has been completed. You can download a copy of the invoice or any relevant certificate below.',
 			position: 'top-right'
 		}
 	];
@@ -80,6 +81,7 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 	vm.$onInit = function() {
 
 		switch(currentTransactionItem.latestTransStatus) { //add current transaction progress value to scope
+
 			case 'Initiated':
 				vm.transactionProgress = 0;
 			break;

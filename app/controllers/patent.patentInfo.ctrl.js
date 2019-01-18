@@ -24,6 +24,8 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
 
     vm.$onInit = function() {
 
+        var patentService = patent.portfolioUI.serviceList[0];
+
         if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) {
             patent.availableFee = null;
             return;
@@ -36,11 +38,17 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
         })
 
         patent.availableFee = {};
-        patent.availableFee.costBandEndDateUI = patent.portfolioUI.serviceList[0].costBandEndDateUI;
+        patent.availableFee.costBandEndDateUI = patentService.costBandEndDateUI;
 
         if(patent.renewalFeeUI !== null) {
             patent.availableFee.savings = (function(){
-                return patent.portfolioUI.serviceList[0].nextStageCostUSD - patent.portfolioUI.serviceList[0].currentStageCostUSD;
+                if((patentService.currentStageColour == 'Black' && patentService.serviceStatus == 'Show price') || (patentService.currentStageColour !== 'Black')) {
+                    if(patentService.nextStageCostUSD !== 0) {
+                        return patentService.nextStageCostUSD - patentService.currentStageCostUSD;
+                    }
+                    return 0;
+                }
+                return 0;
             }())
             patent.availableFee.title = 'Regional Renewal';
             patent.availableFee.fee = patent.renewalFeeUI;
@@ -59,13 +67,19 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
                     if(patent.renewalFeeUI.expressFeeEUR !== 0) total += patent.renewalFeeUI.expressFeeEUR;
                     return total;
                 }())
-            }             
+            }
 
         }
 
         if(patent.form1200FeeUI !== null) {
             patent.availableFee.savings = (function(){
-                return patent.portfolioUI.serviceList[0].nextStageCostUSD - patent.portfolioUI.serviceList[0].currentStageCostUSD;
+                if(patentService.currentStageColour !== 'Red') {                
+                    if(patentService.nextStageCostUSD !==0) {
+                        return patentService.nextStageCostUSD - patentService.currentStageCostUSD;
+                    }
+                    return 0;
+                }
+                return 0;
             }())
             patent.availableFee.title = 'Form 1200';
             patent.availableFee.fee = patent.form1200FeeUI;

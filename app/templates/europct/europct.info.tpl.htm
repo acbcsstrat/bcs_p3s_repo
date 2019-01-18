@@ -23,7 +23,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
-                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'bg')">
+                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="$ctrl.getNextColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'bg')">
                                 <uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.form1200StageProgress">{{$ctrl.patent.form1200StageProgress}}%</uib-bar>
                             </uib-progress>
                         </div>
@@ -290,7 +290,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'bg')">
+                            <uib-progress class="pill-radius progress-bar-tall" data-ng-class="$ctrl.getNextColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'bg')">
                                 <uib-bar class="pill-radius progress-bar-tall d-flex align-items-center justify-content-center font-weight-medium progress-10 font-body" value="$ctrl.patent.form1200StageProgress">{{$ctrl.patent.form1200StageProgress}}%</uib-bar>
                             </uib-progress>
                         </div>

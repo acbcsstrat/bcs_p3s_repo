@@ -44,19 +44,19 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 	    event: {
 	    	afterChange: function (event, slick, currentSlide, nextSlide) {
 
-	    		vm.currentIndex = currentSlide;
-        		vm.currIndexForTitle = (currentSlide + 1);
-                $timeout(function(){
+                    vm.currentIndex = currentSlide;
+                    vm.currIndexForTitle = (currentSlide + 1);                    
                     vm.selectedPatent = patentPhasesService.getPatent;
+
             		if(vm.selectedPatent !== null && patentPhasesService.getPatents !== null) {
     					patentPhasesService.setPatent(vm.patents[vm.currentIndex])
                         $scope.$emit('updatePatent');
             		}
-                }, 300)
-
 
         	},
         	init: function (event, slick) {
+                slick.refresh();
+                vm.patents = patentPhasesService.getPatents;
               	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
             }
         }

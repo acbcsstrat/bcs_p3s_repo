@@ -9,8 +9,17 @@ function renewalCaCtrl(patent, ca, $timeout, $state, $location, $anchorScroll, c
     vm.fetchItemTransaction = fetchItemTransaction;
 
     if(typeof ca !== 'undefined' || ca !== null ) {
-        
+        var patentService = patent.portfolioUI.serviceList[0];
         vm.ca = ca;
+        patent.renewalSavings = (function(){
+            if((patentService.currentStageColour == 'Black' && patentService.serviceStatus == 'Show price') || (patentService.currentStageColour !== 'Black')) {
+                if(patentService.nextStageCostUSD !== 0) {
+                    return patentService.nextStageCostUSD - patentService.currentStageCostUSD;
+                }
+                return 0;
+            }
+            return 0;
+        }())
         vm.patent = patent;
         vm.barData = barData;
         vm.loadChart = loadChart;

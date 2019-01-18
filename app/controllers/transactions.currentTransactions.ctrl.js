@@ -96,7 +96,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 					arrayOrder.sort();
 
 					arrayOrder.forEach(function(key){
-						// console.log(key)
+
 						var found = false;
 
 						vm.tableData = vm.tableData.filter(function(item){
