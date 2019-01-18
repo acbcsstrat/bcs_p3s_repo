@@ -14,8 +14,18 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextServi
     }
 
     if(typeof ca !== 'undefined' || ca !== null ) {
-
+        var patentService = patent.portfolioUI.serviceList[0];
+        patentService.currentStageColour = 'Red'
         vm.ca = ca;
+        patent.renewalSavings = (function(){
+            if(patentService.currentStageColour !== 'Red') {
+                if(patentService.nextStageCostUSD !== 0) {
+                    return patentService.nextStageCostUSD - patentService.currentStageCostUSD;
+                }
+                return 0;
+            }
+            return 0;
+        }())        
         vm.patent = patent;
         vm.barData = barData;
         vm.loadChart = loadChart;

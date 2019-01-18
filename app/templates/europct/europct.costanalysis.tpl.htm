@@ -258,13 +258,13 @@
                             <div class="col-xl-3">
                                 <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.subTotalEUR | number: 2) || '0.00'}}</p>
                             </div>
-                        </div>                            
+                        </div>
                         <div class=" m-b-sm border-grey-xs--btm"></div>       
                     </div>
-                    <div class="row">
+                    <div class="row" data-ng-if="$ctrl.patent.portfolioUI.serviceList[0].currentStageColour !== 'Red'"><!--FINISH WORK OFF TOMORROW -->
                         <div class="col-xl-12 d-flex justify-content-between align-items-end">
-                            <div data-ng-if="$ctrl.actionStatus($ctrl.patent.epctStatus)">
-                                <p class="font-h3 font-weight-medium m-b-xs">Save: <span class="txt-phase-green">$ {{($ctrl.patent.portfolioUI.serviceList[0].nextStageCostUSD - $ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD | number: 2) || '0.00'}}</span></p>
+                            <div data-ng-if="$ctrl.patent.renewalSavings !== 0">
+                                <p class="font-h3 font-weight-medium m-b-xs">Save: <span class="txt-phase-green">$ {{($ctrl.patent.renewalSavings | number: 2) || '0.00'}}</span></p>
                                 <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</span></p>
                             </div>
                         </div>
@@ -548,19 +548,24 @@
                         <div class="col-md-3">
                             <p class="text-center">&euro; {{($ctrl.patent.form1200FeeUI.subTotalEUR | number: 2) || '0.00'}}</p>
                         </div>
-                    </div>                            
+                    </div>
                     <div class="border-grey-xs--btm"></div>                                    
                 </div>
-                <div class="col-md-4 col-lg-4 d-flex flex-column justify-content-end m-t-sm">
-                    <div data-ng-if="$ctrl.patent.renewalStatus == 'Show price'">
-                        <p class="font-h3 font-weight-medium">Save: $ <span class="txt-phase-green">{{$ctrl.patent.renewalCostNextStageUSD - $ctrl.patent.currentRenewalCostUSD | number: 2}}</span></p>
-                        <p class="font-body m-b-xs">Instruct before: <span class="font-weight-medium">{{$ctrl.patent.costBandEndDateUI}}</span></p>
-                        <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-t-sm" name="service.renewal" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-                        </ngcart-addtocart>
+                <div class="row" data-ng-if="$ctrl.patent.portfolioUI.serviceList[0].currentStageColour !== 'Red'">
+                    <div class="col-md-4 col-lg-4 d-flex justify-content-between align-items-end">
+                        <div data-ng-if="$ctrl.patent.renewalSavings !== 0">
+                            <p class="font-h3 font-weight-medium m-b-xs">Save: <span class="txt-phase-green">$ {{($ctrl.patent.renewalSavings | number: 2) || '0.00'}}</span></p>
+                            <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</span></p>
+                        </div>
                     </div>
-                    <button type="button" data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" class="btn btn--green btn--lg pill-radius m-t-sm" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                                                             
-                </div> 
-            </div> <!-- row end-->
+                </div>
+                <div class="row m-t-sm">
+                    <div class="col-md-4 col-lg-4">              
+                        <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
+                        <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'" name="service.renewal" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent"></ngcart-addtocart>
+                    </div>          
+                </div>
+            </div>
         </div>
     </div>
 </div>
