@@ -31,21 +31,11 @@ function searchPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, se
 			},
 			function(errResponse) {
 				vm.queriedPatent = null;
-				switch(errResponse.status) {
-					case 400:
-						vm.searchError = 'We\'ve not been able to find that patent in the European Patent Register.  Please enter an application number such as 18 123456.2';
-					break;
-					case 404:
-						vm.searchError = 'We’ve not been able to find Patent Application '+patentNo+' in the European Patent Register.  Please check the number you’re entering and try again.';
-					break;
-					case 204:
-						vm.searchError = 'It looks like we\'ve already added Patent Application '+patentNo+' in to the system.  You should be able to find it in the List Patents page using the search boxes.';
-					break;
-					default:
-						vm.searchError = null;
-					}
+				vm.searchError = errResponse.data;
+
 			}
-		);
+		)
+
     }  	
 
 };

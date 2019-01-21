@@ -24,9 +24,12 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 
 
     $scope.$on('updateCost', function(e, o){
-        vm.noPatents = false;
+
         vm.loading = true;
-        if(patentPhasesService.getPatent !== null) {
+
+        if(patentPhasesService.getPatent !== '') {
+
+            vm.noPatents = false;
             vm.cartService = null;
 
             var patentId =  patentPhasesService.getPatent.id;
@@ -64,8 +67,10 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
     })
 
     $scope.$on('updatePhase', function(e, o){
-        if(patentPhasesService.getPatents === null) {
+        
+        if(patentPhasesService.getPatents === '' && vm.patent !== undefined) {
             vm.patent.serviceCost = null;
+            vm.noPatents = true;
         }
     });
 
