@@ -225,6 +225,7 @@
   .m-b-md-xs { margin-bottom: 0.75rem; } 
 
   .m-r-none-md {margin-right: 0!important; }
+  .m-l-none-md {margin-left: 0!important; }
 
   .md-point { 
     background:#DDD;
@@ -260,6 +261,10 @@
 
 
 @media (min-width: 993px) {
+
+  .m-l-lg-sm { margin-left: 1.5rem; }
+  .m-r-lg-sm { margin-right: 1.5rem; }
+
   .app-guide-panel {
     .modal-dialog {
       max-width: 750px;
