@@ -27,20 +27,20 @@ function patentPhasesService($timeout, $q, $rootScope, calculateService, patents
 
 		function sortPatentNumbers(patents)	 {
 
-				if(patents.length === 0) {
-					setPatents(null)
-					return;
-				}
-
 				for(var property in obj) {
 					if(obj.hasOwnProperty(property)){
 						if(Array.isArray(obj[property])) {
 							obj[property].length = 0;
+						} else {
+							obj[property] = 0; //for totoal obj.Total
 						}
 						
-					} else {
-						obj[property] = 0; //for totoal obj.Total
 					}
+				}			
+
+				if((Array.isArray(patents) && patents.length === 0) || patents === null) {
+					setPatents(null)
+					return;
 				}
 
 				obj.Total = patents.length;
@@ -101,7 +101,7 @@ function patentPhasesService($timeout, $q, $rootScope, calculateService, patents
 					patents = obj[phase];
 					if(patents.length > 0) {
 						if(patents[0].serviceList.length === 0) {
-							factory.getPatents = null;
+							factory.getPatents = '';
 						} else {
 							factory.getPatents = patents;
 							factory.getPatent = patents[0].serviceList[0];
