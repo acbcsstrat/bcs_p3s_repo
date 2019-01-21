@@ -27,6 +27,11 @@ function patentPhasesService($timeout, $q, $rootScope, calculateService, patents
 
 		function sortPatentNumbers(patents)	 {
 
+				if(patents.length === 0) {
+					setPatents(null)
+					return;
+				}
+
 				for(var property in obj) {
 					if(obj.hasOwnProperty(property)){
 						if(Array.isArray(obj[property])) {
@@ -76,6 +81,12 @@ function patentPhasesService($timeout, $q, $rootScope, calculateService, patents
 
 		function setPatents(phase){
 
+			if(phase === null) {
+			    factory.getPatents = '';
+				factory.getPatent = '';
+				return;
+			}
+
 			var patents;
 
 			if(phase == 'Green') factory.getIndex = 0;
@@ -96,8 +107,8 @@ function patentPhasesService($timeout, $q, $rootScope, calculateService, patents
 							factory.getPatent = patents[0].serviceList[0];
 						}
 					} else {
-						factory.getPatents = null;
-						factory.getPatent = null;
+						factory.getPatents = '';
+						factory.getPatent = '';
 					}
 				}
 			}
@@ -107,9 +118,9 @@ function patentPhasesService($timeout, $q, $rootScope, calculateService, patents
 		function setPatent(patent) {
 			if(patent.serviceList.length > 0) {
 				patent.serviceList[0].id = patent.id;
-				factory.getPatent = patent;
+				factory.getPatent = patent.serviceList[0];
 			} else {
-				factory.getPatent = null;
+				factory.getPatent = '';
 			}
 
 			

@@ -7,75 +7,79 @@
 			<div class="col-md-9 col-lg-9 col-lg-9">
 				<nav>
 					<ul class="panel-nav d-flex justify-content-end">
-						<li class="bg-phase-green pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-init="activeTab = 0" data-ng-click="activeTab = 0; $ctrl.setPatents('Green')" data-ng-hide="activeTab == 0">({{$ctrl.patentData.Green.length}})</li>
-						<li class="bg-phase-amber pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 1; $ctrl.setPatents('Amber')" data-ng-hide="activeTab == 1">({{$ctrl.patentData.Amber.length}})</li>
-						<li class="bg-phase-red pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 2; $ctrl.setPatents('Red')" data-ng-hide="activeTab == 2">({{$ctrl.patentData.Red.length}})</li>
-						<li class="bg-phase-blue pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 3; $ctrl.setPatents('Blue')" data-ng-hide="activeTab == 3">({{$ctrl.patentData.Blue.length}})</li>
-						<li class="bg-phase-black pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 4; $ctrl.setPatents('Black')" data-ng-hide="activeTab == 4">({{$ctrl.patentData.Black.length}})</li>
-						<li class="bg-phase-grey pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 5; $ctrl.setPatents('Grey')" data-ng-hide="true">({{$ctrl.patentData.Grey.length}})</li>								
+						<li class="bg-phase-green pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-init="activeTab = 0" data-ng-click="activeTab = 0; $ctrl.setPatents('Green')" data-ng-hide="activeTab == 0">({{$ctrl.patentData.Green.length || '0'}})</li>
+						<li class="bg-phase-amber pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 1; $ctrl.setPatents('Amber')" data-ng-hide="activeTab == 1">({{$ctrl.patentData.Amber.length || '0'}})</li>
+						<li class="bg-phase-red pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 2; $ctrl.setPatents('Red')" data-ng-hide="activeTab == 2">({{$ctrl.patentData.Red.length || '0'}})</li>
+						<li class="bg-phase-blue pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 3; $ctrl.setPatents('Blue')" data-ng-hide="activeTab == 3">({{$ctrl.patentData.Blue.length || '0'}})</li>
+						<li class="bg-phase-black pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 4; $ctrl.setPatents('Black')" data-ng-hide="activeTab == 4">({{$ctrl.patentData.Black.length || '0'}})</li>
+						<li class="bg-phase-grey pill-radius panel-nav__list-item list-item--colour list-item--sm-pad" data-ng-click="activeTab = 5; $ctrl.setPatents('Grey')" data-ng-hide="true">({{$ctrl.patentData.Grey.length || '0'}})</li>								
 					</ul>
 				</nav>
 			</div>
 		</div>
 	</div>
 	<div class="widget-panel__body">
-		<uib-tabset type="pills" class="pills animate-show" data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== null && $ctrl.selectedPatent !== null">
+		<uib-tabset type="pills" class="pills animate-show" data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== '' && $ctrl.selectedPatent !== ''">
 		    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body" data-ng-hide="true">
-	            <div class="slick-container" class="">
-	            	<div class="tr-border slick-header" data-ng-class="$ctrl.getCurrColour($ctrl.selectedPatent.currentStageColour, 'bg')">
+	            <div class="slick-container">
+	            	<div class="tr-border slick-header" data-ng-class="$ctrl.getCurrColour($ctrl.selectedPatent.currentStageColour, 'bg')" data-ng-if="$ctrl.phaseLoaded && $ctrl.selectedPatent !== null">
         				<h4 class="font-weight-medium text-center font-h4 txt-white">Patent <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.patents.length}}</h4>
         			</div>					            	
-				    <slick data="$ctrl.patents" settings="$ctrl.slickConfig" data-ng-if="$ctrl.phaseLoaded && $ctrl.selectedPatent !== null">
-				        <div data-ng-repeat="item in $ctrl.patents">
-				        	<table class="t-data slider-table border">
-				        		<tbody class="font-body">
-					            	<tr class="t-data__tr">
-					            		<td class="t-data__td td-border text-left border">
-					            			<span class="font-weight-medium">App No: </span>{{item.ep_ApplicationNumber}}
-					            		</td>
-					            		<td class="t-data__td td-border-nb">
-					            			<div class="d-flex justify-content-between">
-							            		<p><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'MM-dd-yy'}}</p>
-												<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getCurrColour(item.serviceList[0].currentStageColour, 'bg')"></div>	
-						            		</div>
-					            		</td>
-					            	</tr>
-					            	<tr class="t-data__tr">
-					            		<td class="t-data__td td-border text-left border t-data__td-50 t-data__td--ellipsis">
-					            			<span class="font-weight-medium">Client Ref: </span> <span class="td-ellipsis" data-ng-bind="item.clientRef || '[No Client Reference Provided]'"></span>
-					            		</td>
-					            		<td class="t-data__td no-border-er text-left">
-					            			<div class="d-flex justify-content-between">
-					            				<p><span class="font-weight-medium">Next Stage: </span>{{item.serviceList[0].costBandEndDate | date:'MM-dd-yy'}}</p>
-					            				<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getCurrColour(item.serviceList[0].nextStageColour, 'bg')"></div>	
-					            			</div>
-					            		</td>
-					            	</tr>
-<!-- 					            	<tr class="t-data__tr">
-					            		<td class="t-data__td td-border text-left border t-data__td-50">
-					            			<span class="font-weight-medium">Due Date: </span>{{item.serviceList[0].costBandEndDateUI}}
-					            		</td>
-					            		<td class="t-data__td td-border-nt">
-					            			<div class="progress-phase" data-ng-if="item.serviceList[0].currentStageColour !== 'Red' && item.serviceList[0].currentStageColour !== 'Black'">
-							       				<uib-progress class="pill-radius" data-ng-class="$ctrl.getNextColour(item.serviceList[0].currentStageColour, 'bg')">
-							       					
-							       					<uib-bar class="pill-radius" value="item.serviceList[0].renewalStageProgress || item.serviceList[0].form1200StageProgress"></uib-bar>
-							       					}
-							       				</uib-progress>
-							            	</div>	
-					            			<div data-ng-if="item.serviceList[0].currentStageColour == 'Red' || item.serviceList[0].currentStageColour == 'Black'">
-							       				<p class="font-h4" data-ng-bind="$ctrl.getStatus(item.serviceList[0].serviceStatus)"></p>
-							            	</div>								            	
-					            		</td>							            		
-					            	</tr> -->
-				        		</tbody>
-				        	</table>
-				        </div>
-				    </slick>
+			    	<div class="row">
+			    		<div class="col-md-12">
+						    <slick data="$ctrl.patents" settings="$ctrl.slickConfig" data-ng-if="$ctrl.phaseLoaded && $ctrl.selectedPatent !== null">
+						        <div data-ng-repeat="item in $ctrl.patents">
+						        	<table class="t-data slider-table border">
+						        		<tbody class="font-body">
+							            	<tr class="t-data__tr">
+							            		<td class="t-data__td td-border text-left border">
+							            			<span class="font-weight-medium">App No: </span>{{item.ep_ApplicationNumber}}
+							            		</td>
+							            		<td class="t-data__td td-border-nb">
+							            			<div class="d-flex justify-content-between">
+									            		<p><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'MM-dd-yy'}}</p>
+														<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getCurrColour(item.serviceList[0].currentStageColour, 'bg')"></div>	
+								            		</div>
+							            		</td>
+							            	</tr>
+							            	<tr class="t-data__tr">
+							            		<td class="t-data__td td-border text-left border t-data__td-50 t-data__td--ellipsis">
+							            			<span class="font-weight-medium">Client Ref: </span> <span class="td-ellipsis" data-ng-bind="item.clientRef || '[No Client Reference Provided]'"></span>
+							            		</td>
+							            		<td class="t-data__td no-border-er text-left">
+							            			<div class="d-flex justify-content-between">
+							            				<p><span class="font-weight-medium">Next Stage: </span>{{item.serviceList[0].costBandEndDate | date:'MM-dd-yy'}}</p>
+							            				<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getCurrColour(item.serviceList[0].nextStageColour, 'bg')"></div>	
+							            			</div>
+							            		</td>
+							            	</tr>
+		<!-- 					            	<tr class="t-data__tr">
+							            		<td class="t-data__td td-border text-left border t-data__td-50">
+							            			<span class="font-weight-medium">Due Date: </span>{{item.serviceList[0].costBandEndDateUI}}
+							            		</td>
+							            		<td class="t-data__td td-border-nt">
+							            			<div class="progress-phase" data-ng-if="item.serviceList[0].currentStageColour !== 'Red' && item.serviceList[0].currentStageColour !== 'Black'">
+									       				<uib-progress class="pill-radius" data-ng-class="$ctrl.getNextColour(item.serviceList[0].currentStageColour, 'bg')">
+									       					
+									       					<uib-bar class="pill-radius" value="item.serviceList[0].renewalStageProgress || item.serviceList[0].form1200StageProgress"></uib-bar>
+									       					}
+									       				</uib-progress>
+									            	</div>	
+							            			<div data-ng-if="item.serviceList[0].currentStageColour == 'Red' || item.serviceList[0].currentStageColour == 'Black'">
+									       				<p class="font-h4" data-ng-bind="$ctrl.getStatus(item.serviceList[0].serviceStatus)"></p>
+									            	</div>								            	
+							            		</td>							            		
+							            	</tr> -->
+						        		</tbody>
+						        	</table>
+						        </div>
+						    </slick>
+			    		</div>
+			    	</div>
             	</div>
 			</uib-tab>
 		</uib-tabset>
-        <div data-ng-show="$ctrl.patents === null" class="row">
+        <div data-ng-show="$ctrl.patents === '' || $ctrl.patents === null" class="row">
         	<div class="col-md-12 d-flex justify-content-center z-index-1">
         		<div class="bg-no-data d-flex align-items-center justify-content-center">
         			<p class="font-body font-weight-bold text-center">Currently there aren't any patents in this phase</p>
