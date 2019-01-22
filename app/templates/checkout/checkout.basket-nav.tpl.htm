@@ -9,15 +9,19 @@
 				</p>
 				<div class="d-flex justify-content-end align-items-center">
 					<div class="m-r-md">
-						<a ui-sref="profile">
-							<img src="assets/imgs/icons/user_icon_sm.png">
+						<a data-ui-sref="profile">
+							<span class="fa-stack fa-stack-lg">
+							  <i class="far fa-circle fa-stack-2x txt-grey"></i>
+							  <i class="far fa-user fa-stack-1x txt-grey"></i>
+							</span>							
+							
 						</a>					
 					</div>
 					<div class="m-r-md">
 						<p class="font-body no-line-height font-weight-bold">{{$root.user.firstName}}</p>
 						<a class="font-body no-line-height txt-black inline-link" data-ng-click="$ctrl.empty()" data-ng-href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
 					</div>
-					<a ui-sref="basket" class="m-r-md">
+					<a data-ui-sref="basket" class="m-r-md">
 						<ngcart-summary class="font-body txt-black"></ngcart-summary>
 					</a>
 				</div>	
