@@ -52,11 +52,14 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
                         patentPhasesService.setPatent(vm.patents[vm.currentIndex])
                         $scope.$emit('updatePatent');
                     }
-                })
+                }, 200)
 
             },
-            init: function (event, slick, currentSlide) {           
-              	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
+            init: function (event, slick, currentSlide) {
+                $timeout(function() {
+                    slick.refresh()      
+                  	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
+                }, 100);
             }
         }
     } //slick end
