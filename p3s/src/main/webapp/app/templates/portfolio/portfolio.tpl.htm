@@ -207,15 +207,15 @@
                             </td><!--when multiple services begin-->
                             <td class="t-data__td t-data__w25">
                                 <div data-ng-if="patent.serviceList.length === 0">
-                                    <span data-ng-if="patent.serviceStatus == 'Renewal in place'">Renewal in Place</span>
-                                    <span data-ng-if="patent.serviceStatus == 'No renewal needed'">No Renewal Needed</span>
-                     <!--                <span data-ng-if="patent.serviceStatus == 'Too late to renew'">No Renewal Needed</span> -->
+                                    <div data-ng-if="!$ctrl.actionStatus(patent.serviceStatus) || patent.serviceStatus == 'Too late to renew'">
+                                        <span data-ng-bind="$ctrl.getStatus(patent.serviceStatus)" class="font-weight-medium"></span>
+                                    </div>
                                 </div>
                                 <table data-ng-if="patent.serviceList.length > 1">
                                     <tr data-ng-repeat="item in patent.serviceList">
                                         <td class="t-data__td t-data__w15 border-grey-xs--left">
                                             <div data-ng-if="!$ctrl.actionStatus(item.serviceStatus) || item.serviceStatus == 'Too late to renew'">
-                                                <span data-ng-bind="$ctrl.getStatus(item.serviceStatus)" class="font-weight-medium"></span>
+                                                <span data-ng-bind="$ctrl.getStatus(item.serviceStatus)"></span>
                                             </div>
                                             <div data-ng-if="$ctrl.actionStatus(item.serviceStatus) && item.serviceStatus !== 'Too late to renew'" data-ng-if="$ctrl.actionStatus(item.serviceStatus) && item.serviceStatus !== 'Too late to renew'">
                                                 <p data-ng-class="$ctrl.getCurrColour(item.currentStageColour, 'text')" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>

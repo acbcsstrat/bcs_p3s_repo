@@ -9,8 +9,7 @@
 				<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 			</div>
 		</div>
-	
-		<div data-ng-if="!$ctrl.noPatents" class="animate-show">
+		<div data-ng-if="!$ctrl.noPatents">
 			<div data-ng-show="$ctrl.loading" class="animate-show">
 				<div class="row">
 					<div class="col-xl-12 text-center">
@@ -19,7 +18,7 @@
 						</div>
 					</div>
 				</div>
-			</div>		
+			</div>
 			<div data-ng-hide="$ctrl.loading" class="animate-show">			
 				<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-md">
 					<uib-tab heading="Today" class="font-body" index="0" data-ng-hide="true">
@@ -29,7 +28,7 @@
 								<p class="font-h2">$ {{$ctrl.patent.serviceCost.subTotalUSD | number: 2 }}</p>
 							</div>
 							<div class="col-xl-2 text-center d-flex align-items-center">
-								<img src="assets/imgs/icons/arrows.png" alt="foreigh exchange icon">
+								<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
 							</div>
 							<div class="col-xl-5 text-center">
 								<p class="font-h3 m-b-xs">EUR</p>
@@ -44,7 +43,7 @@
 								<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDYesterday | number: 2 }}</p>
 							</div>
 							<div class="col-xl-2 text-center d-flex align-items-center">
-								<img src="assets/imgs/icons/arrows.png" alt="foreigh exchange icon">
+								<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
 							</div>
 							<div class="col-xl-5 text-center">
 								<p class="font-h3 m-b-xs">EUR</p>
@@ -59,7 +58,7 @@
 								<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastWeek | number: 2 }}</p>
 							</div>
 							<div class="col-xl-2 text-center d-flex align-items-center">
-								<img src="assets/imgs/icons/arrows.png" alt="foreigh exchange icon">
+								<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
 							</div>
 							<div class="col-xl-5 text-center">
 								<p class="font-h3 m-b-xs">EUR</p>
@@ -74,7 +73,7 @@
 								<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth | number: 2 }}</p>
 							</div>
 							<div class="col-xl-2 text-center d-flex align-items-center">
-								<img src="assets/imgs/icons/arrows.png" alt="foreigh exchange icon">
+								<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
 							</div>
 							<div class="col-xl-5 text-center">
 								<p class="font-h3 m-b-xs">EUR</p>
@@ -129,7 +128,7 @@
 	</div>
 </div>
 
-<div class="bg-white widget-panel d-xl-none">
+<div class="bg-white widget-panel d-xl-none h-100">
 	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
 		<h3 class="font-h3 font-weight-bold">Service Cost</h3>
 		<div data-ng-if="$ctrl.fxTimeFrame" class="pill-radius d-flex justify-content-center align-items-center flex-column bg-phase-green">	
@@ -151,7 +150,7 @@
 							<p class="font-h2">$ {{$ctrl.patent.serviceCost.subTotalUSD | number: 2 }}</p>
 						</div>
 						<div class="col-md-2 col-lg-2 d-flex align-items-center justify-content-center">
-							<img src="assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
+							<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
 						</div>
 						<div class="col-md-5 col-lg-5 text-center">
 							<p class="font-h3 m-b-xs">EUR</p>
@@ -166,7 +165,7 @@
 							<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDYesterday | number: 2 }}</p>
 						</div>
 						<div class="col-md-2 col-lg-2 d-flex align-items-center justify-content-center">
-							<img src="assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
+							<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
 						</div>
 						<div class="col-md-5 col-lg-5 text-center">
 							<p class="font-h3 m-b-xs">EUR</p>
@@ -181,7 +180,7 @@
 							<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastWeek | number: 2 }}</p>
 						</div>
 						<div class="col-md-2 col-lg-2 d-flex align-items-center justify-content-center">
-							<img src="assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
+							<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
 						</div>
 						<div class="col-md-5 col-lg-5 text-center">
 							<p class="font-h3 m-b-xs">EUR</p>
@@ -196,7 +195,7 @@
 							<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth | number: 2 }}</p>
 						</div>
 						<div class="col-md-2 col-lg-2 d-flex align-items-center justify-content-center">
-							<img src="assets/imgs/icons/arrows_icons_sm.png" alt="foreign exchange icon">
+							<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
 						</div>
 						<div class="col-md-5 col-lg-5 text-center">
 							<p class="font-h3 m-b-xs">EUR</p>
@@ -249,10 +248,10 @@
 			 				</ngcart-addtocart>
 						</div>
 						<div data-ng-show="$ctrl.patent.serviceStatus !== null" class="w-100 text-right">
-			        		<button class="btn btn--lg btn--green pill-radius btn-md-block m-l-sm" data-ng-show="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Renewal'" data-ui-sref="portfolio.patent.renewal.cost-analysis({patentId: $ctrl.patent.id})">View Fee Breakdown</button>
-			        		<button class="btn btn--lg btn--green pill-radius btn-md-block m-l-sm" data-ng-show="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Form1200'" data-ui-sref="portfolio.patent.euro-pct.cost-analysis({patentId: $ctrl.patent.id})">View Fee Breakdown</button>
+			        		<button class="btn btn--lg btn--green pill-radius btn-md-block m-l-none-md" data-ng-show="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Renewal'" data-ui-sref="portfolio.patent.renewal.cost-analysis({patentId: $ctrl.patent.id})">View Fee Breakdown</button>
+			        		<button class="btn btn--lg btn--green pill-radius btn-md-block m-l-none-md" data-ng-show="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Form1200'" data-ui-sref="portfolio.patent.euro-pct.cost-analysis({patentId: $ctrl.patent.id})">View Fee Breakdown</button>
 						</div>
-			        	<button type="button" class="btn btn--lg btn--green pill-radius btn-md-block m-l-sm" data-ng-show="$ctrl.paymentStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.epctStatus)" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
+			        	<button type="button" class="btn btn--lg btn--green pill-radius btn-md-block m-l-none-md" data-ng-show="$ctrl.paymentStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.epctStatus)" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
 					</div>
 				</div>
 			</div>

@@ -7,13 +7,11 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 	var vm = this;
 
 	vm.phaseLoaded = true;
-	vm.patentData = patentPhasesService.patentNumbers;
 	vm.setPatents = setPatents;
     $timeout(function() {
-        vm.patents = patentPhasesService.getPatents;
+        vm.patents = patentPhasesService.getPatents;    
     });
 
-    vm.patentsTotal = patentPhasesService.patentNumbers;
     vm.date = new Date();
     vm.getCurrColour = getCurrColour;
     vm.getNextColour = getNextColour;
@@ -44,20 +42,24 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 	    event: {
 	    	afterChange: function (event, slick, currentSlide, nextSlide) {
 
+                $timeout(function() {
+                    vm.patentData = patentPhasesService.patentNumbers;
                     vm.currentIndex = currentSlide;
                     vm.currIndexForTitle = (currentSlide + 1);                    
+                    vm.patents = patentPhasesService.getPatents;
                     vm.selectedPatent = patentPhasesService.getPatent;
-
-            		if(vm.selectedPatent !== null && patentPhasesService.getPatents !== null) {
-    					patentPhasesService.setPatent(vm.patents[vm.currentIndex])
+                    if(vm.selectedPatent !== '' && patentPhasesService.getPatents !== '') {
+                        patentPhasesService.setPatent(vm.patents[vm.currentIndex])
                         $scope.$emit('updatePatent');
-            		}
+                    }
+                }, 200)
 
-        	},
-        	init: function (event, slick) {
-                slick.refresh();
-                vm.patents = patentPhasesService.getPatents;
-              	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
+            },
+            init: function (event, slick, currentSlide) {
+                $timeout(function() {
+                    slick.refresh()      
+                  	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
+                }, 100);
             }
         }
     } //slick end
@@ -77,7 +79,7 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
 		vm.phaseLoaded = false;
 		$timeout(function() {
             vm.patents = patentPhasesService.getPatents;
-            vm.selectedPatent = patentPhasesService.getPatent;            
+            vm.selectedPatent = patentPhasesService.getPatent;
 			vm.phaseLoaded = true;
 		}, 10);
 
