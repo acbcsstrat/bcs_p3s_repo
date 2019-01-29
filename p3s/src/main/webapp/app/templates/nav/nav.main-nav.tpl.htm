@@ -20,12 +20,12 @@
       	 	<md-content class="bg-phase-grey">
 	      	 	<div layout="column" class="p-pill-tabs m-b-sm p-a-sm">
 		      	 	<div class="d-flex justify-content-center align-items-center m-b-sm">
-		      	 		<a class="nav-link" ui-sref="profile">
+		      	 		<a class="nav-link" data-ui-sref="profile">
 		      	 			<img src="assets/imgs/icons/user_icon.png">
 	      	 			</a>
 		      	 	</div>
 	      	 		<div class="d-flex justify-content-center align-items-center">
-	      	 			<a class="nav-link nav-link--white d-flex justify-content-center align-items-center font-h4 font-weight-bold" ui-sref="profile">
+	      	 			<a class="nav-link nav-link--white d-flex justify-content-center align-items-center font-h4 font-weight-bold" data-ui-sref="profile">
 			      	 		{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}
 		      	 		</a>
 	      	 		</div>
@@ -36,7 +36,7 @@
 	      	 	<div layout="column" class=" d-flex justify-content-center">
 	      	 		<nav class="nav">
 						<ul class="side-menu w-100">
-							<li data-ng-repeat="section in $ctrl.menu.sections" class="font-body font-weight-medium" ui-sref-active="active" data-ng-class="{'parentActive' : $ctrl.isSectionSelected(section)}">
+							<li data-ng-repeat="section in $ctrl.menu.sections" class="font-body font-weight-medium" data-ui-sref-active="active" data-ng-class="{'parentActive' : $ctrl.isSectionSelected(section)}">
 	                        	<menu-link section="section" data-ng-if="section.type === 'link'"></menu-link>
 	        					<menu-toggle section="section" data-ng-if="section.type === 'toggle'" context="$ctrl"></menu-toggle>
 					        </li>
@@ -52,7 +52,7 @@
   
     <div layout="column" class="closed-sidenav bg-phase-grey">
 	  	<div class="text-center w-100 p-tb-35">
-	  		<a ui-sref="dashboard">
+	  		<a data-ui-sref="dashboard">
 	  			<img width="35" src="assets/imgs/logos/pp_icon.png">
 	  		</a>
 	    </div>
@@ -61,20 +61,20 @@
 	    	<i class="fas fa-bars fa-2x d-xl-none d-lg-inline-block"></i>
 	    </div>
 		<ul class="nav flex-column">
-			<li class="nav-item" ui-sref-active="active">
-				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" ui-sref="dashboard">
+			<li class="nav-item" data-ui-sref-active="active">
+				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" data-ui-sref="dashboard">
 					<i class="fas fa-tachometer-alt fa-2x d-none d-xl-block"></i>
 					<i class="fas fa-tachometer-alt fa-2x d-xl-none"></i>
 				</a>
 			</li>
-			<li class="nav-item" ui-sref-active="active">
-				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" ui-sref="portfolio">
+			<li class="nav-item" data-ui-sref-active="active">
+				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" data-ui-sref="portfolio" data-ui-sref-opts="{reload: true}">
 					<i class="fas fa-folder-open fa-2x d-none d-xl-block"></i>
 					<i class="fas fa-folder-open fa-2x d-xl-none d-lg-inline-block"></i>
 				</a>
 			</li>			
-			<li class="nav-item" ui-sref-active="active">
-				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" ui-sref="current-transactions">
+			<li class="nav-item" data-ui-sref-active="active">
+				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" data-ui-sref="current-transactions">
 					<i class="far fa-credit-card fa-2x d-none d-xl-block"></i>
 					<i class="far fa-credit-card fa-2x d-xl-none d-lg-inline-block"></i>
 				</a>
