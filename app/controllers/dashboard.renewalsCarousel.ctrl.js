@@ -57,7 +57,7 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
             },
             init: function (event, slick, currentSlide) {
                 $timeout(function() {
-                    angular.element($window).dispatchEvent(new Event("resize"));
+                    angular.element($window.dispatchEvent(new Event("resize")));
                     slick.refresh()      
                   	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
                 }, 100);
