@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
 
-renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'patentPhasesService', 'dashboardService', 'organiseColourService', 'organiseTextService']
+renewalsCarouselCtrl.$inject = ['$scope', '$timeout', '$window', 'patentIds', 'patentPhasesService', 'dashboardService', 'organiseColourService', 'organiseTextService']
 
-function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, dashboardService, organiseColourService, organiseTextService) {
+function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhasesService, dashboardService, organiseColourService, organiseTextService) {
 
 	var vm = this;
 
@@ -57,6 +57,7 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, patentPhasesService, 
             },
             init: function (event, slick, currentSlide) {
                 $timeout(function() {
+                    angular.element($window).dispatchEvent(new Event("resize"));
                     slick.refresh()      
                   	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
                 }, 100);
