@@ -123,8 +123,6 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
             form1200Service.submitForm1200($stateParams.form1200)
             .then(
                 function(response){
-                    console.log(response)
-                    $rootScope.page = 'Form 1200 Generated';
                     vm.form1200 = response;
                 },
                 function(errResponse){
