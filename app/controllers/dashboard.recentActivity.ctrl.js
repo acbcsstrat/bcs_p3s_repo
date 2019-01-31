@@ -13,7 +13,7 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 	vm.getCurrColour = getCurrColour;
 
     vm.recentActivityData = [];
-    vm.recentTransArr = []
+    vm.recentTransArr = [];
 
     vm.setActivityActiveTab = setActivityActiveTab;
 	vm.changeActivity = changeActivity;
@@ -83,12 +83,13 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 					function(response, i){
 						if(data.serviceList.length > 0) {
 		        			if(data.serviceStatus == 'Show price' || data.serviceStatus == 'Too late to renew' || data.serviceStatus == 'Epct available' || data.serviceStatus == 'Epct rejected' || data.serviceStatus == 'Epct saved') {
-		        				var hours = calculateService.calculateHours(data.serviceList.costBandColour, response);
+		        				var hours = calculateService.calculateHours(data.serviceList[0].currentStageColour, response);
 		    					if(calculateService.recentActivity(hours)) {
 		    						vm.recentActivityData.push(data);
 		    					}
 		        			}
 						}
+						console.log(vm.recentActivityData)
 					},
 					function(errResponse) {
 						console.log(errResponse)
@@ -96,6 +97,7 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 				);
 			})
 		}
+		
 
 	}
 
