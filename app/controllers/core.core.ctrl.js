@@ -45,22 +45,22 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
       	
 	});
 
-  	// $scope.$on('appGuideOpen', function(){
-  	// 	if(coreService.appGuideOpen === true) {
-			// var modalInstance = $uibModal.open({
-			// 	templateUrl: 'app/templates/app/app.in-app-guide.tpl.htm',
-			// 	scope: $scope,
-			// 	windowClass: 'app-guide-panel',
-			// 	controllerAs:'$ctrl',
-			// 	controller: ['$uibModalInstance', function($uibModalInstance) {
+  	$scope.$on('appGuideOpen', function(){
+  		if(coreService.appGuideOpen === true) {
+			var modalInstance = $uibModal.open({
+				templateUrl: 'app/templates/app/app.in-app-guide.tpl.htm',
+				scope: $scope,
+				windowClass: 'app-guide-panel',
+				controllerAs:'$ctrl',
+				controller: ['$uibModalInstance', function($uibModalInstance) {
 
-			//  	  	this.dismissWelcomeModal = function () {
-			// 	    	$uibModalInstance.close();
-			// 	  	};
-			// 	}]
-			// });
-  	// 	}
-  	// })
+			 	  	this.dismissWelcomeModal = function () {
+				    	$uibModalInstance.close();
+				  	};
+				}]
+			});
+  		}
+  	})
 
     function init() {
 
