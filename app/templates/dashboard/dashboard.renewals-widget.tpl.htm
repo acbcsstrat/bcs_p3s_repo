@@ -19,70 +19,35 @@
 	</div>
 	<div>
 		<uib-tabset type="pills" class="pills animate-show" data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== '' && $ctrl.selectedPatent !== ''">
-		    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body" data-ng-hide="true">
-<!-- 	            <div class="slick-container">
-	            	<div class="tr-border slick-header" data-ng-class="$ctrl.getCurrColour($ctrl.selectedPatent.currentStageColour, 'bg')" data-ng-if="$ctrl.phaseLoaded && $ctrl.selectedPatent !== null">
-        				<h4 class="font-weight-medium text-center font-h4 txt-white">Patent <span data-ng-bind="$ctrl.currIndexForTitle"></span> of {{$ctrl.patents.length}}</h4>
-        			</div>			 -->		            	
-			    	<div class="row">
-			    		<div class="col-md-12">
-		    				<table class="table t-data t-data--border table-scroll">
-		    					<thead>
-		    						<tr class="t-data__row">
-		    							<th class="t-data__th">App No.</th>
-		    							<th class="t-data__th">Client Ref</th>
-		    							<th class="t-data__th">Current Stage</th>
-		    							<th class="t-data__th">Next Stage</th>
-		    						</tr>
-		    					</thead>
-			                    <tbody>
-			                    	<tr class="t-data__row" data-ng-repeat="patent in $ctrl.patents" data-ng-click="$ctrl.fetchCost(patent)" data-ng-init="$ctrl.fetchCost($ctrl.patents[0])">
-				                    	<td class="t-data__td t-data__td--ellipsis" data-ng-bind="patent.ep_ApplicationNumber">
-				                    		
-				                    	</td>
-				                    	<td class="t-data__td t-data__td--ellipsis" data-ng-bind="patent.clientRef || '[No Client Reference Provided]'">
-				                    		
-				                    	</td>
-				                    	<td class="t-data__td font-weight-medium" data-ng-class="$ctrl.getCurrColour(patent.serviceList[0].currentStageColour, 'text')">
-				                    		{{patent.serviceList[0].currentStageColour}}: {{$ctrl.date | date:'MM-dd-yy'}}
-				                    	</td>
-				                    	<td class="t-data__td font-weight-medium" data-ng-class="$ctrl.getCurrColour(patent.serviceList[0].nextStageColour, 'text')">
-				                    		{{patent.serviceList[0].nextStageColour}}: {{patent.serviceList[0].costBandEndDate | date:'MM-dd-yy'}}
-				                    	</td>				                    					                    					                    					                    	
-			                    	</tr>
-			                    </tbody>
-			    			</table>
-<!-- 						    <slick data="$ctrl.patents" settings="$ctrl.slickConfig" data-ng-if="$ctrl.phaseLoaded && $ctrl.selectedPatent !== ''">
-						        <div data-ng-repeat="item in $ctrl.patents">
-						        	<table class="t-data slider-table border">
-						        		<tbody class="font-body">
-							            	<tr class="t-data__tr">
-							            		<td class="t-data__td td-border text-left border">
-							            			<span class="font-weight-medium">App No: </span>{{item.ep_ApplicationNumber}}
-							            		</td>
-							            		<td class="t-data__td td-border-nb">
-							            			<div class="d-flex justify-content-between">
-									            		<p><span class="font-weight-medium">Current Stage:</span> {{$ctrl.date | date:'MM-dd-yy'}}</p>
-														<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getCurrColour(item.serviceList[0].currentStageColour, 'bg')"></div>	
-								            		</div>
-							            		</td>
-							            	</tr>
-							            	<tr class="t-data__tr">
-							            		<td class="t-data__td td-border text-left border t-data__td-50 t-data__td--ellipsis">
-							            			<span class="font-weight-medium">Client Ref: </span> <span class="td-ellipsis" data-ng-bind="item.clientRef || '[No Client Reference Provided]'"></span>
-							            		</td>
-							            		<td class="t-data__td no-border-er text-left">
-							            			<div class="d-flex justify-content-between">
-							            				<p><span class="font-weight-medium">Next Stage: </span>{{item.serviceList[0].costBandEndDate | date:'MM-dd-yy'}}</p>
-							            				<div class="phase-rectangle m-r-lg" data-ng-class="$ctrl.getCurrColour(item.serviceList[0].nextStageColour, 'bg')"></div>	
-							            			</div>
-							            		</td>
-							            	</tr>
-						        		</tbody>
-						        	</table>
-						        </div>
-						    </slick> -->
-			    <!-- 		</div> -->
+		    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body" data-ng-hide="true">	            	
+		    	<div class="row">
+		    		<div class="col-md-12">
+	    				<table class="table t-data t-data--border table-scroll">
+	    					<thead>
+	    						<tr class="t-data__row">
+	    							<th class="t-data__th">App No.</th>
+	    							<th class="t-data__th">Client Ref</th>
+	    							<th class="t-data__th">Current Stage</th>
+	    							<th class="t-data__th">Next Stage</th>
+	    						</tr>
+	    					</thead>
+		                    <tbody>
+		                    	<tr class="t-data__row" data-ng-repeat="patent in $ctrl.patents" data-ng-click="$ctrl.fetchCost(patent)" data-ng-init="$ctrl.fetchCost($ctrl.patents[0])">
+			                    	<td class="t-data__td t-data__td--ellipsis" data-ng-bind="patent.ep_ApplicationNumber">
+			                    		
+			                    	</td>
+			                    	<td class="t-data__td t-data__td--ellipsis" data-ng-bind="patent.clientRef || '[No Client Reference Provided]'">
+			                    		
+			                    	</td>
+			                    	<td class="t-data__td font-weight-medium" data-ng-class="$ctrl.getCurrColour(patent.serviceList[0].currentStageColour, 'text')">
+			                    		{{patent.serviceList[0].currentStageColour}}: {{$ctrl.date | date:'MM-dd-yy'}}
+			                    	</td>
+			                    	<td class="t-data__td font-weight-medium" data-ng-class="$ctrl.getCurrColour(patent.serviceList[0].nextStageColour, 'text')">
+			                    		{{patent.serviceList[0].nextStageColour}}: {{patent.serviceList[0].costBandEndDate | date:'MM-dd-yy'}}
+			                    	</td>				                    					                    					                    					                    	
+		                    	</tr>
+		                    </tbody>
+		    			</table>
 			    	</div>
             	</div>
 			</uib-tab>

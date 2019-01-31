@@ -1,33 +1,32 @@
 angular.module('ppApp').controller('recentActivityCtrl', recentActivityCtrl);
 
-recentActivityCtrl.$inject = ['patentIds', 'calculateService', 'patentsRestService', 'coreService', 'transactionHistoryService', 'currentTransactionsService'];
+recentActivityCtrl.$inject = ['patentIds', 'calculateService', 'patentsRestService', 'coreService', 'transactionHistoryService', 'currentTransactionsService', 'organiseColourService'];
 
-function recentActivityCtrl(patentIds, calculateService, patentsRestService, coreService, transactionHistoryService, currentTransactionsService) {
+function recentActivityCtrl(patentIds, calculateService, patentsRestService, coreService, transactionHistoryService, currentTransactionsService, organiseColourService) {
 
 	var vm = this;
 
-	var date = new Date().getTime();
+	vm.date = new Date().getTime();
 
-	vm.recentTransArr = [];
-	vm.recentRenewalArr = [];
-    vm.recentStageArr = [];
+	vm.fetchStageChanges = fetchStageChanges;
+	vm.fetchTransChanges = fetchTransChanges;
+	vm.getCurrColour = getCurrColour;
+
+    vm.recentActivityData = [];
+    vm.recentTransArr = []
+
     vm.setActivityActiveTab = setActivityActiveTab;
 	vm.changeActivity = changeActivity;
     vm.activityNotifications = [
 		{
 			activity: 'Stage Change',
 			index: 0,
-			function: 'recentStageChanges'
+			function: 'fetchStageChanges'
 		},
 		{
 			activity: 'Transactions',
 			index: 1,
-			function: 'recentTransactions'			
-		},
-		{	
-			activity: 'Renewals',
-			index: 2,
-			function: 'recentRenewals'			
+			function: 'fetchTransChanges'			
 		}
 	]
 	vm.activeMenu = vm.activityNotifications[0].activity;
@@ -51,44 +50,48 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
             }
         )
 
-        recentStageChanges()
+        fetchStageChanges()
 
+	}
+
+	function getCurrColour(colour, type) {
+		return organiseColourService.getCurrColour(colour, type)
 	}
 
 	function changeActivity(activity) {
 
 		if(activity == 'Stage Change') {
-			recentStageChanges();
-			return
+			fetchStageChanges();
+			return;
 		}
 
 		if(activity == 'Transactions') {
-			recentTransactions();
-			return
+			fetchTransChanges();
+			return;
 		}
 
-		if(activity == 'Renewals') {
-			recentRenewals();
-			return
-		} 
 	}
 
-	function recentStageChanges() {
+	function fetchStageChanges() {
+
+		vm.recentActivityData.length = 0;
 
 		if(patentIds.length > 0) {
 			patentIds.forEach(function(data){
 				patentsRestService.fetchCostAnalysis(data.id)
 				.then(
 					function(response, i){
-	        			if(data.renewalStatus == 'Show price' || data.renewalStatus == 'Too late to renew' || data.epctStatus == 'Epct available' || data.epctStatus == 'Epct rejected' || data.epctStatus == 'Epct saved') {
-	        				var hours = calculateService.calculateHours(data.costBandColour, response);
-	    					if(calculateService.recentActivity(hours)) {
-	    						vm.recentStageArr.push(data);
-	    					}
-	        			}
+						if(data.serviceList.length > 0) {
+		        			if(data.serviceStatus == 'Show price' || data.serviceStatus == 'Too late to renew' || data.serviceStatus == 'Epct available' || data.serviceStatus == 'Epct rejected' || data.serviceStatus == 'Epct saved') {
+		        				var hours = calculateService.calculateHours(data.serviceList.costBandColour, response);
+		    					if(calculateService.recentActivity(hours)) {
+		    						vm.recentActivityData.push(data);
+		    					}
+		        			}
+						}
 					},
 					function(errResponse) {
-						// body...
+						console.log(errResponse)
 					}
 				);
 			})
@@ -96,30 +99,15 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 
 	}
 
-	function recentTransactions() {
-
+	function fetchTransChanges() {
 		if(currentTransactions.length > 0) {
 			currentTransactions.forEach(function(data){
-				var hours =  date - data.lastUpdatedDate;
+				var hours =  new Date().getTime() - data.lastUpdatedDate;
 				var recentTrans  = calculateService.recentActivity(hours);
 				if(recentTrans) {
 					vm.recentTransArr.push(data);
 				}
 			});	
-		}
-
-	}
-
-	function recentRenewals() {
-
-		if(transactionHistory.length > 0) {
-			transactionHistory.forEach(function(data){
-				var hours =  date - data.lastUpdatedDate;
-				var recentRenewal = calculateService.recentActivity(hours);			
-				if(recentRenewal && data.latestTransStatus === 'Completed') {
-					vm.recentRenewalArr.push(data);
-				}
-			})
 		}
 
 	}
