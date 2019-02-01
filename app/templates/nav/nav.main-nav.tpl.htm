@@ -1,4 +1,79 @@
-<div data-ng-controller="mainNavCtrl">
+<div class="fade long-fade show" data-ng-if="$ctrl.timeLoaded"> <!--top nav-->
+    <div layout="row" class="closed-sidenav d-flex justify-content-between border-grey-xs--btm">
+		<span class="d-flex cursor-pointer" data-ng-click="$ctrl.toggleLeft()">
+	    	<i class="fas fa-bars fa-2x txt-black" ></i>
+<!-- 	    	<i class="fas fa-bars fa-2x  txt-black"></i> -->
+		    <p class="txt-black m-l-sm">Menu</p>
+		</span>
+    	
+		<div class="d-flex justify-content-between align-items-center">
+			<span class="m-r-md font-h4 txt-black"><span class="font-weight-bold">EST:</span> {{$ctrl.estTime}}</span> 
+			<span class="font-h4 txt-black"><span class="font-weight-bold">UTC:</span> {{$ctrl.utcTime}}</span>
+		</div>		
+		<div class="d-flex justify-content-between align-items-center">
+			<span class="m-r-md font-h4 txt-black"><span class="font-weight-bold m-r-xs">USD:EUR</span><i class="fas fa-caret-up txt-phase-green m-r-xs fa-lg"></i>0.88493</span> 
+		</div>
+		<div class="d-flex justify-content-end align-items-center">
+			
+<!-- 			<button data-ng-click="$ctrl.openGuide()" class="btn btn-no-bg m-r-sm">
+				<i class="far fa-question-circle fa-2x txt-black"></i>
+			</button> 
+			 -->
+<!-- 			<div class="m-r-sm">
+				<a data-ui-sref="profile">
+					<span class="fa-stack fa-stack-lg">
+					  	<i class="far fa-circle fa-stack-2x txt-black"></i>
+					  	<i class="far fa-user fa-stack-1x txt-black"></i>
+					</span>							
+				</a>					
+			</div> -->
+			<a data-ui-sref="basket" class="m-r-md">
+				<ngcart-summary class="font-body txt-black"></ngcart-summary>
+			</a>
+			<div class="m-r-md">
+				<p class="txt-black">
+					<a data-ui-sref="profile" class="font-weight-medium font-h4">{{$root.user.firstName}}</a> | 
+					<a class="font-h4 txt-black inline-link" data-ng-click="$ctrl.empty()" data-ng-href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
+				</p>
+			</div>
+		</div>
+  	</div>
+	<!--<div layout="row" class="justify-content-between bg-light-grey">
+		<div class="d-flex justify-content-between align-items-center">
+			<span class="m-r-md font-h4"><span class="font-weight-bold">EST:</span> {{$ctrl.estTime}}</span> 
+			<span class="font-h4"><span class="font-weight-bold">UTC:</span> {{$ctrl.utcTime}}</span>
+		</div>
+		<div class="d-flex justify-content-end align-items-center">
+			<p class="font-h4 no-line-height m-r-sm">Hello, <span class="font-weight-medium">{{$root.user.firstName}}!</span></p>
+<!-- 			<button data-ng-click="$ctrl.openGuide()" class="btn btn-no-bg m-r-sm">
+				<i class="far fa-question-circle fa-2x"></i>
+			</button> 
+				<img src="assets/imgs/logos/moneycorp-logo_small.png" alt="moneycorp icon">
+			
+			<div class="m-r-sm">
+				<a data-ui-sref="profile">
+					<span class="fa-stack fa-stack-lg">
+					  	<i class="far fa-circle fa-stack-2x"></i>
+					  	<i class="far fa-user fa-stack-1x"></i>
+					</span>							
+				</a>					
+			</div>
+			<a data-ui-sref="basket" class="m-r-md">
+				<ngcart-summary class="font-body txt-black"></ngcart-summary>
+			</a>
+			<div class="m-r-md">
+				<a class="font-body no-line-heigh inline-link" data-ng-click="$ctrl.empty()" data-ng-href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
+			</div>
+		</div>-->
+	<!-- </div> -->
+</div>
+
+
+
+
+
+
+<div><!--side-nav-->
  	<section flex>
 	    <md-sidenav class="md-sidenav-left bg-phase-grey " md-component-id="left" md-disable-backdrop md-whiteframe="3">
 	    	<div class="row">
@@ -7,18 +82,14 @@
 			      		<div class="row">
 					      	<div class="col-md-6 d-flex justify-content-center align-items-center">
 					      		<img src="assets/imgs/logos/pp_icon.png" alt="patent place icon small">
-					      	</div>
-					      	<div class="col-md-6 d-flex justify-content-center align-items-center">
-						        <md-button data-ng-click="toggleLeft()" class="d-flex justify-content-right align-items-center">
-					          		<img src="assets/imgs/icons/close_icon.png" alt="close menu icon">
-					        	</md-button>
-					      	</div>			      			
+					      	</div>	
 			      		</div>
 			      	</div>	    			
 	    		</div>
 	    	</div>
       	 	<md-content class="bg-phase-grey">
 	      	 	<div layout="column" class="p-pill-tabs m-b-sm p-a-sm">
+	      	 		<span class="cursor-pointer" data-ng-click="$ctrl.toggleLeft()"><i class="fas fa-times fa-2x txt-white"></i></span>
 		      	 	<div class="d-flex justify-content-center align-items-center m-b-sm">
 		      	 		<a class="nav-link" data-ui-sref="profile">
 		      	 			<img src="assets/imgs/icons/user_icon.png">
@@ -50,15 +121,11 @@
 	    </md-sidenav>
   	</section>
   
-    <div layout="column" class="closed-sidenav bg-phase-grey">
+    <div layout="column" class="closed-sidenav-side bg-phase-grey">
 	  	<div class="text-center w-100 p-tb-35">
 	  		<a data-ui-sref="dashboard">
 	  			<img width="35" src="assets/imgs/logos/pp_icon.png">
 	  		</a>
-	    </div>
-	    <div data-ng-click="toggleLeft()" class="btn p-tb-sm btn--green">
-	    	<i class="fas fa-bars fa-2x d-none d-xl-inline-block"></i>
-	    	<i class="fas fa-bars fa-2x d-xl-none d-lg-inline-block"></i>
 	    </div>
 		<ul class="nav flex-column">
 			<li class="nav-item" data-ui-sref-active="active">
