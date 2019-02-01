@@ -9,12 +9,14 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
 	vm.phaseLoaded = true;
 	vm.setPatents = setPatents;
     $timeout(function() {
-        vm.patents = patentPhasesService.getPatents;    
+        vm.patents = patentPhasesService.getPatents;
+        vm.patentData = patentPhasesService.patentNumbers; 
     });
 
     vm.date = new Date();
     vm.getCurrColour = getCurrColour;
     vm.getNextColour = getNextColour;
+    vm.fetchCost = fetchCost;
 
     vm.getStatus = getStatus;
 
@@ -30,43 +32,17 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
         return organiseColourService.getNextColour(phase, type)
     }
 
-	vm.currentIndex = 0;
-    vm.slickConfig = {
-    	accessibility: false,
-    	arrows: true,
-	    enabled: true,
-	    autoplay: false,
-	    draggable: false,
-	    autoplaySpeed: 3000,
-	    method: {},
-	    event: {
-	    	afterChange: function (event, slick, currentSlide, nextSlide) {
+    function fetchCost(patent) {
+        // vm.patentData = patentPhasesService.patentNumbers;                
+        vm.patents = patentPhasesService.getPatents;
+        if(patentPhasesService.getPatent !== '' && patentPhasesService.getPatents !== '') {
+            patentPhasesService.setPatent(patent)
+            $scope.$emit('updatePatent');
+        }        
+    }
 
-                $timeout(function() {
-                    vm.patentData = patentPhasesService.patentNumbers;
-                    vm.currentIndex = currentSlide;
-                    vm.currIndexForTitle = (currentSlide + 1);                    
-                    vm.patents = patentPhasesService.getPatents;
-                    vm.selectedPatent = patentPhasesService.getPatent;
-                    if(vm.selectedPatent !== '' && patentPhasesService.getPatents !== '') {
-                        patentPhasesService.setPatent(vm.patents[vm.currentIndex])
-                        $scope.$emit('updatePatent');
-                    }
-                }, 200)
-
-            },
-            init: function (event, slick, currentSlide) {
-                $timeout(function() {
-                    angular.element($window.dispatchEvent(new Event("resize")));
-                    slick.refresh()      
-                  	slick.slickGoTo(vm.currentIndex); // slide to correct index when init
-                }, 100);
-            }
-        }
-    } //slick end
-
-	$scope.$on('updatePhase', function(e, o){
-		setPhaseFn(o.phase)
+    $scope.$on('updatePhase', function(e, o){
+        setPhaseFn(o.phase)
         $scope.activeTab = patentPhasesService.getIndex;
 	})
 

@@ -11,6 +11,7 @@ function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentP
     vm.date = new Date().getTime();
 
     function init() {
+
         if(patentIds.length > 0) {
             if(patentPhasesService.getPatents === '' || patentPhasesService.patentNumbers.Total !== patentIds.length) { //check if any patents have been addded. Otherwise there is no need to execute code
                 setPatents();
@@ -26,6 +27,7 @@ function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentP
                 vm.animate = true;
             }, 300)   
         }
+        
     }
 
     init();
