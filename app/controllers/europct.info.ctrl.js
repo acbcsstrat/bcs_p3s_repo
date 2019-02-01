@@ -8,7 +8,7 @@ function euroPctInfoCtrl(patent, $state, $timeout, $location, $anchorScroll, chu
 
     vm.patent = patent;
     vm.deleteApplication = deleteApplication;
-    vm.editApplication = editApplication;
+    // vm.editApplication = editApplication;
     vm.updateNotifications = updateNotifications;
     vm.getStatus = getStatus;
     vm.checkActionStatus = checkActionStatus;
@@ -97,17 +97,17 @@ function euroPctInfoCtrl(patent, $state, $timeout, $location, $anchorScroll, chu
         });
     }
 
-    function editApplication(id) {    
-        euroPctService.editApplication(id)
-        .then(
-            function(response){
-                $state.go('portfolio.patent.euro-pct.form1200.questionnaire', {savedForm1200: response.data}, {reload: false}) //send saved data to questionnaire
-            },
-            function(errResponse){
-                editApplicationError(errResponse);
-            }
-        )
-    }    
+    // function editApplication(id) {    
+    //     euroPctService.editApplication(id)
+    //     .then(
+    //         function(response){
+    //             $state.go('portfolio.patent.euro-pct.form1200.questionnaire', {savedForm1200: response.data}, {reload: false}) //send saved data to questionnaire
+    //         },
+    //         function(errResponse){
+    //             editApplicationError(errResponse);
+    //         }
+    //     )
+    // }    
 
     function updateNotifications(id) {
         euroPctService.updateNotifications(id, patent.epctNotificationUIs)

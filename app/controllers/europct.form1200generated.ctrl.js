@@ -11,14 +11,18 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
     vm.patent = patent;
     // vm.form1200;
     vm.deleteApplication = deleteApplication;
-    vm.editApplication = editApplication; 
+    // vm.editApplication = editApplication; 
     vm.portfolioDir = portfolioDir;
     vm.loadingQuestions = false;
     vm.costData = $stateParams.form1200.form1200FeeUI;
 
     function init() {
-        form1200Generating();
-        checkForm1200();   
+        if($stateParams.form1200 === '') {
+            $state.go('portfolio.patent.euro-pct.form1200.intro');
+        } else {        
+            form1200Generating();
+            checkForm1200();   
+        }
     }
 
     init();
@@ -51,17 +55,17 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
         )
     }
 
-    function editApplication(id) {    
-        euroPctService.editApplication(id)
-        .then(
-            function(response){
-                $state.go('portfolio.patent.euro-pct.form1200.questionnaire', {savedForm1200: response.data}, {reload: false}) //send saved data to questionnaire
-            },
-            function(errResponse){
-                editApplicationError(errResponse);
-            }
-        )
-    }    
+    // function editApplication(id) {    
+    //     euroPctService.editApplication(id)
+    //     .then(
+    //         function(response){
+    //             $state.go('portfolio.patent.euro-pct.form1200.questionnaire', {savedForm1200: response.data}, {reload: false}) //send saved data to questionnaire
+    //         },
+    //         function(errResponse){
+    //             editApplicationError(errResponse);
+    //         }
+    //     )
+    // }    
 
     function deleteApplicationSuccess() {
         var modalInstance = $uibModal.open({
@@ -119,17 +123,7 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
     }
 
     function checkForm1200() {
-        if($stateParams.form1200 !== null) {
-            form1200Service.submitForm1200($stateParams.form1200)
-            .then(
-                function(response){
-                    vm.form1200 = response;
-                },
-                function(errResponse){
-                    console.log('Error generating form 1200')
-                }
-            )
-        }
+        vm.form1200 = $stateParams.form1200;
     }
 
     function portfolioDir() {
