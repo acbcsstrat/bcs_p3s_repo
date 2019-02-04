@@ -53,10 +53,6 @@ privileged aspect Patent_Roo_JavaBean {
         return this.clientRef;
     }
     
-    public void Patent.setClientRef(String clientRef) {
-        this.clientRef = clientRef;
-    }
-    
     public String Patent.getShortTitle() {
         return this.shortTitle;
     }

@@ -65,7 +65,7 @@ public class Patent {
     /**
      */
     // May be Null
-    @Size(max = 30)
+    @Size(max = 15)
     private String clientRef;
 
     /**
@@ -226,6 +226,15 @@ public class Patent {
     // Setter pushed to support P3S 'Enums'
     public void setRenewalStatus(String renewalStatus) {
     	this.renewalStatus = (new RenewalStatusEnum(renewalStatus)).toString();
+    }
+
+    // Setter pushed to make 15char ClientRef safe
+    public void setClientRef(String newClientRef) {
+    	String safeClientRef = newClientRef;
+    	if (newClientRef!=null && newClientRef.length()>15) {
+    		safeClientRef = newClientRef.substring(0, 15);
+    	}
+    	this.clientRef = safeClientRef;
     }
 
     // Getter to get the search office Only
