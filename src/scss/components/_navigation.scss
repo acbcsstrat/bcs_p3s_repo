@@ -103,15 +103,54 @@
 }
 
 
+
 .panel-nav {
     width: 100%;
+    .panel-nav__colour-item {
+        font-size: $font-body;
+        cursor: pointer;
+        line-height: $line-none;
+        text-decoration: none;
+        margin-right: 1rem;
+        @include padding-mixin(2rem 0.75rem);
+        &:last-child {
+            margin-right: 0;
+        }
+        &.green {
+          &.active {
+            border-bottom: 4px solid $green;
+          }
+        }
+        &.amber {
+          &.active {
+            border-bottom: 4px solid $amber;
+          }
+        }    
+        &.red {
+          &.active {
+            border-bottom: 4px solid $red;
+          }
+        }    
+        &.blue {
+          &.active {
+            border-bottom: 4px solid $blue;
+          }
+        }    
+        &.black {
+          &.active {
+            border-bottom: 4px solid $black;
+          }
+        }                                    
+        &.list-item--pad {
+            @include padding-mixin(2rem 0.75rem);
+        }
+    }
     .panel-nav__list-item {
         color: $grey-dark;
         font-size: $font-body;
         cursor: pointer;
         line-height: $line-none;
         text-decoration: none;
-        
         margin-right: 1rem;
         @include padding-mixin(0.5rem 3rem);
         -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
@@ -204,3 +243,6 @@
         // }
       } /*modules*/ /*components*/ /*_navigation.scss*/ /*OR REMOVE CLASS AND ADD CLASSES TO VIEW?*/ //ADD CLASS TO LI ITEMS
 }
+
+    // padding: 1.75rem 1rem;
+    /* border-bottom: 4px solid black!important; */

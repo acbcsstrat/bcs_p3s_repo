@@ -18,6 +18,11 @@
   border-color: $border;
   border-width: 0 0 1px 0; 
 }
+%border-top { 
+  border-style: solid;
+  border-color: $border;
+  border-width: 1px 0 0 0; 
+}
 %no-border { border-width: 0 0 0 0!important; border: 0; }
 %border { border: 1px solid $border; }
 
@@ -46,6 +51,10 @@
 
 .t-data_td--b-border {
   @extend %border-bottom;
+}
+
+.t-data_td--t-border {
+  @extend %border-top;
 }
 
 .t-data__row---border {
