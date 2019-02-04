@@ -89,7 +89,6 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 		    					}
 		        			}
 						}
-						console.log(vm.recentActivityData)
 					},
 					function(errResponse) {
 						console.log(errResponse)
