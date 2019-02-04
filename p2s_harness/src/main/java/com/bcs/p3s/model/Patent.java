@@ -65,7 +65,7 @@ public class Patent {
     /**
      */
     // May be Null
-    @Size(max = 30)
+    @Size(max = 15)
     private String clientRef;
 
     /**
