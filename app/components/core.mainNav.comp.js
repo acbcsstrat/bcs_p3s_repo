@@ -1,18 +1,12 @@
 angular.module('ppApp').component('mainnav', {
 	templateUrl: 'app/templates/nav/nav.main-nav.tpl.htm',
-	controller: ['userService', 'mainNavService', '$scope', '$rootScope', '$mdSidenav', 'ngCart', 'coreService', '$timeout', 'moment',  function(userService, mainNavService, $scope, $rootScope, $mdSidenav, ngCart, coreService, $timeout, moment){
+	controller: ['userService', 'mainNavService', '$scope', '$rootScope', '$mdSidenav', 'ngCart', 'coreService', '$timeout', 'moment', 'fxService', function(userService, mainNavService, $scope, $rootScope, $mdSidenav, ngCart, coreService, $timeout, moment, fxService){
 
 		var vm = this;
 
-		userService.fetchUser()
-		.then(
-			function(response){
-				vm.user = response;
-			},
-			function(errResponse){
-				console.log(errResponse)
-			}
-		)
+	 	vm.toggleLeft = buildToggler('left');
+	    vm.toggleRight = buildToggler('right');
+	    vm.openGuide = openGuide;
 		vm.isOpen = isOpen;
       	vm.toggleOpen = toggleOpen;
       	vm.autoFocusContent = false;
@@ -21,6 +15,32 @@ angular.module('ppApp').component('mainnav', {
         	isFirstOpen: true,
         	isFirstDisabled: false
       	};
+	    
+      	function init() {
+
+			userService.fetchUser()
+			.then(
+				function(response){
+					vm.user = response;
+				},
+				function(errResponse){
+					console.log(errResponse)
+				}
+			)
+	    	fxService.fetchFx()
+	    	.then(
+	    		function(response){
+	    			vm.fxRate = response.currentFXRate.rate
+	    		},
+	    		function(errResponse){
+	    			console.log(errResponse)
+	    		}
+	    	)	
+
+      	}
+
+
+      	init()
 
       	function isOpen(section) {
         	return vm.menu.isSectionSelected(section);
@@ -29,10 +49,6 @@ angular.module('ppApp').component('mainnav', {
         	vm.menu.toggleSelectSection(section);
       	}
 
-	 	vm.toggleLeft = buildToggler('left');
-	    vm.toggleRight = buildToggler('right');
-
-	    vm.openGuide = openGuide;
 
 	    function buildToggler(componentId) {
 	      	return function() {

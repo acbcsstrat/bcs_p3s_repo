@@ -11,22 +11,9 @@
 			<span class="font-h4 txt-black"><span class="font-weight-bold">UTC:</span> {{$ctrl.utcTime}}</span>
 		</div>		
 		<div class="d-flex justify-content-between align-items-center">
-			<span class="m-r-md font-h4 txt-black"><span class="font-weight-bold m-r-xs">USD:EUR</span><i class="fas fa-caret-up txt-phase-green m-r-xs fa-lg"></i>0.88493</span> 
+			<span class="m-r-md font-h4 txt-black"><span class="font-weight-bold m-r-xs">USD - EUR</span>{{$ctrl.fxRate}}</span> 
 		</div>
 		<div class="d-flex justify-content-end align-items-center">
-			
-<!-- 			<button data-ng-click="$ctrl.openGuide()" class="btn btn-no-bg m-r-sm">
-				<i class="far fa-question-circle fa-2x txt-black"></i>
-			</button> 
-			 -->
-<!-- 			<div class="m-r-sm">
-				<a data-ui-sref="profile">
-					<span class="fa-stack fa-stack-lg">
-					  	<i class="far fa-circle fa-stack-2x txt-black"></i>
-					  	<i class="far fa-user fa-stack-1x txt-black"></i>
-					</span>							
-				</a>					
-			</div> -->
 			<a data-ui-sref="basket" class="m-r-md">
 				<ngcart-summary class="font-body txt-black"></ngcart-summary>
 			</a>
@@ -38,34 +25,6 @@
 			</div>
 		</div>
   	</div>
-	<!--<div layout="row" class="justify-content-between bg-light-grey">
-		<div class="d-flex justify-content-between align-items-center">
-			<span class="m-r-md font-h4"><span class="font-weight-bold">EST:</span> {{$ctrl.estTime}}</span> 
-			<span class="font-h4"><span class="font-weight-bold">UTC:</span> {{$ctrl.utcTime}}</span>
-		</div>
-		<div class="d-flex justify-content-end align-items-center">
-			<p class="font-h4 no-line-height m-r-sm">Hello, <span class="font-weight-medium">{{$root.user.firstName}}!</span></p>
-<!-- 			<button data-ng-click="$ctrl.openGuide()" class="btn btn-no-bg m-r-sm">
-				<i class="far fa-question-circle fa-2x"></i>
-			</button> 
-				<img src="assets/imgs/logos/moneycorp-logo_small.png" alt="moneycorp icon">
-			
-			<div class="m-r-sm">
-				<a data-ui-sref="profile">
-					<span class="fa-stack fa-stack-lg">
-					  	<i class="far fa-circle fa-stack-2x"></i>
-					  	<i class="far fa-user fa-stack-1x"></i>
-					</span>							
-				</a>					
-			</div>
-			<a data-ui-sref="basket" class="m-r-md">
-				<ngcart-summary class="font-body txt-black"></ngcart-summary>
-			</a>
-			<div class="m-r-md">
-				<a class="font-body no-line-heigh inline-link" data-ng-click="$ctrl.empty()" data-ng-href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
-			</div>
-		</div>-->
-	<!-- </div> -->
 </div>
 
 
@@ -75,21 +34,18 @@
 
 <div><!--side-nav-->
  	<section flex>
-	    <md-sidenav class="md-sidenav-left bg-phase-grey " md-component-id="left" md-disable-backdrop md-whiteframe="3">
-	    	<div class="row">
-	    		<div class="col-md-12">
-			      	<div class="bg-phase-grey p-tb-sm">
-			      		<div class="row">
-					      	<div class="col-md-6 d-flex justify-content-center align-items-center">
-					      		<img src="assets/imgs/logos/pp_icon.png" alt="patent place icon small">
-					      	</div>	
-			      		</div>
-			      	</div>	    			
-	    		</div>
-	    	</div>
+	    <md-sidenav class="md-sidenav-left bg-phase-grey" md-component-id="left" md-disable-backdrop md-whiteframe="3">
+      		<div class="row">
+		      	<div class="col-md-12">
+		      		<div class="bg-phase-grey p-v-sm-h-lg flex-grow-1 d-flex justify-content-between align-items-center">
+			      		<img src="assets/imgs/logos/pp_icon.png" alt="patent place icon small">
+			      		<span class="cursor-pointer" data-ng-click="$ctrl.toggleLeft()"><i class="fas fa-times fa-2x txt-white"></i></span>
+			      	</div>	
+	      		</div>
+	      	</div>	    			
       	 	<md-content class="bg-phase-grey">
 	      	 	<div layout="column" class="p-pill-tabs m-b-sm p-a-sm">
-	      	 		<span class="cursor-pointer" data-ng-click="$ctrl.toggleLeft()"><i class="fas fa-times fa-2x txt-white"></i></span>
+	      	 		
 		      	 	<div class="d-flex justify-content-center align-items-center m-b-sm">
 		      	 		<a class="nav-link" data-ui-sref="profile">
 		      	 			<img src="assets/imgs/icons/user_icon.png">
