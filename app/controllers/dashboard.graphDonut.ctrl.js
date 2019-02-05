@@ -12,7 +12,7 @@ function graphDonutCtrl( $scope, $timeout, patentIds, patentPhasesService) {
       		vm.donutOptions = {
 	            chart: {
 	                type: 'pieChart',	
-	                height: 250,
+	                height: 200,
 	                donut: true,
 	                margin: { top: 0, right: 0, bottom: 0, left: 0 },
 	                tooltip: {
@@ -24,6 +24,7 @@ function graphDonutCtrl( $scope, $timeout, patentIds, patentPhasesService) {
 	                y: function(d){
 	                	return d.y;
 	                },
+	                donutRatio: 0.60,
 					duration: 500,
 	                showLabels: false,
 	                pie: {
