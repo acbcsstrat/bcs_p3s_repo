@@ -6,7 +6,7 @@ function mainNavService(){
   		name: 'Dashboard',
   		type: 'link',
   		state: 'dashboard',
-  		icon: 'fas fa-tachometer-alt font-h1'
+  		icon: 'far fa-tachometer-alt'
 		}];    
   	sections.push({
   		name: 'Portfolio',
@@ -23,7 +23,7 @@ function mainNavService(){
 				  state: 'search-patent'
 		    }
 		  ],
-		  icon: 'fas fa-folder-open font-h1'
+		  icon: 'far fa-folders'
     })
 
   	sections.push({
@@ -42,7 +42,7 @@ function mainNavService(){
             type: 'link',
         }
       ],
-      icon: 'far fa-credit-card font-h1'
+      icon: 'far fa-money-check-alt'
 	})
      
      	// console.log(sections)
