@@ -86,7 +86,7 @@ function graphDonutCtrl( $scope, $timeout, patentIds, patentPhasesService) {
 
 	
 
-  		}, 300);
+  		}, 400);
 
 	} //if patents end	
 }
