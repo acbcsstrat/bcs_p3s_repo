@@ -9,15 +9,21 @@ require("angular/angular.min.js");
 
 require("tether/dist/js/tether.min.js");
 
+
+require("popper.js/dist/popper.min.js");
+require("bootstrap/dist/js/bootstrap.min.js");
+
 require("angular-animate/angular-animate.min.js");
 require("angular-aria/angular-aria.min.js");
 require("angular-material/angular-material.min.js");
 require("angular-ui-bootstrap/dist/ui-bootstrap-tpls.js");
 require("slick-carousel/slick/slick.min.js");
 require("angular-route/angular-route.min.js");
-require("angular-slick-carousel/dist/angular-slick.min.js");
+require("angular-ui-carousel/dist/ui-carousel.min.js");
 require("@uirouter/angularjs/release/angular-ui-router.min.js");
 require("angular-local-storage/dist/angular-local-storage.min.js");
+require('angular-touch/angular-touch.min.js');
+require('angular-carousel/dist/angular-carousel.min.js');
 
 require("d3/d3.min.js");
 require("nvd3/build/nv.d3.min.js");
