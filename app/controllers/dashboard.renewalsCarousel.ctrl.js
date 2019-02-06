@@ -32,8 +32,7 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
         return organiseColourService.getNextColour(phase, type)
     }
 
-    function fetchCost(patent) {
-        // vm.patentData = patentPhasesService.patentNumbers;                
+    function fetchCost(patent) {             
         vm.patents = patentPhasesService.getPatents;
         if(patentPhasesService.getPatent !== '' && patentPhasesService.getPatents !== '') {
             patentPhasesService.setPatent(patent)

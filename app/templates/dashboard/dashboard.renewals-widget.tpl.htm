@@ -7,7 +7,7 @@
 			<div class="col-md-9 col-lg-9 col-lg-9">
 				<nav class="">
 					<ul class="panel-nav d-flex justify-content-end">
-						<li class="txt-phase-green green panel-nav__colour-item font-weight-medium" data-ng-init="activeTab = 0" data-ng-class="{'active': activeTab === 0}" data-ng-click="activeTab = 0; $ctrl.setPatents('Green')">Green ({{$ctrl.patentData.Green.length || '0'}})</li>
+						<li class="txt-phase-green green panel-nav__colour-item font-weight-medium" data-ng-init="activeTab = 0; $ctrl.setPatents('Green')" data-ng-class="{'active': activeTab === 0}" data-ng-click="activeTab = 0; $ctrl.setPatents('Green')">Green ({{$ctrl.patentData.Green.length || '0'}})</li>
 						<li class="txt-phase-amber amber panel-nav__colour-item font-weight-medium" data-ng-class="{'active': activeTab === 1}" data-ng-click="activeTab = 1; $ctrl.setPatents('Amber')">Amber ({{$ctrl.patentData.Amber.length || '0'}})</li>
 						<li class="txt-phase-red red panel-nav__colour-item font-weight-medium" data-ng-class="{'active': activeTab === 2}" data-ng-click="activeTab = 2; $ctrl.setPatents('Red')">Red ({{$ctrl.patentData.Red.length || '0'}})</li>
 						<li class="txt-phase-blue blue panel-nav__colour-item font-weight-medium" data-ng-class="{'active': activeTab === 3}" data-ng-click="activeTab = 3; $ctrl.setPatents('Blue')">Blue ({{$ctrl.patentData.Blue.length || '0'}})</li>
