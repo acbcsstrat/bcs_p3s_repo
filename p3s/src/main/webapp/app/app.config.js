@@ -1,8 +1,8 @@
 angular.module('ppApp').config(appConfig);
 
-appConfig.$inject = ['$httpProvider', '$urlRouterProvider', '$uibModalProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'slickCarouselConfig', 'localStorageServiceProvider'];
+appConfig.$inject = ['$httpProvider', '$urlRouterProvider', '$uibModalProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'localStorageServiceProvider'];
 
-function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, slickCarouselConfig, localStorageServiceProvider) {
+function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, localStorageServiceProvider) {
 
     if (!$httpProvider.defaults.headers.get) {
         $httpProvider.defaults.headers.get = {};    
@@ -31,8 +31,8 @@ function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compil
         .when('/', '/dashboard')
         .otherwise('/dashboard');
 
-    slickCarouselConfig.dots = true;
-    slickCarouselConfig.autoplay = false;
+    // slickCarouselConfig.dots = true;
+    // slickCarouselConfig.autoplay = false;
 
     $qProvider.errorOnUnhandledRejections(false);
 

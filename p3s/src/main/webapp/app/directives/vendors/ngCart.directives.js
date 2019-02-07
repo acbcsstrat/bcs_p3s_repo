@@ -145,7 +145,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             };
 
             $rootScope.$on('ngCart:itemRemoved', function() {
-                // fetchBasketPatents(cartArr);
+                scope.summary = null;
                 scope.summary.totalPatents = ngCart.getItems().length;
             });
 

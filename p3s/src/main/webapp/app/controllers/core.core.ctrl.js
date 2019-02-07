@@ -11,7 +11,8 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	var patentsFound = true;
 	var userTimedOut = false;
 	var messageArr = [];
-	
+
+
 
 	$scope.$on('IdleStart', function() {
 		
@@ -45,22 +46,38 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
       	
 	});
 
-  	// $scope.$on('appGuideOpen', function(){
-  	// 	if(coreService.appGuideOpen === true) {
-			// var modalInstance = $uibModal.open({
-			// 	templateUrl: 'app/templates/app/app.in-app-guide.tpl.htm',
-			// 	scope: $scope,
-			// 	windowClass: 'app-guide-panel',
-			// 	controllerAs:'$ctrl',
-			// 	controller: ['$uibModalInstance', function($uibModalInstance) {
+    vm.states = {};
+    vm.states.activeItem = 0;
 
-			//  	  	this.dismissWelcomeModal = function () {
-			// 	    	$uibModalInstance.close();
-			// 	  	};
-			// 	}]
-			// });
-  	// 	}
-  	// })
+  	$scope.$on('appGuideOpen', function(){
+  		if(coreService.appGuideOpen === true) {
+			var modalInstance = $uibModal.open({
+				templateUrl: 'app/templates/app/app.in-app-guide.tpl.htm',
+				scope: $scope,
+				windowClass: 'app-guide-panel',
+				controllerAs:'$ctrl',
+				controller: ['$uibModalInstance', function($uibModalInstance) {
+
+				    this.slides = [
+				        {index: 0, title: 'Color Phase'},
+				        {index: 1, title: 'Portfolio'},
+				        {index: 2, title: 'Add a Patent'},
+				        {index: 3, title: 'Form 1200'},
+				        {index: 4, title: 'Renewals'},
+				        {index: 5, title: 'Add a Patent'},
+				        {index: 6, title: 'Form 1200'},
+				        {index: 7, title: 'Renewals'},
+				        {index: 8, title: 'Scenario 1'}
+				    ]
+
+			 	  	this.dismissWelcomeModal = function () {
+				    	$uibModalInstance.close();
+				  	};
+
+				}]
+			});
+  		}
+  	})
 
     function init() {
 
@@ -109,11 +126,11 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 		    	function(response){
 
 		    		var date = new Date().getTime();
-
+		    		console.log(response)
 	    		 	if(response.systemMessages.length > 0) {
 
 			            $timeout(function() {
-			                systemMessageModal()    
+			                systemMessageModal(response.systemMessages)    
 			            }, 1000);
 
 			        } //if end
@@ -158,14 +175,14 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	    }
 	}
 
-    function systemMessageModal() {
+    function systemMessageModal(message) {
 
         var modalInstance = $uibModal.open({
             templateUrl: 'app/templates/modals/modal.system-message.tpl.htm',
             scope: $scope,
             appendTo: undefined,
             controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
+            controller: ['$uibModalInstance', function($uibModalInstance) {
 
                 this.systemMessage = {
                 	message:  message

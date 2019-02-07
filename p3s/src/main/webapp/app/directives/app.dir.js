@@ -26,11 +26,11 @@ angular.module('ppApp').directive('menuToggle', [ '$timeout', function($timeout)
         templateUrl: 'app/templates/nav/nav.main-nav-li-item.tpl.htm',
         link: function ($scope, $element) {
             var controller = $element.parent().controller();
-            $scope.focusSection = function () {
-                // set flag to be used later when
-                // $locationChangeSuccess calls openPage()
-                controller.autoFocusContent = true;
-            };
+            // $scope.focusSection = function () {
+            //     // set flag to be used later when
+            //     // $locationChangeSuccess calls openPage()
+            //     controller.autoFocusContent = true;
+            // };
         }
     };
 }]);

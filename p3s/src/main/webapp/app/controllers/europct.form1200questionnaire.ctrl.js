@@ -162,10 +162,8 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         },
         activeTabFn: function(dir) {
             if(dir === 'prev') {
-                console.log(dir)
                 return this.index-1;
             } else { 
-                console.log(dir)
                 return this.index+1;
             }            
         },        
@@ -185,15 +183,14 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
             vm.loading = false;
             vm.patentsLoaded = true;
         }
-
         if(vm.questionsParam.length === 0) {
             $state.go('portfolio.patent.euro-pct.form1200.intro');
         } else {
 
-            if($stateParams.savedForm1200) { //if user is editing
-                vm.formData = $stateParams.savedForm1200;
-                vm.confirmEntityModel = true; //tick entity checjbox
-            } else { //if new form
+            // if($stateParams.savedForm1200) { //if user is editing
+            //     vm.formData = $stateParams.savedForm1200;
+            //     vm.confirmEntityModel = true; //tick entity checjbox
+            // } else { //if new form
 
                 vm.formData.extensionStatesUI = vm.questionsParam.extensionStatesUI;
                 vm.formData.validationStatesUI = vm.questionsParam.validationStatesUI;
@@ -226,7 +223,7 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
                 if(questions.isYear3RenewalDue()) {
                     vm.renewal.active = true;
                 }
-            }
+            // }
 
         }
 
@@ -289,16 +286,16 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         vm.formData.id = patent.id
         vm.formData.totalClaims = parseInt(vm.formData.totalClaims);
         vm.formData.totalPages = parseInt(vm.formData.totalPages);
-        // form1200Service.submitForm1200(vm.formData)
-        // .then(
-        //     function(response){
-        //         console.log(response)
-        $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: vm.formData}, {reload: false})
-        //     },
-        //     function(errResponse){
-        //         console.log(errResponse)
-        //     }
-        // )
+        form1200Service.submitForm1200(vm.formData)
+        .then(
+            function(response){
+                $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response.data}, {reload: false})
+            },
+            function(errResponse){
+                console.log(errResponse)
+                form1200Errors() 
+            }
+        )
     }
 
     function chkValidStates(item, index) {
@@ -317,6 +314,22 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
             vm.questionsParam.extensionStatesUI[index].selected = false;
         }
         vm.formData.extensionStatesUI =  vm.questionsParam.extensionStatesUI;
+    }
+
+    function form1200Errors() {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.generate-form1200-error.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+
+                vm.proceedMsgAmend  = true;
+                this.dismissModal = function () {
+                    $uibModalInstance.close();
+                };
+
+            }]
+        });
     }
 
     function manualProcess(value, question) {// NOT NEEDED FOR RELEASE 1

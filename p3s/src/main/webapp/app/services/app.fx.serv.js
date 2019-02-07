@@ -6,10 +6,27 @@ function fxService($q, $http) {
 	
 	var factory = {
 		fetchFxWeek: fetchFxWeek,
-		fetchFxMonth: fetchFxMonth
+		fetchFxMonth: fetchFxMonth,
+		fetchFx: fetchFx
 	};
 
 	return factory;	
+
+	function fetchFx() {
+
+		var deferred = $q.defer()
+
+		$http.get(ppdomain+'rest-fxrate/')
+		.then(
+			function(response){
+				deferred.resolve(response.data)
+			},
+			function(errResponse){
+				deferred.reject(errResponse.data)
+			}
+		)
+		return deferred.promise;
+	}
 
 	function fetchFxWeek() {
 
