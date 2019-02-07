@@ -126,11 +126,11 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 		    	function(response){
 
 		    		var date = new Date().getTime();
-
+		    		console.log(response)
 	    		 	if(response.systemMessages.length > 0) {
 
 			            $timeout(function() {
-			                systemMessageModal()    
+			                systemMessageModal(response.systemMessages)    
 			            }, 1000);
 
 			        } //if end
@@ -175,14 +175,14 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	    }
 	}
 
-    function systemMessageModal() {
+    function systemMessageModal(message) {
 
         var modalInstance = $uibModal.open({
             templateUrl: 'app/templates/modals/modal.system-message.tpl.htm',
             scope: $scope,
             appendTo: undefined,
             controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
+            controller: ['$uibModalInstance', function($uibModalInstance) {
 
                 this.systemMessage = {
                 	message:  message
