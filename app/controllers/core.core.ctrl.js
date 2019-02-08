@@ -130,7 +130,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 		    	function(response){
 
 		    		var date = new Date().getTime();
-		    		console.log(response)
+
 	    		 	if(response.systemMessages.length > 0) {
 
 			            $timeout(function() {
