@@ -1,17 +1,39 @@
 <div class="app-guide">
     <div class="app-guide__head text-left bg-phase-grey d-flex justify-content-between align-items-center">
-        <h2 class="font-h2 font-weight-medium txt-white">Patent Place Guide</h2>
+        <div class="d-flex justify-content-between align-items-center">        
+            <img src="assets/imgs/logos/pp_icon.png" width="30px" class="m-r-sm" alt="patent place logo">
+            <h2 class="font-h2 font-weight-medium txt-white">Patent Place Guide</h2>
+        </div>
         <span class="cursor-pointer" data-ng-click="$ctrl.dismissWelcomeModal()"><i class="txt-white fa fa-times fa-2x"></i></span>
     </div>
     <div class="d-flex flex-column justify-content-center p-t-none">
         <div class="row">
             <div class="col-md-12">
                 <div class="app-guide">
-                    <ul class="nav nav-tabs">
-                        <li class="panel-nav__list-item uib-tab nav-item" data-ng-repeat="item in $ctrl.slides track by item.index" data-ng-class="{'active': item.index == $ctrl.states.activeItem} " data-ng-init="$ctrl.states.activeItem = 0;" data-ng-click="$ctrl.states.activeItem = item.index; active.activeGuideTab = item.index">
-                            <a class="nav-link">{{item.title}}</a>
-                        </li>
-                    </ul>
+                    <div id="carouselIndicate" class="carousel slide d-flex justify-content-between" data-interval="false" data-wrap="false">
+                        <a class="prev-caret" href="#carouselIndicate" role="button" data-slide="prev"> <!--side ones we need-->
+                            <span class="txt-black font-weight-bold d-flex align-items-center"><i class="fas fa-caret-left fa-2x m-r-xs"></i> Prev</span>
+                        </a>
+                        <div class="carousel-inner flex-grow-1">
+                            <div class="carousel-item active">
+                                <ul class="nav nav-tabs d-flex justify-content-between">
+                                    <li class="panel-nav__list-item nav-item flex-fill text-center" data-ng-repeat="item in $ctrl.slides track by item.index" data-ng-init="$ctrl.states.activeItem = 0" data-ng-class="{'active': item.index == $ctrl.states.activeItem} " data-ng-click="$ctrl.states.activeItem = item.index; active.activeGuideTab = item.index">
+                                        <a class="nav-link">{{item.title}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="carousel-item">
+                                <ul class="nav nav-tabs d-flex justify-content-center">
+                                    <li class="panel-nav__list-item nav-item flex-fill text-center" data-ng-repeat="item in $ctrl.slides2 track by item.index"  data-ng-class="{'active': item.index == $ctrl.states.activeItem}" data-ng-click="$ctrl.states.activeItem = item.index; active.activeGuideTab = item.index">
+                                        <a class="nav-link">{{item.title}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a class="next-caret " href="#carouselIndicate" role="button" data-slide="next">
+                            <span class="txt-black font-weight-bold d-flex align-items-center">Next <i class="fas fa-caret-right fa-2x m-l-xs"></i></span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
