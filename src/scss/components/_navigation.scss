@@ -70,36 +70,53 @@
 }
 
 .app-guide {
-    .nav-tabs {
-        border-top: 1px solid $grey!important; //!important overrides other overide for bootstraps nav-tabs border
-        border-bottom: 1px solid $grey!important;
-        .nav-item {
-            &[disabled] {
-                color: $grey;
-                background: $grey-blocked;
-                cursor: not-allowed;
-                border-bottom: 3px solid $grey-blocked; 
-            }
-            &.active {
-                border-bottom: 3px solid $black; 
-            }
-            .nav-link {          
-                border-right: 1px solid $grey;
-                border-left: 1px solid $grey;
-                border-bottom: 3px solid $white; 
-                font-weight: 400;
-                font-size: $font-h4;
-                cursor: pointer;
-                line-height: $line-none;
-                @include padding-mixin(1.5rem 3rem);
-                -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-                -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-                transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-                text-decoration: none;
-                text-transform: uppercase;
+    .carousel-inner {
+        // .carousel-item:not(.active) {
+        //     .nav-tabs {
+        //         height: 0!important;
+        //         border-top: 0; //!important overrides other overide for bootstraps nav-tabs border
+        //         border-bottom: 0;
+        //         display: none;
+        //     }
+        // }      
+        .carousel-item {
+            border-bottom: 1px solid $grey;
+            .nav-tabs {
+                // border-top: 1px solid $grey!important; //!important overrides other overide for bootstraps nav-tabs border
+                // border-bottom: 1px solid $grey!important;
+                .nav-item {
+                    border-bottom: 1px solid $grey; 
+                    &[disabled] {
+                        color: $grey;
+                        background: $grey-blocked;
+                        cursor: not-allowed;
+                        border-bottom: 3px solid $grey-blocked; 
+                    }
+                    &.active {
+                        .nav-link {
+                            border-bottom: 3px solid $black; 
+                        }
+                    }
+                    .nav-link {          
+                        border-right: 1px solid $grey;
+                        border-left: 1px solid $grey;
+                        border-bottom: 3px solid $white; 
+                        font-weight: 500;
+                        font-size: $font-h4;
+                        cursor: pointer;
+                        line-height: $line-none;
+                        @include padding-mixin(1.5rem 3rem);
+                        -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+                        -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+                        transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
+                        text-decoration: none;
+                        // text-transform: uppercase;
+                    }
+                }
             }
         }
     }
+
 }
 
 

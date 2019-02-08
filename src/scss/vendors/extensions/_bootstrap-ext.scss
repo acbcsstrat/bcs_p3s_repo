@@ -75,3 +75,30 @@ uib-progress.progressblue { height: 3rem; }
   justify-content: space-between; /*for uib elements*/ }
 
 .btn-block+.btn-block { margin-top: 0px; }
+
+.carousel-inner {
+    max-height: 49px;
+    overflow: hidden;
+}
+
+.next-caret, .prev-caret {
+    z-index: 999; 
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 80px;
+    color: #fff;
+    text-align: center;
+    opacity: .5;
+    &:hover {
+        text-decoration: none;
+        opacity: 1;
+    }
+}
+
+.modal-content {
+  border: none!important;
+}
