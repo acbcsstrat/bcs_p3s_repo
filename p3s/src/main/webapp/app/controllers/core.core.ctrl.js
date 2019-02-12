@@ -63,12 +63,16 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 				        {index: 1, title: 'Portfolio'},
 				        {index: 2, title: 'Add a Patent'},
 				        {index: 3, title: 'Form 1200'},
-				        {index: 4, title: 'Renewals'},
+				        {index: 4, title: 'Renewals'}
+
+				    ]
+
+				    this.slides2 = [
 				        {index: 5, title: 'Add a Patent'},
 				        {index: 6, title: 'Form 1200'},
 				        {index: 7, title: 'Renewals'},
 				        {index: 8, title: 'Scenario 1'}
-				    ]
+				    ]				    
 
 			 	  	this.dismissWelcomeModal = function () {
 				    	$uibModalInstance.close();
@@ -126,7 +130,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 		    	function(response){
 
 		    		var date = new Date().getTime();
-		    		console.log(response)
+
 	    		 	if(response.systemMessages.length > 0) {
 
 			            $timeout(function() {
