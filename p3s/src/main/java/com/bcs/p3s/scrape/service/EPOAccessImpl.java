@@ -15,7 +15,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.openqa.selenium.remote.RemoteWebDriver.When;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -251,6 +250,9 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 	        	iss.setEncoding("UTF-8");
 	        	sp.parse(iss, digest);
 	        }
+	        
+	        
+	        if (form1200.isFix190212triggered()) log().warn("fix190212 was triggered for patent "+patentApplicationNumber);
 	        
 	        //if((patent.getPatentApplicationNumber().substring(2)).equals(record.getPatentApplicationNumber()))   // this check became redundant
 	        //patent = populatePatent(patent,record);

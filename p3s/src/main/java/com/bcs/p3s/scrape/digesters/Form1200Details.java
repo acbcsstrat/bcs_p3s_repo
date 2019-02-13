@@ -27,13 +27,35 @@ public class Form1200Details extends DigesterElements{
 	ApplicationData application;
 	private Set<ApplicationData> applicationList;
 	private ArrayList<String> designatedStates = new ArrayList<String>();
+	private boolean fix190212isAppNum = false;
+	
+	
+	
+	
 	public Form1200Details(Form1200Record form1200) {
 		super();
 		this.form1200 = form1200;
 	}
 	
 	public void characters(char[] buffer, int start, int length) {
-        temp = new String(buffer, start, length);
+
+		boolean usual = true;
+		if (fix190212isAppNum) {
+			usual = false;
+			String thisFragment = new String(buffer, start, length);
+			int len = thisFragment.length();
+			if ( (len!=8) && ( (temp.length()+len)==8) ) {
+				temp = temp.concat(thisFragment);
+				form1200.setFix190212triggered(true);
+			}
+			else {
+				temp = thisFragment;
+			}
+		}
+		
+		if (usual) {
+			temp = new String(buffer, start, length);
+		}
 	}
 
 
@@ -62,6 +84,13 @@ public class Form1200Details extends DigesterElements{
      		   applicationList = new HashSet<ApplicationData>();
      	   
         }
+        if( isApplicationData && ("reg:doc-number".equals(qName)) ) {
+        	fix190212isAppNum = true;
+        }
+
+        
+        
+        
         if("reg:publication-reference".equals(qName)){
      	   isPublicationData = true;
      	   publication = new PublicationData();
@@ -89,6 +118,8 @@ public class Form1200Details extends DigesterElements{
 	 public void endElement(String uri, String localName, String qName)
 	               throws SAXException {
 	 		
+		fix190212isAppNum = false;
+
 	 	if (qName.equalsIgnoreCase("reg:bibliographic-data")) {
 	 		System.out.println("Closing biblio data");
 	 		
@@ -171,4 +202,9 @@ public class Form1200Details extends DigesterElements{
 			 	
 	}
 
+	//	 Explanation of fix190212 : On that date, discovered that 'Add Patent' of EP18184535 failed, because the above characters() method
+	//	 returned only <i>part</i> of the 18184535. Specifically, 1818453. The Next call (which overwrote 'temp') was 5, causing a subsequent 
+	//	 error in the self-check checkStrSame(EP18184535, EP5, EPappNum).
+	//	 Crude workaround: For that field only, allow datas to be concatenated. See what we learn goign forward.
+	 
 }

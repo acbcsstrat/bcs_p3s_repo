@@ -45,6 +45,8 @@ public class Form1200Record {
 	
 	private String abstractTxt;
 
+	private boolean fix190212triggered = false;
+
 	
 
 	public String getEP_AppNumber() {
@@ -212,6 +214,15 @@ public class Form1200Record {
 		this.abstractTxt = abstractTxt;
 	}
 
+	public boolean isFix190212triggered() {
+		return fix190212triggered;
+	}
+
+	public void setFix190212triggered(boolean fix190212triggered) {
+		this.fix190212triggered = fix190212triggered;
+	}
+
+
 	
 	
 	
@@ -240,5 +251,5 @@ public class Form1200Record {
 		}
 		return bestSofar;
 	}
-
+	
 }
