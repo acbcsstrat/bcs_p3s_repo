@@ -23,6 +23,6 @@
 .content-panel .content-panel__head { padding: 2rem 3rem; } 
 
 .widget-panel .widget-panel__head { min-height: 59px; } 
-.widget-row-top .widget-panel { min-height: 300px; } 
+.widget-row-top .widget-panel { min-height: 280px; max-height: 280px; overflow-y: auto; overflow-x: hidden; } 
 .widget-row-middle .widget-panel { min-height: 275px; } 
 .widget-panel--max { max-height: 450px; overflow-y: auto; overflow-x: hidden; }
