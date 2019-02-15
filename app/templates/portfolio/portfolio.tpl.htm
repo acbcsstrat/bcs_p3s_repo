@@ -100,12 +100,16 @@
                                                 <div class="col-md-2 col-xl-2">  
                                                      <h4 class="font-body font-weight-bold">Renewals</h4>
                                                 </div>
-                                                <div class="col-md-9 col-xl-9 d-flex">                                                
-                                                    <div class="checkbox-container" data-ng-repeat="status in renewalsStatus('serviceStatus')">
-                                                        <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body" data-ng-if="status">{{status}}</span>
-                                                            <span class="checkmark"></span>
-                                                        </label>
+                                                <div class="col-md-9 col-xl-9 d-flex">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-xl-6 m-b-sm" data-ng-repeat="status in renewalsStatus('serviceStatus')">                                 
+                                                            <div class="checkbox-container">
+                                                                <label class="filter-container">
+                                                                    <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body" data-ng-if="status">{{status}}</span>
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div> 
                                             </div>                                         
