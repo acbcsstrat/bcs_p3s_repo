@@ -224,7 +224,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
                   $state.go('portfolio.patent', {patentId: patent.id} , {reload:true});
                   $timeout(function(){
                       $state.go('portfolio.patent.euro-pct.form1200.intro', {patentId: patent.id} , {reload:false});
-                  }, 500)
+                  }, 1000)
                 } 
             }
         }
