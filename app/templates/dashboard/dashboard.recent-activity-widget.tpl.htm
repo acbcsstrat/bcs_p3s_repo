@@ -15,7 +15,37 @@
 						<p class="font-weight-bold">There is no recent activity to report</p>
 					</div>
 				</div>
-				<div class="row" data-ng-if="$ctrl.recentActivityData.length !== 0" data-ng-repeat="item in $ctrl.recentActivityData"><!--  -->
+		    	<div class="row" data-ng-if="$ctrl.recentActivityData.length !== 0">
+		    		<div class="col-md-12">
+	    				<table class="table t-data table-scroll">
+	    					<thead>
+	    						<tr class="t-data__row">
+	    							<th class="t-data__th border-t-none">App No.</th>
+	    							<th class="t-data__th border-t-none">Client Ref</th>
+	    							<th class="t-data__th border-t-none">Current Cost</th>
+	    							<th class="t-data__th border-t-none">Next Stage</th>
+	    						</tr>
+	    					</thead>
+		                    <tbody>
+		                    	<tr class="t-data__row t-data__row--select" data-ng-repeat="patent in $ctrl.recentActivityData">
+			                    	<td class="t-data__td t-data__td--ellipsis t-data__w25" data-ng-bind="patent.ep_ApplicationNumber">
+			                    		
+			                    	</td>
+			                    	<td class="t-data__td t-data__td--ellipsis t-data__w25" data-ng-bind="patent.clientRef || '[No Client Reference Provided]'">
+			                    		
+			                    	</td>
+			                    	<td class="t-data__td font-weight-medium t-data__w25" data-ng-class="$ctrl.getCurrColour(patent.serviceList[0].currentStageColour, 'text')">
+			                    		{{patent.serviceList[0].currentStageColour}}: {{$ctrl.date | date:'MM-dd-yy'}}
+			                    	</td>
+			                    	<td class="t-data__td font-weight-medium t-data__w25" data-ng-class="$ctrl.getCurrColour(patent.serviceList[0].nextStageColour, 'text')">
+			                    		{{patent.serviceList[0].nextStageColour}}: {{patent.serviceList[0].costBandEndDate | date:'MM-dd-yy'}}
+			                    	</td>				                    					                    					                    					                    	
+		                    	</tr>
+		                    </tbody>
+		    			</table>
+			    	</div>
+	        	</div>		<!--row end-->		
+				<!-- <div class="row" data-ng-if="$ctrl.recentActivityData.length !== 0" data-ng-repeat="item in $ctrl.recentActivityData">
 					<div class="col-md-12 col-lg-6 col-xl-8">
 						<div class="row m-b-md">
 							<div class="col-md-5">
@@ -51,8 +81,8 @@
 	                    		</p>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-12 col-lg-6 col-xl-4">
+					</div> -->
+<!-- 					<div class="col-md-12 col-lg-6 col-xl-4">
 						<div class="row m-b-md">
 							<div class="col-md-12">
 								<p class="font-h4 font-weight-medium">Current Cost:</p>
@@ -73,8 +103,8 @@
 								<p class="font-h4">$ {{item.serviceList[0].nextStageCostUSD | number: 2}}</p>
 							</div>
 						</div>																								
-					</div>
-				</div>								
+					</div> -->
+		<!-- 		</div>	 -->							
 			</uib-tab>
 		    <uib-tab data-ng-hide="true" index="1">
 					<div class="row bg-no-data" data-ng-if="$ctrl.recentTransArr.length === 0">
