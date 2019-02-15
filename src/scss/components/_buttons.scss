@@ -56,16 +56,16 @@
   -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
   transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
   &.btn--lg { @include padding-mixin(0.5rem 3rem) } 
-  &:not(.remove) {
-    &.cartbtn:before {
-      content: 'Add '
-    }
-  }
-  &:not(.add) {
-    &.cartbtn:before {
-      content: 'Remove '
-    }
-  }
+  // &:not(.remove) {
+  //   &.cartbtn:before {
+  //     content: 'Add '
+  //   }
+  // }
+  // &:not(.add) {
+  //   &.cartbtn:before {
+  //     content: 'Remove '
+  //   }
+  // }
   &.btn--plain {
     background: $grey;
     border: 1px solid $border;

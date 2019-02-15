@@ -1,4 +1,2 @@
-<button data-ng-hide="inCart()" data-ng-if="attrs.name == 'service.renewal'" class="btn btn--lg pill-radius cartbtn add" data-ng-click="ngCart.addItem(id, name, price, q, data)">Renewal <i class="far fa-shopping-cart fa-lg txt-phase-green"></i></button>
-<button data-ng-hide="inCart()" data-ng-if="attrs.name == 'service.form1200'" class="btn btn--lg pill-radius cartbtn add" data-ng-click="ngCart.addItem(id, name, price, q, data)">Form 1200 <i class="far fa-shopping-cart fa-lg txt-phase-green"></i></button>
-<button data-ng-show="inCart()" class="btn btn--lg pill-radius cartbtn remove" data-ng-click="ngCart.removeItemById(id)" data-ng-if="attrs.name == 'service.renewal'">Renewal <i class="far fa-shopping-cart fa-lg txt-phase-red"></i></button>
-<button data-ng-show="inCart()" class="btn btn--lg pill-radius cartbtn remove" data-ng-click="ngCart.removeItemById(id)" data-ng-if="attrs.name == 'service.form1200'">Form 1200 <i class="far fa-shopping-cart fa-lg txt-phase-red"></i></button>
+<button data-ng-hide="inCart()" class="btn btn--lg btn--green pill-radius cartbtn add" data-ng-click="ngCart.addItem(id, name, price, q, data)">Add to basket</button>
+<button data-ng-show="inCart()" class="btn btn--lg btn--red pill-radius cartbtn remove" data-ng-click="ngCart.removeItemById(id)">Remove</button>
