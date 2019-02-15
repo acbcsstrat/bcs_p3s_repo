@@ -29,7 +29,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       'value': 'All Patents',
       'values': ['All Patents', 'No Action Available', 'Action Available']
     }
-    console.log(patents)
+
     $scope.filters = {
       serviceStatus: {},
       serviceType: {},
