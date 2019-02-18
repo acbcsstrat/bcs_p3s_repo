@@ -210,7 +210,6 @@
                                 <span class="td-ellipsis txt-grey" data-ng-if="patent.shortTitle == ''">[No client description provided]</span>
                                 <span class="td-ellipsis" data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
                             </td>
-
                             <td class="t-data__td t-data__w25">
                                 <div data-ng-if="patent.serviceList.length === 0">
                                     <div data-ng-if="!$ctrl.actionStatus(patent.serviceStatus) || patent.serviceStatus == 'Too late to renew'">
