@@ -61,17 +61,18 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 				    this.slides = [
 				        {index: 0, title: 'Color Phase'},
 				        {index: 1, title: 'Portfolio'},
-				        {index: 2, title: 'Add a Patent'},
-				        {index: 3, title: 'Form 1200'},
-				        {index: 4, title: 'Renewals'}
+				        {index: 2, title: 'Case overview'},
+				        {index: 3, title: 'Add Patent'},
+				        {index: 4, title: 'Form 1200'}
 
 				    ]
 
 				    this.slides2 = [
-				        {index: 5, title: 'Add a Patent'},
-				        {index: 6, title: 'Form 1200'},
-				        {index: 7, title: 'Renewals'},
-				        {index: 8, title: 'Scenario 1'}
+				        {index: 4, title: 'Form 1200'},
+				        {index: 5, title: 'Fees'},
+				        {index: 6, title: 'Checkout'},
+				        {index: 7, title: 'Transactions'},
+				        {index: 8, title: 'Nav'}
 				    ]				    
 
 			 	  	this.dismissWelcomeModal = function () {
