@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import com.bcs.p3s.model.P3SUser;
-import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 
@@ -28,6 +23,8 @@ public class GenerateForm1200Extractor extends Universal {
 	 */
 	public GenerateForm1200DataIn extractGenerateForm1200DataIn(Object obby, boolean strictAPI) {
 
+		log().debug("GenerateForm1200Extractor : extractGenerateForm1200DataIn invoked");
+		
 		this.tolerant = ! strictAPI;
 		GenerateForm1200DataIn generateForm1200DataIn = new GenerateForm1200DataIn();
 		
@@ -214,14 +211,20 @@ public class GenerateForm1200Extractor extends Universal {
 											List<PageDescriptionUI> pageDescriptionUIs = new ArrayList<PageDescriptionUI>();
 											LinkedHashMap<String,Object> tmp = null;
 											for (Object obItem : oblist) {
+												log().debug("TOP of pageDescriptionsUI Object loop");
 												if (obItem instanceof LinkedHashMap<?,?>) {
 													tmp = (LinkedHashMap<String,Object>) obItem;
+													log().debug("ob IS a LinkedHashMap (size: "+tmp.size()+"): extracting");
 													PageDescriptionUI pdui = PageDescriptionTool.extractPageDescriptionUI( tmp ); 
 													pageDescriptionUIs.add(pdui);
 												}
 												else if (obItem instanceof PageDescriptionUI) {
+													log().debug("ob IS a PageDescriptionUI: extracting");
 													PageDescriptionUI pdui = (PageDescriptionUI) obItem;
 													pageDescriptionUIs.add(pdui);
+												}
+												else {
+													logErrorAndContinue("pageDescriptionsUI Object loop has UNRECOGNISED class - is "+obItem.getClass().getName() );
 												}
 											}
 											//generateForm1200DataIn.pageDescriptionUI = (List<PageDescriptionUI>) ob;

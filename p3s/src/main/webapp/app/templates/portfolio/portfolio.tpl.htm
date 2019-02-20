@@ -54,11 +54,15 @@
                                                     <h4 class="font-body font-h4-title font-weight-bold">Euro-PCT</h4>
                                                 </div>
                                                 <div class="col-md-9 col-xl-9 d-flex">
-                                                    <div class="checkbox-container" data-ng-repeat="status in europctStatus('serviceStatus')">
-                                                        <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
-                                                            <span class="checkmark"></span>
-                                                        </label>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-xl-6 m-b-sm" data-ng-repeat="status in europctStatus('serviceStatus')">
+                                                            <div class="checkbox-container">
+                                                                <label class="filter-container">
+                                                                    <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body">{{status}}</span>
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,12 +100,16 @@
                                                 <div class="col-md-2 col-xl-2">  
                                                      <h4 class="font-body font-weight-bold">Renewals</h4>
                                                 </div>
-                                                <div class="col-md-9 col-xl-9 d-flex">                                                
-                                                    <div class="checkbox-container" data-ng-repeat="status in renewalsStatus('serviceStatus')">
-                                                        <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body" data-ng-if="status">{{status}}</span>
-                                                            <span class="checkmark"></span>
-                                                        </label>
+                                                <div class="col-md-9 col-xl-9 d-flex">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-xl-6 m-b-sm" data-ng-repeat="status in renewalsStatus('serviceStatus')">                                 
+                                                            <div class="checkbox-container">
+                                                                <label class="filter-container">
+                                                                    <input type="checkbox" data-ng-model="filters.serviceStatus[status]"><span class="font-body" data-ng-if="status">{{status}}</span>
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div> 
                                             </div>                                         
@@ -159,52 +167,49 @@
                 <table class="table t-data t-data--border table-scroll" fixed-table-headers="scrollable-area">
                     <thead>
                         <tr class="t-data__row t-data__row--select t-data__head">
-                            <th class="t-data__th t-data__w12" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th t-data__w10" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>App No.</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
                             </th>
-                            <th class="t-data__th t-data__w12" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th t-data__w15" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>Client Ref</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                          
                             </th>
-                            <th class="t-data__th t-data__w12" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th t-data__w15" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>Client Desc</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                         
                             </th>
-                            <th class="t-data__th t-data__w15" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
-                                <span>EPO Status</span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>     
-                            </th>
                             <th class="t-data__th t-data__w25" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
-                                <span>Service Status</span>
+                                <span>Patent Place Status</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                          
+                            </th>
+                            <th class="t-data__th t-data__w14" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                                <span>European Action</span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
+                                <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>     
                             </th>
                             <th class="t-data__w20"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter:testFl | filter:filterPortfolio as Result" data-ng-click="$ctrl.rowSelect($event, patent)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
-                            <td class="t-data__td--ellipsis t-data__td t-data__w12">
+                            <td class="t-data__td--ellipsis t-data__td t-data__w10">
                                 <span class="td-ellipsis">
                                     <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.id}}"></a>
                                 </span>
                             </td>
-                            <td class="t-data__td--ellipsis t-data__td t-data__w12 ellipsis-remove" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">
+                            <td class="t-data__td--ellipsis t-data__td t-data__w15 ellipsis-remove" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">
                                 <span class="td-ellipsis txt-grey" data-ng-if="patent.clientRef == ''">[No client reference provided]</span>
                                 <span class="td-ellipsis" data-ng-if="patent.clientRef !== ''">{{patent.clientRef}}</span>
                             </td>
-                            <td class="t-data__td--ellipsis t-data__td t-data__w12 ellipsis-remove" data-ng-class="patent.shortTitle == '' ? 'ellipsis-remove' : ''">
+                            <td class="t-data__td--ellipsis t-data__td t-data__w15 ellipsis-remove" data-ng-class="patent.shortTitle == '' ? 'ellipsis-remove' : ''">
                                 <span class="td-ellipsis txt-grey" data-ng-if="patent.shortTitle == ''">[No client description provided]</span>
                                 <span class="td-ellipsis" data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
                             </td>
-                            <td class="t-data__td--ellipsis t-data__td t-data__w15 ellipsis-remove"> <!--this is where it starts to split with x2 services-->
-                                <span class="td-ellipsis" data-ng-bind="patent.epoStatus"></span>
-                            </td><!--when multiple services begin-->
                             <td class="t-data__td t-data__w25">
                                 <div data-ng-if="patent.serviceList.length === 0">
                                     <div data-ng-if="!$ctrl.actionStatus(patent.serviceStatus) || patent.serviceStatus == 'Too late to renew'">
@@ -253,7 +258,11 @@
                                         </td>
                                     </tr>
                                 </table>
-                            </td><!--service status-->
+                            </td><!--patent place status-->
+                            <td class="t-data__td t-data__w14 ellipsis-remove"> <!--this is where it starts to split with x2 services-->
+                                <span data-ng-if="patent.epeStage == 'Filing'">Form 1200</span>
+                                <span data-ng-if="patent.epeStage == 'Prosecution'">Renewal</span>
+                            </td><!--when multiple services begin-->                            
                             <td class="t-data__td t-data__w20">
                                 <table data-ng-if="patent.serviceList.length == 1">
                                     <tr>
@@ -279,7 +288,7 @@
                                         <td class="t-data__td t-data__w15">
                                             <div class="d-flex justify-content-center">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
-                                                    <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--default pill-radius bg-phase-green t-data__btn-portal" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200
+                                                    <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--default pill-radius bg-phase-green t-data__btn-portal">Generate Form 1200
                                                     </a>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
                                                         <ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->

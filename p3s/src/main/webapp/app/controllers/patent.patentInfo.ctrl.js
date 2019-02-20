@@ -93,7 +93,7 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
                     return total;
                 }()),
                 EUR: (function(){
-                    var total = patent.form1200FeeUI.processingFeeUSD;
+                    var total = patent.form1200FeeUI.processingFeeEUR;
                     if(patent.form1200FeeUI.urgentFeeEUR !== 0) total += patent.form1200FeeUI.urgentFeeEUR;
                     if(patent.form1200FeeUI.expressFeeEUR !== 0) total += patent.form1200FeeUI.expressFeeEUR;
                     return total;

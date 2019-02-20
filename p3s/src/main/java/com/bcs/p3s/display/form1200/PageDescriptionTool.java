@@ -4,11 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.bcs.p3s.util.lang.P3SRuntimeException;
+import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.util.log.BcsLogger;
 
 /**
  * A Util class for PageDescription*
  */
-public class PageDescriptionTool {
+public class PageDescriptionTool extends Universal {
 
 	/**
 	 * Must be a list of 3 pageDescriptionUIs, 1 of each type
@@ -46,12 +48,48 @@ public class PageDescriptionTool {
 	}
 	
 	public static PageDescriptionUI extractPageDescriptionUI(LinkedHashMap<String, Object> asMap) {
-		String typeStart = (String) asMap.get("typeStart");
-		String typeEnd =   (String) asMap.get("typeEnd");
-		String rawType =      (String) asMap.get("type");
+
+		BcsLogger bcsLogger = new BcsLogger();
+		Object obStart = asMap.get("typeStart");
+		Object obEnd = asMap.get("typeEnd");
+		Object obType = asMap.get("type");
+		bcsLogger.log().debug("PageDescriptionTool extractPageDescriptionUI NullChecks = "+(obStart==null)+", "+(obEnd==null)+", "+(obType==null)); 
+		bcsLogger.log().debug("PageDescriptionTool extractPageDescriptionUI ClassType checks follow:"); 
+		bcsLogger.log().debug("                  "+obStart.getClass().getName()); 
+		bcsLogger.log().debug("                  "+obEnd.getClass().getName()); 
+		bcsLogger.log().debug("                  "+obType.getClass().getName()); 
+		
+		//	String typeStart = (String) asMap.get("typeStart");
+		//	String typeEnd =   (String) asMap.get("typeEnd");
+		//	String rawType =      (String) asMap.get("type");
+
+		String typeStart = castIntegerThenString( asMap.get("typeStart") );
+		String typeEnd =   castIntegerThenString( asMap.get("typeEnd") );
+		String rawType =   castIntegerThenString( asMap.get("type") );
+		bcsLogger.log().debug("PageDescriptionUI extractPageDescriptionUI MIDWAY params are:"+typeStart+", "+typeEnd+", "+rawType);
+		
 		PageDescriptionEnum pde = PageDescriptionEnum.getPageDescriptionEnum(rawType);
 		PageDescriptionUI pdui = new PageDescriptionUI(pde, typeStart, typeEnd); 
+
+		bcsLogger.log().debug("PageDescriptionUI params are:"+rawType+"=="+pde.toString()+", "+typeStart+", "+typeEnd);
+
 		return pdui;
 	}
 	
+	
+	protected static String castIntegerThenString(Object o) {
+		String str = "unset";
+		if (o instanceof Integer) {
+			str = ((Integer) o).toString();
+		} 
+		else if (o instanceof String) {
+			str = (String) o;
+		} 
+		else {
+			BcsLogger bcsLogger = new BcsLogger();
+			bcsLogger.log().debug("PageDescriptionTool : castIntegerThenString() fails as Class is "+o.getClass().getName());
+		}
+		return str;
+	}
+
 }

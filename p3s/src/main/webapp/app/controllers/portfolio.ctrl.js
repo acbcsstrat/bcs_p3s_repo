@@ -15,7 +15,6 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.getCurrColour = getCurrColour;
     vm.actionStatus = actionStatus;
     vm.toggleAll = toggleAll;
-    vm.generateForm1200 = generateForm1200;
     vm.sortType = sortType;
     vm.sortReverse  = false;
     vm.selectedSortType = 'ep_ApplicationNumber';
@@ -30,7 +29,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       'value': 'All Patents',
       'values': ['All Patents', 'No Action Available', 'Action Available']
     }
-  
+
     $scope.filters = {
       serviceStatus: {},
       serviceType: {},
@@ -54,10 +53,6 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       return array.filter(function(item, pos, self) {
         return self.indexOf(item) == pos;
       })
-    }
-
-    function generateForm1200(id) {
-      $state.go('portfolio.patent.euro-pct.form1200.intro', {patenId: id}, {reload: true})
     }
 
     function updateCategory(status) {
@@ -229,7 +224,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
                   $state.go('portfolio.patent', {patentId: patent.id} , {reload:true});
                   $timeout(function(){
                       $state.go('portfolio.patent.euro-pct.form1200.intro', {patentId: patent.id} , {reload:false});
-                  }, 300)
+                  }, 1000)
                 } 
             }
         }

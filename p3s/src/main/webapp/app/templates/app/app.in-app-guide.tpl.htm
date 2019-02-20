@@ -38,11 +38,11 @@
             </div>
         </div>
         <uib-tabset active="active.activeGuideTab">
-            <uib-tab index="0" heading="Colour Phases" data-ng-hide="true">
+            <uib-tab index="0" heading="Color Phases" data-ng-hide="true">
                 <div class="app-guide__body">
-                    <div class="row m-b-sm">
+                    <div class="row m-b-lg">
                         <div class="col-md-12">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>                                
+                            <p class="font-h4 font-h4-text">The colour phase concept is to illustrate the costs involved through the time period of a European action leading upto the trial deadline. Depending on which action, the timeline of a color phase and cost will vary. The color phases indicate when a price increase is going to occur, helping you make a decision on when to process a transaction.</p>                         
                         </div>
                     </div>
 
@@ -61,69 +61,150 @@
                         </div>
                     </div>
                     <uib-tabset active="activeTab" type="pills">
-                        <uib-tab heading="Green" index="0" class="bg-phase-green font-body" data-ng-hide="true">
-                                <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> 3 months before renewal date - 6 working days before renewal date</p>
-                                <p class="font-body">The Green Phase is the first phase in the annuity cycle and starts when the renewal window opens 3 months before the renewal date, and closes when only 6 working days remain before the end of the period.  This is the most cost-effective time to renew.</p>
+                        <uib-tab heading="Green" index="0" class="bg-phase-green font-h4 font-h4-text" data-ng-hide="true">
+                                <p class="font-weight-medium font-h4 font-h4-text m-b-xs"><span class="font-weight-bold">Timeframe:</span> 3 months before renewal date - 6 working days before renewal date</p>
+                                <p class="font-h4 font-h4-text">The Green Phase is the prime time before any deadline. For example it's the first phase in the annuity cycle and starts when the renewal window opens 3 months before the renewal date, and closes when only 6 working days remain before the end of the period.  This is the most cost-effective time to renew.  It's also the prime time to apply for your ePCT to ensure it's completed before the deadline.</p>
                         </uib-tab>
                         <uib-tab heading="Amber" index="1" data-ng-hide="true">
-                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> 6 working days before renewal date - 3 working days before renewal date</p>
-                            <p class="font-body">The Amber Phase starts on day 6 before the renewal date and closes on day 4. We use priority exchange and payments methods during this time which attract a small premium.</p>
+                            <p class="font-weight-medium font-h4 font-h4-text m-b-xs"><span class="font-weight-bold">Timeframe:</span> 6 working days before renewal date - 3 working days before renewal date</p>
+                            <p class="font-h4 font-h4-text">The Amber Phase starts on day 6 before the deadline and closes on day 4. We use priority exchange and payments methods during this time which attract a small premium.</p>
                         </uib-tab>
                         <uib-tab heading="Red" index="2" data-ng-hide="true">
-                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> Final 3 days before renewal date</p>                              
-                            <p class="font-body">The Red Phase is the final 3 working days before the renewal date.  We’re not currently able to accept renewals through our web service at this time, but we can certainly help – you just need to give us a call.</p>
+                            <p class="font-weight-medium font-h4 font-h4-text m-b-xs"><span class="font-weight-bold">Timeframe:</span> Final 3 days before renewal date</p>
+                            <p class="font-h4 font-h4-text m-b-lg">The Red Phase is the final 3 working days before the deadline. We're not currently able to process orders through our web service at this time, but we can certainly help – you just need to give us a call.</p>
+                            <h2 class="font-h2 font-weight-medium m-b-xs">Manual Processing</h2>
+                            <p class="font-h4 m-b-xs">There are two reasons why a European action has t be manually processed:</p>
+                            <ol class="m-b-lg">
+                                <li class="font-h4 font-h4-text">When a European action is too close to a trial deadline, so that an expected manual process is required</li>
+                                <li class="font-h4 font-h4-text">Information extracted from the EPO has caused our platform to reject the European action from our automated service</li>
+                            </ol>
+                            <p class="font-h4 font-h4-text">Patent Place offers a manual processing of these actions via our telephone service: please call telephone number +4411111999999 if you have an action that requires urgent processing</p>
                         </uib-tab>
                         <uib-tab heading="Blue" index="3" data-ng-hide="true">
-                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> Day after renewal date - 10 working days before end of extension</p>
-                            <p class="font-body">The Blue Phase starts on the day after the renewal date and runs until the end of the 11th working days before the end of the 6 month extension period.</p>
+                            <p class="font-weight-medium font-h4 font-h4-text m-b-xs"><span class="font-weight-bold">Timeframe:</span> Day after renewal date - 10 working days before end of extension</p>
+                            <p class="font-h4 font-h4-text">The Blue Phase starts on the day after the deadline (renewals only) and runs until the end of the 11th working days before the end of the 6 month extension period.</p>
                         </uib-tab>
                         <uib-tab heading="Black" index="4" data-ng-hide="true">
-                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> The period between 10 and 6 working days before the expiry of the extension period</p>                                
-                            <p class="font-body">The Black Phase starts on the 10th day before the expiry of the extension period, and runs until 21:00 UTC on the 6th day before the end of the extension period.</p>
+                            <p class="font-weight-medium font-h4 font-h4-text m-b-xs"><span class="font-weight-bold">Timeframe:</span> The period between 10 and 6 working days before the expiry of the extension period</p>                                
+                            <p class="font-h4 font-h4-text m-b-lg">The Black Phase starts on the 10th day before the expiry of the renewals extension period, and runs until 21:00 UTC on the 6th day before the end of the extension period.</p>
+                            <h2 class="font-h2 font-weight-medium m-b-xs">Manual Processing</h2>
+                            <p class="font-h4 m-b-xs">There are two reasons why a European action has t be manually processed:</p>
+                            <ol class="m-b-lg">
+                                <li class="font-h4 font-h4-text">When a European action is too close to a trial deadline, so that an expected manual process is required</li>
+                                <li class="font-h4 font-h4-text">Information extracted from the EPO has caused our platform to reject the European action from our automated service</li>
+                            </ol>
+                            <p class="font-h4 font-h4-text">Patent Place offers a manual processing of these actions via our telephone service: please call telephone number +4411111999999 if you have an action that requires urgent processing</p>                            
                         </uib-tab>
                         <uib-tab heading="Grey" index="5" data-ng-hide="true">
-                            <p class="font-weight-medium font-body m-b-xs"><span class="font-weight-bold">Timeframe:</span> During this period patents are not generally available for renewal</p>
-                            <p class="font-body">Generally patents are not renewable during this the Grey phase.  This may be because the patent has already been renewed, or it may be that the renewal window hasn’t opened yet.  If you think you should be able to renew a patent in this phase then please contact us.</p>
+                            <p class="font-weight-medium font-h4 font-h4-text m-b-xs"><span class="font-weight-bold">Timeframe:</span> During this period patents are not generally available for renewal</p>
+                            <p class="font-h4 font-h4-text">If patents show in the grey phase then there are not any actions available. This may be because the patent has already been renewed, or it may be that the renewal or ePCT window hasn't opened yet.  If you think you should be able to action a patent in this phase then please contact us.</p>
                         </uib-tab>
                     </uib-tabset>
                 </div>
             </uib-tab>
             <uib-tab index="1" heading="Portfolio" data-ng-hide="true">
                 <div class="app-guide__body">
-                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
-                    <ul>
-                        <li>Find information on the patent which is extracted from the EPO</li>
-                        <li>Access Renewal options and information (if appropriate)</li>
-                        <li>Access all Euro-PCT information and service such as generating a Form 1200</li>
-                        <li>Edit or delete patents on the system</li>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Table</h2>
+                    <p class="font-h4 font-h4-text m-b-xs">Portfolio is the feature to add and remove patents from the platform and to manage all key information and services associated with a specific patent.</p>
+                    <p class="m-b-lg font-h4 font-h4-text">Portfolio key table is set out with the following columns:</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Application Number</h2>
+                    <p class="m-b-lg font-h4 font-h4-text">This is the Application Number that is saved by the EPO</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Client Reference and Description </h2>
+                    <p class="m-b-lg font-h4 font-h4-text">This is for your reference and short form description of the patent to help you identify patents. They can be filtered using the search inputs located above the table.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Patent Place Statuses</h2>
+                    <p class="font-h4 font-h4-text m-b-xs">Patents in your Portfolio are updated with information directly from the EPO daily. The status summarizes the current color phase, transaction status or latest EPO status.</p>
+                    <p class="m-b-lg font-h4 font-h4-text">Patent Place assigns a status to each patent to indicate whether the next action can be processed, or what stage it is during the progress of an action. If an action is available, the current and next color phase and the costs will be displayed. This is to help you on the timing of executing the next action.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">European Actions</h2>
+                    <p class="m-b-lg font-h4 font-h4-text">The European Action column displays the next stages available for your patent, for example an upcoming Renewal or filing a Form 1200 and what you need to do next.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Filtering/Quick search</h2>
+                    <p class="m-b-xs font-h4 font-h4-text">Patent Place offers three ways to filter and search the portfolio:</p>
+                    <ul class="m-b-lg">
+                        <li class="font-h4 font-h4-text">Use the search fields to filter by Application number or Client Reference.</li>
+                        <li class="font-h4 font-h4-text">Use the drop-down filter to find patents that have an action available or not</li>
+                        <li class="font-h4 font-h4-text">Through the ‘Advanced Search’ options, filter patents based on statuses or color phases assigned by Patent Place. For example, to see patents that have just opened for Renewal or are in the Amber phase, then you can do so by selecting these filter options. To revert to manually scrolling through the table, then clear all filter options.</li>
                     </ul>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Case overview</h2>
+                    <p class="font-h4 font-h4-text">By selecting a row in the Portfolio table, the case overview for that selected patent is displayed. This gives you access to the details, cost and available actions and documents.</p>
                 </div>
             </uib-tab>
-            <uib-tab index="2" heading="Adding a Patent" data-ng-hide="true">
+            <uib-tab index="2" heading="Case Overview" data-ng-hide="true">
                 <div class="app-guide__body">
-                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Case overview</h2>
+                    <p class="m-b-lg font-h4 font-h4-text">Select a patent in the Portfolio table and the details are highlighted in the case overview panel below.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Patent Information tab</h2>
+                    <p class="m-b-lg font-h4 font-h4-text">There is basic information for the patent (extracted from the EPO), and you are able to add, remove or edit the Client Reference and Description. The costs table sets out the EPO official fees, our processing fees, and the spot rate for the foreign exchange.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Euro-PCT tab</h2>
+                    <p class="m-b-lg font-h4 font-h4-text">If a patent is to enter the European National Phase, this tab contains all relevant information, documents and actions.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Euro-PCT Info Panel</h2>
+                    <p class="m-b-xs font-h4 font-h4-text">This panel allows you to change the notification settings for each of the available color phases for entry into Euro-PCT. This is a simple 'on or off' status and remember to click 'Save' to update the settings.</p>
+                    <p class="m-b-lg font-h4 font-h4-text">The progress bar illustrates the total cost variation between the current color phase and the next color phase. It also shows you how long you have until the next color phase is reached.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Form 1200 panel</h2>
+                    <p class="m-b-lg font-h4 font-h4-text">If an action to generate a Form 1200 for submission to the EPO is available, the 'Form 1200' tab will be accessible and from here you can generate the required document.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Cost Analysis panel</h2>
+                    <p class="m-b-lg font-h4 font-h4-text">The cost analysis provides a breakdown of costs, including all fees charged by the EPO and Patent Place. The bar chart illustrates the cost of each color phase and the FX chart displays the fluctuation in cost with the foreign exchange rate applied over the period of 90 days. Both chars assist you on deciding when to commit to a purchase.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Renewals tab</h2>
+                    <p class="m-b-lg font-h4 font-h4-text">If a patent has a renewal to be paid, this tab contains all relevant information, documents and actions.</p>
+
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Renewal Info panel</h2>
+                    <p class="m-b-xs font-h4 font-h4-text">This panel allows you to change the notification settings for each of the available color phases for Renewals. This is a simple 'on or off' status and remember to click 'Save' to update the settings.</p>
+                    <p class="m-b-lg font-h4 font-h4-text">The progress bar illustrates the total cost variation between the current color phase and the next color phase. It also shows you how long you have until the next color phase is reached.</p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Cost Analysis panel</h2>
+                    <p class="m-b-lg font-h4 font-h4-text">The cost analysis provides a breakdown of costs, including all fees charged by the EPO and Patent Place. The bar chart illustrates the cost of each color phase and the FX chart displays the fluctuation in cost with the foreign exchange rate applied over the period of 90 days. Both chars assist you on deciding when to commit to a purchase.</p>
+
                 </div>
             </uib-tab>
-            <uib-tab index="3" heading="Form 1200" data-ng-hide="true">
+            <uib-tab index="3" heading="Add Patent" data-ng-hide="true">
                 <div class="app-guide__body">
-                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Adding Patents</h2>
+                    <p class="m-b-xs font-h4 font-h4-text">From the Portfolio you are able to add patents to the platform. Click on the 'add patent' button and enter the EPO application number, making sure to include the check digit (eg.123456.1). Our system will fetch the details from the EPO, which you will need to confirm are correct.</p>
+                    <p class="font-h4 font-h4-text">You can add your reference and short description, which you can use for organizing the patents, or, you can leave them blank. This information can be added, edited, or removed at a later stage through the Patent Information panel.</p>
+                </div>
+            </uib-tab>            
+            <uib-tab index="4" heading="Form 1200" data-ng-hide="true">
+                <div class="app-guide__body">
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Generating a Form 1200</h2>
+                    <p class="m-b-xs font-h4 font-h4-text">To generate a Form 1200, go to the Portfolio, select the patent from the table which displays the case overview panel, and then navigate to the Euro-PCT tab and click the 'Form 1200' link.</p>
+                    <p class="m-b-xs font-h4 font-h4-text">Once you click 'Start process', you will be directed to a series of questions. Complete each section, and when displayed, click the 'Generate form 1200' button. You will be directed to a fee summary page which provides a breakdown of all EPO official fees and Patent Place charges whilst your form 1200 is being generated. You do not have to stay on this page and can proceed to complete other tasks whilst you wait.</p>
+                    <p class="m-b-xs font-h4 font-h4-text">When the form 1200 has been generated in a PDF format, you can review the document by navigating to Euro-PCT tab and selecting the 'Download' button under the heading 'Form 1200 application'. If required, you can also delete the application from the same location. With the form 1200 generated, you are able to commit this transaction.</p>
+                    <p class="m-b-xs font-h4 font-h4-text">If you have been informed that the case is not suitable for using Patent Place's automated Form 1200 service, contact us at support@ip.place</p>   
                 </div>
             </uib-tab>
-            <uib-tab index="4" heading="Renewals" data-ng-hide="true">
+            <uib-tab index="5" heading="Fees" data-ng-hide="true">
                 <div class="app-guide__body">
-                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
-                </div>
-            </uib-tab>
-            <uib-tab index="5" heading="Scenario 1" data-ng-hide="true">
-                <div class="app-guide__body">
-                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
-                </div>
-            </uib-tab>         
-            <uib-tab index="6" heading="Scenario 2" data-ng-hide="true">
-                <div class="app-guide__body">
-                    <p class="m-b-sm">The Portfolio is where you can find all patents that you have added to the system. From this one location you can access all infromation and services relevant to each patent listed by selecting an item from the Portfolio table, where subsequentially a secondary panel will display where you can: </p>
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Fees</h2>
+                    <p class="m-b-xs font-h4 font-h4-text">Patent place aims to provide transparent fee structure so the platform provides a clear breakdown of the EPO official fees and the Patent Place charges</p>                  
+                    <p class="font-h4 font-h4-text">The cost analysis provides a breakdown of costs, including all fees charged by the EPO and Patent Place. The bar chart illustrates the cost of each color phase and the FX chart displays the fluctuation in cost with the foreign exchange rate applied over the period of 90 days. Both chars assist you on deciding when to commit to a purchase.</p>
                 </div>
             </uib-tab>                                                 
+            <uib-tab index="6" heading="Checkout" data-ng-hide="true">
+                <div class="app-guide__body">
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Checkout</h2>
+                    <p class="m-b-xs font-h4 font-h4-text">To process an action at the EPO you have to:
+                    <ol class="m-b-lg">
+                        <li class="font-h4 font-h4-text">Add the item to the basket</li>
+                        <li class="font-h4 font-h4-text">From the basket page (in the top right hand corner), review the terms and conditions and click 'Continue'</li>
+                        <li class="font-h4 font-h4-text">Once you have reviewed th order and check the transfer deadline, click 'Place the order'</li>
+                    </ol>
+                    <p class="m-b-xs font-h4 font-h4-text">From this point you will have committed the action and are required to make sure the funds are received into the account displayed before the stated deadline.</p>
+                    <p class="m-b-xs font-h4 font-h4-text">You will be presented with a download link for a pro-forma invoice if you require a copy. If you navigate away from the page, do not worry as you can locate the invoice from Current Transactions.</p>
+                </div>
+            </uib-tab>
+            <uib-tab index="7" heading="Transactions" data-ng-hide="true">
+                <div class="app-guide__body">
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Transactions</h2>
+                    <p class="m-b-xs font-h4 font-h4-text">All transactions are grouped into, Current Transaction tab and Transaction History tab.</p>
+                    <p class="m-b-xs font-h4 font-h4-text">All transactions that have been initiated and are pending will be located in the Current Transactions tab; all Transactions that have either been completed or failed will be located in the Transaction History tab.</p>
+                    <p class="m-b-xs font-h4 font-h4-text">If you would like find further information on a transaction, select one of the transactions from the table and a Transaction overview panel will be displayed. There is information on the Patent and the processing stage with the EPO.</p>
+                    <p class="m-b-xs font-h4 font-h4-text">Any invoices can also be located in the transaction overview panel, where they can be downloaded or printed off.</p>
+                </div>
+            </uib-tab>            
+            <uib-tab index="8" heading="Navigation" data-ng-hide="true">
+                <div class="app-guide__body">
+                    <h2 class="font-h2 font-weight-medium m-b-xs">Navigation</h2>
+                    <p class="m-b-xs font-h4 font-h4-text">You can find a quick access navigation on the left-hand side of the page. This directs you to the frequently used Patent Place services: Dashboard, Portfolio and Transactions.</p>
+                    <p class="font-h4 font-h4-text">To view all available links to services in Patent Place, select the menu icon or text at the top.</p>
+                </div>
+            </uib-tab>            
         </uib-tabset>
     </div>
 </div>
