@@ -33,7 +33,7 @@ public class ServiceManager extends Universal {
     	if (StageManager.isInFiling(patent.getEpoPatentStatus())) {
     		// Unconditionally provide 1 Service, detailing current Form1200 Status
     		
-    		log().debug("zaph - aptent id is "+patent.getId());
+    		log().debug("Patent id is "+patent.getId());
     		EpctEngine epctEngine = new EpctEngine(patent);
     		if ( ! epctEngine.isNotAvailable) {
 	    		service = epctEngine.prepareForm1200Service();

@@ -202,7 +202,6 @@ public class EpctEngine extends Universal {
     	//String err = CLASSNAME + "prepareForm1200Service() : ";
     	
     	// Service needs current AND next, colour AND price. So calc ..
-		log().debug("zaph tmp debug");
 		if (patent==null) log().error("patent is null!!!"); else log().debug("patent ID is "+patent.getId());
 		// Don't recalcuate pricing if already been done
 		if (fee==null) calcEpctPersistPricingOnly(null);

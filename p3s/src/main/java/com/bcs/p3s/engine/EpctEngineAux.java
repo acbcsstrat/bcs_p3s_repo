@@ -73,7 +73,7 @@ public class EpctEngineAux extends Universal {
 	public boolean isANonWorkingDay(LocalDate candiDate) {
     	if (candiDate==null) throw new P3SRuntimeException("isANonWorkingDay() passed a null");
     	boolean isANonWorkingDay = (allNonWorkingDayLDs.contains(candiDate));
-    	log().debug("zaph Testing for isANonWorkingDay("+candiDate+") yields "+isANonWorkingDay);
+    	log().debug(" Testing for isANonWorkingDay("+candiDate+") yields "+isANonWorkingDay);
     	return isANonWorkingDay;
     }
 	
