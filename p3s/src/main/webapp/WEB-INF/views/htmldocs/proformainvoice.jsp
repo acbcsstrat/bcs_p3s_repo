@@ -67,6 +67,10 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
   <!-- Top Header -->
   <table border="0" width="100%">
     <tr>
+      <td height="30px">
+      </td>
+    </tr>
+    <tr>
       <td width="50%">
         <img src="/p3sweb/public/images/logo-withname-4htmldoc.png">
       </td>

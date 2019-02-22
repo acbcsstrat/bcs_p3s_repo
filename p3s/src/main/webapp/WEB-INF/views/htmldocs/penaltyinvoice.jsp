@@ -63,7 +63,11 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 <tr>
   <td>
   <!-- Top Header -->
-  <table border="0" width="100%">
+  <table border="0" width="100%" >
+    <tr>
+      <td height="30px">
+      </td>
+    </tr>
     <tr>
       <td width="50%">
         <img src="/p3sweb/public/images/logo-withname-4htmldoc.png">
@@ -192,11 +196,13 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
   </td>
 </tr>
 
+<tr>
+<td>
 
 
 
   <!-- Repeating Patent details-->
-  <table border="0" width="100%">
+  <table border="0" align="center" width="100%"  style="width: 960px;">
     <tr>
       <td>
 	    <!-- Start of a patent - summary row-->
@@ -251,8 +257,8 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 
 <tr>
   <!-- Grand Total line -->
-      <td>
-  		<div align="right">TOTAL PAYABLE :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>$<%=data.getTotalUsdPayable() %></b></div>
+      <td align="right" style="text-align: right;width: 960px;">
+  		<div align="right" style="text-align: right;width: 960px;;">TOTAL PAYABLE :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>$<%=data.getTotalUsdPayable() %></b></div>
       </td>
 </tr>
 
@@ -262,8 +268,8 @@ PenaltyInvoice data = (PenaltyInvoice) request.getAttribute("penaltyInvoice");
 
 <tr>
   <!-- Have this Invoice been paid yet ? -->
-      <td>
-  		<div align="right">Invoice Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=data.getInvoiceStatusMessage() %></div>
+      <td align="right" style="width: 960px;">
+  		<div align="right" style="width: 960px;text-align: right;">Invoice Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=data.getInvoiceStatusMessage() %></div>
       </td>
 </tr>
 
