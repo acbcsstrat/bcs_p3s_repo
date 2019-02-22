@@ -13,7 +13,7 @@
 <script>
     function demoFromHTML() {
     	
-        var pdf = new jsPDF('p', 'pt', 'A4');
+        var pdf = new jsPDF('p', 'pt', 'letter');
         
         source = $('#content')[0];
 
@@ -53,7 +53,17 @@
 
 <body>
 
-<div id="content" class="watermark">
+
+<div class="btn-no-bg" align="center" style="margin-bottom: 30px;">
+
+<button onclick="window.print()">Print this page</button>
+<button onclick="javascript:demoFromHTML()">Download as PDF</button>
+
+
+</div>
+
+
+<div id="content" class="watermark" >
 
 <%@ page import = "java.util.List"%>
 <%@ page import = "com.bcs.p3s.docs.htmldoc.model.ProformaInvoice"%>
@@ -64,18 +74,22 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 %>
 
 
-<table border="0" width="100%" >
+<table border="0" align="center" width="100%" style="width: 960px;">
 <tr>
   <td>
   <!-- Top Header -->
   <table border="0" width="100%">
+    <tr>
+      <td height="30px">
+      </td>
+    </tr>
     <tr>
       <td width="50%">
         <img src="/p3sweb/public/images/logo-withname-4htmldoc.png">
       </td>
 	  <td>
 	  </td>
-	  <td width="50%" align="left">
+	  <td width="50%" align="right">
 	    <h1>INVOICE</h1>
 	  </td>
 	  <td>
@@ -340,7 +354,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
     </tr>
     <tr>
       <td>
-        <h1 align="center">NO SERVICES PROVIDED IN THE US</h1>
+        <h2 align="center">NO SERVICES PROVIDED IN THE US</h2>
       </td>
     </tr>
     <tr>
@@ -353,8 +367,6 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 </tr>
 </table>
 </div>
-<div class="btn-no-bg">
-	<a href="javascript:demoFromHTML()">Save as PDF</a>
-</div>  
+
 </body>
 </html>

@@ -12,7 +12,7 @@
 <script>
     function demoFromHTML() {
     	
-        var pdf = new jsPDF('p', 'pt', 'A4');
+        var pdf = new jsPDF('p', 'pt', 'letter');
         
         source = $('#content')[0];
 
@@ -92,7 +92,30 @@
 HtmlDocCertificate data = (HtmlDocCertificate) request.getAttribute("htmlDocCertificate");
 %>
 
+
+<div class="btn-no-bg" align="center" style="margin-bottom: 30px;">
+
+<button onclick="window.print()">Print this page</button>
+<button onclick="javascript:demoFromHTML()">Download as PDF</button>
+
+
+</div>
+
+
 <div id="content" class="watermark">
+
+<table border="0" align="center" width="100%" style="width: 960px;border: none;">
+<tr>
+  <td height="30px" style="border: none;">
+  </td>
+</tr>
+<tr>
+<td style="border: none;">
+
+
+
+
+
 
 <!-- Top Header -->
 
@@ -119,7 +142,7 @@ HtmlDocCertificate data = (HtmlDocCertificate) request.getAttribute("htmlDocCert
 	      	
   <!-- Content table -->
   <!-- below onwards replace with DB data later -->
-  	<table>
+  	<table align="center" style="width: 960px;">
 		<tr>
 			<td><b>ORGANISATION</b></td>
 			<td><%=data.getClientBusinessName() %></td>
@@ -158,7 +181,7 @@ HtmlDocCertificate data = (HtmlDocCertificate) request.getAttribute("htmlDocCert
  	<br/>
  	<br/>
  	<div>The EPO Record shows:</div>
- 	<table>
+ 	<table style="width: 960px;">
  		<tr>
  			<td><b>PATENT YEAR</b></td>
  			<td><%=data.getEpoPatentYearInPlace() %></td>
@@ -173,7 +196,7 @@ HtmlDocCertificate data = (HtmlDocCertificate) request.getAttribute("htmlDocCert
  	<br/>
 	<div class="footnum">
 	 	<p/>
-	 	<table >
+	 	<table style="width: 960px;">
 	 		<tr>
 	 			<td><b>Patent Place Certificate Number:</b></td>
 	 			<td><%=data.getCertificateNumber() %></td>
@@ -187,13 +210,12 @@ HtmlDocCertificate data = (HtmlDocCertificate) request.getAttribute("htmlDocCert
 
 
 </div>
+
+</td>
+</tr>
+</table>
+
 </div>
-
-
-<p/>
-<div class="btn-no-bg">
-	<a href="javascript:demoFromHTML()">Save as PDF</a>
-</div>  
 
 </body>
 </html>

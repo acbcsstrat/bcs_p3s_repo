@@ -13,7 +13,7 @@
 <script>
     function demoFromHTML() {
     	
-        var pdf = new jsPDF('p', 'pt', 'A4');
+        var pdf = new jsPDF('p', 'pt', 'letter');
         
         source = $('#content')[0];
 
@@ -50,8 +50,18 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 %>
 
 
+<div class="btn-no-bg" align="center" style="margin-bottom: 30px;">
+
+<button onclick="window.print()">Print this page</button>
+<button onclick="javascript:demoFromHTML()">Download as PDF</button>
+
+
+</div>
+
+
+
 <div id="content">
-<table border="0" width="100%" >
+<table border="0" align="center" width="100%" style="width: 960px;">
 <tr>
   <td>
   <!-- Top Header -->
@@ -62,7 +72,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
       </td>
 	  <td>
 	  </td>
-	  <td width="50%" align="left">
+	  <td width="50%" align="right">
 	    <h1>PRO-FORMA INVOICE</h1>
 	  </td>
 	  <td>
@@ -317,7 +327,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
   <table border=0 align="center"  width="100%">
     <tr>
       <td>
-        <h1 align="center">NO SERVICES PROVIDED IN THE US</h1>
+        <h2 align="center">NO SERVICES PROVIDED IN THE US</h2>
       </td>
     </tr>
     <tr>
@@ -327,7 +337,7 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
     </tr>
     <tr>
       <td>
-        <h2 align="center">PLEASE WIRE YOUR PAYMENT TO EITHER OF:</h2>
+        <h3 align="center">PLEASE WIRE YOUR PAYMENT TO EITHER OF:</h3>
       </td>
     </tr>
     <tr>
@@ -530,8 +540,5 @@ List<Patent4htmlDoc> patents = (List<Patent4htmlDoc>) data.getPatents();
 </tr>
 </table>
 </div>
-<div class="btn-no-bg">
-	<a href="javascript:demoFromHTML()">Save as PDF</a>
-</div>  
 </body>
 </html>
