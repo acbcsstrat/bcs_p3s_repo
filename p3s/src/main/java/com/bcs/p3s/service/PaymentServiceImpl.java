@@ -66,11 +66,18 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 	public BasketContents showBasketContents(List<Long> patentIds) {
 
 		String err = PREFIX+"showBasketDetails() ";
+		BasketContents basketContents = new BasketContents();
+
+		// 190226 are now being invoked with empty basket. Avoid exception
+		if (patentIds==null || patentIds.size()==0) {
+			log().debug("showBasket() invoked with empty basket!  Avoid exception.  190226    "+err);
+			return basketContents;
+		}
+		
+		
+		
 		checkAreMyPatents(patentIds, err);
 		log().debug(err+" invoked ");
-
-		
-		BasketContents basketContents = new BasketContents();
 		
 		try {
 			populateBasketContents(basketContents, patentIds);
