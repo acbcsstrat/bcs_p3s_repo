@@ -70,7 +70,7 @@ public class PaymentServiceImpl extends ServiceAuthorisationTools implements Pay
 
 		// 190226 are now being invoked with empty basket. Avoid exception
 		if (patentIds==null || patentIds.size()==0) {
-			log().debug("showBasket() invoked with empty basket!  Avoid exception.  190226    "+err);
+			log().debug("showBasket() invoked with empty basket!  Avoid ex-ception.  190226    "+err);
 			return basketContents;
 		}
 		
