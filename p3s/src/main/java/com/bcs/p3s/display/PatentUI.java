@@ -158,6 +158,14 @@ public class PatentUI extends Patent {
 		else 
 		{
 			for(PatentExtendedData extendedData : extendedDatas){
+				
+				if (extendedData.getCurrentCostBand()==null) {
+						Universal universal = new Universal();
+						universal.log().error(
+							"extendedData.getCurrentCostBand() is Null. Expect Crash.     [extendedData.getPatentId()="+extendedData.getPatentId()+"]     "
+							+"From PatentUI constructor("+this.getId()+", sz"+extendedDatas.size()+")  ln162");
+				}
+				
 				if(extendedData.getPatentId() == null){ // Happens within add-patent processing 
 					this.setRenewalDueDate(extendedData.getRenewalDueDate());
 					this.setCostBandColour(extendedData.getCurrentCostBand());
