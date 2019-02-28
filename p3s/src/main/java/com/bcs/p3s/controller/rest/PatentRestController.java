@@ -550,7 +550,7 @@ public class PatentRestController extends Universal {
 	//---------------------Fetch Renewal History ------------------------------------------------
 		    @RequestMapping(value = "/rest-renewal-history/{id}", method = RequestMethod.GET)    
 		    public ResponseEntity<List<RenewalUI>> getRenewalHistory(@PathVariable("id") long id) {
-		    	log().debug("PatentRestController : /rest-renewal-history/ invoked ");
+		    	log().debug("PatentRestController : /rest-renewal-history/{"+id+"} invoked ");
 		    	//check whether id is null
 		    	List<RenewalUI> renewalHistoryData = patentService.getRenewalHistory(id);
 
@@ -559,19 +559,19 @@ public class PatentRestController extends Universal {
 		    	// Also - had found that 'patentUI' was populated, but 'patent' wasn't (Why the duplication?).
 
 		    	
-		    	log().info("zf9: start to investigate data returned. list size is "+renewalHistoryData.size());
+		    	log().info("unqCode01: start to investigate data returned. list size is "+renewalHistoryData.size());
 		    	if (renewalHistoryData.size()>0) {
-			    	log().info("zf9: examine first element "+""+""+""+""+"");
+			    	log().info("unqCode01: examine first element "+""+""+""+""+"");
 			    	RenewalUI rury = renewalHistoryData.get(0);
-			    	log().info("zf9: still alive. "+""+""+""+""+"");
+			    	log().info("unqCode01: still alive. "+""+""+""+""+"");
 			    	Payment activePaymentId = rury.getActivePaymentId();
-			    	log().info("zf9: still alive. "+""+""+"(activePaymentId==null ) = "+""+ (activePaymentId==null ) );
+			    	log().info("unqCode01: still alive. "+""+""+"(activePaymentId==null ) = "+""+ (activePaymentId==null ) );
 			    	Patent patent = rury.getPatent();
-			    	log().info("zf9:  = "+"(patent==null ) = "+ (patent==null ) );
-			    	if (patent!=null) log().info("zf9:  and patentID = "+patent.getId());
+			    	log().info("unqCode01:  = "+"(patent==null ) = "+ (patent==null ) );
+			    	if (patent!=null) log().info("unqCode01:  and patentID = "+patent.getId());
 			    	PatentUI patentUI = rury.getPatentUI();
-			    	log().info("zf9:  = "+"(patentUI==null ) = "+ (patentUI==null ) );
-			    	if (patentUI!=null) log().info("zf9:  and patentUI.getID() = "+patentUI.getId() );
+			    	log().info("unqCode01:  = "+"(patentUI==null ) = "+ (patentUI==null ) );
+			    	if (patentUI!=null) log().info("unqCode01:  and patentUI.getID() = "+patentUI.getId() );
 		    		
 		    	}
 		    	
@@ -598,28 +598,28 @@ public class PatentRestController extends Universal {
 			    	//////rury.getActivePaymentId().setLatestInvoice(null);
 
 			    	// Why isn't the existing ActivePaymentId.renewals ok. record whats there
-			    	log().info("zf9: investigating the existing ActivePaymentId.renewals ");
+			    	log().info("unqCode01: investigating the existing ActivePaymentId.renewals ");
 			    	Payment pay = rury.getActivePaymentId();
-			    	if (pay==null) log().info("zf9: pay is null ");
+			    	if (pay==null) log().info("unqCode01: pay is null ");
 			    	else {
-			    		log().info("zf9: pay id is "+pay.getId());
+			    		log().info("unqCode01: pay id is "+pay.getId());
 			    		List<Renewal> kylo = pay.getRenewals();
-				    	if (kylo==null) log().info("zf9: pay kylo is null ");
+				    	if (kylo==null) log().info("unqCode01: pay kylo is null ");
 				    	else {
-				    		log().info("zf9: kylo is not null. is size "+kylo.size()+".      id of each renewal follows:");
-				    		for (Renewal miniRen : kylo) { log().info("zf9: .....    "+miniRen.getId()); }
+				    		log().info("unqCode01: kylo is not null. is size "+kylo.size()+".      id of each renewal follows:");
+				    		for (Renewal miniRen : kylo) { log().info("unqCode01: .....    "+miniRen.getId()); }
 				    	}
 			    	}
 			    	
 			    	Payment rey = Payment.findPayment(pay.getId());
-		    		log().info("zf9: Created REY : id is "+rey.getId());
+		    		log().info("unqCode01: Created REY : id is "+rey.getId());
 		    		List<Renewal> bb8 = rey.getRenewals();
-			    	if (bb8==null) log().info("zf9: rey's bb8 is null ");
+			    	if (bb8==null) log().info("unqCode01: rey's bb8 is null ");
 			    	else {
-			    		log().info("zf9: bb8 is not null. is size "+bb8.size()+".      id of each renewal follows:");
-			    		for (Renewal miniRen : bb8) { log().info("zf9: .....    "+miniRen.getId()); }
+			    		log().info("unqCode01: bb8 is not null. is size "+bb8.size()+".      id of each renewal follows:");
+			    		for (Renewal miniRen : bb8) { log().info("unqCode01: .....    "+miniRen.getId()); }
 			    	}
-			    	log().info("zf9: end of debug ");
+			    	log().info("unqCode01: end of debug ");
 			    	
 			    	// Wow. bb8 is NULL - not event empty - acTidy
 			    	// so give it an EMPTY renewals & see what happens ... 
@@ -649,18 +649,18 @@ public class PatentRestController extends Universal {
 			    	
 
 			    	bodge.add(rury);
-			    	log().info("zf9: re-bodged for patent #"+patentId);
+			    	log().info("unqCode01: re-bodged for patent #"+patentId);
 		    	}
 		    	
 		    	
 		    	
-//		    	log().info("zf9: & AFTER the bodge . siz e = "+bodge.size()  );
+//		    	log().info("unqCode01: & AFTER the bodge . siz e = "+bodge.size()  );
 //		    	if (bodge.size()>0) {
-//			    	log().info("zf9: examine first element "+""+""+""+""+"");
+//			    	log().info("unqCode01: examine first element "+""+""+""+""+"");
 //			    	RenewalUI rury = bodge.get(0);  //      <<<<---------   hardcode - first only
 //			    	Patent patent = rury.getPatent();
-//			    	log().info("zf9:  = "+"(patent==null ) = "+ (patent==null ) );
-//			    	if (patent!=null) log().info("zf9:  and patentID = "+patent.getId());
+//			    	log().info("unqCode01:  = "+"(patent==null ) = "+ (patent==null ) );
+//			    	if (patent!=null) log().info("unqCode01:  and patentID = "+patent.getId());
 //
 //		    	
 //			    	
