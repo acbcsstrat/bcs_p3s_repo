@@ -29,6 +29,9 @@ import com.bcs.p3s.wrap.InBasket;
  *
  */
 public class ExtractSubmittedDataEngine extends Universal {
+
+	protected static String NO_DATA = "NO DATA";
+	
 	
 	public HashMap<String, Object> extractRegistrationForm(Object object){
 		
@@ -164,24 +167,24 @@ public class ExtractSubmittedDataEngine extends Universal {
 		   	LinkedHashMap<String, Object> newPatentHashMap = (LinkedHashMap<String, Object>) obby; 
 		   	Set<String> keys = newPatentHashMap.keySet();
 
-		   	for (String key : keys) {
-			   	String displayable = "";
-			   	Object tmp = newPatentHashMap.get(key);
-			   	if (tmp!=null) { 
-			   		displayable = tmp.toString();
-			   	}
-		   	}
+			//for (String key : keys) {
+			//   	String displayable = "";
+			//   	Object tmp = newPatentHashMap.get(key);
+			//   	if (tmp!=null) { 
+			//   		displayable = tmp.toString();
+			//   	}
+			//}
 		   	
 		   	
 		   	// Process fields, one by one
 		   	String value = "nevernever";
-		   	LinkedHashMap<String, Object> notificationObjects = new LinkedHashMap<String, Object>();
-		   	List<Notification> onNotifications = new ArrayList<Notification>();
+			//LinkedHashMap<String, Object> notificationObjects = new LinkedHashMap<String, Object>();
+			//List<Notification> onNotifications = new ArrayList<Notification>();
 		   	
 		   	for (String key : keys) {
 		   		//MP09022018 1351 Changing to NODATA if in case any of the values from EPO is null
 		   		//value = "FAILED";
-		   		value = "NO DATA";
+		   		value = NO_DATA;
 			   	Object ob = newPatentHashMap.get(key);
 			   	if (ob instanceof String) value = (String) ob;
 			   	
@@ -275,8 +278,16 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   	// Added for v2.1 - E-PCT / Form1200
 			   	
 			   	if ("internationalFilingLang".equals(key.trim())) patent.setInternationalFilingLang(value);
-			   	if ("PCT_applicationNumber".equals(key.trim())) patent.setPCT_applicationNumber(value);	
-			   	if ("PCT_publicationNumber".equals(key.trim())) patent.setPCT_publicationNumber(value);
+			   	if ("pct_applicationNumber".equals(key.trim())) {
+			   		if (NO_DATA.equals(value)) value = "";
+			   		patent.setPCT_applicationNumber(value);	
+			   	}
+			   	if ("pct_publicationNumber".equals(key.trim())) {
+			   		if (NO_DATA.equals(value)) value = "";
+			   		patent.setPCT_publicationNumber(value);
+			   	}
+
+			   	
 			   	if ("internationalSearchAuthority".equals(key.trim())) patent.setInternationalSearchAuthority(value);
 			   	if ("designated_states".equals(key.trim())) patent.setDesignated_states(value);
 			   	if ("epctStatus".equals(key.trim())) patent.setEpctStatus(value);
@@ -295,7 +306,8 @@ public class ExtractSubmittedDataEngine extends Universal {
 			   		}
 			   		patent.setPriorityDate(itch);
 			   	}
-			   	if ("PCT_publishedDate".equals(key.trim())) {
+			   	//if ("PCT_publishedDate".equals(key.trim())) {
+				if ("pct_publishedDate".equals(key.trim())) {
 			   		Date itch = null;
 			   		if (ob instanceof Long) {
 				   		itch = new Date((Long) ob);

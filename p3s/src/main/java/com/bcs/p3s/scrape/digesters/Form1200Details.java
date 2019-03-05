@@ -11,6 +11,8 @@ import org.xml.sax.SAXException;
 import com.bcs.p3s.scrape.model.ApplicationData;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.scrape.model.PublicationData;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
+import com.bcs.p3s.util.lang.Universal;
 
 
 public class Form1200Details extends DigesterElements{
@@ -137,11 +139,16 @@ public class Form1200Details extends DigesterElements{
     		if("reg:publication-reference".equals(qName)){
          	   isPublicationData = false;
          	   publicationList.add(publication);
-         	   if("EP".equals(publication.getCountryCode())){
-         	   form1200.setEP_PublicationNumber(publication.getCountryCode().concat(publication.getPublicationNumber()));
+         	   String combiCountryNumber = assembleCountryNumber(publication.getCountryCode(), publication.getPublicationNumber());
+         	   if("EP".equals(publication.getCountryCode())) {
+	         	   //form1200.setEP_PublicationNumber(publication.getCountryCode().concat(publication.getPublicationNumber()));
+         		  ckeck4multipleCountryNumCodes(form1200.getEP_PublicationNumber(), combiCountryNumber, "Pub");
+         		  form1200.setEP_PublicationNumber(combiCountryNumber);
          	   }
          	  if("WO".equals(publication.getCountryCode())){
-            	   form1200.setPCT_PublicationNumber(publication.getCountryCode().concat(publication.getPublicationNumber()));
+            	  //form1200.setPCT_PublicationNumber(publication.getCountryCode().concat(publication.getPublicationNumber()));
+         		  ckeck4multipleCountryNumCodes(form1200.getPCT_PublicationNumber(), combiCountryNumber, "Pub");
+          		  form1200.setPCT_PublicationNumber(combiCountryNumber);
          	  }
          	   //record.addPublication(publication);
             }
@@ -163,11 +170,16 @@ public class Form1200Details extends DigesterElements{
 				isApplicationData = false;
 				applicationList.add(application);
 				//record.addApplication(application);
+				String combiCountryNumber = assembleCountryNumber(application.getCountryCode(), application.getApplicationNumber());
 				if("EP".equals(application.getCountryCode())){
-					form1200.setEP_AppNumber(application.getCountryCode().concat(application.getApplicationNumber()));
+					//form1200.setEP_AppNumber(application.getCountryCode().concat(application.getApplicationNumber()));
+					ckeck4multipleCountryNumCodes(form1200.getEP_AppNumber(), combiCountryNumber, "App");
+					form1200.setEP_AppNumber(combiCountryNumber);
 				}
 				if("WO".equals(application.getCountryCode())){
-					form1200.setPCT_AppNumber(application.getCountryCode().concat(application.getApplicationNumber()));
+					//form1200.setPCT_AppNumber(application.getCountryCode().concat(application.getApplicationNumber()));
+					ckeck4multipleCountryNumCodes(form1200.getPCT_AppNumber(), combiCountryNumber, "App");
+					form1200.setPCT_AppNumber(combiCountryNumber);
 				}
 			}
 			if("reg:country".equals(qName)){
@@ -206,5 +218,26 @@ public class Form1200Details extends DigesterElements{
 	//	 returned only <i>part</i> of the 18184535. Specifically, 1818453. The Next call (which overwrote 'temp') was 5, causing a subsequent 
 	//	 error in the self-check checkStrSame(EP18184535, EP5, EPappNum).
 	//	 Crude workaround: For that field only, allow datas to be concatenated. See what we learn goign forward.
+
 	 
+	 protected String assembleCountryNumber(String countryCode, String number) {
+		 if (countryCode==null || number==null || number.length()<1) 
+			 		throw new P3SRuntimeException(" from assembleCountryNumber("+countryCode+", "+number+") in digester Form1200Details()");
+		 String combi = "combi-Failed";
+		 Character charOne = number.charAt(0);
+		 if (Character.isAlphabetic(charOne)) {
+			 combi = number;
+		 }
+		 else {
+			 combi = countryCode.concat(number);
+		 }
+		 return combi;
+	 }
+	 protected void ckeck4multipleCountryNumCodes(String existing, String neww, String type) {
+		 if (existing!=null && existing.trim().length()>0) {
+			 Universal universal = new Universal();
+			 universal.logErrorAndContinue("NotExpected: "+neww+" will replace "+existing+" in ckeck4multipleCountryNumCodes(type="+type+") in digester Form1200Details()");
+		 }
+	 }
+
 }
