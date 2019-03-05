@@ -6,7 +6,8 @@
     width: calc(100% - 55px)!important;
     padding: 0;
     left: 55px;
-    position: absolute;
+    position: fixed;
+    z-index: 59;
     background: $white;
     padding: 2rem 2.5rem;
 }
