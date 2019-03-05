@@ -54,10 +54,12 @@
 .blue-notification { border: 2px solid #0097ce; } 
 .black-notification { border: 2px solid #3c3c3b; } 
 
+.cursor-pointer,
 a.cursor-pointer, 
 button.cursor-pointer, 
 input.cursor-pointer,
-span.cursor-pointer { cursor: pointer }
+span.cursor-pointer,
+i.cursor-pointer { cursor: pointer }
 div.cursor-help { cursor: help; }
 
 .nowrap { white-space: nowrap; }
@@ -134,4 +136,10 @@ div.cursor-help { cursor: help; }
 .screen-load {
   position: relative;
   top: -54px;
+}
+
+.cart-total-pos {
+    position: relative;
+    top: -5px;
+    right: 4px;
 }

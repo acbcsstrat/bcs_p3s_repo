@@ -377,8 +377,14 @@ span[disabled] { cursor: not-allowed; }
 
 .circle-radius-xs { 
   border-radius: 50%;
-  width: 2rem;
-  height: 2rem; 
+  width: 1.75rem;
+  height: 1.75rem; 
+}
+
+.cart-total {
+    position: relative;
+    top: -5px;
+    right: 4px;
 }
 
 .circle-radius-sm { 
