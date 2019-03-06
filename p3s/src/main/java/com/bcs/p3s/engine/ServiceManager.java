@@ -60,14 +60,32 @@ public class ServiceManager extends Universal {
 
     		if ( ( ! (RenewalColourEnum.GREY.equalsIgnoreCase(colourNow)))
     			|| RenewalStatusEnum.isInProgress(patent.getRenewalStatus()) ) { 
-	    		
+
 	    		
 	    		service.setServiceType(P3SProductTypeEnum.RENEWAL);
-	    		service.setServiceStatus(patent.getRenewalStatus());
+	    		//service.setServiceStatus(patent.getRenewalStatus());
 	    		service.setCurrentStageColour(colourNow);
 	
 	    		service.setNextStageColour(ColourManager.whatColourComesNext(
 	    				colourNow, P3SProductTypeEnum.RENEWAL));
+	    		
+	    		// 190306cludge 1of2 - If Red Renewal, set status TooLate
+	    		// Postscript: This WAS a problem. Now seems not be. New code never fires. Never needs to..
+	    		String xStatus = patent.getRenewalStatus();
+	    		log().warn("190306a - PRE cludge 1of2 : xStatus is : "+xStatus+" & colourNow = "+colourNow); 
+	    		if ( (RenewalColourEnum.RED.equals(colourNow))
+      			  && (RenewalStatusEnum.SHOW_PRICE.equals(xStatus)) ) 
+	    		{
+
+	    			log().warn("190306cludge  1of2 invoked ");
+	    			
+	    			log().debug("190306cludge 1of2 invoked for patent "+patent.getId() +" by "+err);
+	    			xStatus = RenewalStatusEnum.TOO_LATE;
+
+	    			log().warn("190306cludge  1of2 invoked AFTER");
+	    		}
+	    		
+	    		service.setServiceStatus(xStatus);
 	    		
 	    		service.setCurrentStageCostUSD(patentUI.getCurrentRenewalCostUSD());
 	    		service.setNextStageCostUSD(patentUI.getRenewalCostNextStageUSD());
