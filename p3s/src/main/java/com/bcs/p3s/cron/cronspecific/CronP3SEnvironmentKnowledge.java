@@ -34,6 +34,10 @@ public class CronP3SEnvironmentKnowledge extends P3SEnvironmentKnowledge {
 		if ("DESKTOP-H575IU3".equals(host)) {
 			path = "C:/xampp/tomcat/webapps/p3scron/WEB-INF/classes/";
 		}
+		if ("AVID-3590-026".equals(host)) { // Pat's new Laptop - ip is .87 on 6/3/2019
+			// TBV - path below yet to be Verified
+			path = "C:/xampp/tomcat/webapps/p3scron/WEB-INF/classes/";
+		}
 		if ("reviewsystem".equals(host)) {
 			path = "/opt/tomcat8/webapps/p3scron/WEB-INF/classes/";
 		}

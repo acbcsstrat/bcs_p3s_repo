@@ -64,7 +64,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			// Original: path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
-		if ("AVID-3590-026".equals(host)) {
+		if ("AVID-3590-026".equals(host)) { // Pat's new Laptop - ip is .87 on 6/3/2019
 			// 190102 best guess
 			path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
 		}
@@ -79,7 +79,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 		}
 		if ("AVID-3580-022".equals(host)) {
 			// 190102 best guess
-			path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+			//path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
+			path = "C:/tomcat/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/META-INF/spring/"; // OR 8.5.33. .20 has a p3sweb, .33 dunt
 		}
 		if ("tomcatu".equals(host) || "tomcatv".equals(host)) {
 			path = "/var/lib/tomcat8/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
@@ -141,7 +142,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			//path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
 			path = "C:/utils/apache-tomcat-8.5.14/webapps/p3sweb/WEB-INF/classes/";
 		}
-		if ("AVID-3590-026".equals(host) ) {
+		if ("AVID-3590-026".equals(host) ) { // Pat's new Laptop - ip is .87 on 6/3/2019
 			// 190102 best guess
 			path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/";
 		}
@@ -159,8 +160,9 @@ public class P3SEnvironmentKnowledge extends Universal {
 		}
 		if ("AVID-3580-022".equals(host) ) {
 			// 190102 best guess
-			path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/";
+			//path = "C:/tomcat8.5/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/";
 			//path = "C:/gitrepos/github/project-repo/p3s_web_v2.1/p3s/src/main/resources/";
+			path = "C:/tomcat/apache-tomcat-8.5.20/webapps/p3sweb/WEB-INF/classes/"; // OR 8.5.33. .20 has a p3sweb, .33 dunt
 		}
 		if ("nodea".equals(host) || "nodeb".equals(host)) {
 			path = "/opt/tomcat/latest/webapps/p3sweb/WEB-INF/classes/";
