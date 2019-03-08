@@ -79,5 +79,6 @@ require("app/controllers/user.userProfile.ctrl.js");
 
 // require("app/components/core.basketNav.comp.js");
 require("app/components/core.mainNav.comp.js");
+require("app/components/core.caseoverviewNav.comp.js");
 require("app/components/patents.patentNav.comp.js");
 require("app/components/transactions.transNav.comp.js");

@@ -5,7 +5,7 @@
                 <div class="col-xl-4">
                     <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
-                        <span class="font-weight-medium">Euro-PCT Status:</span> 
+                        <span class="font-weight-medium">Patent Place Status:</span> 
                         <span data-ng-bind="$ctrl.getStatus($ctrl.patent.epctStatus)"></span>
                     </p>
                 </div>
@@ -249,6 +249,7 @@
                             <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'">
                             </ngcart-addtocart>
                             <button type="button" class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== 'Epct available'">View Transaction</button>
+                            <button class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == 'Epct available'" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200</button>
                             <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)">View Fee Breakdown</a>
                         </div>
                     </div>
@@ -265,8 +266,8 @@
                 <div class="col-md-6">
                     <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
-                        <span class="font-weight-medium">Euro-PCT Status: </span> 
-                        <span>{{$ctrl.patent.epctStatus}}</span>
+                        <span class="font-weight-medium">Patent Place Status: </span> 
+                        <span data-ng-bind="$ctrl.getStatus($ctrl.patent.epctStatus)"></span>
                     </p>
                 </div>
                 <div class="col-md-6">                                    
@@ -502,6 +503,7 @@
                             <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-l-sm" name="service.form1200" price="{{$ctrl.patent.form1200FeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'">
                             </ngcart-addtocart>
                             <button type="button" class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus) && $ctrl.patent.epctStatus !== 'Epct available'">View Transaction</button>
+                            <button class="btn btn--green btn--lg pill-radius m-l-sm" data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == 'Epct available'" data-ui-sref="portfolio.patent.euro-pct.form1200.intro">Generate Form 1200</button>                            
                             <a data-ui-sref="portfolio.patent.euro-pct.cost-analysis" class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-if="$ctrl.checkActionStatus($ctrl.patent.epctStatus)">View Fee Breakdown</a>
                         </div>
                     </div>

@@ -130,7 +130,7 @@ function euroPctInfoCtrl(patent, $state, $timeout, $location, $anchorScroll, chu
                 this.dismissModal = function () {
                     $uibModalInstance.close();
                 };
-                $state.go('portfolio.patent', {patentId: patent.id}, {reload: true}); //go to patent info on successful deletion
+                $state.go('portfolio.patent.patent-info', {patentId: patent.id}, {reload: true}); //go to patent info on successful deletion
             }]
 
         });

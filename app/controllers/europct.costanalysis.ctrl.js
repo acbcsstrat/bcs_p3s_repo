@@ -15,7 +15,6 @@ function euroPctCostAnalysisCtrl(patent, ca, $timeout, $state, organiseTextServi
 
     if(typeof ca !== 'undefined' || ca !== null ) {
         var patentService = patent.portfolioUI.serviceList[0];
-        patentService.currentStageColour = 'Red'
         vm.ca = ca;
         patent.renewalSavings = (function(){
             if(patentService.currentStageColour !== 'Red') {

@@ -13,7 +13,7 @@ function appRoutes($stateProvider) {
                 }],
                 fxRatesMonth: ['fxService', function(fxService) {
                     return fxService.fetchFxMonth();
-                }]      
+                }]
             },
             views: {
                 '@': {
@@ -70,7 +70,7 @@ function appRoutes($stateProvider) {
             controller: 'portfolioCtrl',
             controllerAs: '$ctrl',
             resolve: {
-                patents: ['patentsRestService', function(patentsRestService) {     
+                patents: ['patentsRestService', function(patentsRestService) {
                     return patentsRestService.fetchAllPatents();
                 }]
             },
@@ -80,9 +80,8 @@ function appRoutes($stateProvider) {
         })
         .state('portfolio.patent', {
             templateUrl: 'app/templates/patent/patent.patent-item.tpl.htm',
-            controller: 'patentItemCtrl',
-            controllerAs: '$ctrl',
-            url: '/{patentId}',
+            abstract: true,
+            url: '/:patentId',
             resolve: {
                 patent: ['patents', '$stateParams', 'patentsRestService', function(patents, $stateParams, patentsRestService) {
                     var match = patents.find(function(patent){
@@ -90,16 +89,21 @@ function appRoutes($stateProvider) {
                     })
                     return patentsRestService.fetchPatentItem(match.id);
                 }]
+            },
+            params: {
+                patentId: null
             }
         })
         .state('portfolio.patent.patent-info', {
             templateUrl: 'app/templates/patent/patent.patent-info.tpl.htm',
+            url: '/',
             controller: 'patentInfoCtrl',
-            controllerAs: '$ctrl'
+            controllerAs: '$ctrl'      
         })
         .state('portfolio.patent.euro-pct', {
             abstract: true,
             templateUrl: 'app/templates/patent/patent.europct.tpl.htm',
+            url: '/',
             params: {
                 navigation: 'portfolio'
             },
@@ -157,8 +161,8 @@ function appRoutes($stateProvider) {
             controllerAs: '$ctrl'
         })        
         .state('portfolio.patent.renewal', {
-            abstract: true,
             templateUrl: 'app/templates/patent/patent.renewal.tpl.htm',
+            url: '/',
             resolve: {
                 ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
                     return costAnalysisService.fetchRenewalCa(patent.id);  

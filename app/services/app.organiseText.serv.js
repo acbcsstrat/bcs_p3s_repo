@@ -15,9 +15,9 @@ function organiseTextService(coreService, $timeout) {
         {text: 'Epct rejected', uiText: 'Euro-PCT Rejected'},
         {text: 'Epct available', uiText: 'Euro-PCT Ready'},
         {text: 'Epct saved', uiText: 'Euro-PCT Saved'},
-        {text: 'Epct being generated', uiText: 'Euro-PCT Generating'},
+        // {text: 'Epct being generated', uiText: 'Euro-PCT Generating'},
         // {text: 'EPO Instructed', uiText: 'EPO Instructed'},
-        {text: 'Too late to renew', uiText: 'Call Pure Ideas Ltd on +44 1992 563964'},
+        // {text: 'Too late to renew', uiText: 'URGENT ACTION REQUIRED'},
         {text: 'Await pdf gen start', uiText: 'Euro-PCT Generating'}        
     ]
 
@@ -38,10 +38,10 @@ function organiseTextService(coreService, $timeout) {
         {text: 'Epct available', uiText: 'Euro-PCT Ready'},
         {text: 'Epct not available', uiText: 'Manual Processing Only'},
         {text: 'Epct saved', uiText: 'Euro-PCT Saved'},
-        {text: 'Epct being generated', uiText: 'Euro-PCT Generating'},
-        {text: 'Await pdf gen start', uiText: 'Euro-PCT Generating'},
+        {text: 'Epct being generated', uiText: 'Form 1200 Generating'},
+        {text: 'Await pdf gen start', uiText: 'Form 1200 Generating'},
         {text: 'EPO Instructed', uiText: 'EPO Instructed'},
-        {text: 'Too late to renew', uiText: 'Call Pure Ideas Ltd on +44 1992 563964'},
+        {text: 'Too late to renew', uiText: 'URGENT ACTION REQUIRED'},
     ]          
 
 
@@ -64,6 +64,7 @@ function organiseTextService(coreService, $timeout) {
     }
 
     function paymentStatus(status) {
+
         var match;
 
         for(var i = 0;i < paymentStatuses.length; i++) {
@@ -81,7 +82,7 @@ function organiseTextService(coreService, $timeout) {
         var match;
 
         for(var i = 0;i < actionableStatuses.length; i++) {
-            if(actionableStatuses[i].text.indexOf(status) > -1) {
+            if(actionableStatuses[i].text == status) {
                 match = true;
                 break;
             }

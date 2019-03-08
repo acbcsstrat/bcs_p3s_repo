@@ -56,11 +56,25 @@ angular.module('ppApp').component('mainnav', {
 	      	};
 	    }
 
+	    function timeZoneClocks() {
+
+	        var utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
+	        var est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
+	    
+	        var t = $timeout(function() {
+	            vm.utcTime = utc;
+	            vm.estTime =  est;
+	            timeZoneClocks()
+	        }, 500);
+
+	    }
+
+	    
+
 	    $timeout(function() {
-	    	vm.utcTime = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
-	    	vm.estTime = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
-	    	vm.timeLoaded = true;
-	    });    
+	    	timeZoneClocks()
+	    	vm.timeLoaded = true;   
+	    })
 
 		vm.empty = function() {
 			ngCart.empty();
