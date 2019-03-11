@@ -289,10 +289,9 @@ function form1200questionnaireCtrl(patent, $scope, $rootScope, $stateParams, $ti
         form1200Service.submitForm1200(vm.formData)
         .then(
             function(response){
-                $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response.data}, {reload: false})
+                $state.go('portfolio.patent.euro-pct.form1200.generated', {form1200: response}, {reload: false})
             },
             function(errResponse){
-                console.log(errResponse)
                 form1200Errors() 
             }
         )

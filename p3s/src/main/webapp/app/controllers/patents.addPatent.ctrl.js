@@ -47,7 +47,7 @@ function addPatentCtrl($state, $stateParams, $rootScope, $timeout, $location, $a
 			            .then(
 			            	function(response){
 	        			 		var patent = response[0];
-				             	$state.go('portfolio', {patentId: patent.id})
+				             	$state.go('portfolio.patent.patent-info', {patentId: patent.id})
 				             	.then(
 									function(response){
 										$timeout(function() {

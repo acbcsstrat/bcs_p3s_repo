@@ -18,7 +18,7 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
 
     function init() {
         if($stateParams.form1200 === '') {
-            $state.go('portfolio.patent.euro-pct.form1200.intro');
+            $state.go('portfolio.patent.euro-pct.form1200.intro', {}, {reload: true});
         } else {        
             form1200Generating();
             checkForm1200();   

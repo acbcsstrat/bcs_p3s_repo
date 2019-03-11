@@ -7,6 +7,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     var vm = this;
     vm.pageTitle = 'Portfolio';
     $scope.portfolioData = patents;
+    vm.stateParams = $stateParams.patentId; 
     vm.rowSelect = rowSelect;
     vm.date = new Date();   
     vm.updateCategory = updateCategory;
@@ -214,14 +215,12 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
         if(!$(event.target).hasClass('cartbtn')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].id; //gets data from data-id
-              $state.go('portfolio.patent', {patentId: patent.id}, {reload: true})
-            
+              $state.go('portfolio.patent.patent-info', {patentId: patent.id}, {reload: false})            
         }
         if($(event.target).hasClass('cartbtn')) {
             for(var i = 0; i < patent.serviceList.length; i++) {
                 var status = patent.serviceList[i].serviceStatus;
                 if(status == 'Epct available') {
-                  $state.go('portfolio.patent', {patentId: patent.id} , {reload:true});
                   $timeout(function(){
                       $state.go('portfolio.patent.euro-pct.form1200.intro', {patentId: patent.id} , {reload:false});
                   }, 1000)

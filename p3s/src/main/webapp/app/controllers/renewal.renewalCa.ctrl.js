@@ -1,12 +1,18 @@
 angular.module('ppApp').controller('renewalCaCtrl', renewalCaCtrl);
 
-renewalCaCtrl.$inject = ['patent','ca', '$timeout', '$state', '$location', '$anchorScroll', 'chunkDataService', 'costAnalysisService', 'currentTransactionsService'];
+renewalCaCtrl.$inject = ['patent','ca', '$timeout', '$state', '$location', '$anchorScroll', 'chunkDataService', 'costAnalysisService', 'currentTransactionsService', 'organiseTextService'];
 
-function renewalCaCtrl(patent, ca, $timeout, $state, $location, $anchorScroll, chunkDataService, costAnalysisService, currentTransactionsService) {
+function renewalCaCtrl(patent, ca, $timeout, $state, $location, $anchorScroll, chunkDataService, costAnalysisService, currentTransactionsService, organiseTextService) {
 
     var vm = this;
 
     vm.fetchItemTransaction = fetchItemTransaction;
+    vm.getStatus = getStatus;
+    vm.patent = patent;
+
+    function getStatus(text) {
+        return organiseTextService.uiStatus(text);
+    }
 
     if(typeof ca !== 'undefined' || ca !== null ) {
         var patentService = patent.portfolioUI.serviceList[0];

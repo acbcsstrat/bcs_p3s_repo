@@ -2,14 +2,15 @@
     <div class="content-panel bg-white border-t-none">
         <div class="content-panel__head border-grey-xs--btm">
             <div class="row d-flex align-items-center">
-                <div class="col-xl-4">
+                <div class="col-xl-5">
                     <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
-                        <span class="font-weight-medium">Renewal Status:</span> 
-                        <span data-ng-bind="$ctrl.getStatus($ctrl.patent.renewalStatus)">
+                        <span class="font-weight-medium">Patent Place Status:</span> 
+                        <span data-ng-bind="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus)" data-ng-class="{'txt-phase-red': $ctrl.patent.portfolioUI.serviceStatus == 'Too late to renew'}"></span>
+                        <span data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == 'Too late to renew'"> - Call Pure Ideas on +44 203 696 0949</span>
                     </p>
                 </div>
-                <div class="col-xl-5" data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.renewalStatus)"> <!-- data-ng-if="$ctrl.patent.renewalStatus == 'Show price'"-->
+                <div class="col-xl-4" data-ng-if="$ctrl.actionStatus($ctrl.patent.portfolioUI.serviceStatus) || $ctrl.paymentStatus($ctrl.patent.portfolioUI.serviceStatus)"> <!-- data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == 'Show price'"-->
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="text-center inline-container m-b-xs" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
@@ -28,7 +29,7 @@
                     </div>
                 </div>
                 <div class="col-xl-3">
-                    <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.renewalStatus)" class="text-right">
+                    <div data-ng-if="$ctrl.actionStatus($ctrl.patent.portfolioUI.serviceStatus) || $ctrl.paymentStatus($ctrl.patent.portfolioUI.serviceStatus)" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-bold">Next stage: </span> 
                             <span data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">{{$ctrl.patent.portfolioUI.serviceList[0].nextStageColour}}</span>
@@ -256,12 +257,12 @@
                     </div> <!-- row end -->
                     <div class="row d-flex justify-content-end">
                         <div class="col-xl-12 text-right">
-                            <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus)" class="d-flex justify-content-end">
+                            <div data-ng-if="$ctrl.actionStatus($ctrl.patent.portfolioUI.serviceStatus) && $ctrl.patent.portfolioUI.serviceStatus !== 'Too late to renew' && $ctrl.patent.portfolioUI.serviceStatus == 'Way too late to renew'" class="d-flex justify-content-end">
                                 <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.renewalFeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
                                 </ngcart-addtocart>
-                                <a class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent.renewal.cost-analysis">View Fee Breakdown</a>
                             </div>
-                            <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                                     
+                            <a data-ng-if="$ctrl.actionStatus($ctrl.patent.portfolioUI.serviceStatus) || $ctrl.patent.portfolioUI.serviceStatus == 'Too late to renew'" class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent.renewal.cost-analysis">View Fee Breakdown</a>
+                            <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                                     
                         </div>
                     </div>
                 </div> <!-- col-xl-6 END -->                
@@ -277,12 +278,13 @@
                 <div class="col-md-6">
                     <p class="font-h4 m-b-xs"><span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}</p>
                     <p class="font-h4">
-                        <span class="font-weight-medium">Renewal Status:</span> 
-                        <span data-ng-bind="$ctrl.getStatus($ctrl.patent.renewalStatus)">
+                        <span class="font-weight-medium">Patent Place Status:</span> 
+                        <span data-ng-bind="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus)" data-ng-class="{'txt-phase-red': $ctrl.patent.portfolioUI.serviceStatus == 'Too late to renew'}"></span>
+                        <span data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == 'Too late to renew'"> - Call Pue Ideas on +44 203 696 0949</span>                
                     </p>
                 </div>
                 <div class="col-md-6">
-                    <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.renewalStatus)" class="text-right">
+                    <div data-ng-if="$ctrl.actionStatus($ctrl.patent.portfolioUI.serviceStatus) || $ctrl.paymentStatus($ctrl.patent.portfolioUI.serviceStatus)" class="text-right">
                         <p class="font-h4 m-b-xs">
                             <span class="font-weight-medium">Next stage: </span> 
                             <span data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">{{$ctrl.patent.portfolioUI.serviceList[0].nextStageColour}}</span>
@@ -290,7 +292,7 @@
                         <p class="font-h4"><span class="font-weight-medium">Occurs: </span> {{$ctrl.patent.costBandEndDateUI}}</p>
                     </div>
                 </div>
-                <div class="col-md-12 m-t-sm" data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.renewalStatus)">
+                <div class="col-md-12 m-t-sm" data-ng-if="$ctrl.actionStatus($ctrl.patent.portfolioUI.serviceStatus) || $ctrl.paymentStatus($ctrl.patent.portfolioUI.serviceStatus)">
                     <div class="text-center inline-container" data-ng-style="{'width': $ctrl.patent.renewalStageProgress + '%'}">
                         <span class="font-h4 font-weight-medium nowrap" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')">$ {{$ctrl.patent.renewalFeeUI.subTotalUSD | number: 2 }}</span>
                     </div>
@@ -535,12 +537,12 @@
                         </div> <!-- row end -->
                         <div class="row d-flex justify-content-end">
                             <div class="col-md-6 d-flex justify-content-end">
-                                <div data-ng-if="$ctrl.actionStatus($ctrl.patent.renewalStatus)" class="d-flex justify-content-end">
+                                <div data-ng-if="$ctrl.actionStatus($ctrl.patent.portfolioUI.serviceStatus) && $ctrl.patent.portfolioUI.serviceStatus !== 'Too late to renew' && $ctrl.patent.portfolioUI.serviceStatus == 'Way too late to renew'" class="d-flex justify-content-end">
                                     <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.renewalFeeUI.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
                                     </ngcart-addtocart>
-                                    <a class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent.renewal.cost-analysis">View Fee Breakdown</a>
                                 </div>
-                                <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.renewalStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                             
+                                <a data-ng-if="$ctrl.actionStatus($ctrl.patent.portfolioUI.serviceStatus) || $ctrl.patent.portfolioUI.serviceStatus == 'Too late to renew'" class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent.renewal.cost-analysis">View Fee Breakdown</a>
+                                <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>                             
                             </div>
                         </div>
                     </div>
