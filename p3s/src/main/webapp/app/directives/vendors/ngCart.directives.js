@@ -133,28 +133,40 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
         }]),
         link: function(scope, element, attrs) {
 
-            var cartArr = [];
-            var cartItems = ngCart.getItems();
 
-            cartItems.forEach(function(currentValue, index, array){
-                cartArr.push(currentValue._id);
-            });
 
-            var idObj = {
-                patent_id: cartArr
-            };
+
+            var cartArr = function() {
+                var cartArr = [];
+                var cartItems = ngCart.getItems();
+
+                cartItems.forEach(function(currentValue, index, array){
+                    cartArr.push(currentValue._id);
+                });
+
+                var idObj = {
+                    patent_id: cartArr
+                };
+
+                return idObj;
+            }
 
             $rootScope.$on('ngCart:itemRemoved', function() {
-                scope.summary = null;
-                scope.summary.totalPatents = ngCart.getItems().length;
+                // console.log(scope.summary)
+                // // scope.summary = null;
+
+               fetchBasketPatents();
             });
 
-            fetchBasketPatents(idObj);
+            fetchBasketPatents();
 
-            function fetchBasketPatents(obj) {
-                basketService.fetchBasketPatents(obj)
+            function fetchBasketPatents() {
+                var patent_ids = cartArr();
+
+                basketService.fetchBasketPatents(patent_ids)
                 .then(
                     function(response){
+
                         scope.summary = {
                             firstName: response.firstName,
                             lastName: response.lastName,
@@ -174,6 +186,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                             },
                             totalPatents: response.orderedPatentUIs.length
                         };
+
                     },
                     function(errResponse){
                         console.log(errResponse);

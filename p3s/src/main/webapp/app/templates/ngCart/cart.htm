@@ -23,8 +23,8 @@
                             <span data-ng-if="item.getData().clientRef !== ''">{{item.getData().clientRef}}</span>
                         </td>
                         <td class="t-data__td">
-                            <span data-ng-if="item.getData().clientRef == ''" class="txt-grey">[No client description provided]</span>
-                            <span data-ng-if="item.getData().clientRef !== ''">{{item.getData().shortTitle}}</span>
+                            <span data-ng-if="item.getData().shortTitle == ''" class="txt-grey">[No client description provided]</span>
+                            <span data-ng-if="item.getData().shortTitle !== ''">{{item.getData().shortTitle}}</span>
                         </td>
 
                         <td class="t-data__td">$ {{item._price | number: 2}}</td>
