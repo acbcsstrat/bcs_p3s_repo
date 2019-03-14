@@ -164,8 +164,6 @@ public class RenewalDatesEngine extends Universal{
 		        		allDates.setRenewalYear(renewalYear);
 		        		allDates.setCurrentRenewalDueDate(actualYear3RenDue.getTime());
 		        		return allDates;
-		        		
-		        		
 		        	}
 		        	colourDates = allColourDates.getSingleResult();
 		        	//colourDates = new CalendarColourJDBC().findCalendarColoursByRenewalDueDate(actualCurrentRenewalDate.getTime());

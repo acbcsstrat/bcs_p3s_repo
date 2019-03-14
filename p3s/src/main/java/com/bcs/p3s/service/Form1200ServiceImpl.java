@@ -440,7 +440,8 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 
 		String clientRef = generateForm1200DataIn.getClientRef();
 		if (isEmpty(clientRef )) clientRef = ""; else if (clientRef.length()>15) fail(err+" clientRef TOO LONG: >15 : "+clientRef);
-		epct.setClientRef(clientRef);
+		String uniqueClientRef = ensureEpctClientRefIsUnique(clientRef, epct, patentId);
+		epct.setClientRef(uniqueClientRef);
 		
 		epct.setExtensionStates(countryStatesUtil.listSelectedExtensionStatesUI2commaSeparatedString(generateForm1200DataIn.getExtensionStatesUI()));
 		epct.setValidationStates(countryStatesUtil.listSelectedValidationStatesUI2commaSeparatedString(generateForm1200DataIn.getValidationStatesUI()));
@@ -712,5 +713,45 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		return null;
 	}
 
-
+	protected String ensureEpctClientRefIsUnique(String proposedClientRef, Epct epct, long patentId) {
+		String unq = proposedClientRef;
+	    List<Epct> existingMatchingEpcts = Epct.findEpctsByPatent(proposedClientRef);
+	    if (existingMatchingEpcts.size()>0) {
+	    	proposedClientRef = genHopefullyUniqueClientRef(proposedClientRef, patentId);
+		    List<Epct> existingMatchingEpcts2 = Epct.findEpctsByPatent(proposedClientRef);
+		    if (existingMatchingEpcts2.size()>0) {
+		    	// Dog's chance
+		    	proposedClientRef = "PP"+patentId;
+			    List<Epct> existingMatchingEpcts3 = Epct.findEpctsByPatent(proposedClientRef);
+			    if (existingMatchingEpcts3.size()>0) {
+			    	fail("Strewth - Never gonna happen. ensureEpctClientRefIsUnique("+unq+", "+epct.getId()+", "+patentId+")");
+			    } else unq = proposedClientRef;
+		    } else unq = proposedClientRef;
+	    } // else - no action needed
+		return unq;
+	}
+	
+	protected String alphaNumOnly(String offered) {
+		if (isEmpty(offered)) offered = "";
+		String safe = "";
+		int initLen = offered.length();
+		for (int ii = 0 ; ii<initLen ; ii++) {
+			char aChar = safe.charAt(ii);
+			if (Character.isAlphabetic(aChar) || Character.isDigit(aChar)) safe += aChar;
+		}
+		return safe; 
+	}
+	protected String genHopefullyUniqueClientRef(String proposedClientRef, long patentId) {
+		if (isEmpty(proposedClientRef)) proposedClientRef = "P";
+		proposedClientRef = alphaNumOnly(proposedClientRef);
+		String numeric = ""+patentId;
+		int numlen = numeric.length();
+		int allowedlen = 15 - numlen;
+		int strlen = proposedClientRef.length();
+		if (allowedlen>strlen) allowedlen = strlen; 
+		
+		String built = proposedClientRef.substring(0, strlen) + numeric;
+		
+		return built;
+	}
 }

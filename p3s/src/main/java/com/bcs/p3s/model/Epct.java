@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -210,6 +211,21 @@ public class Epct {
     			return latestEpct;
     	}
     }
+
+    /**
+     * @return Any existing Epcts with given clientRef (Case dependent)
+     */
+    public static List<Epct> findEpctsByPatent(String clientRef) {
+        if (clientRef == null) throw new IllegalArgumentException("findEpctsByPatent() passed null");
+        EntityManager em = Epct.entityManager();
+
+        StringBuilder queryBuilder = new StringBuilder("SELECT o FROM Epct AS o WHERE o.client_ref = :clientref");
+        TypedQuery<Epct> q = em.createQuery(queryBuilder.toString(), Epct.class);
+        q.setParameter("clientref", clientRef);
+        List<Epct> matches = q.getResultList();
+        return matches;
+    }
+    
     
     public List<String> extensionStatesAsList() {
     	if (extensionStates==null || extensionStates.trim().length()==0) return new ArrayList<String>();
