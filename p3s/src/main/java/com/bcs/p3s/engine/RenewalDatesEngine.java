@@ -150,12 +150,21 @@ public class RenewalDatesEngine extends Universal{
 		        	log().debug("Year 3 Renewal due date will be " + actualYear3RenDue.getTime());
 		        	colourDates = new CalendarColour();
 		        	allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(actualYear3RenDue.getTime());
-		        	if(allColourDates.getResultList().size() == 0){
-		        		log().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table E");
-		        		logInternalError().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table F");
+		        	if(allColourDates.getResultList().size() == 0) {
+		        		// CalendarColour doesn't go this far into the future. Not an issue unless date is within 3 months. Hence:
+		        		long daysInFuture = (actualYear3RenDue.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / (1000*60*60*24);
+		        		if (daysInFuture>93) {
+			        		log().debug("No CalendarColour data for renewal due date " + actualYear3RenDue.getTime() 
+			        			+ " but is ok. Is way over 3months in future W ");
+		        		}
+		        		else {
+			        		log().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table E ");
+			        		logInternalError().debug("No data available for renewal due date " + actualYear3RenDue.getTime() + " in calendar_colour table F ");
+		        		}
 		        		allDates.setRenewalYear(renewalYear);
 		        		allDates.setCurrentRenewalDueDate(actualYear3RenDue.getTime());
 		        		return allDates;
+		        		
 		        		
 		        	}
 		        	colourDates = allColourDates.getSingleResult();
