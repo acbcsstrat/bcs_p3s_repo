@@ -715,14 +715,14 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 
 	protected String ensureEpctClientRefIsUnique(String proposedClientRef, Epct epct, long patentId) {
 		String unq = proposedClientRef;
-	    List<Epct> existingMatchingEpcts = Epct.findEpctsByPatent(proposedClientRef);
+	    List<Epct> existingMatchingEpcts = Epct.findEpctsByClientRef(proposedClientRef);
 	    if (existingMatchingEpcts.size()>0) {
 	    	proposedClientRef = genHopefullyUniqueClientRef(proposedClientRef, patentId);
-		    List<Epct> existingMatchingEpcts2 = Epct.findEpctsByPatent(proposedClientRef);
+		    List<Epct> existingMatchingEpcts2 = Epct.findEpctsByClientRef(proposedClientRef);
 		    if (existingMatchingEpcts2.size()>0) {
 		    	// Dog's chance
 		    	proposedClientRef = "PP"+patentId;
-			    List<Epct> existingMatchingEpcts3 = Epct.findEpctsByPatent(proposedClientRef);
+			    List<Epct> existingMatchingEpcts3 = Epct.findEpctsByClientRef(proposedClientRef);
 			    if (existingMatchingEpcts3.size()>0) {
 			    	fail("Strewth - Never gonna happen. ensureEpctClientRefIsUnique("+unq+", "+epct.getId()+", "+patentId+")");
 			    } else unq = proposedClientRef;
@@ -736,7 +736,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		String safe = "";
 		int initLen = offered.length();
 		for (int ii = 0 ; ii<initLen ; ii++) {
-			char aChar = safe.charAt(ii);
+			char aChar = offered.charAt(ii);
 			if (Character.isAlphabetic(aChar) || Character.isDigit(aChar)) safe += aChar;
 		}
 		return safe; 
@@ -750,7 +750,7 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 		int strlen = proposedClientRef.length();
 		if (allowedlen>strlen) allowedlen = strlen; 
 		
-		String built = proposedClientRef.substring(0, strlen) + numeric;
+		String built = proposedClientRef.substring(0, allowedlen) + numeric;
 		
 		return built;
 	}

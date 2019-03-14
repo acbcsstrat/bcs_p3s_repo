@@ -215,11 +215,11 @@ public class Epct {
     /**
      * @return Any existing Epcts with given clientRef (Case dependent)
      */
-    public static List<Epct> findEpctsByPatent(String clientRef) {
+    public static List<Epct> findEpctsByClientRef(String clientRef) {
         if (clientRef == null) throw new IllegalArgumentException("findEpctsByPatent() passed null");
         EntityManager em = Epct.entityManager();
 
-        StringBuilder queryBuilder = new StringBuilder("SELECT o FROM Epct AS o WHERE o.client_ref = :clientref");
+        StringBuilder queryBuilder = new StringBuilder("SELECT o FROM Epct AS o WHERE o.clientRef = :clientref");
         TypedQuery<Epct> q = em.createQuery(queryBuilder.toString(), Epct.class);
         q.setParameter("clientref", clientRef);
         List<Epct> matches = q.getResultList();
