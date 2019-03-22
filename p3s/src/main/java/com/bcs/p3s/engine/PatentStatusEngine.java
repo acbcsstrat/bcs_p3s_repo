@@ -103,7 +103,9 @@ public class PatentStatusEngine extends Universal {
 				else if(renewalInfo.getActiveRenewalYear() == patent.getLastRenewedYearEpo()){
 					renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 				}
-				else if(RenewalStatusEnum.isInProgress(patent.getRenewalStatus())) {
+
+				// 190322 Prevent crash in isInProgress() if patent.getRenewalStatus() is null
+				else if( (patent.getRenewalStatus()!=null) && RenewalStatusEnum.isInProgress(patent.getRenewalStatus())) {
 					renewalInfo.setCurrentRenewalStatus(patent.getRenewalStatus());
 				}
 				else{
@@ -178,6 +180,17 @@ public class PatentStatusEngine extends Universal {
 			e.printStackTrace(new PrintWriter(errors));
 			log().error("Stacktrace was: "+errors.toString());
 			
+		}
+		
+		// safety checks following 190322 EP14862834 issue
+		log().debug("^^^  (patent.getRenewalStatus()==null) = "+(patent.getRenewalStatus()==null)+" for patent "+patent.getEP_ApplicationNumber()+"("+patent.getId()+")     from"+PREFIX);
+		if (patent.getRenewalStatus()==null) {
+			if ( ! isEmpty(renewalInfo.getCurrentRenewalStatus())) {
+				patent.setRenewalStatus(renewalInfo.getCurrentRenewalStatus());
+				log().debug("Hope have just avoided crash - set RenewalStatus to "+renewalInfo.getCurrentRenewalStatus());
+			} else {
+				log().warn("patent.RenewalStatus is null. Expect trouble. For patent "+patent.getEP_ApplicationNumber()+"("+patent.getId()+")     from"+PREFIX);
+			}
 		}
 		
 		return renewalInfo;

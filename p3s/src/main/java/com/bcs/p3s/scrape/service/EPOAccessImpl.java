@@ -457,19 +457,19 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
     		return null;
     	
     	if(acct.getAddress3() == null){
-    		repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
-        			concat(ADDRESS_DELIMITER).concat(acct.getCountry());
+    		repDetails = nvl(acct.getName()).concat(ADDRESS_DELIMITER).concat(nvl(acct.getAddress1())).concat(ADDRESS_DELIMITER).concat(nvl(acct.getAddress2())).
+        			concat(ADDRESS_DELIMITER).concat(nvl(acct.getCountry()));
     	}
     	
     	else if(acct.getAddress4() == null){
-    		repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
-        			concat(ADDRESS_DELIMITER).concat(acct.getAddress3()).concat(ADDRESS_DELIMITER).concat(acct.getCountry());
+    		repDetails = nvl(acct.getName()).concat(ADDRESS_DELIMITER).concat(nvl(acct.getAddress1())).concat(ADDRESS_DELIMITER).concat(nvl(acct.getAddress2())).
+        			concat(ADDRESS_DELIMITER).concat(nvl(acct.getAddress3())).concat(ADDRESS_DELIMITER).concat(nvl(acct.getCountry()));
     	}
     	
     	else{
-	    	repDetails = acct.getName().concat(ADDRESS_DELIMITER).concat(acct.getAddress1()).concat(ADDRESS_DELIMITER).concat(acct.getAddress2()).
-	    			concat(ADDRESS_DELIMITER).concat(acct.getAddress3()).concat(ADDRESS_DELIMITER).concat(acct.getAddress4()).concat(ADDRESS_DELIMITER).
-	    			concat(acct.getCountry());
+	    	repDetails = nvl(acct.getName()).concat(ADDRESS_DELIMITER).concat(nvl(acct.getAddress1())).concat(ADDRESS_DELIMITER).concat(nvl(acct.getAddress2())).
+	    			concat(ADDRESS_DELIMITER).concat(nvl(acct.getAddress3())).concat(ADDRESS_DELIMITER).concat(nvl(acct.getAddress4())).concat(ADDRESS_DELIMITER).
+	    			concat(nvl(acct.getCountry()));
     	}
     	
     	return repDetails;
@@ -708,4 +708,8 @@ public class EPOAccessImpl  extends Universal implements EPOAccess{
 		return latestCodes;
 	}
 	
+	protected String nvl(String dubious) {
+		if (dubious==null) return "";
+		return dubious;
+	}
 }
