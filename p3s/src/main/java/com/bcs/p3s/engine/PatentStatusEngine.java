@@ -9,6 +9,8 @@ import java.util.Date;
 
 import javax.persistence.TypedQuery;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+
 import com.bcs.p3s.display.RenewalDates;
 import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
@@ -319,14 +321,30 @@ public class PatentStatusEngine extends Universal {
 	
 	public CalendarColour getAllColorDates(Date renewalDueDate) {
 		
+		if (renewalDueDate==null) log().error("getAllColorDates(Date) in "+CLASSNAME+" passed a NULL date!");
+		log().debug("getAllColorDates(Date="+renewalDueDate.toString()+") invoked in "+CLASSNAME);
 		CalendarColour colourDates = new CalendarColour();
 		try{
-	    	TypedQuery<CalendarColour> allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(renewalDueDate);
-	    	colourDates = allColourDates.getSingleResult();
+			try {
+				TypedQuery<CalendarColour> allColourDates = CalendarColour.findCalendarColoursByRenewalDueDate(renewalDueDate);
+		    	colourDates = allColourDates.getSingleResult();
+			} catch (EmptyResultDataAccessException nowt) {
+				// This is valid if renewalDueDate >3months in the future (as we won't be offereing a renewal anyway)
+				long future3months = (new Date()).getTime() * 3*31*24*60*60;
+				if (renewalDueDate.getTime() > future3months) {
+		    		log().debug("isOK as >3months in future. No data found in calendar_colour table for given renewal due date."
+		    				+ "      from getAllColorDates(Date="+renewalDueDate.toString()+") invoked in "+CLASSNAME);
+		    		colourDates = new CalendarColour();
+				}
+				else
+				{
+		    		log().error("Bad as <3months in future. No data found in calendar_colour table for given renewal due date."
+		    				+ "      from getAllColorDates(Date="+renewalDueDate.toString()+") invoked in "+CLASSNAME);
+				}
+			}
 	    	//renewalDates.setCurrentColorDates(colourDates);
 			//return renewalDates;
 	    	if(colourDates == null){
-	    		log().debug("No data found in calendar_colour table for renewal due date " + renewalDueDate.getTime());
 	    		log().error("No data found in calendar_colour table for renewal due date " + renewalDueDate.getTime());
 	    	}
 		}
