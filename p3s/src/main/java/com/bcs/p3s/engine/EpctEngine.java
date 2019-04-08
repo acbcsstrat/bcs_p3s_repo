@@ -371,14 +371,32 @@ public class EpctEngine extends Universal {
 	protected void calcYear3RenewalBooleans() {
 		// Determine if Year3 renewal fee is : Mandated, Optional or NotYetAvailable
 		// For E-PCT applications, Year3 renewal can be paid 6 months before due. (Usually 3)
-		LocalDate ld1andHalfYears =  ldEffectivePriority.plusMonths(18L);
-		LocalDate ld2Years =  ldEffectivePriority.plusYears(2L);
+		if ((patent==null) || (patent.getInternationalFilingDate()==null) ) {
+			fail("calcYear3RenewalBooleans passed a null !");
+		}
+		
+		LocalDate filingDate =  (patent.getInternationalFilingDate()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate ld1andHalfYears =  filingDate.plusMonths(18L);
+		LocalDate ld2Years =  filingDate.plusYears(2L);
+		
 		// boolean default values (all false) indicate NotYetAvailable
 		int safetyNetDays = 11; // Need avoid taking order when optional, yet by time we instruct EPO, has become mandatory.
 		  // Based on: T+3 +weekend +1nonWorkingDay(ignore Xmas), +valueDate, +day we instruct, +1 (for > becomes =>), +2 safety.
 		if (ldToday.plusDays(safetyNetDays).isAfter(ld2Years))  isRenewalFeeMandated = true;
 		else if (ldToday.isAfter(ld1andHalfYears)) isRenewalFeeOptional = true;
 	}
+	// upto 190405 was below
+	//protected void calcYear3RenewalBooleans() {
+	//	// Determine if Year3 renewal fee is : Mandated, Optional or NotYetAvailable
+	//	// For E-PCT applications, Year3 renewal can be paid 6 months before due. (Usually 3)
+	//	LocalDate ld1andHalfYears =  ldEffectivePriority.plusMonths(18L);
+	//	LocalDate ld2Years =  ldEffectivePriority.plusYears(2L);
+	//	// boolean default values (all false) indicate NotYetAvailable
+	//	int safetyNetDays = 11; // Need avoid taking order when optional, yet by time we instruct EPO, has become mandatory.
+	//	  // Based on: T+3 +weekend +1nonWorkingDay(ignore Xmas), +valueDate, +day we instruct, +1 (for > becomes =>), +2 safety.
+	//	if (ldToday.plusDays(safetyNetDays).isAfter(ld2Years))  isRenewalFeeMandated = true;
+	//	else if (ldToday.isAfter(ld1andHalfYears)) isRenewalFeeOptional = true;
+	//}
 	
 
 	protected void calcDatesAndColour() {
