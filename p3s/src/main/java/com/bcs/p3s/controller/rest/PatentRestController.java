@@ -169,7 +169,7 @@ public class PatentRestController extends Universal {
 			
 			
 		  	patentUI = patentService.searchEpoForPatent(patentApplicationNumber,postSession);
-		  	patentUI.setCheckDigit(checkDigit);
+		  	if (patentUI != null) patentUI.setCheckDigit(checkDigit);
 		  	
 		}
 		
