@@ -6,8 +6,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
+import com.bcs.p3s.util.lang.Universal;
 
-public class SecurityUtil {
+public class SecurityUtil extends Universal {
 
 	public static synchronized String getMyUserName() { // Potential performance point - for Thread-Safety
 		System.out.println("                     SecurityUtil:getMyUserName() invoked");
@@ -24,7 +25,12 @@ public class SecurityUtil {
 		System.out.println("                     SecurityUtil:getMyUser() invoked");
 		String username =  getMyUserName();
 		TypedQuery<P3SUser> tq_user = P3SUser.findP3SUsersByEmailAddress(username);
-		if (tq_user==null) { System.out.println("INTERNAL ERROR: ToDo: User lookup failed"); }
+		if (tq_user==null) { 
+			System.out.println("INTERNAL ERROR: ToDo: User lookup failed"); 
+
+			Universal universal = new Universal();
+			universal.logErrorAndContinue("getMyUser() is NULL ! - Expect Imminent crash !   (User session TimedOut ?)  from SecurityUtil { timeout }");
+		}
 		P3SUser myUser = tq_user.getSingleResult();
 		return myUser;
 	}
