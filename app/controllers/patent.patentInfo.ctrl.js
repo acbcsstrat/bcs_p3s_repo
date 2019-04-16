@@ -24,12 +24,12 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
 
     vm.$onInit = function() {
 
-        var patentService = patent.portfolioUI.serviceList[0];
-
         if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) {
             patent.availableFee = null;
             return;
         }
+
+        var patentService = patent.portfolioUI.serviceList[0];
 
         patent.portfolioUI.serviceList.forEach(function(el){
             if(organiseTextService.actionStatus(el.serviceStatus)) {
