@@ -5,7 +5,47 @@
 		</div>
 	</div>
 </div>
-<!-- <div data-ng-show="$ctrl.patentLoaded" class="animate-show"> -->
-<caseoverviewnav></caseoverviewnav>
-<div ui-view></div>
-<!-- </div> -->
+<div class="content-panel d-none d-xl-block">	
+	<div class="bg-white">
+		<div class="content-panel__head border-grey-xs--btm">
+			<div class="row d-flex align-items-center">
+			    <div class="col-xl-6">
+					<p class="font-h4 m-b-xs">
+						<span class="font-weight-medium">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}
+					</p>
+					<p class="font-h4">
+						<span class="font-weight-medium">EPO Status:</span> {{$ctrl.patent.epoPatentStatus}}
+					</p>
+			    </div>
+			    <div class="col-xl-6 text-right">
+			    	<div data-ng-if="$ctrl.statusesAvailable.length > 0">
+						<p class="font-h4 font-weight-medium m-b-xs">
+							Services available:<br>
+						</p>
+						<p class="font-h4">
+							<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
+								<span class="txt-phase-green">{{$ctrl.getStatus(service)}}</span>
+								<span data-ng-if="$ctrl.statusesAvailable > 1">, </span>
+							</span>
+						</p>
+			    	</div>
+			    	<div data-ng-if="$ctrl.statusesAvailable.length === 0">
+			    		<p class="font-h4 font-weight-medium">No services available</p>
+			    	</div>
+			    </div>		    
+			</div>
+	    </div>
+		<div class="row">
+			<div class="col-xl-6 col-cxl-6">
+				
+				<tab ng-repeat="(tabName,tab) in $ctrl.leftTabs">
+				    <div template='{{tab.template}}' dyn-controller="tab.controller">Loading {{tabName}} ...</div>
+				 </tab>
+			   
+			</div>
+<!-- 			<div class="col-xl-6 col-cxl-6 p-r-none border-grey-xs--right">
+				<div data-ng-include="{{$ctrl.rightCaseView}}" data-ng-controller="$ctrl.rightCaseView.ctrl}}"></div>
+			</div>		 -->
+	   	</div>
+	</div>
+</div>

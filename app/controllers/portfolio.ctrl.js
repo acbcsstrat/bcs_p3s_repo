@@ -212,10 +212,11 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     };
 
     function rowSelect(event, patent){
+      
         if(!$(event.target).hasClass('cartbtn')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].id; //gets data from data-id
-              $state.go('portfolio.patent.patent-info', {patentId: patent.id}, {reload: false})            
+              $state.go('portfolio.patent', {patentId: patent.id}, {reload: false})            
         }
         if($(event.target).hasClass('cartbtn')) {
             for(var i = 0; i < patent.serviceList.length; i++) {
