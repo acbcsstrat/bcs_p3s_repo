@@ -17,6 +17,42 @@ function feeBreakDownCtrl($scope, $timeout, $state, organiseTextService, $locati
     }
     console.log(vm.patent)
     function checkServices() {
+        // vm.patent.renewalFeeUI = {
+
+        //     claimsFee1EUR: 0,
+        //     claimsFee1USD: 0,
+        //     claimsFee2EUR: 0,
+        //     claimsFee2USD: 0,
+        //     costHistoryUI: {fxRateYesterday: 0.818845, subTotalEURYesterday: 2591.41, subTotalUSDYesterday: 3164.72, fxRateLastWeek: 0.818845, subTotalEURLastWeek: 2591.41},
+        //     currentOfficialFeeEUR: 25530,
+        //     currentOfficialFeeUSD: 30589.71949,
+        //     designationFeeEUR: 5855,
+        //     designationFeeUSD: 7514.42,
+        //     dollarComponentUSD: 755,
+        //     euroComponentEUR: 25350,
+        //     examinationFeeEUR: 18525,
+        //     examinationFeeUSD: 25228.75,
+        //     excessPageFeeEUR: 0,
+        //     excessPageFeeUSD: 0,
+        //     expressFeeEUR: 0,
+        //     expressFeeUSD: 0,
+        //     extensionFeeEUR: 0
+        // }
+        // vm.patent.portfolioUI.serviceList.push({
+        //    costBandEndDate: 1579132800000,
+        //     costBandEndDateUI: "Thu Jan 16, 2020",
+        //     currentOfficialFeeEUR: 2530,
+        //     currentOfficialFeeUSD: 3089.71949,
+        //     currentStageColour: "Green",
+        //     currentStageCostUSD: 3164.71949,
+        //     failedReason: null,
+        //     nextStageColour: "Amber",
+        //     nextStageCostUSD: 3473.691439,
+        //     serviceStatus: "show price",
+        //     serviceType: "Renewal"
+
+        //     })
+        
         vm.patent.portfolioUI.serviceList.forEach(function(data, index){
             vm.data.availableAction.push({id: index, action: data.serviceType})
         })
