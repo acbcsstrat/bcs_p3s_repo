@@ -37,12 +37,19 @@
 	    </div>
 		<div class="row">
 			<div class="col-xl-6 col-cxl-6">
-				
-				<tab ng-repeat="(tabName,tab) in $ctrl.leftTabs">
-				    <div template='{{tab.template}}' dyn-controller="tab.controller">Loading {{tabName}} ...</div>
-				 </tab>
-			   
+				<uib-tabset active="activeLeft">
+					<uib-tab index="$index" ng-repeat="(tabName,tab) in $ctrl.leftTabs" index="$index" heading="{{tabName}}">
+					    <div template='{{tab.template}}' dyn-controller="tab.controller">Loading {{tabName}} ...</div>
+					 </uib-tab>
+				</uib-tabset>
 			</div>
+			<div class="col-xl-6 col-cxl-6">
+				<uib-tabset active="activeRight">
+					<uib-tab index="$index" ng-repeat="(tabName,tab) in $ctrl.rightTabs" index="$index" heading="{{tabName}}">
+					    <div template='{{tab.template}}' dyn-controller="tab.controller">Loading {{tabName}} ...</div>
+					 </uib-tab>
+				</uib-tabset>
+			</div>			
 <!-- 			<div class="col-xl-6 col-cxl-6 p-r-none border-grey-xs--right">
 				<div data-ng-include="{{$ctrl.rightCaseView}}" data-ng-controller="$ctrl.rightCaseView.ctrl}}"></div>
 			</div>		 -->
