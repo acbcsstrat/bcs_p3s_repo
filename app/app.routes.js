@@ -48,7 +48,7 @@ function appRoutes($stateProvider) {
                 },            
                 'fxchartwidget@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.fxchart-widget.tpl.htm',
-                    controller: 'fxChartCtrl',
+                    controller: 'dbfxChartCtrl',
                     controllerAs: '$ctrl',
                 },
                 'recentactivitywidget@dashboard': {
@@ -80,9 +80,6 @@ function appRoutes($stateProvider) {
         })
         .state('portfolio.patent', {
             url: '/:patentId',
-            // controller: 'patentItemCtrl',
-            // controllerAs: '$ctrl',
-            // templateUrl: 'app/templates/patent/patent.patent-item.tpl.htm',
             resolve: {
                 patent: ['patents', '$stateParams', 'patentsRestService', function(patents, $stateParams, patentsRestService) {
                     var match = patents.find(function(patent){
@@ -91,28 +88,21 @@ function appRoutes($stateProvider) {
                     return patentsRestService.fetchPatentItem(match.id);
                 }],
                 ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
-                    return costAnalysisService.fetchEuroPctCa(patent.id);  
-                }]                
+                    return costAnalysisService.fetchCa(patent);  
+                }]
             },
-            // views: {
-            //     '@': {
-            //         templateUrl: 'app/templates/patent/patent.patent-item.tpl.htm',
-            //         controller: 'dashboard',
-            //         controllerAs: '$ctrl'
-            //     }
-            // },
             params: {
                 patentId: null
             },
             views:{
                 "": {
-                    controller: 'patentItemCtrl',
+                    controller: 'caseOverviewCtrl',
                     controllerAs: '$ctrl',
-                    templateUrl: 'app/templates/patent/patent.patent-item.tpl.htm',
+                    templateUrl: 'app/templates/patent/case-overview.tpl.htm',
                 },
                 "details@portfolio.patent": {
-                    templateUrl: 'app/templates/patent/patent.patent-info.tpl.htm',
-                    controller: 'patentInfoCtrl',
+                    templateUrl: 'app/templates/patent/patent-details.tpl.htm',
+                    controller: 'patentDetailsCtrl',
                     controllerAs: '$ctrl'      
                 },
                 "notifications@portfolio.patent": {
@@ -137,123 +127,6 @@ function appRoutes($stateProvider) {
                 }                                        
             }            
         })
-        // .state('portfolio.patent.fee-breakdown', {
-        //     url: '/',
-        //     views: {
-        //         "rightTab": {
-        //             templateUrl: 'app/templates/fee-breakdown/fee-breakdown.tpl.htm',
-        //             controller: 'feeBreakDownCtrl',
-        //             controllerAs: '$ctrl'
-        //         }
-        //     }        
-        // })
-        // .state('portfolio.patent.fx-chart', {
-        //     url: '/',
-        //     views: {
-        //         "rightTab": {
-        //             templateUrl: 'app/templates/fxchart/fxchart.tpl.htm',
-        //             controller: 'fxChartCtrl',
-        //             controllerAs: '$ctrl'
-        //         }
-        //     }
-        // })   
-        // .state('portfolio.patent.cost-chart', {
-        //     url: '/',
-        //     views: {
-        //         "rightTab": {
-        //             templateUrl: 'app/templates/colour-chart/colour-phase-chart.tpl.htm',
-        //             controller: 'barChartCtrl',
-        //             controllerAs: '$ctrl'
-        //         }
-        //     }
-        // })                     
-        // .state('portfolio.patent.euro-pct', {
-        //     abstract: true,
-        //     templateUrl: 'app/templates/patent/patent.europct.tpl.htm',
-        //     url: '/',
-        //     params: {
-        //         navigation: 'portfolio'
-        //     },
-        //     controller: 'euroPctCtrl',
-        //     controllerAs: '$ctrl',
-        //     resolve: {
-        //         ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
-        //             return costAnalysisService.fetchEuroPctCa(patent.id);  
-        //         }]
-        //     }
-        // })
-        // .state('portfolio.patent.euro-pct.info', {
-        //     templateUrl: 'app/templates/europct/europct.info.tpl.htm',
-        //     controller: 'euroPctInfoCtrl',
-        //     controllerAs: '$ctrl'
-        // })
-        // .state('portfolio.patent.euro-pct.form1200', {
-        //     abstract: true,
-        //     templateUrl: 'app/templates/europct/europct.form1200.tpl.htm',
-        // })
-        // .state('portfolio.patent.euro-pct.form1200.intro', {
-        //     templateUrl: 'app/templates/europct/europct.form1200.intro.tpl.htm',
-        //     controller: 'form1200IntroCtrl',
-        //     controllerAs: '$ctrl'
-        // })
-        // .state('portfolio.patent.euro-pct.form1200.questionnaire', {
-        //     url: '/form-1200-questionnaire/',
-        //     views: {
-        //         "@": {
-        //             templateUrl: 'app/templates/europct/europct.form1200.questionnaire.tpl.htm',
-        //             controller: 'form1200questionnaireCtrl',
-        //             controllerAs: '$ctrl',
-        //         }
-        //     },
-        //     params: {
-        //         questions: null
-        //     }            
-        // })
-        // .state('portfolio.patent.euro-pct.form1200.generated', {
-        //     url: '/form-1200-generated/',
-        //     views: {
-        //         "@": {
-        //             templateUrl: 'app/templates/europct/europct.form1200.generated.tpl.htm',
-        //             controller: 'form1200GeneratedCtrl',
-        //             controllerAs: '$ctrl'
-        //         }
-        //     },
-        //     params: {
-        //         form1200: null
-        //     }
-        // })
-        // .state('portfolio.patent.euro-pct.cost-analysis', {
-        //     templateUrl: 'app/templates/europct/europct.costanalysis.tpl.htm',
-        //     controller: 'euroPctCostAnalysisCtrl',
-        //     controllerAs: '$ctrl'
-        // })        
-        // .state('portfolio.patent.renewal', {
-        //     templateUrl: 'app/templates/patent/patent.renewal.tpl.htm',
-        //     url: '/',
-        //     resolve: {
-        //         ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
-        //             return costAnalysisService.fetchRenewalCa(patent.id);  
-        //         }],
-        //         renewal: ['renewalRestService', '$stateParams', 'patent', function(renewalRestService, $stateParams, patent){
-        //             return renewalRestService.fetchHistory(patent.id);
-        //         }]                   
-        //     }            
-        // })
-        // .state('portfolio.patent.renewal.info', {
-        //     templateUrl: 'app/templates/renewal/renewal.info.tpl.htm',
-        //     controller: 'renewalInfoCtrl',
-        //     controllerAs: '$ctrl'
-        // })
-        // .state('portfolio.patent.renewal.history', {
-        //     templateUrl: 'app/templates/renewal/renewal.history.tpl.htm',
-        //     controller: 'renewalHistoryCtrl',
-        //     controllerAs: '$ctrl'
-        // })
-        // .state('portfolio.patent.renewal.cost-analysis', {
-        //     templateUrl: 'app/templates/renewal/renewal.cost-analysis.tpl.htm',
-        //     controller: 'renewalCaCtrl',
-        //     controllerAs: '$ctrl'
-        // })
         .state('search-patent', {
             url: '/search-patent',
             templateUrl: 'app/templates/patents/patents.search-patent.tpl.htm',

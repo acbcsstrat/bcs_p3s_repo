@@ -1,25 +1,22 @@
-angular.module('ppApp').controller('patentItemCtrl', patentItemCtrl);
+angular.module('ppApp').controller('patentDetailsCtrl', patentDetailsCtrl);
 
-patentItemCtrl.$inject = ['patent', '$rootScope', '$scope', '$state', '$stateParams', 'renewalRestService']
+patentDetailsCtrl.$inject = ['patent', 'ca', '$rootScope', '$scope', '$state', '$stateParams', 'renewalRestService', '$timeout']
 
-function patentItemCtrl(patent, $rootScope, $scope, $state, $stateParams, renewalRestService) {
+function patentDetailsCtrl(patent, ca, $rootScope, $scope, $state, $stateParams, renewalRestService, $timeout) {
 
 	var vm = this;
 
-		vm.patent = patent;
-		$scope.patent = patent;
-		console.log(patent)
+	vm.patent = patent;
+    vm.testClick = testClick;
 
-		vm.leftTabs = {
-			'tab1': {
-				template: 'app/templates/patent/patent.patent-info.tpl.htm',
-				controller: 'patentInfoCtrl'
-			},
-			'tab2': {
-	            template: 'app/templates/europct/europct.info.tpl.htm',
-	            controller: 'euroPctInfoCtrl'
-			}
-		}
+    function testClick (){
+        $timeout(function(){  
+            var evt = document.createEvent('UIEvents');
+            evt.initUIEvent('resize', true, false, window, 0);
+            window.dispatchEvent(evt);
+        }, 300)
+    }
+
 
 }
 
@@ -28,7 +25,7 @@ angular.module('ppApp').directive('template', ['$compile', '$http', function($co
         restrict: 'A',
         replace: false,
         link: function($scope, element, attrs) {
-        	console.log('whatt')
+
             var template = attrs['template'];
             if(template!==undefined){
                 // Load the template

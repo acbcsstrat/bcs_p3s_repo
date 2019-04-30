@@ -1,12 +1,13 @@
-angular.module('ppApp').controller('patentInfoCtrl', patentInfoCtrl);
+angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
 
-patentInfoCtrl.$inject = ['$scope', 'patent', '$state', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService']
+caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService']
 
-function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService) {
+function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService) {
 
     var vm = this;
 
     vm.patent = patent;
+
     vm.fetchItemTransaction = fetchItemTransaction;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
@@ -17,6 +18,27 @@ function patentInfoCtrl($scope, patent, $state, $timeout, $location, $anchorScro
 
     vm.editing = [];
     vm.statusesAvailable = [];
+
+    $scope.availableServices = (function() {    
+        // vm.patent.portfolioUI.serviceList.push({
+        //    costBandEndDate: 1579132800000,
+        //     costBandEndDateUI: "Thu Jan 16, 2020",
+        //     currentOfficialFeeEUR: 2530,
+        //     currentOfficialFeeUSD: 3089.71949,
+        //     currentStageColour: "Green",
+        //     currentStageCostUSD: 3164.71949,
+        //     failedReason: null,
+        //     nextStageColour: "Amber",
+        //     nextStageCostUSD: 3473.691439,
+        //     serviceStatus: "show price",
+        //     serviceType: "Renewal"
+
+        //     })
+
+        return vm.patent.portfolioUI.serviceList.map(function(data, index){
+           return {id: index, action: data.serviceType}
+        })
+    }())    
 
     function getStatus(text) {
         return organiseTextService.uiStatus(text);

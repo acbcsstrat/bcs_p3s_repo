@@ -7,16 +7,13 @@ function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, 
     var vm = this;
 
     vm.patent = patent;
-    vm.loadChart = loadChart;
-    vm.data = {}
+    vm.setData = setData;
+    vm.lineData = null;
+    vm.data = {};
     vm.data.availableAction = $scope.$parent.availableServices;
-    vm.data.selectedAction = {id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action }
-
-    console.log(vm.data)
+    vm.data.selectedAction = { id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action }
 
     if(ca !== undefined || typeof ca !== 'undefined') {
-
-        
 
         vm.lineOptions = {
             chart: {
@@ -121,41 +118,51 @@ function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, 
 
 
 
-        function lineData() {
+        function setData(data) {
+
+            vm.lineData = null;
 
             var lineDataArr = [];
-            for (var property in ca.lineChart) { //change ca.lineChart
-                if (ca.lineChart.hasOwnProperty(property)) {
-                    const dayData = ca.lineChart[property];
-                    var str = property.split("T").shift();
-                    var date = new Date(str).getTime();
+            var fxData;
 
-                    lineDataArr.push([date, dayData]);
+            if(data === undefined || typeof data === 'undefined') {
+                return;
+            }
+            
+            if(data == 'Form1200') {
+                fxData = ca[0].data.lineChart;
+                for (var property in fxData) { //change lineData
+                    if (fxData.hasOwnProperty(property)) {
+                        const dayData = fxData[property];
+                        var str = property.split("T").shift();
+                        var date = new Date(str).getTime();
+                        lineDataArr.push([date, dayData]);
+                    }
                 }
             }
 
-            return [
+            if(data == 'Renewal') {
+                fxData = ca[0].data.lineChart;
+                for (var property in fxData) { //change lineData
+                    if (fxData.hasOwnProperty(property)) {
+                        const dayData = fxData[property].currentOfficialFeeUSD; //different object structure to form1200 (not sure why)
+                        var str = property.split("T").shift();
+                        var date = new Date(str).getTime();
+                        lineDataArr.push([date, dayData]);
+                    }
+                }                
+            }
+
+            vm.lineData = [
                 {
                     values: lineDataArr,
                     color: '#2ca02c'
                 }
             ]
 
+
         }    
 
-        function loadChart() {
-            //add loading gif here
-            $timeout(function(){
-                vm.lineData = lineData;                
-                var evt = document.createEvent('UIEvents');
-                evt.initUIEvent('resize', true, false, window, 0);
-                window.dispatchEvent(evt);
-            }, 3000)
-        }
-
-        loadChart()
-
     }
-    
     
 }
