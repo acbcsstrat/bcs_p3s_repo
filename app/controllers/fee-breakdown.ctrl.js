@@ -1,21 +1,21 @@
 angular.module('ppApp').controller('feeBreakDownCtrl', feeBreakDownCtrl);
 
-feeBreakDownCtrl.$inject = ['$scope', '$timeout', '$state', 'organiseTextService', '$location', 'currentTransactionsService', '$anchorScroll']
+feeBreakDownCtrl.$inject = ['patent', '$scope', '$timeout', '$state', 'organiseTextService', '$location', 'currentTransactionsService', '$anchorScroll']
 
-function feeBreakDownCtrl($scope, $timeout, $state, organiseTextService, $location, currentTransactionsService, $anchorScroll) {
+function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService, $location, currentTransactionsService, $anchorScroll) {
 
     var vm = this;
 
     vm.actionStatus = actionStatus;
     vm.fetchItemTransaction = fetchItemTransaction;
-    vm.patent = $scope.$parent.patent;
+    vm.patent = patent;
     vm.setFees = setFees;
 
     vm.data = {    
         availableAction: [],
         selectedAction: {}
     }
-    console.log(vm.patent)
+
     function checkServices() {
         // vm.patent.renewalFeeUI = {
 
@@ -62,14 +62,12 @@ function feeBreakDownCtrl($scope, $timeout, $state, organiseTextService, $locati
     checkServices();
 
     function setFees(action) {
-        console.log(action)
+
         if(action == 'Form1200') {
-            console.log('form1200')
             vm.availableFees = vm.patent.form1200FeeUI;
         }
 
         if(action == 'Renewal') {
-            console.log('renewal')
             vm.availableFees = vm.patent.renewalFeeUI;
         }
 

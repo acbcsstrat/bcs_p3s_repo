@@ -1,17 +1,17 @@
 angular.module('ppApp').controller('notificationsCtrl', notificationsCtrl);
 
-notificationsCtrl.$inject = ['$scope', '$state', '$timeout', '$location', '$anchorScroll', 'chunkDataService', 'notificationService', '$uibModal', 'organiseTextService', 'organiseColourService', 'currentTransactionsService'];
+notificationsCtrl.$inject = ['patent', '$scope', '$state', '$timeout', '$location', '$anchorScroll', 'chunkDataService', 'notificationService', '$uibModal', 'organiseTextService', 'organiseColourService', 'currentTransactionsService'];
 
-function notificationsCtrl($scope, $state, $timeout, $location, $anchorScroll, chunkDataService, notificationService, $uibModal, organiseTextService, organiseColourService, currentTransactionsService) {
+function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorScroll, chunkDataService, notificationService, $uibModal, organiseTextService, organiseColourService, currentTransactionsService) {
 
     var vm = this;
 
-    var patent = $scope.$parent.patent;
-    vm.patent = $scope.$parent.patent;
+    vm.patent = patent;
     vm.updateNotifications = updateNotifications;
     vm.displayNotifications = displayNotifications;
     vm.notificationNavItems = [];
     vm.notificationUrl = 'rest-renewal-notifications/';
+
     vm.data = {    
         availableAction: [],
         selectedAction: {}
@@ -84,7 +84,7 @@ function notificationsCtrl($scope, $state, $timeout, $location, $anchorScroll, c
         }
 
         if(action == 'Renewal') {
-            console.log('should hit')
+
             vm.notificationUi = 'renewalNotificationUIs';
             vm.availableNotifications = chunkDataService.chunkData(phaseNotifications(phase, patent[vm.notificationUi]), 6);
             vm.notificationUrl = 'rest-renewal-notifications/';

@@ -7,16 +7,6 @@ function patentDetailsCtrl(patent, ca, $rootScope, $scope, $state, $stateParams,
 	var vm = this;
 
 	vm.patent = patent;
-    vm.testClick = testClick;
-
-    function testClick (){
-        $timeout(function(){  
-            var evt = document.createEvent('UIEvents');
-            evt.initUIEvent('resize', true, false, window, 0);
-            window.dispatchEvent(evt);
-        }, 300)
-    }
-
 
 }
 
