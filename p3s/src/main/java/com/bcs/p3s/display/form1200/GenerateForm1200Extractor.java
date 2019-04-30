@@ -91,8 +91,10 @@ public class GenerateForm1200Extractor extends Universal {
 											generateForm1200DataIn.isYear3RenewalPaying = castBoolean(ob, thisElement);
 											break;
 
-						case "totalPages":	if (ob instanceof Integer) generateForm1200DataIn.totalPages = castInteger(ob, thisElement);
+						case "totalPages":	
+											if (ob instanceof Integer) generateForm1200DataIn.totalPages = castInteger(ob, thisElement);
 											if (ob instanceof Long) generateForm1200DataIn.totalPages = ((Long) ob).intValue();
+											log().debug("Ignoring f1200 Qs totalPages of "+ generateForm1200DataIn.getTotalPages());
 											break;
 
 						case "extensionStatesUI":	
@@ -269,6 +271,9 @@ public class GenerateForm1200Extractor extends Universal {
 				if (generateForm1200DataIn.getPatentId()==0) generateForm1200DataIn.setPatentId(backstopPatentId);  // Safety check
 				if (generateForm1200DataIn.getPatentId()<1) log().error("Gonna fail : PatentId = "+generateForm1200DataIn.getPatentId()+"  from extractGenerateForm1200DataIn()");
 				
+				// Now ignore any totalPages provided. Instead Calc as per EPO approach
+				calcNumPagesALaEpo(generateForm1200DataIn);
+				
 			} // end of : IS a LinkedHashMap
 		} // end of: Object not null			
 		
@@ -331,4 +336,39 @@ public class GenerateForm1200Extractor extends Universal {
 		return ret;
 	}
 
+	/**
+	 * Calculate the number of pages using the approach the EPO uses
+	 * (Slightly odd, but ...)
+	 * Overwrites the totalPages field in data
+	 * @param data The data extracted from the FE.
+	 */
+	protected void calcNumPagesALaEpo(GenerateForm1200DataIn data) {
+		if (data==null) return;
+		String idh = "calcNumPagesALaEpo(). Existing pages="+data.getTotalPages()+", patent id = "+data.getPatentId()+"          from "+CLASSNAME;
+		log().debug("Invoked "+idh);
+
+		// Approach. Cautious. If incomplete data, logit & return original value
+		int pagesSoFar = 1; // The abstract page
+		List<PageDescriptionUI> threeRanges = data.getPageDescriptionsUI();
+		if (threeRanges==null) log().warn("threeRanges==null !     "+idh);
+		else {
+			if (threeRanges.size()!=3) log().warn("threeRanges.size() = "+threeRanges.size()+" !     "+idh);
+			for (PageDescriptionUI pdui : threeRanges ) {
+				int pagesThisPdui = pdui.numberOfPages();
+				pagesSoFar += pagesThisPdui;
+				log().debug("      pdui pages for "+pdui.getType()+" = "+pagesThisPdui+"   pagesSoFar = "+pagesSoFar);
+			}
+
+			if (threeRanges.size()==3) {
+				data.setTotalPages(pagesSoFar);
+				log().debug("calcNumPagesALaEpo(). Set pages to "+pagesSoFar+"   Existing pages="+data.getTotalPages()+", patent id = "+data.getPatentId()+"          from "+idh);
+			}
+		
+		}
+
+	}
+	
+	
+	
+	
 }

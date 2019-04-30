@@ -253,7 +253,10 @@ public class ServiceAuthorisationTools extends Universal {
 		int claimsEnd = Integer.parseInt(claimsPages.getTypeEnd());
 		int drgsStart = Integer.parseInt(drawingsPages.getTypeStart());
 		int drgsEnd = Integer.parseInt(drawingsPages.getTypeEnd());
-		if (descEnd>totPages || claimsEnd>totPages || drgsEnd>totPages) failMalicious(err+"SectionEndPage beyond end doc."); 
+		if (descEnd>totPages || claimsEnd>totPages || drgsEnd>totPages) {
+			log().warn("Odd pages Nos (but EPO accepts): "
+				+ "totPages="+totPages+"  Desc"+descStart+":"+descEnd+"   Claims"+claimsStart+":"+claimsEnd+"  Drgs"+drgsStart+":"+drgsEnd);
+		}
 		// check each range for overlaps
 		if ( 
 			   (isPageNumWithinRange(claimsStart, descStart, descEnd))

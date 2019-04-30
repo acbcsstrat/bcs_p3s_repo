@@ -37,6 +37,15 @@ public class PageDescriptionUI {
 		if (start<0 || end<start) throw new P3SRuntimeException("PageDescriptionUI passed invalid page-number-pair : "+start+", "+end);
 	}
 	
+	
+	
+	public int numberOfPages() {
+		int numPages = checkInt(typeEnd) - checkInt(typeStart) + 1;
+		return numPages;
+	}
+	
+	
+	
 	// Ordinary getters & setters
 	public PageDescriptionEnum getType() {
 		return type;
