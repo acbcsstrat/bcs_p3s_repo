@@ -1,47 +1,22 @@
 angular.module('ppApp').controller('form1200GeneratedCtrl', form1200GeneratedCtrl);
 
-form1200GeneratedCtrl.$inject = ['$scope', '$rootScope','patent', '$http', '$state', '$stateParams', 'euroPctService', '$timeout', '$uibModal', 'form1200Service'];
+form1200GeneratedCtrl.$inject = ['$scope', '$rootScope', '$http', '$state', '$stateParams', 'euroPctService', '$timeout', '$uibModal', 'form1200Service'];
 
-function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $stateParams, euroPctService, $timeout, $uibModal, form1200Service) {
+function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, euroPctService, $timeout, $uibModal, form1200Service) {
 
     var vm = this;
 
     vm.pageTitle = 'Form 1200 Generating';
 
-    vm.patent = patent;
-    // vm.form1200;
+    console.log($scope.$parent.patent)
+    vm.patent = $scope.$parent.patent
     vm.deleteApplication = deleteApplication;
-    // vm.editApplication = editApplication; 
-    vm.portfolioDir = portfolioDir;
-    vm.loadingQuestions = false;
-    vm.costData = $stateParams.form1200.form1200FeeUI;
 
-    function init() {
-        if($stateParams.form1200 === '') {
-            $state.go('portfolio.patent.euro-pct.form1200.intro', {}, {reload: true});
-        } else {        
-            form1200Generating();
-            checkForm1200();   
-        }
+    function init() {    
+        checkForm1200();
     }
 
     init();
-
-    function form1200Generating() {
-
-        var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.form1200-generating.tpl.htm', //create html for notifications update success
-            appendTo: undefined,
-            controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', function($uibModalInstance){
-                this.dismissModal = function () {
-                    $uibModalInstance.close();
-                };
-            }]
-
-        })
-
-    }
 
     function deleteApplication(id) {    
         euroPctService.deleteApplication(id)
@@ -54,18 +29,6 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
             }
         )
     }
-
-    // function editApplication(id) {    
-    //     euroPctService.editApplication(id)
-    //     .then(
-    //         function(response){
-    //             $state.go('portfolio.patent.euro-pct.form1200.questionnaire', {savedForm1200: response.data}, {reload: false}) //send saved data to questionnaire
-    //         },
-    //         function(errResponse){
-    //             editApplicationError(errResponse);
-    //         }
-    //     )
-    // }    
 
     function deleteApplicationSuccess() {
         var modalInstance = $uibModal.open({
@@ -123,11 +86,13 @@ function form1200GeneratedCtrl($scope, $rootScope, patent, $http, $state, $state
     }
 
     function checkForm1200() {
-        vm.form1200 = $stateParams.form1200;
+        if(vm.patent.form1200PdfUrl === null) {
+            vm.form1200Ready = false;
+            return
+        }
+        vm.form1200Ready = true;
+       
     }
 
-    function portfolioDir() {
-        $state.go('portfolio', {}, {reload: true});
-    }
 
 }

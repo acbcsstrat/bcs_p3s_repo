@@ -110,6 +110,11 @@ function appRoutes($stateProvider) {
                     controller: 'notificationsCtrl',
                     controllerAs: '$ctrl',  
                 },
+                "form1200@portfolio.patent": {
+                    templateUrl: 'app/templates/europct/europct.form1200.tpl.htm',
+                    controller: 'form1200Ctrl',
+                    controllerAs: '$ctrl',  
+                },                
                 "fee-breakdown@portfolio.patent": {
                     templateUrl: 'app/templates/fee-breakdown/fee-breakdown.tpl.htm',
                     controller: 'feeBreakDownCtrl',

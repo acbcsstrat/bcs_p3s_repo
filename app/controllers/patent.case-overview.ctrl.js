@@ -63,12 +63,12 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 )
                 
             }
-        
-            if(organiseTextService.actionStatus(obj.status) && obj.action == 'Form1200') {
+
+            if(obj.action == 'Form1200') {
                 $scope.availableServices.forEach(function(obj){
-                    if(organiseTextService.actionStatus(obj.status) && obj.action == 'Form1200') {
+                    if((organiseTextService.actionStatus(obj.status) && obj.action == 'Form1200') || (obj.status == 'Epct being generated' && obj.action == 'Form1200')) {
                         vm.displayForm1200Tab = true;
-                        return
+                        return;
                     }
                     vm.displayForm1200Tab = false;
                 })   

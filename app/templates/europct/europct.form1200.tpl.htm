@@ -1,31 +1,24 @@
-<!-- <div class="content-panel bg-white">   
-    <div class="content-panel__head">
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="view-tabs">
-                    <ul class="nav chart-pills">
-                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__nav-link secondary-view-nav__nav-link--black" 
-                        data-ng-init="$ctrl.activeSelectedTab = 0; form1200.activePatentItemMenu = 'Euro-PCT Info'" 
-                        data-ng-click="$ctrl.activeSelectedTab = 0; form1200.activePatentItemMenu = 'Euro-PCT Info'" 
-                        data-ng-class="{active : form1200.activePatentItemMenu == 'Euro-PCT Info'}">Intro</li>
-                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ng-click="$ctrl.activeSelectedTab = 1; form1200.activePatentItemMenu = 'Form 1200'" data-ng-class="{active : form1200.activePatentItemMenu == 'Form 1200'}">Questionnaire</li>
-                        <li class="nav-item pill-radius btn--lg pill-tabs secondary-view-nav__nav-link secondary-view-nav__nav-link--black" data-ng-click="$ctrl.activeSelectedTab = 3; form1200.activePatentItemMenu = 'Cost Analysis'" data-ng-class="{active : form1200.activePatentItemMenu == 'Cost Analysis'}">Cost Analysis</li> 
-                    </ul>
-                </div>  
+<div class="content-panel bg-white border-t-none">
+    <div class="content-panel__body">
+        <div data-ng-if="$ctrl.epctStage == 1" data-ng-class="fade-in">
+            <div class="row">
+                <div class="col-md-12 col-xl-12">
+
+
+                    <div class="m-b-sm" data-ng-include="$ctrl.form1200Template">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div data-ng-if="$ctrl.epctStage == 2" data-ng-class="fade-in" data-ng-controller="form1200GeneratedCtrl">
+            <div class="row">
+                <div class="col-md-12 col-xl-12">
+                    <div class="m-b-sm" data-ng-include="$ctrl.form1200Template">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div> -->
- <div ui-view></div>
-<!--
-<uib-tabset type="pills" active="$ctrl.activeSelectedTab">
-    <uib-tab heading="Intro" index="0" data-ng-hide="true">
-        <div ui-view="form1200intro"></div>
-    </uib-tab>
-    <uib-tab heading="Questionnaire" index="1" data-ng-hide="true">
-        <div ui-view="form1200questionnaire"></div>
-    </uib-tab>
-    <uib-tab heading="Form 1200 Generated" index="2" data-ng-hide="true">
-        <div ui-view="form1200generated"></div>
-    </uib-tab>
-</uib-tabset> -->
+</div>
