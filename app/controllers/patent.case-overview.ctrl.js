@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
 
-caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService']
+caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService', 'renewalRestService']
 
-function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService) {
+function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService, renewalRestService) {
 
     var vm = this;
 
@@ -15,13 +15,11 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.editItem = editItem;
     vm.doneEditing = doneEditing;
     vm.getStatus = getStatus;
-
+    vm.refreshChart = refreshChart;
     vm.editing = [];
     vm.statusesAvailable = [];
 
-    vm.testClick = testClick;
-
-    function testClick (){
+    function refreshChart (){
         $timeout(function(){  
             var evt = document.createEvent('UIEvents');
             evt.initUIEvent('resize', true, false, window, 0);
@@ -36,8 +34,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         //     currentOfficialFeeEUR: 2530,
         //     currentOfficialFeeUSD: 3089.71949,
         //     currentStageColour: "Green",
-        //     currentStageCostUSD: 3164.71949,
-        //     failedReason: null,
         //     nextStageColour: "Amber",
         //     nextStageCostUSD: 3473.691439,
         //     serviceStatus: "show price",
@@ -46,93 +42,45 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         //     })
 
         return vm.patent.portfolioUI.serviceList.map(function(data, index){
-           return {id: index, action: data.serviceType}
+           return {id: index, action: data.serviceType, status: data.serviceStatus}
         })
-    }())    
+    }())
+
+
+    function init() {
+
+        $scope.availableServices.forEach(function(obj){
+            if(obj.action == 'Renewal') {
+                renewalRestService.fetchHistory(patent.id)
+                .then(
+                    function(response){
+                        if(response.length > 0) {
+                           vm.displayRenewalHistoryTab = true;
+                           return;
+                        }
+                        vm.displayRenewalHistoryTab = false;
+                    }
+                )
+                
+            }
+        
+            if(organiseTextService.actionStatus(obj.status) && obj.action == 'Form1200') {
+                $scope.availableServices.forEach(function(obj){
+                    if(organiseTextService.actionStatus(obj.status) && obj.action == 'Form1200') {
+                        vm.displayForm1200Tab = true;
+                        return
+                    }
+                    vm.displayForm1200Tab = false;
+                })   
+            }
+        })
+    }
+
+    init()
 
     function getStatus(text) {
         return organiseTextService.uiStatus(text);
     }
-
-    // vm.$onInit = function() {
-
-    //     if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) {
-    //         patent.availableFee = null;
-    //         return;
-    //     }
-
-    //     var patentService = patent.portfolioUI.serviceList[0];
-
-    //     patent.portfolioUI.serviceList.forEach(function(el){
-    //         if(organiseTextService.actionStatus(el.serviceStatus)) {
-    //             vm.statusesAvailable.push(el.serviceStatus)
-    //         }
-    //     })
-
-    //     patent.availableFee = {};
-    //     patent.availableFee.costBandEndDateUI = patentService.costBandEndDateUI;
-
-    //     if(patent.renewalFeeUI !== null) {
-    //         patent.availableFee.savings = (function(){
-    //             if((patentService.currentStageColour == 'Black' && patentService.serviceStatus == 'Show price') || (patentService.currentStageColour !== 'Black')) {
-    //                 if(patentService.nextStageCostUSD !== 0) {
-    //                     return patentService.nextStageCostUSD - patentService.currentStageCostUSD;
-    //                 }
-    //                 return 0;
-    //             }
-    //             return 0;
-    //         }())
-    //         patent.availableFee.title = 'Regional Renewal';
-    //         patent.availableFee.fee = patent.renewalFeeUI;
-    //         patent.availableFee.costHistoryUI = patent.renewalFeeUI.costHistoryUI;
-    //         patent.availableFee.fxRate = patent.renewalFeeUI.fxRate;
-    //         patent.ppFees = {
-    //             USD: (function(){
-    //                 var total = patent.renewalFeeUI.processingFeeUSD;
-    //                 if(patent.renewalFeeUI.urgentFeeUSD !== 0) {total += patent.renewalFeeUI.urgentFeeUSD}
-    //                 if(patent.renewalFeeUI.expressFeeUSD !== 0) {total += patent.renewalFeeUI.expressFeeUSD}
-    //                 return total;
-    //             }()),
-    //             EUR: (function(){
-    //                 var total = patent.renewalFeeUI.processingFeeEUR
-    //                 if(patent.renewalFeeUI.urgentFeeEUR !== 0) total += patent.renewalFeeUI.urgentFeeEUR;
-    //                 if(patent.renewalFeeUI.expressFeeEUR !== 0) total += patent.renewalFeeUI.expressFeeEUR;
-    //                 return total;
-    //             }())
-    //         }
-
-    //     }
-
-    //     if(patent.form1200FeeUI !== null) {
-    //         patent.availableFee.savings = (function(){
-    //             if(patentService.currentStageColour !== 'Red') {                
-    //                 if(patentService.nextStageCostUSD !==0) {
-    //                     return patentService.nextStageCostUSD - patentService.currentStageCostUSD;
-    //                 }
-    //                 return 0;
-    //             }
-    //             return 0;
-    //         }())
-    //         patent.availableFee.title = 'Form 1200';
-    //         patent.availableFee.fee = patent.form1200FeeUI;
-    //         patent.availableFee.costHistoryUI = patent.form1200FeeUI.costHistoryUI;
-    //         patent.availableFee.fxRate = patent.form1200FeeUI.fxRate;
-    //         patent.ppFees = {
-    //             USD: (function(){
-    //                 var total = patent.form1200FeeUI.processingFeeUSD;
-    //                 if(patent.form1200FeeUI.urgentFeeUSD !== 0) total += patent.form1200FeeUI.urgentFeeUSD;
-    //                 if(patent.form1200FeeUI.expressFeeUSD !== 0) total += patent.form1200FeeUI.expressFeeUSD;
-    //                 return total;
-    //             }()),
-    //             EUR: (function(){
-    //                 var total = patent.form1200FeeUI.processingFeeEUR;
-    //                 if(patent.form1200FeeUI.urgentFeeEUR !== 0) total += patent.form1200FeeUI.urgentFeeEUR;
-    //                 if(patent.form1200FeeUI.expressFeeEUR !== 0) total += patent.form1200FeeUI.expressFeeEUR;
-    //                 return total;
-    //             }())
-    //         }
-    //     }        
-    // }
 
     function fetchItemTransaction(id) {
         currentTransactionsService.fetchCurrentTransactions()
