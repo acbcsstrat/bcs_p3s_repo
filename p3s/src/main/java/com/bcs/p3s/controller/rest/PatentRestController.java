@@ -35,17 +35,20 @@ import com.bcs.p3s.engine.ExtractSubmittedDataEngine;
 import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.enump3s.NotificationProductTypeEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
+import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Notification;
 import com.bcs.p3s.model.NotificationMapping;
 import com.bcs.p3s.model.Patent;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.model.Renewal;
+import com.bcs.p3s.security.SecurityUtil;
 import com.bcs.p3s.service.Form1200Service;
 import com.bcs.p3s.service.Form1200ServiceImpl;
 import com.bcs.p3s.service.PatentService;
 import com.bcs.p3s.session.PostLoginSessionBean;
 import com.bcs.p3s.util.currency.CurrencyUtil;
+import com.bcs.p3s.util.lang.P3SRuntimeException;
 import com.bcs.p3s.util.lang.Universal;
 
 
@@ -215,7 +218,20 @@ public class PatentRestController extends Universal {
 			//calculate the extended data again
 			
 			log().info("A patent with application number[" + patent.getEP_ApplicationNumber() +"] having a status as " + patent.getEpoPatentStatus() + " being added");
-		   	//patent.persist();
+
+			// Check patent not already exist for this client (old double-click issue)
+			String newPatentEpAppNum = patent.getEP_ApplicationNumber();
+			Business businessFromFE = patent.getBusiness();
+            Business myBuisness = SecurityUtil.getMyBusiness();
+            if (businessFromFE.getId()!=myBuisness.getId()) logM().error("BusMismatch!  "+businessFromFE.getId()+" != "+myBuisness.getId()+"  by "+SecurityUtil.getMyUserEmail() );
+            List<Patent> existingPatentsForBusiness = Patent.findPatentsByBusiness(businessFromFE).getResultList();
+            for (Patent anExistingPatent : existingPatentsForBusiness) {
+            	if (anExistingPatent.getEP_ApplicationNumber().equals(newPatentEpAppNum)) 
+            		throw new P3SRuntimeException("Whilst adding patent "+newPatentEpAppNum+" for business "+businessFromFE.getId()+" found we already have it!  ("+anExistingPatent.getId()+")");
+            }
+			
+			
+			//patent.persist();
 			newPatent = patent.persist();
 
 			// Set E-PCT status settings as appropriate
@@ -257,9 +273,11 @@ public class PatentRestController extends Universal {
 		   	
 		   	
 		} catch (Exception e) {
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			log().error("Stacktrace was: "+errors.toString());
+			//StringWriter errors = new StringWriter();
+			//e.printStackTrace(new PrintWriter(errors));
+			//log().error("Stacktrace was: "+errors.toString());
+			logErrorAndContinue("Controller POST /rest-patents/ caught unexpected failure : "+idh, e);
+		  	return new ResponseEntity<List<PatentUI>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<List<PatentUI>>(patentUIs, HttpStatus.OK);
 		
