@@ -5,8 +5,6 @@ costAnalysisService.$inject = ['$http', '$q'];
 function costAnalysisService($http, $q) {
 
     var factory = {
-        fetchEuroPctCa:  fetchEuroPctCa,
-        fetchRenewalCa: fetchRenewalCa,
         fetchCa: fetchCa
     }
 
