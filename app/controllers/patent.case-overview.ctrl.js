@@ -18,6 +18,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.refreshChart = refreshChart;
     vm.editing = [];
     vm.statusesAvailable = [];
+    vm.servicesAvailable = true;
 
     function refreshChart (){
         $timeout(function(){  
@@ -27,27 +28,19 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         }, 300)
     }    
 
-    $scope.availableServices = (function() {    
-        // vm.patent.portfolioUI.serviceList.push({
-        //    costBandEndDate: 1579132800000,
-        //     costBandEndDateUI: "Thu Jan 16, 2020",
-        //     currentOfficialFeeEUR: 2530,
-        //     currentOfficialFeeUSD: 3089.71949,
-        //     currentStageColour: "Green",
-        //     nextStageColour: "Amber",
-        //     nextStageCostUSD: 3473.691439,
-        //     serviceStatus: "show price",
-        //     serviceType: "Renewal"
-
-        //     })
-
-        return vm.patent.portfolioUI.serviceList.map(function(data, index){
-           return {id: index, action: data.serviceType, status: data.serviceStatus}
-        })
-    }())
 
 
     function init() {
+
+        $scope.availableServices = (function() {    
+            return vm.patent.portfolioUI.serviceList.map(function(data, index){
+               return {id: index, action: data.serviceType, status: data.serviceStatus}
+            })
+        }())
+
+        if($scope.availableServices.length === 0) {
+            vm.servicesAvailable = false;
+        }
 
         $scope.availableServices.forEach(function(obj){
             if(obj.action == 'Renewal') {
