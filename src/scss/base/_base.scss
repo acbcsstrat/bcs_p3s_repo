@@ -5,7 +5,8 @@ html, body {
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
   overflow-x: hidden;
-  // background: #f1f2f2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -126,3 +127,6 @@ button {
 
 }
 
+.table td {
+  border-top: none;
+}
