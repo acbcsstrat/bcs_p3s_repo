@@ -172,6 +172,40 @@ animation:*/
 //     -ms-transform: rotate(45deg);
 //     transform: rotate(45deg);
 // }
+#scrollable-area { /*modules*/ /*components*/ /*_tables.scss*  ADD CLASS INSTAD OF SELECTING WITH ID*/ 
+  margin: auto;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: scroll;  /*<!-- here is what is important-->*/
+  overflow-x: hidden;
+  border-bottom: 50px solid $white;
+  border-radius: 15px;
+  -webkit-box-shadow: 0px 7px 9px 5px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 7px 9px 5px rgba(0,0,0,0.2);
+  box-shadow: 0px 7px 9px 5px rgba(0,0,0,0.2);  
+}
 
+.portfolio-pointer {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: $white;
+  position: absolute;
+  left: 50%;
+  margin-left: -25px;
+  top: 225px;
+  .fa-caret-down {
+    position: absolute;
+    left: 50%;
+    color: $grey-dark;
+    margin-left: -10px;
+    top: 11px;
+  }
+}
 
-
+// .table-panel {
+//   border-radius: 10px 10px 0 0;
+//   -webkit-box-shadow: 0px 7px 9px 5px rgba(0,0,0,0.2);
+//   -moz-box-shadow: 0px 7px 9px 5px rgba(0,0,0,0.2);
+//   box-shadow: 0px 7px 9px 5px rgba(0,0,0,0.2);  
+// }

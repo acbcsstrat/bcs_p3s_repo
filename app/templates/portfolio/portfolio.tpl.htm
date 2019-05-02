@@ -163,7 +163,7 @@
             </div>
         </div>        
         <div data-ng-show="data.length !== 0" class="col-md-12">
-            <div id="scrollable-area" class="table-responsive-md">
+            <div id="scrollable-area" class="table-panel">
                 <table class="table t-data t-data--border table-scroll" fixed-table-headers="scrollable-area">
                     <thead>
                         <tr class="t-data__row t-data__row--select t-data__head">
@@ -324,8 +324,17 @@
                         </tr>                               
                     </tbody>
                 </table>
+            </div><!-- response table end-->
+            <div class="portfolio-pointer">
+                <i class="fas fa-caret-down fa-3x"></i>
             </div>
         </div>
     </div>
-    <div data-ui-view class="m-b-xl"></div>
+    <div data-ui-view class="m-b-xl m-t-xl">
+        <div class="row">
+            <div class="col-xl-12 d-flex justify-content-center">
+                <p>Select a patent from the Portfolio table to access further information and services.</p>
+            </div>
+        </div>
+    </div>
 </div>
