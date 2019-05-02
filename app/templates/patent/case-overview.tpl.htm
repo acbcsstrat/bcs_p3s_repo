@@ -5,7 +5,7 @@
 		</div>
 	</div>
 </div>
-<div class="content-panel d-none d-xl-block">	
+<div class="content-panel">	
 	<div class="bg-white">
 		<div class="content-panel__head border-grey-xs--btm">
 			<div class="row d-flex align-items-center">
@@ -32,11 +32,11 @@
 			    	<div data-ng-if="$ctrl.statusesAvailable.length === 0">
 			    		<p class="font-h4 font-weight-medium">No services available</p>
 			    	</div>
-			    </div>		    
+			    </div>
 			</div>
 	    </div>
 		<div class="row">
-			<div class="col-xl-6 col-cxl-6">
+			<div class="col-md-12 col-lg-6 col-xl-6">
 				<uib-tabset active="activeLeft">
 					<uib-tab index="0" heading="Details">
 						<div ui-view="details"></div>
@@ -48,12 +48,12 @@
 						<div ui-view="form1200"></div>
 					</uib-tab>
 					<uib-tab index="3" heading="Renewal History" data-ng-if="$ctrl.displayRenewalHistoryTab">
-						<div ui-view="notifications"></div>
+						<div ui-view="renewalhistory"></div>
 					</uib-tab>						
 				</uib-tabset>
 			</div>
-			<div class="col-xl-6 col-cxl-6">
-				<uib-tabset active="activeRight">
+			<div class="col-md-12 col-lg-6 ">
+				<uib-tabset active="activeRight" data-ng-if="$ctrl.servicesAvailable">
 					<uib-tab index="0" heading="Fee Breakdown">
 						<div ui-view="fee-breakdown"></div>
 					</uib-tab>
@@ -64,10 +64,29 @@
 						<div ui-view="costchart"></div>
 					</uib-tab>
 				</uib-tabset>
+				<div data-ng-if="!$ctrl.servicesAvailable">
+                    <div class="content-panel__body bg-white">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="d-flex align-items-center justify-content-center h-100 z-index-1">
+                                    <div class="d-flex justify-content-center bg-no-chart align-items-center flex-column">
+                                        <p class="h4 font-weight-medium">Sorry</p>
+                                        <p class="h4 font-weight-medium text-center">No Information Available</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
 			</div>			
 <!-- 			<div class="col-xl-6 col-cxl-6 p-r-none border-grey-xs--right">
 				<div data-ng-include="{{$ctrl.rightCaseView}}" data-ng-controller="$ctrl.rightCaseView.ctrl}}"></div>
 			</div>		 -->
 	   	</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xl-12">
+		<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.id)">
 	</div>
 </div>

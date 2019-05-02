@@ -114,7 +114,12 @@ function appRoutes($stateProvider) {
                     templateUrl: 'app/templates/europct/europct.form1200.tpl.htm',
                     controller: 'form1200Ctrl',
                     controllerAs: '$ctrl',  
-                },                
+                },           
+                "renewalhistory@portfolio.patent": {
+                    templateUrl: 'app/templates/renewal/renewal.history.tpl.htm',
+                    controller: 'renewalHistoryCtrl',
+                    controllerAs: '$ctrl',  
+                },                          
                 "fee-breakdown@portfolio.patent": {
                     templateUrl: 'app/templates/fee-breakdown/fee-breakdown.tpl.htm',
                     controller: 'feeBreakDownCtrl',
