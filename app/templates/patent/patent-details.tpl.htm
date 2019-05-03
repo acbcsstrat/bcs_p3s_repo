@@ -1,78 +1,70 @@
-<div class="content-panel">	
-	<div class="bg-white">
+<div class="content-panel__body bg-white">
+	<form class="form" name="patentInfoForm" novalidate>
 		<div class="row">
 			<div class="col-xl-12 col-cxl-12">
-				<div class="content-panel__body">
-	    			<form class="form" name="patentInfoForm" novalidate>
-	    				<div class="row">
-		    				<div class="col-xl-12 col-cxl-12">
-		    					<div class="m-b-lg">
-			    					<h4 class="font-h4 font-weight-medium m-b-sm">Details</h4>
-									<div class="form-group row">
-										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Client Desc: </label>
-										<div class="col-xl-8">
-											<div class="d-flex justify-content-between align-items-center">
-												<span class="font-body" data-ng-hide="$ctrl.editing[1]">{{$ctrl.patent.shortTitle}}</span>
-										        <input type="text" name="shortTitle" id="shortTitle" class="form-control m-r-sm" data-ng-show="$ctrl.editing[1]" data-ng-focus="focus.shortTitleFocus = true" data-ng-blur="$ctrl.doneEditing(1); focus.shortTitleFocus = false" data-ng-model="$ctrl.patent.shortTitle" data-ng-maxlength="25" autofocus>
-										        <span data-ng-click="$ctrl.editItem(1)">
-										        	<i class="fa fa-edit fa-2x"></i>
-										        </span>
-											</div>
-							        		<p class="txt-phase-red" data-ng-show="patentInfoForm.shortTitle.$error.maxlength && patentInfoForm.shortTitle.$dirty && focus.shortTitleFocus">A maximum of 25 characters is allowed for a Client Description</p>
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Client Reference: </label>
-										<div class="col-xl-8">
-											<div class="d-flex justify-content-between align-items-center">
-										 		<span class="font-body" data-ng-hide="$ctrl.editing[2]">{{$ctrl.patent.clientRef}}</span>
-								        		<input type="text" class="form-control m-r-sm" name="clientRef" id="clientRef" data-ng-show="$ctrl.editing[2]" data-ng-focus="focus.clientRefFocus = true" data-ng-blur="$ctrl.doneEditing(2); focus.clientRefFocus = false" data-ng-model="$ctrl.patent.clientRef" data-ng-maxlength="15" autofocus>
-								        		<span data-ng-click="$ctrl.editItem(2)"><i class="fa fa-edit fa-2x"></i></span>
-							        		</div>
-							        		<p class="txt-phase-red" data-ng-show="patentInfoForm.clientRef.$error.maxlength && patentInfoForm.clientRef.$dirty && focus.clientRefFocus">A maximum of 15 characters is allowed for a Client Reference</p>
-						        		</div>	
-									</div>
-									<div class="form-group row">
-										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Applicant Name: </label>
-										<div class="col-xl-8">
-							        		<input type="text" class="form-control" data-ng-model="$ctrl.patent.primaryApplicantName" readonly>
-							        	</div>
-									</div>
-									<div class="form-group row">
-										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Publication No: </label>
-										<div class="col-xl-8">
-								        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.patentPublicationNumber" readonly>
-								        </div>
-									</div>
-									<div class="form-group row">
-										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Title: </label>
-										<div class="col-xl-8">
-								        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.title" readonly>
-								        </div>
-									</div>	
-									<div class="form-group row">
-										<label class="font-weight-medium col-xl-4 d-flex align-items-center">International Filing date: </label>
-										<div class="col-xl-8">
-								        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.internationalFilingDateUI" readonly>
-								        </div>
-									</div>
-									<div class="form-group row">
-										<label class="font-weight-medium col-xl-4 d-flex align-items-center">Priority date: </label>
-										<div class="col-xl-8">
-								        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.priorityDateUI" readonly>
-								        </div>
-									</div>									
-								</div>
-								<div class="row">
-									<div class="col-xl-12 d-flex">
-										<input type="submit" id="submit" class="btn btn--lg btn--green pill-radius m-r-sm" value="Save" data-ng-click="$ctrl.updatePatent($ctrl.patent)">
-									</div>
-								</div>
+				<div class="m-b-lg">
+					<h4 class="font-h4 font-weight-medium m-b-sm">Details</h4>
+					<div class="form-group row">
+						<label class="font-weight-medium col-xl-4 d-flex align-items-center">Client Desc: </label>
+						<div class="col-xl-8">
+							<div class="d-flex justify-content-between align-items-center">
+								<span class="font-body" data-ng-hide="$ctrl.editing[1]">{{$ctrl.patent.shortTitle}}</span>
+						        <input type="text" name="shortTitle" id="shortTitle" class="form-control m-r-sm" data-ng-show="$ctrl.editing[1]" data-ng-focus="focus.shortTitleFocus = true" data-ng-blur="$ctrl.doneEditing(1); focus.shortTitleFocus = false" data-ng-model="$ctrl.patent.shortTitle" data-ng-maxlength="25" autofocus>
+						        <span data-ng-click="$ctrl.editItem(1)">
+						        	<i class="fa fa-edit fa-2x"></i>
+						        </span>
 							</div>
-						</div>								
-					</form>
-				</div>			
+			        		<p class="txt-phase-red" data-ng-show="patentInfoForm.shortTitle.$error.maxlength && patentInfoForm.shortTitle.$dirty && focus.shortTitleFocus">A maximum of 25 characters is allowed for a Client Description</p>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="font-weight-medium col-xl-4 d-flex align-items-center">Client Reference: </label>
+						<div class="col-xl-8">
+							<div class="d-flex justify-content-between align-items-center">
+						 		<span class="font-body" data-ng-hide="$ctrl.editing[2]">{{$ctrl.patent.clientRef}}</span>
+				        		<input type="text" class="form-control m-r-sm" name="clientRef" id="clientRef" data-ng-show="$ctrl.editing[2]" data-ng-focus="focus.clientRefFocus = true" data-ng-blur="$ctrl.doneEditing(2); focus.clientRefFocus = false" data-ng-model="$ctrl.patent.clientRef" data-ng-maxlength="15" autofocus>
+				        		<span data-ng-click="$ctrl.editItem(2)"><i class="fa fa-edit fa-2x"></i></span>
+			        		</div>
+			        		<p class="txt-phase-red" data-ng-show="patentInfoForm.clientRef.$error.maxlength && patentInfoForm.clientRef.$dirty && focus.clientRefFocus">A maximum of 15 characters is allowed for a Client Reference</p>
+		        		</div>	
+					</div>
+					<div class="form-group row">
+						<label class="font-weight-medium col-xl-4 d-flex align-items-center">Applicant Name: </label>
+						<div class="col-xl-8">
+			        		<input type="text" class="form-control" data-ng-model="$ctrl.patent.primaryApplicantName" readonly>
+			        	</div>
+					</div>
+					<div class="form-group row">
+						<label class="font-weight-medium col-xl-4 d-flex align-items-center">Publication No: </label>
+						<div class="col-xl-8">
+				        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.patentPublicationNumber" readonly>
+				        </div>
+					</div>
+					<div class="form-group row">
+						<label class="font-weight-medium col-xl-4 d-flex align-items-center">Title: </label>
+						<div class="col-xl-8">
+				        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.title" readonly>
+				        </div>
+					</div>	
+					<div class="form-group row">
+						<label class="font-weight-medium col-xl-4 d-flex align-items-center">International Filing date: </label>
+						<div class="col-xl-8">
+				        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.internationalFilingDateUI" readonly>
+				        </div>
+					</div>
+					<div class="form-group row">
+						<label class="font-weight-medium col-xl-4 d-flex align-items-center">Priority date: </label>
+						<div class="col-xl-8">
+				        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.priorityDateUI" readonly>
+				        </div>
+					</div>									
+				</div>
+				<div class="row">
+					<div class="col-xl-12 d-flex">
+						<input type="submit" id="submit" class="btn btn--lg btn--green pill-radius m-r-sm" value="Save" data-ng-click="$ctrl.updatePatent($ctrl.patent)">
+					</div>
+				</div>
 			</div>
-	   	</div>
-	</div>
+		</div>
+	</form>
 </div>
