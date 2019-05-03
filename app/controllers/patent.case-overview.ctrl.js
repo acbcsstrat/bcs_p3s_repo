@@ -11,12 +11,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.fetchItemTransaction = fetchItemTransaction;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
-    vm.updatePatent = updatePatent;
-    vm.editItem = editItem;
-    vm.doneEditing = doneEditing;
     vm.getStatus = getStatus;
     vm.refreshChart = refreshChart;
-    vm.editing = [];
     vm.statusesAvailable = [];
     vm.servicesAvailable = true;
 
@@ -42,20 +38,18 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             vm.servicesAvailable = false;
         }
 
-        $scope.availableServices.forEach(function(obj){
-            if(obj.action == 'Renewal') {
-                renewalRestService.fetchHistory(patent.id)
-                .then(
-                    function(response){
-                        if(response.length > 0) {
-                           vm.displayRenewalHistoryTab = true;
-                           return;
-                        }
-                        vm.displayRenewalHistoryTab = false;
-                    }
-                )
-                
+        renewalRestService.fetchHistory(patent.id) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
+        .then(
+            function(response){
+                if(response.length > 0) {
+                   vm.displayRenewalHistoryTab = true;
+                   return;
+                }
+                vm.displayRenewalHistoryTab = false;
             }
+        )        
+
+        $scope.availableServices.forEach(function(obj){
 
             if(obj.action == 'Form1200') {
                 $scope.availableServices.forEach(function(obj){
@@ -107,57 +101,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             }
         );
     };
-
-    function updatePatent(patent) {
-
-        patentsRestService.updatePatent(patent, patent.id)
-        .then(
-            function(response){
-                updatePatentSuccess();
-            },
-            function(errResponse){
-                updatePatentError();
-            }
-        )
-
-    };
-
-    function updatePatentSuccess() {
-
-        var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.update-patent-success.tpl.htm',
-            appendTo: undefined,
-            controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-                this.dismissModal = function() {
-                    $uibModalInstance.close();
-                    $state.reload()
-                };
-
-            }]
-
-        });
-        
-    }
-
-    function updatePatentError() {
-
-        var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.update-patent-error.tpl.htm',
-            appendTo: undefined,
-            controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-                this.dismissModal = function() {
-                    $uibModalInstance.close();
-                };
-
-            }]
-
-        });
-
-    }
 
     function confirmDeletePatent(id) {
 
@@ -238,12 +181,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     }
 
-    function editItem(index) {
-        vm.editing[index] = true;
-    };
 
-    function doneEditing(index) {
-        vm.editing[index] = false;
-    };
     
 }

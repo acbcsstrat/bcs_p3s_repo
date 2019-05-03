@@ -4,7 +4,7 @@
     </div>
 </div>
 <patentnav></patentnav>
-<div class="animate-show">    
+<div data-ng-show="$ctrl.portfolioLoaded" class="animate-show">    
     <div class="form-group row m-b-sm">
         <div class="col-md-3 col-lg-3 col-xl-2">
             <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">

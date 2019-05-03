@@ -31,6 +31,6 @@
 } 
 
 .widget-panel .widget-panel__head { min-height: 59px; } 
-.widget-row-top .widget-panel { min-height: 280px; max-height: 280px; overflow-y: auto; overflow-x: hidden; } 
+.widget-row-top .widget-panel { min-height: 280px; max-height: 280px; overflow-y: hidden; overflow-x: hidden; } 
 .widget-row-middle .widget-panel { min-height: 275px; } 
-.widget-panel--max { max-height: 450px; overflow-y: auto; overflow-x: hidden; }
+.widget-panel--max { max-height: 450px; overflow-y: hidden; overflow-x: hidden; }

@@ -37,16 +37,16 @@
 	<div class="col-md-12 col-lg-6 col-xl-6">
 		<div class="content-panel">
 			<uib-tabset active="activeLeft">
-				<uib-tab index="0" heading="Details">
+				<uib-tab index="0" heading="Details" class="font-h3">
 					<div ui-view="details"></div>
 				</uib-tab>
-				<uib-tab index="1" heading="Notifications">
+				<uib-tab index="1" heading="Notifications" class="font-h3">
 					<div ui-view="notifications"></div>
 				</uib-tab>
-				<uib-tab index="2" heading="Form 1200" data-ng-if="$ctrl.displayForm1200Tab">
+				<uib-tab index="2" heading="Form 1200" class="font-h3" data-ng-if="$ctrl.displayForm1200Tab">
 					<div ui-view="form1200"></div>
 				</uib-tab>
-				<uib-tab index="3" heading="Renewal History" data-ng-if="$ctrl.displayRenewalHistoryTab">
+				<uib-tab index="3" heading="Renewal History" class="font-h3" data-ng-if="$ctrl.displayRenewalHistoryTab">
 					<div ui-view="renewalhistory"></div>
 				</uib-tab>						
 			</uib-tabset>
@@ -56,13 +56,13 @@
 	<div class="col-md-12 col-lg-6 ">
 		<div class="content-panel">
 			<uib-tabset active="activeRight" data-ng-if="$ctrl.servicesAvailable">
-				<uib-tab index="0" heading="Fee Breakdown">
+				<uib-tab index="0" heading="Fee Breakdown" class="font-h3">
 					<div ui-view="fee-breakdown"></div>
 				</uib-tab>
-				<uib-tab index="1" heading="FX Chart" data-ng-click="$ctrl.refreshChart()">
+				<uib-tab index="1" heading="FX Chart" class="font-h3" data-ng-click="$ctrl.refreshChart()">
 					<div ui-view="fxchart"></div>
 				</uib-tab>
-				<uib-tab index="2" heading="Cost Chart" data-ng-click="$ctrl.refreshChart()">
+				<uib-tab index="2" heading="Cost Chart" class="font-h3" data-ng-click="$ctrl.refreshChart()">
 					<div ui-view="costchart"></div>
 				</uib-tab>
 			</uib-tabset>
@@ -92,3 +92,4 @@
 		<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.id)">
 	</div>
 </div>
+

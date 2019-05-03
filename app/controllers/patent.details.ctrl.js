@@ -1,12 +1,65 @@
 angular.module('ppApp').controller('patentDetailsCtrl', patentDetailsCtrl);
 
-patentDetailsCtrl.$inject = ['patent', 'ca', '$rootScope', '$scope', '$state', '$stateParams', 'renewalRestService', '$timeout']
+patentDetailsCtrl.$inject = ['patent', 'ca', '$rootScope', '$scope', '$state', '$stateParams', 'renewalRestService', '$timeout', 'patentsRestService', '$uibModal']
 
-function patentDetailsCtrl(patent, ca, $rootScope, $scope, $state, $stateParams, renewalRestService, $timeout) {
+function patentDetailsCtrl(patent, ca, $rootScope, $scope, $state, $stateParams, renewalRestService, $timeout, patentsRestService, $uibModal) {
 
 	var vm = this;
 
 	vm.patent = patent;
+    vm.updatePatent = updatePatent;    
+
+    function updatePatentSuccess() {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.update-patent-success.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                    $state.reload()
+                };
+
+            }]
+
+        });
+        
+    }
+
+    function updatePatentError() {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.update-patent-error.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
+
+            }]
+
+        });
+
+    }
+
+    function updatePatent(patent) {
+        console.log(patent)
+        patentsRestService.updatePatent(patent, patent.id)
+        .then(
+            function(response){
+                updatePatentSuccess();
+            },
+            function(errResponse){
+                updatePatentError();
+            }
+        )
+
+    };
+
 
 }
 

@@ -17,6 +17,10 @@
 
 .form-control {
   line-height: 1.2rem;
+  border-radius: 2rem;
+  .form-control {
+    border: none;
+  }
 }
 
 .btn {

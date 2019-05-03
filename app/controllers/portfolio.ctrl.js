@@ -21,7 +21,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.selectedSortType = 'ep_ApplicationNumber';
 
     $timeout(function(){
-      vm.animate = true;
+      vm.portfolioLoaded = true;
     }, 300);
 
     var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available', 'Epct being generated', 'Payment in progress', 'EPO instructed', 'Too early', 'Too late'];
