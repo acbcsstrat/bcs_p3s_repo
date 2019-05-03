@@ -50,8 +50,9 @@ a,
 input, 
 table, 
 td, 
-th { 
-  font-family: $font-body!important; 
+th,
+span { 
+  font-family: $font-body; 
 }
 
 p, 
@@ -74,6 +75,10 @@ table {
   margin:0;
 }
 
+table td, table tr {
+  border: none;
+}
+
 /*table.slider-table { width: 99%; }*/
 
 thead {
@@ -83,6 +88,7 @@ thead {
 }
 
 .table td, .table th {
+  border-top: none;
   vertical-align: middle;
   padding: 0;
 }
@@ -127,6 +133,3 @@ button {
 
 }
 
-.table td {
-  border-top: none;
-}
