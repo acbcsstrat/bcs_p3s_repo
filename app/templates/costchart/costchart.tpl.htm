@@ -1,20 +1,23 @@
-<div class="content-panel d-none d-xl-block border-t-none">
-    <div class="bg-white">
-     
-        <div class="row">
-            <div class="col-xl-12 text-xs-left">                           
-                <div data-ng-if="$ctrl.barData !== null">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <label>Display FX data for
-                                <select name="actions" id="actions" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-change="$ctrl.setData($ctrl.data.selectedAction.action)">
-                                </select>
-                            </label>
+<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
+    <div class="col-xl-12">
+        <p>Select an action from the drop-down menu below</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-xs-left">                           
+        <div data-ng-if="$ctrl.barData !== null">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-inline">
+                        <div class="form-group">                      
+                            <label class="font-body font-weight-bold text-uppercase m-r-sm">Display chart data for: </label>
+                            <select name="actions" id="actions" class="form-control" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-change="$ctrl.setData($ctrl.data.selectedAction.action)"></select>
+
                         </div>        
-                    </div>                          
-                    <nvd3 options="$ctrl.barOptions" data="$ctrl.barData" class="with-transitions"></nvd3>
+                    </div>   
                 </div>
-            </div>
+            </div>                       
+            <nvd3 options="$ctrl.barOptions" data="$ctrl.barData" class="with-transitions"></nvd3>
         </div>
     </div>
 </div>
