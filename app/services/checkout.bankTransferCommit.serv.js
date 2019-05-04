@@ -11,7 +11,7 @@ function bankTransferCommitService($http, $q, $state){
 	return factory;
 
 	function commitTransfer(order) {
-		console.log('order', order)
+
 		var commitOrder = {}
 		commitOrder.totalCostUSD = order.totalCostUSD;
 		commitOrder.billingDetails = order.billingDetails;
@@ -21,7 +21,7 @@ function bankTransferCommitService($http, $q, $state){
 				return el.id;
 			})
 		}())
-		console.log(commitOrder)
+
 		var deferred = $q.defer();
 		$http.post(ppdomain+'rest-committed-banktransfer/', commitOrder)
 		.then(

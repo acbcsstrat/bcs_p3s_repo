@@ -36,7 +36,6 @@ angular.module('ngCart.fulfilment', [])
             $http.post('http://localhost:8080/p3sweb/rest-prepare-banktransfer/', obj)
             .then(
                 function(response){
-                    console.log(response)
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
