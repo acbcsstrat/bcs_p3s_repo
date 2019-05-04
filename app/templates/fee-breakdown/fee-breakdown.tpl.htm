@@ -1,4 +1,4 @@
-<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
+<div class="row m-b-sm">
     <div class="col-xl-12">
         <p>Select an action from the drop-down menu below</p>
     </div>
@@ -21,7 +21,7 @@
         <p class="font-h4 font-weight-bold" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">$ {{$ctrl.patent.portfolioUI.serviceList[0].nextStageCostUSD | number: 2}}</p>           
     </div>     
     <div class="col-xl-6 text-right">
-        <p class="font-h4" data-ng-if="$ctrl.availableFees">1 EUR = {{$ctrl.availableFees.fxRate}} USD</p>
+        <p class="font-h4">1 EUR = {{$ctrl.availableFees.fxRate}} USD</p>
     </div>  
 </div>
 <div class="m-t-md">
@@ -216,10 +216,10 @@
             </div>
         </div>
     </div>
-    <div class=" m-b-sm border-grey-xs--btm"></div>       
-    <div class="row m-b-sm">
+    <div class="m-b-md border-grey-xs--btm"></div>       
+    <div class="row m-b-md">
         <div class="col-xl-5">
-            <p class="font-weight-medium">Total:</p>
+            <p class="font-weight-heavy">Total:</p>
         </div>
         <div class="col-xl-4">
             <p class="text-center">$ {{($ctrl.availableFees.subTotalUSD | number: 2) || '0.00'}}</p>
@@ -230,13 +230,11 @@
     </div>
     <div class="row"><!--FINISH WORK OFF TOMORROW -->
         <div class="col-xl-12 d-flex justify-content-between align-items-end">
-            <div data-ng-if="$ctrl.patent.renewalSavings !== 0">
-                <p class="font-h3 font-weight-medium m-b-xs">Save: <span class="txt-phase-green">$ {{($ctrl.patent.renewalSavings | number: 2) || '0.00'}}</span></p>
-                <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</span></p>
-            </div>
+            <p class="font-h3 font-weight-heavy m-b-xs">Save: <span class="txt-phase-green">$ {{($ctrl.availableFees.savings | number: 2) || '0.00'}}</span></p>
+            <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</span></p>
         </div>
     </div>
-    <div class="row m-t-sm">
+    <div class="row m-t-md">
         <div class="col-xl-12">
             <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
             <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'" name="service.form1200" price="{{$ctrl.availableFees.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent"></ngcart-addtocart>

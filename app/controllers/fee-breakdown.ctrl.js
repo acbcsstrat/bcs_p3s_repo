@@ -28,7 +28,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
     }    
 
     function setFees(action) {
-
+ 
         if(action == 'Form1200') {
             vm.availableFees = patent.form1200FeeUI;
             vm.availableFees.ppFeesUSD = patent.form1200FeeUI.subTotalUSD - patent.form1200FeeUI.currentOfficialFeeUSD;
@@ -40,6 +40,8 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.availableFees.ppFeesUSD = patent.renewalFeeUI.subTotalUSD - patent.renewalFeeUI.currentOfficialFeeUSD;
             vm.availableFees.ppFeesEUR = patent.renewalFeeUI.subTotalEUR - patent.renewalFeeUI.currentOfficialFeeEUR;            
         }
+
+        vm.availableFees.savings = patent.portfolioUI.serviceList[0].nextStageCostUSD - patent.portfolioUI.serviceList[0].currentStageCostUSD;
 
     }
 
