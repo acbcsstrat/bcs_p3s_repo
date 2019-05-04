@@ -1,0 +1,22 @@
+.case-overview {
+  min-height: 420px
+}
+
+.case-overview-nav {
+	.nav-link{
+		font-size: $font-h4;
+		text-transform: uppercase;
+		font-weight: 700;
+		padding: 0 0 2rem 0;
+		margin: 0 1.5rem 0 1.5rem;
+	}
+	&.nav-item {	
+		&.active {
+			border-bottom: 3px solid $black;
+		}
+	}
+	.nav-tabs {
+		margin-bottom: 2.5rem;
+	}
+
+}
