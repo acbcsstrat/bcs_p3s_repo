@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('feeBreakDownCtrl', feeBreakDownCtrl);
 
-feeBreakDownCtrl.$inject = ['patent', '$scope', '$timeout', '$state', 'organiseTextService', '$location', 'currentTransactionsService', '$anchorScroll']
+feeBreakDownCtrl.$inject = ['patent', '$scope', '$timeout', '$state', 'organiseTextService', '$location', 'currentTransactionsService', '$anchorScroll', 'organiseColourService']
 
-function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService, $location, currentTransactionsService, $anchorScroll) {
+function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService, $location, currentTransactionsService, $anchorScroll, organiseColourService) {
 
     var vm = this;
 
@@ -10,6 +10,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
     vm.fetchItemTransaction = fetchItemTransaction;
     vm.patent = patent;
     vm.setFees = setFees;
+    vm.getCurrColour = getCurrColour;
     vm.feeData = null;
 
     if($scope.$parent.availableServices.length > 0) {
@@ -22,14 +23,22 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
     }
 
+    function getCurrColour(color, type) {
+      return organiseColourService.getCurrColour(color, type)
+    }    
+
     function setFees(action) {
 
         if(action == 'Form1200') {
-            vm.availableFees = vm.patent.form1200FeeUI;
+            vm.availableFees = patent.form1200FeeUI;
+            vm.availableFees.ppFeesUSD = patent.form1200FeeUI.subTotalUSD - patent.form1200FeeUI.currentOfficialFeeUSD;
+            vm.availableFees.ppFeesEUR = patent.form1200FeeUI.subTotalEUR - patent.form1200FeeUI.currentOfficialFeeEUR;
         }
 
         if(action == 'Renewal') {
-            vm.availableFees = vm.patent.renewalFeeUI;
+            vm.availableFees = patent.renewalFeeUI;
+            vm.availableFees.ppFeesUSD = patent.renewalFeeUI.subTotalUSD - patent.renewalFeeUI.currentOfficialFeeUSD;
+            vm.availableFees.ppFeesEUR = patent.renewalFeeUI.subTotalEUR - patent.renewalFeeUI.currentOfficialFeeEUR;            
         }
 
     }
