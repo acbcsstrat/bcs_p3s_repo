@@ -1,4 +1,4 @@
-<div data-ng-hide="$ctrl.animate" class="page-loading animate-show animate-hide h-100">
+<div data-ng-hide="$ctrl.dashboardLoaded" class="page-loading animate-show animate-hide h-100">
 	<div class="screen-load">
 		<div class="row m-b-md">
 			<div class="col-xl-12 text-center">
@@ -7,7 +7,7 @@
 		</div>
 	</div>
 </div>
-<div data-ng-show="$ctrl.animate" class="animate-show m-b-xl">
+<div data-ng-show="$ctrl.dashboardLoaded" class="animate-show m-b-xl">
 	<div class="row">
 		<div class="col-sm-12">
 			<h1 class="font-h1" data-ng-bind="$ctrl.pageTitle"></h1>

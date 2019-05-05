@@ -25,7 +25,9 @@
 .widget-panel .widget-panel__head, .app-guide .app-guide__head  { padding: 1.5rem 3rem ;}
 
 .content-panel .content-panel__body,
-.content-panel .content-panel__head { 
+.content-panel .content-panel__head,
+.widget-panel .widget-panel__body,
+.widget-panel .widget-panel__head { 
   flex-grow: 1;
   padding: 2rem 3rem; 
   border-radius: 15px;
@@ -34,7 +36,7 @@
   box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.2);
 } 
 
-.widget-panel .widget-panel__head { min-height: 59px; } 
-.widget-row-top .widget-panel { min-height: 280px; max-height: 280px; overflow-y: hidden; overflow-x: hidden; } 
-.widget-row-middle .widget-panel { min-height: 275px; } 
-.widget-panel--max { max-height: 450px; overflow-y: hidden; overflow-x: hidden; }
+// .widget-panel .widget-panel__head { min-height: 59px; } 
+// .widget-row-top .widget-panel { overflow-x: hidden; } 
+// .widget-row-middle .widget-panel { min-height: 275px; } 
+// .widget-panel--max { max-height: 450px; overflow-y: hidden; overflow-x: hidden; }

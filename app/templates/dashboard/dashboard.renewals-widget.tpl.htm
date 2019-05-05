@@ -1,25 +1,23 @@
-<div class="bg-white h-100 widget-panel d-flex flex-column">
-	<div class="widget-panel__head border-grey-xs--btm d-flex flex-column justify-content-center p-t-none p-b-none">
-		<div class="row d-flex align-items-center">
+<div class="widget-panel">
+	<div class="widget-panel__body bg-white">
+		<div class="row d-flex align-items-start">
 			<div class="col-md-3 col-lg-3 col-xl-3">
 				<h3 class="font-h3 m-r-sm font-weight-bold">Services</h3>
 			</div>
 			<div class="col-md-9 col-lg-9 col-lg-9">
 				<nav class="">
 					<ul class="panel-nav d-flex justify-content-end">
-						<li class="txt-phase-green green panel-nav__colour-item font-weight-medium" data-ng-init="activeTab = 0; $ctrl.setPatents('Green')" data-ng-class="{'active': activeTab === 0}" data-ng-click="activeTab = 0; $ctrl.setPatents('Green')">Green ({{$ctrl.patentData.Green.length || '0'}})</li>
-						<li class="txt-phase-amber amber panel-nav__colour-item font-weight-medium" data-ng-class="{'active': activeTab === 1}" data-ng-click="activeTab = 1; $ctrl.setPatents('Amber')">Amber ({{$ctrl.patentData.Amber.length || '0'}})</li>
-						<li class="txt-phase-red red panel-nav__colour-item font-weight-medium" data-ng-class="{'active': activeTab === 2}" data-ng-click="activeTab = 2; $ctrl.setPatents('Red')">Red ({{$ctrl.patentData.Red.length || '0'}})</li>
-						<li class="txt-phase-blue blue panel-nav__colour-item font-weight-medium" data-ng-class="{'active': activeTab === 3}" data-ng-click="activeTab = 3; $ctrl.setPatents('Blue')">Blue ({{$ctrl.patentData.Blue.length || '0'}})</li>
-						<li class="txt-phase-black black panel-nav__colour-item font-weight-medium" data-ng-class="{'active': activeTab === 4}" data-ng-click="activeTab = 4; $ctrl.setPatents('Black')">Black ({{$ctrl.patentData.Black.length || '0'}})</li>						
+						<li class="txt-phase-green green panel-nav__colour-item font-weight-medium p-t-none" data-ng-init="activeTab = 0; $ctrl.setPatents('Green')" data-ng-class="{'active': activeTab === 0}" data-ng-click="activeTab = 0; $ctrl.setPatents('Green')">Green ({{$ctrl.patentData.Green.length || '0'}})</li>
+						<li class="txt-phase-amber amber panel-nav__colour-item font-weight-medium p-t-none" data-ng-class="{'active': activeTab === 1}" data-ng-click="activeTab = 1; $ctrl.setPatents('Amber')">Amber ({{$ctrl.patentData.Amber.length || '0'}})</li>
+						<li class="txt-phase-red red panel-nav__colour-item font-weight-medium p-t-none" data-ng-class="{'active': activeTab === 2}" data-ng-click="activeTab = 2; $ctrl.setPatents('Red')">Red ({{$ctrl.patentData.Red.length || '0'}})</li>
+						<li class="txt-phase-blue blue panel-nav__colour-item font-weight-medium p-t-none" data-ng-class="{'active': activeTab === 3}" data-ng-click="activeTab = 3; $ctrl.setPatents('Blue')">Blue ({{$ctrl.patentData.Blue.length || '0'}})</li>
+						<li class="txt-phase-black black panel-nav__colour-item font-weight-medium p-t-none" data-ng-class="{'active': activeTab === 4}" data-ng-click="activeTab = 4; $ctrl.setPatents('Black')">Black ({{$ctrl.patentData.Black.length || '0'}})</li>						
 					</ul>
 				</nav>
 			</div>
-		</div>
-	</div>
-	<div class="widget-panel__body p-none d-flex flex-row flex-grow-1">
-		<uib-tabset type="pills" class="pills animate-show flex-grow-1" data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== '' && $ctrl.selectedPatent !== ''">
-		    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body flex-grow-1" data-ng-hide="true">	            	
+		</div>		
+		<uib-tabset type="pills" class="pills animate-show" data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== '' && $ctrl.selectedPatent !== ''">
+		    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body" data-ng-hide="true">	            	
 		    	<div class="row">
 		    		<div class="col-md-12">
 	    				<table class="table t-data table-scroll">
@@ -31,7 +29,7 @@
 	    							<th class="t-data__th border-t-none">Next Stage</th>
 	    						</tr>
 	    					</thead>
-		                    <tbody>
+		                    <tbody class="dashboard-table">
 		                    	<tr class="t-data__row t-data__row--select" data-ng-repeat="patent in $ctrl.patents" data-ng-click="$ctrl.fetchCost(patent)" data-ng-init="$ctrl.fetchCost($ctrl.patents[0])">
 			                    	<td class="t-data__td t-data__td--ellipsis t-data__w25" data-ng-bind="patent.ep_ApplicationNumber">
 			                    		
