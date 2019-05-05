@@ -47,7 +47,7 @@
                         <h1 class="font-weight-bold font-h2">Register</h1>
                         <div class="d-flex">                     
                             <p class="font-body font-weight-medium m-r-xs">Do you have an account already?</p>
-                            <a href="/p3sweb/register" class="inline-link" href="/p3sweb/login">Login</a>
+                            <a href="/p3sweb/login" class="inline-link">Login</a>
                         </div>                        
                      </div>
                 </div>
