@@ -1,16 +1,18 @@
-<div class="content-panel__body">
+<!-- <div class="content-panel__body bg-white"> -->
 	<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
 	    <div class="col-xl-12">
-	        <h4 class="font-weight-medium">Notifications</h4>
 	        <p>Simply select the colour and time frame to receive email notifications for this patent prior to each stage. You can select as many or few as you want.</p>
 	    </div>
 	</div>
 	<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
 	    <div class="col-xl-12">
-	        <label>Display notifications for
-	        	<select name="actions" id="actions" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-init="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Green')" data-ng-change="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Green')">
-	        	</select>
-	        </label>
+	    	<div class="form-inline">
+	    		<div class="form-group">                      
+                	<label class="font-body font-weight-bold text-uppercase m-r-sm">Display notifications for: </label>
+		        	<select name="actions" id="actions" class="form-control" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-init="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Green')" data-ng-change="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Green')">
+			        </select>
+	    		</div>
+	    	</div>
 	    </div>
 	</div>	
 	<div class="row">
@@ -20,8 +22,6 @@
 	            	<li class="panel-nav__list-item list-item--colour-border pill-radius" data-ng-repeat="item in $ctrl.notificationNavItems track by item.id" data-ng-click="$ctrl.displayNotifications($ctrl.data.selectedAction.action, item.colour);" data-ng-class="{'active green': 2 > 1, 'txt-phase-green': 2 > 1}">
 	            		{{item.colour}}
 	            	</li>
-<!-- 					<li class="panel-nav__list-item list-item--colour-border pill-radius green" data-ng-click="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Green');" data-ng-class="{'active bg-phase-green': activeNotificationTab == 0, 'txt-phase-green': activeNotificationTab !== 0}">Green</li>
-					<li class="panel-nav__list-item list-item--colour-border pill-radius amber" data-ng-click="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Amber');" data-ng-class="{'active bg-phase-amber': activeNotificationTab == 1, 'txt-phase-amber': activeNotificationTab !== 1}">Amber</li> -->
 	            </ul>
 	        </nav>
 	    </div>
@@ -43,15 +43,9 @@
 	        </uib-tabset>
 	    </div>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-            <div class="content-panel__head border-grey-xs--top">
-                <div class="row">
-                    <div class="col-xl-12 d-flex">
-                        <input type="submit" id="submit" class="btn btn--green btn--lg pill-radius" value="Save" data-ng-click="$ctrl.updateNotifications($ctrl.patent.id, $ctrl.notificationUi, $ctrl.notificationUrl)">                                   
-                    </div>
-                </div>
-            </div>
+	<div class="row m-t">
+		<div class="col-xl-12 text-right">
+            <input type="submit" id="submit" class="btn btn--green btn--lg pill-radius" value="Save" data-ng-click="$ctrl.updateNotifications($ctrl.patent.id, $ctrl.notificationUi, $ctrl.notificationUrl)">
 		</div>
 	</div>
-</div>
+<!-- </div> -->
