@@ -69,7 +69,7 @@
                            <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn--lg btn--green pill-radius">
                         </div>
                      </form>
-                     <div class="row m-b-sm">
+                     <div class="row">
                         <div class="col-md-12 text-center">
                            <a href="/p3sweb/forgot-password" class="btn-no-bg font-weight-medium btn-underlined">Forgot Password?</a>
                         </div>
