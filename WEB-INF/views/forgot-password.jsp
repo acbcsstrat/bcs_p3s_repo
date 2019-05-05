@@ -41,17 +41,17 @@
          <div class="container-pre-app__center-box-40">
             <img src="assets/imgs/logos/pp-logo-text.png" alt="patent place logo">
             <div class="content-panel__body bg-white">
-               <div class="rest-forgot-password">
+               <div class="row m-b-sm">
                   <div class="col-md-12 d-flex justify-content-between align-items-center">
                      <h1 class="font-weight-bold font-h2">Forgot Password</h1>
                   </div>
                </div>
                <div id="initialForgotPass">
-                  <div class="row m-b-sm">
+<!--                   <div class="row m-b-sm">
                      <div class="col-md-12 col-lg-12 col-xl-12">
                         <p class="font-body font-weight-medium">Please enter the email address you used to regisiter this user.</p>
                      </div>
-                  </div>
+                  </div> -->
                   <div id="forgotPassFail" class="hide-before m-b-sm">
                      <div class="content-panel bg-white">
                         <div class="content-panel__body">
@@ -71,7 +71,7 @@
                   <form name="forgotPassForm" id="forgotPassForm" class="form" data-parsley-validate="">                                     
                      <div class="row m-b-sm">
                         <div class="col-md-12">
-                           <input name="emailAddress" class="form-control font-body pill-radius" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-trigger="change" data-parsley-required="true">
+                           <input name="emailAddress" class="form-control font-body pill-radius" id="emailAddress" placeholder="Please enter your email address" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-trigger="change" data-parsley-required="true">
                         </div>
                      </div>
                      <div class="row m-b-sm">
