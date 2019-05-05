@@ -3,7 +3,7 @@
         <p>Select an action from the drop-down menu below</p>
     </div>
 </div>
-<div class="row m-b-md">
+<div class="row m-b-sm">
     <div class="col-xl-12">
         <div class="form-inline">
             <div class="form-group">                      
@@ -15,12 +15,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xl-6 d-flex justify-content-between align-items-center">
-        <p class="font-h4 font-weight-bold" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')">$ {{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD | number: 2}}</p>
-        <i class="fa fa-chevron-right fa-lg" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')"></i>
-        <p class="font-h4 font-weight-bold" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">$ {{$ctrl.patent.portfolioUI.serviceList[0].nextStageCostUSD | number: 2}}</p>           
-    </div>     
-    <div class="col-xl-6 text-right">
+    <div class="col-xl-12 text-right">
         <p class="font-h4">1 EUR = {{$ctrl.availableFees.fxRate}} USD</p>
     </div>  
 </div>
@@ -216,7 +211,7 @@
             </div>
         </div>
     </div>
-    <div class="m-b-md border-grey-xs--btm"></div>       
+    <div class="m-b-md border-grey-xs--btm"></div>
     <div class="row m-b-md">
         <div class="col-xl-5">
             <p class="font-weight-heavy">Total:</p>
@@ -228,18 +223,25 @@
             <p class="text-center">&euro; {{($ctrl.availableFees.subTotalEUR | number: 2) || '0.00'}}</p>
         </div>
     </div>
-    <div class="row"><!--FINISH WORK OFF TOMORROW -->
-        <div class="col-xl-12 d-flex justify-content-between align-items-end">
-            <p class="font-h3 font-weight-heavy m-b-xs">Save: <span class="txt-phase-green">$ {{($ctrl.availableFees.savings | number: 2) || '0.00'}}</span></p>
+    <div class="m-b-md border-grey-xs--btm"></div>
+    <div class="row">
+        <div class="col-xl-6 d-flex justify-content-around align-items-center">
+            <div class="d-flex  flex-column align-items-center text-center">
+                <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs">Current cost</span>
+                <p class="font-h3 font-weight-bold" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')">$ {{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD | number: 2}}</p>
+
+            </div>   
+<!--             <div class="align-items-center m-r-xs">
+                <i class="fa fa-chevron-right fa-lg" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')"></i>
+            </div>  -->        
+            <div class="d-flex flex-column align-items-center text-center">
+                <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs">Future cost</span>
+                <p class="font-h3 font-weight-bold" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">$ {{$ctrl.patent.portfolioUI.serviceList[0].nextStageCostUSD | number: 2}}</p>           
+            </div>
+        </div>
+        <div class="col-xl-6 d-flex justify-content-center align-items-center flex-column">
+            <p class="font-h3 font-weight-heavy font-h3--content">Save: <span class="txt-phase-green">$ {{($ctrl.availableFees.savings | number: 2) || '0.00'}}</span></p>
             <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</span></p>
         </div>
     </div>
-    <div class="row m-t-md">
-        <div class="col-xl-12">
-            <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
-            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'" name="service.form1200" price="{{$ctrl.availableFees.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent"></ngcart-addtocart>
-            <span class="font-h4" data-ng-bind="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus)"></span>                            
-            <span class="font-h4" data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == 'Epct not available'"> - Call Pure Ideas on +44 203 696 0949</span>                            
-        </div>          
-    </div> <!-- row end-->
 </div>
