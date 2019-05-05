@@ -1,13 +1,15 @@
-<div class="bg-white widget-panel h-100">
-	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
-		<h3 class="font-h3 font-weight-bold">Recent Activity</h3>
-		<nav>
-			<ul class="panel-nav">
-				<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTab); $ctrl.activeActivityTab = item.index; $ctrl.changeActivity(item.activity)" data-ng-class="{active : $ctrl.activeMenu == item.activity}">{{item.activity}}</li>
-			</ul>
-		</nav>
-	</div>	
-	<div class="widget-panel__body">
+<div class="widget-panel">
+	<div class="widget-panel__body bg-white">
+		<div class="row m-b-md">
+			<div class="col-xl-12 d-flex align-items-center justify-content-between">
+				<h3 class="font-h3 font-weight-bold">Recent Activity</h3>
+				<nav>
+					<ul class="panel-nav">
+						<li data-ng-repeat="item in $ctrl.activityNotifications track by $index" class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.setActivityActiveTab(item.activity, $ctrl.activeActivityTab); $ctrl.activeActivityTab = item.index; $ctrl.changeActivity(item.activity)" data-ng-class="{active : $ctrl.activeMenu == item.activity}">{{item.activity}}</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
 		<uib-tabset class="panel-nav" active="$ctrl.activeActivityTab">
 			<uib-tab data-ng-hide="true" index="0">
 				<div class="row bg-no-data" data-ng-if="$ctrl.recentActivityData.length === 0">
