@@ -10,22 +10,19 @@ function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentP
     vm.pageTitle = 'Dashboard';
     vm.date = new Date().getTime();
 
+    $timeout(function(){
+      vm.dashboardLoaded = true;
+    }, 300);
+
     function init() {
 
         if(patentIds.length > 0) {
             if(patentPhasesService.getPatents === '' || patentPhasesService.patentNumbers.Total !== patentIds.length) { //check if any patents have been addded. Otherwise there is no need to execute code
                 setPatents();
-            } else {
-                $timeout(function(){
-                    vm.animate = true;
-                }, 300)
-            }        
+            } 
         } else {
             patentPhasesService.sortPatentNumbers(null)
             patentPhasesService.setPatents(null); //no patents avaialble
-            $timeout(function(){
-                vm.animate = true;
-            }, 300)   
         }
         
     }
