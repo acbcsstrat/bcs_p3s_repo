@@ -195,7 +195,7 @@
                             <th class="t-data__w15"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="portfolio-table">
                         <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter:testFl | filter:filterPortfolio as Result" data-ng-click="$ctrl.rowSelect($event, patent)" data-ui-sref-active="active" class="t-data__row t-data__row--select" data-ng-class="{'active': patent.id == $ctrl.stateParams}">
                             <td class="t-data__td--ellipsis t-data__td t-data__w15">
                                 <span class="td-ellipsis">
