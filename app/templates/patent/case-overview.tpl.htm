@@ -58,17 +58,29 @@
 	<div class="col-md-12 col-lg-6 ">
 		<div class="content-panel">
 			<div class="content-panel__body bg-white">
-				<uib-tabset active="activeRight" data-ng-if="$ctrl.servicesAvailable">
-					<uib-tab index="0" heading="Fee Breakdown" class="case-overview-nav">
-						<div ui-view="fee-breakdown" class="m-t-lg"></div>
-					</uib-tab>
-					<uib-tab index="1" heading="FX Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart()">
-						<div ui-view="fxchart" class="m-t-lg"></div>
-					</uib-tab>
-					<uib-tab index="2" heading="Cost Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart()">
-						<div ui-view="costchart" class="m-t-lg"></div>
-					</uib-tab>
-				</uib-tabset>
+				<div data-ng-if="$ctrl.servicesAvailable">
+					<uib-tabset active="activeRight" class="m-b-md">
+						<uib-tab index="0" heading="Fee Breakdown" class="case-overview-nav">
+							<div ui-view="fee-breakdown" class="m-t-lg"></div>
+						</uib-tab>
+						<uib-tab index="1" heading="FX Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart()">
+							<div ui-view="fxchart" class="m-t-lg"></div>
+						</uib-tab>
+						<uib-tab index="2" heading="Cost Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart()">
+							<div ui-view="costchart" class="m-t-lg"></div>
+						</uib-tab>
+					</uib-tabset>
+					<div class="border-grey-xs--btm"></div>
+	                <div class="row m-t-md">
+	                	<div class="col-xl-12 text-right">
+				            <button type="button" class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.epctStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
+				            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentOfficialFeeUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.form1200FeeUI !== null && $ctrl.patent.epctStatus == 'Epct saved'"></ngcart-addtocart>
+				            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentOfficialFeeUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.renewalFeeUI !== null && $ctrl.patent.renewalStatus == 'Show price'"></ngcart-addtocart>				            
+<!-- 				            <span class="font-h4" data-ng-bind="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus)"></span>                            
+				            <span class="font-h4" data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == 'Epct not available'"> - Call Pure Ideas on +44 203 696 0949</span>           -->                  
+				        </div>          
+	                </div>				
+				</div>
 				<div data-ng-if="!$ctrl.servicesAvailable">
 	                <div class="content-panel__body bg-white">
 	                    <div class="row">
