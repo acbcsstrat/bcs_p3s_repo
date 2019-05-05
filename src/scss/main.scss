@@ -12,6 +12,7 @@
 @import "./vendors/extensions/_bootstrap-ext.scss";
 @import "./vendors/extensions/_parsley-ext.scss";
 @import "./vendors/extensions/_nvd3.scss";
+@import "./vendors/extensions/_font-awesome.scss";
 @import "./vendors/_stepProgress.scss";
 @import "./vendors/angular-ui-carousel/dist/ui-carousel.min.css";
 @import "./vendors/angular-carousel/dist/angular-carousel.min.css";
@@ -43,3 +44,4 @@
 @import "./pages/_transactions.scss";
 @import "./pages/_user-profile.scss";
 @import "./pages/_portfolio.scss";
+@import "./pages/_case-overview.scss";

@@ -11,7 +11,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-
     &.cartbtn::after {
       display: inline-block;
       font-size: 2rem;
@@ -55,7 +54,8 @@
   -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
   -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
   transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-  &.btn--lg { @include padding-mixin(0.5rem 3rem) } 
+  overflow-x: hidden;
+  &.btn--lg { @include padding-mixin(1rem 3rem);  text-transform: uppercase; } 
   // &:not(.remove) {
   //   &.cartbtn:before {
   //     content: 'Add '

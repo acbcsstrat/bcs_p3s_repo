@@ -51,8 +51,11 @@ input,
 table, 
 td, 
 th,
-span { 
-  font-family: $font-body; 
+span,
+select,
+html,
+textarea { 
+  font-family: $font-body!important; 
 }
 
 p, 
