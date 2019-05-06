@@ -9,7 +9,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 	vm.pageTitle = 'Current Transactions';
 
     $timeout(function() {
-      	vm.animate = true;
+      	vm.transactionsLoaded = true;
     }, 300);
 
 	vm.tableData = currentTransactions;
