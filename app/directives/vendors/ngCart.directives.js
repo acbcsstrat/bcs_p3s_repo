@@ -152,9 +152,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             }
 
             $rootScope.$on('ngCart:itemRemoved', function() {
-                // console.log(scope.summary)
-                // // scope.summary = null;
-
                fetchBasketPatents();
             });
 
@@ -166,7 +163,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 basketService.fetchBasketPatents(patent_ids)
                 .then(
                     function(response){
-
                         scope.summary = {
                             firstName: response.firstName,
                             lastName: response.lastName,
@@ -182,6 +178,9 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                                 totalExpressFeesUSD: response.totalExpressFeesUSD,
                                 totalUrgentFeesUSD: response.totalUrgentFeesUSD,
                                 totalOfficialFeesUSD: response.totalOfficialFeesUSD,
+                                totalPatentPlaceFeesUSD: (function(){
+                                    return response.totalCostUSD - response.totalOfficialFeesUSD;
+                                }),
                                 totalCostUSD: response.totalCostUSD
                             },
                             totalPatents: response.orderedPatentUIs.length

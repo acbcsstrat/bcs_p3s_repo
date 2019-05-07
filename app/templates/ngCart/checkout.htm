@@ -1,14 +1,12 @@
 <div class="row" data-ng-if="summary.totalPatents > 0">
     <div class="col-md-12 col-xl-6 lg-m-b-md">
-        <div class="content-panel bg-white">
-            <div class="content-panel__head border-grey-xs--btm">
-                <p class="font-h4 font-weight-medium">Summary</p>
-            </div>
-            <div class="content-panel__head border-grey-xs--btm">
+        <div class="content-panel">
+            <div class="content-panel__body  bg-white">
+                <p class="font-h3 font-weight-medium m-b-sm">Summary</p>
+                <div class="border-grey-xs--btm m-b-sm"></div>
                 <p class="font-body m-b-xs"><span class="font-weight-medium">Date: </span> {{summary.date || date}}</p>
                 <p class="font-body"><span class="font-weight-medium ">Total No of Patents: </span> {{summary.totalPatents}}</p>
-            </div>
-            <div class="content-panel__head border-grey-xs--btm">
+                <div class=" border-grey-xs--btm m-b-sm m-t-sm"></div>
                 <div class="row">
                     <div class="col-md-3 col-lg-3 col-xl-8">
                         <p class="font-weight-medium font-body">Fee</p>
@@ -23,11 +21,10 @@
                         <p class="font-weight-medium font-body text-md-right text-lg-right">Amount</p>
                     </div>
                 </div>
-            </div>
-            <div class="content-panel__head border-grey-xs--btm">
+                <div class="border-grey-xs--btm m-t-sm m-b-sm"></div>
                 <div class="row">
                     <div class="col-md-6 d-xl-none">
-                        <div class="row m-b-md">
+                        <div class="row m-b-sm">
                             <div class="col-md-6">
                                 <p class="font-weight-medium font-body">Official Fees</p>                        
                             </div>
@@ -37,34 +34,15 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <p class="font-weight-medium font-body">Processing Fees</p>
+                                <p class="font-weight-medium font-body">Patent Place Fees</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="font-body text-right">$ {{(summary.fees.totalProcessingFeesUSD | number:2) || '0.00' }}</p>
+                                <p class="font-body text-right">$ {{(summary.fees.totalPatentPlaceFeesUSD | number:2) || '0.00' }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 d-xl-none">
-                        <div class="row m-b-md">
-                            <div class="col-md-6">
-                                <p class="font-weight-medium font-body">Express Fee</p>                        
-                            </div>
-                            <div class="col-md-6">
-                                <p class="font-body text-right">$ {{(summary.fees.totalExpressFeesUSD | number:2) || '0.00' }}</p>
-                            </div>
-                        </div>
-                        <div class="row">                         
-                            <div class="col-md-6">
-                                <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
-                            </div>
-                            <div class="col-md-6">
-                                <p class="font-body text-right">$ {{(summary.fees.totalUrgentFeesUSD | number:2) || '0.00'}}</p>
-                            </div> 
-                        </div>
-                    </div>
-
                     <div class="col-xl-12 d-none d-xl-block">
-                        <div class="m-b-md">
+                        <div class="m-b-sm">
                             <div class="row">
                                 <div class="col-xl-8">
                                     <p class="font-weight-medium font-body">Official Fees</p>                        
@@ -74,40 +52,19 @@
                                 </div>                               
                             </div>
                         </div>
-                        <div class="m-b-md">
+                        <div class="m-b-sm">
                             <div class="row">
                                 <div class="col-xl-8">
-                                    <p class="font-weight-medium font-body">Processing Fees</p>
+                                    <p class="font-weight-medium font-body">Patent Place Fees</p>
                                 </div>
                                 <div class="col-xl-4">
-                                    <p class="font-body">$ {{(summary.fees.totalProcessingFeesUSD | number:2) || '0.00'}}</p>
+                                    <p class="font-body">$ {{(summary.fees.totalPatentPlaceFeesUS | number:2) || '0.00'}}</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="m-b-md">
-                            <div class="row">                         
-                                <div class="col-xl-8">
-                                    <p class="font-weight-medium font-body">Express Fees</p>                        
-                                </div>
-                                <div class="col-xl-4">
-                                    <p class="font-body">$ {{(summary.fees.totalExpressFeesUSD | number:2) || '0.00'}}</p>
-                                </div> 
-                            </div>
-                        </div>
-                        <div>
-                            <div class="row">                         
-                                <div class="col-xl-8">
-                                    <p class="font-weight-medium font-body">Urgent Clearance Fees</p>                        
-                                </div>
-                                <div class="col-xl-4">
-                                    <p class="font-body">$ {{(summary.fees.totalUrgentFeesUSD | number:2) || '0.00'}}</p>
-                                </div> 
-                            </div>
-                        </div>                        
+                        </div>                       
                     </div>                       
                 </div>
-            </div>
-            <div class="content-panel__head">
+                <div class="border-grey-xs--btm m-b-md"></div>
                 <div class="d-none d-xl-block">
                     <div class="row">
                         <div class="col-xl-8">
@@ -133,15 +90,10 @@
     <div class="col-md-12 col-xl-6">
         <div class="content-panel bg-white">
             <div class="content-panel__head border-grey-xs--btm">
-                <p class="font-h4 font-weight-medium">Details</p>
-            </div>
-            <div class="content-panel__head">
+                <p class="font-h3 font-weight-medium m-b-md">Your Details</p>
                 <form class="form" name="billingForm" novalidate>
                     <div class="row m-b-md">
                         <div class="col-12">
-                            <div class="m-b-sm">
-                                <p class="font-h4 font-weight-medium">Your Information</p>
-                            </div>
                             <div class="d-none d-xl-block hidden-cxl-up">
                                 <div class="form-group row">
                                     <label class="col-form-label col-cxl-4 text-left font-body font-weight-medium" for="firstName">First Name</label>

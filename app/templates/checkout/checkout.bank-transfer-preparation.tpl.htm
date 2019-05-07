@@ -6,164 +6,151 @@
 <div data-ng-controller="CartController" class="m-b-xl">
     <div class="d-none d-md-block d-lg-none">
         <div class="row m-b-md">
-            <div class="content-panel col-md-12">
-                <div class="bg-white">
-                    <div class="content-panel__head border-grey-xs--btm">
-                        <p class="font-h4 font-weight-medium">Important notice</p>
+            <div class="col-md-12">
+                <div class="content-panel">
+                    <div class="content-panel__body bg-white">
+                        <h3 class="font-h3 font-weight-medium">Important notice</h3>
+                        <div class="border-grey-xs--btm m-t-sm m-b-sm"></div>
+                        <div>
+                            <p class="font-body m-b-md">Please check the transaction details below. When you press the "Place this order" button below you're entering in to a legal contract under our terms and conditions.</p>
+                            <p class="font-body m-b-md">You will need to make payment in to the MoneyCorp account at the Bank of New York.</p>
+                            <p class="font-h4 font-weight-medium m-b-md">Funds must be received in to our account at MoneyCorp by:</p>                
+                            <p class="font-weight-bold font-h3 m-b-md">{{$ctrl.orderObj.transTargetEndDateUI}}</p>       
+                            <p class="font-body">The transaction will be progressed at the time shown provided funds have been received.  After this point the transaction will be cancelled and penalty charges will apply.  The cost of renewal may also change.</p>
+                        </div>
                     </div>
-                    <div class="content-panel__body">
-                        <p class="font-body m-b-md">Please check the transaction details below. When you press the "Place this order" button below you're entering in to a legal contract under our terms and conditions.</p>
-                        <p class="font-body m-b-md">You will need to make payment in to the MoneyCorp account at the Bank of New York.</p>
-                        <p class="font-body m-b-md">Funds must be received in to our account at MoneyCorp by:</p>                
-                        <p class="font-weight-medium font-h4 m-b-md">{{$ctrl.orderObj.transTargetEndDateUI}}</p>       
-                        <p class="font-body">The transaction will be progressed at the time shown provided funds have been received.  After this point the transaction will be cancelled and penalty charges will apply.  The cost of renewal may also change.</p>
-                    </div>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
     <div class="d-none d-md-block d-lg-none">
         <div class="row">
            <div class="col-md-12">
-                <div class="content-panel ">
-                    <div class="bg-white">
-                        <div class="content-panel__head border-grey-xs--btm">
-                            <p class="font-h4 font-weight-medium">Order Summary</p>
-                        </div>
-                         <div class="content-panel__body">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="border-grey-xs--btm  m-b-xs">
-                                        <div class="row font-body m-b-xs">
-                                            <div class="col-md-5">
-                                                <p class="font-weight-medium font-body">Total Patents: </p>                        
-                                            </div>
-                                            <div class="col-md-7">
-                                                <p class="font-body">{{$ctrl.orderObj.orderedPatentUIs.length}}</p>
-                                            </div>                                
+                <div class="content-panel">
+                    <div class="content-panel__body bg-white border-grey-xs--btm">
+                        <p class="font-h3 font-weight-medium">Order Summary</p>
+                        <div class="border-grey-xs--btm m-t-sm m-b-sm"></div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="border-grey-xs--btm  m-b-xs">
+                                    <div class="row font-body m-b-xs">
+                                        <div class="col-md-5">
+                                            <p class="font-weight-medium font-body">Total Patents: </p>                        
                                         </div>
+                                        <div class="col-md-7">
+                                            <p class="font-body">{{$ctrl.orderObj.orderedPatentUIs.length}}</p>
+                                        </div>                                
                                     </div>
-                                    <div class="border-grey-xs--btm m-b-xs">
-                                        <div class="row font-body m-b-xs">                                
-                                            <div class="col-md-5">
-                                                <p class="font-weight-medium font-body">App No/s: </p>                        
-                                            </div>                    
-                                            <div class="col-md-7">
-                                                <span class="font-body" data-ng-repeat="p in $ctrl.orderObj.patentNos">{{p}}<br></span>
-                                            </div>  
-                                        </div>
-                                    </div>
-                                    <div class="border-grey-xs--btm m-b-xs">
-                                        <div class="row font-body m-b-xs">                                
-                                            <div class="col-md-5">
-                                                <p class="font-weight-medium font-body">Date: </p>                        
-                                            </div>                  
-                                            <div class="col-md-7">
-                                                <p class="font-body">{{$ctrl.orderObj.dateNowLocalTimeUI}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="m-b-xs"> 
-                                        <div class="row font-body m-b-xs">                         
-                                            <div class="col-md-5">
-                                                <p class="font-weight-medium font-body">Total Cost: </p>                        
-                                            </div>
-                                            <div class="col-md-7">
-                                                <p class="font-body">$ {{$ctrl.orderObj.totalCostUSD | number: 2 }}</p>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                </div>                       
-                                <div class="col-md-7 d-flex justify-content-end align-items-end">
-                                    <button class="btn btn--lg btn--red pill-radius m-r-sm" data-ng-click="$ctrl.openCancelTransModal()">Cancel transaction</button>                            
-                                    <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">Place this order</button>  
                                 </div>
+                                <div class="border-grey-xs--btm m-b-xs">
+                                    <div class="row font-body m-b-xs">                                
+                                        <div class="col-md-5">
+                                            <p class="font-weight-medium font-body">App No/s: </p>                        
+                                        </div>                    
+                                        <div class="col-md-7">
+                                            <span class="font-body" data-ng-repeat="p in $ctrl.orderObj.patentNos">{{p}}<br></span>
+                                        </div>  
+                                    </div>
+                                </div>
+                                <div class="border-grey-xs--btm m-b-xs">
+                                    <div class="row font-body m-b-xs">                                
+                                        <div class="col-md-5">
+                                            <p class="font-weight-medium font-body">Date: </p>                        
+                                        </div>                  
+                                        <div class="col-md-7">
+                                            <p class="font-body">{{$ctrl.orderObj.dateNowLocalTimeUI}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-b-xs"> 
+                                    <div class="row font-body m-b-xs">                         
+                                        <div class="col-md-5">
+                                            <p class="font-weight-medium font-body">Total Cost: </p>                        
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="font-body">$ {{$ctrl.orderObj.totalCostUSD | number: 2 }}</p>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>                       
+                            <div class="col-md-7 d-flex justify-content-end align-items-end">
+                                <button class="btn btn--lg btn--red pill-radius m-r-sm" data-ng-click="$ctrl.openCancelTransModal()">Cancel transaction</button>                            
+                                <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">Place this order</button>  
                             </div>
-                        </div>
-                    </div>                   
-                </div>      
-            </div>
-        </div>
-    </div>
-    <div class="bg-white">
-        <div class="d-none d-lg-block">
-            <div class="row">
-                
-                <div class="col-lg-6 col-xl-6 p-r-none h-100">
-                        <div class="content-panel">
-                        <div class="content-panel__head border-grey-xs--btm">
-                            <p class="font-h4 font-weight-medium">Important notice</p>
-                        </div>
-                        <div class="content-panel__body">
-                            <p class="font-body m-b-md">Please check the transaction details below. When you press the "Place this order" button below you're entering in to a legal contract under our terms and conditions.</p>
-                            <p class="font-body m-b-md">Funds must be received in to our U.S MoneyCorp account by:</p>                
-                            <p class="font-weight-medium font-h4 m-b-md">{{$ctrl.orderObj.transTargetEndDateUI}}</p>       
-                            <p class="font-body">The transaction will be progressed at the time shown provided funds have been received. Otherwise the transaction will be cancelled and penalty charges will apply.  The cost of renewal may also change.</p>
                         </div>
                     </div>
                 </div>
-    	        <div class="col-lg-6 col-xl-6 p-l-none h-100">
-                    <div class="content-panel">
-                        <div class="content-panel__head border-grey-xs--btm">
-                            <p class="font-h4 font-weight-medium">Order Summary</p>
-                        </div>
-                        <div class="content-panel__body">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="border-grey-xs--btm  m-b-xs">
-                                        <div class="row font-body m-b-xs">
-                                            <div class="col-xl-8">
-                                                <p class="font-weight-medium font-body">Total Patents: </p>                        
-                                            </div>
-                                            <div class="col-xl-4">
-                                                <p class="font-body" >{{$ctrl.orderObj.orderedPatentUIs.length}}</p>
-                                            </div>                                
-                                        </div>
-                                    </div>
-                                    <div class="border-grey-xs--btm m-b-xs">
-                                        <div class="row font-body m-b-xs">                                
-                                            <div class="col-xl-8">
-                                                <p class="font-weight-medium font-body">App No/s: </p>                        
-                                            </div>                    
-                                            <div class="col-xl-4">
-                                                <span class="font-body" data-ng-repeat="p in $ctrl.orderObj.patentNos">{{p}}<br></span>
-                                            </div>  
-                                        </div>
-                                    </div>
-                                    <div class="border-grey-xs--btm m-b-xs">
-                                        <div class="row font-body m-b-xs">                                
-                                            <div class="col-xl-8">
-                                                <p class="font-weight-medium font-body">Date: </p>                        
-                                            </div>                  
-                                            <div class="col-xl-4">
-                                                <p class="font-body">{{$ctrl.orderObj.dateNowLocalTimeUI}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="m-b-xs"> 
-                                        <div class="row font-body m-b-xs">                         
-                                            <div class="col-xl-8">
-                                                <p class="font-weight-medium font-body">Total Cost: </p>                        
-                                            </div>
-                                            <div class="col-xl-4">
-                                                <p class="font-body">$ {{$ctrl.orderObj.totalCostUSD | number: 2 }}</p>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                </div>                       
-                            </div>
-                        </div>
-            			<div class="content-panel__body">
-                			<div class="row">
-            					<div class="col-xl-12 d-flex justify-content-end">
-                                    <button class="btn btn--lg btn--red pill-radius m-r-sm" data-ng-click="$ctrl.openCancelTransModal()">Cancel transaction</button>
-                                     <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">Place this order</button>
-            					</div>						
-                			</div>
-                        </div>
-        			</div>		
-                </div>
-        	</div>
+            </div>
         </div>
     </div>
-</div>	
+    <div class="d-none d-lg-block">
+        <div class="row">
+            <div class="col-lg-6 col-xl-6">
+                <div class="content-panel">
+                    <div class="content-panel__body bg-white">
+                        <p class="font-h4 font-weight-medium">Important notice</p>
+                        <div class=" border-grey-xs--btm m-b-sm m-t-sm"></div>
+                        <p class="font-body m-b-md">Please check the transaction details below. When you press the "Place this order" button below you're entering in to a legal contract under our terms and conditions.</p>
+                        <p class="font-h4 font-weight-medium m-b-md">Funds must be received in to our U.S MoneyCorp account by:</p>                
+                        <p class="font-weight-bold font-h3 m-b-md">{{$ctrl.orderObj.transTargetEndDateUI}}</p>       
+                        <p class="font-body">The transaction will be progressed at the time shown provided funds have been received. Otherwise the transaction will be cancelled and penalty charges will apply.  The cost of renewal may also change.</p>
+                    </div>
+                </div>
+            </div>
+	        <div class="col-lg-6 col-xl-6">
+                <div class="content-panel">
+                    <div class="content-panel__body bg-white">
+                        <p class="font-h4 font-weight-medium">Order Summary</p>
+                        <div class=" border-grey-xs--btm m-b-sm m-t-sm"></div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="border-grey-xs--btm  m-b-xs">
+                                    <div class="row font-body m-b-xs">
+                                        <div class="col-xl-8">
+                                            <p class="font-weight-medium font-body">Total Patents: </p>                        
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <p class="font-body" >{{$ctrl.orderObj.orderedPatentUIs.length}}</p>
+                                        </div>                                
+                                    </div>
+                                </div>
+                                <div class="border-grey-xs--btm m-b-xs">
+                                    <div class="row font-body m-b-xs">                                
+                                        <div class="col-xl-8">
+                                            <p class="font-weight-medium font-body">App No/s: </p>                        
+                                        </div>                    
+                                        <div class="col-xl-4">
+                                            <span class="font-body" data-ng-repeat="p in $ctrl.orderObj.patentNos">{{p}}<br></span>
+                                        </div>  
+                                    </div>
+                                </div>
+                                <div class="border-grey-xs--btm m-b-xs">
+                                    <div class="row font-body m-b-xs">                                
+                                        <div class="col-xl-8">
+                                            <p class="font-weight-medium font-body">Date: </p>                        
+                                        </div>                  
+                                        <div class="col-xl-4">
+                                            <p class="font-body">{{$ctrl.orderObj.dateNowLocalTimeUI}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row font-body">                         
+                                    <div class="col-xl-8">
+                                        <p class="font-weight-medium font-body">Total Cost: </p>                        
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <p class="font-body">$ {{$ctrl.orderObj.totalCostUSD | number: 2 }}</p>
+                                    </div> 
+                                </div>
+                            </div>                       
+                        </div>
+            			<div class="row m-t-md">
+        					<div class="col-xl-12 d-flex justify-content-end">
+                                <button class="btn btn--lg btn--red pill-radius m-r-sm" data-ng-click="$ctrl.openCancelTransModal()">Cancel transaction</button>
+                                 <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.commitTransfer(); ngCart.empty()" data-ng-disabled="$ctrl.commitTransferBtn">Place this order</button>
+        					</div>						
+            			</div>
+                    </div>
+    			</div>		
+            </div>
+    	</div>
