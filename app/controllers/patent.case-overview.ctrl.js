@@ -13,7 +13,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.deletePatent = deletePatent;
     vm.getStatus = getStatus;
     vm.refreshChart = refreshChart;
-    vm.statusesAvailable = [];
     vm.servicesAvailable = true;
 
     function refreshChart (){
@@ -24,8 +23,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         }, 300)
     }    
 
-
-
     function init() {
 
         $scope.availableServices = (function() {    
@@ -33,6 +30,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                return {id: index, action: data.serviceType, status: data.serviceStatus}
             })
         }())
+
+        vm.statusesAvailable = $scope.availableServices;
 
         if($scope.availableServices.length === 0) {
             vm.servicesAvailable = false;
