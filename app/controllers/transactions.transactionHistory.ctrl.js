@@ -9,7 +9,7 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
     vm.pageTitle = 'Transaction History';
 
     $timeout(function() {
-        vm.animate = true;
+        vm.transactionsLoaded = true;
     }, 300);
 
     vm.tableData = transactionHistory;
