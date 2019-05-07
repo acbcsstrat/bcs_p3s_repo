@@ -37,8 +37,10 @@
 	</div>
 	<div class="row m-b-md">
 		<div class="col-md-12 col-lg-12 col-xl-12" data-ng-show="$ctrl.tableData.length === 0">
-			<div class="bg-white content-panel p-a-sm">
-				<p class="font-body font-weight-medium">There are currently no active transactions</p>
+			<div class="content-panel p-a-sm">
+				<div class="bg-white content-panel__body">
+					<p class="font-body font-weight-medium">There are currently no active transactions</p>
+				</div>
 			</div>
 		</div>
 		<div data-ng-if="$ctrl.tableData.length !== 0" class="col-md-12 col-lg-12 col-xl-12">
@@ -138,9 +140,9 @@
 </div>
 <!-- <div class="animate-show" data-ng-show="$ctrl.transInfoContent"> -->
 <div id="currTransAnchor" data-ui-view class="m-t-xl m-b-xl">
-	<div class="row">
+	<div class="row" data-ng-if="$ctrl.tableData.length !== 0">
 		<div class="col-xl-12 text-center">
-			<p>Select a transaction from the Transaction table to access information and documents.</p>
+			<p>Select a transaction from the Transaction table to access further information and documents.</p>
 		</div>
 	</div>
 </div>	

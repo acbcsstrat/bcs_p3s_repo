@@ -34,7 +34,7 @@
 				<div data-ng-repeat="transaction in $ctrl.currentTransactionItem.serviceUIs | filter: transactionsFilter" class="border-grey-xs--btm row">
 					<div class="col-md-12 col-lg-6 col-xl-6 md-m-b-md">
 						<div class="d-none d-lg-block m-b-sm">
-							<p class="font-weight-bold font-h4 m-b-sm">Service: <span class="font-weight-normal" data-ng-bind="transaction.serviceType"></span></p>
+							<p class="font-weight-bold font-h4 m-b-sm">European Action: <span class="font-weight-normal" data-ng-bind="transaction.serviceType"></span></p>
 							<p class="font-weight-bold font-h4 m-b-sm">App No: <span class="font-weight-normal" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
 							<p class="font-weight-bold font-h4 m-b-sm">Client Ref: 
 								<span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal" data-ng-bind="transaction.patentUI.clientRef"></span>
@@ -46,7 +46,7 @@
 							<div class="p-b-sm">
 								<div class="row">
 									<div class="col-md-6">
-										<p class="font-weight-bold font-h4 m-b-xs">Service: <span class="font-weight-normal" data-ng-bind="transaction.serviceType"></span></p>
+										<p class="font-weight-bold font-h4 m-b-xs">European Action: <span class="font-weight-normal" data-ng-bind="transaction.serviceType"></span></p>
 									</div>
 									<div class="col-md-6">
 										<p class="font-weight-bold font-h4 m-b-xs">App No:
