@@ -39,35 +39,26 @@
    <body class="bg-light-grey2">
       <div class="d-flex justify-content-center align-items-center content-panel">
          <div class="container-pre-app__center-box-40">
-            <img src="assets/imgs/logos/pp-logo-text.png" alt="patent place logo">
             <div class="content-panel__body bg-white">
+               <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-t-xs m-l-xs">                  
                <div class="row m-b-sm">
                   <div class="col-md-12 d-flex justify-content-between align-items-center">
                      <h1 class="font-weight-bold font-h2">Forgot Password</h1>
+                     <a href="/p3sweb/login" class="font-body text-center txt-black inline-link">Login</a>
                   </div>
                </div>
                <div id="initialForgotPass">
-<!--                   <div class="row m-b-sm">
-                     <div class="col-md-12 col-lg-12 col-xl-12">
-                        <p class="font-body font-weight-medium">Please enter the email address you used to regisiter this user.</p>
-                     </div>
-                  </div> -->
                   <div id="forgotPassFail" class="hide-before m-b-sm">
-                     <div class="content-panel bg-white">
-                        <div class="content-panel__body">
-                           <div class="row">
-                              <div class="col-md-12">
-                                 <div class="d-flex flex-column justify-content-center align-items-center">
-                                    <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-red w-100 text-center">Unsuccessful</h3>
-                                    <p id="errorMsg" class="font-body text-center m-b-sm w-100 text-center"></p>
-                                    <p class="font-body w-100 text-center"></p>
-                                 </div>
-                              </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="d-flex flex-column justify-content-center align-items-center">
+                              <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-red w-100 text-center">Unsucccccessful</h3>
+                              <p id="errorMsg" class="font-body text-center m-b-sm w-100 text-center"></p>
+                              <p class="font-body w-100 text-center"></p>
                            </div>
                         </div>
                      </div>
                   </div>
-
                   <form name="forgotPassForm" id="forgotPassForm" class="form" data-parsley-validate="">                                     
                      <div class="row m-b-sm">
                         <div class="col-md-12">
@@ -82,29 +73,20 @@
                      <div class="row m-b-sm">
                          <div class="col-md-12 col-lg-12 col-xl-12"> 
                            <input type="Submit" id="btnSubmit" value="Reset Password" class="btn btn-block btn--lg btn--green pill-radius" disabled="disabled">
-                           </div>
                         </div>
-                     </div>
-                     <div class="row m-b-sm">
-                        <div class="col-md-12 text-center">
-                           <a href="/p3sweb/login" class="font-body text-center txt-black inline-link">Go to login</a>
-                        </div>
-                     </div>
+                     </div>   
                   </form>
                </div>
+
                <div id="forgotPassSuccess" class="hide-before">
-                  <div class="content-panel bg-white">
-                     <div class="content-panel__body">
-                        <div class="row">
-                           <div class="col-md-12">
-                              <div class="d-flex flex-column justify-content-center align-items-center">
-                                 <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-green w-100 text-center">Successful</h3>
-                                 <p class="font-body text-center w-100">Please check your inbox and complete the process to reset your password.</p>
-                              </div>
-                           </div>
-                        </div>                        
+                  <div class="row">
+                     <div class="col-md-12">
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                           <h3 class="font-h3 font-weight-medium m-b-sm txt-phase-green w-100 text-center">Successsssful</h3>
+                           <p class="font-body text-center w-100">Please check your inbox and complete the process to reset your password.</p>
+                        </div>
                      </div>
-                  </div>               
+                  </div>                        
                </div>
             </div>
          </div>

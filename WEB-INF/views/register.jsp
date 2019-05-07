@@ -37,11 +37,11 @@
 
     </head>
 
-   <body class="bg-light-grey2">
+   <body class="bg-light-grey2"> 
       <div class="d-flex justify-content-center align-items-center content-panel">
          <div class="container-pre-app__center-box-40">
-            <img src="assets/imgs/logos/pp-logo-text.png" alt="patent place logo">
             <div class="content-panel__body bg-white">
+                <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-md">   
                <div class="row m-b-md">
                   <div class="col-md-12 d-flex justify-content-between align-items-center">
                         <h1 class="font-weight-bold font-h2">Register</h1>
