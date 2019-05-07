@@ -36,7 +36,7 @@
 <div class="row">
 	<div class="col-md-12 col-lg-6 col-xl-6">
 		<div class="content-panel">
-			<div class="content-panel__body bg-white">
+			<div class="content-panel__body bg-white p-t-none">
 				<uib-tabset active="activeLeft" class="">
 					<uib-tab index="0" heading="Details" class="case-overview-nav">
 						<div ui-view="details" class="m-t-lg"></div>
@@ -57,7 +57,7 @@
 
 	<div class="col-md-12 col-lg-6 ">
 		<div class="content-panel">
-			<div class="content-panel__body bg-white">
+			<div class="content-panel__body bg-white p-t-none">
 				<div data-ng-if="$ctrl.servicesAvailable">
 					<uib-tabset active="activeRight" class="m-b-md">
 						<uib-tab index="0" heading="Fee Breakdown" class="case-overview-nav">

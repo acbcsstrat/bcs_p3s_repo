@@ -16,22 +16,29 @@
         border: 1px solid $border;
         font-weight: 400;
         background: $white;
-        font-size: $font-h3;
+        font-size: $font-h4;
         cursor: pointer;
         line-height: $line-none;
-        @include padding-mixin(0.7rem 3rem);
+        @include padding-mixin(1rem 3rem);
         -webkit-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
         -o-transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
         transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
         text-decoration: none;
         text-transform: uppercase;
-        // border: 1px solid transparent;    
+        &:not(.active) {
+          -webkit-box-shadow: 0px 4px 3px 0px rgba(0,0,0,0.2);
+          -moz-box-shadow: 0px 4px 3px 0px rgba(0,0,0,0.2);
+          box-shadow: 0px 4px 3px 0px rgba(0,0,0,0.2);  
+        }
         &[disabled] {
             color: $white;
             cursor: not-allowed;
         }
         &:not([disabled]):hover, &:not([disabled]):focus {
-            box-shadow: 0 0 2px .01px $grey-dark;
+            background: $grey;
+            -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+            -moz-box-shadow: 0 0 0 0 rgba(0,0,0,0);          
+            box-shadow: 0 0 0 0 rgba(0,0,0,0);
         }
         &.active {
             color: $white; 
