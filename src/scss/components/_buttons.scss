@@ -61,6 +61,7 @@
   -o-transition: background .3s ease-in-out, box-shadow .3s ease-in-out;
   transition: background .3s ease-in-out, box-shadow .3s ease-in-out;
   overflow-x: hidden;
+  overflow-y: hidden;
   &.btn--lg { 
     @include padding-mixin(1rem 2.15rem);  
     font-weight: bold; 
