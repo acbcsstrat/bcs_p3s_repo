@@ -10,12 +10,15 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
     vm.updateNotifications = updateNotifications;
     vm.displayNotifications = displayNotifications;
     vm.notificationNavItems = [];
+    vm.notificationCss = notificationCss;
     vm.notificationUrl = 'rest-renewal-notifications/';
 
     vm.data = {    
         availableAction: [],
         selectedAction: {}
     }
+
+    vm.activeTab = 0;
 
     function checkServices() {
 
@@ -80,7 +83,10 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
             vm.notificationUi = 'epctNotificationUIs';
             vm.notificationUrl = 'rest-epct-notifications/';
             vm.availableNotifications = chunkDataService.chunkData(phaseNotifications(phase, patent[vm.notificationUi]), 6);
-            vm.notificationNavItems = [{id: 0, colour: 'Green'}, {id: 1, colour: 'Amber'}]
+            vm.notificationNavItems = [
+                {id: 0, colour: 'Green', css: 'green'}, 
+                {id: 1, colour: 'Amber', css: 'amber'}
+            ]
         }
 
         if(action == 'Renewal') {
@@ -89,15 +95,20 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
             vm.availableNotifications = chunkDataService.chunkData(phaseNotifications(phase, patent[vm.notificationUi]), 6);
             vm.notificationUrl = 'rest-renewal-notifications/';
             vm.notificationNavItems = [
-                {id: 0, colour: 'Green'}, 
-                {id: 1, colour: 'Amber'}, 
-                {id: 2, colour: 'Red'}, 
-                {id: 3, colour: 'Blue'}, 
-                {id: 4, colour: 'Black'}
+                {id: 0, colour: 'Green', css: 'green'}, 
+                {id: 1, colour: 'Amber', css: 'amber'}, 
+                {id: 2, colour: 'Red', css: 'red'}, 
+                {id: 3, colour: 'Blue', css: 'blue'}, 
+                {id: 4, colour: 'Black', css: 'black'}
             ]
         }
 
     };
+
+    function notificationCss(colour) {
+        return colour;
+    }
+
 
     function phaseNotifications(phase, ui) { //migrate to renewalCtrl
 
