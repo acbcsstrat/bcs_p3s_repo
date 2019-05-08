@@ -182,12 +182,12 @@
                                 <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                         
                             </th>
-                            <th class="t-data__th t-data__w25" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th t-data__w20" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>Patent Place Status</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                          
                             </th>
-                            <th class="t-data__th t-data__w10" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th t-data__w15" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>European Action</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>     
@@ -210,7 +210,7 @@
                                 <span class="td-ellipsis txt-grey" data-ng-if="patent.shortTitle == ''">[No client description provided]</span>
                                 <span class="td-ellipsis" data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
                             </td>
-                            <td class="t-data__td t-data__w25">
+                            <td class="t-data__td t-data__w20">
                                 <div data-ng-if="patent.serviceList.length === 0">
                                     <div data-ng-if="!$ctrl.actionStatus(patent.serviceStatus) || patent.serviceStatus == 'Too late to renew'">
                                         <span data-ng-bind="$ctrl.getStatus(patent.serviceStatus)" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
@@ -259,7 +259,7 @@
                                     </tr>
                                 </table>
                             </td><!--patent place status-->
-                            <td class="t-data__td t-data__w10 ellipsis-remove"> <!--this is where it starts to split with x2 services-->
+                            <td class="t-data__td t-data__w15 ellipsis-remove"> <!--this is where it starts to split with x2 services-->
                                 <span data-ng-if="patent.epeStage == 'Filing'">Form 1200</span>
                                 <span data-ng-if="patent.epeStage == 'Prosecution'">Renewal</span>
                             </td><!--when multiple services begin-->
