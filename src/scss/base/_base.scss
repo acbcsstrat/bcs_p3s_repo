@@ -56,7 +56,8 @@ select,
 html,
 textarea,
 legend { 
-  font-family: $font-body!important; 
+  font-family: $font-body; 
+  letter-spacing: .05px;
 }
 
 p, 
