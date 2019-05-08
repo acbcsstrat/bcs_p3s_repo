@@ -30,6 +30,12 @@
 @import "./layouts/_panels.scss";
 @import "./layouts/_sidenav.scss";
 
+@import "./pages/_dashboard.scss";
+@import "./pages/_transactions.scss";
+@import "./pages/_user-profile.scss";
+@import "./pages/_portfolio.scss";
+@import "./pages/_case-overview.scss";
+
 @import "./components/_buttons.scss";
 @import "./components/_form.scss";
 @import "./components/_navigation.scss";
@@ -39,9 +45,3 @@
 @import "./components/_media_queries.scss";
 @import "./components/_transformations.scss";
 
-
-@import "./pages/_dashboard.scss";
-@import "./pages/_transactions.scss";
-@import "./pages/_user-profile.scss";
-@import "./pages/_portfolio.scss";
-@import "./pages/_case-overview.scss";
