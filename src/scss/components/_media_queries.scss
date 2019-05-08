@@ -107,6 +107,20 @@
 
   $font-normal: 1rem !global;
 
+  .case-overview-nav {
+    background: $white;
+    -webkit-transition: background .3s ease-in-out;
+     -o-transition: background .3s ease-in-out;    
+    transition: background .3s ease-in-out;
+    .nav-link{
+      font-size: $font-body;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 1.25rem 0 1.25rem 0;
+      margin: 0 1.25rem 0 1.25rem;
+    }
+  }
+
   .view-nav .view-nav__item, .view-nav-secondary .view-nav__item {
     font-size: 1.5rem;
   }  
