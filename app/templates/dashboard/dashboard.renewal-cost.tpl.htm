@@ -118,8 +118,7 @@
 				 				</ngcart-addtocart>
 							</div>
 							<div data-ng-show="$ctrl.patent.serviceStatus !== null">
-				        		<button class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-show="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Renewal'" data-ui-sref="portfolio.patent.renewal.cost-analysis({patentId: $ctrl.patent.id})">View Fee Breakdown</button>
-				        		<button class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-show="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Form1200'" data-ui-sref="portfolio.patent.euro-pct.cost-analysis({patentId: $ctrl.patent.id})">View Fee Breakdown</button>
+				        		<button class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent({patentId: $ctrl.patent.id})">View Patent</button>
 							</div>							
 				        	<button type="button" class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-show="$ctrl.paymentStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.epctStatus)" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
 						</div>
@@ -250,8 +249,7 @@
 			 				</ngcart-addtocart>
 						</div>
 						<div data-ng-show="$ctrl.patent.serviceStatus !== null" class="w-100 text-right">
-			        		<button class="btn btn--lg btn--green pill-radius btn-md-block m-l-none-md" data-ng-show="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Renewal'" data-ui-sref="portfolio.patent.renewal.cost-analysis({patentId: $ctrl.patent.id})">View Fee Breakdown</button>
-			        		<button class="btn btn--lg btn--green pill-radius btn-md-block m-l-none-md" data-ng-show="$ctrl.patent.portfolioUI.serviceList[0].serviceType == 'Form1200'" data-ui-sref="portfolio.patent.euro-pct.cost-analysis({patentId: $ctrl.patent.id})">View Fee Breakdown</button>
+			        		<button class="btn btn--lg btn--green pill-radius btn-md-block m-l-none-md" data-ui-sref="portfolio.patent({patentId: $ctrl.patent.id})">View patent</button>
 						</div>
 			        	<button type="button" class="btn btn--lg btn--green pill-radius btn-md-block m-l-none-md" data-ng-show="$ctrl.paymentStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.epctStatus)" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
 					</div>
