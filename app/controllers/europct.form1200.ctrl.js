@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('form1200Ctrl', form1200Ctrl);
 
-form1200Ctrl.$inject = ['$scope', 'patent', '$state', 'organiseTextService', '$stateParams', '$timeout', 'form1200Service', '$uibModal'];
+form1200Ctrl.$inject = ['$scope', 'patent', '$state', 'organiseTextService', '$stateParams', '$timeout', 'form1200Service', '$uibModal', 'activeTabService'];
 
-function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams, $timeout, form1200Service, $uibModal) {
+function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams, $timeout, form1200Service, $uibModal, activeTabService) {
 
     var vm = this;
 
@@ -319,14 +319,14 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
     function submitForm1200(data) {
         var arr = sortPageDetails(data);
         vm.formData.pageDescriptionsUI = arr;
-        vm.formData.id = patent.id
+        vm.formData.id = patent.id;
         vm.formData.totalClaims = parseInt(vm.formData.totalClaims);
         vm.formData.totalPages = parseInt(vm.formData.totalPages);
         form1200Service.submitForm1200(vm.formData)
         .then(
             function(response){
-                vm.form1200Template = vm.templates[2].url;
-                $scope.form1200Controller = vm.templates[2].controller;
+                activeTabService.setTab(2)
+                $state.go('portfolio.patent', {}, {reload: true});
             },
             function(errResponse){
                 form1200Errors() 

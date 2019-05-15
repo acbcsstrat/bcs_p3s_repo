@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
 
-caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService', 'renewalRestService']
+caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService', 'renewalRestService', 'activeTabService']
 
-function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService, renewalRestService) {
+function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService, renewalRestService, activeTabService) {
 
     var vm = this;
 
@@ -21,11 +21,20 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             evt.initUIEvent('resize', true, false, window, 0);
             window.dispatchEvent(evt);
         }, 300)
-    }    
+    }
 
     function init() {
+        if(activeTabService.getTab == 2) {
+            $scope.activeLeft = 2
+            activeTabService.setTab(0)
+        } else if(activeTabService.getTab == 3) {
+            $scope.activeLeft = 3;
+            activeTabService.setTab(0)
+        } else {
+            $scope.activeLeft = 0;
+        }
 
-        $scope.availableServices = (function() {    
+        $scope.availableServices = (function() {
             return vm.patent.portfolioUI.serviceList.map(function(data, index){
                return {id: index, action: data.serviceType, status: data.serviceStatus}
             })

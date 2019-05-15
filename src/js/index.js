@@ -85,6 +85,8 @@ require("app/controllers/patent.case-overview.ctrl.js");
 require("app/controllers/patent.details.ctrl.js");
 
 require("app/services/notification.serv.js");
+require("app/services/notification.serv.js");
+require("app/services/activeTab.serv.js")
 
 // require("app/components/core.basketNav.comp.js");
 require("app/components/core.mainNav.comp.js");

@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row m-t-md">
                     <div class="col-md-12 d-flex justify-content-end">
                         <button class="btn btn--green btn--lg pill-radius" data-ng-disabled="!$ctrl.confirmEntityModel" data-ng-click="$ctrl.confirmEntity.fn()" type="button">Next</button>
                     </div>
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row m-t-md">
                     <div class="col-md-12 d-flex justify-content-between">
                         <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.amendments.fn($event)">Previous</button>
                         <div class="d-flex justify-content-between align-items-center">
@@ -76,7 +76,7 @@
                                 <p data-ng-show="$ctrl.proceedMsgDocs" class="txt-phase-red font-weight-medium m-t-xs">Cannot proceed if additional documents are required have been made. Uncheck the checkbox if no additional documents are required.</p>                                            
                             </label>
                         </div>
-                        <div class="row">
+                        <div class="row m-t-md">
                             <div class="col-md-12 d-flex justify-content-between">
                                 <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.documents.fn($event)">Previous</button>
                                 <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="$ctrl.documentsModel" data-ng-click="$ctrl.documents.fn($event)">Next</button>                                                
@@ -87,7 +87,7 @@
             </uib-tab>                        
             <uib-tab index="$ctrl.extAndValid.index" data-ng-hide="true"> <!--if ISA = to EP-->
                 <div class="row">
-                     <div class="col-xl-6">
+                     <div class="col-xl-12">
                         <h4 class="m-b-xs font-weight-medium">Extension states</h4>
                         <div class="row m-b-sm">
                             <div class="col-md-6" data-ng-repeat="item in $ctrl.questionsParam.extensionStatesUI track by $index">
@@ -102,7 +102,7 @@
                     </div>  
                 </div>
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-12">
                         <h4 class="m-b-xs font-weight-medium">Validation states</h4>
                         <div class="row">
                             <div class="col-md-6" data-ng-repeat="item in $ctrl.questionsParam.validationStatesUI track by $index">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-xl-12">
                         <p data-ng-init="extStatesPanelActive = true" data-ng-click="extStatesPanelActive = !extStatesPanelActive" class="btn btn-underlined">Which countries are included? 
                             <i class="fas fa-chevron-down fa-sm" data-ng-show="!extStatesPanelActive"></i>
                             <i class="fas fa-chevron-right fa-sm" data-ng-show="extStatesPanelActive"></i>
@@ -176,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row m-t-sm">
+                <div class="row m-t-md">
                     <div class="col-xl-12">
                         <div class="row">
                             <div class="col-md-12 d-flex justify-content-between">
@@ -191,7 +191,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-4 col-xl-4">
+                            <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                 <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant's or representatives reference: </label>
                                 <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-model="$ctrl.formData.clientRef" required>
                                 <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.maxlength && form1200Form.reference.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>                                                
@@ -200,7 +200,7 @@
                     </div>
                 </div>
                 <div class="row m-b-xs">
-                    <div class="col-md-6">
+                    <div class="col-xl-12">
                         <p data-ng-init="referencePanelActive = true" data-ng-click="referencePanelActive = !referencePanelActive" class="btn btn-underlined">What does this mean? 
                             <i class="fas fa-chevron-down fa-sm" data-ng-show="!referencePanelActive"></i>
                             <i class="fas fa-chevron-right fa-sm" data-ng-show="referencePanelActive"></i>
@@ -212,7 +212,7 @@
                         </div>
                     </div>    
                 </div>
-                <div class="row m-t-sm">
+                <div class="row m-t-md">
                     <div class="col-md-12 d-flex justify-content-between">
                         <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)">Previous</button>
                         <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.reference.fn($event)" data-ng-disabled="!$ctrl.formData.clientRef">Next</button>
@@ -224,26 +224,26 @@
                     <div class="col-xl-12">
                         <div class="form-group row">
                             <label for="totalPages" class="col-md-4 col-xl-3 col-form-label font-body">Please enter the total number of pages</label>
-                            <div class="col-md-4 col-lg-2 col-xl-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="totalPages" id="totalPages" class="form-control pill-radius" data-ng-change="$ctrl.formData.totalPages = totalPages" data-ng-model="totalPages" placeholder="Total Pages" validate-numbers required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalPages.$error.validNumber && form1200Form.totalPages.$dirty">Only numbers are valid charcters in this field.</p>  
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="totalClaims" class="col-md-4 col-xl-3 col-form-label font-body">Please enter the total number of claims</label>
-                            <div class="col-md-4 col-lg-2 col-xl-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="totalClaims" class="form-control pill-radius" data-ng-change="$ctrl.formData.totalClaims = totalClaims" data-ng-model="totalClaims" placeholder="Total Claims" validate-numbers required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-xl-3 col-form-label font-body">Please enter start and end pages of description</label>
-                            <div class="col-md-4 col-lg-2 col-xl-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="descStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.description.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers  validate-numbers required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.validNumber && form1200Form.descStart.$dirty">Only numbers are valid charcters in this field.</p>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.max && form1200Form.descStart.$dirty">The end page exceeds the total number of pages.</p>
                             </div>
-                            <div class="col-md-4 col-lg-2 col-xl-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="descEnd" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.description.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers validate-numbers ng-valid-max required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.validNumber && form1200Form.descEnd.$dirty">Only numbers are valid charcters in this field.</p>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.max && form1200Form.descEnd.$dirty">The end page exceeds the total number of pages.</p>                                                  
@@ -251,12 +251,12 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-xl-3 col-form-label font-body">Please enter the start and end pages of claims</label>
-                            <div class="col-md-4 col-lg-2 col-xl-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="claimsStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.claims.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required validate-numbers required>
                                 <p class="font-body txt-phase-red"  placeholder="Start" data-ng-show="form1200Form.claimsStart.$error.validNumber && form1200Form.claimsStart.$dirty">Only numbers are valid charcters in this field.</p>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsStart.$error.max && form1200Form.claimsStart.$dirty">The end page exceeds the total number of pages.</p>                                                  
                             </div>
-                            <div class="col-md-4 col-lg-2 col-xl-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="claimsEnd" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.claims.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers ng-valid-max validate-numbers required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.validNumber && form1200Form.claimsEnd.$dirty">Only numbers are valid charcters in this field.</p>    
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.max && form1200Form.claimsEnd.$dirty">The end page exceeds the total number of pages.</p>
@@ -264,18 +264,18 @@
                         </div>
                         <div class="form-group row">
                             <label for="claimsStart" class="col-md-4 col-xl-3 col-form-label font-body">Please enter start and end pages of drawings</label>
-                            <div class="col-md-4 col-lg-2 col-xl-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="drawingStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.drawings.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers  validate-numbers required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.validNumber && form1200Form.drawingStart.$dirty">Only numbers are valid charcters in this field.</p>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.max && form1200Form.drawingStart.$dirty">The end page exceeds the total number of pages.</p>
                             </div>
-                            <div class="col-md-4 col-lg-2 col-xl-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="drawingEnd" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.drawings.typeEnd" max="{{totalPages}}" placeholder="End" validate-number required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.validNumber && form1200Form.drawingEnd.$dirty">Only numbers are valid charcters in this field.</p>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.max && form1200Form.drawingEnd.$dirty">The end page exceeds the total number of pages.</p>
                             </div>                                        
                         </div>                                                                     
-                        <div class="row m-t-sm">
+                        <div class="row m-t-md">
                             <div class="col-md-12 d-flex justify-content-between">
                                 <button type="button" class="prev btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.confirmPages.fn($event)">Previous</button>                                                
                                 <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate Form 1200</button>
@@ -288,16 +288,17 @@
             <uib-tab index="$ctrl.renewal.index" data-ng-hide="true" data-ng-if="$ctrl.renewal.active">
                 <div class="row">
                     <div class="col-xl-12">
-                        <div class="form-group">
-                            <label for="renewal">We can see that the third year renewal can be renewed. Would you like to process the renewal in this transaction?
-                                <input type="checkbox" name="renewal" data-ng-model="$ctrl.formData.isYear3RenewalPaying" class="m-l-xs">
-                            </label>
+                        <p>We can see that the third year renewal can be renewed. Would you like to process the renewal in this transaction?</p>
+                        <div class="form-check form-check-inline">
+                            
+                            <input type="checkbox" name="renewal" class="form-check-input" data-ng-model="$ctrl.formData.isYear3RenewalPaying">
+                            <label for="renewal" class="form-check-label">Yes</label>
                         </div>
                     </div>
                 </div>
-                <div class="row m-t-sm">
+                <div class="row m-t-md">
                     <div class="col-md-12 d-flex justify-content-between">
-                        <button type="submit" id="submit" class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.renewal.fn($event)">Previous</button>                                        
+                        <button type="submit" id="submit" class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.renewal.fn($event)">Previous</button>
                         <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate form</button>
                     </div>
                 </div>                            
@@ -305,4 +306,4 @@
         </uib-tabset>
     </form>
 </div><!--form end-->
-<button type="button" class="btn btn--red btn--lg pill-radius" data-ng-click="$ctrl.cancel1200()">Cancel Application</button>
+<button type="button" class="btn btn--red btn--lg pill-radius m-t-md" data-ng-click="$ctrl.cancel1200()">Cancel Application</button>
