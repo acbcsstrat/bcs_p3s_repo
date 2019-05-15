@@ -35,11 +35,11 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
             vm.form1200Template = vm.templates[0].url;
             vm.epctStage = 1;
         }
-
-        if(service[0].status == 'Epct being generated' || service[0].status == 'Epct generated') {
+        if(service[0].status == 'Epct being generated' || service[0].status == 'Epct saved') {
             vm.form1200Template = vm.templates[2].url;
             vm.epctStage = 2;
         }
+       
 
     }
 
