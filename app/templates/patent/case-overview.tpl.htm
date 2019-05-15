@@ -53,10 +53,10 @@
 		</div>
 	</div>
 
-	<div class="col-md-12 col-lg-6 ">
-		<div class="content-panel">
-			<div class="content-panel__body bg-white p-t-none">
-				<div data-ng-if="$ctrl.servicesAvailable">
+	<div class="col-md-12 col-lg-6">
+		<div class="content-panel d-flex">
+			<div data-ng-if="$ctrl.servicesAvailable">
+				<div class="content-panel__body bg-white p-t-none">
 					<uib-tabset active="activeRight" class="m-b-md">
 						<uib-tab index="0" heading="Fee Breakdown" class="case-overview-nav">
 							<div ui-view="fee-breakdown" class="m-t-lg"></div>
@@ -79,20 +79,16 @@
 				        </div>          
 	                </div>				
 				</div>
-				<div data-ng-if="!$ctrl.servicesAvailable">
-	                <div class="content-panel__body bg-white">
-	                    <div class="row">
-	                        <div class="col-xl-12">
-	                            <div class="d-flex align-items-center justify-content-center h-100 z-index-1">
-	                                <div class="d-flex justify-content-center bg-no-chart align-items-center flex-column">
-	                                    <p class="h4 font-weight-medium">Sorry</p>
-	                                    <p class="h4 font-weight-medium text-center">No Information Available</p>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-				</div>
+			</div>
+			<div data-ng-if="!$ctrl.servicesAvailable" class="d-flex flex-grow-1 align-items-center justify-content-center ng-scope">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="text-center flex-column">
+                            <p class="h4 font-weight-medium">Sorry</p>
+                            <p class="h4 font-weight-medium text-center">No information currently available</p>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>			

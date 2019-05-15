@@ -10,7 +10,6 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
     vm.updateNotifications = updateNotifications;
     vm.displayNotifications = displayNotifications;
     vm.notificationNavItems = [];
-    vm.notificationCss = notificationCss;
     vm.notificationUrl = 'rest-renewal-notifications/';
 
     vm.data = {    
@@ -22,10 +21,14 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
 
     function checkServices() {
 
-        vm.patent.portfolioUI.serviceList.forEach(function(data, index){
-            vm.data.availableAction.push({id: index, action: data.serviceType})
-        })
+        if(vm.patent.portfolioUI.epeStage == 'Prosecution') {
+            vm.data.availableAction.push({id: 0, action: 'Renewal'})
+        }
+        if(vm.patent.portfolioUI.epeStage == 'Filing') {
+            vm.data.availableAction.push({id: 0, action: 'Form1200'})
+        }
         vm.data.selectedAction = vm.data.availableAction[0];
+
     }
 
     checkServices()
@@ -104,11 +107,6 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
         }
 
     };
-
-    function notificationCss(colour) {
-        return colour;
-    }
-
 
     function phaseNotifications(phase, ui) { //migrate to renewalCtrl
 
