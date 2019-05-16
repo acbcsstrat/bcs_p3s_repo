@@ -1,104 +1,18 @@
 <div class="row">
     <div class="col-xl-12">
         <div data-ng-if="$ctrl.patent.epctStatus == 'Epct saved'" class="d-flex justify-content-start align-items-center">
-            <p class="m-b-xs">Your Form 1200 has been generated and is avaialble to download and view.</p>
+            <p class="m-b-xs">Your Form 1200 has been generated and is avaialble to add to basket, download or view.</p>
         </div>
         <div data-ng-if="$ctrl.patent.epctStatus == 'Epct being generated' || $ctrl.patent.epctStatus == 'Await pdf gen start'">
             <p>We are currently generating your Form 1200. When the document is ready, you will be able to access it here.</p> 
             <p>You can view the fees in the 'Fee Breakdown' tab through the panel on the right.</p>                      
         </div>
-        <div class="row" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
+        <div class="row m-t-xs" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
             <div class="col-md-12 d-flex justify-content-start">
+                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-r-sm" name="service.form1200" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentOfficialFeeUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.form1200FeeUI !== null && $ctrl.patent.epctStatus == 'Epct saved'"></ngcart-addtocart>                     
                 <a class="btn btn--lg btn--green pill-radius m-r-sm" href="{{$ctrl.patent.form1200PdfUrl}}&download=true" target="_blank" download>Download</a>
                 <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
             </div>
         </div>
     </div>
 </div>
-<!-- <div class="border-grey-xs--btm m-b-sm m-t-xs"></div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Filing Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.filingFeeUSD | number: 2) || '0.00'"></span></p>
-    </div> 
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Examination fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.examinationFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Supplmentary search fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.supplementarySearchFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>1st Claim Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.claimsFee1USD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>2st Claim Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.claimsFee2USD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">                          
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Designation fee:</p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.designationFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Validation States Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.validationFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Extension States Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.extensionFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Renewal Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.renewalFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>                  
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Excess Page Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.excessPageFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Processing Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.processingFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Urgent Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.urgentFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p>Express Fee: </p>
-        <p class="font-weight-medium">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.expressFeeUSD | number: 2) || '0.00'"></span></p>
-    </div>
-</div>
-<div class="border-grey-xs--btm m-b-sm m-t-xs"></div>
-<div class="row">
-    <div class="col-xl-12 d-flex justify-content-between m-b-xs">
-        <p class="font-weight-medium font-h4">Total: </p>
-        <p class="font-weight-medium font-h4">$ <span data-ng-bind="($ctrl.patent.form1200FeeUI.subTotalUSD | number: 2) || '0.00'"></span></p>
-    </div>                                     
-</div>
- -->

@@ -8,7 +8,6 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
 
     vm.pageTitle = 'Form 1200 Generating';
 
-    console.log($scope.$parent.patent)
     vm.patent = $scope.$parent.patent
     vm.deleteApplication = deleteApplication;
 
