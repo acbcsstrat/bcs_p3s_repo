@@ -139,7 +139,7 @@ function appRoutes($stateProvider) {
         })
         .state('search-patent', {
             url: '/search-patent',
-            templateUrl: 'app/templates/patents/patents.search-patent.tpl.htm',
+            templateUrl: 'app/templates/add-patent/patents.search-patent.tpl.htm',
             controller: 'searchPatentCtrl',
             controllerAs: '$ctrl',
             params: {
@@ -148,7 +148,7 @@ function appRoutes($stateProvider) {
         })
         .state('search-patent.add-patent', {
             url: '?params',
-            templateUrl: 'app/templates/patents/patents.add-patent.tpl.htm',
+            templateUrl: 'app/templates/add-patent/patents.add-patent.tpl.htm',
             controller: 'addPatentCtrl',
             controllerAs: '$ctrl',
             params: {
