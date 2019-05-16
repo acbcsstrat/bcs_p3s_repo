@@ -21,28 +21,23 @@ function appRoutes($stateProvider) {
                     controller: 'dashboardCtrl',
                     controllerAs: '$ctrl'
                 },
-                'colourkeywidget@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.colour-key-widget.tpl.htm',
-                    controller: 'colourKeyCtrl',
-                    controllerAs: '$ctrl'
-                },
                 'graphdonutwidget@dashboard': {
                     controller: 'graphDonutCtrl',
                     controllerAs: '$ctrl',
                     templateUrl: 'app/templates/dashboard/dashboard.graph-donut-widget.tpl.htm',         
                 },
-                'renewalswidget@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.renewals-widget.tpl.htm',
+                'actionsavailable@dashboard': {
+                    templateUrl: 'app/templates/dashboard/dashboard.actions-available.tpl.htm',
                     controller: 'renewalsCarouselCtrl',
                     controllerAs: '$ctrl'                
                 },
-                'fxrateswidget@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.renewal-cost.tpl.htm',
+                'actioncost@dashboard': {
+                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
                     controller: 'renewalCostCtrl',
                     controllerAs: '$ctrl'
                 },
-                'fxrateswidgetmd@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.renewal-cost.tpl.htm',
+                'actioncostmd@dashboard': {
+                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
                     controller: 'renewalCostCtrl',
                     controllerAs: '$ctrl'                
                 },            
