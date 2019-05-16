@@ -1,38 +1,38 @@
 <div class="widget-panel">
-	<div class="widget-panel__body bg-white">
+	<div class="widget-panel__body bg-white d-flex flex-column">
 		<div class="row m-b-md">
 			<div class="col-xl-12 d-flex align-items-center justify-content-between">
 				<h3 class="font-h3 font-weight-bold">Action Cost</h3>
 				<h4 class="pill-radius bg-phase-green txt-white font-body p-default" data-ng-if="$ctrl.fxTimeFrame" data-ng-bind="$ctrl.fxTimeFrame"></h4>
 			</div>
 		</div>
-		<div class="row bg-no-data" data-ng-if="$ctrl.noPatents">
+		<div class="row bg-no-data d-flex flex-grow-1 justify-content-center align-items-center" data-ng-if="$ctrl.noPatents">
 			<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
 				<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
 			</div>
 		</div>
-		<div data-ng-if="!$ctrl.noPatents">
-			<div data-ng-show="$ctrl.loading" class="animate-show">
+		<div data-ng-if="!$ctrl.noPatents" class="d-flex flex-grow-1 justify-content-center align-items-center">
+			<div data-ng-show="$ctrl.loading" class="animate-show d-flex flex-grow-1">
 				<div class="row">
 					<div class="col-xl-12 text-center">
-						<div class="d-flex justify-content-center align-items-center">
+						<div class="d-flex flex-grow-1 justify-content-center align-items-center">
 							<img src="assets/imgs/icons/spinner-loader-sm.gif">
 						</div>
 					</div>
 				</div>
 			</div>
-			<div data-ng-hide="$ctrl.loading" class="animate-show">			
+			<div data-ng-hide="$ctrl.loading" class="animate-show d-flex flex-grow-1">
 				<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-md">
 					<uib-tab heading="Today" class="font-body" index="0" data-ng-hide="true">
 						<div class="row">
-							<div class="col-xl-5 text-center">
+							<div class="col-md-5 col-xl-5 text-center">
 								<p class="font-h3 m-b-xs">USD</p>
 								<p class="font-h2">$ {{$ctrl.patent.serviceCost.subTotalUSD | number: 2 }}</p>
 							</div>
-							<div class="col-xl-2 text-center d-flex align-items-center">
-								<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
+							<div class="col-md-2 col-xl-2 text-center d-flex align-items-center justify-content-center">
+								<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
 							</div>
-							<div class="col-xl-5 text-center">
+							<div class="col-md-5 col-xl-5 text-center">
 								<p class="font-h3 m-b-xs">EUR</p>
 								<p class="font-h2">€ {{$ctrl.patent.serviceCost.subTotalEUR | number: 2 }}</p>
 							</div>
@@ -45,7 +45,7 @@
 								<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDYesterday | number: 2 }}</p>
 							</div>
 							<div class="col-xl-2 text-center d-flex align-items-center">
-								<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
+								<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
 							</div>
 							<div class="col-xl-5 text-center">
 								<p class="font-h3 m-b-xs">EUR</p>
@@ -60,7 +60,7 @@
 								<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastWeek | number: 2 }}</p>
 							</div>
 							<div class="col-xl-2 text-center d-flex align-items-center">
-								<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
+								<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
 							</div>
 							<div class="col-xl-5 text-center">
 								<p class="font-h3 m-b-xs">EUR</p>
@@ -75,7 +75,7 @@
 								<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth | number: 2 }}</p>
 							</div>
 							<div class="col-xl-2 text-center d-flex align-items-center">
-								<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
+								<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
 							</div>
 							<div class="col-xl-5 text-center">
 								<p class="font-h3 m-b-xs">EUR</p>
@@ -84,7 +84,7 @@
 						</div>
 					</uib-tab>									
 				</uib-tabset>
-				<div class="row m-b-md">
+				<div class="row m-b-md d-md-none d-lg-block">
 					<div class="col-md-12 col-lg-12 col-xl-12">
 						<ul class="panel-nav d-flex justify-content-between">
 							<li class="pill-radius panel-nav__list-item list-item--plain" data-ng-init="$ctrl.fxTimeFrame = 'Today'" data-ng-click="$ctrl.fxTimeFrame = 'Today'" data-ng-hide="$ctrl.fxTimeFrame == 'Today'">Today</li>
@@ -95,10 +95,10 @@
 					</div>	
 				</div>
 				<div class="row">
-					<div class="col-xl-8 text-left">
+					<div class="col-md-6 col-xl-8 text-left">
 						<p class="font-h4 font-weight-bold">Four week variation:</p> <!--lg-->
 					</div>
-					<div class="col-xl-4 text-right">
+					<div class="col-md-6 col-xl-4 text-right">
 	                    <p class="font-h4 text-right" data-ng-class="$ctrl.patent.serviceCost.subTotalUSD <= $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
 	                    	<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.serviceCost.subTotalUSD < $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
 	                    	<i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.serviceCost.subTotalUSD > $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
@@ -122,136 +122,6 @@
 							</div>							
 				        	<button type="button" class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-show="$ctrl.paymentStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.epctStatus)" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="bg-white widget-panel d-xl-none h-100">
-	<div class="widget-panel__head border-grey-xs--btm d-flex align-items-center justify-content-between">
-		<h3 class="font-h3 font-weight-bold">Service Cost</h3>
-		<div data-ng-if="$ctrl.fxTimeFrame" class="pill-radius d-flex justify-content-center align-items-center flex-column bg-phase-green">	
-			<h4 class="txt-white font-body no-line-height btn--lg">{{$ctrl.fxTimeFrame}}</h4>
-		</div>
-	</div>
-	<div class="widget-panel__body">
-		<div class="row bg-no-data" data-ng-if="!$ctrl.patent.serviceCost">
-			<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
-				<p class="font-body font-weight-bold">No patents currently in this Stage</p>
-			</div>
-		</div>
-		<div data-ng-if="$ctrl.patent.serviceCost">
-			<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-sm">
-				<uib-tab heading="Today" class="font-body" index="0" data-ng-hide="true">
-					<div class="row">
-						<div class="col-md-5 col-lg-5 text-center">
-							<p class="font-h3 m-b-xs">USD</p>
-							<p class="font-h2">$ {{$ctrl.patent.serviceCost.subTotalUSD | number: 2 }}</p>
-						</div>
-						<div class="col-md-2 col-lg-2 d-flex align-items-center justify-content-center">
-							<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
-						</div>
-						<div class="col-md-5 col-lg-5 text-center">
-							<p class="font-h3 m-b-xs">EUR</p>
-							<p class="font-h2">€ {{$ctrl.patent.serviceCost.subTotalEUR | number: 2 }}</p>
-						</div>
-					</div>
-				</uib-tab>			
-				<uib-tab heading="Yesterday" class="font-body" index="1" data-ng-hide="true">
-					<div class="row">
-						<div class="col-md-5 col-lg-5 text-center">
-							<p class="font-h3 m-b-xs">USD</p>
-							<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDYesterday | number: 2 }}</p>
-						</div>
-						<div class="col-md-2 col-lg-2 d-flex align-items-center justify-content-center">
-							<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
-						</div>
-						<div class="col-md-5 col-lg-5 text-center">
-							<p class="font-h3 m-b-xs">EUR</p>
-							<p class="font-h2">€ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalEURYesterday | number: 2 }}</p>
-						</div>
-					</div>
-				</uib-tab>
-				<uib-tab heading="Last week" class="font-body" index="2" data-ng-hide="true">
-					<div class="row">
-						<div class="col-md-5 col-lg-5 text-center">
-							<p class="font-h3 m-b-xs">USD</p>
-							<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastWeek | number: 2 }}</p>
-						</div>
-						<div class="col-md-2 col-lg-2 d-flex align-items-center justify-content-center">
-							<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
-						</div>
-						<div class="col-md-5 col-lg-5 text-center">
-							<p class="font-h3 m-b-xs">EUR</p>
-							<p class="font-h2">€ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalEURLastWeek | number: 2 }}</p>
-						</div>
-					</div>
-				</uib-tab>
-				<uib-tab heading="Last Mth" class="font-body" index="3" data-ng-hide="true">
-					<div class="row">
-						<div class="col-md-5 col-lg-5 text-center">
-							<p class="font-h3 m-b-xs">USD</p>
-							<p class="font-h2">$ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth | number: 2 }}</p>
-						</div>
-						<div class="col-md-2 col-lg-2 d-flex align-items-center justify-content-center">
-							<i class="fas fa-exchange-alt fa-3x txt-grey"></i>
-						</div>
-						<div class="col-md-5 col-lg-5 text-center">
-							<p class="font-h3 m-b-xs">EUR</p>
-							<p class="font-h2">€ {{$ctrl.patent.serviceCost.costHistoryUI.subTotalEURLastMonth | number: 2 }}</p>
-						</div>
-					</div>
-				</uib-tab>									
-			</uib-tabset>
-			<div class="row m-b-sm">
-				<div class="col-md-12 col-lg-12">
-					<nav class="d-xl-none d-md-none d-lg-block">
-						<ul class="panel-nav d-flex justify-content-between">
-							<li class="panel-nav__list-item list-item--plain pill-radius" data-ng-init="$ctrl.fxTimeFrame = 'Today'" data-ng-click="$ctrl.fxPeriodActive(0); fxPeriodActiveTabs = 0; $ctrl.fxTimeFrame = 'Today'" data-ng-hide="$ctrl.fxTimeFrame == 'Today'">Today</li>
-							<li class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.fxPeriodActive(1); fxPeriodActiveTabs = 1; $ctrl.fxTimeFrame = 'Yesterday'" data-ng-hide="$ctrl.fxTimeFrame == 'Yesterday'">Yesterday</li>
-							<li class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.fxPeriodActive(2); fxPeriodActiveTabs = 2; $ctrl.fxTimeFrame = 'Last Week'" data-ng-hide="$ctrl.fxTimeFrame == 'Last Week'">Last Week</li>
-							<li class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.fxPeriodActive(3); fxPeriodActiveTabs = 3; $ctrl.fxTimeFrame = 'Last Mth'" data-ng-hide="$ctrl.fxTimeFrame == 'Last Mth'">Last Mth</li>
-						</ul>								
-					</nav>
-					<nav class="d-lg-none d-md-block">
-						<ul class="panel-nav d-flex justify-content-between">
-							<li class="panel-nav__list-item w-100 list-item--plain pill-radius m-b-xs m-r-none-md text-center" data-ng-init="$ctrl.fxTimeFrame = 'Today'" data-ng-click="$ctrl.fxPeriodActive(0); fxPeriodActiveTabs = 0; $ctrl.fxTimeFrame = 'Today'" data-ng-hide="$ctrl.fxTimeFrame == 'Today'">Today</li>
-							<li class="panel-nav__list-item w-100 list-item--plain pill-radius m-b-xs m-r-none-md text-center" data-ng-click="$ctrl.fxPeriodActive(1); fxPeriodActiveTabs = 1; $ctrl.fxTimeFrame = 'Yesterday'" data-ng-hide="$ctrl.fxTimeFrame == 'Yesterday'">Yesterday</li>
-							<li class="panel-nav__list-item w-100  list-item--plain pill-radius m-b-xs m-r-none-md text-center" data-ng-click="$ctrl.fxPeriodActive(2); fxPeriodActiveTabs = 2; $ctrl.fxTimeFrame = 'Last Week'"  data-ng-hide="$ctrl.fxTimeFrame == 'Last Week'">Last Week</li>
-							<li class="panel-nav__list-item w-100 list-item--plain pill-radius m-b-xs m-r-none-md text-center" data-ng-click="$ctrl.fxPeriodActive(3); fxPeriodActiveTabs = 3; $ctrl.fxTimeFrame = 'Last Mth'" data-ng-hide="$ctrl.fxTimeFrame == 'Last Mth'">Last Mth</li>
-						</ul>								
-					</nav>					
-				</div>	
-			</div>
-			<div class="row m-b-sm">
-				<div class="col-md-8 col-lg-8 text-left">
-					<p class="font-h4 font-weight-bold">Four week variation:</p> 
-				</div>
-				<div class="col-md-4 col-lg-4 text-right">
-                    <p class="font-h4 text-center" data-ng-class="$ctrl.patent.serviceCost.subTotalUSD <= $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
-                    	<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.patent.serviceCost.subTotalUSD < $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
-                    	<i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.patent.serviceCost.subTotalUSD > $ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
-                    	$ {{($ctrl.patent.serviceCost.costHistoryUI.subTotalUSDLastMonth - $ctrl.patent.serviceCost.subTotalUSD | number: 2)  || '0.00'}}
-                	</p>   
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 col-lg-12">
-					<div class="d-flex flex-md-wrap flex-lg-nowrap justify-content-between align-items-center">
-						<div data-ng-show="$ctrl.cartService == 'Renewal'" class="w-100 m-b-md-xs m-r-none-md text-right">
-				 			<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn btn-md-block" name="service.renewal" price="{{$ctrl.patent.serviceCost.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-			 				</ngcart-addtocart>
-						</div>
-						<div data-ng-show="$ctrl.cartService == 'Epct'" class="w-100 m-b-md-xs m-r-none-md text-right">
-				 			<ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn btn-md-block" name="service.form1200" price="{{$ctrl.patent.serviceCost.subTotalUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent">
-			 				</ngcart-addtocart>
-						</div>
-						<div data-ng-show="$ctrl.patent.serviceStatus !== null" class="w-100 text-right">
-			        		<button class="btn btn--lg btn--green pill-radius btn-md-block m-l-none-md" data-ui-sref="portfolio.patent({patentId: $ctrl.patent.id})">View patent</button>
-						</div>
-			        	<button type="button" class="btn btn--lg btn--green pill-radius btn-md-block m-l-none-md" data-ng-show="$ctrl.paymentStatus($ctrl.patent.renewalStatus) || $ctrl.paymentStatus($ctrl.patent.epctStatus)" data-ng-click="$ctrl.fetchItemTransaction($ctrl.patent.id)">View Transaction</button>
 					</div>
 				</div>
 			</div>
