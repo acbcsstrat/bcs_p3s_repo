@@ -61,7 +61,7 @@
                     </div>                  
                 </div>
 
-                <div id="initialRegistration" class="m-t-md">
+                <div id="initialRegistration" class="m-t-md d-none">
                     <div class="row">
                         <div class="col-xl-12">
                             <form name="register" id="registerForm" class="form" data-parsley-validate="">
@@ -205,7 +205,7 @@
                     </div>
                 </div>
 
-                <div id="register-success">
+                <div id="register-success" class="d-none">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
                             <h3 class="font-h3 txt-phase-green m-b-sm">Successful</h3>
@@ -214,7 +214,7 @@
                     </div>                              
                 </div>
 
-                <div id="register-failure">
+                <div id="register-failure" class="d-none">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
                             <h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
@@ -223,7 +223,7 @@
                     </div>
                 </div>      
 
-                <div id="companyCode">
+                <div id="companyCode" class="d-none">
                     <div class="row m-t-md">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <form name="companyCodeForm" id="companyCodeForm">
@@ -249,7 +249,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="businessConfirm">
+                <div id="businessConfirm" class="d-none">
                     <div class="row m-t-md">
                         <div class="col-md-12 col-lg-12 col-xl-12">                         
                             <div class="m-b-xs text-xl-center">
@@ -406,12 +406,12 @@
             
                 window.Parsley.addValidator('validateCompanyName', {
                     validateString: function(value) {
-                        if(!value.match('^[a-zA-z0-9\'\+\.\(\) -]*$')) {
+                        if(!value.match('^[a-zA-z0-9\'\+\.\(\), -]*$')) {
                             return false;
                         }
                     },
                     messages: {
-                        en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
+                        en: 'Only letters, numbers, commas, \' , -, () and spaces are valid charcters in this field.',
                     }
                 });
 
@@ -464,12 +464,6 @@
                         en: 'Only letters are valid charcters in this field.',
                     }
                 }); 
-
-                $('#register-success').hide();
-                $('#register-failure').hide();
-                $('#initialRegistration').hide();
-                $('#companyCode').hide();
-                $('#businessConfirm').hide();
 
             });
 
@@ -585,11 +579,11 @@
                 $('input[name=typeRegister]').change(function(e){
                     if(e.target.id == 'subRegister') {
 
-                        $('#initialRegistration').hide();
-                        $('#initialRegistrationSubmit').hide();
+                        $('#initialRegistration').addClass('d-none')
+                        $('#initialRegistrationSubmit').addClass('d-none')
 
-                        $('#subRegistrationSubmit').show();
-                        $('#companyCode').show();
+                        $('#subRegistrationSubmit').removeClass('d-none');
+                        $('#companyCode').removeClass('d-none');
 
                         if(registerForm) {
                             registerForm.attr('id', 'subUserForm').attr('id', 'subUserForm');
@@ -597,11 +591,11 @@
 
                     } else {
                         
-                        $('#initialRegistration').show();
-                        $('#initialRegistrationSubmit').show(); 
-                        $('#subRegistrationSubmit').hide();
-                        $('#companyCode').hide();
-                        $('#businessConfirm').hide();                   
+                        $('#initialRegistration').removeClass('d-none');
+                        $('#initialRegistrationSubmit').removeClass('d-none');
+                        $('#subRegistrationSubmit').addClass('d-none');
+                        $('#companyCode').addClass('d-none')
+                        $('#businessConfirm').addClass('d-none')                  
 
                         if(registerForm) {
                             registerForm.attr('id', 'registerForm');
@@ -695,7 +689,7 @@
                                 $('#companyCodeSubmit').attr('disabled', true);
                                 $('#companyCodeSubmit').parent().closest('div.form-group').hide();
                             }
-                            $('#businessConfirm').show();
+                            $('#businessConfirm').removeClass('d-none');
                             $('#businessNameConfirm').html(response.businessName);
                             $('#businessAddressStreetConfirm').html(response.street);
                             $('#businessAddressCityConfirm').html(response.city);
@@ -729,8 +723,8 @@
 
                 $('#businessConfirmSubmit').click(function(e){
                     e.preventDefault();
-                    $('#businessConfirm, #subRegistration, #companyCode, #divQn').hide();
-                    $('#initialRegistration').show();
+                    $('#businessConfirm, #subRegistration, #companyCode, #divQn').addClass('d-none');
+                    $('#initialRegistration').removeClass('d-none');
                     $('#businessDetails input').each(function(i){
                         $(this).prop('readonly', true);
                     })
