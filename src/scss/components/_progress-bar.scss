@@ -1,37 +1,37 @@
 .bg-phase-amber {
 	.progress-bar { 
-		background: #53ab58; 
+		background: $green; 
 	} 
 }
 .bg-phase-red {
 	.progress-bar { 
-		background: #f9b233; 
+		background: $amber; 
 	}
 } 
 .bg-phase-blue {
 	.progress-bar { 
-		background: #e30613; 
+		background: $red; 
 	}
 }
 .bg-phase-black {
 	.progress-bar { 
-		background: #0097ce; 
+		background: $blue; 
 	}
 }
 .bg-phase-white {
 	.progress-bar { 
-		background: #000; 
+		background: $black; 
 	}
 }
 
 .progress-phase__progress-15 { min-width: 15%; }
 .progress-phase__progress-10 { min-width: 10%; }
 
-.bg-phase-amber .progress-bar{ background: #53ab58; } /*green stage */
-.bg-phase-red .progress-bar{ background: #f9b233; } /*amber stage */
-.bg-phase-blue .progress-bar{ background: #e30613; } /*red stage */
-.bg-phase-black .progress-bar{ background: #0097ce; } /*blue stage */
-.bg-phase-white .progress-bar { background: #000; }
+// .bg-phase-amber .progress-bar{ background: #53ab58; } /*green stage */
+// .bg-phase-red .progress-bar{ background: #f9b233; } /*amber stage */
+// .bg-phase-blue .progress-bar{ background: #e30613; } /*red stage */
+// .bg-phase-black .progress-bar{ background: #0097ce; } /*blue stage */
+// .bg-phase-white .progress-bar { background: #000; }
  
 .progress-15 { min-width: 15%; }
 

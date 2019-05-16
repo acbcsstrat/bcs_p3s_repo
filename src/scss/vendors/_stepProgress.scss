@@ -67,19 +67,19 @@
  }
 
 .success .steps .steps-container {
-    background: #4EAB5A;
+    background: $green;
 }
 
 .failed .steps .steps-container {
-    background: #e30613;
+    background: $red;
 }
 
 .success .steps  .steps-container li .step .step-image span {
-    background: #4EAB5A;
+    background: $green;
 }
 
 .failed .steps  .steps-container li .step .step-image span {
-    background: #e30613;
+    background: $red;
 }
 
 .success .steps .steps-container li.complete .step .step-image span,  .success .steps  .steps-container li.active .step .step-image span, .failed .steps .steps-container li.complete .step .step-image span,  .failed .steps  .steps-container li.active .step .step-image span {
@@ -130,11 +130,11 @@
 }
 
 .success .steps .steps-container li.complete .step .step-image span, .success .steps .steps-container li.active .step .step-image span {
-    background-color: #4EAA5A; /*green*/
+    background-color: $green; /*green*/
 }
 
 .failed .steps .steps-container li.complete .step .step-image span, .failed .steps .steps-container li.active .step .step-image span {
-    background-color: #ed1c24;/*red*/
+    background-color: $red;/*red*/
 }
 
 .failed .steps .steps-container li.complete .step .step-image span:after, .success .steps .steps-container li.complete .step .step-image span:after, .steps .steps-container li.failed .step .step-image span:after {
