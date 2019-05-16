@@ -50,38 +50,35 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
     vm.states.activeItem = 0;
 
   	$scope.$on('appGuideOpen', function(){
-  		if(coreService.appGuideOpen === true) {
-			var modalInstance = $uibModal.open({
-				templateUrl: 'app/templates/app/app.in-app-guide.tpl.htm',
-				scope: $scope,
-				windowClass: 'app-guide-panel',
-				controllerAs:'$ctrl',
-				controller: ['$uibModalInstance', function($uibModalInstance) {
+		var modalInstance = $uibModal.open({
+			templateUrl: 'app/templates/app/app.in-app-guide.tpl.htm',
+			windowClass: 'app-guide-panel',
+			controllerAs:'$ctrl',
+			controller: ['$uibModalInstance', function($uibModalInstance) {
 
-				    this.slides = [
-				        {index: 0, title: 'Color Phase'},
-				        {index: 1, title: 'Portfolio'},
-				        {index: 2, title: 'Case overview'},
-				        {index: 3, title: 'Add Patent'},
-				        {index: 4, title: 'Form 1200'}
+			    this.slides = [
+			        {index: 0, title: 'Color Phase'},
+			        {index: 1, title: 'Portfolio'},
+			        {index: 2, title: 'Case overview'},
+			        {index: 3, title: 'Add Patent'},
+			        {index: 4, title: 'Form 1200'}
 
-				    ]
+			    ]
 
-				    this.slides2 = [
-				        {index: 4, title: 'Form 1200'},
-				        {index: 5, title: 'Fees'},
-				        {index: 6, title: 'Checkout'},
-				        {index: 7, title: 'Transactions'},
-				        {index: 8, title: 'Nav'}
-				    ]				    
+			    this.slides2 = [
+			        {index: 4, title: 'Form 1200'},
+			        {index: 5, title: 'Fees'},
+			        {index: 6, title: 'Checkout'},
+			        {index: 7, title: 'Transactions'},
+			        {index: 8, title: 'Nav'}
+			    ]				    
 
-			 	  	this.dismissWelcomeModal = function () {
-				    	$uibModalInstance.close();
-				  	};
+		 	  	this.dismissWelcomeModal = function () {
+			    	$uibModalInstance.close();
+			  	};
 
-				}]
-			});
-  		}
+			}]
+		});
   	})
 
     function init() {

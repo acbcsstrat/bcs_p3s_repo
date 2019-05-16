@@ -12,8 +12,6 @@ function coreService($q, $timeout, fxService, $http) {
         appGuideOpen: false
     };
 
-    var appGuideOpen = true;
-
     function ppContact() {
         var deferred = $q.defer();
         $http.get(REST_SERVICE_URI)
@@ -29,7 +27,7 @@ function coreService($q, $timeout, fxService, $http) {
     }
 
     function openAppGuide() {
-        return factory.appGuideOpen = !factory.appGuideOpen
+        return factory.appGuideOpen = !factory.appGuideOpen;
     }
 
     return factory;
