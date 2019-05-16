@@ -19,6 +19,8 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.sortType = sortType;
     vm.sortReverse  = false;
     vm.selectedSortType = 'ep_ApplicationNumber';
+    vm.select = select;
+    vm.selected = 0;
 
     $timeout(function(){
       vm.portfolioLoaded = true;
@@ -35,6 +37,10 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       serviceStatus: {},
       serviceType: {},
       currentStageColour: {}
+    }
+
+    function select(i) {
+      vm.selected = i;
     }
 
     function actionStatus(text) {
