@@ -37,10 +37,10 @@
 			                    	<td class="t-data__td t-data__td--ellipsis t-data__w25" data-ng-bind="patent.clientRef || '[No Client Reference Provided]'">
 			                    		
 			                    	</td>
-			                    	<td class="t-data__td font-weight-medium t-data__w25" data-ng-class="$ctrl.getCurrColour(patent.serviceList[0].currentStageColour, 'text')">
+			                    	<td class="t-data__td font-weight-medium t-data__w25" data-ng-class="patent.cssCurrent">
 			                    		{{patent.serviceList[0].currentStageColour}}: {{$ctrl.date | date:'MM-dd-yy'}}
 			                    	</td>
-			                    	<td class="t-data__td font-weight-medium t-data__w25" data-ng-class="$ctrl.getCurrColour(patent.serviceList[0].nextStageColour, 'text')">
+			                    	<td class="t-data__td font-weight-medium t-data__w25" data-ng-class="patent.cssNext">
 			                    		{{patent.serviceList[0].nextStageColour}}: {{patent.serviceList[0].costBandEndDate | date:'MM-dd-yy'}}
 			                    	</td>				                    					                    					                    					                    	
 		                    	</tr>

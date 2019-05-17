@@ -112,7 +112,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 		var counter = localStorageService.get('counter');
 
-		// if(counter === null) {
+		if(counter === null) {
 
 			localStorageService.set('counter', 1);
 
@@ -156,7 +156,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 				}, 350);
 			}
 
-		// } //if end
+		} //if end
 
 	}
 

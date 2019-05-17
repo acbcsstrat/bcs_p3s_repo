@@ -27,18 +27,6 @@ function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentP
         
     }
 
-    // $transitions.onStart({}, function(transition) {
-    //   if (transition.to().resolve) {
-    //     console.log('1')
-    //   }
-    // });
-
-    // $transitions.onSuccess({}, function(transition) {
-    //   if (transition.to().resolve) {
-    //     console.log('2')
-    //   }
-    // });    
-
     init();
 
 	function setPatents() {
