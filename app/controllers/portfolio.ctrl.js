@@ -6,15 +6,13 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     var vm = this;
     vm.pageTitle = 'Portfolio';
+
     $scope.portfolioData = patents;
     vm.stateParams = $stateParams.patentId; 
     vm.rowSelect = rowSelect;
     vm.date = new Date();   
     vm.updateCategory = updateCategory;
     vm.panelActive = true; 
-    vm.getStatus = getStatus;
-    vm.getCurrColour = getCurrColour;
-    vm.actionStatus = actionStatus;
     vm.toggleAll = toggleAll;
     vm.sortType = sortType;
     vm.sortReverse  = false;
@@ -39,21 +37,21 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       currentStageColour: {}
     }
 
+    function init() {
+      patents.map(function(item, i){
+        item.action = organiseTextService.actionStatus(item.serviceStatus) ? true : false;
+        item.uiStatus = organiseTextService.uiStatus(item.serviceStatus);
+        if(item.serviceList.length > 0) {
+          item.cssCurrent = organiseColourService.getCurrColour(item.serviceList[0].currentStageColour, 'text')
+          item.cssNext = organiseColourService.getCurrColour(item.serviceList[0].nextStageColour, 'text')
+        }
+      }) 
+    }
+
+    init()
+
     function select(i) {
       vm.selected = i;
-    }
-
-    function actionStatus(text) {
-      return organiseTextService.actionStatus(text);
-    }
-
-    function getStatus(text) {
-
-      return organiseTextService.uiStatus(text);
-    }
-
-    function getCurrColour(color, type) {
-      return organiseColourService.getCurrColour(color, type)
     }
 
     function uniqueArray(array) {
