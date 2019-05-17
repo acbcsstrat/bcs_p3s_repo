@@ -1,5 +1,5 @@
 .expandcollapse-item {
-  overflow: hidden;
+  // overflow: hidden;
   // border-top:1px solid blue;
 }
 
@@ -52,9 +52,12 @@
 }
 
 .expand-collapse-content {
-  border: 1px solid $border;
   background: $white;
   padding: $panel-pad-md;
+  border-radius: 25px;
+  -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.2);  
 }
 
 /*
@@ -72,7 +75,7 @@ animation:*/
   max-height:50rem; //allows for dynamic heights
   transition:max-height 0.35s ease-in;
   -webkit-transition: max-height 0.35s ease-in;
-  overflow:hidden;
+  // overflow:hidden;
   position:relative;
 }
 

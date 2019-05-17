@@ -39,7 +39,7 @@
       text-decoration: none;
     }
     &.btn--green, &.btn--red, .btn--lg {
-      padding: none;
+      padding: 0;
       color: $black;
       background: none;
       text-transform: capitalize; 
@@ -53,6 +53,13 @@
   }
 }
 
+.tablebtn {
+  button.btn.btn--lg {
+    padding: 0 2.15rem!important;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+}
 .btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
   font-size: $font-normal;  
   font-weight: 500;
@@ -116,6 +123,7 @@
     }
   }
 }
+
 
 .t-data .t-data__btn-portal { min-width: 183.48px; } //required from ngCart
 

@@ -124,8 +124,6 @@
                                 </div>                                 
                             </uib-tab>
                         </uib-tabset>
-                    </div>
-                    <div class="expand-collapse-content border-t-none">
                         <div class="row d-flex align-items-center">
                             <div class="col-md-6">
                                 <button data-ng-click="$ctrl.toggleAll($event, false)" class="txt-phase-red btn-no-bg font-body font-weight-medium btn-underlined">Clear All Filters</button>
@@ -298,14 +296,14 @@
                                         <td>
                                             <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.serviceList">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
-                                                    <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--bordered btn-underlined cartbtn" data-ng-click="$ctrl.generateForm1200(patent.id)">Generate Form 1200</a>
+                                                    <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--bordered btn-underlined" data-ng-click="$ctrl.generateForm1200(patent.id)">Generate Form 1200</a>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
-                                                        <ngcart-addtocart id="{{patent.id}}" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                                        <ngcart-addtocart id="{{patent.id}}" class="tablebtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                                         </ngcart-addtocart>
                                                     </div>
                                                 </div>
                                                 <div data-ng-if="item.serviceType == 'Renewal'">
-                                                    <ngcart-addtocart id="{{patent.id}}" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
+                                                    <ngcart-addtocart id="{{patent.id}}" class="tablebtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
                                                     </ngcart-addtocart>
                                                     <p class="font-weight-medium" data-ng-class="item.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''" data-ng-if="item.serviceStatus == 'Too late to renew' || item.serviceStatus == 'Epct not available'">Call +44 203 696 0949</p>
                                                 </div>
@@ -321,7 +319,7 @@
                                                     <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--default pill-radius bg-phase-green t-data__btn-portal">Generate Form 1200
                                                     </a>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
-                                                        <ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                                        <ngcart-addtocart id="{{patent.id}}" class="tablebtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                                         </ngcart-addtocart>
                                                     </div>
                                                     <div data-ng-if="item.serviceStatus == 'Epct not available'">
@@ -329,7 +327,7 @@
                                                     </div>                                                              
                                                 </div>
                                                 <div data-ng-if="item.serviceType == 'Renewal'">
-                                                    <ngcart-addtocart id="{{patent.id}}" class="cartbtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
+                                                    <ngcart-addtocart id="{{patent.id}}" class="tablebtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
                                                     </ngcart-addtocart>
                                                 </div>
                                                 <p class="font-weight-medium" data-ng-class="item.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''" data-ng-if="item.serviceStatus == 'Too late to renew' || item.serviceStatus == 'Epct not available' ">Call +44 203 696 0949</p>
