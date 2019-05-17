@@ -5,24 +5,8 @@
 </div>
 <patentnav></patentnav>
 <div data-ng-show="$ctrl.portfolioLoaded" class="animate-show">    
-    <div class="form-group row m-b-sm">
-        <div class="col-md-3 col-lg-3 col-xl-2">
-            <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">
-        </div>
-        <div class="col-md-3 col-lg-3 col-xl-2">
-            <div class="input-group">
-                <input type="text" class="form-control pill-radius" name="clientRefFilter" data-ng-model="filterPortfolio.clientRef" placeholder="Client Ref" autocomplete="off">
-            </div>
-        </div>
-        <div class="col-md-3 col-lg-3 col-xl-2 offset-xl-4">
-            <div class="input-group">
-                <select class="pill-radius form-control font-body" data-ng-options="item for item in $ctrl.patentActionStatuses.values" data-ng-model="$ctrl.patentActionStatuses.value" data-ng-change="$ctrl.updateCategory($ctrl.patentActionStatuses.value)">
-                </select>
-            </div>
-        </div>
-        <div class="col-md-3 col-lg-3 col-xl-2">
-            <button type="button" class="btn btn--lg btn--plain btn-block pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Advanced Search</button>
-        </div>
+    <div class="d-flex justify-content-end m-b-sm">
+        <button type="button" class="btn btn--lg btn--plain pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Advanced Search</button>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -163,7 +147,23 @@
             </div>
         </div>        
         <div data-ng-show="data.length !== 0" class="col-md-12">
-            <div class="table-panel scrollable-area">
+            <div class="table-panel scrollable-area bg-white">
+                <div class="row p-a-sm">
+                    <div class="col-md-3 col-lg-3 col-xl-2">
+                        <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control pill-radius" name="clientRefFilter" data-ng-model="filterPortfolio.clientRef" placeholder="Client Ref" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-2">
+                        <div class="input-group">
+                            <select class="pill-radius form-control font-body" data-ng-options="item for item in $ctrl.patentActionStatuses.values" data-ng-model="$ctrl.patentActionStatuses.value" data-ng-change="$ctrl.updateCategory($ctrl.patentActionStatuses.value)">
+                            </select>
+                        </div>
+                    </div>                
+                </div>
                 <table class="table t-data table-scroll">
                     <thead>
                         <tr class="t-data__row t-data__row--select t-data__head">
@@ -213,26 +213,37 @@
                             <td class="t-data__td t-data__w20">
                                 <div data-ng-if="patent.serviceList.length === 0">
                                     <div data-ng-if="!patent.action || patent.serviceStatus == 'Too late to renew'">
-                                        <span data-ng-bind="patet.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
+                                        <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
                                     </div>
                                 </div>
                                 <table data-ng-if="patent.serviceList.length > 1">
                                     <tr data-ng-repeat="item in patent.serviceList">
                                         <td class="t-data__td t-data__w15 border-grey-xs--left">
-                                            <div data-ng-if="!patent.action || item.serviceStatus == 'Too late to renew'">
-                                                <span data-ng-bind="patent.uiStatus" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
+                                            <div data-ng-if="!patent.action">
+                                                <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
                                             </div>
-                                            <div data-ng-if="patent.action && item.serviceStatus !== 'Too late to renew'" data-ng-if="patent.action && item.serviceStatus !== 'Too late to renew'">
-                                                <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
-                                                <p data-ng-if="patent.cssCurrent !== 'Red' && (patent.cssCurrent == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>    
-                                                <p data-ng-if="patent.cssCurrent == 'Red' || (patent.cssCurrent == 'Black' && item.serviceStatus !== 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold" data-ng-bind="patent.uiStatus"></p>
+                                            <div data-ng-if="patent.action" class="d-md-none d-lg-flex justify-content-between flex-column"><!--xl devices-->
+                                                <div data-ng-if="(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
+                                                    <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
+                                                </div>
+                                                <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
+                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                    <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
+                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
+                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
+                                                </div>
                                             </div>
-                                            <div data-ng-if="patent.action && item.serviceStatus !== 'Too late to renew'" class="d-md-flex d-lg-none flex-column">  <!-- small devices-->
-                                                <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
-                                                <p data-ng-if="patent.cssCurrent !== 'Red' && (patent.cssCurrent == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
-                                                <p data-ng-if="patent.cssCurrent == 'Red' || (patent.cssCurrent == 'Black' && item.serviceStatus !== 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold" data-ng-bind="patent.uiStatus"></p>
+                                            <div data-ng-if="patent.action" class="d-md-flex d-lg-none"> <!-- small devices-->
+                                                <div data-ng-if="(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
+                                                    <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
+                                                </div>
+
+                                                <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
+                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                    <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
+                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
+                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -243,16 +254,28 @@
                                             <div data-ng-if="!patent.action">
                                                 <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
                                             </div>
-                                            <div data-ng-if="patent.action" class="d-md-none d-lg-flex justify-content-between align-items-center">
-                                                <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
-                                                <p data-ng-if="patent.cssCurrent !== 'Red' || (patent.cssCurrent == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>    
+                                            <div data-ng-if="patent.action" class="d-md-none d-lg-flex justify-content-between flex-column"><!--xl devices-->
+                                                <div data-ng-if="(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
+                                                    <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
+                                                </div>
+                                                <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
+                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                    <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
+                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
+                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
+                                                </div>
                                             </div>
-                                            <div data-ng-if="patent.action" class="d-md-flex d-lg-none flex-column"> <!-- small devices-->
-                                                <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
-                                                <p data-ng-if="patent.cssCurrent !== 'Red' && (patent.cssCurrent == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>    
+                                            <div data-ng-if="patent.action" class="d-md-flex d-lg-none"> <!-- small devices-->
+                                                <div data-ng-if="(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
+                                                    <p class="txt-phase-red">URGENT ACTION REQUIREDD</p>
+                                                </div>
 
+                                                <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
+                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                    <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
+                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
+                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
