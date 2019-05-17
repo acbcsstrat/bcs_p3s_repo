@@ -105,4 +105,9 @@ uib-progress.progressblue { height: 3rem; }
 
 .modal-content {
   border: none!important;
+  width: auto;
+}
+
+.modal-dialog {
+  max-width: 60rem;
 }

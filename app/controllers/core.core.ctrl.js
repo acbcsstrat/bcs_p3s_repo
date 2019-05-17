@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('coreCtrl', coreCtrl);
 
-coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService'];
+coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService', 'organiseColourService'];
 
-function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService) {
+function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService, organiseColourService) {
 
 	var vm = this;
 
@@ -11,8 +11,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 	var patentsFound = true;
 	var userTimedOut = false;
 	var messageArr = [];
-
-
 
 	$scope.$on('IdleStart', function() {
 		
@@ -45,9 +43,6 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 		)    	
       	
 	});
-
-    vm.states = {};
-    vm.states.activeItem = 0;
 
   	$scope.$on('appGuideOpen', function(){
 		var modalInstance = $uibModal.open({
@@ -117,7 +112,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 		var counter = localStorageService.get('counter');
 
-		if(counter === null) {
+		// if(counter === null) {
 
 			localStorageService.set('counter', 1);
 
@@ -145,21 +140,23 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 						$timeout(function() {
 							urgentPatentModal(response);
 						}, 500);
-					} 			
+					}
+
 
 		    	},
 		    	function(errResponse){
 		    		console.log(errResponse);
 		    	}
 			);
+		    if(patentsFound === false) {
+				$timeout(function() {
+				 	
+				 	welcomeMessageModal();
+					
+				}, 350);
+			}
 
-			$timeout(function() {
-			 	if(patentsFound === false) {
-			 		welcomeMessageModal();
-				}
-			}, 350);
-
-		} //if end
+		// } //if end
 
 	}
 
@@ -185,6 +182,9 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance) {
+
+
+
 
                 this.systemMessage = {
                 	message:  message
@@ -231,14 +231,18 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 			appendTo: undefined,
 			controllerAs: '$ctrl',
 			controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
-
 				this.urgentPatents = message;
+				this.urgentPatents.map(function(item, i){
+					item.color = {}
+					item.color.current = organiseColourService.getCurrColour(item.costBandColour, 'text')
+					item.color.next = organiseColourService.getNextColour(item.costBandColour, 'text')
+				})
 
 		        coreService.ppContact()
 		        .then(
 		            function(response){
-		                $scope.partnerName = response.partnerName;
-		                $scope.partnerPhone = response.partnerPhone;
+		                this.partnerName = response.partnerName;
+		                this.partnerPhone = response.partnerPhone;
 		            },
 		            function(errResponse){
 		            	console.log(errResponse)
