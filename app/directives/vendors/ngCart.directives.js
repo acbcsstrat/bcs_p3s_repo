@@ -97,6 +97,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
             $scope.ngCart = ngCart;
             var productData = ngCart.$cart.items;
+
             $scope.checkout = function () {
 
                 var patent_ids = [];
@@ -180,7 +181,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                                 totalOfficialFeesUSD: response.totalOfficialFeesUSD,
                                 totalPatentPlaceFeesUSD: (function(){
                                     return response.totalCostUSD - response.totalOfficialFeesUSD;
-                                }),
+                                }()),
                                 totalCostUSD: response.totalCostUSD
                             },
                             totalPatents: response.orderedPatentUIs.length
