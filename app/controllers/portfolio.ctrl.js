@@ -49,7 +49,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     }
 
     init()
-    console.log($scope.portfolioData)
+
     function select(i) {
       vm.selected = i;
     }
