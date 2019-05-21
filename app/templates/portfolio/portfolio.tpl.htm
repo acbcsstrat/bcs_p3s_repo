@@ -148,11 +148,19 @@
             <div class="table-panel scrollable-area bg-white">
                 <div class="row p-a-sm">
                     <div class="col-md-3 col-lg-3 col-xl-2">
-                        <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">
+                        <div class="input-group">
+                        <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">  
+                            <div class="input-group-append">
+                                <i class="d-flex input-group-text pill-radius fa fa-search"></i>
+                            </div>                            
+                        </div>                                        
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-2">
                         <div class="input-group">
                             <input type="text" class="form-control pill-radius" name="clientRefFilter" data-ng-model="filterPortfolio.clientRef" placeholder="Client Ref" autocomplete="off">
+                            <div class="input-group-append">
+                                <i class="d-flex input-group-text pill-radius fa fa-search"></i>
+                            </div>                            
                         </div>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-2">
