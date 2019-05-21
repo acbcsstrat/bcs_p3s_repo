@@ -18,8 +18,12 @@
 .form-control {
   line-height: 1.2rem;
   border-radius: 2rem;
-  .form-control {
-    border: none;
+  padding: .75rem 1.125rem;
+}
+
+select.form-control {
+  &:not([size]):not([multiple]) {
+    height: inherit;
   }
 }
 

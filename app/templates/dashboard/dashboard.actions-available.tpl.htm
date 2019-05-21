@@ -1,24 +1,25 @@
 <div class="widget-panel">
-	<div class="widget-panel__body bg-white">
-		<div class="row d-flex align-items-start">
-			<div class="col-md-3 col-lg-3 col-xl-3">
-				<h3 class="font-h3 m-r-sm font-weight-bold">Actions Available</h3>
-			</div>
-			<div class="col-md-9 col-lg-9 col-lg-9">
-				<nav class="">
-					<ul class="panel-nav d-flex justify-content-end">
-						<li class="txt-phase-green green panel-nav__colour-item font-weight-medium p-t-none" data-ng-init="availableActions = 0;" data-ng-class="{'active': availableActions === 0}" data-ng-click="availableActions = 0; $ctrl.setPhase('Green')">Green ({{$ctrl.patents.Green.length || '0'}})</li>
-						<li class="txt-phase-amber amber panel-nav__colour-item font-weight-medium p-t-none" data-ng-class="{'active': availableActions === 1}" data-ng-click="availableActions = 1; $ctrl.setPhase('Amber')">Amber ({{$ctrl.patents.Amber.length || '0'}})</li>
-						<li class="txt-phase-red red panel-nav__colour-item font-weight-medium p-t-none" data-ng-class="{'active': availableActions === 2}" data-ng-click="availableActions = 2; $ctrl.setPhase('Red')">Red ({{$ctrl.patents.Red.length || '0'}})</li>
-						<li class="txt-phase-blue blue panel-nav__colour-item font-weight-medium p-t-none" data-ng-class="{'active': availableActions === 3}" data-ng-click="availableActions = 3; $ctrl.setPhase('Blue')">Blue ({{$ctrl.patents.Blue.length || '0'}})</li>
-						<li class="txt-phase-black black panel-nav__colour-item font-weight-medium p-t-none" data-ng-class="{'active': availableActions === 4}" data-ng-click="availableActions = 4; $ctrl.setPhase('Black')">Black ({{$ctrl.patents.Black.length || '0'}})</li>						
-					</ul>
-				</nav>
-			</div>
-		</div>		
-		<uib-tabset type="pills" class="pills" active="availableActions"> <!-- data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== '' && $ctrl.selectedPatent !== ''" -->
-		    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body" data-ng-repeat="(key, value) in $ctrl.patents track by $index" data-ng-hide="true" index="$index">
-		    	<div data-ng-if="$ctrl.patents[key].length > 0" class="animate-show">
+	<uib-tabset type="pills" class="pills" active="availableActions"> <!-- data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== '' && $ctrl.selectedPatent !== ''" -->
+	    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body" data-ng-repeat="(key, value) in $ctrl.patents track by $index" data-ng-hide="true" index="$index">
+	    	<div data-ng-if="$ctrl.patents[key].length > 0" class="animate-show">
+	    		<div class="table-panel scrollable-area bg-white">
+					<div class="row">
+						<div class="col-md-12 d-flex justify-content-between">						
+							<div class="p-panel p-b-none">
+								<h3 class="font-h3 m-r-sm font-weight-bold">Actions Available</h3>
+							</div>	
+							<nav class="m-r-md">
+								<ul class="panel-nav">
+									<li class="txt-phase-green green panel-nav__colour-item font-weight-medium" data-ng-init="availableActions = 0;" data-ng-class="{'active': availableActions === 0}" data-ng-click="availableActions = 0; $ctrl.setPhase('Green')">Green ({{$ctrl.patents.Green.length || '0'}})</li>
+									<li class="txt-phase-amber amber panel-nav__colour-item font-weight-medium" data-ng-class="{'active': availableActions === 1}" data-ng-click="availableActions = 1; $ctrl.setPhase('Amber')">Amber ({{$ctrl.patents.Amber.length || '0'}})</li>
+									<li class="txt-phase-red red panel-nav__colour-item font-weight-medium" data-ng-class="{'active': availableActions === 2}" data-ng-click="availableActions = 2; $ctrl.setPhase('Red')">Red ({{$ctrl.patents.Red.length || '0'}})</li>
+									<li class="txt-phase-blue blue panel-nav__colour-item font-weight-medium" data-ng-class="{'active': availableActions === 3}" data-ng-click="availableActions = 3; $ctrl.setPhase('Blue')">Blue ({{$ctrl.patents.Blue.length || '0'}})</li>
+									<li class="txt-phase-black black panel-nav__colour-item font-weight-medium" data-ng-class="{'active': availableActions === 4}" data-ng-click="availableActions = 4; $ctrl.setPhase('Black')">Black ({{$ctrl.patents.Black.length || '0'}})</li>						
+								</ul>
+							</nav>              
+						</div>	
+	          	    		
+					</div>	    			
 					<table class="table t-data table-scroll">
 						<thead>
 							<tr class="t-data__row">
@@ -46,16 +47,17 @@
 	                    </tbody>
 	    			</table>
     			</div>
-    			<div data-ng-if="$ctrl.patents[key].length == 0" class="animate-show">
-				    <div class="row flex-grow-1">
-				    	<div class="col-md-12 d-flex justify-content-center align-items-center z-index-1">
-				    		<div class="bg-no-data d-flex align-items-center justify-content-center">
-				    			<p class="font-body font-weight-bold text-center">Currently there aren't any patents in this phase</p>
-				    		</div>
-				    	</div>
-				    </div>
+			</div>
+			<div data-ng-if="$ctrl.patents[key].length == 0" class="animate-show">
+			    <div class="row flex-grow-1">
+			    	<div class="col-md-12 d-flex justify-content-center align-items-center z-index-1">
+			    		<div class="bg-no-data d-flex align-items-center justify-content-center">
+			    			<p class="font-body font-weight-bold text-center">Currently there aren't any patents in this phase</p>
+			    		</div>
+			    	</div>
 			    </div>
-			</uib-tab>
-		</uib-tabset>
-    </div>
+		    </div>
+		</uib-tab>
+	</uib-tabset>
+
 </div>
