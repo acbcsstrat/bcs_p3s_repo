@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('coreCtrl', coreCtrl);
 
-coreCtrl.$inject = ['$uibModal', '$scope', 'dashboardService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService', 'organiseColourService'];
+coreCtrl.$inject = ['$uibModal', '$scope', 'coreService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService', 'organiseColourService'];
 
-function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService, organiseColourService) {
+function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService, organiseColourService) {
 
 	var vm = this;
 
@@ -118,7 +118,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 
 			counter = localStorageService.get('counter');
 
-			dashboardService.getMessages()
+			coreService.getMessages()
 		    .then(
 		    	function(response){
 
@@ -210,7 +210,7 @@ function coreCtrl($uibModal, $scope, dashboardService, localStorageService, $tim
 				}
 
 				this.supresssMessages = function() {
-					dashboardService.supressMessages(messageArr)
+					coreService.supressMessages(messageArr)
 				} 	                
 
             }],

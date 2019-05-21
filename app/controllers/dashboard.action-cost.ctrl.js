@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
 
-renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patentIds','currentTransactionsService', 'patentsRestService', 'dashboardService', 'organiseTextService',  'patentPhasesService']
+renewalCostCtrl.$inject = ['$scope', '$timeout', '$state', '$location', '$anchorScroll', 'patentIds','currentTransactionsService', 'dashboardService', 'organiseTextService']
 
-function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patentIds, currentTransactionsService, patentsRestService, dashboardService, organiseTextService,  patentPhasesService) {
+function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, patentIds, currentTransactionsService, dashboardService, organiseTextService) {
 
 	var vm = this;
 
@@ -10,9 +10,9 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 	vm.fetchItemTransaction = fetchItemTransaction;
     vm.actionStatus = actionStatus;
     vm.paymentStatus = paymentStatus;
+
     vm.loading = true;
     vm.noPatents = true;
-    vm.patent;
 
     function init() {
         if(patentIds.length == 0) {
@@ -22,57 +22,10 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 
     init();
 
-
-    $scope.$on('updateCost', function(e, o){
-
-        vm.loading = true;
-
-        if(patentPhasesService.getPatent !== '') {
-
-            vm.noPatents = false;
-            vm.cartService = null;
-
-            var patentId =  patentPhasesService.getPatent.id;
-
-            patentsRestService.fetchPatentItem(patentId)
-            .then(
-                function(response){
-                    return response;
-                })
-            .then(
-                function(patent){
-                    if(patent == null || patent == undefined) {
-                        vm.patent = null;
-                        return
-                    }
-                    vm.patent = patent;
-                    if(vm.patent !== undefined || typeof vm.patent !== 'undefined') {
-                        if(vm.patent.renewalFeeUI !== null) {
-                            if(actionStatus(vm.patent.renewalStatus) && vm.patent.renewalStatus !== ('Payment in progress' && 'EPO Instructed')) {
-                                vm.cartService = 'Renewal';
-                            }
-                            vm.patent.serviceCost = vm.patent.renewalFeeUI;
-                        } else {
-                            if(actionStatus(vm.patent.epctStatus) && vm.patent.epctStatus !== ('Payment in progress' && 'EPO Instructed' && 'Epct being generated' && 'Epct available')) {
-                                vm.cartService = 'Epct';
-                            }
-                            vm.patent.serviceCost = vm.patent.form1200FeeUI;
-                        }
-                    }
-                    vm.loading = false;
-                }
-            )
-        }
-
+   $scope.$on('updateCost', function(e, o){
+        vm.actionCost = dashboardService.fetchActionCost();
+        vm.loading = false;
     })
-
-    $scope.$on('updatePhase', function(e, o){
-        
-        if(patentPhasesService.getPatents === '' && vm.patent !== undefined) {
-            vm.patent.serviceCost = null;
-            vm.noPatents = true;
-        }
-    });
 
     function actionStatus(text) {
         return organiseTextService.actionStatus(text)

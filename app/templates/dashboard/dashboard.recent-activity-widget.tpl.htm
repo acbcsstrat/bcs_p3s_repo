@@ -28,7 +28,7 @@
 	    							<th class="t-data__th border-t-none">Next Stage</th>
 	    						</tr>
 	    					</thead>
-		                    <tbody>
+		                    <tbody class="dashboard-table">
 		                    	<tr class="t-data__row t-data__row--select" data-ng-repeat="patent in $ctrl.recentActivityData">
 			                    	<td class="t-data__td t-data__td--ellipsis t-data__w25" data-ng-bind="patent.ep_ApplicationNumber">
 			                    		
@@ -54,37 +54,36 @@
 							<p class="font-weight-bold">There is no recent activity to report</p>
 						</div>								
 					</div>
-				    <div class="row m-t-md border-grey-xs--btm" data-ng-repeat="trans in $ctrl.recentTransArr" data-ng-if="$ctrl.recentTransArr.length !== 0">
+				    <div class="row m-t-md" data-ng-if="$ctrl.recentTransArr.length !== 0">
 						<div class="col-md-12 col-lg-12 col-xl-12">
-							<table class="table t-data">
-								<tr>
-									<td class="font-weight-bold">Transaction ID</td>
-									<td class="t-data__td-50">{{trans.p3S_TransRef}}</td>
-								</tr>
-								<tr>
-									<td class="font-weight-bold">Transaction Date</td>
-									<td class="t-data__td-50">{{trans.transStartDate | date:'MM-dd-yy'}}</td>
-								</tr>
-								<tr>
-									<td class="font-weight-bold">Patents</td>
-									<td class="t-data__td-50">
-										<span data-ng-repeat="item in trans.renewalUIs" data-ng-if="trans.renewalUIs.length == 1" >
-											{{item.patentUI.patentApplicationNumber}}<br>
-										</span>
-										<select data-ng-if="trans.renewalUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in trans.renewalUIs" data-ng-model="data.selectedOption" class="pill-radius form-control">
-											<option value="" disabled selected>Multiple</option>									
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<td class="font-weight-bold">Total</td>
-									<td class="t-data__td-50">$ {{trans.transAmount_USD | number: 2 }}</td>
-								</tr>
-								<tr>
-									<td class="font-weight-bold">Transaction status</td>
-									<td class="t-data__td-50">{{trans.latestTransStatus}}</td>
-								</tr>
+							<table class="table t-data table-scroll">
+		    					<thead>
+		    						<tr class="t-data__row">
+		    							<th class="t-data__th border-t-none">Trans ID</th>
+		    							<th class="t-data__th border-t-none">Trans Date</th>
+		    							<th class="t-data__th border-t-none">Patents</th>
+		    							<th class="t-data__th border-t-none">Total</th>
+		    							<th class="t-data__th border-t-none">Trans status</th>
+		    						</tr>
+		    					</thead>								
+								<tbody class="dashboard-table">
+									<tr class="t-data__row t-data__row--select"  data-ng-repeat="trans in $ctrl.recentTransArr" data-ui-sref="current-transactions.current-transaction-item({transId: trans.id})">
+										<td class="t-data__td">{{trans.p3S_TransRef}}</td>
+										<td class="t-data__td">{{trans.transStartDate | date:'MM-dd-yy'}}</td>
+										<td class="t-data__td">
+											<span data-ng-repeat="item in trans.renewalUIs" data-ng-if="trans.renewalUIs.length == 1" >
+												{{item.patentUI.patentApplicationNumber}}<br>
+											</span>
+											<select data-ng-if="trans.renewalUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in trans.renewalUIs" data-ng-model="data.selectedOption" class="pill-radius form-control">
+												<option value="" disabled selected>Multiple</option>									
+											</select>
+										</td>
+										<td class="t-data__td">$ {{trans.transAmount_USD | number: 2 }}</td>
+										<td class="t-data__td">{{trans.latestTransStatus}}</td>
+									</tr>
+								</tbody>
 							</table>
+		<!-- 					<div class="border-grey-xs--btm m-t-md"></div> -->
 						</div>
 					</div>
 			</uib-tab>				

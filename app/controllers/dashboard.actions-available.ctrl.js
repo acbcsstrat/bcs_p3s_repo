@@ -7,48 +7,32 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
 	var vm = this;
 
 	vm.phaseLoaded = true;
-	vm.setPatents = setPatents;
-    $timeout(function() {
-        vm.patents = patentPhasesService.getPatents;
-        vm.patents.map(function(item, i){
-            if(item.serviceList.length > 0) {
-              item.cssCurrent = organiseColourService.getCurrColour(item.serviceList[0].currentStageColour, 'text')
-              item.cssNext = organiseColourService.getCurrColour(item.serviceList[0].nextStageColour, 'text')
-            }
-        })
-        vm.patentData = patentPhasesService.patentNumbers; 
-    });
 
     vm.date = new Date();
-    vm.fetchCost = fetchCost;
+    vm.setActionCost = setActionCost;
+    vm.setPhase = setPhase
+    vm.patents = dashboardService.getPatents;
+    
+    var initialPhase = (function(){
+        for(var property in vm.patents)
+            if(vm.patents.hasOwnProperty(property)) {
+                if(vm.patents[property].length > 0) {
+                    return vm.patents[property][0];
+                }
+            }
+    }())
 
-    function fetchCost(patent) {             
-        vm.patents = patentPhasesService.getPatents;
-        if(patentPhasesService.getPatent !== '' && patentPhasesService.getPatents !== '') {
-            patentPhasesService.setPatent(patent)
-            $scope.$emit('updatePatent');
-        }        
+    function setPhase(phase) {
+        setActionCost(vm.patents[phase][0])
     }
 
-    $scope.$on('updatePhase', function(e, o){
-        setPhaseFn(o.phase)
-        $scope.activeTab = patentPhasesService.getIndex;
-	})
-
-    function setPatents(phase) {
-        patentPhasesService.setPatents(phase);
-        setPhaseFn(phase)
-        $scope.$emit('phaseChange', {phase: phase})
+    function setActionCost(patent) {
+        dashboardService.setActionCost(patent)
+        $timeout(function(){
+            $scope.$emit('updatePatent')
+        }, 300)
     }
 
-	function setPhaseFn(phase) {
-		vm.phaseLoaded = false;
-		$timeout(function() {
-            vm.patents = patentPhasesService.getPatents;
-            vm.selectedPatent = patentPhasesService.getPatent;
-			vm.phaseLoaded = true;
-		}, 10);
-
-	}
+    setActionCost(initialPhase)
 
 }

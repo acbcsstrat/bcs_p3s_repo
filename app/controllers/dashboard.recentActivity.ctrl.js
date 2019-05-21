@@ -59,7 +59,7 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 	}
 
 	function changeActivity(activity) {
-
+		console.log(activity)
 		if(activity == 'Stage Change') {
 			fetchStageChanges();
 			return;
@@ -101,15 +101,18 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 	}
 
 	function fetchTransChanges() {
-		if(currentTransactions.length > 0) {
-			currentTransactions.forEach(function(data){
-				var hours =  new Date().getTime() - data.lastUpdatedDate;
-				var recentTrans  = calculateService.recentActivity(hours);
-				if(recentTrans) {
-					vm.recentTransArr.push(data);
-				}
-			});	
-		}
+		currentTransactions
+		.then(function(response){
+			if(response.length > 0) {
+				response.forEach(function(data){
+					var hours =  new Date().getTime() - data.lastUpdatedDate;
+					var recentTrans  = calculateService.recentActivity(hours);
+					if(recentTrans) {
+						vm.recentTransArr.push(data);
+					}
+				});	
+			}
+		})
 
 	}
 
