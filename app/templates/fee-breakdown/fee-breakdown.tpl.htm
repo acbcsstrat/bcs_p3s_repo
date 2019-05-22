@@ -7,7 +7,7 @@
     <div class="col-xl-12">
         <div class="form-inline">
             <div class="form-group">                      
-                <label class="font-body font-weight-bold text-uppercase m-r-sm">Display fees for: </label>
+                <label class="font-h4 font-weight-bold text-uppercase m-r-sm">Display fees for: </label>
                 <select name="actions" id="actions" class="form-control" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-init="$ctrl.setFees($ctrl.data.selectedAction.action)"  data-ng-change="$ctrl.setFees($ctrl.data.selectedAction.action)">
                 </select>
             </div>
