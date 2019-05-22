@@ -1,25 +1,25 @@
 <div class="widget-panel">
-	<uib-tabset type="pills" class="pills" active="availableActions"> <!-- data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== '' && $ctrl.selectedPatent !== ''" -->
+	<uib-tabset type="pills" class="pills bg-white panel-shadow-radius d-flex flex-column flex-grow-1" active="$ctrl.availableActions"> <!-- data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== '' && $ctrl.selectedPatent !== ''" -->
+		<div class="row">
+			<div class="col-md-12 d-flex justify-content-between">						
+				<div class="p-panel p-b-none">
+					<h3 class="font-h3 m-r-sm font-weight-bold">Actions Available</h3>
+				</div>	
+				<nav class="m-r-md">
+					<ul class="panel-nav">
+						<li class="txt-phase-green green panel-nav__colour-item font-weight-medium" data-ng-init="$ctrl.availableActions = 0;" data-ng-class="{'active': $ctrl.availableActions === 0}" data-ng-click="$ctrl.availableActions = 0; $ctrl.setPhase('Green')">Green ({{$ctrl.patents.Green.length || '0'}})</li>
+						<li class="txt-phase-amber amber panel-nav__colour-item font-weight-medium" data-ng-class="{'active': $ctrl.availableActions === 1}" data-ng-click="$ctrl.availableActions = 1; $ctrl.setPhase('Amber')">Amber ({{$ctrl.patents.Amber.length || '0'}})</li>
+						<li class="txt-phase-red red panel-nav__colour-item font-weight-medium" data-ng-class="{'active': $ctrl.availableActions === 2}" data-ng-click="$ctrl.availableActions = 2; $ctrl.setPhase('Red')">Red ({{$ctrl.patents.Red.length || '0'}})</li>
+						<li class="txt-phase-blue blue panel-nav__colour-item font-weight-medium" data-ng-class="{'active': $ctrl.availableActions === 3}" data-ng-click="$ctrl.availableActions = 3; $ctrl.setPhase('Blue')">Blue ({{$ctrl.patents.Blue.length || '0'}})</li>
+						<li class="txt-phase-black black panel-nav__colour-item font-weight-medium" data-ng-class="{'active': $ctrl.availableActions === 4}" data-ng-click="$ctrl.availableActions = 4; $ctrl.setPhase('Black')">Black ({{$ctrl.patents.Black.length || '0'}})</li>						
+					</ul>
+				</nav>              
+			</div>	
+  	    		
+		</div>	    			
 	    <uib-tab class="pill-radius p-pill-tabs pill-tabs font-body" data-ng-repeat="(key, value) in $ctrl.patents track by $index" data-ng-hide="true" index="$index">
 	    	<div data-ng-if="$ctrl.patents[key].length > 0" class="animate-show">
-	    		<div class="table-panel scrollable-area bg-white">
-					<div class="row">
-						<div class="col-md-12 d-flex justify-content-between">						
-							<div class="p-panel p-b-none">
-								<h3 class="font-h3 m-r-sm font-weight-bold">Actions Available</h3>
-							</div>	
-							<nav class="m-r-md">
-								<ul class="panel-nav">
-									<li class="txt-phase-green green panel-nav__colour-item font-weight-medium" data-ng-init="availableActions = 0;" data-ng-class="{'active': availableActions === 0}" data-ng-click="availableActions = 0; $ctrl.setPhase('Green')">Green ({{$ctrl.patents.Green.length || '0'}})</li>
-									<li class="txt-phase-amber amber panel-nav__colour-item font-weight-medium" data-ng-class="{'active': availableActions === 1}" data-ng-click="availableActions = 1; $ctrl.setPhase('Amber')">Amber ({{$ctrl.patents.Amber.length || '0'}})</li>
-									<li class="txt-phase-red red panel-nav__colour-item font-weight-medium" data-ng-class="{'active': availableActions === 2}" data-ng-click="availableActions = 2; $ctrl.setPhase('Red')">Red ({{$ctrl.patents.Red.length || '0'}})</li>
-									<li class="txt-phase-blue blue panel-nav__colour-item font-weight-medium" data-ng-class="{'active': availableActions === 3}" data-ng-click="availableActions = 3; $ctrl.setPhase('Blue')">Blue ({{$ctrl.patents.Blue.length || '0'}})</li>
-									<li class="txt-phase-black black panel-nav__colour-item font-weight-medium" data-ng-class="{'active': availableActions === 4}" data-ng-click="availableActions = 4; $ctrl.setPhase('Black')">Black ({{$ctrl.patents.Black.length || '0'}})</li>						
-								</ul>
-							</nav>              
-						</div>	
-	          	    		
-					</div>	    			
+	    		<div class="table-panel scrollable-area  scrollable-area--no-shadow">
 					<table class="table t-data table-scroll">
 						<thead>
 							<tr class="t-data__row">
