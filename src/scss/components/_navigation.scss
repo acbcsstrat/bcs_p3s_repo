@@ -137,6 +137,9 @@
         text-decoration: none;
         margin-right: 1rem;
         @include padding-mixin(2rem 0.75rem);
+        -webkit-transition: background .2s ease-in-out;
+        -o-transition: background .2s ease-in-out;
+        transition: background .2s ease-in-out;        
         &:last-child {
             margin-right: 0;
         }
@@ -167,6 +170,9 @@
         }                                    
         &.list-item--pad {
             @include padding-mixin(2rem 0.75rem);
+        }
+        &:not(.active):not([disabled]):hover {
+            background: $grey;
         }
     }
     .panel-nav__list-item {
