@@ -136,6 +136,11 @@ table.t-border-space { border-spacing: 0rem 0.75rem; border-collapse: separate; 
   ::-webkit-scrollbar {
     width: 15px;
   }
+  &.scrollable-area--no-shadow {
+    -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    -moz-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  }
 
   /* Track */
   // ::-webkit-scrollbar-track {

@@ -35,7 +35,15 @@
 
 		<main class="app-container h-100" data-ng-controller="coreCtrl">
 			<basketnav></basketnav>
-			<ui-view class="h-100"></ui-view>
+			<ui-view class="h-100">
+				<div class="screen-load">
+					<div class="row m-b-md">
+						<div class="col-xl-12 text-center">
+							<img src="assets/imgs/icons/spinner-loader-sm.gif">
+						</div>
+					</div>
+				</div>
+			</ui-view>
 			<idle></idle>
 
 		</main>
