@@ -3,97 +3,97 @@
 
 package com.bcs.p3s.model;
 
-import com.bcs.p3s.model.Form1200;
+import com.bcs.p3s.model.RenewalBlob;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
-privileged aspect Form1200_Roo_Jpa_ActiveRecord {
+privileged aspect RenewalBlob_Roo_Jpa_ActiveRecord {
     
     @PersistenceContext
-    transient EntityManager Form1200.entityManager;
+    transient EntityManager RenewalBlob.entityManager;
     
-    public static final List<String> Form1200.fieldNames4OrderClauseFilter = java.util.Arrays.asList("pdfBlob", "createdDate", "epoReceiptBlob", "epoReceiptCreatedDate");
+    public static final List<String> RenewalBlob.fieldNames4OrderClauseFilter = java.util.Arrays.asList("id", "epoReceiptBlob", "epoReceiptCreatedDate");
     
-    public static final EntityManager Form1200.entityManager() {
-        EntityManager em = new Form1200().entityManager;
+    public static final EntityManager RenewalBlob.entityManager() {
+        EntityManager em = new RenewalBlob().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
-    public static long Form1200.countForm1200s() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM Form1200 o", Long.class).getSingleResult();
+    public static long RenewalBlob.countRenewalBlobs() {
+        return entityManager().createQuery("SELECT COUNT(o) FROM RenewalBlob o", Long.class).getSingleResult();
     }
     
-    public static List<Form1200> Form1200.findAllForm1200s() {
-        return entityManager().createQuery("SELECT o FROM Form1200 o", Form1200.class).getResultList();
+    public static List<RenewalBlob> RenewalBlob.findAllRenewalBlobs() {
+        return entityManager().createQuery("SELECT o FROM RenewalBlob o", RenewalBlob.class).getResultList();
     }
     
-    public static List<Form1200> Form1200.findAllForm1200s(String sortFieldName, String sortOrder) {
-        String jpaQuery = "SELECT o FROM Form1200 o";
+    public static List<RenewalBlob> RenewalBlob.findAllRenewalBlobs(String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM RenewalBlob o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
             jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
             if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
                 jpaQuery = jpaQuery + " " + sortOrder;
             }
         }
-        return entityManager().createQuery(jpaQuery, Form1200.class).getResultList();
+        return entityManager().createQuery(jpaQuery, RenewalBlob.class).getResultList();
     }
     
-    public static Form1200 Form1200.findForm1200(Long id) {
+    public static RenewalBlob RenewalBlob.findRenewalBlob(Long id) {
         if (id == null) return null;
-        return entityManager().find(Form1200.class, id);
+        return entityManager().find(RenewalBlob.class, id);
     }
     
-    public static List<Form1200> Form1200.findForm1200Entries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM Form1200 o", Form1200.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    public static List<RenewalBlob> RenewalBlob.findRenewalBlobEntries(int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM RenewalBlob o", RenewalBlob.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    public static List<Form1200> Form1200.findForm1200Entries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
-        String jpaQuery = "SELECT o FROM Form1200 o";
+    public static List<RenewalBlob> RenewalBlob.findRenewalBlobEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM RenewalBlob o";
         if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
             jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
             if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
                 jpaQuery = jpaQuery + " " + sortOrder;
             }
         }
-        return entityManager().createQuery(jpaQuery, Form1200.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+        return entityManager().createQuery(jpaQuery, RenewalBlob.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional
-    public void Form1200.persist() {
+    public void RenewalBlob.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
-    public void Form1200.remove() {
+    public void RenewalBlob.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            Form1200 attached = Form1200.findForm1200(this.id);
+            RenewalBlob attached = RenewalBlob.findRenewalBlob(this.id);
             this.entityManager.remove(attached);
         }
     }
     
     @Transactional
-    public void Form1200.flush() {
+    public void RenewalBlob.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
-    public void Form1200.clear() {
+    public void RenewalBlob.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
-    public Form1200 Form1200.merge() {
+    public RenewalBlob RenewalBlob.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
-        Form1200 merged = this.entityManager.merge(this);
+        RenewalBlob merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
     }

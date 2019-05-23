@@ -25,4 +25,20 @@ privileged aspect Form1200_Roo_JavaBean {
         this.createdDate = createdDate;
     }
     
+    public Blob Form1200.getEpoReceiptBlob() {
+        return this.epoReceiptBlob;
+    }
+    
+    public void Form1200.setEpoReceiptBlob(Blob epoReceiptBlob) {
+        this.epoReceiptBlob = epoReceiptBlob;
+    }
+    
+    public Date Form1200.getEpoReceiptCreatedDate() {
+        return this.epoReceiptCreatedDate;
+    }
+    
+    public void Form1200.setEpoReceiptCreatedDate(Date epoReceiptCreatedDate) {
+        this.epoReceiptCreatedDate = epoReceiptCreatedDate;
+    }
+    
 }

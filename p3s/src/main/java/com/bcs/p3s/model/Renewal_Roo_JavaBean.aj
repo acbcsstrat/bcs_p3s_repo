@@ -76,4 +76,12 @@ privileged aspect Renewal_Roo_JavaBean {
         this.renewalAttemptsMade = renewalAttemptsMade;
     }
     
+    public Long Renewal.getRenewalBlobId() {
+        return this.renewalBlobId;
+    }
+    
+    public void Renewal.setRenewalBlobId(Long renewalBlobId) {
+        this.renewalBlobId = renewalBlobId;
+    }
+    
 }

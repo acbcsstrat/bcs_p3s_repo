@@ -78,6 +78,12 @@ public class Renewal {
     @NotNull
     private Integer renewalAttemptsMade;
 
+    /**
+     * id to access any saved renewal PDF (i.e. EPO Receipt PDF)
+     * ref table: RenewalBlob
+     */
+    private Long renewalBlobId;
+
 
 
     // Setters pushed to support P3S 'Enums'
