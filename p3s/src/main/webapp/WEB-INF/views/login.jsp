@@ -37,58 +37,56 @@
    </head>
 
    <body class="bg-light-grey2">
-      <div class="container-pre-app d-flex justify-content-center align-items-center">
-         <div class="container-pre-app__center-box-40 p-a-sm">
-            <div class="content-panel border-none">
-               <div class="content-panel__head">
-                  <div class="row">
-                     <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
-                        <div class="m-b-md">
-                           <img src="assets/imgs/logos/PP_icon_lg.png" alt="patent place logo">
-                        </div>
-                        
-                        <h1 class="font-weight-bold font-h1">Login</h1>
+      
+      <div class="d-flex justify-content-center align-items-center content-panel">
+         <div class="container-pre-app__center-box-40">
+            <div class="content-panel__body bg-white">
+               <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-sm">
+               <div class="row m-b-sm">
+                  <div class="col-md-12 d-flex justify-content-between align-items-center">
+                     <h1 class="font-weight-bold font-h2">Login</h1>
+                     <div class="d-flex">                     
+                        <p class="font-body font-weight-medium m-r-xs">Don't have an account?</p>
+                        <a href="/p3sweb/register" class="inline-link">Register</a>
                      </div>
                   </div>
-               </div>
-               <div class="content-panel__body">
-                  <div class="row">
-                     <div class="col-md-12">
-                        <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
-                           <div class="form-group row m-b-sm">
-                              <div class="col-md-12">
-                                 <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username" data-parsley-validate-email="" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
-                              </div>
-                           </div>
-                           <div class="form-group row m-b-sm">
-                              <div class="col-md-12">
-                                 <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true" autocomplete="off">
-                              </div>
-                           </div>
-                           <div class="form-group d-flex justify-content-center flex-column m-b-sm">
-                              <p id="loginMessage" class="m-b-sm font-body txt-phase-red"></p>
-                              <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn--lg btn--green pill-radius">
-                           </div>
-                        </form>
-                        <div class="row m-b-sm">
-                           <div class="col-md-12 text-center">
-                              <a href="/p3sweb/forgot-password" class="btn-no-bg font-weight-medium btn-underlined">Forgot Password?</a>
+               </div>               
+               <div class="row">
+                  <div class="col-md-12">
+
+                     <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+                        <div class="form-group row m-b-sm">
+                           <div class="col-md-12">
+                              <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username" data-parsley-validate-email="" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
                            </div>
                         </div>
-                        <div class="row">
-                           <div class="col-md-12 d-flex justify-content-between align-items-center">
-                              <p class="font-body">Don't have an account?</p>
-                              <div class="btn-no-bg">
-                                 <a class="btn btn--lg btn--bordered green txt-black pill-radius" href="/p3sweb/register">Register</a>
-                              </div>
+                        <div class="form-group row m-b-sm">
+                           <div class="col-md-12">
+                              <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true" autocomplete="off">
                            </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-center flex-column m-b-sm">
+                           <p id="loginMessage" class="m-b-sm font-body txt-phase-red"></p>
+                           <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn--lg btn--green pill-radius">
+                        </div>
+                     </form>
+                     <div class="row">
+                        <div class="col-md-12 text-center">
+                           <a href="/p3sweb/forgot-password" class="btn-no-bg font-weight-medium btn-underlined">Forgot Password?</a>
                         </div>
                      </div>
+           <!--           <div class="row"> -->
+<!--                         <div class="col-md-12 d-flex justify-content-between align-items-center">
+                           <p class="font-body">Don't have an account?</p>
+                           <div class="btn-no-bg">
+                              <a class="btn btn--lg btn--bordered green txt-black pill-radius" href="/p3sweb/register">Register</a>
+                           </div>
+                        </div>
+                     </div> -->
                   </div>
                </div>
             </div>
-         </div>         
-      </div>
+         </div>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

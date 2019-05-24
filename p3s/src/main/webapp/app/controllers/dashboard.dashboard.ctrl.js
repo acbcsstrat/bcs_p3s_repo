@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('dashboardCtrl', dashboardCtrl);
 
-dashboardCtrl.$inject = ['$scope','$state', 'patentIds', '$timeout', '$rootScope', 'patentPhasesService', '$transitions'];
+dashboardCtrl.$inject = ['$scope','$state', 'patentIds', '$timeout', '$rootScope', 'patentPhasesService', '$transitions', 'dashboardService', '$transitions'];
 
-function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentPhasesService, $transitions) {
+function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentPhasesService, $transitions, dashboardService, $transitions) {
 
     var vm = this;
 
@@ -10,54 +10,23 @@ function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentP
     vm.pageTitle = 'Dashboard';
     vm.date = new Date().getTime();
 
+    $timeout(function(){
+      vm.dashboardLoaded = true;
+    }, 300);
+
+    $transitions.onFinish({}, function(transition) {
+      console.log(
+          "Successful Transition from " + transition.from().name +
+          " to " + transition.to().name
+      );
+    });    
+
     function init() {
-
-        if(patentIds.length > 0) {
-            if(patentPhasesService.getPatents === '' || patentPhasesService.patentNumbers.Total !== patentIds.length) { //check if any patents have been addded. Otherwise there is no need to execute code
-                setPatents();
-            } else {
-                $timeout(function(){
-                    vm.animate = true;
-                }, 300)
-            }        
-        } else {
-            patentPhasesService.sortPatentNumbers(null)
-            patentPhasesService.setPatents(null); //no patents avaialble
-            $timeout(function(){
-                vm.animate = true;
-            }, 300)   
-        }
-        
+        $scope.$emit('updatePatent')
+        dashboardService.sortPatents(patentIds);
     }
-
-    // $transitions.onStart({}, function(transition) {
-    //   if (transition.to().resolve) {
-    //     console.log('1')
-    //   }
-    // });
-
-    // $transitions.onSuccess({}, function(transition) {
-    //   if (transition.to().resolve) {
-    //     console.log('2')
-    //   }
-    // });    
 
     init();
-
-	function setPatents() {
-		patentPhasesService.sortPatentNumbers(patentIds)
-        $timeout(function(){
-            vm.animate = true;
-        }, 300)
-	}
-
-    if(patentIds.length > 0) {
-        $scope.$emit('phaseChange', {phase: 'green'});
-    }
-
-    $scope.$on('phaseChange', function(e, o){
-        $scope.$broadcast('updatePhase', {phase: o.phase});
-    })
 
     $scope.$on('updatePatent', function(e, o){
         $scope.$broadcast('updateCost');

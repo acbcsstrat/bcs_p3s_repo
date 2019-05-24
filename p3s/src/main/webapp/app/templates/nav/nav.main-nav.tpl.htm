@@ -1,20 +1,19 @@
 <div class="fade long-fade show" data-ng-if="$ctrl.timeLoaded"> <!--top nav-->
     <div layout="row" class="closed-sidenav d-flex justify-content-between border-grey-xs--btm">
-		<span class="d-flex cursor-pointer" data-ng-click="$ctrl.toggleLeft()">
+		<span class="d-flex cursor-pointer m-r-lg align-items-center" data-ng-click="$ctrl.toggleLeft()">
 	    	<i class="fas fa-bars fa-2x txt-black" ></i>
 <!-- 	    	<i class="fas fa-bars fa-2x  txt-black"></i> -->
 		    <p class="txt-black m-l-sm">Menu</p>
 		</span>
-    	
-		<div class="d-flex justify-content-between align-items-center">
-			<span class="m-r-md font-h4 txt-black"><span class="font-weight-bold">EST:</span> {{$ctrl.estTime}}</span> 
-			<span class="font-h4 txt-black"><span class="font-weight-bold">UTC:</span> {{$ctrl.utcTime}}</span>
-		</div>		
-		<div class="d-flex justify-content-between align-items-center">
-			<span class="m-r-md font-h4 txt-black"><span class="font-weight-bold m-r-xs">USD - EUR</span>{{$ctrl.fxRate}}</span> 
-		</div>
-		<div class="d-flex justify-content-between align-items-center">
-		</div>
+    	<div class="d-flex">
+			<div class="d-flex justify-content-between align-items-center m-r-lg">
+				<span class="m-r-xs font-h4 txt-black"><span class="font-weight-bold">EST:</span> {{$ctrl.estTime}}</span> 
+				<span class="font-h4 txt-black"><span class="font-weight-bold">UTC:</span> {{$ctrl.utcTime}}</span>
+			</div>		
+			<div class="d-flex justify-content-between align-items-center">
+				<span class="m-r-md font-h4 txt-black"><span class="font-weight-bold m-r-xs">USD - EUR</span>{{$ctrl.fxRate}}</span> 
+			</div>
+    	</div>
 		<div class="d-flex justify-content-end align-items-center">
 			<div class="d-flex justify-content-between align-items-center m-r-md">			
 				<i class="far fa-info-circle fa-2x cursor-pointer" data-ng-click="$ctrl.openGuide()"></i>

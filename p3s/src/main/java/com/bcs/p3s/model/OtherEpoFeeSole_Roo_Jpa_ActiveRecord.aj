@@ -14,7 +14,7 @@ privileged aspect OtherEpoFeeSole_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager OtherEpoFeeSole.entityManager;
     
-    public static final List<String> OtherEpoFeeSole.fieldNames4OrderClauseFilter = java.util.Arrays.asList("filingFee_EUR", "supplementarySearchFee_EUR", "designationStatesFee_EUR", "extensionFee_BA_EUR", "extensionFee_ME_EUR", "validationFee_MA_EUR", "validationFee_MD_EUR", "validationFee_TN_EUR", "validationFee_KH_EUR", "examinationFee_EUR", "claimsFee1_EUR", "claimsFee2_EUR", "excessPagesFee_EUR");
+    public static final List<String> OtherEpoFeeSole.fieldNames4OrderClauseFilter = java.util.Arrays.asList("filingFee_EUR", "supplementarySearchFee_EUR", "designationStatesFee_EUR", "extensionFee_BA_EUR", "extensionFee_ME_EUR", "validationFee_MA_EUR", "validationFee_MD_EUR", "validationFee_TN_EUR", "validationFee_KH_EUR", "examinationFee_EUR", "examinationReducedFee_EUR", "claimsFee1_EUR", "claimsFee2_EUR", "excessPagesFee_EUR");
     
     public static final EntityManager OtherEpoFeeSole.entityManager() {
         EntityManager em = new OtherEpoFeeSole().entityManager;

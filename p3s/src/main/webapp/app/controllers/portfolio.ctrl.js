@@ -6,22 +6,22 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     var vm = this;
     vm.pageTitle = 'Portfolio';
+
     $scope.portfolioData = patents;
     vm.stateParams = $stateParams.patentId; 
     vm.rowSelect = rowSelect;
     vm.date = new Date();   
     vm.updateCategory = updateCategory;
     vm.panelActive = true; 
-    vm.getStatus = getStatus;
-    vm.getCurrColour = getCurrColour;
-    vm.actionStatus = actionStatus;
     vm.toggleAll = toggleAll;
     vm.sortType = sortType;
     vm.sortReverse  = false;
     vm.selectedSortType = 'ep_ApplicationNumber';
+    vm.select = select;
+    vm.selected = 0;
 
     $timeout(function(){
-      vm.animate = true;
+      vm.portfolioLoaded = true;
     }, 300);
 
     var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available', 'Epct being generated', 'Payment in progress', 'EPO instructed', 'Too early', 'Too late'];
@@ -37,17 +37,21 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       currentStageColour: {}
     }
 
-    function actionStatus(text) {
-      return organiseTextService.actionStatus(text);
+    function init() {
+      patents.map(function(item, i){
+        item.action = organiseTextService.actionStatus(item.serviceStatus) ? true : false;
+        item.uiStatus = organiseTextService.uiStatus(item.serviceStatus);
+        if(item.serviceList.length > 0) {
+          item.cssCurrent = organiseColourService.getCurrColour(item.serviceList[0].currentStageColour, 'text')
+          item.cssNext = organiseColourService.getCurrColour(item.serviceList[0].nextStageColour, 'text')
+        }
+      }) 
     }
 
-    function getStatus(text) {
+    init()
 
-      return organiseTextService.uiStatus(text);
-    }
-
-    function getCurrColour(color, type) {
-      return organiseColourService.getCurrColour(color, type)
+    function select(i) {
+      vm.selected = i;
     }
 
     function uniqueArray(array) {
@@ -212,10 +216,11 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     };
 
     function rowSelect(event, patent){
+      
         if(!$(event.target).hasClass('cartbtn')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].id; //gets data from data-id
-              $state.go('portfolio.patent.patent-info', {patentId: patent.id}, {reload: false})            
+              $state.go('portfolio.patent', {patentId: patent.id}, {reload: false})            
         }
         if($(event.target).hasClass('cartbtn')) {
             for(var i = 0; i < patent.serviceList.length; i++) {

@@ -81,6 +81,13 @@ public class OtherEpoFeeSole {
 
 
     /**
+     * Charge this (lower) exam fee if the search fee is being charged
+     */
+    @NotNull
+    private BigDecimal examinationReducedFee_EUR;
+
+
+    /**
      * Fee payable for each Claim #15 - #50, inclusive
      */
     @NotNull

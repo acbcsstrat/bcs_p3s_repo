@@ -88,6 +88,14 @@ privileged aspect OtherEpoFeeSole_Roo_JavaBean {
         this.examinationFee_EUR = examinationFee_EUR;
     }
     
+    public BigDecimal OtherEpoFeeSole.getExaminationReducedFee_EUR() {
+        return this.examinationReducedFee_EUR;
+    }
+    
+    public void OtherEpoFeeSole.setExaminationReducedFee_EUR(BigDecimal examinationReducedFee_EUR) {
+        this.examinationReducedFee_EUR = examinationReducedFee_EUR;
+    }
+    
     public BigDecimal OtherEpoFeeSole.getClaimsFee1_EUR() {
         return this.claimsFee1_EUR;
     }

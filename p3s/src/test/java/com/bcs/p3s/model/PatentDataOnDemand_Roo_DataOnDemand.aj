@@ -73,8 +73,8 @@ privileged aspect PatentDataOnDemand_Roo_DataOnDemand {
     
     public void PatentDataOnDemand.setClientRef(Patent obj, int index) {
         String clientRef = "clientRef_" + index;
-        if (clientRef.length() > 30) {
-            clientRef = clientRef.substring(0, 30);
+        if (clientRef.length() > 15) {
+            clientRef = clientRef.substring(0, 15);
         }
         obj.setClientRef(clientRef);
     }

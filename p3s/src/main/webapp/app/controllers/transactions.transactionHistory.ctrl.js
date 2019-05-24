@@ -9,7 +9,7 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
     vm.pageTitle = 'Transaction History';
 
     $timeout(function() {
-        vm.animate = true;
+        vm.transactionsLoaded = true;
     }, 300);
 
     vm.tableData = transactionHistory;
@@ -23,7 +23,7 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
     vm.rowSelect = rowSelect;
     vm.selectedSortType = 'p3S_TransRef';
     fetchData();
-
+    console.log(vm.tableData)
     function fetchData() {
 
         transactionHistory.forEach(function(data){

@@ -1,8 +1,8 @@
-angular.module('ppApp').controller('fxChartCtrl', fxChartCtrl);
+angular.module('ppApp').controller('dbfxChartCtrl', dbfxChartCtrl);
 
-fxChartCtrl.$inject = ['$scope', '$timeout', 'patentPhasesService', 'fxRatesMonth'];
+dbfxChartCtrl.$inject = ['$scope', '$timeout', 'patentPhasesService', 'fxRatesMonth'];
 
-function fxChartCtrl($scope, $timeout, patentPhasesService, fxRatesMonth) {
+function dbfxChartCtrl($scope, $timeout, patentPhasesService, fxRatesMonth) {
 
     var vm = this;
 

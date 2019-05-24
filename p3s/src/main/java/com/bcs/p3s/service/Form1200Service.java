@@ -16,6 +16,7 @@ import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.scrape.model.Form1200Record;
 
 public interface Form1200Service {
@@ -105,5 +106,8 @@ public interface Form1200Service {
 	 */
 	public Epct findEpct(long epctId);
 
-	
+
+	// misplaced, but appropriate for FileUpDownController
+	public Renewal findRenewal(long renewalId);
+
 }

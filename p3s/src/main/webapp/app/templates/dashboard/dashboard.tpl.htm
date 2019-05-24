@@ -1,13 +1,4 @@
-<div data-ng-hide="$ctrl.animate" class="page-loading animate-show animate-hide h-100">
-	<div class="screen-load">
-		<div class="row m-b-md">
-			<div class="col-xl-12 text-center">
-				<img src="assets/imgs/icons/spinner-loader-sm.gif">
-			</div>
-		</div>
-	</div>
-</div>
-<div data-ng-show="$ctrl.animate" class="animate-show m-b-xl">
+<div data-ng-show="$ctrl.dashboardLoaded" class="animate-show m-b-xl">
 	<div class="row">
 		<div class="col-sm-12">
 			<h1 class="font-h1" data-ng-bind="$ctrl.pageTitle"></h1>
@@ -18,10 +9,10 @@
 			<div ui-view="colourkeywidget" class="h-100"></div>
 		</div> -->
 		<div class="col-md-12 col-lg-12 col-xl-7">
-			<div ui-view="renewalswidget" class="h-100"></div>
+			<div ui-view="actionsavailable" class="h-100"></div>
 		</div>	            
 		<div class="col-xl-5 d-none d-xl-flex flex-column">
-			<div ui-view="fxrateswidget" class="h-100"></div>
+			<div ui-view="actioncost" class="h-100"></div>
 		</div>		
 
 	</div>
@@ -30,7 +21,7 @@
 			<div ui-view="recentactivitywidget" class="h-100"></div>
 		</div>		
  		<div class="col-md-6 col-lg-6 d-xl-none">
-			<div ui-view="fxrateswidgetmd" class="h-100"></div>
+			<div ui-view="actioncostmd" class="h-100"></div>
 		</div>		
 		<div class="col-md-6 col-lg-6 col-xl-5">
 			<div ui-view="graphdonutwidget" class="h-100"></div>
@@ -41,7 +32,4 @@
 			<div ui-view="fxchartwidget" class="h-100"></div>
 		</div>
 	</div>
-<!-- 	<div class="row">
-
-	</div> -->
 </div>

@@ -36,15 +36,15 @@
 
    	</head>
 
-	<body class="bg-light-grey"> 
-      	<div class="container-pre-app d-flex justify-content-center align-items-center">
-         	<div class="container-pre-app__center-box-40 p-a-sm">
-          		<div class="row m-b-sm">
-                     <div class="col-md-12 d-flex justify-content-center align-items-center flex-column">
-                        <div class="m-b-sm">
-                           <img src="assets/imgs/logos/PP_icon_lg.png">
-                        </div>
+   <body class="bg-light-grey2">
+      <div class="d-flex justify-content-center align-items-center content-panel">
+         <div class="container-pre-app__center-box-40">
+            <div class="content-panel__body bg-white">
+         		<img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-t-xs m-l-xs">
+               	<div class="row m-b-sm">
+                  	<div class="col-md-12 d-flex justify-content-between align-items-center">
                         <h1 class="font-weight-bold font-h1">Reset Password</h1>
+                        <a class="btn btn-block btn--lg btn--green pill-radius m-t-sm" href="/p3sweb/login">Go to Login</a>
                      </div>
           		</div>
           		<div id="initialResetPassForm">
@@ -78,38 +78,25 @@
 					</form>   	          			
           		</div>
 				<div id="resetPassSuccess" class="hide-before">
-   					<div class="content-panel">
-   						<div class="content-panel__body">
-	   						<div class="row">
-	   							<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-	   								<h3 class="font-h3 font-weight-medium m-b-sm">Successful</h3>
-	   								<p class="font-body text-center">You have successfully reset your password.</p>
-	   							</div>
-	   						</div>
-	   						<div class="row">
-	   							<div class="col-md-8 offset-md-2">
-   									<a class="btn btn-block btn--lg btn--green pill-radius m-t-sm" href="/p3sweb/login">Go to Login</a>
-	   							</div>
-	   						</div>
-   						</div>
-   					</div>
+					<div class="row">
+						<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+							<h3 class="font-h3 font-weight-medium m-b-sm">Successful</h3>
+							<p class="font-body text-center">You have successfully reset your password.</p>
+						</div>
+						<div class="row">
+							<div class="col-md-8 offset-md-2">
+								<a class="btn btn-block btn--lg btn--green pill-radius m-t-sm" href="/p3sweb/login">Go to Login</a>
+							</div>
+						</div>
+					</div>
           		</div>
 				<div id="resetPassFail" class="hide-before">
-   					<div class="content-panel">
-   						<div class="content-panel__body">
-	   						<div class="row">
-	   							<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-									<h3 class="font-h3 font-weight-medium m-b-sm">Unsuccessful</h3>
-	   								<p class="font-body text-center">We've encoutered a problem whilst attempting to reset your password.  Please try again.  If it's still a problem then please let us know support@ip.place</p>
-	   							</div>
-	   						</div>
-                            <div class="row">
-                                <div class="col-md-8 offset-md-2">
-                                    <a class="btn btn-block btn--lg btn--green pill-radius m-t-sm" href="/p3sweb/login">Go to Login</a>
-                                </div>
-                            </div>                            
-	   					</div>
-   					</div>
+					<div class="row">
+						<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+							<h3 class="font-h3 font-weight-medium m-b-sm">Unsuccessful</h3>
+							<p class="font-body text-center">We've encoutered a problem whilst attempting to reset your password.  Please try again.  If it's still a problem then please let us know support@ip.place</p>
+						</div>
+					</div>                     
           		</div>
          	</div>
       	</div>

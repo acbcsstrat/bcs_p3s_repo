@@ -36,6 +36,7 @@ import com.bcs.p3s.model.Form1200;
 import com.bcs.p3s.model.Form1200Fee;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.model.Renewal;
 import com.bcs.p3s.scrape.model.Form1200Record;
 import com.bcs.p3s.util.config.P3SPropertyException;
 import com.bcs.p3s.util.config.P3SPropertyNames;
@@ -618,7 +619,18 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	}
 
 	
-	
+	// misplaced, but appropriate for FileUpDownController
+	public Renewal findRenewal(long renewalId) {
+
+		Renewal renewal = Renewal.findRenewal(renewalId);
+		if (renewal==null) { log().error("findRenewal("+renewalId+") yields null. from "+CLASSNAME); return null; }
+		
+		checkThisIsMyPatent(renewal.getPatent().getId(), "from findRenewal("+renewalId+") in "+CLASSNAME);
+		
+		return renewal;
+	}
+
+
 	
 	
 	// End of public methods

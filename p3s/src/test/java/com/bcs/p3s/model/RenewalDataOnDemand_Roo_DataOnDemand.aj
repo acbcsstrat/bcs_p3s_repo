@@ -50,6 +50,7 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
         setActivePaymentId(obj, index);
         setPatent(obj, index);
         setRenewalAttemptsMade(obj, index);
+        setRenewalBlobId(obj, index);
         setRenewalDueDate(obj, index);
         setRenewalFee(obj, index);
         setRenewalPeriod(obj, index);
@@ -71,6 +72,11 @@ privileged aspect RenewalDataOnDemand_Roo_DataOnDemand {
     public void RenewalDataOnDemand.setRenewalAttemptsMade(Renewal obj, int index) {
         Integer renewalAttemptsMade = new Integer(index);
         obj.setRenewalAttemptsMade(renewalAttemptsMade);
+    }
+    
+    public void RenewalDataOnDemand.setRenewalBlobId(Renewal obj, int index) {
+        Long renewalBlobId = new Integer(index).longValue();
+        obj.setRenewalBlobId(renewalBlobId);
     }
     
     public void RenewalDataOnDemand.setRenewalDueDate(Renewal obj, int index) {

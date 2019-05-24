@@ -5,43 +5,29 @@ costAnalysisService.$inject = ['$http', '$q'];
 function costAnalysisService($http, $q) {
 
     var factory = {
-        fetchEuroPctCa:  fetchEuroPctCa,
-        fetchRenewalCa: fetchRenewalCa
+        fetchCa: fetchCa
     }
 
-    function fetchEuroPctCa(id) {
-
+    function fetchCa(patent) {
+        
+        var array = [];
         var deferred = $q.defer();
-        $http.get(ppdomain+'rest-form1200-cost-analysis/'+id)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                deferred.reject(errResponse);
+        patent.portfolioUI.serviceList.forEach(function(data){
+            if(data.serviceType == 'Form1200') {
+                array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patent.id))
+
             }
-        );
-
-        return deferred.promise;
-
-    };
-
-    function fetchRenewalCa(id) {
-
-        var deferred = $q.defer();
-        $http.get(ppdomain+'rest-cost-analysis/'+id)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                deferred.reject(errResponse);
+            if(data.serviceType == 'Renewal') {
+                array.push($http.get(ppdomain+'rest-cost-analysis/'+patent.id))
             }
-        );
+        })
 
-        return deferred.promise;
+        return $q.all(array).then(function(data){
+            return data;
+        })
 
-    };    
+        // return 
+    }
 
     return factory;
 

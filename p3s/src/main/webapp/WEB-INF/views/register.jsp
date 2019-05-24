@@ -37,35 +37,33 @@
 
     </head>
 
-    <body class="bg-light-grey2 hide-before"> 
-        <div class="container-pre-app d-flex justify-content-center align-items-center">
-            <div class="container-pre-app__center-box-40 p-a-sm">
-                <div class="row m-b-sm">
-                     <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-center align-items-center flex-column">
-                        <div class="m-b-sm">
-                           <img src="assets/imgs/logos/PP_icon_lg.png" alt="patent place logo">
-                        </div>
-                        <h1 class="font-weight-bold font-h1">Register</h1>
+   <body class="bg-light-grey2"> 
+      <div class="d-flex justify-content-center align-items-center content-panel">
+         <div class="container-pre-app__center-box-40">
+            <div class="content-panel__body bg-white">
+                <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-md">   
+               <div class="row m-b-md">
+                  <div class="col-md-12 d-flex justify-content-between align-items-center">
+                        <h1 class="font-weight-bold font-h2">Register</h1>
+                        <div class="d-flex">                     
+                            <p class="font-body font-weight-medium m-r-xs">Do you have an account already?</p>
+                            <a href="/p3sweb/login" class="inline-link">Login</a>
+                        </div>                        
                      </div>
                 </div>
                 <div id="register-intro">
-                    <div class="row m-b-sm">
-                        <div class="col-md-12 col-lg-12 col-xl-12 text-center">
-                            <a href="/p3sweb/login" class="font-body txt-phase-green font-weight-medium inline-link">Already have user account set up?</a>
-                        </div>
-                    </div>
-                    <div class="row m-b-md" id="divQn">
-                        <div class="col-md-12 col-lg-12 col-xl-12 text-center">
-                            <span class="font-body font-weight-medium m-r-md">Firm already registered?</span>
+                    <div class="row" id="divQn">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <span class="font-body font-weight-medium m-r-md">Has your firm already registered?</span>
                             <label class="form-check-label font-body m-r-sm">Yes<input class="m-l-xs" type="radio" name="typeRegister" id="subRegister"></label>
                             <label class="form-check-label font-body">No<input class="m-l-xs" type="radio" name="typeRegister" id="initalRegister"></label>
                         </div>
                     </div>                  
                 </div>
 
-                <div id="initialRegistration">
+                <div id="initialRegistration" class="m-t-md d-none">
                     <div class="row">
-                        <div class="col-xl-8 offset-xl-2">
+                        <div class="col-xl-12">
                             <form name="register" id="registerForm" class="form" data-parsley-validate="">
                                 <div class="form-section current m-b-sm">
                                     <div class="form-group row">
@@ -207,98 +205,82 @@
                     </div>
                 </div>
 
-                <div id="register-success">
-                    <div class="content-panel bg-white">
-                        <div class="content-panel__body">
-                            <div class="row">
-                                <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
-                                    <h3 class="font-h3 txt-phase-green m-b-sm">Successful</h3>
-                                    <p class="font-body text-center w-100">You have successfully registered your details. Please check your inbox to validate your account.</p>
-                                </div>
-                            </div>                              
+                <div id="register-success" class="d-none">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
+                            <h3 class="font-h3 txt-phase-green m-b-sm">Successful</h3>
+                            <p class="font-body text-center w-100">You have successfully registered your details. Please check your inbox to validate your account.</p>
                         </div>
-                    </div>
+                    </div>                              
                 </div>
 
-                <div id="register-failure">
-                    <div class="content-panel bg-white">
-                        <div class="content-panel__body">
-                            <div class="row">
-                                <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
-                                    <h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
-                                    <p class="font-body text-center w-100">We were unable to register your details. Please try <a class="inline-link font-weight-medium" href="/p3sweb/register">registering</a> again. If it's still a problem then please let us know : support@ip.place</p>
-                                </div>
-                            </div>
+                <div id="register-failure" class="d-none">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
+                            <h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
+                            <p class="font-body text-center w-100">We were unable to register your details. Please try <a class="inline-link font-weight-medium" href="/p3sweb/register">registering</a> again. If it's still a problem then please let us know : support@ip.place</p>
                         </div>
                     </div>
                 </div>      
 
-                <div id="companyCode">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-center flex-column align-items-center">
-                            <div class="container-pre-app__center-box-70">
-                                <form name="companyCodeForm" id="companyCodeForm">
-                                    <div class="m-b-md">
-                                        <div class="form-group row">
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <input data-parsley-type="alphanum" class="form-control pill-radius font-body" name="businessNumber" placeholder="Business Number" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <input class="form-control pill-radius font-body" name="businessPin" placeholder="Business PIN" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
-                                            </div>
-                                        </div>
-                                        <div id="businessValidation">
-                                        </div>                                          
+                <div id="companyCode" class="d-none">
+                    <div class="row m-t-md">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <form name="companyCodeForm" id="companyCodeForm">
+                                <div class="form-group row">
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <input data-parsley-type="alphanum" class="form-control pill-radius font-body" name="businessNumber" placeholder="Business Number" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
                                     </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <input class="form-control pill-radius font-body" name="businessPin" placeholder="Business PIN" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+                                    </div>
+                                </div>
+                                <div id="businessValidation">
+                                </div>                                          
 
-                                    <div class="form-group row">
-                                        <div class="col-md-12 col-xl-12 text-right">
-                                            <input type="submit" name="companyCodeSubmit" id="companyCodeSubmit" class="btn btn--lg btn--green pill-radius" value="Search">
-                                        </div>
+                                <div class="form-group row m-t-md">
+                                    <div class="col-md-12 col-xl-12 text-right">
+                                        <input type="submit" name="companyCodeSubmit" id="companyCodeSubmit" class="btn btn--lg btn--green pill-radius" value="Search">
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div id="businessConfirm">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-center flex-column align-items-center">
-                            <div class="container-pre-app__center-box-70">                          
-                                <div class="m-b-xs text-xl-center">
-                                    <p class="font-h4 font-weight-medium">Details Found</p>
-                                </div>
-                                <div class="m-b-sm">
-                                    <table class="font-body">
-                                        <tr>
-                                            <td class="bg-white pill-radius form-control font-body m-b-sm" id="businessNameConfirm"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bg-white form-control font-body pill-radius-textarea">
-                                                <span id="businessAddressStreetConfirm"></span><br>
-                                                <span id="businessAddressCityConfirm"></span><br>
-                                                <span id="businessAddressStateConfirm"></span><br>
-                                                <span id="businessAddressZipConfirm"></span>
-                                            </td>
-                                        </tr>                                           
-                                    </table>                                    
-                                </div>
-                                <div class="row m-b-sm">
-                                    <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-between align-items-center">
-                                        <p class="font-weight-medium font-body m-r-sm">Are the details correct?</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-md-between justify-content-lg-end justify-content-xl-end">
-                                        <input type="button" id="businessConfirmSubmit" name="businessConfirmSubmit" class="btn btn--lg btn--green pill-radius m-r-sm" value="Yes">
-                                        <input type="button" id="businessCancel" name="businessCancel" class="btn btn--lg btn--red pill-radius" value="No">
-                                    </div>              
-                                </div>
+                <div id="businessConfirm" class="d-none">
+                    <div class="row m-t-md">
+                        <div class="col-md-12 col-lg-12 col-xl-12">                         
+                            <div class="m-b-xs text-xl-center">
+                                <p class="font-h4 font-weight-medium">Details Found</p>
                             </div>
-                        </div>  
-                    </div>
+                            <div class="m-b-sm">
+                                <table class="font-body">
+                                    <tr>
+                                        <td class="bg-white pill-radius form-control font-body m-b-sm" id="businessNameConfirm"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-white form-control font-body pill-radius-textarea">
+                                            <span id="businessAddressStreetConfirm"></span><br>
+                                            <span id="businessAddressCityConfirm"></span><br>
+                                            <span id="businessAddressStateConfirm"></span><br>
+                                            <span id="businessAddressZipConfirm"></span>
+                                        </td>
+                                    </tr>                                           
+                                </table>                                    
+                            </div>
+                            <div class="row m-b-sm">
+                                <div class="col-md-12 col-lg-12 col-xl-6 d-flex justify-content-between align-items-center">
+                                    <p class="font-weight-bold font-body m-r-sm">Are the details correct?</p>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-6 d-flex justify-content-md-between justify-content-lg-end justify-content-xl-end">
+                                    <input type="button" id="businessConfirmSubmit" name="businessConfirmSubmit" class="btn btn--lg btn--green pill-radius m-r-sm" value="Yes">
+                                    <input type="button" id="businessCancel" name="businessCancel" class="btn btn--lg btn--red pill-radius" value="No">
+                                </div>              
+                            </div>
+                        </div>
+                    </div>  
                 </div>
             </div>                              
         </div>
@@ -424,12 +406,12 @@
             
                 window.Parsley.addValidator('validateCompanyName', {
                     validateString: function(value) {
-                        if(!value.match('^[a-zA-z0-9\'\+\.\(\) -]*$')) {
+                        if(!value.match('^[a-zA-z0-9\'\+\.\(\), -]*$')) {
                             return false;
                         }
                     },
                     messages: {
-                        en: 'Only letters, numbers, \' , -, () and spaces are valid charcters in this field.',
+                        en: 'Only letters, numbers, commas, \' , -, () and spaces are valid charcters in this field.',
                     }
                 });
 
@@ -482,12 +464,6 @@
                         en: 'Only letters are valid charcters in this field.',
                     }
                 }); 
-
-                $('#register-success').hide();
-                $('#register-failure').hide();
-                $('#initialRegistration').hide();
-                $('#companyCode').hide();
-                $('#businessConfirm').hide();
 
             });
 
@@ -603,11 +579,11 @@
                 $('input[name=typeRegister]').change(function(e){
                     if(e.target.id == 'subRegister') {
 
-                        $('#initialRegistration').hide();
-                        $('#initialRegistrationSubmit').hide();
+                        $('#initialRegistration').addClass('d-none')
+                        $('#initialRegistrationSubmit').addClass('d-none')
 
-                        $('#subRegistrationSubmit').show();
-                        $('#companyCode').show();
+                        $('#subRegistrationSubmit').removeClass('d-none');
+                        $('#companyCode').removeClass('d-none');
 
                         if(registerForm) {
                             registerForm.attr('id', 'subUserForm').attr('id', 'subUserForm');
@@ -615,11 +591,11 @@
 
                     } else {
                         
-                        $('#initialRegistration').show();
-                        $('#initialRegistrationSubmit').show(); 
-                        $('#subRegistrationSubmit').hide();
-                        $('#companyCode').hide();
-                        $('#businessConfirm').hide();                   
+                        $('#initialRegistration').removeClass('d-none');
+                        $('#initialRegistrationSubmit').removeClass('d-none');
+                        $('#subRegistrationSubmit').addClass('d-none');
+                        $('#companyCode').addClass('d-none')
+                        $('#businessConfirm').addClass('d-none')                  
 
                         if(registerForm) {
                             registerForm.attr('id', 'registerForm');
@@ -713,7 +689,7 @@
                                 $('#companyCodeSubmit').attr('disabled', true);
                                 $('#companyCodeSubmit').parent().closest('div.form-group').hide();
                             }
-                            $('#businessConfirm').show();
+                            $('#businessConfirm').removeClass('d-none');
                             $('#businessNameConfirm').html(response.businessName);
                             $('#businessAddressStreetConfirm').html(response.street);
                             $('#businessAddressCityConfirm').html(response.city);
@@ -747,8 +723,8 @@
 
                 $('#businessConfirmSubmit').click(function(e){
                     e.preventDefault();
-                    $('#businessConfirm, #subRegistration, #companyCode, #divQn').hide();
-                    $('#initialRegistration').show();
+                    $('#businessConfirm, #subRegistration, #companyCode, #divQn').addClass('d-none');
+                    $('#initialRegistration').removeClass('d-none');
                     $('#businessDetails input').each(function(i){
                         $(this).prop('readonly', true);
                     })

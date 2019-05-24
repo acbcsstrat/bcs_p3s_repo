@@ -1,11 +1,10 @@
 <div class="alert alert-warning" role="alert" data-ng-show="ngCart.getTotalItems() === 0">
     <span class="font-body">Your cart is empty</span>
 </div>
-
 <div class="row">
     <div class="col-md-12">
-        <div class="table-responsive-md" data-ng-show="ngCart.getTotalItems() > 0">
-            <table class="table t-data t-data--border">
+        <div class="table-panel scrollable-area" data-ng-if="ngCart.getTotalItems() > 0">
+            <table class="table t-data table-scroll">
                 <thead>
                     <tr class="font-body font-weight-bold">
                         <th class="t-data__th text-left">Application No.</th>

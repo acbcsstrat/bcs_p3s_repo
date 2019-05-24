@@ -1,13 +1,13 @@
 angular.module('ppApp').controller('graphDonutCtrl', graphDonutCtrl);
 
-graphDonutCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'patentPhasesService'];
+graphDonutCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'dashboardService'];
 
-function graphDonutCtrl( $scope, $timeout, patentIds, patentPhasesService) {
+function graphDonutCtrl( $scope, $timeout, patentIds, dashboardService) {
 
 	var vm = this;
 
 	if(patentIds.length > 0) {
-		vm.patentData = patentPhasesService.patentNumbers
+		vm.patentData = dashboardService.getPatents;
 		$timeout(function() { //required to load correct size of donut graph in view
       		vm.donutOptions = {
 	            chart: {
@@ -27,23 +27,6 @@ function graphDonutCtrl( $scope, $timeout, patentIds, patentPhasesService) {
 	                donutRatio: 0.60,
 					duration: 500,
 	                showLabels: false,
-	                pie: {
-	                  	dispatch: {
-		                    elementClick: function(e) {
-		                    	
-								var key = e.data.key;
-
-								$timeout(function(){ //timeout needed to reset carousel content. Colour key emit however is not encapsulated within a timeout method
-							        patentPhasesService.setPatents(key);
-							        $scope.$emit('phaseChange', {phase: key})	
-								}, 10)
-
-	                    	}
-	                	},
-	                    startAngle: function(d) { return d.startAngle - Math.PI },
-	                    endAngle: function(d) { return d.endAngle - Math.PI }
-	                },
-	                growOnHover: true,
 	                showLegend: false,
 	                valueFormat: function(d) {
 	                	return d;
@@ -84,9 +67,13 @@ function graphDonutCtrl( $scope, $timeout, patentIds, patentPhasesService) {
 	        	}
 	        ]
 
-	
 
-  		}, 400);
+	            var evt = document.createEvent('UIEvents');
+	            evt.initUIEvent('resize', true, false, window, 0);
+	            window.dispatchEvent(evt);
+
+
+  		}, 1000);
 
 	} //if patents end	
 }

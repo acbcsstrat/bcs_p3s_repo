@@ -27,7 +27,7 @@ import javax.persistence.ManyToMany;
 
 // Note! : Payment was formerly called Transaction  (But Roo wouldn't allow that term)
 // Hence you'll find numerous references to 'the transaction' throughout the code.
-// Not least as Transaction is a better description of the role of the object. Payment implies just the money. 
+// Not least as Transaction is a better description of the role of the object. Payment implies just the money.
 
 @RooJavaBean
 @RooToString
@@ -38,7 +38,7 @@ public class Payment {
      */
     //@NotNull
     private String P3S_TransRef;
- 
+
     /**
      * For security do not send this to the front end
      */
@@ -71,7 +71,7 @@ public class Payment {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date transTargetEndDate;
-    
+
     /**
      */
     @NotNull
@@ -107,14 +107,14 @@ public class Payment {
     private Boolean hasFailed;
 
     /**
-     * If transaction fails, holds 1 of the 3 codes agreed with Moneycorp : 
-     * see P3SAbstractEnum
+     * If transaction fails, holds 1 of the 3 codes agreed with Moneycorp :
+     * see Cron:MoneycorpPaymentStatusEnum (Zaph - does p3sweb have an enum for this ?)
      */
     private String MC_failCode;
 
     /**
-     * If transaction fails store the reason. Else null. Suitable for display to customer. 
-     * May also be null unless MC_failCode is 'other' 
+     * If transaction fails store the reason. Else null. Suitable for display to customer.
+     * May also be null unless MC_failCode is 'other'
      */
     private String failureReason;
 
@@ -167,14 +167,14 @@ public class Payment {
     @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private List<Epct> epcts = new ArrayList<Epct>();
 
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
     // superceded by below
 	//// DIY finder
 	//// Approach: All renewals in a transaction must be from the same business
@@ -198,7 +198,7 @@ public class Payment {
 	//    }
 	//    return result;
 	//}
-    
+
     // DIY finder
     // Approach: For ALL payments, Use Payment:initiatedByUser, locate users business, compare
     public static List<Payment> findPaymentsByBusiness(Business business) {
@@ -208,14 +208,14 @@ public class Payment {
         for (Payment someonesPayment : everyonesPayments) {
         	P3SUser aUser = someonesPayment.initiatedByUserId;
         	long thisPaymentsBusinessId = aUser.getBusiness().getId();
-        	
+
             if (thisPaymentsBusinessId == business.getId()) {
                 result.add(someonesPayment);
             }
         }
         return result;
     }
-    
+
     public static List<Payment> findPaymentsNotYetNotifiedToMoneycorp() {
         EntityManager em = Payment.entityManager();
         TypedQuery q = em.createQuery("SELECT o FROM Payment AS o WHERE o.sentToMc IS NULL", Payment.class);
@@ -228,7 +228,7 @@ public class Payment {
         return (List<Payment>) q.getResultList();
     }
 
-    
+
     // Setters pushed to support P3S 'Enums'
     public void setTransType(String transType) {
         this.transType = (new PaymentTypeEnum(transType)).toString();
@@ -237,19 +237,19 @@ public class Payment {
     public void setLatestTransStatus(String latestTransStatus) {
         this.latestTransStatus = (new PaymentStatusEnum(latestTransStatus)).toString();
     }
-    
+
     public void setMC_failCode(String MC_failCode) {
-    	if (MC_failCode==null) this.MC_failCode = null; 
+    	if (MC_failCode==null) this.MC_failCode = null;
     	else
     		this.MC_failCode = (new McFailCodeEnum(MC_failCode)).toString();
     }
 
-    
+
     @Transactional
-    public Payment persist() {  
-    	Payment payment = new Payment();  
+    public Payment persist() {
+    	Payment payment = new Payment();
     	EntityManager em = this.entityManager();
-        em.persist(this); 
+        em.persist(this);
         payment = Payment.findPayment(this.getId());
         return payment;
     }
@@ -258,5 +258,5 @@ public class Payment {
     	return this.MC_failCode;
     }
 
-    
+
 }
