@@ -1,0 +1,247 @@
+<div class="row m-b-sm">
+    <div class="col-xl-12">
+        <p>Select an action from the drop-down menu below</p>
+    </div>
+</div>
+<div class="row m-b-sm">
+    <div class="col-xl-12">
+        <div class="form-inline">
+            <div class="form-group">                      
+                <label class="font-h4 font-weight-bold text-uppercase m-r-sm">Display fees for: </label>
+                <select name="actions" id="actions" class="form-control" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-init="$ctrl.setFees($ctrl.data.selectedAction.action)"  data-ng-change="$ctrl.setFees($ctrl.data.selectedAction.action)">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-right">
+        <p class="font-h4">1 EUR = {{$ctrl.availableFees.fxRate}} USD</p>
+    </div>  
+</div>
+<div class="m-t-md">
+    <div class="row">
+        <div class="col-md-2 offset-md-6 col-xl-2 offset-xl-6">
+            <p class="font-h4 font-weight-bold m-b-xs text-center">USD</p>
+        </div>
+        <div class="col-md-3 offset-md-1 col-xl-3 offset-xl-1">
+            <p class="font-h4 font-weight-bold m-b-xs text-center">EUR</p>
+        </div>
+    </div>
+    <div class="m-b-sm border-grey-xs--btm"></div>                  
+    <div class="row m-b-xs">
+        <div class="col-md-5 col-xl-5">
+            <p class="font-weight-medium">Official Fee:
+                <i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !panelActive}" data-ng-click="panelActive = !panelActive"></i>
+            </p>
+        </div>
+        <div class="col-md-4 col-xl-4">
+            <p class="text-center">$ {{($ctrl.availableFees.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
+        </div>
+        <div class="col-md-3 col-xl-3">
+            <p class="text-center">&euro; {{($ctrl.availableFees.currentOfficialFeeEUR | number: 2) || '0.00'}}</p>
+        </div>
+        <div class="col-md-12 col-xl-12">
+            <div class="expandcollapse-item">
+                <div class="slideDown m-t-sm" data-ng-init="panelActive = true" data-ng-hide="panelActive">
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Designation fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.designationFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.designationFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Examination fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.examinationFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.examinationFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Excess Page fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.excessPageFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.excessPageFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Filing fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.filingFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.filingFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Renewal Fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.renewalFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.renewalFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Supplmentary Search fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.supplementarySearchFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.supplementarySearchFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Validation State fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.validationFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.validationFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Extension State fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.extensionFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.extensionFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>                                        
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Claims fee 1:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.claimsFee1USD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.claimsFee1EUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>   
+                    <div class="row m-b-sm">
+                        <div class="col-md-5 col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Claims fee 2:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.claimsFee2USD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.claimsFee2EUR | number: 2) || '0.00'}}</p>
+                        </div>                                                                                        
+                    </div>                                                                                                
+                    <div class="border-grey-xs--btm"></div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-b-sm">
+        <div class="col-md-5 col-xl-5">
+            <p class="font-weight-medium">Patent Place Fees:
+                <i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !ppPanelActive}" data-ng-click="ppPanelActive = !ppPanelActive"></i>
+            </p>
+        </div>
+        <div class="col-md-4 col-xl-4">
+            <p class="text-center">$ {{($ctrl.availableFees.ppFeesUSD | number: 2) || '0.00'}}</p>
+        </div>
+        <div class="col-md-3 col-xl-3">
+            <p class="text-center">&euro; {{($ctrl.availableFees.ppFeesEUR | number: 2) || '0.00'}}</p>
+        </div>    
+        <div class="col-xl-12">
+            <div class="expandcollapse-item">
+                <div class="slideDown m-t-sm" data-ng-init="ppPanelActive = true" data-ng-hide="ppPanelActive">
+                    <div class="row m-b-sm">
+                        <div class="col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Processing fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.processingFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.processingFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Express fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.expressFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.expressFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-xl-5">
+                            <p class="font-weight-medium m-l-sm">Urgent fee:</p>
+                        </div>
+                        <div class="col-md-4 col-xl-4">
+                            <p class="text-center">$ {{($ctrl.availableFees.urgentFeeUSD | number: 2) || '0.00'}}</p>
+                        </div>
+                        <div class="col-md-3 col-xl-3">
+                            <p class="text-center">&euro; {{($ctrl.availableFees.urgentFeeEUR | number: 2) || '0.00'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-b-md border-grey-xs--btm"></div>
+    <div class="row m-b-md">
+        <div class="col-md-5 col-xl-5">
+            <p class="font-weight-heavy">Total:</p>
+        </div>
+        <div class="col-md-4 col-xl-4">
+            <p class="text-center">$ {{($ctrl.availableFees.subTotalUSD | number: 2) || '0.00'}}</p>
+        </div>
+        <div class="col-md-3 col-xl-3">
+            <p class="text-center">&euro; {{($ctrl.availableFees.subTotalEUR | number: 2) || '0.00'}}</p>
+        </div>
+    </div>
+    <div class="m-b-md border-grey-xs--btm"></div>
+    <div class="row">
+        <div class="col-md-6 col-xl-6 d-flex justify-content-around align-items-center">
+            <div class="d-flex flex-column align-items-start text-left">
+                <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs">Current cost</span>
+                <p class="font-h3 font-weight-bold" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')">$ {{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD | number: 2}}</p>
+
+            </div>   
+<!--             <div class="align-items-center m-r-xs">
+                <i class="fa fa-chevron-right fa-lg" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].currentStageColour, 'text')"></i>
+            </div>  -->        
+            <div class="d-flex flex-column align-items-start text-left">
+                <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs">Future cost</span>
+                <p class="font-h3 font-weight-bold" data-ng-class="$ctrl.getCurrColour($ctrl.patent.portfolioUI.serviceList[0].nextStageColour, 'text')">$ {{$ctrl.patent.portfolioUI.serviceList[0].nextStageCostUSD | number: 2}}</p>           
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-6 d-flex justify-content-center align-items-start flex-column">
+            <p class="font-h3 font-weight-heavy font-h3--content">Save: <span class="txt-phase-green">$ {{($ctrl.availableFees.savings | number: 2) || '0.00'}}</span></p>
+            <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</span></p>
+        </div>
+    </div>
+</div>
