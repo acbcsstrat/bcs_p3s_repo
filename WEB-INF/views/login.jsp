@@ -50,7 +50,7 @@
                         <a href="/p3sweb/register" class="inline-link">Register</a>
                      </div>
                   </div>
-               </div>               
+               </div>
                <div class="row">
                   <div class="col-md-12">
 
