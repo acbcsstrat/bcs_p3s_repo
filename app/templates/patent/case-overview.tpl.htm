@@ -6,29 +6,31 @@
 	</div>
 </div>
 <div class="row d-flex align-items-center m-b-sm">
-    <div class="col-lg-6 col-xl-4">
-		<p class="font-h2">
-			<span class="font-weight-bold">Application Number:</span> {{$ctrl.patent.ep_ApplicationNumber}}
-		</p>
-    </div>
-    <div class="col-lg-6 col-xl-4">
-		<p class="font-h2">
-			<span class="font-weight-bold">Patent Place Status:</span> <span data-ng-bind="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus)"></span>
-		</p>
-    </div>
-    <div class="col-lg-6 col-xl-4 text-xl-right lg-m-t-sm">
-    	<div data-ng-if="$ctrl.statusesAvailable.length > 0">
-			<p class="font-h2">
-				<span class="font-weight-bold">European Actions available:</span>
-				<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
-					<span class="txt-phase-green">{{service.action}}</span>
-					<span data-ng-if="$ctrl.statusesAvailable.length > 1 && $index == 0">, </span>
-				</span>
-			</p>
+    <div class="col-xl-12 d-flex justify-content-between">
+    	<div>
+			<p class="font-h2 lh-head font-weight-bold">Application Number:</p>
+			<p class="font-h2 lh-head">{{$ctrl.patent.ep_ApplicationNumber}}</p>
+
     	</div>
-    	<p class="font-h2 font-weight-medium" data-ng-if="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus) == 'Manual Processing Only'"><span class="txt-phase-red font-weight-bold">Call</span> +44 203 696 0949</p>
-    	<div data-ng-if="$ctrl.statusesAvailable.length === 0 && !$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus) == 'Manual Processing Only'">
-    		<p class="font-h2 font-weight-medium">No services available</p>
+    	<div class="d-flex">
+    		<div class="m-r-xxxl">			
+				<p class="font-h2 lh-head font-weight-bold">Patent Place Status:<span></span>
+				</p>
+				<p class="font-h2 lh-head text-right" data-ng-bind="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus)"></p>
+    		</div>
+	    	<div data-ng-if="$ctrl.statusesAvailable.length > 0">
+				<p class="font-h2 lh-head font-weight-bold">European Actions available:</p>
+				<p class="font-h2 lh-head text-right">
+					<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
+						<span class="txt-phase-green">{{service.action}}</span>
+						<span data-ng-if="$ctrl.statusesAvailable.length > 1 && $index == 0">, </span>
+					</span>
+				</p>
+		    	<p class="font-h2 lh-head font-weight-medium  text-right" data-ng-if="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus) == 'Manual Processing Only'"><span class="txt-phase-red font-weight-bold">Call</span> +44 203 696 0949</p>
+		    	<div data-ng-if="$ctrl.statusesAvailable.length === 0 && !$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus) == 'Manual Processing Only'">
+		    		<p class="font-h2 lh-head font-weight-medium  text-right">No services available</p>
+		    	</div>
+	    	</div>
     	</div>
     </div>
 </div>
