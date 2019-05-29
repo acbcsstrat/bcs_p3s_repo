@@ -14,13 +14,15 @@
 
 .side-menu .menu-toggle-list a.md-button {
   display: block;
-  padding: 15px 30px 15px 50px;
+  padding: 10px 30px 10px 50px;
   text-transform: none;
   text-rendering: optimizeLegibility;
   // min-height: 5.5rem;
 }
 
 .side-menu .menu-toggle-list .md-button {
+  min-height: auto;
+  line-height: 0;
   display: block;
   padding: 10px 30px;
   text-transform: none;
@@ -53,7 +55,7 @@
   cursor: pointer;
   margin: 0;
   overflow: hidden;
-  padding: 0 30px;
+  padding: 10px 30px;
   text-align: left;
   text-decoration: none;
   white-space: normal;
