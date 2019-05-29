@@ -8,14 +8,12 @@
 .font-body, 
 .tooltip.trackerStep { 
   font-size: $font-normal; 
-  letter-spacing: -0.1px;  
 }
 
 .no-line-height { line-height: 1.2rem!important; }
 
 .font-h4 { 
   font-size: $font-h4;
-  letter-spacing: -0.4px;
   line-height: 1.2rem;
 }
 
@@ -29,7 +27,6 @@
 
 .font-h3 {  
   font-size: $font-h3;
-  letter-spacing: -0.4px;
   line-height: 1.2rem;
   &.font-h3--content {
     line-height: 2.4rem;
@@ -38,14 +35,13 @@
 
 .font-h2 {   
   font-size: $font-h2;
-  letter-spacing: -0.6px;
   line-height: 1.2rem;
 }
 
 .font-h1 {  
   font-size: $font-h1;
-  letter-spacing: -1px;
   line-height: 4.8rem;
+  font-weight: 700;
 }
 
 .font-weight-medium { font-weight: 600; }
