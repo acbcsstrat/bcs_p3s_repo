@@ -13,12 +13,12 @@
 
     	</div>
     	<div class="d-flex">
-    		<div class="m-r-xxxl">			
+    		<div class="">			
 				<p class="font-h2 lh-head font-weight-bold">Patent Place Status:<span></span>
 				</p>
 				<p class="font-h2 lh-head text-right" data-ng-bind="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus)"></p>
     		</div>
-	    	<div data-ng-if="$ctrl.statusesAvailable.length > 0">
+	    	<div data-ng-if="$ctrl.statusesAvailable.length > 0" class="m-l-xxxl">
 				<p class="font-h2 lh-head font-weight-bold">European Actions available:</p>
 				<p class="font-h2 lh-head text-right">
 					<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
@@ -85,14 +85,16 @@
 	                </div>				
 				</div>
 			</div>
-			<div data-ng-if="!$ctrl.servicesAvailable" class="d-flex flex-grow-1 bg-no-chart align-items-center justify-content-center ng-scope">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="text-center flex-column">
-                            <p class="h4 font-weight-medium">Sorry</p>
-                            <p class="h4 font-weight-medium text-center">No cost breakdown currently available</p>
-                        </div>
-                    </div>
+			<div data-ng-if="!$ctrl.servicesAvailable" class="content-panel__body bg-white d-flex d-flex align-items-center">
+				<div class="d-flex flex-grow-1 bg-no-chart align-items-center justify-content-center ng-scope">
+	                <div class="row">
+	                    <div class="col-xl-12">
+	                        <div class="text-center flex-column">
+	                            <p class="h4 font-weight-medium">Sorry</p>
+	                            <p class="h4 font-weight-medium text-center">No cost breakdown currently available</p>
+	                        </div>
+	                    </div>
+	                </div>
                 </div>
 			</div>
 		</div>
