@@ -21,13 +21,14 @@
 	}
 }
 
-.widget-panel .widget-panel__body, .app-guide .app-guide__body { padding: 3rem 3rem;} 
-.widget-panel .widget-panel__head, .app-guide .app-guide__head  { padding: 1.5rem 3rem ;}
+// .widget-panel .widget-panel__body, .app-guide .app-guide__body { padding: 3rem 3rem;} 
+// .widget-panel .widget-panel__head, .app-guide .app-guide__head  { padding: 1.5rem 3rem ;}
 
 .content-panel .content-panel__body,
 .content-panel .content-panel__head,
 .widget-panel .widget-panel__body,
-.widget-panel .widget-panel__head { 
+.widget-panel .widget-panel__head,
+.app-guide .app-guide__body { 
   flex-grow: 1;
   padding: 2rem 3rem; 
   border-radius: 10px;
