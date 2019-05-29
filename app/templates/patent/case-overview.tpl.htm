@@ -60,7 +60,7 @@
 
 	<div class="col-md-12 col-lg-6">
 		<div class="content-panel d-flex">
-			<div data-ng-if="$ctrl.servicesAvailable">
+			<div data-ng-if="$ctrl.servicesAvailable" class="d-flex flex-grow-1">
 				<div class="content-panel__body bg-white p-t-none">
 					<uib-tabset active="activeRight" class="m-b-md">
 						<uib-tab index="0" heading="Fee Breakdown" class="case-overview-nav">
@@ -99,13 +99,10 @@
 			</div>
 		</div>
 	</div>			
-<!-- 			<div class="col-xl-6 col-cxl-6 p-r-none border-grey-xs--right">
-				<div data-ng-include="{{$ctrl.rightCaseView}}" data-ng-controller="$ctrl.rightCaseView.ctrl}}"></div>
-			</div>		 -->
 </div>
 
 <div class="row m-t-md">
-	<div class="col-xl-12 text-right">
+	<div class="col-xl-12 text-left">
 		<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove patent" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.id)">
 	</div>
 </div>
