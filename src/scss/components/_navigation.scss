@@ -130,6 +130,23 @@
 
 .panel-nav {
     width: 100%;
+    .panel-nav__temp-item {
+        background: $white;
+        -webkit-transition: background .3s ease-in-out;
+        -o-transition: background .3s ease-in-out;    
+        transition: background .3s ease-in-out;
+        font-size: $font-h4;
+        font-weight: 600;
+        padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+        cursor: pointer;
+        &.active {
+          border-bottom: 2px solid $black;
+        }
+        &:not(.active):hover {
+          background: $grey;
+        }
+
+    }
     .panel-nav__colour-item {
         font-size: $font-body;
         cursor: pointer;
