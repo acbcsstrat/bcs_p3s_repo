@@ -5,7 +5,6 @@
 </div>
 <transactionnav></transactionnav>
 <div data-ng-show="$ctrl.transactionsLoaded" class="animate-show">
-
 	<div class="row m-b-md">
 		<div class="col-md-12 col-lg-12 col-xl-12" data-ng-show="$ctrl.tableData.length === 0">
 			<div class="content-panel p-a-sm">
@@ -17,32 +16,29 @@
 		<div data-ng-if="$ctrl.tableData.length !== 0" class="col-md-12 col-lg-12 col-xl-12">
             <div class="table-panel scrollable-area bg-white">
 				<div class="row p-a-sm">
-					<div class="col-md-12 col-lg-9 offset-lg-3 col-xl-6 offset-xl-6 p-none">
+					<div class="col-md-12 col-lg-12 col-xl-12">
 						<form class="form-inline">
-							<div class="col-md-4 col-lg-4 col-xl-4">
-								<div class="input-group">
-									<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="p3S_TransRefFilter" data-ng-model="searchTrans.p3S_TransRef" placeholder="Transaction ID">
-									<div class="input-group-append">
-										<i class="d-flex input-group-text pill-radius fa fa-search"></i>
-									</div>
-								</div>
-							</div>					
-							<div class="col-md-4 col-lg-4 col-xl-4">
-								<div class="input-group">
-									<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="appNoFilter" data-ng-model="searchTrans.patentApplicationNumber" placeholder="App No.">
-									<div class="input-group-append">
-										<i class="d-flex input-group-text pill-radius fa fa-search"></i>
-									</div>
+							<div class="input-group m-r-md">
+								<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="p3S_TransRefFilter" data-ng-model="searchTrans.p3S_TransRef" placeholder="Transaction ID">
+								<div class="input-group-append">
+									<i class="d-flex input-group-text pill-radius fa fa-search"></i>
 								</div>
 							</div>
-							<div class="col-md-4 col-lg-4 col-xl-4">
-								<div class="input-group">
-									<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="clientRefFilter" data-ng-model="searchTrans.clientRef" placeholder="Client Ref">
-									<div class="input-group-append">
-										<i class="d-flex input-group-text pill-radius fa fa-search"></i>
-									</div>
+							
+							<div class="input-group m-r-md">
+								<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="appNoFilter" data-ng-model="searchTrans.patentApplicationNumber" placeholder="App No.">
+								<div class="input-group-append">
+									<i class="d-flex input-group-text pill-radius fa fa-search"></i>
 								</div>
 							</div>
+				
+							<div class="input-group">
+								<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="clientRefFilter" data-ng-model="searchTrans.clientRef" placeholder="Client Ref">
+								<div class="input-group-append">
+									<i class="d-flex input-group-text pill-radius fa fa-search"></i>
+								</div>
+							</div>
+							
 						</form>
 					</div>
 				</div>            	
@@ -140,7 +136,7 @@
 	</div>
 </div>
 <!-- <div class="animate-show" data-ng-show="$ctrl.transInfoContent"> -->
-<div id="currTransAnchor" data-ui-view class="m-t-xl m-b-xl">
+<div id="currTransAnchor" data-ui-view class="m-t-xxxl m-b-xl">
 	<div class="row" data-ng-if="$ctrl.tableData.length !== 0">
 		<div class="col-xl-12 text-center">
 			<i class="fas fa-caret-up fa-3x"></i>
