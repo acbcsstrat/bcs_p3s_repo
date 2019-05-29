@@ -17,8 +17,11 @@
   line-height: 1.2rem;
 }
 
-.font-h4.font-h4-text {
+.font-h4 {
   line-height: 2.2rem;
+  &.lh-default {
+    line-height: 2.5rem;
+  }
 }
 
 // .font-h4.font-h4-title {
