@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
 
-caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService', 'renewalRestService', 'activeTabService']
+caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService', 'renewalRestService', 'activeTabService', 'organiseColourService']
 
-function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService, renewalRestService, activeTabService) {
+function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService, renewalRestService, activeTabService, organiseColourService) {
 
     var vm = this;
 
@@ -11,7 +11,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.fetchItemTransaction = fetchItemTransaction;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
-    vm.getStatus = getStatus;
     vm.refreshChart = refreshChart;
     vm.servicesAvailable = true;
 
@@ -34,55 +33,23 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             $scope.activeLeft = 0;
         }
 
-        // vm.patent.portfolioUI.serviceList[1] = {
-        //     costBandEndDate: 1571353200000,
-        //     costBandEndDateUI: "Fri Oct 18, 2019",
-        //     currentOfficialFeeEUR: 17347.5,
-        //     currentOfficialFeeUSD: 21334.1046675,
-        //     currentStageColour: "Green",
-        //     currentStageCostUSD: 22309.1,
-        //     failedReason: null,
-        //     nextStageColour: "Amber",
-        //     nextStageCostUSD: 24330.02,
-        //     serviceStatus: "Epct available",
-        //     serviceType: "Form1200"
-        // }
+        patent.action = organiseTextService.actionStatus(patent.portfolioUI.serviceStatus) ? true : false;
+        patent.uiStatus = organiseTextService.uiStatus(patent.portfolioUI.serviceStatus);
+        if(patent.portfolioUI.serviceList.length > 0) {
+            patent.cssCurrent = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].currentStageColour, 'text')
+            patent.cssNext = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].nextStageColour, 'text')
+        }
 
-        // vm.patent.form1200FeeUI = {
-        //     costHistoryUI: {fxRateYesterday: 0.818845, subTotalEURYesterday: 1808.91, subTotalUSDYesterday: 2209.1, fxRateLastWeek: 0.818845, subTotalEURLastWeek: 1808.91},
-        //     currentOfficialFeeEUR: 1747.5,
-        //     currentOfficialFeeUSD: 21434.1046675,
-        //     dollarComponentUSD: 745,
-        //     euroComponentEUR: 17447.5,
-        //     expressFeeEUR: 0,
-        //     expressFeeUSD: 0,
-        //     expressFee_USD: 0,
-        //     extensionFeeEUR: 5842.5,
-        //     extensionFeeUSD: 7141.37,
-        //     extensionFee_EUR: 5482.5,
-        //     extensionFee_USD: 7411.37,
-        //     feeActiveDate: null,
-        //     fxRate: 0.818845,
-        //     latePayPenaltyEUR: null,
-        //     latePayPenaltyUSD: null,
-        //     latePayPenalty_USD: null,
-        //     ppFeesEUR: 641.41000000000008,
-        //     ppFeesUSD: 744.99533250000013,
-        //     processingFeeEUR: 61.41,
-        //     processingFeeUSD: 745,
-        //     processingFee_USD: 75,
-        //     renewalFeeEUR: 1165,
-        //     renewalFeeUSD: 14422.74,
-        //     renewalFee_EUR: 11465,
-        //     renewalFee_USD: 14422.74,
-        //     savings: 2240.92000000000007,
-        //     subTotalEUR: 1808.91,
-        //     subTotalUSD: 2209.1,
-        //     subTotal_USD: 2209.1,
-        //     urgentFeeEUR: 0,
-        //     urgentFeeUSD: 0,
-        //     urgentFee_USD: 0
-        // }
+        patent.urgentAttentionReq = (function(){
+
+            if(patent.portfolioUI.serviceStatus == 'Too late to renew') {
+                return true;
+            }
+            if(patent.portfolioUI.serviceStatus == 'Too late' && patent.portfolioUI.serviceList[0].currentStageColour == 'Red') {
+                return true
+            }
+            return false
+        }())
 
         $scope.availableServices = (function() {
             return vm.patent.portfolioUI.serviceList.map(function(data, index){
@@ -110,13 +77,13 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         $scope.availableServices.forEach(function(obj){
 
             if(obj.action == 'Form1200') {
-                $scope.availableServices.forEach(function(obj){
+                
                     if((organiseTextService.actionStatus(obj.status) && obj.action == 'Form1200') || (obj.status == 'Epct being generated' && obj.action == 'Form1200')) {
                         vm.displayForm1200Tab = true;
                         return;
                     }
                     vm.displayForm1200Tab = false;
-                })   
+           
             }
         })
     }

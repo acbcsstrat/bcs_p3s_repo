@@ -13,23 +13,25 @@
 
     	</div>
     	<div class="d-flex">
-    		<div class="">			
-				<p class="font-h2 lh-head font-weight-bold">Patent Place Status:<span></span>
+    		<div class="text-right">			
+				<p class="font-h2 lh-head font-weight-bold text-right">Patent Place Status:<span></span>
 				</p>
-				<p class="font-h2 lh-head text-right" data-ng-bind="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus)"></p>
+				<p class="font-h2 lh-head text-right" data-ng-class="{'txt-phase-red': $ctrl.patent.urgentAttentionReq === true}">{{$ctrl.patent.uiStatus}}<span class="txt-phase-black" data-ng-if="$ctrl.patent.urgentAttentionReq"> - Call +44 203 696 0949</span></p>
     		</div>
-	    	<div data-ng-if="$ctrl.statusesAvailable.length > 0" class="m-l-xxxl">
-				<p class="font-h2 lh-head font-weight-bold">European Actions available:</p>
-				<p class="font-h2 lh-head text-right">
-					<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
-						<span class="txt-phase-green">{{service.action}}</span>
-						<span data-ng-if="$ctrl.statusesAvailable.length > 1 && $index == 0">, </span>
-					</span>
-				</p>
-		    	<p class="font-h2 lh-head font-weight-medium  text-right" data-ng-if="$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus) == 'Manual Processing Only'"><span class="txt-phase-red font-weight-bold">Call</span> +44 203 696 0949</p>
-		    	<div data-ng-if="$ctrl.statusesAvailable.length === 0 && !$ctrl.getStatus($ctrl.patent.portfolioUI.serviceStatus) == 'Manual Processing Only'">
-		    		<p class="font-h2 lh-head font-weight-medium  text-right">No services available</p>
-		    	</div>
+	    	<div data-ng-if="$ctrl.statusesAvailable.length > 0">
+	    		<div class="m-l-xxxl" data-ng-if="!$ctrl.patent.urgentAttentionReq">
+					<p class="font-h2 lh-head font-weight-bold  text-right" >European Actions available:</p>
+					<p class="font-h2 lh-head text-right" data-ng-if="!$ctrl.patent.urgentAttentionReq">
+						<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
+							<span class="txt-phase-green">{{service.action}}</span>
+							<span data-ng-if="$ctrl.statusesAvailable.length > 1 && $index == 0">, </span>
+						</span>
+					</p>
+				</div>
+	    	</div>
+	    	<div data-ng-if="$ctrl.statusesAvailable.length === 0 && !$ctrl.patent.urgentAttentionReq" class="m-l-xxxl">
+	    		<p class="font-h2 lh-head font-weight-bold  text-right" >European Actions available:</p>
+	    		<p class="font-h2 lh-head font-weight-medium  text-right">No actions available</p>
 	    	</div>
     	</div>
     </div>
