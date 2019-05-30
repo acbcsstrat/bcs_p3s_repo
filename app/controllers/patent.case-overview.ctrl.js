@@ -51,6 +51,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             return false
         }())
 
+        patent.manualProcess = patent.portfolioUI.serviceStatus === 'Epct not available' ? true : false;
+
         $scope.availableServices = (function() {
             return vm.patent.portfolioUI.serviceList.map(function(data, index){
                return {id: index, action: data.serviceType, status: data.serviceStatus}
@@ -72,7 +74,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 }
                 vm.displayRenewalHistoryTab = false;
             }
-        )        
+        )
 
         $scope.availableServices.forEach(function(obj){
 
