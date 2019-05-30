@@ -6,7 +6,6 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
     var vm = this;
 
-    vm.actionStatus = actionStatus;
     vm.fetchItemTransaction = fetchItemTransaction;
     vm.patent = patent;
     vm.setFees = setFees;
@@ -23,12 +22,37 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
     }
 
+    function init() {
+        console.log('hello')
+        console.log(patent)
+        if(patent.portfolioUI.serviceList.length > 0) {
+            patent.portfolioUI.cssCurrent = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].currentStageColour, 'text')
+            patent.portfolioUI.cssNext = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].nextStageColour, 'text')
+        }
+
+        patent.urgentAttentionReq = (function(){
+            if(patent.portfolioUI.serviceStatus == 'Too late to renew') {
+                return true;
+            }
+            if(patent.portfolioUI.serviceStatus == 'Too late' && patent.portfolioUI.serviceList[0].currentStageColour == 'Red') {
+                return true
+            }
+            return false
+        }())        
+    }
+
+    init()
+
     function getCurrColour(color, type) {
       return organiseColourService.getCurrColour(color, type)
     }    
 
     function setFees(action) {
- 
+
+        if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) {
+            return
+        }
+
         if(action == 'Form1200') {
             vm.availableFees = patent.form1200FeeUI;
             vm.availableFees.ppFeesUSD = patent.form1200FeeUI.subTotalUSD - patent.form1200FeeUI.currentOfficialFeeUSD;
@@ -45,11 +69,8 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
     }
 
-    function actionStatus(text) {
-        return organiseTextService.actionStatus(text)
-    }
-
     function fetchItemTransaction(id) {
+
         currentTransactionsService.fetchCurrentTransactions()
         .then(
             function(response) {
