@@ -14,13 +14,6 @@ function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentP
       vm.dashboardLoaded = true;
     }, 300);
 
-    $transitions.onFinish({}, function(transition) {
-      console.log(
-          "Successful Transition from " + transition.from().name +
-          " to " + transition.to().name
-      );
-    });    
-
     function init() {
         $scope.$emit('updatePatent')
         dashboardService.sortPatents(patentIds);

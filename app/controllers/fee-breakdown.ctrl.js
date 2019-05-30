@@ -23,8 +23,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
     }
 
     function init() {
-        console.log('hello')
-        console.log(patent)
+
         if(patent.portfolioUI.serviceList.length > 0) {
             patent.portfolioUI.cssCurrent = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].currentStageColour, 'text')
             patent.portfolioUI.cssNext = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].nextStageColour, 'text')
