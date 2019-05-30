@@ -133,7 +133,7 @@
 							<div data-ng-show="$ctrl.actionCost.serviceStatus !== null">
 				        		<button class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent({patentId: $ctrl.actionCost.id})">View Patent</button>
 							</div>							
-				        	<button type="button" class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-show="$ctrl.paymentStatus($ctrl.actionCost.renewalStatus) || $ctrl.paymentStatus($ctrl.actionCost.epctStatus)" data-ng-click="$ctrl.fetchItemTransaction($ctrl.actionCost.id)">View Transaction</button>
+				        	<button type="button" class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-show="$ctrl.actionCost.portfolioUI.serviceStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.actionCost.id)">View Transaction</button>
 						</div>
 					</div>
 				</div>

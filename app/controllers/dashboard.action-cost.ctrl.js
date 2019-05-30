@@ -8,7 +8,6 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 
 	vm.fxTimeFrame = 'Today';
 	vm.fetchItemTransaction = fetchItemTransaction;
-    vm.paymentStatus = paymentStatus;
 
     vm.loading = true;
     vm.noPatents = true;
@@ -25,10 +24,6 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
         vm.actionCost = dashboardService.fetchActionCost();
         vm.loading = false;
     })
-
-    function paymentStatus(text) {
-        return organiseTextService.paymentStatus(text)
-    }
 
     function fetchItemTransaction(id) {
         currentTransactionsService.fetchCurrentTransactions()
