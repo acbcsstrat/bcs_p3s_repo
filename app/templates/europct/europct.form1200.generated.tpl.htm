@@ -9,7 +9,7 @@
         </div>
         <div class="row m-t-xs" data-ng-if="$ctrl.patent.epctStatus == 'Epct saved' || $ctrl.patent.epctStatus == 'Payment in progress'">
             <div class="col-md-12 d-flex justify-content-start">
-                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-r-sm" name="service.form1200" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentOfficialFeeUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.form1200FeeUI !== null && $ctrl.patent.epctStatus == 'Epct saved'"></ngcart-addtocart>                     
+                <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn m-r-sm" name="service.form1200" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.form1200FeeUI !== null && $ctrl.patent.epctStatus == 'Epct saved'"></ngcart-addtocart>                     
                 <a class="btn btn--lg btn--green pill-radius m-r-sm" href="{{$ctrl.patent.form1200PdfUrl}}&download=true" target="_blank" download>Download</a>
                 <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.deleteApplication($ctrl.patent.id)">Delete</button>
             </div>
