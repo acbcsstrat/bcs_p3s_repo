@@ -178,13 +178,13 @@ table.t-border-space { border-spacing: 0rem 0.75rem; border-collapse: separate; 
 }
 
 .table-scroll {
-   &>tbody {
+    &>tbody {
       overflow-y: auto;
       display: block;
       width: 100%;
       table-layout: fixed;
     }
-    &>.portfolio-table {
+    &>.portfolio-table, &>.transaction-table, &>.renewalhistory-table  {
         max-height: 280px;
     }
     &>.dashboard-table {

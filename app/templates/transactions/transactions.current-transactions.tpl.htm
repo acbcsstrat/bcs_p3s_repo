@@ -75,7 +75,7 @@
 							</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody class="transaction-table">
 					    <tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {serviceUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {serviceUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
 					        <td class="t-data__td--ellipsis t-data__td t-data__w15">
 					        	<span class="td-ellipsis">
