@@ -208,17 +208,17 @@
                 <div id="register-success" class="d-none">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
-                            <h3 class="font-h3 txt-phase-green m-b-sm">Successful</h3>
-                            <p class="font-body text-center w-100">You have successfully registered your details. Please check your inbox to validate your account.</p>
+                            <h3 class="font-h2 font-weight-bold txt-phase-green m-b-sm">Successful</h3>
+                            <p class="font-h4 text-center w-100">You have successfully registered your details. Please check your inbox to validate your account.</p>
                         </div>
                     </div>                              
                 </div>
 
                 <div id="register-failure" class="d-none">
                     <div class="row">
-                        <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
-                            <h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
-                            <p class="font-body text-center w-100">We were unable to register your details. Please try <a class="inline-link font-weight-medium" href="/p3sweb/register">registering</a> again. If it's still a problem then please let us know : support@ip.place</p>
+                        <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center py-5 px-3">
+                            <h3 class="font-h2 font-weight-bold txt-phase-red  m-b-sm">Unsuccessful</h3>
+                            <p class="font-h4 text-center w-100">We were unable to register your details. Please try <a class="inline-link font-weight-medium" href="/p3sweb/register">registering</a> again. If it's still a problem then please let us know : support@ip.place</p>
                         </div>
                     </div>
                 </div>      
@@ -319,12 +319,12 @@
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function(response) {
-                        $('#initialRegistration, #register-intro,  divQn').fadeOut(500);    
-                        $('#register-success').delay(520).fadeIn(500);                          
+                        $('#initialRegistration, #register-intro,  divQn').addClass('d-none');  
+                        $('#register-success').delay(520).removeClass('d-none');               
                     },
                     error:function(errResponse) {
-                        $('#initialRegistration,  divQn').fadeOut(500); 
-                        $('#register-failure').delay(520).fadeIn(500);                          
+                        $('#initialRegistration,  #register-intro, divQn').addClass('d-none');  
+                        $('#register-failure').delay(520).removeClass('d-none');                          
                     }
                 });
 
