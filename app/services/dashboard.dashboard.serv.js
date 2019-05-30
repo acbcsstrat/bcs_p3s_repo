@@ -89,6 +89,10 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
             return;
         }
 
+        if((patent.serviceStatus === 'Too late to renew') || (patent.serviceStatus === 'Too late' && patent.serviceList[0].currentStageColour == 'Red')) {
+            factory.actionCost = undefined;
+            return
+        }
 
         patentsRestService.fetchPatentItem(patent.id)
         .then(
