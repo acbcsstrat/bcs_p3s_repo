@@ -7,12 +7,12 @@ function renewalHistoryCtrl(patent, chunkDataService, renewalRestService) {
     var vm = this;
 
     vm.patent = patent;
+
     function init(){
 
         renewalRestService.fetchHistory(patent.id)
         .then(
         	function(response){
-                console.log(response)
                 vm.renewal = response;
             }
         )
