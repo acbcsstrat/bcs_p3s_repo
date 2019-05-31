@@ -36,45 +36,47 @@
 
    	</head>
 
-   <body class="bg-light-grey2">
       <div class="d-flex justify-content-center align-items-center content-panel">
          <div class="container-pre-app__center-box-40">
-            <div class="content-panel__body bg-white">
-         		<img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-sm">
-               	<div class="row m-b-sm">
-                  	<div class="col-md-12 d-flex justify-content-between align-items-center">
-                        <h1 class="font-weight-bold font-h1">Reset Password</h1>
-                        <a class="btn btn-block btn--lg btn--green pill-radius m-t-sm" href="/p3sweb/login">Go to Login</a>
-                     </div>
-          		</div>
+            <div class="content-panel__body bg-white p-t-xxxl p-b-xxxl p-r-6 p-l-6">
+               <div class="row">
+                  <div class="col-xl-12 text-center">
+                     <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-lg">
+                  </div>  
+               </div>
+               
+               <div class="row m-b-lg">
+                  <div class="col-md-12 text-center">
+                     <h1 class="font-h1 font-weight-light">Create new password</h1>
+
+                  </div>
+               </div>
           		<div id="initialResetPassForm">
-	       			<div class="row m-b-sm">
-	       				<div class="col-md-12 col-lg-12 col-xl-12 text-center">
-	       					<p class="font-body font-weight-medium">Please enter and confirm your new password.</p>
-	       				</div>
-	       			</div>
 					<form name="resetPassForm" id="resetPassForm" class="form" data-parsley-validate="">													
 						<div class="form-group row">
 							<div class="col-md-12">
-								<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
+								<input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Enter your new password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
 							</div>
 						</div>
 						<div class="form-group row">
 							<div class="col-md-12">
 								<ul id="passwordStrength" class="p-none m-none">
-									<li class="point-reg"></li>
-									<li class="point-reg"></li>
-									<li class="point-reg"></li>
-									<li class="point-reg"></li>
+									<li class="point"></li>
+									<li class="point"></li>
+									<li class="point"></li>
+									<li class="point"></li>
 								</ul>															
 							</div>
 						</div>														
 						<div class="form-group row m-b-md">
 							<div class="col-md-12">
-								<input type="password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
+								<input type="password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm your new password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-trigger="change" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
 							</div>
 						</div>
-						<input type="Submit" value="Reset Password" class="btn btn-block btn--lg btn--green pill-radius">
+						<div class="text-center">
+							<input type="Submit" value="Reset Password" class="btn btn--lg btn--green pill-radius p-r-6 p-l-6">
+						</div>
+						
 					</form>   	          			
           		</div>
 				<div id="resetPassSuccess" class="hide-before">
