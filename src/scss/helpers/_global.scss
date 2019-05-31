@@ -116,21 +116,24 @@ div.cursor-help { cursor: help; }
 
 .fade.in { opacity: 1; }
 
-.first {
-  background-color: #e30613;
+.point {
+  &.first {
+    background-color: #e30613;
+  }
+
+  &.second {
+    background-color: #f9b233;
+  }
+
+  &.third {
+    background-color: #53ab58;
+  }
+
+  &.fourth {
+    background-color: #418746;
+  }
 }
 
-.second {
-  background-color: #f9b233;
-}
-
-.third {
-  background-color: #53ab58;
-}
-
-.fourth {
-  background-color: #418746;
-}
 
 .point {
   background: $grey;
