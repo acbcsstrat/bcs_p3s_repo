@@ -54,8 +54,8 @@
                <div class="row m-b-lg">
                     <div class="col-md-12 text-center">
                          <div class="d-flex justify-content-center">                     
-                            <p class="font-body m-r-xs">Need to sign in?</p>
-                            <a href="/p3sweb/login" class="inline-link font-weight-medium">Login</a>
+                            <p class="font-body m-r-xs">Need to <a href="/p3sweb/login" class="inline-link font-weight-medium">Login</a>?</p>
+                            
                         </div>                        
 
                     </div>
