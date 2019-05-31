@@ -37,7 +37,7 @@ function userProfileCtrl(userService, $rootScope, $scope, $timeout, $uibModal, t
         userService.listUsers()
         .then(
             function(response){
-                
+
                 for (var i=0; i < response.length; i++) {
                     response[i].index = i + 1;
                 }

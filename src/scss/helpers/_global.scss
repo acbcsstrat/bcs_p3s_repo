@@ -36,6 +36,8 @@
 .m-none { margin: 0!important; }
 .m-l-none { margin-left: 0!important; }
 .m-b-none { margin-bottom: 0; }
+.m-b-10 { margin-bottom: 1rem; }
+.m-t-10 { margin-top: 1rem; }
 
 .p-v-sm-h-lg {
   padding: 1.5rem 3rem;
@@ -109,15 +111,6 @@ div.cursor-help { cursor: help; }
 
 .fade.in { opacity: 1; }
 
-.point-reg { 
-  background: #DDD;
-  border-radius: 2px;
-  display: inline-block;
-  height: 10px;
-  margin-right: 2px;
-  width: 23.2%;
-}
-
 .first {
   background-color: #e30613;
 }
@@ -135,12 +128,12 @@ div.cursor-help { cursor: help; }
 }
 
 .point {
-    background:#DDD;
-    border-radius:2px;
-    display:inline-block;
-    height:10px;
-    margin-right:2px;
-    width: 24.2%;
+  background: $grey;
+  border-radius: 10px;
+  display: inline-block;
+  height: 10px;
+  margin-right: 2px;
+  width: 40px;
 }
 
 .point:last,

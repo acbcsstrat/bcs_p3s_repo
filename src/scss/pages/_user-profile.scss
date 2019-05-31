@@ -1,8 +1,8 @@
 ul#strength {
-  display: inline;
   list-style: none;
   padding: 0;
-  vertical-align: 2px;
+  line-height: 1rem;
+  display: block!important;
 }
 
 input.ng-pristine + ul#strength { display:none; }  /* modules*/ /*pages*/ /*_userprofile.scss*/
