@@ -40,24 +40,25 @@
       
       <div class="d-flex justify-content-center align-items-center content-panel">
          <div class="container-pre-app__center-box-40">
-            <div class="content-panel__body bg-white">
-               <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-sm">
-               <div class="row m-b-sm">
-                  <div class="col-md-12 d-flex justify-content-between align-items-center">
-                     <h1 class="font-weight-bold font-h2">Login</h1>
-                     <div class="d-flex">                     
-                        <p class="font-body font-weight-medium m-r-xs">Don't have an account?</p>
-                        <a href="/p3sweb/register" class="inline-link">Register</a>
-                     </div>
+            <div class="content-panel__body bg-white p-t-xxxl p-b-xxxl p-r-6 p-l-6">
+               <div class="row">
+                  <div class="col-xl-12 text-center">
+                     <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-lg">
+                  </div>  
+               </div>
+               
+               <div class="row m-b-lg">
+                  <div class="col-md-12 text-center">
+                     <h1 class="font-h1 font-weight-light">Login into your account</h1>
+
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-12">
-
                      <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
                         <div class="form-group row m-b-sm">
                            <div class="col-md-12">
-                              <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username" data-parsley-validate-email="" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
+                              <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username/Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
                            </div>
                         </div>
                         <div class="form-group row m-b-sm">
@@ -65,28 +66,25 @@
                               <input type="password" name="j_password" class="form-control font-body pill-radius input-p-sm" placeholder="Password" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true" autocomplete="off">
                            </div>
                         </div>
-                        <div class="form-group d-flex justify-content-center flex-column m-b-sm">
+                        <div class="form-group text-center m-b-md m-t-md">
                            <p id="loginMessage" class="m-b-sm font-body txt-phase-red"></p>
-                           <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="btn btn--lg btn--green pill-radius">
+                           <input type="submit" name="loginBtn" id="loginBtn" value="Login" class="font-h4 btn btn--box-shadow text-uppercase p-r-6 p-l-6 py-2 btn--green pill-radius">
                         </div>
                      </form>
                      <div class="row">
-                        <div class="col-md-12 text-center">
+                        <div class="col-md-12 text-center d-flex justify-content-between m-t-sm">
+                           <div class="d-flex">                     
+                              <p class="font-body m-r-xs">Don't have an account?</p>
+                              <a href="/p3sweb/register" class="inline-link font-weight-medium font-weight-medium ">Register Now</a>
+                           </div>                           
                            <a href="/p3sweb/forgot-password" class="btn-no-bg font-weight-medium btn-underlined">Forgot Password?</a>
                         </div>
                      </div>
-           <!--           <div class="row"> -->
-<!--                         <div class="col-md-12 d-flex justify-content-between align-items-center">
-                           <p class="font-body">Don't have an account?</p>
-                           <div class="btn-no-bg">
-                              <a class="btn btn--lg btn--bordered green txt-black pill-radius" href="/p3sweb/register">Register</a>
-                           </div>
-                        </div>
-                     </div> -->
                   </div>
                </div>
             </div>
          </div>
+      </div>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

@@ -69,6 +69,11 @@
   transition: background .3s ease-in-out, box-shadow .3s ease-in-out;
   overflow-x: hidden;
   overflow-y: hidden;
+  &.btn--box-shadow {
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);  
+  }
   &.btn--lg { 
     @include padding-mixin(1rem 2.15rem);  
     font-weight: bold; 
