@@ -65,9 +65,9 @@
                 <div id="register-intro">
                     <div class="row" id="divQn">
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <span class="font-body font-weight-medium m-r-md">Has your firm already registered?</span>
-                            <label class="form-check-label font-body m-r-sm">Yes<input class="m-l-xs" type="radio" name="typeRegister" id="subRegister"></label>
-                            <label class="form-check-label font-body">No<input class="m-l-xs" type="radio" name="typeRegister" id="initalRegister"></label>
+                            <span class="font-h4 font-weight-medium m-r-md">Has your firm already registered?</span>
+                            <label class="form-check-label font-h4 m-r-sm">Yes<input class="m-l-xs" type="radio" name="typeRegister" id="subRegister"></label>
+                            <label class="form-check-label font-h4">No<input class="m-l-xs" type="radio" name="typeRegister" id="initalRegister"></label>
                         </div>
                     </div>                  
                 </div>
