@@ -120,7 +120,7 @@ input[type=checkbox], input[type=radio] {
 a {
   display: inline-block;
   &:hover {
-    color: #000;
+    color: $black;
     text-decoration: none;
   }
   &:focus {
