@@ -3,51 +3,37 @@
 	<div class="bg-white">
 		<div class="row">
 			<div class="col-xl-12">
-				<table class="t-data" data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
-					<tbody>
-						<tr class="t-data__row">
-							<td class="t-data__td text-left align-top t-data__w15">Renewal Year</td>
-							<td class="t-data__td text-left align-top t-data__w15">Year <span data-ng-bind="renewal.renewalYear"></span></td>
+				<table class="t-data table-scroll" data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+					<tbody class="renewalhistory-table">
+						<tr class="t-data__row border-grey-xs--btm">
+							<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold">Renewal Year</td>
+							<td class="t-data__td text-left align-top t-data__w15 font-h4">Year <span data-ng-bind="renewal.renewalYear"></span></td>
 						</tr>
-						<tr>
-							<td class="t-data__td text-left align-top t-data__w15">Date Renewed</td>
-							<td class="t-data__td text-left align-top t-data__w15">{{renewal.certificate.renewedOnDateExEpo | date: 'MM/dd/yy'}}</td>
+						<tr class="t-data__row border-grey-xs--btm">
+							<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold">Date Renewed</td>
+							<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold">{{renewal.certificate.renewedOnDateExEpo | date: 'MM/dd/yy'}}</td>
 						</tr>
-						<tr>
-							<td class="t-data__td text-left align-top t-data__w15">Cost Breakdown</td>
-							<td class="t-data__td text-left align-top t-data__w35">
+						<tr class="t-data__row border-grey-xs--btm">
+							<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold">Cost Breakdown</td>
+							<td class="text-left align-top t-data__w15">
 								<table class="t-data table-borderless">
 									<tr class="t-data__row">
-										<td class="t-data__td text-left">Official fee:
-										</td>
-										<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}											
-											<tr class="t-data__row">
-												<td class="t-data__td text-left">Processing fee:</td>
-												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.processingFeeUSD | number: 2) || '0.00'}}</td>
-											</tr>
-											<tr class="t-data__row">
-												<td class="t-data__td text-left">Express fee:</td>
-												<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.expressFeeUSD | number: 2) || '0.00'}}</td>
-											</tr>
-											<tr class="t-data_td--b-border t-data__row">
-												<td class="t-data__td text-left">Urgent fee:</td>
-												<td class="t-data__td text-left ">$ {{(renewal.renewalFeeUI.urgentFeeUSD | number: 2) || '0.00'}}</td>
-											</tr>																								
-											<tr class="t-data__row">
-												<td class="t-data__td text-left font-weight-bold">Total: </td>
-												<td class="t-data__td text-left font-weight-bold">$ {{renewal.renewalFeeUI.subTotalUSD | number: 2 || '0.00' }}</td>
-											</tr>
-										</td>
-
+										<td class="t-data__td text-left font-h4">Official fee:</td>
+										<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>
+									</tr>
+									<tr class="t-data__row">
+										<td class="t-data__td text-left font-h4">Patent Place fees:</td>							
+										<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.subTotalUSD - renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>							
+										
 									</tr>												
 								</table>
 							</td>
 						</tr>
 						<tr>
-							<td class="t-data__td text-left align-top t-data__w15">Downloads</td>
-							<td class="t-data__td text-left align-top t-data__w15">
+							<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold">Downloads</td>
+							<td class="t-data__td text-left align-top t-data__w15 font-h4">
 								<div class="row">
-									<div class="col-xl-12 d-flex align-items-center p-l-none">
+									<div class="col-xl-12 text-left">
 										<a class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-href="{{renewal.certificateUrl}}" target="_blank" data-ng-if="renewal.certificateUrl">Certificate
 						 				</a>
 										<a class="btn btn--lg btn--green pill-radius" data-ng-href="{{renewal.invoiceUrl}}" target="_blank">Invoice

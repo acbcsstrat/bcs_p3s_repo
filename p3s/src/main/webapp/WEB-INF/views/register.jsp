@@ -40,23 +40,34 @@
    <body class="bg-light-grey2"> 
       <div class="d-flex justify-content-center align-items-center content-panel">
          <div class="container-pre-app__center-box-40">
-            <div class="content-panel__body bg-white">
-                <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-md">   
-               <div class="row m-b-md">
-                  <div class="col-md-12 d-flex justify-content-between align-items-center">
-                        <h1 class="font-weight-bold font-h2">Register</h1>
-                        <div class="d-flex">                     
-                            <p class="font-body font-weight-medium m-r-xs">Do you have an account already?</p>
-                            <a href="/p3sweb/login" class="inline-link">Login</a>
-                        </div>                        
-                     </div>
+            <div class="content-panel__body bg-white p-t-xxxl p-b-xxxl p-r-6 p-l-6">
+                <div class="row">
+                    <div class="col-xl-12 text-center">
+                        <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-lg">
+                    </div>  
+               </div> 
+               <div class="row m-b-lg">
+                  <div class="col-md-12 text-center">
+                        <h1 class="font-h1 font-weight-light">Register an account</h1>
+                    </div>
                 </div>
+               <div class="row m-b-lg">
+                    <div class="col-md-12 text-center">
+                         <div class="d-flex justify-content-center">                     
+                            <p class="font-body m-r-xs">Need to <a href="/p3sweb/login" class="inline-link font-weight-medium">Login</a>?</p>
+                            
+                        </div>                        
+
+                    </div>
+                </div>
+<!--                      </div>
+                </div> --> 
                 <div id="register-intro">
                     <div class="row" id="divQn">
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <span class="font-body font-weight-medium m-r-md">Has your firm already registered?</span>
-                            <label class="form-check-label font-body m-r-sm">Yes<input class="m-l-xs" type="radio" name="typeRegister" id="subRegister"></label>
-                            <label class="form-check-label font-body">No<input class="m-l-xs" type="radio" name="typeRegister" id="initalRegister"></label>
+                            <span class="font-h4 font-weight-medium m-r-md">Has your firm already registered?</span>
+                            <label class="form-check-label font-h4 m-r-sm">Yes<input class="m-l-xs" type="radio" name="typeRegister" id="subRegister"></label>
+                            <label class="form-check-label font-h4">No<input class="m-l-xs" type="radio" name="typeRegister" id="initalRegister"></label>
                         </div>
                     </div>                  
                 </div>
@@ -89,10 +100,10 @@
                                     <div class="form-group row">
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <ul id="passwordStrength" class="p-none m-none">
-                                                <li class="point-reg" data-matched-class="first"></li>
-                                                <li class="point-reg" data-matched-class="second"></li>
-                                                <li class="point-reg" data-matched-class="third"></li>
-                                                <li class="point-reg" data-matched-class="fourth"></li>
+                                                <li class="point" data-matched-class="first"></li>
+                                                <li class="point" data-matched-class="second"></li>
+                                                <li class="point" data-matched-class="third"></li>
+                                                <li class="point" data-matched-class="fourth"></li>
                                             </ul>                                                           
                                         </div>
                                     </div>
@@ -208,17 +219,17 @@
                 <div id="register-success" class="d-none">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
-                            <h3 class="font-h3 txt-phase-green m-b-sm">Successful</h3>
-                            <p class="font-body text-center w-100">You have successfully registered your details. Please check your inbox to validate your account.</p>
+                            <h3 class="font-h2 font-weight-bold txt-phase-green m-b-sm">Successful</h3>
+                            <p class="font-h4 text-center w-100">You have successfully registered your details. Please check your inbox to validate your account.</p>
                         </div>
                     </div>                              
                 </div>
 
                 <div id="register-failure" class="d-none">
                     <div class="row">
-                        <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
-                            <h3 class="font-h3 txt-phase-red  m-b-sm">Unsuccessful</h3>
-                            <p class="font-body text-center w-100">We were unable to register your details. Please try <a class="inline-link font-weight-medium" href="/p3sweb/register">registering</a> again. If it's still a problem then please let us know : support@ip.place</p>
+                        <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center py-5 px-3">
+                            <h3 class="font-h2 font-weight-bold txt-phase-red  m-b-sm">Unsuccessful</h3>
+                            <p class="font-h4 text-center w-100">We were unable to register your details. Please try <a class="inline-link font-weight-medium font-h4" href="/p3sweb/register">registering</a> again. If it's still a problem then please let us know : support@ip.place</p>
                         </div>
                     </div>
                 </div>      
@@ -319,12 +330,12 @@
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function(response) {
-                        $('#initialRegistration, #register-intro,  divQn').fadeOut(500);    
-                        $('#register-success').delay(520).fadeIn(500);                          
+                        $('#initialRegistration, #register-intro,  divQn').addClass('d-none');  
+                        $('#register-success').delay(520).removeClass('d-none');               
                     },
                     error:function(errResponse) {
-                        $('#initialRegistration,  divQn').fadeOut(500); 
-                        $('#register-failure').delay(520).fadeIn(500);                          
+                        $('#initialRegistration,  #register-intro, divQn').addClass('d-none');  
+                        $('#register-failure').delay(520).removeClass('d-none');                          
                     }
                 });
 
@@ -482,7 +493,7 @@
                 $('#password').bind('keyup', function() {
                     var counter = 0;
                     var pw = $(this).val();
-
+                    console.log(pw)
                     if (pw.length >= 8) {
                       counter++;
                     }
@@ -501,9 +512,10 @@
 
                     //Get all classes to remove
                     var clssesToRemove = password_li.map(function() { //remove data-matched-class attribute depending on counter value
+                        console.log(this)
                         return $(this).data('matched-class'); //return any li item with data-matched-class attribute
                     }).get().join(' ');
-
+                    console.log(clssesToRemove)
                     //Remove all class
                     password_li.removeClass(clssesToRemove);
 
@@ -578,7 +590,7 @@
 
                 $('input[name=typeRegister]').change(function(e){
                     if(e.target.id == 'subRegister') {
-
+                        $('#divQn').addClass('d-none')
                         $('#initialRegistration').addClass('d-none')
                         $('#initialRegistrationSubmit').addClass('d-none')
 
@@ -590,7 +602,7 @@
                         }
 
                     } else {
-                        
+                        $('#divQn').addClass('d-none')
                         $('#initialRegistration').removeClass('d-none');
                         $('#initialRegistrationSubmit').removeClass('d-none');
                         $('#subRegistrationSubmit').addClass('d-none');

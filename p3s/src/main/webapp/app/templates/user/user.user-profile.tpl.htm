@@ -1,93 +1,120 @@
-<div class="row">
-	<div class="col-md-12">
-		<h1 class="font-h1" data-ng-bind="$ctrl.pageTitle"></h1>
-	</div>
-</div>
-
 <div class="m-b-xl">
 	<form name="userProfileForm" novalidate>
 		<div class="content-panel m-b-md">
-			<div class="content-panel__body bg-white">
-				<div class="row m-b-md">
-					<div class="col-md-12 col-lg-12 col-xl-12">
+			<div class="row m-b-md">
+				<div class="col-md-12 col-lg-12 col-xl-12 d-flex">
+					<i class="fas fa-user-circle fa-7x m-r-md"></i>
+					<div class="d-flex justify-content-center align-items-start flex-column">
+		      	 		<p class="font-weight-medium font-h1 lh-head m-b-xs">{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</p>
+      	 				<p class="font-h1">{{$ctrl.user.business.businessName}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-6 d-flex">
+					<div class="content-panel__body bg-white flex-grow-1">
 						<div class="row">
-							<div class="col-md-2 col-lg-1 col-xl-1">
-								<img src="assets/imgs/icons/user_icon_lg.png" alt="user profile icon">
+							<div class="col-xl-12">
+								<fieldset class="form-group md-m-b-md">
+									<legend class="font-weight-bold font-h4">Email notifications</legend>
+									<p class="font-body font-weight-medium">Do you want to receive email notificaitons?</p>
+									<div class="row m-t-xs">
+										<div class="col-md-4">
+											<div class="onoffswitch">
+												<label class="switch font-body">
+											  		<input type="checkbox" data-ng-model="$ctrl.user.isEmailNotification">
+											  		<span class="slider round"></span>
+												</label>
+											</div>
+										</div>							
+									</div>
+								</fieldset>
 							</div>
-							<div class="col-md-10 col-lg-11 col-xl-11 d-flex justify-content-center align-items-start flex-column">
-				      	 		<p class="font-weight-bold font-h3 m-b-xs">{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</p>
-		      	 				<p class="font-h3">{{$ctrl.user.business.businessName}}</p>
+						</div>
+						<div class="row">
+							<div class="col-md-12 col-xl-12">
+								<p class="font-h4 font-weight-bold">Company Users: {{$ctrl.companyUsers.length}}</p>
+								<div class="row m-t-sm">
+									<div class="col-xl-6" data-ng-repeat="prop in $ctrl.chunkedData.chunk">
+										
+										<div data-ng-repeat="user in prop track by $index">
+											<input class="form-control m-b-md" placeholder="{{user.index}}. {{user.firstName}} {{user.lastName}} " readonly>
+										</div>
+									</div>
+								</div>
+								<div >
+									
+									
+								</div>
+<!-- 									<ul class="ul-bullet-free">
+										<li class="font-body font-weight-medium" data-ng-repeat="users in prop"><span class="font-weight-bold">. </span><span></span></ -->
+							</div>						
+						</div>
+					</div>			
+				</div>
+				<div class="col-xl-6 d-flex">
+					<div class="content-panel__body bg-white flex-grow-1">
+						<div class="row m-b-md">
+							<div class="col-md-12 col-lg-6 col-xl-12">
+								<fieldset class="m-b-md">
+									<legend class="font-weight-bold font-h2 m-b-md">User Details</legend>
+									<div class="form-group row">
+										<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="emailAddress">Email:</label>
+										<div class="col-md-6 col-lg-8">
+											<input type="email" name="emailAddress" id="emailAddress" data-ng-model="$ctrl.user.emailAddress" class="form-control font-body pill-radius" readonly>
+											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.emailAddress.$error.required && userProfileForm.emailAddress.$dirty">Please fill out this field</p>
+											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.emailAddress.$error.email && userProfileForm.emailAddress.$dirty">Please enter a valid email address</p>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="firstName">First name:</label>
+										<div class="col-md-6 col-lg-8">
+											<input type="text" name="firstName" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.firstName" id="firstName" data-ng-bind="firstName" required data-validate-name>
+											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.firstName.$error.required && userProfileForm.firstName.$dirty">Please fill out this field</p>
+											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.firstName.$error.validName && userProfileForm.firstName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="lastName">Last name:</label>
+										<div class="col-md-6 col-lg-8">
+											<input type="text" class="form-control font-body pill-radius" name="lastName" data-ng-model="$ctrl.user.lastName"  id="lastName" required data-validate-name>
+											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.lastName.$invalid && !userProfileForm.lastName.$pristine">Please fill out this field</p>
+											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.lastName.$error.validName && userProfileForm.lastName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>								
+										</div>
+									</div>
+									<div class="form-group row m-b-none">
+										<label class="col-md-4 d-flex flex-column justify-content-start font-body font-weight-medium" for="newPassword">Password:</label>
+										<div class="col-md-4 col-lg-8">
+											<input type="password" name="newPassword" data-ng-model="newPassword" class="form-control font-body pill-radius m-b-xs" id="newPassword" data-ng-blur="visitednewPassword=true" data-ng-minlength="8" data-ng-maxlength="20" autocomplete="off">
+											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.required && userProfileForm.newPassword.$dirty">Please fill out this field</p>
+											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.minlength && visitednewPassword">Password needs to be a minimum of 8 characters</p>
+											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.minlength && visitednewPassword">Password needs to be a maximum of 20 characters</p>
+											<div class="m-t-10 m-b-10 m-l-sm">
+												<ul id="strength" data-check-strength="newPassword"></ul>
+											</div>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="password2">Confirm password:</label>
+										<div class="col-md-4 col-lg-8">	
+											<input type="password" name="password2" id="password2" class="form-control font-body pill-radius" data-ng-model="password2" data-pw-check="newPassword" data-ng-blur="visitedPassword2=true">
+											 
+										</div>
+										<div class="col-md-4 offset-md-4 col-lg-8">	
+											<span class="font-body txt-phase-red" data-ng-show="userProfileForm.password2.$error.pwmatch && visitedPassword2">Passwords don't match.</span>
+										</div>
+									</div>
+								</fieldset>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row m-b-md">
-					<div class="col-md-12 col-lg-6 col-xl-5">
-						<fieldset class="m-b-md">
-							<legend class="font-weight-bold font-h4 m-b-md">User Details</legend>
-							<div class="form-group row">
-								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="emailAddress">Email:</label>
-								<div class="col-md-6 col-lg-8">
-									<input type="email" name="emailAddress" id="emailAddress" data-ng-model="$ctrl.user.emailAddress" class="form-control font-body pill-radius" readonly>
-									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.emailAddress.$error.required && userProfileForm.emailAddress.$dirty">Please fill out this field</p>
-									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.emailAddress.$error.email && userProfileForm.emailAddress.$dirty">Please enter a valid email address</p>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="firstName">First name:</label>
-								<div class="col-md-6 col-lg-8">
-									<input type="text" name="firstName" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.firstName" id="firstName" data-ng-bind="firstName" required data-validate-name>
-									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.firstName.$error.required && userProfileForm.firstName.$dirty">Please fill out this field</p>
-									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.firstName.$error.validName && userProfileForm.firstName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="lastName">Last name:</label>
-								<div class="col-md-6 col-lg-8">
-									<input type="text" class="form-control font-body pill-radius" name="lastName" data-ng-model="$ctrl.user.lastName"  id="lastName" required data-validate-name>
-									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.lastName.$invalid && !userProfileForm.lastName.$pristine">Please fill out this field</p>
-									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.lastName.$error.validName && userProfileForm.lastName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>								
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-4 d-flex flex-column justify-content-start font-body font-weight-medium" for="newPassword">Password:</label>
-								<div class="col-md-4 col-lg-8">
-									<input type="password" name="newPassword" data-ng-model="newPassword" class="form-control font-body pill-radius m-b-xs" id="newPassword" data-ng-blur="visitednewPassword=true" data-ng-minlength="8" data-ng-maxlength="20" autocomplete="off">
-									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.required && userProfileForm.newPassword.$dirty">Please fill out this field</p>
-									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.minlength && visitednewPassword">Password needs to be a minimum of 8 characters</p>
-									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.minlength && visitednewPassword">Password needs to be a maximum of 20 characters</p>
-									<ul class="m-t-xs" id="strength" data-check-strength="newPassword"></ul>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="password2">Confirm password:</label>
-								<div class="col-md-4 col-lg-8">	
-									<input type="password" name="password2" id="password2" class="form-control font-body pill-radius" data-ng-model="password2" data-pw-check="newPassword" data-ng-blur="visitedPassword2=true">
-									 
-								</div>
-								<div class="col-md-4 offset-md-4 col-lg-8">	
-									<span class="font-body txt-phase-red" data-ng-show="userProfileForm.password2.$error.pwmatch && visitedPassword2">Passwords don't match.</span>
-								</div>
-							</div>
-						</fieldset>
-						<fieldset class="form-group md-m-b-md">
-							<legend class="font-weight-bold font-h4">Email notifications</legend>
-							<p class="font-body font-weight-medium">Do you want to receive email notificaitons?</p>
-							<div class="row m-t-xs">
-								<div class="col-md-4">
-									<div class="onoffswitch">
-										<label class="switch font-body">
-									  		<input type="checkbox" data-ng-model="$ctrl.user.isEmailNotification">
-									  		<span class="slider round"></span>
-										</label>
-									</div>
-								</div>							
-							</div>
-						</fieldset>
-					</div>
-					<div class="col-md-12 col-lg-6 offset-lg-0 col-xl-6 offset-xl-1">
+			</div>
+			<div class="row m-t-lg">
+				<div class="col-xl-6 d-flex">
+					<div class="content-panel__body bg-white flex-grow-1">		
 						<fieldset>
-							<legend class="font-weight-bold font-h4 m-b-sm">Business Address</legend>
+							<legend class="font-weight-bold font-h2 m-b-sm">Business Address</legend>
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="businessName">Business name:</label>
 								<div class="col-md-6 col-lg-8">
@@ -147,16 +174,12 @@
 								</div>
 							</div>
 						</fieldset>
-					</div>	
+					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-12 col-lg-6 push-lg-6 col-xl-6 push-xl-6 md-m-b-md">
+				<div class="col-xl-6 d-flex">
+					<div class="content-panel__body bg-white flex-grow-1">
 						<fieldset>
-							<div class="row m-b-sm">
-								<div class="col-md-12 col-lg-12 col-xl-12">
-									<h4 class="font-weight-bold font-h4 m-b-sm">Billing address</h4>
-								</div>			
-							</div>
+							<legend class="font-weight-bold font-h2 m-b-sm">Billing address</legend>
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="billing_street">Street</label>
 								<div class="col-md-6 col-lg-8">
@@ -190,23 +213,6 @@
 								</div>
 							</div>
 						</fieldset>
-					</div>		
-					<div class="col-md-11 col-lg-6 pull-lg-6 col-xl-5 pull-xl-6">
-						<div class="row m-b-md">
-							<div class="col-md-6">
-								<p class="font-h4 font-weight-bold">Company Users</p>
-							</div>
-							<div class="col-md-6 text-right">
-								<p class="font-h4 font-weight-bold">Total: {{$ctrl.companyUsers.length}}</p>
-							</div>						
-						</div>
-						<div class="row">
-							<div class="col-md-6" data-ng-repeat="prop in $ctrl.chunkedData.chunk">
-								<ul class="ul-bullet-free">
-									<li class="font-body font-weight-medium" data-ng-repeat="users in prop"><span class="font-weight-bold">{{users.index}}. </span><span>{{users.firstName}} {{users.lastName}}</span></li> <!-- removed {{$index + 1}}-->
-								</ul>
-							</div>
-						</div>
 					</div>
 				</div> <!---row end-->
 			</div> <!-- content panel body end-->

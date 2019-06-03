@@ -188,16 +188,18 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 
 	   			vm.sortTransItems = true;
 	   			vm.selectedSortType = (function() {
-					if (vm.sortReverse === false) {
+					if (vm.sortReverse === false) { //Descending
 	   					vm.tableData.sort(function(a, b){
-	   						var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
-	   						return renewalsB - renewalsA;
+
+	   						var actionA = a.serviceUIs.length, actionB = b.serviceUIs.length;
+	 
+	   						return actionB - actionA;
 	   					});        
 	   				} else {
-	   					if(vm.sortReverse === true) {
+	   					if(vm.sortReverse === true) { //Ascending
 		   					vm.tableData.sort(function(a, b){
-		   						var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
-		   						return renewalsB - renewalsA;
+		   						var actionA = a.serviceUIs.length, actionB = b.serviceUIs.length;
+		   						return actionB - actionA;
 		   					});
 	   					}
 	   				}

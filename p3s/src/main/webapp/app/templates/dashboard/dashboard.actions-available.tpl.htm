@@ -1,11 +1,11 @@
 <div class="widget-panel">
 	<uib-tabset type="pills" class="pills bg-white panel-shadow-radius d-flex flex-column flex-grow-1" active="$ctrl.availableActions"> <!-- data-ng-show="$ctrl.phaseLoaded && $ctrl.patents !== '' && $ctrl.selectedPatent !== ''" -->
-		<div class="row">
-			<div class="col-md-12 d-flex justify-content-between">						
+		<div class="row d-flex flex-grow-1">
+			<div class="col-md-12 d-flex flex-grow-1 justify-content-between">						
 				<div class="p-panel p-b-none">
 					<h3 class="font-h3 m-r-sm font-weight-bold">Actions Available</h3>
 				</div>	
-				<nav class="m-r-md">
+				<nav class="m-r-lg">
 					<ul class="panel-nav">
 						<li class="txt-phase-green green panel-nav__colour-item font-weight-medium" data-ng-init="$ctrl.availableActions = 0;" data-ng-class="{'active': $ctrl.availableActions === 0}" data-ng-click="$ctrl.availableActions = 0; $ctrl.setPhase('Green')">Green ({{$ctrl.patents.Green.length || '0'}})</li>
 						<li class="txt-phase-amber amber panel-nav__colour-item font-weight-medium" data-ng-class="{'active': $ctrl.availableActions === 1}" data-ng-click="$ctrl.availableActions = 1; $ctrl.setPhase('Amber')">Amber ({{$ctrl.patents.Amber.length || '0'}})</li>

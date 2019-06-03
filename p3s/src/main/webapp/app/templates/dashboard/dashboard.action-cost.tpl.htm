@@ -10,10 +10,10 @@
 			<div class="row bg-no-data d-flex flex-grow-1 justify-content-center align-items-center">
 
 				<div class="col-md-12 d-flex align-items-center justify-content-center z-index-1">
-					<p class="font-body font-weight-bold">Currently there aren't any patents in this phase</p>
+					<p class="font-body font-weight-bold">Currently no fee breakdown information available</p>
 				</div>
 			</div>
-			</div>
+		</div>
 		<div class="d-flex flex-grow-1 justify-content-center align-items-center">
 			<div data-ng-show="$ctrl.loading" class="animate-show d-flex flex-grow-1">
 				<div class="row">
@@ -29,85 +29,94 @@
 				<uib-tabset type="pills" active="fxPeriodActiveTabs" class="m-b-md">
 					<uib-tab heading="Today" class="font-body" index="0" data-ng-hide="true">
 						<div class="row">
-							<div class="col-md-5 col-xl-5 text-center">
-								<p class="font-h3 m-b-xs">USD</p>
-								<p class="font-h2">$ {{$ctrl.actionCost.serviceCost.subTotalUSD | number: 2 }}</p>
-							</div>
-							<div class="col-md-2 col-xl-2 text-center d-flex align-items-center justify-content-center">
-								<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
-							</div>
-							<div class="col-md-5 col-xl-5 text-center">
-								<p class="font-h3 m-b-xs">EUR</p>
-								<p class="font-h2">€ {{$ctrl.actionCost.serviceCost.subTotalEUR | number: 2 }}</p>
+							<div class="col-md-12 d-flex justify-content-center">
+								<div class="text-center mr-5">
+									<p class="font-h3 m-b-xs">USD</p>
+									<p class="font-h2">$ {{$ctrl.actionCost.serviceCost.subTotalUSD | number: 2 }}</p>
+								</div>
+								<div class="text-center d-flex align-items-center justify-content-center mr-5">
+									<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
+								</div>
+								<div class="text-center">
+									<p class="font-h3 m-b-xs">EUR</p>
+									<p class="font-h2">€ {{$ctrl.actionCost.serviceCost.subTotalEUR | number: 2 }}</p>
+								</div>
 							</div>
 						</div>
 					</uib-tab>
 					<uib-tab heading="Yesterday" class="font-body" index="1"  data-ng-hide="true">
 						<div class="row">
-							<div class="col-xl-5 text-center">
-								<p class="font-h3 m-b-xs">USD</p>
-								<p class="font-h2">$ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDYesterday | number: 2 }}</p>
-							</div>
-							<div class="col-xl-2 text-center d-flex align-items-center">
-								<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
-							</div>
-							<div class="col-xl-5 text-center">
-								<p class="font-h3 m-b-xs">EUR</p>
-								<p class="font-h2">€ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalEURYesterday | number: 2 }}</p>
+							<div class="col-md-12 d-flex justify-content-center">
+								<div class="text-center mr-5">
+									<p class="font-h3 m-b-xs">USD</p>
+									<p class="font-h2">$ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDYesterday | number: 2 }}</p>
+								</div>
+								<div class="text-center d-flex align-items-center justify-content-center mr-5">
+									<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
+								</div>
+								<div class="text-center">
+									<p class="font-h3 m-b-xs">EUR</p>
+									<p class="font-h2">€ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalEURYesterday | number: 2 }}</p>
+								</div>
 							</div>
 						</div>
 					</uib-tab>
 					<uib-tab heading="Last week" class="font-body" index="2" data-ng-hide="true">
 						<div class="row">
-							<div class="col-xl-5 text-center">
-								<p class="font-h3 m-b-xs">USD</p>
-								<p class="font-h2">$ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastWeek | number: 2 }}</p>
-							</div>
-							<div class="col-xl-2 text-center d-flex align-items-center">
-								<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
-							</div>
-							<div class="col-xl-5 text-center">
-								<p class="font-h3 m-b-xs">EUR</p>
-								<p class="font-h2">€ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalEURLastWeek | number: 2 }}</p>
+							<div class="col-md-12 d-flex justify-content-center">
+								<div class="text-center mr-5">
+									<p class="font-h3 m-b-xs">USD</p>
+									<p class="font-h2">$ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastWeek | number: 2 }}</p>
+								</div>
+								<div class="text-center d-flex align-items-center mr-5">
+									<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
+								</div>
+								<div class="text-center">
+									<p class="font-h3 m-b-xs">EUR</p>
+									<p class="font-h2">€ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalEURLastWeek | number: 2 }}</p>
+								</div>
 							</div>
 						</div>
 					</uib-tab>	
 					<uib-tab heading="Last Mth" class="font-body" index="3" data-ng-hide="true">
 						<div class="row">
-							<div class="col-xl-5 text-center">
-								<p class="font-h3 m-b-xs">USD</p>
-								<p class="font-h2">$ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth | number: 2 }}</p>
-							</div>
-							<div class="col-xl-2 text-center d-flex align-items-center">
-								<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
-							</div>
-							<div class="col-xl-5 text-center">
-								<p class="font-h3 m-b-xs">EUR</p>
-								<p class="font-h2">€ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalEURLastMonth | number: 2 }}</p>
+							<div class="col-md-12 d-flex justify-content-center">
+								<div class="text-center mr-5">
+									<p class="font-h3 m-b-xs">USD</p>
+									<p class="font-h2">$ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth | number: 2 }}</p>
+								</div>
+								<div class="text-center d-flex align-items-center mr-5">
+									<i class="fas fa-exchange-alt fa-3x txt-grey m-t-xs m-b-xs"></i>
+								</div>
+								<div class="text-center">
+									<p class="font-h3 m-b-xs">EUR</p>
+									<p class="font-h2">€ {{$ctrl.actionCost.serviceCost.costHistoryUI.subTotalEURLastMonth | number: 2 }}</p>
+								</div>
 							</div>
 						</div>
 					</uib-tab>									
 				</uib-tabset>
 				<div class="row m-b-md d-md-none d-lg-block">
 					<div class="col-md-12 col-lg-12 col-xl-12">
-						<ul class="panel-nav d-flex justify-content-between">
-							<li class="pill-radius panel-nav__list-item list-item--plain" data-ng-init="$ctrl.fxTimeFrame = 'Today'; fxPeriodActiveTabs = 0" data-ng-click="$ctrl.fxTimeFrame = 'Today'; fxPeriodActiveTabs = 0" data-ng-hide="$ctrl.fxTimeFrame == 'Today'">Today</li>
-							<li class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.fxTimeFrame = 'Yesterday'; fxPeriodActiveTabs = 1" data-ng-hide="$ctrl.fxTimeFrame == 'Yesterday'">Yesterday</li>
-							<li class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.fxTimeFrame = 'Last Week'; fxPeriodActiveTabs = 2" data-ng-hide="$ctrl.fxTimeFrame == 'Last Week'">Last Week</li>
-							<li class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.fxTimeFrame = 'Last Mth'; fxPeriodActiveTabs = 3" data-ng-hide="$ctrl.fxTimeFrame == 'Last Mth'">Last Mth</li>
+						<ul class="panel-nav d-flex justify-content-center">
+							<li class="pill-radius panel-nav__list-item list-item--plain mr-5" data-ng-init="$ctrl.fxTimeFrame = 'Today'; fxPeriodActiveTabs = 0" data-ng-click="$ctrl.fxTimeFrame = 'Today'; fxPeriodActiveTabs = 0" data-ng-hide="$ctrl.fxTimeFrame == 'Today'">Today</li>
+							<li class="pill-radius panel-nav__list-item list-item--plain mr-5" data-ng-click="$ctrl.fxTimeFrame = 'Yesterday'; fxPeriodActiveTabs = 1" data-ng-hide="$ctrl.fxTimeFrame == 'Yesterday'">Yesterday</li>
+							<li class="pill-radius panel-nav__list-item list-item--plain mr-5" data-ng-click="$ctrl.fxTimeFrame = 'Last Week'; fxPeriodActiveTabs = 2" data-ng-hide="$ctrl.fxTimeFrame == 'Last Week'">Last Week</li>
+							<li class="pill-radius panel-nav__list-item list-item--plain mr-5" data-ng-click="$ctrl.fxTimeFrame = 'Last Mth'; fxPeriodActiveTabs = 3" data-ng-hide="$ctrl.fxTimeFrame == 'Last Mth'">Last Mth</li>
 						</ul>								
 					</div>	
 				</div>
 				<div class="row">
 					<div class="col-md-6 col-xl-8 text-left">
-						<p class="font-h4 font-weight-bold">Four week variation:</p> <!--lg-->
+						<p class="font-h4 font-weight-bold">Four week variation: 
+							<span  class="font-h4 text-right m-l-xs" data-ng-class="$ctrl.actionCost.serviceCost.subTotalUSD <= $ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
+								<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.actionCost.serviceCost.subTotalUSD < $ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
+		                    	<i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.actionCost.serviceCost.subTotalUSD > $ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
+		                    	$ {{($ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth - $ctrl.actionCost.serviceCost.subTotalUSD | number: 2)  || '0.00'}}
+		                    </span>
+	                	</p>     
 					</div>
 					<div class="col-md-6 col-xl-4 text-right">
-	                    <p class="font-h4 text-right" data-ng-class="$ctrl.actionCost.serviceCost.subTotalUSD <= $ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth ? 'txt-phase-green': 'txt-phase-red'">
-	                    	<i class="fa fa-caret-down fa-sm" data-ng-if="$ctrl.actionCost.serviceCost.subTotalUSD < $ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
-	                    	<i class="fa fa-caret-up fa-sm" data-ng-if="$ctrl.actionCost.serviceCost.subTotalUSD > $ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth"></i>
-	                    	$ {{($ctrl.actionCost.serviceCost.costHistoryUI.subTotalUSDLastMonth - $ctrl.actionCost.serviceCost.subTotalUSD | number: 2)  || '0.00'}}
-	                	</p>     
 					</div>
 				</div>
 				<div class="row m-t-sm">
@@ -124,11 +133,11 @@
 							<div data-ng-show="$ctrl.actionCost.serviceStatus !== null">
 				        		<button class="btn btn--lg btn--green pill-radius m-l-sm" data-ui-sref="portfolio.patent({patentId: $ctrl.actionCost.id})">View Patent</button>
 							</div>							
-				        	<button type="button" class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-show="$ctrl.paymentStatus($ctrl.actionCost.renewalStatus) || $ctrl.paymentStatus($ctrl.actionCost.epctStatus)" data-ng-click="$ctrl.fetchItemTransaction($ctrl.actionCost.id)">View Transaction</button>
+				        	<button type="button" class="btn btn--lg btn--green pill-radius m-l-sm" data-ng-show="$ctrl.actionCost.portfolioUI.serviceStatus == ('Payment in progress' || 'EPO Instructed')" data-ng-click="$ctrl.fetchItemTransaction($ctrl.actionCost.id)">View Transaction</button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div><!-- valid action cost body end-->
 	</div>
 </div>

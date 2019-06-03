@@ -36,15 +36,19 @@
 
    </head>
 
-   <body class="bg-light-grey2">
       <div class="d-flex justify-content-center align-items-center content-panel">
          <div class="container-pre-app__center-box-40">
-            <div class="content-panel__body bg-white">
-               <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-t-xs m-l-xs">                  
-               <div class="row m-b-sm">
-                  <div class="col-md-12 d-flex justify-content-between align-items-center">
-                     <h1 class="font-weight-bold font-h2">Forgot Password</h1>
-                     <a href="/p3sweb/login" class="font-body text-center txt-black inline-link">Login</a>
+            <div class="content-panel__body bg-white p-t-xxxl p-b-xxxl p-r-6 p-l-6">
+               <div class="row">
+                  <div class="col-xl-12 text-center">
+                     <img src="assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-lg">
+                  </div>  
+               </div>
+               
+               <div class="row m-b-lg">
+                  <div class="col-md-12 text-center">
+                     <h1 class="font-h1 font-weight-light">Resetting your password</h1>
+
                   </div>
                </div>
                <div id="initialForgotPass">
@@ -70,10 +74,8 @@
                              <div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LezdHEUAAAAABvniybP4wWGWWztRMQXT5r0_WMs" data-callback="recaptchaCallback"></div>
                          </div>
                      </div>
-                     <div class="row m-b-sm">
-                         <div class="col-md-12 col-lg-12 col-xl-12"> 
-                           <input type="Submit" id="btnSubmit" value="Reset Password" class="btn btn-block btn--lg btn--green pill-radius" disabled="disabled">
-                        </div>
+                     <div class="text-center">
+                        <input type="Submit" id="btnSubmit" value="Reset Password" class="btn btn--lg btn--green pill-radius p-l-6 p-r-6" disabled="disabled">
                      </div>   
                   </form>
                </div>
@@ -107,6 +109,7 @@
             var response = grecaptcha.getResponse();
 
             if(response.length > 0) {
+
                btnSubmit.prop('disabled', false);
             } else {
                btnSubmit.prop('disabled', true);

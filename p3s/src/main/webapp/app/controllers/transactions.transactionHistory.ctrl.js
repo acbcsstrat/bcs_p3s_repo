@@ -23,7 +23,7 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
     vm.rowSelect = rowSelect;
     vm.selectedSortType = 'p3S_TransRef';
     fetchData();
-    console.log(vm.tableData)
+
     function fetchData() {
 
         transactionHistory.forEach(function(data){
@@ -190,14 +190,14 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
                 vm.selectedSortType = (function() {
                     if (vm.sortReverse === false) {
                         vm.tableData.sort(function(a, b){
-                            var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
-                            return renewalsB - renewalsA;
+                            var actionA = a.serviceUIs.length, actionB = b.serviceUIs.length;
+                            return actionB - actionA;
                         });        
                     } else {
                         if(vm.sortReverse === true) {
                             vm.tableData.sort(function(a, b){
-                                var renewalsA = a.renewalUIs.length, renewalsB = b.renewalUIs.length;
-                                return renewalsB - renewalsA;
+                                var actionA = a.serviceUIs.length, actionB = b.serviceUIs.length;
+                                return actionB - actionA;
                             });
                         }
                     }
