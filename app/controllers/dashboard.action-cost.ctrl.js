@@ -21,8 +21,11 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
     init();
 
    $scope.$on('updateCost', function(e, o){
-        vm.actionCost = dashboardService.fetchActionCost();
-        vm.loading = false;
+        $timeout(function(){
+            vm.actionCost = dashboardService.fetchActionCost();
+            vm.loading = false;
+        }, 300)
+
     })
 
     function fetchItemTransaction(id) {
