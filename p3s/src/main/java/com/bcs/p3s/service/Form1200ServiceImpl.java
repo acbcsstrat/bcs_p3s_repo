@@ -707,11 +707,18 @@ public class Form1200ServiceImpl extends ServiceAuthorisationTools implements Fo
 	protected Date shorttermGetCostbandSTARTdate(CostAnalysisData cad) {
 		// CostAnalysisData provides colour & all dates
 		// so read the colour, & pick out the appropriate start date
-		if (cad==null || cad.getCurrentcostBand()==null) return null;
+		if (cad==null || cad.getCurrentcostBand()==null) {
+			logErrorAndContinue("Passed Null in shorttermGetCostbandSTARTdate() : "+(cad==null)+(cad.getCurrentcostBand()==null)+CLASSNAME);
+			return null;
+		}
 
 		String colourNow = cad.getCurrentcostBand();
-		if (RenewalColourEnum.GREY.equals(colourNow)) return null;
+		if (RenewalColourEnum.GREY.equals(colourNow)) {
+			logErrorAndContinue("shorttermGetCostbandSTARTdate() has GrEY - so ret nuLL.  "+CLASSNAME);
+			return null;
+		}
 		
+		log().debug("shorttermGetCostbandSTARTdate() has cad.getGreenStartDate() = "+cad.getGreenStartDate()); // Monitor, as seen null here before
 		switch (colourNow) {
 		  case RenewalColourEnum.GREEN:		return cad.getGreenStartDate();
 		  case RenewalColourEnum.AMBER:		return cad.getGreenStartDate();

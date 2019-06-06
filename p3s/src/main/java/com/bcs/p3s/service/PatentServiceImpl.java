@@ -871,6 +871,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 				|| RenewalStatusEnum.WAY_TOO_LATE.equalsIgnoreCase(patent.getRenewalStatus())) {
 			caData.setCurrentcostBand(RenewalColourEnum.GREY);
 			caData.setGreenStartDate(allDates.getNextWindowOpenDate());
+			log().debug("190606b monitor: CurrentcostBand="+caData.getCurrentcostBand() +" & GreenStartDate="+caData.getGreenStartDate()+"   in PatentServiceImpl getCostAnalysisData("+id+")");
 			return caData;
 		}
 		/**
@@ -908,6 +909,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		//		if (renewalFeeUI==null) log().error("HE LL patSerImpl 889 *IS* null (PatentId="+id); 
 		
+		log().debug("190606a monitor: CurrentcostBand="+caData.getCurrentcostBand() +" & GreenStartDate="+caData.getGreenStartDate()+"   in PatentServiceImpl getCostAnalysisData("+id+")");
 		return caData;
 	}
 

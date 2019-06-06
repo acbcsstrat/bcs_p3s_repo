@@ -57,6 +57,9 @@ public class ServiceManager extends Universal {
     		// Provide a 'Service' conditional on : we can sell a renewal, or are currently in progress
     		PatentUI patentUI = populateDataToPatentUI(patent, session);
     		String colourNow = patentUI.getCostBandColour();
+    		if (colourNow==null) {
+    			logErrorAndContinue("190606v colourNow is nulL in ServiceManager getServicesForPatent("+patent.getId()+")  ");
+    		}
 
     		if ( ( ! (RenewalColourEnum.GREY.equalsIgnoreCase(colourNow)))
     			|| RenewalStatusEnum.isInProgress(patent.getRenewalStatus()) ) { 
@@ -146,6 +149,9 @@ public class ServiceManager extends Universal {
 					return patentUI;
 				}
 			}
+		if (patentUI.getCostBandColour()==null) {
+			logErrorAndContinue("190606 CostBandColour is nulL in ServiceManager populateDataToPatentUI("+patent.getId()+")  patentFound="+patentFound);
+		}
 		return patentUI;
 	}
     // End of : Method copied from PatentServiceImpl (which wouldn't want to call from here)

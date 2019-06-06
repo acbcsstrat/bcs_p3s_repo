@@ -227,7 +227,7 @@ public class PatentRestController extends Universal {
             List<Patent> existingPatentsForBusiness = Patent.findPatentsByBusiness(businessFromFE).getResultList();
             for (Patent anExistingPatent : existingPatentsForBusiness) {
             	if (anExistingPatent.getEP_ApplicationNumber().equals(newPatentEpAppNum)) 
-            		throw new P3SRuntimeException("Whilst adding patent "+newPatentEpAppNum+" for business "+businessFromFE.getId()+" found we already have it!  ("+anExistingPatent.getId()+")");
+            		throw new P3SRuntimeException("Whilst adding patent "+newPatentEpAppNum+" for business "+businessFromFE.getId()+" found we already have it!  ("+anExistingPatent.getId()+")  user="+SecurityUtil.getMyUser().getId()+" = "+SecurityUtil.getMyUserName());
             }
 			
 			
