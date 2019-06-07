@@ -49,4 +49,12 @@ privileged aspect GlobalVariableSole_Roo_JavaBean {
         this.moneycorpKey = moneycorpKey;
     }
     
+    public Date GlobalVariableSole.getCurrentRunStart() {
+        return this.currentRunStart;
+    }
+    
+    public void GlobalVariableSole.setCurrentRunStart(Date currentRunStart) {
+        this.currentRunStart = currentRunStart;
+    }
+    
 }

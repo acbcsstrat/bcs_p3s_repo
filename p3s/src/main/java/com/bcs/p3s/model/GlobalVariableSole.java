@@ -57,6 +57,16 @@ public class GlobalVariableSole {
     @NotNull
     private String moneycorpKey;
 
+	/**
+	 * Initially, intended only for use by the EPO Automation tasks (EPO Instruct & generate PDFs).
+	 * Normally null, this flag is set upon processing start and cleared at end (inc ABEND).
+	 * Purpose is to abort any subsequent invokation if this one is still running.
+	 * Is date rather than boolean to support some alarm upon extended outage (DeRisk)
+	 */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date currentRunStart;
+
     
     
     
