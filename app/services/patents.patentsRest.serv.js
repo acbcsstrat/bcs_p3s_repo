@@ -11,7 +11,6 @@ function patentsRestService($http, $q) {
         updatePatent: updatePatent,
         savePatent: savePatent,
         deletePatent: deletePatent,
-        fetchCostAnalysis: fetchCostAnalysis,
         fetchPatentItem: fetchPatentItem
     };
 
@@ -92,23 +91,6 @@ function patentsRestService($http, $q) {
         return deferred.promise;
     };
 
-    function fetchCostAnalysis(id) {
-        
-        var deferred = $q.defer();
-         $http.get(ppdomain+'rest-cost-analysis/'+id)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                console.error('Error while fetching cost analysis');
-                deferred.reject(errResponse);
-            }
-        );
-
-        return deferred.promise;
-        
-    };
 
 }
 

@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('recentActivityCtrl', recentActivityCtrl);
 
-recentActivityCtrl.$inject = ['patentIds', 'calculateService', 'patentsRestService', 'coreService', 'transactionHistoryService', 'currentTransactionsService', 'organiseColourService'];
+recentActivityCtrl.$inject = ['patentIds', 'calculateService', 'costAnalysisService', 'coreService', 'transactionHistoryService', 'currentTransactionsService', 'organiseColourService'];
 
-function recentActivityCtrl(patentIds, calculateService, patentsRestService, coreService, transactionHistoryService, currentTransactionsService, organiseColourService) {
+function recentActivityCtrl(patentIds, calculateService, costAnalysisService, coreService, transactionHistoryService, currentTransactionsService, organiseColourService) {
 
 	var vm = this;
 
@@ -12,8 +12,8 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 	vm.fetchTransChanges = fetchTransChanges;
 	vm.getCurrColour = getCurrColour;
 
-    vm.recentActivityData = [];
-    vm.recentTransArr = [];
+    
+    
 
     vm.setActivityActiveTab = setActivityActiveTab;
 	vm.changeActivity = changeActivity;
@@ -38,28 +38,15 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
     }())
 
 	vm.$onInit = function() {
-
-        coreService.ppContact()
-        .then(
-            function(response){
-                vm.partnerName = response.partnerName;
-                vm.partnerPhone = response.partnerPhone;
-            },
-            function(errResponse){
-
-            }
-        )
-
-        fetchStageChanges()
-
+        fetchStageChanges();
 	}
 
 	function getCurrColour(colour, type) {
-		return organiseColourService.getCurrColour(colour, type)
+		return organiseColourService.getCurrColour(colour, type);
 	}
 
 	function changeActivity(activity) {
-		console.log(activity)
+		// console.log(activity)
 		if(activity == 'Stage Change') {
 			fetchStageChanges();
 			return;
@@ -74,18 +61,18 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 
 	function fetchStageChanges() {
 
-		vm.recentActivityData.length = 0;
+		vm.recentActivityData = [];
 
 		if(patentIds.length > 0) {
-			patentIds.forEach(function(data){
-				patentsRestService.fetchCostAnalysis(data.id)
+			patentIds.forEach(function(patent){
+				costAnalysisService.fetchCa(patent)
 				.then(
 					function(response, i){
-						if(data.serviceList.length > 0) {
-		        			if(data.serviceStatus == 'Show price' || data.serviceStatus == 'Too late to renew' || data.serviceStatus == 'Epct available' || data.serviceStatus == 'Epct rejected' || data.serviceStatus == 'Epct saved') {
-		        				var hours = calculateService.calculateHours(data.serviceList[0].currentStageColour, response);
+						if(patent.serviceList.length > 0) {
+		        			if(patent.serviceStatus == 'Show price' || patent.serviceStatus == 'Too late to renew' || patent.serviceStatus == 'Epct available' || patent.serviceStatus == 'Epct rejected' || patent.serviceStatus == 'Epct saved') {
+		        				var hours = calculateService.calculateHours(patent.serviceList[0].currentStageColour, response[0].data);
 		    					if(calculateService.recentActivity(hours)) {
-		    						vm.recentActivityData.push(data);
+		    						vm.recentActivityData.push(patent);
 		    					}
 		        			}
 						}
@@ -101,6 +88,8 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 	}
 
 	function fetchTransChanges() {
+
+		vm.recentTransArr = [];
 		currentTransactions
 		.then(function(response){
 			if(response.length > 0) {
@@ -112,7 +101,9 @@ function recentActivityCtrl(patentIds, calculateService, patentsRestService, cor
 					}
 				});	
 			}
+
 		})
+
 
 	}
 
