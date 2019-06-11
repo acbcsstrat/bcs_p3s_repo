@@ -32,12 +32,14 @@ import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.engine.CostAnalysisDataEngine;
+import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.PatentStatusEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.Business;
+import com.bcs.p3s.model.Form1200Fee;
 import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
@@ -935,6 +937,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		caData = form1200ServiceImpl.populatePatentInfoPlusCostAnalysis(caData, patentV2UI, session);
 
 		Form1200FeeUI form1200FeeUI = patentV2UI.getForm1200FeeUI();
+		//form1200FeeUI = ensureForm1200FeeUInotNull(form1200FeeUI, patentV2UI, session);
 		caData.setForm1200FeeUI(form1200FeeUI);
 		
 		CostAnalysisDataEngine costEngine = new CostAnalysisDataEngine();
@@ -950,7 +953,27 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 		
 		return caData;
 	}
-	
+	///**
+	// * Update - likely this was never needed - F1200 code passed a renewal patent!
+	// * 11/06/2019 Found valid request to /rest-form1200-cost-analysis/nn  causes NPE in existing code due to form1200FeeUI being null.
+	// * Unclear how this ever worked. Puzzling, no NPEs (detected) with current FE - only if manually make this valid API call.
+	// * Decision now - make safe with this method. NotNice, but is only tmp until big rewrite.
+	// */
+	//protected Form1200FeeUI ensureForm1200FeeUInotNull(Form1200FeeUI form1200FeeUI, PatentV2UI patentV2UI, HttpSession session) {
+	//	if (patentV2UI==null || session==null) 
+	//			fail("ensureForm1200FeeUInotNull("+(patentV2UI==null)+(session==null)+") given null - in PatentServiceImpl");
+	//
+	//	Form1200FeeUI newForm1200FeeUI = form1200FeeUI;
+	//	if (newForm1200FeeUI==null) {
+	//		Form1200ServiceImpl form1200ServiceImpl = new Form1200ServiceImpl(session);
+	//		EpctEngine epctEngine = form1200ServiceImpl.populatePatentInfo(patentV2UI, session);
+	//		if (epctEngine==null) fail("ensureForm1200FeeUInotNull failed to create an EpctEngine ");
+	//		Form1200Fee form1200Fee = epctEngine.getFee(); 
+	//		if (form1200Fee==null) fail("ensureForm1200FeeUInotNull failed to create a Form1200Fee ");
+	//		newForm1200FeeUI = new Form1200FeeUI(form1200Fee);
+	//	}
+	//	return newForm1200FeeUI;
+	//}
 	
 	
 

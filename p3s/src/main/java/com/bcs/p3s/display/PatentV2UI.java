@@ -25,7 +25,7 @@ public class PatentV2UI extends PatentUI {
 	protected Integer renewalStageProgress;		// Integer percentage from last colour-change to next. Not used if in Grey
 	protected Integer form1200StageProgress;
 	
-	protected Form1200FeeUI form1200FeeUI;		// null unless Form1200 sale is viable
+// 190611 This already in PatentUI - so why duplicate here:	protected Form1200FeeUI form1200FeeUI;		// null unless Form1200 sale is viable
 	
 //	protected List<NotificationUI> renewalNotificationUIs;
 //	protected List<NotificationUI> form1200NotificationUIs;
@@ -90,13 +90,16 @@ public class PatentV2UI extends PatentUI {
 	public void setForm1200StageProgress(Integer form1200StageProgress) {
 		this.form1200StageProgress = form1200StageProgress;
 	}
-	public Form1200FeeUI getForm1200FeeUI() {
-		return form1200FeeUI;
-	}
-	public void setForm1200FeeUI(Form1200FeeUI form1200FeeUI) {
-		this.form1200FeeUI = form1200FeeUI;
-	}
-//	public List<NotificationUI> getRenewalNotificationUIs() {
+	
+	// as per above
+//	public Form1200FeeUI getForm1200FeeUI() {
+//		return form1200FeeUI;
+//	}
+//	public void setForm1200FeeUI(Form1200FeeUI form1200FeeUI) {
+//		this.form1200FeeUI = form1200FeeUI;
+//	}
+
+	//	public List<NotificationUI> getRenewalNotificationUIs() {
 //		return renewalNotificationUIs;
 //	}
 //	public void setRenewalNotificationUIs(List<NotificationUI> renewalNotificationUIs) {

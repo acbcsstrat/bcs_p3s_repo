@@ -19,6 +19,7 @@ import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.OtherEpoFeeSole;
 import com.bcs.p3s.model.P3SFeeSole;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.util.currency.OfficialFeeUpliftCalculator;
 import com.bcs.p3s.util.lang.Universal;
 
 /**
@@ -179,8 +180,15 @@ public class EpctEngine extends Universal {
 				 P3SFeeSole p3sEffectiveFees = pricingEngine.getEffectiveP3sFees(patent.getBusiness());
 				 
 				 BigDecimal greenCostUsd = totFeePreUplift_USD; 
-				 BigDecimal amberCostUsd = totFeePreUplift_USD.add( totFeePreUplift_USD.multiply(p3sEffectiveFees.getExpressFee_Percent()).divide(new BigDecimal(100.0)) );
-				 BigDecimal redCostUsd = totFeePreUplift_USD.add( totFeePreUplift_USD.multiply(p3sEffectiveFees.getUrgentFee_Percent()).divide(new BigDecimal(100.0)) );
+				 // Express & Urgent. Do NOT also increase our processing fee - zaphod
+				 // Former: BigDecimal amberCostUsd = totFeePreUplift_USD.add( totFeePreUplift_USD.multiply(p3sEffectiveFees.getExpressFee_Percent()).divide(new BigDecimal(100.0)) );
+				 //			BigDecimal redCostUsd = totFeePreUplift_USD.add( totFeePreUplift_USD.multiply(p3sEffectiveFees.getUrgentFee_Percent()).divide(new BigDecimal(100.0)) );
+				 OfficialFeeUpliftCalculator calc = new OfficialFeeUpliftCalculator();
+				 
+				 BigDecimal amberCostUsd = calc.increaseOfficialComponent(
+						 totFeePreUplift_USD, p3sEffectiveFees.getExpressFee_Percent(), p3sEffectiveFees);
+				 BigDecimal redCostUsd = calc.increaseOfficialComponent(
+						 totFeePreUplift_USD, p3sEffectiveFees.getUrgentFee_Percent(), p3sEffectiveFees);
 
 				 caData.setGreenCost(greenCostUsd.setScale(2, BigDecimal.ROUND_HALF_UP));
 				 caData.setAmberCost(amberCostUsd.setScale(2, BigDecimal.ROUND_HALF_UP));
