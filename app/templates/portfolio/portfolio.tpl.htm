@@ -207,7 +207,7 @@
                         </tr>
                     </thead>
                     <tbody class="portfolio-table">
-                        <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: filter:filterPortfolio as Result track by $index" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select($index)"  class="t-data__row t-data__row--select" data-ng-class="{active: $index == $ctrl.selected}">
+                        <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: filter:filterPortfolio as Result track by $index" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.id)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.id == $ctrl.selected}">
                             <td class="t-data__td--ellipsis t-data__td t-data__w15">
                                 <span class="td-ellipsis">
                                     <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.id}}"></a>
@@ -309,7 +309,7 @@
                                         <td>
                                             <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.serviceList">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
-                                                    <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--bordered btn-underlined" data-ng-click="$ctrl.generateForm1200(patent.id)">Generate Form 1200</a>
+                                                    <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--bordered btn-underlined generateForm1200" data-ng-click="$ctrl.generateForm1200(patent.id)">Generate Form 1200</a>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
                                                         <ngcart-addtocart id="{{patent.id}}" class="tablebtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                                         </ngcart-addtocart>

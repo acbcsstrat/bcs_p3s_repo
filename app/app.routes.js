@@ -87,7 +87,8 @@ function appRoutes($stateProvider) {
                 }]
             },
             params: {
-                patentId: null
+                patentId: null,
+                form1200generate: null
             },
             views:{
                 "": {
