@@ -74,8 +74,10 @@ public class PaymentUI extends Payment {
 		this.setTransStartDate(payment.getTransStartDate());
 		this.setTransTargetEndDate(payment.getTransTargetEndDate());
 		this.setLastUpdatedDate(payment.getLastUpdatedDate());
-		this.setLatestTransStatus(payment.getLatestTransStatus());
+		//this.setLatestTransStatus(payment.getLatestTransStatus());
+		this.setLatestTransStatus(getLatestTransStatusUI(payment));
 
+		
 		this.setHasFailed(payment.getHasFailed());
 		String failReason = payment.getFailureReason();
 		if (payment.getHasFailed() && isEmpty(failReason) ) {
@@ -243,6 +245,27 @@ public class PaymentUI extends Payment {
 //	}
 	
 	
+	
+	// Special getters/setters
+
+	/** 
+	 * Hide, from FE, new value it won't recognise
+	 * @param payment
+	 * @return
+	 */
+	public String getLatestTransStatusUI(Payment payment) {
+		String rawPaymentStatus = payment.getLatestTransStatus();
+		
+		PaymentStatusEnum statusEnum = new PaymentStatusEnum(rawPaymentStatus);
+		String paymentStatusUI = statusEnum.toString();
+		if (PaymentStatusEnum.INSTRUCTING_EPO.equals(paymentStatusUI)) 
+		{
+			paymentStatusUI = PaymentStatusEnum.EPO_RECEIVED;
+		}
+		return paymentStatusUI;
+	}
+
+
 	
 	// Ordinary getters/setters
 

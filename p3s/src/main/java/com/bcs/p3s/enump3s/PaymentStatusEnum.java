@@ -20,6 +20,7 @@ public class PaymentStatusEnum extends P3SAbstractEnum {
 	public static final String FUNDS_RECEIVED = "Funds Received";
 	public static final String FUNDS_SENT = "Funds Sent";
 	public static final String EPO_RECEIVED = "EPO Received";
+	public static final String INSTRUCTING_EPO = "Instructing EPO";  	// added for EPO Automation
 	public static final String EPO_INSTRUCTED = "EPO Instructed";
 	//public static final String FAILED = "Failed"; // AC 170830 Payment:hasFailed makes this redundant
 	public static final String COMPLETED = "Completed";
@@ -60,7 +61,10 @@ public class PaymentStatusEnum extends P3SAbstractEnum {
 		if (status.equalsIgnoreCase(PaymentStatusEnum.EPO_RECEIVED) || status.equalsIgnoreCase("EPO_RECEIVED")
 		 || status.equalsIgnoreCase(PaymentStatusEnum.MONEYCORP_EPO_RECEIVED))
 					sofar = PaymentStatusEnum.EPO_RECEIVED;
-
+		
+		if (status.equalsIgnoreCase(PaymentStatusEnum.INSTRUCTING_EPO) || status.equalsIgnoreCase("INSTRUCTING_EPO"))
+							sofar = PaymentStatusEnum.INSTRUCTING_EPO;
+		
 		if (status.equalsIgnoreCase(PaymentStatusEnum.EPO_INSTRUCTED) || status.equalsIgnoreCase("EPO_INSTRUCTED"))
 					sofar = PaymentStatusEnum.EPO_INSTRUCTED;
 

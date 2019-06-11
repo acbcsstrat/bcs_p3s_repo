@@ -167,6 +167,14 @@ public class Payment {
     @ManyToMany(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private List<Epct> epcts = new ArrayList<Epct>();
 
+    /**
+     * Null, until we receive from Moneycorp, the signal: PaymentStatusEnum:EPO_RECEIVED
+     * whereupon this timestamp is set, then never changed
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date epoRxDate;
+
 
 
 

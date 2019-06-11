@@ -174,4 +174,12 @@ privileged aspect Payment_Roo_JavaBean {
         this.epcts = epcts;
     }
     
+    public Date Payment.getEpoRxDate() {
+        return this.epoRxDate;
+    }
+    
+    public void Payment.setEpoRxDate(Date epoRxDate) {
+        this.epoRxDate = epoRxDate;
+    }
+    
 }
