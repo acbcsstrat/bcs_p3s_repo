@@ -25,6 +25,7 @@ import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.P3SFeeSole;
 import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.util.currency.OfficialFeeUpliftCalculator;
 import com.bcs.p3s.util.date.DateUtil;
 import com.bcs.p3s.util.lang.Universal;
 import com.bcs.p3s.wrap.CombinedFee;
@@ -238,18 +239,26 @@ public class CostAnalysisDataEngine extends Universal{
 		caMoreData.setGreenStageCost(greenCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 		caMoreData.setCurrentOfficialFeeEUR(caMoreData.getGreenStageCost());
 		
-		amberCost = greenCost.add(greenCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
+		 // Express & Urgent. Do NOT also increase our processing fee - zaphod
+		// Former: amberCost = greenCost.add(greenCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
+		// redCost = greenCost.add(greenCost.multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
+		// blueCost = greenCost.add(epoRenewalFee.getExtensionFee_EUR().multiply(fxRate)); 
+		// blackCost = blueCost.add(blueCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
+		
+//		zaphod  - old above - new below 
+		OfficialFeeUpliftCalculator calc = new OfficialFeeUpliftCalculator();
+		
+		amberCost = calc.increaseOfficialComponent(greenCost, p3sFee.getExpressFee_Percent(), p3sFee);
+		redCost = calc.increaseOfficialComponent(greenCost, p3sFee.getUrgentFee_Percent(), p3sFee);
+		blueCost = greenCost.add(epoRenewalFee.getExtensionFee_EUR().multiply(fxRate));
+		blackCost = calc.increaseOfficialComponent(blueCost, p3sFee.getExpressFee_Percent(), p3sFee);
+		
 		
 		caMoreData.setAmberStageCost(amberCost.setScale(2, BigDecimal.ROUND_HALF_UP)); 
 		
-		redCost = greenCost.add(greenCost.multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
-		
 		caMoreData.setRedStageCost(redCost.setScale(2, BigDecimal.ROUND_HALF_UP));
-		blueCost = greenCost.add(epoRenewalFee.getExtensionFee_EUR().multiply(fxRate)); 
 		
 		caMoreData.setBlueStageCost(blueCost.setScale(2, BigDecimal.ROUND_HALF_UP));
-		
-		blackCost = blueCost.add(blueCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 		
 		caMoreData.setBlackStageCost(blackCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 		
@@ -281,12 +290,17 @@ public class CostAnalysisDataEngine extends Universal{
 		BigDecimal extensionFeeEUR = epoRenewalFee.getExtensionFee_EUR();
 		BigDecimal extensionFeeUSD = extensionFeeEUR.multiply(fxRate);
 		BigDecimal processingFeeUSD = p3sFee.getProcessingFee_USD();
+
+		// Upto 190611 was the below, which adds processing fee PRIOR to the %age increase
+		//BigDecimal baseCostUSD = renewalFeeUSD.add(processingFeeUSD);
+		//BigDecimal expressFeeUSD = baseCostUSD.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)));
+		//BigDecimal urgentFeeUSD = baseCostUSD.multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100)));
 		
-		BigDecimal baseCostUSD = renewalFeeUSD.add(processingFeeUSD);
-		
+		BigDecimal baseCostUSD = renewalFeeUSD;
 		BigDecimal expressFeeUSD = baseCostUSD.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)));
 		BigDecimal urgentFeeUSD = baseCostUSD.multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100)));
-		
+		baseCostUSD = baseCostUSD.add(processingFeeUSD);
+
 		
 		//setting the base costs to fee objects
 		fee.setFxRate(fxRate);
@@ -335,9 +349,14 @@ public class CostAnalysisDataEngine extends Universal{
 			//blackCost = baseCost.add(epoRenewalFee.getExtensionFee_EUR().multiply(fxRate)).
 			//		add((epoRenewalFee.getRenewalFee_EUR().add(epoRenewalFee.getExtensionFee_EUR())).multiply(fxRate).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)))); 
 			
-			BigDecimal expressExtensionFeeUSD = (baseCostUSD.add(extensionFeeUSD)).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)));
+			//BigDecimal expressExtensionFeeUSD = (baseCostUSD.add(extensionFeeUSD)).multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)));
+			//subTotalUSD = baseCostUSD.add(extensionFeeUSD).add(expressExtensionFeeUSD);
+
+			BigDecimal officialFeeOnly = baseCostUSD.subtract(processingFeeUSD).add(extensionFeeUSD);
+			BigDecimal expressExtensionFeeUSD = officialFeeOnly.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100)));
 			subTotalUSD = baseCostUSD.add(extensionFeeUSD).add(expressExtensionFeeUSD);
 
+			
 			fee.setExtensionFee_EUR(epoRenewalFee.getExtensionFee_EUR());
 			fee.setExpressFee_USD(expressExtensionFeeUSD);
 			fee.setSubTotal_USD(subTotalUSD.setScale(2, BigDecimal.ROUND_HALF_UP));
