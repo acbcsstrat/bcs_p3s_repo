@@ -19,6 +19,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.selectedSortType = 'ep_ApplicationNumber';
     vm.select = select;
     vm.selected = 0;
+    vm.filterPortfolioResults = filterPortfolioResults;
 
     $timeout(function(){
       vm.portfolioLoaded = true;
@@ -96,79 +97,11 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     }
 
-    $scope.epctStages = function(field) {
-        var result = [];
-        for(var i = 0; i < $scope.portfolioData.length; i++){
-            var patent = $scope.portfolioData[i];
-            if(patent.serviceList && patent.serviceList.length > 0){
-                for(var j = 0; j < patent.serviceList.length; j++){
-                    if(patent.serviceList[j].serviceType == 'Form1200') {
-                        result.push(patent.serviceList[j][field])
-                    }
-                }
-            }
-        }
-        return uniqueArray(result); //check no duplicates
-    }
+    function filterPortfolioResults(filter) {
 
-    $scope.renewalStages = function(field) {
-        var result = [];
-        for(var i = 0; i < $scope.portfolioData.length; i++){
-            var patent = $scope.portfolioData[i];
-            if(patent.serviceList && patent.serviceList.length > 0){
-                for(var j = 0; j < patent.serviceList.length; j++){
-                    if(patent.serviceList[j].serviceType == 'Renewal') {
-                        result.push(patent.serviceList[j][field])
-                    }
-                }
-            }
-        }
+      $scope.portfolioData = patents;
+      $scope.portfolioData = $scope.portfolioData.filter(function(el){
 
-        return uniqueArray(result); //check no duplicates
-
-    }    
-
-    $scope.europctStatus = function(field){
-        var result = [];
-        for(var i = 0; i < $scope.portfolioData.length; i++){
-            var patent = $scope.portfolioData[i];
-            if(patent.serviceList && patent.serviceList.length > 0){
-
-                for(var j = 0; j < patent.serviceList.length; j++){
-                    if(euroPctStatuses.indexOf(patent.serviceList[j][field]) > -1) 
-                        result.push(organiseTextService.uiStatus(patent.serviceList[j][field])) //organisetTextservice required as UI text and backend text are being mixed
-                }
-            } else { //if not servicelist
-
-                if(euroPctStatuses.indexOf(patent.serviceStatus) > -1) {
-                    result.push(organiseTextService.uiStatus(patent.serviceStatus));
-                }
-            }
-            
-        }
-        return uniqueArray(result); //check no duplicates
-    }
-
-    $scope.renewalsStatus = function(field){
-      var result = [];
-      for(var i = 0; i < $scope.portfolioData.length; i++){
-          var patent = $scope.portfolioData[i];
-          if(patent.serviceList && patent.serviceList.length > 0){
-            for(var j = 0; j < patent.serviceList.length; j++){
-              if(renewalStatuses.indexOf(patent.serviceList[j][field]) > -1)
-                  result.push(organiseTextService.uiStatus(patent.serviceList[j][field]));
-              }
-          } else {
-            if(renewalStatuses.indexOf(patent.serviceStatus) > -1) { //if not servicelist
-              result.push(organiseTextService.uiStatus(patent.serviceStatus));
-            }
-          }
-      }
-      return uniqueArray(result); //check no duplicates
-    };
-
-    $scope.testFl = function(el){
-        
         for(var filter in $scope.filters){
             var filterArray = [];
             for(var i in $scope.filters[filter]){
@@ -188,6 +121,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
                         }
                     }
                 }
+
             } else { //to handle items that dont have a service 
 
                 if(el.serviceStatus.toLowerCase() === 'epct not available') {
@@ -201,8 +135,84 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
                 }
             }
         }
+
         return true;
-    };   
+      })
+
+    }
+
+    $scope.epctStages = (function() {
+      
+        var result = [];
+        for(var i = 0; i < $scope.portfolioData.length; i++){
+            var patent = $scope.portfolioData[i];
+            if(patent.serviceList && patent.serviceList.length > 0){
+                for(var j = 0; j < patent.serviceList.length; j++){
+                    if(patent.serviceList[j].serviceType == 'Form1200') {
+                        result.push(patent.serviceList[j]['currentStageColour'])
+                    }
+                }
+            }
+        }
+        return uniqueArray(result); //check no duplicates
+    }())
+
+    $scope.renewalStages = (function() {
+              var result = [];
+        for(var i = 0; i < $scope.portfolioData.length; i++){
+            var patent = $scope.portfolioData[i];
+            if(patent.serviceList && patent.serviceList.length > 0){
+                for(var j = 0; j < patent.serviceList.length; j++){
+                    if(patent.serviceList[j].serviceType == 'Renewal') {
+                        result.push(patent.serviceList[j]['currentStageColour'])
+                    }
+                }
+            }
+        }
+        return uniqueArray(result); //check no duplicates
+
+    }())
+
+
+    $scope.europctStatus = (function(){
+        
+        var result = [];
+        for(var i = 0; i < $scope.portfolioData.length; i++){
+            var patent = $scope.portfolioData[i];
+            if(patent.serviceList && patent.serviceList.length > 0){
+
+                for(var j = 0; j < patent.serviceList.length; j++){
+                    if(euroPctStatuses.indexOf(patent.serviceList[j]['serviceStatus']) > -1) 
+                        result.push(organiseTextService.uiStatus(patent.serviceList[j]['serviceStatus'])) //organisetTextservice required as UI text and backend text are being mixed
+                }
+            } else { //if not servicelist
+
+                if(euroPctStatuses.indexOf(patent.serviceStatus) > -1) {
+                    result.push(organiseTextService.uiStatus(patent.serviceStatus));
+                }
+            }
+            
+        }
+        return uniqueArray(result); //check no duplicates
+    }())
+
+    $scope.renewalsStatus = (function(){
+      var result = [];
+      for(var i = 0; i < $scope.portfolioData.length; i++){
+          var patent = $scope.portfolioData[i];
+          if(patent.serviceList && patent.serviceList.length > 0){
+            for(var j = 0; j < patent.serviceList.length; j++){
+              if(renewalStatuses.indexOf(patent.serviceList[j]['serviceStatus']) > -1)
+                  result.push(organiseTextService.uiStatus(patent.serviceList[j]['serviceStatus']));
+              }
+          } else {
+            if(renewalStatuses.indexOf(patent.serviceStatus) > -1) { //if not servicelist
+              result.push(organiseTextService.uiStatus(patent.serviceStatus));
+            }
+          }
+      }
+      return uniqueArray(result); //check no duplicates
+    }());
 
     function toggleAll($event, includeAll) { //used for clear or select all
         for(var filter in $scope.filters) {
