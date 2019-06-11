@@ -207,7 +207,7 @@
                         </tr>
                     </thead>
                     <tbody class="portfolio-table">
-                        <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: filter:filterPortfolio as Result track by $index" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.id)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.id == $ctrl.selected}">
+                        <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter:filterPortfolio as Result track by $index" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.id)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.id == $ctrl.selected}">
                             <td class="t-data__td--ellipsis t-data__td t-data__w15">
                                 <span class="td-ellipsis">
                                     <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.id}}"></a>
