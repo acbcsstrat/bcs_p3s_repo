@@ -6,18 +6,37 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
 
     var vm = this;
 
-    vm.pageTitle = 'Form 1200 Generating';
+    $scope.patent = $scope.$parent.patent
+    $scope.confirmDeleteApplication = confirmDeleteApplication;
+    $scope.deleteApplicationReq = false;
 
-    vm.patent = $scope.$parent.patent
-    vm.deleteApplication = deleteApplication;
+    function confirmDeleteApplication(id) {
 
-    function init() {    
-        checkForm1200();
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.confirm-delete-epct-application-success.tpl.htm', //create html for notifications update success
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', function($uibModalInstance){
+
+                this.confirm = function() {
+                    deleteApplication($scope.patent.id)
+                    $uibModalInstance.close();
+                }
+
+                this.dismissModal = function () {
+                    $uibModalInstance.close();
+                    
+                };
+               
+            }]
+
+        });      
+
     }
 
-    init();
+    function deleteApplication(id) {
 
-    function deleteApplication(id) {    
+        $scope.deleteApplicationReq = true;
         euroPctService.deleteApplication(id)
         .then(
             function(response){
@@ -27,9 +46,13 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
                 deleteApplicationError(errResponse);
             }
         )
+
     }
 
     function deleteApplicationSuccess() {
+
+        $scope.deleteApplicationReq = true;
+
         var modalInstance = $uibModal.open({
             templateUrl: 'app/templates/modals/modal.delete-epct-application-success.tpl.htm', //create html for notifications update success
             appendTo: undefined,
@@ -37,8 +60,12 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
             controller: ['$uibModalInstance', function($uibModalInstance){
                 this.dismissModal = function () {
                     $uibModalInstance.close();
+                    
                 };
-                $state.go('portfolio.patent', {patentId: patent.id}, {reload: true}); //go to patent info on successful deletion
+                $timeout(function() {
+                    $state.go('portfolio.patent', {patentId: $scope.patent.id}, {reload: true}); //go to patent info on successful deletion                    
+                }, 200);
+               
             }]
 
         });
@@ -82,15 +109,6 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
 
         });
 
-    }
-
-    function checkForm1200() {
-        if(vm.patent.form1200PdfUrl === null) {
-            vm.form1200Ready = false;
-            return
-        }
-        vm.form1200Ready = true;
-       
     }
 
 
