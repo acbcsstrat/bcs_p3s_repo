@@ -1,48 +1,179 @@
-Patent Place email verification request
-Hello [FIRSTNAME], 
-<p/>
 
-Thank you for registering with The Patent Place.
-<p/>
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+   <td>
+    <table align="center" border="1" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+ <tr>
+  <td>
+   <table align="center" border="1" cellpadding="" cellspacing="0" width="600">
+ <tr>
+  <td align="center" bgcolor="#ffffff" style="padding: 40px 0 20px 0;">
+  
+  
 
-Before you login, please confirm your email address by clicking on the below link, or by copy-and-pasting the link address into a browser:
+
+<style>
+.intro {
+  background-color: white;
+  color: 000000;
+  font-family: "muli";
+  font-weight: 999;
+  font-size: 19px;
+}
+</style>
+
+
+<a href="https://thepatent.place/" target="_blank">
+<img src="https://thepatent.place/wp-content/uploads/2017/09/PP-Web-Logo-2.png" alt="Patent Place">
+</a>
+<br/>
+<br/>
+
+<div class="intro">
+  Patent Place Email Verification<p/>
+ 
+
+<style>
+
+p.serif {
+  font-family: "muli", serif;
+  font-weight: 600;
+  
+  }
+}
+}
+</style>
+
+
+
+<p/>
+ 
+ <tr>
+  <td align="center" bgcolor="#ffffff" style="padding: 30px 0 30px 0;">
+   <p/>
+   
+<p class="intro">Hello [FIRSTNAME],<p/>
+<br/>
+<p class="serif">Thank you for registering with The Patent Place.<p/>
+<br/>
+<p class="serif">Before you login, please confirm your email address by clicking on button below, or by copy-and-pasting the link address into a browser:
+<br/>
+
+
+<style>
+.button {
+  background-color: #53aa58;
+  border: none;
+  color: white;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: muli;
+  font-weight: 750;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+
+<br/>
+<a href="[URL_TO_VERIFY_EMAIL]" class="button">Verify email </a> 
+<br/>
 <br/>
 <a href="[URL_TO_VERIFY_EMAIL]">[URL_TO_VERIFY_EMAIL]</a>
-<p/>
-
-You will not be able to login until you have confirmed your email address.
-<p/>
-
-
-
-For more information about thepatent.place, see our FAQ <a href="[URL_TO_FAQ]">here</a>
-<p/>
-
-Should you want to register a support request, contact : <a href="mailto:[SUPPORT_EMAIL_ADDRESS]">[SUPPORT_EMAIL_ADDRESS]</a>
-<p/>
-
-
-
-Should your colleagues also wish to register with this same [COMPANY_NAME] account, 
 <br/>
-they should register, indicating 'firm already registered' (or click <a href="[LOGIN_URL]">here</a>), 
 <br/>
+<p class="serif">You will not be able to login until you have confirmed your email address.</p>
+<br/>
+
+<p class="serif">Should your colleagues also wish to register with this same [COMPANY_NAME] account, 
+
+they should register, indicating &apos;firm already registered&apos; (or click <a href="[LOGIN_URL]">here</a>), 
+
 and enter the following identifying credentials for your company:
 <p/>
-
+<br/>
 <table class="tblCompanyDetails3colregemail">
-[THREECOL_TABLE_OF_COMPANY_DETAILS]<tr><td></td><td>[FIELDB]:</td><td>[FIELDC]</td></tr>
+<p class="serif">[THREECOL_TABLE_OF_COMPANY_DETAILS]<tr><td></td><td><p class="serif">[FIELDB]:</td><td><p class="serif">[FIELDC]</td></tr>
 </table>
 
 <p/>
-(These details are also available to you from your User Profile page)
+<p class="serif">(These details are also available to you from your User Profile page)
 <p/>
 
 
 
-We're delighted to have you on board!
+<p class="serif">We're delighted to have you on board!
 
 <p/>
-Kind regards,
 <br/>
-The Patent Place team
+<p class="serif">Kind regards,
+<br/>
+<p class="serif">The Patent Place team
+ <tr>
+ 
+  <td align="center" bgcolor="#53aa58" style="padding: 10px 0 10px 0;">
+  
+  <p class="serif">For more information about thepatent.place, see our FAQ <a href="[URL_TO_FAQ]">here</a>
+<p/>
+
+<p class="serif">Should you want to register a support request, contact : [SUPPORT_EMAIL_ADDRESS]
+<br/>
+<br/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.fa {
+  padding: 10px;
+  font-size: 30px;
+  width: 30px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+  border-radius: 50%;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+.fa-facebook {
+  background: white;
+  color: #53aa58;
+}
+.fa-twitter {
+  background: white;
+  color:  #53aa58;
+
+}
+.fa-linkedin {
+  background: white;
+  color:  #53aa58;
+}
+
+</style>
+
+
+<a href="https://www.twitter.com/patent_place/" target="_blank" class="fa fa-twitter"></a>
+<a href="https://www.linkedin.com/company/patent-place/" target="_blank" class="fa fa-linkedin"></a>
+<a href="https://www.facebook.com/patentplace/" target="_blank" class="fa fa-facebook"></a>
+
+<p/>
+
+ 
+
+
+
+
+
+
+<style>
+:target {
+  border: 2px solid #D4D4D4;
+  background-color: #e5eecc;
+}
+</style>
+
+
