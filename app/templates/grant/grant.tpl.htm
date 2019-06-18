@@ -1,0 +1,18 @@
+<div data-ng-if="$ctrl.grantStage == 1" data-ng-class="fade-in">
+    <div class="row">
+        <div class="col-md-12 col-xl-12">
+            <div class="m-b-sm" data-ng-include="$ctrl.grantTemplate">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div data-ng-if="$ctrl.grantStage == 2" data-ng-class="fade-in" data-ng-controller="grantReadyCtrl">
+    <div class="row">
+        <div class="col-md-12 col-xl-12">
+            <div class="m-b-sm" data-ng-include="$ctrl.grantTemplate">
+            </div>
+        </div>
+    </div>
+</div>

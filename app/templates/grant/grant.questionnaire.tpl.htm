@@ -1,0 +1,45 @@
+<!-- <div class="row m-b-md">
+    <div class="col-xl-12">
+        <p class="font-h4 m-b-xs">The Grant and Publishing fees that are due: <span class="font-h4 font-weight-bold" data-ng-repeat="item in $ctrl.patent.serviceList.epoFeeCodes">{{item.name}}, </span></p> <!-- GRANT TEST DATA
+        <p class="font-h4 m-b-xs">Deadline: <span class="font-h4 font-weight-bold" data-ng-bind="$ctrl.patent.serviceList.costBandEndDateUI"></span></p>
+    </div>
+</div> --> 
+    <div class="m-t-sm m-b-md">
+        <div class="panel-nav">
+            <button class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.activeTab = item.index; $ctrl.setNavIndex(item.index)" data-ng-class="{'active': $ctrl.activeTab == item.index}" data-ng-repeat="item in $ctrl.questions" data-ng-disabled="item.index !== $ctrl.current.index && item.index > $ctrl.highestPoint">{{item.number}}</button>           
+        </div>
+    </div>
+    <form name="grantAndPublishForm" data-ng-submit="$ctrl.prepareAction()" novalidate>
+        <uib-tabset active="$ctrl.activeTab">
+            <uib-tab index="$index" data-ng-hide="true" data-ng-repeat="question in $ctrl.questions">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <p class="font-weight-medium m-r-sm font-h4 m-b-xs">
+                                <span data-ng-bind="question.number"></span>
+                                <span data-ng-bind="question.title"></span>
+                            </p>
+                            <label for="checkYes" class="font-h4 m-r-sm">Yes
+                                <input type="checkbox" name="checkYes" data-ng-model="checkYes[question]" data-ng-change="$ctrl.grantNotSuitable(question, checkYes[question], 'yes')" data-ng-click="checkNo[question] = false" class="m-l-xs">
+                            </label>
+                            <label for="checkNo" class="font-h4">No
+                                <input type="checkbox" name="checkNo" data-ng-model="checkNo[question]" data-ng-change="$ctrl.grantNotSuitable(question, checkNo[question], 'no')" data-ng-click="checkYes[question] = false"  class="m-l-xs" required>
+                            </label>
+                            <p data-ng-if="$ctrl.cannotProceed" class="txt-phase-red font-h4 m-t-xs" data-ng-bind="question.cannotProceedMsg"></p>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>        
+        <div class="row m-t-md">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span data-ng-show="$ctrl.current.index == 0"></span>
+                    <button class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.previous(); $ctrl.activeTab = $ctrl.current.index" data-ng-show="$ctrl.current.index !== 0">Previous</button>
+                    <button class="next btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.next(); $ctrl.activeTab = $ctrl.current.index" data-ng-disabled="$ctrl.cannotProceed" data-ng-hide="$ctrl.current.index == $ctrl.questions.length - 1">Next</button>
+                    <button class="btn btn--green btn--lg pill-radius" type="submit" data-ng-show="$ctrl.current.index == $ctrl.questions.length - 1" data-ng-disabled="grantAndPublishForm.$invalid">Prepare action</button>
+                </div>
+                <p data-ng-if="$ctrl.current.index == $ctrl.questions.length - 1 && grantAndPublishForm.$invalid" class="txt-phase-red font-body text-right m-t-sm">Please make sure an option has been selected for each question</p>
+            </div>
+        </div>
+    </form>
