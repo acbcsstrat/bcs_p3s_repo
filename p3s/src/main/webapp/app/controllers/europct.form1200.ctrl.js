@@ -17,7 +17,6 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
     var service = $scope.$parent.availableServices;
 
     //QUESTIONAIRE
-
     vm.manualProcess = manualProcess;// NOT REQUIRED FOR RELEASE 1
     vm.chkValidStates = chkValidStates;
     vm.chkExtStates = chkExtStates;
@@ -317,6 +316,7 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
     }
 
     function submitForm1200(data) {
+        vm.form1200submitted = true;
         var arr = sortPageDetails(data);
         vm.formData.pageDescriptionsUI = arr;
         vm.formData.id = patent.id;
@@ -325,6 +325,7 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
         form1200Service.submitForm1200(vm.formData)
         .then(
             function(response){
+                form1200Generating();
                 activeTabService.setTab(2)
                 $state.go('portfolio.patent', {}, {reload: true});
             },
@@ -333,6 +334,23 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
             }
         )
     }
+
+    function form1200Generating() {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.form1200-generating.tpl.htm', //create html for notifications update success
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', function($uibModalInstance){
+                this.dismissModal = function () {
+                    $uibModalInstance.close();
+                };
+            }]
+
+        })
+
+    }
+
 
     function chkValidStates(item, index) {
         if(item === '') {

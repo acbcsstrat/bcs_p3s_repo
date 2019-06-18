@@ -9,10 +9,10 @@ function costAnalysisService($http, $q) {
     }
 
     function fetchCa(patent) {
-        
+
         var array = [];
         var deferred = $q.defer();
-        patent.portfolioUI.serviceList.forEach(function(data){
+        patent.serviceList.forEach(function(data){
             if(data.serviceType == 'Form1200') {
                 array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patent.id))
 

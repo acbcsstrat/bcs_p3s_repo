@@ -83,11 +83,12 @@ function appRoutes($stateProvider) {
                     return patentsRestService.fetchPatentItem(match.id);
                 }],
                 ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
-                    return costAnalysisService.fetchCa(patent);  
+                    return costAnalysisService.fetchCa(patent.portfolioUI);  
                 }]
             },
             params: {
-                patentId: null
+                patentId: null,
+                form1200generate: null
             },
             views:{
                 "": {

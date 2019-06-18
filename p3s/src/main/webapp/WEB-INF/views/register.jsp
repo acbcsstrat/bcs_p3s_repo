@@ -240,12 +240,12 @@
                             <form name="companyCodeForm" id="companyCodeForm">
                                 <div class="form-group row">
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <input data-parsley-type="alphanum" class="form-control pill-radius font-body" name="businessNumber" placeholder="Business Number" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+                                        <input data-parsley-type="alphanum" class="form-control pill-radius font-body" name="businessNumber" placeholder="Company Number" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <input class="form-control pill-radius font-body" name="businessPin" placeholder="Business PIN" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+                                        <input class="form-control pill-radius font-body" name="businessPin" placeholder="Company PIN" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
                                     </div>
                                 </div>
                                 <div id="businessValidation">
@@ -727,7 +727,7 @@
                         },
                         error: function(errResponse) {
                             if(errResponse.status == 400) {
-                                $('#businessValidation').html('<p class="font-body txt-phase-red">The business PIN and number do not match our records. Please try again.</p>');
+                                $('#businessValidation').html('<p class="font-body txt-phase-red">The company PIN and number do not match our records. Please try again.</p>');
                             }
                         }
                     });

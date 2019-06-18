@@ -23,6 +23,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     }
 
     function init() {
+
         if(activeTabService.getTab == 2) {
             $scope.activeLeft = 2
             activeTabService.setTab(0)
@@ -31,6 +32,11 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             activeTabService.setTab(0)
         } else {
             $scope.activeLeft = 0;
+        }
+
+        if($stateParams.form1200generate === 1) {
+            $scope.activeLeft = 2;
+            activeTabService.setTab(0)
         }
 
         patent.action = organiseTextService.actionStatus(patent.portfolioUI.serviceStatus) ? true : false;
@@ -45,8 +51,13 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             if(patent.portfolioUI.serviceStatus == 'Too late to renew') {
                 return true;
             }
-            if(patent.portfolioUI.serviceStatus == 'Too late' && patent.portfolioUI.serviceList[0].currentStageColour == 'Red') {
-                return true
+            if(patent.portfolioUI.serviceStatus == 'Too late') {
+                if(patent.portfolioUI.serviceList.length > 0) {
+                    if(patent.portfolioUI.serviceList[0].currentStageColour == 'Red') {
+                        return true
+                    }
+                }
+
             }
             return false
         }())

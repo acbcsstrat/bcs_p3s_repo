@@ -278,7 +278,7 @@
                         <div class="row m-t-md">
                             <div class="col-md-12 d-flex justify-content-between">
                                 <button type="button" class="prev btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.confirmPages.fn($event)">Previous</button>                                                
-                                <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate Form 1200</button>
+                                <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-if="!$ctrl.renewal.active" data-ng-if="!$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid || $ctrl.form1200submitted" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate Form 1200</button>
                                 <button type="button" class="btn btn--green btn--lg pill-radius" data-ng-if="$ctrl.renewal.active" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.confirmPages.fn($event)">Next</button>
                             </div>
                         </div>
@@ -299,7 +299,7 @@
                 <div class="row m-t-md">
                     <div class="col-md-12 d-flex justify-content-between">
                         <button type="submit" id="submit" class="prev btn btn--green btn--lg pill-radius" type="button" data-ng-click="$ctrl.renewal.fn($event)">Previous</button>
-                        <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$invalid" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate form</button>
+                        <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$invalid || $ctrl.form1200submitted" data-ng-click="$ctrl.submitForm1200($ctrl.pageDetailsData)">Generate form</button>
                     </div>
                 </div>                            
             </uib-tab>

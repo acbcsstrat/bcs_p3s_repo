@@ -9,7 +9,7 @@ function notificationService($q, $http) {
     }
 
     function updateNotifications(id, list, url) {
-        console.log(ppdomain+url)
+
         var deferred = $q.defer()
 
         $http.put(ppdomain+url+id, list)

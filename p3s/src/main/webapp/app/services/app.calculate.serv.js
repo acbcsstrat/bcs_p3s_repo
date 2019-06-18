@@ -54,7 +54,7 @@ function calculateService($q, $timeout, patentsRestService, fxService) {
         seconds = Math.floor(seconds % 60);
         seconds = (seconds >= 10) ? seconds : "0" + seconds;
 
-        if (hours !== '' && hours < 48) { //if within 48 hours
+        if (hours !== '' && hours < 2000) { //if within 48 hours
             return true;
         }
 
