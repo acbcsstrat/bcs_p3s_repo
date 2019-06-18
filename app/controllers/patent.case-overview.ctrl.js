@@ -51,8 +51,13 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             if(patent.portfolioUI.serviceStatus == 'Too late to renew') {
                 return true;
             }
-            if(patent.portfolioUI.serviceStatus == 'Too late' && patent.portfolioUI.serviceList[0].currentStageColour == 'Red') {
-                return true
+            if(patent.portfolioUI.serviceStatus == 'Too late') {
+                if(patent.portfolioUI.serviceList.length > 0) {
+                    if(patent.portfolioUI.serviceList[0].currentStageColour == 'Red') {
+                        return true
+                    }
+                }
+
             }
             return false
         }())
