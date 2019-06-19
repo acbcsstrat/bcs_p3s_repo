@@ -19,7 +19,7 @@
 	    <div class="col-md-12 col-xl-12">
 	        <nav>
 	            <ul class="panel-nav">
-	            	<li class="panel-nav__list-item list-item--colour-border pill-radius  lg-m-t-sm" data-ng-init="$ctrl.activeTab = 0" data-ng-repeat="item in $ctrl.notificationNavItems track by item.id" data-ng-click="$ctrl.displayNotifications($ctrl.data.selectedAction.action, item.colour); $ctrl.activeTab = $index" data-ng-class="{'{{item.css}}': $index == item.id, 'active': $ctrl.activeTab == $index}">
+	            	<li class="panel-nav__list-item list-item--colour-border pill-radius m-t-sm" data-ng-init="$ctrl.activeTab = 0" data-ng-repeat="item in $ctrl.notificationNavItems track by item.id" data-ng-click="$ctrl.displayNotifications($ctrl.data.selectedAction.action, item.colour); $ctrl.activeTab = $index" data-ng-class="{'{{item.css}}': $index == item.id, 'active': $ctrl.activeTab == $index}">
 	            		{{item.colour}}
 	            	</li>
 	            </ul>
@@ -28,7 +28,7 @@
 	    <div class="col-md-12 col-xl-12 m-t-xs">
 	        <uib-tabset active="activeNotificationTab" type="pills" class="flex-row">
 	        	<uib-tab data-ng-repeat="checkbox in $ctrl.availableNotifications track by $index" index="$index">
-	        		<div class="row lg-m-t-sm">
+	        		<div class="row m-t-sm">
 	                    <div class="col-md-2 col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
 	                        {{item.title}}
 	                        <div class="onoffswitch">
