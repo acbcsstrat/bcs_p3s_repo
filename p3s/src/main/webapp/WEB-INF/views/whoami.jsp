@@ -43,7 +43,7 @@
  </tr>
  <tr>
 	<td>P3S product version</td>
-	<td>v2.1</td>
+	<td>v2.1+auto</td>
  </tr>
 </table>
 
