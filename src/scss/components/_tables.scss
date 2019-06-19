@@ -179,19 +179,25 @@ td, th {
   white-space: nowrap;
   min-width: 110px;
 }
-th {
-  background-color:white;
-/*color:white;*/
+
+.sticky-table {
+  th {
+    background-color:white;
+  }
 }
 
-th:first-child, td:first-child {
-  position:sticky;
-  left:0px;
-  z-index: 20;
+.sticky-table {
+  th:first-child, td:first-child {
+    position:sticky;
+    left:0px;
+    z-index: 20;
+  }
 }
 
-td:first-child {
-  background: white;
+.sticky-table {
+  td:first-child {
+    background: white;
+  }
 }
 
 .t-data__w8 { width: 8%; }

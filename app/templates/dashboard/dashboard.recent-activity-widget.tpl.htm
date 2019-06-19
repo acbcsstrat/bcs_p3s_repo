@@ -19,18 +19,18 @@
 				</div>
 			</div>
 	    	<div data-ng-hide="$ctrl.recentActivityData.length === 0" class="scrollable-area dashboard-table scrollable-area--no-shadow animate-show">
-				<table class="t-data">
-					<thead>
+				<table class="t-data sticky-table">
+					<thead class="sticky-thead">
 						<tr class="t-data__row">
-							<th class="t-data__th border-t-none">App No.</th>
+							<th class="t-data__th border-t-none sticky-th">App No.</th>
 							<th class="t-data__th border-t-none">Client Ref</th>
 							<th class="t-data__th border-t-none">Current Cost</th>
 							<th class="t-data__th border-t-none">Next Stage</th>
 						</tr>
 					</thead>
-                    <tbody class="dashboard-table">
+                    <tbody class="sticky-tbody">
                     	<tr class="t-data__row t-data__row--select" data-ng-repeat="patent in $ctrl.recentActivityData">
-	                    	<td class="t-data__td" data-ng-bind="patent.ep_ApplicationNumber">
+	                    	<td class="t-data__td sticky-td" data-ng-bind="patent.ep_ApplicationNumber">
 	                    		
 	                    	</td>
 	                    	<td class="t-data__td" data-ng-bind="patent.clientRef || '[No Client Reference Provided]'">
@@ -54,19 +54,19 @@
 				</div>								
 			</div>
 		    <div data-ng-hide="$ctrl.recentTransArr.length === 0"  class="scrollable-area dashboard-table scrollable-area--no-shadow animate-show">
-				<table class="t-data">
-					<thead>
+				<table class="t-data sticky-table">
+					<thead class="sticky-thead">
 						<tr class="t-data__row">
-							<th class="t-data__th border-t-none">Trans ID</th>
+							<th class="t-data__th border-t-none sticky-th">Trans ID</th>
 							<th class="t-data__th border-t-none">Trans Date</th>
 							<th class="t-data__th border-t-none">Patents</th>
 							<th class="t-data__th border-t-none">Total</th>
 							<th class="t-data__th border-t-none">Trans status</th>
 						</tr>
 					</thead>								
-					<tbody class="dashboard-table">
+					<tbody class="sticky-tbody">
 						<tr class="t-data__row t-data__row--select"  data-ng-repeat="trans in $ctrl.recentTransArr" data-ui-sref="current-transactions.current-transaction-item({transId: trans.id})">
-							<td class="t-data__td">{{trans.p3S_TransRef}}</td>
+							<td class="t-data__td sticky-th">{{trans.p3S_TransRef}}</td>
 							<td class="t-data__td">{{trans.transStartDate | date:'MM-dd-yy'}}</td>
 							<td class="t-data__td">
 								<span data-ng-repeat="item in trans.renewalUIs" data-ng-if="trans.renewalUIs.length == 1" >

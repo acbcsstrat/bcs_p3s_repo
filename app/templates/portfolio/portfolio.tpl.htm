@@ -155,7 +155,6 @@
             </div>
         </div>        
         <div data-ng-show="data.length !== 0" class="col-md-12">
-            <div class="table-panel scrollable-area bg-white">
                 <div class="row p-a-sm">
                     <div class="col-md-3 col-lg-3 col-xl-2">
                         <div class="input-group">
@@ -173,55 +172,57 @@
                             </div>                            
                         </div>
                     </div>
-           
                 </div>
-                <table class="table t-data table-scroll">
+            <div class="scrollable-area portfolio-table bg-white">
+                <table class="t-data">
                     <thead>
-                        <tr class="t-data__row t-data__row--select t-data__head">
-                            <th class="t-data__th t-data__w15" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                        <tr class="t-data__row t-data__row--select">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>App No.</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
                             </th>
-                            <th class="t-data__th t-data__w20" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>Client Ref</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                          
                             </th>
-                            <th class="t-data__th t-data__w15" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>Client Desc</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                         
                             </th>
-                            <th class="t-data__th t-data__w20" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>Patent Place Status</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>                          
                             </th>
-                            <th class="t-data__th t-data__w15" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>European Action</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && $ctrl.sortReverse" class="fa fa-caret-up"></span>     
                             </th>
-                            <th class="t-data__w15"></th>
+                            <th class="t-data__th">
+                                <span></span>
+                            </th>
                         </tr>
                     </thead>
-                    <tbody class="portfolio-table">
+                    <tbody class="">
                         <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter:filterPortfolio as Result track by $index" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.id)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.id == $ctrl.selected}">
-                            <td class="t-data__td--ellipsis t-data__td t-data__w15">
+                            <td class="t-data__td--ellipsis t-data__td">
                                 <span class="td-ellipsis">
                                     <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.id}}"></a>
                                 </span>
                             </td>
-                            <td class="t-data__td--ellipsis t-data__td t-data__w20 ellipsis-remove" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">
+                            <td class="t-data__td--ellipsis t-data__td" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">
                                 <span class="td-ellipsis txt-grey" data-ng-if="patent.clientRef == ''">[No client reference provided]</span>
                                 <span class="td-ellipsis" data-ng-if="patent.clientRef !== ''">{{patent.clientRef}}</span>
                             </td>
-                            <td class="t-data__td--ellipsis t-data__td t-data__w15 ellipsis-remove" data-ng-class="patent.shortTitle == '' ? 'ellipsis-remove' : ''">
+                            <td class="t-data__td--ellipsis t-data__td" data-ng-class="patent.shortTitle == '' ? 'ellipsis-remove' : ''">
                                 <span class="td-ellipsis txt-grey" data-ng-if="patent.shortTitle == ''">[No client description provided]</span>
                                 <span class="td-ellipsis" data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
                             </td>
-                            <td class="t-data__td t-data__w20">
+                            <td class="t-data__td">
                                 <div data-ng-if="patent.serviceList.length === 0">
                                     <div data-ng-if="!patent.action || patent.serviceStatus == 'Too late to renew'">
                                         <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
@@ -229,7 +230,7 @@
                                 </div>
                                 <table data-ng-if="patent.serviceList.length > 1">
                                     <tr data-ng-repeat="item in patent.serviceList">
-                                        <td class="t-data__td t-data__w15 border-grey-xs--left">
+                                        <td class="t-data__td border-grey-xs--left">
                                             <div data-ng-if="!patent.action">
                                                 <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
                                             </div>
@@ -292,11 +293,11 @@
                                     </tr>
                                 </table>
                             </td><!--patent place status-->
-                            <td class="t-data__td t-data__w15 ellipsis-remove"> <!--this is where it starts to split with x2 services-->
+                            <td class="t-data__td ellipsis-remove"> <!--this is where it starts to split with x2 services-->
                                 <span data-ng-if="patent.epeStage == 'Filing'">Form 1200</span>
                                 <span data-ng-if="patent.epeStage == 'Prosecution'">Renewal</span>
                             </td><!--when multiple services begin-->
-                            <td class="t-data__td t-data__w15">
+                            <td class="t-data__td">
                                 <table data-ng-if="patent.serviceList.length === 0">
                                     <tr>
                                         <td>
@@ -326,7 +327,7 @@
                                 </table>
                                 <table data-ng-if="patent.serviceList.length > 1">
                                     <tr data-ng-repeat="item in patent.serviceList">
-                                        <td class="t-data__td t-data__w15">
+                                        <td class="t-data__td">
                                             <div class="d-flex justify-content-center">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
                                                     <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--default pill-radius bg-phase-green t-data__btn-portal">Generate Form 1200

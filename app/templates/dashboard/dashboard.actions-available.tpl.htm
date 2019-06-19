@@ -19,18 +19,18 @@
         </div>      
         <uib-tab data-ng-repeat="(key, value) in $ctrl.patents track by $index" data-ng-hide="true" index="$index">
             <div data-ng-if="$ctrl.patents[key].length > 0" class="scrollable-area dashboard-table scrollable-area--no-shadow animate-show">
-                <table class="t-data">
-                    <thead>                    
+                <table class="t-data sticky-table">
+                    <thead class="sticky-thead">                    
                         <tr class="t-data__row">
-                            <th class="t-data__th border-t-none">App No.</th>
+                            <th class="t-data__th border-t-none sticky-th">App No.</th>
                             <th class="t-data__th border-t-none">Client Ref</th>
                             <th class="t-data__th border-t-none">Current Stage</th>
                             <th class="t-data__th border-t-none">Next Stage</th>
                         </tr>
                     </thead>
-                    <tbody class="dashboard-table">
+                    <tbody class="sticky-tbody">
                         <tr class="t-data__row t-data__row--select" data-ng-repeat="item in $ctrl.patents[key]">
-                            <td class="t-data__td" data-ng-bind="item.ep_ApplicationNumber"> </td>
+                            <td class="t-data__td sticky-td" data-ng-bind="item.ep_ApplicationNumber"> </td>
                             <td class="t-data__td" data-ng-bind="item.clientRef || '[No Client Reference Provided]'"></td>
                             <td class="t-data__td" data-ng-class="item.cssCurrent">{{item.serviceList[0].currentStageColour}}: {{$ctrl.date | date:'MM-dd-yy'}}</td> 
                             <td class="t-data__td" data-ng-class="item.cssNext">{{item.serviceList[0].nextStageColour}}: {{item.serviceList[0].costBandEndDate | date:'MM-dd-yy'}}</td>
