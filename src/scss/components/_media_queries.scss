@@ -257,10 +257,10 @@
     width: calc(100% - 90px)!important;
     left: 75px;
     position: absolute;
-    top: 100px
+    top: 90px
   }
 
-  // .closed-sidenav { width: 60px!important; }
+  .closed-sidenav { padding: 1rem 0; }
 
   .btn-md-block {
     width: 100%;
