@@ -53,12 +53,16 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
         }
 
         if(action == 'Form1200') {
+            vm.displayForm1200 = true;
+            vm.displayRenewal = false;
             vm.availableFees = patent.form1200FeeUI;
             vm.availableFees.ppFeesUSD = patent.form1200FeeUI.subTotalUSD - patent.form1200FeeUI.currentOfficialFeeUSD;
             vm.availableFees.ppFeesEUR = patent.form1200FeeUI.subTotalEUR - patent.form1200FeeUI.currentOfficialFeeEUR;
         }
 
         if(action == 'Renewal') {
+            vm.displayForm1200 = false;
+            vm.displayRenewal = true;
             vm.availableFees = patent.renewalFeeUI;
             vm.availableFees.ppFeesUSD = patent.renewalFeeUI.subTotalUSD - patent.renewalFeeUI.currentOfficialFeeUSD;
             vm.availableFees.ppFeesEUR = patent.renewalFeeUI.subTotalEUR - patent.renewalFeeUI.currentOfficialFeeEUR;            
