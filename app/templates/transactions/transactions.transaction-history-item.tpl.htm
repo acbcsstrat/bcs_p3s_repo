@@ -77,7 +77,7 @@
 					    <div class="row m-b-sm">
 					        <div class="col-md-5 col-xl-5">
 					            <p class="font-weight-medium font-h4">Official Fee:
-					                <i class="fas font-h4 fa-caret-right accordion-caret" data-ng-class="{'active': !panelActive}" data-ng-click="panelActive = !panelActive"></i>
+					                <i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !panelActive}" data-ng-click="panelActive = !panelActive"></i>
 					            </p>
 					        </div>								
 					        <div class="col-md-4 col-xl-4">
@@ -85,106 +85,120 @@
 					        </div>
 					        <div class="col-md-12 col-xl-12">								
 								<div class="expandcollapse-item">
-					                <div class="slideDown m-t-sm" data-ng-init="panelActive = true" data-ng-hide="panelActive">
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Designation fee:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.designationFeeUSD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                     
-					                    </div>
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Examination fee:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.examinationFeeUSD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                      
-					                    </div>
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Excess Page fee:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.excessPageFeeUSD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                       
-					                    </div>
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Filing fee:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.filingFeeUSD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                    
-					                    </div>
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Renewal Fee:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                     
-					                    </div>
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Supplmentary Search fee:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.supplementarySearchFeeUSD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                       
-					                    </div>
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Validation State fee:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.validationFeeUSD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                    
-					                    </div>
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Extension State fee:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                      
-					                    </div>                                        
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Claims fee 1:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.claimsFee1USD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                      
-					                    </div>   
-					                    <div class="row m-b-sm">
-					                        <div class="col-md-5 col-xl-5">
-					                            <p class="font-weight-medium m-l-sm">Claims fee 2:</p>
-					                        </div>
-					                        <div class="col-md-4 col-xl-4">
-					                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.claimsFee2USD | number: 2) || '0.00'}}</p>
-					                        </div>                                                                                    
-					                    </div>                                                                                                
-					                    <div class="border-grey-xs--btm"></div> 
-					                </div>
-					            </div><!--official drop down end-->
+									<div class="slideDown m-t-sm" data-ng-init="panelActive = true" data-ng-hide="panelActive">
+										<div data-ng-if="transaction.serviceType == 'Form 1200'">
+						                
+						                    <div class="row m-b-sm">
+						                        <div class="col-md-5 col-xl-5">
+						                            <p class="font-weight-medium m-l-sm">Designation fee:</p>
+						                        </div>
+						                        <div class="col-md-4 col-xl-4">
+						                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.designationFeeUSD | number: 2) || '0.00'}}</p>
+						                        </div>                                                                                     
+						                    </div>
+						                    <div class="row m-b-sm">
+						                        <div class="col-md-5 col-xl-5">
+						                            <p class="font-weight-medium m-l-sm">Examination fee:</p>
+						                        </div>
+						                        <div class="col-md-4 col-xl-4">
+						                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.examinationFeeUSD | number: 2) || '0.00'}}</p>
+						                        </div>                                                                                      
+						                    </div>
+						                    <div class="row m-b-sm">
+						                        <div class="col-md-5 col-xl-5">
+						                            <p class="font-weight-medium m-l-sm">Excess Page fee:</p>
+						                        </div>
+						                        <div class="col-md-4 col-xl-4">
+						                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.excessPageFeeUSD | number: 2) || '0.00'}}</p>
+						                        </div>                                                                                       
+						                    </div>
+						                    <div class="row m-b-sm">
+						                        <div class="col-md-5 col-xl-5">
+						                            <p class="font-weight-medium m-l-sm">Filing fee:</p>
+						                        </div>
+						                        <div class="col-md-4 col-xl-4">
+						                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.filingFeeUSD | number: 2) || '0.00'}}</p>
+						                        </div>                                                                                    
+						                    </div>
+						                    <div class="row m-b-sm">
+						                        <div class="col-md-5 col-xl-5">
+						                            <p class="font-weight-medium m-l-sm">Supplmentary Search fee:</p>
+						                        </div>
+						                        <div class="col-md-4 col-xl-4">
+						                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.supplementarySearchFeeUSD | number: 2) || '0.00'}}</p>
+						                        </div>                                                                                       
+						                    </div>
+						                    <div class="row m-b-sm">
+						                        <div class="col-md-5 col-xl-5">
+						                            <p class="font-weight-medium m-l-sm">Validation State fee:</p>
+						                        </div>
+						                        <div class="col-md-4 col-xl-4">
+						                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.validationFeeUSD | number: 2) || '0.00'}}</p>
+						                        </div>                                                                                    
+						                    </div>
+						                    <div class="row m-b-sm">
+						                        <div class="col-md-5 col-xl-5">
+						                            <p class="font-weight-medium m-l-sm">Extension State fee:</p>
+						                        </div>
+						                        <div class="col-md-4 col-xl-4">
+						                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
+						                        </div>                                                                                      
+						                    </div>                                        
+						                    <div class="row m-b-sm">
+						                        <div class="col-md-5 col-xl-5">
+						                            <p class="font-weight-medium m-l-sm">Claims fee 1:</p>
+						                        </div>
+						                        <div class="col-md-4 col-xl-4">
+						                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.claimsFee1USD | number: 2) || '0.00'}}</p>
+						                        </div>                                                                                      
+						                    </div>   
+						                    <div class="row m-b-sm">
+						                        <div class="col-md-5 col-xl-5">
+						                            <p class="font-weight-medium m-l-sm">Claims fee 2:</p>
+						                        </div>
+						                        <div class="col-md-4 col-xl-4">
+						                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.claimsFee2USD | number: 2) || '0.00'}}</p>
+						                        </div>                                                                                    
+						                    </div>                                                                                                
+						                    <div class="border-grey-xs--btm"></div> 
+						                </div>
+						            
+							            <div data-ng-if="transaction.serviceType == 'Regional Renewal'">
+					                         <div class="row m-b-sm">
+				                                <div class="col-md-5 col-xl-5">
+				                                    <p class="font-weight-medium m-l-sm">Renewal Fee:</p>
+				                                </div>
+				                                <div class="col-md-4 col-xl-4">
+				                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</p>
+				                                </div>                                                                                
+				                            </div>
+				                            <div class="row m-b-sm">
+				                                <div class="col-md-5 col-xl-5">
+				                                    <p class="font-weight-medium m-l-sm">Extension Fee:</p>
+				                                </div>
+				                                <div class="col-md-4 col-xl-4">
+				                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
+				                                </div>                                                                                       
+				                            </div>   
+							            </div>
+							        </div>
+								</div>
 					        </div>
 					    </div>
 					    <div class="row m-b-sm">
 					        <div class="col-md-5 col-xl-5">
 					            <p class="font-weight-medium  font-h4">Patent Place Fees:
-					                <i class="fas font-h4 fa-caret-right accordion-caret" data-ng-class="{'active': !ppPanelActive}" data-ng-click="ppPanelActive = !ppPanelActive"></i>
+					                <i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !ppPanelActive}" data-ng-click="ppPanelActive = !ppPanelActive"></i>
 					            </p>
 					        </div>
 					        <div class="col-md-4 col-xl-4">
 					            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.subTotalUSD - transaction.serviceFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
 					        </div> 
 					        <div class="col-xl-12">
-					            <div class="expandcollapse-item">
-					                <div class="slideDown m-t-sm" data-ng-init="ppPanelActive = true" data-ng-hide="ppPanelActive">
+					        	<div class="slideDown m-t-sm" data-ng-init="ppPanelActive = true" data-ng-hide="ppPanelActive">
+					            	<div class="expandcollapse-item">
 					                    <div class="row m-b-sm">
-					                        <div class="col-xl-5">
+					                        <div class="col-md-5 col-xl-5">
 					                            <p class="font-weight-medium m-l-sm">Processing fee:</p>
 					                        </div>
 					                        <div class="col-md-4 col-xl-4">
@@ -192,7 +206,7 @@
 					                        </div>
 					                    </div>
 					                    <div class="row m-b-sm">
-					                        <div class="col-xl-5">
+					                        <div class="col-md-5 col-xl-5">
 					                            <p class="font-weight-medium m-l-sm">Express fee:</p>
 					                        </div>
 					                        <div class="col-md-4 col-xl-4">
@@ -200,7 +214,7 @@
 					                        </div>
 					                    </div>
 					                    <div class="row m-b-sm">
-					                        <div class="col-xl-5">
+					                        <div class="col-md-5 col-xl-5">
 					                            <p class="font-weight-medium m-l-sm">Urgent fee:</p>
 					                        </div>
 					                        <div class="col-md-4 col-xl-4">
