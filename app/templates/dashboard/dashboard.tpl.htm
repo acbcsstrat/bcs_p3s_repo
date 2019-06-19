@@ -8,27 +8,31 @@
 <!-- 		<div class="col-md-12 col-lg-12 col-xl-7 md-m-b-md lg-m-b-md">
 			<div ui-view="colourkeywidget" class="h-100"></div>
 		</div> -->
-		<div class="col-md-12 col-lg-12 col-xl-7">
+		<div class="col-md-12 col-lg-12 col-xl-7 md-m-b-md lg-m-b-md">
 			<div ui-view="actionsavailable" class="h-100"></div>
 		</div>	            
-		<div class="col-xl-5 d-none d-xl-flex flex-column">
+		<div class="col-xl-5 d-none d-xl-flex flex-column lg-m-b-md">
 			<div ui-view="actioncost" class="h-100"></div>
+		</div>	
+ 		<div class="col-md-12 col-lg-6 d-xl-none md-m-b-md">
+			<div ui-view="actioncostmd" class="h-100"></div>
 		</div>		
+		<div class="col-md-12 col-lg-6 col-xl-5 d-md-none d-lg-block d-xl-none">
+			<div ui-view="graphdonutwidget" class="h-100"></div>
+		</div>					
 
 	</div>
 	<div class="row m-b-xl lg-m-b-md widget-row-middle">
-		<div class="col-md-12 col-lg-12 col-xl-7 lg-m-b-md">
+		<div class="col-md-12 col-lg-12 col-xl-7 m-b-md-md">
 			<div ui-view="recentactivitywidget" class="h-100"></div>
 		</div>		
- 		<div class="col-md-6 col-lg-6 d-xl-none">
-			<div ui-view="actioncostmd" class="h-100"></div>
-		</div>		
-		<div class="col-md-6 col-lg-6 col-xl-5">
+
+		<div class="col-md-12 col-lg-6 col-xl-5  d-md-block d-lg-none d-xl-block">
 			<div ui-view="graphdonutwidget" class="h-100"></div>
 		</div>
 	</div>
-	<div class="row m-b-xl">
-		<div class="col-md-12 col-lg-12 col-xl-12 lg-m-b-md">
+	<div class="row m-b-xl d-md-none d-lg-block">
+		<div class="col-md-12 col-lg-12 col-xl-12 lg-m-b-md ">
 			<div ui-view="fxchartwidget" class="h-100"></div>
 		</div>
 	</div>

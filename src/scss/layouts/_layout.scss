@@ -27,32 +27,34 @@
 .bg-info-icon, 
 .bg-no-chart, 
 .bg-no-data { /*modules*/ /*components*/ /*_layout.scss*/
-  position: relative;
-  overflow: hidden;
-  height: 20rem; //swappred from min-height due to IE11
-  z-index: 1;
+    position: relative;
+    overflow: hidden;
+    height: 28rem; //swappred from min-height due to IE11
+    z-index: 1;
 }
 
 .bg-info-icon:after { /*modules*/ /*components*/ /*_layout.scss*/
-  content: url(../../p3sweb/assets/imgs/icons/info_icon.png);
-  position: absolute;
-  bottom: -4px;
-  right: -1px;
-  z-index: -1;
+    content: url(../../p3sweb/assets/imgs/icons/info_icon.png);
+    position: absolute;
+    bottom: -4px;
+    right: -1px;
+    z-index: -1;
 }
 
 .bg-no-data:after { /*modules*/ /*components*/ /*_layout.scss*/
-  content:'';
-  position: absolute;
-  bottom: 0;
-  margin: 0 auto;
-  top:0;
-  left:0;
-  right:0;
-  background: url(../../p3sweb/assets/imgs/icons/chart_icon.png) no-repeat center center;
-  background-size: contain;
-  width: 100%;
-  z-index: -1;
+    content:'';
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto;
+    top: 50%;
+    left:0;
+    right:0;
+    background: url(../../p3sweb/assets/imgs/icons/chart_icon.png) no-repeat center center;
+    background-size: contain;
+    width: 100%;
+    z-index: -1;
+    margin-top: -10rem;  
+    height: 20rem;
 }
 
 .bg-no-chart:after { /*modules*/ /*components*/ /*_layout.scss*/
@@ -60,13 +62,15 @@
     position: absolute;
     bottom: 0;
     margin: 0 auto;
-    top:0;
+    top: 50%;
     left:0;
     right:0;
     background: url(../../p3sweb/assets/imgs/icons/chart_icon.png) no-repeat center center;
     background-size: contain;
     width: 100%;
     z-index: -1;
+    margin-top: -10rem;
+    height: 20rem;
 }
 
 .side-menu a:hover, 

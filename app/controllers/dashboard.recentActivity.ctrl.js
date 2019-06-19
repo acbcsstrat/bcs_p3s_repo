@@ -10,10 +10,6 @@ function recentActivityCtrl(patentIds, calculateService, costAnalysisService, co
 
 	vm.fetchStageChanges = fetchStageChanges;
 	vm.fetchTransChanges = fetchTransChanges;
-	vm.getCurrColour = getCurrColour;
-
-    
-    
 
     vm.setActivityActiveTab = setActivityActiveTab;
 	vm.changeActivity = changeActivity;
@@ -29,6 +25,7 @@ function recentActivityCtrl(patentIds, calculateService, costAnalysisService, co
 			function: 'fetchTransChanges'			
 		}
 	]
+
 	vm.activeMenu = vm.activityNotifications[0].activity;
     var transactionHistory = (function() {
         return transactionHistoryService.fetchTransactionHistory();
@@ -39,10 +36,6 @@ function recentActivityCtrl(patentIds, calculateService, costAnalysisService, co
 
 	vm.$onInit = function() {
         fetchStageChanges();
-	}
-
-	function getCurrColour(colour, type) {
-		return organiseColourService.getCurrColour(colour, type);
 	}
 
 	function changeActivity(activity) {

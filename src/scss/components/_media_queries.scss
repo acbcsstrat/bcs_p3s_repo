@@ -129,11 +129,11 @@
     padding: 1rem 3rem;
   }
 
-  .panel-nav .panel-nav__list-item {
+  .panel-nav .panel-nav__list-item,  .panel-nav .panel-nav__temp-item {
     font-size: 1.2rem;
   }
   
-
+ 
   p, 
   li, 
   button, 
@@ -163,13 +163,13 @@
     @include list-item(6rem, 10.5rem)
   }
 
-  .font-h1 { font-size: 2.6rem; }
+  .font-h1 { font-size: 2.6rem!important; }
 
-  .font-h2 { font-size: 1.6rem; }
+  .font-h2 { font-size: 1.6rem!important; }
 
-  .font-h3 { font-size: 1.4rem }
+  .font-h3 { font-size: 1.4rem!important; }
 
-  .font-h4 { font-size: 1.2rem; }
+  .font-h4 { font-size: 1.2rem!important; }
 
   .lg-m-b-sm { margin-bottom: 1.5rem }
   .lg-m-b-md { margin-bottom: 2.25rem }
@@ -218,11 +218,11 @@
   .t-data__w20 { width: 10%; }
 
   .t-data .t-data__td {
-    @include padding-mixin(0.5rem 1rem);
+    @include padding-mixin(0.5rem 3rem);
   }
 
   .t-data .t-data__th {
-    @include padding-mixin(1.5rem 1rem);
+    @include padding-mixin(1.5rem 3rem);
   }
 
 
