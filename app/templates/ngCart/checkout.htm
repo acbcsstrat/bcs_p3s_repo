@@ -22,70 +22,73 @@
                     </div>
                 </div>
                 <div class="border-grey-xs--btm m-t-sm m-b-sm"></div>
-                <div class="row">
-                    <div class="col-md-6 d-xl-none">
-                        <div class="row m-b-sm">
-                            <div class="col-md-6">
-                                <p class="font-weight-medium font-h4">Official Fees</p>                        
-                            </div>
-                            <div class="col-md-6">
-                                <p class="font-h4 text-right">$ {{(summary.fees.totalOfficialFeesUSD | number:2) || '0.00'}}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="font-weight-medium font-h4">Patent Place Fees</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="font-h4 text-right">$ {{(summary.fees.totalPatentPlaceFeesUSD | number:2) || '0.00' }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 d-none d-xl-block">
-                        <div class="m-b-sm">
-                            <div class="row">
-                                <div class="col-xl-8">
+                    <div class="row">
+                        <div class="col-md-6 d-md-block d-xl-none">
+                            <div class="row m-b-sm">
+                                <div class="col-md-6">
                                     <p class="font-weight-medium font-h4">Official Fees</p>                        
                                 </div>
-                                <div class="col-xl-4">
-                                    <p class="font-h4">$ {{(summary.fees.totalOfficialFeesUSD | number:2) || '0.00'}}</p>
-                                </div>                               
+                                <div class="col-md-6">
+                                    <p class="font-h4 text-right">$ {{(summary.fees.totalOfficialFeesUSD | number:2) || '0.00'}}</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="m-b-sm">
-                            <div class="row">
-                                <div class="col-xl-8">
+                        <div class="col-md-6 d-md-block d-xl-none">
+                            <div class="row m-b-sm">
+                                <div class="col-md-6">
                                     <p class="font-weight-medium font-h4">Patent Place Fees</p>
                                 </div>
-                                <div class="col-xl-4">
-                                    <p class="font-h4">$ {{(summary.fees.totalPatentPlaceFeesUSD | number:2) || '0.00'}}</p>
+                                    <div class="col-md-6">
+                                        <p class="font-h4 text-right">$ {{(summary.fees.totalPatentPlaceFeesUSD | number:2) || '0.00' }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>                       
-                    </div>                       
-                </div>
-                <div class="border-grey-xs--btm m-b-md"></div>
-                <div class="d-none d-xl-block">
-                    <div class="row">
-                        <div class="col-xl-8">
-                            <p class="font-weight-bold font-h4">Total:</p> 
                         </div>
-                        <div class="col-xl-4">
-                            <p class="font-weight-bold font-h4">$ {{(summary.fees.totalCostUSD | number:2) || '0.00'}}</p>
+                        <div class="col-xl-12 d-none d-xl-block">
+                            <div class="m-b-sm">
+                                <div class="row">
+                                    <div class="col-xl-8">
+                                        <p class="font-weight-medium font-h4">Official Fees</p>                        
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <p class="font-h4">$ {{(summary.fees.totalOfficialFeesUSD | number:2) || '0.00'}}</p>
+                                    </div>                               
+                                </div>
+                            </div>
+                            <div class="m-b-sm">
+                                <div class="row">
+                                    <div class="col-xl-8">
+                                        <p class="font-weight-medium font-h4">Patent Place Fees</p>
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <p class="font-h4">$ {{(summary.fees.totalPatentPlaceFeesUSD | number:2) || '0.00'}}</p>
+                                    </div>
+                                </div>
+                            </div>                       
+                        </div>                  
+                   
+                        <div class="border-grey-xs--btm m-b-md"></div>
+                        <div class="d-none d-xl-block">
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <p class="font-weight-bold font-h4">Total:</p> 
+                                </div>
+                                <div class="col-xl-4">
+                                    <p class="font-weight-bold font-h4">$ {{(summary.fees.totalCostUSD | number:2) || '0.00'}}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="d-xl-none">
-                    <div class="row">
-                        <div class="col-md-12 d-flex">
-                            <p class="font-weight-medium font-h4 m-r-sm">Total:</p> 
-                            <p class="font-weight-medium font-h4">$ {{(summary.fees.totalCostUSD | number:2) || '0.00'}}</p>                       
-                        </div>
-                    </div>
-                </div>                
-            </div>            
-        </div>
-    </div>
+                        <div class="d-xl-none">
+                            <div class="row">
+                                <div class="col-md-12 d-flex justify-content-end">
+                                    <p class="font-weight-medium font-h4 m-r-sm">Total:</p> 
+                                    <p class="font-weight-medium font-h4">$ {{(summary.fees.totalCostUSD | number:2) || '0.00'}}</p>                       
+                                </div>
+                            </div>
+                        </div>     
+                     </div>           
+                </div>            
+            </div>
 
     <div class="col-md-12 col-xl-6">
         <div class="content-panel bg-white">

@@ -3,20 +3,20 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="table-panel scrollable-area" data-ng-if="ngCart.getTotalItems() > 0">
-            <table class="table t-data table-scroll">
-                <thead>
+        <div class="scrollable-area" data-ng-if="ngCart.getTotalItems() > 0">
+            <table class="t-data sticky-table">
+                <thead class="sticky-thead">
                     <tr class="font-body font-weight-bold">
-                        <th class="t-data__th text-left">Application No.</th>
+                        <th class="t-data__th text-left sticky-th">Application No.</th>
                         <th class="t-data__th text-left">Client Reference</th>
                         <th class="t-data__th text-left">Client Description</th>
                         <th class="t-data__th text-left">Amount</th>
                         <th class="t-data__th text-left"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="sticky-tbody">
                     <tr class="t-data__tr" data-ng-repeat="item in ngCart.getCart().items track by $index">
-                        <td class="t-data__td">{{item.getData().ep_ApplicationNumber}}</td>
+                        <td class="t-data__td sticky-td">{{item.getData().ep_ApplicationNumber}}</td>
                         <td class="t-data__td">
                             <span data-ng-if="item.getData().clientRef == ''" class="txt-grey">[No client reference provided]</span>
                             <span data-ng-if="item.getData().clientRef !== ''">{{item.getData().clientRef}}</span>
