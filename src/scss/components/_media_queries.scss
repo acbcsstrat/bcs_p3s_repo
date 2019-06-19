@@ -143,7 +143,9 @@
   td, 
   th,
   label,
-  .form-control { 
+  .form-control,
+  .btn, 
+  a:not([href]):not([tabindex]):not([data-ng-attr-id]) { 
     font-size: $font-normal; 
   }
 
@@ -237,6 +239,8 @@
   .m-b-md-md { margin-bottom: 2.25rem; }
   .m-t-md-sm { margin-top: 1.5rem; }
   .m-b-md-xs { margin-bottom: 0.75rem; } 
+  .m-r-md-xs { margin-right: 0.75rem; } 
+  .m-l-md-xs { margin-left: 0.75rem; } 
 
   .m-r-none-md {margin-right: 0!important; }
   .m-l-none-md {margin-left: 0!important; }

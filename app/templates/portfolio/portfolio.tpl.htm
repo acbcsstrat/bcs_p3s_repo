@@ -155,14 +155,15 @@
             </div>
         </div>        
         <div data-ng-show="data.length !== 0" class="col-md-12">
-                <div class="row p-a-sm">
+            <div class="bg-white p-a-sm br-tx-1">
+                <div class="row">
                     <div class="col-md-3 col-lg-3 col-xl-2">
                         <div class="input-group">
                         <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">  
                             <div class="input-group-append">
                                 <i class="d-flex input-group-text pill-radius fa fa-search"></i>
-                            </div>                            
-                        </div>                                        
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-2">
                         <div class="input-group">
@@ -173,11 +174,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
             <div class="scrollable-area portfolio-table bg-white">
-                <table class="t-data">
-                    <thead>
+                <table class="t-data sticky-table">
+                    <thead class="sticky-thead">
                         <tr class="t-data__row t-data__row--select">
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th sticky-th" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
                                 <span>App No.</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
@@ -207,9 +209,9 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="">
+                    <tbody class="sticky-tbody">
                         <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter:filterPortfolio as Result track by $index" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.id)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.id == $ctrl.selected}">
-                            <td class="t-data__td--ellipsis t-data__td">
+                            <td class="t-data__td--ellipsis t-data__td sticky-td">
                                 <span class="td-ellipsis">
                                     <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.id}}"></a>
                                 </span>
@@ -240,7 +242,7 @@
                                                 </div>
                                                 <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
                                                     <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
+                                                    <i class="fa fa-chevron-right fa-lg m-r-md-xs m-l-md-xs" data-ng-class="patent.cssCurrent"></i>
                                                     <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                                     <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
                                                 </div>
@@ -252,7 +254,7 @@
 
                                                 <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
                                                     <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
+                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="patent.cssCurrent"></i>
                                                     <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                                     <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
                                                 </div>
@@ -272,7 +274,7 @@
                                                 </div>
                                                 <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
                                                     <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
+                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="patent.cssCurrent"></i>
                                                     <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                                     <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
                                                 </div>
@@ -284,7 +286,7 @@
 
                                                 <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
                                                     <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg" data-ng-class="patent.cssCurrent"></i>
+                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="patent.cssCurrent"></i>
                                                     <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                                     <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
                                                 </div>

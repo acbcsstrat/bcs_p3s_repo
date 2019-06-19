@@ -24,6 +24,7 @@
   font-size: $font-normal;
   width: 100%;
   background: $white;
+  table-layout: auto;
   .t-data__td:not(.ellipsis-remove) { 
     z-index: 0;
   }
