@@ -1,13 +1,13 @@
 
     <div class="m-t-sm m-b-md">
         <div class="panel-nav">
-            <button class="pill-radius panel-nav__list-item list-item--plain" data-ng-init="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-click="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-class="{'active': $ctrl.activeTab == 0}">{{$ctrl.confirmEntity.title()}}</button>
-            <button class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.activeTab = $ctrl.amendments.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.amendments.index}" data-ng-disabled="!$ctrl.confirmEntityChecked">{{$ctrl.amendments.title()}}</button>
-            <button class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.activeTab = $ctrl.documents.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.documents.index}" data-ng-if="$ctrl.documents.active" data-ng-disabled="!$ctrl.amendmentsChecked">{{$ctrl.documents.title()}}</button>
-            <button class="pill-radius panel-nav__list-item list-item--plain" data-ng-click="$ctrl.activeTab = $ctrl.extAndValid.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.extAndValid.index}" data-ng-disabled="!$ctrl.documentsChecked">{{$ctrl.extAndValid.title()}}</button>
-            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.activeTab = $ctrl.reference.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.reference.index}" data-ng-disabled="!$ctrl.extAndValidChecked">{{$ctrl.reference.title()}}</button> 
-            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-click="$ctrl.activeTab = $ctrl.confirmPages.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.confirmPages.index}" data-ng-disabled="!$ctrl.referenceChecked">{{$ctrl.confirmPages.title()}}</button>
-            <button class="panel-nav__list-item list-item--plain pill-radius" data-ng-if="$ctrl.renewal.active" data-ng-click="$ctrl.activeTab = $ctrl.renewal.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.renewal.index}" data-ng-disabled="!$ctrl.confirmPagesChecked">{{$ctrl.renewal.title()}}</button>
+            <button class="pill-radius panel-nav__list-item list-item--plain lg-m-b-sm" data-ng-init="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-click="$ctrl.activeTab = $ctrl.confirmEntity.index" data-ng-class="{'active': $ctrl.activeTab == 0}">{{$ctrl.confirmEntity.title()}}</button>
+            <button class="pill-radius panel-nav__list-item list-item--plain lg-m-b-sm" data-ng-click="$ctrl.activeTab = $ctrl.amendments.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.amendments.index}" data-ng-disabled="!$ctrl.confirmEntityChecked">{{$ctrl.amendments.title()}}</button>
+            <button class="pill-radius panel-nav__list-item list-item--plain lg-m-b-sm" data-ng-click="$ctrl.activeTab = $ctrl.documents.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.documents.index}" data-ng-if="$ctrl.documents.active" data-ng-disabled="!$ctrl.amendmentsChecked">{{$ctrl.documents.title()}}</button>
+            <button class="pill-radius panel-nav__list-item list-item--plain lg-m-b-sm" data-ng-click="$ctrl.activeTab = $ctrl.extAndValid.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.extAndValid.index}" data-ng-disabled="!$ctrl.documentsChecked">{{$ctrl.extAndValid.title()}}</button>
+            <button class="pill-radius panel-nav__list-item list-item--plain lg-m-b-sm" data-ng-click="$ctrl.activeTab = $ctrl.reference.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.reference.index}" data-ng-disabled="!$ctrl.extAndValidChecked">{{$ctrl.reference.title()}}</button> 
+            <button class="pill-radius panel-nav__list-item list-item--plain lg-m-b-sm" data-ng-click="$ctrl.activeTab = $ctrl.confirmPages.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.confirmPages.index}" data-ng-disabled="!$ctrl.referenceChecked">{{$ctrl.confirmPages.title()}}</button>
+            <button class="pill-radius panel-nav__list-item list-item--plain lg-m-b-sm" data-ng-if="$ctrl.renewal.active" data-ng-click="$ctrl.activeTab = $ctrl.renewal.index" data-ng-class="{'active': $ctrl.activeTab == $ctrl.renewal.index}" data-ng-disabled="!$ctrl.confirmPagesChecked">{{$ctrl.renewal.title()}}</button>
         </div>
     </div>
     <form name="form1200Form" novalidate>
@@ -223,21 +223,21 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group row">
-                            <label for="totalPages" class="col-md-4 col-xl-3 col-form-label font-body">Please enter the total number of pages</label>
+                            <label for="totalPages" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter the total number of pages</label>
                             <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="totalPages" id="totalPages" class="form-control pill-radius" data-ng-change="$ctrl.formData.totalPages = totalPages" data-ng-model="totalPages" placeholder="Total Pages" validate-numbers required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalPages.$error.validNumber && form1200Form.totalPages.$dirty">Only numbers are valid charcters in this field.</p>  
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="totalClaims" class="col-md-4 col-xl-3 col-form-label font-body">Please enter the total number of claims</label>
+                            <label for="totalClaims" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter the total number of claims</label>
                             <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="totalClaims" class="form-control pill-radius" data-ng-change="$ctrl.formData.totalClaims = totalClaims" data-ng-model="totalClaims" placeholder="Total Claims" validate-numbers required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-xl-3 col-form-label font-body">Please enter start and end pages of description</label>
+                            <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter start and end pages of description</label>
                             <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="descStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.description.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers  validate-numbers required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.validNumber && form1200Form.descStart.$dirty">Only numbers are valid charcters in this field.</p>
@@ -250,7 +250,7 @@
                             </div>                                        
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-xl-3 col-form-label font-body">Please enter the start and end pages of claims</label>
+                            <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter the start and end pages of claims</label>
                             <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="claimsStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.claims.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required validate-numbers required>
                                 <p class="font-body txt-phase-red"  placeholder="Start" data-ng-show="form1200Form.claimsStart.$error.validNumber && form1200Form.claimsStart.$dirty">Only numbers are valid charcters in this field.</p>
@@ -263,7 +263,7 @@
                             </div>                                        
                         </div>
                         <div class="form-group row">
-                            <label for="claimsStart" class="col-md-4 col-xl-3 col-form-label font-body">Please enter start and end pages of drawings</label>
+                            <label for="claimsStart" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter start and end pages of drawings</label>
                             <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
                                 <input type="number" name="drawingStart" class="form-control pill-radius" data-ng-model="$ctrl.pageDetailsData.drawings.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers  validate-numbers required>
                                 <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.validNumber && form1200Form.drawingStart.$dirty">Only numbers are valid charcters in this field.</p>
