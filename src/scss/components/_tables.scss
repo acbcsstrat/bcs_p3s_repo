@@ -59,6 +59,12 @@
   }
   &:hover:not(.t-data__head), &.active:not(.t-data__head) {
     background: #f5f5f5;
+    // .sticky-td:hover {
+    //   background: #f5f5f5;
+    // }
+    .sticky-td {
+      background: #f5f5f5;
+    }    
   }  
 }
 
@@ -141,7 +147,7 @@ table.t-border-space { border-spacing: 0rem 0.75rem; border-collapse: separate; 
     width: 15px;
   }    
   &.portfolio-table, &.transaction-table, &.renewalhistory-table  {
-      max-height: 280px;
+      max-height: 320px;
   }
   &.dashboard-table {
       height: 280px;
@@ -181,24 +187,29 @@ td, th {
 }
 
 .sticky-table {
-  th {
-    background-color:white;
+  .sticky-thead {
+    &>th {
+      background-color:white;
+    }
   }
 }
 
 .sticky-table {
-  th:first-child, td:first-child {
-    position:sticky;
-    left:0px;
-    z-index: 20;
+  .sticky-thead, .sticky-tbody {
+    .sticky-th, .sticky-td {
+      position:sticky;
+      left:0px;
+      z-index: 20;
+      background: white;
+    }
   }
 }
 
-.sticky-table {
-  td:first-child {
-    background: white;
-  }
-}
+// .sticky-table {
+//   &>td:first-child {
+    
+//   }
+// }
 
 .t-data__w8 { width: 8%; }
 .t-data__w9 { width: 9%; }
