@@ -14,8 +14,8 @@
 			</div>
 		</div>
 		<div data-ng-if="$ctrl.tableData.length !== 0" class="col-md-12 col-lg-12 col-xl-12">
-            <div class="table-panel scrollable-area bg-white">
-				<div class="row p-a-sm">
+	        <div class="bg-white p-a-sm br-tx-1">
+				<div class="row">
 					<div class="col-md-12 col-lg-12 col-xl-12">
 						<form class="form-inline">
 							<div class="input-group m-r-md">
@@ -41,11 +41,14 @@
 							
 						</form>
 					</div>
-				</div>            	
-                <table class="table t-data table-scroll">
-					<thead>
+				</div> 
+			</div>           	
+		
+            <div class="scrollable-area transaction-table bg-white">
+                <table class="t-data sticky-table">
+                    <thead class="sticky-thead">
 						<tr class="t-data__row t-data__row--select t-data__head">
-							<th class="t-data__th" data-ng-click="$ctrl.sortType('p3S_TransRef'); $ctrl.sortReverse = !$ctrl.sortReverse">Trans ID
+							<th class="t-data__th sticky-th" data-ng-click="$ctrl.sortType('p3S_TransRef'); $ctrl.sortReverse = !$ctrl.sortReverse">Trans ID
 				            	<span data-ng-show="$ctrl.selectedSortType == 'p3S_TransRef' && !$ctrl.sortReverse" class="fa fa-caret-down"></span>
 	        					<span data-ng-show="$ctrl.selectedSortType == 'p3S_TransRef' && $ctrl.sortReverse" class="fa fa-caret-up"></span>
 							</th>
@@ -75,20 +78,18 @@
 							</th>
 						</tr>
 					</thead>
-					<tbody class="transaction-table">
+					<tbody class="sticky-tbody">
 					    <tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {serviceUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {serviceUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
-					        <td class="t-data__td--ellipsis t-data__td t-data__w15">
-					        	<span class="td-ellipsis">
-									<a class="t-data__a" data-ui-sref="current-transactions.current-transaction-item({transId: item.id})">{{item.p3S_TransRef}}</a>
-					        	</span>
+					        <td class="t-data__td sticky-td">
+								<a class="t-data__a" data-ui-sref="current-transactions.current-transaction-item({transId: item.id})">{{item.p3S_TransRef}}</a>
 					        </td>
-					        <td class="t-data__td t-data__w13">
+					        <td class="t-data__td">
 								{{item.serviceUIs.length}}
 					        </td>
-					        <td class="t-data__td--ellipsis t-data__td t-data__w15">
+					        <td class="t-data__td">
 								<span data-ng-if="item.serviceUIs.length === 1" data-ng-repeat="patent in item.serviceUIs">
 									<span data-ng-if="patent.patentUI.patentApplicationNumber.length">
-										<span class="td-ellipsis txt-grey">
+										<span class=" txt-grey">
 											{{patent.patentUI.patentApplicationNumber}}
 										</span>
 									</span>
@@ -97,10 +98,10 @@
 									<option value="">Multiple</option>
 								</select>
 					        </td>
-					        <td class="t-data__td--ellipsis t-data__td t-data__w15" data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
+					        <td class="t-data__td" data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
 								<span data-ng-if="item.serviceUIs.length == 1;" data-ng-repeat="ref in item.serviceUIs">
 									<span data-ng-if="ref.patentUI.clientRef === ''" data-ng-init="$ctrl.noClientRef()">
-										<span class="td-ellipsis txt-grey">[No client reference provided]</span>
+										<span class=" txt-grey">[No client reference provided]</span>
 									</span>
 									<span data-ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>
 								</span>
@@ -108,13 +109,13 @@
 									<option value="">Multiple</option>
 								</select>
 					        </td>
-					        <td class="t-data__td t-data__w13">
+					        <td class="t-data__td">
 				        		{{item.transStartDate | date: 'MM/dd/yy'}}
 					        </td>
-					        <td class="t-data__td t-data__w13">
+					        <td class="t-data__td">
 					        	$ {{item.transAmount_USD | number: 2}}
 					        </td>
-					        <td class="t-data__td t-data__w16">
+					        <td class="t-data__td">
 								<p class="font-weight-bold m-b-xs">{{item.latestTransStatus}}</p>
 								<div class="progress-tracker progress-trans">
 									<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="item.renewalProgress" max="100"></uib-bar></uib-progress>
@@ -129,9 +130,6 @@
 					</tbody>
 				</table>
 			</div>
-<!--             <div class="portfolio-pointer">
-                <i class="fas fa-caret-down fa-3x"></i>
-            </div> -->
 		</div>
 	</div>
 </div>

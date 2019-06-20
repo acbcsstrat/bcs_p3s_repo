@@ -24,6 +24,7 @@
   font-size: $font-normal;
   width: 100%;
   background: $white;
+  table-layout: auto;
   .t-data__td:not(.ellipsis-remove) { 
     z-index: 0;
   }
@@ -59,6 +60,12 @@
   }
   &:hover:not(.t-data__head), &.active:not(.t-data__head) {
     background: #f5f5f5;
+    // .sticky-td:hover {
+    //   background: #f5f5f5;
+    // }
+    .sticky-td {
+      background: #f5f5f5;
+    }    
   }  
 }
 
@@ -123,32 +130,45 @@ table.t-border-space { border-spacing: 0rem 0.75rem; border-collapse: separate; 
 }
 
 .scrollable-area { /*modules*/ /*components*/ /*_tables.scss*  ADD CLASS INSTAD OF SELECTING WITH ID*/ 
-  margin: auto;
-  width: 100%;
-  overflow-y: hidden;  /*<!-- here is what is important-->*/
-  overflow-x: hidden;
+  overflow-x: auto;
+  overflow-y: auto;
   border-bottom: 50px solid $white;
-  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
   -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
   -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
   box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
 
-  ::-webkit-scrollbar {
+  &::-webkit-scrollbar-thumb {
+    background: $grey; 
+    border-radius: 10px;
+    height: 30px;
+  }      
+
+  &::-webkit-scrollbar {
     width: 15px;
+  }    
+  &.portfolio-table, &.transaction-table, &.renewalhistory-table  {
+      max-height: 320px;
   }
+  &.dashboard-table {
+      height: 280px;
+  }    
   &.scrollable-area--no-shadow {
     -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0);
     -moz-box-shadow: 0 0 0 0 rgba(0,0,0,0);
     box-shadow: 0 0 0 0 rgba(0,0,0,0);
   }
 
-  /* Track */
-  // ::-webkit-scrollbar-track {
-  //   box-shadow: inset 0 0 5px;
-  //   border-radius: 10px;
-  //   max-height: 310px;
-  // }
-   
+ thead tr:nth-child(1) th{
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    &:nth-child(1) {
+      z-index: 25;
+    }
+  }  
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: $grey; 
@@ -156,48 +176,41 @@ table.t-border-space { border-spacing: 0rem 0.75rem; border-collapse: separate; 
     height: 30px;
   }
 
-  /* Handle on hover */
-  // ::-webkit-scrollbar-thumb:hover {
-  //   opacity: 0.7 
-  // }  
 }
 
+table {
+    width: 100%;
+}
 
-// .table-panel {
-//   border-radius: 10px 10px 0 0;
-//   -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
-//   -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
-//   box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);  
+td, th {
+  white-space: nowrap;
+  min-width: 110px;
+}
+
+.sticky-table {
+  .sticky-thead {
+    &>th {
+      background-color:white;
+    }
+  }
+}
+
+.sticky-table {
+  .sticky-thead, .sticky-tbody {
+    .sticky-th, .sticky-td {
+      position:sticky;
+      left:0px;
+      z-index: 20;
+      background: white;
+    }
+  }
+}
+
+// .sticky-table {
+//   &>td:first-child {
+    
+//   }
 // }
-
-
-.table-scroll thead {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-}
-
-.table-scroll {
-    &>tbody {
-      overflow-y: auto;
-      display: block;
-      width: 100%;
-      table-layout: fixed;
-    }
-    &>.portfolio-table, &>.transaction-table, &>.renewalhistory-table  {
-        max-height: 280px;
-    }
-    &>.dashboard-table {
-        max-height: 190px;
-    }    
-}
-
-.table-scroll tr {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-}
-
 
 .t-data__w8 { width: 8%; }
 .t-data__w9 { width: 9%; }

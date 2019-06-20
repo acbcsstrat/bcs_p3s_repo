@@ -84,6 +84,14 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
                 if(response.length === 0) {
                     patentsFound = false;
                 }
+			    if(patentsFound === false) {
+					$timeout(function() {
+					 	
+					 	welcomeMessageModal();
+						
+					}, 350);
+				}                
+
             },
             function(errResponse){
                 console.log(errResponse)
@@ -108,59 +116,59 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
 		});
  	}
 
-	function displayMessages() {
+	// function displayMessages() {
 
-		var counter = localStorageService.get('counter');
+	// 	var counter = localStorageService.get('counter');
 
-		if(counter === null) {
+	// 	if(counter === null) {
 
-			localStorageService.set('counter', 1);
+	// 		localStorageService.set('counter', 1);
 
-			counter = localStorageService.get('counter');
+	// 		counter = localStorageService.get('counter');
 
-			coreService.getMessages()
-		    .then(
-		    	function(response){
+	// 		coreService.getMessages()
+	// 	    .then(
+	// 	    	function(response){
 
-		    		var date = new Date().getTime();
+	// 	    		var date = new Date().getTime();
 
-	    		 	if(response.systemMessages.length > 0) {
+	//     		 	if(response.systemMessages.length > 0) {
 
-			            $timeout(function() {
-			                systemMessageModal(response.systemMessages)    
-			            }, 1000);
+	// 		            $timeout(function() {
+	// 		                systemMessageModal(response.systemMessages)    
+	// 		            }, 1000);
 
-			        } //if end
+	// 		        } //if end
 
-					if(response.urgentPatents.length > 0) {
-		    			response.urgentPatents.forEach(function(data){
-		    				urgentResponse.push(data);
-		    			});
+	// 				if(response.urgentPatents.length > 0) {
+	// 	    			response.urgentPatents.forEach(function(data){
+	// 	    				urgentResponse.push(data);
+	// 	    			});
 
-						$timeout(function() {
-							urgentPatentModal(response);
-						}, 500);
-					}
+	// 					$timeout(function() {
+	// 						urgentPatentModal(response);
+	// 					}, 500);
+	// 				}
 
 
-		    	},
-		    	function(errResponse){
-		    		console.log(errResponse);
-		    	}
-			);
-		    if(patentsFound === false) {
-				$timeout(function() {
+	// 	    	},
+	// 	    	function(errResponse){
+	// 	    		console.log(errResponse);
+	// 	    	}
+	// 		);
+	// 	    if(patentsFound === false) {
+	// 			$timeout(function() {
 				 	
-				 	welcomeMessageModal();
+	// 			 	welcomeMessageModal();
 					
-				}, 350);
-			}
+	// 			}, 350);
+	// 		}
 
-		} //if end
+	// 	} //if end
 
-	}
+	// }
 
-	displayMessages();
+	// displayMessages();
 	
 	function closeModals() {
 	    if ($scope.warning) {
