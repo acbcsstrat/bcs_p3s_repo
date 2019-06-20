@@ -17,7 +17,6 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
         vm.data = {};
         vm.data.availableAction = $scope.$parent.availableServices;
         vm.data.selectedAction = { id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action };
-        setFees(vm.data.selectedAction.action)
         vm.feeData = true;
 
     }
@@ -64,11 +63,11 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.displayForm1200 = false;
             vm.displayRenewal = true;
             vm.availableFees = patent.renewalFeeUI;
-            vm.availableFees.ppFeesUSD = patent.renewalFeeUI.subTotalUSD - patent.renewalFeeUI.currentOfficialFeeUSD;
-            vm.availableFees.ppFeesEUR = patent.renewalFeeUI.subTotalEUR - patent.renewalFeeUI.currentOfficialFeeEUR;            
+            vm.availableFees.ppFeesUSD = Number(Math.round((patent.renewalFeeUI.subTotalUSD - patent.renewalFeeUI.currentOfficialFeeUSD) + 'e2') +'e-2')
+            vm.availableFees.ppFeesEUR = Number(Math.round((patent.renewalFeeUI.subTotalEUR - patent.renewalFeeUI.currentOfficialFeeEUR) +'e2')+'e-2')
         }
 
-        vm.availableFees.savings = patent.portfolioUI.serviceList[0].nextStageCostUSD - patent.portfolioUI.serviceList[0].currentStageCostUSD;
+        vm.availableFees.savings = Number(Math.round((patent.portfolioUI.serviceList[0].nextStageCostUSD - patent.portfolioUI.serviceList[0].currentStageCostUSD) + 'e2') +'e-2')
 
     }
 
