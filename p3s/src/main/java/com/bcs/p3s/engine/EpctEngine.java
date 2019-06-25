@@ -512,13 +512,18 @@ public class EpctEngine extends Universal {
 	protected void calcStageAprices(OtherEpoFeeSole epoEpctFees) {
 		fee.setFilingFee_EUR(epoEpctFees.getFilingFee_EUR());
 
-		if ( EPO_SA.equals(patent.getInternationalSearchAuthority())) 
+		if ( EPO_SA.equals(patent.getInternationalSearchAuthority())) { 
 			fee.setSupplementarySearchFee_EUR(zero);
+			fee.setExaminationFee_EUR(epoEpctFees.getExaminationFee_EUR());
+		}
 		else
+		{
 			fee.setSupplementarySearchFee_EUR(epoEpctFees.getSupplementarySearchFee_EUR());
+			fee.setExaminationFee_EUR(epoEpctFees.getExaminationReducedFee_EUR());
+			// If pay search fee, use the Lower exam fee
+		}
 
 		fee.setDesignationStatesFee_EUR(epoEpctFees.getDesignationStatesFee_EUR());
-		fee.setExaminationFee_EUR(epoEpctFees.getExaminationFee_EUR());
 	}
 	protected void calcStageBprices(OtherEpoFeeSole epoEpctFees) {
 		// epct MAY be null
