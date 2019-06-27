@@ -123,8 +123,8 @@ public class PaymentUI extends Payment {
 			// aRenUI.getPatentUI().setNotificationUIs(null); remember that notifications DID hang off Patent. is now renewal & epct. So this'll break renewal notifications too 
 			
 			this.getRenewalUIs().add(aRenUI);
-			// Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo
-			//System.out.println("Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo");
+			// Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !
+			//System.out.println("Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   ");
 		}
 
 	
@@ -143,11 +143,11 @@ public class PaymentUI extends Payment {
 			//anEpctUI.getPatentUI().setNotificationUIs(null);  // he
 			
 			this.getEpctUIs().add(anEpctUI);
-			// Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo
-			//System.out.println("Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   - acToDo");
+			// Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   
+			//System.out.println("Warning: at 170726 is not possible to populate those 4 extra PatentUI fields !   ");
 		}
 
-		// acTodo  -cf above - can these be above the 2 loops?
+		// cf above - can these be above the 2 loops? : 190627 update: old comment. Seems work as is.
 		this.setRenewals(null);   // Don't need Renewals, Just RenewalUIs
 		this.setEpcts(null);
 

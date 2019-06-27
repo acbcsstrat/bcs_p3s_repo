@@ -99,7 +99,7 @@ public class RenewalFeeUI extends FeeCurrencyComponents {
 
 
 	
-	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // acToDo 01-sep-2017 {intention still valid 17-oct-2018}
+	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // 01-sep-2017 {intention still valid 17-oct-2018}. 190627 Update: will be superceded by future rewrite. Fix now impractical.
 
 	public BigDecimal getRenewalFee_EUR() {
 		return renewalFeeEUR;

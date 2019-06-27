@@ -202,7 +202,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 	 */
 //	public static final String MandatedESProperties[] = {
 //			  "Dummy1"					// role ...
-//			// YET TO INCLUDE: Everything     acToDo
+//			// YET TO INCLUDE: Everything     ToDo sometime
 //	};
 		
 	/**

@@ -134,7 +134,7 @@ public class PatentStatusEngine extends Universal {
 						renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.RENEWAL_IN_PLACE);
 					}
 					else{
-						renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE); // acToDo: This had been commented out. Why? Keep watch.  
+						renewalInfo.setCurrentRenewalStatus(RenewalStatusEnum.SHOW_PRICE); // Note: This had been commented out. Why? Keep watch.  
 						getCurrentPhaseAndStatus(renewalInfo);
 					}
 				}

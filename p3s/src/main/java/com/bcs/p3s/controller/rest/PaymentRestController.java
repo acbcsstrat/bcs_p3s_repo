@@ -122,7 +122,7 @@ public class PaymentRestController extends Universal {
     		
     		//get the ids from the object
     		
-    		log().debug("acTodo z2.1 monitor (paymentService==null) is "+(paymentService==null));
+    		log().debug("z2.1 monitor (paymentService==null) is "+(paymentService==null));
     		log().debug("Check for below. (basketContents==null) is "+(basketContents==null));
     		log().debug("Displaying Checkout Page: former FE bug. ((basketContents.getExpectedCost())==null) is "+((basketContents.getExpectedCost())==null));
 			bankTransferPreCommitDetails = paymentService.showBankTransferPreCommitDetails(basketContents);

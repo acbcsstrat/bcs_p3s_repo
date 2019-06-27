@@ -71,6 +71,7 @@ public class PostalAddressAndHyperlink {
 	
 
 	protected String getOurUrl() {
-		return "DummyTODO"; // acToDo - from property file
+		//return "DummyTODO"; // LongAgo Intended read from Property file. But appears unused, so make safe
+		return "";
 	}
 }

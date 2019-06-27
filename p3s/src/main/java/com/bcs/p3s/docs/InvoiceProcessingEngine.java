@@ -127,7 +127,7 @@ public class InvoiceProcessingEngine extends Universal {
 //		String filename = "dummyInvoiceNumber1.pdf";
 //		
 //		DummyDataEngine dummy = new DummyDataEngine();  // Flag up incompleteness
-//		log().warn("Generating PDFs of Invoices is NOT YET WRITTEN"); // acToDo
+//		log().warn("Generating PDFs of Invoices is NOT YET WRITTEN");
 //		
 //		
 //		log().debug("Completed "+ err);

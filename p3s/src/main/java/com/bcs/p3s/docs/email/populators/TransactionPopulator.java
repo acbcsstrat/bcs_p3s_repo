@@ -286,7 +286,7 @@ public class TransactionPopulator extends AbstractPopulator implements Injectabl
 		for (Patent patent : data.getPatents()) {
 			currentLine = subtemplate;
 			// use existing, unused, fields, but update on each loop/patent 
-			//log().debug("acDebug TransactionPopulator processRepeatingPatents 289: (data==null)="+(data==null)+"  (patent==null)="+(patent==null)); // discard once no longer populated with dodgy patent.getID(1L) - acTodo
+			//log().debug("acDebug TransactionPopulator processRepeatingPatents 289: (data==null)="+(data==null)+"  (patent==null)="+(patent==null)); // discard once no longer populated with dodgy patent.getID(1L) 
 			data.setPatentTransactionType((patent.isThisPatentaRenewal() ? renewalTitle : epctTitle)+" : ");
 			data.setPatentApplicationNumber(patent.getEP_ApplicationNumber());
 			data.setPatentShortTitle(patent.getShortTitle());

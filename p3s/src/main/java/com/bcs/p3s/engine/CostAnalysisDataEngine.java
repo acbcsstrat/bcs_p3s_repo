@@ -239,13 +239,12 @@ public class CostAnalysisDataEngine extends Universal{
 		caMoreData.setGreenStageCost(greenCost.setScale(2, BigDecimal.ROUND_HALF_UP));
 		caMoreData.setCurrentOfficialFeeEUR(caMoreData.getGreenStageCost());
 		
-		 // Express & Urgent. Do NOT also increase our processing fee - zaphod
+		 // Express & Urgent. Do NOT also increase our processing fee
 		// Former: amberCost = greenCost.add(greenCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 		// redCost = greenCost.add(greenCost.multiply(p3sFee.getUrgentFee_Percent().divide(new BigDecimal(100))));
 		// blueCost = greenCost.add(epoRenewalFee.getExtensionFee_EUR().multiply(fxRate)); 
 		// blackCost = blueCost.add(blueCost.multiply(p3sFee.getExpressFee_Percent().divide(new BigDecimal(100))));
 		
-//		zaphod  - old above - new below 
 		OfficialFeeUpliftCalculator calc = new OfficialFeeUpliftCalculator();
 		
 		amberCost = calc.increaseOfficialComponent(greenCost, p3sFee.getExpressFee_Percent(), p3sFee);

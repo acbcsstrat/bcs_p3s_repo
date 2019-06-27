@@ -76,11 +76,11 @@ public class PaymentStatusEnum extends P3SAbstractEnum {
 
 		
 		
-		// Start of Legacy / Redundant option - to be removed as soon a 'Pending' is removed from all dBs. // acToDo 01-sep-2017
+		// Start of Legacy / Redundant option - to be removed as soon a 'Pending' is removed from all dBs. 01-sep-2017.  190627 Update: Must be safe by now
 		// AWAITING_FUNDS was formerly known as PENDING
-		if (status.equalsIgnoreCase("PENDING"))
-					sofar = PaymentStatusEnum.AWAITING_FUNDS;
-		// End of Legacy / Redundant option - to be removed as soon a 'Pending' is removed from all dBs. // acToDo 01-sep-2017
+			//if (status.equalsIgnoreCase("PENDING"))
+			//			sofar = PaymentStatusEnum.AWAITING_FUNDS;
+		// End of Legacy / Redundant option - to be removed as soon a 'Pending' is removed from all dBs. 
 
 
 		

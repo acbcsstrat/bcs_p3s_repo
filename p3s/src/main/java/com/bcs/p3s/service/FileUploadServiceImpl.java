@@ -2,7 +2,6 @@ package com.bcs.p3s.service;
 
 
 
-// ACTODO - replace: System.out.println
 
 
 
@@ -213,6 +212,7 @@ public class FileUploadServiceImpl extends Universal implements FileUploadServic
 		return resizedImage;
     }
 
+// 		replace: System.out.println
 //	protected void writeImageToDb(byte[] stream) throws SQLException
 //	{
 //		System.out.println("writeImageToDb invoked");

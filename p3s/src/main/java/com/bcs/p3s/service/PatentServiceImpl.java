@@ -32,14 +32,12 @@ import com.bcs.p3s.display.RenewalFeeUI;
 import com.bcs.p3s.display.RenewalUI;
 import com.bcs.p3s.display.form1200.CostAnalysisDataForm1200;
 import com.bcs.p3s.engine.CostAnalysisDataEngine;
-import com.bcs.p3s.engine.EpctEngine;
 import com.bcs.p3s.engine.PatentStatusEngine;
 import com.bcs.p3s.engine.PostLoginDataEngine;
 import com.bcs.p3s.enump3s.RenewalColourEnum;
 import com.bcs.p3s.enump3s.RenewalStatusEnum;
 import com.bcs.p3s.model.ArchivedRate;
 import com.bcs.p3s.model.Business;
-import com.bcs.p3s.model.Form1200Fee;
 import com.bcs.p3s.model.RenewalFee;
 import com.bcs.p3s.model.GlobalVariableSole;
 import com.bcs.p3s.model.Notification;
@@ -511,7 +509,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			} else log().error("      Even the TITLE of this key isnt a string. Its a "+obKey.getClass().getName());
 		}
 
-		// Now attempt extract the data. Avoid Crash if fails - acTodo z2.1
+		// Now attempt extract the data. Avoid Crash if fails 
 		boolean backstopIsOnReceived = false;
 		try {
 			NotificationUI notificationUI = new NotificationUI(new Notification());
@@ -727,7 +725,7 @@ public class PatentServiceImpl extends ServiceAuthorisationTools implements Pate
 			 * Calculate the actual renewal due date and window close and open dates --
 			 * method call here
 			 */
-		/* acTodo z2.1 huge cleanup here once proven ...
+		/* acTidy z2.1 huge cleanup here once proven ...
 		 * log().debug("Renewal In Place status for the patent");
 		 * 
 		 * //check whether the renewal has been done from our system TypedQuery<Renewal>

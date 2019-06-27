@@ -180,7 +180,7 @@ public class EpctEngine extends Universal {
 				 P3SFeeSole p3sEffectiveFees = pricingEngine.getEffectiveP3sFees(patent.getBusiness());
 				 
 				 BigDecimal greenCostUsd = totFeePreUplift_USD; 
-				 // Express & Urgent. Do NOT also increase our processing fee - zaphod
+				 // Express & Urgent. Do NOT also increase our processing fee
 				 // Former: BigDecimal amberCostUsd = totFeePreUplift_USD.add( totFeePreUplift_USD.multiply(p3sEffectiveFees.getExpressFee_Percent()).divide(new BigDecimal(100.0)) );
 				 //			BigDecimal redCostUsd = totFeePreUplift_USD.add( totFeePreUplift_USD.multiply(p3sEffectiveFees.getUrgentFee_Percent()).divide(new BigDecimal(100.0)) );
 				 OfficialFeeUpliftCalculator calc = new OfficialFeeUpliftCalculator();

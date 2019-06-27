@@ -314,10 +314,10 @@ public class Form1200RestController extends Universal {
 		return new ResponseEntity<Form1200Record>(HttpStatus.OK);
 	}
 
-	protected void fut(String msg) { // acTodo z2.1
-		log().error("So this IS AS FAR AS WE ARE GETTING ");
-		log().error("************************************************************************************************");
-	}
+	//protected void fut(String msg) { 
+	//	log().error("So this IS AS FAR AS WE ARE GETTING ");
+	//	log().error("************************************************************************************************");
+	//}
 
 	protected void tellOb(Object o) {
 		log().info("");

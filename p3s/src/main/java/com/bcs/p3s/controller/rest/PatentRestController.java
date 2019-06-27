@@ -121,7 +121,7 @@ public class PatentRestController extends Universal {
 				patentV2UI = patentService.getPatentInfo(id, session);
 			}
 		} catch (Exception e) {
-			// acToDo - there may yet be EXPECTED errors to be caught here
+			// there may yet be EXPECTED errors to be caught here. 190627 update: none observed yet. acTidy
 			logErrorAndContinue("Controller caught unexpected failure : "+handle, e);
 		  	return new ResponseEntity<PatentV2UI>(patentV2UI, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

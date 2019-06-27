@@ -306,14 +306,14 @@ public class PatentUI extends Patent {
 	
 	
 	
-	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // acToDo 01-sep-2017
+	// Start of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification. // 01-sep-2017
 
-//	public BigDecimal getCurrentRenewalCost() {
-//		return currentRenewalCostUSD;
-//	}
-//	public BigDecimal getRenewalCostNextStage() {
-//		return renewalCostNextStageUSD;
-//	}
+	//	public BigDecimal getCurrentRenewalCost() {
+	//		return currentRenewalCostUSD;
+	//	}
+	//	public BigDecimal getRenewalCostNextStage() {
+	//		return renewalCostNextStageUSD;
+	//	}
 	
 	// End of Legacy / Redundant getters - to be removed soon, while/incase FrontEnd still uses them. FE to migrate to non-underscore naming, WITH currencyIdentification.
 	

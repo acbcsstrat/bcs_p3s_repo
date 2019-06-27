@@ -108,7 +108,7 @@ public class Payment {
 
     /**
      * If transaction fails, holds 1 of the 3 codes agreed with Moneycorp :
-     * see Cron:MoneycorpPaymentStatusEnum (Zaph - does p3sweb have an enum for this ?)
+     * see Cron:MoneycorpPaymentStatusEnum (Exists here in McFailCodeEnum) - [acTidy : resolve inconsistency in future rewrite]
      */
     private String MC_failCode;
 

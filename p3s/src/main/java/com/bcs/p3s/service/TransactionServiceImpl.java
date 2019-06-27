@@ -97,7 +97,7 @@ public class TransactionServiceImpl extends ServiceAuthorisationTools implements
 
 			paymentUIs.add(payui);
 		}
-		// AC 170726 - right now, unable to fully populate PatentUI - needs thos extra 4 fields - acToDo
+		// AC 170726 - right now, unable to fully populate PatentUI - needs thos extra 4 fields: 190627 Update: Safest leave be
 		return paymentUIs; 
 	}
 	

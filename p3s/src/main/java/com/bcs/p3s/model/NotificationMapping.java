@@ -63,7 +63,7 @@ public class NotificationMapping {
 	}
 
 
-	// acTodo z2.1 - hellofaCleanup required here - once notification calls proven
+	// acTidy z2.1 - hellofaCleanup required here - once notification calls proven
 	// blat this once -- ..   
 	//	/**
 //	 * 'All' means filtered for this patent, this user and this notification.productType
