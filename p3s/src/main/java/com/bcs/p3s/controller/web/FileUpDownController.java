@@ -171,7 +171,7 @@ public class FileUpDownController  extends Universal {
 		String err = "getEpctPreviewPdfBlob(epct="+epctId+", isDownloadNotView="+isDownloadNotView+")    from "+CLASSNAME;
 
 		Epct epct = form1200Service.findEpct(epctId); // Includes safety authorisation check
-		if (epct==null) fail("Specified epct does not exist.  In : "+err);
+		if (epct==null) logM().error("Specified epct does not exist.  In : "+err);
 		
 		byte[] failedBytearray = new byte[1024]; 
 		Form1200 form1200 = epct.getForm1200();
@@ -199,7 +199,7 @@ public class FileUpDownController  extends Universal {
 		String err = "streamEpctReceiptPdf(epct="+epctId+", isDownloadNotView="+isDownloadNotView+")    from "+CLASSNAME;
 
 		Epct epct = form1200Service.findEpct(epctId); // Includes safety authorisation check
-		if (epct==null) fail("Specified epct does not exist.  In : "+err);
+		if (epct==null) logM().error("Specified epct does not exist.  In : "+err);
 		
 		byte[] failedBytearray = new byte[1024]; 
 		Form1200 form1200 = epct.getForm1200();
@@ -228,7 +228,7 @@ public class FileUpDownController  extends Universal {
 		String err = "streamRenewalReceiptPdf(epct="+renewalId+", isDownloadNotView="+isDownloadNotView+")    from "+CLASSNAME;
 
 		Renewal renewal = form1200Service.findRenewal(renewalId); // Includes safety authorisation check
-		if (renewal==null) fail("Specified renewal does not exist.  In : "+err);
+		if (renewal==null) logM().error("Specified renewal does not exist.  In : "+err);
 		
 		byte[] failedBytearray = new byte[1024]; 
 		Long renewalBlobId = renewal.getRenewalBlobId();
