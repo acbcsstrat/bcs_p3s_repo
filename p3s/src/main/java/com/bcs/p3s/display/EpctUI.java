@@ -5,6 +5,7 @@ import java.util.List;
 import com.bcs.p3s.display.form1200.ExtensionStateUI;
 import com.bcs.p3s.display.form1200.ValidationStateUI;
 import com.bcs.p3s.engine.DummyForm1200Engine;
+import com.bcs.p3s.enump3s.Form1200StatusEnum;
 import com.bcs.p3s.model.Epct;
 import com.bcs.p3s.model.Payment;
 import com.bcs.p3s.util.config.P3SPropertyException;
@@ -54,12 +55,14 @@ public class EpctUI extends Epct {
 	private List<ValidationStateUI> validationStatesUI;		// from epct
 	//private String activePaymentId	
 	private String form1200PdfUrl;						// from form1200
-	
+    private String epoReceiptUrl;
+
 	
 	
 	//Items from elsewhere
 	
-    
+
+
 	// Constructor - converting a Epct to a EpctUI
 	public EpctUI(Epct epct,  List<PatentExtendedData> extendedDatas) {
 
@@ -91,8 +94,8 @@ public class EpctUI extends Epct {
 		String urlBase = null;
 		try {
 			P3SPropertyReader reader = new P3SPropertyReader();
-			context = reader.getGenericProperty(P3SPropertyNames.P3S_WEB_CONTEXT); 
-			urlBase = reader.getESProperty(P3SPropertyNames.P3S_WEB_TOMCAT_URL_BASE);
+			context = reader.getGenericProperty(P3SPropertyNames.P3S_WEB_CONTEXT);    // no trailing /
+			urlBase = reader.getESProperty(P3SPropertyNames.P3S_WEB_TOMCAT_URL_BASE); // has training /
 		} catch (P3SPropertyException e) {
 			System.out.println("EpctUI constructor : property read failed");
 			e.printStackTrace();
@@ -157,12 +160,22 @@ public class EpctUI extends Epct {
 		if(this.getForm1200() != null) {
 			String url = "";
 			if (urlBase!=null) {
-				url = urlBase + "download.pdf?epctId=" + this.getId();
+				//url = urlBase + "download.pdf?epctId=" + this.getId();
+				url = context + "/download.pdf?epctId=" + this.getId();
 			}
 			this.setForm1200PdfUrl(url);
 		}
 
-		
+		// The EPO Acknowledgement of Receipt document
+		this.setEpoReceiptUrl(null);
+		if (Form1200StatusEnum.COMPLETED.equalsIgnoreCase(epct.getEpctStatus())) {
+			String url = null;
+			if (urlBase!=null) {
+				url = context + "/downloadEpctReceipt.pdf?epctId=" + epct.getId();
+			}
+			this.setEpoReceiptUrl(url);
+		}
+	
 		
 		
 		//Get the paymentUI details  - acTidy
@@ -303,6 +316,11 @@ public class EpctUI extends Epct {
 	public String getForm1200PdfUrl() {
 		return form1200PdfUrl;
 	}
+	public String getEpoReceiptUrl() {
+		return epoReceiptUrl;
+	}
+
+	
 	public void setFilingLang(String filingLang) {
 		this.filingLang = filingLang;
 	}
@@ -329,6 +347,9 @@ public class EpctUI extends Epct {
 	}
 	public void setForm1200PdfUrl(String form1200PdfUrl) {
 		this.form1200PdfUrl = form1200PdfUrl;
+	}
+	public void setEpoReceiptUrl(String epoReceiptUrl) {
+		this.epoReceiptUrl = epoReceiptUrl;
 	}
 
 

@@ -32,6 +32,7 @@ public class RenewalUI extends Renewal {
 
     private String renewalDueDateUI;
     private String certificateUrl;
+    private String epoReceiptUrl;
     private String invoiceUrl;
     private PatentUI patentUI;
     private RenewalFeeUI renewalFeeUI;
@@ -76,8 +77,15 @@ public class RenewalUI extends Renewal {
 		if (renewal.getCertificate() != null) {
 			this.setCertificateUrl(context + "/certificate/" + renewal.getId().toString());
 			this.setCertificate(renewal.getCertificate());
-			this.getCertificate().setRenewal(null);
+			this.getCertificate().setRenewal(null); // prevent JSON infinite loops
 		}
+		
+		// The EPO Acknowledgement of Receipt document
+		this.setEpoReceiptUrl(null);
+		if (renewal.getRenewalBlobId() != null) {
+			this.setEpoReceiptUrl(context + "/downloadRenewalReceipt.pdf?renewalId=" + renewal.getId());
+		}
+		
 		
 		//Get the invoice url
 		// getUrl method is redundant until we create & store PDFs locally
@@ -163,6 +171,13 @@ public class RenewalUI extends Renewal {
 	}
 	public void setCertificateUrl(String certificateUrl) {
 		this.certificateUrl = certificateUrl;
+	}
+
+	public String getEpoReceiptUrl() {
+		return epoReceiptUrl;
+	}
+	public void setEpoReceiptUrl(String epoReceiptUrl) {
+		this.epoReceiptUrl = epoReceiptUrl;
 	}
 
 	public PatentUI getPatentUI() {
