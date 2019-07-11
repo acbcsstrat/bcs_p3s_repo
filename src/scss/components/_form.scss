@@ -76,3 +76,15 @@ input {
     border-radius: 50%; 
   } /*modules*/ /*components*/ /*_form.scss*/
 }
+
+.icon-field{
+  position: relative;
+  .icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    margin-top: -7px;
+    font-size: 1.5rem;
+    color: $grey-dark;
+  }
+}

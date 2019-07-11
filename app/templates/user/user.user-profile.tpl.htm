@@ -15,7 +15,7 @@
 					<div class="content-panel__body bg-white flex-grow-1">
 						<div class="row">
 							<div class="col-xl-12">
-								<fieldset class="form-group md-m-b-md">
+								<fieldset class="form-group md-m-b-md p-0">
 									<legend class="font-weight-bold font-h4">Email notifications</legend>
 									<p class="font-body font-weight-medium">Do you want to receive email notificaitons?</p>
 									<div class="row m-t-xs">
@@ -36,27 +36,21 @@
 								<p class="font-h4 font-weight-bold">Company Users: {{$ctrl.companyUsers.length}}</p>
 								<div class="row m-t-sm">
 									<div class="col-xl-6" data-ng-repeat="prop in $ctrl.chunkedData.chunk">
-										
 										<div data-ng-repeat="user in prop track by $index">
 											<input class="form-control m-b-md" placeholder="{{user.index}}. {{user.firstName}} {{user.lastName}} " readonly>
 										</div>
 									</div>
-								</div>
-								<div >
-									
-									
-								</div>
-<!-- 									<ul class="ul-bullet-free">
-										<li class="font-body font-weight-medium" data-ng-repeat="users in prop"><span class="font-weight-bold">. </span><span></span></ -->
-							</div>						
-						</div>
-					</div>			
-				</div>
+								</div>	
+							</div>
+						</div>						
+					</div>
+				</div>			
+			
 				<div class="col-xl-6 d-flex m-t-md-sm lg-m-t-sm">
 					<div class="content-panel__body bg-white flex-grow-1">
 						<div class="row m-b-md">
 							<div class="col-md-12 col-lg-6 col-xl-12">
-								<fieldset class="m-b-md">
+								<fieldset class="m-b-md p-0">
 									<legend class="font-weight-bold font-h2 m-b-md">User Details</legend>
 									<div class="form-group row">
 										<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="emailAddress">Email:</label>
@@ -69,7 +63,10 @@
 									<div class="form-group row">
 										<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="firstName">First name:</label>
 										<div class="col-md-6 col-lg-8">
-											<input type="text" name="firstName" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.firstName" id="firstName" data-ng-bind="firstName" required data-validate-name>
+											<div class="icon-field">
+												<input type="text" name="firstName" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.firstName" id="firstName" data-ng-bind="firstName" required data-validate-name>
+												<i class="far fa-pencil fa-2x icon"></i>
+											</div>
 											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.firstName.$error.required && userProfileForm.firstName.$dirty">Please fill out this field</p>
 											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.firstName.$error.validName && userProfileForm.firstName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>
 										</div>
@@ -77,7 +74,10 @@
 									<div class="form-group row">
 										<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="lastName">Last name:</label>
 										<div class="col-md-6 col-lg-8">
-											<input type="text" class="form-control font-body pill-radius" name="lastName" data-ng-model="$ctrl.user.lastName"  id="lastName" required data-validate-name>
+											<div class="icon-field">
+												<input type="text" class="form-control font-body pill-radius" name="lastName" data-ng-model="$ctrl.user.lastName"  id="lastName" required data-validate-name>
+												<i class="far fa-pencil fa-2x icon"></i>
+											</div>
 											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.lastName.$invalid && !userProfileForm.lastName.$pristine">Please fill out this field</p>
 											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.lastName.$error.validName && userProfileForm.lastName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>								
 										</div>
@@ -85,7 +85,10 @@
 									<div class="form-group row m-b-none">
 										<label class="col-md-4 d-flex flex-column justify-content-start font-body font-weight-medium" for="newPassword">Password:</label>
 										<div class="col-md-4 col-lg-8">
-											<input type="password" name="newPassword" data-ng-model="newPassword" class="form-control font-body pill-radius m-b-xs" id="newPassword" data-ng-blur="visitednewPassword=true" data-ng-minlength="8" data-ng-maxlength="20" autocomplete="off">
+											<div class="icon-field">
+												<input type="password" name="newPassword" data-ng-model="newPassword" class="form-control font-body pill-radius m-b-xs" id="newPassword" data-ng-blur="visitednewPassword=true" data-ng-minlength="8" data-ng-maxlength="20" autocomplete="off">
+												<i class="far fa-pencil fa-2x icon"></i>
+											</div>
 											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.required && userProfileForm.newPassword.$dirty">Please fill out this field</p>
 											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.minlength && visitednewPassword">Password needs to be a minimum of 8 characters</p>
 											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.minlength && visitednewPassword">Password needs to be a maximum of 20 characters</p>
@@ -125,7 +128,10 @@
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="phoneNumber">Tel:</label>
 								<div class="col-md-3 col-lg-8">
-									<input type="text" name="phoneNumber" class="form-control font-body pill-radius" data-ng-maxlength="40" data-ng-model="$ctrl.user.business.phoneNumber" id="phoneNumber" data-max-length="40" required data-validate-phone>
+									<div class="icon-field">
+										<input type="text" name="phoneNumber" class="form-control font-body pill-radius" data-ng-maxlength="40" data-ng-model="$ctrl.user.business.phoneNumber" id="phoneNumber" data-max-length="40" required data-validate-phone>
+										<i class="far fa-pencil fa-2x icon"></i>
+									</div>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.phoneNumber.$error.required && userProfileForm.phoneNumber.$dirty">Please fill out this field.</p>
 									<p class="font-body txt-phase-red" data-ng-show="(userProfileForm.phoneNumber.$error.validPhone && userProfileForm.phoneNumber.$dirty) || userProfileForm.phoneNumber.$error.maxlength">Please enter a valid phone number.</p>						
 								</div>
@@ -133,7 +139,10 @@
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="street">Street:</label>
 								<div class="col-md-6 col-lg-8">
-									<input type="text" name="street" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.street" id="street" required data-validate-address>
+									<div class="icon-field">
+										<input type="text" name="street" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.street" id="street" required data-validate-address>
+										<i class="far fa-pencil fa-2x icon"></i>
+									</div>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.street.$error.required && userProfileForm.street.$dirty">Please fill out this field.</p>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.street.$error.validAddress && userProfileForm.street.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>
 								</div>
@@ -141,7 +150,10 @@
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="city">City:</label>
 								<div class="col-md-5 col-lg-8">
-									<input type="text" name="city" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.city" id="city" required data-validate-address>
+									<div class="icon-field">
+										<input type="text" name="city" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.city" id="city" required data-validate-address>
+										<i class="far fa-pencil fa-2x icon"></i>
+									</div>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.city.$error.required && userProfileForm.city.$dirty">Please fill out this field.</p>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.city.$error.validAddress && userProfileForm.city.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>								
 								</div>
@@ -149,7 +161,10 @@
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="USstate">State:</label>
 								<div class="col-md-3 col-lg-8">
-									<input type="text" name="USstate" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.usstate" id="USstate" required data-validate-address>
+									<div class="icon-field">
+										<input type="text" name="USstate" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.usstate" id="USstate" required data-validate-address>
+										<i class="far fa-pencil fa-2x icon"></i>
+									</div>										
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.USstate.$error.required && userProfileForm.USstate.$dirty">Please fill out this field.</p>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.USstate.$error.validAddress && userProfileForm.USstate.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>				
 								</div>
@@ -157,7 +172,10 @@
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="zip">Zip:</label>
 								<div class="col-md-3 col-lg-8">
-									<input type="text" name="zip" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.zip" id="zip" required data-validate-zip>
+									<div class="icon-field">
+										<input type="text" name="zip" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.zip" id="zip" required data-validate-zip>
+										<i class="far fa-pencil fa-2x icon"></i>
+									</div>										
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.zip.$error.required && userProfileForm.zip.$dirty">Please fill out this field.</p>		
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.zip.$error.validZip && userProfileForm.zip.$dirty">Only numbers and - are valid characters in this field.</p>
 								</div>
@@ -183,7 +201,10 @@
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="billing_street">Street</label>
 								<div class="col-md-6 col-lg-8">
-									<input type="text" name="billing_street" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.billingStreet" id="billing_street" required data-validate-address>
+									<div class="icon-field">
+										<input type="text" name="billing_street" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.billingStreet" id="billing_street" required data-validate-address>
+										<i class="far fa-pencil fa-2x icon"></i>
+									</div>									
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.billing_street.$error.required && userProfileForm.billing_street.$dirty">Please fill out this field</p>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.billing_street.$error.validAddress && userProfileForm.billing_street.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>
 								</div>
@@ -191,7 +212,10 @@
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="billing_city">City</label>
 								<div class="col-md-5 col-lg-8">
-									<input type="text" name="billing_city" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.billingCity" id="billing_city" required data-validate-address>
+									<div class="icon-field">
+										<input type="text" name="billing_city" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.billingCity" id="billing_city" required data-validate-address>
+										<i class="far fa-pencil fa-2x icon"></i>
+									</div>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.billing_city.$error.required && userProfileForm.billing_city.$dirty">Please fill out this field</p>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.billing_city.$error.validAddress && userProfileForm.billing_city.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>
 								</div>
@@ -199,7 +223,10 @@
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="billing_state">State</label>
 								<div class="col-md-3 col-lg-8">
-									<input type="text" name="billing_state" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.billingState" id="billing_state" required data-validate-address>						
+									<div class="icon-field">									
+										<input type="text" name="billing_state" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.billingState" id="billing_state" required data-validate-address>
+										<i class="far fa-pencil fa-2x icon"></i>
+									</div>															
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.billing_state.$error.required && userProfileForm.billing_state.$dirty">Please fill out this field</p>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.billing_state.$error.validAddress && userProfileForm.billing_state.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>			
 								</div>
@@ -207,7 +234,10 @@
 							<div class="form-group row">
 								<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="billing_zip">Zip</label>
 								<div class="col-md-3 col-lg-8">
-									<input type="text" name="billing_zip" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.billingZip" id="billing_zip" required data-validate-zip>
+									<div class="icon-field">	
+										<input type="text" name="billing_zip" class="form-control font-body pill-radius" data-ng-model="$ctrl.user.business.billingZip" id="billing_zip" required data-validate-zip>
+										<i class="far fa-pencil fa-2x icon"></i>
+									</div>											
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.billing_zip.$error.required && userProfileForm.billing_zip.$dirty">Please fill out this field</p>
 									<p class="font-body txt-phase-red" data-ng-show="userProfileForm.billing_zip.$error.validZip && userProfileForm.billing_zip.$dirty">Only numbers and - are valid characters in this field.</p>
 								</div>
