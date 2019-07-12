@@ -106,6 +106,10 @@
     background: $red;
     color: $white;
   }
+  &.btn--grey {
+    background: $grey-dark;
+    color: $white;
+  }  
   &:not([disabled]):hover, &:not([disabled]):focus  {
     -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0);
     -moz-box-shadow: 0 0 0 0 rgba(0,0,0,0);    

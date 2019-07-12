@@ -27,7 +27,9 @@ angular.module('ngCart', ['ngCart.directives'])
 
     }])
 
-    .service('ngCart', ['$rootScope', '$window', 'ngCartItem', 'store', function ($rootScope, $window, ngCartItem, store) {
+    .service('ngCart', ['$rootScope', '$window', 'ngCartItem', 'store', '$uibModal', '$state', function ($rootScope, $window, ngCartItem, store, $uibModal, $state) {
+
+        var vm = this;
 
         this.init = function(){
             this.$cart = {
@@ -39,8 +41,33 @@ angular.module('ngCart', ['ngCart.directives'])
         };
 
         this.addItem = function (id, name, price, quantity, data) {
+            
 
             var inCart = this.getItemById(id);
+
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/templates/modals/modal.confirm-add-action.tpl.htm',
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', function($uibModalInstance) {
+
+                    this.order = {}
+                    this.order.price = price;
+                    this.order.ep_ApplicationNumber = data.ep_ApplicationNumber;
+                    this.order.totalOrderLength = vm.getItems().length;
+                    this.order.totalCost = vm.totalCost();
+
+                    this.continueBasket =  function() {
+                        $state.go('basket', {})
+                        $uibModalInstance.close();
+                    }
+
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+
+                }]
+            })
 
             if (typeof inCart === 'object'){
                 //Update quantity of an item if it's already in the cart

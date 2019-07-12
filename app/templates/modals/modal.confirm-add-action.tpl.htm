@@ -1,0 +1,30 @@
+<div class="bg-white px-5 pt-4 pb-5 flex-column br-1">
+	<div class="row m-b-sm">
+		<div class="col-md-12 d-flex justify-content-between align-items-center">		
+			<p class="font-h3 font-weight-medium"><span data-ng-bind="$ctrl.order.totalOrderLength"></span>item(s) added to your cart </p>
+			<span class="cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 d-flex flex-column">
+			<div class="m-b-xs">
+				<p class="font-h4 font-weight-bold">Patent Applicatin No:</p>
+				<p class="font-h4" data-ng-bind="$ctrl.order.ep_ApplicationNumber"></p>
+			</div>
+			<div class="flex-grow-1 d-flex align-items-end">
+				<div>				
+					<p class="font-h4 font-weight-bold">Cost:</p>
+					<p class="font-h4 text-uppercase">$ <span data-ng-bind="$ctrl.order.price"></span></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 border-grey-xs--left">
+			<div class="border-grey-xs--left"></div>
+			<p class="font-h4 font-weight-bold m-b-sm">Cart total: (<span data-ng-bind="$ctrl.order.totalOrderLength"></span> items)</p>
+			<div class="d-flex justify-content-between flex-wrap">
+				<button data-ng-click="$ctrl.dismissModal()" class="btn btn-block btn--lg btn--green pill-radius m-b-xs">Add more actions</button>
+				<button data-ng-click="$ctrl.continueBasket()" class="btn btn-block btn--lg btn--grey pill-radius">Proceed to checkout</button>
+			</div>
+		</div>
+	</div>
+</div>

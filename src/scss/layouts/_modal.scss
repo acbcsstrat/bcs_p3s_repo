@@ -8,28 +8,10 @@
 
 .bar-phase { width: 100%; } /*modules*/ /*components*/ /*_modal.scss*/
 
-.modal.in .modal-dialog {
-  -webkit-transform: translate(0, 0);
-  -o-transform: translate(0, 0);
-  transform: translate(0, 0);
-}
-
 .modal-backdrop .fade .in { opacity: 0.5 !important; }
 .modal-backdrop.fade { opacity: 0.5 !important; }
 
-.modal-dialog {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -moz-justify-content: space-between;    
-  justify-content: center;
-  min-height: 100%;  
-}
+
 
 .modal-header,
 .modal-body,
