@@ -14,7 +14,7 @@ require('app/directives/patents.list-patents.dir.js');
 require('app/directives/user.dir.js');
 require('app/directives/transactions.dir.js');
 require('app/directives/patents.search-patent.dir.js');
-
+require("app/directives/portfolio.nav.dir.js");
 require('app/directives/vendors/ngCart.directives.js');
 
 require("app/services/app.core.serv.js");
@@ -47,29 +47,18 @@ require("app/controllers/checkout.bankTransferPrep.ctrl.js");
 require("app/controllers/checkout.bankTransferSuccess.ctrl.js");
 require("app/controllers/checkout.basket.ctrl.js");
 require("app/controllers/core.core.ctrl.js");
-// require("app/controllers/core.mainNav.ctrl.js");
 require("app/controllers/dashboard.dashboard.ctrl.js");
 require("app/controllers/dashboard.fxChart.ctrl.js");
 require("app/controllers/dashboard.graphDonut.ctrl.js");
 require("app/controllers/dashboard.recentActivity.ctrl.js");
 require("app/controllers/dashboard.action-cost.ctrl.js");
 require("app/controllers/dashboard.actions-available.ctrl.js");
-// require("app/controllers/europct.info.ctrl.js");
 require("app/controllers/europct.form1200.ctrl.js");
-// require("app/controllers/europct.form1200intro.ctrl.js");
-// require("app/controllers/europct.form1200questionnaire.ctrl.js");
 require("app/controllers/europct.form1200generated.ctrl.js");
-// require("app/controllers/europct.costanalysis.ctrl.js");
 require("app/controllers/portfolio.ctrl.js");
 require("app/controllers/patents.addPatent.ctrl.js");
 require("app/controllers/patents.searchPatent.ctrl.js");
-// require("app/controllers/patent.europct.ctrl.js");
-
-
-// require("app/controllers/patent.renewal.ctrl.js");
-// require("app/controllers/renewal.renewalInfo.ctrl.js");
 require("app/controllers/renewal.renewalHistory.ctrl.js");
-// require("app/controllers/renewal.renewalCa.ctrl.js");
 require("app/controllers/transactions.currentTransactionItem.ctrl.js");
 require("app/controllers/transactions.currentTransactions.ctrl.js");
 require("app/controllers/transactions.transactionHistory.ctrl.js");
@@ -84,11 +73,8 @@ require("app/controllers/patent.case-overview.ctrl.js");
 require("app/controllers/patent.details.ctrl.js");
 
 require("app/services/notification.serv.js");
-require("app/services/notification.serv.js");
 require("app/services/activeTab.serv.js")
 
-// require("app/components/core.basketNav.comp.js");
 require("app/components/core.mainNav.comp.js");
 require("app/components/core.caseoverviewNav.comp.js");
-require("app/components/patents.patentNav.comp.js");
 require("app/components/transactions.transNav.comp.js");

@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('coreCtrl', coreCtrl);
 
-coreCtrl.$inject = ['$uibModal', '$scope', 'coreService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService', 'organiseColourService'];
+coreCtrl.$inject = ['$uibModal', '$scope', 'coreService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService', 'organiseColourService', '$cookies'];
 
-function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService, organiseColourService) {
+function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService, organiseColourService, $cookies) {
 
 	var vm = this;
 

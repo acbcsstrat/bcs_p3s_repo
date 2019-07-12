@@ -60,6 +60,7 @@
     "angular-animate": "^1.6.10",
     "angular-aria": "^1.6.10",
     "angular-carousel": "^1.1.0",
+    "angular-cookies": "^1.7.8",
     "angular-local-storage": "^0.7.1",
     "angular-material": "^1.1.9",
     "angular-moment": "^1.2.0",

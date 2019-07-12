@@ -1,4 +1,4 @@
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngMaterial', 'ui.carousel', 'ngTouch', 'angular-carousel', 'angularMoment', 'LocalStorageModule', 'nvd3']);
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngMaterial', 'ui.carousel', 'ngTouch', 'angular-carousel', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies']);
 
 angular.module('ppApp').run(startUpRun)
 

@@ -6,7 +6,6 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     var vm = this;
     vm.pageTitle = 'Portfolio';
-
     $scope.portfolioData = patents;
     vm.stateParams = $stateParams.patentId; 
     vm.rowSelect = rowSelect;

@@ -4,9 +4,11 @@
             <li class="m-r-sm">
                 <a class="view-nav__item pill-radius" data-ui-sref-active="active" data-ui-sref="portfolio">List Patents</a>
             </li>
+
             <li data-ui-sref-active="active">
                 <a class="view-nav__item pill-radius" data-ui-sref-active="active" data-ui-sref="search-patent">Add Patent</a>
             </li>
+            <md-tooltip md-delay="1000" md-hide-delay="7000" md-direction="right" data-ng-if="noPatents" md-visible="true">You currently have no patents added to the portfolio. Click on the 'Add patents' to add a patent.</md-tooltip> 
        </ul>
    </div>
 </nav> 
