@@ -28,7 +28,7 @@ public class P3SEnvironmentKnowledge extends Universal {
 			  "CCP020"					// Andy's Lenovo 
 			, "CCP007"					// Andy's Dell 
 			, "AVID-3580-022"			// Andy's NEW Dell 
-			, "avid-ox790-013"			// Merin's PC
+			, "AVID-3590-004"			// Merin's PC
 			// Pat's WAS "patrickwork" - now seems DESKTOP-H575IU3
 			, "DESKTOP-H575IU3"			// Patrick's PC
 			, "AVID-3590-026"			// Pat's NEW Dell 
@@ -57,8 +57,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 			path = "C:/gitrepos/github/project-repo/p3s/src/main/resources/META-INF/spring/";    		// If running from eclipse
 			// trying to commit this fix !
 		}
-		if ("avid-ox790-013".equals(host)) {
-			path = "C:/MERIN/Documents/PatentPlace/P3S local repo/bcs_p3s_repo_18042018_0931/p3s/src/main/resources/META-INF/spring/";
+		if ("AVID-3590-004".equals(host)) {
+			path = "C:/Merin/Git/p3sweb_v2.1/p3s/src/main/resources/META-INF/spring/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
 			// Original: path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/META-INF/spring/";
@@ -135,8 +135,8 @@ public class P3SEnvironmentKnowledge extends Universal {
 			//path = "C:/utils/git_repos/bcs_p3s_repo/p3s/src/main/resources/";
 			path = "C:/utils/apache-tomcat-8.5.6/webapps/p3sweb/WEB-INF/classes/";
 		}
-		if ("avid-ox790-013".equals(host)) {
-			path = "C:/MERIN/Documents/PatentPlace/P3S local repo/bcs_p3s_repo_18042018_0931/p3s/src/main/resources/";
+		if ("AVID-3590-004".equals(host)) {
+			path = "C:/Merin/Git/p3sweb_v2.1/p3s/src/main/resources/META-INF/spring/";
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
 			//path = "C:/xampp/tomcat/webapps/p3sweb/WEB-INF/classes/";
