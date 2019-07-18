@@ -137,8 +137,12 @@ public class P3SEnvironmentKnowledge extends Universal {
 		}
 		if ("AVID-3590-004".equals(host)) {
 			//path = "C:/Merin/Git/p3sweb_v2.1/p3s/src/main/resources/META-INF/spring/";
+
+			path = "C:/Merin/Git/p3sweb_v2.1/p3s/src/main/resources/";
+
 			//path = "C:/Merin/Git/p3sweb_v2.1/p3s/src/main/resources/";
-			path = "C:/Merin/Git/p3sweb_v2.1/p3s/src/main/resources/META-INF/spring/";
+			//path = "C:/Merin/Git/p3sweb_v2.1/p3s/src/main/resources/META-INF/spring/";
+
 
 		}
 		if ("DESKTOP-H575IU3".equals(host)) {
