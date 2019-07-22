@@ -4,11 +4,11 @@ import $ from 'jquery'; //neede to prevent error with slick-carousel
 window.jQuery = $;
 window.$ = $;
 
+
 require("jquery/dist/jquery.min.js");
 require("angular/angular.min.js");
 
 require("tether/dist/js/tether.min.js");
-
 
 require("popper.js/dist/popper.min.js");
 require("bootstrap/dist/js/bootstrap.min.js");
@@ -25,6 +25,7 @@ require("@uirouter/angularjs/release/angular-ui-router.min.js");
 require("angular-local-storage/dist/angular-local-storage.min.js");
 require('angular-touch/angular-touch.min.js');
 require('angular-carousel/dist/angular-carousel.min.js');
+require("angular-croppie/angular-croppie.js")
 
 require("d3/d3.min.js");
 require("nvd3/build/nv.d3.min.js");
@@ -41,3 +42,7 @@ require("localScripts/js/vendors/jquery.stickytableheader.js");
 
 require("localScripts/js/vendors/ngCart.js");
 require("localScripts/js/vendors/parsley.min.js");
+
+
+
+// require("croppie/croppie.min.js")

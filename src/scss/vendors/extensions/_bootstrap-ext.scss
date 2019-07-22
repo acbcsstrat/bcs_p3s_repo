@@ -77,9 +77,7 @@ uib-progress.progressblue { height: 3rem; }
   padding: 0!important;
 }
 
-.modal-dialog {
-  height: 100%;
-} 
+
 
 .nav-tabs .nav-link.active, 
 .nav-tabs .nav-link { border: none; }
@@ -127,7 +125,14 @@ uib-progress.progressblue { height: 3rem; }
   transform: translate(0, 0);
 }
 
+.wide-modal {
+  .modal-dialog {
+      max-width: 80rem;
+  }
+}
+
 .modal-dialog {
+  height: 100%;
   width: auto;
   max-width: 65rem;
   display: -webkit-box;

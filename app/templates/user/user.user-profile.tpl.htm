@@ -3,7 +3,7 @@
 		<div class="content-panel m-b-md">
 			<div class="row m-b-md">
 				<div class="col-md-12 col-lg-12 col-xl-12 d-flex">
-					<i class="fas fa-user-circle fa-7x m-r-md"></i>
+					<avatar-img class="m-r-xl" data-ng-click="$ctrl.openAvatarModal()"></avatar-img>
 					<div class="d-flex justify-content-center align-items-start flex-column">
 		      	 		<p class="font-weight-medium font-h1 lh-head m-b-xs">{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</p>
       	 				<p class="font-h1 font-weight-light">{{$ctrl.user.business.businessName}}</p>
@@ -42,10 +42,9 @@
 									</div>
 								</div>	
 							</div>
-						</div>						
+						</div>
 					</div>
-				</div>			
-			
+				</div>	
 				<div class="col-xl-6 d-flex m-t-md-sm lg-m-t-sm">
 					<div class="content-panel__body bg-white flex-grow-1">
 						<div class="row m-b-md">

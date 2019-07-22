@@ -16,6 +16,8 @@ require('app/directives/transactions.dir.js');
 require('app/directives/patents.search-patent.dir.js');
 require("app/directives/portfolio.nav.dir.js");
 require('app/directives/vendors/ngCart.directives.js');
+require('app/directives/avatar.dir.js');
+require('app/directives/select-avatar.dir.js');
 
 require("app/services/app.core.serv.js");
 require("app/services/app.organiseText.serv.js");
@@ -27,7 +29,6 @@ require("app/services/app.fxCalculation.serv.js");
 require("app/services/app.mainNav.serv.js");
 require("app/services/app.timezone.serv.js");
 require("app/services/app.CostAnalysis.serv.js")
-
 require("app/services/checkout.bankTransferCommit.serv.js");
 require("app/services/checkout.basket.serv.js");
 require("app/services/dashboard.dashboard.serv.js");
