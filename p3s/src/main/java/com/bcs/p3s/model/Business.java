@@ -4,12 +4,13 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
+@RooJpaActiveRecord(finders = { "findBusinessesByBusinessNumber"})
 public class Business {
 
     /**
@@ -21,10 +22,10 @@ public class Business {
     /**
      */
     @NotNull
-    @Min(4L)
-    @Max(4L)
+    @Min(100L)
+    @Max(9999L)
     private Integer businessPin;
-
+    
     /**
      */
     @NotNull
@@ -33,7 +34,8 @@ public class Business {
     /**
      */
     @NotNull
-    private Long phoneNumber;
+    @Size(max = 40)
+    private String phoneNumber;
 
     /**
      */
@@ -56,13 +58,11 @@ public class Business {
     private String USstate;
 
     /**
+     * Permit the more detailed format: 60025-2854
+     * Hence need convert from long to String
      */
     @NotNull
-    private Long zip;
-
-    /**
-     */
-    private Boolean isBillingAddressSame;
+    private String zip; 
 
     /**
      */
@@ -82,5 +82,7 @@ public class Business {
     /**
      */
     @NotNull
-    private Long billingZip;
+    private String  billingZip;
+
+    
 }

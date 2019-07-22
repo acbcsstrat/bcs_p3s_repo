@@ -9,12 +9,12 @@ import java.util.Date;
 
 privileged aspect Patent_Roo_JavaBean {
     
-    public String Patent.getPatentApplicationNumber() {
-        return this.patentApplicationNumber;
+    public String Patent.getEP_ApplicationNumber() {
+        return this.EP_ApplicationNumber;
     }
     
-    public void Patent.setPatentApplicationNumber(String patentApplicationNumber) {
-        this.patentApplicationNumber = patentApplicationNumber;
+    public void Patent.setEP_ApplicationNumber(String EP_ApplicationNumber) {
+        this.EP_ApplicationNumber = EP_ApplicationNumber;
     }
     
     public String Patent.getTitle() {
@@ -25,12 +25,12 @@ privileged aspect Patent_Roo_JavaBean {
         this.title = title;
     }
     
-    public Date Patent.getFilingDate() {
-        return this.filingDate;
+    public Date Patent.getInternationalFilingDate() {
+        return this.internationalFilingDate;
     }
     
-    public void Patent.setFilingDate(Date filingDate) {
-        this.filingDate = filingDate;
+    public void Patent.setInternationalFilingDate(Date internationalFilingDate) {
+        this.internationalFilingDate = internationalFilingDate;
     }
     
     public Business Patent.getBusiness() {
@@ -51,10 +51,6 @@ privileged aspect Patent_Roo_JavaBean {
     
     public String Patent.getClientRef() {
         return this.clientRef;
-    }
-    
-    public void Patent.setClientRef(String clientRef) {
-        this.clientRef = clientRef;
     }
     
     public String Patent.getShortTitle() {
@@ -81,6 +77,14 @@ privileged aspect Patent_Roo_JavaBean {
         this.lastRenewedDateExEpo = lastRenewedDateExEpo;
     }
     
+    public Integer Patent.getLastRenewedYearEpo() {
+        return this.lastRenewedYearEpo;
+    }
+    
+    public void Patent.setLastRenewedYearEpo(Integer lastRenewedYearEpo) {
+        this.lastRenewedYearEpo = lastRenewedYearEpo;
+    }
+    
     public Integer Patent.getRenewalYear() {
         return this.renewalYear;
     }
@@ -93,16 +97,108 @@ privileged aspect Patent_Roo_JavaBean {
         return this.renewalStatus;
     }
     
-    public void Patent.setRenewalStatus(String renewalStatus) {
-        this.renewalStatus = renewalStatus;
+    public String Patent.getEP_PublicationNumber() {
+        return this.EP_PublicationNumber;
     }
     
-    public String Patent.getPatentPublicationNumber() {
-        return this.patentPublicationNumber;
+    public void Patent.setEP_PublicationNumber(String EP_PublicationNumber) {
+        this.EP_PublicationNumber = EP_PublicationNumber;
     }
     
-    public void Patent.setPatentPublicationNumber(String patentPublicationNumber) {
-        this.patentPublicationNumber = patentPublicationNumber;
+    public String Patent.getIpcCodes() {
+        return this.ipcCodes;
+    }
+    
+    public void Patent.setIpcCodes(String ipcCodes) {
+        this.ipcCodes = ipcCodes;
+    }
+    
+    public String Patent.getRepresentative() {
+        return this.representative;
+    }
+    
+    public void Patent.setRepresentative(String representative) {
+        this.representative = representative;
+    }
+    
+    public String Patent.getCheckDigit() {
+        return this.checkDigit;
+    }
+    
+    public void Patent.setCheckDigit(String checkDigit) {
+        this.checkDigit = checkDigit;
+    }
+    
+    public String Patent.getInternationalFilingLang() {
+        return this.internationalFilingLang;
+    }
+    
+    public void Patent.setInternationalFilingLang(String internationalFilingLang) {
+        this.internationalFilingLang = internationalFilingLang;
+    }
+    
+    public String Patent.getPCT_applicationNumber() {
+        return this.PCT_applicationNumber;
+    }
+    
+    public void Patent.setPCT_applicationNumber(String PCT_applicationNumber) {
+        this.PCT_applicationNumber = PCT_applicationNumber;
+    }
+    
+    public String Patent.getPCT_publicationNumber() {
+        return this.PCT_publicationNumber;
+    }
+    
+    public void Patent.setPCT_publicationNumber(String PCT_publicationNumber) {
+        this.PCT_publicationNumber = PCT_publicationNumber;
+    }
+    
+    public String Patent.getInternationalSearchAuthority() {
+        return this.internationalSearchAuthority;
+    }
+    
+    public void Patent.setInternationalSearchAuthority(String internationalSearchAuthority) {
+        this.internationalSearchAuthority = internationalSearchAuthority;
+    }
+    
+    public String Patent.getDesignated_states() {
+        return this.designated_states;
+    }
+    
+    public void Patent.setDesignated_states(String designated_states) {
+        this.designated_states = designated_states;
+    }
+    
+    public String Patent.getEpctStatus() {
+        return this.epctStatus;
+    }
+    
+    public void Patent.setEpctStatus(String epctStatus) {
+        this.epctStatus = epctStatus;
+    }
+    
+    public String Patent.getEpctNotAvailableReason() {
+        return this.epctNotAvailableReason;
+    }
+    
+    public void Patent.setEpctNotAvailableReason(String epctNotAvailableReason) {
+        this.epctNotAvailableReason = epctNotAvailableReason;
+    }
+    
+    public Date Patent.getPriorityDate() {
+        return this.priorityDate;
+    }
+    
+    public void Patent.setPriorityDate(Date priorityDate) {
+        this.priorityDate = priorityDate;
+    }
+    
+    public Date Patent.getPCT_publishedDate() {
+        return this.PCT_publishedDate;
+    }
+    
+    public void Patent.setPCT_publishedDate(Date PCT_publishedDate) {
+        this.PCT_publishedDate = PCT_publishedDate;
     }
     
 }

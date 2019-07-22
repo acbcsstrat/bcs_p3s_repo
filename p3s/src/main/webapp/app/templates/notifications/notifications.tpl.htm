@@ -1,0 +1,50 @@
+
+	<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
+	    <div class="col-md-12 col-xl-12">
+	        <p>Simply select the colour and time frame to receive email notifications for this patent prior to each stage. You can select as many or few as you want.</p>
+	    </div>
+	</div>
+	<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
+	    <div class="col-md-12 col-xl-12">
+	    	<div class="form-inline">
+	    		<div class="form-group">                      
+                	<label class="font-h4 font-weight-bold text-uppercase m-r-sm">Display notifications for: </label>
+		        	<select name="actions" id="actions" class="form-control" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-init="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Green')" data-ng-change="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Green')">
+			        </select>
+	    		</div>
+	    	</div>
+	    </div>
+	</div>	
+	<div class="row">
+	    <div class="col-md-12 col-xl-12">
+	        <nav>
+	            <ul class="panel-nav">
+	            	<li class="panel-nav__list-item list-item--colour-border pill-radius m-t-sm" data-ng-init="$ctrl.activeTab = 0" data-ng-repeat="item in $ctrl.notificationNavItems track by item.id" data-ng-click="$ctrl.displayNotifications($ctrl.data.selectedAction.action, item.colour); $ctrl.activeTab = $index" data-ng-class="{'{{item.css}}': $index == item.id, 'active': $ctrl.activeTab == $index}">
+	            		{{item.colour}}
+	            	</li>
+	            </ul>
+	        </nav>
+	    </div>
+	    <div class="col-md-12 col-xl-12 m-t-xs">
+	        <uib-tabset active="activeNotificationTab" type="pills" class="flex-row">
+	        	<uib-tab data-ng-repeat="checkbox in $ctrl.availableNotifications track by $index" index="$index">
+	        		<div class="row m-t-sm">
+	                    <div class="col-md-2 col-xl-2 text-center font-body" data-ng-repeat="item in checkbox">
+	                        {{item.title}}
+	                        <div class="onoffswitch">
+	                            <label class="switch">
+	                              	<input type="checkbox" data-ng-model="item.isOn">
+	                              	<span class="slider round bg-phase-green"></span>
+	                            </label>
+	                        </div>
+	                    </div>
+	        		</div>
+	        	</uib-tab>
+	        </uib-tabset>
+	    </div>
+	</div>
+	<div class="row m-t-md">
+		<div class="col-xl-12 text-right">
+            <input type="submit" id="submit" class="btn btn--green btn--lg pill-radius" value="Save" data-ng-click="$ctrl.updateNotifications($ctrl.patent.id, $ctrl.notificationUi, $ctrl.notificationUrl)">
+		</div>
+	</div>

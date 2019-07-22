@@ -31,11 +31,11 @@ privileged aspect Business_Roo_JavaBean {
         this.businessName = businessName;
     }
     
-    public Long Business.getPhoneNumber() {
+    public String Business.getPhoneNumber() {
         return this.phoneNumber;
     }
     
-    public void Business.setPhoneNumber(Long phoneNumber) {
+    public void Business.setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
     
@@ -71,20 +71,12 @@ privileged aspect Business_Roo_JavaBean {
         this.USstate = USstate;
     }
     
-    public Long Business.getZip() {
+    public String Business.getZip() {
         return this.zip;
     }
     
-    public void Business.setZip(Long zip) {
+    public void Business.setZip(String zip) {
         this.zip = zip;
-    }
-    
-    public Boolean Business.getIsBillingAddressSame() {
-        return this.isBillingAddressSame;
-    }
-    
-    public void Business.setIsBillingAddressSame(Boolean isBillingAddressSame) {
-        this.isBillingAddressSame = isBillingAddressSame;
     }
     
     public String Business.getBillingStreet() {
@@ -111,11 +103,11 @@ privileged aspect Business_Roo_JavaBean {
         this.billingState = billingState;
     }
     
-    public Long Business.getBillingZip() {
+    public String Business.getBillingZip() {
         return this.billingZip;
     }
     
-    public void Business.setBillingZip(Long billingZip) {
+    public void Business.setBillingZip(String billingZip) {
         this.billingZip = billingZip;
     }
     

@@ -6,6 +6,14 @@
     <put-attribute name="body" value="/WEB-INF/views/index.jspx"/>
   </definition>
 
+  <definition extends="default" name="blank">
+    <put-attribute name="body" value="/WEB-INF/views/blank.jsp"/>
+  </definition>
+
+  <definition extends="default" name="whereami">
+    <put-attribute name="body" value="/WEB-INF/views/whoami.jsp"/>
+  </definition>
+
   <definition extends="public" name="dataAccessFailure">
     <put-attribute name="body" value="/WEB-INF/views/dataAccessFailure.jspx"/>
   </definition>

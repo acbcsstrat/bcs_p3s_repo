@@ -1,0 +1,31 @@
+<div class="m-b-md animate-show" data-ng-show="$ctrl.animate">
+	<div class="row m-b-sm">
+		<div class="col-xl-12">
+			<div class="d-flex justify-content-between align-items-center">			
+<!-- 				<h1 class="font-h1 animate-show">{{$root.page}}</h1> -->
+				<p class="animate-show font-h3">
+					<span class="m-r-md"><span class="font-weight-bold">EST:</span> {{$ctrl.estTime}}</span> 
+					<span class="font-xl"><span class="font-weight-bold">UTC:</span> {{$ctrl.utcTime}}</span>
+				</p>
+				<div class="d-flex justify-content-end align-items-center">
+					<div class="m-r-md">
+						<a data-ui-sref="profile">
+							<span class="fa-stack fa-stack-lg">
+							  <i class="far fa-circle fa-stack-2x txt-grey"></i>
+							  <i class="far fa-user fa-stack-1x txt-grey"></i>
+							</span>							
+							
+						</a>					
+					</div>
+					<div class="m-r-md">
+						<p class="font-body no-line-height font-weight-bold">{{$root.user.firstName}}</p>
+						<a class="font-body no-line-height txt-black inline-link" data-ng-click="$ctrl.empty()" data-ng-href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
+					</div>
+					<a data-ui-sref="basket" class="m-r-md">
+						<ngcart-summary class="font-body txt-black"></ngcart-summary>
+					</a>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>

@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.bcs.p3s.engine.DummyDataEngine;
 import com.bcs.p3s.model.Business;
 import com.bcs.p3s.model.P3SUser;
 import com.bcs.p3s.model.Patent;
@@ -26,44 +25,25 @@ import com.bcs.p3s.security.SecurityUtil;
  * 
  * @author andyc
  */
-public class UserProfileUI extends Business {
+public class UserProfileUI {
 
 	// The 4 fields from P3SUser
     private String firstName;
     private String lastName;
     private String emailAddress;
+    
+    private String newPassword;
+    
+    private Boolean isEmailNotification;
 
-
-	
+    private Business business;
+    
+    // SHOULD BE REMOVED AFTER TESTING
+    private LoginMessageUI messages;
+    
 	public UserProfileUI() {
-		//DummyDataEngine dummy = new DummyDataEngine();
 		
-		P3SUser myUser = SecurityUtil.getMyUser();
-    	Business myBusiness = SecurityUtil.getMyBusiness();
-
-    	// Fields from P3SUser
-    	this.setFirstName(myUser.getFirstName());
-    	this.setLastName(myUser.getLastName());
-    	this.setEmailAddress(myUser.getEmailAddress());
-    	
-    	// Fields from Business
-    	this.setBusinessName(myBusiness.getBusinessName());
-    	this.setPhoneNumber(myBusiness.getPhoneNumber());
-    	this.setTimezone(myBusiness.getTimezone());
-    	this.setStreet(myBusiness.getStreet());
-    	this.setCity(myBusiness.getCity());
-    	this.setUSstate(myBusiness.getUSstate());
-    	this.setZip(myBusiness.getZip());
-    	this.setBillingStreet(myBusiness.getBillingStreet());
-    	this.setBillingCity(myBusiness.getBillingCity());
-    	this.setBillingState(myBusiness.getBillingState());
-    	this.setBillingZip(myBusiness.getBillingZip());
-    	this.setIsBillingAddressSame(myBusiness.getIsBillingAddressSame());
-	
 	}
-
-
-
 
 	public String getFirstName() {
 		return firstName;
@@ -84,6 +64,38 @@ public class UserProfileUI extends Business {
 	}
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+
+	public Boolean getIsEmailNotification() {
+		return isEmailNotification;
+	}
+
+	public void setIsEmailNotification(Boolean isEmailNotification) {
+		this.isEmailNotification = isEmailNotification;
+	}
+
+	public Business getBusiness() {
+		return business;
+	}
+
+	public void setBusiness(Business business) {
+		this.business = business;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public LoginMessageUI getMessages() {
+		return messages;
+	}
+
+	public void setMessages(LoginMessageUI messages) {
+		this.messages = messages;
 	}
 
 }

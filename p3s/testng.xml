@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--   <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">  190404 commentOut as prevented Compilation -->
+<suite name="Suite">
+  <test thread-count="5" name="Test">
+    <classes>
+      <class name="com.bcs.p3s.automationtest.TestP3sLogin"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

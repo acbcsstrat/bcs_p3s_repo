@@ -14,7 +14,7 @@ privileged aspect Patent_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Patent.entityManager;
     
-    public static final List<String> Patent.fieldNames4OrderClauseFilter = java.util.Arrays.asList("patentApplicationNumber", "title", "filingDate", "business", "primaryApplicantName", "clientRef", "shortTitle", "epoPatentStatus", "lastRenewedDateExEpo", "renewalYear", "renewalStatus", "patentPublicationNumber");
+    public static final List<String> Patent.fieldNames4OrderClauseFilter = java.util.Arrays.asList("EP_ApplicationNumber", "title", "internationalFilingDate", "business", "primaryApplicantName", "clientRef", "shortTitle", "epoPatentStatus", "lastRenewedDateExEpo", "lastRenewedYearEpo", "renewalYear", "renewalStatus", "EP_PublicationNumber", "ipcCodes", "representative", "checkDigit", "internationalFilingLang", "PCT_applicationNumber", "PCT_publicationNumber", "internationalSearchAuthority", "designated_states", "epctStatus", "epctNotAvailableReason", "priorityDate", "PCT_publishedDate");
     
     public static final EntityManager Patent.entityManager() {
         EntityManager em = new Patent().entityManager;
@@ -59,12 +59,6 @@ privileged aspect Patent_Roo_Jpa_ActiveRecord {
             }
         }
         return entityManager().createQuery(jpaQuery, Patent.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
-    }
-    
-    @Transactional
-    public void Patent.persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.persist(this);
     }
     
     @Transactional

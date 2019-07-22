@@ -1,0 +1,31 @@
+<div class="widget-panel widget-panel-sq">
+	<div class="widget-panel__body bg-white d-flex flex-column">
+		<div class="row m-b-md">
+			<div class="col-xl-12">
+				<h3 class="font-h3 font-weight-bold">Total Patents</h3>
+			</div>
+		</div>
+		<div class="row d-flex flex-grow-1 just-content-center align-items-center">
+			<div class="col-md-12 col-lg-8 col-xl-8">
+				<nvd3 options="$ctrl.donutOptions" data="$ctrl.donutData" class="with-transitions"></nvd3>
+				<div class="donut-inner">
+					<h4 class="font-h4 font-weight-bold">Total</h4>
+					<span class="font-h2 font-weight-bold">{{$ctrl.patentData.Total || 0}}</span>							
+				</div>
+				<!--check whether it works when its back online-->
+			</div>
+			<div class="col-md-6 col-lg-4 col-xl-4 d-none d-md-none d-lg-block">
+				<div class="d-flex align-items-center h-100">
+					<ul class="nav flex-column font-h4">
+						<li class="m-b-sm"><i class="txt-phase-green fas fa-square m-r-xs"></i><span>Green: <span data-ng-bind="$ctrl.patentData.Green.length || '0'"></span></span></li>
+						<li class="m-b-sm"><i class="txt-phase-amber fas fa-square m-r-xs"></i><span>Amber: <span data-ng-bind="$ctrl.patentData.Amber.length || '0'"></span></span></li>
+						<li class="m-b-sm"><i class="txt-phase-red fas fa-square m-r-xs"></i><span>Red: <span data-ng-bind="$ctrl.patentData.Red.length || '0'"></span></span></li>
+						<li class="m-b-sm"><i class="txt-phase-blue fas fa-square m-r-xs"></i><span>Blue: <span data-ng-bind="$ctrl.patentData.Blue.length || '0'"></span></span></li>
+						<li class="m-b-sm"><i class="txt-phase-black fas fa-square m-r-xs"></i><span>Black: <span data-ng-bind="$ctrl.patentData.Black.length || '0'"></span></span></li>
+						<li class="m-b-sm"><i class="txt-phase-grey fas fa-square m-r-xs"></i><span>Grey: <span data-ng-bind="$ctrl.patentData.Grey.length || '0'"></span></span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

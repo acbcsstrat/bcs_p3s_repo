@@ -1,0 +1,161 @@
+package com.bcs.p3s.engine;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import com.bcs.p3s.display.PatentUI;
+import com.bcs.p3s.display.P3SService;
+import com.bcs.p3s.enump3s.P3SProductTypeEnum;
+import com.bcs.p3s.enump3s.RenewalColourEnum;
+import com.bcs.p3s.enump3s.RenewalStatusEnum;
+import com.bcs.p3s.model.GlobalVariableSole;
+import com.bcs.p3s.model.Patent;
+import com.bcs.p3s.session.PostLoginSessionBean;
+import com.bcs.p3s.util.lang.Universal;
+import com.bcs.p3s.wrap.PatentExtendedData;
+
+/**
+ * See com.bcs.p3s.display.Service
+ *
+ */
+public class ServiceManager extends Universal {
+
+	// param 'session' can be ditched once/if we stop using the session
+    public List<P3SService> getServicesForPatent(Patent patent, HttpSession session) {
+    	String err = CLASSNAME + "getServicesForPatent() : ";
+    	List<P3SService> services = new ArrayList<P3SService>();
+    	if (patent==null) return services;
+    	
+		P3SService service = new P3SService();
+    	if (StageManager.isInFiling(patent.getEpoPatentStatus())) {
+    		// Unconditionally provide 1 Service, detailing current Form1200 Status
+    		
+    		log().debug("Patent id is "+patent.getId());
+    		EpctEngine epctEngine = new EpctEngine(patent);
+    		if ( ! epctEngine.isNotAvailable) {
+	    		service = epctEngine.prepareForm1200Service();
+
+	    		// This to investigate an AC claimed bug
+	    		log().info("service costs for f1200 patent "+patent.getId()+" follows:    ........"); // c181217
+	    		log().info("currentStageCostUSD   = "+service.getCurrentStageCostUSD());
+	    		log().info("currentOfficialFeeEUR = "+service.getCurrentOfficialFeeEUR());
+	    	    log().info("currentOfficialFeeUSD = "+service.getCurrentOfficialFeeUSD());
+	    		
+	    		services.add(service);
+    		}
+    	}
+    	else if (StageManager.isInProsecution(patent.getEpoPatentStatus())) {
+    		// Can we sell a renewal ?
+    		// v2.1 will provide either 0 or 1 Service
+
+    		//  for now - re-use existing (calculation intensive (session)) mechanism
+ 
+    		log().debug(" patent id is "+patent.getId()+"   from "+err); // debugging aide
+    		// Provide a 'Service' conditional on : we can sell a renewal, or are currently in progress
+    		PatentUI patentUI = populateDataToPatentUI(patent, session);
+    		String colourNow = patentUI.getCostBandColour();
+    		if (colourNow==null) {
+    			logErrorAndContinue("190606v colourNow is nulL in ServiceManager getServicesForPatent("+patent.getId()+")  ");
+    		}
+
+    		if ( ( ! (RenewalColourEnum.GREY.equalsIgnoreCase(colourNow)))
+    			|| RenewalStatusEnum.isInProgress(patent.getRenewalStatus()) ) { 
+
+	    		
+	    		service.setServiceType(P3SProductTypeEnum.RENEWAL);
+	    		//service.setServiceStatus(patent.getRenewalStatus());
+	    		service.setCurrentStageColour(colourNow);
+	
+	    		service.setNextStageColour(ColourManager.whatColourComesNext(
+	    				colourNow, P3SProductTypeEnum.RENEWAL));
+	    		
+	    		// 190306cludge 1of2 - If Red Renewal, set status TooLate
+	    		// Postscript: This WAS a problem. Now seems not be. New code never fires. Never needs to..
+	    		String xStatus = patent.getRenewalStatus();
+	    		log().warn("190306a - PRE cludge 1of2 : xStatus is : "+xStatus+" & colourNow = "+colourNow); 
+	    		if ( (RenewalColourEnum.RED.equals(colourNow))
+      			  && (RenewalStatusEnum.SHOW_PRICE.equals(xStatus)) ) 
+	    		{
+
+	    			log().warn("190306cludge  1of2 invoked ");
+	    			
+	    			log().debug("190306cludge 1of2 invoked for patent "+patent.getId() +" by "+err);
+	    			xStatus = RenewalStatusEnum.TOO_LATE;
+
+	    			log().warn("190306cludge  1of2 invoked AFTER");
+	    		}
+	    		
+	    		service.setServiceStatus(xStatus);
+	    		
+	    		service.setCurrentStageCostUSD(patentUI.getCurrentRenewalCostUSD());
+	    		service.setNextStageCostUSD(patentUI.getRenewalCostNextStageUSD());
+	    		service.setCostBandEndDate(patentUI.getCostBandEndDate());
+	    		service.setFailedReason(null);
+
+	    		// Add currentOfficialFeeEUR currentOfficialFeeUSD
+	    		service.setCurrentOfficialFeeEUR(patentUI.getTotalRenewalOfficialFeesEUR());
+	    		GlobalVariableSole glob = GlobalVariableSole.findOnlyGlobalVariableSole();
+	    		BigDecimal fxRate = glob.getCurrent_P3S_rate();
+	    		service.setCurrentOfficialFeeUSD(service.getCurrentOfficialFeeEUR().multiply(fxRate));  // NPE here until PostLoginDataEngine 181219 workaround
+	
+	    		services.add(service);
+    		}
+    	}
+
+    	
+    	log().debug(err+"returning "+services.size()+" service(s) for patentId "+patent.getId());
+    	return services;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    // START OF : Short term copy of existing (computationally expensive / calc-all-&-store-in-session) code
+    
+    // Start of : Method copied from PatentServiceImpl (which wouldn't want to call from here)
+	public PatentUI populateDataToPatentUI(Patent patent, HttpSession session) {
+		
+		String err = CLASSNAME+"populateDataToPatentUI(patent) ";
+		boolean patentFound = false;
+		
+		
+		PostLoginSessionBean pLoginSession = (PostLoginSessionBean) session.getAttribute("postSession");
+		List<PatentExtendedData> extendedDatas = pLoginSession.getExtendedPatentUI();
+		
+		PatentUI patentUI = new PatentUI(patent,extendedDatas);
+		
+			for(PatentExtendedData extendedData : extendedDatas){
+				if(extendedData.getPatentId() == null){
+					patentUI.setRenewalDueDate(extendedData.getRenewalDueDate());
+					patentUI.setCurrentRenewalCostUSD(extendedData.getCurrentRenewalCost());
+					patentUI.setCostBandEndDate(extendedData.getCostBandEndDate());
+					patentUI.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
+					return patentUI;
+				}
+				
+				else if(extendedData.getPatentId().equals(patentUI.getId())){
+					patentFound = true;
+					patentUI.setRenewalDueDate(extendedData.getRenewalDueDate());
+					patentUI.setCurrentRenewalCostUSD(extendedData.getCurrentRenewalCost());
+					patentUI.setCostBandEndDate(extendedData.getCostBandEndDate());
+					patentUI.setRenewalCostNextStageUSD(extendedData.getRenewalCostNextStage());
+					return patentUI;
+				}
+			}
+		if (patentUI.getCostBandColour()==null) {
+			logErrorAndContinue("190606 CostBandColour is nulL in ServiceManager populateDataToPatentUI("+patent.getId()+")  patentFound="+patentFound);
+		}
+		return patentUI;
+	}
+    // End of : Method copied from PatentServiceImpl (which wouldn't want to call from here)
+    
+    
+    // END OF : Short term copy of existing (computationally expensive / calc-all-&-store-in-session) code
+}
