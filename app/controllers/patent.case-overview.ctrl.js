@@ -8,6 +8,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     vm.patent = patent;
 
+
     vm.fetchItemTransaction = fetchItemTransaction;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
@@ -24,6 +25,66 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     function init() {
 
+        patent.serviceList = { // TEST DATA FOR GRANT
+            costBandEndDate: 1565910000000,
+            costBandEndDateUI: "Fri Aug 16, 2019",
+            currentOfficialFeeEUR: 2362.5,
+            currentOfficialFeeUSD: 2885.1629625,
+            currentStageColour: "Gren",
+            currentStageCostUSD: 2960.16,
+            failedReason: null,
+            nextStageColour: "Amber",
+            nextStageCostUSD: 3256.18,
+            serviceStatus: "Grant saved",
+            serviceType: "Grant",
+            epoFeeCodes: [
+                {name: '007'},
+                {name: '008'},
+                {name: '016'},
+            ],
+            fees: { //!!!!!!!! TEST DATA FOR GRANT
+                currentOfficialFeeEUR: 2362.5,
+                currentOfficialFeeUSD: 2885.1629625,
+                expressFeeEUR: 0,
+                expressFeeUSD: 0,
+                extensionFeeEUR: 787.5,
+                extensionFeeUSD: 961.72,
+                fxRate: 0.818845,
+                latePayPenaltyEUR: null,
+                latePayPenaltyUSD: null,
+                processingFeeEUR: 61.41,
+                processingFeeUSD: 75,
+                subTotalEUR: 2423.91,
+                subTotalUSD: 2960.16,
+                urgentFeeEUR: 0,
+                urgentFeeUSD: 0,
+            }
+        }
+
+
+        patent.grantFeeUI = { //!!!!!!!! TEST DATA FOR GRANT
+            currentOfficialFeeEUR: 2362.5,
+            currentOfficialFeeUSD: 2885.1629625,
+            dollarComponentUSD: 75,
+            euroComponentEUR: 2362.5,
+            expressFeeEUR: 0,
+            expressFeeUSD: 0,
+            extensionFeeEUR: 787.5,
+            extensionFeeUSD: 961.72,
+            feeActiveDate: null,
+            fxRate: 0.818845,
+            latePayPenaltyEUR: null,
+            latePayPenaltyUSD: null,
+            processingFeeEUR: 61.41,
+            processingFeeUSD: 75,
+            renewalFeeEUR: 1575,
+            renewalFeeUSD: 1923.44,
+            subTotalEUR: 2423.91,
+            subTotalUSD: 2960.16,
+            urgentFeeEUR: 0,
+            urgentFeeUSD: 0
+        }
+
         if(activeTabService.getTab == 2) {
             $scope.activeLeft = 2
             activeTabService.setTab(0)
@@ -39,8 +100,13 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             activeTabService.setTab(0)
         }
 
-        patent.action = organiseTextService.actionStatus(patent.portfolioUI.serviceStatus) ? true : false;
-        patent.uiStatus = organiseTextService.uiStatus(patent.portfolioUI.serviceStatus);
+        if($stateParams.grantOrder === 1) {
+            $scope.activeLeft = 4;
+            activeTabService.setTab(0)
+        }        
+
+        patent.action = true;//organiseTextService.actionStatus(patent.portfolioUI.serviceStatus) ? true : false; <--GRANT TEST DATA -->
+        patent.uiStatus = 'Grant and Publishing Fees payable'; //organiseTextService.uiStatus(patent.portfolioUI.serviceStatus); <--GRANT TEST DATA -- >
         if(patent.portfolioUI.serviceList.length > 0) {
             patent.cssCurrent = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].currentStageColour, 'text')
             patent.cssNext = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].nextStageColour, 'text')
@@ -66,7 +132,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         $scope.availableServices = (function() {
             return vm.patent.portfolioUI.serviceList.map(function(data, index){
-               return {id: index, action: data.serviceType, status: data.serviceStatus}
+               return {id: index, action: 'Grant and Publishing Fees', status: 'Grant available'} //!!!!!!!!!!!!!GRANT TEST DATA
             })
         }())
 
@@ -98,6 +164,11 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                     vm.displayForm1200Tab = false;
            
             }
+
+            if(obj.action == 'Grant and Publishing Fees') { // !!!!!! GRANT TEST DATA
+                vm.displayGrantTab = true;
+            }
+
         })
     }
 

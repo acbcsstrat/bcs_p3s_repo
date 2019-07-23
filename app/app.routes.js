@@ -88,6 +88,7 @@ function appRoutes($stateProvider) {
             },
             params: {
                 patentId: null,
+                grantOrder: null, // !!!!!!! GRANT TEST DATA
                 form1200generate: null
             },
             views:{
@@ -115,7 +116,12 @@ function appRoutes($stateProvider) {
                     templateUrl: 'app/templates/renewal/renewal.history.tpl.htm',
                     controller: 'renewalHistoryCtrl',
                     controllerAs: '$ctrl',  
-                },                          
+                },        
+                "grantandpublishing@portfolio.patent": { // !!!!!!! GRANT TEST DATA
+                    templateUrl: 'app/templates/grant/grant.tpl.htm',
+                    controller: 'grantCtrl',
+                    controllerAs: '$ctrl',  
+                },                                     
                 "fee-breakdown@portfolio.patent": {
                     templateUrl: 'app/templates/fee-breakdown/fee-breakdown.tpl.htm',
                     controller: 'feeBreakDownCtrl',
@@ -130,8 +136,8 @@ function appRoutes($stateProvider) {
                     templateUrl: 'app/templates/costchart/costchart.tpl.htm',
                     controller: 'costChartCtrl',
                     controllerAs: '$ctrl',  
-                }                                        
-            }            
+                }
+            }
         })
         .state('search-patent', {
             url: '/search-patent',

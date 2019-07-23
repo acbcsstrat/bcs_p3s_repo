@@ -6,20 +6,21 @@ require("app/app.module.js");
 require("app/app.config.js");
 require("app/app.routes.js");
 
-require('app/directives/app.dir.js');
-require('app/directives/form1200.dir.js');
-require('app/directives/checkout.dir.js');
-require('app/directives/current-transactions.transactions.dir.js');
-require('app/directives/patents.list-patents.dir.js');
-require('app/directives/user.dir.js');
-require('app/directives/transactions.dir.js');
-require('app/directives/patents.search-patent.dir.js');
+require("app/directives/app.dir.js");
+require("app/directives/form1200.dir.js");
+require("app/directives/checkout.dir.js");
+require("app/directives/current-transactions.transactions.dir.js");
+require("app/directives/patents.list-patents.dir.js");
+require("app/directives/user.dir.js");
+require("app/directives/transactions.dir.js");
+require("app/directives/patents.search-patent.dir.js");
 require("app/directives/portfolio.nav.dir.js");
 require('app/directives/vendors/ngCart.directives.js');
 require('app/directives/avatar.dir.js');
 require('app/directives/mobile-redirect.dir.js');
 require('app/directives/select-avatar.dir.js');
 
+require("app/directives/vendors/ngCart.directives.js");
 require("app/services/app.core.serv.js");
 require("app/services/app.organiseText.serv.js");
 require("app/services/app.organiseColour.serv.js");
@@ -45,6 +46,7 @@ require("app/services/transactions.currentTransactions.serv.js");
 require("app/services/user.user.serv.js");
 require("app/services/vendors/ngCart.fulfilment.js");
 require("app/services/app.uploadAvatar.serv.js");
+require("app/services/grant.serv.js");
 
 require("app/controllers/checkout.bankTransferPrep.ctrl.js");
 require("app/controllers/checkout.bankTransferSuccess.ctrl.js");
@@ -57,6 +59,8 @@ require("app/controllers/dashboard.recentActivity.ctrl.js");
 require("app/controllers/dashboard.action-cost.ctrl.js");
 require("app/controllers/dashboard.actions-available.ctrl.js");
 require("app/controllers/europct.form1200.ctrl.js");
+require("app/controllers/grant.ctrl.js");// !!!!!!! GRANT TEST DATA
+require("app/controllers/grant-ready.ctrl.js");// !!!!!!! GRANT TEST DATA
 require("app/controllers/europct.form1200generated.ctrl.js");
 require("app/controllers/portfolio.ctrl.js");
 require("app/controllers/patents.addPatent.ctrl.js");

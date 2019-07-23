@@ -47,7 +47,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
     function setFees(action) {
 
-        if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) {
+        if(patent.renewalFeeUI === null && patent.form1200FeeUI === null && patent.grantFeeUI === null) { //!!!!!! ADDED GRANTFEEUI CHECK. SHOULD BE OKAY FOR PRODUCTION
             return
         }
 
@@ -55,8 +55,8 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.displayForm1200 = true;
             vm.displayRenewal = false;
             vm.availableFees = patent.form1200FeeUI;
-            vm.availableFees.ppFeesUSD = patent.form1200FeeUI.subTotalUSD - patent.form1200FeeUI.currentOfficialFeeUSD;
-            vm.availableFees.ppFeesEUR = patent.form1200FeeUI.subTotalEUR - patent.form1200FeeUI.currentOfficialFeeEUR;
+            vm.availableFees.ppFeesUSD = Number(Math.round((patent.form1200FeeUI.subTotalUSD - patent.form1200FeeUI.currentOfficialFeeUSD) + 'e2') +'e-2')
+            vm.availableFees.ppFeesEUR = Number(Math.round((patent.form1200FeeUI.subTotalEUR - patent.form1200FeeUI.currentOfficialFeeEUR) + 'e2') +'e-2')
         }
 
         if(action == 'Renewal') {
@@ -66,6 +66,12 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.availableFees.ppFeesUSD = Number(Math.round((patent.renewalFeeUI.subTotalUSD - patent.renewalFeeUI.currentOfficialFeeUSD) + 'e2') +'e-2')
             vm.availableFees.ppFeesEUR = Number(Math.round((patent.renewalFeeUI.subTotalEUR - patent.renewalFeeUI.currentOfficialFeeEUR) +'e2')+'e-2')
         }
+
+        if(action == 'Grant and Publishing Fees') { //!!!!!!!!! TEST DATA FOR GRANT
+            vm.availableFees = patent.grantFeeUI;
+            vm.availableFees.ppFeesUSD = patent.grantFeeUI.subTotalUSD - patent.grantFeeUI.currentOfficialFeeUSD;
+            vm.availableFees.ppFeesEUR = patent.grantFeeUI.subTotalEUR - patent.grantFeeUI.currentOfficialFeeEUR;            
+        }        
 
         vm.availableFees.savings = Number(Math.round((patent.portfolioUI.serviceList[0].nextStageCostUSD - patent.portfolioUI.serviceList[0].currentStageCostUSD) + 'e2') +'e-2')
 
