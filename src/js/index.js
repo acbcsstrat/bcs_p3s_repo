@@ -17,6 +17,7 @@ require('app/directives/patents.search-patent.dir.js');
 require("app/directives/portfolio.nav.dir.js");
 require('app/directives/vendors/ngCart.directives.js');
 require('app/directives/avatar.dir.js');
+require('app/directives/mobile-redirect.dir.js');
 require('app/directives/select-avatar.dir.js');
 
 require("app/services/app.core.serv.js");
@@ -43,6 +44,7 @@ require("app/services/transactions.transactionHistory.serv.js");
 require("app/services/transactions.currentTransactions.serv.js");
 require("app/services/user.user.serv.js");
 require("app/services/vendors/ngCart.fulfilment.js");
+require("app/services/app.uploadAvatar.serv.js");
 
 require("app/controllers/checkout.bankTransferPrep.ctrl.js");
 require("app/controllers/checkout.bankTransferSuccess.ctrl.js");
