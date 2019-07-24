@@ -229,7 +229,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     };
 
     function rowSelect(event, patent){
-
+        console.log(patent)
         vm.stateParams = $stateParams;
         if($(event.target).hasClass('generateForm1200')) {
           $state.go('portfolio.patent', {patentId: patent.id, form1200generate: 1}, {notify: false})

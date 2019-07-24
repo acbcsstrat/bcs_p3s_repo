@@ -1,10 +1,7 @@
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="font-h1 lh-default" data-ng-bind="$ctrl.pageTitle"></h1>
-    </div>
-</div>
-<div class="row">
+
+<div class="row" data-ng-hide="$ctrl.addingPatent">
     <div class="col-md-12 col-lg-12 col-xl-8">
+        <h2 class="font-h2 lh-default">Patent details: </h2> 	
     	<div class="content-panel">
 	    	<div class="content-panel__body bg-white">
 				<form name="addPatentForm">
@@ -85,5 +82,12 @@
 				</form>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="row" data-ng-show="$ctrl.addingPatent">
+	<div class="col-md-12 d-flex justify-content-center align-items-center">
+		<div class="fa-3x d-flex align-items-center">
+			<i class="far font-weight-medium fa-sync-alt fa-spin m-r-sm"></i> <p class="font-h3 d-inline">Adding patent to portfolio</p>
+		</div>	
 	</div>
 </div>

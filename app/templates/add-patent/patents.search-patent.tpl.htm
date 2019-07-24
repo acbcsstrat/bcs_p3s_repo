@@ -6,15 +6,16 @@
 <patentnav></patentnav>
 <div data-ng-show="$ctrl.animate" class="animate-show m-t-md">
 	<div class="row m-b-md">
-		<div class="col-md-12 col-lg-7 col-xl-6">
+		<div class="col-md-12 col-lg-7 col-xl-6">		
 			<form class="form" data-ng-submit="$ctrl.findPatent(searchPatent);" name="searchPatentForm" novalidate>
 				<div class="form-group m-b-none d-flex align-items-center">
-				
 					<input type="text" name="searchPatent" id="searchPatent" data-ng-model="searchPatent" class="form-control form-control-lg pill-radius font-h4 m-r-sm" placeholder="Enter Patent Application No. ..." focus-me="true" data-validate-search required>
-
 					<div class="user-utils d-flex justify-content-center">
 						<button type="submit" data-ng-disabled="searchPatentForm.$invalid" class="btn btn--green circle-radius-sm d-flex justify-content-center align-items-center icon-link">
-							<i class="fa fa-search fa-lg"></i>
+							<i data-ng-hide="$ctrl.loadingPatent" class="fa fa-search fa-lg"></i>
+							<div class="fa-2x"  data-ng-show="$ctrl.loadingPatent">
+								<i class="far font-weight-medium fa-sync-alt fa-spin"></i>
+							</div>
 						</button>
 					</div>
 				</div>
@@ -27,7 +28,7 @@
 			</div>			
 		</div>
 	</div>
-	<div class="animate-show">
+	<div data-ng-show="!$ctrl.loadingPatent && !$ctrl.error" class="animate-show">
 		<div data-ui-view></div>
 	</div>
 </div>

@@ -54,7 +54,7 @@ function organiseTextService(coreService, $timeout) {
         }
 
         availableStatuses.forEach(function(el){
-            if(el.text == text) {
+            if(el.text.toLowerCase() == text.toLowerCase()) {
                 uiText = el.uiText;
             }
         })

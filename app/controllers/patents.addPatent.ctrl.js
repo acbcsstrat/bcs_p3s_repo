@@ -42,34 +42,33 @@ function addPatentCtrl($state, $stateParams, $rootScope, $timeout, $location, $a
 			controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
 
 			  	this.addPatent = function () {
-			 		$timeout(function(){
-						patentsRestService.savePatent(patent)
-			            .then(
-			            	function(response){
-	        			 		var patent = response[0];
-				             	$state.go('portfolio.patent', {patentId: patent.id})
-				             	.then(
-									function(response){
-										$timeout(function() {
-											$location.hash('patentAnchor');
-										  	$anchorScroll();
-										}, 300);
-									},
-									function(errResponse){
-										console.log(errResponse)
-									}
-								);
+			  		vm.addingPatent = true;
+			  		$uibModalInstance.close();
+					patentsRestService.savePatent(patent)
+		            .then(
+		            	function(response){
 
-			             	},
-				            function(errResponse){
-				                console.error('Error while saving Patent');
-				            }
-			    		)
-			 		}, 100);
+        			 		var patent = response[0];
+			             	$state.go('portfolio.patent', {patentId: patent.id})
+			             	.then(
+								function(response){
+									$timeout(function() {
+										
+										$location.hash('patentAnchor');
+									  	$anchorScroll();
+									}, 300);
+								},
+								function(errResponse){
+									console.log(errResponse)
+								}
+							);
 
-		  			$timeout(function() {
-						$uibModalInstance.close()
-		  			}, 100);
+		             	},
+			            function(errResponse){
+			                console.error('Error while saving Patent');
+			            }
+		    		)
+
 			  	};
 
 				this.dismissModal = function () {
