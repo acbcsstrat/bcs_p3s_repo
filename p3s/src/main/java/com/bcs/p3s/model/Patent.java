@@ -168,12 +168,12 @@ public class Patent {
     */
     private String epctStatus;
     
-    /** Will only be populated if epctStatus is EPCT_AVAILABLE or EPCT_REJECTED
+    /** Will only be populated if epctStatus is EPCT_NOT_AVAILABLE or EPCT_REJECTED
      * 
      * The possible codes are specified in the (FE/BE) API 
      * See EPCTnotAvailableReasonEnum
      * 
-     * if epctStatus is EPCT_AVAILABLE, the reason explains why an E-PCT application cannot be started  
+     * if epctStatus is EPCT_NOT_AVAILABLE, the reason explains why an E-PCT application cannot be started  
      * if epctStatus is EPCT_REJECTED,  the reason explains why the E-PCT application started earlier, failed. 
     */
     private String epctNotAvailableReason;
