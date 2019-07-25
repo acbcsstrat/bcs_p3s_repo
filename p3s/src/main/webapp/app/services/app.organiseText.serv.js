@@ -28,6 +28,7 @@ function organiseTextService(coreService, $timeout) {
 
     var availableStatuses = [
         {text: 'Show price', uiText: 'Open for Renewal'},
+        {text: 'Completed', uiText: 'Completed'},
         {text: 'Renewal in place', uiText: 'Renewal In Place'},
         {text: 'No renewal needed', uiText: 'No Renewal Needed'},
         {text: 'EPO Instructed', uiText: 'EPO Instructed'},
@@ -54,7 +55,7 @@ function organiseTextService(coreService, $timeout) {
         }
 
         availableStatuses.forEach(function(el){
-            if(el.text == text) {
+            if(el.text.toLowerCase() == text.toLowerCase()) {
                 uiText = el.uiText;
             }
         })

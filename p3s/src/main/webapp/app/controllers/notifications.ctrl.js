@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('notificationsCtrl', notificationsCtrl);
 
-notificationsCtrl.$inject = ['patent', '$scope', '$state', '$timeout', '$location', '$anchorScroll', 'chunkDataService', 'notificationService', '$uibModal', 'organiseTextService', 'organiseColourService', 'currentTransactionsService'];
+notificationsCtrl.$inject = ['patent', '$scope', '$state', '$timeout', '$location', '$anchorScroll', 'chunkDataService', 'notificationService', '$uibModal', 'organiseTextService', 'organiseColourService', 'currentTransactionsService', 'coreService', '$rootScope'];
 
-function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorScroll, chunkDataService, notificationService, $uibModal, organiseTextService, organiseColourService, currentTransactionsService) {
+function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorScroll, chunkDataService, notificationService, $uibModal, organiseTextService, organiseColourService, currentTransactionsService, coreService, $rootScope) {
 
     var vm = this;
 
@@ -11,6 +11,7 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
     vm.displayNotifications = displayNotifications;
     vm.notificationNavItems = [];
     vm.notificationUrl = 'rest-renewal-notifications/';
+    vm.openGuide = openGuide;
 
     vm.data = {    
         availableAction: [],
@@ -32,6 +33,11 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
     }
 
     checkServices()
+
+    function openGuide() {
+        coreService.openAppGuide();
+        $rootScope.$broadcast('appGuideOpen');
+    }    
 
     function updateNotifications(id, ui, url) {
         notificationService.updateNotifications(id, patent[ui], url)

@@ -15,17 +15,21 @@ function searchPatentCtrl($state, $stateParams, $scope, $rootScope, $timeout, se
     vm.findPatent = findPatent;
 
 	function findPatent(patentNo) {
+		vm.loadingPatent = true;
 		searchPatentService.findPatent(patentNo)
 		.then(
 			function(response) {
 				if(response.status == 204 && response.data == '') {
-					vm.queriedPatent = null;
+					vm.loadingPatent = false;
+					vm.error = true;
 					$state.go('search-patent', {}, {reload: false});
-					vm.searchError = 'It looks like we’ve already added Patent Application '+patentNo+' in to the system.  You should be able to find it in the List Patents page using the search boxes.';
+					vm.searchError = 'It looks like we\'ve already added Patent Application '+patentNo+' in to the system.  You should be able to find it in the List Patents page using the search boxes.';
 				} else {
-					vm.searchError = null;
+					vm.loadingPatent = false;
+					vm.error = false;
 					var patentJson = angular.toJson(response)
 					$state.go('search-patent.add-patent', {patent: patentJson});
+
 				}
 
 			},
