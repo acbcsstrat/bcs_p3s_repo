@@ -250,15 +250,15 @@
 											<p class="font-body">This is the process between asking us to complete a transaction and us sending the money to the EPO.  We send an instruction to our payment partner who book the currency exchange transaction.  Once we receive the money it's exchanged and sent on directly to the EPO.</p>
 										</div>
 									</div>
-								</div>
-								<div data-ng-if="transaction.renewalStatus == 'EPO Instructed' || transaction.form1200Status == 'EPO Instructed'">
-									<div class="progress-tracker m-b-sm">
-										<uib-progress>
-											<uib-bar class="bg-phase-green pill-radius tracker-item" value="66" max="100"></uib-bar>
-										</uib-progress>
-									</div>											
-									<div class="m-b-sm">
-										<p class="font-body">This means that we've instructed the EPO to complete the transaction. We're now just waiting for them to action this.</p>
+									<div data-ng-if="transaction.renewalStatus == 'EPO Instructed' || transaction.form1200Status == 'EPO Instructed'">
+										<div class="progress-tracker m-b-sm">
+											<uib-progress>
+												<uib-bar class="bg-phase-green pill-radius tracker-item" value="66" max="100"></uib-bar>
+											</uib-progress>
+										</div>											
+										<div class="m-b-sm">
+											<p class="font-body">This means that we've asked the EPO to complete the transaction. We're now just waiting for them to action this.</p>
+										</div>
 									</div>
 									<div data-ng-if="transaction.renewalStatus == 'Renewal in place' || transaction.form1200Status == 'Completed'">
 										<div class="progress-tracker m-b-sm">
