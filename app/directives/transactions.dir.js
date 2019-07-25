@@ -1,70 +1,51 @@
-angular.module('ppApp').directive('transactionLink', function() {
+angular.module('ppApp').directive('transactionLink', transactionLink);
 
+transactionLink.$inject = ['$document', '$interval', '$anchorScroll','$state', '$location', 'currentTransactionsService'];
 
-//$compile can match directives based on element names (E), attributes (A), class names (C), and comments (M).
-
+function transactionLink($document, $interval, $anchorScroll, $state, $location, currentTransactionsService) {
     return {
-
-        restrict: 'E',
-        scope: {
-            patentId: '@', //if the attribute name was patentId, you can use =, equivlaent of =patentId,
-            ngModel: '='
-        },
-        transclude: true, //gives access to the outside scope of this directive Best Practice: only use transclude: true when you want to create a directive that wraps arbitrary content.
+        transclude: true,
+        scope: {},
         templateUrl: 'app/templates/directives/transaction-link.tpl.htm',
-        controller: ['$scope', function($scope) {
+        link: function(scope, elem, attrs) {
 
-            $scope.hello = 'this';
+            $(elem).click(function() {
 
-        }],
-        link: function(scope, element, attrs, ctrl) {
+                var id = attrs.transId;
 
-            console.log('element', element)
-            console.log('scope', scope)
-            console.log('attr: ', attrs.patentId)
-            console.log('ctrl: ', scope.hello)            
+                currentTransactionsService.fetchCurrentTransactions()
+                .then(
+                    function(response) {
+                        var match = response.filter(function(el){
+                            
+                            return el.serviceUIs.find(function(item){
+                                return item.patentUI.id == id;
+                            })
+                        })
 
-            // element.on('$destroy', function() { //used to destroy servieces if element is removed from DOM. Stops memory leaks
+                        if(match !== undefined || typeof match !== 'undefined') {
+                            $state.go('current-transactions.current-transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
+                            .then(
+                                function(response){
+                                    elem.on('$destroy', function(){
+                                        $location.hash('currTransAnchor'); 
+                                        $anchorScroll();  //scroll to anchor href
+                                    })                                
+                                },
+                                function(errResponse){
+                                    console.log(errResponse);
+                                }
+                            );
+                        }
 
-            // })
+                    },
+                    function(errResponse) {
+                        console.log(errResponse);
+                    }
+                );   
+            })  
 
         }
 
     }
-
-})
-// <transaction-link>
-//     id //inititated from view
-//     currentTransactions //initiated from controller
-
-//     function fetchItemTransaction(id) {
-//         currentTransactionsService.fetchCurrentTransactions()
-//         .then(
-//             function(response) {
-//                 response.forEach(function(data) {
-                    
-//                     var transaction = data.renewalUIs.find(function(data, i) {
-//                         return data.patentUI.id == id;
-//                     })
-
-//                     if(transaction) {
-//                         $state.go('current-transactions.current-transaction-item',{transId: transaction}) //if match, go current-transaction-item
-//                         .then(
-//                             function(response){
-//                                 $timeout(function() {
-//                                     $location.hash('currTransAnchor'); 
-//                                     $anchorScroll();  //scroll to anchor href
-//                                 }, 300);
-//                             },
-//                             function(errResponse){
-//                                 console.log(errResponse);
-//                             }
-//                         );
-//                     }
-//                 });
-//             },
-//             function(errResponse) {
-//                 console.log(errResponse);
-//             }
-//         );
-//     };    
+}
