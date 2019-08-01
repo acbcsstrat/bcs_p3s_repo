@@ -19,6 +19,9 @@ require('app/directives/vendors/ngCart.directives.js');
 require('app/directives/avatar.dir.js');
 require('app/directives/mobile-redirect.dir.js');
 require('app/directives/select-avatar.dir.js');
+require('app/directives/open-help.dir.js');
+require('app/directives/help-panel.dir.js');
+require("app/directives/help-panel-group.dir.js");
 
 require("app/directives/vendors/ngCart.directives.js");
 require("app/services/app.core.serv.js");
@@ -31,6 +34,7 @@ require("app/services/app.fxCalculation.serv.js");
 require("app/services/app.mainNav.serv.js");
 require("app/services/app.timezone.serv.js");
 require("app/services/app.CostAnalysis.serv.js")
+require("app/services/app.helpInfo.serv.js");
 require("app/services/checkout.bankTransferCommit.serv.js");
 require("app/services/checkout.basket.serv.js");
 require("app/services/dashboard.dashboard.serv.js");
