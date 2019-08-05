@@ -12,7 +12,10 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
     vm.notificationNavItems = [];
     vm.notificationUrl = 'rest-renewal-notifications/';
     vm.openGuide = openGuide;
-
+    vm.notificationUi; //required for uopdating notifications
+    vm.notificationUrl;
+    var colors = ['green', 'amber', 'red', 'blue', 'black'];
+    vm.toBlueOrNotToBlue = false;
     vm.data = {    
         availableAction: [],
         selectedAction: {}
@@ -32,7 +35,54 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
 
     }
 
-    checkServices()
+    checkServices();
+
+    vm.notifications = {};
+
+    function displayNotifications(action) {  //displays the specifed actions notifications
+
+        if(action == 'Form1200') { 
+            vm.notificationUi = 'epctNotificationUIs';
+            vm.notificationUrl = 'rest-epct-notifications/';
+            vm.toBlueOrNotToBlue = false;
+        }
+
+        if(action == 'Renewal') {
+            vm.notificationUi = 'renewalNotificationUIs';
+            vm.notificationUrl = 'rest-renewal-notifications/';
+            vm.toBlueOrNotToBlue = true;
+        }
+
+
+
+        phaseNotifications()
+
+    };
+
+    function phaseNotifications() {  //all info assigned to scope is requried for submitting data
+
+        for(var i = 0; colors.length > i; i++) {
+            if(vm.toBlueOrNotToBlue) {
+                vm.notifications[colors[i]] = chunkDataService.chunkData(fetchNotificationUi(colors[i], patent[vm.notificationUi]), 6)//chunk data makes sure the coluns go no more than 6
+            }
+            if(!vm.toBlueOrNotToBlue) {
+                if(i == 2) { break };
+                vm.notifications[colors[i]] = chunkDataService.chunkData(fetchNotificationUi(colors[i], patent[vm.notificationUi]), 6)
+            }
+        }        
+
+    }    
+
+    function fetchNotificationUi(phase, ui) { //returns the phases notifciations for chunkdata service
+        return ui.filter(function(data){
+            return data.costbandcolor.toLowerCase() == phase.toLowerCase();
+        });
+    }
+
+    console.log(vm.notifications)
+
+
+
 
     function openGuide() {
         coreService.openAppGuide();
@@ -40,13 +90,16 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
     }    
 
     function updateNotifications(id, ui, url) {
+        vm.updatingNotifications = true;
         notificationService.updateNotifications(id, patent[ui], url)
         .then(
             function(response){
                 updateNotificationsSuccess();
+                vm.updatingNotifications = false;
             },
             function(errResponse){
                 updateNotificationsError(errResponse);
+                vm.updatingNotifications = false;
             }
         )
     };
@@ -84,42 +137,6 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
 
     }        
 
-    function displayNotifications(action, phase) {  //migrate to renewalCtr
 
-        var notificationUi;
-
-        if(action == 'Form1200') { 
-            vm.notificationUi = 'epctNotificationUIs';
-            vm.notificationUrl = 'rest-epct-notifications/';
-            vm.availableNotifications = chunkDataService.chunkData(phaseNotifications(phase, patent[vm.notificationUi]), 6);
-            vm.notificationNavItems = [
-                {id: 0, colour: 'Green', css: 'green'}, 
-                {id: 1, colour: 'Amber', css: 'amber'}
-            ]
-        }
-
-        if(action == 'Renewal') {
-
-            vm.notificationUi = 'renewalNotificationUIs';
-            vm.availableNotifications = chunkDataService.chunkData(phaseNotifications(phase, patent[vm.notificationUi]), 6);
-            vm.notificationUrl = 'rest-renewal-notifications/';
-            vm.notificationNavItems = [
-                {id: 0, colour: 'Green', css: 'green'}, 
-                {id: 1, colour: 'Amber', css: 'amber'}, 
-                {id: 2, colour: 'Red', css: 'red'}, 
-                {id: 3, colour: 'Blue', css: 'blue'}, 
-                {id: 4, colour: 'Black', css: 'black'}
-            ]
-        }
-
-    };
-
-    function phaseNotifications(phase, ui) { //migrate to renewalCtrl
-
-        return ui.filter(function(data){
-            return data.costbandcolor == phase;
-        });
-
-    }
 
 }

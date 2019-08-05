@@ -1,21 +1,397 @@
+<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
+    <div class="col-md-12 col-xl-12">
+        <p>Select a color to be able to view and choose the reminder emails you would like to receive during this phase/time-frame. You can select as many or few as you want. For further information on color phases, please view our <span data-ng-click="$ctrl.openGuide()" class="inline-link cursor-pointer">help guide</span>.</p>
+    </div>
+</div>
 
-	<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
-	    <div class="col-md-12 col-xl-12">
-	        <p>Select a color to be able to view and choose the reminder emails you would like to receive during this phase/time-frame. You can select as many or few as you want. For further information on color phases, please view our <span data-ng-click="$ctrl.openGuide()" class="inline-link cursor-pointer">help guide</span>.</p>
-	    </div>
+<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved -->
+    <div class="col-md-12 col-xl-12">
+    	<div class="form-inline">
+    		<div class="form-group">                      
+            	<label class="font-h4 font-weight-bold text-uppercase m-r-sm">Display notifications for: </label>
+	        	<select name="actions" id="actions" class="form-control" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-init="$ctrl.displayNotifications($ctrl.data.selectedAction.action)" data-ng-change="$ctrl.displayNotifications($ctrl.data.selectedAction.action)">
+		        </select>
+    		</div>
+    	</div>
+    </div>
+</div>	
+
+<div class="d-flex flex-column">
+	<div class="d-flex align-items-center">
+		<div class="notification-heading">
+			<span class="font-h4 font-weight-bold txt-phase-green">Green</span>
+		</div>
+		<div class="py-2 pl-5 notification-body border-grey-xs--left" data-ng-repeat="checkbox in $ctrl.notifications.green track by $index" index="$index">
+    		<div class="d-flex flex-wrap">
+                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                    <label for class="notification-radio">
+                      	<input type="checkbox" data-ng-model="item.isOn">
+                      	<span class="checkmark green"></span>
+                    </label>
+                    <span class="font-body checkbox-text">{{item.title}}</span>
+                </div>
+            </div>
+		</div>
+		</div>
 	</div>
-	<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
-	    <div class="col-md-12 col-xl-12">
-	    	<div class="form-inline">
-	    		<div class="form-group">                      
-                	<label class="font-h4 font-weight-bold text-uppercase m-r-sm">Display notifications for: </label>
-		        	<select name="actions" id="actions" class="form-control" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-init="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Green')" data-ng-change="$ctrl.displayNotifications($ctrl.data.selectedAction.action, 'Green')">
-			        </select>
-	    		</div>
-	    	</div>
-	    </div>
-	</div>	
-	<div class="row">
+	<div class="d-flex align-items-center">
+		<div class="notification-heading">
+			<span class="font-h4 font-weight-bold txt-phase-amber">Amber</span>
+		</div>			
+	
+		<div class="py-2 pl-5 notification-body  border-grey-xs--left" data-ng-repeat="checkbox in $ctrl.notifications.amber track by $index" index="$index">
+    		<div class="d-flex flex-wrap">
+                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                    <label class="notification-radio">
+                      	<input type="checkbox" data-ng-model="item.isOn">
+                      	<span class="checkmark amber"></span>
+                    </label>
+                    <span class="font-body checkbox-text">{{item.title}}</span>
+                </div>
+            </div>
+		</div>
+	</div>
+	<div data-ng-if="$ctrl.toBlueOrNotToBlue">
+		<div class="d-flex align-items-center">
+			<div class="notification-heading">
+				<span class="font-h4 font-weight-bold txt-phase-red">Red</span>
+			</div>	
+			<div class="border-grey-xs--left">
+				<div class="py-2 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.red track by $index" index="$index">
+		    		<div class="d-flex flex-wrap">
+		                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+	                        <label class="notification-radio">
+	                          	<input type="checkbox" data-ng-model="item.isOn">
+	                          	<span class="checkmark red"></span>
+	                        </label>
+		                    <span class="font-body checkbox-text">{{item.title}}</span>
+		                </div>
+		            </div>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex align-items-center">
+			<div class="notification-heading">
+				<span class="font-h4 font-weight-bold txt-phase-blue">Blue</span>
+			</div>	
+			<div class="border-grey-xs--left">	
+				<div class="py-2 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.blue track by $index" index="$index">
+		    		<div class="d-flex flex-wrap">
+		                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+	                        <label class="notification-radio">
+	                          	<input type="checkbox" data-ng-model="item.isOn">
+	                          	<span class="checkmark blue"></span>
+	                        </label>
+		                    <span class="font-body checkbox-text">{{item.title}}</span>
+		                </div>
+		            </div>
+				</div>
+			</div>	
+		</div>
+		<div class="d-flex align-items-center">
+			<div class="notification-heading">
+				<span class="font-h4 font-weight-bold txt-phase-black">Black</span>
+			</div>		
+			<div class=" border-grey-xs--left">	
+				<div class="py-2 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.black track by $index" index="$index">
+		    		<div class="d-flex flex-wrap">
+		                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+		                        <label class="notification-radio">
+		                          	<input type="checkbox" data-ng-model="item.isOn">
+		                          	<span class="checkmark black"></span>
+		                        </label>
+		                    <span class="font-body checkbox-text">{{item.title}}</span>
+		                </div>
+		            </div>
+				</div>
+			</div>		
+		</div>
+	</div><!--blue and black end-->
+</div>
+
+<!-- <div class="d-flex flex-column">
+	<div class="d-flex align-items-center">
+		<div class="p-4 notification-heading">
+			<span class="font-h4 font-weight-bold txt-phase-green">Green</span>
+		</div>
+		<div class="border-grey-xs--left">	
+			<div class="p-4 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.green track by $index" index="$index">
+	    		<div class="d-flex flex-wrap">
+	                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                        <label class="notification-radio">
+                          	<input type="checkbox" data-ng-model="item.isOn">
+                          	<span class="checkmark green"></span>
+                        </label>
+	                    <span class="font-body">{{item.title}}</span>
+	                </div>
+	            </div>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex align-items-center">
+		<div class="p-4 notification-heading">
+			<span class="font-h4 font-weight-bold txt-phase-amber">Amber</span>
+		</div>			
+		<div class="border-grey-xs--left">
+			<div class="py-4 pl-5 notification-body " data-ng-repeat="checkbox in $ctrl.notifications.amber track by $index" index="$index">
+	    		<div class="d-flex flex-wrap">
+	                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                        <label class="notification-radio">
+                          	<input type="checkbox" data-ng-model="item.isOn">
+                          	<span class="checkmark amber"></span>
+                        </label>
+	                    <span class="font-body">{{item.title}}</span>
+	                </div>
+	            </div>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex align-items-center">
+		<div class="p-4 notification-heading">
+			<span class="font-h4 font-weight-bold txt-phase-red">Red</span>
+		</div>	
+		<div class="border-grey-xs--left">
+			<div class="py-4 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.red track by $index" index="$index">
+	    		<div class="d-flex flex-wrap">
+	                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                        <label class="notification-radio">
+                          	<input type="checkbox" data-ng-model="item.isOn">
+                          	<span class="checkmark red"></span>
+                        </label>
+	                    <span class="font-body">{{item.title}}</span>
+	                </div>
+	            </div>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex align-items-center">
+		<div class="p-4 notification-heading">
+			<span class="font-h4 font-weight-bold txt-phase-blue">Blue</span>
+		</div>	
+		<div class="border-grey-xs--left">	
+			<div class="py-4 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.blue track by $index" index="$index">
+	    		<div class="d-flex flex-wrap">
+	                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                        <label class="notification-radio">
+                          	<input type="checkbox" data-ng-model="item.isOn">
+                          	<span class="checkmark blue"></span>
+                        </label>
+	                    <span class="font-body">{{item.title}}</span>
+	                </div>
+	            </div>
+			</div>
+		</div>	
+	</div>
+	<div class="d-flex align-items-center">
+		<div class="p-4 notification-heading">
+			<span class="font-h4 font-weight-bold txt-phase-black">Black</span>
+		</div>		
+		<div class=" border-grey-xs--left">	
+			<div class="p-4 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.black track by $index" index="$index">
+	    		<div class="d-flex flex-wrap">
+	                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+	                        <label class="notification-radio">
+	                          	<input type="checkbox" data-ng-model="item.isOn">
+	                          	<span class="checkmark black"></span>
+	                        </label>
+	                    <span class="font-body">{{item.title}}</span>
+	                </div>
+	            </div>
+			</div>
+		</div>		
+	</div>
+</div> -->
+
+<!-- <div class="d-flex flex-column">
+	<div class="d-flex align-items-center">
+		<div class="py-4 notification-heading border-grey-xs--right">
+			<span class="font-h4 font-weight-bold">Green</span>
+		</div>
+		<div class="py-4 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.green track by $index" index="$index">
+    		<div class="d-flex flex-wrap">
+                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                    <div class="onoffswitch m-r-xs">
+                        <label class="switch">
+                          	<input type="checkbox" data-ng-model="item.isOn">
+                          	<span class="slider round bg-phase-green"></span>
+                        </label>
+                    </div>
+                    <span class="font-body">{{item.title}}</span>
+                </div>
+            </div>
+		</div>
+	</div>
+	<div class="d-flex align-items-center">
+		<div class="py-4 notification-heading border-grey-xs--right">
+			<span class="font-h4 font-weight-bold">Amber</span>
+		</div>			
+		<div class="py-4 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.amber track by $index" index="$index">
+    		<div class="d-flex flex-wrap">
+                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                    <div class="onoffswitch m-r-xs">
+                        <label class="switch">
+                          	<input type="checkbox" data-ng-model="item.isOn">
+                          	<span class="slider round bg-phase-amber"></span>
+                        </label>
+                    </div>
+                    <span class="font-body">{{item.title}}</span>
+                </div>
+            </div>
+		</div>
+	</div>
+	<div class="d-flex align-items-center">
+		<div class="py-4 notification-heading border-grey-xs--right">
+			<span class="font-h4 font-weight-bold">Red</span>
+		</div>		
+		<div class="py-4 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.red track by $index" index="$index">
+    		<div class="d-flex flex-wrap">
+                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                    <div class="onoffswitch m-r-xs">
+                        <label class="switch">
+                          	<input type="checkbox" data-ng-model="item.isOn">
+                          	<span class="slider round bg-phase-red"></span>
+                        </label>
+                    </div>
+                    <span class="font-body">{{item.title}}</span>
+                </div>
+            </div>
+		</div>			
+	</div>
+	<div class="d-flex align-items-center">
+		<div class="py-4 notification-heading border-grey-xs--right">
+			<span class="font-h4 font-weight-bold">Blue</span>
+		</div>			
+		<div class="py-4 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.blue track by $index" index="$index">
+    		<div class="d-flex flex-wrap">
+                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                    <div class="onoffswitch m-r-xs">
+                        <label class="switch">
+                          	<input type="checkbox" data-ng-model="item.isOn">
+                          	<span class="slider round bg-phase-blue"></span>
+                        </label>
+                    </div>
+                    <span class="font-body">{{item.title}}</span>
+                </div>
+            </div>
+		</div>			
+	</div>
+	<div class="d-flex align-items-center">
+		<div class="py-4 notification-heading border-grey-xs--right">
+			<span class="font-h4 font-weight-bold">Black</span>
+		</div>			
+		<div class="py-4 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.black track by $index" index="$index">
+    		<div class="d-flex flex-wrap">
+                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+                    <div class="onoffswitch m-r-xs">
+                        <label class="switch">
+                          	<input type="checkbox" data-ng-model="item.isOn">
+                          	<span class="slider round bg-phase-black"></span>
+                        </label>
+                    </div>
+                    <span class="font-body">{{item.title}}</span>
+                </div>
+            </div>
+		</div>			
+	</div>
+</div> -->
+
+
+
+
+
+<!-- <notifications>
+	<notification-tab title="Green" color="txt-phase-green" border="green">
+        <uib-tabset active="activeNotificationTab" type="pills" class="flex-row">
+        	<uib-tab data-ng-repeat="checkbox in $ctrl.availableNotifications track by $index" index="$index">
+        		<div class="d-flex flex-wrap justify-content-between">
+                    <div class="d-flex align-items-center m-r-sm" data-ng-repeat="item in checkbox">
+                        <span class="font-body">{{item.title}}</span>
+                        <div class="onoffswitch m-r-xs">
+                            <label class="switch">
+                              	<input type="checkbox" data-ng-model="item.isOn">
+                              	<span class="slider round bg-phase-green"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+        	</uib-tab>
+        </uib-tabset>
+	</notification-tab>
+	<notification-tab title="Amber" color="txt-phase-amber" border="amber">
+        <uib-tabset active="activeNotificationTab" type="pills" class="flex-row">
+        	<uib-tab data-ng-repeat="checkbox in $ctrl.availableNotifications track by $index" index="$index">
+        		<div class="d-flex flex-wrap justify-content-between">
+                    <div class="d-flex align-items-center m-r-sm" data-ng-repeat="item in checkbox">
+                        <span class="font-h4 m-r-sm">{{item.title}}</span>
+                        <div class="onoffswitch">
+                            <label class="switch">
+                              	<input type="checkbox" data-ng-model="item.isOn">
+                              	<span class="slider round bg-phase-green"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+        	</uib-tab>
+        </uib-tabset>
+	</notification-tab>
+	<notification-tab title="Red" color="txt-phase-red" border="red">
+        <uib-tabset active="activeNotificationTab" type="pills" class="flex-row">
+        	<uib-tab data-ng-repeat="checkbox in $ctrl.availableNotifications track by $index" index="$index">
+        		<div class="d-flex flex-wrap justify-content-between">
+                    <div class="d-flex align-items-center m-r-sm" data-ng-repeat="item in checkbox">
+                        <span class="font-h4 m-r-sm">{{item.title}}</span>
+                        <div class="onoffswitch">
+                            <label class="switch">
+                              	<input type="checkbox" data-ng-model="item.isOn">
+                              	<span class="slider round bg-phase-green"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+        	</uib-tab>
+        </uib-tabset>
+	</notification-tab>
+	<notification-tab title="Blue" color="txt-phase-blue" border="blue">
+        <uib-tabset active="activeNotificationTab" type="pills" class="flex-row">
+        	<uib-tab data-ng-repeat="checkbox in $ctrl.availableNotifications track by $index" index="$index">
+        		<div class="d-flex flex-wrap justify-content-between">
+                    <div class="d-flex align-items-center m-r-sm" data-ng-repeat="item in checkbox">
+                        <span class="font-h4 m-r-sm">{{item.title}}</span>
+                        <div class="onoffswitch">
+                            <label class="switch">
+                              	<input type="checkbox" data-ng-model="item.isOn">
+                              	<span class="slider round bg-phase-green"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+        	</uib-tab>
+        </uib-tabset>
+	</notification-tab>
+	<notification-tab title="Black" color="txt-phase-black" border="black">
+        <uib-tabset active="activeNotificationTab" type="pills" class="flex-row">
+        	<uib-tab data-ng-repeat="checkbox in $ctrl.availableNotifications track by $index" index="$index">
+        		<div class="d-flex flex-wrap justify-content-between">
+                    <div class="d-flex align-items-center m-r-sm" data-ng-repeat="item in checkbox">
+                        <span class="font-h4 m-r-sm">{{item.title}}</span>
+                        <div class="onoffswitch">
+                            <label class="switch">
+                              	<input type="checkbox" data-ng-model="item.isOn">
+                              	<span class="slider round bg-phase-green"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+        	</uib-tab>
+        </uib-tabset>
+	</notification-tab>		
+</notifications>
+
+
+ -->
+
+
+<!-- 	<div class="row">
 	    <div class="col-md-12 col-xl-12">
 	        <nav>
 	            <ul class="panel-nav">
@@ -42,9 +418,9 @@
 	        	</uib-tab>
 	        </uib-tabset>
 	    </div>
-	</div>
+	</div> -->
 	<div class="row m-t-md">
 		<div class="col-xl-12 text-right">
-            <input type="submit" id="submit" class="btn btn--green btn--lg pill-radius" value="Save" data-ng-click="$ctrl.updateNotifications($ctrl.patent.id, $ctrl.notificationUi, $ctrl.notificationUrl)">
+            <input type="submit" id="submit" class="btn btn--green btn--lg pill-radius" value="Save" data-ng-click="$ctrl.updateNotifications($ctrl.patent.id, $ctrl.notificationUi, $ctrl.notificationUrl)" data-ng-disabled="$ctrl.updatingNotifications">
 		</div>
 	</div>
