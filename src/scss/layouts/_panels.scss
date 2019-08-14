@@ -57,11 +57,22 @@
     right: 0;
     top: 65px;
     margin-right: -500px;
+    overflow-y: auto;
     transition: margin .3s ease-in-out ;
     z-index: 999;
     -webkit-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.1);
     -moz-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.1);
     box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.1);  
+
+    &::-webkit-scrollbar-thumb {
+      background: $grey; 
+      border-radius: 10px;
+      height: 30px;
+    }      
+
+    &::-webkit-scrollbar {
+      width: 15px;
+    }    
 
     &.active {
         margin-right: 0;

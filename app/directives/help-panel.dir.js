@@ -37,8 +37,9 @@ function helpPanel($rootScope, fetchHelpService) {
 			}
 
 			scope.helpItemSelected = function(category, item) {
+				console.log(category)
 				var helpInfo = fetchHelpService.getSelectedInformation(category, item);
-				$rootScope.$broadcast('itemSeleted', helpInfo)
+				$rootScope.$broadcast('itemSeleted', helpInfo, category)
 				
 			}
 

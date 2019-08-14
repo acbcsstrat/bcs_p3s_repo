@@ -42,38 +42,39 @@ function helpInformation($rootScope, $compile) {
 	    },
 		link: function(scope, elem, attr) { //helpInformation access
 
-			$rootScope.$on('itemSeleted', function(event, data) {
-			  	compileTemplate(data);
+			$rootScope.$on('itemSeleted', function(event, data, cat) {
+			  	compileTemplate(data, cat);
 			  	angular.element(document).find('#helpPanelId').css("margin-left", "-100%")
 		  	})
 
 			function generateTemplate(data) {
 
-				elem.empty();
-
-				var template = '';
-
-				template += '<h3 class="font-h3 font-weight-bold m-b-md">' + 'Portfolio | ' + data.title + '</h3>';
-
-				for(var i = 0; i < data.info.length; i++) { //loop through the info items and create a template
-					template += '<div class="m-b-sm">\
-					<h4 class="font-h4 font-weight-bold">' + data.info[i].title + '</h4>\
-					<p clas="font-body">' + data.info[i].content + '</p>\
-					</div>'
-				}
-
-				var el = $compile(template)(scope);//Compiles an HTML string or DOM into a template and produces a template function, which can then be used to link scope
-				elem.append(el)
 
 			}
 
 			var setIndex, setTitle;
 
-			function compileTemplate(data) {
+			function compileTemplate(data, cat) {
+				console.log(data, cat)
 				if((setIndex === undefined && setTitle === undefined) || (setTitle !== data.title)) {
 					setIndex = data.index; 
 					setTitle = data.title;
-					generateTemplate(data)
+
+					elem.empty();
+
+					var template = '';
+
+					template += '<h3 class="font-h3 font-weight-bold m-b-md">' + cat + ' | ' + data.title + '</h3>';
+
+					for(var i = 0; i < data.info.length; i++) { //loop through the info items and create a template
+						template += '<div class="m-b-sm">\
+						<h4 class="font-h4 lh-default font-weight-bold">' + data.info[i].title + '</h4>\
+						<p class="font-body font-body--content">' + data.info[i].content + '</p>\
+						</div>'
+					}
+
+					var el = $compile(template)(scope);//Compiles an HTML string or DOM into a template and produces a template function, which can then be used to link scope
+					elem.append(el)
 					return;
 				}
 

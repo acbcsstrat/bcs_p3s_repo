@@ -8,6 +8,9 @@
 .font-body, 
 .tooltip.trackerStep { 
   font-size: $font-normal; 
+  &.font-body--content {
+    line-height: 2.2rem;
+  }
 }
 
 .no-line-height { line-height: 1.2rem!important; }
