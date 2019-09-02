@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-xl-12">
+        <p class="font-weight-medium m-b-xs">Are additional copies of the document cited in the supplementary European search report requested?</p>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" name="checkYes" data-ng-model="validModel[question.title].yes" class="form-check-input" data-ng-change="question.checkError(validModel[question.title].yes); " data-ng-click="validModel[question.title].no = false">
+            <label for="checkYes" class="form-check-label">Yes</label>  
+        </div>    
+        <div class="form-check form-check-inline">
+            <input type="checkbox" name="checkNo" data-ng-model="validModel[question.title].no" class="form-check-input" data-ng-change="question.checkError(validModel[question.title].yes); isOptionValid(validModel[question.title].no, question);" data-ng-click="validModel[question.title].yes = false" required>
+            <label for="checkNo" class="form-check-label">No</label>  
+        </div>            
+        <p data-ng-show="question.showError" class="txt-phase-red font-weight-medium m-t-xs">Cannot proceed if additional documents are required have been made. Uncheck the checkbox if no additional documents are required.</p>               
+    </div>
+</div>

@@ -6,7 +6,10 @@ function form1200Service($http, $q) {
 
     var factory = {
         fetchQuestions: fetchQuestions,
-        submitForm1200: submitForm1200
+        submitForm1200: submitForm1200,
+        setQuestions: setQuestions,
+        questions: '',
+        getQuestions: getQuestions
     }
 
     function fetchQuestions(id) {
@@ -42,6 +45,16 @@ function form1200Service($http, $q) {
 
         return deferred.promise;
 
+    }
+
+    function setQuestions(data){
+
+        factory.questions = data;
+
+    }
+
+    function getQuestions() {
+        return factory.questions;
     }
 
     return factory;

@@ -1,11 +1,11 @@
-angular.module('ppApp').controller('form1200Ctrl', form1200Ctrl);
+ angular.module('ppApp').controller('form1200Ctrl', form1200Ctrl);
 
 form1200Ctrl.$inject = ['$scope', 'patent', '$state', 'organiseTextService', '$stateParams', '$timeout', 'form1200Service', '$uibModal', 'activeTabService'];
 
 function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams, $timeout, form1200Service, $uibModal, activeTabService) {
 
     var vm = this;
-
+    var service = $scope.$parent.availableServices;
     vm.patent = patent;
     vm.initiateForm1200 = initiateForm1200;
     vm.templates = [
@@ -13,20 +13,8 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
         { name: 'form1200questions.html', url: 'app/templates/europct/europct.form1200.questionnaire.tpl.htm'},
         { name: 'form1200generated.html', url: 'app/templates/europct/europct.form1200.generated.tpl.htm'}
     ];
-    
-    var service = $scope.$parent.availableServices;
-
-    //QUESTIONAIRE
-    vm.manualProcess = manualProcess;// NOT REQUIRED FOR RELEASE 1
-    vm.chkValidStates = chkValidStates;
-    vm.chkExtStates = chkExtStates;
-    vm.submitForm1200 = submitForm1200;
     vm.questionsParam = '';
     vm.cancel1200 = cancel1200;
-    vm.formData = {};
-    vm.formData.clientRef = patent.clientRef;
-    vm.formData.isYear3RenewalPaying = false;
-    vm.entityAccepted = false;
 
     function init() {
         $scope.patent = patent;
@@ -44,23 +32,75 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
 
     init()
 
-
     //QUESTIONAIRE
+
+    var form1200Questions = [
+        { 
+            title: 'entity',
+            template: 'entity',
+            displayHelp: false,
+            checkError: null,
+            showError: false,
+            valid: false,
+            required: true
+        },
+        { 
+            title: 'amendments',
+            template: 'amendments',
+            displayHelp: false,
+            checked: false,
+            checkError: function(value) {
+                if(value === true) {
+                    this.showError = true;
+                    manualProcess('amendments')
+                    return
+                }
+                this.showError = false;
+            },
+            showError: false,
+            valid: false,
+            questionEnabled: false,
+            required: true
+
+        },
+        { 
+            title: 'clientRef',
+            template: 'reference',
+            displayHelp: false,
+            checked: false,
+            checkError: null,
+            showError: false,
+            valid: false,
+            questionEnabled: false,
+            required: true
+
+        },
+        { 
+            title: 'startEnd',
+            template: 'startend',
+            displayHelp: false,
+            checked: false,
+            checkError: null,
+            showError: false,
+            valid: false,
+            questionEnabled: false,
+            required: true
+
+        }             
+
+    ];
     
     function initiateForm1200() {
         
+        // console.log('intiate')
 
         form1200Service.fetchQuestions(patent.id)
         .then(
             function(response){
                 if(response !== null) {
                     vm.form1200Template = vm.templates[1].url;
-                    vm.questionsParam = response;
                     return;
                 }
-            },
-            function(errResponse){
-                console.log('error: ', errResponse)
             }
         )
         .then(
@@ -71,199 +111,88 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
                     vm.patentsLoaded = true;
                 } else {
 
-                    vm.formData.extensionStatesUI = vm.questionsParam.extensionStatesUI;
-                    vm.formData.validationStatesUI = vm.questionsParam.validationStatesUI;
-                    
-                    var questions = {
-                        showOptionalQuestion: function() {
-                            if(vm.questionsParam.showOptionalQuestion) {
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        },
-                        isYear3RenewalDue: function() {
-                            if(vm.questionsParam.isYear3RenewalDue) {
-                                return true;
-                            } else {
-                                return false;
-                            }
+                    var stateObj = { 
+                        title: 'states',
+                        template: 'states',
+                        displayHelp: false,
+                        checked: true,
+                        checkError: null,
+                        showError: false,
+                        valid: true,
+                        questionEnabled: false,
+                        required: false,
+                        checkItems: {
+                            extensionStatesUI: [
+                                {stateCode: "BA", stateName: "Bosnia and Herzegovina", checked: false},
+                                {stateCode: "ME", stateName: "Montenegro", checked: false}
+                            ],
+                            validationStatesUI: [
+                                {stateCode: "MA", stateName: "Morocco", checked: false},
+                                {stateCode: "MD", stateName: "Republic of Moldova", checked: false},
+                                {stateCode: "TN", stateName: "Tunisia", checked: false},
+                                {stateCode: "KH", stateName: "Cambodia", checked: false}      
+                            ]
+                        }                        
+
+                    }
+
+                    form1200Questions.splice(2, 0, stateObj)
+
+                    if(vm.questionsParam.showOptionalQuestion) {
+
+                        var obj = { 
+                            title: 'documents',
+                            template: 'documents',
+                            displayHelp: false,
+                            checked: true,
+                            checkError: function(value) {
+                                if(value === true) {
+                                    this.showError = true;
+                                    manualProcess('documents')
+                                    return
+                                }
+                                this.showError = false;
+                            },
+                            showError: false,
+                            valid: false,
+                            questionEnabled: false,
+                            required: false
                         }
+                        form1200Questions.splice(2, 0, obj)
+
+                    }
+     
+                    if(vm.questionsParam.isYear3RenewalDue) {
+
+                        var obj = { 
+                            title: 'isYear3RenewalPaying',
+                            template: 'renewal',
+                            displayHelp: false,
+                            checked: true,
+                            checkError: null,
+                            showError: false,
+                            valid: true,
+                            questionEnabled: false,
+                            required: false
+                        }
+                        form1200Questions.push(obj)
+
                     }
 
-                    if(questions.showOptionalQuestion()) { //if extra question is included, extend index of other quesitons
-                        vm.documents.active = true;
-                        vm.extAndValid.index++;
-                        vm.reference.index++;
-                        vm.confirmPages.index++;
-                        vm.renewal.index++;
-                    }
+                    form1200Questions.map(function(item, index) {
+                        item.index = index
+                        return item;
+                    })
 
-                    if(questions.isYear3RenewalDue()) {
-                        vm.renewal.active = true;
-                    }
                 }
 
             }        
         )
-    }
-
-    vm.confirmEntity = {
-        index: 0,
-        title: function() {
-           return 'Q.'+(this.index+1)+'';
-        },
-        activeTabFn: function() {
-            return this.index+1;
-        },        
-        fn: function() {
-            vm.activeTab = this.activeTabFn();
-            vm.confirmEntityChecked = true;
-        }
-    }
-
-    vm.amendments = {
-        index: 1,
-        title: function() {
-           return 'Q.'+(this.index+1)+'';
-        },
-        activeTabFn: function(dir) {
-            if(dir === 'prev') {
-                return this.index-1;
-            } else {
-               if(!vm.documents.active) {
-                    vm.documentsChecked = true;
-                }                
-                return this.index+1;
+        .then(
+            function(){
+                form1200Service.setQuestions(form1200Questions)
             }
-            
-        },
-        fn: function(event){
-            var btn = angular.element(event.currentTarget)
-            if(btn.hasClass('prev')) {
-                vm.activeTab = this.activeTabFn('prev');
-            } else {
-                vm.activeTab = this.activeTabFn('next');
-            }
-            vm.amendmentsChecked = true;
-        }
-    }
-
-    vm.documents = {
-        active: false,
-        index: 2,
-        title: function() {
-           return 'Q.'+(this.index+1)+'';
-        },
-        activeTabFn: function(dir) {
-            if(dir === 'prev') {
-                return this.index-1;
-            } else {             
-                vm.documentsChecked = true;
-                return this.index+1;
-            }
-        },        
-        fn: function(event) {
-            var btn = angular.element(event.currentTarget)            
-            if(btn.hasClass('prev')) {
-                vm.activeTab = this.activeTabFn('prev');
-            } else {
-                vm.activeTab = this.activeTabFn('next');
-            }            
-           
-        }
-    }
-
-    vm.extAndValid = {
-        index: 2,
-        title: function() {
-           return 'Q.'+(this.index+1)+'';
-        },
-        activeTabFn: function(dir) {
-            if(dir === 'prev') {
-                return this.index-1;
-            } else {
-                vm.extAndValidChecked = true;                        
-                return this.index+1;
-            }
-        },        
-        fn: function(event) {
-            var btn = angular.element(event.currentTarget);
-            if(btn.hasClass('prev')) {
-                vm.activeTab = this.activeTabFn('prev');
-            } else { 
-                vm.activeTab = this.activeTabFn('next');
-            }
-        }
-    }
-
-    vm.reference = {
-        index: 3,
-        title: function() {
-           return 'Q.'+(this.index+1)+'';
-        },
-        activeTabFn: function(dir) {
-            if(dir === 'prev') {
-                return this.index-1;
-            } else {           
-                vm.referenceChecked = true; 
-                return this.index+1;
-            }
-        },
-        fn: function(event) {
-            var btn = angular.element(event.currentTarget);
-            if(btn.hasClass('prev')) {
-                vm.activeTab = this.activeTabFn('prev');
-            } else { 
-                vm.activeTab = this.activeTabFn('next');
-            }
-        }               
-    }
-
-    vm.confirmPages = {
-        index: 4,
-        title: function() {
-           return 'Q.'+(this.index+1)+'';
-        },
-        activeTabFn: function(dir) {
-            if(dir === 'prev') {
-                return this.index-1;
-            } else { 
-                vm.confirmPagesChecked = true;
-                return this.index+1;
-            }            
-        },
-        fn: function(event) {
-            var btn = angular.element(event.currentTarget);
-            if(btn.hasClass('prev')) {
-                vm.activeTab = this.activeTabFn('prev');
-            } else { 
-                vm.activeTab = this.activeTabFn('next');
-            }
-        }
-    }
-
-    vm.renewal = {
-        active: false,
-        index: 5,
-        title: function() {
-           return 'Q.'+(this.index+1)+'';
-        },
-        activeTabFn: function(dir) {
-            if(dir === 'prev') {
-                return this.index-1;
-            } else { 
-                return this.index+1;
-            }            
-        },        
-        fn: function(event) {
-            var btn = angular.element(event.currentTarget);
-            if(btn.hasClass('prev')) {
-                vm.activeTab = this.activeTabFn('prev');
-            } else { 
-                vm.activeTab = this.activeTabFn('next');
-            }
-        }        
+        )
     }
 
     function cancel1200() {
@@ -287,6 +216,9 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
         });
 
     }
+
+
+
 
     function sortPageDetails(data) {
 
@@ -315,14 +247,22 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
 
     }
 
-    function submitForm1200(data) {
+
+    $scope.submitFormData = function(data){
+
         vm.form1200submitted = true;
-        var arr = sortPageDetails(data);
-        vm.formData.pageDescriptionsUI = arr;
-        vm.formData.id = patent.id;
-        vm.formData.totalClaims = parseInt(vm.formData.totalClaims);
-        vm.formData.totalPages = parseInt(vm.formData.totalPages);
-        form1200Service.submitForm1200(vm.formData)
+        var formData = {};
+        var arr = sortPageDetails(data.pageDetailsData);
+
+        formData.extensionStatesUI = data.extensionStatesUI
+        formData.validationStatesUI = data.validationStatesUI;
+        formData.pageDescriptionsUI = arr;
+        formData.id = patent.id;
+        formData.totalClaims = parseInt(data.totalClaims);
+        formData.totalPages = parseInt(data.totalPages);
+        formData.clientRef = data.clientRef;
+
+        form1200Service.submitForm1200(formData)
         .then(
             function(response){
                 form1200Generating();
@@ -351,25 +291,6 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
 
     }
 
-
-    function chkValidStates(item, index) {
-        if(item === '') {
-            vm.questionsParam.validationStatesUI[index].selected = true;
-        } else {
-            vm.questionsParam.validationStatesUI[index].selected = false;
-        }
-        vm.formData.validationStatesUI =  vm.questionsParam.validationStatesUI;
-    }
-
-    function chkExtStates(item, index) {
-        if(item === '') {
-            vm.questionsParam.extensionStatesUI[index].selected = true;
-        } else {
-            vm.questionsParam.extensionStatesUI[index].selected = false;
-        }
-        vm.formData.extensionStatesUI =  vm.questionsParam.extensionStatesUI;
-    }
-
     function form1200Errors() {
         var modalInstance = $uibModal.open({
             templateUrl: 'app/templates/modals/modal.generate-form1200-error.tpl.htm',
@@ -386,13 +307,10 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
         });
     }
 
-    function manualProcess(value, question) {// NOT NEEDED FOR RELEASE 1
+    function manualProcess(question) {// NOT NEEDED FOR RELEASE 1
 
-        if(value === true && question == 'amendments') {
-            vm.documentsChecked = false;
-            vm.extAndValidChecked = false;
-            vm.referenceChecked = false;
-            vm.confirmPagesChecked = false;
+        if(question == 'amendments') {
+
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/templates/modals/modal.manual-processing-amendments.tpl.htm',
                 appendTo: undefined,
@@ -412,11 +330,9 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
 
                 }]
             });
-        } else {
-            vm.proceedMsgAmend = false;
         }
 
-        if(value === true && question == 'documents') {
+        if(question == 'documents') {
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/templates/modals/modal.manual-processing-documents.tpl.htm',
                 appendTo: undefined,
@@ -436,10 +352,7 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
 
                 }]
             });            
-        } else {
-            vm.proceedMsgDocs = false;
         }
-
     }
 
 } 

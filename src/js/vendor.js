@@ -7,7 +7,7 @@ window.$ = $;
 
 require("jquery/dist/jquery.min.js");
 require("angular/angular.min.js");
-
+require("angular-sanitize/angular-sanitize.js")
 require("tether/dist/js/tether.min.js");
 
 require("popper.js/dist/popper.min.js");

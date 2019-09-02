@@ -3,3 +3,28 @@
 a.disabled, 
 button.disabled, 
 li.disabled { cursor: not-allowed; opacity: .65;}  /* modules*/ /*components*/ /*_js.scss*/
+
+.question-slider {
+  max-width: 940px;
+  margin: 0px auto 30px auto;}
+
+.question-slide-viewer {
+    position: relative; /* needed for IE7 */
+    overflow: hidden;
+    height: 400px;
+}
+
+.question-slide-group {
+    width: 100%;
+    height: 100%;
+    position: relative;}
+
+.question-slide {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;}
+
+.question-slide:first-child {
+    display: block;
+}

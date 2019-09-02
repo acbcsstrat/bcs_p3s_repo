@@ -22,6 +22,7 @@ require('app/directives/select-avatar.dir.js');
 require('app/directives/open-help.dir.js');
 require('app/directives/help-panel.dir.js');
 require("app/directives/help-panel-group.dir.js");
+require("app/directives/question-panel.dir.js");
 
 require("app/directives/vendors/ngCart.directives.js");
 require("app/services/app.core.serv.js");
