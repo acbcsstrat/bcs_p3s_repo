@@ -3,8 +3,27 @@
         <p>We can see that the third year renewal can be renewed. Would you like to process the renewal in this transaction?</p>
         <div class="form-check form-check-inline">
             
-            <input type="checkbox" name="renewal" class="form-check-input" data-ng-model="formData.isYear3RenewalPaying">
+            <input 
+            type="checkbox" 
+            name="renewal" 
+            class="form-check-input" 
+            data-ng-model="formData.isYear3RenewalPaying.yes" 
+            data-ng-click="formData.isYear3RenewalPaying.no = false; addToFormData('', formData.isYear3RenewalPaying)"
+            data-ng-required="!formData.isYear3RenewalPaying.no"
+            required
+            >
             <label for="renewal" class="form-check-label">Yes</label>
+          
+            <input 
+            type="checkbox" 
+            name="renewal" 
+            class="form-check-input" 
+            data-ng-model="formData.isYear3RenewalPaying.no" 
+            data-ng-click="formData.isYear3RenewalPaying.yes = false; addToFormData('', formData.isYear3RenewalPaying)"
+            data-ng-required="!formData.isYear3RenewalPaying.yes"
+            required
+            >
+            <label for="renewal" class="form-check-label">No</label>            
         </div>
     </div>
 </div>

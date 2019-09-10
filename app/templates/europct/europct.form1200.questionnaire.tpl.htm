@@ -1,9 +1,8 @@
-<form name="form1200Form" method="get" novalidate>
-    <question-panel class="question-slider">
+<question-panel class="question-slider">
+    <form name="form1200Form" method="get" post-action="form1200Service" novalidate>
         <div class="question-slide-viewer">
             <h4 class="font-h3 font-weight-bold m-b-sm">Question {{questionCount}}.</h4>
             <div class="question-slide-group">
-
                 <question-content class="question-slide" data-ng-repeat="question in questions"></question-content>
             </div>
         </div>
@@ -19,8 +18,8 @@
             </div>
             <div class="col-xl-3 d-flex align-items-center justify-content-end">
                 <button data-ng-click="nextElement()" data-ng-hide="lastQ" class="question-direction font-h4 d-flex align-items-center" data-ng-disabled="nextBtnDisabled">Next <i class="far fa-angle-right fa-2x m-l-xs"></i></button><!--these two buttons invoke selectQuestion-->
-                <button type="submit" id="submit"  data-ng-show="lastQ" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$invalid || $ctrl.form1200submitted" data-ng-click="submitFormData(formData)">Generate form</button>
+                <button type="submit" id="submit"  data-ng-show="lastQ" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$invalid || formDataSubmitted" data-ng-click="submitFormData('submitForm1200Data'); formDataSubmitted = true">Generate form</button>
             </div>
         </div>
-    </question-panel>
-</form>
+    </form>
+</question-panel>

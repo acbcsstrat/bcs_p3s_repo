@@ -1,8 +1,8 @@
  angular.module('ppApp').controller('form1200Ctrl', form1200Ctrl);
 
-form1200Ctrl.$inject = ['$scope', 'patent', '$state', 'organiseTextService', '$stateParams', '$timeout', 'form1200Service', '$uibModal', 'activeTabService'];
+form1200Ctrl.$inject = ['$scope', '$rootScope', 'patent', '$state', 'organiseTextService', '$stateParams', '$timeout', 'form1200Service', '$uibModal', 'activeTabService'];
 
-function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams, $timeout, form1200Service, $uibModal, activeTabService) {
+function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $stateParams, $timeout, form1200Service, $uibModal, activeTabService) {
 
     var vm = this;
     var service = $scope.$parent.availableServices;
@@ -67,7 +67,6 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
             title: 'clientRef',
             template: 'reference',
             displayHelp: false,
-            checked: false,
             checkError: null,
             showError: false,
             valid: false,
@@ -79,7 +78,6 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
             title: 'startEnd',
             template: 'startend',
             displayHelp: false,
-            checked: false,
             checkError: null,
             showError: false,
             valid: false,
@@ -247,22 +245,16 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
 
     }
 
+    $rootScope.$on('submitForm1200Data', function(e, formData){
 
-    $scope.submitFormData = function(data){
+        var arr = sortPageDetails(formData.data.pageDetailsData);
 
-        vm.form1200submitted = true;
-        var formData = {};
-        var arr = sortPageDetails(data.pageDetailsData);
+        formData.data.pageDescriptionsUI = arr;
+        formData.data.id = patent.id;
+        formData.data.totalClaims = parseInt(formData.data.totalClaims);
+        formData.data.totalPages = parseInt(formData.data.totalPages);
 
-        formData.extensionStatesUI = data.extensionStatesUI
-        formData.validationStatesUI = data.validationStatesUI;
-        formData.pageDescriptionsUI = arr;
-        formData.id = patent.id;
-        formData.totalClaims = parseInt(data.totalClaims);
-        formData.totalPages = parseInt(data.totalPages);
-        formData.clientRef = data.clientRef;
-
-        form1200Service.submitForm1200(formData)
+        form1200Service.submitForm1200(formData.data)
         .then(
             function(response){
                 form1200Generating();
@@ -270,10 +262,17 @@ function form1200Ctrl($scope, patent, $state, organiseTextService, $stateParams,
                 $state.go('portfolio.patent', {}, {reload: true});
             },
             function(errResponse){
+                console.log(errResponse)
                 form1200Errors() 
             }
         )
-    }
+
+    })
+
+    // $scope.submitFormData = function(data){
+
+
+    // }
 
     function form1200Generating() {
 

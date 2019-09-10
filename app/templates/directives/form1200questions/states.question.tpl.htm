@@ -7,7 +7,7 @@
                     <label for="item.abbr" class="m-r-xs">
                         <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
                     </label>
-                    <input type="checkbox" id="'{{item.stateCode}}'" data-ng-model="check.stateCode" data-ng-change="updateChecklist('extensionStatesUI', item.stateCode, check.stateCode)">
+                    <input type="checkbox" id="'{{item.stateCode}}'" class="checkbox-round" data-ng-model="check.stateCode" data-ng-change="updateChecklist('extensionStatesUI', item.stateCode, check.stateCode)">
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                     <label for="item.abbr" class="m-r-xs">
                         <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
                     </label>
-                    <input type="checkbox" id="'{{item.name}}'" data-ng-model="check.stateCode" data-ng-change="updateChecklist('validationStatesUI', item.stateCode, check.stateCode)">
+                    <input type="checkbox" id="'{{item.name}}'" class="checkbox-round" data-ng-model="check.stateCode" data-ng-change="updateChecklist('validationStatesUI', item.stateCode, check.stateCode)">
                 </div>
             </div>
         </div>

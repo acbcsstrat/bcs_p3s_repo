@@ -4,67 +4,58 @@ grantService.$inject = ['$http', '$q', '$timeout'];
 
 function grantService($http, $q, $timeout){
 
-	var factory = {};
-		
-	factory.prepareOrder = function() {
-		
-	 	var deferred = $q.defer();
+    var factory = {
+        fetchQuestions: fetchQuestions,
+        submitGrant: submitGrant,
+        setQuestions: setQuestions,
+        questions: '',
+        getQuestions: getQuestions
+    }
 
-  		setTimeout(function() {
-	      	deferred.resolve('Hello, ' + 'name' + '!');
-	  	}, 500);
+    function fetchQuestions(id) {
+            
+        var deferred = $q.defer();
 
-	  	return deferred.promise;
+        $http.get(ppdomain+'rest-start-form1200/'+id)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                deferred.reject(errResponse.data)
+            }
+        )
 
-	};
+        return deferred.promise;
+    }
 
+    function submitGrant(data) {
+        var deferred = $q.defer();
 
+       $http.post(ppdomain+'rest-form1200/', data)
+       .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                deferred.reject(errResponse.data)
+            }
+        )
 
-	factory.fetchQuestions = function() {
+        return deferred.promise;
 
-		var questions = [
-			{
-				index: 0,
-				category: 'amendments',
-				number: 'Q.1',
-				title: 'Have any significant amendments been made to the application?',
-				cannotProceedMsg: 'Because all additional page fees have not been paid we can\'t process it automatically. If you confirm that not all aditional page fees have not been paid you be re-directed for manual processing.'
-			},
-			{
-				index: 1,
-				category: 'claimFees',
-				number: 'Q.2',
-				title: 'Are there any outstanding claims fees?',
-				cannotProceedMsg: 'Because all additional claim fees have not been paid we can\'t process it automatically. If you contact us: : support@ip.place, we\'ll be able to help offline.'				
-			},
-			{
-				index: 2,
-				category: 'addPages',
-				number: 'Q.3',
-				title: 'Are there any outstanding additional page fees?',
-				cannotProceedMsg: 'Because amendments have been made to the application we can\'t process it automatically. If you contact us: : support@ip.place, we\'ll be able to help offline.'
-			},
-			{
-				index: 3,
-				category: 'notifyValidation',
-				number: 'Q.4',
-				title: 'Do you want to be notified when the validaiton window opens?',
-				cannotProceedMsg: ''
-			},					
-		]
+    }
 
-	 	var deferred = $q.defer();
+    function setQuestions(data){
 
-  		setTimeout(function() {
-  			deferred.resolve(questions);
-  		}, 300)
+        factory.questions = data;
 
-		return deferred.promise;
+    }
 
-	};
+    function getQuestions() {
+        return factory.questions;
+    }
 
-	
-
-	return factory;
+    return factory;
 
 }

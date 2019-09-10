@@ -33,16 +33,17 @@ function organiseTextService(coreService, $timeout) {
         {text: 'No renewal needed', uiText: 'No Renewal Needed'},
         {text: 'EPO Instructed', uiText: 'EPO Instructed'},
         {text: 'Payment in progress', uiText: 'Payment in Progress'},
+        {text: 'Too late to renew', uiText: 'URGENT ACTION REQUIRED'},
+        {text: 'Way too late to renew', uiText: 'LAPSED'},
+        {text: 'EPO Instructed', uiText: 'EPO Instructed'},
+
         {text: 'Too early', uiText: 'Too Early'},
         {text: 'Too late', uiText: 'Too Late'},
-        {text: 'Way too late to renew', uiText: 'LAPSED'},
         {text: 'Epct available', uiText: 'Euro-PCT Ready'},
         {text: 'Epct not available', uiText: 'Manual Processing Only'},
         {text: 'Epct saved', uiText: 'Euro-PCT Saved'},
         {text: 'Epct being generated', uiText: 'Form 1200 Generating'},
-        {text: 'Await pdf gen start', uiText: 'Form 1200 Generating'},
-        {text: 'EPO Instructed', uiText: 'EPO Instructed'},
-        {text: 'Too late to renew', uiText: 'URGENT ACTION REQUIRED'},
+        {text: 'Await pdf gen start', uiText: 'Form 1200 Generating'}
     ]          
 
 

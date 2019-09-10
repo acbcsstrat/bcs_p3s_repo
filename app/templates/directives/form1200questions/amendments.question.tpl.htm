@@ -3,11 +3,11 @@
         <div class="form-group">
             <p class="font-weight-medium m-r-sm font-body m-b-xs">Have any amendments been made to the claims?</p>
             <div class="form-check form-check-inline">
-                <input type="checkbox" name="checkYes" data-ng-model="validModel[question.title].yes" class="form-check-input" data-ng-change="question.checkError(validModel[question.title].yes);" data-ng-click="validModel[question.title].no = false">
+                <input type="checkbox" name="checkYes" data-ng-model="validModel[question.title].yes" class="form-check-input checkbox-round" data-ng-change="question.checkError(validModel[question.title].yes);" data-ng-click="validModel[question.title].no = false">
                 <label for="checkYes" class="form-check-label">Yes</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="checkbox" name="checkNo" data-ng-model="validModel[question.title].no" class="form-check-input" data-ng-change="question.checkError(validModel[question.title].yes); isOptionValid(validModel[question.title].no, question);" data-ng-click="validModel[question.title].yes = false" required>
+                <input type="checkbox" name="checkNo" data-ng-model="validModel[question.title].no" class="form-check-input checkbox-round" data-ng-change="question.checkError(validModel[question.title].yes); isOptionValid(validModel[question.title].no, question);" data-ng-click="validModel[question.title].yes = false" required>
                 <label for="checkNo" class="form-check-label">No</label>   
             </div>
             <p data-ng-show="question.showError" class="txt-phase-red font-weight-medium m-t-xs">Cannot proceed if amendments have been made. Uncheck the checkbox if no amendements have been made.</p>

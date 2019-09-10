@@ -38,7 +38,6 @@ function form1200Service($http, $q) {
                 deferred.resolve(response.data)
             },
             function(errResponse){
-                console.log(errResponse)
                 deferred.reject(errResponse.data)
             }
         )
