@@ -52,11 +52,9 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
                     list.cssNext = organiseColourService.getCurrColour(list.nextStageColour, 'text')
                 }
             })
-            // if(item.serviceList.length > 0) {
-            // }
+
         }) 
 
-        console.log(patents)
     }
 
     init()

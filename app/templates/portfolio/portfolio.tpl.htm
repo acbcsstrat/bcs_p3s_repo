@@ -137,7 +137,6 @@
                         <div class="row d-flex align-items-center">
                             <div class="col-md-6">
                                 <button data-ng-click="$ctrl.toggleAll($event, false)" class="txt-phase-red btn-no-bg font-body font-weight-medium btn-underlined">Clear All Filters</button>
-<!--                                 <button data-ng-click="$ctrl.toggleAll($event, true)" class="txt-phase-black btn-no-bg font-body font-weight-medium btn-underlined">Select All Filters</button> -->
                             </div>
                             <div class="col-md-6 text-right">
                                 <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Close</button>
@@ -225,12 +224,6 @@
                                 <span class="td-ellipsis" data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
                             </td>
                             <td class="t-data__td">
-<!--                                 <div data-ng-if="patent.P3Sservice.length === 0">
-                                    <div data-ng-if="!patent.action || patent.serviceStatus == 'Too late to renew'">
-                                        <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
-                                    </div>
-                                </div> -->
-
                                 <table data-ng-if="patent.P3Sservice.length == 1">
                                     <tr>
                                         <td data-ng-repeat="item in patent.P3Sservice">
@@ -263,19 +256,44 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <table data-ng-if="patent.P3Sservice.length > 1">
+                                    <tr data-ng-repeat="item in patent.P3Sservice">
+                                        <td class="t-data__td border-grey-xs--left">
+                                            <div data-ng-if="!item.actionable">
+                                                <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
+                                            </div>
+                                            <div data-ng-if="item.actionable" class="d-md-none d-lg-flex justify-content-between flex-column"><!--xl devices-->
+                                                <div data-ng-if="item.urgentAttention" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
+                                                    <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
+                                                </div>
+                                                <div data-ng-if="!item.urgentAttention" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
+                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                    <i class="fa fa-chevron-right fa-lg m-r-md-xs m-l-md-xs" data-ng-class="patent.cssCurrent"></i>
+                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
+                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
+                                                </div>
+                                            </div>
+                                            <div data-ng-if="item.actionable" class="d-md-flex d-lg-none"> <!-- small devices-->
+                                                <div data-ng-if="item.urgentAttention" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
+                                                    <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
+                                                </div>
+
+                                                <div data-ng-if="!item.urgentAttention" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
+                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="patent.cssCurrent"></i>
+                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
+                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>                                
                             </td><!--patent place status-->
                             <td class="t-data__td ellipsis-remove"> <!--this is where it starts to split with x2 services-->
                                 <span data-ng-if="patent.epeStage == 'Filing'">Form 1200</span>
                                 <span data-ng-if="patent.epeStage == 'Prosecution'">Renewal</span>
                             </td><!--when multiple services begin-->
                             <td class="t-data__td">
-<!--                                 <table data-ng-if="patent.P3Sservice.length === 0">
-                                    <tr>
-                                        <td>
-                                            <p class="font-weight-medium text-center" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''" data-ng-if="patent.serviceStatus == 'Too late to renew' || patent.serviceStatus == 'Epct not available'">Call +44 203 696 0949</p>
-                                        </td>
-                                    </tr>
-                                </table> -->
                                 <table data-ng-if="patent.P3Sservice.length == 1">
                                     <tr>
                                         <td>
@@ -330,9 +348,6 @@
                     </tbody>
                 </table>
             </div><!-- response table end-->
-<!--             <div class="portfolio-pointer">
-                <i class="fas fa-caret-down fa-3x"></i>
-            </div> -->
         </div>
     </div>
     <div data-ui-view class="m-b-xl m-t-xl">
