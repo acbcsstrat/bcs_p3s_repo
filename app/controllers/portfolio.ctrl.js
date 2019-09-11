@@ -38,14 +38,25 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     }
 
     function init() {
-        patents.map(function(item, i){
-            item.action = organiseTextService.actionStatus(item.serviceStatus) ? true : false;
-            item.uiStatus = organiseTextService.uiStatus(item.serviceStatus);
-            if(item.serviceList.length > 0) {
-                item.cssCurrent = organiseColourService.getCurrColour(item.serviceList[0].currentStageColour, 'text')
-                item.cssNext = organiseColourService.getCurrColour(item.serviceList[0].nextStageColour, 'text')
-            }
+        patents.map(function(service, i){
+            service.P3Sservice = service.serviceList;
+            delete service.serviceList;
+            return service.P3Sservice.map(function(list){
+                list.actionable = organiseTextService.actionStatus(list.serviceStatus) ? true : false;
+                list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
+                list.urgentAttention = list.currentStageColour === 'Red' ? true : false;
+                if(list.currentStageColour) {
+                    list.cssCurrent = organiseColourService.getCurrColour(list.currentStageColour, 'text')
+                }
+                if(list.nextStageColour) {
+                    list.cssNext = organiseColourService.getCurrColour(list.nextStageColour, 'text')
+                }
+            })
+            // if(item.serviceList.length > 0) {
+            // }
         }) 
+
+        console.log(patents)
     }
 
     init()
@@ -58,9 +69,9 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     select($stateParams.patentId)
 
     function uniqueArray(array) {
-      return array.filter(function(item, pos, self) {
-        return self.indexOf(item) == pos;
-      })
+        return array.filter(function(item, pos, self) {
+            return self.indexOf(item) == pos;
+        })
     }
 
     function updateCategory(status) {

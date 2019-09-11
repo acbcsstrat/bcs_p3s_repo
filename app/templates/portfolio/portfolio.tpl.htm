@@ -225,69 +225,38 @@
                                 <span class="td-ellipsis" data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
                             </td>
                             <td class="t-data__td">
-                                <div data-ng-if="patent.serviceList.length === 0">
+<!--                                 <div data-ng-if="patent.P3Sservice.length === 0">
                                     <div data-ng-if="!patent.action || patent.serviceStatus == 'Too late to renew'">
                                         <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
                                     </div>
-                                </div>
-                                <table data-ng-if="patent.serviceList.length > 1">
-                                    <tr data-ng-repeat="item in patent.serviceList">
-                                        <td class="t-data__td border-grey-xs--left">
-                                            <div data-ng-if="!patent.action">
-                                                <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
-                                            </div>
-                                            <div data-ng-if="patent.action" class="d-md-none d-lg-flex justify-content-between flex-column"><!--xl devices-->
-                                                <div data-ng-if="(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
-                                                    <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
-                                                </div>
-                                                <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
-                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg m-r-md-xs m-l-md-xs" data-ng-class="patent.cssCurrent"></i>
-                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
-                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
-                                                </div>
-                                            </div>
-                                            <div data-ng-if="patent.action" class="d-md-flex d-lg-none"> <!-- small devices-->
-                                                <div data-ng-if="(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
-                                                    <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
-                                                </div>
+                                </div> -->
 
-                                                <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
-                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="patent.cssCurrent"></i>
-                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
-                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table data-ng-if="patent.serviceList.length == 1">
+                                <table data-ng-if="patent.P3Sservice.length == 1">
                                     <tr>
-                                        <td data-ng-repeat="item in patent.serviceList">
-                                            <div data-ng-if="!patent.action">
-                                                <span data-ng-bind="patent.uiStatus" class="font-weight-medium" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
+                                        <td data-ng-repeat="item in patent.P3Sservice">
+                                            <div data-ng-if="!item.actionable">
+                                                <span data-ng-bind="item.uiStatus" class="font-weight-medium" data-ng-class="item.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
                                             </div>
-                                            <div data-ng-if="patent.action" class="d-md-none d-lg-flex justify-content-between flex-column"><!--xl devices-->
-                                                <div data-ng-if="(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
+                                            <div data-ng-if="item.actionable" class="d-md-none d-lg-flex justify-content-between flex-column"><!--xl devices-->
+                                                <div data-ng-if="item.urgentAttention" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
                                                     <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
                                                 </div>
-                                                <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
-                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="patent.cssCurrent"></i>
-                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
+                                                <div data-ng-if="!item.urgentAttention" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
+                                                    <p data-ng-class="item.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="item.cssCurrent"></i>
+                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                                     <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
                                                 </div>
                                             </div>
-                                            <div data-ng-if="patent.action" class="d-md-flex d-lg-none"> <!-- small devices-->
-                                                <div data-ng-if="(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
+                                            <div data-ng-if="item.actionable" class="d-md-flex d-lg-none"> <!-- small devices-->
+                                                <div data-ng-if="item.urgentAttention" class="d-flex justify-content-between align-items-center"><!--display manual processing-->   
                                                     <p class="txt-phase-red">URGENT ACTION REQUIREDD</p>
                                                 </div>
 
-                                                <div data-ng-if="!(item.currentStageColour == 'Red' || (item.currentStageColour == 'Black' && item.serviceStatus !== 'Show price'))" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
-                                                    <p data-ng-class="patent.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="patent.cssCurrent"></i>
-                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="patent.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
+                                                <div data-ng-if="!item.urgentAttention" class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
+                                                    <p data-ng-class="item.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="item.cssCurrent"></i>
+                                                    <p data-ng-if="item.currentStageColour !== 'Red' && !(item.currentStageColour == 'Black' && item.serviceStatus == 'Show price')" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p>
                                                     <p data-ng-if="item.currentStageColour == 'Black' && item.serviceStatus == 'Show price'" class="font-weight-bold">LAPSE</p>
                                                 </div>
                                             </div>
@@ -300,17 +269,17 @@
                                 <span data-ng-if="patent.epeStage == 'Prosecution'">Renewal</span>
                             </td><!--when multiple services begin-->
                             <td class="t-data__td">
-                                <table data-ng-if="patent.serviceList.length === 0">
+<!--                                 <table data-ng-if="patent.P3Sservice.length === 0">
                                     <tr>
                                         <td>
                                             <p class="font-weight-medium text-center" data-ng-class="patent.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''" data-ng-if="patent.serviceStatus == 'Too late to renew' || patent.serviceStatus == 'Epct not available'">Call +44 203 696 0949</p>
                                         </td>
                                     </tr>
-                                </table>
-                                <table data-ng-if="patent.serviceList.length == 1">
+                                </table> -->
+                                <table data-ng-if="patent.P3Sservice.length == 1">
                                     <tr>
                                         <td>
-                                            <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.serviceList">
+                                            <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.P3Sservice">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
                                                     <a data-ng-if="item.serviceStatus == 'Epct available' || item.serviceStatus == 'Epct rejected' || item.serviceStatus == 'Payment failed'" class="btn btn--bordered btn-underlined generateForm1200" data-ng-click="$ctrl.generateForm1200(patent.id)">Generate Form 1200</a>
                                                     <div data-ng-if="item.serviceStatus == 'Epct saved'">
@@ -327,8 +296,8 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <table data-ng-if="patent.serviceList.length > 1">
-                                    <tr data-ng-repeat="item in patent.serviceList">
+                                <table data-ng-if="patent.P3Sservice.length > 1">
+                                    <tr data-ng-repeat="item in patent.P3Sservice">
                                         <td class="t-data__td">
                                             <div class="d-flex justify-content-center">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
