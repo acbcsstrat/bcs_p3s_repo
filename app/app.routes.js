@@ -88,7 +88,7 @@ function appRoutes($stateProvider) {
             },
             params: {
                 patentId: null,
-                grantOrder: null, // !!!!!!! GRANT TEST DATA
+                grantOrder: null,
                 form1200generate: null
             },
             views:{
@@ -117,7 +117,7 @@ function appRoutes($stateProvider) {
                     controller: 'renewalHistoryCtrl',
                     controllerAs: '$ctrl',  
                 },        
-                "grantandpublishing@portfolio.patent": { // !!!!!!! GRANT TEST DATA
+                "grantandpublishing@portfolio.patent": {
                     templateUrl: 'app/templates/grant/grant.tpl.htm',
                     controller: 'grantCtrl',
                     controllerAs: '$ctrl',  

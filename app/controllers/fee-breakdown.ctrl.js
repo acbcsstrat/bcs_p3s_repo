@@ -22,16 +22,16 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
     function init() {
 
-        if(patent.portfolioUI.serviceList.length > 0) {
-            patent.portfolioUI.cssCurrent = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].currentStageColour, 'text')
-            patent.portfolioUI.cssNext = organiseColourService.getCurrColour(patent.portfolioUI.serviceList[0].nextStageColour, 'text')
+        if(patent.serviceList.length > 0) {
+            patent.cssCurrent = organiseColourService.getCurrColour(patent.serviceList[0].currentStageColour, 'text')
+            patent.cssNext = organiseColourService.getCurrColour(patent.serviceList[0].nextStageColour, 'text')
         }
 
         patent.urgentAttentionReq = (function(){
-            if(patent.portfolioUI.serviceStatus == 'Too late to renew') {
+            if(patent.serviceStatus == 'Too late to renew') {
                 return true;
             }
-            if(patent.portfolioUI.serviceStatus == 'Too late' && patent.portfolioUI.serviceList[0].currentStageColour == 'Red') {
+            if(patent.serviceStatus == 'Too late' && patent.serviceList[0].currentStageColour == 'Red') {
                 return true
             }
             return false
@@ -46,7 +46,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
     function setFees(action) {
 
-        if(patent.renewalFeeUI === null && patent.form1200FeeUI === null && patent.grantFeeUI === null) { //!!!!!! ADDED GRANTFEEUI CHECK. SHOULD BE OKAY FOR PRODUCTION
+        if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) { //!!!!!! ADDED GRANTFEEUI CHECK. SHOULD BE OKAY FOR PRODUCTION
             return
         }
 
@@ -66,13 +66,14 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.availableFees.ppFeesEUR = Number(Math.round((patent.renewalFeeUI.subTotalEUR - patent.renewalFeeUI.currentOfficialFeeEUR) +'e2')+'e-2')
         }
 
-        if(action == 'Grant and Publishing Fees') { //!!!!!!!!! TEST DATA FOR GRANT
-            vm.availableFees = patent.grantFeeUI;
-            vm.availableFees.ppFeesUSD = patent.grantFeeUI.subTotalUSD - patent.grantFeeUI.currentOfficialFeeUSD;
-            vm.availableFees.ppFeesEUR = patent.grantFeeUI.subTotalEUR - patent.grantFeeUI.currentOfficialFeeEUR;            
-        }        
+        // if(action == 'Grant') { //!!!!!!!!! TEST DATA FOR GRANT
+            
+        //     vm.availableFees = patent.grantFeeUI;
+        //     vm.availableFees.ppFeesUSD = patent.grantFeeUI.subTotalUSD - patent.grantFeeUI.currentOfficialFeeUSD;
+        //     vm.availableFees.ppFeesEUR = patent.grantFeeUI.subTotalEUR - patent.grantFeeUI.currentOfficialFeeEUR;            
+        // }        
 
-        vm.availableFees.savings = Number(Math.round((patent.portfolioUI.serviceList[0].nextStageCostUSD - patent.portfolioUI.serviceList[0].currentStageCostUSD) + 'e2') +'e-2')
+        vm.availableFees.savings = Number(Math.round((patent.serviceList[0].nextStageCostUSD - patent.serviceList[0].currentStageCostUSD) + 'e2') +'e-2')
 
     }
 

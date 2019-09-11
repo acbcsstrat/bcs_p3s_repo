@@ -79,11 +79,6 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
         });
     }
 
-    console.log(vm.notifications)
-
-
-
-
     function openGuide() {
         coreService.openAppGuide();
         $rootScope.$broadcast('appGuideOpen');

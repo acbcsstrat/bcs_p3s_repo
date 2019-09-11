@@ -7,7 +7,7 @@ window.$ = $;
 
 require("jquery/dist/jquery.min.js");
 require("angular/angular.min.js");
-
+require("angular-sanitize/angular-sanitize.js")
 require("tether/dist/js/tether.min.js");
 
 require("popper.js/dist/popper.min.js");
@@ -18,13 +18,10 @@ require("angular-animate/angular-animate.min.js");
 require("angular-aria/angular-aria.min.js");
 require("angular-material/angular-material.min.js");
 require("angular-ui-bootstrap/dist/ui-bootstrap-tpls.js");
-require("slick-carousel/slick/slick.min.js");
 require("angular-route/angular-route.min.js");
-require("angular-ui-carousel/dist/ui-carousel.min.js");
 require("@uirouter/angularjs/release/angular-ui-router.min.js");
 require("angular-local-storage/dist/angular-local-storage.min.js");
 require('angular-touch/angular-touch.min.js');
-require('angular-carousel/dist/angular-carousel.min.js');
 require("angular-croppie/angular-croppie.js")
 
 require("d3/d3.min.js");
@@ -42,7 +39,3 @@ require("localScripts/js/vendors/jquery.stickytableheader.js");
 
 require("localScripts/js/vendors/ngCart.js");
 require("localScripts/js/vendors/parsley.min.js");
-
-
-
-// require("croppie/croppie.min.js")

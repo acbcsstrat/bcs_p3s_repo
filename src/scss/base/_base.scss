@@ -55,8 +55,9 @@ span,
 select,
 html,
 textarea,
-legend { 
-  font-family: $font-body; 
+legend,
+label { 
+  font-family: $font-body!important; 
 }
 
 p, 

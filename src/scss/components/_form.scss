@@ -1,88 +1,4 @@
-// .switch { /*modules*/ /*components*/ /*_form.scss*/
-//   position: relative;
-//   display: inline-block;
-//   width: 40px;
-//   height: 20px;
-// }
-
-// /* Hide default HTML checkbox */
-// .switch input { display:none; } /*modules*/ /*components*/ /*_form.scss*/
-
-/* The slider */
-// .slider { /*modules*/ /*components*/ /*_form.scss*/
-//   position: absolute;
-//   cursor: pointer;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   background-color: #ccc;
-//   -webkit-transition: .4s;
-//   transition: .4s;
-// }
-
-// .slider {
-//   &:before { /*modules*/ /*components*/ /*_form.scss*/
-//     position: absolute;
-//     content: "";
-//     height: 16px;
-//     width: 16px;
-//     left: 3px;
-//     bottom: 2px;
-//     background-color: white;
-//     -webkit-transition: .4s;
-//     transition: .4s;
-//   }
-// }
-
-// .onoffswitch {
-//   height: 20px;
-// }
-
-// input:checked + .slider, input:checked + .slider.bg-phase-green { /*modules*/ /*components*/ /*_form.scss*/
-//   background-color: $green;
-// }
-
-// input:checked + .slider.bg-phase-amber { /*modules*/ /*components*/ /*_form.scss*/
-//   background-color: $amber;
-// }
-
-// input:checked + .slider.bg-phase-red { /*modules*/ /*components*/ /*_form.scss*/
-//   background-color: $red;
-// }
-
-// input:checked + .slider.bg-phase-blue { /*modules*/ /*components*/ /*_form.scss*/
-//   background-color: $blue;
-// }
-
-// input:checked + .slider.bg-phase-black { /*modules*/ /*components*/ /*_form.scss*/
-//   background-color: $black;
-// }
-
-// input:focus + .slider { /*modules*/ /*components*/ /*_form.scss*/
-//   box-shadow: 0 0 1px #2196F3;
-// }
-
-// input {
-//   &:checked {
-//     + .slider:before { /*modules*/ /*components*/ /*_form.scss*/
-//       -webkit-transform: translateX(18px);
-//       -ms-transform: translateX(18px);
-//       transform: translateX(18px);
-//     }
-//   }
-// }
-
-// .slider.round { border-radius: 34px; } /*modules*/ /*components*/ /*_form.scss*/
-
-// .slider.round {
-//   &:before { 
-//     border-radius: 50%; 
-//   } /*modules*/ /*components*/ /*_form.scss*/
-// }
-
-
-.notification-radio {
+.notification-radio  {
   display: block;
   position: relative;
   padding-left: 30px;
@@ -94,6 +10,7 @@
   -ms-user-select: none;
   user-select: none;
 }
+
 
 /* Hide the browser's default radio button */
 .notification-radio input {
@@ -202,4 +119,87 @@
     font-size: 1.5rem;
     color: $grey-dark;
   }
+}
+
+
+
+
+
+
+// .checkbox-radio {
+//     display: block;
+//     position: relative;
+//     padding-left: 5px;
+//     cursor: pointer;
+//     font-size: 22px;
+//     margin-bottom: 20px;
+//     -webkit-user-select: none;
+//     -moz-user-select: none;
+//     -ms-user-select: none;
+//     user-select: none;
+//     input {
+//         position: absolute;
+//         opacity: 0;
+//         cursor: pointer;
+//         height: 0;
+//         width: 0;
+//     }
+//     .checkmark {
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//         height: 15px;
+//         width: 15px;
+//         background-color: $white;
+//         border-radius: 50%;
+//         border: 1px solid $grey-dark;
+//         &:after {
+//             content: "";
+//             position: absolute;
+//             display: none;
+//         }  
+//         &:hover input .checkmark {
+//             background-color: red;
+//         }
+//     }
+// }
+
+// .notification-radio:hover input ~ .checkmark {
+  
+// }
+
+// /* When the radio button is checked, add a blue background */
+// .notification-radio input:checked ~ .checkmark {
+//   background-color: $white
+// }
+
+// /* Create the indicator (the dot/circle - hidden when not checked) */
+// .checkmark:after {
+//   content: "";
+//   position: absolute;
+//   display: none;
+// }
+
+.form-check-label {
+  margin-left: 1rem;
+}
+
+.form-check-inline { 
+  margin-left: 1rem;
+}
+
+.checkbox-round {
+    width: 1.3em;
+    height: 1.3em;
+    background-color: $grey;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid grey;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.checkbox-round:checked {
+    background-color: $green;
 }

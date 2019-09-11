@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="form-group row">
+            <label for="totalClaims" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">How many total claims have been file?</label>
+            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                <input type="number" name="totalClaims" id="totalClaims" class="form-control pill-radus" data-ng-change="addToFormData('', formData.totalClaims); isOptionValid(formData.totalClaims, question);" data-ng-model="formData.totalClaims" placeholder="Total number of claims" validate-numbers required>
+            </div>
+        </div>
+        <p class="font-body txt-phase-red" data-ng-show="grantForm.totalClaims.$error.validNumber && grantForm.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>
+    </div>
+</div>
