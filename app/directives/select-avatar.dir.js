@@ -8,17 +8,9 @@ function selectAvatar($timeout) {
         restrict: 'A',
         link: function (scope, element, attr) {
 
-            function dataURItoBlob(dataURI) { //In computer science Base64 is a group of binary-to-text encoding schemes that represent binary data in an ASCII string format 
-                var binary = atob(dataURI.split(',')[1]);
-                var array = [];
-                for(var i = 0; i < binary.length; i++) {
-                    array.push(binary.charCodeAt(i));
-                }
-                return new Blob([new Uint8Array(array)], {type: 'image/jpeg '});
-            }
-
             element.bind('change', function(event) { //2/3
 
+                scope.uploadImg = false;
                 scope.imgSelected = true;
 
                 var input = this;
