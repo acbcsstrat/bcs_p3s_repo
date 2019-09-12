@@ -17,12 +17,12 @@
     		<div class="text-right">			
 				<p class="font-h2 lh-head font-weight-bold text-right">Patent Place Status:<span></span>
 				</p>
-				<p class="font-h2 lh-head text-right" data-ng-class="{'txt-phase-red': $ctrl.patent.urgentAttentionReq === true}">{{$ctrl.patent.uiStatus}}<span class="txt-phase-black font-weight-medium" data-ng-if="$ctrl.patent.urgentAttentionReq || $ctrl.patent.manualProcess"> - Call +44 203 696 0949</span></p>
+				<p class="font-h2 lh-head text-right" data-ng-class="{'txt-phase-red': $ctrl.patent.urgentAttention === true}">{{$ctrl.patent.uiStatus}}<span class="txt-phase-black font-weight-medium" data-ng-if="$ctrl.patent.urgentAttention || $ctrl.patent.manualProcess"> - Call +44 203 696 0949</span></p>
     		</div>
 	    	<div data-ng-if="$ctrl.statusesAvailable.length > 0">
-	    		<div class="m-l-xxxl" data-ng-if="!$ctrl.patent.urgentAttentionReq && !$ctrl.patent.manualProcess">
+	    		<div class="m-l-xxxl" data-ng-if="!$ctrl.patent.urgentAttention && !$ctrl.patent.manualProcess">
 					<p class="font-h2 lh-head font-weight-bold  text-right" >European Actions available:</p>
-					<p class="font-h2 lh-head text-right" data-ng-if="!$ctrl.patent.urgentAttentionReq">
+					<p class="font-h2 lh-head text-right" data-ng-if="!$ctrl.patent.urgentAttention">
 						<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
 							<span class="txt-phase-green">{{service.action}}</span>
 							<span data-ng-if="$ctrl.statusesAvailable.length > 1 && $index == 0">, </span>
@@ -30,7 +30,7 @@
 					</p>
 				</div>
 	    	</div>
-	    	<div data-ng-if="$ctrl.statusesAvailable.length === 0 && !$ctrl.patent.urgentAttentionReq && !$ctrl.patent.manualProcess" class="m-l-xxxl">
+	    	<div data-ng-if="$ctrl.statusesAvailable.length === 0 && !$ctrl.patent.urgentAttention && !$ctrl.patent.manualProcess" class="m-l-xxxl">
 	    		<p class="font-h2 lh-head font-weight-bold  text-right" >European Actions available:</p>
 	    		<p class="font-h2 lh-head font-weight-medium  text-right">No actions available</p>
 	    	</div>

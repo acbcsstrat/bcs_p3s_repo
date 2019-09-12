@@ -14,7 +14,7 @@
         </div>
     </div>
 </div>
-<div data-ng-if="!$ctrl.patent.urgentAttentionReq">
+<div data-ng-if="!$ctrl.patent.urgentAttention">
     <div class="row">
         <div class="col-xl-12 text-right">
             <p class="font-h4">1 USD = {{$ctrl.availableFees.fxRate}} EUR</p>
@@ -241,7 +241,7 @@
         </div>
     </div>
 </div>
-    <div data-ng-if="$ctrl.patent.urgentAttentionReq" class="d-flex justify-content-center align-items-center m-b-xxxl m-t-xxxl">
+    <div data-ng-if="$ctrl.patent.urgentAttention" class="d-flex justify-content-center align-items-center m-b-xxxl m-t-xxxl">
         <p class="font-h4 font-weight-medium">This European Action requires urgent attention. If you want to process the action before the deadline is reached, call our legal team on: +44 203 696 0949</p>
     </div>
     <div class="m-b-md border-grey-xs--btm"></div>
@@ -249,18 +249,18 @@
         <div class="col-md-6 col-lg-12 col-xl-6 d-flex justify-content-start align-items-center">
             <div class="d-flex flex-column align-items-start text-left m-r-xxxl">
                 <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs">Current cost</span>
-                <p class="font-h3 font-weight-bold nowrap" data-ng-class="$ctrl.patent.portfolioUI.cssCurrent">$ {{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD | number: 2}}</p>
+                <p class="font-h3 font-weight-bold nowrap" data-ng-class="$ctrl.patent.cssCurrent">$ {{$ctrl.patent.P3SserviceWithFees[0].currentStageCostUSD | number: 2}}</p>
 
             </div>   
             <div class="d-flex flex-column align-items-start text-left">
                 <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs">Future cost</span>
-                <p class="font-h3 font-weight-bold nowrap" data-ng-class="$ctrl.patent.portfolioUI.cssNext" data-ng-if="!$ctrl.patent.urgentAttentionReq">$ {{$ctrl.patent.portfolioUI.serviceList[0].nextStageCostUSD | number: 2}}</p>     
-                <p class="font-h3 font-weight-bold txt-phase-red" data-ng-if="$ctrl.patent.urgentAttentionReq">LAPSE</p>      
+                <p class="font-h3 font-weight-bold nowrap" data-ng-class="$ctrl.patent.cssNext" data-ng-if="!$ctrl.patent.urgentAttention">$ {{$ctrl.patent.P3SserviceWithFees[0].nextStageCostUSD | number: 2}}</p>     
+                <p class="font-h3 font-weight-bold txt-phase-red" data-ng-if="$ctrl.patent.urgentAttention">LAPSE</p>      
             </div>
         </div>
-        <div class="col-md-6 col-lg-12 col-xl-6 lg-m-t-sm d-flex justify-content-center align-items-end flex-column" data-ng-if="!$ctrl.patent.urgentAttentionReq">
+        <div class="col-md-6 col-lg-12 col-xl-6 lg-m-t-sm d-flex justify-content-center align-items-end flex-column" data-ng-if="!$ctrl.patent.urgentAttention">
             <p class="font-h3 font-weight-heavy font-h3--content">Save: <span class="txt-phase-green">$ {{($ctrl.availableFees.savings | number: 2) || '0.00'}}</span></p>
-            <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.patent.portfolioUI.serviceList[0].costBandEndDateUI}}</span></p>
+            <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.patent.P3SserviceWithFees[0].costBandEndDateUI}}</span></p>
         </div>
     </div>
 </div>

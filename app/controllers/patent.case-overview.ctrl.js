@@ -25,7 +25,19 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     function init() {
 
-        patent.serviceList = patent.portfolioUI.serviceList;
+        patent.P3SserviceWithFees = patent.portfolioUI.serviceList;
+        delete patent.portfolioUI.serviceList;
+        patent.P3SserviceWithFees.map(function(list){
+            list.actionable = organiseTextService.actionStatus(list.serviceStatus) ? true : false;
+            list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
+            list.urgentAttention = list.currentStageColour === 'Red' ? true : false;
+            if(list.currentStageColour) {
+                list.cssCurrent = organiseColourService.getCurrColour(list.currentStageColour, 'text')
+            }
+            if(list.nextStageColour) {
+                list.cssNext = organiseColourService.getCurrColour(list.nextStageColour, 'text')
+            }
+        })
 
         if(activeTabService.getTab == 2) {
             $scope.activeLeft = 2
@@ -49,9 +61,9 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         patent.action = organiseTextService.actionStatus(patent.portfolioUI.serviceStatus) ? true : false;
         patent.uiStatus = organiseTextService.uiStatus(patent.portfolioUI.serviceStatus);
-        if(patent.serviceList.length > 0) {
-            patent.cssCurrent = organiseColourService.getCurrColour(patent.serviceList[0].currentStageColour, 'text')
-            patent.cssNext = organiseColourService.getCurrColour(patent.serviceList[0].nextStageColour, 'text')
+        if(patent.P3SserviceWithFees.length > 0) {
+            patent.cssCurrent = organiseColourService.getCurrColour(patent.P3SserviceWithFees[0].currentStageColour, 'text')
+            patent.cssNext = organiseColourService.getCurrColour(patent.P3SserviceWithFees[0].nextStageColour, 'text')
         }
 
         patent.urgentAttentionReq = (function(){
@@ -60,8 +72,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 return true;
             }
             if(patent.serviceStatus == 'Too late') {
-                if(patent.serviceList.length > 0) {
-                    if(patent.serviceList[0].currentStageColour == 'Red') {
+                if(patent.P3SserviceWithFees.length > 0) {
+                    if(patent.P3SserviceWithFees[0].currentStageColour == 'Red') {
                         return true
                     }
                 }
@@ -73,7 +85,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         patent.manualProcess = patent.serviceStatus === 'Epct not available' ? true : false;
 
         $scope.availableServices = (function() {
-            return vm.patent.serviceList.map(function(data, index){
+            return vm.patent.P3SserviceWithFees.map(function(data, index){
                return {id: index, action: data.serviceType, status: data.serviceStatus}
             })
         }())        
