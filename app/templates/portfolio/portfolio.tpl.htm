@@ -227,6 +227,7 @@
                                 <table data-ng-if="patent.P3Sservice.length == 1">
                                     <tr>
                                         <td data-ng-repeat="item in patent.P3Sservice">
+
                                             <div data-ng-if="!item.actionable">
                                                 <span data-ng-bind="item.uiStatus" class="font-weight-medium" data-ng-class="item.serviceStatus == 'Too late to renew' ? 'txt-phase-red' : ''"></span>
                                             </div>

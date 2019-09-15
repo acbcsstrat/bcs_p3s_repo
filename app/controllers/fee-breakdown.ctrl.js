@@ -10,7 +10,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
     vm.setFees = setFees;
     vm.getCurrColour = getCurrColour;
     vm.feeData = null;
-
+    
     if($scope.$parent.availableServices.length > 0) {
 
         vm.data = {};

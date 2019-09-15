@@ -137,7 +137,36 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 				}
 			}
 
+			function isEmpty(obj) {
+				var allFilled;
+				for(var property in obj) {
+					if(obj.hasOwnProperty(property)) {
+						if(obj[property].constructor !== Object) {
+							allFilled = true;
+						} else {
+							allFilled = false;
+						}
+					}
+				}
+				if(allFilled === true) {
+					return true;
+				} else {
+					return false;
+				}
+
+			}
+
+
+
 			this.isOptionValid = function(value, item) { //INVOKED FROM PANEL CONTENT
+
+				if(value !== undefined  && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
+					if(isEmpty(value)) {
+						$scope.nextBtnDisabled = false;
+						$scope.questions[item.index].valid = true;
+					}
+					return;
+				}
 				if(value === undefined || typeof value === 'undefined' || value === false) {
 					$scope.nextBtnDisabled = true; //DISABLE NEXT BTN 
 					$scope.questions[item.index].valid = false;
@@ -145,6 +174,7 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 					$scope.nextBtnDisabled = false;
 					$scope.questions[item.index].valid = true;
 				}
+
 			}
 
 			this.initalSelect = $scope.selectQuestion; //USED FOR INITAL LOAD
@@ -245,3 +275,33 @@ function postAction() {
 	}
 
 }
+
+angular.module("ppApp").directive("ngUploadChange",function(){
+    return{
+        scope:{
+            ngUploadChange:"&"
+        },
+        link:function(scope, element, attrs){
+            element.on("change",function(event){
+                scope.$apply(function(){	
+                    scope.ngUploadChange({$event: event});
+                })
+            })
+            scope.$on("$destroy",function(){
+                element.off();
+            });
+        }
+    }
+});
+
+angular.module("ppApp").directive("selectNgFiles", function() {
+  return {
+    require: "ngModel",
+    link: function postLink(scope,elem,attrs,ngModel) {
+      elem.on("change", function(e) {
+        var files = elem[0].files[0];
+        ngModel.$setViewValue(files);
+      })
+    }
+  }
+});

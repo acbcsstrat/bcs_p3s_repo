@@ -39,11 +39,31 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     function init() {
         patents.map(function(service, i){
+            // service.serviceStatus = 'Grant available';
+            // service.epeStage = 'Grant';
+            // service.serviceList = [{
+            //     actionable: false,
+            //     costBandEndDate: 1580774400000,
+            //     costBandEndDateUI: "Tue Feb 4, 2020",
+            //     cssCurrent: "txt-phase-green",
+            //     cssNext: "txt-phase-amber",
+            //     currentOfficialFeeEUR: 4300,
+            //     currentOfficialFeeUSD: 5251.3019,
+            //     currentStageColour: "Green",
+            //     currentStageCostUSD: 5326.3019,
+            //     failedReason: null,
+            //     nextStageColour: "Amber",
+            //     nextStageCostUSD: 5851.43209,
+            //     serviceStatus: "Grant available",
+            //     serviceType: "Grant",
+            //     uiStatus: "Grant available",
+            //     urgentAttention: false
+            // }]
             service.P3Sservice = service.serviceList;
             delete service.serviceList;
             return service.P3Sservice.map(function(list){
                 list.actionable = organiseTextService.actionStatus(list.serviceStatus) ? true : false;
-                list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
+                // list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
                 list.urgentAttention = list.currentStageColour === 'Red' ? true : false;
                 if(list.currentStageColour) {
                     list.cssCurrent = organiseColourService.getCurrColour(list.currentStageColour, 'text')
@@ -54,6 +74,7 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
             })
 
         }) 
+
 
     }
 

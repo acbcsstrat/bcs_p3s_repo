@@ -7,7 +7,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 	var vm = this;
 
 	vm.patent = patent;
-	vm.grantNotSuitable = grantNotSuitable;
+    // vm.grantNotSuitable = grantNotSuitable;
 	vm.initiateGrantOrder = initiateGrantOrder;
     vm.templates = [
         { name: 'grantintro.html', url: 'app/templates/grant/grant.intro.tpl.htm'},
@@ -21,12 +21,12 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
   
     	vm.activeTab = 0;
 
-		if(patent.serviceList[0].serviceStatus == 'Grant available') {
+		if(patent.P3SserviceWithFees[0].serviceStatus == 'Grant available') {
 			vm.grantStage = 1;
     		vm.grantTemplate = vm.templates[0].url;        
     	}
 
-		if(patent.serviceList[0].serviceStatus == 'Grant saved') {
+		if(patent.P3SserviceWithFees[0].serviceStatus == 'Grant saved') {
 			vm.grantStage = 2;
     		vm.grantTemplate = vm.templates[2].url;        
     	}    	
@@ -34,18 +34,22 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
     init()
 
-    $rootScope.$on('submitGrantData', function(e, formData){
+    $rootScope.$on('submitGrantData', function(e, data){
 
-        formData.data.totalClaims = parseInt(formData.data.totalClaims);
-        formData.data.totalAdditionalClaims = parseInt(formData.data.totalAdditionalClaims);
-        formData.data.totalPages = parseInt(formData.data.totalPages);
-        formData.data.totalAdditionalPages = parseInt(formData.data.totalAdditionalPages);
+        var formData = new FormData();
+        var notifyWhenValidationAvailable = (function(){
+            data.data.optInValidation = data.data.optInValidation.no === true ? false : true;
+        }())
+        formData.append('patent_ID', patent.id);
+        formData.append('totalClaims', parseInt(data.data.totalClaims));
+        formData.append('ofWhichClaimsUnpaid', parseInt(data.data.totalAdditionalClaims));
+        formData.append('totalPages', parseInt(data.data.totalPages));
+        formData.append('ofWhichPagesUnpaid', parseInt(data.data.totalAdditionalPages));
+        formData.append('notifyWhenValidationAvailable', notifyWhenValidationAvailable);
+        formData.append('frenchTranslation', data.data.translations.frenchTranslation);
+        formData.append('germanTranslation', data.data.translations.germanTranslation);
 
-        if(formData.data.optInValidation.no === true) {
-            formData.data.optInValidation = formData.data.optInValidation.no === true ? false : true;
-        }
-
-        grantService.submitGrant(formData.data)
+        grantService.submitGrant(formData)
         .then(
             function(response){
                 activeTabService.setTab(2)
@@ -62,13 +66,13 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 	var grantQuestions = [
 
         { 
-            title: 'approve',
-            template: 'approvetext',
+            title: 'representative',
+            template: 'representative',
             displayHelp: false,
             checkError: function(value) {
                 if(value === true) {
                     this.showError = true;
-                    grantNotSuitable()
+                    grantNotSuitableRepresentative()
                     return
                 }
                 this.showError = false;
@@ -77,6 +81,31 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             valid: false,
             required: true
         },
+        { 
+            title: 'approve',
+            template: 'approvetext',
+            displayHelp: false,
+            checkError: function(value) {
+                if(value === true) {
+                    this.showError = true;
+                    grantNotSuitableApprove()
+                    return
+                }
+                this.showError = false;
+            },
+            showError: false,
+            valid: false,
+            required: true
+        },
+        { 
+            title: 'translations',
+            template: 'translations',
+            displayHelp: false,
+            showError: false,
+            valid: false,
+            required: true,
+            fileUpload: true
+        },        
         { 
             title: 'totalclaims',
             template: 'totalclaims',
@@ -184,11 +213,11 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
 	}
 
-	function grantNotSuitable() {
+	function grantNotSuitableRepresentative() {
 
 		vm.cannotProceed = true;
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.confirm-grant-not-suitable.tpl.htm',
+            templateUrl: 'app/templates/modals/modal.confirm-grant-not-suitable-representative.tpl.htm',
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -201,4 +230,23 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         });
 		
 	}
+
+    function grantNotSuitableApprove() {
+
+        vm.cannotProceed = true;
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.confirm-grant-not-suitable-approve.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
+
+            }]
+        });
+        
+    }
+
 }
