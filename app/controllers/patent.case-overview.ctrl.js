@@ -8,7 +8,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     vm.patent = patent;
 
-
     vm.fetchItemTransaction = fetchItemTransaction;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
@@ -25,76 +24,57 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     function init() {
 
+        // if(patent.portfolioUI.serviceList) {       
 
-            // patent.serviceStatus = 'Grant available';
-            // patent.epeStage = 'Grant';
-            // patent.grantFeeUI = {
+        //         patent.serviceStatus = 'Show price';
+        //         patent.epeStage = 'Prosecution';
+        //         patent.serviceList = [{
+        //             costBandEndDate: 1578960000000,
+        //             costBandEndDateUI: "Tue Jan 14, 2020",
+        //             cssCurrent: "txt-phase-green",
+        //             cssNext: "txt-phase-amber",
+        //             currentOfficialFeeEUR: 2530,
+        //             currentOfficialFeeUSD: 3089.71949,
+        //             currentStageColour: "Green",
+        //             currentStageCostUSD: 3164.71949,
+        //             failedReason: null,
+        //             isUrgentAttention: false,
+        //             nextStageColour: "Amber",
+        //             nextStageCostUSD: 3473.691439,
+        //             saleType: "Online",
+        //             serviceStatus: "Show price",
+        //             serviceType: "Renewal",
+        //             serviceStatusUI: "Open for Renewal"
+        //         }];
+        //         // if(patent.renewalFeeUI) {
+        //             var feeUIarr = {}; // {} will create an object
+        //             var feeUI = 'renewalFeeUI';
+        //             var val = patent.renewalFeeUI;
+        //             feeUIarr[feeUI] = val;
+        //             patent.serviceList.push(feeUIarr)
+        //         // }
+        //         console.log(patent)
+        //         patent.P3SserviceWithFees = patent.serviceList;
+        //         delete patent.serviceList;
+                patent.P3SserviceWithFees.map(function(list){
+                    // list.saleType = 'Online';
+                    // list.actionable = organiseTextService.actionStatus(list.serviceStatus) ? true : false;
+                    // list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
+                    // list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
+                    // list.isUrgentAttention = list.currentStageColour === 'Red' ? true : false;                
+                    if(list.currentStageColour) {
+                        list.cssCurrent = organiseColourService.getCurrColour(list.currentStageColour, 'text')
+                    }
+                    if(list.nextStageColour) {
+                        list.cssNext = organiseColourService.getCurrColour(list.nextStageColour, 'text')
+                    }
+                })
 
-            //     claimsFee1EUR: 0,
-            //     claimsFee1USD: 0,
-            //     claimsFee2EUR: 0,
-            //     claimsFee2USD: 0,
-            //     currentOfficialFeeEUR: 2530,
-            //     currentOfficialFeeUSD: 3089.71949,
-            //     designationFeeEUR: 585,
-            //     designationFeeUSD: 714.42,
-            //     dollarComponentUSD: 75,
-            //     euroComponentEUR: 2530,
-            //     examinationFeeEUR: 1825,
-            //     examinationFeeUSD: 2228.75,
-            //     excessPageFeeEUR: 0,
-            //     excessPageFeeUSD: 0,
-            //     expressFeeEUR: 0,
-            //     expressFeeUSD: 0,
-            //     extensionFeeEUR: 0,
-            //     extensionFeeUSD: 0,
-            //     filingFeeEUR: 120,
-            //     filingFeeUSD: 146.55,
-            //     fxRate: 0.818845,
-            //     processingFeeEUR: 61.41,
-            //     processingFeeUSD: 75,
-            //     renewalFeeEUR: 0,
-            //     renewalFeeUSD: 0,
-            //     subTotalEUR: 2591.41,
-            //     subTotalUSD: 3164.72,
-            //     supplementarySearchFeeEUR: 0,
-            //     supplementarySearchFeeUSD: 0,
-            //     urgentFeeEUR: 0,
-            //     urgentFeeUSD: 0,
-            //     validationFeeEUR: 0,
-            //     validationFeeUSD: 0
-            // }
-            // patent.serviceList = [{
-            //     actionable: false,
-            //     costBandEndDate: 1580774400000,
-            //     costBandEndDateUI: "Tue Feb 4, 2020",
-            //     cssCurrent: "txt-phase-green",
-            //     cssNext: "txt-phase-amber",
-            //     currentOfficialFeeEUR: 4300,
-            //     currentOfficialFeeUSD: 5251.3019,
-            //     currentStageColour: "Green",
-            //     currentStageCostUSD: 5326.3019,
-            //     failedReason: null,
-            //     nextStageColour: "Amber",
-            //     nextStageCostUSD: 5851.43209,
-            //     serviceStatus: "Grant available",
-            //     serviceType: "Grant",
-            //     uiStatus: "Grant available",
-            //     urgentAttention: false
-            // }]
-            patent.P3SserviceWithFees = patent.portfolioUI.serviceList;
-            delete patent.serviceList;
-            patent.P3SserviceWithFees.map(function(list){
-                list.actionable = organiseTextService.actionStatus(list.serviceStatus) ? true : false;
-                list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
-                list.urgentAttention = list.currentStageColour === 'Red' ? true : false;
-                if(list.currentStageColour) {
-                    list.cssCurrent = organiseColourService.getCurrColour(list.currentStageColour, 'text')
-                }
-                if(list.nextStageColour) {
-                    list.cssNext = organiseColourService.getCurrColour(list.nextStageColour, 'text')
-                }
-            })
+  
+        // }
+    
+
+
 
 
         if(activeTabService.getTab == 2) {
@@ -117,40 +97,14 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             activeTabService.setTab(0)
         }        
 
-        if(patent.P3SserviceWithFees.length > 0) {
-            patent.cssCurrent = organiseColourService.getCurrColour(patent.P3SserviceWithFees[0].currentStageColour, 'text')
-            patent.cssNext = organiseColourService.getCurrColour(patent.P3SserviceWithFees[0].nextStageColour, 'text')
-        }
-
-        patent.urgentAttentionReq = (function(){
-
-            if(patent.serviceStatus == 'Too late to renew') {
-                return true;
-            }
-            if(patent.serviceStatus == 'Too late') {
-                if(patent.P3SserviceWithFees.length > 0) {
-                    if(patent.P3SserviceWithFees[0].currentStageColour == 'Red') {
-                        return true
-                    }
-                }
-
-            }
-            return false
-        }())
-
-        patent.manualProcess = patent.serviceStatus === 'Epct not available' ? true : false;
-
         $scope.availableServices = (function() {
+            console.log(vm.patent)
             return vm.patent.P3SserviceWithFees.map(function(data, index){
                return {id: index, action: data.serviceType, status: data.serviceStatus}
             })
         }())        
 
         vm.statusesAvailable = $scope.availableServices;
-
-        if($scope.availableServices.length === 0) {
-            vm.servicesAvailable = false;
-        }
 
         renewalRestService.fetchHistory(patent.id) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
         .then(
@@ -179,6 +133,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         })
     }
+
+
 
     init()
 

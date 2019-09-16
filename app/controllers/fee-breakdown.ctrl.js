@@ -46,31 +46,31 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
     function setFees(action) {
 
-        if(patent.renewalFeeUI === null && patent.form1200FeeUI === null && patent.grantFeeUI === null) {
+        if(patent.renewalFeeUI === null && patent.form1200FeeUI === null) { //patent.grantFeeUI === null
             return
         }
 
         if(action == 'Form1200') {
             vm.displayForm1200 = true;
             vm.displayRenewal = false;
-            vm.availableFees = patent.form1200FeeUI;
-            vm.availableFees.ppFeesUSD = Number(Math.round((patent.form1200FeeUI.subTotalUSD - patent.form1200FeeUI.currentOfficialFeeUSD) + 'e2') +'e-2')
-            vm.availableFees.ppFeesEUR = Number(Math.round((patent.form1200FeeUI.subTotalEUR - patent.form1200FeeUI.currentOfficialFeeEUR) + 'e2') +'e-2')
+            vm.availableFees = patent.P3SserviceWithFees[1].form1200FeeUI;
+            vm.availableFees.ppFeesUSD = Number(Math.round(( vm.availableFees.subTotalUSD -  vm.availableFees.currentOfficialFeeUSD) + 'e2') +'e-2')
+            vm.availableFees.ppFeesEUR = Number(Math.round(( vm.availableFees.subTotalEUR -  vm.availableFees.currentOfficialFeeEUR) + 'e2') +'e-2')
         }
 
         if(action == 'Renewal') {
             vm.displayForm1200 = false;
             vm.displayRenewal = true;
-            vm.availableFees = patent.renewalFeeUI;
-            vm.availableFees.ppFeesUSD = Number(Math.round((patent.renewalFeeUI.subTotalUSD - patent.renewalFeeUI.currentOfficialFeeUSD) + 'e2') +'e-2')
-            vm.availableFees.ppFeesEUR = Number(Math.round((patent.renewalFeeUI.subTotalEUR - patent.renewalFeeUI.currentOfficialFeeEUR) +'e2')+'e-2')
+            vm.availableFees = patent.P3SserviceWithFees[1].renewalFeeUI;
+            vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.subTotalUSD - vm.availableFees.currentOfficialFeeUSD) + 'e2') +'e-2')
+            vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.subTotalEUR - vm.availableFees.currentOfficialFeeEUR) +'e2')+'e-2')
         }
 
         if(action == 'Grant') {
             
-            vm.availableFees = patent.grantFeeUI;
-            vm.availableFees.ppFeesUSD = patent.grantFeeUI.subTotalUSD - patent.grantFeeUI.currentOfficialFeeUSD;
-            vm.availableFees.ppFeesEUR = patent.grantFeeUI.subTotalEUR - patent.grantFeeUI.currentOfficialFeeEUR;            
+            vm.availableFees = patent.P3SserviceWithFees[1].grantFeeUI;
+            vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.subTotalUSD - vm.availableFees.currentOfficialFeeUSD) + 'e2') +'e-2')
+            vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.subTotalEUR - vm.availableFees.currentOfficialFeeEUR) + 'e2') +'e-2')            
         }        
 
         vm.availableFees.savings = Number(Math.round((patent.P3SserviceWithFees[0].nextStageCostUSD - patent.P3SserviceWithFees[0].currentStageCostUSD) + 'e2') +'e-2')
