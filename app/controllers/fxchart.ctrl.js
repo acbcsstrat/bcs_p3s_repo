@@ -122,7 +122,7 @@ function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, 
             vm.setData(vm.data.selectedAction.action)
 
             function setData(data) {
-  
+
                 vm.lineData = null;
 
                 var lineDataArr = [];
@@ -132,7 +132,7 @@ function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, 
                     return;
                 }
 
-                if(data == 'Form1200') {
+                if(data == 'epct') {
                     fxData = ca[0].data.lineChart;
                     for (var property in fxData) { //change lineData
                         if (fxData.hasOwnProperty(property)) {
@@ -144,7 +144,7 @@ function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, 
                     }
                 }
 
-                if(data == 'Renewal') {
+                if(data == 'renewal') {
                     fxData = ca[0].data.lineChart;
                     for (var property in fxData) { //change lineData
                         if (fxData.hasOwnProperty(property)) {

@@ -12,13 +12,14 @@ function costAnalysisService($http, $q) {
 
         var array = [];
         var deferred = $q.defer();
+
         patent.p3sServicesWithFees.forEach(function(data){
-            if(data.serviceType == 'Form1200') {
-                array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patent.id))
+            if(data.serviceType == 'epct') {
+                array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patent.patentID))
 
             }
-            if(data.serviceType == 'Renewal') {
-                array.push($http.get(ppdomain+'rest-cost-analysis/'+patent.id))
+            if(data.serviceType == 'renewal') {
+                array.push($http.get(ppdomain+'rest-cost-analysis/'+patent.patentID))
             }
         })
 
