@@ -25,10 +25,10 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
 
     function checkServices() {
 
-        if(vm.patent.portfolioUI.epeStage == 'Prosecution') {
+        if(vm.patent.epoStage == 'Prosecution') {
             vm.data.availableAction.push({id: 0, action: 'Renewal'})
         }
-        if(vm.patent.portfolioUI.epeStage == 'Filing') {
+        if(vm.patent.epoStage == 'Filing') {
             vm.data.availableAction.push({id: 0, action: 'Form1200'})
         }
         vm.data.selectedAction = vm.data.availableAction[0];
@@ -42,13 +42,13 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
     function displayNotifications(action) {  //displays the specifed actions notifications
 
         if(action == 'Form1200') { 
-            vm.notificationUi = 'epctNotificationUIs';
+            vm.notificationUi = 'allEpctNotificationUIs';
             vm.notificationUrl = 'rest-epct-notifications/';
             vm.toBlueOrNotToBlue = false;
         }
 
         if(action == 'Renewal') {
-            vm.notificationUi = 'renewalNotificationUIs';
+            vm.notificationUi = 'allRenewalNotificationUIs';
             vm.notificationUrl = 'rest-renewal-notifications/';
             vm.toBlueOrNotToBlue = true;
         }

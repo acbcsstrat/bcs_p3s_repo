@@ -24,58 +24,14 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     function init() {
 
-        // if(patent.portfolioUI.serviceList) {       
-
-        //         patent.serviceStatus = 'Show price';
-        //         patent.epeStage = 'Prosecution';
-        //         patent.serviceList = [{
-        //             costBandEndDate: 1578960000000,
-        //             costBandEndDateUI: "Tue Jan 14, 2020",
-        //             cssCurrent: "txt-phase-green",
-        //             cssNext: "txt-phase-amber",
-        //             currentOfficialFeeEUR: 2530,
-        //             currentOfficialFeeUSD: 3089.71949,
-        //             currentStageColour: "Green",
-        //             currentStageCostUSD: 3164.71949,
-        //             failedReason: null,
-        //             isUrgentAttention: false,
-        //             nextStageColour: "Amber",
-        //             nextStageCostUSD: 3473.691439,
-        //             saleType: "Online",
-        //             serviceStatus: "Show price",
-        //             serviceType: "Renewal",
-        //             serviceStatusUI: "Open for Renewal"
-        //         }];
-        //         // if(patent.renewalFeeUI) {
-        //             var feeUIarr = {}; // {} will create an object
-        //             var feeUI = 'renewalFeeUI';
-        //             var val = patent.renewalFeeUI;
-        //             feeUIarr[feeUI] = val;
-        //             patent.serviceList.push(feeUIarr)
-        //         // }
-        //         console.log(patent)
-        //         patent.P3SserviceWithFees = patent.serviceList;
-        //         delete patent.serviceList;
-                patent.P3SserviceWithFees.map(function(list){
-                    // list.saleType = 'Online';
-                    // list.actionable = organiseTextService.actionStatus(list.serviceStatus) ? true : false;
-                    // list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
-                    // list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
-                    // list.isUrgentAttention = list.currentStageColour === 'Red' ? true : false;                
-                    if(list.currentStageColour) {
-                        list.cssCurrent = organiseColourService.getCurrColour(list.currentStageColour, 'text')
-                    }
-                    if(list.nextStageColour) {
-                        list.cssNext = organiseColourService.getCurrColour(list.nextStageColour, 'text')
-                    }
-                })
-
-  
-        // }
-    
-
-
-
+        patent.p3sServicesWithFees.map(function(list){         
+            if(list.currentStageColour) {
+                list.cssCurrent = organiseColourService.getCurrColour(list.currentStageColour, 'text')
+            }
+            if(list.nextStageColour) {
+                list.cssNext = organiseColourService.getCurrColour(list.nextStageColour, 'text')
+            }
+        })
 
         if(activeTabService.getTab == 2) {
             $scope.activeLeft = 2
@@ -98,15 +54,14 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         }        
 
         $scope.availableServices = (function() {
-            console.log(vm.patent)
-            return vm.patent.P3SserviceWithFees.map(function(data, index){
+            return vm.patent.p3sServicesWithFees.map(function(data, index){
                return {id: index, action: data.serviceType, status: data.serviceStatus}
             })
         }())        
 
         vm.statusesAvailable = $scope.availableServices;
 
-        renewalRestService.fetchHistory(patent.id) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
+        renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
         .then(
             function(response){
                 if(response.length > 0) {
@@ -133,8 +88,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         })
     }
-
-
 
     init()
 

@@ -12,7 +12,7 @@ function costAnalysisService($http, $q) {
 
         var array = [];
         var deferred = $q.defer();
-        patent.serviceList.forEach(function(data){
+        patent.p3sServicesWithFees.forEach(function(data){
             if(data.serviceType == 'Form1200') {
                 array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patent.id))
 
