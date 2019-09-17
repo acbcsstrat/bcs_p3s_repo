@@ -128,11 +128,11 @@ function costChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService
                         return;
                     }                
               
-                    if(service == 'Renewal') {
+                    if(service == 'renewal') {
                         vm.barOptions.chart.barColor = ["#3c3c3b", "#0097ce", "#e30613", "#f9b233", "#53ab58"];
                     }
 
-                    if(service == 'Form1200') {
+                    if(service == 'epct') {
                         vm.barOptions.chart.barColor = ["#e30613", "#f9b233", "#53ab58"];
                     }     
 
