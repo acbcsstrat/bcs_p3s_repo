@@ -43,7 +43,11 @@
  </tr>
  <tr>
 	<td>P3S product version</td>
+<<<<<<< HEAD
 	<td>v3.1dev</td>
+=======
+	<td>v2.1</td>
+>>>>>>> fe-branch-v3
  </tr>
 </table>
 

@@ -1,0 +1,117 @@
+ul#strength {
+  list-style: none;
+  padding: 0;
+  line-height: 1rem;
+  display: block!important;
+}
+
+input.ng-pristine + ul#strength { display:none; }  /* modules*/ /*pages*/ /*_userprofile.scss*/
+
+.avatar, .avatar-cropped {
+	position: relative;
+	cursor: pointer;
+	width: 20rem;
+	height: 20rem;
+	.avatar-icon {
+		position: absolute;
+		top: 50%;
+		margin-top: -20px;
+		right: -22px;
+		z-index: 9999;
+		&:hover {
+			color: rgba(3, 60, 60, 1);
+			cursor: pointer;
+		}
+	}
+
+	.avatar-img {
+		border: 3px solid #fff;
+		border-radius: 50%;
+		box-shadow: 0 7px 5px 0 rgba(0,0,0,.1);
+		transition: opacity .3s ease-in-out;
+	    height: 100%;
+	    width: 100%;
+		&:hover {
+			opacity: .85;
+			cursor: pointer;
+		}
+	}
+
+	input {
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		width: 100%;
+		height:100%;
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+}
+
+.avatar-img-container {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+}
+
+.avatar-prompt-container {
+	// background: red;
+	border-radius: 50%;
+	background: $grey-dark;
+  	transition: .5s ease;
+  	opacity: 0;
+ 	position: absolute;
+  	top: 0;
+  	left: 0;
+  	width: 20rem;
+  	height: 20rem;
+  	text-align: center;
+}
+
+.avatar-container:hover .avatar-img-container {
+  opacity: 0.3;
+}
+
+.avatar-container:hover .avatar-prompt-container {
+  opacity: 1;
+}
+
+
+
+// .avatar-cropped {
+// 	margin-top: -42px;
+// }
+
+#avatarFileUpload {
+	display: none;
+}
+
+.pre-upload-avatar {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    z-index: 1;
+    width: 300px;
+    border: 5px dashed $grey;
+    border-radius: 10px;
+    height: 350px;
+    color: $grey;
+    font-size: $font-h4;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: border .5s ease-in-out, color .5s ease-in-out, background .5s ease-in-out;
+    &:hover {
+    	border: 5px dashed $grey-dark;
+    	color: $grey-dark;
+    	background: $grey;
+    }
+}
