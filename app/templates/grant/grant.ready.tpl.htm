@@ -1,0 +1,10 @@
+<div class="row">
+	<div class="col-md-12">
+		<p class="font-h4 m-b-sm">Your Grant and Publishing fee action is ready to commit, simply just add it to the basket and following the checkout process. The break down of fees are available to view in the 'Fee Breakdown' tab to the <span class="d-md-none d-lg-inline">right.</span> <span class="d-md-inline d-lg-none">below.</span></p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 d-flex justify-content-end">
+        <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.grant" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent"></ngcart-addtocart>
+	</div>
+</div>
