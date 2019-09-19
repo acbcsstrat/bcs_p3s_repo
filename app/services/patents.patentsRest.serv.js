@@ -50,8 +50,7 @@ function patentsRestService($http, $q, organiseColourService) {
          $http.get(ppdomain+'rest-patent/'+ id)
             .then(
             function (response) {
-                response.data.p3sServicesWithFees.map(function(patent){
-                    return patent.p3sServices.map(function(property){
+                response.data.p3sServicesWithFees.map(function(property){
                         if(property.currentStageColour) {
                             property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text')
                         }
@@ -59,7 +58,7 @@ function patentsRestService($http, $q, organiseColourService) {
                             property.cssNext = organiseColourService.getCurrColour(property.nextStageColour, 'text')
                         }
                         return property
-                    })
+                
                 })                
                 deferred.resolve(response.data);
             },

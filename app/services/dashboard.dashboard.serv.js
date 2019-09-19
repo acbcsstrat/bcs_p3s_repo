@@ -38,12 +38,7 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
                 }
                 
             }
-        }           
-
-        // if((Array.isArray(patents) && patents.length === 0) || patents === null) {
-        //     setActionCosts(null)
-        //     return;
-        // }
+        }
 
         obj.Total = patents.length;
 
