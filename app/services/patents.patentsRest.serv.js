@@ -1,8 +1,8 @@
 angular.module('ppApp').factory('patentsRestService', patentsRestService);
 
-patentsRestService.$inject = ['$http', '$q'];
+patentsRestService.$inject = ['$http', '$q', 'organiseColourService'];
 
-function patentsRestService($http, $q) {
+function patentsRestService($http, $q, organiseColourService) {
 
     var REST_SERVICE_URI = ppdomain+'rest-patents/'; 
 
@@ -22,6 +22,17 @@ function patentsRestService($http, $q) {
          $http.get(ppdomain+'rest-patents-portfolio/')
             .then(
             function (response) {
+                response.data.map(function(patent){
+                    return patent.p3sServices.map(function(property){
+                        if(property.currentStageColour) {
+                            property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text')
+                        }
+                        if(property.nextStageColour) {
+                            property.cssNext = organiseColourService.getCurrColour(property.nextStageColour, 'text')
+                        }
+                        return property
+                    })
+                })
                 deferred.resolve(response.data);
             },
             function(errResponse){
@@ -39,6 +50,17 @@ function patentsRestService($http, $q) {
          $http.get(ppdomain+'rest-patent/'+ id)
             .then(
             function (response) {
+                response.data.p3sServicesWithFees.map(function(patent){
+                    return patent.p3sServices.map(function(property){
+                        if(property.currentStageColour) {
+                            property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text')
+                        }
+                        if(property.nextStageColour) {
+                            property.cssNext = organiseColourService.getCurrColour(property.nextStageColour, 'text')
+                        }
+                        return property
+                    })
+                })                
                 deferred.resolve(response.data);
             },
             function(errResponse){

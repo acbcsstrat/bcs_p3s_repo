@@ -225,9 +225,9 @@
                             </td>
                             <td class="t-data__td">
 
-                                <table data-ng-if="patent.P3Sservice.length == 1">
+                                <table data-ng-if="patent.p3sServices.length == 1">
                                     <tr>
-                                        <td data-ng-repeat="item in patent.P3Sservice">
+                                        <td data-ng-repeat="item in patent.p3sServices">
                                             <div data-ng-if="item.saleType === 'Not In Progress'"> <!--cover all actions that cannot be sold -->
                                                 <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
                                             </div>
@@ -248,7 +248,8 @@
                                                         <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="item.cssCurrent"></i>
 
                                                         <p data-ng-if="!item.isUrgentAttention && item.currentStageColour !== 'Black' && item.saleType === 'Online' || 'Offline'" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
-                                                        <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
+                                                        <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
+                                                        <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -257,8 +258,8 @@
                                     </tr>
                                 </table>
 
-                                <table data-ng-if="patent.P3Sservice.length > 1">
-                                    <tr data-ng-repeat="item in patent.P3Sservice">
+                                <table data-ng-if="patent.p3sServices.length > 1">
+                                    <tr data-ng-repeat="item in patent.p3sServices">
                                         <td class="t-data__td border-grey-xs--left">
 
                                             <div data-ng-if="item.saleType === 'Not In Progress'"> <!--cover all actions that cannot be sold -->
@@ -287,7 +288,8 @@
                                                     <p data-ng-class="item.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
                                                     <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="item.cssCurrent"></i>
                                                     <p data-ng-if="!item.isUrgentAttention" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
-                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.isUrgentAttention" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
+                                                        <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
+                                                        <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
                                                 </div>
                                             </div>
 
@@ -300,10 +302,10 @@
                                 <span data-ng-if="patent.epeStage == 'Prosecution'">Renewal</span>
                             </td><!--when multiple services begin-->
                             <td class="t-data__td">
-                                <table data-ng-if="patent.P3Sservice.length == 1">
+                                <table data-ng-if="patent.p3sServices.length == 1">
                                     <tr>
                                         <td>
-                                            <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.P3Sservice">
+                                            <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.p3sServices">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
                                                     <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--bordered btn-underlined generateForm1200" data-ng-click="$ctrl.generateForm1200(patent.id)">Generate Form 1200</a>
 
@@ -320,8 +322,8 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <table data-ng-if="patent.P3Sservice.length > 1">
-                                    <tr data-ng-repeat="item in patent.P3Sservice">
+                                <table data-ng-if="patent.p3sServices.length > 1">
+                                    <tr data-ng-repeat="item in patent.p3sServices">
                                         <td class="t-data__td">
                                             <div class="d-flex justify-content-center">
                                                 <div data-ng-if="item.serviceType == 'Form1200'">
