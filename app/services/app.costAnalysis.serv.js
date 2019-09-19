@@ -8,18 +8,18 @@ function costAnalysisService($http, $q) {
         fetchCa: fetchCa
     }
 
-    function fetchCa(patent) {
+    function fetchCa(patentID, services) {
 
         var array = [];
         var deferred = $q.defer();
 
-        patent.p3sServicesWithFees.forEach(function(data){
+        services.forEach(function(data){
             if(data.serviceType == 'epct') {
-                array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patent.patentID))
+                array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patentID))
 
             }
             if(data.serviceType == 'renewal') {
-                array.push($http.get(ppdomain+'rest-cost-analysis/'+patent.patentID))
+                array.push($http.get(ppdomain+'rest-cost-analysis/'+patentID))
             }
         })
 

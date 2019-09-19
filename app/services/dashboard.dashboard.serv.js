@@ -48,8 +48,8 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
         obj.Total = patents.length;
 
         for(var i = 0; i < patents.length; i++) {
-            
-            var item =  patents[i].serviceList;
+
+            var item =  patents[i].p3sServices;
 
             if(item.length !== 0) {
                 patents[i].cssCurrent = organiseColourService.getCurrColour(item[0].currentStageColour, 'text')
@@ -62,13 +62,12 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
 
         for(var property in obj) {
             if(obj.hasOwnProperty(property)) {
-
                 if(obj[property].length > 0) {
-                    if(obj[property][0].serviceList.length === 0) {
-                        phase = 'Grey'
+                    if(obj[property][0].p3sServices.length === 0) {
+                        phase = 'Grey';
                     }
-                    if(obj[property][0].serviceList.length > 0) {
-                        phase = obj[property][0].serviceList[0].currentStageColour;
+                    if(obj[property][0].p3sServices.length > 0) {
+                        phase = obj[property][0].p3sServices[0].currentStageColour;
                     }
                     break;
                 }
@@ -84,41 +83,26 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
 
     function setActionCost(patent) {
 
-        if(patent === undefined || typeof patent === 'undefined') {
-            factory.actionCost = patent;
-            return;
-        }
-
-        if((patent.serviceStatus === 'Too late to renew') || (patent.serviceStatus === 'Too late' && patent.serviceList[0].currentStageColour == 'Red')) {
-            factory.actionCost = undefined;
-            return
-        }
-
         patentsRestService.fetchPatentItem(patent.id)
         .then(
-            function(response){
-                return response;
-            }
-        )
-        .then(
             function(patent){
-                if(patent == null || patent == undefined) {
-                    patent = null;
-                    return;
+
+                var service = patent.p3sServicesWithFees;
+
+                var fee = Object.keys(service[0]).find(function(el){
+                    if(el.indexOf('FeeUI') > 0 && service[0][el] !== null) {
+                        return true;
+                    }
+                    return false
+                })
+
+                if(service[0][fee]) {
+                    if(service[0].saleType === 'Online' || service[0].saleType === 'Offline') {
+                        patent.cartService = fee.replace('FeeUI','');
+                        patent.serviceCost = service[0][fee];
+                    }
                 }
 
-                if(patent.renewalFeeUI !== null) {
-                    if(actionStatus(patent.renewalStatus) && patent.renewalStatus !== 'Payment in progress' && patent.renewalStatus !== 'EPO Instructed') {
-                        patent.cartService = 'Renewal';
-                    }
-                    patent.serviceCost = patent.renewalFeeUI;
-                } else {
-                    if(actionStatus(patent.epctStatus) && patent.epctStatus !== 'Payment in progress' && patent.epctStatus !==  'EPO Instructed'  && patent.epctStatus !==  'Epct being generated' && patent.epctStatus !==  'Epct available') {
-                        patent.cartService = 'Epct';
-                    }
-                    patent.serviceCost = patent.form1200FeeUI;
-                }
-                
                 return patent
             }
         )
