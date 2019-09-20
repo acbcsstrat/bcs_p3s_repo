@@ -80,7 +80,7 @@ function appRoutes($stateProvider) {
                     var match = patents.find(function(patent){
                         return patent.patentID == $stateParams.patentId;
                     })
-                    return patentsRestService.fetchPatentItem(match.id);
+                    return patentsRestService.fetchPatentItem(match.patentID);
                 }],
                 ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
                     return costAnalysisService.fetchCa(patent.patentID, patent.p3sServicesWithFees);  
