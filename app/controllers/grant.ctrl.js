@@ -7,7 +7,6 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 	var vm = this;
 
 	vm.patent = patent;
-    // vm.grantNotSuitable = grantNotSuitable;
 	vm.initiateGrantOrder = initiateGrantOrder;
     vm.templates = [
         { name: 'grantintro.html', url: 'app/templates/grant/grant.intro.tpl.htm'},
@@ -15,7 +14,6 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         { name: 'grantgenerated.html', url: 'app/templates/grant/grant.ready.tpl.htm'}
     ];
     vm.highestPoint = 0;
-    vm.prepareAction = prepareAction;
     vm.uninhibitGrantConfirm = uninhibitGrantConfirm;
 
     function init() {
