@@ -1,8 +1,8 @@
-angular.module('ppApp').factory('calculateService', calculateService);
+export default angular.module('ppApp').factory('calculateService', calculateService).name;
 
-calculateService.$inject = ['$q', '$timeout', 'patentsRestService', 'fxService'];
+calculateService.$inject = ['$q', '$timeout'];
 
-function calculateService($q, $timeout, patentsRestService, fxService) {
+function calculateService($q, $timeout) {
 
 	var factory = {
 		calculateHours: calculateHours,

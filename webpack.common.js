@@ -6,36 +6,27 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  devtool: "source-map",
   entry: {
-    vendor: './src/js/vendor.js',   
-    app: './src/js/index.js',
-    style: './src/scss/main.scss'
+    // vendor: './src/js/vendor.js',   
+    app: './src/js/app.js'
+    // style: './src/scss/main.scss'
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "./dist"),
     filename: '[name].bundle.js'
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
   },
   resolve: {
     alias: {
-      localScripts: path.resolve(__dirname, 'assets'),
-      app: path.resolve(__dirname, 'app'),
+      localScripts: path.resolve(__dirname, 'assets')
     }
   },
   module: {
     rules: [
-      // {
-      //   test: /\.js$/,
-      //   exclude: /(node_modules|bower_components)/,
-      //   use: {
-      //     loader: 'babel-loader',
-      //     options: {
-      //       presets: ['@babel/preset-env'],
-      //       plugins: ['@babel/plugin-transform-runtime']
-
-      //     }
-      //   }
-      // },
       {
         test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         use: [
@@ -48,6 +39,10 @@ module.exports = {
             },            
         ]
       }, 
+      { 
+        test: /\.(html|tpl)$/, 
+        loader: 'html-loader' 
+      },
       {
         test: /\.css$/,
         use: [
@@ -95,9 +90,10 @@ module.exports = {
     }),  
     new webpack.ContextReplacementPlugin(/\.\/locale$/, 'empty-module', false, /js$/), //needed for bug in moment
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: true,
       title: 'Patent Place',
-      template: 'index.htm'
+      template: 'indexxx.html',    
+      filename:'index.html'
 
     }),
     new webpack.NamedModulesPlugin(),

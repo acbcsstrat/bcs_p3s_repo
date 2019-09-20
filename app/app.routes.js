@@ -1,8 +1,13 @@
-angular.module('ppApp').config(appRoutes);
+export default angular.module('ppApp.routes', []).config(appRoutes).name;
 
-appRoutes.$inject = ['$stateProvider'];
+appRoutes.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-function appRoutes($stateProvider) {
+function appRoutes($stateProvider, $urlRouterProvider) {
+
+    $urlRouterProvider
+        .when('', '/dashboard')
+        .when('/', '/dashboard')
+        .otherwise('/dashboard');
 
     $stateProvider
         .state('dashboard', {

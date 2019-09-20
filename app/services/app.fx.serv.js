@@ -1,4 +1,4 @@
-angular.module('ppApp').factory('fxService', fxService);
+export default angular.module('services.fx-service', []).factory('fxService', fxService).name;
 
 fxService.$inject = ['$q', '$http'];
 

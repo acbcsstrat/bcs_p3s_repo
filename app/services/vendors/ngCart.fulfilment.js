@@ -1,4 +1,4 @@
-angular.module('ngCart.fulfilment', [])
+export default angular.module('ngCart.fulfilment', [])
 
 .service('fulfilmentProvider', ['$injector', '$state', '$timeout', function($injector, $state, $timeout){
 
@@ -47,7 +47,7 @@ angular.module('ngCart.fulfilment', [])
             return deferred.promise;
         };
 
- }]);
+ }]).name
 
 
 

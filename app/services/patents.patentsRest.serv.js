@@ -1,4 +1,6 @@
-angular.module('ppApp').factory('patentsRestService', patentsRestService);
+import organiseColourService from '../../app/services/app.organiseColour.serv.js'
+
+export default angular.module('services.patents-rest-service', [organiseColourService]).factory('patentsRestService', patentsRestService).name
 
 patentsRestService.$inject = ['$http', '$q', 'organiseColourService'];
 
@@ -18,6 +20,7 @@ function patentsRestService($http, $q, organiseColourService) {
 
     function fetchAllPatents() {
     
+    
         var deferred = $q.defer();
          $http.get(ppdomain+'rest-patents-portfolio/')
             .then(
@@ -36,7 +39,8 @@ function patentsRestService($http, $q, organiseColourService) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
-                console.error('Error while fetching patents');
+
+                console.error('Error while fetching patentssss');
                 deferred.reject(errResponse);
             }
         );

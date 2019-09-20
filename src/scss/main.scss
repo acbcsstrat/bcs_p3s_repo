@@ -16,8 +16,6 @@
 @import "./vendors/extensions/_font-awesome.scss";
 @import "./vendors/extensions/_croppie.scss";
 @import "./vendors/_stepProgress.scss";
-@import "./vendors/angular-ui-carousel/dist/ui-carousel.min.css";
-@import "./vendors/angular-carousel/dist/angular-carousel.min.css";
 
 @import "./base/_colours.scss";
 @import "./base/_typography.scss";
@@ -32,7 +30,7 @@
 @import "./layouts/_panels.scss";
 @import "./layouts/_sidenav.scss";
 
-@import "./pages/_dashboard.scss";
+// @import "./pages/_dashboard.scss";
 @import "./pages/_transactions.scss";
 @import "./pages/_user-profile.scss";
 @import "./pages/_portfolio.scss";

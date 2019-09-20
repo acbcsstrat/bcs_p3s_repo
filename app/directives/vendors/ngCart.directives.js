@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('ngCart.directives', ['ngCart.fulfilment'])
+import fulfilment from '../../services/vendors/ngCart.fulfilment.js';
+
+export default angular.module('ngCart.directives', [fulfilment])
 
 .controller('CartController',['$scope', 'ngCart', '$state', function($scope, ngCart, $state) {
     $scope.ngCart = ngCart;
@@ -203,6 +205,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             }
         }
     };
-}]);
+}]).name
 
 

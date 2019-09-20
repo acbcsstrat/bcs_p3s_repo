@@ -1,8 +1,11 @@
-angular.module('ppApp').controller('coreCtrl', coreCtrl);
+import coreService from '../../app/services/app.core.serv.js';
+import patentsRestService from '../../app/services/patents.patentsRest.serv.js';
 
-coreCtrl.$inject = ['$uibModal', '$scope', 'coreService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'coreService', 'organiseColourService', '$cookies'];
+export default angular.module('ppApp.core', [coreService, patentsRestService]).controller('coreCtrl', coreCtrl).name
 
-function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, coreService, organiseColourService, $cookies) {
+coreCtrl.$inject = ['$uibModal', '$scope', 'coreService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'organiseColourService', '$cookies'];
+
+function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, organiseColourService, $cookies) {
 
 	var vm = this;
 
@@ -77,26 +80,26 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
   	})
 
     function init() {
-
-        patentsRestService.fetchAllPatents()
-        .then(
-            function(response){
-                if(response.length === 0) {
-                    patentsFound = false;
-                }
-			    if(patentsFound === false) {
-					$timeout(function() {
+    	
+    //     patentsRestService.fetchAllPatents()
+    //     .then(
+    //         function(response){
+    //             if(response.length === 0) {
+    //                 patentsFound = false;
+    //             }
+			 //    if(patentsFound === false) {
+				// 	$timeout(function() {
 					 	
-					 	welcomeMessageModal();
+				// 	 	welcomeMessageModal();
 						
-					}, 350);
-				}                
+				// 	}, 350);
+				// }                
 
-            },
-            function(errResponse){
-                console.log(errResponse)
-            }
-        )
+    //         },
+    //         function(errResponse){
+    //             console.log(errResponse)
+    //         }
+    //     )
 
     }
 

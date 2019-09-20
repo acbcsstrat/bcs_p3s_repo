@@ -1,4 +1,6 @@
-angular.module('ppApp').factory('userService', userService)
+import angular from 'angular';
+
+export default angular.module('services.user-service', []).factory('userService', userService).name
 
 userService.$inject = ['$http', '$q']; 
 

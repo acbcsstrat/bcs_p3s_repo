@@ -1,4 +1,4 @@
-angular.module('ppApp').factory('organiseColourService', organiseColourService);
+export default angular.module('services.organise-colour-service', []).factory('organiseColourService', organiseColourService).name
 
 organiseColourService.$inject = ['$http', '$q'];
 

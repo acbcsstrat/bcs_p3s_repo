@@ -1,4 +1,6 @@
-angular.module('ppApp').factory('coreService', coreService);
+import fxService from '../../app/services/app.fx.serv.js';
+
+export default angular.module('services.core-service', [fxService]).factory('coreService', coreService).name;
 
 coreService.$inject = ['$q', '$timeout', 'fxService', '$http'];
 
