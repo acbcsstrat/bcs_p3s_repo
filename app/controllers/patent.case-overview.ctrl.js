@@ -74,15 +74,15 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         $scope.availableServices.forEach(function(obj){
 
-            if(obj.action == 'Form1200') {
-                if((organiseTextService.actionStatus(obj.status) && obj.action == 'Form1200') || (obj.status == 'Epct being generated' && obj.action == 'Form1200')) {
+            if(obj.action == 'epct') {
+                if((organiseTextService.actionStatus(obj.status) && obj.action == 'epct') || (obj.status == 'Epct being generated' && obj.action == 'epct')) {
                     vm.displayForm1200Tab = true;
                     return;
                 }
                 vm.displayForm1200Tab = false;
             }
 
-            if(obj.action == 'Grant') {
+            if(obj.action == 'grant') {
                 vm.displayGrantTab = true;
             }
 

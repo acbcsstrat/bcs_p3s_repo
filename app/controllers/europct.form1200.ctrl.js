@@ -92,7 +92,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
         
         // console.log('intiate')
 
-        form1200Service.fetchQuestions(patent.id)
+        form1200Service.fetchQuestions(patent.patentID)
         .then(
             function(response){
                 if(response !== null) {
