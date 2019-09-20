@@ -48,7 +48,7 @@ function patentDetailsCtrl(patent, ca, $rootScope, $scope, $state, $stateParams,
 
     function updatePatent(patent) {
         console.log(patent)
-        patentsRestService.updatePatent(patent, patent.id)
+        patentsRestService.updatePatent(patent, patent.patentID)
         .then(
             function(response){
                 updatePatentSuccess();

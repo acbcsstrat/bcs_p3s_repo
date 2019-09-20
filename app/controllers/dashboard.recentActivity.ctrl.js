@@ -58,7 +58,7 @@ function recentActivityCtrl(patentIds, calculateService, costAnalysisService, co
 
 		if(patentIds.length > 0) {
 			patentIds.forEach(function(patent){
-				costAnalysisService.fetchCa(patent.id, patent.p3sServices)
+				costAnalysisService.fetchCa(patent.patentID, patent.p3sServices)
 				.then(
 					function(response, i){
 						if(patent.serviceList.length > 0) {

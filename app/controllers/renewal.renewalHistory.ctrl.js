@@ -10,7 +10,7 @@ function renewalHistoryCtrl(patent, chunkDataService, renewalRestService) {
 
     function init(){
 
-        renewalRestService.fetchHistory(patent.id)
+        renewalRestService.fetchHistory(patent.patentID)
         .then(
         	function(response){
                 vm.renewal = response;

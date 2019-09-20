@@ -82,9 +82,9 @@
 					<div class="border-grey-xs--btm"></div>
 	                <div class="row m-t-md">
 	                	<div class="col-xl-12 text-right">
-				            <transaction-link trans-id="{{$ctrl.patent.id}}" data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == ('Payment in progress' || 'EPO Instructed')"></transaction-link>
-				            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.form1200FeeUI !== null && $ctrl.patent.epctStatus == 'Epct saved'"></ngcart-addtocart>
-				            <ngcart-addtocart id="{{$ctrl.patent.id}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.renewalFeeUI !== null && $ctrl.patent.renewalStatus == 'Show price'"></ngcart-addtocart>             
+				            <transaction-link trans-id="{{$ctrl.patent.patentID}}" data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == ('Payment in progress' || 'EPO Instructed')"></transaction-link>
+				            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.form1200FeeUI !== null && $ctrl.patent.epctStatus == 'Epct saved'"></ngcart-addtocart>
+				            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.renewalFeeUI !== null && $ctrl.patent.renewalStatus == 'Show price'"></ngcart-addtocart>             
 				        </div>          
 	                </div>				
 				</div>
@@ -107,7 +107,7 @@
 
 <div class="row m-t-md">
 	<div class="col-xl-12 text-left">
-		<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove patent" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.id)">
+		<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove patent" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.patentID)">
 	</div>
 </div>
 

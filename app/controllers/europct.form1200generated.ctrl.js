@@ -19,7 +19,7 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
             controller: ['$uibModalInstance', function($uibModalInstance){
 
                 this.confirm = function() {
-                    deleteApplication($scope.patent.id)
+                    deleteApplication($scope.patent.patentID)
                     $uibModalInstance.close();
                 }
 
@@ -63,7 +63,7 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
                     
                 };
                 $timeout(function() {
-                    $state.go('portfolio.patent', {patentId: $scope.patent.id}, {reload: true}); //go to patent info on successful deletion                    
+                    $state.go('portfolio.patent', {patentId: $scope.patent.patentID}, {reload: true}); //go to patent info on successful deletion                    
                 }, 200);
                
             }]

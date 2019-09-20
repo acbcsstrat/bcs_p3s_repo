@@ -78,7 +78,7 @@ function appRoutes($stateProvider) {
             resolve: {
                 patent: ['patents', '$stateParams', 'patentsRestService', function(patents, $stateParams, patentsRestService) {
                     var match = patents.find(function(patent){
-                        return patent.id == $stateParams.patentId;
+                        return patent.patentID == $stateParams.patentId;
                     })
                     return patentsRestService.fetchPatentItem(match.id);
                 }],

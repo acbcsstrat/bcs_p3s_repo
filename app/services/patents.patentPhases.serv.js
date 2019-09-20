@@ -108,7 +108,7 @@ function patentPhasesService($timeout, $q, $rootScope, calculateService, patents
 
 		function setPatent(patent) {
 			if(patent.serviceList.length > 0) {
-				patent.serviceList[0].id = patent.id;
+				patent.serviceList[0].id = patent.patentID;
 				factory.getPatent = patent;
 			} else {
 				factory.getPatent = '';

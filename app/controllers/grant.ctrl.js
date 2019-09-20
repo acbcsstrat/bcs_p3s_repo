@@ -41,7 +41,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         var notifyWhenValidationAvailable = (function(){
             data.data.optInValidation = data.data.optInValidation.no === true ? false : true;
         }())
-        formData.append('patent_ID', patent.id);
+        formData.append('patent_ID', patent.patentID);
         formData.append('totalClaims', parseInt(data.data.totalClaims));
         formData.append('ofWhichClaimsUnpaid', parseInt(data.data.totalAdditionalClaims));
         formData.append('totalPages', parseInt(data.data.totalPages));
