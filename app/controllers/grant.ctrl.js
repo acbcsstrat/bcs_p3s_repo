@@ -16,6 +16,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     ];
     vm.highestPoint = 0;
     vm.prepareAction = prepareAction;
+    vm.uninhibitGrantConfirm = uninhibitGrantConfirm;
 
     function init() {
   
@@ -70,9 +71,14 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             template: 'representative',
             displayHelp: false,
             checkError: function(value) {
+                var obj = {}
+                obj.title = 'Representative'
+                ob.message = 'If you confirm that you do not wish IP Place to act as representative The Patent Place can only offer help with your application offline\
+                    via a Patent Administrator, and the order will become unavailable to process via the applcation. For further help please contact The Patent Place via\
+                     email: support@ip.place, or phone: +44 203 696 0949'
                 if(value === true) {
                     this.showError = true;
-                    grantNotSuitableRepresentative()
+                    inhibitGrantConfirm(obj);
                     return
                 }
                 this.showError = false;
@@ -86,13 +92,18 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             template: 'approvetext',
             displayHelp: false,
             checkError: function(value) {
+                var obj = {}
+                obj.title = 'Patent Specification'
+                ob.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can only offer help with your application offline\
+                    via a Patent Administrator, and the order will become unavailable to process via the applcation. For further help please contact The Patent Place via\
+                     email: support@ip.place, or phone: +44 203 696 0949'
                 if(value === true) {
                     this.showError = true;
-                    grantNotSuitableApprove()
+                    inhibitGrantConfirm(obj);
                     return
                 }
                 this.showError = false;
-            },
+            },      
             showError: false,
             valid: false,
             required: true
@@ -154,73 +165,94 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         }           
 	];
 
+
 	function initiateGrantOrder() {
 		grantService.setQuestions(grantQuestions);
     	vm.grantTemplate = vm.templates[1].url;
 	}
 
-	function prepareAction() {
+    function uninhibitGrant() {
+        grantService.unhibitGrant(patent.patentID)
+        .then(
+            function(response){
 
-		grantService.prepareOrder()
-		.then(
-			function(response){
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.grant-order-deleted.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
-		        var modalInstance = $uibModal.open({
-		            templateUrl: 'app/templates/modals/modal.prepare-grant-order.tpl.htm',
-		            appendTo: undefined,
-		            controllerAs: '$ctrl',
-		            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                            $state.reload()
+                        };
 
-		                this.dismissModal = function() {
-		                    $uibModalInstance.close();
-		                };
+                    }]
+                });
 
-		                $timeout(function(){
-		                	$state.go('portfolio.patent', {grantOrder: 1}, {reload: true})
-		                }, 300)
+            },
+            function(errResponse){
+                console.errr('Error deleting grant order: ', errResponse)
+            }
+        )
+    }
 
-		            }]
-		        });
-			}
-		)	
+    function uninhibitGrantConfirm() {
 
-	}
-
-	function confirmNotifyValidation(checked) {
-
-		grantService.optForNotification()
-		.then(
-			function(response){
-				vm.hideOptIn = true;
-		        var modalInstance = $uibModal.open({
-		            templateUrl: 'app/templates/modals/modal.validaiton-notify-success.tpl.htm',
-		            appendTo: undefined,
-		            controllerAs: '$ctrl',
-		            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-		                this.dismissModal = function() {
-		                    $uibModalInstance.close();
-		                };
-
-		                $timeout(function(){
-		                	$state.go('.', {}, {reload: true})
-		                }, 300)
-
-		            }]
-		        });
-			}
-		)
-
-	}
-
-	function grantNotSuitableRepresentative() {
-
-		vm.cannotProceed = true;
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.confirm-grant-not-suitable-representative.tpl.htm',
+            templateUrl: 'app/templates/modals/modal.confrm-grant-order-delete.tpl.htm',
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.uninhibitGrant = function() {
+                    uninhibitGrant()
+                }
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                    $state.reload()
+                };
+
+            }]
+        });
+
+    }
+
+    function inhibitGrant() {
+        grantService.inhibitGrant(patent.patentID)
+        .then(
+            function(response) {
+                $state.reload();
+            },
+            function(errResponse){
+                console.error('Error inhibiting grant order: ', errResponse)
+            }
+        )
+    }
+
+    function inhibitGrantconfirm(message) {
+
+        var modalInstance = $uibModal.open({
+            template: '<div class="modal-header d-flex flex-column align-items-center justify-content-center">\
+                            <span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>\
+                            <div class="m-b-sm">\
+                                <i class="fas fa-exclamation-circle fa-4x txt-phase-red"></i>\
+                            </div>\
+                            <p class="font-h3 font-weight-medium">'+message.title+'</p>\
+                            <p class="font-body w-100 text-center m-b-sm m-t-xs">'+ message.message+'</p>\
+                            <div class="d-flex">\
+                                <button class="btn btn--lg btn--red pill-radius m-r-md" data-ng-click="$ctrl.dismissModal()">Cancel</button>\
+                                <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.confirmNotSuitable()">Confirm</button>\
+                            </div>\
+                        </div>',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.confirm = function() {
+                    inhibitGrant();
+                }
 
                 this.dismissModal = function() {
                     $uibModalInstance.close();
@@ -228,25 +260,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
             }]
         });
-		
-	}
 
-    function grantNotSuitableApprove() {
-
-        vm.cannotProceed = true;
-        var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.confirm-grant-not-suitable-approve.tpl.htm',
-            appendTo: undefined,
-            controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-                this.dismissModal = function() {
-                    $uibModalInstance.close();
-                };
-
-            }]
-        });
-        
     }
 
 }

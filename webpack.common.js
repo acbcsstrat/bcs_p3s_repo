@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  devtool: "source-map",
   entry: {
     vendor: './src/js/vendor.js',   
     app: './src/js/index.js',
