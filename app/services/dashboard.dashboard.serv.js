@@ -42,16 +42,18 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
         obj.Total = patents.length;
 
         for(var i = 0; i < patents.length; i++) {
-            var item =  patents[i].p3sServices;
-            if(item.length !== 0) {
-                item.cssCurrent = organiseColourService.getCurrColour(item[0].currentStageColour, 'text')
-                item.cssNext = organiseColourService.getCurrColour(item[0].nextStageColour, 'text')
-                var string = item[0].currentStageColour.toLowerCase();
+            for(var k = 0; k < patents[i].p3sServices.length; k++) {
+                var item = patents[i].p3sServices[k];
+                item.cssCurrent = organiseColourService.getCurrColour(item.currentStageColour, 'text')
+                item.cssNext = organiseColourService.getCurrColour(item.nextStageColour, 'text')
+                var string = item.currentStageColour.toLowerCase();
                 var capitlized = string.charAt(0).toUpperCase() + string.slice(1)
                 obj[capitlized].push(patents[i]);
-            } else {    
-                obj.Grey.push(patents[i]);
             }
+
+     
+
+
         }
 
         for(var property in obj) {

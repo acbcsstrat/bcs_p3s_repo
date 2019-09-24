@@ -39,7 +39,7 @@ function recentActivityCtrl(patentIds, calculateService, costAnalysisService, co
 	}
 
 	function changeActivity(activity) {
-		// console.log(activity)
+
 		if(activity == 'Stage Change') {
 			fetchStageChanges();
 			return;
@@ -58,44 +58,46 @@ function recentActivityCtrl(patentIds, calculateService, costAnalysisService, co
 
 		if(patentIds.length > 0) {
 			patentIds.forEach(function(patent){
-				costAnalysisService.fetchCa(patent.patentID, patent.p3sServices)
-				.then(
-					function(response, i){
-						if(patent.serviceList.length > 0) {
-		        			if(patent.serviceStatus == 'Show price' || patent.serviceStatus == 'Too late to renew' || patent.serviceStatus == 'Epct available' || patent.serviceStatus == 'Epct rejected' || patent.serviceStatus == 'Epct saved') {
-		        				var hours = calculateService.calculateHours(patent.serviceList[0].currentStageColour, response[0].data);
+				patent.p3sServices.forEach(function(service){
+					if(service.saleType !== 'Not In Progress') {					
+						costAnalysisService.fetchCa(patent.patentID, patent.p3sServices)
+						.then(
+							function(response, i){
+		        				var hours = calculateService.calculateHours(service.currentStageColour, response[0].data);
 		    					if(calculateService.recentActivity(hours)) {
 		    						vm.recentActivityData.push(patent);
 		    					}
-		        			}
-						}
-					},
-					function(errResponse) {
-						console.log(errResponse)
+							},
+							function(errResponse) {
+								console.error('Error finding recent activites:', errResponse)
+							}
+						);
 					}
-				);
+				})
 			})
 		}
-		
-
 	}
 
 	function fetchTransChanges() {
 
 		vm.recentTransArr = [];
 		currentTransactions
-		.then(function(response){
-			if(response.length > 0) {
-				response.forEach(function(data){
-					var hours =  new Date().getTime() - data.lastUpdatedDate;
-					var recentTrans  = calculateService.recentActivity(hours);
-					if(recentTrans) {
-						vm.recentTransArr.push(data);
-					}
-				});	
+		.then(
+			function(response){
+				if(response.length > 0) {
+					response.forEach(function(data){
+						var hours =  new Date().getTime() - data.lastUpdatedDate;
+						var recentTrans  = calculateService.recentActivity(hours);
+						if(recentTrans) {
+							vm.recentTransArr.push(data);
+						}
+					});	
+				}
+			},
+			function(errResponse) {
+				console.error('Error finding recent transactions: ', errResponse)
 			}
-
-		})
+		)
 
 
 	}
