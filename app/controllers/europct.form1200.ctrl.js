@@ -92,7 +92,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
         
         // console.log('intiate')
 
-        form1200Service.fetchQuestions(patent.id)
+        form1200Service.fetchQuestions(patent.patentID)
         .then(
             function(response){
                 if(response !== null) {
@@ -250,7 +250,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
         var arr = sortPageDetails(formData.data.pageDetailsData);
 
         formData.data.pageDescriptionsUI = arr;
-        formData.data.id = patent.id;
+        formData.data.id = patent.patentID;
         formData.data.totalClaims = parseInt(formData.data.totalClaims);
         formData.data.totalPages = parseInt(formData.data.totalPages);
 

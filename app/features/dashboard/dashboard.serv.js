@@ -78,7 +78,7 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
 
     function setActionCost(patent) {
 
-        patentsRestService.fetchPatentItem(patent.id)
+        patentsRestService.fetchPatentItem(patent.patentID)
         .then(
             function(patent){
 
