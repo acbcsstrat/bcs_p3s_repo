@@ -79,6 +79,11 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
 
     function setActionCost(patent) {
 
+        if(patent === undefined || patent.saleType === 'Not In Progress') {
+            factory.actionCost = undefined;
+            return
+        }
+
         patentsRestService.fetchPatentItem(patent.patentID)
         .then(
             function(patent){
@@ -93,6 +98,7 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
                 })
 
                 if(service[0][fee]) {
+
                     if(service[0].saleType === 'Online' || service[0].saleType === 'Offline') {
                         patent.cartService = fee.replace('FeeUI','');
                         patent.serviceCost = service[0][fee];

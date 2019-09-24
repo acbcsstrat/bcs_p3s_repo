@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('recentActivityCtrl', recentActivityCtrl);
 
-recentActivityCtrl.$inject = ['patentIds', 'calculateService', 'costAnalysisService', 'coreService', 'transactionHistoryService', 'currentTransactionsService', 'organiseColourService'];
+recentActivityCtrl.$inject = ['patentIds', 'calculateService', 'costAnalysisService', 'transactionHistoryService', 'currentTransactionsService'];
 
-function recentActivityCtrl(patentIds, calculateService, costAnalysisService, coreService, transactionHistoryService, currentTransactionsService, organiseColourService) {
+function recentActivityCtrl(patentIds, calculateService, costAnalysisService, transactionHistoryService, currentTransactionsService) {
 
 	var vm = this;
 

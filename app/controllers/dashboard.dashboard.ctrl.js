@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('dashboardCtrl', dashboardCtrl);
 
-dashboardCtrl.$inject = ['$scope','$state', 'patentIds', '$timeout', '$rootScope', 'patentPhasesService', '$transitions', 'dashboardService', '$transitions'];
+dashboardCtrl.$inject = ['$scope', 'patentIds', '$timeout', 'dashboardService'];
 
-function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentPhasesService, $transitions, dashboardService, $transitions) {
+function dashboardCtrl ($scope, patentIds, $timeout, dashboardService) {
 
     var vm = this;
 
