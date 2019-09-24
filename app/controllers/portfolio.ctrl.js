@@ -39,51 +39,17 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     function init() {
 
-        // if(patents[0].serviceList) {       
-        //     patents.map(function(service, i){
-        //         service.serviceStatus = 'Show price';
-        //         service.epeStage = 'Prosecution';
-        //         service.serviceList = [{
-        //             costBandEndDate: 1578960000000,
-        //             costBandEndDateUI: "Tue Jan 14, 2020",
-        //             cssCurrent: "txt-phase-green",
-        //             cssNext: "txt-phase-amber",
-        //             currentOfficialFeeEUR: 2530,
-        //             currentOfficialFeeUSD: 3089.71949,
-        //             currentStageColour: "Black",
-        //             currentStageCostUSD: 3164.71949,
-        //             failedReason: null,
-        //             isUrgentAttention: false,
-        //             nextStageColour: "Blue",
-        //             nextStageCostUSD: 3473.691439,
-        //             saleType: "Offline",
-        //             serviceStatus: "Show price",
-        //             serviceType: "Renewal",
-        //             serviceStatusUI: "Open for Renewal"
-        //         }];
-        //         service.P3Sservice = service.serviceList;
-        //         delete service.serviceList;
-        //         return service.P3Sservice.map(function(list){
-        //             // list.saleType = 'Online';
-        //             // list.actionable = organiseTextService.actionStatus(list.serviceStatus) ? true : false;
-        //             // list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
-        //             // list.uiStatus = organiseTextService.uiStatus(list.serviceStatus);
-        //             // list.isUrgentAttention = list.currentStageColour === 'Red' ? true : false;                
-        //             if(list.currentStageColour) {
-        //                 list.cssCurrent = organiseColourService.getCurrColour(list.currentStageColour, 'text')
-        //             }
-        //             if(list.nextStageColour) {
-        //                 list.cssNext = organiseColourService.getCurrColour(list.nextStageColour, 'text')
-        //             }
-        //         })
-
-        //     }) 
-        // }
-
+        var obj = patents[0].p3sServices[0];
+        obj.serviceType = 'renewal';
+        obj.serviceStatus = 'Show price'
+        obj.serviceStatusUI = 'Show Price'
+        patents[0].p3sServices.push(obj);
+ 
     }
 
-    init()
+    
 
+    init()
 
     function select(i) {
       vm.selected = i;
