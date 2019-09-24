@@ -13,6 +13,7 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
     vm.setPhase = setPhase
     vm.patents = dashboardService.getPatents;
     vm.availableActions = 0;
+    var setActionCostTmeout;
 
     var initialPhase = (function(){
         for(var property in vm.patents) {
@@ -30,10 +31,14 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
 
     function setActionCost(patent) {
         dashboardService.setActionCost(patent)
-        $timeout(function(){
+        setActionCostTmeout = $timeout(function(){
             $scope.$emit('updatePatent')
         }, 300)
     }
+
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(setActionCostTmeout)
+    })
 
     setActionCost(initialPhase)
 

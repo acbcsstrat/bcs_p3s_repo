@@ -10,6 +10,7 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
 
     vm.loading = true;
     vm.noPatents = true;
+    var updateCosttimeout;
 
     function init() {
         if(patentIds.length == 0) {
@@ -20,11 +21,15 @@ function renewalCostCtrl($scope, $timeout, $state, $location, $anchorScroll, pat
     init();
 
    $scope.$on('updateCost', function(e, o){
-        $timeout(function(){
+        updateCosttimeout = $timeout(function(){
             vm.actionCost = dashboardService.fetchActionCost();
             vm.loading = false;
         }, 300)
 
     })  
+
+   $scope.$on('$destroy', function(){
+        $timeout.cancel(updateCosttimeout)
+   })
 
 }
