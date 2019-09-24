@@ -20,12 +20,12 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
   
     	vm.activeTab = 0;
 
-		if(patent.P3SserviceWithFees[0].serviceStatus == 'Grant available') {
+		if(patent.P3SservicesWithFees[0].serviceStatus == 'Grant available') {
 			vm.grantStage = 1;
     		vm.grantTemplate = vm.templates[0].url;        
     	}
 
-		if(patent.P3SserviceWithFees[0].serviceStatus == 'Grant saved') {
+		if(patent.P3SservicesWithFees[0].serviceStatus == 'Grant saved') {
 			vm.grantStage = 2;
     		vm.grantTemplate = vm.templates[2].url;        
     	}    	
