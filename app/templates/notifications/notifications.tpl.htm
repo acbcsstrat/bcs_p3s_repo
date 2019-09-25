@@ -24,7 +24,7 @@
 		<div class="py-2 pl-5 notification-body border-grey-xs--left" data-ng-repeat="checkbox in $ctrl.notifications.green track by $index" index="$index">
     		<div class="d-flex flex-wrap">
                 <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
-                    <label for class="notification-radio">
+                    <label class="notification-radio">
                       	<input type="checkbox" data-ng-model="item.isOn">
                       	<span class="checkmark green"></span>
                     </label>
