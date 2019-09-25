@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
 
-caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService', 'renewalRestService', 'activeTabService', 'organiseColourService']
+caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal', 'renewalRestService', 'activeTabService']
 
-function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService, renewalRestService, activeTabService, organiseColourService) {
+function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, patentsRestService, $uibModal, renewalRestService, activeTabService) {
 
     var vm = this;
 
@@ -11,6 +11,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
+    $scope.availableServices = [];
+    $scope.notInProgress = true;
 
     function refreshChart (){
         $timeout(function(){  
@@ -52,17 +54,16 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 vm.displayRenewalHistoryTab = false;
             }
         )
-
-        $scope.availableServices = (function() {
-            return vm.patent.p3sServicesWithFees.map(function(data, index){
-               return {id: index, action: data.serviceType, status: data.serviceStatus}
-            })
-        }())
+       
+        vm.patent.p3sServicesWithFees.forEach(function(data, index){
+            $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
+            $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus})
+        })
 
         $scope.availableServices.forEach(function(obj){
 
             if(obj.action == 'epct') {
-                if(obj.action == 'epct' || (obj.status == 'Epct being generated' && obj.action == 'epct')) {
+                if(obj.status == 'Epct being generated' || obj.status == 'Epct available') {
                     vm.displayForm1200Tab = true;
                     return;
                 }

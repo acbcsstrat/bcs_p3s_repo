@@ -66,7 +66,7 @@
 
 	<div class="col-md-12 col-lg-6">
 		<div class="content-panel d-flex">
-			<div data-ng-if="availableServices.length > 0" class="d-flex flex-grow-1">
+			<div data-ng-if="!notInProgress" class="d-flex flex-grow-1">
 				<div class="content-panel__body bg-white p-t-none">
 					<uib-tabset active="activeRight" class="m-b-md">
 						<uib-tab index="0" heading="Fee Breakdown" class="case-overview-nav">
@@ -90,7 +90,7 @@
 	                </div>				
 				</div>
 			</div>
-			<div data-ng-if="!availableServices.length === 0" class="content-panel__body bg-white d-flex d-flex align-items-center">
+			<div data-ng-if="notInProgress" class="content-panel__body bg-white d-flex d-flex align-items-center">
 				<div class="d-flex flex-grow-1 bg-no-chart align-items-center justify-content-center ng-scope">
 	                <div class="row">
 	                    <div class="col-xl-12">
