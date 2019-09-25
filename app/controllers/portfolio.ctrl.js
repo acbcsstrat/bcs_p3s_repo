@@ -24,8 +24,10 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       vm.portfolioLoaded = true;
     }, 300);
 
-    var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available', 'Epct being generated', 'Payment in progress', 'EPO instructed', 'Too early', 'Too late'];
+    var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available', 'Epct being generated', 'Payment in progress', 'EPO instructed', 'Too early', 'Too late', 'Error', 'Completed','Payment failed'];
     var renewalStatuses = ['Show price', 'Renewal in place', 'No renewal needed', 'Payment in progress', 'EPO instructed', 'Too late to renew', 'Way too late to renew'];
+    var grantStatuses = ['Grant available', 'Grant not available', 'Grant saved', 'Manual processing', 'Manual processing mandated', 'Payment in progress', 'EPO instructed', 'Payment failed', 'Completed'];
+
     vm.patentActionStatuses = {
       'value': 'All Patents',
       'values': ['All Patents', 'No Action Available', 'Action Available']
@@ -40,14 +42,13 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     function init() {
 
         var obj = patents[0].p3sServices[0];
-        obj.serviceType = 'renewal';
-        obj.serviceStatus = 'Show price'
-        obj.serviceStatusUI = 'Show Price'
+        obj.serviceType = 'grant';
+        obj.serviceStatus = 'Grant available'
+        obj.serviceStatusUI = 'Grant Available'
         patents[0].p3sServices.push(obj);
  
     }
 
-    
 
     init()
 
@@ -80,19 +81,19 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
         if(status === 'Action Available') {
             $scope.portfolioData = patents.filter(function(el){
-                if(el.serviceList && el.serviceList.length > 0) {
-                    return organiseTextService.actionStatus(el.serviceList[0].serviceStatus)
+                if(el.p3sServices && el.p3sServices.length > 0) {
+                    return organiseTextService.actionStatus(el.p3sServices[0].serviceStatus)
                 }
             })
         }
 
         if(status === 'No Action Available') {
             $scope.portfolioData = patents.filter(function(el){
-                if(el.serviceList.length === 0) {
+                if(el.p3sServices.length === 0) {
                     return el;
                 }
-                if(el.serviceList && el.serviceList.length > 0) {
-                    return !organiseTextService.actionStatus(el.serviceList[0].serviceStatus)
+                if(el.p3sServices && el.p3sServices.length > 0) {
+                    return !organiseTextService.actionStatus(el.p3sServices[0].serviceStatus)
                 }
             })
         }      
@@ -109,16 +110,16 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
             for(var i in $scope.filters[filter]){
                 if($scope.filters[filter][i]) filterArray.push(i.toLowerCase()); //if property in filter object returns true, push to filterArray
             }
-            if(el.serviceList && el.serviceList.length > 0) {
-                for(var i = 0; i < el.serviceList.length; i++) {            
-                    var notUiText = organiseTextService.uiStatus(el.serviceList[i][filter])
+            if(el.p3sServices && el.p3sServices.length > 0) {
+                for(var i = 0; i < el.p3sServices.length; i++) {            
+                    var notUiText = organiseTextService.uiStatus(el.p3sServices[i][filter])
                     if(notUiText !== undefined || typeof notUiText !== 'undefined') {
                       
                         if(filterArray.length > 0 && filterArray.indexOf(notUiText.toLowerCase()) === -1) { //not part of filter options
                           return false;
                         }
                     } else {
-                        if(filterArray.length > 0 && filterArray.indexOf(el.serviceList[i][filter].toLowerCase()) === -1) { //not part of filter options if servicetype or colour
+                        if(filterArray.length > 0 && filterArray.indexOf(el.p3sServices[i][filter].toLowerCase()) === -1) { //not part of filter options if servicetype or colour
                             return false;
                         }
                     }
@@ -148,10 +149,10 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
         var result = [];
         for(var i = 0; i < $scope.portfolioData.length; i++){
             var patent = $scope.portfolioData[i];
-            if(patent.serviceList && patent.serviceList.length > 0){
-                for(var j = 0; j < patent.serviceList.length; j++){
-                    if(patent.serviceList[j].serviceType == 'Form1200') {
-                        result.push(patent.serviceList[j]['currentStageColour'])
+            if(patent.p3sServices && patent.p3sServices.length > 0){
+                for(var j = 0; j < patent.p3sServices.length; j++){
+                    if(patent.p3sServices[j].serviceType == 'epct') {
+                        result.push(patent.p3sServices[j]['currentStageColour'])
                     }
                 }
             }
@@ -160,13 +161,29 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     }())
 
     $scope.renewalStages = (function() {
-              var result = [];
+        var result = [];
         for(var i = 0; i < $scope.portfolioData.length; i++){
             var patent = $scope.portfolioData[i];
-            if(patent.serviceList && patent.serviceList.length > 0){
-                for(var j = 0; j < patent.serviceList.length; j++){
-                    if(patent.serviceList[j].serviceType == 'Renewal') {
-                        result.push(patent.serviceList[j]['currentStageColour'])
+            if(patent.p3sServices && patent.p3sServices.length > 0){
+                for(var j = 0; j < patent.p3sServices.length; j++){
+                    if(patent.p3sServices[j].serviceType == 'renewal') {
+                        result.push(patent.p3sServices[j]['currentStageColour'])
+                    }
+                }
+            }
+        }
+        return uniqueArray(result); //check no duplicates
+
+    }())
+
+    $scope.grantStages = (function() {
+        var result = [];
+        for(var i = 0; i < $scope.portfolioData.length; i++){
+            var patent = $scope.portfolioData[i];
+            if(patent.p3sServices && patent.p3sServices.length > 0){
+                for(var j = 0; j < patent.p3sServices.length; j++){
+                    if(patent.p3sServices[j].serviceType == 'grant') {
+                        result.push(patent.p3sServices[j]['currentStageColour'])
                     }
                 }
             }
@@ -176,18 +193,19 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     }())
 
 
+
     $scope.europctStatus = (function(){
         
         var result = [];
         for(var i = 0; i < $scope.portfolioData.length; i++){
             var patent = $scope.portfolioData[i];
-            if(patent.serviceList && patent.serviceList.length > 0){
+            if(patent.p3sServices && patent.p3sServices.length > 0){
 
-                for(var j = 0; j < patent.serviceList.length; j++){
-                    if(euroPctStatuses.indexOf(patent.serviceList[j]['serviceStatus']) > -1) 
-                        result.push(organiseTextService.uiStatus(patent.serviceList[j]['serviceStatus'])) //organisetTextservice required as UI text and backend text are being mixed
+                for(var j = 0; j < patent.p3sServices.length; j++){
+                    if(euroPctStatuses.indexOf(patent.p3sServices[j]['serviceStatus']) > -1) 
+                        result.push(organiseTextService.uiStatus(patent.p3sServices[j]['serviceStatus'])) //organisetTextservice required as UI text and backend text are being mixed
                 }
-            } else { //if not servicelist
+            } else { //if not p3sServices
 
                 if(euroPctStatuses.indexOf(patent.serviceStatus) > -1) {
                     result.push(organiseTextService.uiStatus(patent.serviceStatus));
@@ -199,22 +217,39 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     }())
 
     $scope.renewalsStatus = (function(){
-      var result = [];
-      for(var i = 0; i < $scope.portfolioData.length; i++){
-          var patent = $scope.portfolioData[i];
-          if(patent.serviceList && patent.serviceList.length > 0){
-            for(var j = 0; j < patent.serviceList.length; j++){
-              if(renewalStatuses.indexOf(patent.serviceList[j]['serviceStatus']) > -1)
-                  result.push(organiseTextService.uiStatus(patent.serviceList[j]['serviceStatus']));
-              }
-          } else {
-            if(renewalStatuses.indexOf(patent.serviceStatus) > -1) { //if not servicelist
-              result.push(organiseTextService.uiStatus(patent.serviceStatus));
+        var result = [];
+        for(var i = 0; i < $scope.portfolioData.length; i++){
+            var patent = $scope.portfolioData[i];
+            if(patent.p3sServices && patent.p3sServices.length > 0){
+                for(var j = 0; j < patent.p3sServices.length; j++){
+                    if(renewalStatuses.indexOf(patent.p3sServices[j]['serviceStatus']) > -1)
+                        result.push(organiseTextService.uiStatus(patent.p3sServices[j]['serviceStatus']));
+                    }
+                } else {
+                    if(renewalStatuses.indexOf(patent.serviceStatus) > -1) { //if not p3sServices
+                        result.push(organiseTextService.uiStatus(patent.serviceStatus));
+                    }
             }
-          }
-      }
+        } 
       return uniqueArray(result); //check no duplicates
     }());
+
+    $scope.grantStatus = (function(){
+        var result = [];
+        for(var i = 0; i < $scope.portfolioData.length; i++){
+            var patent = $scope.portfolioData[i];
+            if(patent.p3sServices && patent.p3sServices.length > 0){
+
+                for(var j = 0; j < patent.p3sServices.length; j++){
+                    if(grantStatuses.indexOf(patent.p3sServices[j]['serviceStatus']) > -1) {
+                        result.push(patent.p3sServices[j].serviceStatusUI);
+                    
+                    }
+                }
+            } 
+        }
+        return uniqueArray(result); //check no duplicates
+    }());    
 
     function toggleAll($event, includeAll) { //used for clear or select all
         for(var filter in $scope.filters) {
@@ -234,7 +269,11 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
           $state.go('portfolio.patent', {patentId: patent.patentID, form1200generate: 1}, {notify: false})
         }
 
-        if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200')) {
+        if($(event.target).hasClass('prepareGrant')) {
+          $state.go('portfolio.patent', {patentId: patent.patentID, prepareGrant: 1}, {notify: false})
+        }        
+
+        if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].id; //gets data from data-id
             $state.go('portfolio.patent', {patentId: patent.patentID, form1200generate: null}, {notify: false})            

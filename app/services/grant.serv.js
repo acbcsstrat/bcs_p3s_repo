@@ -7,7 +7,9 @@ function grantService($http, $q, $timeout){
     var factory = {
         submitGrant: submitGrant,
         inhibitGrant: inhibitGrant,
-        unhibitGrant: unhibitGrant
+        unhibitGrant: unhibitGrant,
+        setQuestions: setQuestions,
+        getQuestions: getQuestions
     }
 
     function unhibitGrant(id) {
@@ -64,6 +66,16 @@ function grantService($http, $q, $timeout){
         return deferred.promise;
 
     }
+
+    function setQuestions(data){
+
+        factory.questions = data;
+
+    }
+
+    function getQuestions() {
+        return factory.questions;
+    }    
 
     return factory;
 
