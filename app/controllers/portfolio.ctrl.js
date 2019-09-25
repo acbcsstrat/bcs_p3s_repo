@@ -39,18 +39,18 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       currentStageColour: {}
     }
 
-    function init() {
+    // function init() {
 
-        var obj = patents[0].p3sServices[0];
-        obj.serviceType = 'grant';
-        obj.serviceStatus = 'Grant available'
-        obj.serviceStatusUI = 'Grant Available'
-        patents[0].p3sServices.push(obj);
+    //     var obj = patents[0].p3sServices[0];
+    //     obj.serviceType = 'grant';
+    //     obj.serviceStatus = 'Grant available'
+    //     obj.serviceStatusUI = 'Grant Available'
+    //     patents[0].p3sServices.push(obj);
  
-    }
+    // }
 
 
-    init()
+    // init()
 
     function select(i) {
       vm.selected = i;

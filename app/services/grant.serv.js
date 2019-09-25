@@ -9,7 +9,8 @@ function grantService($http, $q, $timeout){
         inhibitGrant: inhibitGrant,
         unhibitGrant: unhibitGrant,
         setQuestions: setQuestions,
-        getQuestions: getQuestions
+        getQuestions: getQuestions,
+        representativeCheck: representativeCheck
     }
 
     function unhibitGrant(id) {
@@ -49,16 +50,17 @@ function grantService($http, $q, $timeout){
         return deferred.promise;
     }
 
-    function submitGrant(data) {
+    function submitGrant(data, config) {
 
         var deferred = $q.defer();
 
-       $http.post(ppdomain+'rest-grant/', data)
+       $http.post(ppdomain+'rest-grant/', data, config)
        .then(
             function(response){
                 deferred.resolve(response.data)
             },
             function(errResponse){
+                console.error('Error: Unable to submit grant data')
                 deferred.reject(errResponse.data)
             }
         )
@@ -76,6 +78,25 @@ function grantService($http, $q, $timeout){
     function getQuestions() {
         return factory.questions;
     }    
+
+    function representativeCheck() { ///rest-start-grant/
+        
+        var deferred = $q.defer();
+
+        $http.get('../../p3sweb/rest-start-grant.json')
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                console.error('Error: Unable to fetch conditional boolean value to display first question')
+                deferred.reject(response.data)
+            }
+        )
+
+        return deferred.promise
+
+    }
 
     return factory;
 

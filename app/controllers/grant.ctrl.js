@@ -38,9 +38,8 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     $rootScope.$on('submitGrantData', function(e, data){
 
         var formData = new FormData();
-        var notifyWhenValidationAvailable = (function(){
-            data.data.optInValidation = data.data.optInValidation.no === true ? false : true;
-        }())
+        var config = { headers: {'Content-Type': undefined} };
+        var notifyWhenValidationAvailable = data.data.optInValidation.no === true ? false : true;
         formData.append('patent_ID', patent.patentID);
         formData.append('totalClaims', parseInt(data.data.totalClaims));
         formData.append('ofWhichClaimsUnpaid', parseInt(data.data.totalAdditionalClaims));
@@ -50,14 +49,19 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         formData.append('frenchTranslation', data.data.translations.frenchTranslation);
         formData.append('germanTranslation', data.data.translations.germanTranslation);
 
-        grantService.submitGrant(formData)
+        console.dir('FORMDATA BEING SENT FROM GRANT CONTROLLER: ')
+        for (var pair of formData.entries()) {
+            console.log(pair[0]+ ': ' + pair[1]); 
+        }
+
+        grantService.submitGrant(formData, config)
         .then(
             function(response){
                 activeTabService.setTab(2)
                 $state.go('portfolio.patent', {}, {reload: true});
             },
             function(errResponse){
-                form1200Errors() 
+                // INCLUDE FUNCTION TO DISPLAY MODAL
             }
         )
 
@@ -73,7 +77,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             checkError: function(value) {
                 var obj = {}
                 obj.title = 'Representative'
-                ob.message = 'If you confirm that you do not wish IP Place to act as representative The Patent Place can only offer help with your application offline\
+                obj.message = 'If you confirm that you do not wish IP Place to act as representative The Patent Place can only offer help with your application offline\
                     via a Patent Administrator, and the order will become unavailable to process via the applcation. For further help please contact The Patent Place via\
                      email: support@ip.place, or phone: +44 203 696 0949'
                 if(value === true) {
@@ -94,7 +98,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             checkError: function(value) {
                 var obj = {}
                 obj.title = 'Patent Specification'
-                ob.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can only offer help with your application offline\
+                obj.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can only offer help with your application offline\
                     via a Patent Administrator, and the order will become unavailable to process via the applcation. For further help please contact The Patent Place via\
                      email: support@ip.place, or phone: +44 203 696 0949'
                 if(value === true) {
@@ -167,35 +171,21 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
 
 	function initiateGrantOrder() {
-		grantService.setQuestions(grantQuestions);
-    	vm.grantTemplate = vm.templates[1].url;
-	}
-
-    function uninhibitGrant() {
-        grantService.unhibitGrant(patent.patentID)
+        grantService.representativeCheck()
         .then(
             function(response){
 
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modals/modal.grant-order-deleted.tpl.htm',
-                    appendTo: undefined,
-                    controllerAs: '$ctrl',
-                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                if(response.data.changeOfRepresentativeNeeded === true) {
+                    grantQuestions.splice(0, 1)
+                }
 
-                        this.dismissModal = function() {
-                            $uibModalInstance.close();
-                            $state.reload()
-                        };
-
-                    }]
-                });
-
-            },
-            function(errResponse){
-                console.errr('Error deleting grant order: ', errResponse)
+                grantService.setQuestions(grantQuestions);
+                vm.grantTemplate = vm.templates[1].url;
             }
         )
-    }
+		
+
+	}
 
     function uninhibitGrantConfirm() {
 
@@ -206,7 +196,29 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
                 this.uninhibitGrant = function() {
-                    uninhibitGrant()
+                    grantService.unhibitGrant(patent.patentID)
+                    .then(
+                        function(response){
+
+                            var modalInstance = $uibModal.open({
+                                templateUrl: 'app/templates/modals/modal.grant-order-deleted.tpl.htm',
+                                appendTo: undefined,
+                                controllerAs: '$ctrl',
+                                controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                                    this.dismissModal = function() {
+                                        $uibModalInstance.close();
+                                        $state.reload()
+                                    };
+
+                                }]
+                            });
+
+                        },
+                        function(errResponse){
+                            console.errr('Error deleting grant order: ', errResponse)
+                        }
+                    )
                 }
 
                 this.dismissModal = function() {
@@ -219,19 +231,8 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
     }
 
-    function inhibitGrant() {
-        grantService.inhibitGrant(patent.patentID)
-        .then(
-            function(response) {
-                $state.reload();
-            },
-            function(errResponse){
-                console.error('Error inhibiting grant order: ', errResponse)
-            }
-        )
-    }
 
-    function inhibitGrantconfirm(message) {
+    function inhibitGrantConfirm(message) {
 
         var modalInstance = $uibModal.open({
             template: '<div class="modal-header d-flex flex-column align-items-center justify-content-center">\
@@ -243,15 +244,24 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                             <p class="font-body w-100 text-center m-b-sm m-t-xs">'+ message.message+'</p>\
                             <div class="d-flex">\
                                 <button class="btn btn--lg btn--red pill-radius m-r-md" data-ng-click="$ctrl.dismissModal()">Cancel</button>\
-                                <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.confirmNotSuitable()">Confirm</button>\
+                                <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.confirm()">Confirm</button>\
                             </div>\
                         </div>',
             appendTo: undefined,
             controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+            controller: ['$uibModalInstance', '$timeout', '$state', function($uibModalInstance, $timeout, $state){
 
                 this.confirm = function() {
-                    inhibitGrant();
+                    grantService.inhibitGrant(patent.patentID)
+                    .then(
+                        function(response) {
+                            $state.reload();
+                            console.log('Will send request to inhibit grant')
+                        },
+                        function(errResponse){
+                            console.error('Error inhibiting grant order: ', errResponse)
+                        }
+                    )
                 }
 
                 this.dismissModal = function() {

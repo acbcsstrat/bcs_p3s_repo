@@ -49,7 +49,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         }
 
         if($stateParams.prepareGrant === 1) {
-            $scope.activeLeft = 2;
+            $scope.activeLeft = 4;
             activeTabService.setTab(0)
         }        
 
@@ -73,7 +73,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         )
 
         $scope.availableServices.forEach(function(obj){
-            console.log(obj)
+
             if(obj.action == 'epct') {
                 if((organiseTextService.actionStatus(obj.status) && obj.action == 'epct') || (obj.status == 'Epct being generated' && obj.action == 'epct')) {
                     vm.displayForm1200Tab = true;
