@@ -23,7 +23,7 @@
 			<div class="col-md-9 col-lg-12 col-xl-12 m-t-sm" data-ng-show="searchPatentForm.searchPatent.$error.validSearch && searchPatentForm.searchPatent.$dirty && searchPatentForm.searchPatent.$touched">
 				<p class="font-h4 font-weight-medium txt-phase-red m-t-xs" data-ng-if="searchPatentForm.searchPatent.$error.validSearch">Please inlcude the check digit when entering the application number e.g. EP12345678.9</p>
 			</div>							
-			<div class="col-md-9 col-lg-12 col-xl-12 m-t-sm" data-ng-show="!$ctrl.queriedPatent">
+			<div class="col-md-9 col-lg-12 col-xl-12 m-t-sm" data-ng-show="$ctrl.error">
 				<p class="font-h4 font-weight-medium txt-phase-red" data-ng-bind="$ctrl.searchError"></p>
 			</div>			
 		</div>
