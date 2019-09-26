@@ -1,16 +1,33 @@
 angular.module('ppApp').factory('uploadAvatarServ', uploadAvatarServ);
 
-uploadAvatarServ.$inject = ['$http'];
+uploadAvatarServ.$inject = ['$http', '$q'];
 
-function uploadAvatarServ($http) {
-    return function (file, data, callback) { 
-        $http({
-            url: file,
-            method: "POST",
-            data: data,
-            headers: {'Content-Type': undefined}
-        }).then(function (response) {
-            callback(response)
-        });
+function uploadAvatarServ($http, $q) {
+
+    var factory = {
+        uploadAvatar: uploadAvatar
+    }
+
+    return factory
+
+
+    function uploadAvatar(data) { 
+
+        var deferred = $q.defer()
+
+        var config = { headers: {'Content-Type': undefined} };
+
+        $http.post('../p3sweb/FileUploadServlet', data, config)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                 deferred.reject(response.data)
+            }
+        )
+
+        return deferred.promise;
+
     };
 };

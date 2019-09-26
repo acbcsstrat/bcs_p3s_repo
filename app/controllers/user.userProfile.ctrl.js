@@ -76,15 +76,6 @@ function userProfileCtrl($state, userService, $rootScope, $scope, $timeout, $uib
                 $scope.uploadImg = true;
                 $scope.avatarImgUploaded = false;
 
-                function dataURItoBlob(dataURI) { //In computer science Base64 is a group of binary-to-text encoding schemes that represent binary data in an ASCII string format 
-                    var binary = atob(dataURI.split(',')[1]);
-                    var array = [];
-                    for(var i = 0; i < binary.length; i++) {
-                        array.push(binary.charCodeAt(i));
-                    }
-                    return new Blob([new Uint8Array(array)], {type: 'image/jpeg '});
-                }
-
                 $scope.dismissModal = function() {
                     $uibModalInstance.close()
                 }
@@ -96,13 +87,22 @@ function userProfileCtrl($state, userService, $rootScope, $scope, $timeout, $uib
                 $scope.imgSelected = false;
 
                 $scope.uploadAvatar = function() {
-                    var blob = dataURItoBlob($scope.cropped.image); //3 //NEED TO GET THE FINAL IMAGE AFTER THEY HAVE FINISHED EDITING
-                    var fd = new FormData();
-                    fd.append("file", blob);                    
-                    uploadAvatarServ('../p3sweb/FileUploadServlet', fd, function (callback) { //4
-                        $scope.avatarImgUploaded = true;
-                        $state.reload();
-                    })
+
+                    var blob = new Blob([$scope.cropped.image], {type : 'image/png'});
+                    var formData = new FormData();
+                    formData.append('image', blob);
+
+                    uploadAvatarServ.uploadAvatar(formData) 
+                    .then(
+                        function(response){
+                            $scope.avatarImgUploaded = true;
+                            $state.reload();
+                        },
+                        function(errResponse){
+                            console.error('Error : unable to upload new image')
+                        }
+                    )
+                         
                 }
 
             }]
@@ -117,7 +117,7 @@ function userProfileCtrl($state, userService, $rootScope, $scope, $timeout, $uib
 
         user = vm.user;
 
-        if (p !== '' || undefined) {
+        if (p !== '' || p !== undefined) {
             user.newPassword = p;
         }
 
