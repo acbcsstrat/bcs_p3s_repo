@@ -37,6 +37,11 @@ angular.module('ppApp').component('mainnav', {
 	    		}
 	    	)	
 
+		    $timeout(function() {
+		    	timeZoneClocks();
+		    	vm.timeLoaded = true;   
+		    })	    	
+
       	}
 
 
@@ -68,13 +73,6 @@ angular.module('ppApp').component('mainnav', {
 	        }, 500);
 
 	    }
-
-	    
-
-	    $timeout(function() {
-	    	timeZoneClocks()
-	    	vm.timeLoaded = true;   
-	    })
 
 		vm.empty = function() {
 			ngCart.empty();

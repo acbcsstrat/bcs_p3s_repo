@@ -83,12 +83,6 @@ input.ng-pristine + ul#strength { display:none; }  /* modules*/ /*pages*/ /*_use
   opacity: 1;
 }
 
-
-
-// .avatar-cropped {
-// 	margin-top: -42px;
-// }
-
 #avatarFileUpload {
 	display: none;
 }
@@ -114,4 +108,9 @@ input.ng-pristine + ul#strength { display:none; }  /* modules*/ /*pages*/ /*_use
     	color: $grey-dark;
     	background: $grey;
     }
+}
+
+.profile-pic-radius {
+	border-radius: 50%;
+	border: 2px solid;
 }
