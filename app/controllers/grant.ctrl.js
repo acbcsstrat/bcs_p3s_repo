@@ -171,11 +171,12 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
 
 	function initiateGrantOrder() {
-        grantService.representativeCheck()
+
+        grantService.representativeCheck(patent.patentID)
         .then(
             function(response){
 
-                if(response.data.changeOfRepresentativeNeeded === true) {
+                if(response.changeOfRepresentativeNeeded === true) {
                     grantQuestions.splice(0, 1)
                 }
 

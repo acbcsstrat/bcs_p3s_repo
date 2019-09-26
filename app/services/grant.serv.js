@@ -79,11 +79,11 @@ function grantService($http, $q, $timeout){
         return factory.questions;
     }    
 
-    function representativeCheck() { ///rest-start-grant/
+    function representativeCheck(id) {
         
         var deferred = $q.defer();
 
-        $http.get('../../p3sweb/rest-start-grant.json')
+        $http.get(ppdomain+'rest-start-grant/'+id)
         .then(
             function(response){
                 deferred.resolve(response.data)
