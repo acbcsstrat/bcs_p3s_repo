@@ -41,7 +41,6 @@ require("app/services/checkout.basket.serv.js");
 require("app/services/dashboard.dashboard.serv.js");
 require("app/services/patent.euroPct.serv.js");
 require("app/services/europct.form1200.serv.js");
-require("app/services/patents.patentPhases.serv.js");
 require("app/services/patents.patents.serv.js");
 require("app/services/patents.patentsRest.serv.js");
 require("app/services/patents.searchPatent.serv.js");
@@ -52,6 +51,8 @@ require("app/services/user.user.serv.js");
 require("app/services/vendors/ngCart.fulfilment.js");
 require("app/services/app.uploadAvatar.serv.js");
 require("app/services/grant.serv.js");
+require("app/services/notification.serv.js");
+require("app/services/activeTab.serv.js")
 
 require("app/controllers/checkout.bankTransferPrep.ctrl.js");
 require("app/controllers/checkout.bankTransferSuccess.ctrl.js");
@@ -76,7 +77,6 @@ require("app/controllers/transactions.currentTransactions.ctrl.js");
 require("app/controllers/transactions.transactionHistory.ctrl.js");
 require("app/controllers/transactions.transactionHistoryItem.ctrl.js");
 require("app/controllers/user.userProfile.ctrl.js");
-
 require("app/controllers/fee-breakdown.ctrl.js")
 require("app/controllers/fxchart.ctrl.js")
 require("app/controllers/costchart.ctrl.js")
@@ -84,9 +84,6 @@ require("app/controllers/notifications.ctrl.js")
 require("app/controllers/patent.case-overview.ctrl.js");
 require("app/controllers/patent.details.ctrl.js");
 
-require("app/services/notification.serv.js");
-require("app/services/activeTab.serv.js")
 
 require("app/components/core.mainNav.comp.js");
-require("app/components/core.caseoverviewNav.comp.js");
 require("app/components/transactions.transNav.comp.js");
