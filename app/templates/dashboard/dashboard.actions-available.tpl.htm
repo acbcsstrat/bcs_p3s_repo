@@ -30,11 +30,10 @@
                     </thead>
                     <tbody class="sticky-tbody">
                         <tr class="t-data__row t-data__row--select" data-ng-repeat="item in $ctrl.patents[key]" data-ng-click="$ctrl.setActionCost(item)">
-                            
                             <td class="t-data__td sticky-td" data-ng-bind="item.ep_ApplicationNumber"> </td>
                             <td class="t-data__td" data-ng-bind="item.clientRef || '[No Client Reference Provided]'"></td>
-                            <td class="t-data__td" data-ng-class="item.cssCurrent">{{item.p3sServices[0].currentStageColour}}: {{$ctrl.date | date:'MM-dd-yy'}}</td> 
-                            <td class="t-data__td" data-ng-class="item.cssNext">{{item.p3sServices[0].nextStageColour}}: {{item.p3sServices[0].costBandEndDate | date:'MM-dd-yy'}}</td>
+                            <td class="t-data__td" data-ng-class="item.p3sServices[0].cssCurrent">{{item.p3sServices[0].currentStageColour}}: {{$ctrl.date | date:'MM-dd-yy'}}</td> 
+                            <td class="t-data__td" data-ng-class="item.p3sServices[0].cssNext">{{item.p3sServices[0].nextStageColour}}: {{item.p3sServices[0].costBandEndDate | date:'MM-dd-yy'}}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,47 +1,40 @@
 
-@import "./helpers/_variables.scss";
-@import "./base/_reset.scss";
-@import "./base/_base.scss";
+// @import '~bootstrap/dist/css/bootstrap.min.css';
+// @import 'croppie/croppie.css';
 
-@import "./vendors/angular-material/angular-material.scss";
-@import "./vendors/angular-material/angular-material.scss";
-@import "./vendors/nvd3/build/nv.d3.css";
-@import "./vendors/fontawesome/css/all.css";
-@import "./vendors/slick-carousel/slick/slick.scss";
-@import "./vendors/slick-carousel/slick/slick-theme.scss";
-@import "./vendors/extensions/_angularJS-materials-ext.scss";
-@import "./vendors/extensions/_bootstrap-ext.scss";
-@import "./vendors/extensions/_parsley-ext.scss";
-@import "./vendors/extensions/_nvd3.scss";
-@import "./vendors/extensions/_font-awesome.scss";
-@import "./vendors/extensions/_croppie.scss";
-@import "./vendors/_stepProgress.scss";
+@import "../scss/helpers/_variables.scss";
+@import "../scss/base/_reset.scss";
+@import "../scss/base/_base.scss";
 
-@import "./base/_colours.scss";
-@import "./base/_typography.scss";
-@import "./base/_angular.scss";
-@import "./base/_js.scss";
+@import "../scss/vendors/angular-material/angular-material.scss";
+@import "../scss/vendors/nvd3/build/nv.d3.css";
+@import "../scss/vendors/fontawesome/css/all.css";
+@import "../scss/vendors/extensions/_angularJS-materials-ext.scss";
+@import "../scss/vendors/extensions/_bootstrap-ext.scss";
+@import "../scss/vendors/extensions/_parsley-ext.scss";
+@import "../scss/vendors/extensions/_nvd3.scss";
+@import "../scss/vendors/extensions/_font-awesome.scss";
+@import "../scss/vendors/extensions/_croppie.scss";
+@import "../scss/vendors/_stepProgress.scss";
 
-@import "./helpers/_mixins.scss";
-@import "./helpers/_global.scss";
+@import "../scss/base/_colours.scss";
+@import "../scss/base/_typography.scss";
+@import "../scss/base/_angular.scss";
+@import "../scss/base/_js.scss";
 
-@import "./layouts/_layout.scss";
-@import "./layouts/_modal.scss";
-@import "./layouts/_panels.scss";
-@import "./layouts/_sidenav.scss";
+@import "../scss/helpers/_mixins.scss";
+@import "../scss/helpers/_global.scss";
 
-// @import "./pages/_dashboard.scss";
-@import "./pages/_transactions.scss";
-@import "./pages/_user-profile.scss";
-@import "./pages/_portfolio.scss";
-@import "./pages/_case-overview.scss";
+@import "../scss/layouts/_layout.scss";
+@import "../scss/layouts/_modal.scss";
+@import "../scss/layouts/_panels.scss";
+@import "../scss/layouts/_sidenav.scss";
 
-@import "./components/_buttons.scss";
-@import "./components/_form.scss";
-@import "./components/_navigation.scss";
-@import "./components/_progress-bar.scss";
-@import "./components/_shapes.scss";
-@import "./components/_tables.scss";
-@import "./components/_media_queries.scss";
-@import "./components/_transformations.scss";
-
+@import "../scss/components/_buttons.scss";
+@import "../scss/components/_form.scss";
+@import "../scss/components/_navigation.scss";
+@import "../scss/components/_progress-bar.scss";
+@import "../scss/components/_shapes.scss";
+@import "../scss/components/_tables.scss";
+@import "../scss/components/_media_queries.scss";
+@import "../scss/components/_transformations.scss";

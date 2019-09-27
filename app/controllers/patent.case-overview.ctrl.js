@@ -1,18 +1,18 @@
 angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
 
-caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'currentTransactionsService', 'patentsRestService', 'chunkDataService', '$uibModal', 'coreService', 'organiseTextService', 'renewalRestService', 'activeTabService', 'organiseColourService']
+caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal', 'renewalRestService', 'activeTabService']
 
-function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, currentTransactionsService, patentsRestService, chunkDataService, $uibModal, coreService, organiseTextService, renewalRestService, activeTabService, organiseColourService) {
+function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, patentsRestService, $uibModal, renewalRestService, activeTabService) {
 
     var vm = this;
 
     vm.patent = patent;
 
-    vm.fetchItemTransaction = fetchItemTransaction;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
-    vm.servicesAvailable = true;
+    $scope.availableServices = [];
+    $scope.notInProgress = true;
 
     function refreshChart (){
         $timeout(function(){  
@@ -23,15 +23,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     }
 
     function init() {
-
-        patent.p3sServicesWithFees.map(function(list){         
-            if(list.currentStageColour) {
-                list.cssCurrent = organiseColourService.getCurrColour(list.currentStageColour, 'text')
-            }
-            if(list.nextStageColour) {
-                list.cssNext = organiseColourService.getCurrColour(list.nextStageColour, 'text')
-            }
-        })
 
         if(activeTabService.getTab == 2) {
             $scope.activeLeft = 2
@@ -48,18 +39,10 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             activeTabService.setTab(0)
         }
 
-        if($stateParams.grantOrder === 1) {
+        if($stateParams.prepareGrant === 1) {
             $scope.activeLeft = 4;
             activeTabService.setTab(0)
         }        
-
-        $scope.availableServices = (function() {
-            return vm.patent.p3sServicesWithFees.map(function(data, index){
-               return {id: index, action: data.serviceType, status: data.serviceStatus}
-            })
-        }())        
-
-        vm.statusesAvailable = $scope.availableServices;
 
         renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
         .then(
@@ -71,11 +54,16 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 vm.displayRenewalHistoryTab = false;
             }
         )
+       
+        vm.patent.p3sServicesWithFees.forEach(function(data, index){
+            $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
+            $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus})
+        })
 
         $scope.availableServices.forEach(function(obj){
 
             if(obj.action == 'epct') {
-                if((organiseTextService.actionStatus(obj.status) && obj.action == 'epct') || (obj.status == 'Epct being generated' && obj.action == 'epct')) {
+                if(obj.status == 'Epct being generated' || obj.status == 'Epct available') {
                     vm.displayForm1200Tab = true;
                     return;
                 }
@@ -90,43 +78,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     }
 
     init()
-
-    function getStatus(text) {
-        return organiseTextService.uiStatus(text);
-    }
-
-    function fetchItemTransaction(id) {
-        currentTransactionsService.fetchCurrentTransactions()
-        .then(
-            function(response) {
-
-                var match = response.filter(function(el){
-                    return el.serviceUIs.find(function(item){
-                        return item.patentUI.id === id;
-                    })
-                })
-
-                if(match !== undefined || typeof match !== 'undefined') {
-                    $state.go('current-transactions.current-transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
-                    .then(
-                        function(response){
-                            $timeout(function() {
-                                $location.hash('currTransAnchor'); 
-                                $anchorScroll();  //scroll to anchor href
-                            }, 300);
-                        },
-                        function(errResponse){
-                            console.log(errResponse);
-                        }
-                    );
-                }
-
-            },
-            function(errResponse) {
-                console.log(errResponse);
-            }
-        );
-    };
 
     function confirmDeletePatent(id) {
 

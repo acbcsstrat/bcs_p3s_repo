@@ -14,7 +14,7 @@
 						<button type="submit" data-ng-disabled="searchPatentForm.$invalid" class="btn btn--green circle-radius-sm d-flex justify-content-center align-items-center icon-link">
 							<i data-ng-hide="$ctrl.loadingPatent" class="fa fa-search fa-lg"></i>
 							<div class="fa-2x"  data-ng-show="$ctrl.loadingPatent">
-								<i class="far font-weight-medium fa-sync-alt fa-spin"></i>
+								<i class="far fa-cog fa-spin fa-1x"></i>
 							</div>
 						</button>
 					</div>
@@ -23,7 +23,7 @@
 			<div class="col-md-9 col-lg-12 col-xl-12 m-t-sm" data-ng-show="searchPatentForm.searchPatent.$error.validSearch && searchPatentForm.searchPatent.$dirty && searchPatentForm.searchPatent.$touched">
 				<p class="font-h4 font-weight-medium txt-phase-red m-t-xs" data-ng-if="searchPatentForm.searchPatent.$error.validSearch">Please inlcude the check digit when entering the application number e.g. EP12345678.9</p>
 			</div>							
-			<div class="col-md-9 col-lg-12 col-xl-12 m-t-sm" data-ng-show="!$ctrl.queriedPatent">
+			<div class="col-md-9 col-lg-12 col-xl-12 m-t-sm" data-ng-show="$ctrl.error">
 				<p class="font-h4 font-weight-medium txt-phase-red" data-ng-bind="$ctrl.searchError"></p>
 			</div>			
 		</div>

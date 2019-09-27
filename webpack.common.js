@@ -8,17 +8,25 @@ const devMode = process.env.NODE_ENV !== 'production';
 module.exports = {
   entry: {
     // vendor: './src/js/vendor.js',   
-    app: './src/js/app.js'
-    // style: './src/scss/main.scss'
+    app: './src/js/app.js',
+    style: './src/scss/main.scss'
   },
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: '[name].bundle.js'
+    filename: '[name].[contentHash].js'
   },
   optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
+    moduleIds: 'hashed',
+    runtimeChunk: 'single',
+    splitChunks: { //extract third-party libraries, such as lodash or react, to a separate vendor chunk as they are less likely to change than our local source code
+       cacheGroups: {
+         vendor: {
+           test: /[\\/]node_modules[\\/]/,
+           name: 'vendors',
+           chunks: 'all',
+         },
+       },
+     }     
   },
   resolve: {
     alias: {
@@ -27,6 +35,11 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        include: path.resolve(__dirname, 'src'),
+        loader: 'babel-loader'
+      },
       {
         test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         use: [
@@ -46,35 +59,30 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: 'css-loader', options: { url: false, sourceMap: true } },
-          MiniCssExtractPlugin.loader,
-          { loader: 'css-loader' }
+          { loader: 'css-loader', options: { sourceMap: true } },
+          { loader: 'style-loader' }
         ]
       },      
       {
-        test: /\.scss$/,
-        include: [
-          path.resolve(__dirname, "./src/scss")
-        ],
-        // exclude: [
-        //   path.resolve(__dirname, "node_modules")
-        // ],        
-        use: [
-          'style-loader',
-          MiniCssExtractPlugin.loader,
-          { 
-            loader: 'css-loader', 
-            options: { 
-              url: false, sourceMap: true 
-            } 
-          },
-          { 
-            loader: 'sass-loader', 
-            options: { 
-              sourceMap: true 
-            } 
-          }
-        ]
+          test: /\.s?[ac]ss$/,
+          use: [
+              { loader: 'css-loader', options: { url: false, sourceMap: true } },
+              { loader: 'sass-loader', options: { sourceMap: true } }
+              // {
+              //   loader: 'postcss-loader', // Run post css actions
+
+              //   options: {
+              //     sourceMap: true,
+              //     parser: "postcss-scss",
+              //     plugins: function () { // post css plugins, can be exported to postcss.config.js
+              //       return [
+              //         require('precss'),
+              //         require('autoprefixer')
+              //       ];
+              //     }
+              //   }
+              // }
+          ],
       },
       { 
         test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
@@ -82,8 +90,8 @@ module.exports = {
       }
     ]
   },
-  // cache: false,
   plugins: [
+
     new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery'
@@ -95,8 +103,8 @@ module.exports = {
       template: 'indexxx.html',    
       filename:'index.html'
 
-    }),
+    }),  
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()      
+    // new webpack.HotModuleReplacementPlugin()      commented out for use of contentHash. has to be used if HMR is used
   ]
 }

@@ -17,20 +17,20 @@
     		<div class="text-right">			
 				<p class="font-h2 lh-head font-weight-bold text-right">Patent Place Status:<span></span>
 				</p>
-				<p class="font-h2 lh-head text-right" data-ng-class="{'txt-phase-red': $ctrl.patent.urgentAttention === true}">{{$ctrl.patent.uiStatus}}<span class="txt-phase-black font-weight-medium" data-ng-if="$ctrl.patent.urgentAttention || $ctrl.patent.manualProcess"> - Call +44 203 696 0949</span></p>
+				<p class="font-h2 lh-head text-right font-weight-medium text-capitlize" data-ng-class="{'txt-phase-red': $ctrl.patent.p3sServicesWithFees[0].isUrgentAttention === true, 'txt-phase-green': $ctrl.patent.p3sServicesWithFees[0].isUrgentAttention === false}">{{$ctrl.patent.p3sServicesWithFees[0].serviceStatusUI}}<span class="txt-phase-black" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Offline'"> - Call +44 203 696 0949</span></p>
     		</div>
-	    	<div data-ng-if="$ctrl.statusesAvailable.length > 0">
-	    		<div class="m-l-xxxl" data-ng-if="!$ctrl.patent.urgentAttention && !$ctrl.patent.manualProcess">
-					<p class="font-h2 lh-head font-weight-bold  text-right" >European Actions available:</p>
+	    	<div data-ng-if="availableServices.length > 0">
+	    		<div class="m-l-xxxl" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType !== 'Offline'">
+					<p class="font-h2 lh-head font-weight-bold text-right">European Actions available:</p>
 					<p class="font-h2 lh-head text-right" data-ng-if="!$ctrl.patent.urgentAttention">
-						<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in $ctrl.statusesAvailable">
-							<span class="txt-phase-green">{{service.action}}</span>
-							<span data-ng-if="$ctrl.statusesAvailable.length > 1 && $index == 0">, </span>
+						<span class="txt-phase-green font-weight-medium" data-ng-repeat="service in availableServices">
+							<span class="txt-phase-green text-capitalize">{{service.action}}</span>
+							<span data-ng-if="availableServices.length > 1 && $index == 0">, </span>
 						</span>
 					</p>
 				</div>
 	    	</div>
-	    	<div data-ng-if="$ctrl.statusesAvailable.length === 0 && !$ctrl.patent.urgentAttention && !$ctrl.patent.manualProcess" class="m-l-xxxl">
+	    	<div data-ng-if="availableServices.length === 0 && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Offline'" class="m-l-xxxl">
 	    		<p class="font-h2 lh-head font-weight-bold  text-right" >European Actions available:</p>
 	    		<p class="font-h2 lh-head font-weight-medium  text-right">No actions available</p>
 	    	</div>
@@ -66,7 +66,7 @@
 
 	<div class="col-md-12 col-lg-6">
 		<div class="content-panel d-flex">
-			<div data-ng-if="$ctrl.servicesAvailable" class="d-flex flex-grow-1">
+			<div data-ng-if="!notInProgress" class="d-flex flex-grow-1">
 				<div class="content-panel__body bg-white p-t-none">
 					<uib-tabset active="activeRight" class="m-b-md">
 						<uib-tab index="0" heading="Fee Breakdown" class="case-overview-nav">
@@ -82,14 +82,15 @@
 					<div class="border-grey-xs--btm"></div>
 	                <div class="row m-t-md">
 	                	<div class="col-xl-12 text-right">
-				            <transaction-link trans-id="{{$ctrl.patent.patentID}}" data-ng-if="$ctrl.patent.portfolioUI.serviceStatus == ('Payment in progress' || 'EPO Instructed')"></transaction-link>
-				            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.form1200FeeUI !== null && $ctrl.patent.epctStatus == 'Epct saved'"></ngcart-addtocart>
-				            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.renewalFeeUI !== null && $ctrl.patent.renewalStatus == 'Show price'"></ngcart-addtocart>             
+				            <transaction-link trans-id="{{$ctrl.patent.patentID}}" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'In Progress'"></transaction-link>
+				            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved'"></ngcart-addtocart>
+				            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Show price'"></ngcart-addtocart>
+				            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.grant" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved'"></ngcart-addtocart>             
 				        </div>          
 	                </div>				
 				</div>
 			</div>
-			<div data-ng-if="!$ctrl.servicesAvailable" class="content-panel__body bg-white d-flex d-flex align-items-center">
+			<div data-ng-if="notInProgress" class="content-panel__body bg-white d-flex d-flex align-items-center">
 				<div class="d-flex flex-grow-1 bg-no-chart align-items-center justify-content-center ng-scope">
 	                <div class="row">
 	                    <div class="col-xl-12">

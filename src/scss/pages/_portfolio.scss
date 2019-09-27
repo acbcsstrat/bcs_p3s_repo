@@ -109,7 +109,7 @@ animation:*/
 .filter-container {
   display: block;
   position: relative;
-  padding-left: 3.25rem;
+  padding-left: 2.25rem;
   // margin-bottom: 1.75rem;
   line-height: 1.4rem;
   cursor: pointer;
@@ -133,8 +133,8 @@ animation:*/
     position: absolute;
     top: 0;
     left: 0;
-    height: 15px;
-    width: 15px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     border: 1px solid "$grey-dark";    
     background-color: $white;

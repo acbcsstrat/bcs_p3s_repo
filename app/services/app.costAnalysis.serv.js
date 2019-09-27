@@ -13,7 +13,7 @@ function costAnalysisService($http, $q) {
         var array = [];
         var deferred = $q.defer();
 
-        services.forEach(function(data){
+        services.forEach(function(data){ //for multiple services for single patent
             if(data.serviceType == 'epct') {
                 array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patentID))
 
@@ -23,9 +23,18 @@ function costAnalysisService($http, $q) {
             }
         })
 
-        return $q.all(array).then(function(data){
-            return data;
-        })
+        return $q.all(array)
+        .then(
+            function(response){
+                deferred.resolve(response);
+            },
+            function(errResponse){
+                console.error('Error: Unable to fetch cost analysis')
+                deferred.reject(errResponse)
+            }
+        )
+
+        return deferred.promise;
 
         // return 
     }

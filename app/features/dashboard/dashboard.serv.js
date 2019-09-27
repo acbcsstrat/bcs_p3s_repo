@@ -36,23 +36,24 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
                 } else {
                     obj[property] = 0; //for totoal obj.Total
                 }
-                
             }
         }
 
         obj.Total = patents.length;
 
         for(var i = 0; i < patents.length; i++) {
-
-            var item =  patents[i].p3sServices;
-
-            if(item.length !== 0) {
-                patents[i].cssCurrent = organiseColourService.getCurrColour(item[0].currentStageColour, 'text')
-                patents[i].cssNext = organiseColourService.getCurrColour(item[0].nextStageColour, 'text')
-                obj[item[0].currentStageColour].push(patents[i]);
-            } else {    
-                obj.Grey.push(patents[i]);
+            for(var k = 0; k < patents[i].p3sServices.length; k++) {
+                var item = patents[i].p3sServices[k];
+                item.cssCurrent = organiseColourService.getCurrColour(item.currentStageColour, 'text')
+                item.cssNext = organiseColourService.getCurrColour(item.nextStageColour, 'text')
+                var string = item.currentStageColour.toLowerCase();
+                var capitlized = string.charAt(0).toUpperCase() + string.slice(1)
+                obj[capitlized].push(patents[i]);
             }
+
+     
+
+
         }
 
         for(var property in obj) {
@@ -78,6 +79,11 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
 
     function setActionCost(patent) {
 
+        if(patent === undefined || patent.saleType === 'Not In Progress') {
+            factory.actionCost = undefined;
+            return
+        }
+
         patentsRestService.fetchPatentItem(patent.patentID)
         .then(
             function(patent){
@@ -92,6 +98,7 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
                 })
 
                 if(service[0][fee]) {
+
                     if(service[0].saleType === 'Online' || service[0].saleType === 'Offline') {
                         patent.cartService = fee.replace('FeeUI','');
                         patent.serviceCost = service[0][fee];

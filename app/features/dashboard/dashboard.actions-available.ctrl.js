@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalsCarouselCtrl', renewalsCarouselCtrl);
 
-renewalsCarouselCtrl.$inject = ['$scope', '$timeout', '$window', 'patentIds', 'patentPhasesService', 'dashboardService', 'organiseColourService', 'organiseTextService']
+renewalsCarouselCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'dashboardService']
 
-function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhasesService, dashboardService, organiseColourService, organiseTextService) {
+function renewalsCarouselCtrl($scope, $timeout, patentIds, dashboardService) {
 
 	var vm = this;
 
@@ -13,8 +13,9 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
     vm.setPhase = setPhase
     vm.patents = dashboardService.getPatents;
     vm.availableActions = 0;
+    var setActionCostTmeout;
 
-    var initialPhase = (function(){
+    function initialPhase(){
         for(var property in vm.patents) {
             if(vm.patents.hasOwnProperty(property)) {
                 if(vm.patents[property].length > 0) {
@@ -22,7 +23,7 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
                 }
             }
         }
-    }())
+    }
 
     function setPhase(phase) {
         setActionCost(vm.patents[phase][0])
@@ -30,11 +31,15 @@ function renewalsCarouselCtrl($scope, $timeout, $window, patentIds, patentPhases
 
     function setActionCost(patent) {
         dashboardService.setActionCost(patent)
-        $timeout(function(){
+        setActionCostTmeout = $timeout(function(){
             $scope.$emit('updatePatent')
-        }, 300)
+        })
     }
 
-    setActionCost(initialPhase)
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(setActionCostTmeout)
+    })
+
+    setActionCost(initialPhase())
 
 }

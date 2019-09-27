@@ -1,21 +1,21 @@
 angular.module('ppApp').controller('addPatentCtrl', addPatentCtrl);
 
-addPatentCtrl.$inject = ['$state', '$stateParams', '$rootScope', '$timeout', '$location', '$anchorScroll', 'searchPatentService', 'chunkDataService', 'patentsRestService', '$uibModal'];
+addPatentCtrl.$inject = ['$state', '$stateParams', '$scope', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal'];
 
-function addPatentCtrl($state, $stateParams, $rootScope, $timeout, $location, $anchorScroll, searchPatentService, chunkDataService, patentsRestService, $uibModal) {
+function addPatentCtrl($state, $stateParams, $scope, $timeout, $location, $anchorScroll, patentsRestService, $uibModal) {
 
 	var vm = this;
 
 	vm.openCancelSearchModal = openCancelSearchModal;
 	vm.openConfirmModal = openConfirmModal;
 	vm.patent =  JSON.parse($stateParams.patent).data;
+	var toPatentTimeout;
 
   	function openCancelSearchModal() {
 
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modals/modal.cancel-search.tpl.htm',
             appendTo: undefined,
-            // scope: $scope, // asigns modal to the rootscope rathen than the modal scope
             controllerAs: '$ctrl',
 			controller: ['$uibModalInstance', function($uibModalInstance) {
 
@@ -52,14 +52,10 @@ function addPatentCtrl($state, $stateParams, $rootScope, $timeout, $location, $a
 			             	$state.go('portfolio.patent', {patentId: patent.patentID})
 			             	.then(
 								function(response){
-									$timeout(function() {
-										
+									toPatentTimeout = $timeout(function() {
 										$location.hash('patentAnchor');
 									  	$anchorScroll();
 									}, 300);
-								},
-								function(errResponse){
-									console.log(errResponse)
 								}
 							);
 
@@ -84,4 +80,8 @@ function addPatentCtrl($state, $stateParams, $rootScope, $timeout, $location, $a
 			}]
 		})
 	}
+
+	$scope.$on('$destroy', function(){
+		$timeout.cancel(toPatentTimeout)
+	})
 }

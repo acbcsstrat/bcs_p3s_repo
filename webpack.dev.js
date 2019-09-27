@@ -1,7 +1,7 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 
 module.exports = merge(common, {
@@ -18,10 +18,6 @@ module.exports = merge(common, {
 
     },  
   	plugins: [
-        new MiniCssExtractPlugin({
-          sourceMap: true,
-          filename: "main.css"
-        }),
       	new webpack.NamedModulesPlugin(),
       	new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
