@@ -12,7 +12,7 @@ export default function DashboardController($timeout, $scope, patentIds, Dashboa
     vm.pageTitle = 'Dashboard';
     vm.date = new Date().getTime();
 
-    $timeout(function(){
+    var dashboardLoadTimeout = $timeout(function(){
       vm.dashboardLoaded = true;
     }, 300);
 
@@ -25,6 +25,10 @@ export default function DashboardController($timeout, $scope, patentIds, Dashboa
 
     $scope.$on('updatePatent', function(e, o){
         $scope.$broadcast('updateCost');
-    })    
+    })
+
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(dashboardLoadTimeout)
+    })
 
 }

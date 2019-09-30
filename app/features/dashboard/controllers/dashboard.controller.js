@@ -1,0 +1,30 @@
+DashboardController.$inject = ['$timeout', '$scope', 'patentIds', 'DashboardService'];
+
+export default function DashboardController($timeout, $scope, patentIds, DashboardService) {
+
+    var vm = this;
+
+    vm.animate = false;
+    vm.pageTitle = 'Dashboard';
+    vm.date = new Date().getTime();
+
+    var dashboardLoadTimeout = $timeout(function(){
+      vm.dashboardLoaded = true;
+    }, 300);
+
+    function init() {
+        $scope.$emit('updatePatent')
+        DashboardService.sortPatents(patentIds);
+    }
+
+    init();
+
+    $scope.$on('updatePatent', function(e, o){
+        $scope.$broadcast('updateCost');
+    })
+
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(dashboardLoadTimeout)
+    })
+
+}

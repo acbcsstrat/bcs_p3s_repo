@@ -1,19 +1,28 @@
-
 import './_dashboard.scss';
 
 import angular from 'angular';
 
-import DashboardService from './dashboard.serv.js';
+import DashboardService from './services/dashboard.service.js';
+import CalculateService from '../../services/calculate.service.js';
+import CostAnalysisService from '../../services/cost-analysis.service.js';
+import TransactionHistoryService from '../../services/transaction-history.service.js';
+import CurrentTransactionsService from '../../services/current-transactions.service.js';
 
-import DashboardController from './dashboard.controller';
+import DashboardController from './controllers/dashboard.controller';
+import AvailableActionsController from './controllers/actions-available.controller';
+import GraphDonutController from './controllers/donut-chart.controller';
+import FxChartController from './controllers/fx-chart.controller';
+import ActionCostController from './controllers/action-cost.controller';
+import RecentActivityController from './controllers/recent-activity.controller';
 
 import routing  from './dashboard.routes';
-console.log('index.js')
-export default angular.module('ppApp.dashboard', [DashboardService])
+
+export default angular.module('ppApp.dashboard', [DashboardService, CalculateService, CostAnalysisService, TransactionHistoryService, CurrentTransactionsService]) //import dashboard view controllers
 	.config(routing)
   	.controller('DashboardController', DashboardController)
+  	.controller('AvailableActionsController', AvailableActionsController)
+  	.controller('GraphDonutController', GraphDonutController)
+  	.controller('FxChartController', FxChartController)
+  	.controller('ActionCostController', ActionCostController)
+  	.controller('RecentActivityController', RecentActivityController)
   	.name;
-
-// dashboardCtrl.$inject = ['$scope','$state', 'patentIds', '$timeout', '$rootScope', 'patentPhasesService', '$transitions', 'dashboardService', '$transitions'];
-
-// function dashboardCtrl ($scope, $state, patentIds, $timeout, $rootScope, patentPhasesService, $transitions, dashboardService, $transitions) {

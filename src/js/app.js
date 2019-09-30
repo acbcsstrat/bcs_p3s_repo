@@ -43,7 +43,6 @@ import dashboard from '../../app/features/dashboard/index.js'
 
 import "../scss/main.scss";
 
-console.log(dashboard)
 angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', uirouter, userService, coreCtrl, dashboard]).config(config)
 
 angular.module('ppApp').run(startUpRun)
