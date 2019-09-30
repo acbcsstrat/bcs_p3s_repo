@@ -1,8 +1,11 @@
-angular.module('ppApp').factory('dashboardService', dashboardService);
+import angular from 'angular';
 
-dashboardService.$inject = ['$http', '$q', 'organiseColourService', 'organiseTextService', 'patentsRestService']
 
-function dashboardService($http, $q, organiseColourService, organiseTextService, patentsRestService) {
+export default angular.module('services.DashboardService', []).factory('DashboardService', DashboardService).name;
+
+DashboardService.$inject = ['$http', '$q', 'patentsRestService']
+
+function DashboardService($http, $q, patentsRestService) {
 
     var factory = {
         sortPatents: sortPatents,
@@ -44,8 +47,6 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
         for(var i = 0; i < patents.length; i++) {
             for(var k = 0; k < patents[i].p3sServices.length; k++) {
                 var item = patents[i].p3sServices[k];
-                item.cssCurrent = organiseColourService.getCurrColour(item.currentStageColour, 'text')
-                item.cssNext = organiseColourService.getCurrColour(item.nextStageColour, 'text')
                 var string = item.currentStageColour.toLowerCase();
                 var capitlized = string.charAt(0).toUpperCase() + string.slice(1)
                 obj[capitlized].push(patents[i]);
@@ -73,9 +74,6 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
         factory.getPatents = obj;
     }
 
-    function actionStatus(text) {
-        return organiseTextService.actionStatus(text)
-    }    
 
     function setActionCost(patent) {
 

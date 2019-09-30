@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
+  devtool: 'source-map',
   entry: {
     // vendor: './src/js/vendor.js',   
     app: './src/js/app.js',
@@ -59,13 +60,21 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: 'css-loader', options: { sourceMap: true } },
-          { loader: 'style-loader' }
+          { 
+            loader: MiniCssExtractPlugin.loader, 
+            options: { sourceMap: true } 
+          },
+          'css-loader',
+          { 
+            loader: 'style-loader' 
+          }
         ]
       },      
       {
           test: /\.s?[ac]ss$/,
           use: [
+              'style-loader',
+              MiniCssExtractPlugin.loader,
               { loader: 'css-loader', options: { url: false, sourceMap: true } },
               { loader: 'sass-loader', options: { sourceMap: true } }
               // {
@@ -91,7 +100,11 @@ module.exports = {
     ]
   },
   plugins: [
-
+    new MiniCssExtractPlugin({
+      sourceMap: true,
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
     new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery'
@@ -100,7 +113,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       title: 'Patent Place',
-      template: 'indexxx.html',    
+      template: 'distindex.html',    
       filename:'index.html'
 
     }),  

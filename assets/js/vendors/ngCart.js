@@ -379,4 +379,4 @@ export default angular.module('ngCart', [directives])
 
     }])
 
-    .value('version', '1.0.0');
+    .value('version', '1.0.0').name;

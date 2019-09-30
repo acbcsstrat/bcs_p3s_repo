@@ -3,9 +3,9 @@ import patentsRestService from '../../app/services/patents.patentsRest.serv.js';
 
 export default angular.module('ppApp.core', [coreService, patentsRestService]).controller('coreCtrl', coreCtrl).name
 
-coreCtrl.$inject = ['$uibModal', '$scope', 'coreService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'ngCart', 'organiseColourService', '$cookies'];
+coreCtrl.$inject = ['$uibModal', '$scope', 'coreService', 'localStorageService', '$timeout', 'patentsRestService', 'Idle', 'Keepalive', '$http', 'organiseColourService', '$cookies'];
 
-function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, ngCart, organiseColourService, $cookies) {
+function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout, patentsRestService, Idle, Keepalive, $http, organiseColourService, $cookies) {
 
 	var vm = this;
 
@@ -14,7 +14,7 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
 	var patentsFound = true;
 	var userTimedOut = false;
 	var messageArr = [];
-
+	
 	$scope.$on('IdleStart', function() {
 		
 	  	closeModals();

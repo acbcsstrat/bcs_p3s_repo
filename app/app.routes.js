@@ -1,3 +1,6 @@
+import DashboardController from './features/dashboard/dashboard.controller';
+
+
 export default angular.module('ppApp.routes', []).config(appRoutes).name;
 
 appRoutes.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -10,63 +13,63 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         .otherwise('/dashboard');
 
     $stateProvider
-        .state('dashboard', {
-            url: '/dashboard',
-            resolve: {
-                patentIds: ['patentsRestService', '$q', '$timeout', function(patentsRestService, $q, $timeout) {
-                    return patentsRestService.fetchAllPatents();
-                }],
-                fxRatesMonth: ['fxService', function(fxService) {
-                    return fxService.fetchFxMonth();
-                }]
-            },
-            views: {
-                '@': {
-                    templateUrl: 'app/templates/dashboard/dashboard.tpl.htm',
-                    controller: 'dashboardCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'graphdonutwidget@dashboard': {
-                    controller: 'graphDonutCtrl',
-                    controllerAs: '$ctrl',
-                    templateUrl: 'app/templates/dashboard/dashboard.graph-donut-widget.tpl.htm',         
-                },
-                'actionsavailable@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.actions-available.tpl.htm',
-                    controller: 'renewalsCarouselCtrl',
-                    controllerAs: '$ctrl'                
-                },
-                'actioncost@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
-                    controller: 'renewalCostCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'actioncostmd@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
-                    controller: 'renewalCostCtrl',
-                    controllerAs: '$ctrl'                
-                },            
-                'fxchartwidget@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.fxchart-widget.tpl.htm',
-                    controller: 'dbfxChartCtrl',
-                    controllerAs: '$ctrl',
-                },
-                'recentactivitywidget@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.recent-activity-widget.tpl.htm',
-                    controller: 'recentActivityCtrl',
-                    controllerAs: '$ctrl'
-                }
-            }
-        })
+        // .state('dashboard', {
+        //     url: '/dashboard',
+        //     resolve: {
+        //         patentIds: ['patentsRestService', '$q', '$timeout', function(patentsRestService, $q, $timeout) {
+        //             return patentsRestService.fetchAllPatents();
+        //         }],
+        //         fxRatesMonth: ['fxService', function(fxService) {
+        //             return fxService.fetchFxMonth();
+        //         }]
+        //     },
+        //     views: {
+        //         '@': {
+        //             templateUrl: '../app/templates/dashboard/dashboard.tpl.htm',
+        //             controller: 'DashboardController',
+        //             controllerAs: '$ctrl'
+        //         },
+        //         'graphdonutwidget@dashboard': {
+        //             controller: 'graphDonutCtrl',
+        //             controllerAs: '$ctrl',
+        //             templateUrl: '../app/templates/dashboard/dashboard.graph-donut-widget.tpl.htm',         
+        //         },
+        //         'actionsavailable@dashboard': {
+        //             templateUrl: '../app/templates/dashboard/dashboard.actions-available.tpl.htm',
+        //             controller: 'renewalsCarouselCtrl',
+        //             controllerAs: '$ctrl'                
+        //         },
+        //         'actioncost@dashboard': {
+        //             templateUrl: '../app/templates/dashboard/dashboard.action-cost.tpl.htm',
+        //             controller: 'renewalCostCtrl',
+        //             controllerAs: '$ctrl'
+        //         },
+        //         'actioncostmd@dashboard': {
+        //             templateUrl: '../app/templates/dashboard/dashboard.action-cost.tpl.htm',
+        //             controller: 'renewalCostCtrl',
+        //             controllerAs: '$ctrl'                
+        //         },            
+        //         'fxchartwidget@dashboard': {
+        //             templateUrl: '../app/templates/dashboard/dashboard.fxchart-widget.tpl.htm',
+        //             controller: 'dbfxChartCtrl',
+        //             controllerAs: '$ctrl',
+        //         },
+        //         'recentactivitywidget@dashboard': {
+        //             templateUrl: '../app/templates/dashboard/dashboard.recent-activity-widget.tpl.htm',
+        //             controller: 'recentActivityCtrl',
+        //             controllerAs: '$ctrl'
+        //         }
+        //     }
+        // })
         .state('profile', {
             url: '/profile',
-            templateUrl: 'app/templates/user/user.user-profile.tpl.htm',
+            templateUrl: '../app/templates/user/user.user-profile.tpl.htm',
             controller: 'userProfileCtrl',
             controllerAs: '$ctrl'
         })
         .state('portfolio', {
             url: '/portfolio',
-            templateUrl: 'app/templates/portfolio/portfolio.tpl.htm',
+            templateUrl: '../app/templates/portfolio/portfolio.tpl.htm',
             controller: 'portfolioCtrl',
             controllerAs: '$ctrl',
             resolve: {
@@ -100,45 +103,45 @@ function appRoutes($stateProvider, $urlRouterProvider) {
                 "": {
                     controller: 'caseOverviewCtrl',
                     controllerAs: '$ctrl',
-                    templateUrl: 'app/templates/patent/case-overview.tpl.htm',
+                    templateUrl: '../app/templates/patent/case-overview.tpl.htm',
                 },
                 "details@portfolio.patent": {
-                    templateUrl: 'app/templates/patent/patent-details.tpl.htm',
+                    templateUrl: '../app/templates/patent/patent-details.tpl.htm',
                     controller: 'patentDetailsCtrl',
                     controllerAs: '$ctrl'      
                 },
                 "notifications@portfolio.patent": {
-                    templateUrl: 'app/templates/notifications/notifications.tpl.htm',
+                    templateUrl: '../app/templates/notifications/notifications.tpl.htm',
                     controller: 'notificationsCtrl',
                     controllerAs: '$ctrl',  
                 },
                 "form1200@portfolio.patent": {
-                    templateUrl: 'app/templates/europct/europct.form1200.tpl.htm',
+                    templateUrl: '../app/templates/europct/europct.form1200.tpl.htm',
                     controller: 'form1200Ctrl',
                     controllerAs: '$ctrl',  
                 },           
                 "renewalhistory@portfolio.patent": {
-                    templateUrl: 'app/templates/renewal/renewal.history.tpl.htm',
+                    templateUrl: '../app/templates/renewal/renewal.history.tpl.htm',
                     controller: 'renewalHistoryCtrl',
                     controllerAs: '$ctrl',  
                 },        
                 "grantandpublishing@portfolio.patent": {
-                    templateUrl: 'app/templates/grant/grant.tpl.htm',
+                    templateUrl: '../app/templates/grant/grant.tpl.htm',
                     controller: 'grantCtrl',
                     controllerAs: '$ctrl',  
                 },                                     
                 "fee-breakdown@portfolio.patent": {
-                    templateUrl: 'app/templates/fee-breakdown/fee-breakdown.tpl.htm',
+                    templateUrl: '../app/templates/fee-breakdown/fee-breakdown.tpl.htm',
                     controller: 'feeBreakDownCtrl',
                     controllerAs: '$ctrl',  
                 },
                 "fxchart@portfolio.patent": {
-                    templateUrl: 'app/templates/fxchart/fxchart.tpl.htm',
+                    templateUrl: '../app/templates/fxchart/fxchart.tpl.htm',
                     controller: 'fxChartCtrl',
                     controllerAs: '$ctrl',  
                 },
                 "costchart@portfolio.patent": {
-                    templateUrl: 'app/templates/costchart/costchart.tpl.htm',
+                    templateUrl: '../app/templates/costchart/costchart.tpl.htm',
                     controller: 'costChartCtrl',
                     controllerAs: '$ctrl',  
                 }
@@ -146,7 +149,7 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         })
         .state('search-patent', {
             url: '/search-patent',
-            templateUrl: 'app/templates/add-patent/patents.search-patent.tpl.htm',
+            templateUrl: '../app/templates/add-patent/patents.search-patent.tpl.htm',
             controller: 'searchPatentCtrl',
             controllerAs: '$ctrl',
             params: {
@@ -155,7 +158,7 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         })
         .state('search-patent.add-patent', {
             url: '?params',
-            templateUrl: 'app/templates/add-patent/patents.add-patent.tpl.htm',
+            templateUrl: '../app/templates/add-patent/patents.add-patent.tpl.htm',
             controller: 'addPatentCtrl',
             controllerAs: '$ctrl',
             params: {
@@ -164,7 +167,7 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         })
         .state('current-transactions', {
             url: '/current-transactions',
-            templateUrl: 'app/templates/transactions/transactions.current-transactions.tpl.htm',
+            templateUrl: '../app/templates/transactions/transactions.current-transactions.tpl.htm',
             controller: 'currentTransactionsCtrl',
             controllerAs: '$ctrl',
             resolve: {
@@ -178,7 +181,7 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         })
         .state('current-transactions.current-transaction-item', {
             url: '/{transId}/:transHref',
-            templateUrl: 'app/templates/transactions/transactions.current-transaction-item.tpl.htm',
+            templateUrl: '../app/templates/transactions/transactions.current-transaction-item.tpl.htm',
             controller: 'currentTransactionItemCtrl',
             controllerAs: '$ctrl',
             resolve: {
@@ -194,7 +197,7 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         })
         .state('transaction-history', {
             url: '/transaction-history',
-            templateUrl: 'app/templates/transactions/transactions.transaction-history.tpl.htm',
+            templateUrl: '../app/templates/transactions/transactions.transaction-history.tpl.htm',
             controller: 'transactionHistoryCtrl',
             controllerAs: '$ctrl',
             resolve: {
@@ -208,7 +211,7 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         })
         .state('transaction-history.transaction-history-item', {
             url: '/{transHistoryId}',
-            templateUrl: 'app/templates/transactions/transactions.transaction-history-item.tpl.htm',
+            templateUrl: '../app/templates/transactions/transactions.transaction-history-item.tpl.htm',
             controller: 'transactionHistoryItemCtrl',
             controllerAs: '$ctrl',            
             resolve: {
@@ -221,13 +224,13 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         })
         .state('basket', {
             url: '/basket',
-            templateUrl: 'app/templates/checkout/checkout.basket.tpl.htm',
+            templateUrl: '../app/templates/checkout/checkout.basket.tpl.htm',
             controller: 'basketCtrl',
             controllerAs: '$ctrl'
         })
         .state('bank-transfer-preparation', {
             url: '/bank-transfer-preparation',
-            templateUrl: 'app/templates/checkout/checkout.bank-transfer-preparation.tpl.htm',
+            templateUrl: '../app/templates/checkout/checkout.bank-transfer-preparation.tpl.htm',
             controller: 'bankTransferPrepCtrl',
             controllerAs: '$ctrl',
             params: {
@@ -236,7 +239,7 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         })
         .state('bank-transfer-success', {
             url: '/bank-transfer-success',
-            templateUrl: 'app/templates/checkout/checkout.bank-transfer-success.tpl.htm',            
+            templateUrl: '../app/templates/checkout/checkout.bank-transfer-success.tpl.htm',            
             controller: 'bankTransferSuccessCtrl',
             controllerAs: '$ctrl',            
             params: {

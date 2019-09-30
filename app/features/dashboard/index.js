@@ -3,13 +3,16 @@ import './_dashboard.scss';
 
 import angular from 'angular';
 
-import DashboardService from './dasshboard.serv.js';
+import DashboardService from './dashboard.serv.js';
 
 import DashboardController from './dashboard.controller';
 
-export default angular.module('ppApp.home', [DashboardService])
-  .controller('DashboardController', DashboardController)
-  .name;
+import routing  from './dashboard.routes';
+console.log('index.js')
+export default angular.module('ppApp.dashboard', [DashboardService])
+	.config(routing)
+  	.controller('DashboardController', DashboardController)
+  	.name;
 
 // dashboardCtrl.$inject = ['$scope','$state', 'patentIds', '$timeout', '$rootScope', 'patentPhasesService', '$transitions', 'dashboardService', '$transitions'];
 

@@ -1,4 +1,10 @@
-export default function DashboardController () {
+import DashboardService from './dashboard.serv.js';
+
+DashboardController.$inject = ['$timeout', '$scope', 'patentIds', 'DashboardService'];
+
+export default function DashboardController($timeout, $scope, patentIds, DashboardService) {
+
+    console.log('dshboardscope', $scope)
 
     var vm = this;
 
@@ -12,7 +18,7 @@ export default function DashboardController () {
 
     function init() {
         $scope.$emit('updatePatent')
-        dashboardService.sortPatents(patentIds);
+        DashboardService.sortPatents(patentIds);
     }
 
     init();

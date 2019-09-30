@@ -29,23 +29,22 @@ import "angular-nvd3/dist/angular-nvd3.min.js";
 import angular from 'angular';
 import uirouter from 'angular-ui-router';
 import ngIdle from "ng-idle/angular-idle.min.js";
-import ngCart from "localScripts/js/vendors/ngCart.js";
+// import ngCart from "localScripts/js/vendors/ngCart.js";
 import angularMoment from "angular-moment";
 import nvd3 from "angular-nvd3";
 import croppie from "angular-croppie/angular-croppie.js";
-
-import routes from "../../app/app.routes.js"
 
 import config from '../../app/app.config.js';
 
 import userService from '../../app/services/user.user.serv.js';
 
 import coreCtrl from '../../app/controllers/core.core.ctrl.js'
+import dashboard from '../../app/features/dashboard/index.js'
 
 import "../scss/main.scss";
 
-
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngCart', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', uirouter, userService, routes ,coreCtrl]).config(config)
+console.log(dashboard)
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', uirouter, userService, coreCtrl, dashboard]).config(config)
 
 angular.module('ppApp').run(startUpRun)
 

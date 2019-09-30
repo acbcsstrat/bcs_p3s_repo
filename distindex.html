@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title>Patent Place | Online European Phase filing</title>
+
+		<style id="antiClickjack">body{display:none !important;}</style>
+
+		<script type="text/javascript">
+			
+			if(self === top) {
+				var antiClickjack = document.getElementById("antiClickjack");
+				antiClickjack.parentNode.removeChild(antiClickjack)
+			} else {
+				top.location = self.location
+			}
+
+		</script>
+
+	</head>
+
+	<body detect-device mobile-redirect data-ng-app="ppApp">
+		
+		<div data-ng-if="!smallDevice">
+				
+			<mainnav></mainnav>
+
+			<main class="app-container h-100" data-ng-controller="coreCtrl">
+				<basketnav></basketnav>
+				<ui-view class="h-100">
+					<div class="screen-load">
+						<div class="row m-b-md">
+							<div class="col-xl-12 text-center">
+								<img src="assets/imgs/icons/spinner-loader-sm.gif">
+							</div>
+						</div>
+					</div>
+				</ui-view>
+				<idle></idle>
+				<open-help-panel class="animate-show"></open-help-panel>
+				<help-panel class="help-panel"></help-panel>
+			</main>
+		</div>
+
+		<div data-ng-if="smallDevice" class="h-100 container-pre-app__center-box-70 mx-auto my-0 d-none" id="mobileRedirectId">
+			<div class="d-flex h-100 p5">			
+				<div class="d-flex justify-content-center align-items-center flex-column flex-grow-1 flex-column">
+					<img src="assets/imgs/mobile-device.svg" width="300" height="300">
+					<h4 class="font-h3 font-h3--content font-weight-bold">We're sorry... we don't offer The Patent Place via small devices.</h4>
+					<p class="font-body text-center">An application design for small devices is in on the way but for now we recommend you access The Patent Place via a device such as a large tablet or desktop.</p>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

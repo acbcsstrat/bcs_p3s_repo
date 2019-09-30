@@ -10,7 +10,7 @@ export default function appConfig($httpProvider, $uibModalProvider, $compileProv
         $httpProvider.defaults.headers.get = {};    
     }    
 
-    window.ppdomain = "http://localhost:8081/p3sweb/";
+    window.ppdomain = "http://localhost:8080/p3sweb/";
 
     // Answer edited to include suggestions from comments
     // because previous version of code introduced browser-related errors
