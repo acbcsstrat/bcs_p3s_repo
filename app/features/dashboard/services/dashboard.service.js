@@ -1,6 +1,5 @@
 import angular from 'angular';
 
-
 export default angular.module('services.DashboardService', []).factory('DashboardService', DashboardService).name;
 
 DashboardService.$inject = ['$http', '$q', 'patentsRestService']

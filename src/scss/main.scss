@@ -1,7 +1,7 @@
 
 @import '~bootstrap/dist/css/bootstrap.min.css';
-// @import 'croppie/croppie.css';
-
+$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
+@import '~@fortawesome/fontawesome-pro/css/all.css';
 @import "../scss/helpers/_variables.scss";
 @import "../scss/base/_reset.scss";
 @import "../scss/base/_base.scss";

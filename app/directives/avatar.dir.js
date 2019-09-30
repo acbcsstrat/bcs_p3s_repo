@@ -9,7 +9,7 @@ function avatarImg($rootScope, $http) {
 		templateUrl: 'app/templates/directives/avatar.tpl.htm',
 		link: function(scope, elem, attr) {
 
-			$http.get('../p3sweb/avatarImage')
+			$http.get('avatarImage')
 			.then(
 				function(response){
 					if(response.data == '' || response.data == undefined) {

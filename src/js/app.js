@@ -1,3 +1,7 @@
+
+import "localScripts/js/config.js";;
+import "localScripts/js/polyfillers.js";
+
 import "babel-polyfill";
 import $ from 'jquery'; //neede to prevent error with slick-carousel
 window.jQuery = $;
@@ -29,7 +33,7 @@ import "angular-nvd3/dist/angular-nvd3.min.js";
 import angular from 'angular';
 import uirouter from 'angular-ui-router';
 import ngIdle from "ng-idle/angular-idle.min.js";
-// import ngCart from "localScripts/js/vendors/ngCart.js";
+import ngCart from "../../assets/js/vendors/ngCart.js";
 import angularMoment from "angular-moment";
 import nvd3 from "angular-nvd3";
 import croppie from "angular-croppie/angular-croppie.js";
@@ -38,14 +42,19 @@ import config from '../../app/app.config.js';
 
 import userService from '../../app/services/user.user.serv.js';
 
-import coreCtrl from '../../app/controllers/core.core.ctrl.js'
-import dashboard from '../../app/features/dashboard/index.js'
+import coreCtrl from '../../app/controllers/core.core.ctrl.js';
+import dashboard from '../../app/features/dashboard/index.js';
+import sidenav from '../../app/features/sidenav/index.js';
+
+import '@fortawesome/fontawesome-pro/js/fontawesome'
+import '@fortawesome/fontawesome-pro/js/solid'
+import '@fortawesome/fontawesome-pro/js/regular'
+import '@fortawesome/fontawesome-pro/js/brands'
 
 import "../scss/main.scss";
 
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', uirouter, userService, coreCtrl, dashboard]).config(config)
 
-angular.module('ppApp').run(startUpRun)
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', uirouter, userService, ngCart, coreCtrl, dashboard, sidenav]).config(config).run(startUpRun)
 
 startUpRun.$inject = ['Idle', 'userService', '$rootScope', '$timeout'];
 
@@ -65,8 +74,6 @@ function startUpRun(Idle, userService, $rootScope, $timeout) {
 
 };
 
-// require("localScripts/js/config.js");
-// require("localScripts/js/polyfillers.js")
 
 // require("app/app.module.js");
 // require("app/app.config.js");
