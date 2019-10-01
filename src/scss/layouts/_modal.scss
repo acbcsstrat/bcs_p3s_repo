@@ -1,0 +1,79 @@
+.modal-cross { /*modules*/ /*components*/ /*_modal.scss*/
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-top: 5px; /*change when correct image is provided*/
+}
+
+.bar-phase { width: 100%; } /*modules*/ /*components*/ /*_modal.scss*/
+
+.modal-backdrop .fade .in { opacity: 0.5 !important; }
+.modal-backdrop.fade { opacity: 0.5 !important; }
+
+
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.modal-content {
+  background: transparent;
+}
+.modal-header {
+  background: $white;
+  border-bottom: 0;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1); 
+
+}
+
+.modal-body {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.modal-footer {
+  border-top: 0;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.modal-footer>:not(:last-child) {
+  margin-right: 1.5rem;
+}
+
+.modal-body--multiple {
+  padding-left: 5rem;
+  padding-right: 5rem;  
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;  
+}
+
+.modal-header--multiple {
+  padding-left: 5rem;
+  padding-right: 5rem;  
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;  
+}
+
+.modal-content--multiple {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.modal-content--table {
+  width: 500px;
+}
+
+.modal-max {
+  max-height: 600px;
+  overflow-y: scroll;
+}
