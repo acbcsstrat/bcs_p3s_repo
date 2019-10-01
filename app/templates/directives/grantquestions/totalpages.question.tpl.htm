@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="form-group row">
+            <label for="totalPages" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">How many total pages have been file?</label>
+            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                <input type="number" name="totalPages" id="totalPages" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalPages); isOptionValid(formData.totalPages, question);" data-ng-model="formData.totalPages" placeholder="Total number of pages" validate-numbers required>
+            </div>
+        </div>
+        <p class="font-body txt-phase-red" data-ng-show="grantForm.totalPages.$error.validNumber && grantForm.totalPages.$dirty">Only numbers are valid charcters in this field.</p>  
+    </div>
+</div>

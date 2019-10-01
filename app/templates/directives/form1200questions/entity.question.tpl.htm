@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-xl-12">
+        <p class="m-b-xs">The/Each applicant hereby declares that he is an entity or a natural person under Rule 6(4) EPC.</p>
+    
+        <div class="form-check form-check-inline">
+
+            <input type="checkbox" name="checkYes" data-ng-model="validModel[question.title].yes" class="form-check-input checkbox-round" data-ng-change="isOptionValid(validModel[question.title].yes, question);" required>
+            <label for="checkYes" class="form-check-label">Yes</label>
+        </div>
+        <div class="row m-b-xs m-t-sm">
+            <div class="col-md-6">
+                <p data-ng-click="question.displayHelp = !question.displayHelp" class="btn btn-underlined font-weight-medium">What does this mean? 
+                    <i class="fas fa-chevron-down fa-sm" data-ng-show="question.displayHelp"></i>
+                    <i class="fas fa-chevron-right fa-sm" data-ng-show="!question.displayHelp"></i>
+                </p>
+            </div>
+        </div>
+        <div class="expandcollapse-item">
+            <div class="slideDown m-b-sm" data-ng-hide="question.displayHelp === false">
+                <p class="font-body">For more information about Rule 6(4) EPC then please <a class="btn btn-underlined" target="__blank" data-ng-href="https://www.epo.org/law-practice/legal-texts/html/epc/2016/e/r6.html">click here</a></p>
+            </div>
+        </div>
+    </div>
+</div>

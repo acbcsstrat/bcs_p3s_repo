@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-xl-12">
+        <p class="m-b-xs">Please provide both the French and German translations of the claims</p>
+        <div class="form-check form-check-inline">
+            <label for="frenchTranslation" class="form-check-label">French</label>
+            <input type="file" name="frenchTranslation" data-ng-init="formData.translations.frenchTranslation = {};" data-ng-model="formData.translations.frenchTranslation" class="form-check-input" select-ng-files data-ng-upload-change="addToFormData('', formData.translations); isOptionValid(formData.translations, question);" accept="application/pdf" required>
+        </div>
+        <div class="form-check form-check-inline">
+            <label for="germanTranslation" class="form-check-label">German</label>  
+            <input type="file" name="germanTranslation" data-ng-init="formData.translations.germanTranslation = {};" data-ng-model="formData.translations.germanTranslation" class="form-check-input" select-ng-files data-ng-upload-change="addToFormData('', formData.translations); isOptionValid(formData.translations, question);" accept="application/pdf" required>
+        </div>
+
+    </div>
+</div>
