@@ -138,6 +138,7 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 			}
 
 			function isEmpty(obj) {
+
 				var allFilled;
 				for(var property in obj) {
 					if(obj.hasOwnProperty(property)) {
@@ -159,7 +160,7 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 
 
 			this.isOptionValid = function(value, item) { //INVOKED FROM PANEL CONTENT
-
+				console.log('value: ', value)
 				if(value !== undefined  && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
 					if(isEmpty(value)) {
 						$scope.nextBtnDisabled = false;
@@ -305,3 +306,42 @@ angular.module("ppApp").directive("selectNgFiles", function() {
     }
   }
 });
+
+angular.module('ppApp').directive('validatePdf', function(){
+
+	return {
+		restrict: 'A',
+		require: 'ngModel',
+		link: function(scope, elem, attr, ctrl){
+
+			ctrl.$parsers.unshift(checkPdf);
+
+		    function checkPdf(viewValue){
+		    	console.log(viewValue)
+		        if (viewValue.type === 'application/pdf') {
+		          ctrl.$setValidity('pdfValid',true);
+		        }
+		        else{
+		          ctrl.$setValidity('pdfValid', false);
+		        }
+		        return viewValue;
+		    }
+
+
+			// elem.on('change', function(e){
+
+			// 	if(elem[0].files[0].type === 'application/pdf') {
+
+			// 		modelController.$setValidity('pdfValid', true)
+
+			// 	} else {
+			// 		modelController.$setValidity('pdfValid', false)
+
+			// 	}
+			// 	console.log('scope', scope.grantForm)
+		
+			// })
+			
+		}
+	}
+})
