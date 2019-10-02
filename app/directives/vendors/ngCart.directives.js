@@ -103,10 +103,9 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 var patent_ids = [];
                 var cartItems = {};
                 var totalCost = ngCart.totalCost();
-
                 Object.keys(productData).forEach(function(data){
                     cartItems = productData[data]._data;
-                    patent_ids.push(cartItems.id);
+                    patent_ids.push(cartItems.patentID);
                 });
 
                 var patentObj = {
@@ -133,9 +132,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             };
         }]),
         link: function(scope, element, attrs) {
-
-
-
 
             var cartArr = function() {
                 var cartArr = [];
