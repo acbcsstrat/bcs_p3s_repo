@@ -161,7 +161,7 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 
 
 			this.isOptionValid = function(value, item) { //INVOKED FROM PANEL CONTENT
-				console.log('value: ', value)
+			
 				if(value !== undefined  && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
 					if(isEmpty(value)) {
 						$scope.nextBtnDisabled = false;
@@ -211,6 +211,8 @@ function questionContent($rootScope, $compile, $timeout) {
 		scope: true,
 		template: '<div data-ng-include="questionTemplate"></div> ',
 		link: function(scope, elem, attr, ctrl) {
+
+			// console.log(scope)
 
 			scope.validModel = {};
 
@@ -308,32 +310,30 @@ angular.module("ppApp").directive("ngUploadChange",function(){
 //   }
 // });
 
-angular.module("ppApp").directive("selectNgFiles", function() {
+angular.module("ppApp").directive("selectNgFiles", function() { //if files to be uploaded vary in future, add condition to check type or create new directive
   return {
     require: "ngModel",
     link: function postLink(scope,elem,attrs,ngModel) {
        var validFormats = ['pdf'];
         elem.bind('change', function () {
-            validImage(false);
-            // console.log(ngModel)
-            // console.dir(ngModel)
+            validFile(false);
             scope.$apply(function () {
                 ngModel.$render();
             });
         });
         ngModel.$render = function () {
-            ngModel.$setViewValue(elem.val());
+            ngModel.$setViewValue(elem[0].files[0]);
         };
-        function validImage(bool) {
-            ngModel.$setValidity('extension', bool);
+        function validFile(bool) {
+            ngModel.$setValidity('pdfIncorrect', bool);
         }
         ngModel.$parsers.push(function(value) {
-            var ext = value.substr(value.lastIndexOf('.')+1);
+            var ext = value.name.substr(value.name.lastIndexOf('.')+1);
             if(ext=='') return;
             if(validFormats.indexOf(ext) == -1){
                 return value;
             }
-            validImage(true);
+            validFile(true);
             return value;
         });
     }
@@ -397,7 +397,7 @@ angular.module('ppApp').directive('validatePdf', function(){
 //     link: function postLink(scope,elem,attrs,ngModel) {
 //        var validFormats = ['pdf'];
 //         elem.bind('change', function () {
-//             validImage(false);
+//             validFile(false);
 //             scope.$apply(function () {
 //                 ngModel.$render();
 //             });
@@ -405,7 +405,7 @@ angular.module('ppApp').directive('validatePdf', function(){
 //         ngModel.$render = function () {
 //             ngModel.$setViewValue(elem.val());
 //         };
-//         function validImage(bool) {
+//         function validFile(bool) {
 //             ngModel.$setValidity('extension', bool);
 //         }
 //         ngModel.$parsers.push(function(value) {
@@ -414,7 +414,7 @@ angular.module('ppApp').directive('validatePdf', function(){
 //             if(validFormats.indexOf(ext) == -1){
 //                 return value;
 //             }
-//             validImage(true);
+//             validFile(true);
 //             return value;
 //         });
 //     }

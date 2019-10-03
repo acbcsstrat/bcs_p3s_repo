@@ -9,18 +9,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-3  d-flex align-items-center justify-content-start">
-                  <button data-ng-click="prevElement()" data-ng-hide="firstQ" class="question-direction font-h4 d-flex align-items-center"><i class="far fa-angle-left fa-2x m-r-xs"></i> Prev</button>
-                </div>
-                <!--these two buttons invoke selectQuestion-->
-                <div class="col-xl-6 d-flex align-items-center justify-content-center">            
+                <div class="col-md-12 col-xl-12 d-flex align-items-center justify-content-between">
+                <!--these two buttons invoke selectQuestion-->         
                     <div class="nav">
                         <button data-ng-repeat="item in buttons track by $index" data-ng-click="selectQuestion($index)" data-ng-disabled="item.disabled" class="queston-btn">Q{{$index + 1}}</button>
-                      </div> 
-                </div>
-                <div class="col-xl-3 d-flex align-items-center justify-content-end">
-                    <button type="button" data-ng-click="nextElement()" data-ng-hide="lastQ" class="question-direction font-h4 d-flex align-items-center" data-ng-disabled="nextBtnDisabled">Next <i class="far fa-angle-right fa-2x m-l-xs"></i></button><!--these two buttons invoke selectQuestion-->
-                    <button type="button" id="submit" class="btn btn--green btn--lg pill-radius" data-ng-show="lastQ" data-ng-click="submitFormData('submitGrantData'); formDataSubmitted = true;" data-ng-disabled="grantForm.$invalid || formDataSubmitted">Prepare Grant Action</button>
+                    
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end">
+                        <div class="d-flex align-items-center justify-content-start">
+                          <button data-ng-click="prevElement()" data-ng-hide="firstQ" class="question-direction font-h4 d-flex align-items-center"><i class="far fa-angle-left fa-2x m-r-xs"></i> Prev</button>
+                        </div>                    
+                        <button type="button" data-ng-click="nextElement()" data-ng-hide="lastQ" class="question-direction font-h4 d-flex align-items-center" data-ng-disabled="nextBtnDisabled">Next <i class="far fa-angle-right fa-2x m-l-xs"></i></button><!--these two buttons invoke selectQuestion-->
+                        <button type="button" id="submit" class="btn btn--green btn--lg pill-radius" data-ng-show="lastQ" data-ng-click="submitFormData('submitGrantData'); formDataSubmitted = true;" data-ng-disabled="grantForm.$invalid || formDataSubmitted">Prepare Grant Action</button>
+                    </div>
                 </div>
             </div>
         </form>

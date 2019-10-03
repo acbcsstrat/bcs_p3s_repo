@@ -37,7 +37,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     init();
 
     $rootScope.$on('submitGrantData', function(e, data){
-        console.log(data)
+
         var formData = new FormData();
         var config = { headers: {'Content-Type': undefined} };
         var notifyWhenValidationAvailable = data.data.optInValidation.no === true ? false : true;
