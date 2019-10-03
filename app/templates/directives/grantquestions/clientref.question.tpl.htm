@@ -3,7 +3,7 @@
         <div class="form-group row">
             <label for="clientRef" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please provide an applicant or representative reference:</label>
             <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
-                <input type="text" name="clientRef" id="clientRef" class="form-control pill-radius" data-ng-change="addToFormData('clientRef', question.data); isOptionValid(question.data, question);" data-ng-model="question.data" placeholder="Applicant/representative reference" data-ng-maxlength="15" required>
+                <input type="text" name="clientRef" id="clientRef" class="form-control pill-radius" data-ng-init="isOptionValid(question.data, question);" data-ng-change="addToFormData('clientRef', question.data); isOptionValid(question.data, question);" data-ng-model="question.data" placeholder="Applicant/representative reference" data-ng-maxlength="15" required>
             </div>
         </div>
 		<p class="font-body txt-phase-red" data-ng-show="grantForm.clientRef.$error.required && grantForm.clientRef.$dirty">Please fill out this field</p>

@@ -161,7 +161,7 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 
 
 			this.isOptionValid = function(value, item) { //INVOKED FROM PANEL CONTENT
-			
+				
 				if(value !== undefined  && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
 					if(isEmpty(value)) {
 						$scope.nextBtnDisabled = false;
