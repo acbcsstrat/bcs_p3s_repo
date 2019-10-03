@@ -142,6 +142,7 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 				var allFilled;
 				for(var property in obj) {
 					if(obj.hasOwnProperty(property)) {
+						if(obj[property] === undefined) { return; }
 						if(obj[property].constructor !== Object) {
 							allFilled = true;
 						} else {
@@ -295,37 +296,85 @@ angular.module("ppApp").directive("ngUploadChange",function(){
     }
 });
 
+// angular.module("ppApp").directive("selectNgFiles", function() {
+//   return {
+//     require: "ngModel",
+//     link: function postLink(scope,elem,attrs,ngModel) {
+//       elem.on("change", function(e) {
+//         var files = elem[0].files[0];
+//         ngModel.$setViewValue(files);
+//       })
+//     }
+//   }
+// });
+
 angular.module("ppApp").directive("selectNgFiles", function() {
   return {
     require: "ngModel",
     link: function postLink(scope,elem,attrs,ngModel) {
-      elem.on("change", function(e) {
-        var files = elem[0].files[0];
-        ngModel.$setViewValue(files);
-      })
+       var validFormats = ['pdf'];
+        elem.bind('change', function () {
+        	console.log('change')
+            validImage(false);
+            // console.log(ngModel)
+            // console.dir(ngModel)
+            scope.$apply(function () {
+            	console.log('scope apply')
+                ngModel.$render();
+            });
+        });
+        ngModel.$render = function () {
+        	console.log('render')
+            ngModel.$setViewValue(elem.val());
+        };
+        function validImage(bool) {
+            ngModel.$setValidity('extension', bool);
+        }
+        ngModel.$parsers.push(function(value) {
+        	console.log('parsers')
+            var ext = value.substr(value.lastIndexOf('.')+1);
+            if(ext=='') return;
+            if(validFormats.indexOf(ext) == -1){
+                return value;
+            }
+            validImage(true);
+            return value;
+        });
     }
   }
 });
 
 angular.module('ppApp').directive('validatePdf', function(){
 
+	var validFormats = ['pdf'];
+
 	return {
 		restrict: 'A',
 		require: 'ngModel',
 		link: function(scope, elem, attr, ctrl){
 
-			ctrl.$parsers.unshift(checkPdf);
+            // ctrl.$validators.validFile = function() {
+            //     elem.on('change', function () {
+            //        var value = elem.val(),
+            //            ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();   
 
-		    function checkPdf(viewValue){
-		    	console.log(viewValue)
-		        if (viewValue.type === 'application/pdf') {
-		          ctrl.$setValidity('pdfValid',true);
-		        }
-		        else{
-		          ctrl.$setValidity('pdfValid', false);
-		        }
-		        return viewValue;
-		    }
+            //        	return validFormats.indexOf(ext) !== -1;
+            //     });
+            // }
+
+			// ctrl.$formatters.unshift(checkForEven);.unshift(checkPdf);
+
+		 //    function checkPdf(viewValue){
+		 //        if (viewValue.type === 'application/pdf') {
+		 //          ctrl.$setValidity('pdfValid',true);
+		 //        }
+		 //        else{
+		 //          ctrl.$setValidity('pdfValid', false);
+		 //        }
+		 //        return viewValue;
+		 //    }
+
+
 
 
 			// elem.on('change', function(e){
@@ -345,3 +394,85 @@ angular.module('ppApp').directive('validatePdf', function(){
 		}
 	}
 })
+
+// angular.module("ppApp").directive("selectNgFiles", function() {
+//   return {
+//     require: "ngModel",
+//     link: function postLink(scope,elem,attrs,ngModel) {
+//        var validFormats = ['pdf'];
+//         elem.bind('change', function () {
+//             validImage(false);
+//             scope.$apply(function () {
+//                 ngModel.$render();
+//             });
+//         });
+//         ngModel.$render = function () {
+//             ngModel.$setViewValue(elem.val());
+//         };
+//         function validImage(bool) {
+//             ngModel.$setValidity('extension', bool);
+//         }
+//         ngModel.$parsers.push(function(value) {
+//             var ext = value.substr(value.lastIndexOf('.')+1);
+//             if(ext=='') return;
+//             if(validFormats.indexOf(ext) == -1){
+//                 return value;
+//             }
+//             validImage(true);
+//             return value;
+//         });
+//     }
+//   }
+// });
+
+// angular.module('ppApp').directive('validatePdf', function(){
+
+// 	return {
+// 		restrict: 'A',
+// 		require: 'ngModel',
+// 		link: function(scope, elem, attr, ctrl){
+
+// 			// ctrl.$parsers.unshift(checkPdf);
+
+// 		 //    function checkPdf(viewValue){
+// 		 //    	console.log(viewValue)
+// 		 //        if (viewValue.type === 'application/pdf') {
+// 		 //          ctrl.$setValidity('pdfValid',true);
+// 		 //        }
+// 		 //        else{
+// 		 //          ctrl.$setValidity('pdfValid', false);
+// 		 //        }
+// 		 //        return viewValue;
+// 		 //    }
+
+
+// 	    // ctrl.$validators.validFile = function() {
+// 	        // elem.on('change', function () {
+// 	        // 	console.log('validFile')
+// 	        //    	var value = elem.val(),
+// 	        //        ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();   
+// 	        //        	// if(validFormats.indexOf(ext) !== -1) {
+// 	        //        	// 	changeView()
+// 	        //        	// }
+// 		       //  	return validFormats.indexOf(ext) !== -1;
+	               
+// 	        //    	// 
+// 	        // });
+// 	    // }
+// 			// elem.on('change', function(e){
+
+// 			// 	if(elem[0].files[0].type === 'application/pdf') {
+
+// 			// 		modelController.$setValidity('pdfValid', true)
+
+// 			// 	} else {
+// 			// 		modelController.$setValidity('pdfValid', false)
+
+// 			// 	}
+// 			// 	console.log('scope', scope.grantForm)
+		
+// 			// })
+			
+// 		}
+// 	}
+// })
