@@ -314,24 +314,20 @@ angular.module("ppApp").directive("selectNgFiles", function() {
     link: function postLink(scope,elem,attrs,ngModel) {
        var validFormats = ['pdf'];
         elem.bind('change', function () {
-        	console.log('change')
             validImage(false);
             // console.log(ngModel)
             // console.dir(ngModel)
             scope.$apply(function () {
-            	console.log('scope apply')
                 ngModel.$render();
             });
         });
         ngModel.$render = function () {
-        	console.log('render')
             ngModel.$setViewValue(elem.val());
         };
         function validImage(bool) {
             ngModel.$setValidity('extension', bool);
         }
         ngModel.$parsers.push(function(value) {
-        	console.log('parsers')
             var ext = value.substr(value.lastIndexOf('.')+1);
             if(ext=='') return;
             if(validFormats.indexOf(ext) == -1){
