@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-xl-12">
+        <p>Please provide both the French and German translations of the claims</p>
+        <div class="form-check form-check-inline m-t-sm">
+            <label for="frenchTranslation" class="form-check-label m-r-xs">French</label>
+            <input type="file" name="frenchTranslation" data-ng-init="formData.translations.frenchTranslation = {};" data-ng-model="formData.translations.frenchTranslation" class="form-check-input form-control-file" select-ng-files data-ng-upload-change="addToFormData('', formData.translations); isOptionValid(formData.translations, question);" accept="application/pdf" required>
+        </div>
+        <div class="form-check form-check-inline m-t-sm">
+            <label for="germanTranslation" class="form-check-label m-r-xs">German</label>  
+            <input type="file" name="germanTranslation" data-ng-init="formData.translations.germanTranslation = {};" data-ng-model="formData.translations.germanTranslation" class="form-check-input form-control-file" select-ng-files data-ng-upload-change="addToFormData('', formData.translations); isOptionValid(formData.translations, question);" accept="application/pdf" required>
+        </div>
+    </div>
+    <div class="col-md-12 m-t-xs" data-ng-show="grantForm.germanTranslation.$error.pdfIncorrect || grantForm.frenchTranslation.$error.pdfIncorrect">
+        <p class="font-body txt-phase-red">Please ensure that the file you have uploaded is saved in a .pdf format.</p>        
+    </div>
+</div>
