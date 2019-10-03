@@ -325,7 +325,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
                 this.deleteGrant = function() {
                     $uibModalInstance.close();
-                    grantService.unhibitGrant(patent.patentID)
+                    grantService.deleteGrant(patent.patentID)
                     .then(
                         function(response){
                             $state.reload()

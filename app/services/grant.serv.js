@@ -10,8 +10,10 @@ function grantService($http, $q, $timeout){
         unhibitGrant: unhibitGrant,
         setQuestions: setQuestions,
         getQuestions: getQuestions,
+        deleteGrant: deleteGrant,
         representativeCheck: representativeCheck
     }
+
 
     function unhibitGrant(id) {
 
@@ -48,6 +50,25 @@ function grantService($http, $q, $timeout){
         )
 
         return deferred.promise;
+    }
+
+    function deleteGrant(id) {
+
+        var deferred = $q.defer();
+
+        $http.delete(ppdomain+'rest-grant/'+id)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                console.error('Error: Unable to reset grant order');
+                deferred.reject(errResponse.data)
+            }
+        )
+
+        return deferred.promise;
+
     }
 
     function submitGrant(data, config) {
