@@ -170,6 +170,63 @@
                                 </div>                                                                                        
                             </div>                            
                         </div>
+                        <div data-ng-if="$ctrl.displayGrant">
+                            <div class="row m-b-sm">
+                                <div class="col-md-5 col-xl-5">
+                                    <p class="font-weight-medium m-l-sm">Grant Fee:</p>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <p class="text-left font-body">$ {{($ctrl.availableFees.grantFeeUSD | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-md-3 col-xl-3">
+                                    <p class="text-left font-body">&euro; {{($ctrl.availableFees.grantFeeEUR | number: 2) || '0.00'}}</p>
+                                </div>                                                                                        
+                            </div>                             
+                            <div class="row m-b-sm">
+                                <div class="col-md-5 col-xl-5">
+                                    <p class="font-weight-medium m-l-sm">Claims for the 16th and each subsequent claim to the limit of 50:</p>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <p class="text-left font-body">$ {{($ctrl.availableFees.claimsFee1USD | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-md-3 col-xl-3">
+                                    <p class="text-left font-body">&euro; {{($ctrl.availableFees.claimsFee1EUR | number: 2) || '0.00'}}</p>
+                                </div>                                                                                        
+                            </div>
+                            <div class="row m-b-sm">
+                                <div class="col-md-5 col-xl-5">
+                                    <p class="font-weight-medium m-l-sm">Claims for the 51st and each subsequent claim:</p>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <p class="text-left font-body">$ {{($ctrl.availableFees.claimsFee2USD | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-md-3 col-xl-3">
+                                    <p class="text-left font-body">&euro; {{($ctrl.availableFees.claimsFee2EUR | number: 2) || '0.00'}}</p>
+                                </div>                                                                                        
+                            </div>      
+                            <div class="row m-b-sm">
+                                <div class="col-md-5 col-xl-5">
+                                    <p class="font-weight-medium m-l-sm">Excess pages:</p>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <p class="text-left font-body">$ {{($ctrl.availableFees.excessPageFeeUSD | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-md-3 col-xl-3">
+                                    <p class="text-left font-body">&euro; {{($ctrl.availableFees.excessPageFeeEUR | number: 2) || '0.00'}}</p>
+                                </div>                                                                                        
+                            </div>   
+                            <div class="row m-b-sm">
+                                <div class="col-md-5 col-xl-5">
+                                    <p class="font-weight-medium m-l-sm">Renewal Fee:</p>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <p class="text-left font-body">$ {{($ctrl.availableFees.renewalExtensionFeeUSD | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-md-3 col-xl-3">
+                                    <p class="text-left font-body">&euro; {{($ctrl.availableFees.renewalExtensionFeeEUR | number: 2) || '0.00'}}</p>
+                                </div>                                                                                        
+                            </div>                                                                                                         
+                        </div>                        
                         <div class="border-grey-xs--btm"></div> 
                     </div>
                 </div>
