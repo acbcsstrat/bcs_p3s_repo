@@ -24,7 +24,7 @@ function renewalCostCtrl($scope, $timeout, patentIds, dashboardService, organise
         updateCosttimeout = $timeout(function(){
             vm.actionCost = dashboardService.fetchActionCost();
             vm.loading = false;
-        }, 100)
+        }, 300)
 
     })  
 
