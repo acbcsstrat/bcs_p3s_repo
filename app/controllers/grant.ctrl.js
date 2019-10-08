@@ -36,7 +36,9 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
     init();
 
-    $rootScope.$on('submitGrantData', function(e, data){
+    var destroyFrom;
+
+    destroyFrom = $rootScope.$on('submitGrantData', function(e, data){
 
         var formData = new FormData();
         var config = { headers: {'Content-Type': undefined} };
@@ -55,8 +57,6 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         .then(
             function(response){
 
-                
-
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.grant-order-prepared.tpl.htm',
                     appendTo: undefined,
@@ -74,7 +74,6 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
             },
             function(errResponse){
-
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.grant-order-not-prepared.tpl.htm',
                     appendTo: undefined,
@@ -95,6 +94,9 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
     })
 
+    $scope.$on('$destroy', function() {
+      destroyFrom(); // remove listener.
+    });     
 
 	var grantQuestions = [
 

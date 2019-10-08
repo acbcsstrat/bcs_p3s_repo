@@ -119,7 +119,6 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 
 			}
 
-
 	      	$scope.submitFormData = function(service){
 	        	$rootScope.$emit(service, {data: $scope.formData, service: service});
 	      	};			
@@ -211,8 +210,6 @@ function questionContent($rootScope, $compile, $timeout) {
 		scope: true,
 		template: '<div data-ng-include="questionTemplate"></div> ',
 		link: function(scope, elem, attr, ctrl) {
-
-			// console.log(scope)
 
 			scope.validModel = {};
 

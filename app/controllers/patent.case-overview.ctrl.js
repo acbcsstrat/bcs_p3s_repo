@@ -110,7 +110,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         patentsRestService.deletePatent(id)
         .then(
-            function(){
+            function(response){
+                console.log('success: ', response)
                 $state.go('portfolio', {}, {reload: true})
                 .then(function(){
                     $timeout(function(){
@@ -119,6 +120,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 });
             },
             function(errResponse){
+                console.log('error: ', errResponse)
                 deletePatentError(errResponse);
             }
         );
