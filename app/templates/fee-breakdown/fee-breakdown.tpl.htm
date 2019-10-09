@@ -305,18 +305,20 @@
     <div class="row">
         <div class="col-md-6 col-lg-12 col-xl-6 d-flex justify-content-start align-items-center">
             <div class="d-flex flex-column align-items-start text-left m-r-xxxl">
-                <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs">Current cost</span>
-                <p class="font-h3 font-weight-bold nowrap" data-ng-class="$ctrl.patent.p3sServicesWithFees[0].cssCurrent">$ {{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD | number: 2}}</p>
+                <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType !== 'In Progress'">Current cost</span>
+                <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'In Progress'">Committed cost</span>
+                <p class="font-h3 font-weight-bold nowrap" data-ng-class="$ctrl.patent.p3sServicesWithFees[0].cssCurrent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType !== 'In Progress'">$ {{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD | number: 2}}</p>
+                <p class="font-h3 font-weight-bold nowrap" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'In Progress'">$ {{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD | number: 2}}</p>                
 
             </div>   
-            <div class="d-flex flex-column align-items-start text-left">
+            <div class="d-flex flex-column align-items-start text-left" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType !== 'In Progress'">
                 <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs">Future cost</span>
                 <p class="font-h3 font-weight-bold nowrap" data-ng-class="$ctrl.patent.p3sServicesWithFees[0].cssNext" 
                 data-ng-if="($ctrl.patent.p3sServicesWithFees[0].nextStageColour !== 'Black') || ($ctrl.patent.p3sServicesWithFees[0].isUrgentAttention === true && $ctrl.patent.p3sServicesWithFees[0].serviceType !== 'renewal')">$ {{$ctrl.patent.p3sServicesWithFees[0].nextStageCostUSD | number: 2}}</p>     
                 <p class="font-h3 font-weight-bold txt-phase-red" data-ng-if="($ctrl.patent.p3sServicesWithFees[0].isUrgentAttention && $ctrl.patent.p3sServicesWithFees[0].currentStageColour === 'Red' && $ctrl.patent.p3sServicesWithFees[0].serviceType !== 'renewal') || ($ctrl.patent.p3sServicesWithFees[0].isUrgentAttention && $ctrl.patent.p3sServicesWithFees[0].currentStageColour === 'Black' && $ctrl.patent.p3sServicesWithFees[0].serviceType == 'renewal')">LAPSE</p>   
             </div>
         </div>
-        <div class="col-md-6 col-lg-12 col-xl-6 lg-m-t-sm d-flex justify-content-center align-items-end flex-column" data-ng-if="!$ctrl.patent.p3sServicesWithFees[0].isUrgentAttention">
+        <div class="col-md-6 col-lg-12 col-xl-6 lg-m-t-sm d-flex justify-content-center align-items-end flex-column" data-ng-if="!$ctrl.patent.p3sServicesWithFees[0].isUrgentAttention && $ctrl.patent.p3sServicesWithFees[0].saleType !== 'In Progress'">
             <p class="font-h3 font-weight-heavy font-h3--content">Save: <span class="txt-phase-green">$ {{($ctrl.availableFees.savings | number: 2) || '0.00'}}</span></p>
             <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.patent.p3sServicesWithFees[0].costBandEndDateUI}}</span></p>
         </div>
