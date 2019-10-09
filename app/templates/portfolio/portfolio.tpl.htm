@@ -286,13 +286,13 @@
                                 <table data-ng-if="patent.p3sServices.length == 1">
                                     <tr>
                                         <td data-ng-repeat="item in patent.p3sServices track by $index">
-                                            <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'In Progress' && !item.isUrgentAttention"> <!-- cover manual processing-->
+                                            <div data-ng-if="item.saleType !== 'Online' && !item.isUrgentAttention"> <!-- cover manual processing-->
                                                 <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
                                             </div>
                                             <div data-ng-if="item.saleType === 'Offline' && item.isUrgentAttention"> <!-- cover manual processing-->
                                                 <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
                                             </div>                                            
-                                            <div data-ng-if="item.saleType === 'Online' || item.saleType === 'In Progress'">
+                                            <div data-ng-if="item.saleType === 'Online'">
                                                 <div class="d-md-none d-lg-flex justify-content-between flex-column">
                                                     
                                                     <div class="d-flex justify-content-between align-items-center"><!--display costs-->

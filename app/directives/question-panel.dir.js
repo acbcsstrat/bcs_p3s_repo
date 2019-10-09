@@ -240,7 +240,7 @@ function questionContent($rootScope, $compile, $timeout) {
       		scope.updateChecklist = function(checklist, property, value) {
         		ctrl.formData[checklist].map(function(item){
           			if(property == item.stateCode) {
-            			item.checked = value;
+            			item.isSelected = value;
           			}
          			return item;
     			})
