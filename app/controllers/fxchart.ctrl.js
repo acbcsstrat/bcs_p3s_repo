@@ -11,7 +11,7 @@ function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, 
     vm.lineData = null;
 
     if($scope.$parent.availableServices.length > 0) {
-        
+   
         vm.data = {};
         vm.data.availableAction = $scope.$parent.availableServices;
         vm.data.selectedAction = { id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action }
@@ -132,7 +132,7 @@ function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, 
                     return;
                 }
 
-                if(data == 'epct') {
+                if(data == 'epct' || data == 'grant') {
                     fxData = ca[0].data.lineChart;
                     for (var property in fxData) { //change lineData
                         if (fxData.hasOwnProperty(property)) {
