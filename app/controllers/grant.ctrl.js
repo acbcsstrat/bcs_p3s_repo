@@ -18,7 +18,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     vm.deleteGrantConfirm = deleteGrantConfirm;
 
     function init() {
-  
+
     	vm.activeTab = 0;
 
 
@@ -107,7 +107,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             checkError: function(value) {
                 var obj = {};
                 obj.title = 'Representative';
-                obj.message = 'If you confirm that you do not wish IP Place to act as representative, The Patent Place can only offer help with your application offline\
+                obj.message = 'If you confirm that you do not wish IP Place to act as representative, The Patent Place can offer help with your application offline\
                     via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
                      email: support@ip.place, or phone: +44 203 696 0949';
                 if(value === true) {
@@ -128,7 +128,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             checkError: function(value) {
                 var obj = {};
                 obj.title = 'Patent Specification';
-                obj.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can only offer help with your application offline\
+                obj.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can offer help with your application offline\
                     via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
                      email: support@ip.place, or phone: +44 203 696 0949';
                 if(value === true) {
@@ -257,7 +257,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
                         },
                         function(errResponse){
-                            console.errr('Error deleting grant order: ', errResponse)
+                            console.error('Error deleting grant order: ', errResponse)
                         }
                     )
                 }
