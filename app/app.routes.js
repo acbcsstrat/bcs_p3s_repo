@@ -82,7 +82,7 @@ function appRoutes($stateProvider) {
                     })
                     return patentsRestService.fetchPatentItem(match.patentID);
                 }],
-                ca: ['costAnalysisService', '$stateParams', 'patent', function(costAnalysisService, $stateParams, patent) {
+                ca: ['costAnalysisService', 'patent', function(costAnalysisService,  patent) {
                     return costAnalysisService.fetchCa(patent.patentID, patent.p3sServicesWithFees);  
                 }]
             },

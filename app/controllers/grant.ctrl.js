@@ -18,9 +18,8 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     vm.deleteGrantConfirm = deleteGrantConfirm;
 
     function init() {
-  
-    	vm.activeTab = 0;
 
+    	vm.activeTab = 0;
 
 		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant available') {
 			vm.grantStage = 1;
@@ -36,7 +35,9 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
     init();
 
-    $rootScope.$on('submitGrantData', function(e, data){
+    var destroyFrom;
+
+    destroyFrom = $rootScope.$on('submitGrantData', function(e, data){
 
         var formData = new FormData();
         var config = { headers: {'Content-Type': undefined} };
@@ -54,8 +55,6 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         grantService.submitGrant(formData, config)
         .then(
             function(response){
-
-                
 
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.grant-order-prepared.tpl.htm',
@@ -96,6 +95,10 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     })
 
 
+    $scope.$on('$destroy', function() {
+      destroyFrom(); // remove listener.
+    });     
+
 	var grantQuestions = [
 
         { 
@@ -105,8 +108,9 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             checkError: function(value) {
                 var obj = {};
                 obj.title = 'Representative';
-                obj.message = 'If you confirm that you do not wish IP Place to act as representative, The Patent Place can only offer help with your application offline\
-                    via a Patent Administrator, and the order will become unavailable to process via the applcation. For further help please contact The Patent Place via\
+
+                obj.message = 'If you confirm that you do not wish IP Place to act as representative, The Patent Place can offer help with your application offline\
+                    via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
                      email: support@ip.place, or phone: +44 203 696 0949';
                 if(value === true) {
                     this.showError = true;
@@ -126,8 +130,8 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             checkError: function(value) {
                 var obj = {};
                 obj.title = 'Patent Specification';
-                obj.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can only offer help with your application offline\
-                    via a Patent Administrator, and the order will become unavailable to process via the applcation. For further help please contact The Patent Place via\
+                obj.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can offer help with your application offline\
+                    via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
                      email: support@ip.place, or phone: +44 203 696 0949';
                 if(value === true) {
                     this.showError = true;
@@ -255,7 +259,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
                         },
                         function(errResponse){
-                            console.errr('Error deleting grant order: ', errResponse)
+                            console.error('Error deleting grant order: ', errResponse)
                         }
                     )
                 }

@@ -119,7 +119,6 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 
 			}
 
-
 	      	$scope.submitFormData = function(service){
 	        	$rootScope.$emit(service, {data: $scope.formData, service: service});
 	      	};			
@@ -212,8 +211,6 @@ function questionContent($rootScope, $compile, $timeout) {
 		template: '<div data-ng-include="questionTemplate"></div> ',
 		link: function(scope, elem, attr, ctrl) {
 
-			// console.log(scope)
-
 			scope.validModel = {};
 
 			ctrl.createButtons();
@@ -243,7 +240,7 @@ function questionContent($rootScope, $compile, $timeout) {
       		scope.updateChecklist = function(checklist, property, value) {
         		ctrl.formData[checklist].map(function(item){
           			if(property == item.stateCode) {
-            			item.checked = value;
+            			item.isSelected = value;
           			}
          			return item;
     			})

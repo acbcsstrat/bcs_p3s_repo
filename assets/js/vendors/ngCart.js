@@ -52,7 +52,13 @@ angular.module('ngCart', ['ngCart.directives'])
 
                     this.order = {}
                     this.order.price = price;
-                    this.order.euroAction = data.P3Sservice[0].serviceType;
+
+                    if(data.p3sServices) {
+                        this.order.euroAction = data.p3sServices[0].serviceType;
+                    }
+                    if(data.p3sServicesWithFees) {
+                        this.order.euroAction = data.p3sServicesWithFees[0].serviceType;
+                    }
 
                     this.order.ep_ApplicationNumber = data.ep_ApplicationNumber;
                     this.order.totalOrderLength = vm.getItems().length;

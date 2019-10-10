@@ -71,8 +71,8 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
             showError: false,
             valid: false,
             questionEnabled: false,
-            required: true
-
+            required: true,
+            data: patent.clientRef
         },
         { 
             title: 'startEnd',
@@ -121,14 +121,14 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                         required: false,
                         checkItems: {
                             extensionStatesUI: [
-                                {stateCode: "BA", stateName: "Bosnia and Herzegovina", checked: false},
-                                {stateCode: "ME", stateName: "Montenegro", checked: false}
+                                {stateCode: "BA", stateName: "Bosnia and Herzegovina", isSelected: false},
+                                {stateCode: "ME", stateName: "Montenegro", isSelected: false}
                             ],
                             validationStatesUI: [
-                                {stateCode: "MA", stateName: "Morocco", checked: false},
-                                {stateCode: "MD", stateName: "Republic of Moldova", checked: false},
-                                {stateCode: "TN", stateName: "Tunisia", checked: false},
-                                {stateCode: "KH", stateName: "Cambodia", checked: false}      
+                                {stateCode: "MA", stateName: "Morocco", isSelected: false},
+                                {stateCode: "MD", stateName: "Republic of Moldova", isSelected: false},
+                                {stateCode: "TN", stateName: "Tunisia", isSelected: false},
+                                {stateCode: "KH", stateName: "Cambodia", isSelected: false}      
                             ]
                         }                        
 
@@ -245,16 +245,32 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
 
     }
 
-    $rootScope.$on('submitForm1200Data', function(e, formData){
+    var destroyFrom;
 
-        var arr = sortPageDetails(formData.data.pageDetailsData);
+    destroyFrom = $rootScope.$on('submitForm1200Data', function(e, data){    
 
-        formData.data.pageDescriptionsUI = arr;
-        formData.data.id = patent.patentID;
-        formData.data.totalClaims = parseInt(formData.data.totalClaims);
-        formData.data.totalPages = parseInt(formData.data.totalPages);
+        var arr = sortPageDetails(data.data.pageDetailsData);
 
-        form1200Service.submitForm1200(formData.data)
+        var formData = new FormData();
+        var config = { headers: {'Content-Type': undefined} };
+
+        if(data.data.isYear3RenewalDue) {
+            formData.append('isYear3RenewalDue', data.data.isYear3RenewalDue);
+        }
+        if(data.data.showOptionalQuestion) {
+            formData.append('showOptionalQuestion', data.data.showOptionalQuestion);
+        }
+
+        formData.append('pageDescriptionsUI', arr);
+        formData.append('id', patent.patentID);
+        formData.append('clientRef', data.data.clientRef);
+        formData.append('totalClaims', parseInt(data.data.totalClaims));
+        formData.append('totalPages', parseInt(data.data.totalPages));
+        formData.append('validationStatesUI', data.data.validationStatesUI);
+        formData.append('extensionStatesUI', data.data.extensionStatesUI);
+
+        form1200Service.submitForm1200(formData, config)
+
         .then(
             function(response){
                 form1200Generating();
@@ -262,17 +278,16 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                 $state.go('portfolio.patent', {}, {reload: true});
             },
             function(errResponse){
-                console.log(errResponse)
+                console.error('Error: Unable to generate form 1200. Error response: ', errResponse)
                 form1200Errors() 
             }
         )
 
     })
 
-    // $scope.submitFormData = function(data){
-
-
-    // }
+    $scope.$on('$destroy', function() {
+      destroyFrom(); // remove listener.
+    }); 
 
     function form1200Generating() {
 

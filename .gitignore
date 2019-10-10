@@ -16,3 +16,4 @@ WEB-INF/views/htmldocs
 node_modules
 # dist/
 package-lock.json
+index.html
