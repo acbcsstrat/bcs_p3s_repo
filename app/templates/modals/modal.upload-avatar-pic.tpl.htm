@@ -1,0 +1,52 @@
+<div class="bg-white d-flex flex-column p-5 br-1">
+	<div data-ng-hide="avatarImgUploaded">
+		<span class="modal-cross cursor-pointer" data-ng-click="dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+		<div class="row" data-ng-show="uploadImg">
+			<div class="col-md-12 text-center d-flex flex-column">
+				<h4 class="font-h2 font-weight-bold">Change Profile Picture</h4>
+				<div class="m-t-xl m-b-xl">
+					<img src="assets/imgs/avatar-default.png">
+				</div>
+				
+				<input data-select-avatar id="avatarFileUpload" type="file" name="avatarFileUpload" accept="image/*">
+				<div>				
+					<label for="avatarFileUpload" class="btn btn--lg btn--green pill-radius m-b-md">
+					    Select file
+					</label>
+				</div>
+			</div>
+		</div>
+	 	<div class="row" data-ng-show="imgSelected">
+	 		<div class="col-md-12 d-flex flex-column">
+	 			<h4 class="font-h2 font-weight-bold text-center">Adjust Profile Picture</h4>
+	 			<croppie  src="cropped.source" data-ng-model="cropped.image" options="{boundary:{width:400,height:350}}" class="br-1 m-t-xl m-b-xl"></croppie>
+	 			<div class="d-flex justify-content-between">
+	 				<button class="btn btn--lg pill-radius btn--red" data-ng-click="uploadImg = true; imgSelected = false;">Cancel</button>
+	 				<button class="btn btn--lg pill-radius btn--green" data-ng-click="imgSelected = false; imgConfirmed = true;">Crop Image</button>
+	 			</div>
+	 		</div>
+	 	</div>
+	 	<div data-ng-show="imgConfirmed"> 		
+	 		<div class="col-md-12 text-center d-flex flex-column">
+				<p class="font-h2 font-weight-bold">Do you like your profile picture?</p>
+				<div class="flex-grow-1 d-flex justify-content-center align-items-center">
+					<div class="avatar-cropped m-t-xl m-b-xl">
+						<img class="avatar-img" data-ng-src="{{cropped.image}}">
+					</div>
+				</div>
+				<div>
+	 				<button type="button" name="avatarUpload" data-ng-click="uploadAvatar()" class="btn btn--lg btn--green pill-radius m-b-lg">Confirm Image</button>
+				</div>
+				<div>
+	 				<button type="button" name="avatarUpload" data-ng-click="imgSelected = true; imgConfirmed = false;" class="btn btn--lg btn--red pill-radius m-b-lg">Try another image</button>
+				</div>				
+		 	</div>
+	 	</div>
+	</div>
+	<div data-ng-show="avatarImgUploaded" class="d-flex flex-column text-center">
+		<div class="m-b-sm">
+			<i class="fas fa-check-circle fa-4x txt-phase-green"></i>
+		</div>
+		<p class="font-h4">Your new profile picture has been saved!</p>
+	</div>
+</div>

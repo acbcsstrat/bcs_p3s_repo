@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div data-ng-if="patent.epctStatus == 'Epct saved'" class="d-flex justify-content-start align-items-center">
+            <p class="m-b-xs font-h4">Your Form 1200 has been generated and is avaialble to add to basket or download.</p>
+        </div>
+        <div data-ng-if="patent.epctStatus == 'Epct being generated' || patent.epctStatus == 'Await pdf gen start'">
+            <p class="m-b-xs font-h4">We are currently generating your Form 1200. When the document is ready, you will be able to access it here.</p> 
+            <p class="font-h4">You can view the fees in the 'Fee Breakdown' tab through the panel on the right.</p>                      
+        </div>
+        <div class="row" data-ng-if="patent.epctStatus == 'Epct saved' || patent.epctStatus == 'Payment in progress'">
+            <div class="col-md-12 d-flex flex-wrap justify-content-start align-items-center">
+                <ngcart-addtocart id="{{patent.patentID}}" class="cartbtn m-r-sm m-t-sm" name="service.form1200" price="{{patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="patent.form1200FeeUI !== null && patent.epctStatus == 'Epct saved'"></ngcart-addtocart>                     
+                <a class="btn btn--lg btn--green pill-radius m-r-sm m-t-sm" href="{{patent.form1200PdfUrl}}&download=true" target="_blank" download>Download Form 1200</a>
+                <button class="btn btn--lg btn--red pill-radius m-t-sm" data-ng-click="confirmDeleteApplication()" data-ng-disabled="deleteApplicationReq">Delete Form 1200</button>
+            </div>
+        </div>
+    </div>
+</div>

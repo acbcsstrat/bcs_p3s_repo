@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-xl-12">
+        <p>Please provide both the French and German translations of the claims</p>
+        <div class="form-check form-check-inline m-t-sm">
+            <label for="frenchTranslation" class="form-check-label m-r-xs">French</label>
+            <input type="file" name="frenchTranslation" data-ng-init="formData.translations.frenchTranslation = {};" data-ng-model="formData.translations.frenchTranslation" class="form-check-input form-control-file" select-ng-files data-ng-upload-change="addToFormData('', formData.translations); isOptionValid(formData.translations, question);" accept="application/pdf" required>
+        </div>
+        <div class="form-check form-check-inline m-t-sm">
+            <label for="germanTranslation" class="form-check-label m-r-xs">German</label>  
+            <input type="file" name="germanTranslation" data-ng-init="formData.translations.germanTranslation = {};" data-ng-model="formData.translations.germanTranslation" class="form-check-input form-control-file" select-ng-files data-ng-upload-change="addToFormData('', formData.translations); isOptionValid(formData.translations, question);" accept="application/pdf" required>
+        </div>
+    </div>
+    <div class="col-md-12 m-t-xs" data-ng-show="grantForm.germanTranslation.$error.pdfIncorrect || grantForm.frenchTranslation.$error.pdfIncorrect">
+        <p class="font-body txt-phase-red">Please ensure that the file you have uploaded is saved in a .pdf format.</p>        
+    </div>
+
+    <div class="col-md-6 m-b-xs m-t-sm">
+        <p data-ng-click="question.displayHelp = !question.displayHelp" class="btn btn-underlined font-weight-medium">Are you making sure the file is Annex F compliant? 
+            <i class="fas fa-chevron-down fa-sm" data-ng-show="question.displayHelp"></i>
+            <i class="fas fa-chevron-right fa-sm" data-ng-show="!question.displayHelp"></i>
+        </p>
+    </div>
+    <div class="col-md-12 col-xl-12">    
+        <div class="expandcollapse-item">
+            <div class="slideDown m-b-sm" data-ng-hide="question.displayHelp === false">
+                <p class="font-body m-b-sm">In order for your grant to be processed, the EPO require that the PDF file you upload is Annex F compliant. Please see the checklist below to ensure that the document meets the criteria.</p>
+                <ul class="m-b-sm">
+                    <li>all fonts are embedded (exception: Base 14 fonts are accepted even if they are not embedded)</li>
+                    <li>the page size is A4 +/- 5%</li>
+                    <li>the PDF is not encrypted</li>
+                    <li>it does not contain colour or grey scale images and drawings</li>
+                    <li>the PDF is Version 1.1 (or later)</li>
+                    <li>the PDF does not contain embedded OLE objects</li>
+                </ul>
+                <p>If you require further information, please visit <a class="btn btn-underlined" href="https://www.epo.org/service-support/faq/online-services/filing.html">www.epo.org</a></p>
+            </div>
+        </div>
+    </div>
+</div>
