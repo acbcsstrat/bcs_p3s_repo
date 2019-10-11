@@ -36,11 +36,12 @@
 	                    	<td class="t-data__td" data-ng-bind="patent.clientRef || '[No Client Reference Provided]'">
 	                    		
 	                    	</td>
-	                    	<td class="t-data__td font-weight-medium" data-ng-class="patent.cssCurrent">
-	                    		{{patent.serviceList[0].currentStageColour}}: {{$ctrl.date | date:'MM-dd-yy'}}
+
+	                    	<td class="t-data__td font-weight-medium" data-ng-class="patent.p3sServices[0].cssCurrent">
+	                    		{{patent.p3sServices[0].currentStageColour}}: {{$ctrl.date | date:'MM-dd-yy'}}
 	                    	</td>
-	                    	<td class="t-data__td font-weight-medium" data-ng-class="patent.cssNext">
-	                    		{{patent.serviceList[0].nextStageColour}}: {{patent.serviceList[0].costBandEndDate | date:'MM-dd-yy'}}
+	                    	<td class="t-data__td font-weight-medium" data-ng-class="patent.p3sServices[0].cssNext">
+	                    		{{patent.p3sServices[0].nextStageColour}}: {{patent.p3sServices[0].costBandEndDate | date:'MM-dd-yy'}}
 	                    	</td>				                    					                    					                    					                    	
                     	</tr>
                     </tbody>
