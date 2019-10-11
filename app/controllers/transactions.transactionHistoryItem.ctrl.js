@@ -35,6 +35,7 @@ function transactionHistoryItemCtrl($scope, transactionHistoryItem, transactionH
 		}
 	}
 
+	console.log(vm.transactionHistoryItem)
 
 	vm.checkProgress = checkProgress;
 	vm.patents = [];
