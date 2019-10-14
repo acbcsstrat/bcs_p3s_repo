@@ -11,7 +11,20 @@ function renewalsCarouselCtrl($scope, $timeout, patentIds, dashboardService) {
     vm.date = new Date();
     vm.setActionCost = setActionCost;
     vm.setPhase = setPhase
-    vm.patents = dashboardService.getPatents;
+    vm.patents = (function(){
+        var obj = {}
+        for(var property in dashboardService.getPatents) {
+            if(dashboardService.getPatents.hasOwnProperty(property)) {
+                if(Array.isArray(dashboardService.getPatents[property])) {
+                    obj[property] = dashboardService.getPatents[property].filter(function(el){
+                        return el.p3sServices[0].saleType === 'Online' || el.p3sServices[0].saleType === 'Offline';
+                    })
+                }
+            }
+        }
+        return obj;
+    }())
+
     vm.availableActions = 0;
     var setActionCostTmeout;
 

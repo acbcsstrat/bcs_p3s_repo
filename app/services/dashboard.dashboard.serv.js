@@ -44,8 +44,6 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
         for(var i = 0; i < patents.length; i++) {
             for(var k = 0; k < patents[i].p3sServices.length; k++) {
                 var item = patents[i].p3sServices[k];
-                item.cssCurrent = organiseColourService.getCurrColour(item.currentStageColour, 'text')
-                item.cssNext = organiseColourService.getCurrColour(item.nextStageColour, 'text')
                 var string = item.currentStageColour.toLowerCase();
                 var capitlized = string.charAt(0).toUpperCase() + string.slice(1)
                 obj[capitlized].push(patents[i]);
@@ -59,10 +57,10 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
         for(var property in obj) {
             if(obj.hasOwnProperty(property)) {
                 if(obj[property].length > 0) {
-                    if(obj[property][0].p3sServices.length === 0) {
+                    if(obj[property][0].p3sServices[0].saleType === 'Not in progress') {
                         phase = 'Grey';
                     }
-                    if(obj[property][0].p3sServices.length > 0) {
+                    if(obj[property][0].p3sServices[0].saleType === 'Online' || p3sServices[0].saleType === 'Offline') {
                         phase = obj[property][0].p3sServices[0].currentStageColour;
                     }
                     break;
