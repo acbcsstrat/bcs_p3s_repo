@@ -22,6 +22,7 @@ function form1200Service($http, $q) {
                 deferred.resolve(response.data)
             },
             function(errResponse){
+                console.error('Error: Unable to fetch questions. Error response:', errResponse);
                 deferred.reject(errResponse.data)
             }
         )
@@ -29,15 +30,17 @@ function form1200Service($http, $q) {
         return deferred.promise;
     }
 
-    function submitForm1200(data) {
+    function submitForm1200(data, config) {
+
         var deferred = $q.defer();
 
-       $http.post(ppdomain+'rest-form1200/', data)
+       $http.post(ppdomain+'rest-form1200/', data, config)
        .then(
             function(response){
                 deferred.resolve(response.data)
             },
             function(errResponse){
+                console.error('Error: Unable to submit form1200. Error response:', errResponse);
                 deferred.reject(errResponse.data)
             }
         )
