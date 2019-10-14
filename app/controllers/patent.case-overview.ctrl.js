@@ -90,7 +90,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 this.dismissModal = function() {
                     $uibModalInstance.close();
                 };
-
+                
                 this.deletePatent = function() {
                     deletePatent(id);
                     $timeout(function() {

@@ -89,8 +89,6 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
     ];
     
     function initiateForm1200() {
-        
-        // console.log('intiate')
 
         form1200Service.fetchQuestions(patent.patentID)
         .then(
@@ -270,7 +268,6 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
         formData.append('extensionStatesUI', data.data.extensionStatesUI);
 
         form1200Service.submitForm1200(formData, config)
-
         .then(
             function(response){
                 form1200Generating();

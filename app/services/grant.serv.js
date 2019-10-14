@@ -25,7 +25,7 @@ function grantService($http, $q, $timeout){
                 deferred.resolve(response.data)
             },
             function(errResponse){
-                console.error('Error: Unable to reset grant order');
+                console.error('Error: Unable to reset grant order. Error response:', errResponse);
                 deferred.reject(errResponse.data)
             }
         )
@@ -44,7 +44,7 @@ function grantService($http, $q, $timeout){
                 deferred.resolve(response.data)
             },
             function(errResponse){
-                console.error('Error: Unable create grant order')
+                console.error('Error: Unable create grant order. Error response:', errResponse);
                 deferred.reject(errResponse.data)
             }
         )
@@ -62,7 +62,7 @@ function grantService($http, $q, $timeout){
                 deferred.resolve(response.data)
             },
             function(errResponse){
-                console.error('Error: Unable to reset grant order');
+                console.error('Error: Unable to reset grant order. Error response:', errResponse);
                 deferred.reject(errResponse.data)
             }
         )
@@ -81,7 +81,7 @@ function grantService($http, $q, $timeout){
                 deferred.resolve(response.data)
             },
             function(errResponse){
-                console.error('Error: Unable to submit grant data')
+                console.error('Error: Unable to submit grant data. Error response:', errResponse);
                 deferred.reject(errResponse.data)
             }
         )

@@ -257,9 +257,6 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                                 }]
                             });
 
-                        },
-                        function(errResponse){
-                            console.error('Error deleting grant order: ', errResponse)
                         }
                     )
                 }
@@ -302,9 +299,6 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                             function(response) {
                                 $state.reload();
                                 $uibModalInstance.close();
-                            },
-                            function(errResponse){
-                                console.error('Error inhibiting grant order: ', errResponse)
                             }
                         )
                     }
@@ -346,9 +340,6 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                                 }]
                             });
 
-                        },
-                        function(errResponse){
-                            console.errr('Error deleting grant order: ', errResponse)
                         }
                     )
                 }
