@@ -250,7 +250,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
         var arr = sortPageDetails(data.data.pageDetailsData);
 
         var formData = new FormData();
-        var config = { headers: {'Content-Type': undefined} };
+        var config = { headers: {'Content-Type': 'multipart/form-data'} };
 
         if(data.data.isYear3RenewalDue) {
             formData.append('isYear3RenewalDue', data.data.isYear3RenewalDue);
