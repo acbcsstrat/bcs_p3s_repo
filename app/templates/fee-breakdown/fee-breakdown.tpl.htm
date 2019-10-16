@@ -220,12 +220,23 @@
                                     <p class="font-weight-medium m-l-sm">Renewal Fee:</p>
                                 </div>
                                 <div class="col-md-4 col-xl-4">
+                                    <p class="text-left font-body">$ {{($ctrl.availableFees.renewalFeeUSD | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-md-3 col-xl-3">
+                                    <p class="text-left font-body">&euro; {{($ctrl.availableFees.renewalFeeEUR | number: 2) || '0.00'}}</p>
+                                </div>                                                                                        
+                            </div>
+                            <div class="row m-b-sm">
+                                <div class="col-md-5 col-xl-5">
+                                    <p class="font-weight-medium m-l-sm">Renewal Extension Fee:</p>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
                                     <p class="text-left font-body">$ {{($ctrl.availableFees.renewalExtensionFeeUSD | number: 2) || '0.00'}}</p>
                                 </div>
                                 <div class="col-md-3 col-xl-3">
                                     <p class="text-left font-body">&euro; {{($ctrl.availableFees.renewalExtensionFeeEUR | number: 2) || '0.00'}}</p>
                                 </div>                                                                                        
-                            </div>                                                                                                         
+                            </div>                                                                                                                             
                         </div>
                         <div class="border-grey-xs--btm"></div> 
                     </div>

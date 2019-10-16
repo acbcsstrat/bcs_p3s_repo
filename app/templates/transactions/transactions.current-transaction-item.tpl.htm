@@ -231,12 +231,23 @@
 					                                    <p class="font-weight-medium m-l-sm">Renewal Fee:</p>
 					                                </div>
 					                                <div class="col-md-4 col-xl-4">
+					                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</p>
+					                                </div>
+					                                <div class="col-md-3 col-xl-3">
+					                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.renewalFeeEUR | number: 2) || '0.00'}}</p>
+					                                </div>                                                                                        
+					                            </div> 
+					                            <div class="row m-b-sm">
+					                                <div class="col-md-5 col-xl-5">
+					                                    <p class="font-weight-medium m-l-sm">Renewal Extension Fee:</p>
+					                                </div>
+					                                <div class="col-md-4 col-xl-4">
 					                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.renewalExtensionFeeUSD | number: 2) || '0.00'}}</p>
 					                                </div>
 					                                <div class="col-md-3 col-xl-3">
 					                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.renewalExtensionFeeEUR | number: 2) || '0.00'}}</p>
-					                                </div>                                                                                        
-					                            </div> 
+					                                </div>                  
+					                            </div>
 								            </div>								            
 								        </div>
 									</div>
