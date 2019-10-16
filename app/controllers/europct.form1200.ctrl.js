@@ -250,7 +250,6 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
         var arr = sortPageDetails(data.data.pageDetailsData);
 
         var formData = new FormData();
-        var config = { headers: {'Content-Type': 'multipart/form-data'} };
 
         if(data.data.isYear3RenewalDue) {
             formData.append('isYear3RenewalDue', data.data.isYear3RenewalDue);
@@ -267,7 +266,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
         formData.append('validationStatesUI', data.data.validationStatesUI);
         formData.append('extensionStatesUI', data.data.extensionStatesUI);
 
-        form1200Service.submitForm1200(formData, config)
+        form1200Service.submitForm1200(formData)
         .then(
             function(response){
                 form1200Generating();
@@ -275,7 +274,6 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                 $state.go('portfolio.patent', {}, {reload: true});
             },
             function(errResponse){
-                console.error('Error: Unable to generate form 1200. Error response: ', errResponse)
                 form1200Errors() 
             }
         )
@@ -283,7 +281,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
     })
 
     $scope.$on('$destroy', function() {
-      destroyFrom(); // remove listener.
+        destroyFrom(); // remove listener.
     }); 
 
     function form1200Generating() {
