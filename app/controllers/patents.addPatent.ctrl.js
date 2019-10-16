@@ -50,7 +50,7 @@ function addPatentCtrl($state, $stateParams, $scope, $timeout, $location, $ancho
 
         			 		var patent = response[0];
 
-			             	$state.go('portfolio.patent', {patentId: patent.patentID})
+			             	$state.go('portfolio.patent', {patentId: patent.id}) //BE NEEDS TO AMEND CALL 16.10.19 ASAP. UPDATE V2 TO V3
 			             	.then(
 								function(response){
 									toPatentTimeout = $timeout(function() {
