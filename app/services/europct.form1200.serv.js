@@ -33,9 +33,10 @@ function form1200Service($http, $q) {
     function submitForm1200(data) {
 
         var deferred = $q.defer();
-
-       $http.post(ppdomain+'rest-form1200/', data)
-       .then(
+        console.log('data : ', data)
+        console.log('http data : ', $http.post(ppdomain+'rest-form1200/', data))
+        $http.post(ppdomain+'rest-form1200/', data)
+        .then(
             function(response){
                 deferred.resolve(response.data)
             },

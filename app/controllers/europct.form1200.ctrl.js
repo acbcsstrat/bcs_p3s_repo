@@ -249,22 +249,24 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
 
         var arr = sortPageDetails(data.data.pageDetailsData);
 
-        var formData = new FormData();
+        var formData = {};
 
         if(data.data.isYear3RenewalDue) {
-            formData.append('isYear3RenewalDue', data.data.isYear3RenewalDue);
+            formData.isYear3RenewalDue = data.data.isYear3RenewalDue;
         }
         if(data.data.showOptionalQuestion) {
-            formData.append('showOptionalQuestion', data.data.showOptionalQuestion);
+            formData.showOptionalQuestion = data.data.showOptionalQuestion;
         }
 
-        formData.append('pageDescriptionsUI', arr);
-        formData.append('id', patent.patentID);
-        formData.append('clientRef', data.data.clientRef);
-        formData.append('totalClaims', parseInt(data.data.totalClaims));
-        formData.append('totalPages', parseInt(data.data.totalPages));
-        formData.append('validationStatesUI', data.data.validationStatesUI);
-        formData.append('extensionStatesUI', data.data.extensionStatesUI);
+        formData.pageDescriptionsUI = arr;
+        formData.id = patent.patentID;
+        formData.clientRef = data.data.clientRef;
+        formData.totalClaims = parseInt(data.data.totalClaims);
+        formData.totalPages = parseInt(data.data.totalPages);
+        formData.validationStatesUI = data.data.validationStatesUI;
+        formData.extensionStatesUI = data.data.extensionStatesUI;
+
+        console.log('formData : ', formData)
 
         form1200Service.submitForm1200(formData)
         .then(
@@ -274,6 +276,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                 $state.go('portfolio.patent', {}, {reload: true});
             },
             function(errResponse){
+                console.error('Error: Unable to generate form 1200. Error response: ', errResponse)
                 form1200Errors() 
             }
         )
