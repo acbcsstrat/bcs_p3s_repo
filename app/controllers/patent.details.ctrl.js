@@ -51,7 +51,6 @@ function patentDetailsCtrl(patent, ca, $rootScope, $scope, $state, $stateParams,
         patentsRestService.updatePatent(patent, patent.patentID)
         .then(
             function(response){
-                console.log('response: ', response)
                 updatePatentSuccess();
             },
             function(errResponse){
