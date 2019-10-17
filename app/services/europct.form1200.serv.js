@@ -17,10 +17,13 @@ function form1200Service($http, $q) {
 
         var deferred = $q.defer();
 
-        $http.get(ppdomain+'rest-reject-form1200/'+id, reason)
+        var config = {
+            params: {patent_id: id, failure_reason: reason}
+        }
+
+        $http.get(ppdomain+'rest-reject-form1200/', config)
         .then(
             function(response){
-                console.log(response)
                 deferred.resolve(response.data)
             },
             function(errResponse){
