@@ -14,6 +14,7 @@ function costAnalysisService($http, $q) {
         var deferred = $q.defer();
 
         services.forEach(function(data){ //for multiple services for single patent
+            if(data.saleType == 'Not In Progress') { return; }
             if(data.serviceType == 'epct') {             
                 array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patentID))
 

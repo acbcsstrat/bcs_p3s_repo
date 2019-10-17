@@ -14,8 +14,10 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     $scope.availableServices = [];
     $scope.notInProgress = true;
 
+    var chartTimeout;
+
     function refreshChart (){
-        $timeout(function(){  
+        chartTimeout = $timeout(function(){  
             var evt = document.createEvent('UIEvents');
             evt.initUIEvent('resize', true, false, window, 0);
             window.dispatchEvent(evt);
@@ -55,19 +57,17 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             }
         )
        
-        vm.patent.p3sServicesWithFees.forEach(function(data, index){
+        patent.p3sServicesWithFees.forEach(function(data, index){
             $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
-            $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus})
+            $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
         })
 
         $scope.availableServices.forEach(function(obj){
 
+            if(obj.type == 'Not In Progress' || obj.type ==  'Offline') { return; }
+
             if(obj.action == 'epct') {
-                if(obj.status == 'Epct being generated' || obj.status == 'Epct available') {
-                    vm.displayForm1200Tab = true;
-                    return;
-                }
-                vm.displayForm1200Tab = false;
+                vm.displayForm1200Tab = true;
             }
 
             if(obj.action == 'grant') {
@@ -157,6 +157,10 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         }
 
     }
+
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(chartTimeout);
+    })
 
 
     
