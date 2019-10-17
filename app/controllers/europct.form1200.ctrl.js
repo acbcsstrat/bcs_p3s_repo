@@ -50,9 +50,14 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
             displayHelp: false,
             checked: false,
             checkError: function(value) {
+                var obj = {};
+                obj.title = 'Amendments made';
+                obj.message = 'If you confirm that amendments have been made to the application, The Patent Place can offer help with your application offline\
+                    via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
+                     email: support@ip.place, or phone: +44 203 696 0949';
                 if(value === true) {
                     this.showError = true;
-                    manualProcess('amendments')
+                    manualProcess(obj, 'Amended')
                     return
                 }
                 this.showError = false;
@@ -142,9 +147,15 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                             displayHelp: false,
                             checked: true,
                             checkError: function(value) {
+                                var obj = {};
+                                obj.title = 'Additional copies required';
+
+                                obj.message = 'If you confirm that you require additional copies of the document cited in the supplementary European search report,\
+                                    The Patent Place can offer help with your application offline via a Patent Administrator, and the order will become unavailable to process online.\
+                                    For further help please contact The Patent Place via email: support@ip.place, or phone: +44 203 696 0949';
                                 if(value === true) {
                                     this.showError = true;
-                                    manualProcess('documents')
+                                    manualProcess(obj, 'DocsRequired')
                                     return
                                 }
                                 this.showError = false;
@@ -189,6 +200,12 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                 form1200Service.setQuestions(form1200Questions)
             }
         )
+    }
+
+    function inhibitForm1200() {
+
+
+
     }
 
     function cancel1200() {
@@ -309,52 +326,45 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
         destroyFrom(); // remove listener.
     }); 
 
-    function manualProcess(question) {// NOT NEEDED FOR RELEASE 1
+    function manualProcess(message, reason) {// NOT NEEDED FOR RELEASE 1
 
-        if(question == 'amendments') {
+        var modalInstance = $uibModal.open({
+            template: '<div class="modal-header d-flex flex-column align-items-center justify-content-center">\
+                            <span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>\
+                            <div class="m-b-sm">\
+                                <i class="fas fa-exclamation-circle fa-4x txt-phase-red"></i>\
+                            </div>\
+                            <p class="font-h3 font-weight-medium">'+message.title+'</p>\
+                            <p class="font-body w-100 text-center m-b-sm m-t-xs">'+ message.message+'</p>\
+                            <div class="d-flex">\
+                                <button class="btn btn--lg btn--red pill-radius m-r-md" data-ng-click="$ctrl.dismissModal()">Cancel</button>\
+                                <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.confirm()">Confirm</button>\
+                            </div>\
+                        </div>',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', '$state', function($uibModalInstance, $timeout, $state){
 
-            var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modals/modal.manual-processing-amendments.tpl.htm',
-                appendTo: undefined,
-                controllerAs: '$ctrl',
-                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+                
 
-                    vm.proceedMsgAmend  = true;
-                    this.dismissModal = function () {
-                        $uibModalInstance.close();
-                    };
+                this.confirm = function() {
+                    form1200Service.inhibitForm1200(patent.patentID, reason)
+                    .then(
+                        function(response) {
+                            $state.reload();
+                            $uibModalInstance.close();
+                        }
+                    )
+                }
+                
 
-                    this.ok = function () {
-                        $state.go('portfolio', {manual: true}, {reload: true});
-                        $uibModalInstance.close();
-                    };
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
 
+            }]
+        });
 
-                }]
-            });
-        }
-
-        if(question == 'documents') {
-            var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modals/modal.manual-processing-documents.tpl.htm',
-                appendTo: undefined,
-                controllerAs: '$ctrl',
-                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
-
-                    vm.proceedMsgDocs  = true;
-                    this.dismissModal = function () {
-                        $uibModalInstance.close();
-                    };
-
-                    this.ok = function () {
-                        $state.go('portfolio', {manual: true}, {reload: true});
-                        $uibModalInstance.close();
-                    };
-
-
-                }]
-            });            
-        }
     }
 
 } 
