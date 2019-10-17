@@ -39,7 +39,19 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
             title: 'entity',
             template: 'entity',
             displayHelp: false,
-            checkError: null,
+            checkError: function(value) {
+                var obj = {};
+                obj.title = 'Entity or a natural person, Rule 6(4)';
+                obj.message = 'If you do not wish to delcare that you are an entity or a natural person, The Patent Place can offer help with your application offline\
+                    via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
+                     email: support@ip.place, or phone: +44 203 696 0949';
+                if(value === true) {
+                    this.showError = true;
+                    manualProcess(obj, 'NaturalPerson')
+                    return
+                }
+                this.showError = false;
+            },
             showError: false,
             valid: false,
             required: true
