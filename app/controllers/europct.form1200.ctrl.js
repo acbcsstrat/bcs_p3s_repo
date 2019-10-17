@@ -266,18 +266,40 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
         formData.validationStatesUI = data.data.validationStatesUI;
         formData.extensionStatesUI = data.data.extensionStatesUI;
 
-        console.log('formData : ', formData)
-
         form1200Service.submitForm1200(formData)
         .then(
             function(response){
-                form1200Generating();
+ 
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.form1200-generating.tpl.htm', //create html for notifications update success
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', function($uibModalInstance){
+                        this.dismissModal = function () {
+                            $uibModalInstance.close();
+                        };
+                    }]
+
+                })
                 activeTabService.setTab(2)
                 $state.go('portfolio.patent', {}, {reload: true});
             },
             function(errResponse){
-                console.error('Error: Unable to generate form 1200. Error response: ', errResponse)
-                form1200Errors() 
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.generate-form1200-error.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+
+                        vm.proceedMsgAmend  = true;
+                        this.dismissModal = function () {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
+                });
+                $state.go('portfolio.patent', {}, {reload: true});
             }
         )
 
@@ -286,38 +308,6 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
     $scope.$on('$destroy', function() {
         destroyFrom(); // remove listener.
     }); 
-
-    function form1200Generating() {
-
-        var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.form1200-generating.tpl.htm', //create html for notifications update success
-            appendTo: undefined,
-            controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', function($uibModalInstance){
-                this.dismissModal = function () {
-                    $uibModalInstance.close();
-                };
-            }]
-
-        })
-
-    }
-
-    function form1200Errors() {
-        var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.generate-form1200-error.tpl.htm',
-            appendTo: undefined,
-            controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
-
-                vm.proceedMsgAmend  = true;
-                this.dismissModal = function () {
-                    $uibModalInstance.close();
-                };
-
-            }]
-        });
-    }
 
     function manualProcess(question) {// NOT NEEDED FOR RELEASE 1
 

@@ -217,13 +217,12 @@ function questionContent($rootScope, $compile, $timeout) {
 
 			scope.question = scope.question;
 			scope.requiredYes = true;
-			scope.requiredNo = true;			
+			scope.requiredNo = true;
 
 		    if(scope.question.checkItems) {
 		        Object.keys(scope.question.checkItems).forEach(function(item){
 		          	ctrl.formData[item] = scope.question.checkItems[item];
 		        })
-		        
 		    }
 
 			if(scope.$parent.$last === true) {
@@ -251,9 +250,7 @@ function questionContent($rootScope, $compile, $timeout) {
     			ctrl.formData[property] = value
       		}
 
-
 			scope.questionTemplate = 'app/templates/directives/' + ctrl.service +'/' + scope.question.template + '.question.tpl.htm';
-
 
 		}
 	}
