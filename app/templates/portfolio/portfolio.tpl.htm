@@ -289,10 +289,11 @@
                                             <div data-ng-if="item.saleType !== 'Online' && !item.isUrgentAttention"> <!-- cover manual processing-->
                                                 <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
                                             </div>
-                                            <div data-ng-if="item.saleType === 'Offline' && item.isUrgentAttention"> <!-- cover manual processing-->
+
+                                            <div data-ng-if="item.isUrgentAttention"> <!-- cover manual processing-->
                                                 <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
                                             </div>                                            
-                                            <div data-ng-if="item.saleType === 'Online'">
+                                            <div data-ng-if="item.saleType === 'Online' && !item.isUrgentAttention">
                                                 <div class="d-flex flex-column">
                                                     <div class="d-flex justify-content-start align-items-center"><!--display costs-->
                                                         <p data-ng-class="item.cssCurrent" class="font-weight-bold m-r-sm">$ {{item.currentStageCostUSD | number: 2}}</p>
