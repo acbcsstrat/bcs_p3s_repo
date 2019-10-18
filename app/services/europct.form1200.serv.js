@@ -9,11 +9,35 @@ function form1200Service($http, $q) {
         submitForm1200: submitForm1200,
         setQuestions: setQuestions,
         questions: '',
-        getQuestions: getQuestions
+        getQuestions: getQuestions,
+        inhibitForm1200: inhibitForm1200
+    }
+
+    function inhibitForm1200(id, reason) {
+
+        var deferred = $q.defer();
+
+        var config = {
+            params: {patent_id: id, failure_reason: reason}
+        }
+
+        $http.get(ppdomain+'rest-reject-form1200/', config)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                console.error('Error: Unable to inhibit form1200. Error response:', errResponse);
+                deferred.reject(errResponse.data)
+            }
+        )
+
+        return deferred.promise;
+
     }
 
     function fetchQuestions(id) {
-            
+
         var deferred = $q.defer();
 
         $http.get(ppdomain+'rest-start-form1200/'+id)

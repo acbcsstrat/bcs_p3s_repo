@@ -136,7 +136,8 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 				}
 			}
 
-			function isEmpty(obj) {
+
+			function isEmpty(obj) { //check if all object properties have been assigned a value 
 
 				var allFilled;
 				for(var property in obj) {
@@ -160,15 +161,16 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 
 
 			this.isOptionValid = function(value, item) { //INVOKED FROM PANEL CONTENT
-				
-				if(value !== undefined  && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
+
+				if(value !== undefined && value !== '' && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
 					if(isEmpty(value)) {
 						$scope.nextBtnDisabled = false;
 						$scope.questions[item.index].valid = true;
 					}
 					return;
 				}
-				if(value === undefined || typeof value === 'undefined' || value === false) {
+
+				if(value === undefined || typeof value === 'undefined' || value === false || value === '') {
 					$scope.nextBtnDisabled = true; //DISABLE NEXT BTN 
 					$scope.questions[item.index].valid = false;
 				} else {
