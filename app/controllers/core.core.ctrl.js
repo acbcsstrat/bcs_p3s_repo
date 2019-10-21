@@ -84,12 +84,10 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
                 if(response.length === 0) {
                     patentsFound = false;
                 }
-                patentsFound = false;
+
 			    if(patentsFound === false) {
 					$timeout(function() {
-					 	
 					 	welcomeMessageModal();
-						
 					}, 350);
 				}                
 
