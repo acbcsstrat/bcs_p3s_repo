@@ -2,14 +2,14 @@
     <div class="col-xl-12">
         <div class="form-group row">
             <label for="clientRef" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please provide an applicant or representative reference:</label>
-            <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
-                <input type="text" name="clientRef" id="clientRef" class="form-control pill-radius" data-ng-change="addToFormData('clientRef', question.data); isOptionValid(question.data, question);" data-ng-model="question.data" placeholder="Applicant/representative reference" data-ng-maxlength="15" required>
+            <div class="col-md-8 col-lg-7 col-xl-6 d-flex align-items-center">
+                <input type="text" name="clientRef" id="clientRef" class="form-control pill-radius" data-ng-init="isOptionValid(question.data, question); addToFormData('clientRef', question.data);" data-ng-change="addToFormData('clientRef', question.data); isOptionValid(question.data, question);" data-ng-model="question.data" placeholder="Applicant/representative reference" data-ng-maxlength="15" required>
             </div>
         </div>
 		<p class="font-body txt-phase-red" data-ng-show="grantForm.clientRef.$error.required && grantForm.clientRef.$dirty">Please fill out this field</p>
         <p class="txt-phase-red m-t-xs" data-ng-show="grantForm.clientRef.$error.maxlength && grantForm.clientRef.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
         <div class="row m-b-xs m-t-sm">
-            <div class="col-md-6">
+            <div class="col-md-8 col-lg-7 col-xl-6">
                 <p data-ng-click="question.displayHelp = !question.displayHelp" class="btn btn-underlined font-weight-medium">Applicant/representative reference? 
                     <i class="fas fa-chevron-down fa-sm" data-ng-show="question.displayHelp"></i>
                     <i class="fas fa-chevron-right fa-sm" data-ng-show="!question.displayHelp"></i>
@@ -18,7 +18,7 @@
         </div>
         <div class="expandcollapse-item">
             <div class="slideDown m-b-sm" data-ng-hide="question.displayHelp === false">
-                <p class="font-body">This reference is required when submitting the 1038 form to the Europan Patent Office. If you initially provided a Client Reference when adding the patent to your portfolio, it will default to this value, but you can provide any reference of your choice.</p>
+                <p class="font-body">This reference is required when submitting the Form 1038 to the European Patent Office. If you initially provided a Client Reference when adding the patent to your portfolio, it will default to this value, but you can provide any reference of your choice.</p>
             </div>
         </div>        
     </div>

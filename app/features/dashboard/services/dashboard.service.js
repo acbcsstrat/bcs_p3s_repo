@@ -50,19 +50,15 @@ function DashboardService($http, $q, patentsRestService) {
                 var capitlized = string.charAt(0).toUpperCase() + string.slice(1)
                 obj[capitlized].push(patents[i]);
             }
-
-     
-
-
         }
 
         for(var property in obj) {
             if(obj.hasOwnProperty(property)) {
                 if(obj[property].length > 0) {
-                    if(obj[property][0].p3sServices.length === 0) {
+                    if(obj[property][0].p3sServices[0].saleType === 'Not in progress') {
                         phase = 'Grey';
                     }
-                    if(obj[property][0].p3sServices.length > 0) {
+                    if(obj[property][0].p3sServices[0].saleType === 'Online' || obj[property][0].p3sServices[0].saleType === 'Offline') {
                         phase = obj[property][0].p3sServices[0].currentStageColour;
                     }
                     break;

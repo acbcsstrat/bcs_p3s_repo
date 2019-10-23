@@ -39,8 +39,12 @@ function patentsRestService($http, $q, organiseColourService) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
+<<<<<<< HEAD
 
                 console.error('Error while fetching patentssss');
+=======
+                console.error('Error: Unable to fetch all patents. Error Response:', errResponse)
+>>>>>>> fe-branch-v3
                 deferred.reject(errResponse);
             }
         );
@@ -67,7 +71,7 @@ function patentsRestService($http, $q, organiseColourService) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
-                console.error('Error while fetching patents');
+                console.error('Error: Unable to fetch patent. Error Response:', errResponse)
                 deferred.reject(errResponse);
             }
         );
@@ -84,6 +88,7 @@ function patentsRestService($http, $q, organiseColourService) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
+                console.error('Error: Unable to update patent. Error Response:', errResponse)
                 deferred.reject(errResponse);
             }
         );
@@ -96,6 +101,7 @@ function patentsRestService($http, $q, organiseColourService) {
             .then(function(response){
                 deferred.resolve(response.data);
             }, function(errResponse) {
+                console.error('Error: Unable to save patent. Error Response:', errResponse)
                 deferred.reject(errResponse);
             }
         );
@@ -110,6 +116,7 @@ function patentsRestService($http, $q, organiseColourService) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
+                console.error('Error: Unable to delete patent. Error Response:', errResponse)
                 deferred.reject(errResponse);
             }
         );

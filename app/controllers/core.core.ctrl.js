@@ -80,6 +80,7 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
   	})
 
     function init() {
+<<<<<<< HEAD
     	
     //     patentsRestService.fetchAllPatents()
     //     .then(
@@ -100,6 +101,27 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
     //             console.log(errResponse)
     //         }
     //     )
+=======
+
+        patentsRestService.fetchAllPatents()
+        .then(
+            function(response){
+                if(response.length === 0) {
+                    patentsFound = false;
+                }
+
+			    if(patentsFound === false) {
+					$timeout(function() {
+					 	welcomeMessageModal();
+					}, 350);
+				}                
+
+            },
+            function(errResponse){
+                console.log(errResponse)
+            }
+        )
+>>>>>>> fe-branch-v3
 
     }
 
@@ -112,7 +134,7 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
 			controllerAs:'$ctrl',
 			controller: ['$uibModalInstance', function($uibModalInstance) {
 
-		 	  	this.dismissWelcomeModal = function () {
+		 	  	this.dismissModal = function () {
 			    	$uibModalInstance.close();
 			  	};
 			}]
@@ -185,96 +207,96 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
 	    }
 	}
 
-    function systemMessageModal(message) {
+ //    function systemMessageModal(message) {
 
-        var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.system-message.tpl.htm',
-            scope: $scope,
-            appendTo: undefined,
-            controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', function($uibModalInstance) {
-
-
+ //        var modalInstance = $uibModal.open({
+ //            templateUrl: 'app/templates/modals/modal.system-message.tpl.htm',
+ //            scope: $scope,
+ //            appendTo: undefined,
+ //            controllerAs: '$ctrl',
+ //            controller: ['$uibModalInstance', function($uibModalInstance) {
 
 
-                this.systemMessage = {
-                	message:  message
-                }
 
-                this.systemOk = function () {
-                    $uibModalInstance.close();
-                };
 
-				this.checkedMessages = function(id, checked) {
+ //                this.systemMessage = {
+ //                	message:  message
+ //                }
 
-					if(checked) {
-						messageArr.push(id)
-						$scope.message = true;
-					} else {
-						messageArr.splice(-1, 1)
-					}
+ //                this.systemOk = function () {
+ //                    $uibModalInstance.close();
+ //                };
 
-					if(messageArr.length == 0) {
-						$scope.message = false;				
-					}
+	// 			this.checkedMessages = function(id, checked) {
 
-				}
+	// 				if(checked) {
+	// 					messageArr.push(id)
+	// 					$scope.message = true;
+	// 				} else {
+	// 					messageArr.splice(-1, 1)
+	// 				}
 
-				this.supresssMessages = function() {
-					coreService.supressMessages(messageArr)
-				} 	                
+	// 				if(messageArr.length == 0) {
+	// 					$scope.message = false;				
+	// 				}
 
-            }],
-            resolve: {
-                message: function() {
-                    return systemResponse;
-                }
-            }
-        });
+	// 			}
 
-    }; //function end
+	// 			this.supresssMessages = function() {
+	// 				coreService.supressMessages(messageArr)
+	// 			} 	                
 
-	function urgentPatentModal(response) {
+ //            }],
+ //            resolve: {
+ //                message: function() {
+ //                    return systemResponse;
+ //                }
+ //            }
+ //        });
 
-		var modalInstance = $uibModal.open({
-			templateUrl: 'app/templates/modals/modal.urgent-message.tpl.htm',
-			scope: $scope,
-			appendTo: undefined,
-			controllerAs: '$ctrl',
-			controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
-				this.urgentPatents = message;
-				this.urgentPatents.map(function(item, i){
-					item.color = {}
-					item.color.current = organiseColourService.getCurrColour(item.costBandColour, 'text')
-					item.color.next = organiseColourService.getNextColour(item.costBandColour, 'text')
-				})
+ //    }; //function end
 
-		        coreService.ppContact()
-		        .then(
-		            function(response){
-		                this.partnerName = response.partnerName;
-		                this.partnerPhone = response.partnerPhone;
-		            },
-		            function(errResponse){
-		            	console.log(errResponse)
-		            }
-		        )
+	// function urgentPatentModal(response) {
 
-		 	  	this.urgentOk = function () {
-			    	$uibModalInstance.close();
-			  	};
+	// 	var modalInstance = $uibModal.open({
+	// 		templateUrl: 'app/templates/modals/modal.urgent-message.tpl.htm',
+	// 		scope: $scope,
+	// 		appendTo: undefined,
+	// 		controllerAs: '$ctrl',
+	// 		controller: ['$uibModalInstance', 'message', function($uibModalInstance, message) {
+	// 			this.urgentPatents = message;
+	// 			this.urgentPatents.map(function(item, i){
+	// 				item.color = {}
+	// 				item.color.current = organiseColourService.getCurrColour(item.costBandColour, 'text')
+	// 				item.color.next = organiseColourService.getNextColour(item.costBandColour, 'text')
+	// 			})
 
-			  	this.urgentDismissModal = function() {
-			  		$uibModalInstance.dismiss();
-			  	};
+	// 	        coreService.ppContact()
+	// 	        .then(
+	// 	            function(response){
+	// 	                this.partnerName = response.partnerName;
+	// 	                this.partnerPhone = response.partnerPhone;
+	// 	            },
+	// 	            function(errResponse){
+	// 	            	console.log(errResponse)
+	// 	            }
+	// 	        )
 
-			}],
-			resolve: {
-				message: function() {
-					return urgentResponse;
-				}
-			}
-		});
- 	} //function urgentPatentModal
+	// 	 	  	this.urgentOk = function () {
+	// 		    	$uibModalInstance.close();
+	// 		  	};
+
+	// 		  	this.urgentDismissModal = function() {
+	// 		  		$uibModalInstance.dismiss();
+	// 		  	};
+
+	// 		}],
+	// 		resolve: {
+	// 			message: function() {
+	// 				return urgentResponse;
+	// 			}
+	// 		}
+	// 	});
+ // 	} //function urgentPatentModal
 
 }

@@ -17,11 +17,22 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 	});
 
 	var currTransStatus = currentTransactionItem.latestTransStatus;
-	vm.currentTransactionItem = currentTransactionItem;	
+	vm.currentTransactionItem = currentTransactionItem;
+
 	for(var i = 0; i < vm.currentTransactionItem.serviceUIs.length; i++) {
 		var item = vm.currentTransactionItem.serviceUIs[i];
-		item.serviceType = item.renewalFeeUI ? 'Regional Renewal' : 'Form 1200';
-		item.serviceFeeUI = item.renewalFeeUI ? item.renewalFeeUI : item.form1200FeeUI;
+		if(item.renewalFeeUI) { 
+			item.serviceType = 'renewal'; 
+			item.serviceFeeUI = item.renewalFeeUI; 
+		}
+		if(item.epctFeeUI) { 
+			item.serviceType = 'epct'; 
+			item.serviceFeeUI = item.epctFeeUI; 
+		}
+		if(item.grantFeeUI) { 
+			item.serviceType = 'grant'; 
+			item.serviceFeeUI = item.grantFeeUI; 
+		}
 	}
 
 	vm.checkProgress = checkProgress;

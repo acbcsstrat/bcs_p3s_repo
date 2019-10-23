@@ -8,7 +8,7 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
 
     vm.pageTitle = 'Transaction History';
 
-    $timeout(function() {
+    var loadTimeout = $timeout(function() {
         vm.transactionsLoaded = true;
     }, 300);
 
@@ -38,7 +38,7 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
         })    
 
         transactionHistory.map(function(o, i){
-            o.renewalProgress = transactionHistoryService.renewalProgress(o.latestTransStatus);
+            o.actionProgress = transactionHistoryService.actionProgress(o.latestTransStatus);
         })
 
     }
@@ -236,5 +236,9 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
             window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
         }
     };
+
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(loadTimeout)
+    })    
     
 }

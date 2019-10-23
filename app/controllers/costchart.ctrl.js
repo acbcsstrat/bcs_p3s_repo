@@ -132,7 +132,7 @@ function costChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService
                         vm.barOptions.chart.barColor = ["#3c3c3b", "#0097ce", "#e30613", "#f9b233", "#53ab58"];
                     }
 
-                    if(service == 'epct') {
+                    if(service == 'epct' || service == 'grant') {
                         vm.barOptions.chart.barColor = ["#e30613", "#f9b233", "#53ab58"];
                     }     
 

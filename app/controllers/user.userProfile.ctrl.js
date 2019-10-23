@@ -86,12 +86,20 @@ function userProfileCtrl($state, userService, $rootScope, $scope, $timeout, $uib
 
                 $scope.imgSelected = false;
 
+                function dataURItoBlob(dataURI) { //In computer science Base64 is a group of binary-to-text encoding schemes that represent binary data in an ASCII string format 
+                    var binary = atob(dataURI.split(',')[1]);
+                    var array = [];
+                    for(var i = 0; i < binary.length; i++) {
+                        array.push(binary.charCodeAt(i));
+                    }
+                    return new Blob([new Uint8Array(array)], {type: 'image/jpeg '});
+                }
+
                 $scope.uploadAvatar = function() {
 
-                    var blob = new Blob([$scope.cropped.image], {type : 'image/png'});
+                    var blob = dataURItoBlob($scope.cropped.image);
                     var formData = new FormData();
                     formData.append('image', blob);
-
                     uploadAvatarServ.uploadAvatar(formData) 
                     .then(
                         function(response){

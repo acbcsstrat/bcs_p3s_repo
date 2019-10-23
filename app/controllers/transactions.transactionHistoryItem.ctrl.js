@@ -18,14 +18,25 @@ function transactionHistoryItemCtrl($scope, transactionHistoryItem, transactionH
 
 	var currTransStatus = transactionHistoryItem.latestTransStatus;
 	vm.transactionHistoryItem = transactionHistoryItem;	
+
 	for(var i = 0; i < vm.transactionHistoryItem.serviceUIs.length; i++) {
 		var item = vm.transactionHistoryItem.serviceUIs[i];
-		item.serviceType = item.renewalFeeUI ? 'Regional Renewal' : 'Form 1200';
-		item.serviceFeeUI = item.renewalFeeUI ? item.renewalFeeUI : item.form1200FeeUI;
+		if(item.renewalFeeUI) { 
+			item.serviceType = 'renewal'; 
+			item.serviceFeeUI = item.renewalFeeUI; 
+		}
+		if(item.epctFeeUI) { 
+			item.serviceType = 'epct'; 
+			item.serviceFeeUI = item.epctFeeUI; 
+		}
+		if(item.grantFeeUI) { 
+			item.serviceType = 'grant'; 
+			item.serviceFeeUI = item.grantFeeUI; 
+		}
 	}
-	var currTransStatus = transactionHistoryItem.latestTransStatus;
-	vm.transactionHistoryItem = transactionHistoryItem;
-	vm.renewalProgress = transactionHistoryService.renewalProgress(currTransStatus)
+
+	console.log(vm.transactionHistoryItem)
+
 	vm.checkProgress = checkProgress;
 	vm.patents = [];
 	vm.transStatus = [

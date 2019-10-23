@@ -42,8 +42,7 @@ export default angular.module('ngCart', [directives])
         };
 
         this.addItem = function (id, name, price, quantity, data) {
-            
-            console.log('hello')
+
             var inCart = this.getItemById(id);
 
             var modalInstance = $uibModal.open({
@@ -54,12 +53,18 @@ export default angular.module('ngCart', [directives])
 
                     this.order = {}
                     this.order.price = price;
-                    this.order.euroAction = data.P3Sservice[0].serviceType;
-                    console.log(data)
+
+                    if(data.p3sServices) {
+                        this.order.euroAction = data.p3sServices[0].serviceType;
+                    }
+                    if(data.p3sServicesWithFees) {
+                        this.order.euroAction = data.p3sServicesWithFees[0].serviceType;
+                    }
+
                     this.order.ep_ApplicationNumber = data.ep_ApplicationNumber;
                     this.order.totalOrderLength = vm.getItems().length;
                     this.order.totalCost = vm.totalCost();
-                     console.log(this.order)
+
                     this.continueBasket =  function() {
                         $state.go('basket', {})
                         $uibModalInstance.close();

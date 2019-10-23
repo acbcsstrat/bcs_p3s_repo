@@ -22,8 +22,8 @@ export default function ActionCostController($scope, $timeout, patentIds, Dashbo
         updateCosttimeout = $timeout(function(){
             vm.actionCost = DashboardService.fetchActionCost();
             vm.loading = false;
-        }, 100)
 
+        }, 300)
     })  
 
    $scope.$on('$destroy', function(){

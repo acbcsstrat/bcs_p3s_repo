@@ -26,10 +26,14 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
     function checkServices() {
 
         if(vm.patent.epoStage == 'Prosecution') {
-            vm.data.availableAction.push({id: 0, action: 'Renewal'})
+            vm.data.availableAction.push({id: 0, action: 'renewal'})
         }
         if(vm.patent.epoStage == 'Filing') {
-            vm.data.availableAction.push({id: 0, action: 'Form1200'})
+            vm.data.availableAction.push({id: 0, action: 'epct'})
+        }
+
+        if(vm.patent.epoStage == 'Grant') {
+            vm.data.availableAction.push({id: 0, action: 'grant'})
         }
         vm.data.selectedAction = vm.data.availableAction[0];
 
@@ -41,17 +45,23 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
 
     function displayNotifications(action) {  //displays the specifed actions notifications
 
-        if(action == 'Form1200') { 
+        if(action == 'epct') { 
             vm.notificationUi = 'allEpctNotificationUIs';
             vm.notificationUrl = 'rest-epct-notifications/';
-            vm.toBlueOrNotToBlue = false;
+            vm.toBlueOrNotToBlue = false; //USED TO DETERMINE WHETHER TO DISPLAY BLUE
         }
 
-        if(action == 'Renewal') {
+        if(action == 'renewal') {
             vm.notificationUi = 'allRenewalNotificationUIs';
             vm.notificationUrl = 'rest-renewal-notifications/';
             vm.toBlueOrNotToBlue = true;
         }
+
+        if(action == 'grant') {
+            vm.notificationUi = 'allGrantNotificationUIs';
+            vm.notificationUrl = 'rest-grant-notifications/';
+            vm.toBlueOrNotToBlue = false;
+        }        
 
 
 

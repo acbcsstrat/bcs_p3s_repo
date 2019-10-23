@@ -286,20 +286,19 @@
                                 <table data-ng-if="patent.p3sServices.length == 1">
                                     <tr>
                                         <td data-ng-repeat="item in patent.p3sServices track by $index">
-                                            <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'In Progress' && !item.isUrgentAttention"> <!-- cover manual processing-->
+                                            <div data-ng-if="item.saleType !== 'Online' && !item.isUrgentAttention"> <!-- cover manual processing-->
                                                 <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
                                             </div>
-                                            <div data-ng-if="item.saleType === 'Offline' && item.isUrgentAttention"> <!-- cover manual processing-->
+
+                                            <div data-ng-if="item.isUrgentAttention"> <!-- cover manual processing-->
                                                 <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
                                             </div>                                            
-                                            <div data-ng-if="item.saleType === 'Online' || item.saleType === 'In Progress'">
-                                                <div class="d-md-none d-lg-flex justify-content-between flex-column">
-                                                    
-                                                    <div class="d-flex justify-content-between align-items-center"><!--display costs-->
-                                                        <p data-ng-class="item.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                        <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="item.cssCurrent"></i>
-
-                                                        <p data-ng-if="!item.isUrgentAttention && item.currentStageColour !== 'Black' && item.saleType === 'Online' || 'Offline'" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
+                                            <div data-ng-if="item.saleType === 'Online' && !item.isUrgentAttention">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex justify-content-start align-items-center"><!--display costs-->
+                                                        <p data-ng-class="item.cssCurrent" class="font-weight-bold m-r-sm">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                        <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs m-r-sm" data-ng-class="item.cssCurrent"></i>
+                                                        <p data-ng-if="!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
                                                         <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
                                                         <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
                                                     </div>
@@ -312,37 +311,23 @@
                                 <table data-ng-if="patent.p3sServices.length > 1">
                                     <tr data-ng-repeat="item in patent.p3sServices track by $index">
                                         <td class="t-data__td p-l-none p-r-none">
-                                            <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'In Progress' && !item.isUrgentAttention" class="d-md-none d-lg-flex justify-content-between flex-column"> <!--cover all actions that cannot be sold -->
+                                            <div data-ng-if="item.saleType !== 'Online' && !item.isUrgentAttention" class="d-flex justify-content-between flex-column"> <!--cover all actions that cannot be sold -->
                                                 <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
                                             </div>
 
-                                            <div data-ng-if="item.saleType === 'Offline' && item.isUrgentAttention"  class="d-md-none d-lg-flex justify-content-between flex-column"> <!-- cover urgent attention (red or second black)-->
+                                            <div data-ng-if="item.saleType === 'Offline' && item.isUrgentAttention" class="d-flex justify-content-between flex-column"> <!-- cover urgent attention (red or second black)-->
                                                 <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
                                             </div>
 
-                                            <div data-ng-if="item.saleType === 'Online' || item.saleType === 'In Progress'" class="d-md-none d-lg-flex justify-content-between flex-column">
-                                                <div class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
-                                                    <p data-ng-class="item.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="item.cssCurrent"></i>
-                                                    <p data-ng-if="!item.isUrgentAttention" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
-                                                    <p data-ng-if="item.currentStageColour == 'Black' && item.isUrgentAttention" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
+                                            <div data-ng-if="item.saleType === 'Online'" class="d-flex flex-column">
+                                                <div class="d-flex justify-content-start align-items-center"><!--dsiplay costs-->
+                                                    <p data-ng-class="item.cssCurrent" class="font-weight-bold m-r-sm">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs m-r-sm" data-ng-class="item.cssCurrent"></i>
+                                                    <p data-ng-if="!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
+                                                    <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
+                                                    <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
                                                 </div>
-                                            </div>                                  
-
-                                            <div data-ng-if="item.saleType === 'Offline' && item.isUrgentAttention" class="d-md-flex d-lg-none"> <!-- cover urgent attention (red or second black)-->
-                                                <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
-                                            </div>
-
-                                            <div data-ng-if="item.saleType === 'Online' || item.saleType === 'In Progress'" class="d-md-flex d-lg-none">
-                                                <div class="d-flex justify-content-between align-items-center"><!--dsiplay costs-->
-                                                    <p data-ng-class="item.cssCurrent" class="font-weight-bold">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs" data-ng-class="item.cssCurrent"></i>
-                                                    <p data-ng-if="!item.isUrgentAttention" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
-                                                        <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
-                                                        <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
-                                                </div>
-                                            </div>
-
+                                            </div>  
                                         </td>
                                     </tr>
                                 </table>                                
@@ -351,7 +336,7 @@
                                 <table data-ng-if="patent.p3sServices.length == 1">
                                     <tr>
                                         <td data-ng-repeat="item in patent.p3sServices track by $index"  class="t-data">
-                                            <div class="d-flex justify-content-center btn-underlined-selector">
+                                            <div class="d-flex justify-content-left btn-underlined-selector">
                                                 <span data-ng-bind="item.serviceType" class="text-capitalize"></span>
                                             </div>
                                         </td>
@@ -360,13 +345,12 @@
                                 <table data-ng-if="patent.p3sServices.length > 1">
                                     <tr data-ng-repeat="item in patent.p3sServices track by $index">
                                         <td class="t-data__td">
-                                            <div class="d-flex justify-content-center btn-underlined-selector">
+                                            <div class="d-flex justify-content-left btn-underlined-selector">
                                                 <span data-ng-bind="item.serviceType" class="text-capitalize"></span>
                                             </div>
                                         </td>
                                     </tr>
                                 </table>                                
-                                
                             </td><!--when multiple services begin-->
                             <td class="t-data__td">
                                 <table data-ng-if="patent.p3sServices.length == 1">

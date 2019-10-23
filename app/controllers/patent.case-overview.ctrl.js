@@ -14,8 +14,10 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     $scope.availableServices = [];
     $scope.notInProgress = true;
 
+    var chartTimeout;
+
     function refreshChart (){
-        $timeout(function(){  
+        chartTimeout = $timeout(function(){  
             var evt = document.createEvent('UIEvents');
             evt.initUIEvent('resize', true, false, window, 0);
             window.dispatchEvent(evt);
@@ -42,7 +44,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         if($stateParams.prepareGrant === 1) {
             $scope.activeLeft = 4;
             activeTabService.setTab(0)
-        }        
+        }
 
         renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
         .then(
@@ -54,24 +56,28 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 vm.displayRenewalHistoryTab = false;
             }
         )
-       
-        vm.patent.p3sServicesWithFees.forEach(function(data, index){
+
+        patent.p3sServicesWithFees.forEach(function(data, index){
             $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
-            $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus})
+            $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
         })
 
         $scope.availableServices.forEach(function(obj){
 
+            if(obj.type == 'Not In Progress') { return; }
+
             if(obj.action == 'epct') {
-                if(obj.status == 'Epct being generated' || obj.status == 'Epct available') {
+                if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
                     vm.displayForm1200Tab = true;
-                    return;
                 }
-                vm.displayForm1200Tab = false;
+                
             }
 
             if(obj.action == 'grant') {
-                vm.displayGrantTab = true;
+                if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
+                    vm.displayGrantTab = true;
+                }
+                
             }
 
         })
@@ -90,7 +96,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 this.dismissModal = function() {
                     $uibModalInstance.close();
                 };
-
+                
                 this.deletePatent = function() {
                     deletePatent(id);
                     $timeout(function() {
@@ -110,7 +116,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         patentsRestService.deletePatent(id)
         .then(
-            function(){
+            function(response){
                 $state.go('portfolio', {}, {reload: true})
                 .then(function(){
                     $timeout(function(){
@@ -157,6 +163,10 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         }
 
     }
+
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(chartTimeout);
+    })
 
 
     

@@ -39,18 +39,6 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
       currentStageColour: {}
     }
 
-    // function init() {
-
-    //     var obj = patents[0].p3sServices[0];
-    //     obj.serviceType = 'grant';
-    //     obj.serviceStatus = 'Grant available'
-    //     obj.serviceStatusUI = 'Grant Available'
-    //     patents[0].p3sServices.push(obj);
- 
-    // }
-
-
-    // init()
 
     function select(i) {
       vm.selected = i;
@@ -266,11 +254,11 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
         vm.stateParams = $stateParams;
         if($(event.target).hasClass('generateForm1200')) {
-          $state.go('portfolio.patent', {patentId: patent.patentID, form1200generate: 1}, {notify: false})
+          $state.go('portfolio.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
         }
 
         if($(event.target).hasClass('prepareGrant')) {
-          $state.go('portfolio.patent', {patentId: patent.patentID, prepareGrant: 1}, {notify: false})
+          $state.go('portfolio.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0,}, {notify: false})
         }        
 
         if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {

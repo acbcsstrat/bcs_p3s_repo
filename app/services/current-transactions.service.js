@@ -8,10 +8,15 @@ function CurrentTransactionsService($http, $q) {
 
 	var factory = {
 		fetchCurrentTransactions:fetchCurrentTransactions,
-		renewalProgress: renewalProgress
+		actionProgress: actionProgress
 	};
 
 	return factory;
+
+
+	function convertToObject(array) {
+		console.log(array)
+	}
 
 	function fetchCurrentTransactions() {
 
@@ -19,8 +24,11 @@ function CurrentTransactionsService($http, $q) {
 		$http.get(REST_SERVICE_URI)
 		.then(
 			function(response){
-                response.data.forEach(function(el){
-                    el.serviceUIs = el.renewalUIs.concat(el.epctUIs)
+                response.data.map(function(el){
+                    el.serviceUIs = [];
+                    el.serviceUIs = el.serviceUIs.concat(el.renewalUIs, el.grantUIs, el.epctUIs)
+                    return el;
+   
                 })
 				deferred.resolve(response.data);
 			},
@@ -33,36 +41,36 @@ function CurrentTransactionsService($http, $q) {
 
 	};
 
-	function renewalProgress(currTransStatus) {
+	function actionProgress(currTransStatus) {
 
-		var renewalProgress = 0;
+		var progress = 0;
 		
 		switch(currTransStatus) {
     		case 'Initiated':
-    			renewalProgress = 14;
+    			progress = 14;
     		break;
     		case 'Awaiting Funds':
-    			renewalProgress = 28;
+    			progress = 28;
 			break;
     		case 'Funds Received':
-    			renewalProgress = 42;
+    			progress = 42;
 			break;	
     		case 'Funds Sent':
-    			renewalProgress = 56;
+    			progress = 56;
 			break;	
     		case 'EPO Received':
-    			renewalProgress = 70;
+    			progress = 70;
 			break;	
     		case 'EPO Instructed':
-    			renewalProgress = 84;
+    			progress = 84;
 			break;
     		case 'Completed':
-    			renewalProgress = 100;
+    			progress = 100;
 			break;	       					    			    			    			
 
 		}
 
-		return renewalProgress;
+		return progress;
 
 	};
 

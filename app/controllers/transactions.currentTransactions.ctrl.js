@@ -8,7 +8,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 
 	vm.pageTitle = 'Current Transactions';
 
-    $timeout(function() {
+    var loadTimeout = $timeout(function() {
       	vm.transactionsLoaded = true;
     }, 300);
 
@@ -38,7 +38,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 		})    
 
 		currentTransactions.map(function(o, i){
-			o.renewalProgress = currentTransactionsService.renewalProgress(o.latestTransStatus);
+			o.actionProgress = currentTransactionsService.actionProgress(o.latestTransStatus);
 		})
 
    	}
@@ -86,7 +86,6 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 					var arrayOrder = [];
 
 					vm.tableData.forEach(function(data) {
-						
 						data.renewalUIs.map(function(o, i){ 
 							arrayOrder.push(o.patentUI.clientRef);
 						})
@@ -94,7 +93,7 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 					})
 
 					arrayOrder.sort();
-
+					console.log(vm.tableData)
 					arrayOrder.forEach(function(key){
 
 						var found = false;
@@ -238,5 +237,9 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
       		window.location = 'http://localhost:8080/p3sweb/index.htm'+patentId;
   		}
   	};
+
+  	$scope.$on('$destroy', function(){
+  		$timeout.cancel(loadTimeout)
+  	})
 	
 }

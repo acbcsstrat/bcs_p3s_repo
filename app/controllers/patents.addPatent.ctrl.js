@@ -34,7 +34,7 @@ function addPatentCtrl($state, $stateParams, $scope, $timeout, $location, $ancho
   	}
 
 	function openConfirmModal(patent) {
-
+		console.log('patent: ', patent)
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modals/modal.confirm-found-patent.tpl.htm',
             appendTo: undefined,
@@ -48,8 +48,11 @@ function addPatentCtrl($state, $stateParams, $scope, $timeout, $location, $ancho
 		            .then(
 		            	function(response){
 
-        			 		var patent = response[0];
-			             	$state.go('portfolio.patent', {patentId: patent.patentID})
+		                    var match = response.find(function(item){
+		                        return item.ep_ApplicationNumber == patent.ep_ApplicationNumber;
+		                    })
+
+			             	$state.go('portfolio.patent', {patentId: match.id}) //BE NEEDS TO AMEND CALL 16.10.19 ASAP. UPDATE V2 TO V3
 			             	.then(
 								function(response){
 									toPatentTimeout = $timeout(function() {

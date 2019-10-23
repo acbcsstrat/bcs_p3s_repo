@@ -119,7 +119,6 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 
 			}
 
-
 	      	$scope.submitFormData = function(service){
 	        	$rootScope.$emit(service, {data: $scope.formData, service: service});
 	      	};			
@@ -137,10 +136,13 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 				}
 			}
 
-			function isEmpty(obj) {
+
+			function isEmpty(obj) { //check if all object properties have been assigned a value 
+
 				var allFilled;
 				for(var property in obj) {
 					if(obj.hasOwnProperty(property)) {
+						if(obj[property] === undefined) { return; }
 						if(obj[property].constructor !== Object) {
 							allFilled = true;
 						} else {
@@ -160,14 +162,15 @@ function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 
 			this.isOptionValid = function(value, item) { //INVOKED FROM PANEL CONTENT
 
-				if(value !== undefined  && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
+				if(value !== undefined && value !== '' && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
 					if(isEmpty(value)) {
 						$scope.nextBtnDisabled = false;
 						$scope.questions[item.index].valid = true;
 					}
 					return;
 				}
-				if(value === undefined || typeof value === 'undefined' || value === false) {
+
+				if(value === undefined || typeof value === 'undefined' || value === false || value === '') {
 					$scope.nextBtnDisabled = true; //DISABLE NEXT BTN 
 					$scope.questions[item.index].valid = false;
 				} else {
@@ -216,13 +219,12 @@ function questionContent($rootScope, $compile, $timeout) {
 
 			scope.question = scope.question;
 			scope.requiredYes = true;
-			scope.requiredNo = true;			
+			scope.requiredNo = true;
 
 		    if(scope.question.checkItems) {
 		        Object.keys(scope.question.checkItems).forEach(function(item){
 		          	ctrl.formData[item] = scope.question.checkItems[item];
 		        })
-		        
 		    }
 
 			if(scope.$parent.$last === true) {
@@ -239,7 +241,7 @@ function questionContent($rootScope, $compile, $timeout) {
       		scope.updateChecklist = function(checklist, property, value) {
         		ctrl.formData[checklist].map(function(item){
           			if(property == item.stateCode) {
-            			item.checked = value;
+            			item.isSelected = value;
           			}
          			return item;
     			})
@@ -250,9 +252,7 @@ function questionContent($rootScope, $compile, $timeout) {
     			ctrl.formData[property] = value
       		}
 
-
 			scope.questionTemplate = 'app/templates/directives/' + ctrl.service +'/' + scope.question.template + '.question.tpl.htm';
-
 
 		}
 	}
@@ -294,14 +294,44 @@ angular.module("ppApp").directive("ngUploadChange",function(){
     }
 });
 
-angular.module("ppApp").directive("selectNgFiles", function() {
+// angular.module("ppApp").directive("selectNgFiles", function() {
+//   return {
+//     require: "ngModel",
+//     link: function postLink(scope,elem,attrs,ngModel) {
+//       elem.on("change", function(e) {
+//         var files = elem[0].files[0];
+//         ngModel.$setViewValue(files);
+//       })
+//     }
+//   }
+// });
+
+angular.module("ppApp").directive("selectNgFiles", function() { //if files to be uploaded vary in future, add condition to check type or create new directive
   return {
     require: "ngModel",
     link: function postLink(scope,elem,attrs,ngModel) {
-      elem.on("change", function(e) {
-        var files = elem[0].files[0];
-        ngModel.$setViewValue(files);
-      })
+       var validFormats = ['pdf'];
+        elem.bind('change', function () {
+            validFile(false);
+            scope.$apply(function () {
+                ngModel.$render();
+            });
+        });
+        ngModel.$render = function () {
+            ngModel.$setViewValue(elem[0].files[0]);
+        };
+        function validFile(bool) {
+            ngModel.$setValidity('pdfIncorrect', bool);
+        }
+        ngModel.$parsers.push(function(value) {
+            var ext = value.name.substr(value.name.lastIndexOf('.')+1);
+            if(ext=='') return;
+            if(validFormats.indexOf(ext) == -1){
+                return value;
+            }
+            validFile(true);
+            return value;
+        });
     }
   }
 });
