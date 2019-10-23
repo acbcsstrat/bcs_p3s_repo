@@ -15,4 +15,9 @@ WEB-INF/web.xml
 WEB-INF/views/htmldocs
 node_modules
 # dist/
+<<<<<<< HEAD
 package-lock.json
+=======
+package-lock.json
+index.html
+>>>>>>> fe-branch-v3
