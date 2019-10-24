@@ -6,7 +6,7 @@ angular.module('ppApp').component('mainnav', {
 
 	 	vm.toggleLeft = buildToggler('left');
 	    vm.toggleRight = buildToggler('right');
-	    vm.openGuide = openGuide;
+	    // vm.openGuide = openGuide;
 		vm.isOpen = isOpen;
       	vm.toggleOpen = toggleOpen;
       	vm.autoFocusContent = false;
@@ -78,24 +78,24 @@ angular.module('ppApp').component('mainnav', {
 			ngCart.empty();
 		}    
 
-	    function openGuide() {
-	    	coreService.openAppGuide();
-	    	$rootScope.$broadcast('appGuideOpen');
-	    }
+	    // function openGuide() {
+	    // 	coreService.openAppGuide();
+	    // 	$rootScope.$broadcast('appGuideOpen');
+	    // }
 
-		function welcomeMessageModal() {
-			var modalInstance = $uibModal.open({
-				templateUrl: 'app/templates/modals/modal.welcome-message.tpl.htm',
-				scope: $scope,
-				controllerAs:'$ctrl',
-				controller: ['$uibModalInstance', function($uibModalInstance) {
+		// function welcomeMessageModal() {
+		// 	var modalInstance = $uibModal.open({
+		// 		templateUrl: 'app/templates/modals/modal.welcome-message.tpl.htm',
+		// 		scope: $scope,
+		// 		controllerAs:'$ctrl',
+		// 		controller: ['$uibModalInstance', function($uibModalInstance) {
 
-			 	  	this.dismissWelcomeModal = function () {
-				    	$uibModalInstance.close();
-				  	};
-				}]
-			});
-	 	}    
+		// 	 	  	this.dismissWelcomeModal = function () {
+		// 		    	$uibModalInstance.close();
+		// 		  	};
+		// 		}]
+		// 	});
+	 // 	}    
 
 
 	}]
