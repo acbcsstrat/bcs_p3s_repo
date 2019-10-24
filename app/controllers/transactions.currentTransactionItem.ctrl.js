@@ -25,9 +25,9 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 			item.serviceType = 'renewal'; 
 			item.serviceFeeUI = item.renewalFeeUI; 
 		}
-		if(item.epctFeeUI) { 
-			item.serviceType = 'epct'; 
-			item.serviceFeeUI = item.epctFeeUI; 
+		if(item.form1200FeeUI) { 
+			item.serviceType = 'Euro-PCT'; 
+			item.serviceFeeUI = item.form1200FeeUI; 
 		}
 		if(item.grantFeeUI) { 
 			item.serviceType = 'grant'; 

@@ -22,9 +22,9 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
     vm.displayTrans = displayTrans;
     vm.rowSelect = rowSelect;
     vm.selectedSortType = 'p3S_TransRef';
-    fetchData();
+   
 
-    function fetchData() {
+    function init() {
 
         transactionHistory.forEach(function(data){
             if(data.serviceUIs.length > 1) {
@@ -42,6 +42,8 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
         })
 
     }
+
+    init();
 
     function sortType(column) {
 
