@@ -59,7 +59,7 @@ function recentActivityCtrl(patentIds, calculateService, costAnalysisService, tr
 		if(patentIds.length > 0) {
 			patentIds.forEach(function(patent){
 				patent.p3sServices.forEach(function(service){
-					if(service.saleType !== 'Not In Progress') {					
+					if(service.saleType !== 'Not In Progress' && service.saleType !== 'In Progress') {
 						costAnalysisService.fetchCa(patent.patentID, patent.p3sServices)
 						.then(
 							function(response, i){
