@@ -1,6 +1,6 @@
 angular.module('ppApp').component('mainnav', {
 	templateUrl: 'app/templates/nav/nav.main-nav.tpl.htm',
-	controller: ['userService', 'mainNavService', '$scope', '$rootScope', '$mdSidenav', 'ngCart', 'coreService', '$timeout', 'moment', 'fxService', function(userService, mainNavService, $scope, $rootScope, $mdSidenav, ngCart, coreService, $timeout, moment, fxService){
+	controller: ['userService', 'mainNavService', '$scope', '$rootScope', '$mdSidenav', 'ngCart', 'coreService', '$timeout', 'moment', 'fxService', '$rootScope', function(userService, mainNavService, $scope, $rootScope, $mdSidenav, ngCart, coreService, $timeout, moment, fxService, $rootScope){
 
 		var vm = this;
 
@@ -15,16 +15,19 @@ angular.module('ppApp').component('mainnav', {
         	isFirstOpen: true,
         	isFirstDisabled: false
       	};
-	    
+      	vm.avatarimage = '../p3sweb/avatarImage';
+
+      	$rootScope.$on('refreshAvatar', function(){
+	        var timestamp = new Date().getTime();
+	        vm.avatarimage = '../p3sweb/avatarImage' + '?' + timestamp;
+      	})
+
       	function init() {
 
 			userService.fetchUser()
 			.then(
 				function(response){
 					vm.user = response;
-				},
-				function(errResponse){
-					console.log(errResponse)
 				}
 			)
 	    	fxService.fetchFx()
