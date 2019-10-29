@@ -22,5 +22,32 @@
         <br /> <input type="submit" value="Upload" />
     </form>
   </center>
+
+
+<p/>
+Avatar2
+    <h1>File Upload</h1>
+    <form method="post" action="/p3sweb/avatar2/" enctype="multipart/form-data">
+        Select file to upload: 
+        <input type="file" name="file" size="60" accept=".jpg,.jpeg,.bmp,.gif,.png" /><br/>
+        <br /> <input type="submit" value="Upload" />
+    </form>
+<p/>
+Avatar3
+    <h1>File Upload</h1>
+    <form method="post" action="/p3sweb/avatar3/" enctype="multipart/form-data">
+        Select file to upload: 
+        <input type="file" name="file" size="60" accept=".jpg,.jpeg,.bmp,.gif,.png" /><br/>
+        <br /> <input type="submit" value="Upload" />
+    </form>
+<p/>
+Avatar3
+    <h1>File Upload</h1>
+    <form method="post" action="/p3sweb/avatar23/" >
+        NO Select NEEDED 
+        <br /> <input type="submit" value="Test" />
+    </form>
+
+
 </body>
 </html>

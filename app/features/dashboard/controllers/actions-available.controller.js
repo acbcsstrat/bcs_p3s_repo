@@ -9,15 +9,13 @@ export default function ActionsAvailableController($scope, $timeout, DashboardSe
     vm.date = new Date();
     vm.setActionCost = setActionCost;
     vm.setPhase = setPhase
-<<<<<<< HEAD:app/features/dashboard/controllers/actions-available.controller.js
-    vm.patents = DashboardService.getPatents;
-=======
+
     vm.patents = (function(){
         var obj = {}
         for(var property in dashboardService.getPatents) {
-            if(dashboardService.getPatents.hasOwnProperty(property)) {
-                if(Array.isArray(dashboardService.getPatents[property])) {
-                    obj[property] = dashboardService.getPatents[property].filter(function(el){
+            if(DashboardService.getPatents.hasOwnProperty(property)) {
+                if(Array.isArray(DashboardService.getPatents[property])) {
+                    obj[property] = DashboardService.getPatents[property].filter(function(el){
                         return el.p3sServices[0].saleType === 'Online' || el.p3sServices[0].saleType === 'Offline';
                     })
                 }
@@ -26,7 +24,6 @@ export default function ActionsAvailableController($scope, $timeout, DashboardSe
         return obj;
     }())
 
->>>>>>> fe-branch-v3:app/controllers/dashboard.actions-available.ctrl.js
     vm.availableActions = 0;
     var setActionCostTmeout;
 

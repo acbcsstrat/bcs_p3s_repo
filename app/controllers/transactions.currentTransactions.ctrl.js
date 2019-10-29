@@ -22,9 +22,8 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
    	vm.displayTrans = displayTrans;
    	vm.rowSelect = rowSelect;
    	vm.selectedSortType = 'p3S_TransRef';
-   	fetchData();
 
-    function fetchData() {
+    function init() {
 
 		currentTransactions.forEach(function(data){
 			if(data.serviceUIs.length > 1) {
@@ -43,8 +42,9 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 
    	}
 
-   	function sortType(column) {
+   	init();
 
+   	function sortType(column) {
 
 		vm.sortTransCost = false;
 		vm.sortPatentApplicationNumber = false;

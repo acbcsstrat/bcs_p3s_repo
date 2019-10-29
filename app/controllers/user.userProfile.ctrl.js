@@ -104,6 +104,8 @@ function userProfileCtrl($state, userService, $rootScope, $scope, $timeout, $uib
                     .then(
                         function(response){
                             $scope.avatarImgUploaded = true;
+                            $rootScope.$emit('refreshAvatar',function(){
+                            })
                             $state.reload();
                         },
                         function(errResponse){

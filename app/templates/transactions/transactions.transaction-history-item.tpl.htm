@@ -87,14 +87,14 @@
 						        <div class="col-md-12 col-xl-12">								
 									<div class="expandcollapse-item">
 										<div class="slideDown m-t-sm" data-ng-init="panelActive = true" data-ng-hide="panelActive">
-											<div data-ng-if="transaction.serviceType == 'epct'">
+											<div data-ng-if="transaction.serviceType == 'Euro-PCT'">
 							                
 							                    <div class="row m-b-sm">
 							                        <div class="col-md-5 col-xl-5">
 							                            <p class="font-weight-medium m-l-sm">Designation fee:</p>
 							                        </div>
 							                        <div class="col-md-4 col-xl-4">
-							                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.designationFeeUSD | number: 2) || '0.00'}}</p>
+							                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.designationFeeUSD | number: 2) || '0.00'}}</p>
 							                        </div>                                                                                     
 							                    </div>
 							                    <div class="row m-b-sm">
@@ -102,7 +102,7 @@
 							                            <p class="font-weight-medium m-l-sm">Examination fee:</p>
 							                        </div>
 							                        <div class="col-md-4 col-xl-4">
-							                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.examinationFeeUSD | number: 2) || '0.00'}}</p>
+							                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.examinationFeeUSD | number: 2) || '0.00'}}</p>
 							                        </div>                                                                                      
 							                    </div>
 							                    <div class="row m-b-sm">
@@ -110,7 +110,7 @@
 							                            <p class="font-weight-medium m-l-sm">Excess Page fee:</p>
 							                        </div>
 							                        <div class="col-md-4 col-xl-4">
-							                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.excessPageFeeUSD | number: 2) || '0.00'}}</p>
+							                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.excessPageFeeUSD | number: 2) || '0.00'}}</p>
 							                        </div>                                                                                       
 							                    </div>
 							                    <div class="row m-b-sm">
@@ -118,7 +118,7 @@
 							                            <p class="font-weight-medium m-l-sm">Filing fee:</p>
 							                        </div>
 							                        <div class="col-md-4 col-xl-4">
-							                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.filingFeeUSD | number: 2) || '0.00'}}</p>
+							                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.filingFeeUSD | number: 2) || '0.00'}}</p>
 							                        </div>                                                                                    
 							                    </div>
 							                    <div class="row m-b-sm">
@@ -126,7 +126,7 @@
 							                            <p class="font-weight-medium m-l-sm">Supplmentary Search fee:</p>
 							                        </div>
 							                        <div class="col-md-4 col-xl-4">
-							                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.supplementarySearchFeeUSD | number: 2) || '0.00'}}</p>
+							                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.supplementarySearchFeeUSD | number: 2) || '0.00'}}</p>
 							                        </div>                                                                                       
 							                    </div>
 							                    <div class="row m-b-sm">
@@ -134,7 +134,7 @@
 							                            <p class="font-weight-medium m-l-sm">Validation State fee:</p>
 							                        </div>
 							                        <div class="col-md-4 col-xl-4">
-							                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.validationFeeUSD | number: 2) || '0.00'}}</p>
+							                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.validationFeeUSD | number: 2) || '0.00'}}</p>
 							                        </div>                                                                                    
 							                    </div>
 							                    <div class="row m-b-sm">
@@ -142,7 +142,7 @@
 							                            <p class="font-weight-medium m-l-sm">Extension State fee:</p>
 							                        </div>
 							                        <div class="col-md-4 col-xl-4">
-							                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
+							                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
 							                        </div>                                                                                      
 							                    </div>                                        
 							                    <div class="row m-b-sm">
@@ -150,7 +150,7 @@
 							                            <p class="font-weight-medium m-l-sm">Claims fee 1:</p>
 							                        </div>
 							                        <div class="col-md-4 col-xl-4">
-							                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.claimsFee1USD | number: 2) || '0.00'}}</p>
+							                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.claimsFee1USD | number: 2) || '0.00'}}</p>
 							                        </div>                                                                                      
 							                    </div>   
 							                    <div class="row m-b-sm">
@@ -158,7 +158,7 @@
 							                            <p class="font-weight-medium m-l-sm">Claims fee 2:</p>
 							                        </div>
 							                        <div class="col-md-4 col-xl-4">
-							                            <p class="text-left font-h4">$ {{(transaction.serviceFeeUI.claimsFee2USD | number: 2) || '0.00'}}</p>
+							                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.claimsFee2USD | number: 2) || '0.00'}}</p>
 							                        </div>                                                                                    
 							                    </div>                                                                                                
 							                    <div class="border-grey-xs--btm"></div> 
@@ -324,7 +324,7 @@
 						</div>
 						<div data-ng-if="transaction.certificateUrl || transaction.epoReceiptUrl" class="col-xl-12">
 							<div class="d-flex justify-content-end">
-								<a class="btn btn--lg btn--green pill-radius" target="_blank" data-ng-href="{{transaction.epoReceiptUrl}}" data-ng-if="transaction.epoReceiptUrl">{{transaction.serviceType}} receipt</a>
+								<a class="btn btn--lg btn--green pill-radius m-r-sm" target="_blank" data-ng-href="{{transaction.epoReceiptUrl}}" data-ng-if="transaction.epoReceiptUrl">{{transaction.serviceType}} receipt</a>
 								<a class="btn btn--lg btn--green pill-radius" target="_blank" data-ng-href="{{transaction.certificateUrl}}" data-ng-if="transaction.certificateUrl" >Certificate</a>
 							</div>
 						</div>

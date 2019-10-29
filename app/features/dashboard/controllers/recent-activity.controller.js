@@ -57,8 +57,8 @@ export default function RecentActvityController(patentIds, CalculateService, Cos
 		if(patentIds.length > 0) {
 			patentIds.forEach(function(patent){
 				patent.p3sServices.forEach(function(service){
-					if(service.saleType !== 'Not In Progress') {					
-						CostAnalysisService.fetchCa(patent.patentID, patent.p3sServices)
+					if(service.saleType !== 'Not In Progress' && service.saleType !== 'In Progress') {
+						costAnalysisService.fetchCa(patent.patentID, patent.p3sServices)
 						.then(
 							function(response, i){
 		        				var hours = CalculateService.calculateHours(service.currentStageColour, response[0].data);

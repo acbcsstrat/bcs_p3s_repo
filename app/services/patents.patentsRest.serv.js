@@ -39,12 +39,7 @@ function patentsRestService($http, $q, organiseColourService) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
-<<<<<<< HEAD
-
-                console.error('Error while fetching patentssss');
-=======
                 console.error('Error: Unable to fetch all patents. Error Response:', errResponse)
->>>>>>> fe-branch-v3
                 deferred.reject(errResponse);
             }
         );
