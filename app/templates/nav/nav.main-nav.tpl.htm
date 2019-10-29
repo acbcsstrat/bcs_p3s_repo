@@ -49,8 +49,9 @@
 	      	 	<div layout="column" class="p-pill-tabs m-b-sm p-a-sm">
 	      	 		
 		      	 	<div class="d-flex justify-content-center align-items-center m-b-sm">		      	 	
-		      	 		<a class="nav-link" data-ui-sref="profile">
-		      	 			<img data-ng-src="{{$ctrl.avatarimage}}" alt="users profile pic" class="profile-pic-radius" width="104">
+		      	 		<a class="nav-link" data-ui-sref="profile">			
+		      	 			<img data-ng-src="{{$ctrl.avatarimage}}" data-ng-if="$ctrl.avatarimage" alt="users profile pic" class="profile-pic-radius" width="104">
+		      	 			<img src="assets/imgs/avatar-default.png" data-ng-if="!$ctrl.avatarimage" alt="users profile pic" class="profile-pic-radius" width="104">
 	      	 			</a>
 		      	 	</div>
 	      	 		<div class="d-flex justify-content-center align-items-center">
