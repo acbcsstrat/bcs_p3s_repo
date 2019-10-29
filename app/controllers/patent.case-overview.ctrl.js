@@ -59,6 +59,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         patent.p3sServicesWithFees.forEach(function(data, index){
             $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
+            if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
             $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
         })
 

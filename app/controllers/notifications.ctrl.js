@@ -29,7 +29,7 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
             vm.data.availableAction.push({id: 0, action: 'renewal'})
         }
         if(vm.patent.epoStage == 'Filing') {
-            vm.data.availableAction.push({id: 0, action: 'epct'})
+            vm.data.availableAction.push({id: 0, action: 'Euro-PCT'})
         }
 
         if(vm.patent.epoStage == 'Grant') {
@@ -45,7 +45,7 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
 
     function displayNotifications(action) {  //displays the specifed actions notifications
 
-        if(action == 'epct') { 
+        if(action == 'Euro-PCT') { 
             vm.notificationUi = 'allEpctNotificationUIs';
             vm.notificationUrl = 'rest-epct-notifications/';
             vm.toBlueOrNotToBlue = false; //USED TO DETERMINE WHETHER TO DISPLAY BLUE

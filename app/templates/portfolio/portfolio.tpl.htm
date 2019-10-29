@@ -337,7 +337,9 @@
                                     <tr>
                                         <td data-ng-repeat="item in patent.p3sServices track by $index"  class="t-data">
                                             <div class="d-flex justify-content-left btn-underlined-selector">
-                                                <span data-ng-bind="item.serviceType" class="text-capitalize"></span>
+                                                <span data-ng-bind="item.serviceType" data-ng-if="item.serviceType !== 'postgrant' && item.serviceType !== 'epct'" class="text-capitalize"></span>
+                                                <span data-ng-if="item.serviceType == 'epct'" class="text-capitalize">Euro-PCT</span>
+                                                <span data-ng-if="item.serviceType == 'postgrant'" class="text-capitalize">----</span>
                                             </div>
                                         </td>
                                     </tr>

@@ -20,8 +20,8 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
     vm.selected = 0;
     vm.filterPortfolioResults = filterPortfolioResults;
 
-    $timeout(function(){
-      vm.portfolioLoaded = true;
+    var portfolioTimeout = $timeout(function(){
+        vm.portfolioLoaded = true;
     }, 300);
 
     var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available', 'Epct being generated', 'Payment in progress', 'EPO instructed', 'Too early', 'Too late', 'Error', 'Completed','Payment failed'];
@@ -271,29 +271,33 @@ function portfolioCtrl(patents, $scope, $state, $stateParams, $rootScope, patent
 
     function sortType(column) {
 
-      if(column == 'dueDate') {
-        vm.selectedSortType = (function() {
+        if(column == 'dueDate') {
+            vm.selectedSortType = (function() {
 
-          vm.sortDate = true;
+                vm.sortDate = true;
 
-          if(vm.sortReverse === false) {
-            $scope.portfolioData.sort(function(a, b){
-              var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-              return dateB - dateA;
-            });
-          } else {
-            $scope.portfolioData.sort(function(a, b){
-              var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-              return dateB - dateA;
-            });
-          }
+                if(vm.sortReverse === false) {
+                    $scope.portfolioData.sort(function(a, b){
+                        var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+                        return dateB - dateA;
+                    });
+                } else {
+                    $scope.portfolioData.sort(function(a, b){
+                        var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
+                        return dateB - dateA;
+                    });
+                }
           
-        }());
-      } else {
-        vm.sortDate = false; //resets column if not selected
-        vm.selectedSortType = column;
-      }
-    };    
+            }());
+        } else {
+            vm.sortDate = false; //resets column if not selected
+            vm.selectedSortType = column;
+        }
+    };
+
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(portfolioTimeout);
+    })
 
 
 }
