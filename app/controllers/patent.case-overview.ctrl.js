@@ -66,8 +66,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         $scope.availableServices.forEach(function(obj){
 
             if(obj.type == 'Not In Progress') { return; }
-
-            if(obj.action == 'epct') {
+            if(obj.action == 'Euro-PCT') {
                 if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
                     vm.displayForm1200Tab = true;
                 }
