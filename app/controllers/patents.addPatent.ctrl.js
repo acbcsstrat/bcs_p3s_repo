@@ -34,7 +34,7 @@ function addPatentCtrl($state, $stateParams, $scope, $timeout, $location, $ancho
   	}
 
 	function openConfirmModal(patent) {
-		console.log('patent: ', patent)
+
 		var modalInstance = $uibModal.open({
 			templateUrl: 'app/templates/modals/modal.confirm-found-patent.tpl.htm',
             appendTo: undefined,

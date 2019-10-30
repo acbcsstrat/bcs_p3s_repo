@@ -1,0 +1,146 @@
+html, body { 
+  height: 100%;
+  width: 100%;
+  overflow-y: auto; 
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-y: scroll;
+  background: #f4f6f8;
+}
+
+html { font-size: 62.5%; }
+
+* { box-sizing: border-box; }
+
+a { color: #212121; }
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6, 
+p {
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  margin: 0 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/*div { z-index: 1; }
+*/
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6, 
+p, 
+li, 
+button, 
+a, 
+input, 
+table, 
+td, 
+th,
+span,
+select,
+html,
+textarea,
+legend,
+label { 
+  font-family: $font-body!important; 
+}
+
+p, 
+li, 
+button, 
+a, 
+input, 
+table, 
+td, 
+th,
+label { 
+  font-size: $font-normal; 
+}
+
+label { margin-bottom: 0; }
+
+table {
+  width: 100%;
+  border-spacing:0;
+  margin:0;
+}
+
+table td, table tr {
+  border: none;
+}
+
+/*table.slider-table { width: 99%; }*/
+
+thead {
+  background: #fff;
+  margin-top: 0;
+  width: 100%;
+}
+
+.table td, .table th {
+  border-top: none;
+  vertical-align: middle;
+  padding: 0;
+}
+
+.table { margin-bottom: 0!important; }
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+ a:not([href]):not([tabindex]) {
+  color: $grey-dark;
+ }
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+  -moz-box-shadow:    inset 0 0 0 1000px #fff;
+  -webkit-box-shadow: inset 0 0 0 1000px #fff;
+  box-shadow:         inset 0 0 0 1000px #fff;
+}
+
+input[type=checkbox], input[type=radio] {
+  vertical-align: middle;
+}
+
+a {
+  display: inline-block;
+  color: $black;
+  &:hover {
+    color: $black;
+    text-decoration: none;
+  }
+  &:focus {
+      text-decoration: none;
+      color: #212121;
+  }
+}
+
+button {
+
+  &:disabled, &[disabled], &[disabled] a {
+    cursor: not-allowed!important;
+  }
+
+}
+
+input[type=radio] {
+    -ms-transform: scale(1.25); /* IE 9 */
+    -webkit-transform: scale(1.25); /* Chrome, Safari, Opera */
+    transform: scale(1.25);
+}

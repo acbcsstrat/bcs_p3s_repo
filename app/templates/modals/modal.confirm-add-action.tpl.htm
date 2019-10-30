@@ -20,7 +20,7 @@
 					<tr class="py-2">
 						<td class="font-body" data-ng-bind="$ctrl.order.ep_ApplicationNumber"></td>
 						<td class="font-body" data-ng-bind="$ctrl.order.euroAction"></td>
-						<td class="font-body text-uppercase">$ <span data-ng-bind="$ctrl.order.price"></span></td>
+						<td class="font-body text-uppercase">$ <span data-ng-bind="$ctrl.order.price | number: 2"></span></td>
 					</tr>
 				</tbody>
 			</table>

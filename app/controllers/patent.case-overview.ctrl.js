@@ -59,14 +59,14 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         patent.p3sServicesWithFees.forEach(function(data, index){
             $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
+            if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
             $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
         })
 
         $scope.availableServices.forEach(function(obj){
 
             if(obj.type == 'Not In Progress') { return; }
-
-            if(obj.action == 'epct') {
+            if(obj.action == 'Euro-PCT') {
                 if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
                     vm.displayForm1200Tab = true;
                 }

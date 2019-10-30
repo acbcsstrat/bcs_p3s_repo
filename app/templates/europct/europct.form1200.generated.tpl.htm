@@ -13,7 +13,7 @@
         </div>
         <div class="row" data-ng-if="patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved' || patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress'">
             <div class="col-md-12 d-flex flex-wrap justify-content-start align-items-center">
-                <ngcart-addtocart id="{{patent.patentID}}" class="cartbtn m-r-sm m-t-sm" name="service.form1200" price="{{patent.portfolioUI.serviceList[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="patent.p3sServicesWithFees[0].form1200FeeUI !== null && patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved'"></ngcart-addtocart>                     
+                <ngcart-addtocart id="{{patent.patentID}}" class="cartbtn m-r-sm m-t-sm" name="service.form1200" price="{{patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="patent.p3sServicesWithFees[0].form1200FeeUI !== null && patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved'"></ngcart-addtocart>
                 <a class="btn btn--lg btn--green pill-radius m-r-sm m-t-sm" href="{{patent.form1200PdfUrl}}&download=true" target="_blank" download>Download Form 1200</a>
                 <button class="btn btn--lg btn--red pill-radius m-t-sm" data-ng-click="confirmDeleteApplication()" data-ng-disabled="deleteApplicationReq">Delete Form 1200</button>
             </div>

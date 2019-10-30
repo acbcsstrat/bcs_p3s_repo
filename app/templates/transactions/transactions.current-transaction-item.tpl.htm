@@ -340,8 +340,9 @@
 								</div>
 							</div>
 						</div><!-- col end-->
-						<div data-ng-if="transaction.certificateUrl" class="col-xl-12">
+						<div data-ng-if="transaction.certificateUrl || transaction.epoReceiptUrl" class="col-xl-12">
 							<div class="d-flex justify-content-end">
+								<a class="btn btn--lg btn--green pill-radius m-r-sm" target="_blank" data-ng-href="{{transaction.epoReceiptUrl}}" data-ng-if="transaction.epoReceiptUrl">{{transaction.serviceType}} receipt</a>								
 								<a data-ng-href="{{transaction.certificateUrl}}" class="btn btn--lg btn--green pill-radius" target="_blank">Certificate</a>
 							</div>
 						</div>
