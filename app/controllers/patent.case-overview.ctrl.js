@@ -13,6 +13,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.refreshChart = refreshChart;
     $scope.availableServices = [];
     $scope.notInProgress = true;
+    vm.portfolioLoaded = false;
 
     var chartTimeout;
 
@@ -23,6 +24,10 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             window.dispatchEvent(evt);
         }, 300)
     }
+
+    $scope.$on('portfolioLoaded', function(){
+        vm.portfolioLoaded = true;
+    })
 
     function init() {
 

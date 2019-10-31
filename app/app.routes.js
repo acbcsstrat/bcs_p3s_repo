@@ -64,11 +64,6 @@ function appRoutes($stateProvider) {
             templateUrl: 'app/templates/portfolio/portfolio.tpl.htm',
             controller: 'portfolioCtrl',
             controllerAs: '$ctrl',
-            resolve: {
-                patents: ['patentsRestService', function(patentsRestService) {
-                    return patentsRestService.fetchAllPatents();
-                }]
-            },
             params: {
                 navigation: 'portfolio'
             }
@@ -76,11 +71,9 @@ function appRoutes($stateProvider) {
         .state('portfolio.patent', {
             url: '/:patentId',
             resolve: {
-                patent: ['patents', '$stateParams', 'patentsRestService', function(patents, $stateParams, patentsRestService) {
-                    var match = patents.find(function(patent){
-                        return patent.patentID == $stateParams.patentId;
-                    })
-                    return patentsRestService.fetchPatentItem(match.patentID);
+                patent: ['$stateParams', 'patentsRestService', function($stateParams, patentsRestService) {
+                    return patentsRestService.fetchPatentItem($stateParams.patentId);
+                    
                 }],
                 ca: ['costAnalysisService', 'patent', function(costAnalysisService,  patent) {
                     return costAnalysisService.fetchCa(patent.patentID, patent.p3sServicesWithFees);  
