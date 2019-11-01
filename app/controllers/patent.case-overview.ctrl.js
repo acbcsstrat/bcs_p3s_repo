@@ -25,67 +25,69 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         }, 300)
     }
 
-    $scope.$on('portfolioLoaded', function(){
-        vm.portfolioLoaded = true;
-    })
-
     function init() {
 
-        if(activeTabService.getTab == 2) {
-            $scope.activeLeft = 2
-            activeTabService.setTab(0)
-        } else if(activeTabService.getTab == 3) {
-            $scope.activeLeft = 3;
-            activeTabService.setTab(0)
-        } else {
-            $scope.activeLeft = 0;
-        }
-
-        if($stateParams.form1200generate === 1) {
-            $scope.activeLeft = 2;
-            activeTabService.setTab(0)
-        }
-
-        if($stateParams.prepareGrant === 1) {
-            $scope.activeLeft = 4;
-            activeTabService.setTab(0)
-        }
-
-        renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
-        .then(
-            function(response){
-                if(response.length > 0) {
-                   vm.displayRenewalHistoryTab = true;
-                   return;
+        $scope.$parent.promise.then(
+            function(){
+                vm.portfolioLoaded = true;
+                if(activeTabService.getTab == 2) {
+                    $scope.activeLeft = 2
+                    activeTabService.setTab(0)
+                } else if(activeTabService.getTab == 3) {
+                    $scope.activeLeft = 3;
+                    activeTabService.setTab(0)
+                } else {
+                    $scope.activeLeft = 0;
                 }
-                vm.displayRenewalHistoryTab = false;
+
+                if($stateParams.form1200generate === 1) {
+                    $scope.activeLeft = 2;
+                    activeTabService.setTab(0)
+                }
+
+                if($stateParams.prepareGrant === 1) {
+                    $scope.activeLeft = 4;
+                    activeTabService.setTab(0)
+                }
+
+                renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
+                .then(
+                    function(response){
+                        if(response.length > 0) {
+                           vm.displayRenewalHistoryTab = true;
+                           return;
+                        }
+                        vm.displayRenewalHistoryTab = false;
+                    }
+                )
+
+                patent.p3sServicesWithFees.forEach(function(data, index){
+                    $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
+                    if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
+                    $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
+                })
+
+                $scope.availableServices.forEach(function(obj){
+
+                    if(obj.type == 'Not In Progress') { return; }
+                    if(obj.action == 'Euro-PCT') {
+                        if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
+                            vm.displayForm1200Tab = true;
+                        }
+                        
+                    }
+
+                    if(obj.action == 'grant') {
+                        if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
+                            vm.displayGrantTab = true;
+                        }
+                        
+                    }
+
+                })
             }
         )
 
-        patent.p3sServicesWithFees.forEach(function(data, index){
-            $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
-            if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
-            $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
-        })
-
-        $scope.availableServices.forEach(function(obj){
-
-            if(obj.type == 'Not In Progress') { return; }
-            if(obj.action == 'Euro-PCT') {
-                if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
-                    vm.displayForm1200Tab = true;
-                }
-                
-            }
-
-            if(obj.action == 'grant') {
-                if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
-                    vm.displayGrantTab = true;
-                }
-                
-            }
-
-        })
     }
 
     init()

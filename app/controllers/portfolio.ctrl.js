@@ -6,7 +6,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
     var vm = this;
     vm.pageTitle = 'Portfolio';
-    var promise = patentsRestService.fetchAllPatents();
+    $scope.promise = patentsRestService.fetchAllPatents();
     vm.select = select;
     vm.selected = 0;
     vm.stateParams = $stateParams.patentId; 
@@ -79,7 +79,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
     };
 
 
-    promise.then(
+    $scope.promise.then(
         function(response){
             var patents = response;
             $scope.portfolioData = patents;
