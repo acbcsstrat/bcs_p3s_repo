@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('recentActivityCtrl', recentActivityCtrl);
 
-recentActivityCtrl.$inject = ['patentIds', 'calculateService', 'costAnalysisService', 'transactionHistoryService', 'currentTransactionsService'];
+recentActivityCtrl.$inject = ['$stateParams', '$scope', 'calculateService', 'costAnalysisService', 'transactionHistoryService', 'currentTransactionsService'];
 
-function recentActivityCtrl(patentIds, calculateService, costAnalysisService, transactionHistoryService, currentTransactionsService) {
+function recentActivityCtrl($stateParams, $scope, calculateService, costAnalysisService, transactionHistoryService, currentTransactionsService) {
 
 	var vm = this;
 
@@ -34,9 +34,11 @@ function recentActivityCtrl(patentIds, calculateService, costAnalysisService, tr
         return currentTransactionsService.fetchCurrentTransactions();
     }())
 
-	vm.$onInit = function() {
-        fetchStageChanges();
-	}
+    function init() {
+    	fetchStageChanges($stateParams.patents)
+    }
+
+    init();
 
 	function changeActivity(activity) {
 
@@ -52,12 +54,12 @@ function recentActivityCtrl(patentIds, calculateService, costAnalysisService, tr
 
 	}
 
-	function fetchStageChanges() {
+	function fetchStageChanges(patents) {
 
 		vm.recentActivityData = [];
 
-		if(patentIds.length > 0) {
-			patentIds.forEach(function(patent){
+		if(patents.length > 0) {
+			patents.forEach(function(patent){
 				patent.p3sServices.forEach(function(service){
 					if(service.saleType !== 'Not In Progress' && service.saleType !== 'In Progress') {
 						costAnalysisService.fetchCa(patent.patentID, patent.p3sServices)

@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('dashboardCtrl', dashboardCtrl);
 
-dashboardCtrl.$inject = ['$scope', 'patentIds', '$timeout', 'dashboardService'];
+dashboardCtrl.$inject = ['$scope', '$state', '$timeout', 'dashboardService', 'patentsRestService', '$rootScope'];
 
-function dashboardCtrl ($scope, patentIds, $timeout, dashboardService) {
+function dashboardCtrl ($scope, $state, $timeout, dashboardService, patentsRestService, $rootScope) {
 
     var vm = this;
 
@@ -11,16 +11,19 @@ function dashboardCtrl ($scope, patentIds, $timeout, dashboardService) {
     vm.date = new Date().getTime();
     var dasboardInitTimeout;
 
+    var promise = patentsRestService.fetchAllPatents();
 
-    function init() {
-        $scope.$emit('updatePatent')
-        dashboardService.sortPatents(patentIds);
-        dasboardInitTimeout = $timeout(function(){
-          vm.dashboardLoaded = true;
-        }, 300);
-    }
+    promise.then(
+        function(response){
+            dashboardService.sortPatents(response);
+            $scope.dashboardData = response;
+            vm.dashboardLoaded = true;
+            $state.go('dashboard.content', {patents: response}, {reload: false});
+            
+        }
+    )
 
-    init();
+
 
     $scope.$on('updatePatent', function(e, o){
         $scope.$broadcast('updateCost');

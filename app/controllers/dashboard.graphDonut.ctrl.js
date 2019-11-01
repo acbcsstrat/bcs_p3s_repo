@@ -1,15 +1,15 @@
 angular.module('ppApp').controller('graphDonutCtrl', graphDonutCtrl);
 
-graphDonutCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'dashboardService'];
+graphDonutCtrl.$inject = ['$stateParams', '$scope', '$timeout', 'dashboardService'];
 
-function graphDonutCtrl( $scope, $timeout, patentIds, dashboardService) {
+function graphDonutCtrl($stateParams, $scope, $timeout, dashboardService) {
 
 	var vm = this;
 	var graphtDonutTimeout;
 
 	function init() {
 
-		if(patentIds.length > 0) {
+		if($stateParams.patents.length > 0) {
 			vm.patentData = dashboardService.getPatents;
 			graphtDonutTimeout = $timeout(function() { //required to load correct size of donut graph in view
 	      		vm.donutOptions = {
@@ -79,9 +79,11 @@ function graphDonutCtrl( $scope, $timeout, patentIds, dashboardService) {
 
 
 		} //if patents end	
-	} //init ends
+	}
 
 	init()
+
+
 
 	$scope.$on('$destroy', function(){
 		$timeout.cancel(graphtDonutTimeout);

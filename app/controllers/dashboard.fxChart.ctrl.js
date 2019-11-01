@@ -1,13 +1,14 @@
 angular.module('ppApp').controller('dbfxChartCtrl', dbfxChartCtrl);
 
-dbfxChartCtrl.$inject = ['$scope', '$timeout', 'fxRatesMonth'];
+dbfxChartCtrl.$inject = ['$scope', 'fxRatesMonth', '$timeout', 'fxService'];
 
-function dbfxChartCtrl($scope, $timeout, fxRatesMonth) {
+function dbfxChartCtrl($scope, fxRatesMonth, $timeout, fxService) {
 
     var vm = this;
     var fxChartTimeout;
 
     function init() {
+
         fxChartTimeout = $timeout(function() {
 
             vm.lineData = lineData;
@@ -66,11 +67,10 @@ function dbfxChartCtrl($scope, $timeout, fxRatesMonth) {
                 }
             }
 
-        }, 300);
+        }, 2000);
     }
 
     init();
-
 
     function lineData() {
 

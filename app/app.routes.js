@@ -7,20 +7,20 @@ function appRoutes($stateProvider) {
     $stateProvider
         .state('dashboard', {
             url: '/dashboard',
+            templateUrl: 'app/templates/dashboard/dashboard.tpl.htm',
+            controller: 'dashboardCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('dashboard.content', {
+            params: {
+                patents: null
+            },
             resolve: {
-                patentIds: ['patentsRestService', '$q', '$timeout', function(patentsRestService, $q, $timeout) {
-                    return patentsRestService.fetchAllPatents();
-                }],
                 fxRatesMonth: ['fxService', function(fxService) {
                     return fxService.fetchFxMonth();
-                }]
+                }]                    
             },
             views: {
-                '@': {
-                    templateUrl: 'app/templates/dashboard/dashboard.tpl.htm',
-                    controller: 'dashboardCtrl',
-                    controllerAs: '$ctrl'
-                },
                 'graphdonutwidget@dashboard': {
                     controller: 'graphDonutCtrl',
                     controllerAs: '$ctrl',
@@ -44,7 +44,7 @@ function appRoutes($stateProvider) {
                 'fxchartwidget@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.fxchart-widget.tpl.htm',
                     controller: 'dbfxChartCtrl',
-                    controllerAs: '$ctrl',
+                    controllerAs: '$ctrl'
                 },
                 'recentactivitywidget@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.recent-activity-widget.tpl.htm',

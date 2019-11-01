@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('renewalCostCtrl', renewalCostCtrl);
 
-renewalCostCtrl.$inject = ['$scope', '$timeout', 'patentIds', 'dashboardService', 'organiseTextService']
+renewalCostCtrl.$inject = ['$scope', '$timeout', 'dashboardService', 'organiseTextService']
 
-function renewalCostCtrl($scope, $timeout, patentIds, dashboardService, organiseTextService) {
+function renewalCostCtrl($scope, $timeout, dashboardService, organiseTextService) {
 
 	var vm = this;
 
@@ -12,13 +12,13 @@ function renewalCostCtrl($scope, $timeout, patentIds, dashboardService, organise
     vm.noPatents = true;
     var updateCosttimeout;
 
-    function init() {
-        if(patentIds.length == 0) {
+    $scope.$on('dashboardLoaded', function(event, response){
+        if(response.length == 0) {
             vm.noPatents = true;
         }
-    }
+    })
 
-    init();
+
 
    $scope.$on('updateCost', function(e, o){
         updateCosttimeout = $timeout(function(){
