@@ -277,29 +277,19 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                 return uniqueArray(result); //check no duplicates
             }());    
 
+            function compare( a, b ) {
+              if ( a.p3sServices[0].serviceStatusUI < b.p3sServices[0].serviceStatusUI ){
+                return -1;
+              }
+              if ( a.p3sServices[0].serviceStatusUI > b.p3sServices[0].serviceStatusUI ){
+                return 1;
+              }
+              return 0;
+            }
+
             function sortType(column) {
-
-                if(column == 'dueDate') {
-                    vm.selectedSortType = (function() {
-
-                        vm.sortDate = true;
-
-                        if(vm.sortReverse === false) {
-                            $scope.portfolioData.sort(function(a, b){
-                                var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-                                return dateB - dateA;
-                            });
-                        } else {
-                            $scope.portfolioData.sort(function(a, b){
-                                var dateA = new Date(a.renewalDueDate), dateB = new Date(b.renewalDueDate);
-                                return dateB - dateA;
-                            });
-                        }
-                  
-                    }());
-                } else {
-                    vm.sortDate = false; //resets column if not selected
-                    vm.selectedSortType = column;
+                if(column == 'serviceStatus') {
+                    $scope.portfolioData.sort(compare);
                 }
             };
 

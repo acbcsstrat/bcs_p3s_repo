@@ -220,7 +220,7 @@
                 <table class="t-data sticky-table">
                     <thead class="sticky-thead">
                         <tr class="t-data__row t-data__row--select">
-                            <th class="t-data__th sticky-th" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th sticky-th" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'ep_ApplicationNumber'">
                                 <span>App No.</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
@@ -229,7 +229,7 @@
                                     <i class="fas fa-angle-up fa-lg"></i>
                                 </span>
                             </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'clientRef'">
                                 <span>Client Ref</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
@@ -238,7 +238,7 @@
                                     <i class="fas fa-angle-up fa-lg"></i>
                                 </span>                          
                             </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'shortTitle'">
                                 <span>Client Desc</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
@@ -247,7 +247,7 @@
                                     <i class="fas fa-angle-up fa-lg"></i>
                                 </span>                         
                             </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'serviceStatus'">
                                 <span>Patent Place Status</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
@@ -256,7 +256,7 @@
                                     <i class="fas fa-angle-up fa-lg"></i>
                                 </span>                          
                             </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'epoStatus'">
                                 <span>European Action</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
