@@ -71,7 +71,7 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
                 } else {
                     vm.tableData.sort(function(a, b){
                         var dateA = new Date(a.transStartDate), dateB = new Date(b.transStartDate);
-                        return dateB - dateA;
+                        return dateA - dateB;
                     });
                 }
 
@@ -81,45 +81,10 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
             case 'clientRef':
 
                 vm.sortClientRef = true;
+
                 vm.selectedSortType = (function() {
-
-                    var result = []
-
-                    var arrayOrder = [];
-
-                    vm.tableData.forEach(function(data) {
-                        
-                        data.renewalUIs.map(function(o, i){ 
-                            arrayOrder.push(o.patentUI.clientRef);
-                        })
-
-                    })
-
-                    arrayOrder.sort();
-
-                    arrayOrder.forEach(function(key){
-
-                        var found = false;
-
-                        vm.tableData = vm.tableData.filter(function(item){
-                            if(item.renewalUIs.length === 1) {
-                                if(!found && item.renewalUIs[0].patentUI.clientRef == key) {
-                                    result.push(item)
-                                    found = true;
-                                    return false;                                   
-                                } else {
-                                    return true;
-                                }
-                            } else {
-                                result.push(item)
-                            }                  
-
-                        })
-
-                    })
-
-                    vm.tableData = result;
-                })
+                    vm.tableData.sort();
+                }());
             
             break;
             case 'patentApplicationNumber':
@@ -127,45 +92,18 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
                 vm.sortPatentApplicationNumber = true;
                 vm.selectedSortType = (function() {
 
-                    var result = []
-
-                    var arrayOrder = [];
-
-                    vm.tableData.forEach(function(data) {
-                        
-                        data.renewalUIs.map(function(o, i){ 
-                            arrayOrder.push(o.patentUI.patentApplicationNumber);
-                        })
-                  
-                    })
-
-                    arrayOrder.sort();
-
-                    arrayOrder.forEach(function(key){
-
-                        var found = false;
-
-                        vm.tableData = vm.tableData.filter(function(item){
-                            
-                            if(item.renewalUIs.length === 1) {
-                                if(!found && item.renewalUIs[0].patentUI.patentApplicationNumber == key) {
-                                    result.push(item)
-                                    found = true;
-                                    return false;                                   
-                                } else {
-                                    return true;
-                                }
-                            } else {
-                                result.push(item)
-                            }                        
-
-                        })
-
-                    })
-
-                    vm.tableData = result;
-
-                })
+                    if(vm.sortReverse === false) {
+                        vm.tableData.sort(function(a, b){
+                            var patentAppA = parseInt(a.serviceUIs[0].patentUI.ep_ApplicationNumber.replace('EP', '')), patentAppB = parseInt(b.serviceUIs[0].patentUI.ep_ApplicationNumber.replace('EP', ''));
+                            return patentAppA - patentAppB;
+                        });
+                    } else {
+                        vm.tableData.sort(function(a, b){
+                            var patentAppA = parseInt(a.serviceUIs[0].patentUI.ep_ApplicationNumber.replace('EP', '')), patentAppB = parseInt(b.serviceUIs[0].patentUI.ep_ApplicationNumber.replace('EP', ''));
+                            return patentAppA - patentAppB;
+                        });
+                    }
+                }());
             
             break;
             case 'transAmount_USD':
@@ -175,12 +113,12 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
                     if (vm.sortReverse === false) {
                         vm.tableData.sort(function(a, b){
                             var costA = a.transAmount_USD, costB = b.transAmount_USD;
-                            return costB - costA;
+                            return costA - costB;
                         });
                     } else {
                         vm.tableData.sort(function(a, b){
                             var costA = a.transAmount_USD, costB = b.transAmount_USD;
-                            return costB - costA;
+                            return costA - costB;
                         });
                     }
                     }());

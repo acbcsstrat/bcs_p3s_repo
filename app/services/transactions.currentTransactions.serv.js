@@ -13,11 +13,6 @@ function currentTransactionsService($http, $q) {
 
 	return factory;
 
-
-	function convertToObject(array) {
-		console.log(array)
-	}
-
 	function fetchCurrentTransactions() {
 
 		var deferred = $q.defer();
@@ -33,7 +28,7 @@ function currentTransactionsService($http, $q) {
 				deferred.resolve(response.data);
 			},
 			function(errResponse){
-				deferred.resolve(errResponse);
+				deferred.reject(errResponse);
 			}
 		);
 
