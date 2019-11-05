@@ -79,6 +79,7 @@
 
 md-sidenav {
   overflow: visible;
+  z-index: 1001!important;
 }
 
 .form-section.current {

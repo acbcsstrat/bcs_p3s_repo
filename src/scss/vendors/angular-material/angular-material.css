@@ -4049,7 +4049,7 @@ md-sidenav {
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
-  z-index: 60;
+  z-index: 1001!important;
   width: 320px;
   max-width: 320px;
   bottom: 0;
