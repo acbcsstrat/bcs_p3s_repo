@@ -27,7 +27,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             return;
         }
 
-        if(action == 'epct') {
+        if(action == 'Euro-PCT') {
             vm.displayForm1200 = true;
             vm.displayRenewal = false;
             vm.displayGrant = false;

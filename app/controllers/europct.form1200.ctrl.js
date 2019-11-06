@@ -22,11 +22,10 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
             vm.form1200Template = vm.templates[0].url;
             vm.epctStage = 1;
         }
-        if(service[0].status == 'Epct being generated' || service[0].status == 'Epct saved') {
+        if(service[0].status == 'Epct being generated' || service[0].status == 'Epct saved' || service[0].status == 'Epct rejected') {
             vm.form1200Template = vm.templates[2].url;
             vm.epctStage = 2;
         }
-       
 
     }
 
@@ -306,7 +305,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
 
                 })
                 activeTabService.setTab(2)
-                $state.go('portfolio.patent', {}, {reload: true});
+                $state.go('portfolio.patent', {form1200generate: 1, prepareGrant: 0}, {reload: true});
             },
             function(errResponse){
 
@@ -323,7 +322,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
 
                     }]
                 });
-                $state.go('portfolio.patent', {}, {reload: true});
+                $state.go('portfolio.patent', {patentId: patent.patentID}, {reload: true});
             }
         )
 

@@ -8,7 +8,7 @@
 	    	</div>
 	    	<div class="d-flex">
 	    		<div>			
-					<p class="font-weight-bold font-h2 lh-head font-weight-bold m-b-xs">Transaction Initated</p>
+					<p class="font-weight-bold font-h2 lh-head font-weight-bold m-b-xs">Transaction initiated on:</p>
 					<p class="font-h2 lh-head text-right">{{$ctrl.transactionHistoryItem.transStartDate | date: 'MM/dd/yy'}}</p>
 	    		</div>
 	    	</div>
@@ -325,7 +325,7 @@
 						<div data-ng-if="transaction.certificateUrl || transaction.epoReceiptUrl" class="col-xl-12">
 							<div class="d-flex justify-content-end">
 								<a class="btn btn--lg btn--green pill-radius m-r-sm" target="_blank" data-ng-href="{{transaction.epoReceiptUrl}}" data-ng-if="transaction.epoReceiptUrl">{{transaction.serviceType}} receipt</a>
-								<a class="btn btn--lg btn--green pill-radius" target="_blank" data-ng-href="{{transaction.certificateUrl}}" data-ng-if="transaction.certificateUrl" >Certificate</a>
+								<a class="btn btn--lg btn--green pill-radius" target="_blank" data-ng-href="{{transaction.certificateUrl}}" data-ng-if="transaction.certificateUrl">Certificate</a>
 							</div>
 						</div>
 					</div> <!--row end-->	

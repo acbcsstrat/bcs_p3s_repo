@@ -3,206 +3,33 @@
         <h1 class="font-h1 lh-default" data-ng-bind="$ctrl.pageTitle"></h1>
     </div>
 </div>
+<div class="row m-b-sm">
+    <div class="col-xl-12 d-flex justify-content-between">  
+        <patentnav patents="portfolioData"></patentnav>
+    </div>
+</div>
 
-<div data-ng-show="$ctrl.portfolioLoaded" class="animate-show">
-    <div class="row m-b-sm">
-        <div class="col-xl-12 d-flex justify-content-between">            
-            <patentnav patents="portfolioData"></patentnav>
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="mr-5">
-                    <select class="pill-radius form-control font-body" data-ng-options="item for item in $ctrl.patentActionStatuses.values" data-ng-model="$ctrl.patentActionStatuses.value" data-ng-change="$ctrl.updateCategory($ctrl.patentActionStatuses.value)">
-                    </select>
-                </div>
-                <button type="button" class="d-flex btn btn--lg btn--plain pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Advanced Search</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-12">
-            <div class="expandcollapse-item">
-                <div class="slideDown m-b-sm" data-ng-hide="$ctrl.panelActive">
-                    <div class="expand-collapse-content">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <h4 class="font-body font-weight-bold m-r-lg">European Action</h4>
-                                    </div>
-                                    <div>
-                                        <ul class="panel-nav">
-                                            <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-class="{active: activeFilterTab == 0}" data-ng-click="activeFilterTab = 0;">EPCT</li>
-                                            <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-class="{active: activeFilterTab == 1}" data-ng-click="activeFilterTab = 1;">Regional Renewals</li>
-                                            <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-class="{active: activeFilterTab == 2}" data-ng-click="activeFilterTab = 2;">Grants</li>                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <uib-tabset active="activeFilterTab" vertical="true" type="pills" class="flex-column">
-                            <uib-tab index="0" heading="renewals" data-ng-hide="true">
-                                <div class="row m-b-xs" data-ng-if="europctStatus.length !== 0">
-                                    <div class="col-md-6 col-xl-6">
-                                        <div class="filter-box m-t-md">
-                                            <div class="py-4">
-                                                <h4 class="font-body font-h4-title font-weight-bold">EPCT</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div data-ng-repeat="status in europctStatus">
-                                                    <div class="checkbox-container">
-                                                        <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-xl-6" data-ng-if="epctStages.length !== 0">
-                                        <div class="filter-box m-t-md">
-                                            <div class="py-4">
-                                                <h4 class="font-body font-h4-title font-weight-bold">Phase</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div data-ng-repeat="status in epctStages" class="m-r-sm">
-                                                    <div class="checkbox-container">
-                                                        <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.currentStageColour[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row m-t-md" data-ng-if="europctStatus.length === 0">
-                                    <div class="col-xl-12 text-center">
-                                        <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
-                                    </div>
-                                </div> 
-                            </uib-tab>
-                            <uib-tab index="1" heading="europct" data-ng-hide="true">
-                                <div class="row m-b-xs" data-ng-if="renewalsStatus.length !== 0">
-                                    <div class="col-md-6 col-xl-6">
-                                        <div class="filter-box m-t-md">
-                                            <div class="py-4"> 
-                                                <h4 class="font-body font-weight-bold">Renewals</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div data-ng-repeat="status in renewalsStatus" class="m-r-sm">                                 
-                                                    <div class="checkbox-container">
-                                                        <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body" data-ng-if="status">{{status}}</span>
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                    </div>
-                                                </div> 
-                                            </div>                                         
-                                        </div>
-                                    </div>
-                                 
-                                    <div class="col-md-6 col-xl-6" data-ng-if="epctStages.length !== 0">
-                                        <div class="filter-box m-t-md">
-                                            <div class="py-4">                                   
-                                                <h4 class="font-body font-weight-bold">Phase</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div data-ng-repeat="status in renewalStages" class="m-r-sm">
-                                                    <div class="checkbox-container">
-                                                        <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.currentStageColour[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                                <div class="row m-t-md" data-ng-if="renewalsStatus.length === 0">
-                                    <div class="col-xl-12 text-center">
-                                        <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
-                                    </div>
-                                </div>                                 
-                            </uib-tab>
-                            <uib-tab index="2" heading="europct" data-ng-hide="true">
-                                <div class="row m-b-xs" data-ng-if="grantStatus.length !== 0">
-                                    <div class="col-md-6 col-xl-6">
-                                        <div class="filter-box m-t-md">
-                                            <div class="py-4"> 
-                                                <h4 class="font-body font-weight-bold">Grant</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div data-ng-repeat="status in grantStatus" class="m-r-sm">                           
-                                                    <div class="checkbox-container">
-                                                        <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.serviceStatus[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body" data-ng-if="status">{{status}}</span>
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                    </div>
-                                                </div> 
-                                            </div>                                         
-                                        </div>
-                                    </div>
-                                 
-                                    <div class="col-md-6 col-xl-6" data-ng-if="grantStages.length !== 0">
-                                        <div class="filter-box m-t-md">
-                                            <div class="py-4">                                   
-                                                <h4 class="font-body font-weight-bold">Phase</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div data-ng-repeat="status in grantStages" class="m-r-sm">
-                                                    <div class="checkbox-container">
-                                                        <label class="filter-container">
-                                                            <input type="checkbox" data-ng-model="filters.currentStageColour[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>                                    
-                                </div>
-                                <div class="row m-t-md" data-ng-if="grantStatus.length === 0">
-                                    <div class="col-xl-12 text-center">
-                                        <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
-                                    </div>
-                                </div>                                 
-                            </uib-tab>                            
-                        </uib-tabset>
-                        <div class="row d-flex align-items-center">
-                            <div class="col-md-6">
-                                <button data-ng-click="$ctrl.toggleAll($event, false)" class="txt-phase-red btn-no-bg font-body font-weight-medium btn-underlined">Clear All Filters</button>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row m-b-xxxl">
+
+    <div class="m-b-xxxl bg-white table-container--portfolio  d-flex">
         <div data-ng-show="data.length === 0" class="col-md-12">
             <div class="bg-white p-a-sm">
                 <p class="font-weight-medium">We are sorry but no results were returned from you search criteria. Please try again.</p>
             </div>
+        </div>
+        <div data-ng-hide="portfolioLoaded" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
+            <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
+            <p>We are just fetching your patents</p>
         </div>        
-        <div data-ng-show="data.length !== 0" class="col-md-12">
-            <div class="bg-white p-a-sm br-tx-1">
-                <div class="row">
-                    <div class="col-md-3 col-lg-3 col-xl-2">
-                        <div class="input-group">
-                        <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">  
-                            <div class="input-group-append">
-                                <i class="d-flex input-group-text pill-radius fa fa-search"></i>
-                            </div>
+        <div data-ng-show="portfolioLoaded" class="animate-show flex-grow-1">
+            <div class="p-a-sm br-tx-1">                            
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <div class="input-group m-r-sm">
+                            <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">  
+                                <div class="input-group-append">
+                                    <i class="d-flex input-group-text pill-radius fa fa-search"></i>
+                                </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-lg-3 col-xl-2">
                         <div class="input-group">
                             <input type="text" class="form-control pill-radius" name="clientRefFilter" data-ng-model="filterPortfolio.clientRef" placeholder="Client Ref" autocomplete="off">
                             <div class="input-group-append">
@@ -210,13 +37,190 @@
                             </div>                            
                         </div>
                     </div>
+                    <div class="d-flex">
+                        <div class="m-r-sm">                        
+                            <select class="pill-radius form-control font-body" data-ng-options="item for item in $ctrl.patentActionStatuses.values" data-ng-model="$ctrl.patentActionStatuses.value" data-ng-change="$ctrl.updateCategory($ctrl.patentActionStatuses.value)">
+                            </select>
+                        </div>
+                        <div>                            
+                            <button type="button" class="d-flex btn btn--lg btn--plain pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Advanced Search</button>
+                        </div>
+                    </div>
+                   
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="expandcollapse-item">
+                        <div class="slideDown" data-ng-hide="$ctrl.panelActive">
+                            <div class="expand-collapse-content">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <h4 class="font-body font-weight-bold m-r-lg">European Action</h4>
+                                            </div>
+                                            <div>
+                                                <ul class="panel-nav">
+                                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-class="{active: activeFilterTab == 0}" data-ng-click="activeFilterTab = 0;">EPCT</li>
+                                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-class="{active: activeFilterTab == 1}" data-ng-click="activeFilterTab = 1;">Regional Renewals</li>
+                                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-class="{active: activeFilterTab == 2}" data-ng-click="activeFilterTab = 2;">Grants</li>                                            
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <uib-tabset active="activeFilterTab" vertical="true" type="pills" class="flex-column">
+                                    <uib-tab index="0" heading="renewals" data-ng-hide="true">
+                                        <div class="row m-b-xs" data-ng-if="europctStatus.length !== 0">
+                                            <div class="col-md-6 col-xl-6">
+                                                <div class="filter-box m-t-md">
+                                                    <div class="py-4">
+                                                        <h4 class="font-body font-h4-title font-weight-bold">EPCT</h4>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div data-ng-repeat="status in europctStatus" class="m-r-sm m-b-sm">
+                                                            <div class="checkbox-container">
+                                                                <label class="filter-container">
+                                                                    <input type="checkbox" data-ng-model="filters.serviceStatus[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-xl-6" data-ng-if="epctStages.length !== 0">
+                                                <div class="filter-box m-t-md">
+                                                    <div class="py-4">
+                                                        <h4 class="font-body font-h4-title font-weight-bold">Phase</h4>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div data-ng-repeat="status in epctStages" class="m-r-sm">
+                                                            <div class="checkbox-container">
+                                                                <label class="filter-container">
+                                                                    <input type="checkbox" data-ng-model="filters.currentStageColour[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row m-t-md" data-ng-if="europctStatus.length === 0">
+                                            <div class="col-xl-12 text-center">
+                                                <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
+                                            </div>
+                                        </div> 
+                                    </uib-tab>
+                                    <uib-tab index="1" heading="europct" data-ng-hide="true">
+                                        <div class="row m-b-xs" data-ng-if="renewalsStatus.length !== 0">
+                                            <div class="col-md-6 col-xl-6">
+                                                <div class="filter-box m-t-md">
+                                                    <div class="py-4"> 
+                                                        <h4 class="font-body font-weight-bold">Renewals</h4>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div data-ng-repeat="status in renewalsStatus" class="m-r-sm">                                 
+                                                            <div class="checkbox-container">
+                                                                <label class="filter-container">
+                                                                    <input type="checkbox" data-ng-model="filters.serviceStatus[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body" data-ng-if="status">{{status}}</span>
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div> 
+                                                    </div>                                         
+                                                </div>
+                                            </div>
+                                         
+                                            <div class="col-md-6 col-xl-6" data-ng-if="epctStages.length !== 0">
+                                                <div class="filter-box m-t-md">
+                                                    <div class="py-4">                                   
+                                                        <h4 class="font-body font-weight-bold">Phase</h4>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div data-ng-repeat="status in renewalStages" class="m-r-sm">
+                                                            <div class="checkbox-container">
+                                                                <label class="filter-container">
+                                                                    <input type="checkbox" data-ng-model="filters.currentStageColour[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                                    
+                                        </div>
+                                        <div class="row m-t-md" data-ng-if="renewalsStatus.length === 0">
+                                            <div class="col-xl-12 text-center">
+                                                <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
+                                            </div>
+                                        </div>                                 
+                                    </uib-tab>
+                                    <uib-tab index="2" heading="europct" data-ng-hide="true">
+                                        <div class="row m-b-xs" data-ng-if="grantStatus.length !== 0">
+                                            <div class="col-md-6 col-xl-6">
+                                                <div class="filter-box m-t-md">
+                                                    <div class="py-4"> 
+                                                        <h4 class="font-body font-weight-bold">Grant</h4>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div data-ng-repeat="status in grantStatus" class="m-r-sm">                           
+                                                            <div class="checkbox-container">
+                                                                <label class="filter-container">
+                                                                    <input type="checkbox" data-ng-model="filters.serviceStatus[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body" data-ng-if="status">{{status}}</span>
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div> 
+                                                    </div>                                         
+                                                </div>
+                                            </div>
+                                         
+                                            <div class="col-md-6 col-xl-6" data-ng-if="grantStages.length !== 0">
+                                                <div class="filter-box m-t-md">
+                                                    <div class="py-4">                                   
+                                                        <h4 class="font-body font-weight-bold">Phase</h4>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div data-ng-repeat="status in grantStages" class="m-r-sm">
+                                                            <div class="checkbox-container">
+                                                                <label class="filter-container">
+                                                                    <input type="checkbox" data-ng-model="filters.currentStageColour[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                                    
+                                        </div>
+                                        <div class="row m-t-md" data-ng-if="grantStatus.length === 0">
+                                            <div class="col-xl-12 text-center">
+                                                <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
+                                            </div>
+                                        </div>                                 
+                                    </uib-tab>                            
+                                </uib-tabset>
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-md-6">
+                                        <button data-ng-click="$ctrl.toggleAll($event, false)" class="txt-phase-red btn-no-bg font-body font-weight-medium btn-underlined">Clear All Filters</button>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>             
             <div class="scrollable-area portfolio-table bg-white">
                 <table class="t-data sticky-table">
                     <thead class="sticky-thead">
                         <tr class="t-data__row t-data__row--select">
-                            <th class="t-data__th sticky-th" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th sticky-th" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'ep_ApplicationNumber'">
                                 <span>App No.</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
@@ -225,7 +229,7 @@
                                     <i class="fas fa-angle-up fa-lg"></i>
                                 </span>
                             </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'clientRef'">
                                 <span>Client Ref</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
@@ -234,7 +238,7 @@
                                     <i class="fas fa-angle-up fa-lg"></i>
                                 </span>                          
                             </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'shortTitle'">
                                 <span>Client Desc</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
@@ -243,7 +247,7 @@
                                     <i class="fas fa-angle-up fa-lg"></i>
                                 </span>                         
                             </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'serviceStatus'">
                                 <span>Patent Place Status</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
@@ -252,7 +256,7 @@
                                     <i class="fas fa-angle-up fa-lg"></i>
                                 </span>                          
                             </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">
+                            <th class="t-data__th" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'epoStatus'">
                                 <span>European Action</span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
@@ -286,14 +290,13 @@
                                 <table data-ng-if="patent.p3sServices.length == 1">
                                     <tr>
                                         <td data-ng-repeat="item in patent.p3sServices track by $index">
-                                            <div data-ng-if="item.saleType !== 'Online' && !item.isUrgentAttention"> <!-- cover manual processing-->
+                                            <div data-ng-if="(item.saleType !== 'Online' && !item.isUrgentAttention) || item.serviceStatus == 'Epct being generated'"> <!-- cover manual processing-->
                                                 <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
                                             </div>
-
                                             <div data-ng-if="item.isUrgentAttention"> <!-- cover manual processing-->
                                                 <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
                                             </div>                                            
-                                            <div data-ng-if="item.saleType === 'Online' && !item.isUrgentAttention">
+                                            <div data-ng-if="item.saleType === 'Online' && !item.isUrgentAttention && item.serviceStatus !== 'Epct being generated'">
                                                 <div class="d-flex flex-column">
                                                     <div class="d-flex justify-content-start align-items-center"><!--display costs-->
                                                         <p data-ng-class="item.cssCurrent" class="font-weight-bold m-r-sm">$ {{item.currentStageCostUSD | number: 2}}</p>
@@ -337,7 +340,9 @@
                                     <tr>
                                         <td data-ng-repeat="item in patent.p3sServices track by $index"  class="t-data">
                                             <div class="d-flex justify-content-left btn-underlined-selector">
-                                                <span data-ng-bind="item.serviceType" class="text-capitalize"></span>
+                                                <span data-ng-bind="item.serviceType" data-ng-if="item.serviceType !== 'postgrant' && item.serviceType !== 'epct'" class="text-capitalize"></span>
+                                                <span data-ng-if="item.serviceType == 'epct'" class="text-capitalize">Euro-PCT</span>
+                                                <span data-ng-if="item.serviceType == 'postgrant'" class="text-capitalize">----</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -421,7 +426,7 @@
             </div><!-- response table end-->
         </div>
     </div>
-    <div data-ui-view class="m-b-xl m-t-xl">
+    <div data-ui-view class="m-b-xl">
         <div class="row">
             <div class="col-xl-12 text-center">
                 <i class="fas fa-caret-up fa-3x"></i>                
@@ -429,4 +434,3 @@
             </div>
         </div>
     </div>
-</div>

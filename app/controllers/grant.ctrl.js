@@ -26,8 +26,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     		vm.grantTemplate = vm.templates[0].url;        
     	}
 
-
-		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' || patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing') {
+		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' || patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing' || patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || patent.p3sServicesWithFees[0].serviceStatus == 'EPO Instrcted') {
 			vm.grantStage = 2;
     		vm.grantTemplate = vm.templates[2].url;        
     	}    	
@@ -69,7 +68,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                     }]
                 });
 
-                $state.go('portfolio.patent', {}, {reload: true})
+                $state.go('portfolio.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
 
             },
             function(errResponse){
@@ -87,7 +86,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                     }]
                 });
 
-                $state.go('portfolio.patent', {}, {reload: true})
+                $state.go('portfolio.patent', {patentId: patent.patentID}, {reload: true})
 
             }
         )

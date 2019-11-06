@@ -15,11 +15,11 @@ angular.module('ppApp').component('mainnav', {
         	isFirstOpen: true,
         	isFirstDisabled: false
       	};
-      	vm.avatarimage = '../p3sweb/avatarImage';
+      	vm.avatarimage = '../p3sweb/avatar-image/';
 
       	$rootScope.$on('refreshAvatar', function(){
 	        var timestamp = new Date().getTime();
-	        vm.avatarimage = '../p3sweb/avatarImage' + '?' + timestamp;
+	        vm.avatarimage = '../p3sweb/avatar-image/' + '?' + timestamp;
       	})
 
       	function init() {
@@ -79,27 +79,7 @@ angular.module('ppApp').component('mainnav', {
 
 		vm.empty = function() {
 			ngCart.empty();
-		}    
-
-	    // function openGuide() {
-	    // 	coreService.openAppGuide();
-	    // 	$rootScope.$broadcast('appGuideOpen');
-	    // }
-
-		// function welcomeMessageModal() {
-		// 	var modalInstance = $uibModal.open({
-		// 		templateUrl: 'app/templates/modals/modal.welcome-message.tpl.htm',
-		// 		scope: $scope,
-		// 		controllerAs:'$ctrl',
-		// 		controller: ['$uibModalInstance', function($uibModalInstance) {
-
-		// 	 	  	this.dismissWelcomeModal = function () {
-		// 		    	$uibModalInstance.close();
-		// 		  	};
-		// 		}]
-		// 	});
-	 // 	}    
-
+		}
 
 	}]
 	

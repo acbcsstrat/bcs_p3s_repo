@@ -79,18 +79,14 @@
 						
 					</form>   	          			
           		</div>
-				<div id="resetPassSuccess" class="hide-before">
+				<div id="resetPassSuccess" class="hide-before text-center">
 					<div class="row">
 						<div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
 							<h3 class="font-h3 font-weight-medium m-b-sm">Successful</h3>
 							<p class="font-body text-center">You have successfully reset your password.</p>
 						</div>
-						<div class="row">
-							<div class="col-md-8 offset-md-2">
-								<a class="btn btn-block btn--lg btn--green pill-radius m-t-sm" href="/p3sweb/login">Go to Login</a>
-							</div>
-						</div>
 					</div>
+					<a class="btn btn-block btn--lg btn--green pill-radius m-t-sm" href="/p3sweb/login">Go to Login</a>
           		</div>
 				<div id="resetPassFail" class="hide-before">
 					<div class="row">

@@ -7,8 +7,8 @@ export default function GraphDonutController( $scope, $timeout, patentIds, Dashb
 
 	function init() {
 
-		if(patentIds.length > 0) {
-			vm.patentData = DashboardService.getPatents;
+		if($stateParams.patents.length > 0) {
+			vm.patentData = dashboardService.getPatents;
 			graphtDonutTimeout = $timeout(function() { //required to load correct size of donut graph in view
 	      		vm.donutOptions = {
 		            chart: {
@@ -77,9 +77,11 @@ export default function GraphDonutController( $scope, $timeout, patentIds, Dashb
 
 
 		} //if patents end	
-	} //init ends
+	}
 
 	init()
+
+
 
 	$scope.$on('$destroy', function(){
 		$timeout.cancel(graphtDonutTimeout);

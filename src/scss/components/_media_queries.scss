@@ -145,7 +145,8 @@
   label,
   .form-control,
   .btn, 
-  a:not([href]):not([tabindex]):not([data-ng-attr-id]) { 
+  a:not([href]):not([tabindex]):not([data-ng-attr-id]),
+  .tablebtn button.btn.btn--lg { 
     font-size: $font-normal; 
   }
 

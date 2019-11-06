@@ -51,7 +51,7 @@
                         <h1 class="font-h1 font-weight-light">Register an account</h1>
                     </div>
                 </div>
-               <div class="row m-b-lg">
+<!--                <div class="row m-b-lg">
                     <div class="col-md-12 text-center">
                          <div class="d-flex justify-content-center">                     
                             <p class="font-body m-r-xs">Need to <a href="/p3sweb/login" class="inline-link font-weight-medium">Login</a>?</p>
@@ -59,7 +59,7 @@
                         </div>                        
 
                     </div>
-                </div>
+                </div> -->
 <!--                      </div>
                 </div> --> 
                 <div id="register-intro">
@@ -220,7 +220,7 @@
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center align-items-center">
                             <h3 class="font-h2 font-weight-bold txt-phase-green m-b-sm">Successful</h3>
-                            <p class="font-h4 text-center w-100">You have successfully registered your details. Please check your inbox to validate your account.</p>
+                            <p class="font-h4 text-center w-100">You have successfully registered your details. Please check your inbox to verify your account before logging in.</p>
                         </div>
                     </div>                              
                 </div>
@@ -652,16 +652,16 @@
                         data: dataString,
                         contentType: "application/json",
                         success: function(response) {
-                            $('#initialRegistration, divQn, register-intro').fadeOut(500);  
-                            $('#register-success').delay(520).fadeIn(500);
+                            $('#initialRegistration, divQn, register-intro').addClass('d-none'); 
+                            $('#register-success').delay(520).removeClass('d-none'); 
                         },
                         error:function(errResponse) {
 
                             $('#registerForm')[0].reset();
                             $('#companyCodeForm')[0].reset();
-                            $('#initialRegistration, divQn, register-intro').fadeOut(500);  
+                            $('#initialRegistration, divQn, register-intro').addClass('d-none');  
 
-                            $('#register-failure').delay(520).fadeIn(500);                      
+                            $('#register-failure').delay(520).removeClass('d-none');                     
                         }
                     });
                 });

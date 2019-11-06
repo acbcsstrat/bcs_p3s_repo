@@ -7,6 +7,7 @@
   top: 80px;
   position: absolute;
   max-width: 180rem;
+  height: calc(100vh - 80px)
 }
 
 /*RETHINK ALL OF THE CONTAINERS BELOW*/
@@ -78,6 +79,7 @@
 
 md-sidenav {
   overflow: visible;
+  z-index: 1001!important;
 }
 
 .form-section.current {

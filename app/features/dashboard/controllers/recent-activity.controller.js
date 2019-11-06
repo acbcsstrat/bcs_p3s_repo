@@ -32,9 +32,11 @@ export default function RecentActvityController(patentIds, CalculateService, Cos
         return CurrentTransactionsService.fetchCurrentTransactions();
     }())
 
-	vm.$onInit = function() {
-        fetchStageChanges();
-	}
+    function init() {
+    	fetchStageChanges($stateParams.patents)
+    }
+
+    init();
 
 	function changeActivity(activity) {
 
@@ -50,12 +52,12 @@ export default function RecentActvityController(patentIds, CalculateService, Cos
 
 	}
 
-	function fetchStageChanges() {
+	function fetchStageChanges(patents) {
 
 		vm.recentActivityData = [];
 
-		if(patentIds.length > 0) {
-			patentIds.forEach(function(patent){
+		if(patents.length > 0) {
+			patents.forEach(function(patent){
 				patent.p3sServices.forEach(function(service){
 					if(service.saleType !== 'Not In Progress' && service.saleType !== 'In Progress') {
 						costAnalysisService.fetchCa(patent.patentID, patent.p3sServices)

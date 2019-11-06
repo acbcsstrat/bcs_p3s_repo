@@ -13,6 +13,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.refreshChart = refreshChart;
     $scope.availableServices = [];
     $scope.notInProgress = true;
+    vm.portfolioLoaded = false;
 
     var chartTimeout;
 
@@ -25,7 +26,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     }
 
     function init() {
-
+        
         if(activeTabService.getTab == 2) {
             $scope.activeLeft = 2
             activeTabService.setTab(0)
@@ -45,42 +46,49 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             $scope.activeLeft = 4;
             activeTabService.setTab(0)
         }
+        $scope.$parent.promise.then(
+            function(){
+                
+                vm.portfolioLoaded = true;
 
-        renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
-        .then(
-            function(response){
-                if(response.length > 0) {
-                   vm.displayRenewalHistoryTab = true;
-                   return;
-                }
-                vm.displayRenewalHistoryTab = false;
+                renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
+                .then(
+                    function(response){
+                        if(response.length > 0) {
+                           vm.displayRenewalHistoryTab = true;
+                           return;
+                        }
+                        vm.displayRenewalHistoryTab = false;
+                    }
+                )
+
+                patent.p3sServicesWithFees.forEach(function(data, index){
+                    $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
+                    if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
+                    $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
+                })
+
+                $scope.availableServices.forEach(function(obj){
+
+                    if(obj.type == 'Not In Progress') { return; }
+                    if(obj.action == 'Euro-PCT') {
+                        if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
+                            vm.displayForm1200Tab = true;
+                        }
+                        
+                    }
+
+                    if(obj.action == 'grant') {
+                        if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
+                            vm.displayGrantTab = true;
+                        }
+                        
+                    }
+
+                })
             }
         )
 
-        patent.p3sServicesWithFees.forEach(function(data, index){
-            $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
-            $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
-        })
-
-        $scope.availableServices.forEach(function(obj){
-
-            if(obj.type == 'Not In Progress') { return; }
-
-            if(obj.action == 'epct') {
-                if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
-                    vm.displayForm1200Tab = true;
-                }
-                
-            }
-
-            if(obj.action == 'grant') {
-                if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
-                    vm.displayGrantTab = true;
-                }
-                
-            }
-
-        })
     }
 
     init()

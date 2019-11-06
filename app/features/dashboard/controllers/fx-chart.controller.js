@@ -6,6 +6,7 @@ export default function DbFxChartCtrl($scope, $timeout, fxRatesMonth) {
     var fxChartTimeout;
 
     function init() {
+
         fxChartTimeout = $timeout(function() {
 
             vm.lineData = lineData;
@@ -64,11 +65,10 @@ export default function DbFxChartCtrl($scope, $timeout, fxRatesMonth) {
                 }
             }
 
-        }, 300);
+        }, 2000);
     }
 
     init();
-
 
     function lineData() {
 

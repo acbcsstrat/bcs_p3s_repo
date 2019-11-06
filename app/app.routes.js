@@ -13,54 +13,54 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         .otherwise('/dashboard');
 
     $stateProvider
-        // .state('dashboard', {
-        //     url: '/dashboard',
-        //     resolve: {
-        //         patentIds: ['patentsRestService', '$q', '$timeout', function(patentsRestService, $q, $timeout) {
-        //             return patentsRestService.fetchAllPatents();
-        //         }],
-        //         fxRatesMonth: ['fxService', function(fxService) {
-        //             return fxService.fetchFxMonth();
-        //         }]
-        //     },
-        //     views: {
-        //         '@': {
-        //             templateUrl: '../app/templates/dashboard/dashboard.tpl.htm',
-        //             controller: 'DashboardController',
-        //             controllerAs: '$ctrl'
-        //         },
-        //         'graphdonutwidget@dashboard': {
-        //             controller: 'graphDonutCtrl',
-        //             controllerAs: '$ctrl',
-        //             templateUrl: '../app/templates/dashboard/dashboard.graph-donut-widget.tpl.htm',         
-        //         },
-        //         'actionsavailable@dashboard': {
-        //             templateUrl: '../app/templates/dashboard/dashboard.actions-available.tpl.htm',
-        //             controller: 'renewalsCarouselCtrl',
-        //             controllerAs: '$ctrl'                
-        //         },
-        //         'actioncost@dashboard': {
-        //             templateUrl: '../app/templates/dashboard/dashboard.action-cost.tpl.htm',
-        //             controller: 'renewalCostCtrl',
-        //             controllerAs: '$ctrl'
-        //         },
-        //         'actioncostmd@dashboard': {
-        //             templateUrl: '../app/templates/dashboard/dashboard.action-cost.tpl.htm',
-        //             controller: 'renewalCostCtrl',
-        //             controllerAs: '$ctrl'                
-        //         },            
-        //         'fxchartwidget@dashboard': {
-        //             templateUrl: '../app/templates/dashboard/dashboard.fxchart-widget.tpl.htm',
-        //             controller: 'dbfxChartCtrl',
-        //             controllerAs: '$ctrl',
-        //         },
-        //         'recentactivitywidget@dashboard': {
-        //             templateUrl: '../app/templates/dashboard/dashboard.recent-activity-widget.tpl.htm',
-        //             controller: 'recentActivityCtrl',
-        //             controllerAs: '$ctrl'
-        //         }
-        //     }
-        // })
+        .state('dashboard', {
+            url: '/dashboard',
+            templateUrl: 'app/templates/dashboard/dashboard.tpl.htm',
+            controller: 'dashboardCtrl',
+            controllerAs: '$ctrl'
+        })
+        .state('dashboard.content', {
+            params: {
+                patents: null
+            },
+            resolve: {
+                fxRatesMonth: ['fxService', function(fxService) {
+                    return fxService.fetchFxMonth();
+                }]                    
+            },
+            views: {
+                'graphdonutwidget@dashboard': {
+                    controller: 'graphDonutCtrl',
+                    controllerAs: '$ctrl',
+                    templateUrl: 'app/templates/dashboard/dashboard.graph-donut-widget.tpl.htm',         
+                },
+                'actionsavailable@dashboard': {
+                    templateUrl: 'app/templates/dashboard/dashboard.actions-available.tpl.htm',
+                    controller: 'renewalsCarouselCtrl',
+                    controllerAs: '$ctrl'                
+                },
+                'actioncost@dashboard': {
+                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
+                    controller: 'renewalCostCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'actioncostmd@dashboard': {
+                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
+                    controller: 'renewalCostCtrl',
+                    controllerAs: '$ctrl'                
+                },            
+                'fxchartwidget@dashboard': {
+                    templateUrl: 'app/templates/dashboard/dashboard.fxchart-widget.tpl.htm',
+                    controller: 'dbfxChartCtrl',
+                    controllerAs: '$ctrl'
+                },
+                'recentactivitywidget@dashboard': {
+                    templateUrl: 'app/templates/dashboard/dashboard.recent-activity-widget.tpl.htm',
+                    controller: 'recentActivityCtrl',
+                    controllerAs: '$ctrl'
+                }
+            }
+        })
         .state('profile', {
             url: '/profile',
             templateUrl: '../app/templates/user/user.user-profile.tpl.htm',
@@ -72,11 +72,6 @@ function appRoutes($stateProvider, $urlRouterProvider) {
             templateUrl: '../app/templates/portfolio/portfolio.tpl.htm',
             controller: 'portfolioCtrl',
             controllerAs: '$ctrl',
-            resolve: {
-                patents: ['patentsRestService', function(patentsRestService) {
-                    return patentsRestService.fetchAllPatents();
-                }]
-            },
             params: {
                 navigation: 'portfolio'
             }
@@ -84,11 +79,9 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         .state('portfolio.patent', {
             url: '/:patentId',
             resolve: {
-                patent: ['patents', '$stateParams', 'patentsRestService', function(patents, $stateParams, patentsRestService) {
-                    var match = patents.find(function(patent){
-                        return patent.patentID == $stateParams.patentId;
-                    })
-                    return patentsRestService.fetchPatentItem(match.patentID);
+                patent: ['$stateParams', 'patentsRestService', function($stateParams, patentsRestService) {
+                    return patentsRestService.fetchPatentItem($stateParams.patentId);
+                    
                 }],
                 ca: ['costAnalysisService', 'patent', function(costAnalysisService,  patent) {
                     return costAnalysisService.fetchCa(patent.patentID, patent.p3sServicesWithFees);  
