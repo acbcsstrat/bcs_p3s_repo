@@ -26,29 +26,30 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     }
 
     function init() {
+        
+        if(activeTabService.getTab == 2) {
+            $scope.activeLeft = 2
+            activeTabService.setTab(0)
+        } else if(activeTabService.getTab == 3) {
+            $scope.activeLeft = 3;
+            activeTabService.setTab(0)
+        } else {
+            $scope.activeLeft = 0;
+        }
 
+        if($stateParams.form1200generate === 1) {
+            $scope.activeLeft = 2;
+            activeTabService.setTab(0)
+        }
+
+        if($stateParams.prepareGrant === 1) {
+            $scope.activeLeft = 4;
+            activeTabService.setTab(0)
+        }
         $scope.$parent.promise.then(
             function(){
+                
                 vm.portfolioLoaded = true;
-                if(activeTabService.getTab == 2) {
-                    $scope.activeLeft = 2
-                    activeTabService.setTab(0)
-                } else if(activeTabService.getTab == 3) {
-                    $scope.activeLeft = 3;
-                    activeTabService.setTab(0)
-                } else {
-                    $scope.activeLeft = 0;
-                }
-
-                if($stateParams.form1200generate === 1) {
-                    $scope.activeLeft = 2;
-                    activeTabService.setTab(0)
-                }
-
-                if($stateParams.prepareGrant === 1) {
-                    $scope.activeLeft = 4;
-                    activeTabService.setTab(0)
-                }
 
                 renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
