@@ -1,72 +1,106 @@
-<!-- <div class="content-panel__body bg-white"> -->
-	<form class="form" name="patentInfoForm" novalidate>
-		<div class="row">
-			<div class="col-xl-12 col-cxl-12">
-				<div class="m-b-lg">
-					<div class="form-group row">
-						<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Client Reference: </label>
-						<div class="col-xl-8">
-							<div class="icon-field">
-								<input type="text" class="form-control m-r-sm" name="clientRef" id="clientRef" data-ng-model="$ctrl.patent.clientRef" data-ng-maxlength="15">
-								<i class="far fa-pencil fa-2x icon"></i>
-							</div>
-			        		<p class="txt-phase-red m-t-xs" data-ng-show="patentInfoForm.clientRef.$error.maxlength && patentInfoForm.clientRef.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
 
-		        		</div>	
-					</div>
-					<div class="form-group row">
-						<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Client Desc: </label>
-						<div class="col-xl-8">
-							<div class="icon-field">
-						    	<input type="text" class="form-control m-r-sm" name="shortTitle" id="shortTitle" data-ng-model="$ctrl.patent.shortTitle" data-ng-maxlength="25">
-						    	<i class="far fa-pencil fa-2x icon"></i>
-							</div>
-			        		<p class="txt-phase-red m-t-xs" data-ng-show="patentInfoForm.shortTitle.$error.maxlength && patentInfoForm.shortTitle.$dirty">A maximum of 25 characters is allowed for a Client Description</p>
+	<div class="row d-flex align-items-center">
+	    <div class="col-xl-12 d-flex justify-content-between">
+			<p class="font-h3 font-weight-bold m-b-sm">Application Number: <span class="font-weight-normal">{{$ctrl.patent.ep_ApplicationNumber}}</span></p>
+	    </div>
+	</div>
+	<div class="row d-flex m-b-md">
+		<div class="col-md-12">
+	    	<div>
+			
+				<p class="font-h4 font-weight-bold m-b-sm">Patent Place Status: <span class="font-h4 font-weight-medium text-capitlize" data-ng-class="{'txt-phase-red': $ctrl.patent.p3sServicesWithFees[0].isUrgentAttention === true, 'txt-phase-green': $ctrl.patent.p3sServicesWithFees[0].isUrgentAttention === false}">{{$ctrl.patent.p3sServicesWithFees[0].serviceStatusUI}}<span class="txt-phase-black" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Offline'"> - Call +44 203 696 0949</span>
+				</p>
+		    	<div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType !== 'Not in progress' || $ctrl.patent.p3sServicesWithFees[0].saleType !== 'In progress'">
+		  
+					<p class="font-h4 font-weight-bold">European Actions available:
+					
+						<span class="font-weight-medium" data-ng-repeat="service in availableServices">
+                            <span data-ng-bind="service.action" data-ng-if="service.action !== 'postgrant' && service.action !== 'epct'" class="txt-phase-green text-capitalize"></span>
+                            <span data-ng-if="service.action == 'epct'" class="text-capitalize txt-phase-green">Euro-PCT</span>
+                            <span data-ng-if="service.action == 'postgrant'" class="text-capitalize">----</span>
+							<span data-ng-if="availableServices.length > 1 && $index == 0">, </span>
+						</span>
+					</p>
+
+					
+		    	</div>
+		    	<div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Not in progress' || $ctrl.patent.p3sServicesWithFees[0].saleType == 'In progress'" class="m-l-xxxl">
+		    		<p class="font-h4 font-weight-bold  text-right" >European Actions available:</p>
+		    		<p class="font-h4 font-weight-medium  text-right">No actions available</p>
+		    	</div>
+	    	</div>
+		</div>
+	</div>
+	<form class="form d-flex flex-grow-1" name="patentInfoForm" novalidate>
+		<div class="d-flex flex-grow-1 flex-column">		
+			<div class="row flex-grow-1">
+				<div class="col-xl-12 col-cxl-12">
+					<div class="m-b-lg">
+						<div class="form-group row">
+							<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Client Reference: </label>
+							<div class="col-xl-8">
+								<div class="icon-field">
+									<input type="text" class="form-control m-r-sm" name="clientRef" id="clientRef" data-ng-model="$ctrl.patent.clientRef" data-ng-maxlength="15">
+									<i class="far fa-pencil fa-2x icon"></i>
+								</div>
+				        		<p class="txt-phase-red m-t-xs" data-ng-show="patentInfoForm.clientRef.$error.maxlength && patentInfoForm.clientRef.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
+
+			        		</div>	
 						</div>
-					</div>
-					<div class="form-group row">
-						<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Applicant Name: </label>
-						<div class="col-xl-8">
-			        		<input type="text" class="form-control" data-ng-model="$ctrl.patent.primaryApplicantName" readonly>
-			        	</div>
-					</div>
-					<div class="form-group row">
-						<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Publication No: </label>
-						<div class="col-xl-8">
-				        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.ep_PublicationNumber" readonly>
-				        </div>
-					</div>
-					<div class="form-group row">
-						<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Title: </label>
-						<div class="col-xl-8">
-				        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.title" readonly>
-				        </div>
-					</div>	
-					<div class="form-group row">
-						<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">International Filing date: </label>
-						<div class="col-xl-8">
-				        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.internationalFilingDateUI" readonly>
-				        </div>
-					</div>
-					<div class="form-group row">
-						<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Priority date: </label>
-						<div class="col-xl-8">
-				        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.priorityDateUI" readonly>
-				        </div>
-					</div>
-					<div class="form-group row">
-						<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">EPO Status: </label>
-						<div class="col-xl-8">
-				        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.epoPatentStatus" readonly>
-				        </div>
-					</div>					
-				</div>
-				<div class="row">
-					<div class="col-xl-12 text-right">
-						<input type="submit" id="submit" class="btn btn--lg btn--green pill-radius" value="Save" data-ng-click="$ctrl.updatePatent($ctrl.patent)">
+						<div class="form-group row">
+							<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Client Desc: </label>
+							<div class="col-xl-8">
+								<div class="icon-field">
+							    	<input type="text" class="form-control m-r-sm" name="shortTitle" id="shortTitle" data-ng-model="$ctrl.patent.shortTitle" data-ng-maxlength="25">
+							    	<i class="far fa-pencil fa-2x icon"></i>
+								</div>
+				        		<p class="txt-phase-red m-t-xs" data-ng-show="patentInfoForm.shortTitle.$error.maxlength && patentInfoForm.shortTitle.$dirty">A maximum of 25 characters is allowed for a Client Description</p>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Applicant Name: </label>
+							<div class="col-xl-8">
+				        		<input type="text" class="form-control" data-ng-model="$ctrl.patent.primaryApplicantName" readonly>
+				        	</div>
+						</div>
+						<div class="form-group row">
+							<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Publication No: </label>
+							<div class="col-xl-8">
+					        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.ep_PublicationNumber" readonly>
+					        </div>
+						</div>
+						<div class="form-group row">
+							<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Title: </label>
+							<div class="col-xl-8">
+					        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.title" readonly>
+					        </div>
+						</div>	
+						<div class="form-group row">
+							<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">International Filing date: </label>
+							<div class="col-xl-8">
+					        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.internationalFilingDateUI" readonly>
+					        </div>
+						</div>
+						<div class="form-group row">
+							<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">Priority date: </label>
+							<div class="col-xl-8">
+					        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.priorityDateUI" readonly>
+					        </div>
+						</div>
+						<div class="form-group row">
+							<label class="font-weight-medium col-xl-4 d-flex align-items-center m-b-md-xs lg-m-b-xs">EPO Status: </label>
+							<div class="col-xl-8">
+					        	<input type="text" class="form-control" data-ng-model="$ctrl.patent.epoPatentStatus" readonly>
+					        </div>
+						</div>					
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-xl-12 text-right">
+					<input type="submit" id="submit" class="btn btn--lg btn--green pill-radius" value="Save" data-ng-click="$ctrl.updatePatent($ctrl.patent)">
+				</div>
+			</div>		
 		</div>
 	</form>
 <!-- </div> -->

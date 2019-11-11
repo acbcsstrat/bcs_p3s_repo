@@ -11,41 +11,37 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
+    vm.closeCaseoverview = closeCaseoverview;
+    vm.portfolioLoaded = false;
+    vm.setTab = setTab;
     $scope.availableServices = [];
     $scope.notInProgress = true;
-    vm.portfolioLoaded = false;
+    $scope.caseoverview_tab = 'details';
 
     var chartTimeout;
 
-    function refreshChart (){
-        chartTimeout = $timeout(function(){  
-            var evt = document.createEvent('UIEvents');
-            evt.initUIEvent('resize', true, false, window, 0);
-            window.dispatchEvent(evt);
-        }, 300)
-    }
-
     function init() {
         
-        if(activeTabService.getTab == 2) {
-            $scope.activeLeft = 2
-            activeTabService.setTab(0)
-        } else if(activeTabService.getTab == 3) {
-            $scope.activeLeft = 3;
-            activeTabService.setTab(0)
-        } else {
-            $scope.activeLeft = 0;
-        }
 
-        if($stateParams.form1200generate === 1) {
-            $scope.activeLeft = 2;
-            activeTabService.setTab(0)
-        }
+        // if(activeTabService.getTab == 2) {
+        //     $scope.activeLeft = 2
+        //     activeTabService.setTab(0)
+        // } else if(activeTabService.getTab == 3) {
+        //     $scope.activeLeft = 3;
+        //     activeTabService.setTab(0)
+        // } else {
+        //     $scope.activeLeft = 0;
+        // }
 
-        if($stateParams.prepareGrant === 1) {
-            $scope.activeLeft = 4;
-            activeTabService.setTab(0)
-        }
+        // if($stateParams.form1200generate === 1) {
+        //     $scope.activeLeft = 2;
+        //     activeTabService.setTab(0)
+        // }
+
+        // if($stateParams.prepareGrant === 1) {
+        //     $scope.activeLeft = 4;
+        //     activeTabService.setTab(0)
+        // }
         $scope.$parent.promise.then(
             function(){
                 
@@ -92,6 +88,22 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     }
 
     init()
+
+    function refreshChart (){
+        chartTimeout = $timeout(function(){  
+            var evt = document.createEvent('UIEvents');
+            evt.initUIEvent('resize', true, false, window, 0);
+            window.dispatchEvent(evt);
+        }, 300)
+    }
+
+    function setTab(tab) {
+        $scope.caseoverview_tab = tab;
+    }
+
+    function closeCaseoverview() {
+        $state.go('portfolio', {}, {reload: false})
+    }
 
     function confirmDeletePatent(id) {
 

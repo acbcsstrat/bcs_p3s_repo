@@ -1,81 +1,103 @@
-<div id="patentAnchor"></div>
 <div data-ng-show="$ctrl.portfolioLoaded" class="animate-show">
-	<div class="row d-flex align-items-center m-b-sm">
-	    <div class="col-xl-12 d-flex justify-content-between">
-	    	<div>
-				<p class="font-h2 lh-head font-weight-bold">Application Number:</p>
-				<p class="font-h2 lh-head">{{$ctrl.patent.ep_ApplicationNumber}}</p>
+<div class="modal-backdrop"></div>
+<div class="modal-caseoverview d-flex flex-column bg-white">
 
-	    	</div>
-	    	<div class="d-flex">
-	    		<div class="text-right">			
-					<p class="font-h2 lh-head font-weight-bold text-right">Patent Place Status:<span></span>
-					</p>
-					<p class="font-h2 lh-head text-right font-weight-medium text-capitlize" data-ng-class="{'txt-phase-red': $ctrl.patent.p3sServicesWithFees[0].isUrgentAttention === true, 'txt-phase-green': $ctrl.patent.p3sServicesWithFees[0].isUrgentAttention === false}">{{$ctrl.patent.p3sServicesWithFees[0].serviceStatusUI}}<span class="txt-phase-black" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Offline'"> - Call +44 203 696 0949</span></p>
-	    		</div>
-		    	<div data-ng-if="availableServices.length > 0">
-		    		<div class="m-l-xxxl" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType !== 'Offline'">
-						<p class="font-h2 lh-head font-weight-bold text-right">European Actions available:</p>
-						<p class="font-h2 lh-head text-right" data-ng-if="!$ctrl.patent.urgentAttention">
-							<span class="font-weight-medium" data-ng-repeat="service in availableServices">
-	                            <span data-ng-bind="service.action" data-ng-if="service.action !== 'postgrant' && service.action !== 'epct'" class="txt-phase-green text-capitalize"></span>
-	                            <span data-ng-if="service.action == 'epct'" class="text-capitalize txt-phase-green">Euro-PCT</span>
-	                            <span data-ng-if="service.action == 'postgrant'" class="text-capitalize">----</span>
-								<span data-ng-if="availableServices.length > 1 && $index == 0">, </span>
-							</span>
-						</p>
-					</div>
-		    	</div>
-		    	<div data-ng-if="availableServices.length === 0 && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Offline'" class="m-l-xxxl">
-		    		<p class="font-h2 lh-head font-weight-bold  text-right" >European Actions available:</p>
-		    		<p class="font-h2 lh-head font-weight-medium  text-right">No actions available</p>
-		    	</div>
-	    	</div>
-	    </div>
-	</div>
+<span class="fa-stack fa-2x cursor-pointer close-icon close-icon--caseoverview" data-ng-click="$ctrl.closeCaseoverview()">
+  	<i class="fas fa-circle fa-stack-2x fa-inverse"></i>
+  	<i class="fas fa-times fa-stack-1x"></i>
+</span>
 
-		
-	<div class="row">
-		<div class="col-md-12 col-lg-6 col-xl-6 m-b-md-md">
-			<div class="content-panel">
-				<div class="content-panel__body bg-white p-t-none">
-					<uib-tabset active="activeLeft">
-						<uib-tab index="0" heading="Details" class="case-overview-nav">
-							<div ui-view="details" class="m-t-lg"></div>
-						</uib-tab>
-						<uib-tab index="1" heading="Notifications" class="case-overview-nav">
-							<div ui-view="notifications" class="m-t-lg"></div>
-						</uib-tab>
-						<uib-tab index="2" heading="Form 1200" class="case-overview-nav" data-ng-if="$ctrl.displayForm1200Tab">
-							<div ui-view="form1200" class="m-t-lg"></div>
-						</uib-tab>
-						<uib-tab index="3" heading="Renewal History" class="case-overview-nav" data-ng-if="$ctrl.displayRenewalHistoryTab">
-							<div ui-view="renewalhistory" class="m-t-lg"></div>
-						</uib-tab>
-						<uib-tab index="4" heading="Grant and Publishing" class="case-overview-nav" data-ng-if="$ctrl.displayGrantTab">
-							<div ui-view="grantandpublishing" class="m-t-lg"></div>
-						</uib-tab>					
-					</uib-tabset>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-12 col-lg-6">
-			<div class="content-panel d-flex">
+				
+		<div class="row flex-grow-1">
+			<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-grow-1">
 				<div data-ng-if="!notInProgress" class="d-flex flex-grow-1">
-					<div class="content-panel__body bg-white p-t-none">
-						<uib-tabset active="activeRight" class="m-b-md">
-							<uib-tab index="0" heading="Fee Breakdown" class="case-overview-nav">
-								<div ui-view="fee-breakdown" class="m-t-lg"></div>
-							</uib-tab>
-							<uib-tab index="1" heading="FX Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart()">
-								<div ui-view="fxchart" class="m-t-lg"></div>
-							</uib-tab>
-							<uib-tab index="2" heading="Cost Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart()">
-								<div ui-view="costchart" class="m-t-lg"></div>
-							</uib-tab>
-						</uib-tabset>
-						<div class="border-grey-xs--btm"></div>
+					<div class="bg-light-grey brbl-10">					
+						<ul class="tabs-left nav tabs-left--width195 m-t-lg bg-light-grey ">
+							<li class="nav-item" data-ng-click="$ctrl.setTab('details'); activeLeft = 0;" data-ng-class="{'active': activeLeft === 0 }">
+								<a class="nav-link d-flex flex-column">
+									<span><i class="fal fa-info-circle font-h3"></i></span>
+									Details
+								</a>
+							</li>
+							<li class="nav-item" data-ng-click="$ctrl.setTab('notifications'); activeLeft = 1;" data-ng-class="{'active': activeLeft === 1 }">
+								<a class="nav-link d-flex flex-column">
+									<span><i class="fal fa-exclamation-circle font-h3"></i></span>							
+									Notifications
+								</a>
+							</li>
+							<li class="nav-item" data-ng-show="$ctrl.displayForm1200Tab" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;" data-ng-class="{'active': activeLeft === 2}">
+								<a class="nav-link d-flex flex-column">
+									<span> <i class="fal fa-file-alt font-h3"></i></span>
+									Form 1200
+								</a>
+							</li>
+							<li class="nav-item" data-ng-show="$ctrl.displayRenewalHistoryTab" data-ng-click="$ctrl.setTab('renewalhistory'); activeLeft = 3;" data-ng-class="{'active': activeLeft === 3 }">
+								<a class="nav-link d-flex flex-column">
+									<span><i class="fal fa-usd-circle font-h3"></i></span>
+									Renewal History
+								</a>
+							</li>
+							<li class="nav-item" data-ng-show="$ctrl.displayGrantTab" data-ng-click="$ctrl.setTab('grantandpublishing'); activeLeft = 4;" data-ng-class="{'active': activeLeft === 4 }">
+								<a class="nav-link d-flex flex-column">
+									<span> <i class="fal fa-file-alt font-h3"></i></span>
+									Grant & Publishing Fees
+								</a>
+							</li>
+							<li class="nav-item" data-ng-click="$ctrl.setTab('feebreakdown'); activeLeft = 5;" data-ng-class="{'active': activeLeft ===  5}">
+								<a class="nav-link d-flex flex-column">
+									<span><i class="fal fa-usd-circle font-h3"></i></span>
+									Fee Breakdown
+								</a>
+							</li>
+							<li class="nav-item" data-ng-click="$ctrl.refreshChart(); $ctrl.setTab('fxchart'); activeLeft = 6;" data-ng-class="{'active': activeLeft ===  6}">
+								<a class="nav-link d-flex flex-column">
+									<span><i class="fal fa-chart-line font-h3"></i></span>
+									FX Chart
+								</a>
+							</li>
+							<li class="nav-item" data-ng-click="$ctrl.refreshChart(); $ctrl.setTab('costchart'); activeLeft = 7;" data-ng-class="{'active': activeLeft ===  7}">
+								<a class="nav-link d-flex flex-column">
+									<span> <i class="fal fa-chart-bar font-h3"></i> </span>
+									Cost Chart
+								</a>
+							</li>								
+						</ul>
+					</div>
+					<uib-tabset active="activeLeft">
+						<uib-tab index="0" heading="Details" class="case-overview-nav" data-ng-click="$ctrl.setTab('details')" hidden="true">
+							
+						</uib-tab>
+						<uib-tab index="1" heading="Notifications" class="case-overview-nav" data-ng-click="$ctrl.setTab('notifications')" hidden="true">
+							
+						</uib-tab>
+						<uib-tab index="2" heading="Form 1200" class="case-overview-nav" data-ng-if="$ctrl.displayForm1200Tab" data-ng-click="$ctrl.setTab('form1200')"  hidden="true">
+							
+						</uib-tab>
+						<uib-tab index="3" heading="Renewal History" class="case-overview-nav" data-ng-if="$ctrl.displayRenewalHistoryTab" data-ng-click="$ctrl.setTab('renewalhistory')"  hidden="true">
+							
+						</uib-tab>
+						<uib-tab index="4" heading="Grant and Publishing" class="case-overview-nav" data-ng-if="$ctrl.displayGrantTab" data-ng-click="$ctrl.setTab('grantandpublishing')"  hidden="true">
+							
+						</uib-tab>	
+						<uib-tab index="5" heading="Fee Breakdown" class="case-overview-nav" data-ng-click="$ctrl.setTab('feebreakdown')"  hidden="true">
+							
+						</uib-tab>
+						<uib-tab index="6" heading="FX Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart(); $ctrl.setTab('fxchart')" hidden="true">
+							
+						</uib-tab>
+						<uib-tab index="7" heading="Cost Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart(); $ctrl.setTab('costchart')" hidden="true">
+						</uib-tab>											
+					</uib-tabset>						
+					<div class="d-flex flex-grow-1 p-t-3 p-r-3 p-b-3 p-l-3">
+						<div ui-view="details" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'details'"></div>
+						<div ui-view="notifications" data-ng-show="caseoverview_tab == 'notifications'"></div>
+						<div ui-view="form1200" data-ng-show="caseoverview_tab == 'form1200'"></div>
+						<div ui-view="renewalhistory" data-ng-show="caseoverview_tab == 'renewalhistory'"></div>
+						<div ui-view="grantandpublishing" data-ng-show="caseoverview_tab == 'grantandpublishing'"></div>
+						<div ui-view="fee-breakdown" data-ng-show="caseoverview_tab == 'feebreakdown'"></div>
+						<div ui-view="fxchart" data-ng-show="caseoverview_tab == 'fxchart'"></div>
+						<div ui-view="costchart" data-ng-show="caseoverview_tab == 'costchart'"></div>
+<!-- 							<div class="border-grey-xs--btm"></div>
 		                <div class="row m-t-md">
 		                	<div class="col-xl-12 text-right">
 					            <transaction-link trans-id="{{$ctrl.patent.patentID}}" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'In Progress'"></transaction-link>
@@ -83,10 +105,10 @@
 					            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Show price'"></ngcart-addtocart>
 					            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.grant" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved'"></ngcart-addtocart>             
 					        </div>          
-		                </div>				
-					</div>
+		                </div> -->				
+					
 				</div>
-				<div data-ng-if="notInProgress" class="content-panel__body bg-white d-flex d-flex align-items-center">
+				<div data-ng-if="notInProgress" class="content-panel__body bg-white d-flex align-items-center">
 					<div class="d-flex flex-grow-1 bg-no-chart align-items-center justify-content-center ng-scope">
 		                <div class="row">
 		                    <div class="col-xl-12">
@@ -100,12 +122,12 @@
 				</div>
 			</div>
 		</div>			
-	</div>
-
-	<div class="row m-t-md">
-		<div class="col-xl-12 text-left">
-			<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove patent" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.patentID)">
 		</div>
+
+<!-- 		<div class="row m-t-md">
+			<div class="col-xl-12 text-left">
+				<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove patent" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.patentID)">
+			</div>
+		</div> -->
 	</div>
 </div>
-

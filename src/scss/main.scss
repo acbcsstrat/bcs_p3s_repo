@@ -47,3 +47,82 @@
 @import "./components/_media_queries.scss";
 @import "./components/_transformations.scss";
 
+.modal-backdrop
+{
+ position: fixed;
+ top: 0px;
+ left: 0px;
+ height:100%;
+ width:100%;
+ background: #000;
+ z-index: 10;
+ opacity: 0.5;
+}
+
+.modal-caseoverview
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    max-width: 800px;
+    height: 630px;
+  	z-index: 999;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+  	border-radius: 10px;
+}
+
+.tabs-left {
+    padding: 0;
+    flex-direction: column;
+    &.tabs-left--width195 {
+        min-width: 195px;
+    }
+    .nav-item {
+        background: $grey;
+        transition: background .3s ease-in-out;
+        cursor: pointer;
+        &.active {
+            background: $white;
+            border-right: 5px solid $green;
+            font-weight: 700;
+            .nav-link {
+                margin-right: -5px;
+            }
+        }
+        &:not(.active):hover {
+            background: $white;
+        }
+        .nav-link {
+            font-size: $font-body;
+            font-weight: 500;
+            padding: 1.4rem 3rem;
+            text-align: center;
+            line-height: 1.8rem;            
+        }
+    }
+    .nav-tabs {
+        margin-bottom: 2.5rem;
+    }
+}
+
+.close-icon {
+    z-index: 1;
+}
+
+.close-icon--caseoverview {
+    position: absolute;
+    right: -15px;
+    top: -15px;
+}
+
+.brbl-10 {
+    border-radius: 0 0 0 10px;
+}
+
+.font-h3 {
+    line-height: 2rem;
+}
