@@ -1,18 +1,16 @@
 <div data-ng-show="$ctrl.portfolioLoaded" class="animate-show">
 <div class="modal-backdrop"></div>
 <div class="modal-caseoverview d-flex flex-column bg-white">
-
-<span class="fa-stack fa-2x cursor-pointer close-icon close-icon--caseoverview" data-ng-click="$ctrl.closeCaseoverview()">
-  	<i class="fas fa-circle fa-stack-2x fa-inverse"></i>
-  	<i class="fas fa-times fa-stack-1x"></i>
-</span>
-
-				
+	<span class="fa-stack fa-2x cursor-pointer close-icon close-icon--caseoverview" data-ng-click="$ctrl.closeCaseoverview()">
+	  	<i class="fas fa-circle fa-stack-2x fa-inverse"></i>
+	  	<i class="fas fa-times fa-stack-1x"></i>
+	</span>
+	<div class="d-flex flex-grow-1 overflow-y-scroll overflow-x-hidden">
 		<div class="row flex-grow-1">
 			<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-grow-1">
 				<div data-ng-if="!notInProgress" class="d-flex flex-grow-1">
-					<div class="bg-light-grey brbl-10">					
-						<ul class="tabs-left nav tabs-left--width195 m-t-lg bg-light-grey ">
+					<div class="width197 bg-light-grey brbl-10 brtl-10">
+						<ul class="tabs-left nav tabs-left--width197 m-t-lg">
 							<li class="nav-item" data-ng-click="$ctrl.setTab('details'); activeLeft = 0;" data-ng-class="{'active': activeLeft === 0 }">
 								<a class="nav-link d-flex flex-column">
 									<span><i class="fal fa-info-circle font-h3"></i></span>
@@ -65,38 +63,31 @@
 					</div>
 					<uib-tabset active="activeLeft">
 						<uib-tab index="0" heading="Details" class="case-overview-nav" data-ng-click="$ctrl.setTab('details')" hidden="true">
-							
 						</uib-tab>
 						<uib-tab index="1" heading="Notifications" class="case-overview-nav" data-ng-click="$ctrl.setTab('notifications')" hidden="true">
-							
 						</uib-tab>
 						<uib-tab index="2" heading="Form 1200" class="case-overview-nav" data-ng-if="$ctrl.displayForm1200Tab" data-ng-click="$ctrl.setTab('form1200')"  hidden="true">
-							
 						</uib-tab>
 						<uib-tab index="3" heading="Renewal History" class="case-overview-nav" data-ng-if="$ctrl.displayRenewalHistoryTab" data-ng-click="$ctrl.setTab('renewalhistory')"  hidden="true">
-							
 						</uib-tab>
 						<uib-tab index="4" heading="Grant and Publishing" class="case-overview-nav" data-ng-if="$ctrl.displayGrantTab" data-ng-click="$ctrl.setTab('grantandpublishing')"  hidden="true">
-							
 						</uib-tab>	
 						<uib-tab index="5" heading="Fee Breakdown" class="case-overview-nav" data-ng-click="$ctrl.setTab('feebreakdown')"  hidden="true">
-							
 						</uib-tab>
 						<uib-tab index="6" heading="FX Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart(); $ctrl.setTab('fxchart')" hidden="true">
-							
 						</uib-tab>
 						<uib-tab index="7" heading="Cost Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart(); $ctrl.setTab('costchart')" hidden="true">
 						</uib-tab>											
 					</uib-tabset>						
-					<div class="d-flex flex-grow-1 p-t-3 p-r-3 p-b-3 p-l-3">
+					<div class="d-flex flex-grow-1 p-t-3 p-r-3 p-b-3 p-l-3 modal-caseoverview--view">
 						<div ui-view="details" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'details'"></div>
-						<div ui-view="notifications" data-ng-show="caseoverview_tab == 'notifications'"></div>
-						<div ui-view="form1200" data-ng-show="caseoverview_tab == 'form1200'"></div>
-						<div ui-view="renewalhistory" data-ng-show="caseoverview_tab == 'renewalhistory'"></div>
-						<div ui-view="grantandpublishing" data-ng-show="caseoverview_tab == 'grantandpublishing'"></div>
-						<div ui-view="fee-breakdown" data-ng-show="caseoverview_tab == 'feebreakdown'"></div>
-						<div ui-view="fxchart" data-ng-show="caseoverview_tab == 'fxchart'"></div>
-						<div ui-view="costchart" data-ng-show="caseoverview_tab == 'costchart'"></div>
+						<div ui-view="notifications" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'notifications'"></div>
+						<div ui-view="form1200" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'form1200'"></div>
+						<div ui-view="renewalhistory" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'renewalhistory'"></div>
+						<div ui-view="grantandpublishing" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'grantandpublishing'"></div>
+						<div ui-view="fee-breakdown" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'feebreakdown'"></div>
+						<div ui-view="fxchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'fxchart'"></div>
+						<div ui-view="costchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'costchart'"></div>
 <!-- 							<div class="border-grey-xs--btm"></div>
 		                <div class="row m-t-md">
 		                	<div class="col-xl-12 text-right">
@@ -123,7 +114,7 @@
 			</div>
 		</div>			
 		</div>
-
+		</div>
 <!-- 		<div class="row m-t-md">
 			<div class="col-xl-12 text-left">
 				<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove patent" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.patentID)">

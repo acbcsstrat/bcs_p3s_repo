@@ -47,39 +47,47 @@
 @import "./components/_media_queries.scss";
 @import "./components/_transformations.scss";
 
-.modal-backdrop
-{
- position: fixed;
- top: 0px;
- left: 0px;
- height:100%;
- width:100%;
- background: #000;
- z-index: 10;
- opacity: 0.5;
+.modal-backdrop {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    z-index: 10;
+    opacity: 0.5;
 }
 
-.modal-caseoverview
-{
+.modal-caseoverview {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 900px;
     height: 630px;
   	z-index: 999;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
   	border-radius: 10px;
+    .modal-caseoverview--view {
+        max-width: 689px;
+        width: 689px;
+    }
 }
+
 
 .tabs-left {
     padding: 0;
     flex-direction: column;
-    &.tabs-left--width195 {
-        min-width: 195px;
+    height: 600px;
+    position: fixed; 
+    width: 197px;
+    max-width: 197px;
+    &.tabs-left--width19 {
+        min-width: 197px;
+        max-width: 197px;
     }
     .nav-item {
         background: $grey;
@@ -91,6 +99,7 @@
             font-weight: 700;
             .nav-link {
                 margin-right: -5px;
+                font-weight: 700;
             }
         }
         &:not(.active):hover {
@@ -109,6 +118,11 @@
     }
 }
 
+.width197 {
+    width: 197px;
+    max-width: 197px;
+}
+
 .close-icon {
     z-index: 1;
 }
@@ -120,7 +134,11 @@
 }
 
 .brbl-10 {
-    border-radius: 0 0 0 10px;
+    border-top-left-radius: 10px;
+}
+
+.brtl-10 {
+    border-bottom-left-radius: 10px;
 }
 
 .font-h3 {
