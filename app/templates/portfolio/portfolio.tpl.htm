@@ -300,8 +300,9 @@
                                                 <div class="d-flex flex-column">
                                                     <div class="d-flex justify-content-start align-items-center"><!--display costs-->
                                                         <p data-ng-class="item.cssCurrent" class="font-weight-bold m-r-sm">$ {{item.currentStageCostUSD | number: 2}}</p>
+                                            <!--             {{if not currently urgent attention and not currently black}} -->
                                                         <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs m-r-sm" data-ng-class="item.cssCurrent"></i>
-                                                        <p data-ng-if="!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
+                                                        <p data-ng-if="(!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')) || (!item.isUrgentAttention && item.currentStageColour == 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline'))" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
                                                         <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
                                                         <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
                                                     </div>

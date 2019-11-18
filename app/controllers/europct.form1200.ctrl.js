@@ -1,12 +1,13 @@
- angular.module('ppApp').controller('form1200Ctrl', form1200Ctrl);
+angular.module('ppApp').controller('form1200Ctrl', form1200Ctrl);
 
 form1200Ctrl.$inject = ['$scope', '$rootScope', 'patent', '$state', 'organiseTextService', '$stateParams', '$timeout', 'form1200Service', '$uibModal', 'activeTabService'];
 
 function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $stateParams, $timeout, form1200Service, $uibModal, activeTabService) {
 
     var vm = this;
-    var service = $scope.$parent.availableServices;
+    
     vm.patent = patent;
+    $scope.patent = patent; //needed for generated controller
     vm.initiateForm1200 = initiateForm1200;
     vm.templates = [
         { name: 'form1200intro.html', url: 'app/templates/europct/europct.form1200.intro.tpl.htm'},
@@ -15,202 +16,104 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
     ];
     vm.questionsParam = '';
     vm.cancel1200 = cancel1200;
+    vm.chkValidStates = chkValidStates;
+    vm.chkExtStates = chkExtStates;
+    vm.checkError = checkError;
+    vm.submitForm1200Data = submitForm1200Data;
+    $scope.formData = {};
+    $scope.validate = {};
 
-    function init() {
-        $scope.patent = patent;
-        if(service[0].status == 'Epct available') {
-            vm.form1200Template = vm.templates[0].url;
-            vm.epctStage = 1;
+    $scope.$parent.promise
+    .then(
+        function(response){
+
+            var service = $scope.$parent.availableServices;
+
+            if(service[0].status == 'Epct available') {
+                vm.form1200Template = vm.templates[0].url;
+                vm.epctStage = 1;
+            }
+
+            if(service[0].status == 'Epct being generated' || service[0].status == 'Epct saved' || service[0].status == 'Epct rejected') {
+                vm.form1200Template = vm.templates[2].url;
+                vm.epctStage = 2;
+            }
+
         }
-        if(service[0].status == 'Epct being generated' || service[0].status == 'Epct saved' || service[0].status == 'Epct rejected') {
-            vm.form1200Template = vm.templates[2].url;
-            vm.epctStage = 2;
-        }
+    )
 
-    }
-
-    init()
-
-    //QUESTIONAIRE
-
-    var form1200Questions = [
-        { 
-            title: 'entity',
-            template: 'entity',
-            displayHelp: false,
-            checkError: function(value) {
-                var obj = {};
-                obj.title = 'Entity or a natural person, Rule 6(4)';
-                obj.message = 'If you do not wish to delcare that you are an entity or a natural person, The Patent Place can offer help with your application offline\
-                    via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                     email: support@ip.place, or phone: +44 203 696 0949';
-                if(value === true) {
-                    this.showError = true;
-                    manualProcess(obj, 'NaturalPerson')
-                    return
-                }
-                this.showError = false;
-            },
-            showError: false,
-            valid: false,
-            required: true
-        },
-        { 
-            title: 'amendments',
-            template: 'amendments',
-            displayHelp: false,
-            checked: false,
-            checkError: function(value) {
-                var obj = {};
-                obj.title = 'Amendments made';
-                obj.message = 'If you confirm that amendments have been made to the application, The Patent Place can offer help with your application offline\
-                    via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                     email: support@ip.place, or phone: +44 203 696 0949';
-                if(value === true) {
-                    this.showError = true;
-                    manualProcess(obj, 'Amended')
-                    return
-                }
-                this.showError = false;
-            },
-            showError: false,
-            valid: false,
-            questionEnabled: false,
-            required: true
-
-        },
-        { 
-            title: 'clientRef',
-            template: 'reference',
-            displayHelp: false,
-            checkError: null,
-            showError: false,
-            valid: false,
-            questionEnabled: false,
-            required: true,
-            data: patent.clientRef
-        },
-        { 
-            title: 'startEnd',
-            template: 'startend',
-            displayHelp: false,
-            checkError: null,
-            showError: false,
-            valid: false,
-            questionEnabled: false,
-            required: true
-
-        }             
-
-    ];
-    
     function initiateForm1200() {
 
         form1200Service.fetchQuestions(patent.patentID)
         .then(
             function(response){
+
                 if(response !== null) {
+                    $scope.formData.extensionStatesUI = response.extensionStatesUI;
+                    $scope.formData.validationStatesUI = response.validationStatesUI;
+                    if(response.clientRef !== '') {
+                        $scope.formData.clientRef = response.clientRef;
+                    }
+                    if(response.showOptionalQuestion === true) {
+                        vm.additionalDocuments = true;
+                    }
+                    if(response.isYear3RenewalDue === true) {
+                        vm.isYear3RenewalDue = true;
+                    }
+
+
                     vm.form1200Template = vm.templates[1].url;
-                    return;
+                    
                 }
             }
         )
-        .then(
-            function(){
 
-                if(patent.form1200FeeUI === null) {
-                    vm.loading = false;
-                    vm.patentsLoaded = true;
-                } else {
+    }
 
-                    var stateObj = { 
-                        title: 'states',
-                        template: 'states',
-                        displayHelp: false,
-                        checked: true,
-                        checkError: null,
-                        showError: false,
-                        valid: true,
-                        questionEnabled: false,
-                        required: false,
-                        checkItems: {
-                            extensionStatesUI: [
-                                {stateCode: "BA", stateName: "Bosnia and Herzegovina", isSelected: false},
-                                {stateCode: "ME", stateName: "Montenegro", isSelected: false}
-                            ],
-                            validationStatesUI: [
-                                {stateCode: "MA", stateName: "Morocco", isSelected: false},
-                                {stateCode: "MD", stateName: "Republic of Moldova", isSelected: false},
-                                {stateCode: "TN", stateName: "Tunisia", isSelected: false},
-                                {stateCode: "KH", stateName: "Cambodia", isSelected: false}      
-                            ]
-                        }                        
 
-                    }
+    function checkError(question, value) {
 
-                    form1200Questions.splice(2, 0, stateObj)
+        if(value === false || typeof value === 'undefined' || value === undefined) { return;}
+        var obj = {};
+        var message = '';
+        if(question == 'entity' && value === true) {
+            message = 'NaturalPerson';
+            obj.title = 'Entity or a natural person, Rule 6(4)';
+            obj.message = 'If you do not wish to delcare that you are an entity or a natural person, The Patent Place can offer help with your application offline\
+                via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
+                 email: support@ip.place, or phone: +44 203 696 0949';
+        }
+        if(question == 'amendments' && value === true) {
+            message = 'Amendedx ';
+            obj.title = 'Amendments made';
+            obj.message = 'If you confirm that amendments have been made to the application, The Patent Place can offer help with your application offline\
+                via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
+                 email: support@ip.place, or phone: +44 203 696 0949';  
+        }
+        if(question == 'documents' && value === true) {
+            message = 'DocsRequired'
+            obj.title = 'Additional copies required';
+            obj.message = 'If you confirm that you require additional copies of the document cited in the supplementary European search report,\
+                The Patent Place can offer help with your application offline via a Patent Administrator, and the order will become unavailable to process online.\
+                For further help please contact The Patent Place via email: support@ip.place, or phone: +44 203 696 0949'; 
+        }              
+        manualProcess(obj, message);  
+    }
 
-                    if(vm.questionsParam.showOptionalQuestion) {
+    function chkValidStates(item, index) {
+        if(item === '') {
+            $scope.formData.validationStatesUI[index].selected = true;
+        } else {
+            $scope.formData.validationStatesUI[index].selected = false;
+        }
+    }
 
-                        var obj = { 
-                            title: 'documents',
-                            template: 'documents',
-                            displayHelp: false,
-                            checked: true,
-                            checkError: function(value) {
-                                var obj = {};
-                                obj.title = 'Additional copies required';
-
-                                obj.message = 'If you confirm that you require additional copies of the document cited in the supplementary European search report,\
-                                    The Patent Place can offer help with your application offline via a Patent Administrator, and the order will become unavailable to process online.\
-                                    For further help please contact The Patent Place via email: support@ip.place, or phone: +44 203 696 0949';
-                                if(value === true) {
-                                    this.showError = true;
-                                    manualProcess(obj, 'DocsRequired')
-                                    return
-                                }
-                                this.showError = false;
-                            },
-                            showError: false,
-                            valid: false,
-                            questionEnabled: false,
-                            required: false
-                        }
-                        form1200Questions.splice(2, 0, obj)
-
-                    }
-     
-                    if(vm.questionsParam.isYear3RenewalDue) {
-
-                        var obj = { 
-                            title: 'isYear3RenewalPaying',
-                            template: 'renewal',
-                            displayHelp: false,
-                            checked: true,
-                            checkError: null,
-                            showError: false,
-                            valid: true,
-                            questionEnabled: false,
-                            required: false
-                        }
-                        form1200Questions.push(obj)
-
-                    }
-
-                    form1200Questions.map(function(item, index) {
-                        item.index = index
-                        return item;
-                    })
-
-                }
-
-            }        
-        )
-        .then(
-            function(){
-                form1200Service.setQuestions(form1200Questions)
-            }
-        )
+    function chkExtStates(item, index) {     
+        if(item === '') {
+            $scope.formData.extensionStatesUI[index].selected = true;
+        } else {
+            $scope.formData.extensionStatesUI[index].selected = false;
+        }
     }
 
 
@@ -266,33 +169,31 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
 
     }
 
-    var destroyFrom;
+    function submitForm1200Data(data){    
 
-    destroyFrom = $rootScope.$on('submitForm1200Data', function(e, data){    
-
-        var arr = sortPageDetails(data.data.pageDetailsData);
+        var arr = sortPageDetails(data.pageDetailsData);
 
         var formData = {};
 
-        if(data.data.isYear3RenewalDue) {
-            formData.isYear3RenewalDue = data.data.isYear3RenewalDue;
+        if(data.isYear3RenewalDue) {
+            formData.isYear3RenewalDue = data.isYear3RenewalDue;
         }
-        if(data.data.showOptionalQuestion) {
-            formData.showOptionalQuestion = data.data.showOptionalQuestion;
+        if(data.showOptionalQuestion) {
+            formData.showOptionalQuestion = data.showOptionalQuestion;
         }
 
         formData.pageDescriptionsUI = arr;
         formData.id = patent.patentID;
-        formData.clientRef = data.data.clientRef;
-        formData.totalClaims = parseInt(data.data.totalClaims);
-        formData.totalPages = parseInt(data.data.totalPages);
-        formData.validationStatesUI = data.data.validationStatesUI;
-        formData.extensionStatesUI = data.data.extensionStatesUI;
+        formData.clientRef = data.clientRef;
+        formData.totalClaims = parseInt(data.totalClaims);
+        formData.totalPages = parseInt(data.totalPages);
+        formData.validationStatesUI = data.validationStatesUI;
+        formData.extensionStatesUI = data.extensionStatesUI;
 
         form1200Service.submitForm1200(formData)
         .then(
             function(response){
- 
+
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.form1200-generating.tpl.htm', //create html for notifications update success
                     appendTo: undefined,
@@ -308,7 +209,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                 $state.go('portfolio.patent', {form1200generate: 1, prepareGrant: 0}, {reload: true});
             },
             function(errResponse){
-
+                console.log(response)
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.generate-form1200-error.tpl.htm',
                     appendTo: undefined,
@@ -326,11 +227,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
             }
         )
 
-    })
-
-    $scope.$on('$destroy', function() {
-        destroyFrom(); // remove listener.
-    }); 
+    }
 
     function manualProcess(message, reason) {// NOT NEEDED FOR RELEASE 1
 
@@ -354,6 +251,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                 
 
                 this.confirm = function() {
+                    console.log('confirm')
                     form1200Service.inhibitForm1200(patent.patentID, reason)
                     .then(
                         function(response) {

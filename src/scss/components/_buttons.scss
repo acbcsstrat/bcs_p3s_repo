@@ -160,6 +160,7 @@
 .btn-underlined {
   cursor: pointer;
   text-decoration: underline;
+  background: transparent;
   &:hover {
     text-decoration: none;
   }

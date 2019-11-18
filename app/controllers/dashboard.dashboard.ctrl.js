@@ -17,8 +17,8 @@ function dashboardCtrl ($scope, $state, $timeout, dashboardService, patentsRestS
         function(response){
             dashboardService.sortPatents(response);
             $scope.dashboardData = response;
-            vm.dashboardLoaded = true;
             $state.go('dashboard.content', {patents: response}, {reload: false});
+            vm.dashboardLoaded = true;
             
         }
     )

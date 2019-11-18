@@ -10,14 +10,20 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
     vm.setFees = setFees;
     vm.feeData = null;
     
-    if($scope.$parent.availableServices.length > 0) {
+    $scope.$parent.promise
+    .then(
+        function(response){
+            if(response.length > 0) {
+                setFees($scope.$parent.availableServices[0].action)
+                vm.data = {};
+                vm.data.availableAction = $scope.$parent.availableServices;
+                vm.data.selectedAction = { id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action };
+                vm.feeData = true;
 
-        vm.data = {};
-        vm.data.availableAction = $scope.$parent.availableServices;
-        vm.data.selectedAction = { id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action };
-        vm.feeData = true;
+            }
 
-    }
+        }
+    )
 
     function setFees(action) {
 

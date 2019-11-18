@@ -123,14 +123,11 @@
     max-width: 197px;
 }
 
-.close-icon {
-    z-index: 1;
-}
-
-.close-icon--caseoverview {
+.caseoverview--options-panel {
     position: absolute;
-    right: -15px;
-    top: -15px;
+    right: 14px;
+    top: 8px;
+    z-index: 1;
 }
 
 .brbl-10 {
@@ -143,4 +140,103 @@
 
 .font-h3 {
     line-height: 2rem;
+}
+
+.p-t-4 { padding-top: 4rem; }
+
+.collapsable{
+    transition: all .2s ease-in-out;
+    min-height: 20px;
+    overflow: hidden;
+}
+.collapsable.collapsed{
+    height: 0;
+    min-height: 0;
+}
+
+// .upload-btn-wrapper {
+
+// }
+
+// .btn-upload {
+//     border: 2px solid $grey-dark;
+//     background-color: white;
+//     padding: 8px 20px;
+//     border-radius: 8px;    
+//     color: $grey-dark;
+//     background-color: transparent;
+//     padding: 0;
+//     border: 0;
+//     font-size: $font-body;
+//     font-weight: bold;
+//     transition: all ease-in-out .25s;
+//     opacity: .6;
+//     // position: relative;
+//     // z-index: 1;
+
+// }
+
+// .upload-btn-wrapper {
+//     position: relative;
+//     overflow: hidden;
+//     display: inline-block;    
+//     margin-bottom: -4px;
+//     cursor: pointer;
+//     input[type=file] {
+//         font-size: 30px;
+//         position: absolute;
+//         left: 0;
+//         top: 0;
+//         opacity: 0;
+//     }
+
+//     &:hover {
+//         .btn-upload {
+//             opacity: 1;
+//         }
+//     }
+
+// }
+
+// .inputfile {
+//     width: 0.1px;
+//     height: 0.1px;
+//     opacity: 0;
+//     overflow: hidden;
+//     position: absolute;
+//     z-index: -1;
+// }
+
+// .inputfile + label {
+//     font-size: 1.25em;
+//     font-weight: 700;
+//     color: white;
+//     background-color: black;
+//     display: inline-block;
+// }
+
+// .inputfile:focus + label,
+// .inputfile + label:hover {
+//     background-color: red;
+// }
+
+
+
+.checkbox-square {
+    width: 1.3em;
+    height: 1.3em;
+    background-color: $white;
+    border-radius: 2px;
+    vertical-align: middle;
+    border: 1px solid #AFAFAF;//#AFAFAF new colour
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    -moz-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2); 
+    -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-square:checked {
+    background-color: $green;
 }

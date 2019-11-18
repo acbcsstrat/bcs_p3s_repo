@@ -4,7 +4,7 @@
 	</div>
 </div>
 
-<div data-ng-if="$ctrl.data.availableAction.length !== 0">
+<div data-ng-if="$ctrl.data.availableAction.length !== 0" class="d-flex flex-column flex-grow-1">
 	<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
 	    <div class="col-md-12 col-xl-12">
 	        <p>Select a color to be able to view and choose the reminder emails you would like to receive during this phase/time-frame. You can select as many or few as you want. For further information on color phases, please view our <span data-ng-click="$ctrl.openGuide()" class="inline-link cursor-pointer">help guide</span>.</p>
@@ -114,8 +114,8 @@
 			</div>
 		</div><!--blue and black end-->
 	
-	<div class="row m-t-md">
-		<div class="col-xl-12 text-right">
+	<div class="row m-t-md flex-grow-1">
+		<div class="col-xl-12 text-right d-flex align-items-end justify-content-end">
 	        <input type="submit" id="submit" class="btn btn--green btn--lg pill-radius" value="Save" data-ng-click="$ctrl.updateNotifications($ctrl.patent.patentID, $ctrl.notificationUi, $ctrl.notificationUrl)" data-ng-disabled="$ctrl.updatingNotifications">
 		</div>
 	</div>

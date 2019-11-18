@@ -17,31 +17,25 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     $scope.availableServices = [];
     $scope.notInProgress = true;
     $scope.caseoverview_tab = 'details';
+    vm.initOptions = initOptions;
+    $scope.showOptions = false;
 
     var chartTimeout;
 
     function init() {
-        
 
-        // if(activeTabService.getTab == 2) {
-        //     $scope.activeLeft = 2
-        //     activeTabService.setTab(0)
-        // } else if(activeTabService.getTab == 3) {
-        //     $scope.activeLeft = 3;
-        //     activeTabService.setTab(0)
-        // } else {
-        //     $scope.activeLeft = 0;
-        // }
+        if($stateParams.form1200generate === 1) {
+            $scope.activeLeft = 2;
+            $scope.caseoverview_tab = 'form1200';
+            activeTabService.setTab(0)
+        }
 
-        // if($stateParams.form1200generate === 1) {
-        //     $scope.activeLeft = 2;
-        //     activeTabService.setTab(0)
-        // }
+        if($stateParams.prepareGrant === 1) {
+            $scope.activeLeft = 4;
+            $scope.caseoverview_tab = 'grantandpublishing';
+            activeTabService.setTab(0)
+        }
 
-        // if($stateParams.prepareGrant === 1) {
-        //     $scope.activeLeft = 4;
-        //     activeTabService.setTab(0)
-        // }
         $scope.$parent.promise.then(
             function(){
                 
@@ -97,12 +91,16 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         }, 300)
     }
 
+    function initOptions() {
+        vm.showOptions = !vm.showOptions
+    }
+
     function setTab(tab) {
         $scope.caseoverview_tab = tab;
     }
 
     function closeCaseoverview() {
-        $state.go('portfolio', {}, {reload: false})
+        $state.go('portfolio', {}, {reload: true})
     }
 
     function confirmDeletePatent(id) {

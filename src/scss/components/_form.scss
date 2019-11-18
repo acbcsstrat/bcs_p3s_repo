@@ -2,7 +2,7 @@
   display: block;
   position: relative;
   padding-left: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   cursor: pointer;
   font-size: 22px;
   -webkit-user-select: none;
@@ -63,42 +63,42 @@
 .notification-radio .checkmark {
 
   &.green:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $green;
   }
   &.amber:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $amber;
   }
   &.red:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $red;
   }
   &.blue:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $blue;
   }
   &.black:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $black;
   } 
@@ -119,73 +119,6 @@
     font-size: 1.5rem;
     color: $grey-dark;
   }
-}
-
-
-
-
-
-
-// .checkbox-radio {
-//     display: block;
-//     position: relative;
-//     padding-left: 5px;
-//     cursor: pointer;
-//     font-size: 22px;
-//     margin-bottom: 20px;
-//     -webkit-user-select: none;
-//     -moz-user-select: none;
-//     -ms-user-select: none;
-//     user-select: none;
-//     input {
-//         position: absolute;
-//         opacity: 0;
-//         cursor: pointer;
-//         height: 0;
-//         width: 0;
-//     }
-//     .checkmark {
-//         position: absolute;
-//         top: 0;
-//         left: 0;
-//         height: 15px;
-//         width: 15px;
-//         background-color: $white;
-//         border-radius: 50%;
-//         border: 1px solid $grey-dark;
-//         &:after {
-//             content: "";
-//             position: absolute;
-//             display: none;
-//         }  
-//         &:hover input .checkmark {
-//             background-color: red;
-//         }
-//     }
-// }
-
-// .notification-radio:hover input ~ .checkmark {
-  
-// }
-
-// /* When the radio button is checked, add a blue background */
-// .notification-radio input:checked ~ .checkmark {
-//   background-color: $white
-// }
-
-// /* Create the indicator (the dot/circle - hidden when not checked) */
-// .checkmark:after {
-//   content: "";
-//   position: absolute;
-//   display: none;
-// }
-
-.form-check-label {
-  margin-left: 1rem;
-}
-
-.form-check-inline { 
-  margin-left: 1rem;
 }
 
 .checkbox-round {

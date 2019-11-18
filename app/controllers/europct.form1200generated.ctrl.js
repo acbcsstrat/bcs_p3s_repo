@@ -35,7 +35,6 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
     }
 
     function deleteApplication(id) {
-
         $scope.deleteApplicationReq = true;
         euroPctService.deleteApplication(id)
         .then(
@@ -62,9 +61,13 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
                     $uibModalInstance.close();
                     
                 };
-                $timeout(function() {
+                var timeout = $timeout(function() {
                     $state.go('portfolio.patent', {patentId: $scope.patent.patentID}, {reload: true}); //go to patent info on successful deletion                    
                 }, 200);
+
+                $scope.$on('$destroy', function(){
+                    $timeout.cancel(timeout)
+                })
                
             }]
 

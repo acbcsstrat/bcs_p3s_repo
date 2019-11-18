@@ -1,204 +1,204 @@
-angular.module('ppApp').directive('questionPanel', questionPanel);
+// angular.module('ppApp').directive('questionPanel', questionPanel);
 
-questionPanel.$inject = ['$rootScope', '$timeout', 'form1200Service', 'grantService'];
+// questionPanel.$inject = ['$rootScope', '$timeout', 'form1200Service', 'grantService'];
 
-function questionPanel($rootScope, $timeout, form1200Service, grantService) {
+// function questionPanel($rootScope, $timeout, form1200Service, grantService) {
 
-	return {
-		restrict: 'EA',
-		scope: true,
-		controller: ['$scope', function($scope) {
-
-
-			var animateLeft, slideLeft, actionService; //REQUIRED FOR SLIDER
-			var newIndex = 0; //REQUIRED FOR SLIDER
-			var currentIndex = 0; //REQUIRED FOR SLIDER
-			var groupResult = document.getElementsByClassName("question-slide-group"); //REQUIRED FOR SLIDER
-			var slideResult = document.getElementsByClassName("question-slide"); //REQUIRED FOR SLIDER
-			var questionReachedIndex = 0; //TRACKS THE HIGHEST INDEX
-			$scope.questionCount = 1; //REQUIRED FOR QUESTION TITLE IN VIEW
-			$scope.buttons = [];
-			$scope.nextBtnDisabled = true;
-			$scope.firstQ = true;
-			$scope.lastQ = false;
-			$scope.questions = '';
-
-            function checkValidity(value) {
-            	if(value === true) {
-            		return true;
-            	}
-            	return false;
-            }
-
-            $scope.nextElement = function () {
-
-			    if (angular.element(groupResult).is(':animated')) {  
-			      	return;
-			    }
-			    newIndex += 1;   
-
-                if ($scope.questions[newIndex]) { //if array item exists
-                    $scope.selectQuestion(newIndex);
-                } else {
-                    newIndex -= 1; //undo the increment
-                }
-            }
-
-            $scope.prevElement = function () {
-			    if (angular.element(groupResult).is(':animated')) {  
-			      	return;
-			    } 
-			    newIndex -= 1;         	
-                if ($scope.questions[newIndex]) {
-                    $scope.selectQuestion(newIndex);
-                } else {
-                    newIndex += 1;
-                }
-            }
+// 	return {
+// 		restrict: 'EA',
+// 		scope: true,
+// 		controller: ['$scope', function($scope) {
 
 
-			$scope.selectQuestion = function(index) { //REQUIRED OR ANIMATION OF QUESTIONS
+// 			var animateLeft, slideLeft, actionService; //REQUIRED FOR SLIDER
+// 			var newIndex = 0; //REQUIRED FOR SLIDER
+// 			var currentIndex = 0; //REQUIRED FOR SLIDER
+// 			var groupResult = document.getElementsByClassName("question-slide-group"); //REQUIRED FOR SLIDER
+// 			var slideResult = document.getElementsByClassName("question-slide"); //REQUIRED FOR SLIDER
+// 			var questionReachedIndex = 0; //TRACKS THE HIGHEST INDEX
+// 			$scope.questionCount = 1; //REQUIRED FOR QUESTION TITLE IN VIEW
+// 			$scope.buttons = [];
+// 			$scope.nextBtnDisabled = true;
+// 			$scope.firstQ = true;
+// 			$scope.lastQ = false;
+// 			$scope.questions = '';
 
-				newIndex = index;
-				var question =  $scope.questions[newIndex];
-				$scope.questionCount = (newIndex + 1);
+//             function checkValidity(value) {
+//             	if(value === true) {
+//             		return true;
+//             	}
+//             	return false;
+//             }
 
-				if(questionReachedIndex < newIndex) { //UPDAE THE HIGHEST INDEX POINT REACHED
-					questionReachedIndex++
-				}
+//             $scope.nextElement = function () {
 
-				if(checkValidity(question.valid)) {
-					$scope.nextBtnDisabled = false; //DISABLE NEXT BTN IF ANSWER IS NOT VALID
-				} else {
-					$scope.nextBtnDisabled = true;
-				}
+// 			    if (angular.element(groupResult).is(':animated')) {  
+// 			      	return;
+// 			    }
+// 			    newIndex += 1;   
 
-				for(var i = 0; i < $scope.buttons.length; i ++) { //DISABLED PROCEEDING Q LINKS
-					if(i <= questionReachedIndex) {
-						$scope.buttons[i].disabled = false;
-					} else {
-						$scope.buttons[i].disabled = true;
-					}
-				}
+//                 if ($scope.questions[newIndex]) { //if array item exists
+//                     $scope.selectQuestion(newIndex);
+//                 } else {
+//                     newIndex -= 1; //undo the increment
+//                 }
+//             }
 
-				if(newIndex === 0) {
-					$scope.firstQ = true;
-					$scope.lastQ = false;
-				} else if(newIndex === $scope.questions.length - 1) {
-					$scope.lastQ = true;
-					$scope.firstQ = false;
-				} else {
-					$scope.firstQ = false;
-					$scope.lastQ = false;
-				}
-
-			    if (angular.element(groupResult).is(':animated') || currentIndex === newIndex) {  
-			      	return;
-			    }
-
-			    if (newIndex > currentIndex) {   // If new item > current
-			      	slideLeft = '100%';            // Sit the new slide to the right //not the slides that animate, its the group as a whole
-			      	animateLeft = '-100%';         // Animate the current group to the left
-			    } else {                         // Otherwise
-			      	slideLeft = '-100%';           // Sit the new slide to the left
-			      	animateLeft = '100%';          // Animate the current group to the right
-			    }
-
-			    angular.element(slideResult).eq(newIndex).css( {left: slideLeft, display: 'block'} );
-				angular.element(groupResult).animate({
-					"left": animateLeft
-				}, function(){
-
-				    angular.element(groupResult).css( {left: animateLeft})
-			      	angular.element(slideResult).eq(currentIndex).css( {display: 'none'} ); // Hide previous slide      
-			      	angular.element(slideResult).eq(newIndex).css( { left: 0 } ); // Set position of the new item
-			      	angular.element(groupResult).css( {left: 0} );               // Set position of group of slides
-			      	currentIndex = newIndex;               // Set currentIndex to the new image
-
-				})
-
-			}
-
-	      	$scope.submitFormData = function(service){
-	        	$rootScope.$emit(service, {data: $scope.formData, service: service});
-	      	};			
-
-			this.service = '';
-
-			this.setService = function(value) {
-				if(value === 'grantService') { 
-					this.service = 'grantquestions'; 
-					$scope.questions = grantService.getQuestions();
-				}
-				if(value === 'form1200Service') { 
-					this.service = 'form1200questions'; 
-					$scope.questions = form1200Service.getQuestions() 
-				}
-			}
+//             $scope.prevElement = function () {
+// 			    if (angular.element(groupResult).is(':animated')) {  
+// 			      	return;
+// 			    } 
+// 			    newIndex -= 1;         	
+//                 if ($scope.questions[newIndex]) {
+//                     $scope.selectQuestion(newIndex);
+//                 } else {
+//                     newIndex += 1;
+//                 }
+//             }
 
 
-			function isEmpty(obj) { //check if all object properties have been assigned a value 
+// 			$scope.selectQuestion = function(index) { //REQUIRED OR ANIMATION OF QUESTIONS
 
-				var allFilled;
-				for(var property in obj) {
-					if(obj.hasOwnProperty(property)) {
-						if(obj[property] === undefined) { return; }
-						if(obj[property].constructor !== Object) {
-							allFilled = true;
-						} else {
-							allFilled = false;
-						}
-					}
-				}
-				if(allFilled === true) {
-					return true;
-				} else {
-					return false;
-				}
+// 				newIndex = index;
+// 				var question =  $scope.questions[newIndex];
+// 				$scope.questionCount = (newIndex + 1);
 
-			}
+// 				if(questionReachedIndex < newIndex) { //UPDAE THE HIGHEST INDEX POINT REACHED
+// 					questionReachedIndex++
+// 				}
+
+// 				if(checkValidity(question.valid)) {
+// 					$scope.nextBtnDisabled = false; //DISABLE NEXT BTN IF ANSWER IS NOT VALID
+// 				} else {
+// 					$scope.nextBtnDisabled = true;
+// 				}
+
+// 				for(var i = 0; i < $scope.buttons.length; i ++) { //DISABLED PROCEEDING Q LINKS
+// 					if(i <= questionReachedIndex) {
+// 						$scope.buttons[i].disabled = false;
+// 					} else {
+// 						$scope.buttons[i].disabled = true;
+// 					}
+// 				}
+
+// 				if(newIndex === 0) {
+// 					$scope.firstQ = true;
+// 					$scope.lastQ = false;
+// 				} else if(newIndex === $scope.questions.length - 1) {
+// 					$scope.lastQ = true;
+// 					$scope.firstQ = false;
+// 				} else {
+// 					$scope.firstQ = false;
+// 					$scope.lastQ = false;
+// 				}
+
+// 			    if (angular.element(groupResult).is(':animated') || currentIndex === newIndex) {  
+// 			      	return;
+// 			    }
+
+// 			    if (newIndex > currentIndex) {   // If new item > current
+// 			      	slideLeft = '100%';            // Sit the new slide to the right //not the slides that animate, its the group as a whole
+// 			      	animateLeft = '-100%';         // Animate the current group to the left
+// 			    } else {                         // Otherwise
+// 			      	slideLeft = '-100%';           // Sit the new slide to the left
+// 			      	animateLeft = '100%';          // Animate the current group to the right
+// 			    }
+
+// 			    angular.element(slideResult).eq(newIndex).css( {left: slideLeft, display: 'block'} );
+// 				angular.element(groupResult).animate({
+// 					"left": animateLeft
+// 				}, function(){
+
+// 				    angular.element(groupResult).css( {left: animateLeft})
+// 			      	angular.element(slideResult).eq(currentIndex).css( {display: 'none'} ); // Hide previous slide      
+// 			      	angular.element(slideResult).eq(newIndex).css( { left: 0 } ); // Set position of the new item
+// 			      	angular.element(groupResult).css( {left: 0} );               // Set position of group of slides
+// 			      	currentIndex = newIndex;               // Set currentIndex to the new image
+
+// 				})
+
+// 			}
+
+// 	      	$scope.submitFormData = function(service){
+// 	        	$rootScope.$emit(service, {data: $scope.formData, service: service});
+// 	      	};			
+
+// 			this.service = '';
+
+// 			this.setService = function(value) {
+// 				if(value === 'grantService') { 
+// 					this.service = 'grantquestions'; 
+// 					$scope.questions = grantService.getQuestions();
+// 				}
+// 				if(value === 'form1200Service') { 
+// 					this.service = 'form1200questions'; 
+// 					$scope.questions = form1200Service.getQuestions() 
+// 				}
+// 			}
+
+
+// 			function isEmpty(obj) { //check if all object properties have been assigned a value 
+
+// 				var allFilled;
+// 				for(var property in obj) {
+// 					if(obj.hasOwnProperty(property)) {
+// 						if(obj[property] === undefined) { return; }
+// 						if(obj[property].constructor !== Object) {
+// 							allFilled = true;
+// 						} else {
+// 							allFilled = false;
+// 						}
+// 					}
+// 				}
+// 				if(allFilled === true) {
+// 					return true;
+// 				} else {
+// 					return false;
+// 				}
+
+// 			}
 
 
 
-			this.isOptionValid = function(value, item) { //INVOKED FROM PANEL CONTENT
+// 			this.isOptionValid = function(value, item) { //INVOKED FROM PANEL CONTENT
 
-				if(value !== undefined && value !== '' && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
-					if(isEmpty(value)) {
-						$scope.nextBtnDisabled = false;
-						$scope.questions[item.index].valid = true;
-					}
-					return;
-				}
+// 				if(value !== undefined && value !== '' && typeof(value) === 'object') { //If two inputs (file upload) are required, create parent within scope from view
+// 					if(isEmpty(value)) {
+// 						$scope.nextBtnDisabled = false;
+// 						$scope.questions[item.index].valid = true;
+// 					}
+// 					return;
+// 				}
 
-				if(value === undefined || typeof value === 'undefined' || value === false || value === '') {
-					$scope.nextBtnDisabled = true; //DISABLE NEXT BTN 
-					$scope.questions[item.index].valid = false;
-				} else {
-					$scope.nextBtnDisabled = false;
-					$scope.questions[item.index].valid = true;
-				}
+// 				if(value === undefined || typeof value === 'undefined' || value === false || value === '') {
+// 					$scope.nextBtnDisabled = true; //DISABLE NEXT BTN 
+// 					$scope.questions[item.index].valid = false;
+// 				} else {
+// 					$scope.nextBtnDisabled = false;
+// 					$scope.questions[item.index].valid = true;
+// 				}
 
-			}
+// 			}
 
-			this.initalSelect = $scope.selectQuestion; //USED FOR INITAL LOAD
+// 			this.initalSelect = $scope.selectQuestion; //USED FOR INITAL LOAD
 
-			this.createButtons = function(question) {
-				var counter = $scope.buttons.length;
-				$scope.questions[counter].index = counter;
-				$scope.buttons.push({
-					index: counter,
-					disabled: true
-				})
-			}
+// 			this.createButtons = function(question) {
+// 				var counter = $scope.buttons.length;
+// 				$scope.questions[counter].index = counter;
+// 				$scope.buttons.push({
+// 					index: counter,
+// 					disabled: true
+// 				})
+// 			}
 
-		    this.formData = {};
+// 		    this.formData = {};
 
-		    $scope.formData = this.formData; //expose formData to scope so view can add from properties to model 
+// 		    $scope.formData = this.formData; //expose formData to scope so view can add from properties to model 
 
-		}]
-	}
+// 		}]
+// 	}
 
-}
+// }
 
 angular.module('ppApp').directive('questionContent', questionContent);
 
@@ -259,22 +259,22 @@ function questionContent($rootScope, $compile, $timeout) {
 
 }
 
-angular.module('ppApp').directive('postAction', postAction);
+// angular.module('ppApp').directive('postAction', postAction);
 
-postAction.$inject = [];
+// postAction.$inject = [];
 
-function postAction() {
+// function postAction() {
 
-	return {
-		restrict: 'A',
-		scope: {},
-		require: '^^questionPanel',
-		link: function(scope, elem, attr, ctrl) {
-			ctrl.setService(attr.postAction)
-		}
-	}
+// 	return {
+// 		restrict: 'A',
+// 		scope: {},
+// 		require: '^^questionPanel',
+// 		link: function(scope, elem, attr, ctrl) {
+// 			ctrl.setService(attr.postAction)
+// 		}
+// 	}
 
-}
+// }
 
 angular.module("ppApp").directive("ngUploadChange",function(){
     return{
@@ -334,4 +334,19 @@ angular.module("ppApp").directive("selectNgFiles", function() { //if files to be
         });
     }
   }
+});
+
+angular.module('ppApp').directive('anchorDisable', function() {
+  return {
+    restrict: 'E',
+    link: function(scope, elem, attrs) {
+    	console.log(scope)
+      elem.on('click', function(e) {
+      	console.log(attrs)
+        if (attrs.disabled) {
+          e.preventDefault(); // prevent link click
+        }
+      });
+    }
+  };
 });

@@ -16,10 +16,19 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     vm.highestPoint = 0;
     vm.uninhibitGrantConfirm = uninhibitGrantConfirm;
     vm.deleteGrantConfirm = deleteGrantConfirm;
+    vm.checkError = checkError;
+    vm.submitGrantData = submitGrantData;
+    $scope.formData = {};
+    $scope.validate = {};
+
 
     function init() {
 
     	vm.activeTab = 0;
+
+        if(patent.clientRef !== '') {
+            $scope.formData.clientRef = patent.clientRef;
+        }
 
 		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant available') {
 			vm.grantStage = 1;
@@ -28,28 +37,28 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
 		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' || patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing' || patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || patent.p3sServicesWithFees[0].serviceStatus == 'EPO Instrcted') {
 			vm.grantStage = 2;
-    		vm.grantTemplate = vm.templates[2].url;        
-    	}    	
+    		vm.grantTemplate = vm.templates[2].url;
+    	}
     }
 
     init();
 
     var destroyFrom;
 
-    destroyFrom = $rootScope.$on('submitGrantData', function(e, data){
+    function submitGrantData(data){
 
         var formData = new FormData();
         var config = { headers: {'Content-Type': undefined} };
-        var notifyWhenValidationAvailable = data.data.optInValidation.no === true ? false : true;
+        var notifyWhenValidationAvailable = data.optInValidation.no === true ? false : true;
         formData.append('patentID', patent.patentID);
-        formData.append('clientRef', data.data.clientRef);
-        formData.append('totalClaims', parseInt(data.data.totalClaims));
-        formData.append('ofWhichClaimsUnpaid', parseInt(data.data.totalAdditionalClaims));
-        formData.append('totalPages', parseInt(data.data.totalPages));
-        formData.append('ofWhichPagesUnpaid', parseInt(data.data.totalAdditionalPages));
+        formData.append('clientRef', data.clientRef);
+        formData.append('totalClaims', parseInt(data.totalClaims));
+        formData.append('ofWhichClaimsUnpaid', parseInt(data.totalAdditionalClaims));
+        formData.append('totalPages', parseInt(data.totalPages));
+        formData.append('ofWhichPagesUnpaid', parseInt(data.totalAdditionalPages));
         formData.append('notifyWhenValidationAvailable', notifyWhenValidationAvailable);
-        formData.append('frenchTranslation', data.data.translations.frenchTranslation);
-        formData.append('germanTranslation', data.data.translations.germanTranslation);
+        formData.append('frenchTranslation', data.translations.frenchTranslation);
+        formData.append('germanTranslation', data.translations.germanTranslation);
 
         grantService.submitGrant(formData, config)
         .then(
@@ -91,137 +100,34 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             }
         )
 
-    })
+    }
 
-
-    $scope.$on('$destroy', function() {
-      destroyFrom(); // remove listener.
-    });     
-
-	var grantQuestions = [
-
-        { 
-            title: 'representative',
-            template: 'representative',
-            displayHelp: false,
-            checkError: function(value) {
-                var obj = {};
-                obj.title = 'Representative';
-
-                obj.message = 'If you confirm that you do not wish IP Place to act as representative, The Patent Place can offer help with your application offline\
-                    via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                     email: support@ip.place, or phone: +44 203 696 0949';
-                if(value === true) {
-                    this.showError = true;
-                    inhibitGrantConfirm(obj);
-                    return
-                }
-                this.showError = false;
-            },
-            showError: false,
-            valid: false,
-            required: true
-        },
-        { 
-            title: 'approve',
-            template: 'approvetext',
-            displayHelp: false,
-            checkError: function(value) {
-                var obj = {};
-                obj.title = 'Patent Specification';
-                obj.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can offer help with your application offline\
-                    via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                     email: support@ip.place, or phone: +44 203 696 0949';
-                if(value === true) {
-                    this.showError = true;
-                    inhibitGrantConfirm(obj);
-                    return
-                }
-                this.showError = false;
-            },      
-            showError: false,
-            valid: false,
-            required: true
-        },
-        { 
-            title: 'translations',
-            template: 'translations',
-            displayHelp: false,
-            showError: false,
-            valid: false,
-            required: true,
-            fileUpload: true
-        },
-        { 
-            title: 'clientref',
-            template: 'clientref',
-            displayHelp: false,
-            showError: false,
-            showError: false,
-            valid: false,
-            required: true,
-            data: patent.clientRef //provides any default data
-        },        
-        { 
-            title: 'totalclaims',
-            template: 'totalclaims',
-            displayHelp: false,
-            showError: false,
-            valid: false,
-            questionEnabled: false,
-            required: true
-
-        },
-        { 
-            title: 'additionalclaims',
-            template: 'additionalclaims',
-            displayHelp: false,
-            showError: false,
-            valid: false,
-            questionEnabled: false,
-            required: true
-        },
-        { 
-            title: 'totalpages',
-            template: 'totalpages',
-            displayHelp: false,
-            showError: false,
-            valid: false,
-            questionEnabled: false,
-            required: true
-        },
-        { 
-            title: 'additionalpages',
-            template: 'additionalpages',
-            displayHelp: false,
-            showError: false,
-            valid: false,
-            questionEnabled: false,
-            required: true
-        },
-        { 
-            title: 'optInValidations',
-            template: 'optforvalidations',
-            displayHelp: false,
-            showError: false,
-            valid: false,
-            questionEnabled: false,
-            required: true
-        }           
-	];
-
+    function checkError(question, value) {
+        if(value === false || typeof value === 'undefined' || value === undefined) { return;}
+        var obj = {};
+        if(question == 'representative' && value === true) {
+            obj.title = 'Representative';
+            obj.message = 'If you confirm that you do not wish IP Place to act as representative, The Patent Place can offer help with your application offline\
+                via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
+                 email: support@ip.place, or phone: +44 203 696 0949';
+        }
+        if(question == 'approveText' && value === true) {
+            obj.title = 'Patent Specification';
+            obj.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can offer help with your application offline\
+                via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
+                 email: support@ip.place, or phone: +44 203 696 0949';            
+        }      
+        inhibitGrantConfirm(obj);  
+    }
 
 	function initiateGrantOrder() {
 
         grantService.representativeCheck(patent.patentID)
         .then(
             function(response){
-
-                if(response.changeOfRepresentativeNeeded === true) {
-                    grantQuestions.splice(0, 1)
+                if(response === true) {
+                    vm.representativeRequired = true;
                 }
-
-                grantService.setQuestions(grantQuestions);
                 vm.grantTemplate = vm.templates[1].url;
             }
         )
@@ -352,5 +258,9 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         });
 
     }
+
+    $scope.$on('$destroy', function() {
+      destroyFrom(); // remove listener.
+    });         
 
 }
