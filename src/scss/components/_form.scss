@@ -2,7 +2,7 @@
   display: block;
   position: relative;
   padding-left: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   cursor: pointer;
   font-size: 22px;
   -webkit-user-select: none;
@@ -63,42 +63,42 @@
 .notification-radio .checkmark {
 
   &.green:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $green;
   }
   &.amber:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $amber;
   }
   &.red:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $red;
   }
   &.blue:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $blue;
   }
   &.black:after {
-    top: 4px;
-    left: 4px;
-    width: 8px;
-    height: 8px;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;    
     background: $black;
   } 
