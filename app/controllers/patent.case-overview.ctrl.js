@@ -19,46 +19,40 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     $scope.caseoverview_tab = 'details';
     vm.initOptions = initOptions;
     $scope.showOptions = false;
+    $scope.activeLeft = 0;
 
     var chartTimeout;
     var originatorEv;
+
+
+    vm.processView = function(tab, index, chart) {
+        if(!$scope.notInProgress) {
+            vm.setTab(tab)
+            $scope.activeLeft = index;
+            if(chart !== undefined) {
+                vm.refreshChart()
+            }
+        }
+
+    }
 
     vm.openMenu = function($mdMenu, ev) {
       originatorEv = ev;
       $mdMenu.open(ev);
     };
 
-    vm.redial = function() {
-        $mdDialog.show(
-            $mdDialog.alert()
-                .targetEvent(originatorEv)
-                .clickOutsideToClose(true)
-                .parent('body')
-                .title('Suddenly, a redial')
-                .textContent('You just called a friend; who told you the most amazing story. Have a cookie!')
-                .ok('That was easy')
-        );
-
-      originatorEv = null;
-    };
-
-    vm.checkVoicemail = function() {
-      // This never happens.
-    };
-
-
     function init() {
 
         if($stateParams.form1200generate === 1) {
             $scope.activeLeft = 2;
             $scope.caseoverview_tab = 'form1200';
-            activeTabService.setTab(0)
+            activeTabService.setTab(0);
         }
 
         if($stateParams.prepareGrant === 1) {
             $scope.activeLeft = 4;
             $scope.caseoverview_tab = 'grantandpublishing';
-            activeTabService.setTab(0)
+            activeTabService.setTab(0);
         }
 
         $scope.$parent.promise.then(

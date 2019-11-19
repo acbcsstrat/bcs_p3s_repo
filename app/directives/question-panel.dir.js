@@ -337,15 +337,16 @@ angular.module("ppApp").directive("selectNgFiles", function() { //if files to be
 });
 
 angular.module('ppApp').directive('anchorDisable', function() {
-  return {
-    restrict: 'E',
-    link: function(scope, elem, attrs) {
-    	console.log(scope)
-      elem.on('click', function(e) {
-      	console.log(attrs)
-        if (attrs.disabled) {
-          e.preventDefault(); // prevent link click
-        }
+    return {
+        restrict: 'E',
+        link: function(scope, elem, attrs) {
+          console.log('hellajsnfasdfSFD')
+    	      console.log(scope)
+            elem.on('click', function(e) {
+    	      console.log(attrs)
+            if (attrs.disabled) {
+               e.preventDefault(); // prevent link click
+            }
       });
     }
   };
