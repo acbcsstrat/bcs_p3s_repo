@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
 
-caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal', 'renewalRestService', 'activeTabService']
+caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal', 'renewalRestService', 'activeTabService', '$mdDialog']
 
-function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, patentsRestService, $uibModal, renewalRestService, activeTabService) {
+function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, patentsRestService, $uibModal, renewalRestService, activeTabService, $mdDialog) {
 
     var vm = this;
 
@@ -21,6 +21,31 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     $scope.showOptions = false;
 
     var chartTimeout;
+    var originatorEv;
+
+    vm.openMenu = function($mdMenu, ev) {
+      originatorEv = ev;
+      $mdMenu.open(ev);
+    };
+
+    vm.redial = function() {
+        $mdDialog.show(
+            $mdDialog.alert()
+                .targetEvent(originatorEv)
+                .clickOutsideToClose(true)
+                .parent('body')
+                .title('Suddenly, a redial')
+                .textContent('You just called a friend; who told you the most amazing story. Have a cookie!')
+                .ok('That was easy')
+        );
+
+      originatorEv = null;
+    };
+
+    vm.checkVoicemail = function() {
+      // This never happens.
+    };
+
 
     function init() {
 
@@ -100,7 +125,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     }
 
     function closeCaseoverview() {
-        $state.go('portfolio', {}, {reload: true})
+        $state.go('portfolio', {}, {reload: false})
     }
 
     function confirmDeletePatent(id) {

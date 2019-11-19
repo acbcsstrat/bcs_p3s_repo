@@ -1,8 +1,8 @@
 angular.module('ppApp').config(appConfig);
 
-appConfig.$inject = ['$httpProvider', '$urlRouterProvider', '$uibModalProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'localStorageServiceProvider'];
+appConfig.$inject = ['$httpProvider', '$urlRouterProvider', '$uibModalProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'localStorageServiceProvider', '$mdIconProvider'];
 
-function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, localStorageServiceProvider) {
+function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, localStorageServiceProvider, $mdIconProvider) {
 
     if (!$httpProvider.defaults.headers.get) {
         $httpProvider.defaults.headers.get = {};    
@@ -19,6 +19,10 @@ function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compil
 
     // $uibModalProvider.options.windowClass = 'show';
     // $uibModalProvider.options.backdropClass = 'show';
+
+    $mdIconProvider
+        .defaultFontSet('FontAwesome')
+        .fontSet('fa', 'FontAwesome');
 
 
     IdleProvider.idle(500);

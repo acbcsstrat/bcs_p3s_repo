@@ -144,84 +144,6 @@
 
 .p-t-4 { padding-top: 4rem; }
 
-.collapsable{
-    transition: all .2s ease-in-out;
-    min-height: 20px;
-    overflow: hidden;
-}
-.collapsable.collapsed{
-    height: 0;
-    min-height: 0;
-}
-
-// .upload-btn-wrapper {
-
-// }
-
-// .btn-upload {
-//     border: 2px solid $grey-dark;
-//     background-color: white;
-//     padding: 8px 20px;
-//     border-radius: 8px;    
-//     color: $grey-dark;
-//     background-color: transparent;
-//     padding: 0;
-//     border: 0;
-//     font-size: $font-body;
-//     font-weight: bold;
-//     transition: all ease-in-out .25s;
-//     opacity: .6;
-//     // position: relative;
-//     // z-index: 1;
-
-// }
-
-// .upload-btn-wrapper {
-//     position: relative;
-//     overflow: hidden;
-//     display: inline-block;    
-//     margin-bottom: -4px;
-//     cursor: pointer;
-//     input[type=file] {
-//         font-size: 30px;
-//         position: absolute;
-//         left: 0;
-//         top: 0;
-//         opacity: 0;
-//     }
-
-//     &:hover {
-//         .btn-upload {
-//             opacity: 1;
-//         }
-//     }
-
-// }
-
-// .inputfile {
-//     width: 0.1px;
-//     height: 0.1px;
-//     opacity: 0;
-//     overflow: hidden;
-//     position: absolute;
-//     z-index: -1;
-// }
-
-// .inputfile + label {
-//     font-size: 1.25em;
-//     font-weight: 700;
-//     color: white;
-//     background-color: black;
-//     display: inline-block;
-// }
-
-// .inputfile:focus + label,
-// .inputfile + label:hover {
-//     background-color: red;
-// }
-
-
-
 .checkbox-square {
     width: 1.3em;
     height: 1.3em;
@@ -239,4 +161,19 @@
 
 .checkbox-square:checked {
     background-color: $green;
+}
+
+
+.md-open-menu-container {
+    z-index: 999
+}
+
+.md-button.md-default-theme:not([disabled]).md-icon-button:hover, .md-button:not([disabled]).md-icon-button:hover {
+    background-color: transparent;
+}
+
+md-menu-item {
+    .md-button.font-body {
+        font-size: 1.2rem;
+    }
 }
