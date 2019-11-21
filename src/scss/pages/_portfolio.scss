@@ -178,10 +178,12 @@ animation:*/
   }
 }
 
-.table-container--portfolio {
-  min-height: 386px;
-  // -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
-  // -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
-  // box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);    
-  border-radius: 10px;  
-}
+// .table-container--portfolio {
+//     min-height: 386px;
+//     height: calc(100vh - 170px);
+//     // -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+//     // -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+//     // box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);    
+//     border-radius: 10px;  
+//     border: 1px solid $grey-border;
+// }
