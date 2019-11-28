@@ -1,4 +1,4 @@
-<div class="fade long-fade show" data-ng-if="$ctrl.timeLoaded"> <!--top nav-->
+<div class="fade long-fade show"> <!--top nav-->
     <div layout="row" class="closed-sidenav border-grey-xs--btm">
     	<div class="closed-sidenav--inner d-flex justify-content-between">
 			<span class="d-flex cursor-pointer m-r-lg align-items-center" data-ng-click="$ctrl.toggleLeft()">
@@ -7,8 +7,8 @@
 			</span>
 	    	<div class="d-flex">
 				<div class="d-flex justify-content-between align-items-center m-r-lg">
-					<span class="m-r-xs font-h4 txt-black"><span class="font-weight-bold">EST:</span> {{$ctrl.estTime}}</span> 
-					<span class="font-h4 txt-black"><span class="font-weight-bold">UTC:</span> {{$ctrl.utcTime}}</span>
+					<span class="m-r-xs font-h4 txt-black"><span class="font-weight-bold">EST:</span> {{$ctrl.est}}</span> 
+					<span class="font-h4 txt-black"><span class="font-weight-bold">UTC:</span> {{$ctrl.utc}}</span>
 				</div>		
 				<div class="d-flex justify-content-between align-items-center">
 					<span class="m-r-md font-h4 txt-black"><span class="font-weight-bold m-r-xs">USD - EUR</span>{{$ctrl.fxRate}}</span> 
