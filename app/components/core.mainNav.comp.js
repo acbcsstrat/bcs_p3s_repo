@@ -24,13 +24,6 @@ angular.module('ppApp').component('mainnav', {
 	        vm.avatarimage = '../p3sweb/avatar-image/' + '?' + timestamp;
       	})
 
-		var nbDigest = 0;
-
-		$rootScope.$watch(function() {
-		  	nbDigest++;
-		  	console.log(nbDigest)
-		});
-
       	function init() {
 
 			userService.fetchUser()
