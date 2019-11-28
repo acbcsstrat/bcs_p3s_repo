@@ -16,6 +16,8 @@ angular.module('ppApp').component('mainnav', {
         	isFirstDisabled: false
       	};
       	vm.avatarimage = '../p3sweb/avatar-image/';
+        vm.utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
+        vm.est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
 
       	$rootScope.$on('refreshAvatar', function(){
 	        var timestamp = new Date().getTime();
@@ -40,10 +42,9 @@ angular.module('ppApp').component('mainnav', {
 	    		}
 	    	)	
 
-		    $timeout(function() {
+		    setInterval(function() {
 		    	timeZoneClocks();
-		    	vm.timeLoaded = true;   
-		    })	    	
+		    }, 1000)
 
       	}
 
@@ -65,16 +66,8 @@ angular.module('ppApp').component('mainnav', {
 	    }
 
 	    function timeZoneClocks() {
-
-	        var utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
-	        var est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
-	    
-	        var t = $timeout(function() {
-	            vm.utcTime = utc;
-	            vm.estTime =  est;
-	            timeZoneClocks()
-	        }, 500);
-
+	        vm.utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
+	        vm.est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
 	    }
 
 		vm.empty = function() {
