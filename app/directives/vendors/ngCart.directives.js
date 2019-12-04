@@ -4,6 +4,15 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
 .controller('CartController',['$scope', 'ngCart', '$state', function($scope, ngCart, $state) {
     $scope.ngCart = ngCart;
+
+    function ID () {
+        // Math.random should be unique because of its seeding algorithm.
+        // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+        // after the decimal.
+        return '_' + Math.random().toString(36).substr(2, 9);
+    };
+
+    console.log(ID())    
 }])
 
 .directive('ngcartAddtocart', ['ngCart', function(ngCart){

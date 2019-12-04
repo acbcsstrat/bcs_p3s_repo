@@ -34,10 +34,13 @@
 	<td>${buildtimestamp}</td>
  </tr>
  <tr>
+<<<<<<< HEAD
 	<td>Current Server timestamp</td>
 	<td>${timestampnow}</td>
  </tr>
  <tr>
+=======
+>>>>>>> fe-branch-v3
 	<td>Using dB</td>
 	<td>${dbname}</td>
  </tr>
@@ -47,7 +50,11 @@
  </tr>
  <tr>
 	<td>P3S product version</td>
+<<<<<<< HEAD
 	<td>v3.1</td>
+=======
+	<td>v3.1dev (with Avatar2)</td>
+>>>>>>> fe-branch-v3
  </tr>
 </table>
 

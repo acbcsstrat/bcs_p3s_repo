@@ -17,6 +17,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
     vm.toggleAll = toggleAll;
     vm.sortReverse  = false;
     vm.selectedSortType = 'ep_ApplicationNumber';
+    vm.noPatents = false;
 
     var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available', 'Epct being generated', 'Payment in progress', 'EPO Instructed', 'Too early', 'Too late', 'Error', 'Completed','Payment failed'];
     var renewalStatuses = ['Show price', 'Renewal in place', 'No renewal needed', 'Payment in progress', 'EPO Instructed', 'Too late to renew', 'Way too late to renew'];
@@ -81,6 +82,11 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
     $scope.promise.then(
         function(response){
+
+            if(!response.length) {
+                vm.noPatents = true;
+            }
+
             var patents = response;
             $scope.portfolioData = patents;
             $scope.portfolioLoaded = true;
