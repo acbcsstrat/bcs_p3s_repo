@@ -1,0 +1,120 @@
+<div class="fade long-fade show" data-ng-if="$ctrl.timeLoaded"> <!--top nav-->
+    <div layout="row" class="closed-sidenav border-grey-xs--btm">
+    	<div class="closed-sidenav--inner d-flex justify-content-between">
+			<span class="d-flex cursor-pointer m-r-lg align-items-center" data-ng-click="$ctrl.toggleLeft()">
+		    	<i class="fas fa-bars fa-2x txt-black"></i>
+			    <p class="txt-black m-l-sm font-h4">Menu</p>
+			</span>
+	    	<div class="d-flex">
+				<div class="d-flex justify-content-between align-items-center m-r-lg">
+					<span class="m-r-xs font-h4 txt-black"><span class="font-weight-bold">EST:</span> {{$ctrl.estTime}}</span> 
+					<span class="font-h4 txt-black"><span class="font-weight-bold">UTC:</span> {{$ctrl.utcTime}}</span>
+				</div>		
+				<div class="d-flex justify-content-between align-items-center">
+					<span class="m-r-md font-h4 txt-black"><span class="font-weight-bold m-r-xs">USD - EUR</span>{{$ctrl.fxRate}}</span> 
+				</div>
+	    	</div>
+			<div class="d-flex justify-content-end align-items-center">
+				<div class="d-flex justify-content-between align-items-center m-r-md">			
+<!-- 					<i class="far fa-info-circle fa-2x cursor-pointer" data-ng-click="$ctrl.openGuide()"></i> -->
+					<md-tooltip md-delay="500" md-direction="bottom">App Guide</md-tooltip>			
+				</div>
+				<a data-ui-sref="basket" class="m-r-md">
+					<ngcart-summary class="font-body txt-black"></ngcart-summary>
+				</a>
+				<div>
+					<p class="txt-black">
+						<a data-ui-sref="profile" class="font-weight-medium font-h4">{{$root.user.firstName}}</a> | 
+						<a class="font-h4 txt-black inline-link" data-ng-click="$ctrl.empty()" data-ng-href="http://localhost:8080/p3sweb/resources/j_spring_security_logout">Logout</a>
+					</p>
+				</div>
+			</div>
+		</div>
+  	</div>
+</div>
+
+
+<div><!--side-nav-->
+ 	<section flex>
+	    <md-sidenav class="md-sidenav-left bg-phase-grey" md-component-id="left" md-disable-backdrop md-whiteframe="3">
+      		<div class="row">
+		      	<div class="col-md-12">
+		      		<div class="bg-phase-grey p-v-sm-h-lg flex-grow-1 d-flex justify-content-between align-items-center">
+			      		<img src="assets/imgs/logos/pp_icon.png" alt="patent place icon small">
+			      		<span class="cursor-pointer" data-ng-click="$ctrl.toggleLeft()"><i class="fas fa-times fa-2x txt-white"></i></span>
+			      	</div>	
+	      		</div>
+	      	</div>	    			
+      	 	<md-content class="bg-phase-grey">
+	      	 	<div layout="column" class="p-pill-tabs m-b-sm p-a-sm">
+	      	 		
+		      	 	<div class="d-flex justify-content-center align-items-center m-b-sm">		      	 	
+		      	 		<a class="nav-link" data-ui-sref="profile">			
+		      	 			<img data-ng-src="{{$ctrl.avatarimage}}" data-ng-if="$ctrl.avatarimage" alt="users profile pic" class="profile-pic-radius" width="104">
+		      	 			<img src="assets/imgs/avatar-default.png" data-ng-if="!$ctrl.avatarimage" alt="users profile pic" class="profile-pic-radius" width="104">
+	      	 			</a>
+		      	 	</div>
+	      	 		<div class="d-flex justify-content-center align-items-center">
+	      	 			<a class="nav-link nav-link--white d-flex justify-content-center align-items-center font-h4 font-weight-bold" data-ui-sref="profile">
+			      	 		{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}
+		      	 		</a>
+	      	 		</div>
+	      	 		<div class="d-flex justify-content-center align-items-center">
+		      	 		<span class="font-body text-center">{{$ctrl.user.business.businessName}}</span>
+		      	 	</div>
+	      	 	</div>
+	      	 	<div layout="column" class=" d-flex justify-content-center">
+	      	 		<nav class="nav">
+						<ul class="side-menu w-100">
+							<li data-ng-repeat="section in $ctrl.menu.sections" class="font-body font-weight-medium" data-ui-sref-active="active" data-ng-class="{'parentActive' : $ctrl.isSectionSelected(section)}">
+	                        	<menu-link section="section" data-ng-if="section.type === 'link'"></menu-link>
+	        					<menu-toggle section="section" data-ng-if="section.type === 'toggle'" context="$ctrl"></menu-toggle>
+					        </li>
+						</ul>
+					</nav>
+				</div>
+			</md-content>
+			<div class="text-center position-bottom w-100 m-b-sm">
+				<img src="assets/imgs/logos/moneycorp_logo.png" alt="moneycorp icon">
+			</div>
+	    </md-sidenav>
+  	</section>
+  
+    <div layout="column" class="closed-sidenav-side bg-phase-grey">
+	  	<div class="text-center w-100 p-tb-20">
+	  		<a data-ui-sref="dashboard">
+	  			<img width="35" src="assets/imgs/logos/pp_icon.png">
+	  		</a>
+	    </div>
+		<ul class="nav flex-column">
+			<li class="nav-item" data-ui-sref-active="active">
+				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" data-ui-sref="dashboard">
+					<i class="far fa-tachometer-alt fa-2x d-none d-xl-block"></i>
+					<i class="far fa-tachometer-alt fa-2x d-xl-none"></i>
+				</a>
+				<md-tooltip md-delay="500" md-direction="right">Dashboard</md-tooltip>
+			</li>
+			<li class="nav-item" data-ui-sref-active="active">
+				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" data-ui-sref="portfolio" data-ui-sref-opts="{reload: true}">
+					<i class="far fa-folders fa-2x d-none d-xl-block"></i>
+					<i class="far fa-folders fa-2x d-xl-none d-lg-inline-block"></i>
+				</a>
+				<md-tooltip md-delay="500" md-direction="right">Portfolio</md-tooltip>
+			</li>			
+			<li class="nav-item" data-ui-sref-active="active">
+				<a class="nav-link p-tb-md d-flex justify-content-center align-items-center" data-ui-sref="current-transactions">
+					<i class="far fa-money-check-alt fa-2x d-none d-xl-block"></i>
+					<i class="far fa-money-check-alt fa-2x d-xl-none d-lg-inline-block"></i>
+				</a>
+				<md-tooltip md-delay="500" md-direction="right">Transactions</md-tooltip>
+			</li>
+		</ul>
+		<div class="text-center position-bottom w-100 m-b-sm">
+<!-- 			<button data-ng-click="$ctrl.openGuide()" class="m-b-sm btn btn-no-bg">
+				<i class="far fa-info-circle fa-2x txt-white"></i>
+				<md-tooltip md-delay="500" md-direction="right">App Guide</md-tooltip>
+			</button> -->
+			<img src="assets/imgs/logos/moneycorp-logo_small.png" alt="moneycorp icon">
+		</div>
+  	</div>
+</div>
