@@ -1,8 +1,8 @@
-angular.module('ppApp').controller('portfolioCtrl', portfolioCtrl);
+angular.module('ppApp').controller('portfolioCtrl', portfolioCtrl)
 
-portfolioCtrl.$inject = ['$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService', 'organiseColourService'];
+portfolioCtrl.$inject = ['$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService', 'organiseColourService', '$mdPanel'];
 
-function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService) {
+function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService, $mdPanel) {
 
     var vm = this;
     vm.pageTitle = 'Portfolio';
@@ -14,29 +14,15 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
     $scope.portfolioLoaded = false;
     vm.date = new Date();
     vm.panelActive = true; 
-    vm.toggleAll = toggleAll;
     vm.sortReverse  = false;
     vm.selectedSortType = 'ep_ApplicationNumber';
-    vm.noPatents = false;
-
-    var euroPctStatuses = ['Epct available', 'Epct saved', 'Epct not available', 'Epct being generated', 'Payment in progress', 'EPO Instructed', 'Too early', 'Too late', 'Error', 'Completed','Payment failed'];
-    var renewalStatuses = ['Show price', 'Renewal in place', 'No renewal needed', 'Payment in progress', 'EPO Instructed', 'Too late to renew', 'Way too late to renew'];
-    var grantStatuses = ['Grant available', 'Grant not available', 'Grant saved', 'Manual processing', 'Manual processing mandated', 'Payment in progress', 'EPO Instructed', 'Payment failed', 'Completed'];
-
-    vm.patentActionStatuses = {
-      'value': 'All Patents',
-      'values': ['All Patents', 'No Action Available', 'Action Available']
-    }
-
-    $scope.filters = {
-      serviceStatus: {},
-      serviceType: {},
-      currentStageColour: {}
-    }
-
-
+    vm.showPanel = showPanel;
+    vm.portfolioData = [];
+    vm.filtered = [];
+    vm.filteredChips = []
+    var outsideFilterStore;
     function select(i) {
-      vm.selected = i;
+        vm.selected = i;
     }
 
     select($stateParams.patentId)
@@ -47,28 +33,15 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
         })
     }
 
-
-
-    function toggleAll($event, includeAll) { //used for clear or select all
-        for(var filter in $scope.filters) {
-            if($scope.filters.hasOwnProperty(filter)) {
-                for(var i in $scope.filters[filter]) {
-                    $scope.filters.serviceStatus[i] = includeAll;
-                    $scope.filters.currentStageColour[i] = includeAll;            
-                }
-            }
-        };    
-    };
-
     function rowSelect(event, patent){
 
         vm.stateParams = $stateParams;
         if($(event.target).hasClass('generateForm1200')) {
-          $state.go('portfolio.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
+            $state.go('portfolio.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
         }
 
         if($(event.target).hasClass('prepareGrant')) {
-          $state.go('portfolio.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0,}, {notify: false})
+            $state.go('portfolio.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
         }        
 
         if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {
@@ -79,21 +52,115 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
     };
 
+    function noSubFilter(obj) {
+        // console.log(obj)
+        for (var key in obj) {
+            if (obj[key]) return false;
+        }
+        return true;
+    }
+
+    $scope.filterByPropertiesMatchingAND = function (data) {
+        var matchesAND = true;
+        for (var obj in outsideFilterStore) {
+            if( outsideFilterStore.hasOwnProperty(obj) ) {
+                if (noSubFilter(outsideFilterStore)) continue;
+                if (!outsideFilterStore[obj][data.p3sServices[0][obj]]) {
+                    matchesAND = false;
+                    break;
+                }
+            }
+        }
+        return matchesAND;
+    };    
+
+
+
+
+
+    function showPanel($event) {
+
+        var panelPosition = $mdPanel.newPanelPosition()
+            .relativeTo($event.target)
+            .addPanelPosition($mdPanel.xPosition.ALIGN_END, $mdPanel.yPosition.BELOW);
+        // var panelAnimation = $mdPanel.newPanelAnimation()
+        //     .openFrom($event.target)
+        //     .duration(200)
+        //     .closeTo('.show-button')
+        //     .withAnimation($mdPanel.animation.SCALE);
+
+        var config = {
+            attachTo: angular.element(document.body),
+            controller: ['mdPanelRef', '$scope', function(mdPanelRef, $scope) {
+  
+                $scope.categories = ['serviceType', 'currentStageColour'];
+                $scope.filter = {};
+                outsideFilterStore = $scope.filter;
+                $scope.portfolioData = vm.portfolioData;
+                $scope.filtered = vm.filtered;
+                $scope.getItems = function (obj, array) {
+            
+                    return (array || []).map(function (w) {
+                        return w.p3sServices[0][obj];
+                    }).filter(function (w, idx, arr) {
+
+                        if (typeof w === 'undefined') {
+                            return false;
+                        }             
+                        return arr.indexOf(w) === idx;
+                    });
+                };
+
+                $scope.testFunction = function(key, value) {
+                    console.log(key, value)
+                    console.log($scope.selectedFilters.indexOf(key))
+                    if(value == true && $scope.selectedFilters.indexOf(key) === -1) {
+                        $scope.selectedFilters.push(key);
+                    } else {
+                        console.log('key : ', key)
+                          var index = $scope.selectedFilters.indexOf(key);
+                        console.log('index: ', index)
+                          $scope.selectedFilters.splice(index, 1)
+                    }
+                    console.log($scope.selectedFilters)
+                }                
+
+            }],
+            controllerAs: '$ctrl',
+            position: panelPosition,
+            // animation: panelAnimation,
+            targetEvent: $event,
+            templateUrl: 'app/templates/portfolio/filter-panel.tpl.htm',
+            clickOutsideToClose: true,
+            escapeToClose: true,
+            focusOnOpen: true
+        };
+        $mdPanel.open(config)
+        .then(
+            function(result) {
+
+                panelRef = result;
+            },
+            function(error){
+                console.error('Error occured when opening panel: ',error)
+            }
+        );
+    }
 
     $scope.promise.then(
         function(response){
-            if(!response.length) {
-                vm.noPatents = true;
-            }
-            var patents = response;
-            $scope.portfolioData = patents;
-            $scope.portfolioLoaded = true;
+
+            response.forEach(function(data){
+                if(data.clientRef == '') {
+                    data.clientRef = '[No Client Reference Provided]'
+                }
+            })
+
+            vm.portfolioData = response;
+            vm.portfolioLoaded = true;
+
             $scope.$broadcast('portfolioLoaded', function(){})
-            vm.sortType = sortType;
-            vm.filterPortfolioResults = filterPortfolioResults;
-            vm.updateCategory = updateCategory;
 
         }
     )
-
 }

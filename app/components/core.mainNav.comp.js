@@ -16,6 +16,7 @@ angular.module('ppApp').component('mainnav', {
         	isFirstDisabled: false
       	};
       	vm.avatarimage = '../p3sweb/avatar-image/';
+
         vm.utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
         vm.est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
 

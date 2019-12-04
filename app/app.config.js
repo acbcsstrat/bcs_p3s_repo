@@ -1,8 +1,8 @@
 angular.module('ppApp').config(appConfig);
 
-appConfig.$inject = ['$httpProvider', '$urlRouterProvider', '$uibModalProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'localStorageServiceProvider', '$mdIconProvider'];
+appConfig.$inject = ['$httpProvider', '$urlRouterProvider', '$uibModalProvider', '$compileProvider' ,'$qProvider', 'KeepaliveProvider', 'IdleProvider', 'localStorageServiceProvider', '$mdIconProvider', '$mdPanelProvider'];
 
-function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, localStorageServiceProvider, $mdIconProvider) {
+function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compileProvider, $qProvider, KeepaliveProvider, IdleProvider, localStorageServiceProvider, $mdIconProvider, $mdPanelProvider) {
 
     if (!$httpProvider.defaults.headers.get) {
         $httpProvider.defaults.headers.get = {};    
@@ -20,6 +20,9 @@ function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compil
     // $uibModalProvider.options.windowClass = 'show';
     // $uibModalProvider.options.backdropClass = 'show';
 
+
+
+
     $mdIconProvider
         .defaultFontSet('FontAwesome')
         .fontSet('fa', 'FontAwesome');
@@ -27,7 +30,6 @@ function appConfig($httpProvider, $urlRouterProvider, $uibModalProvider, $compil
 
     IdleProvider.idle(500);
     IdleProvider.timeout(30);
-    KeepaliveProvider.http(ppdomain+'keep-session-alive/');
     KeepaliveProvider.interval(20);
 
     $urlRouterProvider

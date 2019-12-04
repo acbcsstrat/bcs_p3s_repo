@@ -12,6 +12,11 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
 	var userTimedOut = false;
 	var messageArr = [];
 
+	$scope.$on('Keepalive', function() {
+		$http.get(ppdomain+'keep-session-alive/');
+	});
+
+
 	$scope.$on('IdleStart', function() {
 		
 	  	closeModals();

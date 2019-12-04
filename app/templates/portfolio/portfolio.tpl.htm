@@ -3,39 +3,49 @@
         <p class="font-weight-medium">We are sorry but no results were returned from you search criteria. Please try again.</p>
     </div>
 </div>
-<div data-ng-hide="portfolioLoaded" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
+<div data-ng-hide="$ctrl.portfolioLoaded" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
     <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
     <p>We are just fetching your patents</p>
-</div>        
-<div data-ng-show="portfolioLoaded" class="animate-show container__scrollable-area">
+</div>
+
+<div data-ng-show="$ctrl.portfolioLoaded" class="animate-show container__scrollable-area">
     <div class="p-l-3 p-r-3 p-tb-sm br-tx-1">                            
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="font-h1 lh-default" data-ng-bind="$ctrl.pageTitle"></h1>
-            <div class="d-flex align-items-center">                    
+            <div class="d-flex align-items-center">
                 <div class="m-r-lg">
                     <div class="input-group m-r-sm">
-                        <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="Search Portfolio..." autocomplete="off">  
+                        <input type="text" class="form-control pill-radius" name="portfolioSearch" data-ng-model="searchPortfolio" placeholder="Search Portfolio..." autocomplete="off">  
                         <div class="input-group-append">
                             <i class="d-flex input-group-text pill-radius fa fa-search"></i>
                         </div>
                     </div>
                 </div>
-                <div class="m-r-lg">                        
-                    <i class="fas fa-sort-amount-up fa-2x cursor-pointer"></i>
-                </div>
-                <div class="m-r-lg">                            
-                    <i class="far fa-filter fa-2x cursor-pointer"></i>
-                    
+<!--                 <div>
+                    <md-button class="icon-stretch icon-stretch--icon pill-radius px-125 py-75" data-ng-click="$ctrl.showPanel($event, 'sort')">
+                        <span class="icon-text">Sort</span>
+                        <i class="far fa-sort-amount-up fa-2x cursor-pointer"></i>
+                    </md-button>
+                </div> -->
+                <div>
+                    <md-button class="icon-stretch icon-stretch--icon pill-radius px-125 py-75"data-ng-click="$ctrl.showPanel($event)">
+                        <span class="icon-text">Filter</span>              
+                        <i class="fal fa-filter fa-2x cursor-pointer"></i> 
+                    </md-button>
                 </div>
                 <div>
-                    <span class="fa-stack fa-lg cursor-pointer">
-                      <i class="fas fa-circle fa-stack-2x txt-phase-green"></i>
-                      <i class="fal fa-plus fa-stack-1x txt-white"></i>
-                    </span>
+                    <md-button class="icon-stretch icon-stretch--stack green pill-radius">
+                        <span class="icon-text">Add Case</span>
+                        <span class="fa-stack fa-lg cursor-pointer">
+                            <i class="fas fa-circle fa-stack-2x txt-phase-green"></i>
+                            <i class="fal fa-plus fa-stack-1x txt-white"></i>
+                        </span>
+                    </md-button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="scrollable-area portfolio-table">
         <table class="t-data sticky-table">
             <thead class="sticky-thead">
@@ -67,7 +77,7 @@
                             <i class="fas fa-angle-up fa-lg"></i>
                         </span>     
                     </th>
-                    <th class="t-data__th t-data__th--md" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'serviceStatus'">
+                    <th class="t-data__th t-data__th--md" data-ng-click="$ctrl.sortType('serviceType'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'serviceStatus'">
                         <span>Patent Place Status</span>
                         <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && !$ctrl.sortReverse">
                             <i class="fas fa-angle-down fa-lg"></i>
@@ -76,7 +86,7 @@
                             <i class="fas fa-angle-up fa-lg"></i>
                         </span>                          
                     </th>
-                    <th class="t-data__th t-data__th--sm" data-ng-click="$ctrl.sortType('currentPhase'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'currentPhase'">
+                    <th class="t-data__th t-data__th--sm" data-ng-click="$ctrl.sortType('currentStageColour'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'currentPhase'">
                         <span>Current Phase</span>
                         <span data-ng-show="$ctrl.selectedSortType == 'currentPhase' && !$ctrl.sortReverse">
                             <i class="fas fa-angle-down fa-lg"></i>
@@ -85,7 +95,7 @@
                             <i class="fas fa-angle-up fa-lg"></i>
                         </span>     
                     </th>
-                    <th class="t-data__th t-data__th--sm" data-ng-click="$ctrl.sortType('nextPhase'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'nextPhase'">
+                    <th class="t-data__th t-data__th--sm" data-ng-click="$ctrl.sortType('nextPhaseColour'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'nextPhase'">
                         <span>Next phase</span>
                         <span data-ng-show="$ctrl.selectedSortType == 'nextPhase' && !$ctrl.sortReverse">
                             <i class="fas fa-angle-down fa-lg"></i>
@@ -99,8 +109,9 @@
                     </th>
                 </tr>
             </thead>
+            
             <tbody class="sticky-tbody">
-                <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter:filterPortfolio as Result track by $index" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.patentID)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.patentID == $ctrl.selected}">
+                <tr data-ng-repeat="patent in $ctrl.filtered=($ctrl.portfolioData | filter:filterByPropertiesMatchingAND | filter:searchPortfolio) | orderBy:columnName:reverse" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.patentID)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.patentID == $ctrl.selected}">
                     <td class="t-data__td t-data__td--sm sticky-td">
                         <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
                     </td>
