@@ -96,19 +96,20 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
         controller : ('CartController', ['$scope', 'ngCart', 'fulfilmentProvider', 'basketService','$state', function($scope, ngCart, fulfilmentProvider, basketService, $state) {
 
             $scope.ngCart = ngCart;
-            var productData = ngCart.$cart.items;
+            $scope.productData = ngCart.$cart.items;
+
+            $scope.basketItems = [] = Object.keys($scope.productData).map(function(data, index){
+                var obj = {};
+                obj.patentID = $scope.productData[data]._data.patentID;
+                obj.serviceType = $scope.productData[data]._name;
+                return obj;
+            });
 
             $scope.checkout = function () {
 
-                 var basketItems = [] = Object.keys(productData).map(function(data, index){
-                    var obj = {};
-                    obj.patentID = productData[data]._data.patentID;
-                    obj.serviceType = productData[data]._name;
-                    return obj;
-                });
 
-                var patentObj = {
-                    basketItems: basketItems,
+                var orderObj = {
+                    basketItems: $scope.basketItems,
                     totalCostUSD: ngCart.totalCost(),
                     dateNowLocalTime :null
                 };
@@ -116,7 +117,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 var billingDetails = $scope.summary.billingDetails;
                 fulfilmentProvider.setService($scope.service);
                 fulfilmentProvider.setSettings($scope.settings);
-                fulfilmentProvider.checkout(patentObj)
+                fulfilmentProvider.checkout(orderObj)
                     .then(function (data, status, headers, config) {
                             data.billingDetails = billingDetails;
                             $state.go('bank-transfer-preparation', {orderObj:data}, {reload: false});                            
@@ -131,7 +132,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             };
         }]),
         link: function(scope, element, attrs) {
-
+            
             $rootScope.$on('ngCart:itemRemoved', function() {
                fetchBasketPatents();
             });
@@ -140,12 +141,9 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
             function fetchBasketPatents() {
 
-                var patentObj = {};
-                patentObj.patent_ids = ngCart.getItems().map(function(data) {
-                    return data._data.patentID;
-                })
-
-                basketService.fetchBasketPatents(patentObj)
+                var orderObj = {};
+                orderObj.basketItems = scope.basketItems;
+                basketService.fetchBasketPatents(orderObj)
                 .then(
                     function(response){
                         scope.summary = {
