@@ -23,14 +23,17 @@ function patentsRestService($http, $q, organiseColourService) {
             .then(
             function (response) {
 
-                var randomFixedInteger = function (length) {
-                    return Math.floor(Math.pow(10, length-1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length-1) - 1));
+                var generateId = function (service) {
+                    var number = '';
+                    for (var i = 0; i < service.length; i++) {
+                        number += service.charCodeAt(i).toString();
+                    }
+                    return parseInt(number.substring(2, 9)); //skip decimal
                 }            
 
                 response.data.map(function(patent){
                     return patent.p3sServices.map(function(property){
-
-                        property.actionID = randomFixedInteger(12);
+                        property.actionID = patent.patentID + generateId(property.serviceType); //generate unique id based on patent id and service type (get char codes)
                         if(property.currentStageColour) {
                             property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text')
                         }
