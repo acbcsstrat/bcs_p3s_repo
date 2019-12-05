@@ -197,8 +197,8 @@
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center justify-content-end">
-                        <label class="form-check-label font-body m-r-md">
-                            I accept the <span class="font-weight-medium m-r-xs"><a href="http://thepatent.place/terms" target="__blank" class="inline-link">Terms and Conditions</a></span> <input type="checkbox" name="terms-checkout" data-ng-model="tcChecked">
+                        <label class="form-check-label font-body m-r-xl">
+                            I accept the <span class="font-weight-medium m-r-xs"><a href="http://thepatent.place/terms" target="__blank" class="inline-link">Terms and Conditions</a></span> <input type="checkbox" name="terms-checkout" data-ng-model="tcChecked" class="form-check-input checkbox-round">
                         </label>
                         <div class="text-right">
                             <button class="btn btn--lg btn--green pill-radius" data-ng-if="service=='http' || service == 'log'" data-ng-click="checkout()" data-ng-disabled="!tcChecked || ngCart.getItems() == 0 || billingForm.$invalid">Continue</button>                

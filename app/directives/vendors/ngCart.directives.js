@@ -4,15 +4,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
 .controller('CartController',['$scope', 'ngCart', '$state', function($scope, ngCart, $state) {
     $scope.ngCart = ngCart;
-
-    function ID () {
-        // Math.random should be unique because of its seeding algorithm.
-        // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-        // after the decimal.
-        return '_' + Math.random().toString(36).substr(2, 9);
-    };
-
-    console.log(ID())    
 }])
 
 .directive('ngcartAddtocart', ['ngCart', function(ngCart){
@@ -109,17 +100,16 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
             $scope.checkout = function () {
 
-                var patent_ids = [];
-                var cartItems = {};
-                var totalCost = ngCart.totalCost();
-                Object.keys(productData).forEach(function(data){
-                    cartItems = productData[data]._data;
-                    patent_ids.push(cartItems.patentID);
+                 var basketItems = [] = Object.keys(productData).map(function(data, index){
+                    var obj = {};
+                    obj.patentID = productData[data]._data.patentID;
+                    obj.serviceType = productData[data]._name;
+                    return obj;
                 });
 
                 var patentObj = {
-                    patent_ids: patent_ids,
-                    totalCostUSD: totalCost,
+                    basketItems: basketItems,
+                    totalCostUSD: ngCart.totalCost(),
                     dateNowLocalTime :null
                 };
 
@@ -142,21 +132,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
         }]),
         link: function(scope, element, attrs) {
 
-            var cartArr = function() {
-                var cartArr = [];
-                var cartItems = ngCart.getItems();
-
-                cartItems.forEach(function(currentValue, index, array){
-                    cartArr.push(currentValue._id);
-                });
-
-                var idObj = {
-                    patent_id: cartArr
-                };
-
-                return idObj;
-            }
-
             $rootScope.$on('ngCart:itemRemoved', function() {
                fetchBasketPatents();
             });
@@ -164,9 +139,13 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             fetchBasketPatents();
 
             function fetchBasketPatents() {
-                var patent_ids = cartArr();
 
-                basketService.fetchBasketPatents(patent_ids)
+                var patentObj = {};
+                patentObj.patent_ids = ngCart.getItems().map(function(data) {
+                    return data._data.patentID;
+                })
+
+                basketService.fetchBasketPatents(patentObj)
                 .then(
                     function(response){
                         scope.summary = {
@@ -194,7 +173,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
                     },
                     function(errResponse){
-                        console.log(errResponse);
+                        console.error('Error: Unable to fetch basket details: ', errResponse);
                     }
                 );
             }

@@ -22,8 +22,15 @@ function patentsRestService($http, $q, organiseColourService) {
          $http.get(ppdomain+'rest-patents-portfolio/')
             .then(
             function (response) {
+
+                var randomFixedInteger = function (length) {
+                    return Math.floor(Math.pow(10, length-1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length-1) - 1));
+                }            
+
                 response.data.map(function(patent){
                     return patent.p3sServices.map(function(property){
+
+                        property.actionID = randomFixedInteger(12);
                         if(property.currentStageColour) {
                             property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text')
                         }
