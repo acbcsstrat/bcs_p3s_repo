@@ -330,11 +330,9 @@
                                         <div data-ng-if="item.saleType !== 'Online' && !item.isUrgentAttention" class="d-flex justify-content-between flex-column"> <!--cover all actions that cannot be sold -->
                                             <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
                                         </div>
-
                                         <div data-ng-if="item.saleType === 'Offline' && item.isUrgentAttention" class="d-flex justify-content-between flex-column"> <!-- cover urgent attention (red or second black)-->
                                             <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
                                         </div>
-
                                         <div data-ng-if="item.saleType === 'Online'" class="d-flex flex-column">
                                             <div class="d-flex justify-content-start align-items-center"><!--dsiplay costs-->
                                                 <p data-ng-class="item.cssCurrent" class="font-weight-bold m-r-sm">$ {{item.currentStageCostUSD | number: 2}}</p>
@@ -348,10 +346,10 @@
                                 </tr>
                             </table>                                
                         </td><!--patent place status-->
-                        <td class="t-data__td">
+                        <td>
                             <table data-ng-if="patent.p3sServices.length == 1">
                                 <tr>
-                                    <td data-ng-repeat="item in patent.p3sServices track by $index"  class="t-data">
+                                    <td data-ng-repeat="item in patent.p3sServices track by $index"  class="t-data__td">
                                         <div class="d-flex justify-content-left btn-underlined-selector">
                                             <span data-ng-bind="item.serviceType" data-ng-if="item.serviceType !== 'postgrant' && item.serviceType !== 'epct'" class="text-capitalize"></span>
                                             <span data-ng-if="item.serviceType == 'epct'" class="text-capitalize">Euro-PCT</span>
@@ -370,10 +368,10 @@
                                 </tr>
                             </table>                                
                         </td><!--when multiple services begin-->
-                        <td class="t-data__td">
+                        <td>
                             <table data-ng-if="patent.p3sServices.length == 1">
                                 <tr>
-                                    <td>
+                                    <td class="t-data__td">
                                         <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.p3sServices track by $index">
                                             <div data-ng-if="item.serviceType == 'epct'">
                                                 <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--bordered btn-underlined generateForm1200">Generate Form 1200</a>
@@ -424,9 +422,6 @@
                                             </div>                                                
                                             <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
                                         </div>
-                                    </td>
-                                    <td data-ng-if="item.saleType !== 'Online'">
-                                        hello
                                     </td>
                                 </tr>
                             </table>
