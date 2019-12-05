@@ -119,10 +119,11 @@
                         <span class="txt-grey" data-ng-if="patent.clientRef == ''">[No client reference provided]</span>
                         <span data-ng-if="patent.clientRef !== ''">{{patent.clientRef}}</span>
                     </td>
-                    <td class="t-data__td t-data__th--sm">
+
+                    <td class="t-data__th--sm">
                         <table data-ng-if="patent.p3sServices.length == 1">
                             <tr>
-                                <td data-ng-repeat="item in patent.p3sServices track by $index"  class="t-data">
+                                <td data-ng-repeat="item in patent.p3sServices track by $index"  class="t-data__td">
                                     <div class="d-flex justify-content-left btn-underlined-selector">
                                         <span data-ng-bind="item.serviceType" data-ng-if="item.serviceType !== 'postgrant' && item.serviceType !== 'epct'" class="text-capitalize"></span>
                                         <span data-ng-if="item.serviceType == 'epct'" class="text-capitalize">Euro-PCT</span>
@@ -141,10 +142,10 @@
                             </tr>
                         </table>                                
                     </td><!--when multiple services begin-->                    
-                    <td class="t-data__td t-data__td--md p-t-none p-b-none" >
+                    <td class="t-data__td--md p-t-none p-b-none" >
                         <table data-ng-if="patent.p3sServices.length == 1">
                             <tr>
-                                <td data-ng-repeat="item in patent.p3sServices track by $index">
+                                <td data-ng-repeat="item in patent.p3sServices track by $index" class="t-data__td">
                                     <div data-ng-if="!item.isUrgentAttention"> <!-- cover manual processing-->
                                         <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
                                     </div>
@@ -154,10 +155,22 @@
                                 </td>
                             </tr>
                         </table>                       
+                        <table data-ng-if="patent.p3sServices.length > 1">
+                            <tr data-ng-repeat="item in patent.p3sServices track by $index">
+                                <td class="t-data__td">
+                                    <div data-ng-if="!item.isUrgentAttention"> <!-- cover manual processing-->
+                                        <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
+                                    </div>
+                                    <div data-ng-if="item.isUrgentAttention"> <!-- cover manual processing-->
+                                        <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
+                                    </div>                                            
+                                </td>
+                            </tr>
+                        </table>                         
                     </td><!--patent place status-->
-                    <td class="t-data__td t-data__td--sm">
+                    <td class=" t-data__td--sm">
                         <table data-ng-if="patent.p3sServices.length == 1">
-                            <td data-ng-repeat="item in patent.p3sServices track by $index">
+                            <td data-ng-repeat="item in patent.p3sServices track by $index" class="t-data__td">
                                 <div data-ng-if="item.saleType === 'Online' || item.saleType === 'Offline'">
                                     <div class="d-flex flex-column">
                                         <div class="d-flex justify-content-start align-items-center"><!--display costs-->
@@ -165,24 +178,32 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated'">
                                     <p class="txt-grey">N/A</p>
                                 </div>                                
                             </td>
                         </table>
                         <table data-ng-if="patent.p3sServices.length > 1">
-<!--                             <tr data-ng-repeat="item in patent.p3sServices track by $index">
+                            <tr data-ng-repeat="item in patent.p3sServices track by $index">
                                 <td class="t-data__td">
-                                    <div class="d-flex justify-content-left btn-underlined-selector">
-                                        <span data-ng-bind="item.serviceType" class="text-capitalize"></span>
+                                    <div data-ng-if="item.saleType === 'Online' || item.saleType === 'Offline'">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex justify-content-start align-items-center"><!--display costs-->
+                                                <p class="font-weight-bold m-r-sm"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssCurrent"></i>$ {{item.currentStageCostUSD | number: 2}}</p>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated'">
+                                        <p class="txt-grey">N/A</p>
+                                    </div>                                
                                 </td>
-                            </tr> -->
+                            </tr>
                         </table>                                
                     </td><!--when multiple services begin-->     
-                    <td class="t-data__td t-data__th--sm">
+                    <td class="t-data__th--sm">
                         <table data-ng-if="patent.p3sServices.length == 1">
-                            <td data-ng-repeat="item in patent.p3sServices track by $index">
+                            <td data-ng-repeat="item in patent.p3sServices track by $index" class="t-data__td">
                                 <div data-ng-if="item.saleType === 'Online' || item.saleType === 'Offline'">
                                     <div class="d-flex flex-column">
                                         <div class="d-flex justify-content-start align-items-center"><!--display costs-->
@@ -199,13 +220,23 @@
                             </td>
                         </table>
                         <table data-ng-if="patent.p3sServices.length > 1">
-<!--                             <tr data-ng-repeat="item in patent.p3sServices track by $index">
+                            <tr data-ng-repeat="item in patent.p3sServices track by $index">
                                 <td class="t-data__td">
-                                    <div class="d-flex justify-content-left btn-underlined-selector">
-                                        <span data-ng-bind="item.serviceType" class="text-capitalize"></span>
+                                    <div data-ng-if="item.saleType === 'Online' || item.saleType === 'Offline'">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex justify-content-start align-items-center"><!--display costs-->
+
+                                                <p data-ng-if="(!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')) || (!item.isUrgentAttention && item.currentStageColour == 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline'))" class="font-weight-bold"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssNext"></i> $ {{item.nextStageCostUSD | number: 2}}</p> 
+                                                <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
+                                                <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
+                                            </div>    
+                                        </div>
+                                    </div>                            
+                                    <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated'">
+                                        <p class="txt-grey">N/A</p>
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
                         </table>                                
                     </td><!--when multiple services begin-->     
                     <td class="t-data__td t-data__td--md">
@@ -216,18 +247,20 @@
                                         <div data-ng-if="item.serviceType == 'epct'">
                                             <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--bordered btn-underlined generateForm1200">Generate Form 1200</a>
 
-                                            <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            <ngcart-addtocart id="item.actionID" class="tablebtn" name="form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                             </ngcart-addtocart>
+
                                         </div>
                                         <div data-ng-if="item.serviceType == 'renewal'">
-                                            <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            <ngcart-addtocart id="item.actionID" class="tablebtn" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
                                             </ngcart-addtocart>
                                             
                                         </div>
+
                                         <div data-ng-if="item.serviceType == 'grant'">
                                             <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--bordered btn-underlined prepareGrant" data-ng-click="$ctrl.prepareGrant(patent.patentID)">Prepare Grant
                                             </a>
-                                            <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            <ngcart-addtocart id="item.actionID" class="tablebtn" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                             </ngcart-addtocart>
                                         </div>                                                  
                                         <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
@@ -243,7 +276,7 @@
                                             <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--bordered btn-underlined generateForm1200">Generate Form 1200
                                             </a>
                                             <div data-ng-if="item.serviceStatus == 'Epct saved'">
-                                                <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                                <ngcart-addtocart id="item.actionID" class="tablebtn" name="form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                                 </ngcart-addtocart>
                                             </div>
                                             <div data-ng-if="item.serviceStatus == 'Epct not available'">
@@ -251,20 +284,26 @@
                                             </div>                                                              
                                         </div>
                                         <div data-ng-if="item.serviceType == 'renewal'">
-                                            <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            <ngcart-addtocart id="item.actionID" class="tablebtn" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
                                             </ngcart-addtocart>
+
                                         </div>
                                         <div data-ng-if="item.serviceType == 'grant'">
                                             <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--bordered btn-underlined prepareGrant" data-ng-click="$ctrl.prepareGrant(patent.patentID)">Prepare Grant
                                             </a>
-                                            <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            <ngcart-addtocart id="item.actionID" class="tablebtn" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                             </ngcart-addtocart>
                                         </div>                                                
                                         <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
                                     </div>
+                                    <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline'">
+                                        <span class="invisible">#</span><!--used for display purposes if no item is present -->
+                                    </div>
                                 </td>
+
                             </tr>
                         </table>
+
                     </td>
                 </tr>
                 <tr data-ng-show="Result.length==0">

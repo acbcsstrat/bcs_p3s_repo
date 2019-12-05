@@ -21,10 +21,12 @@ function renewalCostCtrl($scope, $timeout, dashboardService, organiseTextService
 
 
    $scope.$on('updateCost', function(e, o){
+
         updateCosttimeout = $timeout(function() {
             vm.actionCost = dashboardService.fetchActionCost();
             vm.loading = false;
         }, 300);
+
     })  
 
    $scope.$on('$destroy', function(){

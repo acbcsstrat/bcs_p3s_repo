@@ -7,7 +7,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     var vm = this;
 
     vm.patent = patent;
-    console.log(patent)
+
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;

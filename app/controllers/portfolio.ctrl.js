@@ -60,6 +60,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
         return true;
     }
 
+
     $scope.filterByPropertiesMatchingAND = function (data) {
         var matchesAND = true;
         for (var obj in outsideFilterStore) {

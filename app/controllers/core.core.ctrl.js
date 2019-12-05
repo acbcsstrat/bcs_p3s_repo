@@ -80,7 +80,6 @@ function coreCtrl($uibModal, $scope, coreService, localStorageService, $timeout,
 			}]
 		});
  	}
-
 	function closeModals() {
 	    if ($scope.warning) {
 	      $scope.warning.close();
