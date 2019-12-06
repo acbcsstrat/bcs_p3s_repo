@@ -120,7 +120,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 fulfilmentProvider.checkout(orderObj)
                     .then(function (data, status, headers, config) {
                             data.billingDetails = billingDetails;
-                            $state.go('bank-transfer-preparation', {orderObj:data}, {reload: false});                            
+                            $state.go('bank-transfer-preparation', {orderObj:orderObj}, {reload: false});                            
                         },
                         function (data, status, headers, config) {
                             $rootScope.$broadcast('ngCart:checkout_failed', {
