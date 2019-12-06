@@ -11,7 +11,7 @@
 <div data-ng-show="$ctrl.portfolioLoaded" class="animate-show container__scrollable-area">
     <div class="p-l-3 p-r-3 p-tb-sm br-tx-1">                            
         <div class="d-flex justify-content-between align-items-center">
-            <h1 class="font-h1 lh-default" data-ng-bind="$ctrl.pageTitle"></h1>
+            <h1 class="font-h1 lh-default">Portfolio</h1>
             <div class="d-flex align-items-center">
                 <div class="m-r-lg">
                     <div class="input-group m-r-sm">
@@ -96,7 +96,7 @@
                         </span>     
                     </th>
                     <th class="t-data__th t-data__th--sm" data-ng-click="$ctrl.sortType('nextPhaseColour'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'nextPhase'">
-                        <span>Next phase</span>
+                        <span>Next Phase</span>
                         <span data-ng-show="$ctrl.selectedSortType == 'nextPhase' && !$ctrl.sortReverse">
                             <i class="fas fa-angle-down fa-lg"></i>
                         </span>
@@ -111,7 +111,7 @@
             </thead>
             
             <tbody class="sticky-tbody">
-                <tr data-ng-repeat="patent in $ctrl.filtered=($ctrl.portfolioData | filter:filterByPropertiesMatchingAND | filter:searchPortfolio) | orderBy:columnName:reverse" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.patentID)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.patentID == $ctrl.selected}">
+                <tr data-ng-repeat="patent in $ctrl.filtered=($ctrl.portfolioData | filter:filterByPropertiesMatchingAND | filter:searchPortfolio)" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.patentID)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.patentID == $ctrl.selected}">
                     <td class="t-data__td t-data__td--sm sticky-td">
                         <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
                     </td>

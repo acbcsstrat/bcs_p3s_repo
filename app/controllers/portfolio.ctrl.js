@@ -5,22 +5,11 @@ portfolioCtrl.$inject = ['$scope', '$state', '$stateParams','$rootScope', 'paten
 function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService, $mdPanel) {
 
     var vm = this;
-    vm.pageTitle = 'Portfolio';
+
     $scope.promise = patentsRestService.fetchAllPatents();
-    vm.select = select;
-    vm.selected = 0;
-    vm.stateParams = $stateParams.patentId; 
-    vm.rowSelect = rowSelect;
-    $scope.portfolioLoaded = false;
-    vm.date = new Date();
-    vm.panelActive = true; 
-    vm.sortReverse  = false;
-    vm.selectedSortType = 'ep_ApplicationNumber';
-    vm.showPanel = showPanel;
-    vm.portfolioData = [];
+    vm.outsideFilterStore = {};
     vm.filtered = [];
-    vm.filteredChips = []
-    var outsideFilterStore;
+
     function select(i) {
         vm.selected = i;
     }
@@ -53,100 +42,38 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
     };
 
     function noSubFilter(obj) {
-        // console.log(obj)
         for (var key in obj) {
-            if (obj[key]) return false;
+            if (obj[key]) { //if one of the vm.outsideFilterStore ($scope.filter) properties evaluates to true (is selected) return false 
+                return false;
+            }
         }
-        return true;
+        return true; //if no subfilters return true. This will result in all filtered data items being returned a true value
     }
 
 
-    $scope.filterByPropertiesMatchingAND = function (data) {
-        var matchesAND = true;
-        for (var obj in outsideFilterStore) {
-            if( outsideFilterStore.hasOwnProperty(obj) ) {
-                if (noSubFilter(outsideFilterStore)) continue;
-                if (!outsideFilterStore[obj][data.p3sServices[0][obj]]) {
+    function checkArray(obj, service, prop) {
+        return service.some(function(item) { //if filter[curretStageColour][red]
+            return obj[prop][item[prop]] === true;
+        })
+    }
+
+    $scope.filterByPropertiesMatchingAND = function (data) { //all data sent from filter 
+        var matchesAND = true; //set macthes to true (default)
+
+        for (var obj in vm.outsideFilterStore) { //vm.outsideFilterStore is populated by $scope.filter within the panel controller below. Scope filter properties are initiated from front-end. currentStageColour/serviceType
+
+            if( vm.outsideFilterStore.hasOwnProperty(obj) ) {
+                if (noSubFilter(vm.outsideFilterStore[obj])) continue; //Check if there are any sub filter options with the value of true, if so, break from loop to return value of true
+                if (!checkArray(vm.outsideFilterStore, data.p3sServices, obj)) { //If the property from the data matches the property from vm.outsideFilterStore ($scope.filter) return false. It will not turn up in the table
                     matchesAND = false;
-                    break;
+                    break; //break from the loop and return matchesAND which would now return false
                 }
+                
             }
         }
+        // console.log(matchesAND)
         return matchesAND;
     };    
-
-
-
-
-
-    function showPanel($event) {
-
-        var panelPosition = $mdPanel.newPanelPosition()
-            .relativeTo($event.target)
-            .addPanelPosition($mdPanel.xPosition.ALIGN_END, $mdPanel.yPosition.BELOW);
-        // var panelAnimation = $mdPanel.newPanelAnimation()
-        //     .openFrom($event.target)
-        //     .duration(200)
-        //     .closeTo('.show-button')
-        //     .withAnimation($mdPanel.animation.SCALE);
-
-        var config = {
-            attachTo: angular.element(document.body),
-            controller: ['mdPanelRef', '$scope', function(mdPanelRef, $scope) {
-  
-                $scope.categories = ['serviceType', 'currentStageColour'];
-                $scope.filter = {};
-                outsideFilterStore = $scope.filter;
-                $scope.portfolioData = vm.portfolioData;
-                $scope.filtered = vm.filtered;
-                $scope.getItems = function (obj, array) {
-            
-                    return (array || []).map(function (w) {
-                        return w.p3sServices[0][obj];
-                    }).filter(function (w, idx, arr) {
-
-                        if (typeof w === 'undefined') {
-                            return false;
-                        }             
-                        return arr.indexOf(w) === idx;
-                    });
-                };
-
-                $scope.testFunction = function(key, value) {
-                    console.log(key, value)
-                    console.log($scope.selectedFilters.indexOf(key))
-                    if(value == true && $scope.selectedFilters.indexOf(key) === -1) {
-                        $scope.selectedFilters.push(key);
-                    } else {
-                        console.log('key : ', key)
-                          var index = $scope.selectedFilters.indexOf(key);
-                        console.log('index: ', index)
-                          $scope.selectedFilters.splice(index, 1)
-                    }
-                    console.log($scope.selectedFilters)
-                }                
-
-            }],
-            controllerAs: '$ctrl',
-            position: panelPosition,
-            // animation: panelAnimation,
-            targetEvent: $event,
-            templateUrl: 'app/templates/portfolio/filter-panel.tpl.htm',
-            clickOutsideToClose: true,
-            escapeToClose: true,
-            focusOnOpen: true
-        };
-        $mdPanel.open(config)
-        .then(
-            function(result) {
-
-                panelRef = result;
-            },
-            function(error){
-                console.error('Error occured when opening panel: ',error)
-            }
-        );
-    }
 
     $scope.promise.then(
         function(response){
@@ -157,8 +84,90 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                 }
             })
 
+            vm.select = select;
+            vm.selected = 0;
+            vm.stateParams = $stateParams.patentId; 
+            vm.rowSelect = rowSelect;
+            $scope.portfolioLoaded = false;
+            vm.sortReverse  = false;
+            vm.selectedSortType = 'ep_ApplicationNumber';
+            vm.showPanel = showPanel;
+
+            vm.filteredChips = []
             vm.portfolioData = response;
             vm.portfolioLoaded = true;
+
+            function showPanel($event) {
+
+                var panelPosition = $mdPanel.newPanelPosition()
+                    .relativeTo($event.target)
+                    .addPanelPosition($mdPanel.xPosition.ALIGN_END, $mdPanel.yPosition.BELOW);
+                // var panelAnimation = $mdPanel.newPanelAnimation()
+                //     .openFrom($event.target)
+                //     .duration(200)
+                //     .closeTo('.show-button')
+                //     .withAnimation($mdPanel.animation.SCALE);
+
+                var config = {
+                    attachTo: angular.element(document.body),
+                    controller: ['mdPanelRef', '$scope', function(mdPanelRef, $scope) {
+
+                        $scope.categories = ['serviceType', 'currentStageColour'];
+                        $scope.filter = {};
+                        vm.outsideFilterStore = $scope.filter;
+                        $scope.portfolioData = response;
+                        $scope.filtered = vm.filtered; //used for inital load of category items
+                        $scope.getItems = function (obj, array) { //obj is cat currentStageColour or serviceType
+                            
+                            return (array || []).map(function (w) {
+                                return w.p3sServices[0][obj];
+                            }).filter(function (w, idx, arr) {
+
+                                if (typeof w === 'undefined') {
+                                    return false;
+                                }             
+                                return arr.indexOf(w) === idx;
+                            });
+                        };
+
+
+                        // console.log(vm.filtered)
+
+                        // $scope.$parent.$watch('vm.filtered', function (newVal, oldVal) {
+                        //     console.log('newVal', newVal)
+                        //     console.log('oldVal', oldVal)
+                        // })                        
+
+                       // $scop.$watch('vm.filtered', function (newVal, oldVal) {
+                       //      console.log(newVal)
+                       // })
+
+                        // $scope.updateFilterChips = function(value) {
+                        //     // vm.filtered =
+                        // }     
+
+                    }],
+                    controllerAs: '$ctrl',
+                    position: panelPosition,
+                    // animation: panelAnimation,
+                    targetEvent: $event,
+                    templateUrl: 'app/templates/portfolio/filter-panel.tpl.htm',
+                    clickOutsideToClose: true,
+                    escapeToClose: true,
+                    focusOnOpen: true
+                };
+                $mdPanel.open(config)
+                .then(
+                    function(result) {
+
+                        panelRef = result;
+                    },
+                    function(error){
+                        console.error('Error occured when opening panel: ',error)
+                    }
+                );
+            }
+
 
             $scope.$broadcast('portfolioLoaded', function(){})
 

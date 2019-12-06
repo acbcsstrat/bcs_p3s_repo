@@ -14,12 +14,6 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 		$state.go('portfolio', {reload: true}); //direct user to patents
 	} else {
 
-		vm.orderObj.patentNos = (function(){
-			return vm.orderObj.orderedPatentUIs.map(function(el) {
-				return el.ep_ApplicationNumber;
-			})
-		}())
-
 		vm.openCancelTransModal = openCancelTransModal;
 		vm.commitTransfer = commitTransfer;	
 
