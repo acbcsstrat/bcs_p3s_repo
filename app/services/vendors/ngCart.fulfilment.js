@@ -15,9 +15,9 @@ angular.module('ngCart.fulfilment', [])
         this._obj.settings = settings;
     };
   
-    this.checkout = function(patentObj, orderObj){
+    this.checkout = function(orderObj){
         var provider = $injector.get('ngCart.fulfilment.' + this._obj.service);
-        return provider.checkout(this._obj.settings,patentObj ,orderObj);
+        return provider.checkout(this._obj.settings,orderObj);
     };
       
 }])

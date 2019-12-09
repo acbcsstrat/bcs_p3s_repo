@@ -110,17 +110,16 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
                 var orderObj = {
                     basketItems: $scope.basketItems,
-                    totalCostUSD: ngCart.totalCost(),
-                    dateNowLocalTime :null
+                    totalCostUSD: ngCart.totalCost()
+                    // dateNowLocalTime :null
                 };
 
-                var billingDetails = $scope.summary.billingDetails;
                 fulfilmentProvider.setService($scope.service);
                 fulfilmentProvider.setSettings($scope.settings);
                 fulfilmentProvider.checkout(orderObj)
                     .then(function (data, status, headers, config) {
-                            data.billingDetails = billingDetails;
-                            $state.go('bank-transfer-preparation', {orderObj:orderObj}, {reload: false});                            
+                            data.billingDetails = $scope.summary.billingDetails;
+                            $state.go('bank-transfer-preparation', {orderObj:orderObj, details: data}, {reload: false});                            
                         },
                         function (data, status, headers, config) {
                             $rootScope.$broadcast('ngCart:checkout_failed', {
