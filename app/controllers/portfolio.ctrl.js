@@ -8,7 +8,6 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
     $scope.promise = patentsRestService.fetchAllPatents();
     vm.outsideFilterStore = {};
-    vm.filtered = [];
 
     function select(i) {
         vm.selected = i;
@@ -92,8 +91,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
             vm.sortReverse  = false;
             vm.selectedSortType = 'ep_ApplicationNumber';
             vm.showPanel = showPanel;
-
-            vm.filteredChips = []
+            vm.filtered = [];
             vm.portfolioData = response;
             vm.portfolioLoaded = true;
 
@@ -130,21 +128,13 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                             });
                         };
 
+                        $scope.testChange = function(value) {
+                            $timeout(function(argument) {
+                                $scope.filtered = vm.filtered;
+                            })
+                            
+                        }
 
-                        // console.log(vm.filtered)
-
-                        // $scope.$parent.$watch('vm.filtered', function (newVal, oldVal) {
-                        //     console.log('newVal', newVal)
-                        //     console.log('oldVal', oldVal)
-                        // })                        
-
-                       // $scop.$watch('vm.filtered', function (newVal, oldVal) {
-                       //      console.log(newVal)
-                       // })
-
-                        // $scope.updateFilterChips = function(value) {
-                        //     // vm.filtered =
-                        // }     
 
                     }],
                     controllerAs: '$ctrl',
