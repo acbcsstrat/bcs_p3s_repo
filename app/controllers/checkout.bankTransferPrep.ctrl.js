@@ -43,7 +43,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 		function commitTransfer() {
 			
 			vm.commitTransferBtn = true; //prevent double click
-
+			console.log($stateParams.orderObj)
 			bankTransferCommitService.commitTransfer($stateParams.orderObj) //SERVICE HANDLES STATE.GO
 			.then(
 	            function(response){

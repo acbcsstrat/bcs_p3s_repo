@@ -1,0 +1,188 @@
+.expandcollapse-item:first-of-type {
+  border-top:0px;
+}
+
+
+.expandcollapse-heading-collapsed p{
+  font-size: 16px;
+  font-weight: normal;
+  margin:0px;
+}
+
+
+
+.expandcollapse-heading-expanded {
+  cursor: pointer;
+  z-index: 100000000;
+  padding: 1.5rem 3rem;
+  position: relative;
+  color: white; 
+  background-color: black;
+  border: 1px solid blue;
+}
+
+.expandcollapse-heading-expanded p{
+  font-size: 16px;
+  font-weight: bold;
+  margin:0px;
+}
+
+.expandcollapse-heading-collapsed > span,
+.expandcollapse-heading-expanded > span {
+  position:absolute;
+  top: 25px;
+  right: 15px;
+  font-size: 20px;
+  line-height: 0px;
+}
+
+.expand-collapse-content {
+  background: $white;
+  padding: $panel-pad-md;
+  border-bottom: 1px solid $border;;
+}
+
+/*
+animation:*/
+
+.slideDown.ng-hide {
+  max-height: 0;
+  overflow:hidden;
+  position:relative;
+  transition:max-height 0.15s ease-out;
+  -webkit-transition: max-height 0.15s ease-out;
+}
+
+.slideDown {
+  max-height:50rem; //allows for dynamic heights
+  transition:max-height 0.35s ease-in;
+  -webkit-transition: max-height 0.35s ease-in;
+  // overflow:hidden;
+  position:relative;
+}
+
+.slideDown.ng-hide-remove,
+.slideDown.ng-hide-add {
+  /* remember, the .hg-hide class is added to element
+  when the active class is added causing it to appear
+  as hidden. Therefore set the styling to display=block
+  so that the hide animation is visible */
+  display:block!important;
+}
+
+.filter-box {
+  padding: $panel-pad-sm;
+  &:first-child {
+    padding-left: 0;
+  }
+}
+
+
+.filter-box .checkbox-container {
+  margin-right: 2rem;
+  &:only-child {
+    margin-right: 0;
+  }
+  &:last-child { 
+    margin-right: 0;
+  }
+} 
+
+.filter-container {
+  display: block;
+  position: relative;
+  padding-left: 2.25rem;
+  // margin-bottom: 1.75rem;
+  line-height: 1.4rem;
+  cursor: pointer;
+  font-size: $font-normal;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.filter-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 1px solid "$grey-dark";    
+    background-color: $white;
+}
+
+/* On mouse-over, add a grey background color */
+.filter-container:hover input ~ .checkmark {
+    background-color: $grey-lighter;
+}
+
+/* When the checkbox is checked, add a background */
+.filter-container input:checked ~ .checkmark {
+    background-color: $black;
+    border: 1px solid "$black";    
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.filter-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+// .filter-container .checkmark:after {
+//     left: 0.9rem;
+//     top: 0.5rem;
+//     width: 0.5rem;
+//     height: 1rem;
+//     border: solid white;
+//     border-width: 0 3px 3px 0;
+//     -webkit-transform: rotate(45deg);
+//     -ms-transform: rotate(45deg);
+//     transform: rotate(45deg);
+// }
+
+
+.portfolio-pointer {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: $white;
+  position: absolute;
+  left: 50%;
+  margin-left: -25px;
+  top: 40.5rem;
+
+  .fa-caret-down {
+    position: absolute;
+    left: 50%;
+    color: $grey-dark;
+    margin-left: -10px;
+    top: 15px;
+  }
+}
+
+.table-container--portfolio {
+  min-height: 386px;
+  z-index: 999;
+  // -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+  // -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+  // box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);    
+  border-radius: 10px;  
+}
