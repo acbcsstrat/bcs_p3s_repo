@@ -11,6 +11,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
+    $scope.notInProgress = '';
     $scope.availableServices = [];
     $scope.notInProgress = true;
     vm.portfolioLoaded = false;
@@ -62,10 +63,16 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                     }
                 )
 
+                $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
+                    return item.saleType == 'Not In Progress';
+                })
+    
                 patent.p3sServicesWithFees.forEach(function(data, index){
-                    $scope.notInProgress = data.saleType == 'Not In Progress' ? true : false;
+
                     if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
-                    $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
+                    if(data.saleType !== 'Not In Progress') {
+                        $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
+                    }
                 })
 
                 $scope.availableServices.forEach(function(obj){

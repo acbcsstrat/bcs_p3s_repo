@@ -13,47 +13,63 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
     if($scope.$parent.availableServices.length > 0) {
 
         vm.data = {};
-        vm.data.availableAction = $scope.$parent.availableServices;
+        vm.data.availableAction = $scope.$parent.availableServices; 
         vm.data.selectedAction = { id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action };
         vm.feeData = true;
 
     }
 
+    function feeUIAvailable(array) {
+
+        return array.some(function(o) {
+            return Object.keys(o).some(function(k){
+                return k.toLowerCase().indexOf('feeui') !== -1 && o[k] !== null;
+            })
+        })
+
+    }
+
     function setFees(action) {
 
-        vm.availableFees = '';
+        vm.availableFees = {};
 
-        if(patent.p3sServicesWithFees[0].renewalFeeUI === null && patent.p3sServicesWithFees[0].form1200FeeUI === null && patent.p3sServicesWithFees[0].grantFeeUI === null) { //patent.grantFeeUI === null
-            return;
-        }
+        if(feeUIAvailable(patent.p3sServicesWithFees))
 
         if(action == 'Euro-PCT') {
             vm.displayForm1200 = true;
             vm.displayRenewal = false;
             vm.displayGrant = false;
-            vm.availableFees = patent.p3sServicesWithFees[0].form1200FeeUI;
-            vm.availableFees.ppFeesUSD = Number(Math.round(( vm.availableFees.subTotalUSD -  vm.availableFees.currentOfficialFeeUSD) + 'e2') +'e-2');
-            vm.availableFees.ppFeesEUR = Number(Math.round(( vm.availableFees.subTotalEUR -  vm.availableFees.currentOfficialFeeEUR) + 'e2') +'e-2');
+            vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
+                return item.serviceType === 'Euro-PCT';
+            }).map(function(fee) {
+                return fee.form1200FeeUI;
+            })
         }
 
         if(action == 'renewal') {
             vm.displayForm1200 = false;
             vm.displayRenewal = true;
             vm.displayGrant = false;            
-            vm.availableFees = patent.p3sServicesWithFees[0].renewalFeeUI;
-            vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.subTotalUSD - vm.availableFees.currentOfficialFeeUSD) + 'e2') +'e-2');
-            vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.subTotalEUR - vm.availableFees.currentOfficialFeeEUR) +'e2')+'e-2');
+            vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
+                return item.serviceType === 'renewal';
+            }).map(function(fee) {
+                return fee.renewalFeeUI;
+            })
         }
 
         if(action == 'grant') {
             vm.displayForm1200 = false;
             vm.displayRenewal = false;
             vm.displayGrant = true;       
-            vm.availableFees = patent.p3sServicesWithFees[0].grantFeeUI;
-            vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.subTotalUSD - vm.availableFees.currentOfficialFeeUSD) + 'e2') +'e-2');
-            vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.subTotalEUR - vm.availableFees.currentOfficialFeeEUR) + 'e2') +'e-2');
-        }        
+            vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
+                return item.serviceType === 'grant';
+            }).map(function(fee) {
+                return fee.grantFeeUI;
+            })
+        }
 
+        vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.official[0].subTotalUSD - vm.availableFees.official[0].currentOfficialFeeUSD) + 'e2') +'e-2');
+        vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.official[0].subTotalEUR - vm.availableFees.official[0].currentOfficialFeeEUR) +'e2')+'e-2');
         vm.availableFees.savings = Number(Math.round((patent.p3sServicesWithFees[0].nextStageCostUSD - patent.p3sServicesWithFees[0].currentStageCostUSD) + 'e2') +'e-2');
 
     }
