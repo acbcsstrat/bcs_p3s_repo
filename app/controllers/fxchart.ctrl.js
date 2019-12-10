@@ -129,7 +129,8 @@ function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, 
                 }
 
                 var fxChartData = ca.filter(function(item){
-                    return item.info === type
+                    if(item.info == 'epct') { item.info = 'Euro-PCT' }
+                    return item.info === type;
                 }).map(function(data){
                     return data.data.lineChart;
                 })
