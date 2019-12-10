@@ -28,6 +28,7 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
         vm.data.availableAction = patent.p3sServicesWithFees.filter(function(item){
             return item.serviceType !== 'postgrant';
         }).map(function(action, idx){
+            if(action.serviceType == 'epct') { action.serviceType = 'Euro-PCT'}
             return {id: idx, action: action.serviceType}
         })
 
@@ -43,7 +44,7 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
 
         if(typeof action == undefined) { return; }
 
-        if(action == 'Euro-PCT' || action == 'epct') { 
+        if(action == 'Euro-PCT') { 
             vm.notificationUi = 'allEpctNotificationUIs';
             vm.notificationUrl = 'rest-epct-notifications/';
             vm.toBlueOrNotToBlue = false; //USED TO DETERMINE WHETHER TO DISPLAY BLUE
