@@ -42,6 +42,8 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'Euro-PCT';
             }).map(function(fee) {
+                fee.form1200FeeUI.savings = Number(Math.round((fee.nextStageCostUSD - fee.currentStageCostUSD) + 'e2') +'e-2');
+                fee.form1200FeeUI.data = fee;
                 return fee.form1200FeeUI;
             })
         }
@@ -53,6 +55,8 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'renewal';
             }).map(function(fee) {
+                fee.renewalFeeUI.savings = Number(Math.round((fee.nextStageCostUSD - fee.currentStageCostUSD) + 'e2') +'e-2');
+                fee.renewalFeeUI.data = fee;
                 return fee.renewalFeeUI;
             })
         }
@@ -64,6 +68,8 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'grant';
             }).map(function(fee) {
+                fee.grantFeeUI.savings = Number(Math.round((fee.nextStageCostUSD - fee.currentStageCostUSD) + 'e2') +'e-2');
+                fee.grantFeeUI.data = fee;
                 return fee.grantFeeUI;
             })
         }

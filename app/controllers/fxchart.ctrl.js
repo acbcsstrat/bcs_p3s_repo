@@ -120,39 +120,30 @@ function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, 
 
             vm.setData(vm.data.selectedAction.action)
 
-            function setData(data) {
+            function setData(type) {
 
                 vm.lineData = null;
 
-                var lineDataArr = [];
-                var fxData;
-
-                if(data === undefined || typeof data === 'undefined') {
+                if(type === undefined || typeof type === 'undefined') {
                     return;
                 }
 
-                if(data == 'epct' || data == 'grant') {
-                    fxData = ca[0].data.lineChart;
-                    for (var property in fxData) { //change lineData
-                        if (fxData.hasOwnProperty(property)) {
-                            var dayData = fxData[property];
-                            var str = property.split("T").shift();
-                            var date = new Date(str).getTime();
-                            lineDataArr.push([date, dayData]);
-                        }
-                    }
-                }
+                var fxChartData = ca.filter(function(item){
+                    if(item.info == 'epct') { item.info = 'Euro-PCT' }
+                    return item.info === type;
+                }).map(function(data){
+                    return data.data.lineChart;
+                })
 
-                if(data == 'renewal') {
-                    fxData = ca[0].data.lineChart;
-                    for (var property in fxData) { //change lineData
-                        if (fxData.hasOwnProperty(property)) {
-                            var dayData = fxData[property].currentOfficialFeeUSD; //different object structure to form1200 (not sure why)
-                            var str = property.split("T").shift();
-                            var date = new Date(str).getTime();
-                            lineDataArr.push([date, dayData]);
-                        }
-                    }                
+                var lineDataArr = [];
+
+                for (var property in fxChartData[0]) { //change lineData
+                    if (fxChartData[0].hasOwnProperty(property)) {
+                        var dayData = fxChartData[0][property].currentOfficialFeeUSD !== undefined ? fxChartData[0][property].currentOfficialFeeUSD : fxChartData[0][property];
+                        var str = property.split("T").shift();
+                        var date = new Date(str).getTime();
+                        lineDataArr.push([date, dayData]);
+                    }
                 }
 
                 vm.lineData = [

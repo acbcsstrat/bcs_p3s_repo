@@ -399,17 +399,7 @@
                                 <tr data-ng-repeat="item in patent.p3sServices track by $index">
                                     <td class="t-data__td">
                                         <div class="d-flex justify-content-center btn-underlined-selector">
-                                            <div data-ng-if="item.serviceType == 'epct'">
-                                                <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--bordered btn-underlined generateForm1200">Generate Form 1200
-                                                </a>
-                                                <div data-ng-if="item.serviceStatus == 'Epct saved'">
-                                                    <ngcart-addtocart id="{{item.actionID}}" class="tablebtn" name="epct" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
-                                                    </ngcart-addtocart>
-                                                </div>
-                                                <div data-ng-if="item.serviceStatus == 'Epct not available'">
-                                                    <!--empty-->
-                                                </div>                                                              
-                                            </div>
+
                                             <div data-ng-if="item.serviceType == 'renewal'">
                                                 <ngcart-addtocart id="{{item.actionID}}" class="tablebtn" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
                                                 </ngcart-addtocart>
@@ -421,6 +411,7 @@
                                                 </ngcart-addtocart>
                                             </div>                                                
                                             <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
+                                            <p class="invisible" data-ng-if="item.saleType !== 'Online' && item.serviceStatus !== 'Show price' && item.serviceStatus !== 'Grant available'">Fill space</p>
                                         </div>
                                     </td>
                                 </tr>

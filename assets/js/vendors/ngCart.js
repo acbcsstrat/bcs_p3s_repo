@@ -54,10 +54,17 @@ angular.module('ngCart', ['ngCart.directives'])
                     this.order.price = price;
 
                     if(data.p3sServices) {
-                        this.order.euroAction = data.p3sServices[0].serviceType;
+
+                        this.order.euroAction = data.p3sServices.map(function(item){
+                            if(action.serviceType === 'epct') { action.serviceType = 'Euro-PCT'; }
+                            return  item.serviceType;
+                        })
                     }
                     if(data.p3sServicesWithFees) {
-                        this.order.euroAction = data.p3sServicesWithFees[0].serviceType;
+                        this.order.euroAction = data.p3sServicesWithFees.map(function(item){
+                            if(action.serviceType === 'epct') { action.serviceType = 'Euro-PCT'; }
+                            return  item.serviceType;
+                        })
                     }
 
                     this.order.ep_ApplicationNumber = data.ep_ApplicationNumber;
