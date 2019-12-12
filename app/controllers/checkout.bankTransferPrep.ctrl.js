@@ -12,7 +12,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	if(vm.orderObj == '') { //if page is refreshed when on bank prepration page
 		$state.go('portfolio', {reload: true}); //direct user to patents
 	} else {
-
+		console.log($stateParams)
 		vm.details.patentNos = $stateParams.details.orderedPatentUIs.map(function(el) {
 			return el.ep_ApplicationNumber;
 		})

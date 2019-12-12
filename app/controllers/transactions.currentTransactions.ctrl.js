@@ -26,14 +26,13 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
     function init() {
 
 		currentTransactions.forEach(function(data){
-			if(data.serviceUIs.length > 1) {
 				data.serviceUIs.map(function(o, i){ 
+					o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
 					if(o.patentUI.clientRef == '') {
 						o.patentUI.clientRef = '[No Client Reference Provided]'
 					}
 				})					
-			}
-
+			// }
 		})    
 
 		currentTransactions.map(function(o, i){

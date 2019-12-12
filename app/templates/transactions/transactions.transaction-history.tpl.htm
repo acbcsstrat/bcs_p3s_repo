@@ -122,7 +122,7 @@
 										</span>
 									</span>
 								</span>
-								<select data-ng-if="item.serviceUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.serviceUIs" data-ng-model="$ctrl.patentAppData.defaultSelect" data-ng-change="$ctrl.transactionListFilter($ctrl.patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
+								<select data-ng-if="item.serviceUIs.length > 1" data-ng-options="item.appAndType for item in item.serviceUIs" data-ng-model="$ctrl.patentAppData.defaultSelect" data-ng-change="$ctrl.transactionListFilter($ctrl.patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
 									<option value="">Multiple</option>
 								</select>
 					        </td>

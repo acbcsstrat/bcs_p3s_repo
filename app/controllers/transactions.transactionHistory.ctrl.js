@@ -23,18 +23,15 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
     vm.rowSelect = rowSelect;
     vm.selectedSortType = 'p3S_TransRef';
    
-
     function init() {
 
         transactionHistory.forEach(function(data){
-            if(data.serviceUIs.length > 1) {
-                data.serviceUIs.map(function(o, i){ 
-                    if(o.patentUI.clientRef == '') {
-                        o.patentUI.clientRef = '[No Client Reference Provided]'
-                    }
-                })                  
-            }
-
+            data.serviceUIs.map(function(o, i){ 
+                o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
+                if(o.patentUI.clientRef == '') {
+                    o.patentUI.clientRef = '[No Client Reference Provided]'
+                }
+            })
         })    
 
         transactionHistory.map(function(o, i){
