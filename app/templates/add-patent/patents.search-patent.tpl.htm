@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="font-h1 lh-default" data-ng-bind="$ctrl.pageTitle"></h1>
+    </div>
+</div>
+<patentnav></patentnav>
+<div data-ng-show="$ctrl.animate" class="animate-show m-t-md">
+	<div class="row m-b-md">
+		<div class="col-md-12 col-lg-7 col-xl-6">		
+			<form class="form" data-ng-submit="$ctrl.findPatent(searchPatent);" name="searchPatentForm" novalidate>
+				<div class="form-group m-b-none d-flex align-items-center">
+					<input type="text" name="searchPatent" id="searchPatent" data-ng-model="searchPatent" class="form-control form-control-lg pill-radius font-h4 m-r-sm" placeholder="Enter Patent Application No. ..." focus-me="true" data-validate-search required>
+					<div class="user-utils d-flex justify-content-center">
+						<button type="submit" data-ng-disabled="searchPatentForm.$invalid" class="btn btn--green circle-radius-sm d-flex justify-content-center align-items-center icon-link">
+							<i data-ng-hide="$ctrl.loadingPatent" class="fa fa-search fa-lg"></i>
+							<div class="fa-2x"  data-ng-show="$ctrl.loadingPatent">
+								<i class="far fa-cog fa-spin fa-1x"></i>
+							</div>
+						</button>
+					</div>
+				</div>
+			</form>
+			<div class="col-md-9 col-lg-12 col-xl-12 m-t-sm" data-ng-show="searchPatentForm.searchPatent.$error.validSearch && searchPatentForm.searchPatent.$dirty && searchPatentForm.searchPatent.$touched">
+				<p class="font-h4 font-weight-medium txt-phase-red m-t-xs" data-ng-if="searchPatentForm.searchPatent.$error.validSearch">Please inlcude the check digit when entering the application number e.g. EP12345678.9</p>
+			</div>							
+			<div class="col-md-9 col-lg-12 col-xl-12 m-t-sm" data-ng-show="$ctrl.error">
+				<p class="font-h4 font-weight-medium txt-phase-red" data-ng-bind="$ctrl.searchError"></p>
+			</div>			
+		</div>
+	</div>
+	<div data-ng-show="!$ctrl.loadingPatent && !$ctrl.error" class="animate-show">
+		<div data-ui-view></div>
+	</div>
+</div>
