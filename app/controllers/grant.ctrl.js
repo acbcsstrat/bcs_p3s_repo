@@ -16,17 +16,23 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     vm.highestPoint = 0;
     vm.uninhibitGrantConfirm = uninhibitGrantConfirm;
     vm.deleteGrantConfirm = deleteGrantConfirm;
+    var grantAction;
 
     function init() {
 
+        grantAction = patent.p3sServicesWithFees.filter(function(action){
+            return action.serviceType == 'grant';
+        })
+
     	vm.activeTab = 0;
 
-		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant available') {
+
+		if(grantAction[0].serviceStatus == 'Grant available') {
 			vm.grantStage = 1;
     		vm.grantTemplate = vm.templates[0].url;        
     	}
 
-		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' || patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing' || patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || patent.p3sServicesWithFees[0].serviceStatus == 'EPO Instrcted') {
+		if(grantAction[0].serviceStatus == 'Grant saved' || grantAction[0].serviceStatus == 'Manual processing' || grantAction[0].serviceStatus == 'Payment in progress' || grantAction[0].serviceStatus == 'EPO Instrcted') {
 			vm.grantStage = 2;
     		vm.grantTemplate = vm.templates[2].url;        
     	}    	
@@ -290,7 +296,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', '$state', function($uibModalInstance, $timeout, $state){
 
-                if(patent.p3sServicesWithFees[0].serviceStatus === 'Grant available') {
+                if(grantAction[0].serviceStatus === 'Grant available') {
 
                     this.confirm = function() {
                         grantService.inhibitGrant(patent.patentID)
