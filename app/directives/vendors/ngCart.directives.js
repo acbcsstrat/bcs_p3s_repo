@@ -100,6 +100,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
             $scope.basketItems = [] = Object.keys($scope.productData).map(function(data, index){
                 var obj = {};
+                obj.ep_ApplicationNo = $scope.productData[data]._data.ep_ApplicationNumber;
                 obj.patentID = $scope.productData[data]._data.patentID;
                 obj.serviceType = $scope.productData[data]._name;
                 return obj;

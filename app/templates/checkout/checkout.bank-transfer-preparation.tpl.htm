@@ -45,10 +45,10 @@
                                 <div class="border-grey-xs--btm m-b-xs">
                                     <div class="row font-body m-b-xs">                                
                                         <div class="col-md-5">
-                                            <p class="font-weight-medium font-body">App No/s: </p>                        
+                                            <p class="font-weight-medium font-body">Actions: </p>                        
                                         </div>                    
                                         <div class="col-md-7">
-                                            <span class="font-body" data-ng-repeat="p in $ctrl.details.patentNos">{{p}}<br></span>
+                                            <span class="font-body" data-ng-repeat="p in $ctrl.details.patentNos">{{p.ep_ApplicationNo}} <span class="text-capitalize">(p.serviceType)</span><br></span>
                                         </div>  
                                     </div>
                                 </div>
@@ -117,11 +117,12 @@
                                 <div class="border-grey-xs--btm m-b-xs">
                                     <div class="row m-b-xs">                                
                                         <div class="col-xl-8">
-                                            <p class="font-weight-medium font-h4">App No/s: </p>                        
-                                        </div>                    
-                                        <div class="col-xl-4">
-                                            <span class="font-h4" data-ng-repeat="p in $ctrl.details.patentNos">{{p}}<br></span>
-                                        </div>  
+                                            <p class="font-weight-medium font-h4">Actions
+                                            </p>
+                                        </div>
+                                            <div class="col-xl-4">
+                                                <span class="font-body" data-ng-repeat="p in $ctrl.details.patentNos">{{p.ep_ApplicationNo}} <span class="text-capitalize">({{p.serviceType}})</span><br></span>
+                                            </div>  
                                     </div>
                                 </div>
                                 <div class="border-grey-xs--btm m-b-xs">

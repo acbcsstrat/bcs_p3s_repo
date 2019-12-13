@@ -115,11 +115,11 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-2 text-left font-body font-weight-medium" for="firstName">First Name</label>
                                     <div class="col-4">
-                                        <input class="form-control font-body pill-radius" type="text" name="firstName" id="firstName" data-ng-model="summary.firstName" readonly>
+                                        <input class="form-control font-body pill-radius" type="text" name="firstName" id="firstNameMd" data-ng-model="summary.firstName" readonly>
                                     </div>
                                     <label class="col-form-label col-2 text-left font-body font-weight-medium" for="lastName">Last Name</label>
                                     <div class="col-4">
-                                        <input class="form-control font-body pill-radius" type="text" name="lastName" id="lastName" data-ng-model="summary.lastName" readonly>
+                                        <input class="form-control font-body pill-radius" type="text" name="lastName" id="lastNameMd" data-ng-model="summary.lastName" readonly>
                                     </div>                             
                                 </div>
                             </div>                        
@@ -168,13 +168,13 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingStreet">Street</label>
                                     <div class="col-4">
-                                        <input class="form-control font-body pill-radius" type="text" name="businessStreet" id="businessStreet" data-ng-model="summary.billingDetails.billingStreet" data-validate-address required>
+                                        <input class="form-control font-body pill-radius" type="text" name="businessStreet" id="billingStreetMd" data-ng-model="summary.billingDetails.billingStreet" data-validate-address required>
                                         <p class="font-body txt-phase-red" data-ng-show="billingForm.businessStreet.$error.required && billingForm.businessStreet.$dirty">Please fill out this field</p>
                                         <p class="font-body txt-phase-red" data-ng-show="billingForm.businessStreet.$error.validAddress && billingForm.businessStreet.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>                                
                                     </div>
                                     <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingCity">City</label>
                                     <div class="col-4">
-                                        <input class="form-control font-body pill-radius" type="text" name="billingCity" id="billingCity" data-ng-model="summary.billingDetails.billingCity" data-validate-address required>
+                                        <input class="form-control font-body pill-radius" type="text" name="billingCity" id="billingCityMd" data-ng-model="summary.billingDetails.billingCity" data-validate-address required>
                                         <p class="font-body txt-phase-red" data-ng-show="billingForm.billingCity.$error.required && billingForm.billingCity.$dirty">Please fill out this field</p>
                                         <p class="font-body txt-phase-red" data-ng-show="billingForm.billingCity.$error.validAddress && billingForm.billingCity.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>                                        
                                     </div>
@@ -182,13 +182,13 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingState">State</label>
                                     <div class="col-4">
-                                        <input class="form-control font-body pill-radius" type="text" name="billingState" id="billingState" data-ng-model="summary.billingDetails.billingState" data-validate-address required>
+                                        <input class="form-control font-body pill-radius" type="text" name="billingState" id="billingStateMd" data-ng-model="summary.billingDetails.billingState" data-validate-address required>
                                         <p class="font-body txt-phase-red" data-ng-show="billingForm.billingState.$error.required && billingForm.billingState.$dirty">Please fill out this field</p>
                                         <p class="font-body txt-phase-red" data-ng-show="billingForm.billingState.$error.validAddress && billingForm.billingState.$dirty">Only letters, numbers, -, ., (), commas and spaces are valid charcters in this field.</p>                                         
                                     </div>
                                     <label class="col-form-label col-2 text-left font-body font-weight-medium" for="billingZip">Zip</label>
                                     <div class="col-4">
-                                        <input class="form-control font-body pill-radius" type="text" name="billingZip" id="billingZip" data-ng-model="summary.billingDetails.billingZip" data-validate-zip required>
+                                        <input class="form-control font-body pill-radius" type="text" name="billingZip" id="billingZipMd" data-ng-model="summary.billingDetails.billingZip" data-validate-zip required>
                                         <p class="font-body txt-phase-red" data-ng-show="billingForm.billingZip.$error.required && billingForm.billingZip.$dirty">Please fill out this field</p>
                                         <p class="font-body txt-phase-red" data-ng-show="billingForm.billingZip.$error.validZip && billingForm.billingZip.$dirty">Only numbers and - are valid charcters in this field.</p>                                         
                                     </div>
