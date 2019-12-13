@@ -44,6 +44,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             }).map(function(fee) {
                 fee.form1200FeeUI.savings = Number(Math.round((fee.nextStageCostUSD - fee.currentStageCostUSD) + 'e2') +'e-2');
                 fee.form1200FeeUI.data = fee;
+                vm.availableFees.fxRate = fee.form1200FeeUI.fxRate;
                 return fee.form1200FeeUI;
             })
         }
@@ -57,6 +58,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             }).map(function(fee) {
                 fee.renewalFeeUI.savings = Number(Math.round((fee.nextStageCostUSD - fee.currentStageCostUSD) + 'e2') +'e-2');
                 fee.renewalFeeUI.data = fee;
+                vm.availableFees.fxRate = fee.renewalFeeUI.fxRate;
                 return fee.renewalFeeUI;
             })
         }
@@ -70,6 +72,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             }).map(function(fee) {
                 fee.grantFeeUI.savings = Number(Math.round((fee.nextStageCostUSD - fee.currentStageCostUSD) + 'e2') +'e-2');
                 fee.grantFeeUI.data = fee;
+                vm.availableFees.fxRate = fee.grantFeeUI.fxRate;
                 return fee.grantFeeUI;
             })
         }
