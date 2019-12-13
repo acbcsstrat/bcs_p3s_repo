@@ -11,7 +11,7 @@ require("app/directives/form1200.dir.js");
 require("app/directives/checkout.dir.js");
 require("app/directives/current-transactions.transactions.dir.js");
 require("app/directives/patents.list-patents.dir.js");
-require("app/directives/user.dir.js");
+require("app/directives/validations.dir.js");
 require("app/directives/transactions.dir.js");
 require("app/directives/patents.search-patent.dir.js");
 require("app/directives/portfolio.nav.dir.js");
@@ -65,8 +65,7 @@ require("app/controllers/dashboard.recentActivity.ctrl.js");
 require("app/controllers/dashboard.action-cost.ctrl.js");
 require("app/controllers/dashboard.actions-available.ctrl.js");
 require("app/controllers/europct.form1200.ctrl.js");
-require("app/controllers/grant.ctrl.js");// !!!!!!! GRANT TEST DATA
-require("app/controllers/grant-ready.ctrl.js");// !!!!!!! GRANT TEST DATA
+require("app/controllers/grant.ctrl.js");// !!!!!!! GRANT TEST DAT
 require("app/controllers/europct.form1200generated.ctrl.js");
 require("app/controllers/portfolio.ctrl.js");
 require("app/controllers/patents.addPatent.ctrl.js");

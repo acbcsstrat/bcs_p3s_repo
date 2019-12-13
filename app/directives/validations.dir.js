@@ -177,4 +177,26 @@ angular.module('ppApp').directive('validateName', function(){
             });
         }
     };
+}])
+
+.directive('refValidate', [function () {
+
+    var regExp = /[&<>]/;
+
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+
+            function myValidation(value) {
+                if (!regExp.test(value)) {
+                    ctrl.$setValidity('validRef', true);
+                } else {
+                    ctrl.$setValidity('validRef', false);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+        }        
+    };
+
 }]);
