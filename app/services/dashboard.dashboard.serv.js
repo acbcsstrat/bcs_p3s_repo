@@ -27,8 +27,6 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
             Grey: []
         }
 
-        var phase;
-
         for(var property in obj) {
             if(obj.hasOwnProperty(property)){
                 if(Array.isArray(obj[property])) {
@@ -41,28 +39,27 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
 
         obj.Total = patents.length;
 
-        for(var i = 0; i < patents.length; i++) {
-            for(var k = 0; k < patents[i].p3sServices.length; k++) {
-                var item = patents[i].p3sServices[k];
-                var string = item.currentStageColour.toLowerCase();
-                var capitlized = string.charAt(0).toUpperCase() + string.slice(1)
-                obj[capitlized].push(patents[i]);
-            }
-        }
-
-        for(var property in obj) {
-            if(obj.hasOwnProperty(property)) {
-                if(obj[property].length > 0) {
-                    if(obj[property][0].p3sServices[0].saleType === 'Not in progress') {
-                        phase = 'Grey';
-                    }
-                    if(obj[property][0].p3sServices[0].saleType === 'Online' || obj[property][0].p3sServices[0].saleType === 'Offline') {
-                        phase = obj[property][0].p3sServices[0].currentStageColour;
-                    }
-                    break;
+        var newPatents = patents.map(function(patent){
+            return patent.p3sServices.map(function(serv){
+                return {                
+                    patentID: patent.patentID,
+                    ep_ApplicationNumber: patent.ep_ApplicationNumber,
+                    clientRef: patent.clientRef,
+                    p3sServices: [serv]
                 }
-            }
-        }   
+            })
+        })
+
+
+        var result = [].concat(...newPatents);
+
+        result.forEach(function(patent){
+            patent.p3sServices.forEach(function(action, idx){
+                var string = action.currentStageColour.toLowerCase();
+                var capitlized = string.charAt(0).toUpperCase() + string.slice(1);
+                obj[capitlized].push(patent);
+            })
+        })
 
         factory.getPatents = obj;
     }
@@ -78,11 +75,15 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
             return
         }
 
+        var action = patent.p3sServices[0].serviceType;
+
         patentsRestService.fetchPatentItem(patent.patentID)
         .then(
             function(patent){
 
-                var service = patent.p3sServicesWithFees;
+                var service = patent.p3sServicesWithFees.filter(function(el){
+                    return el.serviceType == action;
+                });
 
                 var fee = Object.keys(service[0]).find(function(el){
                     if(el.indexOf('FeeUI') > 0 && service[0][el] !== null) {
