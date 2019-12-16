@@ -80,7 +80,12 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
     };
 
 
-    $scope.promise.then(
+    $scope.promise
+    .then(function(response) {
+        if ($scope.$$destroyed) throw "Scope destroyed";
+        return response;
+    })
+    .then(
         function(response){
 
             if(!response.length) {
