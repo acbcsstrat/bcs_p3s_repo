@@ -26,12 +26,12 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
     function init() {
 
 		currentTransactions.forEach(function(data){
-				data.serviceUIs.map(function(o, i){ 
-					o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
-					if(o.patentUI.clientRef == '') {
-						o.patentUI.clientRef = '[No Client Reference Provided]'
-					}
-				})					
+			data.serviceUIs.map(function(o, i){ 
+				o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
+				if(o.patentUI.clientRef == '') {
+					o.patentUI.clientRef = '[No Client Reference Provided]'
+				}
+			})
 			// }
 		})    
 
@@ -147,17 +147,22 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 
    	};
 
-  	function transactionListFilter(data, filter, i) {
+	function transactionListFilter(item, index) {
 
-	    if(filter == 'clientRefFilter') { //reset altenrate select option
-	        $scope.filter = data;
-    		vm.patentAppData.defaultSelect = null;
-	    } else {
-	        $scope.filter = data;
-	        vm.clientRefData.defaultSelect = null;
-	    }
+		var timestamp = new Date().getTime();
 
-	};
+	    vm.tableData.forEach(function(_ , idx) {
+	         if (index != idx) {
+	             _.selectedUi = null;
+	         };
+	    });
+
+        $scope.filter = { 
+    		selected: item,
+    		stamp: timestamp
+    	};
+
+	}; 
 
 	function noClientRef() {
 		return true;
@@ -167,7 +172,8 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 		$state.go('current-transactions');
 	};		
 
-  	function rowSelect(event){
+  	function rowSelect(item, index, event){
+  		transactionListFilter(item, index)
   		vm.transInfoContent = true;
   		if(!$(event.target).hasClass('cartbtn')) {
       		var id = ($($(event.currentTarget).find('a')));

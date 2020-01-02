@@ -39,7 +39,9 @@
 					</div>
 				</div>
 				<div id="currTransAnchor"></div>
-				<div data-ng-repeat="transaction in $ctrl.currentTransactionItem.serviceUIs | filter: transactionsFilter" class="border-grey-xs--btm">
+<!-- 				filter: {serviceUIs: {patentUI: {ep_ApplicationNumber: searchTrans.ep_ApplicationNumber}}} -->
+				
+				<div data-ng-repeat="transaction in $ctrl.currentTransactionItem.serviceUIs | filter: { appAndType : transactionsFilter.appAndType }" class="border-grey-xs--btm">
 					<div class="row m-t-xxxl m-b-xxxl ">
 						<div class="col-md-12 col-lg-6 col-xl-6 md-m-b-md">
 							<div class="d-none d-lg-block m-b-lg">	

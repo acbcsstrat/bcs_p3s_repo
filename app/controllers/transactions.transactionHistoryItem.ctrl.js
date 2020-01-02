@@ -7,11 +7,12 @@ function transactionHistoryItemCtrl($scope, transactionHistoryItem, transactionH
 	var vm = this;
 
 	$scope.$watch('$parent.filter', function(n, o){ //watch filter in parent state to display selected patent
-		if(n !== undefined ) {
-			if(n !== null) {
-				$scope.transactionsFilter = n.patentUI.patentApplicationNumber;
+		$scope.transactionsFilter = {};
+		if(n !== undefined ) { //check if value has been selected
+			if(n.selected.selectedUi && n.selected.selectedUi !== null) {
+				$scope.transactionsFilter.appAndType =  n.selected.selectedUi.appAndType;
 			} else {
-				$scope.transactionsFilter = null;
+				$scope.transactionsFilter = {}; //reset filter
 			}
 		}
 	});
