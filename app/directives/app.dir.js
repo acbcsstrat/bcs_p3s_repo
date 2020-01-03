@@ -33,4 +33,4 @@ angular.module('ppApp').directive('menuToggle', [ '$timeout', function($timeout)
             // };
         }
     };
-}]);
+}])

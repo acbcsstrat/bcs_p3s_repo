@@ -14,6 +14,7 @@ WEB-INF/web.xml
 !/WEB-INF/views/*.jsp
 WEB-INF/views/htmldocs
 node_modules
-# dist/
+package-lock.json
+views/whoami.jsp
 package-lock.json
 index.html

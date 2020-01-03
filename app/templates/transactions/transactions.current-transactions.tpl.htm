@@ -24,21 +24,18 @@
 									<i class="d-flex input-group-text pill-radius fa fa-search"></i>
 								</div>
 							</div>
-							
 							<div class="input-group m-r-md">
-								<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="appNoFilter" data-ng-model="searchTrans.patentApplicationNumber" placeholder="App No.">
+								<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="appNoFilter" data-ng-model="searchTrans.ep_ApplicationNumber" placeholder="App No.">
 								<div class="input-group-append">
 									<i class="d-flex input-group-text pill-radius fa fa-search"></i>
 								</div>
 							</div>
-				
 							<div class="input-group">
 								<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="clientRefFilter" data-ng-model="searchTrans.clientRef" placeholder="Client Ref">
 								<div class="input-group-append">
 									<i class="d-flex input-group-text pill-radius fa fa-search"></i>
 								</div>
 							</div>
-							
 						</form>
 					</div>
 				</div> 
@@ -64,19 +61,11 @@
                                     <i class="fas fa-angle-down fa-lg"></i>
                                 </span>
 							</th>
-							<th class="t-data__th" data-ng-click="$ctrl.sortType('patentApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">App No.
-                                <span data-ng-show="$ctrl.sortPatentApplicationNumber && $ctrl.sortReverse">
+							<th class="t-data__th" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse">App No.
+                                <span data-ng-show="$ctrl.sortep_ApplicationNumber && $ctrl.sortReverse">
                                     <i class="fas fa-angle-up fa-lg"></i>
-                                </span>                                
-                                <span data-ng-show="$ctrl.sortPatentApplicationNumber && !$ctrl.sortReverse">
-                                    <i class="fas fa-angle-down fa-lg"></i>
                                 </span>
-							</th>
-							<th class="t-data__th" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse">Client Ref
-                                <span data-ng-show="$ctrl.sortClientRef && $ctrl.sortReverse">
-                                    <i class="fas fa-angle-up fa-lg"></i>
-                                </span>                                
-                                <span data-ng-show="$ctrl.sortClientRef && !$ctrl.sortReverse">
+                                <span data-ng-show="$ctrl.sortep_ApplicationNumber && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
                                 </span>
 							</th>
@@ -91,15 +80,15 @@
 							<th class="t-data__th" data-ng-click="$ctrl.sortType('transAmount_USD'); $ctrl.sortReverse = !$ctrl.sortReverse">Cost
                                 <span data-ng-show="$ctrl.sortTransCost && $ctrl.sortReverse">
                                     <i class="fas fa-angle-up fa-lg"></i>
-                                </span>                                
+                                </span>
                                 <span data-ng-show="$ctrl.sortTransCost && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
-                                </span>		        					
+                                </span>
 							</th>
 							<th class="t-data__th" data-ng-click="$ctrl.sortType('latestTransStatus'); $ctrl.sortReverse = !$ctrl.sortReverse">Status
                                 <span data-ng-show="$ctrl.selectedSortType == 'latestTransStatus' && $ctrl.sortReverse">
                                     <i class="fas fa-angle-up fa-lg"></i>
-                                </span>                                
+                                </span>
                                 <span data-ng-show="$ctrl.selectedSortType == 'latestTransStatus' && !$ctrl.sortReverse">
                                     <i class="fas fa-angle-down fa-lg"></i>
                                 </span>									
@@ -107,33 +96,29 @@
 						</tr>
 					</thead>
 					<tbody class="sticky-tbody">
-					    <tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {serviceUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {serviceUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
+					    <tr data-ng-hide="Result.length == 0" data-ng-repeat="item in $ctrl.tableData  | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {serviceUIs: {patentUI: {ep_ApplicationNumber: searchTrans.ep_ApplicationNumber}}} | filter: {serviceUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect(item, $index, $event)" data-ui-sref-active="active" class="t-data__row t-data__row--select" data-ng-init="outerIndex = $index">
 					        <td class="t-data__td sticky-td">
 								<a class="t-data__a" data-ui-sref="current-transactions.current-transaction-item({transId: item.id})">{{item.p3S_TransRef}}</a>
 					        </td>
 					        <td class="t-data__td">
 								{{item.serviceUIs.length}}
-					        </td>
+					        </td>					        
 					        <td class="t-data__td">
 								<span data-ng-if="item.serviceUIs.length === 1" data-ng-repeat="patent in item.serviceUIs">
-									<span data-ng-if="patent.patentUI.patentApplicationNumber.length">
-										<span class=" txt-grey">
-											{{patent.patentUI.patentApplicationNumber}}
+									<span data-ng-if="patent.patentUI.ep_ApplicationNumber.length">
+										<span class="txt-grey">
+											{{patent.patentUI.ep_ApplicationNumber}} {{patent.serviceType}}
 										</span>
 									</span>
-								</span>
-								<select data-ng-if="item.serviceUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.serviceUIs" data-ng-model="$ctrl.patentAppData.defaultSelect" data-ng-change="$ctrl.transactionListFilter($ctrl.patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
-									<option value="">Multiple</option>
-								</select>
-					        </td>
-					        <td class="t-data__td" data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
-								<span data-ng-if="item.serviceUIs.length == 1;" data-ng-repeat="ref in item.serviceUIs">
-									<span data-ng-if="ref.patentUI.clientRef === ''" data-ng-init="$ctrl.noClientRef()">
-										<span class=" txt-grey">[No client reference provided]</span>
-									</span>
-									<span data-ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>
-								</span>
-								<select data-ng-if="item.serviceUIs.length > 1" data-ng-options="item.patentUI.clientRef for item in item.serviceUIs" data-ng-model="$ctrl.clientRefData.defaultSelect" class="pill-radius form-control font-body" data-ng-change="$ctrl.transactionListFilter($ctrl.clientRefData.defaultSelect, 'clientRefFilter', item.id)">
+								</span>						
+								<select 
+									data-ng-if="item.serviceUIs.length > 1"
+							        data-ng-options="ui.appAndType for ui in item.serviceUIs"
+							        data-ng-model="item.selectedUi"
+									data-ng-change="$ctrl.transactionListFilter(item,$index)"
+									id="{{outerIndex}}"
+									class="pill-radius form-control font-body"
+									transaction-select="selectedItem">
 									<option value="">Multiple</option>
 								</select>
 					        </td>

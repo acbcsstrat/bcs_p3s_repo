@@ -20,6 +20,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     vm.submitGrantData = submitGrantData;
     $scope.formData = {};
     $scope.validate = {};
+    var grantAction;
 
 
     function init() {
@@ -31,6 +32,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         }
 
 		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant available') {
+
 			vm.grantStage = 1;
     		vm.grantTemplate = vm.templates[0].url;        
     	}

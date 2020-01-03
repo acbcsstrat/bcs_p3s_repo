@@ -49,7 +49,6 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
         return true; //if no subfilters return true. This will result in all filtered data items being returned a true value
     }
 
-
     function checkArray(obj, service, prop) {
         return service.some(function(item) { //if filter[curretStageColour][red]
             return obj[prop][item[prop]] === true;
@@ -72,10 +71,19 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
         }
         // console.log(matchesAND)
         return matchesAND;
-    };    
+    }; 
 
-    $scope.promise.then(
+    $scope.promise
+    .then(function(response) {
+        if ($scope.$$destroyed) throw "Scope destroyed";
+        return response;
+    })
+    .then(
         function(response){
+
+            if(!response.length) {
+                vm.noPatents = true;
+            }
 
             response.forEach(function(data){
                 if(data.clientRef == '') {

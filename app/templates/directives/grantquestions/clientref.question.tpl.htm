@@ -3,9 +3,10 @@
         <div class="form-group row">
             <label for="clientRef" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please provide an applicant or representative reference:</label>
             <div class="col-md-8 col-lg-7 col-xl-6 d-flex align-items-center">
-                <input type="text" name="clientRef" id="clientRef" class="form-control pill-radius" data-ng-init="isOptionValid(question.data, question); addToFormData('clientRef', question.data);" data-ng-change="addToFormData('clientRef', question.data); isOptionValid(question.data, question);" data-ng-model="question.data" placeholder="Applicant/representative reference" data-ng-maxlength="15" required>
+                <input type="text" name="clientRef" id="clientRef" class="form-control pill-radius" data-ng-init="isOptionValid(question.data, question); addToFormData('clientRef', question.data);" data-ng-change="addToFormData('clientRef', question.data); isOptionValid(question.data, question);" data-ng-model="question.data" placeholder="Applicant/representative reference" data-ng-maxlength="15" ref-validate required>
             </div>
         </div>
+        <p class="txt-phase-red" data-ng-show="grantForm.clientRef.$error.validRef && grantForm.clientRef.$dirty">Special characters &, > and < are not permitted to be included in the Client Reference.</p>        
 		<p class="font-body txt-phase-red" data-ng-show="grantForm.clientRef.$error.required && grantForm.clientRef.$dirty">Please fill out this field</p>
         <p class="txt-phase-red m-t-xs" data-ng-show="grantForm.clientRef.$error.maxlength && grantForm.clientRef.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
         <div class="row m-b-xs m-t-sm">

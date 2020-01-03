@@ -24,21 +24,18 @@
 									<i class="d-flex input-group-text pill-radius fa fa-search"></i>
 								</div>
 							</div>
-							
 							<div class="input-group m-r-md">
 								<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="appNoFilter" data-ng-model="searchTrans.patentApplicationNumber" placeholder="App No.">
 								<div class="input-group-append">
 									<i class="d-flex input-group-text pill-radius fa fa-search"></i>
 								</div>
 							</div>
-				
 							<div class="input-group">
 								<input type="text" class="form-control pill-radius font-body" data-ng-change="$ctrl.displayTrans()" name="clientRefFilter" data-ng-model="searchTrans.clientRef" placeholder="Client Ref">
 								<div class="input-group-append">
 									<i class="d-flex input-group-text pill-radius fa fa-search"></i>
 								</div>
 							</div>
-							
 						</form>
 					</div>
 				</div> 
@@ -107,7 +104,7 @@
 						</tr>
 					</thead>
 					<tbody class="sticky-tbody">
-					    <tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {serviceUIs: {patentUI: {patentApplicationNumber: searchTrans.patentApplicationNumber}}} | filter: {serviceUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect($event)" data-ui-sref-active="active" class="t-data__row t-data__row--select">
+					    <tr data-ng-hide="Result.length==0" data-ng-repeat="item in $ctrl.tableData  | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter: {p3S_TransRef: searchTrans.p3S_TransRef} | filter: {serviceUIs: {patentUI: {ep_ApplicationNumber: searchTrans.ep_ApplicationNumber}}} | filter: {serviceUIs: {patentUI: {clientRef: searchTrans.clientRef}}} as Result" data-ng-click="$ctrl.rowSelect(item, $index, $event)" data-ui-sref-active="active" class="t-data__row t-data__row--select" data-ng-init="outerIndex = $index">
 					        <td class="t-data__td sticky-td">
 								<a class="t-data__a" data-ui-sref="transaction-history.transaction-history-item({transHistoryId: item.id})">{{item.p3S_TransRef}}</a>
 					        </td>
@@ -122,18 +119,14 @@
 										</span>
 									</span>
 								</span>
-								<select data-ng-if="item.serviceUIs.length > 1" data-ng-options="item.patentUI.patentApplicationNumber for item in item.serviceUIs" data-ng-model="$ctrl.patentAppData.defaultSelect" data-ng-change="$ctrl.transactionListFilter($ctrl.patentAppData.defaultSelect, 'patentAppFilter', item.id)" class="pill-radius form-control font-body">
-									<option value="">Multiple</option>
-								</select>
-					        </td>
-					        <td class="t-data__td" data-ng-class="$ctrl.noClientRef ? 'ellipsis-remove' : ''">
-								<span data-ng-if="item.serviceUIs.length == 1;" data-ng-repeat="ref in item.serviceUIs">
-									<span data-ng-if="ref.patentUI.clientRef === ''" data-ng-init="$ctrl.noClientRef()">
-										<span class="txt-grey">[No client reference provided]</span>
-									</span>
-									<span data-ng-if="ref.patentUI.clientRef !== ''">{{ref.patentUI.clientRef}}</span>
-								</span>
-								<select data-ng-if="item.serviceUIs.length > 1" data-ng-options="item.patentUI.clientRef for item in item.serviceUIs" data-ng-model="$ctrl.clientRefData.defaultSelect" class="pill-radius form-control font-body" data-ng-change="$ctrl.transactionListFilter($ctrl.clientRefData.defaultSelect, 'clientRefFilter', item.id)">
+								<select 
+									data-ng-if="item.serviceUIs.length > 1"
+							        data-ng-options="ui.appAndType for ui in item.serviceUIs"
+							        data-ng-model="item.selectedUi"
+									data-ng-change="$ctrl.transactionListFilter(item,$index)"
+									id="{{outerIndex}}"
+									class="pill-radius form-control font-body"
+									transaction-select="selectedItem">
 									<option value="">Multiple</option>
 								</select>
 					        </td>

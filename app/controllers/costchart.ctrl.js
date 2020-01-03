@@ -121,7 +121,6 @@ function costChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService
                         }
                     } //barOptions end
 
-
                 }   
 
                 setData(vm.data.selectedAction.action)
@@ -130,38 +129,45 @@ function costChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService
         }
     )
 
-    function setData(service) {
 
-        vm.barData = null;
+    function setData(type) {
 
-        if(service === undefined || typeof service === 'undefined') {
+        if(type === undefined || typeof type === 'undefined') {
             return;
-        }                
+        }
+
+        var barChartData = ca.filter(function(item){
+            if(item.info == 'epct') { item.info = 'Euro-PCT' }
+            return item.info === type;
+        }).map(function(data){
+            return data.data;
+        })
   
-        if(service == 'renewal') {
+        if(type == 'renewal') {
             vm.barOptions.chart.barColor = ["#3c3c3b", "#0097ce", "#e30613", "#f9b233", "#53ab58"];
         }
 
-        if(service == 'Euro-PCT' || service == 'grant') {
+        if(type == 'Euro-PCT' || type == 'grant') {
+
             vm.barOptions.chart.barColor = ["#e30613", "#f9b233", "#53ab58"];
         }     
 
         var barChartArr = [], label = [], barData = [];
-        for(var property in ca) {
-            if(ca.hasOwnProperty(property)) {
-                var dayData = ca[property];
-                for(var item in dayData.data) {
-                    if(dayData.data.hasOwnProperty(item)) {
-                        if((item.includes('StartDate')) && (!item.includes('UI'))) {
-                            label.push(dayData.data[item]);
-                        }
 
-                        if(item.includes('Cost') && dayData.data[item] !== null) {
-                            barData.push(dayData.data[item]);
-                        }
-                    }
+        for(var item in barChartData[0]) {
+            if(barChartData[0].hasOwnProperty(item)) {
+                if((item.includes('StartDate')) && (!item.includes('UI'))) {
+                    label.push( barChartData[0][item]);
+                }
+
+                if(item.includes('Cost') && barChartData[0][item] !== null) {
+                    barData.push(barChartData[0][item]);
                 }
             }
+        }
+      
+        for (var i = 0; label.length && i < barData.length; i++) {
+            barChartArr[i] = [label[i], barData[i]]; //pairs the items from two arrays into a single array in the new array
         }
 
         for (var i = 0; label.length && i < barData.length; i++) {
@@ -180,5 +186,3 @@ function costChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService
     }
 
 }
-
-    

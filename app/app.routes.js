@@ -219,7 +219,8 @@ function appRoutes($stateProvider) {
             controller: 'bankTransferPrepCtrl',
             controllerAs: '$ctrl',
             params: {
-                orderObj: null
+                orderObj: null,
+                details: null
             }
         })
         .state('bank-transfer-success', {
@@ -228,7 +229,8 @@ function appRoutes($stateProvider) {
             controller: 'bankTransferSuccessCtrl',
             controllerAs: '$ctrl',            
             params: {
-                orderObj: null
+                orderObj: null,
+                details: null
             }
         })
 }

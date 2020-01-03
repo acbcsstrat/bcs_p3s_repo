@@ -13,7 +13,12 @@ function dashboardCtrl ($scope, $state, $timeout, dashboardService, patentsRestS
 
     var promise = patentsRestService.fetchAllPatents();
 
-    promise.then(
+    promise
+    .then(function(response) {
+        if ($scope.$$destroyed) throw "Scope destroyed";
+        return response;
+    })
+    .then(
         function(response){
             if($state.current.name === 'dashboard') {
                 dashboardService.sortPatents(response);

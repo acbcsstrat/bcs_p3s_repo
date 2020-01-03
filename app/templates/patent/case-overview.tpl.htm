@@ -2,11 +2,8 @@
 	<div class="modal-backdrop"></div>
 	<div class="modal-caseoverview d-flex flex-column bg-white">
 		<div class="caseoverview--options-panel cursor-pointer d-flex align-items-center">
-<!-- 			<i class="fas fa-ellipsis-v font-h3 m-r-sm cursor-pointer"></i> -->
 			<i class="fas fa-times fa-2x cursor-pointer" data-ng-click="$ctrl.closeCaseoverview()"></i>
 		</div>
-
-
 		<div class="d-flex flex-grow-1 brbl-10 brtl-10">
 			<div class="row flex-grow-1">
 				<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-grow-1">
@@ -26,7 +23,7 @@
 									</a>
 								</li>
 								<li class="nav-item" data-ng-show="$ctrl.displayForm1200Tab">
-									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 2}" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;" >
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 2 }" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">
 										<span> <i class="fal fa-file-alt font-h3"></i></span>
 										<span>Form 1200</span>
 									</a>
@@ -48,7 +45,7 @@
 									class="nav-link d-flex flex-column" 
 									data-ng-disabled="notInProgress" 
 									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  5};" 
-									data-ng-click="$ctrl.processView('feebreakdown', 5)" >
+									data-ng-click="$ctrl.processView('feebreakdown', 5); activeLeft = 5;" >
 										<span><i class="fal fa-usd-circle font-h3"></i></span>
 										<span>Fee Breakdown</span>
 									</a>
@@ -61,7 +58,7 @@
 									class="nav-link d-flex flex-column" 
 									data-ng-disabled="notInProgress" 
 									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  6};" 
-									data-ng-click="$ctrl.processView('fxchart', 6, 'chart')">
+									data-ng-click="$ctrl.processView('fxchart', 6, 'chart'); activeLeft = 6;">
 										<span><i class="fal fa-chart-line font-h3"></i></span>
 										<span>FX Chart</span>
 									</a>
@@ -74,7 +71,7 @@
 									class="nav-link d-flex flex-column" 
 									data-ng-disabled="notInProgress" 
 									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  7}" 
-									data-ng-click="$ctrl.processView('costchart', 7, 'chart')">
+									data-ng-click="$ctrl.processView('costchart', 7, 'chart'); activeLeft = 7;">
 										<span> <i class="fal fa-chart-bar font-h3"></i> </span>
 										<span>Cost Chart</span>
 									</a>
@@ -84,75 +81,40 @@
 								</li>								
 							</ul>
 						</div>
-						<uib-tabset active="activeLeft">
-							<uib-tab index="0" heading="Details" class="case-overview-nav" data-ng-click="$ctrl.setTab('details')" hidden="true">
-							</uib-tab>
-							<uib-tab index="1" heading="Notifications" class="case-overview-nav" data-ng-click="$ctrl.setTab('notifications')" hidden="true">
-							</uib-tab>
-							<uib-tab index="2" heading="Form 1200" class="case-overview-nav" data-ng-click="$ctrl.setTab('form1200')"  hidden="true">
-							</uib-tab>
-							<uib-tab index="3" heading="Renewal History" class="case-overview-nav" data-ng-click="$ctrl.setTab('renewalhistory')"  hidden="true">
-							</uib-tab>
-							<uib-tab index="4" heading="Grant and Publishing" class="case-overview-nav" data-ng-click="$ctrl.setTab('grantandpublishing')"  hidden="true">
-							</uib-tab>	
-							<uib-tab index="5" heading="Fee Breakdown" class="case-overview-nav" data-ng-click="$ctrl.setTab('feebreakdown')"  hidden="true">
-							</uib-tab>
-							<uib-tab index="6" heading="FX Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart(); $ctrl.setTab('fxchart')" hidden="true">
-							</uib-tab>
-							<uib-tab index="7" heading="Cost Chart" class="case-overview-nav" data-ng-click="$ctrl.refreshChart(); $ctrl.setTab('costchart')" hidden="true">
-							</uib-tab>											
-						</uib-tabset>
-						<div class="border-grey-xs--btm"></div>
-		                <div class="row m-t-md">
-		                	<div class="col-xl-12 text-right">
-					            <transaction-link trans-id="{{$ctrl.patent.patentID}}" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'In Progress'"></transaction-link>
-					            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="form1200" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved'"></ngcart-addtocart>
-					            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="renewal" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Show price'"></ngcart-addtocart>
-					            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="grant" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved'"></ngcart-addtocart>             
-					        </div>          
-		                </div>				
-					</div>
-				</div>
-				<div data-ng-if="notInProgress" class="content-panel__body bg-white d-flex d-flex align-items-center">
-					<div class="d-flex flex-grow-1 bg-no-chart align-items-center justify-content-center ng-scope">
-		                <div class="row">
-		                    <div class="col-xl-12">
-		                        <div class="text-center flex-column">
-		                            <p class="h4 font-weight-medium">Sorry</p>
-		                            <p class="h4 font-weight-medium text-center">No cost breakdown currently available</p>
-		                        </div>
-		                    </div>
-		                </div>
-	                </div>
-				</div>
-			</div>
-		</div>			
-	</div>
+						<div class="d-flex flex-column flex-grow-1 modal-caseoverview__view">
+							<div class=" p-t-4 p-r-3 p-l-3 ">
+								<div class="row">
+									<div class="col-md-6 d-flex align-items-center">
+										<p class="font-h3 font-weight-bold">Application Number: <span class="font-weight-normal">{{$ctrl.patent.ep_ApplicationNumber}}</span></p>
+									</div>
+				                	<div class="col-md-6 text-right">
+							            <transaction-link trans-id="{{$ctrl.patent.patentID}}" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'In Progress'"></transaction-link>
+							            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.form1200" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved'"></ngcart-addtocart>
+							            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.renewal" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Show price'"></ngcart-addtocart>
+							            <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn" name="service.grant" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].saleType == 'Online' && $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved'"></ngcart-addtocart>
 
-
-		                                <md-menu md-position-mode="target-left target" md-offset="20 20" md-disable-backdrop>
-		                                  	<md-button data-ng-click="$ctrl.openMenu($mdMenu, $event)">
-		                                    	<md-icon md-menu-origin md-font-icon="fas fa-ellipsis-h" class="font-h3 cursor-pointer"></md-icon>
-		                                  	</md-button>
-		                                  	<md-menu-content width="4">
-		                                    	<md-menu-item>
-		                                      		<md-button data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.patentID)" class="font-body">
-		                                      			<md-icon md-menu-align-target md-font-icon="fal fa-trash-alt font-h3"></md-icon>
-	                                        			Remove Patent
-		                                      		</md-button>
-		                                    	</md-menu-item>
-		                                    	<md-menu-divider></md-menu-divider>
-										        <md-menu-item>
-										          	<md-button class="font-body">
-										          		<md-icon md-menu-align-target md-font-icon="fas fa-times font-h3"></md-icon>
-										            	Close menu
-										          	</md-button>
-										        </md-menu-item>	                                    	
-		                                  	</md-menu-content>
-		                                </md-menu>
+	                                <md-menu md-position-mode="target-left target" md-offset="20 20" md-disable-backdrop>
+	                                  	<md-button aria-label="Open phone interactions menu" ng-click="$ctrl.openMenu($mdMenu, $event)">
+	                                    	<md-icon md-menu-origin md-font-icon="fas fa-ellipsis-h" class="font-h3 cursor-pointer"></md-icon>
+	                                  	</md-button>
+	                                  	<md-menu-content width="4">
+	                                    	<md-menu-item>
+	                                      		<md-button ng-click="$ctrl.confirmDeletePatent($ctrl.patent.patentID)" class="font-body">
+                                        			Remove Patent
+	                                      		</md-button>
+	                                    	</md-menu-item>
+	                                    	<md-menu-divider></md-menu-divider>
+									        <md-menu-item>
+									          	<md-button ng-click="ctrl.toggleNotifications()" class="font-body">
+									            	Close menu
+									          	</md-button>
+									        </md-menu-item>	                                    	
+	                                  	</md-menu-content>
+	                                </md-menu>
 							        </div>  							
 								</div>
 							</div>
+
 							<div class="p-r-3 p-b-3 p-l-3 modal-caseoverview__view__body">
 								<div class="row">
 									<div class="col-md-12">
