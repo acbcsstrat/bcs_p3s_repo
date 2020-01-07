@@ -79,7 +79,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                     }]
                 });
 
-                $state.go('portfolio.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
 
             },
             function(errResponse){
@@ -97,7 +97,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                     }]
                 });
 
-                $state.go('portfolio.patent', {patentId: patent.patentID}, {reload: true})
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID}, {reload: true})
 
             }
         )

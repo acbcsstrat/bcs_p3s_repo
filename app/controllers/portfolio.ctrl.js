@@ -69,7 +69,6 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                 
             }
         }
-        // console.log(matchesAND)
         return matchesAND;
     }; 
 
