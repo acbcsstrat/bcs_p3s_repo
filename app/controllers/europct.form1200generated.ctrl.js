@@ -62,7 +62,7 @@ function form1200GeneratedCtrl($scope, $rootScope, $http, $state, $stateParams, 
                     
                 };
                 var timeout = $timeout(function() {
-                    $state.go('portfolio.patent', {patentId: $scope.patent.patentID}, {reload: true}); //go to patent info on successful deletion                    
+                    $state.reload(); //go to patent info on successful deletion                    
                 }, 200);
 
                 $scope.$on('$destroy', function(){

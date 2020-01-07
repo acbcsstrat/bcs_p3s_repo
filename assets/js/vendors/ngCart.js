@@ -250,7 +250,26 @@ angular.module('ngCart', ['ngCart.directives'])
         };
 
         this.$save = function () {
-            return store.set('cart', JSON.stringify(this.getCart()));
+
+            var reduceCart = this.getCart().items.map(function(item){
+                if(!item.p3sServices) {
+
+                    if(item._data.form1200FeeUI) {
+                        item._data.form1200FeeUI.data = null;
+                    }
+
+                    if(item._data.renewalFeeUI) {
+                        item._data.renewalFeeUI.data = null;
+                    }
+
+                    if(item._data.grantFeeUI) {
+                        item._data.grantFeeUI.data = null;
+                    }
+
+                } 
+                return item;
+            })
+            return store.set('cart', JSON.stringify(reduceCart));
         }
 
     }])

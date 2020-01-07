@@ -16,6 +16,9 @@ function patentsRestService($http, $q, organiseColourService) {
 
     return factory;
 
+
+    var actionsArray = [];
+
     function fetchAllPatents() {
     
         var deferred = $q.defer();
@@ -23,13 +26,13 @@ function patentsRestService($http, $q, organiseColourService) {
             .then(
             function (response) {
 
-                var generateId = function (service) {
+                var generateId = function(service) {
                     var number = '';
                     for (var i = 0; i < service.length; i++) {
                         number += service.charCodeAt(i).toString();
                     }
                     return parseInt(number.substring(2, 9)); //skip decimal
-                }            
+                }
 
                 response.data.map(function(patent){
                     return patent.p3sServices.map(function(property){
@@ -43,7 +46,19 @@ function patentsRestService($http, $q, organiseColourService) {
                         return property
                     })
                 })
+
+                actionsArray = response.data.map(function(patent){
+                    return patent.p3sServices.map(function(action){
+                        var obj = {};
+                        obj.patentID = patent.patentID;
+                        obj.serviceType = action.serviceType;
+                        obj.actionID = action.actionID
+                        return obj;
+                    })
+                })
+
                 deferred.resolve(response.data);
+
             },
             function(errResponse){
                 console.error('Error: Unable to fetch all patents. Error Response:', errResponse)
@@ -55,19 +70,30 @@ function patentsRestService($http, $q, organiseColourService) {
     };
 
     function fetchPatentItem(id) {
-    
+       
+        
+
         var deferred = $q.defer();
-         $http.get(ppdomain+'rest-patent/'+ id)
+        $http.get(ppdomain+'rest-patent/'+ id)
             .then(
             function (response) {
+
                 response.data.p3sServicesWithFees.map(function(property){
-                        if(property.currentStageColour) {
-                            property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text')
-                        }
-                        if(property.nextStageColour) {
-                            property.cssNext = organiseColourService.getCurrColour(property.nextStageColour, 'text')
-                        }
-                        return property
+                    var item = actionsArray.flat().filter(function(action){
+                        return action.serviceType === property.serviceType && id == action.patentID;
+                    }).map(function(filtered){
+                        return filtered.actionID
+                    })
+
+                    property.actionID = item[0];
+
+                    if(property.currentStageColour) {
+                        property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text');
+                    }
+                    if(property.nextStageColour) {
+                        property.cssNext = organiseColourService.getCurrColour(property.nextStageColour, 'text');
+                    }
+                    return property;
                 
                 })                
                 deferred.resolve(response.data);

@@ -25,17 +25,17 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
         vm.stateParams = $stateParams;
         if($(event.target).hasClass('generateForm1200')) {
-            $state.go('portfolio.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
+            $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
         }
 
         if($(event.target).hasClass('prepareGrant')) {
-            $state.go('portfolio.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
+            $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
         }        
 
         if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {
             var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
             var patentId = id[0].id; //gets data from data-id
-            $state.go('portfolio.patent', {patentId: patent.patentID, form1200generate: null}, {notify: false})            
+            $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: null}, {notify: false})            
         }
 
     };

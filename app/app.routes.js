@@ -68,7 +68,15 @@ function appRoutes($stateProvider) {
                 navigation: 'portfolio'
             }
         })
-        .state('portfolio.patent', {
+        .state('portfolio.modal', {
+            abstract: true,
+            views: {
+                "modal": {
+                    templateUrl: "app/templates/patent/modal.html"
+                }
+            }
+        })
+        .state('portfolio.modal.patent', {
             url: '/:patentId',
             resolve: {
                 patent: ['$stateParams', 'patentsRestService', function($stateParams, patentsRestService) {
@@ -86,46 +94,47 @@ function appRoutes($stateProvider) {
             },
             views:{
                 "": {
+                    templateUrl: 'app/templates/patent/case-overview.tpl.htm',
                     controller: 'caseOverviewCtrl',
                     controllerAs: '$ctrl',
-                    templateUrl: 'app/templates/patent/case-overview.tpl.htm',
+
                 },
-                "details@portfolio.patent": {
+                "details@portfolio.modal.patent": {
                     templateUrl: 'app/templates/patent/patent-details.tpl.htm',
                     controller: 'patentDetailsCtrl',
                     controllerAs: '$ctrl'      
                 },
-                "notifications@portfolio.patent": {
+                "notifications@portfolio.modal.patent": {
                     templateUrl: 'app/templates/notifications/notifications.tpl.htm',
                     controller: 'notificationsCtrl',
                     controllerAs: '$ctrl',  
                 },
-                "form1200@portfolio.patent": {
+                "form1200@portfolio.modal.patent": {
                     templateUrl: 'app/templates/europct/europct.form1200.tpl.htm',
                     controller: 'form1200Ctrl',
                     controllerAs: '$ctrl',  
                 },           
-                "renewalhistory@portfolio.patent": {
+                "renewalhistory@portfolio.modal.patent": {
                     templateUrl: 'app/templates/renewal/renewal.history.tpl.htm',
                     controller: 'renewalHistoryCtrl',
                     controllerAs: '$ctrl',  
                 },        
-                "grantandpublishing@portfolio.patent": {
+                "grantandpublishing@portfolio.modal.patent": {
                     templateUrl: 'app/templates/grant/grant.tpl.htm',
                     controller: 'grantCtrl',
                     controllerAs: '$ctrl',  
                 },                                     
-                "fee-breakdown@portfolio.patent": {
+                "fee-breakdown@portfolio.modal.patent": {
                     templateUrl: 'app/templates/fee-breakdown/fee-breakdown.tpl.htm',
                     controller: 'feeBreakDownCtrl',
                     controllerAs: '$ctrl',  
                 },
-                "fxchart@portfolio.patent": {
+                "fxchart@portfolio.modal.patent": {
                     templateUrl: 'app/templates/fxchart/fxchart.tpl.htm',
                     controller: 'fxChartCtrl',
                     controllerAs: '$ctrl',  
                 },
-                "costchart@portfolio.patent": {
+                "costchart@portfolio.modal.patent": {
                     templateUrl: 'app/templates/costchart/costchart.tpl.htm',
                     controller: 'costChartCtrl',
                     controllerAs: '$ctrl',  

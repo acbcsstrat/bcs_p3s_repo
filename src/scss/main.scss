@@ -75,34 +75,31 @@
         max-width: 703px;
         width: 703px;
         .modal-caseoverview__view__body {
-
             overflow-y: scroll;
             height: 560px;
-
-              &::-webkit-scrollbar-thumb {
+            background: $white;
+            &::-webkit-scrollbar-thumb {
                 background: $grey; 
                 border-radius: 10px;
                 height: 30px;
-              }      
+            }      
 
-              &::-webkit-scrollbar {
+            &::-webkit-scrollbar {
                 width: 15px;
-              }    
-              &::-webkit-scrollbar-thumb {
+            }    
+            &::-webkit-scrollbar-thumb {
                 background: $grey; 
                 border-radius: 10px;
                 height: 30px;
-              }
+            }
         }
     }
 }
-
 
 .tabs-left {
     padding: 0;
     flex-direction: column;
     height: 600px;
-    position: fixed; 
     width: 197px;
     max-width: 197px;
     &.tabs-left--width19 {
@@ -155,9 +152,15 @@
     border-top-left-radius: 10px;
 }
 
+.brbr-10 {
+    border-bottom-right-radius: 10px;
+}
+
 .brtl-10 {
     border-bottom-left-radius: 10px;
 }
+
+
 
 .font-h3 {
     line-height: 2rem;

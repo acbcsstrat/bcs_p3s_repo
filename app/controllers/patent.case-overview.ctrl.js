@@ -7,7 +7,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     var vm = this;
 
     vm.patent = patent;
-
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
@@ -18,7 +17,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     $scope.availableServices = [];
     $scope.notInProgress = true;
     $scope.caseoverview_tab = 'details';
-    vm.initOptions = initOptions;
     $scope.showOptions = false;
     $scope.activeLeft = 0;
 
@@ -43,6 +41,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     };
 
     function init() {
+
 
         if($stateParams.form1200generate === 1) {
             $scope.activeLeft = 2;
@@ -115,10 +114,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             evt.initUIEvent('resize', true, false, window, 0);
             window.dispatchEvent(evt);
         }, 300)
-    }
-
-    function initOptions() {
-        vm.showOptions = !vm.showOptions
     }
 
     function setTab(tab) {
