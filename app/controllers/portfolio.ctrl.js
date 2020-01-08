@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('portfolioCtrl', portfolioCtrl)
 
-portfolioCtrl.$inject = ['$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService', 'organiseColourService', '$mdPanel'];
+portfolioCtrl.$inject = ['$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService', 'organiseColourService', '$mdPanel', 'searchPatentService'];
 
-function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService, $mdPanel) {
+function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService, $mdPanel, searchPatentService) {
 
     var vm = this;
 
@@ -72,6 +72,14 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
         return matchesAND;
     }; 
 
+    function updatePortfolioData() {
+        patentsRestService.fetchAllPatents()
+        .then(function(response) {
+            vm.portfolioData = response;
+        })        
+
+    }
+
     $scope.promise
     .then(function(response) {
         if ($scope.$$destroyed) throw "Scope destroyed";
@@ -97,21 +105,129 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
             $scope.portfolioLoaded = false;
             vm.sortReverse  = false;
             vm.selectedSortType = 'ep_ApplicationNumber';
-            vm.showPanel = showPanel;
+            vm.showFilter = showFilter;
+            vm.showAddPatent = showAddPatent;
             vm.filtered = [];
             vm.portfolioData = response;
             vm.portfolioLoaded = true;
 
-            function showPanel($event) {
+            function showAddPatent($event) {
 
                 var panelPosition = $mdPanel.newPanelPosition()
                     .relativeTo($event.target)
-                    .addPanelPosition($mdPanel.xPosition.ALIGN_END, $mdPanel.yPosition.BELOW);
-                // var panelAnimation = $mdPanel.newPanelAnimation()
-                //     .openFrom($event.target)
-                //     .duration(200)
-                //     .closeTo('.show-button')
-                //     .withAnimation($mdPanel.animation.SCALE);
+                    .addPanelPosition($mdPanel.xPosition.OFFSET_START, $mdPanel.yPosition.BELOW);
+
+                var config = {
+                    attachTo: angular.element(document.body),
+                    controller: ['mdPanelRef', '$scope', function(mdPanelRef, $scope) {
+
+
+                        $scope.findPatent = function(patentNo) {
+                            $scope.loadingPatent = true;
+                            searchPatentService.findPatent(patentNo)
+                            .then(
+                                function(response) {
+                                    $scope.foundPatent = response.data;
+                                    $scope.loadingPatent = false;
+                                    $scope.error = false;
+                                    var patentJson = angular.toJson(response)
+                                },
+                                function(errResponse) {
+                                    console.error('Error finding patent. Error message : ', errResponse)
+                                    $scope.queriedPatent = false;
+                                    $scope.loadingPatent = false;
+                                    $scope.error = true;
+                                    // $state.go('search-patent', {}, {reload: false});
+                                    if(errResponse.status == 412) { //already added patent
+                                        $scope.searchError = 'It looks like we\'ve already added Patent Application '+patentNo+' in to the system.  You should be able to find it in the List Patents page using the search boxes.';
+                                    } 
+                                    if(errResponse.status == 409){ //incorrect check digit
+                                        $scope.searchError = 'It looks like the provided check digit differs from the check digit found at the European Patent Register. Please make sure the check digit is correct and try again.';
+                                    }
+                                    if(errResponse.status == 400) { //incorrect syntax
+                                        $scope.searchError = 'We\'ve not been able to find that patent in the European Patent Register. Please enter an application number such as EP18123456.2';
+                                    }
+
+
+                                }
+                            )
+
+                        }
+
+                        $scope.openConfirmModal = function(patent) {
+
+                            var modalInstance = $uibModal.open({
+                                templateUrl: 'app/templates/modals/modal.confirm-found-patent.tpl.htm',
+                                appendTo: undefined,
+                                controllerAs: '$ctrl',
+                                controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
+
+                                    this.addPatent = function () {
+                                        vm.addingPatent = true;
+                                        $uibModalInstance.close();
+                                        patentsRestService.savePatent(patent)
+                                        .then(
+                                            function(response){
+
+                                                updatePortfolioData();
+                                                
+                                                var match = response.find(function(item){
+                                                    return item.ep_ApplicationNumber == patent.ep_ApplicationNumber;
+                                                })
+
+                                            },
+                                            function(errResponse){
+                                                console.error('Error while saving Patent');
+                                            }
+                                        )
+
+                                    };
+
+                                    this.dismissModal = function () {
+                                        $uibModalInstance.close();
+                                    };
+
+                                    this.cancelAdd = function() {
+                                        $uibModalInstance.close();                  
+                                    }
+
+                                }]
+                            })
+                        }
+
+                        $scope.$on('$destroy', function(){
+                            $timeout.cancel(toPatentTimeout)
+                        })                        
+
+                    }],
+                    controllerAs: '$ctrl',
+                    position: panelPosition,
+                    // animation: panelAnimation,
+                    hasBackdrop: true,
+                    targetEvent: $event,
+                    templateUrl: 'app/templates/portfolio/add-patent.tpl.htm',
+                    clickOutsideToClose: true,
+                    escapeToClose: true,
+                    focusOnOpen: true
+                };
+                $mdPanel.open(config)
+                .then(
+                    function(result) {
+
+                        panelRef = result;
+                    },
+                    function(error){
+                        console.error('Error occured when opening panel: ',error)
+                    }
+                );
+
+            }
+
+            function showFilter($event) {
+
+                var panelPosition = $mdPanel.newPanelPosition()
+                    .relativeTo($event.target)
+                    .addPanelPosition($mdPanel.xPosition.OFFSET_END, $mdPanel.yPosition.BELOW);
 
                 var config = {
                     attachTo: angular.element(document.body),
@@ -170,4 +286,9 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
         }
     )
+
+    //SEARCH ADD PATENT
+
+
+
 }

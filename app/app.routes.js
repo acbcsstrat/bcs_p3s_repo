@@ -141,24 +141,6 @@ function appRoutes($stateProvider) {
                 }
             }
         })
-        .state('search-patent', {
-            url: '/search-patent',
-            templateUrl: 'app/templates/add-patent/patents.search-patent.tpl.htm',
-            controller: 'searchPatentCtrl',
-            controllerAs: '$ctrl',
-            params: {
-                navigation: 'portfolio'
-            }
-        })
-        .state('search-patent.add-patent', {
-            url: '?params',
-            templateUrl: 'app/templates/add-patent/patents.add-patent.tpl.htm',
-            controller: 'addPatentCtrl',
-            controllerAs: '$ctrl',
-            params: {
-                patent: null
-            }
-        })
         .state('current-transactions', {
             url: '/current-transactions',
             templateUrl: 'app/templates/transactions/transactions.current-transactions.tpl.htm',

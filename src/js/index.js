@@ -68,8 +68,6 @@ require("app/controllers/europct.form1200.ctrl.js");
 require("app/controllers/grant.ctrl.js");// !!!!!!! GRANT TEST DAT
 require("app/controllers/europct.form1200generated.ctrl.js");
 require("app/controllers/portfolio.ctrl.js");
-require("app/controllers/patents.addPatent.ctrl.js");
-require("app/controllers/patents.searchPatent.ctrl.js");
 require("app/controllers/renewal.renewalHistory.ctrl.js");
 require("app/controllers/transactions.currentTransactionItem.ctrl.js");
 require("app/controllers/transactions.currentTransactions.ctrl.js");
