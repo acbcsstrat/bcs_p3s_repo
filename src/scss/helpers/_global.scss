@@ -92,6 +92,13 @@ span.cursor-pointer,
 i.cursor-pointer { cursor: pointer }
 div.cursor-help { cursor: help; }
 
+.btn-reset { 
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
 .nowrap { white-space: nowrap; }
 
 .pill-radius { border-radius: 2.5rem; }
@@ -115,7 +122,13 @@ div.cursor-help { cursor: help; }
 .border-grey-xs--right { border-right: 1px solid $border; }
 .border-grey-xs--left { border-left: 1px solid $border; }
 
-.inline-link {text-decoration: underline; color: $black;}
+.inline-link { 
+    text-decoration: underline; 
+    color: $black;
+    &.blue {
+        color:#3960FF
+    }
+}
 .inline-link:hover { text-decoration: none;  }
 
 .fade.in { opacity: 1; }

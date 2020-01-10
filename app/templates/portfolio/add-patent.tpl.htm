@@ -6,13 +6,15 @@
                 <p class="font-body font-weight-medium m-b-xs">Please enter the application number (including check digit) :</p>
                 <form class="form" name="searchPatentForm" novalidate>
                     <div class="form-group m-b-none d-flex align-items-center">
-                        <input type="text" name="searchPatent" id="searchPatent" data-ng-model="searchPatent" class="form-control form-control-lg pill-radius m-r-sm" placeholder="Patent Application No. ..." focus-me="true" data-validate-search required>
-                        <span class="fa-stack fa-2x cursor-pointer" data-ng-hide="loadingPatent" data-ng-click="findPatent(searchPatent);">
+                        <input type="text" name="searchPatent" id="searchPatent" data-ng-model="searchPatent" class="form-control form-control-lg pill-radius m-r-sm" placeholder="Patent Application No. ..." focus-me="true" data-validate-search data-ng-disabled="loadingPatent || foundPatent" required>
+                        <button type="submit" data-ng-hide="loadingPatent" data-ng-click="findPatent(searchPatent);" class="btn-reset">
+                            <span class="fa-stack fa-2x cursor-pointer">
 
-                            <i class="fas fa-circle fa-stack-2x txt-phase-green"></i>
-                            <i class="far fa-search fa-stack-1x fa-inverse"></i>
-         
-                        </span>
+                                <i class="fas fa-circle fa-stack-2x txt-phase-green"></i>
+                                <i class="far fa-search fa-stack-1x fa-inverse"></i>
+             
+                            </span>
+                        </button>
                         <span class="fa-stack fa-2x" data-ng-show="loadingPatent">
                             <i class="fas fa-circle fa-stack-2x txt-phase-green"></i>
                             <i class="far fa-cog fa-spin fa-stack-1x fa-inverse"></i>
@@ -24,6 +26,14 @@
             <div class="col-md-12 col-lg-12 col-xl-12 m-t-sm" data-ng-show="error">
                 <p class="font-body font-weight-medium txt-phase-red" data-ng-bind="searchError"></p>
             </div>             
+        </div>
+        <div class="row m-t-sm m-b-sm" data-ng-show="recently.added.length">
+            <div class="col-md-12">
+                <p class="font-h4 font-weight-medium m-b-xs">Recently Added</p>
+                <p data-ng-repeat="item in recently.added" class="m-b-xs">
+                    <a data-ui-sref="portfolio.modal.patent({patentId: item.id})" class="inline-link blue">{{item.ep_ApplicationNumber}}</a>
+                </p>
+            </div>
         </div>
     </div>
     <div class="p-r-3 p-b-3 p-l-3">    

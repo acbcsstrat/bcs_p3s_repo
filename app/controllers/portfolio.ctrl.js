@@ -76,6 +76,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
         patentsRestService.fetchAllPatents()
         .then(function(response) {
             vm.portfolioData = response;
+            vm.recentlyAdded.push(response.slice(-1).pop())
         })        
 
     }
@@ -121,6 +122,11 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                     attachTo: angular.element(document.body),
                     controller: ['mdPanelRef', '$scope', function(mdPanelRef, $scope) {
 
+                        $scope.recently = {
+                            added: []
+                        }
+                        $scope.foundPatent = '';
+
 
                         $scope.findPatent = function(patentNo) {
                             $scope.loadingPatent = true;
@@ -162,19 +168,23 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
 
+
+
                                     this.addPatent = function () {
                                         vm.addingPatent = true;
                                         $uibModalInstance.close();
                                         patentsRestService.savePatent(patent)
                                         .then(
                                             function(response){
-
+                                                
                                                 updatePortfolioData();
                                                 
                                                 var match = response.find(function(item){
                                                     return item.ep_ApplicationNumber == patent.ep_ApplicationNumber;
-                                                })
+                                                });
 
+                                                $scope.recently.added.push(match);
+                                                $scope.foundPatent = false;
                                             },
                                             function(errResponse){
                                                 console.error('Error while saving Patent');
