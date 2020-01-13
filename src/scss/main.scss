@@ -47,6 +47,12 @@
 @import "./components/_media_queries.scss";
 @import "./components/_transformations.scss";
 
+
+@keyframes animatedBackground {
+    from { opacity: 0 ; }
+    to { opacity: 0.6; }
+}
+
 .modal-backdrop {
     position: fixed;
     top: 0px;
@@ -56,6 +62,7 @@
     background: #000;
     z-index: 999;
     opacity: 0.6;
+    animation: animatedBackground .25s ease-in-out;    
 }
 
 .modal-caseoverview {
@@ -166,6 +173,7 @@
 }
 
 .p-t-4 { padding-top: 4rem; }
+.p-b-4 { padding-bottom: 4rem; }
 
 .px-125 {
     padding-left: 1.25rem;
@@ -293,8 +301,48 @@ md-menu-item {
     box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
           0 13px 19px 2px rgba(0, 0, 0, 0.14),
           0 5px 24px 4px rgba(0, 0, 0, 0.12);
-    width: 70rem;
     z-index: 999;
+    min-height: 13rem;
+    max-height: 30rem;
+    -moz-transition:all ease-in-out .25s;
+    -o-transition:all ease-in-out .25s;
+    -webkit-transition:all ease-in-out .25s;
+    transition:all ease-in-out .25s;
+    .add-patent-panel {
+        width: 70rem;
+    }
+    &.active {
+        max-height: 60rem;
+        min-height: 55rem;
+        .add-patent-panel {
+            .found-patent-panel {
+                &.ng-enter {
+
+                    opacity: 0;
+                    -moz-transition: all ease-in-out .25s .3s;
+                    -o-transition: all ease-in-out .25s .3s;
+                    -webkit-transition: all ease-in-out .25s .3s;
+                    transition: all ease-in-out .25s .3s;
+                }
+                &.ng-enter.ng-enter-active {
+                  opacity:1;
+                }
+            }
+        }
+    }
+    .recently-added-panel {
+        width: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display:block!important;
+        -moz-transition:all ease-in-out .25s;
+        -o-transition:all ease-in-out .25s;
+        -webkit-transition:all ease-in-out .25s;
+        transition:all ease-in-out .25s;
+        &.active {
+            width: 20rem;
+        }
+    }
 }
 
 

@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('portfolioCtrl', portfolioCtrl)
 
-portfolioCtrl.$inject = ['$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService', 'organiseColourService', '$mdPanel', 'searchPatentService'];
+portfolioCtrl.$inject = ['$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService', 'organiseColourService', '$mdPanel', 'searchPatentService', '$transitions'];
 
-function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService, $mdPanel, searchPatentService) {
+function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService, $mdPanel, searchPatentService, $transitions) {
 
     var vm = this;
 
@@ -72,11 +72,33 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
         return matchesAND;
     }; 
 
+    var duplicateTransiation = 0; //QUICK FIX. INVESTIGATE WHY STATE CHANGE OCCURING TWICE
+
+    $transitions.onError({ to: 'portfolio.modal.patent' }, function(transition) {
+        if(transition.error().detail.status === 500 && duplicateTransiation === 0) {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/templates/modals/modal.no-patent-found.tpl.htm',
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', function($uibModalInstance) {
+
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+
+                }]
+            })
+
+        }
+    });
+
     function updatePortfolioData() {
         patentsRestService.fetchAllPatents()
         .then(function(response) {
             vm.portfolioData = response;
+            
             vm.recentlyAdded.push(response.slice(-1).pop())
+
         })        
 
     }
@@ -111,12 +133,13 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
             vm.filtered = [];
             vm.portfolioData = response;
             vm.portfolioLoaded = true;
+            var panelRef;
 
             function showAddPatent($event) {
 
                 var panelPosition = $mdPanel.newPanelPosition()
-                    .relativeTo($event.target)
-                    .addPanelPosition($mdPanel.xPosition.OFFSET_START, $mdPanel.yPosition.BELOW);
+                    .absolute()
+                    .center();
 
                 var config = {
                     attachTo: angular.element(document.body),
@@ -125,7 +148,8 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                         $scope.recently = {
                             added: []
                         }
-                        $scope.foundPatent = '';
+                        $scope.foundPatent = false;
+
 
 
                         $scope.findPatent = function(patentNo) {
@@ -158,7 +182,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                                 }
                             )
 
-                        }
+                        }  
 
                         $scope.openConfirmModal = function(patent) {
 
@@ -168,8 +192,6 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
 
-
-
                                     this.addPatent = function () {
                                         vm.addingPatent = true;
                                         $uibModalInstance.close();
@@ -178,13 +200,16 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                                             function(response){
                                                 
                                                 updatePortfolioData();
-                                                
+
                                                 var match = response.find(function(item){
                                                     return item.ep_ApplicationNumber == patent.ep_ApplicationNumber;
                                                 });
 
                                                 $scope.recently.added.push(match);
                                                 $scope.foundPatent = false;
+                                                $scope.searchPatent = '';
+
+
                                             },
                                             function(errResponse){
                                                 console.error('Error while saving Patent');
@@ -192,6 +217,8 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                                         )
 
                                     };
+
+                                 
 
                                     this.dismissModal = function () {
                                         $uibModalInstance.close();
@@ -223,7 +250,6 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                 $mdPanel.open(config)
                 .then(
                     function(result) {
-
                         panelRef = result;
                     },
                     function(error){
@@ -237,7 +263,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
                 var panelPosition = $mdPanel.newPanelPosition()
                     .relativeTo($event.target)
-                    .addPanelPosition($mdPanel.xPosition.OFFSET_END, $mdPanel.yPosition.BELOW);
+                    .addPanelPosition($mdPanel.xPosition.ALIGN_START, $mdPanel.yPosition.BELOW);
 
                 var config = {
                     attachTo: angular.element(document.body),
@@ -260,13 +286,6 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                                 return arr.indexOf(w) === idx;
                             });
                         };
-
-                        $scope.testChange = function(value) {
-                            $timeout(function(argument) {
-                                $scope.filtered = vm.filtered;
-                            })
-                            
-                        }
 
 
                     }],
