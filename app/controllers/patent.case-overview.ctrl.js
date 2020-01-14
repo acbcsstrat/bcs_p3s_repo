@@ -13,7 +13,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.closeCaseoverview = closeCaseoverview;
     vm.portfolioLoaded = false;
     vm.setTab = setTab;
-    $scope.notInProgress = '';
+    vm.checkAvailableAction = checkAvailableAction;
     $scope.availableServices = [];
     $scope.notInProgress = true;
     $scope.caseoverview_tab = 'details';
@@ -58,6 +58,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         $scope.$parent.promise.then(
             function(){
                 
+
+
                 vm.portfolioLoaded = true;
 
                 renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
@@ -201,6 +203,12 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             });
         }
 
+    }
+
+    function checkAvailableAction(services) {
+        vm.actionsAvailable = services.some(function(item){
+            return item.saleType === 'Online' || item.saleType === 'Offline' || item.saleType === 'In Progress';
+        })
     }
 
     $scope.$on('$destroy', function(){

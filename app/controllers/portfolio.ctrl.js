@@ -103,7 +103,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
     }
 
-    $scope.promise
+    $scope.promise //assigned promise to scope so child state can also resolve this promise to invoke functions
     .then(function(response) {
         if ($scope.$$destroyed) throw "Scope destroyed";
         return response;

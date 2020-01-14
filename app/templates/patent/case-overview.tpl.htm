@@ -111,14 +111,14 @@
 							        </div>
 							        
 						        </div>						
-								<div class="row">
+								<div class="row" data-ng-show="$ctrl.actionsAvailable">
 									<div class="col-md-6">
-										<p class="font-h4 font-weight-bold m-b-xs" data-ng-if="$ctrl.patent.p3sServicesWithFees.length">Available actions</p>
+										<p class="font-h4 font-weight-bold m-b-xs">Available actions</p>
 									</div>
 								</div>
-								<div class="row">
+								<div class="row" data-ng-show="$ctrl.actionsAvailable">
 									<div class="col-md-12 d-flex">
-				                		<div data-ng-repeat="item in $ctrl.patent.p3sServicesWithFees track by $index" class="d-flex align-items-center m-r-xl">
+				                		<div data-ng-repeat="item in $ctrl.patent.p3sServicesWithFees track by $index" class="d-flex align-items-center m-r-xl" data-ng-init="$ctrl.checkAvailableAction($ctrl.patent.p3sServicesWithFees)">
 							               	<p class="font-h4 font-weight-medium m-r-xs text-capitalize" data-ng-if="item.saleType == 'Online' || item.saleType == 'Offline'">{{item.serviceType}}</p>
 								            <transaction-link trans-id="{{item.actionID}}" data-ng-if="item.saleType == 'In Progress'"></transaction-link>
 	                                        <div data-ng-if="item.serviceType == 'grant'">
@@ -135,7 +135,7 @@
 				                		</div>
 			                		</div>
 								</div>
-		                		<div class="row">
+		                		<div class="row" data-ng-show="$ctrl.actionsAvailable">
 		                			<div class="col-md-12">
 		                				<div class="border-grey-xs--btm m-t-md m-b-sm"></div>
 		                			</div>
