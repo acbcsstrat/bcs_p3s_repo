@@ -126,14 +126,21 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
             vm.stateParams = $stateParams.patentId; 
             vm.rowSelect = rowSelect;
             $scope.portfolioLoaded = false;
-            vm.sortReverse  = false;
-            vm.selectedSortType = 'ep_ApplicationNumber';
+
             vm.showFilter = showFilter;
             vm.showAddPatent = showAddPatent;
             vm.filtered = [];
             vm.portfolioData = response;
             vm.portfolioLoaded = true;
             var panelRef;
+
+            vm.propertyName = 'ep_ApplicationNumber';
+            vm.reverse = false;
+
+            vm.sortBy = function(propertyName) {
+                vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
+                vm.propertyName = propertyName;
+            };       
 
             function showAddPatent($event) {
 
@@ -149,8 +156,6 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                             added: []
                         }
                         $scope.foundPatent = false;
-
-
 
                         $scope.findPatent = function(patentNo) {
                             $scope.loadingPatent = true;
@@ -263,7 +268,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
                 var panelPosition = $mdPanel.newPanelPosition()
                     .relativeTo($event.target)
-                    .addPanelPosition($mdPanel.xPosition.ALIGN_START, $mdPanel.yPosition.BELOW);
+                    .addPanelPosition($mdPanel.xPosition.ALIGN_END, $mdPanel.yPosition.BELOW);
 
                 var config = {
                     attachTo: angular.element(document.body),
@@ -275,17 +280,22 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                         $scope.portfolioData = response;
                         $scope.filtered = vm.filtered; //used for inital load of category items
                         $scope.getItems = function (obj, array) { //obj is cat currentStageColour or serviceType
-                            
                             return (array || []).map(function (w) {
                                 return w.p3sServices[0][obj];
                             }).filter(function (w, idx, arr) {
-
                                 if (typeof w === 'undefined') {
                                     return false;
                                 }             
                                 return arr.indexOf(w) === idx;
                             });
                         };
+
+                        $scope.updateFiltered = function(value) {
+                            $timeout(function(argument) {
+                                $scope.filtered = vm.filtered;
+                            })
+                            
+                        }                        
 
 
                     }],
