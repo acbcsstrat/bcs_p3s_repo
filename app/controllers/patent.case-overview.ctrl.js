@@ -42,7 +42,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     function init() {
 
-
         if($stateParams.form1200generate === 1) {
             $scope.activeLeft = 2;
             $scope.caseoverview_tab = 'form1200';
@@ -58,7 +57,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         $scope.$parent.promise.then(
             function(){
                 
-
 
                 vm.portfolioLoaded = true;
 

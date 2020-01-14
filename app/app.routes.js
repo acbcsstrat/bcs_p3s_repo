@@ -79,8 +79,17 @@ function appRoutes($stateProvider) {
         .state('portfolio.modal.patent', {
             url: '/:patentId',
             resolve: {
-                patent: ['$stateParams', 'patentsRestService', function($stateParams, patentsRestService) {
-                    return patentsRestService.fetchPatentItem($stateParams.patentId);
+                patent: ['$stateParams', 'patentsRestService', '$state', function($stateParams, patentsRestService, $state) {
+                    return patentsRestService.fetchPatentItem($stateParams.patentId)
+                    .then(
+                        function(response){
+                            return patentsRestService.fetchPatentItem($stateParams.patentId);
+                        },
+                        function(errResponse){
+                            $state.go('portfolio', {}, {reload: true})
+                        }
+                    )
+                    
                     
                 }],
                 ca: ['costAnalysisService', 'patent', function(costAnalysisService,  patent) {

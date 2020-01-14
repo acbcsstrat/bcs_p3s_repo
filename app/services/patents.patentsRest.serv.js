@@ -16,11 +16,10 @@ function patentsRestService($http, $q, organiseColourService) {
 
     return factory;
 
-
     var actionsArray = [];
 
     function fetchAllPatents() {
-    
+
         var deferred = $q.defer();
          $http.get(ppdomain+'rest-patents-portfolio/')
             .then(
@@ -43,7 +42,7 @@ function patentsRestService($http, $q, organiseColourService) {
                         if(property.nextStageColour) {
                             property.cssNext = organiseColourService.getCurrColour(property.nextStageColour, 'text')
                         }
-                        return property
+                        return property;
                     })
                 })
 
@@ -70,33 +69,39 @@ function patentsRestService($http, $q, organiseColourService) {
     };
 
     function fetchPatentItem(id) {
-       
-        
 
         var deferred = $q.defer();
         $http.get(ppdomain+'rest-patent/'+ id)
             .then(
             function (response) {
 
-                response.data.p3sServicesWithFees.map(function(property){
-                    var item = actionsArray.flat().filter(function(action){
-                        return action.serviceType === property.serviceType && id == action.patentID;
-                    }).map(function(filtered){
-                        return filtered.actionID
+                if(actionsArray === undefined || typeof actionsArray === 'undefined') {
+                    deferred.reject(response.data);
+                }
+                if(actionsArray.length) {
+                    response.data.p3sServicesWithFees.map(function(property){
+                        var item = actionsArray.flat().filter(function(action){
+                            return action.serviceType === property.serviceType && id == action.patentID;
+                        }).map(function(filtered){
+                            return filtered.actionID
+                        })
+
+                        property.actionID = item[0];
+
+                        if(property.currentStageColour) {
+                            property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text');
+                        }
+                        if(property.nextStageColour) {
+                            property.cssNext = organiseColourService.getCurrColour(property.nextStageColour, 'text');
+                        }
+                        return property;
+                    
                     })
 
-                    property.actionID = item[0];
+                     deferred.resolve(response.data);
+                }
 
-                    if(property.currentStageColour) {
-                        property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text');
-                    }
-                    if(property.nextStageColour) {
-                        property.cssNext = organiseColourService.getCurrColour(property.nextStageColour, 'text');
-                    }
-                    return property;
-                
-                })                
-                deferred.resolve(response.data);
+               
             },
             function(errResponse){
                 console.error('Error: Unable to fetch patent. Error Response:', errResponse)
