@@ -206,7 +206,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
 
                 })
                 activeTabService.setTab(2)
-                $state.go('portfolio.patent', {form1200generate: 1, prepareGrant: 0}, {reload: true});
+                $state.go('portfolio.modal.patent', {form1200generate: 1, prepareGrant: 0}, {reload: true});
             },
             function(errResponse){
                 console.log(response)
@@ -223,7 +223,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
 
                     }]
                 });
-                $state.go('portfolio.patent', {patentId: patent.patentID}, {reload: true});
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID}, {reload: true});
             }
         )
 
