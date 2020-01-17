@@ -107,7 +107,15 @@
 .scrollable-area { /*modules*/ /*components*/ /*_tables.scss*  ADD CLASS INSTAD OF SELECTING WITH ID*/ 
     overflow-x: scroll;
     min-height: 386px;
-    height: calc(100vh - 170px);
+
+    &.scrollable-area--full-height {
+        height: calc(100vh - 210px);
+        max-height: calc(100vh - 210px);
+    }
+    &.scrollable-area--mid-height {
+        height: calc(100vh - 50.5rem);
+        max-height: calc(100vh - 50.5rem);
+    }
     &::-webkit-scrollbar-thumb {
         background: $grey; 
         border-radius: 10px;
@@ -117,9 +125,8 @@
     &::-webkit-scrollbar {
         width: 15px;
     }    
-    &.portfolio-table, &.transaction-table, &.renewalhistory-table  {
-        max-height: calc(100vh - 250px);
-        min-height: 320px;
+    &.scrollable-area--full-height  {
+        
     }
     &.dashboard-table {
         height: 280px;

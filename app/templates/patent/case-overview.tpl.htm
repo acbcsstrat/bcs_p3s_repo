@@ -128,9 +128,9 @@
 	                                        <div data-ng-if="item.serviceType == 'Euro-PCT'">
 	                                            <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">Generate Form 1200</a>
                                             </div>
-								            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="item" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"></ngcart-addtocart>
-								            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="item" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
-								            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn" name="service.grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="item" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
+								            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"></ngcart-addtocart>
+								            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
+								            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn" name="service.grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
 								            <p class="font-weight-medium font-h4" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">: Call +44 203 696 0949</p>
 				                		</div>
 			                		</div>

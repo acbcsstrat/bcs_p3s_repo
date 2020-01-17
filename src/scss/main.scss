@@ -412,3 +412,19 @@ option-panel {
         height: 30px;
     }    
 }
+
+.md-chips md-chip {
+    background: $grey;
+    border-radius: 1px solid $grey-dark;
+    box-shadow: none;
+    font-family: $font-body!important;
+    font-size: $font-h4;
+}
+
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+    box-shadow: none!important;
+}
+
+.opacity-0 {
+  opacity: 0;
+}

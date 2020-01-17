@@ -252,19 +252,20 @@ angular.module('ngCart', ['ngCart.directives'])
         this.$save = function () {
 
             var reduceCart = this.getCart().items.map(function(item){
-                if(!item.p3sServices) {
+                if(!item._data.p3sServices) {
+                    item._data.p3sServicesWithFees.map(function(prop){                    
+                        if(prop.form1200FeeUI) {
+                            prop.form1200FeeUI.data = null;
+                        }
 
-                    if(item._data.form1200FeeUI) {
-                        item._data.form1200FeeUI.data = null;
-                    }
+                        if(prop.renewalFeeUI) {
+                            prop.renewalFeeUI.data = null;
+                        }
 
-                    if(item._data.renewalFeeUI) {
-                        item._data.renewalFeeUI.data = null;
-                    }
-
-                    if(item._data.grantFeeUI) {
-                        item._data.grantFeeUI.data = null;
-                    }
+                        if(prop.grantFeeUI) {
+                            prop.grantFeeUI.data = null;
+                        }
+                    })
 
                 } 
                 return item;
