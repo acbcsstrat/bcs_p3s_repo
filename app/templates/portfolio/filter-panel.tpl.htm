@@ -1,11 +1,10 @@
-<div role="dialog" class="container-filter-list">
-
+<div class="container-filter-list" ng-cloak>
     <md-list class="box" ng-repeat="cat in categories" ng-init="filter[cat]={}">
         <md-subheader class="md-no-sticky">
             <h2>{{cat == 'currentStageColour' ? 'Current Stage Colour' : 'European Action'}}</h2>
         </md-subheader>
         <md-list-item ng-repeat="value in getItems(cat, portfolioData)">
-            <md-checkbox class="md-secondary" data-ng-model="filter[cat][value]" data-ng-change="updateFiltered(filter[cat][value])">
+            <md-checkbox class="md-secondary" data-ng-model="filter[cat][value]" data-ng-change="updateFiltered(value, filter[cat][value])">
             </md-checkbox>
             <p>({{(filtered | filter:value:true).length}})&nbsp;
                 <span class="text-capitalize" data-ng-if="value == 'GREY'">Grey</span>
@@ -16,9 +15,8 @@
         <md-divider></md-divider>
     </md-list>
     <div layout="row" class="demo-dialog-button">
-        <md-button md-autofocus flex class="md-primary" data-ng-click="$ctrl.closeDialog();">
+        <md-button md-autofocus flex class="md-primary" data-ng-click="closeDialog();">
             Close
         </md-button>
     </div>
-
 </div>

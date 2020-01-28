@@ -1,13 +1,13 @@
 angular.module('ppApp').controller('portfolioCtrl', portfolioCtrl)
 
-portfolioCtrl.$inject = ['$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService', 'organiseColourService', '$mdPanel', 'searchPatentService', '$transitions'];
+portfolioCtrl.$inject = ['$scope', '$state', '$stateParams','$rootScope', 'patentsRestService', '$timeout', '$uibModal', 'chunkDataService', 'filterFilter', 'organiseTextService', 'organiseColourService', '$mdPanel', 'searchPatentService', '$transitions', '$mdDialog', '$mdMenu'];
 
-function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService, $mdPanel, searchPatentService, $transitions) {
+function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestService, $timeout, $uibModal, chunkDataService, filterFilter, organiseTextService, organiseColourService, $mdPanel, searchPatentService, $transitions, $mdDialog, $mdMenu) {
 
     var vm = this;
 
     $scope.promise = patentsRestService.fetchAllPatents();
-    vm.outsideFilterStore = {};
+    $scope.filter = {};
 
     function select(i) {
         vm.selected = i;
@@ -42,7 +42,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
     function noSubFilter(obj) {
         for (var key in obj) {
-            if (obj[key]) { //if one of the vm.outsideFilterStore ($scope.filter) properties evaluates to true (is selected) return false 
+            if (obj[key]) { //if one of the $scope.filter ($scope.filter) properties evaluates to true (is selected) return false 
                 return false;
             }
         }
@@ -58,11 +58,11 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
     $scope.filterByPropertiesMatchingAND = function (data) { //all data sent from filter 
         var matchesAND = true; //set macthes to true (default)
 
-        for (var obj in vm.outsideFilterStore) { //vm.outsideFilterStore is populated by $scope.filter within the panel controller below. Scope filter properties are initiated from front-end. currentStageColour/serviceType
+        for (var obj in $scope.filter) { //$scope.filter is populated by $scope.filter within the panel controller below. Scope filter properties are initiated from front-end. currentStageColour/serviceType
 
-            if( vm.outsideFilterStore.hasOwnProperty(obj) ) {
-                if (noSubFilter(vm.outsideFilterStore[obj])) continue; //Check if there are any sub filter options with the value of true, if so, break from loop to return value of true
-                if (!checkArray(vm.outsideFilterStore, data.p3sServices, obj)) { //If the property from the data matches the property from vm.outsideFilterStore ($scope.filter) return false. It will not turn up in the table
+            if( $scope.filter.hasOwnProperty(obj) ) {
+                if (noSubFilter($scope.filter[obj])) continue; //Check if there are any sub filter options with the value of true, if so, break from loop to return value of true
+                if (!checkArray($scope.filter, data.p3sServices, obj)) { //If the property from the data matches the property from $scope.filter ($scope.filter) return false. It will not turn up in the table
                     matchesAND = false;
                     break; //break from the loop and return matchesAND which would now return false
                 }
@@ -71,26 +71,6 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
         }
         return matchesAND;
     }; 
-
-    var duplicateTransiation = 0; //QUICK FIX. INVESTIGATE WHY STATE CHANGE OCCURING TWICE
-
-    $transitions.onError({ to: 'portfolio.modal.patent' }, function(transition) {
-        if(transition.error().detail.status === 500 && duplicateTransiation === 0) {
-            var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modals/modal.no-patent-found.tpl.htm',
-                appendTo: undefined,
-                controllerAs: '$ctrl',
-                controller: ['$uibModalInstance', function($uibModalInstance) {
-
-                    this.dismissModal = function () {
-                        $uibModalInstance.close();
-                    };
-
-                }]
-            })
-
-        }
-    });
 
     function updatePortfolioData() {
         patentsRestService.fetchAllPatents()
@@ -125,22 +105,63 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
             vm.selected = 0;
             vm.stateParams = $stateParams.patentId; 
             vm.rowSelect = rowSelect;
-            $scope.portfolioLoaded = false;
-
+            vm.chipOptions = [];
             vm.showFilter = showFilter;
             vm.showAddPatent = showAddPatent;
-            vm.filtered = [];
-            vm.portfolioData = response;
             vm.portfolioLoaded = true;
-            var panelRef;
+            vm.sortBy = sortBy;
+            $scope.selectedChip = selectedChip;
+            $scope.portfolioData = response;
+            $scope.portfolioLoaded = false;
 
             vm.propertyName = 'ep_ApplicationNumber';
             vm.reverse = false;
 
-            vm.sortBy = function(propertyName) {
+            function sortBy(propertyName) {
                 vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
                 vm.propertyName = propertyName;
-            };       
+            };
+
+            function selectedChip(prop, value, cat) {
+                if(cat == 'Euro-PCT') {cat = 'epct'}
+                $scope.filter[cat][prop] = false;
+                // $scope.portfolioData = $scope.portfolioData;
+            }
+
+            function showFilter(mdMenu, $event) {
+         
+                mdMenu.open($event)
+                $scope.categories = ['serviceType', 'currentStageColour'];     
+
+                //return items to filter panel
+                $scope.getItems = function (obj, array) { //obj is cat currentStageColour or serviceType
+                    return (array || []).map(function (w) {
+                        return w.p3sServices[0][obj]; //select property in p3sservices 
+                    }).filter(function (w, idx, arr) {
+                        if (typeof w === 'undefined') {
+                            return false;
+                        }
+                        return arr.indexOf(w) === idx;
+                    });
+                };
+
+                $scope.updateFiltered = function(prop, value, cat) {
+                    if(value === true) {
+                        if(cat === 'epct') {cat = 'Euro-PCT'};
+                        vm.chipOptions.push({cat: cat, value: value, prop: prop})
+                    } 
+                    if(value === false) {
+                        var index = vm.chipOptions.indexOf(cat);
+                        vm.chipOptions.splice(index, 1);
+                    }
+                }
+
+                $scope.closeDialog = function() {
+                    $mdDialog.hide();                            
+                }
+
+            } //showFilter function end
+
 
             function showAddPatent($event) {
 
@@ -262,72 +283,11 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
                     }
                 );
 
-            }
-
-            function showFilter($event) {
-
-                var panelPosition = $mdPanel.newPanelPosition()
-                    .relativeTo($event.target)
-                    .addPanelPosition($mdPanel.xPosition.ALIGN_END, $mdPanel.yPosition.BELOW);
-
-                var config = {
-                    attachTo: angular.element(document.body),
-                    controller: ['mdPanelRef', '$scope', function(mdPanelRef, $scope) {
-
-                        $scope.categories = ['serviceType', 'currentStageColour'];
-                        $scope.filter = {};
-                        vm.outsideFilterStore = $scope.filter;
-                        $scope.portfolioData = response;
-                        $scope.filtered = vm.filtered; //used for inital load of category items
-                        $scope.getItems = function (obj, array) { //obj is cat currentStageColour or serviceType
-                            return (array || []).map(function (w) {
-                                return w.p3sServices[0][obj];
-                            }).filter(function (w, idx, arr) {
-                                if (typeof w === 'undefined') {
-                                    return false;
-                                }             
-                                return arr.indexOf(w) === idx;
-                            });
-                        };
-
-                        $scope.updateFiltered = function(value) {
-                            $timeout(function(argument) {
-                                $scope.filtered = vm.filtered;
-                            })
-                            
-                        }                        
-
-
-                    }],
-                    controllerAs: '$ctrl',
-                    position: panelPosition,
-                    // animation: panelAnimation,
-                    targetEvent: $event,
-                    templateUrl: 'app/templates/portfolio/filter-panel.tpl.htm',
-                    clickOutsideToClose: true,
-                    escapeToClose: true,
-                    focusOnOpen: true
-                };
-                $mdPanel.open(config)
-                .then(
-                    function(result) {
-
-                        panelRef = result;
-                    },
-                    function(error){
-                        console.error('Error occured when opening panel: ',error)
-                    }
-                );
-            }
-
-
-            $scope.$broadcast('portfolioLoaded', function(){})
+            } //showAddPatentPanel end]
 
         }
     )
 
     //SEARCH ADD PATENT
-
-
 
 }
