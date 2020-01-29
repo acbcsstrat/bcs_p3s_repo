@@ -98,25 +98,29 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             $scope.ngCart = ngCart;
             $scope.productData = ngCart.$cart.items;
 
-            $scope.basketItems = [] = Object.keys($scope.productData).map(function(data, index){
-                var obj = {};
-                obj.ep_ApplicationNo = $scope.productData[data]._data.ep_ApplicationNumber;
-                obj.patentID = $scope.productData[data]._data.patentID;
-                obj.serviceType = $scope.productData[data]._name;
-                return obj;
-            });
+
+
+            $scope.basketItems = function() {
+                return [] = Object.keys($scope.productData).map(function(data, index){
+                    var obj = {};
+                    obj.ep_ApplicationNo = $scope.productData[data]._data.ep_ApplicationNumber;
+                    obj.patentID = $scope.productData[data]._data.patentID;
+                    obj.serviceType = $scope.productData[data]._name;
+                    return obj;
+                })
+            };
 
             $scope.checkout = function () {
 
-
                 var orderObj = {
-                    basketItems: $scope.basketItems,
-                    totalCostUSD: ngCart.totalCost()
-                    // dateNowLocalTime :null
+                    basketItems: $scope.basketItems(),
+                    totalCostUSD: ngCart.totalCost(),
+                    dateNowLocalTime: null
                 };
 
                 fulfilmentProvider.setService($scope.service);
                 fulfilmentProvider.setSettings($scope.settings);
+
                 fulfilmentProvider.checkout(orderObj)
                     .then(function (data, status, headers, config) {
                             data.billingDetails = $scope.summary.billingDetails;
@@ -139,13 +143,13 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
 
             fetchBasketPatents();
 
-            function fetchBasketPatents() {
-
+            function fetchBasketPatents(orderObj) {
                 var orderObj = {};
-                orderObj.basketItems = scope.basketItems;
+                orderObj.basketItems = scope.basketItems();
                 basketService.fetchBasketPatents(orderObj)
                 .then(
                     function(response){
+
                         scope.summary = {
                             firstName: response.firstName,
                             lastName: response.lastName,

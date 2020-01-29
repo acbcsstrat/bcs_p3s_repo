@@ -106,7 +106,7 @@
 
 .scrollable-area { /*modules*/ /*components*/ /*_tables.scss*  ADD CLASS INSTAD OF SELECTING WITH ID*/ 
     overflow-x: scroll;
-    min-height: 386px;
+    // min-height: 386px;
 
     &.scrollable-area--full-height {
         height: calc(100vh - 210px);

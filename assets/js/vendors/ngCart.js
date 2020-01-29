@@ -166,7 +166,8 @@ angular.module('ngCart', ['ngCart.directives'])
         };
 
         this.totalCost = function () {
-            return +parseFloat(this.getSubTotal() + this.getShipping() + this.getTax()).toFixed(2);
+            // console.log('this.getShipping()', this.getShipping()) BEEEN REMOVED
+            return +parseFloat(this.getSubTotal() + this.getTax()).toFixed(2);
         };
 
         this.removeItem = function (index) {
@@ -252,7 +253,7 @@ angular.module('ngCart', ['ngCart.directives'])
         this.$save = function () {
 
             var reduceCart = this.getCart().items.map(function(item){
-                if(!item._data.p3sServices) {
+                if(!item._data.p3sServices) { //logic to prevent error of object loop
                     item._data.p3sServicesWithFees.map(function(prop){                    
                         if(prop.form1200FeeUI) {
                             prop.form1200FeeUI.data = null;
