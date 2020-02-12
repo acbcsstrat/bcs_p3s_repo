@@ -12,25 +12,22 @@ function helpPanel($rootScope, fetchHelpService) {
 
 			function displayPanel(open) {
 				if(open) {
-					angular.element(elem[0]).addClass('active')
+					angular.element(elem[0]).addClass('active');
 					return
 				}
-				angular.element(elem[0]).removeClass('active')
+				angular.element(elem[0]).removeClass('active');
 
 			}
 
-			scope.$watch('helpRequired', function() {
-				if(scope.helpRequired === true) {
-					displayPanel(scope.helpRequired)
-				}
+			scope.$on('helpRequired', function(event, value	) {
+				displayPanel(value);
 			})
 
 			scope.closeHelpPanel = function() {
-				scope.helpRequired = !scope.helpRequired
-				displayPanel(scope.helpRequired)
+				displayPanel(false);
 			}
 
-			scope.helpList = fetchHelpService.getAllInformation()
+			scope.helpList = fetchHelpService.getAllInformation();
 
 			scope.backOut = function() {
 				$rootScope.$broadcast('backOut')
@@ -38,7 +35,7 @@ function helpPanel($rootScope, fetchHelpService) {
 
 			scope.helpItemSelected = function(category, item) {
 				var helpInfo = fetchHelpService.getSelectedInformation(category, item);
-				$rootScope.$broadcast('itemSeleted', helpInfo, category)
+				$rootScope.$broadcast('itemSeleted', helpInfo, category);
 				
 			}
 

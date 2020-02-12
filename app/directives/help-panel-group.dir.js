@@ -55,7 +55,7 @@ function helpInformation($rootScope, $compile) {
 			var setIndex, setTitle;
 
 			function compileTemplate(data, cat) {
-				console.log(data, cat)
+
 				if((setIndex === undefined && setTitle === undefined) || (setTitle !== data.title)) {
 					setIndex = data.index; 
 					setTitle = data.title;
