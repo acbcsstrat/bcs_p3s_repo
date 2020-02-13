@@ -75,10 +75,8 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
     function updatePortfolioData() {
         patentsRestService.fetchAllPatents()
         .then(function(response) {
-            vm.portfolioData = response;
-            
+            $scope.portfolioData = response;            
             vm.recentlyAdded.push(response.slice(-1).pop())
-
         })        
 
     }

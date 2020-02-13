@@ -11,6 +11,8 @@ function patentDetailsCtrl(patent, ca, $rootScope, $scope, $state, $stateParams,
 
     function updatePatentSuccess() {
 
+        $state.reload();
+
         var modalInstance = $uibModal.open({
             templateUrl: 'app/templates/modals/modal.update-patent-success.tpl.htm',
             appendTo: undefined,
@@ -19,7 +21,7 @@ function patentDetailsCtrl(patent, ca, $rootScope, $scope, $state, $stateParams,
 
                 this.dismissModal = function() {
                     $uibModalInstance.close();
-                    // $state.reload()
+                    
                 };
 
             }]

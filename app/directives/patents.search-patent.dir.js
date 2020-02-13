@@ -1,6 +1,6 @@
 angular.module('ppApp').directive('validateSearch', function(){
 
-    var regExp = /^([a-zA-z0-9])+\.([0-9])$/;
+    var regExp = /^([a-zA-z0-9 ])+\.([0-9])$/;
 
     return {
 
