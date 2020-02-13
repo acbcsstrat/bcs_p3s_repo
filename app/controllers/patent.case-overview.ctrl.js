@@ -6,7 +6,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     var vm = this;
 
-    vm.patent = patent;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
@@ -57,7 +56,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         $scope.$parent.promise.then(
             function(){
                 
-
+                vm.patent = patent;
                 vm.portfolioLoaded = true;
 
                 renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
