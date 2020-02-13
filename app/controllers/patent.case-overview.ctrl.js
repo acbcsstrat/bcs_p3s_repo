@@ -22,7 +22,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     var chartTimeout;
     var originatorEv;
 
-
     vm.processView = function(tab, index, chart) {
         if(!$scope.notInProgress) {
             vm.setTab(tab)
@@ -55,7 +54,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         $scope.$parent.promise.then(
             function(){
-                
+
                 vm.patent = patent;
                 vm.portfolioLoaded = true;
 
