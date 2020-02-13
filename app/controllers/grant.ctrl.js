@@ -51,7 +51,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
         var formData = new FormData();
         var config = { headers: {'Content-Type': undefined} };
-        var notifyWhenValidationAvailable = data.optInValidation.no === true ? false : true;
+        var notifyWhenValidationAvailable = true; //REMOVE EVENTALLY. QUICK FIX. PROPERTY NOT REQUIRED
         formData.append('patentID', patent.patentID);
         formData.append('clientRef', data.clientRef);
         formData.append('totalClaims', parseInt(data.totalClaims));

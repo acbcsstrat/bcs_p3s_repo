@@ -20,13 +20,6 @@
             <label for="totals" class="form-check-label">I understand</label>
         </div>
 	</div>
-	<div class="form-group m-b-sm">
-		<p class="font-body m-b-xs font-weight-medium">If renewal fee(s) are due, these will be automatically be included</p>
-        <div class="form-check form-check-inline">
-            <input type="checkbox" name="renewal" data-ng-model="initiate.renewal" class="form-check-input checkbox-square" required>
-            <label for="renewal" class="form-check-label">I understand</label>
-        </div>
-	</div>	
 	<div class="row d-flex flex-grow-1">
 		<div class="col-xl-12 d-flex justify-content-end align-items-end">
 			<button class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.initiateGrantOrder()" data-ng-disabled="grantInitiate.$invalid">Start Process</button>
