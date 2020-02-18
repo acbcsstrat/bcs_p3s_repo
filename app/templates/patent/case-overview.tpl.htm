@@ -39,6 +39,12 @@
 										<span>Grant & Publishing</span>
 									</a>
 								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayValidationTab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 8 }" data-ng-click="$ctrl.setTab('validation');  activeLeft = 8;">
+										<span> <i class="fal fa-file-alt font-h3"></i></span>
+										<span>Validation</span>
+									</a>
+								</li>								
 								<li class="nav-item">
 									<a 
 									class="nav-link d-flex flex-column" 
@@ -149,6 +155,7 @@
 										<div ui-view="form1200" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'form1200'"></div>
 										<div ui-view="renewalhistory" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'renewalhistory'"></div>
 										<div ui-view="grantandpublishing" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'grantandpublishing'"></div>
+										<div ui-view="validation" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'validation'"></div>
 										<div ui-view="fee-breakdown" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'feebreakdown'"></div>
 										<div ui-view="fxchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'fxchart'"></div>
 										<div ui-view="costchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'costchart'"></div>

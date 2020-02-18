@@ -74,14 +74,17 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 })
     
                 patent.p3sServicesWithFees.forEach(function(data, index){
-
                     if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
-                    if(data.saleType !== 'Not In Progress') {
+                    if(data.saleType !== 'Not In Progress' || data.serviceType == 'postgrant') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
                         $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
                     }
                 })
 
                 $scope.availableServices.forEach(function(obj){
+
+                    if(obj.action == 'postgrant') {
+                        vm.displayValidationTab = true;
+                    }
 
                     if(obj.type == 'Not In Progress') { return; }
                     if(obj.action == 'Euro-PCT') {
@@ -95,8 +98,9 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                         if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
                             vm.displayGrantTab = true;
                         }
-                        
                     }
+
+
 
                 })
             }

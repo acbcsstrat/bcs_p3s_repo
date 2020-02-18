@@ -53,6 +53,7 @@ require("app/services/app.uploadAvatar.serv.js");
 require("app/services/grant.serv.js");
 require("app/services/notification.serv.js");
 require("app/services/activeTab.serv.js")
+require("app/services/validation.serv.js")
 
 require("app/controllers/checkout.bankTransferPrep.ctrl.js");
 require("app/controllers/checkout.bankTransferSuccess.ctrl.js");
@@ -80,6 +81,7 @@ require("app/controllers/costchart.ctrl.js")
 require("app/controllers/notifications.ctrl.js")
 require("app/controllers/patent.case-overview.ctrl.js");
 require("app/controllers/patent.details.ctrl.js");
+require("app/controllers/validation.ctrl.js");
 
 
 require("app/components/core.mainNav.comp.js");
