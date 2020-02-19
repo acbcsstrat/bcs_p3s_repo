@@ -1,11 +1,89 @@
 <div class="row m-b-sm">
 	<div class="col-xl-12">	
 	    <h3 class="font-weight-bold font-h3 m-b-sm">Validations</h3>
-	    <p>Displayed below are the available designated states. Select or de-select the states you wish to include in the quote</p>
+	    <p>Displayed below are the available designated states. Select or de-select the states you wish to include in the quote.</p>
 	</div>
 </div>
-<div class="row m-b-sm">
-	<div class="col-xl-12">	
-	    <p class="font-weight-bold font-body">Validations</p>
+<form name="validationForm" novalidate>
+	<div class="form-group row m-b-md">
+		<div class="col-xl-12">
+			<h4 class="font-weight-medium font-h4">Contracting States</h4>
+		    <div class="row">
+		    	<div class="col-xl-2 m-t-sm" data-ng-repeat="designatedStates in $ctrl.validationInfo.designatedStates" data-ng-init="checkbox.selected = true; designatedStates.selected = true;">	    		
+					<div class="form-check form-check-inline">
+					  	<label class="form-check-label cursor-pointer" for="designatedStates.stateName">{{designatedStates.stateCode}}
+				            <md-tooltip md-delay="200" md-direction="right" md-z-index="999">
+				              	{{designatedStates.stateName}}
+				            </md-tooltip>					  		
+					  	</label>
+					  	<input class="form-check-input" type="checkbox" id="{{designatedStates.stateName}}" data-ng-model="checkbox.selected"  data-ng-change="$ctrl.checkStates(checkbox.selected, $index, 'designated');" data-ng-model="checkbox.selected">
+					</div>
+
+		    	</div>
+			</div>
+		</div>
 	</div>
-</div>
+	<div class="form-group row m-b-md">
+		<div class="col-xl-12">	
+		    <h4 class="font-weight-medium font-h4">Extension States</h4>
+		    <div class="row">
+			    <div class="col-xl-2 m-t-sm" data-ng-repeat="extensionStates in $ctrl.validationInfo.extensionStates" data-ng-init="checkbox.selected = true; extensionStates.selected = true;">
+					<div class="form-check form-check-inline">
+					  	<label class="form-check-label cursor-pointer" for="extensionStates.stateName">{{extensionStates.stateCode}}
+				            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
+				              	{{extensionStates.stateName}}
+				            </md-tooltip>	
+					  	</label>
+					  	<input class="form-check-input" type="checkbox" id="{{extensionStates.stateName}}" data-ng-model="checkbox.selected"  data-ng-change="$ctrl.checkStates(checkbox.selected, $index, 'extension');">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group row m-b-md">
+		<div class="col-xl-12">	
+		    <h4 class="font-weight-medium font-h4">Validation States</h4>
+		    <div class="row">
+			    <div class="col-xl-2 m-t-sm" data-ng-repeat="validationStates in $ctrl.validationInfo.validationStates" data-ng-init="checkbox.selected = true; validationStates.selected = true;">
+					<div class="form-check form-check-inline cursor-pointer">
+					  	<label class="form-check-label" for="{{validationStates.stateName}}">{{validationStates.stateCode}}
+				            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
+				              	{{validationStates.stateName}}
+				            </md-tooltip>	
+					  	</label>
+					  	<input class="form-check-input" type="checkbox" id="{{validationStates.stateName}}" data-ng-model="checkbox.selected"  data-ng-change="$ctrl.checkStates(checkbox.selected, $index, 'validation');">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="border-grey-xs--top m-b-md m-t-md"></div>
+	<div class="form-group row m-b-sm">
+		<div class="col-xl-12">
+		    <h4 class="font-weight-medium font-h4 m-b-xs">Correspondence Details</h4>
+		    <p>Patent Place require correspondence details in case an IP professional is required to make contact in regards to the validation request.</p>
+		</div>
+	</div>	
+	<div class="form-group row">
+		<label class="col-xl-4 d-flex align-items-center font-body font-weight-medium" for="correspondenceName">Correspondence Name:</label>
+		<div class="col-xl-6">
+			<input type="input" class="form-control" name="correspondenceName" data-ng-model="formData.corresdpondenceName" data-validate-name required>
+			<p class="txt-phase-red m-t-xs" data-ng-show="validationForm.correspondenceName.$error.required && validationForm.correspondenceName.$dirty">Please fill out this field</p>		
+			<p class="txt-phase-red m-t-xs" data-ng-show="validationForm.correspondenceName.$dirty && validationForm.correspondenceName.$error.validName">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-xl-4 d-flex align-items-center font-body font-weight-medium" for="correspondenceEmail">Correspondence Email:</label>
+		<div class="col-xl-6">
+			<input type="input" class="form-control" name="correspondenceEmail" data-ng-model="formData.corresdpondenceEmailaddress" data-validate-email required>
+			<p class="txt-phase-red m-t-xs" data-ng-show="validationForm.correspondenceEmail.$error.required && validationForm.correspondenceEmail.$dirty">Please fill out this field</p>
+			<p class="txt-phase-red m-t-xs" data-ng-show="validationForm.correspondenceEmail.$dirty && validationForm.correspondenceEmail.$error.validEmail">Please enter a valid email address</p>
+		</div>
+	</div>
+	<div class="border-grey-xs--top m-b-md m-t-md"></div>
+	<div class="row">
+		<div class="col-xl-12 text-right">
+    		<button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="validationForm.$invalid || formDataSubmitted || !isChecked" data-ng-click="$ctrl.submitValidationData(formData); formDataSubmitted = true">Request quote</button>
+		</div>
+	</div>
+</form>

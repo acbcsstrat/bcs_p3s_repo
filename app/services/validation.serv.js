@@ -12,16 +12,18 @@ function validationService($http, $q) {
 
 		var deferred = $q.defer()
 
-		$http.get('/rest-validation-quote-request/', id)
+		$http.get('assets/dev_json/QuoteRequest.json') //VALIDATION TEST DATA 
 		.then(
 			function(response){
-				deferred.resolve(response)
+				deferred.resolve(response.data)
 			},
 			function(errResponse){
-				console.error('Error return : ', errResponse)
+				console.error('Error returning validation service : ', errResponse)
 				deferred.reject(errResponse)
 			}	
 		)
+
+		return deferred.promise;
 
 	}
 
