@@ -20,6 +20,21 @@ function CurrentTransactionsService($http, $q) {
 		.then(
 			function(response){
                 response.data.map(function(el){
+                	if(el.renewalUIs.length) {
+	                	el.renewalUIs.map(function(o){ 
+	                		o.newType = 'Renewal';
+	                	})
+                	}
+                	if(el.grantUIs.length) {
+	                	el.grantUIs.map(function(o){ 
+	                		o.newType = 'Grant';
+	                	})
+                	}
+                	if(el.epctUIs.length) {
+	                	el.epctUIs.map(function(o){ 
+	                		o.newType = 'Euro-PCT';
+	                	})
+                	}
                     el.serviceUIs = [];
                     el.serviceUIs = el.serviceUIs.concat(el.renewalUIs, el.grantUIs, el.epctUIs)
                     return el;
@@ -28,6 +43,7 @@ function CurrentTransactionsService($http, $q) {
 				deferred.resolve(response.data);
 			},
 			function(errResponse){
+				console.error('Error: unable to fetch current transactions: Error msg: ', errResponse)
 				deferred.reject(errResponse);
 			}
 		);

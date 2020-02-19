@@ -15,7 +15,7 @@
                             <p class="font-body m-b-md">Please check the transaction details below. When you press the "Place this order" button below you're entering in to a legal contract under our terms and conditions.</p>
                             <p class="font-body m-b-md">You will need to make payment in to the MoneyCorp account at the Bank of New York.</p>
                             <p class="font-h4 font-weight-medium m-b-md">Funds must be received in to our account at MoneyCorp by:</p>                
-                            <p class="font-weight-bold font-h3 m-b-md">{{$ctrl.orderObj.transTargetEndDateUI}}</p>       
+                            <p class="font-weight-bold font-h3 m-b-md">{{$ctrl.details.transTargetEndDateUI}}</p>       
                             <p class="font-body">The transaction will be progressed at the time shown provided funds have been received. After this point the transaction will be cancelled and penalty charges will apply. If subsequently re-submitted, the costs may have changed, or the European Action(s) may no longer be available.</p>
                         </div>
                     </div>
@@ -35,20 +35,20 @@
                                 <div class="border-grey-xs--btm  m-b-xs">
                                     <div class="row font-body m-b-xs">
                                         <div class="col-md-5">
-                                            <p class="font-weight-medium font-body">Total Patents: </p>                        
+                                            <p class="font-weight-medium font-body">Total Actions: </p>                        
                                         </div>
                                         <div class="col-md-7">
-                                            <p class="font-body">{{$ctrl.orderObj.orderedPatentUIs.length}}</p>
+                                            <p class="font-body">{{$ctrl.details.orderedPatentUIs.length}}</p>
                                         </div>                                
                                     </div>
                                 </div>
                                 <div class="border-grey-xs--btm m-b-xs">
                                     <div class="row font-body m-b-xs">                                
                                         <div class="col-md-5">
-                                            <p class="font-weight-medium font-body">App No/s: </p>                        
+                                            <p class="font-weight-medium font-body">Actions: </p>                        
                                         </div>                    
                                         <div class="col-md-7">
-                                            <span class="font-body" data-ng-repeat="p in $ctrl.orderObj.patentNos">{{p}}<br></span>
+                                            <span class="font-body" data-ng-repeat="p in $ctrl.details.patentNos">{{p.ep_ApplicationNo}} <span class="text-capitalize">(p.serviceType)</span><br></span>
                                         </div>  
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                                             <p class="font-weight-medium font-body">Date: </p>                        
                                         </div>                  
                                         <div class="col-md-7">
-                                            <p class="font-body">{{$ctrl.orderObj.dateNowLocalTimeUI}}</p>
+                                            <p class="font-body">{{$ctrl.details.dateNowLocalTimeUI}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                             <p class="font-weight-medium font-body">Total Cost: </p>                        
                                         </div>
                                         <div class="col-md-7">
-                                            <p class="font-body">$ {{$ctrl.orderObj.totalCostUSD | number: 2 }}</p>
+                                            <p class="font-body">$ {{$ctrl.details.totalCostUSD | number: 2 }}</p>
                                         </div> 
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                         <div class=" border-grey-xs--btm m-b-sm m-t-sm"></div>
                         <p class="font-body m-b-md">Please check the transaction details below. When you press the "Place this order" button below you're entering in to a legal contract under our <a href="http://thepatent.place/terms" target="__blank" class="inline-link">Terms and Conditions</a>.</p>
                         <p class="font-h4 font-weight-medium m-b-md">Funds must be received in to our U.S MoneyCorp account by:</p>                
-                        <p class="font-weight-bold font-h3 m-b-md">{{$ctrl.orderObj.transTargetEndDateUI}}</p>       
+                        <p class="font-weight-bold font-h3 m-b-md">{{$ctrl.details.transTargetEndDateUI}}</p>       
                         <p class="font-body">The transaction will be progressed at the time shown provided funds have been received. Otherwise the transaction will be cancelled and penalty charges will apply.  The cost of the European Action(s) may also change.</p>
                     </div>
                 </div>
@@ -110,18 +110,19 @@
                                             <p class="font-weight-medium font-h4">Total Patents: </p>                        
                                         </div>
                                         <div class="col-xl-4">
-                                            <p class="font-h4" >{{$ctrl.orderObj.orderedPatentUIs.length}}</p>
+                                            <p class="font-h4" >{{$ctrl.details.orderedPatentUIs.length}}</p>
                                         </div>                                
                                     </div>
                                 </div>
                                 <div class="border-grey-xs--btm m-b-xs">
                                     <div class="row m-b-xs">                                
                                         <div class="col-xl-8">
-                                            <p class="font-weight-medium font-h4">App No/s: </p>                        
-                                        </div>                    
-                                        <div class="col-xl-4">
-                                            <span class="font-h4" data-ng-repeat="p in $ctrl.orderObj.patentNos">{{p}}<br></span>
-                                        </div>  
+                                            <p class="font-weight-medium font-h4">Actions
+                                            </p>
+                                        </div>
+                                            <div class="col-xl-4">
+                                                <span class="font-body" data-ng-repeat="p in $ctrl.details.patentNos">{{p.ep_ApplicationNo}} <span class="text-capitalize">({{p.serviceType}})</span><br></span>
+                                            </div>  
                                     </div>
                                 </div>
                                 <div class="border-grey-xs--btm m-b-xs">
@@ -130,7 +131,7 @@
                                             <p class="font-weight-medium font-h4">Date: </p>                        
                                         </div>                  
                                         <div class="col-xl-4">
-                                            <p class="font-h4">{{$ctrl.orderObj.dateNowLocalTimeUI}}</p>
+                                            <p class="font-h4">{{$ctrl.details.dateNowLocalTimeUI}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -139,7 +140,7 @@
                                         <p class="font-weight-medium font-h4">Total Cost: </p>                        
                                     </div>
                                     <div class="col-xl-4">
-                                        <p class="font-h4">$ {{$ctrl.orderObj.totalCostUSD | number: 2 }}</p>
+                                        <p class="font-h4">$ {{$ctrl.details.totalCostUSD | number: 2 }}</p>
                                     </div> 
                                 </div>
                             </div>                       

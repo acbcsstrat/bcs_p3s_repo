@@ -98,31 +98,35 @@ export default angular.module('ngCart.directives', [fulfilment])
         controller : ('CartController', ['$scope', 'ngCart', 'fulfilmentProvider', 'basketService','$state', function($scope, ngCart, fulfilmentProvider, basketService, $state) {
 
             $scope.ngCart = ngCart;
-            var productData = ngCart.$cart.items;
+            $scope.productData = ngCart.$cart.items;
+
+
+
+            $scope.basketItems = function() {
+                return [] = Object.keys($scope.productData).map(function(data, index){
+                    var obj = {};
+                    obj.ep_ApplicationNo = $scope.productData[data]._data.ep_ApplicationNumber;
+                    obj.patentID = $scope.productData[data]._data.patentID;
+                    obj.serviceType = $scope.productData[data]._name;
+                    return obj;
+                })
+            };
 
             $scope.checkout = function () {
 
-                var patent_ids = [];
-                var cartItems = {};
-                var totalCost = ngCart.totalCost();
-                Object.keys(productData).forEach(function(data){
-                    cartItems = productData[data]._data;
-                    patent_ids.push(cartItems.patentID);
-                });
-
-                var patentObj = {
-                    patent_ids: patent_ids,
-                    totalCostUSD: totalCost,
-                    dateNowLocalTime :null
+                var orderObj = {
+                    basketItems: $scope.basketItems(),
+                    totalCostUSD: ngCart.totalCost(),
+                    dateNowLocalTime: null
                 };
 
-                var billingDetails = $scope.summary.billingDetails;
                 fulfilmentProvider.setService($scope.service);
                 fulfilmentProvider.setSettings($scope.settings);
-                fulfilmentProvider.checkout(patentObj)
+
+                fulfilmentProvider.checkout(orderObj)
                     .then(function (data, status, headers, config) {
-                            data.billingDetails = billingDetails;
-                            $state.go('bank-transfer-preparation', {orderObj:data}, {reload: false});                            
+                            data.billingDetails = $scope.summary.billingDetails;
+                            $state.go('bank-transfer-preparation', {orderObj:orderObj, details: data}, {reload: false});                            
                         },
                         function (data, status, headers, config) {
                             $rootScope.$broadcast('ngCart:checkout_failed', {
@@ -134,34 +138,20 @@ export default angular.module('ngCart.directives', [fulfilment])
             };
         }]),
         link: function(scope, element, attrs) {
-
-            var cartArr = function() {
-                var cartArr = [];
-                var cartItems = ngCart.getItems();
-
-                cartItems.forEach(function(currentValue, index, array){
-                    cartArr.push(currentValue._id);
-                });
-
-                var idObj = {
-                    patent_id: cartArr
-                };
-
-                return idObj;
-            }
-
+            
             $rootScope.$on('ngCart:itemRemoved', function() {
                fetchBasketPatents();
             });
 
             fetchBasketPatents();
 
-            function fetchBasketPatents() {
-                var patent_ids = cartArr();
-
-                basketService.fetchBasketPatents(patent_ids)
+            function fetchBasketPatents(orderObj) {
+                var orderObj = {};
+                orderObj.basketItems = scope.basketItems();
+                basketService.fetchBasketPatents(orderObj)
                 .then(
                     function(response){
+
                         scope.summary = {
                             firstName: response.firstName,
                             lastName: response.lastName,
@@ -187,7 +177,7 @@ export default angular.module('ngCart.directives', [fulfilment])
 
                     },
                     function(errResponse){
-                        console.log(errResponse);
+                        console.error('Error: Unable to fetch basket details: ', errResponse);
                     }
                 );
             }

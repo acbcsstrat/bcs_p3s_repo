@@ -85,8 +85,8 @@
     box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);  
   } 
   &.btn-help {
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
     background: $green;
     color: $white;
@@ -94,8 +94,8 @@
     -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
     box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);  
     position: fixed;
-    right: 5%;
-    bottom: 5%;
+    right: 2%;
+    bottom: 2%;
   }
   // &:not(.remove) {
   //   &.cartbtn:before {
@@ -160,6 +160,7 @@
 .btn-underlined {
   cursor: pointer;
   text-decoration: underline;
+  background: transparent;
   &:hover {
     text-decoration: none;
   }

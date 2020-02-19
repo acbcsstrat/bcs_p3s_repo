@@ -1,6 +1,6 @@
-ActionCostController.$inject = ['$scope', '$timeout', 'patentIds', 'DashboardService']
+ActionCostController.$inject = ['$scope', '$timeout', 'DashboardService']
 
-export default function ActionCostController($scope, $timeout, patentIds, DashboardService) {
+export default function ActionCostController($scope, $timeout, DashboardService) {
 
 	var vm = this;
 
@@ -20,8 +20,7 @@ export default function ActionCostController($scope, $timeout, patentIds, Dashbo
         updateCosttimeout = $timeout(function(){
             vm.actionCost = DashboardService.fetchActionCost();
             vm.loading = false;
-
-        }, 300)
+        }, 300);
     })  
 
    $scope.$on('$destroy', function(){

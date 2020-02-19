@@ -34,6 +34,10 @@
 	<td>${buildtimestamp}</td>
  </tr>
  <tr>
+	<td>Current Server timestamp</td>
+	<td>${timestampnow}</td>
+ </tr>
+ <tr>
 	<td>Using dB</td>
 	<td>${dbname}</td>
  </tr>
@@ -43,8 +47,18 @@
  </tr>
  <tr>
 	<td>P3S product version</td>
+<<<<<<< HEAD
 	<td>v3.1dev (with Avatar2)</td>
+=======
+<<<<<<< HEAD
+	<td>v3.2</td>
+=======
+
+	<td>v3.1</td>
+	<td>v3.1dev (with Avatar2)</td>
+>>>>>>> fe-branch-planb
  </tr>
+>>>>>>> fe-branch-planb
 </table>
 
 </body>

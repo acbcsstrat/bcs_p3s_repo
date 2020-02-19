@@ -1,6 +1,6 @@
-GraphDonutController.$inject = ['$scope', '$timeout', 'patentIds', 'DashboardService'];
+GraphDonutController.$inject = ['$scope', '$timeout', 'DashboardService', '$stateParams'];
 
-export default function GraphDonutController( $scope, $timeout, patentIds, DashboardService) {
+export default function GraphDonutController($scope, $timeout, DashboardService, $stateParams) {
 
 	var vm = this;
 	var graphtDonutTimeout;
@@ -8,7 +8,7 @@ export default function GraphDonutController( $scope, $timeout, patentIds, Dashb
 	function init() {
 
 		if($stateParams.patents.length > 0) {
-			vm.patentData = dashboardService.getPatents;
+			vm.patentData = DashboardService.getPatents;
 			graphtDonutTimeout = $timeout(function() { //required to load correct size of donut graph in view
 	      		vm.donutOptions = {
 		            chart: {

@@ -12,22 +12,14 @@ function bankTransferCommitService($http, $q, $state){
 
 	function commitTransfer(order) {
 
-		var commitOrder = {}
-		commitOrder.totalCostUSD = order.totalCostUSD;
-		commitOrder.billingDetails = order.billingDetails;
-		commitOrder.patent_ids = (function(){
-			return order.orderedPatentUIs.map(function(el) {
-				return el.id;
-			})
-		}())
-
 		var deferred = $q.defer();
-		$http.post(ppdomain+'rest-committed-banktransfer/', commitOrder)
+		$http.post(ppdomain+'rest-committed-banktransfer/', order)
 		.then(
 			function(response){
 				deferred.resolve(response.data)
 			},
 			function(errResponse){
+				console.error('Error commmitting transacton. Error: ', errResponse)
 				deferred.reject(response.data)
 			});
 			

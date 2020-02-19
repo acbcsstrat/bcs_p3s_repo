@@ -12,7 +12,7 @@ export default function ActionsAvailableController($scope, $timeout, DashboardSe
 
     vm.patents = (function(){
         var obj = {}
-        for(var property in dashboardService.getPatents) {
+        for(var property in DashboardService.getPatents) {
             if(DashboardService.getPatents.hasOwnProperty(property)) {
                 if(Array.isArray(DashboardService.getPatents[property])) {
                     obj[property] = DashboardService.getPatents[property].filter(function(el){

@@ -1,12 +1,13 @@
 html, body { 
-  height: 100%;
+  height: 100%; //changed due to issue with safari placing items
   width: 100%;
   overflow-y: auto; 
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale;  
+  font-smoothing: auto;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+ 
 }
 
 body {
@@ -57,7 +58,8 @@ html,
 textarea,
 legend,
 label { 
-  font-family: $font-body!important; 
+  font-family: $font-body!important;
+  // -webkit-appearance: none;
 }
 
 p, 

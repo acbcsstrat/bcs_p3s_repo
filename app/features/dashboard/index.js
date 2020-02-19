@@ -3,6 +3,7 @@ import './_dashboard.scss';
 import angular from 'angular';
 
 import DashboardService from './services/dashboard.service.js';
+import patentsRestService from '../../services/patents.patentsRest.serv.js';
 import CalculateService from '../../services/calculate.service.js';
 import CostAnalysisService from '../../services/cost-analysis.service.js';
 import TransactionHistoryService from '../../services/transaction-history.service.js';

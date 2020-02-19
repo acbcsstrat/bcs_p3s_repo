@@ -1,436 +1,318 @@
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="font-h1 lh-default" data-ng-bind="$ctrl.pageTitle"></h1>
+<div data-ng-show="data.length === 0" class="col-md-12">
+    <div class="bg-white p-a-sm">
+        <p class="font-weight-medium">We are sorry but no results were returned from you search criteria. Please try again.</p>
     </div>
 </div>
-<div class="row m-b-sm">
-    <div class="col-xl-12 d-flex justify-content-between">  
-        <patentnav patents="portfolioData"></patentnav>
-    </div>
+<div data-ng-hide="$ctrl.portfolioLoaded" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
+    <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
+    <p>We are just fetching your patents</p>
 </div>
 
 
-    <div class="m-b-xxxl bg-white table-container--portfolio  d-flex">
-        <div data-ng-show="data.length === 0" class="col-md-12">
-            <div class="bg-white p-a-sm">
-                <p class="font-weight-medium">We are sorry but no results were returned from you search criteria. Please try again.</p>
+<div data-ng-show="$ctrl.portfolioLoaded" class="animate-show container__scrollable-area">
+    <div class="p-l-3 p-r-3 p-tb-sm br-tx-1">                            
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex">
+                <h1 class="font-h1 lh-default m-r-lg">Portfolio</h1>
             </div>
-        </div>
-        <div data-ng-hide="portfolioLoaded" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
-            <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
-            <p>We are just fetching your patents</p>
-        </div>        
-        <div data-ng-show="portfolioLoaded" class="animate-show flex-grow-1">
-            <div class="p-a-sm br-tx-1">                            
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex">
-                        <div class="input-group m-r-sm">
-                            <input type="text" class="form-control pill-radius" name="appNoFilter" data-ng-model="filterPortfolio.ep_ApplicationNumber" placeholder="App No." autocomplete="off">  
-                                <div class="input-group-append">
-                                    <i class="d-flex input-group-text pill-radius fa fa-search"></i>
-                                </div>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control pill-radius" name="clientRefFilter" data-ng-model="filterPortfolio.clientRef" placeholder="Client Ref" autocomplete="off">
-                            <div class="input-group-append">
-                                <i class="d-flex input-group-text pill-radius fa fa-search"></i>
-                            </div>                            
+            <div class="d-flex align-items-center">
+                <md-chips data-ng-model="$ctrl.chipOptions" readonly="true" md-removable="true" class="text-capitalize font-weight-medium cursor-pointer" md-on-remove="selectedChip($chip.prop, $chip.value, $chip.cat); getItems($chip.cat, portfolioData)">
+                    <md-chip-template>
+                        <strong class="font-body"><span data-ng-show="{{$chip.prop}} == 'epct'">Euro-PCT</span><span data-ng-hide="{{$chip.prop}} == 'epct'">{{$chip.prop}}</span></strong>
+                        <em class="font-body" data-ng-if="$chip.cat ==='serviceType'">(action)</em><em class="font-body" data-ng-if="$chip.cat ==='currentStageColour'">(phase)</em>                     
+                    </md-chip-template>
+                    <!-- <md-icon><i class="d-flex input-group-text pill-radius fa fa-search"></i></md-icon> -->
+                </md-chips>
+                <div class="m-r-lg">
+                    <div class="input-group m-r-sm">
+                        <input type="text" class="form-control pill-radius" name="portfolioSearch" data-ng-model="searchPortfolio" placeholder="Search Portfolio..." autocomplete="off">  
+                        <div class="input-group-append">
+                            <i class="d-flex input-group-text pill-radius fa fa-search"></i>
                         </div>
                     </div>
-                    <div class="d-flex">
-                        <div class="m-r-sm">                        
-                            <select class="pill-radius form-control font-body" data-ng-options="item for item in $ctrl.patentActionStatuses.values" data-ng-model="$ctrl.patentActionStatuses.value" data-ng-change="$ctrl.updateCategory($ctrl.patentActionStatuses.value)">
-                            </select>
-                        </div>
-                        <div>                            
-                            <button type="button" class="d-flex btn btn--lg btn--plain pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Advanced Search</button>
-                        </div>
-                    </div>
-                   
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="expandcollapse-item">
-                        <div class="slideDown" data-ng-hide="$ctrl.panelActive">
-                            <div class="expand-collapse-content">
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <div class="d-flex align-items-center">
-                                            <div>
-                                                <h4 class="font-body font-weight-bold m-r-lg">European Action</h4>
-                                            </div>
-                                            <div>
-                                                <ul class="panel-nav">
-                                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-class="{active: activeFilterTab == 0}" data-ng-click="activeFilterTab = 0;">EPCT</li>
-                                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-class="{active: activeFilterTab == 1}" data-ng-click="activeFilterTab = 1;">Regional Renewals</li>
-                                                    <li class="panel-nav__list-item list-item--plain pill-radius" data-ng-class="{active: activeFilterTab == 2}" data-ng-click="activeFilterTab = 2;">Grants</li>                                            
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <uib-tabset active="activeFilterTab" vertical="true" type="pills" class="flex-column">
-                                    <uib-tab index="0" heading="renewals" data-ng-hide="true">
-                                        <div class="row m-b-xs" data-ng-if="europctStatus.length !== 0">
-                                            <div class="col-md-6 col-xl-6">
-                                                <div class="filter-box m-t-md">
-                                                    <div class="py-4">
-                                                        <h4 class="font-body font-h4-title font-weight-bold">EPCT</h4>
-                                                    </div>
-                                                    <div class="d-flex flex-wrap">
-                                                        <div data-ng-repeat="status in europctStatus" class="m-r-sm m-b-sm">
-                                                            <div class="checkbox-container">
-                                                                <label class="filter-container">
-                                                                    <input type="checkbox" data-ng-model="filters.serviceStatus[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
-                                                                    <span class="checkmark"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-xl-6" data-ng-if="epctStages.length !== 0">
-                                                <div class="filter-box m-t-md">
-                                                    <div class="py-4">
-                                                        <h4 class="font-body font-h4-title font-weight-bold">Phase</h4>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div data-ng-repeat="status in epctStages" class="m-r-sm">
-                                                            <div class="checkbox-container">
-                                                                <label class="filter-container">
-                                                                    <input type="checkbox" data-ng-model="filters.currentStageColour[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
-                                                                    <span class="checkmark"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row m-t-md" data-ng-if="europctStatus.length === 0">
-                                            <div class="col-xl-12 text-center">
-                                                <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
-                                            </div>
-                                        </div> 
-                                    </uib-tab>
-                                    <uib-tab index="1" heading="europct" data-ng-hide="true">
-                                        <div class="row m-b-xs" data-ng-if="renewalsStatus.length !== 0">
-                                            <div class="col-md-6 col-xl-6">
-                                                <div class="filter-box m-t-md">
-                                                    <div class="py-4"> 
-                                                        <h4 class="font-body font-weight-bold">Renewals</h4>
-                                                    </div>
-                                                    <div class="d-flex flex-wrap">
-                                                        <div data-ng-repeat="status in renewalsStatus" class="m-r-sm">                                 
-                                                            <div class="checkbox-container">
-                                                                <label class="filter-container">
-                                                                    <input type="checkbox" data-ng-model="filters.serviceStatus[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body" data-ng-if="status">{{status}}</span>
-                                                                    <span class="checkmark"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div> 
-                                                    </div>                                         
-                                                </div>
-                                            </div>
-                                         
-                                            <div class="col-md-6 col-xl-6" data-ng-if="epctStages.length !== 0">
-                                                <div class="filter-box m-t-md">
-                                                    <div class="py-4">                                   
-                                                        <h4 class="font-body font-weight-bold">Phase</h4>
-                                                    </div>
-                                                    <div class="d-flex flex-wrap">
-                                                        <div data-ng-repeat="status in renewalStages" class="m-r-sm">
-                                                            <div class="checkbox-container">
-                                                                <label class="filter-container">
-                                                                    <input type="checkbox" data-ng-model="filters.currentStageColour[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
-                                                                    <span class="checkmark"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>                                    
-                                        </div>
-                                        <div class="row m-t-md" data-ng-if="renewalsStatus.length === 0">
-                                            <div class="col-xl-12 text-center">
-                                                <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
-                                            </div>
-                                        </div>                                 
-                                    </uib-tab>
-                                    <uib-tab index="2" heading="europct" data-ng-hide="true">
-                                        <div class="row m-b-xs" data-ng-if="grantStatus.length !== 0">
-                                            <div class="col-md-6 col-xl-6">
-                                                <div class="filter-box m-t-md">
-                                                    <div class="py-4"> 
-                                                        <h4 class="font-body font-weight-bold">Grant</h4>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div data-ng-repeat="status in grantStatus" class="m-r-sm">                           
-                                                            <div class="checkbox-container">
-                                                                <label class="filter-container">
-                                                                    <input type="checkbox" data-ng-model="filters.serviceStatus[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body" data-ng-if="status">{{status}}</span>
-                                                                    <span class="checkmark"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div> 
-                                                    </div>                                         
-                                                </div>
-                                            </div>
-                                         
-                                            <div class="col-md-6 col-xl-6" data-ng-if="grantStages.length !== 0">
-                                                <div class="filter-box m-t-md">
-                                                    <div class="py-4">                                   
-                                                        <h4 class="font-body font-weight-bold">Phase</h4>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div data-ng-repeat="status in grantStages" class="m-r-sm">
-                                                            <div class="checkbox-container">
-                                                                <label class="filter-container">
-                                                                    <input type="checkbox" data-ng-model="filters.currentStageColour[status]" data-ng-change="$ctrl.filterPortfolioResults()"><span class="font-body">{{status}}</span>
-                                                                    <span class="checkmark"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>                                    
-                                        </div>
-                                        <div class="row m-t-md" data-ng-if="grantStatus.length === 0">
-                                            <div class="col-xl-12 text-center">
-                                                <p class="font-h4 font-weight-medium">[ No filter options available ]</p>
-                                            </div>
-                                        </div>                                 
-                                    </uib-tab>                            
-                                </uib-tabset>
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-6">
-                                        <button data-ng-click="$ctrl.toggleAll($event, false)" class="txt-phase-red btn-no-bg font-body font-weight-medium btn-underlined">Clear All Filters</button>
-                                    </div>
-                                    <div class="col-md-6 text-right">
-                                        <button type="button" class="btn btn--lg btn--red pill-radius" data-ng-click="$ctrl.panelActive = !$ctrl.panelActive">Close</button>
-                                    </div>
-                                </div>
+                <div>
+                    <md-menu md-position-mode="target-right target">
+                        <md-button class="icon-stretch icon-stretch--icon black pill-radius" data-ng-click="$ctrl.showFilter($mdMenu, $event)">
+                            <span class="icon-text">Filter</span>              
+                            <i class="fal fa-filter fa-2x cursor-pointer icon"></i> 
+                        </md-button>
+                        <md-menu-content class="container-filter-list">
+                            <md-list class="box" data-ng-repeat="cat in categories" ng-init="filter[cat]={}">
+                                <md-subheader class="md-no-sticky">
+                                    <h2 class="font-h3">{{cat == 'currentStageColour' ? 'Current Stage Colour' : 'European Action'}}</h2>
+                                </md-subheader>
+                                <md-list-item data-ng-repeat="value in getItems(cat, portfolioData)">
+                                    <md-checkbox class="md-secondary" data-ng-model="filter[cat][value]" data-ng-change="updateFiltered(value, filter[cat][value], cat);"> <!--used to update filtered patents totals, not filter portfolio-->
+                                    </md-checkbox>
+                                    <p>({{(filtered | filter:value:true).length}})&nbsp;
+                                        <span class="text-capitalize" data-ng-if="value == 'GREY'">Grey</span>
+                                        <span class="text-capitalize" data-ng-if="value == 'epct'">Euro-PCT</span>
+                                        <span class="text-capitalize" data-ng-if="value !== 'epct' && value !== 'GREY'">{{value}}</span>
+                                    </p>
+                                </md-list-item>
+                                <md-divider></md-divider>
+                            </md-list>
+                            <div layout="row" class="demo-dialog-button">
+                                <md-button md-autofocus flex class="md-primary" data-ng-click="closeDialog();">
+                                    Close
+                                </md-button>
                             </div>
-                        </div>
-                    </div>
+                        </md-menu-content>
+                    </md-menu>
                 </div>
-            </div>             
-            <div class="scrollable-area portfolio-table bg-white">
-                <table class="t-data sticky-table">
-                    <thead class="sticky-thead">
-                        <tr class="t-data__row t-data__row--select">
-                            <th class="t-data__th sticky-th" data-ng-click="$ctrl.sortType('ep_ApplicationNumber'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'ep_ApplicationNumber'">
-                                <span>App No.</span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && !$ctrl.sortReverse">
-                                    <i class="fas fa-angle-down fa-lg"></i>
-                                </span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'ep_ApplicationNumber' && $ctrl.sortReverse">
-                                    <i class="fas fa-angle-up fa-lg"></i>
-                                </span>
-                            </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('clientRef'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'clientRef'">
-                                <span>Client Ref</span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && !$ctrl.sortReverse">
-                                    <i class="fas fa-angle-down fa-lg"></i>
-                                </span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'clientRef' && $ctrl.sortReverse">
-                                    <i class="fas fa-angle-up fa-lg"></i>
-                                </span>                          
-                            </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('shortTitle'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'shortTitle'">
-                                <span>Client Desc</span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && !$ctrl.sortReverse">
-                                    <i class="fas fa-angle-down fa-lg"></i>
-                                </span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'shortTitle' && $ctrl.sortReverse">
-                                    <i class="fas fa-angle-up fa-lg"></i>
-                                </span>                         
-                            </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('serviceStatus'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'serviceStatus'">
-                                <span>Patent Place Status</span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && !$ctrl.sortReverse">
-                                    <i class="fas fa-angle-down fa-lg"></i>
-                                </span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'serviceStatus' && $ctrl.sortReverse">
-                                    <i class="fas fa-angle-up fa-lg"></i>
-                                </span>                          
-                            </th>
-                            <th class="t-data__th" data-ng-click="$ctrl.sortType('epoStatus'); $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.selectedSortType = 'epoStatus'">
-                                <span>European Action</span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && !$ctrl.sortReverse">
-                                    <i class="fas fa-angle-down fa-lg"></i>
-                                </span>
-                                <span data-ng-show="$ctrl.selectedSortType == 'epoStatus' && $ctrl.sortReverse">
-                                    <i class="fas fa-angle-up fa-lg"></i>
-                                </span>     
-                            </th>
-                            <th class="t-data__th">
-                                <span></span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="sticky-tbody">
-                        <tr data-ng-repeat="patent in portfolioData | orderBy:$ctrl.selectedSortType:$ctrl.sortReverse | filter:filterPortfolio as Result track by $index" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.patentID)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.patentID == $ctrl.selected}">
-                            <td class="t-data__td--ellipsis t-data__td sticky-td">
-                                <span class="td-ellipsis">
-                                    <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
-                                </span>
-                            </td>
-                            <td class="t-data__td--ellipsis t-data__td" data-ng-class="patent.clientRef == '' ? 'ellipsis-remove' : ''">
-                                <span class="td-ellipsis txt-grey" data-ng-if="patent.clientRef == ''">[No client reference provided]</span>
-                                <span class="td-ellipsis" data-ng-if="patent.clientRef !== ''">{{patent.clientRef}}</span>
-                            </td>
-                            <td class="t-data__td--ellipsis t-data__td" data-ng-class="patent.shortTitle == '' ? 'ellipsis-remove' : ''">
-                                <span class="td-ellipsis txt-grey" data-ng-if="patent.shortTitle == ''">[No client description provided]</span>
-                                <span class="td-ellipsis" data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
-                            </td>
-                            <td class="t-data__td p-t-none p-b-none" >
+                <div>
+                    <md-button class="icon-stretch icon-stretch--icon green pill-radius" data-ng-click="$ctrl.showAddPatent($event)">
+                        <span class="icon-text">Add Patent</span>
 
-                                <table data-ng-if="patent.p3sServices.length == 1">
-                                    <tr>
-                                        <td data-ng-repeat="item in patent.p3sServices track by $index">
-                                            <div data-ng-if="(item.saleType !== 'Online' && !item.isUrgentAttention) || item.serviceStatus == 'Epct being generated'"> <!-- cover manual processing-->
-                                                <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
-                                            </div>
-                                            <div data-ng-if="item.isUrgentAttention"> <!-- cover manual processing-->
-                                                <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
-                                            </div>                                            
-                                            <div data-ng-if="item.saleType === 'Online' && !item.isUrgentAttention && item.serviceStatus !== 'Epct being generated'">
-                                                <div class="d-flex flex-column">
-                                                    <div class="d-flex justify-content-start align-items-center"><!--display costs-->
-                                                        <p data-ng-class="item.cssCurrent" class="font-weight-bold m-r-sm">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                        <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs m-r-sm" data-ng-class="item.cssCurrent"></i>
-                                                        <p data-ng-if="!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
-                                                        <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
-                                                        <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <table data-ng-if="patent.p3sServices.length > 1">
-                                    <tr data-ng-repeat="item in patent.p3sServices track by $index">
-                                        <td class="t-data__td p-l-none p-r-none">
-                                            <div data-ng-if="item.saleType !== 'Online' && !item.isUrgentAttention" class="d-flex justify-content-between flex-column"> <!--cover all actions that cannot be sold -->
-                                                <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
-                                            </div>
-
-                                            <div data-ng-if="item.saleType === 'Offline' && item.isUrgentAttention" class="d-flex justify-content-between flex-column"> <!-- cover urgent attention (red or second black)-->
-                                                <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
-                                            </div>
-
-                                            <div data-ng-if="item.saleType === 'Online'" class="d-flex flex-column">
-                                                <div class="d-flex justify-content-start align-items-center"><!--dsiplay costs-->
-                                                    <p data-ng-class="item.cssCurrent" class="font-weight-bold m-r-sm">$ {{item.currentStageCostUSD | number: 2}}</p>
-                                                    <i class="fa fa-chevron-right fa-lg m-l-md-xs m-r-md-xs m-r-sm" data-ng-class="item.cssCurrent"></i>
-                                                    <p data-ng-if="!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')" data-ng-class="item.cssNext" class="font-weight-bold">$ {{item.nextStageCostUSD | number: 2}}</p> 
-                                                    <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
-                                                    <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
-                                                </div>
-                                            </div>  
-                                        </td>
-                                    </tr>
-                                </table>                                
-                            </td><!--patent place status-->
-                            <td class="t-data__td">
-                                <table data-ng-if="patent.p3sServices.length == 1">
-                                    <tr>
-                                        <td data-ng-repeat="item in patent.p3sServices track by $index"  class="t-data">
-                                            <div class="d-flex justify-content-left btn-underlined-selector">
-                                                <span data-ng-bind="item.serviceType" data-ng-if="item.serviceType !== 'postgrant' && item.serviceType !== 'epct'" class="text-capitalize"></span>
-                                                <span data-ng-if="item.serviceType == 'epct'" class="text-capitalize">Euro-PCT</span>
-                                                <span data-ng-if="item.serviceType == 'postgrant'" class="text-capitalize">----</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table data-ng-if="patent.p3sServices.length > 1">
-                                    <tr data-ng-repeat="item in patent.p3sServices track by $index">
-                                        <td class="t-data__td">
-                                            <div class="d-flex justify-content-left btn-underlined-selector">
-                                                <span data-ng-bind="item.serviceType" class="text-capitalize"></span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>                                
-                            </td><!--when multiple services begin-->
-                            <td class="t-data__td">
-                                <table data-ng-if="patent.p3sServices.length == 1">
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.p3sServices track by $index">
-                                                <div data-ng-if="item.serviceType == 'epct'">
-                                                    <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--bordered btn-underlined generateForm1200">Generate Form 1200</a>
-
-                                                    <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
-                                                    </ngcart-addtocart>
-                                                </div>
-                                                <div data-ng-if="item.serviceType == 'renewal'">
-                                                    <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
-                                                    </ngcart-addtocart>
-                                                    
-                                                </div>
-                                                <div data-ng-if="item.serviceType == 'grant'">
-                                                    <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--bordered btn-underlined prepareGrant" data-ng-click="$ctrl.prepareGrant(patent.patentID)">Prepare Grant
-                                                    </a>
-                                                    <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
-                                                    </ngcart-addtocart>
-                                                </div>                                                  
-                                                <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table data-ng-if="patent.p3sServices.length > 1">
-                                    <tr data-ng-repeat="item in patent.p3sServices track by $index">
-                                        <td class="t-data__td">
-                                            <div class="d-flex justify-content-center btn-underlined-selector">
-                                                <div data-ng-if="item.serviceType == 'epct'">
-                                                    <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--bordered btn-underlined generateForm1200">Generate Form 1200
-                                                    </a>
-                                                    <div data-ng-if="item.serviceStatus == 'Epct saved'">
-                                                        <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.form1200" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
-                                                        </ngcart-addtocart>
-                                                    </div>
-                                                    <div data-ng-if="item.serviceStatus == 'Epct not available'">
-                                                        <!--empty-->
-                                                    </div>                                                              
-                                                </div>
-                                                <div data-ng-if="item.serviceType == 'renewal'">
-                                                    <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
-                                                    </ngcart-addtocart>
-                                                </div>
-                                                <div data-ng-if="item.serviceType == 'grant'">
-                                                    <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--bordered btn-underlined prepareGrant" data-ng-click="$ctrl.prepareGrant(patent.patentID)">Prepare Grant
-                                                    </a>
-                                                    <ngcart-addtocart id="{{patent.patentID}}" class="tablebtn" name="service.grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
-                                                    </ngcart-addtocart>
-                                                </div>                                                
-                                                <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr data-ng-show="Result.length==0">
-                            <td class="t-data__td text-left" colspan="8">
-                                No Results Found
-                            </td>
-                        </tr>                               
-                    </tbody>
-                </table>
-            </div><!-- response table end-->
-        </div>
-    </div>
-    <div data-ui-view class="m-b-xl">
-        <div class="row">
-            <div class="col-xl-12 text-center">
-                <i class="fas fa-caret-up fa-3x"></i>                
-                <p>Select a patent from the Portfolio table to access further information and services.</p>
+                            <i class="fal fa-plus fa-2x txt-white cursor-pointer icon"></i>
+                        </span>
+                    </md-button>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="scrollable-area scrollable-area--full-height">
+        <table class="t-data sticky-table">
+            <thead class="sticky-thead">
+                <tr class="t-data__row t-data__row--select">
+                    <th class="t-data__th t-data__th--sm sticky-th" data-ng-click="$ctrl.sortBy('ep_ApplicationNumber');">
+                        <span>App No.</span>
+                        <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && !$ctrl.reverse">
+                            <i class="fas fa-angle-down fa-lg"></i>
+                        </span>
+                        <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && $ctrl.reverse">
+                            <i class="fas fa-angle-up fa-lg"></i>
+                        </span>
+                    </th>
+                    <th class="t-data__th t-data__th--md" data-ng-click="$ctrl.sortBy('clientRef');">
+                        <span>Client Ref</span>
+                        <span data-ng-show="$ctrl.propertyName == 'clientRef' && !$ctrl.reverse">
+                            <i class="fas fa-angle-down fa-lg"></i>
+                        </span>
+                        <span data-ng-show="$ctrl.propertyName == 'clientRef' && $ctrl.reverse">
+                            <i class="fas fa-angle-up fa-lg"></i>
+                        </span>                          
+                    </th>
+                    <th class="t-data__th t-data__th--md" data-ng-click="$ctrl.sortBy('shortTitle');">
+                        <span>Client Description</span>
+                        <span data-ng-show="$ctrl.propertyName == 'shortTitle' && !$ctrl.reverse">
+                            <i class="fas fa-angle-down fa-lg"></i>
+                        </span>
+                        <span data-ng-show="$ctrl.propertyName == 'shortTitle' && $ctrl.reverse">
+                            <i class="fas fa-angle-up fa-lg"></i>
+                        </span>                          
+                    </th>                    
+                    <th class="t-data__th t-data__th--sm">
+                        <span>European Action</span>
+                    </th>
+                    <th class="t-data__th t-data__th--md">
+                        <span>Patent Place Status</span>                        
+                    </th>
+                    <th class="t-data__th t-data__th--sm">
+                        <span>Current Phase</span>
+                    </th>
+                    <th class="t-data__th t-data__th--sm">
+                        <span>Next Phase</span>    
+                    </th>                    
+                    <th class="t-data__th t-data__th--md">
+                        <span></span>
+                    </th>
+                </tr>
+            </thead>
+            
+            <tbody class="sticky-tbody">
+                <tr data-ng-repeat="patent in filtered=(portfolioData | filter:filterByPropertiesMatchingAND | filter:searchPortfolio) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, patent); $ctrl.select(patent.patentID)"  class="t-data__row t-data__row--select" data-ng-class="{active: patent.patentID == $ctrl.selected}">
+                    <td class="t-data__td t-data__td--sm sticky-td">
+                        <a class="t-data__a" data-ng-bind="patent.ep_ApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
+                    </td>
+                    <td class="t-data__td t-data__td--md">
+                        <span class="txt-grey" data-ng-if="patent.clientRef == ''">[No client reference provided]</span>
+                        <span data-ng-if="patent.clientRef !== ''">{{patent.clientRef}}</span>
+                    </td>
+                    <td class="t-data__td t-data__td--md">
+                        <span class="txt-grey" data-ng-if="patent.shortTitle == ''">[No client reference provided]</span>
+                        <span data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
+                    </td>
+                    <td class="t-data__th--sm">
+                        <table data-ng-if="patent.p3sServices.length == 1">
+                            <tr>
+                                <td data-ng-repeat="item in patent.p3sServices track by $index"  class="t-data__td">
+                                    <div class="d-flex justify-content-left btn-underlined-selector">
+                                        <span data-ng-bind="item.serviceType" data-ng-if="item.serviceType !== 'postgrant' && item.serviceType !== 'epct'" class="text-capitalize"></span>
+                                        <span data-ng-if="item.serviceType == 'epct'" class="text-capitalize">Euro-PCT</span>
+                                        <span data-ng-if="item.serviceType == 'postgrant'" class="text-capitalize">----</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table data-ng-if="patent.p3sServices.length > 1">
+                            <tr data-ng-repeat="item in patent.p3sServices track by $index">
+                                <td class="t-data__td">
+                                    <div class="d-flex justify-content-left btn-underlined-selector">
+                                        <span data-ng-bind="item.serviceType" class="text-capitalize"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>                                
+                    </td><!--when multiple services begin-->                    
+                    <td class="t-data__td--md p-t-none p-b-none" >
+                        <table data-ng-if="patent.p3sServices.length == 1">
+                            <tr>
+                                <td data-ng-repeat="item in patent.p3sServices track by $index" class="t-data__td">
+                                    <div data-ng-if="!item.isUrgentAttention"> <!-- cover manual processing-->
+                                        <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
+                                    </div>
+                                    <div data-ng-if="item.isUrgentAttention"> <!-- cover manual processing-->
+                                        <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
+                                    </div>                                            
+                                </td>
+                            </tr>
+                        </table>                       
+                        <table data-ng-if="patent.p3sServices.length > 1">
+                            <tr data-ng-repeat="item in patent.p3sServices track by $index">
+                                <td class="t-data__td">
+                                    <div data-ng-if="!item.isUrgentAttention"> <!-- cover manual processing-->
+                                        <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
+                                    </div>
+                                    <div data-ng-if="item.isUrgentAttention"> <!-- cover manual processing-->
+                                        <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
+                                    </div>                                            
+                                </td>
+                            </tr>
+                        </table>                         
+                    </td><!--patent place status-->
+                    <td class=" t-data__td--sm">
+                        <table data-ng-if="patent.p3sServices.length == 1">
+                            <td data-ng-repeat="item in patent.p3sServices track by $index" class="t-data__td">
+                                <div data-ng-if="item.saleType === 'Online' || item.saleType === 'Offline'">
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex justify-content-start align-items-center"><!--display costs-->
+                                            <p class="font-weight-bold m-r-sm"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssCurrent"></i>$ {{item.currentStageCostUSD | number: 2}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated'">
+                                    <p class="txt-grey">N/A</p>
+                                </div>                                
+                            </td>
+                        </table>
+                        <table data-ng-if="patent.p3sServices.length > 1">
+                            <tr data-ng-repeat="item in patent.p3sServices track by $index">
+                                <td class="t-data__td">
+                                    <div data-ng-if="item.saleType === 'Online' || item.saleType === 'Offline'">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex justify-content-start align-items-center"><!--display costs-->
+                                                <p class="font-weight-bold m-r-sm"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssCurrent"></i>$ {{item.currentStageCostUSD | number: 2}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated'">
+                                        <p class="txt-grey">N/A</p>
+                                    </div>                                
+                                </td>
+                            </tr>
+                        </table>                                
+                    </td><!--when multiple services begin-->     
+                    <td class="t-data__th--sm">
+                        <table data-ng-if="patent.p3sServices.length == 1">
+                            <td data-ng-repeat="item in patent.p3sServices track by $index" class="t-data__td">
+                                <div data-ng-if="item.saleType === 'Online' || item.saleType === 'Offline'">
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex justify-content-start align-items-center"><!--display costs-->
+
+                                            <p data-ng-if="(!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')) || (!item.isUrgentAttention && item.currentStageColour == 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline'))" class="font-weight-bold"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssNext"></i> $ {{item.nextStageCostUSD | number: 2}}</p> 
+                                            <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
+                                            <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
+                                        </div>    
+                                    </div>
+                                </div>                            
+                                <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated'">
+                                    <p class="txt-grey">N/A</p>
+                                </div>
+                            </td>
+                        </table>
+                        <table data-ng-if="patent.p3sServices.length > 1">
+                            <tr data-ng-repeat="item in patent.p3sServices track by $index">
+                                <td class="t-data__td">
+                                    <div data-ng-if="item.saleType === 'Online' || item.saleType === 'Offline'">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex justify-content-start align-items-center"><!--display costs-->
+
+                                                <p data-ng-if="(!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')) || (!item.isUrgentAttention && item.currentStageColour == 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline'))" class="font-weight-bold"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssNext"></i> $ {{item.nextStageCostUSD | number: 2}}</p> 
+                                                <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
+                                                <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
+                                            </div>    
+                                        </div>
+                                    </div>                            
+                                    <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated'">
+                                        <p class="txt-grey">N/A</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>                                
+                    </td><!--when multiple services begin-->     
+                    <td class="t-data__td t-data__td--md">
+                        <table data-ng-if="patent.p3sServices.length == 1">
+                            <tr>
+                                <td>
+                                    <div class="d-flex justify-content-center btn-underlined-selector" data-ng-repeat="item in patent.p3sServices track by $index">
+                                        <div data-ng-if="item.serviceType == 'epct'">
+                                            <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--bordered btn-underlined generateForm1200">Generate Form 1200</a>
+
+                                            <ngcart-addtocart id="{{item.actionID}}" class="tablebtn" name="epct" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            </ngcart-addtocart>
+                                        </div>
+                                        <div data-ng-if="item.serviceType == 'renewal'">
+                                            <ngcart-addtocart id="{{item.actionID}}" class="tablebtn" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            </ngcart-addtocart>
+                                            
+                                        </div>
+                                        <div data-ng-if="item.serviceType == 'grant'">
+                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--bordered btn-underlined prepareGrant" data-ng-click="$ctrl.prepareGrant(patent.patentID)">Prepare Grant
+                                            </a>
+                                            <ngcart-addtocart id="{{item.actionID}}" class="tablebtn" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            </ngcart-addtocart>
+                                        </div>          
+                                                                                  
+                                        <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table data-ng-if="patent.p3sServices.length > 1">
+                            <tr data-ng-repeat="item in patent.p3sServices track by $index">
+                                <td class="t-data__td">
+                                    <div class="d-flex justify-content-center btn-underlined-selector">
+
+                                        <div data-ng-if="item.serviceType == 'renewal'">
+                                            <ngcart-addtocart id="{{item.actionID}}" class="tablebtn" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            </ngcart-addtocart>
+                                        </div>
+                                        <div data-ng-if="item.serviceType == 'grant'">
+                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--bordered btn-underlined prepareGrant" data-ng-click="$ctrl.prepareGrant(patent.patentID)">Prepare Grant
+                                            </a>
+                                            <ngcart-addtocart id="{{item.actionID}}" class="tablebtn" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
+                                            </ngcart-addtocart>
+                                        </div>                                                
+                                        <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
+                                        <p class="invisible" data-ng-if="item.saleType !== 'Online' && item.serviceStatus !== 'Show price' && item.serviceStatus !== 'Grant available'">Fill space</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr data-ng-show="Result.length==0">
+                    <td class="t-data__td text-left" colspan="8">
+                        No Results Found
+                    </td>
+                </tr>                                   
+            </tbody>
+        </table>
+    </div><!-- response table end-->
+</div>
+
+<div data-ui-view="modal" autoscroll="false"></div>

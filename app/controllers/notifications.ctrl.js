@@ -25,16 +25,14 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
 
     function checkServices() {
 
-        if(vm.patent.epoStage == 'Prosecution') {
-            vm.data.availableAction.push({id: 0, action: 'renewal'})
-        }
-        if(vm.patent.epoStage == 'Filing') {
-            vm.data.availableAction.push({id: 0, action: 'Euro-PCT'})
-        }
 
-        if(vm.patent.epoStage == 'Grant') {
-            vm.data.availableAction.push({id: 0, action: 'grant'})
-        }
+        vm.data.availableAction = patent.p3sServicesWithFees.filter(function(item){
+            return item.serviceType !== 'postgrant';
+        }).map(function(action, idx){
+            if(action.serviceType == 'epct') { action.serviceType = 'Euro-PCT'}
+            return {id: idx, action: action.serviceType}
+        })
+
         vm.data.selectedAction = vm.data.availableAction[0];
 
     }
@@ -44,6 +42,8 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
     vm.notifications = {};
 
     function displayNotifications(action) {  //displays the specifed actions notifications
+
+        if(typeof action == undefined) { return; }
 
         if(action == 'Euro-PCT') { 
             vm.notificationUi = 'allEpctNotificationUIs';
@@ -76,7 +76,7 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
                 vm.notifications[colors[i]] = chunkDataService.chunkData(fetchNotificationUi(colors[i], patent[vm.notificationUi]), 6)//chunk data makes sure the coluns go no more than 6
             }
             if(!vm.toBlueOrNotToBlue) {
-                if(i == 2) { break };
+                if(i == 2) { break }; //if only green and amber available
                 vm.notifications[colors[i]] = chunkDataService.chunkData(fetchNotificationUi(colors[i], patent[vm.notificationUi]), 6)
             }
         }        

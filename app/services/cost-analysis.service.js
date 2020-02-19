@@ -13,9 +13,12 @@ function CostAnalysisService($http, $q) {
         var array = [];
         var deferred = $q.defer();
 
+        var obj = {};
+
         services.forEach(function(data){ //for multiple services for single patent
             if(data.saleType == 'Not In Progress') { return; }
-            if(data.serviceType == 'epct') {             
+            obj[data.serviceType] = data; 
+            if(data.serviceType == 'epct') {      
                 array.push($http.get(ppdomain+'rest-form1200-cost-analysis/'+patentID))
 
             }
@@ -30,6 +33,10 @@ function CostAnalysisService($http, $q) {
         $q.all(array)
         .then(
             function(response){
+                response.map(function(action, idx){
+                    action.info = Object.keys(obj)[idx]
+                    return action;
+                })
                 deferred.resolve(response);
             },
             function(errResponse){

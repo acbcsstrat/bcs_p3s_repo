@@ -20,7 +20,7 @@
 			<uib-tab heading="Transaction Details" index="0" data-ng-hide="true">
 				<div class="m-b-md">
 					<div class="row d-flex align-items-center">
-						<div class="col-md-12 col-lg-12 col-xl-12">
+						<div class="col-md-12 col-lg-12 col-xl-12 text-right">
 <!-- 							<p class="font-weight-bold font-h4 d-none d-xl-block">{{$ctrl.transactionHistoryItem.latestTransStatus}}</p> -->
 							<div data-ng-class="($ctrl.transactionHistoryItem.hasFailed == true ? 'failed' : 'success')">
 								<div class="steps">
@@ -38,7 +38,7 @@
 						</div>
 					</div>
 				</div>
-				<div data-ng-repeat="transaction in $ctrl.transactionHistoryItem.serviceUIs | filter: transactionsFilter"  class="border-grey-xs--btm">
+				<div data-ng-repeat="transaction in $ctrl.transactionHistoryItem.serviceUIs | filter: { appAndType : transactionsFilter.appAndType }"  class="border-grey-xs--btm">
 					<div class="row m-t-xxxl m-b-xxxl">
 						<div class="col-md-12 col-lg-6 col-xl-6 md-m-b-md">
 							<div class="d-none d-lg-block m-b-lg">

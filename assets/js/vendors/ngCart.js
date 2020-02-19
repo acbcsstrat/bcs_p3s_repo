@@ -55,10 +55,17 @@ export default angular.module('ngCart', [directives])
                     this.order.price = price;
 
                     if(data.p3sServices) {
-                        this.order.euroAction = data.p3sServices[0].serviceType;
+
+                        this.order.euroAction = data.p3sServices.map(function(item){
+                            if(action.serviceType === 'epct') { action.serviceType = 'Euro-PCT'; }
+                            return  item.serviceType;
+                        })
                     }
                     if(data.p3sServicesWithFees) {
-                        this.order.euroAction = data.p3sServicesWithFees[0].serviceType;
+                        this.order.euroAction = data.p3sServicesWithFees.map(function(item){
+                            if(action.serviceType === 'epct') { action.serviceType = 'Euro-PCT'; }
+                            return  item.serviceType;
+                        })
                     }
 
                     this.order.ep_ApplicationNumber = data.ep_ApplicationNumber;
@@ -160,7 +167,8 @@ export default angular.module('ngCart', [directives])
         };
 
         this.totalCost = function () {
-            return +parseFloat(this.getSubTotal() + this.getShipping() + this.getTax()).toFixed(2);
+            // console.log('this.getShipping()', this.getShipping()) BEEEN REMOVED
+            return +parseFloat(this.getSubTotal() + this.getTax()).toFixed(2);
         };
 
         this.removeItem = function (index) {
@@ -244,7 +252,27 @@ export default angular.module('ngCart', [directives])
         };
 
         this.$save = function () {
-            return store.set('cart', JSON.stringify(this.getCart()));
+
+            var reduceCart = this.getCart().items.map(function(item){
+                if(!item._data.p3sServices) { //logic to prevent error of object loop
+                    item._data.p3sServicesWithFees.map(function(prop){                    
+                        if(prop.form1200FeeUI) {
+                            prop.form1200FeeUI.data = null;
+                        }
+
+                        if(prop.renewalFeeUI) {
+                            prop.renewalFeeUI.data = null;
+                        }
+
+                        if(prop.grantFeeUI) {
+                            prop.grantFeeUI.data = null;
+                        }
+                    })
+
+                } 
+                return item;
+            })
+            return store.set('cart', JSON.stringify(reduceCart));
         }
 
     }])

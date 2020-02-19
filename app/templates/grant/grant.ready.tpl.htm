@@ -12,6 +12,6 @@
 	<div class="col-md-12 d-flex justify-content-end">
 		<button class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing' && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Offline'" data-ng-click="$ctrl.uninhibitGrantConfirm()">Reset Grant Order</button>
 		<button class="btn btn--lg btn--red pill-radius" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Online'" data-ng-click="$ctrl.deleteGrantConfirm()">Reset Grant Order</button>
-        <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn m-l-sm" name="service.grant" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Online'"></ngcart-addtocart>
+<!--         <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn m-l-sm" name="service.grant" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Online'"></ngcart-addtocart> -->
 	</div>
 </div>

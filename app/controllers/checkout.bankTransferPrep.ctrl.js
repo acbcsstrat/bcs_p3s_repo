@@ -7,18 +7,14 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	var vm = this;
 
 	vm.pageTitle = 'Confirm Order';
-
 	vm.orderObj = $stateParams.orderObj;
-
+	vm.details = $stateParams.details
 	if(vm.orderObj == '') { //if page is refreshed when on bank prepration page
 		$state.go('portfolio', {reload: true}); //direct user to patents
 	} else {
 
-		vm.orderObj.patentNos = (function(){
-			return vm.orderObj.orderedPatentUIs.map(function(el) {
-				return el.ep_ApplicationNumber;
-			})
-		}())
+		vm.details.patentNos = $stateParams.orderObj.basketItems;
+		vm.orderObj.billingDetails = $stateParams.details.billingDetails;
 
 		vm.openCancelTransModal = openCancelTransModal;
 		vm.commitTransfer = commitTransfer;	
@@ -47,9 +43,8 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 		};
 
 		function commitTransfer() {
-			
-			vm.commitTransferBtn = true; //prevent double click
 
+			vm.orderObj.billingDetails = $stateParams.details.billingDetails;
 			bankTransferCommitService.commitTransfer(vm.orderObj) //SERVICE HANDLES STATE.GO
 			.then(
 	            function(response){
@@ -85,9 +80,9 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 
 							}]
 						});
-					}					
+					}
 	            }
-	        );	            
+	        );
 		};
 	}
 }

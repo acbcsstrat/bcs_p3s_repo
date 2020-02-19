@@ -23,18 +23,15 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
     vm.rowSelect = rowSelect;
     vm.selectedSortType = 'p3S_TransRef';
    
-
     function init() {
 
         transactionHistory.forEach(function(data){
-            if(data.serviceUIs.length > 1) {
-                data.serviceUIs.map(function(o, i){ 
-                    if(o.patentUI.clientRef == '') {
-                        o.patentUI.clientRef = '[No Client Reference Provided]'
-                    }
-                })                  
-            }
-
+            data.serviceUIs.map(function(o, i){ 
+                o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
+                if(o.patentUI.clientRef == '') {
+                    o.patentUI.clientRef = '[No Client Reference Provided]'
+                }
+            })
         })    
 
         transactionHistory.map(function(o, i){
@@ -148,17 +145,22 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
 
     };
 
-    function transactionListFilter(data, filter, i) {
+    function transactionListFilter(item, index) {
 
-        if(filter == 'clientRefFilter') { //reset altenrate select option
-            $scope.filter = data;
-            vm.patentAppData.defaultSelect = null;
-        } else {
-            $scope.filter = data;
-            vm.clientRefData.defaultSelect = null;
-        }
+        var timestamp = new Date().getTime();
 
-    };
+        vm.tableData.forEach(function(_ , idx) {
+             if (index != idx) {
+                 _.selectedUi = null;
+             };
+        });
+
+        $scope.filter = { 
+            selected: item,
+            stamp: timestamp
+        };
+
+    }; 
 
     function noClientRef() {
         return true;
@@ -168,7 +170,8 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
         $state.go('transaction-history');
     };      
 
-    function rowSelect(event){
+    function rowSelect(item, index, event){
+        transactionListFilter(item, index)
         vm.transInfoContent = true;
         if(!$(event.target).hasClass('cartbtn')) {
             var id = ($($(event.currentTarget).find('a')));

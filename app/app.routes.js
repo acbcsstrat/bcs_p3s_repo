@@ -13,54 +13,6 @@ function appRoutes($stateProvider, $urlRouterProvider) {
         .otherwise('/dashboard');
 
     $stateProvider
-        .state('dashboard', {
-            url: '/dashboard',
-            templateUrl: 'app/templates/dashboard/dashboard.tpl.htm',
-            controller: 'dashboardCtrl',
-            controllerAs: '$ctrl'
-        })
-        .state('dashboard.content', {
-            params: {
-                patents: null
-            },
-            resolve: {
-                fxRatesMonth: ['fxService', function(fxService) {
-                    return fxService.fetchFxMonth();
-                }]                    
-            },
-            views: {
-                'graphdonutwidget@dashboard': {
-                    controller: 'graphDonutCtrl',
-                    controllerAs: '$ctrl',
-                    templateUrl: 'app/templates/dashboard/dashboard.graph-donut-widget.tpl.htm',         
-                },
-                'actionsavailable@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.actions-available.tpl.htm',
-                    controller: 'renewalsCarouselCtrl',
-                    controllerAs: '$ctrl'                
-                },
-                'actioncost@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
-                    controller: 'renewalCostCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'actioncostmd@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
-                    controller: 'renewalCostCtrl',
-                    controllerAs: '$ctrl'                
-                },            
-                'fxchartwidget@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.fxchart-widget.tpl.htm',
-                    controller: 'dbfxChartCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'recentactivitywidget@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.recent-activity-widget.tpl.htm',
-                    controller: 'recentActivityCtrl',
-                    controllerAs: '$ctrl'
-                }
-            }
-        })
         .state('profile', {
             url: '/profile',
             templateUrl: '../app/templates/user/user.user-profile.tpl.htm',
@@ -76,11 +28,28 @@ function appRoutes($stateProvider, $urlRouterProvider) {
                 navigation: 'portfolio'
             }
         })
-        .state('portfolio.patent', {
+        .state('portfolio.modal', {
+            abstract: true,
+            views: {
+                "modal": {
+                    templateUrl: "app/templates/patent/modal.html"
+                }
+            }
+        })
+        .state('portfolio.modal.patent', {
             url: '/:patentId',
             resolve: {
-                patent: ['$stateParams', 'patentsRestService', function($stateParams, patentsRestService) {
-                    return patentsRestService.fetchPatentItem($stateParams.patentId);
+                patent: ['$stateParams', 'patentsRestService', '$state', function($stateParams, patentsRestService, $state) {
+                    return patentsRestService.fetchPatentItem($stateParams.patentId)
+                    .then(
+                        function(response){
+                            return patentsRestService.fetchPatentItem($stateParams.patentId);
+                        },
+                        function(errResponse){
+                            $state.go('portfolio', {}, {reload: true})
+                        }
+                    )
+                    
                     
                 }],
                 ca: ['costAnalysisService', 'patent', function(costAnalysisService,  patent) {
@@ -94,68 +63,56 @@ function appRoutes($stateProvider, $urlRouterProvider) {
             },
             views:{
                 "": {
+                    templateUrl: 'app/templates/patent/case-overview.tpl.htm',
                     controller: 'caseOverviewCtrl',
                     controllerAs: '$ctrl',
-                    templateUrl: '../app/templates/patent/case-overview.tpl.htm',
+
                 },
-                "details@portfolio.patent": {
-                    templateUrl: '../app/templates/patent/patent-details.tpl.htm',
+                "details@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/patent/patent-details.tpl.htm',
                     controller: 'patentDetailsCtrl',
                     controllerAs: '$ctrl'      
                 },
-                "notifications@portfolio.patent": {
-                    templateUrl: '../app/templates/notifications/notifications.tpl.htm',
+                "notifications@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/notifications/notifications.tpl.htm',
                     controller: 'notificationsCtrl',
                     controllerAs: '$ctrl',  
                 },
-                "form1200@portfolio.patent": {
-                    templateUrl: '../app/templates/europct/europct.form1200.tpl.htm',
+                "form1200@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/europct/europct.form1200.tpl.htm',
                     controller: 'form1200Ctrl',
                     controllerAs: '$ctrl',  
                 },           
-                "renewalhistory@portfolio.patent": {
-                    templateUrl: '../app/templates/renewal/renewal.history.tpl.htm',
+                "renewalhistory@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/renewal/renewal.history.tpl.htm',
                     controller: 'renewalHistoryCtrl',
                     controllerAs: '$ctrl',  
                 },        
-                "grantandpublishing@portfolio.patent": {
-                    templateUrl: '../app/templates/grant/grant.tpl.htm',
+                "grantandpublishing@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/grant/grant.tpl.htm',
                     controller: 'grantCtrl',
                     controllerAs: '$ctrl',  
-                },                                     
-                "fee-breakdown@portfolio.patent": {
-                    templateUrl: '../app/templates/fee-breakdown/fee-breakdown.tpl.htm',
+                },      
+                "validation@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/validation/validation.tpl.htm',
+                    controller: 'validationCtrl',
+                    controllerAs: '$ctrl',  
+                },                                                
+                "fee-breakdown@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/fee-breakdown/fee-breakdown.tpl.htm',
                     controller: 'feeBreakDownCtrl',
                     controllerAs: '$ctrl',  
                 },
-                "fxchart@portfolio.patent": {
-                    templateUrl: '../app/templates/fxchart/fxchart.tpl.htm',
+                "fxchart@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/fxchart/fxchart.tpl.htm',
                     controller: 'fxChartCtrl',
                     controllerAs: '$ctrl',  
                 },
-                "costchart@portfolio.patent": {
-                    templateUrl: '../app/templates/costchart/costchart.tpl.htm',
+                "costchart@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/costchart/costchart.tpl.htm',
                     controller: 'costChartCtrl',
                     controllerAs: '$ctrl',  
                 }
-            }
-        })
-        .state('search-patent', {
-            url: '/search-patent',
-            templateUrl: '../app/templates/add-patent/patents.search-patent.tpl.htm',
-            controller: 'searchPatentCtrl',
-            controllerAs: '$ctrl',
-            params: {
-                navigation: 'portfolio'
-            }
-        })
-        .state('search-patent.add-patent', {
-            url: '?params',
-            templateUrl: '../app/templates/add-patent/patents.add-patent.tpl.htm',
-            controller: 'addPatentCtrl',
-            controllerAs: '$ctrl',
-            params: {
-                patent: null
             }
         })
         .state('current-transactions', {
@@ -227,7 +184,8 @@ function appRoutes($stateProvider, $urlRouterProvider) {
             controller: 'bankTransferPrepCtrl',
             controllerAs: '$ctrl',
             params: {
-                orderObj: null
+                orderObj: null,
+                details: null
             }
         })
         .state('bank-transfer-success', {
@@ -236,7 +194,8 @@ function appRoutes($stateProvider, $urlRouterProvider) {
             controller: 'bankTransferSuccessCtrl',
             controllerAs: '$ctrl',            
             params: {
-                orderObj: null
+                orderObj: null,
+                details: null
             }
         })
 }

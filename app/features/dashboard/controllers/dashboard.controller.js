@@ -1,23 +1,22 @@
-DashboardController.$inject = ['$timeout', '$scope', 'patentIds', 'DashboardService'];
+DashboardController.$inject = ['$state',  '$timeout', '$scope', 'DashboardService', 'patentsRestService'];
 
-export default function DashboardController($timeout, $scope, patentIds, DashboardService) {
+export default function DashboardController($state, $timeout, $scope, DashboardService, patentsRestService) {
 
     var vm = this;
 
     vm.animate = false;
-    vm.pageTitle = 'Dashboard';
     vm.date = new Date().getTime();
 
-    var dashboardLoadTimeout = $timeout(function(){
-      vm.dashboardLoaded = true;
-    }, 300);
+    var promise = patentsRestService.fetchAllPatents();
 
-    function init() {
-        $scope.$emit('updatePatent')
-        DashboardService.sortPatents(patentIds);
-    }
-
-    init();
+    promise.then(
+        function(response){
+            DashboardService.sortPatents(response);
+            $scope.dashboardData = response;
+            vm.dashboardLoaded = true;
+            $state.go('dashboard.content', {patents: response}, {reload: false});
+        }
+    )
 
     $scope.$on('updatePatent', function(e, o){
         $scope.$broadcast('updateCost');

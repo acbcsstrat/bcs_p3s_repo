@@ -1,6 +1,6 @@
-RecentActvityController.$inject = ['patentIds', 'CalculateService', 'CostAnalysisService', 'TransactionHistoryService', 'CurrentTransactionsService'];
+RecentActvityController.$inject = ['CalculateService', 'CostAnalysisService', 'TransactionHistoryService', 'CurrentTransactionsService', '$stateParams'];
 
-export default function RecentActvityController(patentIds, CalculateService, CostAnalysisService, TransactionHistoryService, CurrentTransactionsService) {
+export default function RecentActvityController(CalculateService, CostAnalysisService, TransactionHistoryService, CurrentTransactionsService, $stateParams) {
 
 	var vm = this;
 
@@ -60,7 +60,7 @@ export default function RecentActvityController(patentIds, CalculateService, Cos
 			patents.forEach(function(patent){
 				patent.p3sServices.forEach(function(service){
 					if(service.saleType !== 'Not In Progress' && service.saleType !== 'In Progress') {
-						costAnalysisService.fetchCa(patent.patentID, patent.p3sServices)
+						CostAnalysisService.fetchCa(patent.patentID, patent.p3sServices)
 						.then(
 							function(response, i){
 		        				var hours = CalculateService.calculateHours(service.currentStageColour, response[0].data);

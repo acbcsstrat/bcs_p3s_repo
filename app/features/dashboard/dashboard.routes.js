@@ -5,29 +5,29 @@ export default function routes($stateProvider) {
     $stateProvider
     .state('dashboard', {
         url: '/dashboard',
+        template: require('html-loader!./html/dashboard.tpl.htm'),
+        controller: 'DashboardController',
+        controllerAs: '$ctrl'
+    })    
+    .state('dashboard.content', {
+        params: {
+            patents: null
+        },
         resolve: {
-            patentIds: ['patentsRestService', '$q', '$timeout', function(patentsRestService, $q, $timeout) {
-                return patentsRestService.fetchAllPatents();
-            }],
             fxRatesMonth: ['fxService', function(fxService) {
                 return fxService.fetchFxMonth();
-            }]
+            }]                    
         },
         views: {
-            '@': {
-                template: require('html-loader!./html/dashboard.tpl.htm'),
-                controller: 'DashboardController',
-                controllerAs: '$ctrl'
+            'graphdonutwidget@dashboard': {
+                template: require('html-loader!./html/dashboard.graph-donut-widget.tpl.htm'),
+                controller: 'GraphDonutController',
+                controllerAs: '$ctrl',
             },
             'actionsavailable@dashboard': {
                 template: require('html-loader!./html/dashboard.actions-available.tpl.htm'),
                 controller: 'AvailableActionsController',
                 controllerAs: '$ctrl'                
-            },
-            'graphdonutwidget@dashboard': {
-                template: require('html-loader!./html/dashboard.graph-donut-widget.tpl.htm'),
-                controller: 'GraphDonutController',
-                controllerAs: '$ctrl',
             },
             'actioncost@dashboard': {
                 template: require('html-loader!./html/dashboard.action-cost.tpl.htm'),
@@ -52,3 +52,4 @@ export default function routes($stateProvider) {
         }
     });
 }
+

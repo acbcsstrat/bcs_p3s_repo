@@ -39,7 +39,9 @@
 					</div>
 				</div>
 				<div id="currTransAnchor"></div>
-				<div data-ng-repeat="transaction in $ctrl.currentTransactionItem.serviceUIs | filter: transactionsFilter" class="border-grey-xs--btm">
+<!-- 				filter: {serviceUIs: {patentUI: {ep_ApplicationNumber: searchTrans.ep_ApplicationNumber}}} -->
+				
+				<div data-ng-repeat="transaction in $ctrl.currentTransactionItem.serviceUIs | filter: { appAndType : transactionsFilter.appAndType }" class="border-grey-xs--btm">
 					<div class="row m-t-xxxl m-b-xxxl ">
 						<div class="col-md-12 col-lg-6 col-xl-6 md-m-b-md">
 							<div class="d-none d-lg-block m-b-lg">	
@@ -324,7 +326,7 @@
 											</uib-progress>
 										</div>											
 										<div class="m-b-sm">
-											<p class="font-body">This means that we've asked the EPO to complete the transaction. We're now just waiting for them to action this.</p>
+											<p class="font-body">This means that we've instructed the EPO to complete the transaction. We're now just waiting for them to action this.</p>
 										</div>
 									</div>
 									<div data-ng-if="transaction.renewalStatus == 'Renewal in place' || transaction.epctStatus == 'Completed' || transaction.grantStatus == 'Completed'">

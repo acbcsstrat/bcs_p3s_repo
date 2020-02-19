@@ -1,7 +1,7 @@
-<div data-ng-if="$ctrl.grantStage == 1" data-ng-class="fade-in">
+<div data-ng-if="$ctrl.grantStage == 1" class=" d-flex flex-grow-1" data-ng-class="fade-in">
     <div class="row">
-        <div class="col-md-12 col-xl-12">
-            <div class="m-b-sm" data-ng-include="$ctrl.grantTemplate">
+        <div class="col-md-12 col-xl-12 d-flex">
+            <div class="d-flex flex-column" data-ng-include="$ctrl.grantTemplate">
             </div>
 
         </div>
@@ -10,8 +10,8 @@
 
 <div data-ng-if="$ctrl.grantStage == 2" data-ng-class="fade-in">
     <div class="row">
-        <div class="col-md-12 col-xl-12">
-            <div class="m-b-sm" data-ng-include="$ctrl.grantTemplate">
+        <div class="col-md-12 col-xl-12 d-flex">
+            <div class="d-flex flex-column" data-ng-include="$ctrl.grantTemplate">
             </div>
         </div>
     </div>
