@@ -38,7 +38,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
             $scope.isChecked = true;
 
-            validationService.fetchDesignatedStates()
+            validationService.fetchDesignatedStates(patent.patentID)
             .then(
                 function(response){
                     vm.validationInfo = response;
