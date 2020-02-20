@@ -24,7 +24,7 @@
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.0.0-beta.55",
     "@fortawesome/fontawesome-free": "^5.5.0",
-    "@fortawesome/fontawesome-pro": "^5.11.2",
+    "@fortawesome/fontawesome-pro": "^5.12.1",
     "add": "^2.0.6",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
