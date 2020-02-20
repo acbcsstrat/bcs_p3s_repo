@@ -1,18 +1,15 @@
 angular.module('ppApp').directive('openHelpPanel', openHelpPanel);
 
-openHelpPanel.$inject = [];
+openHelpPanel.$inject = ['$rootScope'];
 
-function openHelpPanel() {
+function openHelpPanel($rootScope) {
 
 	return {
 		restrict: 'E',
 		templateUrl: 'app/templates/directives/open-help-button.tpl.htm',
 		link: function(scope, elem, attr) {
-
-			scope.helpRequired = false;
-
-			elem.bind('click', function(){
-				scope.helpRequired = !scope.helpRequired;
+			elem.bind('click', function(){				
+				scope.$broadcast('helpRequired', true)
 			})
 			
 		}

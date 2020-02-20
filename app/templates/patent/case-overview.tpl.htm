@@ -39,6 +39,12 @@
 										<span>Grant & Publishing</span>
 									</a>
 								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayValidationTab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 8 }" data-ng-click="$ctrl.setTab('validation');  activeLeft = 8;">
+										<span> <i class="fal fa-file-alt font-h3"></i></span>
+										<span>Validation</span>
+									</a>
+								</li>
 								<li class="nav-item">
 									<a 
 									class="nav-link d-flex flex-column" 
@@ -116,22 +122,21 @@
 										<p class="font-h4 font-weight-bold m-b-xs">Available actions</p>
 									</div>
 								</div>
-								<div class="row" data-ng-show="$ctrl.actionsAvailable">
+								<div class="row" data-ng-show="$ctrl.actionsAvailable" data-ng-init="$ctrl.checkAvailableAction($ctrl.patent.p3sServicesWithFees)">
 									<div class="col-md-12 d-flex">
-				                		<div data-ng-repeat="item in $ctrl.patent.p3sServicesWithFees track by $index" class="d-flex align-items-center m-r-xl" data-ng-init="$ctrl.checkAvailableAction($ctrl.patent.p3sServicesWithFees)">
-							               	<p class="font-h4 font-weight-medium m-r-xs text-capitalize" data-ng-if="item.saleType == 'Online' || item.saleType == 'Offline'">{{item.serviceType}}</p>
-								            <transaction-link trans-id="{{item.actionID}}" data-ng-if="item.saleType == 'In Progress'"></transaction-link>
-	                                        <div data-ng-if="item.serviceType == 'grant'">
-	                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.setTab('grantandpublishing');  activeLeft = 4;">Prepare Grant
+				                		<div data-ng-repeat="item in $ctrl.patent.p3sServicesWithFees track by $index" data-ng-class="{'d-none' : item.saleType == 'Not In Progress'}" >
+				                			<div class="d-flex align-items-center">
+								               	<p class="font-h4 font-weight-medium m-r-xs text-capitalize" data-ng-if="item.saleType == 'Online' || item.saleType == 'Offline' || item.saleType == 'In Progress'" data-ng-bind="item.serviceType"></p>
+									            <transaction-link trans-id="{{$ctrl.patent.patentID}}" trans-servicetype="{{item.serviceType}}" data-ng-if="item.saleType == 'In Progress'" class="m-r-xl"></transaction-link>
+	                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--lg btn--green pill-radius m-r-xl" data-ng-click="$ctrl.setTab('grantandpublishing');  activeLeft = 4;">Prepare Grant
 	                                            </a>
-	                                        </div>
-	                                        <div data-ng-if="item.serviceType == 'Euro-PCT'">
-	                                            <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">Generate Form 1200</a>
-                                            </div>
-								            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn" name="epct" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"></ngcart-addtocart>
-								            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
-								            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
-								            <p class="font-weight-medium font-h4" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">: Call +44 203 696 0949</p>
+	                                            <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--lg btn--green pill-radius m-r-xl" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">Generate Form 1200</a>
+	                                            <p data-ng-if="item.serviceStatus == 'Epct being generated'" class="font-h4">: {{item.serviceStatusUI}}</p>
+									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="epct" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"></ngcart-addtocart>
+									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
+									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
+									            <p class="font-weight-medium font-h4" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">: Call +44 203 696 0949</p>
+				                			</div>
 				                		</div>
 			                		</div>
 								</div>
@@ -150,6 +155,7 @@
 										<div ui-view="form1200" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'form1200'"></div>
 										<div ui-view="renewalhistory" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'renewalhistory'"></div>
 										<div ui-view="grantandpublishing" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'grantandpublishing'"></div>
+										<div ui-view="validation" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'validation'"></div>
 										<div ui-view="fee-breakdown" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'feebreakdown'"></div>
 										<div ui-view="fxchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'fxchart'"></div>
 										<div ui-view="costchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'costchart'"></div>

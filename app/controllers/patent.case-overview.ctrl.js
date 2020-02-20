@@ -6,7 +6,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     var vm = this;
 
-    vm.patent = patent;
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
@@ -22,7 +21,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     var chartTimeout;
     var originatorEv;
-
 
     vm.processView = function(tab, index, chart) {
         if(!$scope.notInProgress) {
@@ -56,8 +54,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         $scope.$parent.promise.then(
             function(){
-                
 
+                vm.patent = patent;
                 vm.portfolioLoaded = true;
 
                 renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
@@ -76,15 +74,16 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 })
     
                 patent.p3sServicesWithFees.forEach(function(data, index){
-
                     if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
-                    if(data.saleType !== 'Not In Progress') {
+                    if(data.saleType !== 'Not In Progress' || data.serviceType == 'postgrant') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
                         $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
                     }
                 })
 
                 $scope.availableServices.forEach(function(obj){
-
+                    if(obj.action == 'postgrant') {
+                        vm.displayValidationTab = true;
+                    }
                     if(obj.type == 'Not In Progress') { return; }
                     if(obj.action == 'Euro-PCT') {
                         if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
@@ -97,9 +96,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                         if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
                             vm.displayGrantTab = true;
                         }
-                        
                     }
-
                 })
             }
         )

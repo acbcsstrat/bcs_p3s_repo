@@ -3,7 +3,7 @@
         <div class="row m-b-lg">
             <div class="col-xl-12">
                 <h4 class="font-h4 lh-default font-weight-bold">Question 1.</h4>
-                <p class="m-b-xs">IP Place are required to act as your proffesional representatives in order to file your action. Do you agree to these terms?</p>
+                <p class="m-b-xs">IP Place are required to act as your professional representatives in order to file your action. Do you agree to these terms?</p>
                 <div class="form-check form-check-inline">
                     <input type="checkbox" name="representativeYes" data-ng-model="validate.representative.yes" class="form-check-input checkbox-square" data-ng-click="validate.representative.no = false" required>
                     <label for="representativeYes" class="form-check-label">Yes</label>
@@ -13,7 +13,6 @@
                     <label for="representativeNo" class="form-check-label">No</label>  
                 </div>
                 <p data-ng-show="validate.representative.no" class="txt-phase-red m-t-xs">If you do not wish IP Place to act as a proffesional representative, you will be unable to proceed online.</p>
-<!--                 <p data-ng-show="grantForm.representativeYes.$invalid && grantForm.representativeNo.$invalid && (grantForm.representativeYes.$dirty || grantForm.representativeNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select no and confirm this choice, you will be unable to process this action via online.</p> -->
             </div>
         </div>
     </div>
@@ -24,7 +23,7 @@
                 <h4 class="font-h4 lh-default font-weight-bold" data-ng-show="$ctrl.representativeRequired">Question 2.</h4>
                 <p class="m-b-xs">Do you approve the allowed text attached to the article 71(3) communication?</p>
                 <div class="form-check form-check-inline">
-                    <input type="checkbox" name="approveTextYes" data-ng-model="validate.approveText.yes" class="form-check-input checkbox-square"   data-ng-click="validate.approveText.no = false" required>
+                    <input type="checkbox" name="approveTextYes" data-ng-model="validate.approveText.yes" class="form-check-input checkbox-square" data-ng-click="validate.approveText.no = false" required>
                     <label for="approveTextYes" class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -32,7 +31,6 @@
                     <label for="approveTextNo" class="form-check-label">No</label>  
                 </div>
                 <p data-ng-show="validate.approveText.no" class="txt-phase-red m-t-xs">If you do not approve the allowed text attached to article 71(3) communication, you will be unable to proceed online.</p>
-<!--                 <p data-ng-show="grantForm.approveTextYes.$invalid && grantForm.approveTextNo.$invalid && (grantForm.approveTextYes.$dirty || grantForm.approveTextNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select no and confirm this choice, you will be unable to process this action via online.</p> -->
             </div>
         </div>
     </div>
@@ -170,23 +168,6 @@
             </div>
         </div>
     </div>
-    <div class="border-grey-xs--btm m-b-lg">
-        <div class="row m-b-lg">
-            <div class="col-xl-12">
-                <h4 class="font-h4 lh-default font-weight-bold" data-ng-hide="$ctrl.representativeRequired">Question 8.</h4>
-                <h4 class="font-h4 lh-default font-weight-bold" data-ng-show="$ctrl.representativeRequired">Question 9.</h4>  
-                <p class="m-b-xs">Do you want The Patent Place to notify you when the window in which you can pay the relevant validation fees opens?</p>
-                <div class="form-check form-check-inline">
-                    <input type="checkbox" name="checkYes" data-ng-model="formData.optInValidation.yes" class="form-check-input checkbox-square" data-ng-required="!formData.optInValidation.no" data-ng-click="formData.optInValidation.no = false; formData[question.title].yes = formData.optInValidation.yes">
-                    <label for="checkYes" class="form-check-label">Yes</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="checkbox" name="checkNo" data-ng-model="formData.optInValidation.no" class="form-check-input checkbox-square"  data-ng-required="!formData.optInValidation.yes" data-ng-click="formData.optInValidation.yes = false; formData[question.title].no = formData.optInValidation.no">
-                    <label for="checkNo" class="form-check-label">No</label>  
-                </div>  
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12 col-xl-12 d-flex align-items-center justify-content-end">
        <!-- these two buttons invoke selectQuestion-->
@@ -196,34 +177,3 @@
         </div>
     </div>    
 </form>
-
-
-
-
-<!--     <question-panel class="question-slider">
-        <form name="grantForm" method="get" post-action="grantService" novalidate>
-            <div class="question-slide-viewer">
-                <h4 class="font-h3 font-weight-bold m-b-sm">Question {{questionCount}}.</h4>
-                <div class="question-slide-group">
-
-                    <question-content class="question-slide" data-ng-repeat="question in questions"></question-content>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-xl-12 d-flex align-items-center justify-content-between">
-                <!--these two buttons invoke selectQuestion-
-                    <div class="nav">
-                        <button data-ng-repeat="item in buttons track by $index" data-ng-click="selectQuestion($index)" data-ng-disabled="item.disabled" class="queston-btn">Q{{$index + 1}}</button>
-                    
-                    </div>
-                    <div class="d-flex align-items-center justify-content-end">
-                        <div class="d-flex align-items-center justify-content-start">
-                          <button data-ng-click="prevElement()" data-ng-hide="firstQ" class="question-direction font-h4 d-flex align-items-center"><i class="far fa-angle-left fa-2x m-r-xs"></i> Prev</button>
-                        </div>                    
-                        <button type="button" data-ng-click="nextElement()" data-ng-hide="lastQ" class="question-direction font-h4 d-flex align-items-center" data-ng-disabled="nextBtnDisabled">Next <i class="far fa-angle-right fa-2x m-l-xs"></i></button><!--these two buttons invoke selectQuestion-
-                        <button type="button" id="submit" class="btn btn--green btn--lg pill-radius" data-ng-show="lastQ" data-ng-click="formDataSubmitted = true; submitFormData('submitGrantData');" data-ng-disabled="grantForm.$invalid || formDataSubmitted">Prepare Grant Action</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </question-panel> -->

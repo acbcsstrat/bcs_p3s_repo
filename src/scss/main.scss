@@ -1,0 +1,430 @@
+
+@import "./helpers/_variables.scss";
+@import "./base/_reset.scss";
+@import "./base/_base.scss";
+
+@import "./vendors/angular-material/angular-material.scss";
+@import "./vendors/angular-material/angular-material.scss";
+@import "./vendors/nvd3/build/nv.d3.css";
+@import "./vendors/fontawesome/css/all.css";
+@import "./vendors/slick-carousel/slick/slick.scss";
+@import "./vendors/slick-carousel/slick/slick-theme.scss";
+@import "./vendors/extensions/_angularJS-materials-ext.scss";
+@import "./vendors/extensions/_bootstrap-ext.scss";
+@import "./vendors/extensions/_parsley-ext.scss";
+@import "./vendors/extensions/_nvd3.scss";
+@import "./vendors/extensions/_font-awesome.scss";
+@import "./vendors/extensions/_croppie.scss";
+@import "./vendors/_stepProgress.scss";
+@import "./vendors/angular-ui-carousel/dist/ui-carousel.min.css";
+@import "./vendors/angular-carousel/dist/angular-carousel.min.css";
+
+@import "./base/_colours.scss";
+@import "./base/_typography.scss";
+@import "./base/_angular.scss";
+@import "./base/_js.scss";
+
+@import "./helpers/_mixins.scss";
+@import "./helpers/_global.scss";
+
+@import "./layouts/_layout.scss";
+@import "./layouts/_modal.scss";
+@import "./layouts/_panels.scss";
+@import "./layouts/_sidenav.scss";
+
+@import "./pages/_dashboard.scss";
+@import "./pages/_transactions.scss";
+@import "./pages/_user-profile.scss";
+@import "./pages/_portfolio.scss";
+@import "./pages/_case-overview.scss";
+
+@import "./components/_buttons.scss";
+@import "./components/_form.scss";
+@import "./components/_navigation.scss";
+@import "./components/_progress-bar.scss";
+@import "./components/_shapes.scss";
+@import "./components/_tables.scss";
+@import "./components/_media_queries.scss";
+@import "./components/_transformations.scss";
+
+
+@keyframes animatedBackground {
+    from { opacity: 0 ; }
+    to { opacity: 0.6; }
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    z-index: 999;
+    opacity: 0.6;
+    animation: animatedBackground .25s ease-in-out;    
+}
+
+.modal-caseoverview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    max-width: 900px;
+    height: 660px;
+  	z-index: 999;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+  	border-radius: 10px;
+    .modal-caseoverview__view {
+        max-width: 703px;
+        .modal-caseoverview__view__body {
+            overflow-y: scroll;
+            height: 560px;
+            background: $white;
+            &::-webkit-scrollbar-thumb {
+                background: $grey; 
+                border-radius: 10px;
+                height: 30px;
+            }      
+
+            &::-webkit-scrollbar {
+                width: 15px;
+            }    
+            &::-webkit-scrollbar-thumb {
+                background: $grey; 
+                border-radius: 10px;
+                height: 30px;
+            }
+        }
+    }
+}
+
+.tabs-left {
+    padding: 0;
+    flex-direction: column;
+    height: 600px;
+    width: 197px;
+    max-width: 197px;
+    &.tabs-left--width19 {
+        min-width: 197px;
+        max-width: 197px;
+    }
+    .nav-item {
+        background: $grey;
+        transition: background .3s ease-in-out;
+        cursor: pointer;
+
+        .nav-link {
+            font-size: $font-body;
+            font-weight: 500;
+            padding: 1.4rem 3rem;
+            text-align: center;
+            line-height: 1.8rem;    
+            &:not([disabled]):not(.active):hover {
+                background: $white;
+            }  
+            &:not([disabled]).active {
+                background: $white;
+                border-right: 5px solid $green;
+                font-weight: 700;
+                .nav-link span {
+                    margin-right: -5px;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+    .nav-tabs {
+        margin-bottom: 2.5rem;
+    }
+}
+
+.width197 {
+    width: 197px;
+    max-width: 197px;
+}
+
+.caseoverview--options-panel {
+    position: absolute;
+    right: 14px;
+    top: 8px;
+    z-index: 1;
+}
+
+.brbl-10 {
+    border-top-left-radius: 10px;
+}
+
+.brbr-10 {
+    border-bottom-right-radius: 10px;
+}
+
+.brtl-10 {
+    border-bottom-left-radius: 10px;
+}
+
+
+
+.font-h3 {
+    line-height: 2rem;
+}
+
+.p-t-4 { padding-top: 4rem; }
+.p-b-4 { padding-bottom: 4rem; }
+
+.px-125 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+.py-75 {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+
+.checkbox-square {
+    width: 1.3em;
+    height: 1.3em;
+    background-color: $white;
+    border-radius: 2px;
+    vertical-align: middle;
+    border: 1px solid #AFAFAF;//#AFAFAF new colour
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    -moz-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2); 
+    -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-square:checked {
+    background-color: $green;
+}
+
+
+.md-open-menu-container {
+    z-index: 999;
+}
+
+.md-button.md-default-theme:not([disabled]).md-icon-button:hover, .md-button:not([disabled]).md-icon-button:hover {
+    background-color: transparent;
+}
+
+md-menu-item {
+    .md-button.font-body {
+        font-size: 1.2rem;
+    }
+}
+
+.icon-stretch {
+    cursor: pointer;    
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    min-height: 1px;
+    position: relative;
+    transition: all ease-in-out .25s;
+    text-align: right;
+    box-sizing: content-box;
+    &.icon-stretch--icon {
+        background: white;   
+        width: 2.25rem;
+        height: 3.4rem;
+        color: $grey-dark;
+        &.black {        
+            .icon {
+                margin-right: 5px;
+            }
+            &:not([disabled]):hover {
+                background: $grey-dark;
+                color: $white;
+                width: 9rem;
+                .icon-text {
+                    opacity: 1;
+                    right: 4rem;
+                }
+            }
+            .fa-2x {
+                font-size: 1.85rem;
+            }   
+        }
+        &.green {
+            background: $green;
+            color: $white;
+            .icon {
+                margin-right: 3px;
+            }
+            &:not([disabled]):hover {
+                width: 11rem;
+                .icon-text {
+                    opacity: 1;
+                    right: 3.4rem;
+                }
+
+            }        
+        }        
+    }
+    &.icon-stretch--stack {
+        width: 3rem;
+        &.green {
+            background: $green;
+            color: $white;
+            &:not([disabled]):hover {
+                width: 10rem;
+                .icon-text {
+                    opacity: 1;
+                    right: 5.3rem;
+                }
+            }        
+        }
+    }    
+
+    .icon-text {
+        color: $white;
+        font-size: 1.2rem;
+        font-weight: bold;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 9px;
+        transition: all ease-in-out .25s;
+        transition-delay: .25s;
+    }
+}
+
+
+.container-add-patent {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+          0 13px 19px 2px rgba(0, 0, 0, 0.14),
+          0 5px 24px 4px rgba(0, 0, 0, 0.12);
+    z-index: 999;
+    min-height: 13rem;
+    max-height: 30rem;
+    -moz-transition:all ease-in-out .25s;
+    -o-transition:all ease-in-out .25s;
+    -webkit-transition:all ease-in-out .25s;
+    transition:all ease-in-out .25s;
+    .add-patent-panel {
+        width: 70rem;
+    }
+    &.active {
+        max-height: 60rem;
+        min-height: 55rem;
+        .add-patent-panel {
+            .found-patent-panel {
+                &.ng-enter {
+
+                    opacity: 0;
+                    -moz-transition: all ease-in-out .25s .3s;
+                    -o-transition: all ease-in-out .25s .3s;
+                    -webkit-transition: all ease-in-out .25s .3s;
+                    transition: all ease-in-out .25s .3s;
+                }
+                &.ng-enter.ng-enter-active {
+                  opacity:1;
+                }
+            }
+        }
+    }
+    .recently-added-panel {
+        width: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display:block!important;
+        -moz-transition:all ease-in-out .25s;
+        -o-transition:all ease-in-out .25s;
+        -webkit-transition:all ease-in-out .25s;
+        transition:all ease-in-out .25s;
+        &.active {
+            width: 20rem;
+        }
+    }
+}
+
+
+option-panel {
+    position: relative;
+    .option-panel-content {
+        background: white;
+        border: 1px solid $grey;    
+        border-radius: 2px;
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 
+            0 4px 5px 0 rgba(0,0,0,.14), 
+            0 1px 10px 0 rgba(0,0,0,.12);
+        display: block;
+        height: 0;
+        opacity: 0;
+        padding: 4rem;
+        position: absolute;
+        right: 0;
+        transform-origin: right top;
+        transition: all .25s cubic-bezier(.25,.8,.25,1);
+        width: 0;
+        z-index: 99;
+    }
+    &.active {
+        .icon-stretch {
+            background: $grey-dark;
+            color: $white;
+            width: 10rem;
+            .icon-text {
+                opacity: 1;
+                right: 53px;
+            }
+        }
+        .option-panel-content {
+            opacity: 1;
+            width: 30rem;
+            height: 40rem;
+        }
+    }
+}
+
+.container-filter-list {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+          0 13px 19px 2px rgba(0, 0, 0, 0.14),
+          0 5px 24px 4px rgba(0, 0, 0, 0.12);
+    min-height: 50rem;
+    height: 50rem;
+    max-height: 50rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 28.6rem;
+    z-index: 9999999;
+    &::-webkit-scrollbar-thumb {
+        background: $grey; 
+        border-radius: 10px;
+        height: 30px;
+    }      
+
+    &::-webkit-scrollbar {
+        width: 15px;
+    }    
+    ::-webkit-scrollbar-thumb {
+        background: $grey; 
+        border-radius: 10px;
+        height: 30px;
+    }    
+}
+
+.md-chips md-chip {
+    background: $grey;
+    border-radius: 1px solid $grey-dark;
+    box-shadow: none;
+    font-family: $font-body!important;
+    font-size: $font-h4;
+}
+
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+    box-shadow: none!important;
+}
+
+.opacity-0 {
+  opacity: 0;
+}

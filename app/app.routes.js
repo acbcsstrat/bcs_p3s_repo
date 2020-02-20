@@ -132,7 +132,12 @@ function appRoutes($stateProvider) {
                     templateUrl: 'app/templates/grant/grant.tpl.htm',
                     controller: 'grantCtrl',
                     controllerAs: '$ctrl',  
-                },                                     
+                },      
+                "validation@portfolio.modal.patent": {
+                    templateUrl: 'app/templates/validation/validation.tpl.htm',
+                    controller: 'validationCtrl',
+                    controllerAs: '$ctrl',  
+                },
                 "fee-breakdown@portfolio.modal.patent": {
                     templateUrl: 'app/templates/fee-breakdown/fee-breakdown.tpl.htm',
                     controller: 'feeBreakDownCtrl',

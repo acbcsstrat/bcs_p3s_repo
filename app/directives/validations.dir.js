@@ -42,6 +42,27 @@ angular.module('ppApp').directive('validateName', function(){
     };
 
 })
+.directive('validateEmail', function(){
+
+    var regExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
+
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+
+            function myValidation(value) {
+                if (regExp.test(value)) {
+                    ctrl.$setValidity('validEmail', true);
+                } else {
+                    ctrl.$setValidity('validEmail', false);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+        }        
+    };
+
+})
 .directive('validateAddress', function(){
 
     var regExp = /^[a-zA-z0-9\s\-\(\).,]*$/;

@@ -12,15 +12,18 @@ function transactionLink($document, $interval, $anchorScroll, $state, $location,
             $(elem).click(function() {
 
                 var id = attrs.transId;
+                var type = attrs.transServicetype;
 
                 currentTransactionsService.fetchCurrentTransactions()
                 .then(
                     function(response) {
+
                         var match = response.filter(function(el){
-                            
                             return el.serviceUIs.find(function(item){
                                 return item.patentUI.id == id;
                             })
+                        }).filter(function(item){
+                            return item.serviceUIs[0].newType.toLowerCase() === type;
                         })
 
                         if(match !== undefined || typeof match !== 'undefined') {
@@ -33,19 +36,14 @@ function transactionLink($document, $interval, $anchorScroll, $state, $location,
                                     })                                
                                 },
                                 function(errResponse){
-                                    console.log(errResponse);
+                                    console.error('Error in transition: ', errResponse);
                                 }
                             );
                         }
-
-                    },
-                    function(errResponse) {
-                        console.log(errResponse);
                     }
                 );   
-            })  
+            })
 
         }
-
     }
 }

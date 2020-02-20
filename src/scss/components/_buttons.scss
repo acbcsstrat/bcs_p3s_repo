@@ -1,0 +1,212 @@
+.btn-underlined-selector { //required for addtocart buttons in table. Rest styles
+  .btn:not(add) {
+    &.cartbtn:before {
+      content: ''!important;
+    }    
+  }
+  .btn, .btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
+    text-decoration: underline;
+    border: 0;
+    background: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-y: hidden;
+    &.cartbtn::after {
+      display: inline-block;
+      font-size: 2rem;
+      // font-family: "Font Awesome 5 Brands"; 
+      font-weight: 900;
+      text-decoration: none;
+      margin: 0 0 0 10px;
+      vertical-align:middle;
+    }
+    &.cartbtn.add::after {
+      // content: "\f291";
+      color: $green;      
+    }
+    &.cartbtn.remove::after {
+      // content: "\f291";
+      color: $red;      
+    }    
+    &.cartbtn:hover::after {
+      text-shadow: 0 0 2px $grey;
+    }
+    &:focus {
+      outline: 0;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+    &.btn--green, &.btn--red, .btn--lg {
+      padding: 0;
+      color: $black;
+      background: none;
+      text-transform: capitalize; 
+      -webkit-box-shadow: 0 0 0 0;
+      -moz-box-shadow: 0 0 0 0;
+      box-shadow: 0 0 0 0;        
+    }
+    &:not([disabled]):hover, &:not([disabled]):focus  {
+      box-shadow: none;
+    }    
+  }
+}
+
+.tablebtn {
+  button.btn.btn--lg {
+    padding: 0 2.15rem!important;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+}
+.btn, a:not([href]):not([tabindex]):not([data-ng-attr-id]) {
+  font-size: $font-normal;  
+  font-weight: 500;
+  color: $grey-dark;
+  -webkit-transition: background .3s ease-in-out, box-shadow .3s ease-in-out;
+  -o-transition: background .3s ease-in-out, box-shadow .3s ease-in-out;
+  transition: background .3s ease-in-out, box-shadow .3s ease-in-out;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  &.btn--box-shadow {
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);  
+  }
+  &.btn--lg { 
+    @include padding-mixin(1rem 2.15rem);  
+    font-weight: bold; 
+    letter-spacing: 0.5px; 
+    font-size: 1rem; 
+    text-transform: uppercase; 
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);  
+  } 
+  &.btn-help {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: $green;
+    color: $white;
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);  
+    position: fixed;
+    right: 2%;
+    bottom: 2%;
+  }
+  // &:not(.remove) {
+  //   &.cartbtn:before {
+  //     content: 'Add '
+  //   }
+  // }
+  // &:not(.add) {
+  //   &.cartbtn:before {
+  //     content: 'Remove '
+  //   }
+  // }
+  &.btn--plain {
+    background: $white;
+    border: 1px solid $border;
+  }
+  &.btn--green, {
+    background: $green;
+    color: $white;
+  }  
+  &.btn--red {
+    background: $red;
+    color: $white;
+  }
+  &.btn--grey {
+    background: $grey-dark;
+    color: $white;
+  }  
+  &:not([disabled]):hover, &:not([disabled]):focus  {
+    -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    -moz-box-shadow: 0 0 0 0 rgba(0,0,0,0);    
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  }
+  &.btn-no-bg {
+    background: none;
+    border: 0;
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  &.btn-underlined {
+    text-decoration: underline;
+    vertical-align: baseline;
+    &:hover, &:focus {
+      box-shadow: none;
+      text-decoration: none;
+    }
+  }
+}
+
+
+.t-data .t-data__btn-portal { min-width: 183.48px; } //required from ngCart
+
+.btn-no-bg {
+  background: none;
+  border: 0;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.btn-underlined {
+  cursor: pointer;
+  text-decoration: underline;
+  background: transparent;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.btn--bordered {
+  background: none;
+  &.green {
+    border: 2px solid $green;
+    color: $green;
+    &:not([disabled]):hover {
+      background: $green;
+      color: $white;
+    }
+    &.txt-black {
+      color: $black;
+    }
+  }  
+}
+
+.help-panel__item {
+  cursor: pointer;
+  &:hover {
+    background: $grey;
+  }
+}
+
+.queston-btn {
+  background: $grey-dark;
+  padding: .725rem;
+  border-radius: 50%;
+  color: #fff;
+  margin-right: 1.25rem;
+  border: none;
+  height: 2.75rem;
+  width: 2.75rem;  
+  &[disabled] {
+    background: $grey;
+    color: $grey-dark
+  }
+  &:last-child {
+    margin-right: 0
+  }
+}
+
+.question-direction {
+  border: none;
+  background: none;
+}
