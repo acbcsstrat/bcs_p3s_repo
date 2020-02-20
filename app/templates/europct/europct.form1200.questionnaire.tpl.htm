@@ -1,0 +1,271 @@
+<form name="form1200Form" method="get" post-action="form1200Service" novalidate>
+    <div class="border-grey-xs--btm m-b-lg">
+        <div class="row m-b-lg">
+            <div class="col-xl-12">
+                <h4 class="font-h4 lh-default font-weight-bold">Question 1.</h4>
+                <p class="m-b-xs">The/Each applicant hereby declares that he is an entity or a natural person under Rule 6(4) EPC.</p>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="entityYes" data-ng-model="validate.quesitonOne.yes" class="form-check-input checkbox-square" data-ng-click="validate.entity.no = false">
+                    <label for="entityYes" class="form-check-label" required>Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="entityNo" data-ng-model="validate.entity.no" class="form-check-input checkbox-square" data-ng-change="$ctrl.checkError('entity', validate.entity.no);" data-ng-click="validate.quesitonOne.yes = false; ">
+                    <label for="entityNo" class="form-check-label">No</label>  
+                </div>
+                <p data-ng-show="validate.entity.no" class="txt-phase-red m-t-xs">If you do not wish to declare that the/each applicant is not an entity or natural person, you will be unable to proceed online.</p>
+<!--                 <p data-ng-show="form1200Form.entityNo.$invalid && (form1200Form.entityYes.$dirty || form1200Form.entityNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select no and confirm this choice, you will be unable to process this action via online.</p> -->
+            </div>
+        </div>
+    </div>
+    <div class="border-grey-xs--btm m-b-lg m-t-md">
+        <div class="row m-b-lg">
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <h4 class="font-h4 lh-default font-weight-bold">Question 2.</h4>
+                    <p class="font-weight-medium m-r-sm font-body m-b-xs">Have any amendments been made to the claims?</p>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" name="amendmentsYes" data-ng-model="validate.amendments.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.checkError('amendments', validate.amendments.yes);" data-ng-click="validate.amendments.no = false">
+                        <label for="amendmentsYes" class="form-check-label">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" name="amendmentsNo" data-ng-model="validate.amendments.no" class="form-check-input checkbox-square" data-ng-click="validate.amendments.yes = false">
+                        <label for="amendmentsNo" class="form-check-label" required>No</label>   
+                    </div>
+                    <p data-ng-show="validate.amendments.yes" class="txt-phase-red m-t-xs">If amendments have been made you will be unable to proceed online.</p>
+<!--                     <p data-ng-show="form1200Form.amendmentsYes.$invalid && form1200Form.amendmentsNo.$invalid && (form1200Form.amendmentsYes.$dirty || form1200Form.amendmentsNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select yes and confirm this choice, you will be unable to process this action via online.</p>    -->                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border-grey-xs--btm m-b-lg m-t-md" data-ng-if="$ctrl.additionalDocuments">
+        <div class="row m-b-lg">
+            <div class="col-xl-12">
+                <h4 class="font-h4 lh-default font-weight-bold">Question .3</h4>
+                <p class="font-weight-medium m-b-xs">Are additional copies of the document cited in the supplementary European search report requested?</p>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="documentsYes" data-ng-model="validate.documents.yes" class="form-check-input checkbox-square" data-ng-required="!validate.documents.no" data-ng-change="$ctrl.checkError('documents', validate.documents.yes);" data-ng-click="validate.documents.no = false">
+                    <label for="documentsYes" class="form-check-label">Yes</label>  
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="documentsNo" data-ng-model="validate.documents.no" class="form-check-input checkbox-square" data-ng-required="!validate.documents.yes" data-ng-click="validate.documents.yes = false" required>
+                    <label for="documentsNo" class="form-check-label" required>No</label>  
+                </div>            
+                <p data-ng-show="validate.documents.yes" class="txt-phase-red m-t-xs">If additional documents are required you will be unable to proceed online.</p>               
+                <p data-ng-show="form1200Form.documentsYes.$invalid && form1200Form.documentsNo.$invalid && (form1200Form.documentsYes.$dirty || form1200Form.documentsNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select yes and confirm this choice, you will be unable to process this action via online.</p>  
+            </div>
+        </div>
+    </div>
+    <div class="border-grey-xs--btm m-b-lg m-t-md">
+        <div class="row m-b-sm">
+            <div class="col-xl-12">
+                <h4 class="font-h4 lh-default font-weight-bold">Question .{{$ctrl.additionalDocuments === true ?  4 : 3 }}</h4>
+                <div class="form-row">
+                    <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                        <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant's or representatives reference: </label>
+                        <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-model="formData.clientRef" placeholder="Applicant/representative reference" required>
+                        <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.maxlength && form1200Form.reference.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-b-lg">
+            <div class="col-xl-12">
+                <p data-ng-init="clientRef.displayHelp = false" data-ng-click="clientRef.displayHelp = !clientRef.displayHelp" class="btn btn-underlined font-weight-medium">What does this mean? 
+                    <i class="fas fa-chevron-down fa-sm" data-ng-show="clientRef.displayHelp"></i>
+                    <i class="fas fa-chevron-right fa-sm" data-ng-show="!clientRef.displayHelp"></i>
+                </p>
+                <div class="expandcollapse-item">
+                    <div class="slideDown m-b-sm" data-ng-show="clientRef.displayHelp">
+                        <p class="font-body">You can include any reference here that you want to appear on the Form 1200 as the applicant or representatives reference</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-grey-xs--btm m-b-lg m-t-md">
+        <div class="row m-b-md">
+            <div class="col-xl-12">
+                <h4 class="font-h4 lh-default font-weight-bold">Question .{{$ctrl.additionalDocuments === true ?  5 : 4 }}</h4>
+                <h4 class="m-b-xs font-weight-medium font-body">Extension states</h4>
+                <div class="row">
+                    <div class="col-md-6" data-ng-repeat="item in formData.extensionStatesUI track by $index">
+                        <div> 
+                            <label for="item.abbr" class="m-r-xs">
+                                <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
+                            </label>
+                            <input type="checkbox" id="'{{item.name}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkExtStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="row m-b-md">
+            <div class="col-xl-12">
+                <h4 class="m-b-xs font-weight-medium font-body">Validation states</h4>
+                <div class="row">
+                    <div class="col-md-6" data-ng-repeat="item in formData.validationStatesUI track by $index">
+                        <div class="m-b-sm"> 
+                            <label for="item.abbr" class="m-r-xs">
+                                <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
+                            </label>
+                            <input type="checkbox" id="'{{item.name}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkValidStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-b-lg">
+            <div class="col-xl-12">
+                <p data-ng-init="validation.displayHelp = false" data-ng-click="validation.displayHelp = !validation.displayHelp" class="btn btn-underlined m-b-xs">Which countries are included? 
+                    <i class="fas fa-chevron-down fa-sm" data-ng-show="validation.displayHelp"></i>
+                    <i class="fas fa-chevron-right fa-sm" data-ng-show="!validation.displayHelp"></i>
+                </p>  
+                <div class="expandcollapse-item">
+                    <div class="slideDown m-b-sm" data-ng-show="validation.displayHelp">
+                        <p class="m-b-xs">The countries that are included by default are:</p>
+                        <div class="d-flex">
+                            <ul>
+                                <li>Albania</li>
+                                <li>Austria</li>
+                                <li>Belgium</li>
+                                <li>Bulgaria</li>
+                                <li>Switzerland</li>
+                                <li>Cyprus</li>
+                                <li>Czech Republic</li>
+                                <li>Germany</li>
+                                <li>Denmark</li>
+
+                            </ul>
+                            <ul>
+                                <li>Estonia</li>
+                                <li>Spain</li>
+                                <li>Finland</li>
+                                <li>France</li>                        
+                                <li>United Kingdom</li>
+                                <li>Croatia</li>
+                                <li>Hungary</li>
+                                <li>Ireland</li>
+                                <li>Iceland</li>
+
+                            </ul>
+                            <ul>
+                                <li>Netherlands</li>
+                                <li>Norway</li>
+                                <li>Poland</li>
+                                <li>Portugal</li>
+                                <li>Romania</li>
+                                <li>Serbia</li>
+                                <li>Sweden</li>
+                                <li>Slovenia</li>
+                                <li>Slovakia</li>
+                                <li>San Marino</li>
+                                <li>Turkey</li>
+                            </ul>
+                            <ul>
+                            </ul>                                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border-grey-xs--btm m-b-lg m-t-md">
+        <div class="row m-b-lg">
+            <div class="col-xl-12">
+                <h4 class="font-h4 lh-default font-weight-bold">Question .{{$ctrl.additionalDocuments === true ?  6 : 7 }}</h4>
+                <div class="form-group row">
+                    <label for="totalPages" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter the total number of pages</label>
+                    <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <input type="number" name="totalPages" id="totalPages" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalPages)" data-ng-model="formData.totalPages" placeholder="Total Pages" validate-numbers required>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalPages.$error.validNumber && form1200Form.totalPages.$dirty">Only numbers are valid charcters in this field.</p>  
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="totalClaims" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter the total number of claims</label>
+                    <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <input type="number" name="totalClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalClaims)" data-ng-model="formData.totalClaims" placeholder="Total Claims" validate-numbers required>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter start and end pages of description</label>
+                    <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <input type="number" name="descStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.description.typeStart)" data-ng-model="formData.pageDetailsData.description.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.validNumber && form1200Form.descStart.$dirty">Only numbers are valid charcters in this field.</p>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.max && form1200Form.descStart.$dirty">The end page exceeds the total number of pages.</p>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <input type="number" name="descEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.description.typeEnd)" data-ng-model="formData.pageDetailsData.description.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers ng-valid-max required>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.validNumber && form1200Form.descEnd.$dirty">Only numbers are valid charcters in this field.</p>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.max && form1200Form.descEnd.$dirty">The end page exceeds the total number of pages.</p>                                                  
+                    </div>                                        
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter the start and end pages of claims</label>
+                    <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <input type="number" name="claimsStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.clams.typeStart)" data-ng-model="formData.pageDetailsData.claims.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required>
+                        <p class="font-body txt-phase-red"  placeholder="Start" data-ng-show="form1200Form.claimsStart.$error.validNumber && form1200Form.claimsStart.$dirty">Only numbers are valid charcters in this field.</p>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsStart.$error.max && form1200Form.claimsStart.$dirty">The end page exceeds the total number of pages.</p>                                                  
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <input type="number" name="claimsEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.clams.typeEnd)" data-ng-model="formData.pageDetailsData.claims.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers ng-valid-max required>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.validNumber && form1200Form.claimsEnd.$dirty">Only numbers are valid charcters in this field.</p>    
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.max && form1200Form.claimsEnd.$dirty">The end page exceeds the total number of pages.</p>
+                    </div>                                        
+                </div>
+                <div class="form-group row">
+                    <label for="claimsStart" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter start and end pages of drawings</label>
+                    <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <input type="number" name="drawingStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.drawings.typeStart)" data-ng-model="formData.pageDetailsData.drawings.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers  
+                      required>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.validNumber && form1200Form.drawingStart.$dirty">Only numbers are valid charcters in this field.</p>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.max && form1200Form.drawingStart.$dirty">The end page exceeds the total number of pages.</p>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <input type="number" name="drawingEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.drawings.typeStart)" data-ng-model="formData.pageDetailsData.drawings.typeEnd" max="{{totalPages}}" placeholder="End" validate-number required>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.validNumber && form1200Form.drawingEnd.$dirty">Only numbers are valid charcters in this field.</p>
+                        <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.max && form1200Form.drawingEnd.$dirty">The end page exceeds the total number of pages.</p>
+                    </div>                                        
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border-grey-xs--btm m-b-lg m-t-md" data-ng-if="$ctrl.isYear3RenewalDue">
+        <div class="row m-b-lg">
+            <div class="col-xl-12">
+                <h4 class="font-h4 lh-default font-weight-bold">Question .{{$ctrl.additionalDocuments === true ?  7 : 6 }}</h4>
+                <p class="m-b-xs">We can see that the third year renewal can be renewed. Would you like to process the renewal in this transaction?</p>
+                <div class="form-check form-check-inline">
+                    
+                    <input 
+                    type="checkbox" 
+                    name="renewalYes" 
+                    class="form-check-input" 
+                    data-ng-model="formData.isYear3RenewalPaying.yes" 
+                    data-ng-click="formData.isYear3RenewalPaying.no = false; addToFormData('', formData.isYear3RenewalPaying)"
+                    data-ng-required="!formData.isYear3RenewalPaying.no"
+                    required
+                    >
+                    <label for="renewalYes" class="form-check-label">Yes</label>
+                  
+                    <input 
+                    type="checkbox" 
+                    name="renewalNo" 
+                    class="form-check-input" 
+                    data-ng-model="formData.isYear3RenewalPaying.no" 
+                    data-ng-click="formData.isYear3RenewalPaying.yes = false; addToFormData('', formData.isYear3RenewalPaying)"
+                    data-ng-required="!formData.isYear3RenewalPaying.yes"
+                    required
+                    >
+                    <label for="renewalNo" class="form-check-label">No</label>            
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 text-right">
+            <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$invalid || formDataSubmitted" data-ng-click="$ctrl.submitForm1200Data(formData); formDataSubmitted = true">Generate form</button>
+        </div>
+    </div>
+</form>
