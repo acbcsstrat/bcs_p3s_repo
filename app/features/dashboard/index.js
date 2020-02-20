@@ -3,7 +3,7 @@ import './_dashboard.scss';
 import angular from 'angular';
 
 import DashboardService from './services/dashboard.service.js';
-import patentsRestService from '../../services/patents.patentsRest.serv.js';
+import PatentsRestService from '../../services/patents.patentsRest.serv.js';
 import CalculateService from '../../services/calculate.service.js';
 import CostAnalysisService from '../../services/cost-analysis.service.js';
 import TransactionHistoryService from '../../services/transaction-history.service.js';
@@ -18,7 +18,7 @@ import RecentActivityController from './controllers/recent-activity.controller';
 
 import routing  from './dashboard.routes';
 
-export default angular.module('ppApp.dashboard', [DashboardService, CalculateService, CostAnalysisService, TransactionHistoryService, CurrentTransactionsService]) //import dashboard view controllers
+export default angular.module('ppApp.dashboard', [DashboardService, PatentsRestService, CalculateService, CostAnalysisService, TransactionHistoryService, CurrentTransactionsService]) //import dashboard view controllers
 	.config(routing)
   	.controller('DashboardController', DashboardController)
   	.controller('AvailableActionsController', AvailableActionsController)

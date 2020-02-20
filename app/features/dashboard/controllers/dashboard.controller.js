@@ -1,13 +1,13 @@
-DashboardController.$inject = ['$state',  '$timeout', '$scope', 'DashboardService', 'patentsRestService'];
+DashboardController.$inject = ['$state',  '$timeout', '$scope', 'DashboardService', 'PatentsRestService'];
 
-export default function DashboardController($state, $timeout, $scope, DashboardService, patentsRestService) {
+export default function DashboardController($state, $timeout, $scope, DashboardService, PatentsRestService) {
 
     var vm = this;
 
     vm.animate = false;
     vm.date = new Date().getTime();
 
-    var promise = patentsRestService.fetchAllPatents();
+    var promise = PatentsRestService.fetchAllPatents();
 
     promise.then(
         function(response){
@@ -20,10 +20,6 @@ export default function DashboardController($state, $timeout, $scope, DashboardS
 
     $scope.$on('updatePatent', function(e, o){
         $scope.$broadcast('updateCost');
-    })
-
-    $scope.$on('$destroy', function(){
-        $timeout.cancel(dashboardLoadTimeout)
     })
 
 }

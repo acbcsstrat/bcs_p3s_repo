@@ -2,9 +2,9 @@ import angular from 'angular';
 
 export default angular.module('services.DashboardService', []).factory('DashboardService', DashboardService).name;
 
-DashboardService.$inject = ['$http', '$q', 'patentsRestService']
+DashboardService.$inject = ['$http', '$q', 'PatentsRestService']
 
-function DashboardService($http, $q, patentsRestService) {
+function DashboardService($http, $q, PatentsRestService) {
 
     var factory = {
         sortPatents: sortPatents,
@@ -76,7 +76,7 @@ function DashboardService($http, $q, patentsRestService) {
 
         var action = patent.p3sServices[0].serviceType;
 
-        patentsRestService.fetchPatentItem(patent.patentID)
+        PatentsRestService.fetchPatentItem(patent.patentID)
         .then(
             function(patent){
 
