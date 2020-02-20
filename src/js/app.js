@@ -40,9 +40,9 @@ import croppie from "angular-croppie/angular-croppie.js";
 
 import config from '../../app/app.config.js';
 
-import userService from '../../app/services/user.user.serv.js';
+import userService from '../../app/features/user/services/user.user.serv.js';
 
-import coreCtrl from '../../app/controllers/core.core.ctrl.js';
+import coreCtrl from '../../app/global/controllers/core.core.ctrl.js';
 import dashboard from '../../app/features/dashboard/index.js';
 import portfolio from '../../app/features/portfolio/index.js';
 import sidenav from '../../app/features/sidenav/index.js';

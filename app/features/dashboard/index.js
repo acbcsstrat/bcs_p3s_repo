@@ -3,11 +3,11 @@ import './_dashboard.scss';
 import angular from 'angular';
 
 import DashboardService from './services/dashboard.service.js';
-import PatentsRestService from '../../services/patents.patentsRest.serv.js';
-import CalculateService from '../../services/calculate.service.js';
-import CostAnalysisService from '../../services/cost-analysis.service.js';
-import TransactionHistoryService from '../../services/transaction-history.service.js';
-import CurrentTransactionsService from '../../services/current-transactions.service.js';
+import PatentsRestService from '../portfolio/services/patents.patentsRest.serv.js';
+import CalculateService from '../../global/services/calculate.service.js';
+import CostAnalysisService from '../../global/services/cost-analysis.service.js';
+import TransactionHistoryService from '../../features/transactions/services/transaction-history.service.js';
+import CurrentTransactionsService from '../../features/transactions/services/current-transactions.service.js';
 
 import DashboardController from './controllers/dashboard.controller';
 import AvailableActionsController from './controllers/actions-available.controller';

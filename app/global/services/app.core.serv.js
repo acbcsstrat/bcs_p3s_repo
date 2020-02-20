@@ -1,4 +1,4 @@
-import fxService from '../../app/services/app.fx.serv.js';
+import fxService from './app.fx.serv.js';
 
 export default angular.module('services.core-service', [fxService]).factory('coreService', coreService).name;
 

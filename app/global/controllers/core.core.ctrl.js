@@ -1,5 +1,5 @@
-import coreService from '../../app/services/app.core.serv.js';
-import PatentsRestService from '../../app/services/patents.patentsRest.serv.js';
+import coreService from '../services/app.core.serv.js';
+import PatentsRestService from '../../features/portfolio/services/patents.patentsRest.serv.js';
 
 export default angular.module('ppApp.core', [coreService, PatentsRestService]).controller('coreCtrl', coreCtrl).name
 

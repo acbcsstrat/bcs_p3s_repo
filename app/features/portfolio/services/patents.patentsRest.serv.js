@@ -1,4 +1,4 @@
-import OrganiseColourService from '../../app/services/app.organiseColour.serv.js'
+import OrganiseColourService from '../../../global/services/app.organiseColour.serv.js'
 
 export default angular.module('services.patents-rest-service', [OrganiseColourService]).factory('PatentsRestService', PatentsRestService).name
 

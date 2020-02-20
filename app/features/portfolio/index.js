@@ -2,7 +2,7 @@ import './_portfolio.scss';
 
 import angular from 'angular';
 
-import PatentsRestService from '../../services/patents.patentsRest.serv.js';
+import PatentsRestService from './services/patents.patentsRest.serv.js';
 import SearchPatentService from './services/portfolio.search-patent.serv.js';
 
 import PortfolioController from './controllers/portfolio.controller';

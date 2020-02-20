@@ -1,6 +1,6 @@
 'use strict';
 
-import directives from '../../../app/directives/vendors/ngCart.directives.js';
+import directives from '../../../app/global/directives/vendors/ngCart.directives.js';
 
 export default angular.module('ngCart', [directives])
 
