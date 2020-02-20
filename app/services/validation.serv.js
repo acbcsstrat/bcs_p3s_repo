@@ -8,11 +8,13 @@ function validationService($http, $q) {
 		fetchDesignatedStates: fetchDesignatedStates
 	}
 
-	function fetchDesignatedStates() {
+	function fetchDesignatedStates(id) {
+
+		console.log(id)
 
 		var deferred = $q.defer()
 
-		$http.get('assets/dev_json/QuoteRequest.json') //VALIDATION TEST DATA 
+		$http.get(ppdomain+'rest-validation-quote-request/'+id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				deferred.resolve(response.data)
