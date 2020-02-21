@@ -11,7 +11,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     vm.submitValidationData = submitValidationData;
     vm.stateSelection = stateSelection;
     vm.templates = [
-        { name: 'validationintro.html', url: 'app/templates/validation/validation-available.tpl.htm'}
+        { name: 'validationAvailable', url: 'app/templates/validation/validation-available.tpl.htm'},
+        { name: 'quotePending', url: 'app/templates/validation/validation-quote-pending.tpl.htm'}
     ];
     $scope.formData = {};
     var validationAction;
@@ -29,36 +30,36 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     	vm.activeTab = 0;
 
-		if(patent.p3sServicesWithFees[0].serviceStatus == 'NotUsed') { //VALIDATION TEST DATA - REMOVE NotUsed
-			vm.validationStage = 1;
+		if(patent.p3sServicesWithFees[0].serviceStatus == 'Validation Available') { //VALIDATION TEST DATA - REMOVE NotUsed
     		vm.validationTemplate = vm.templates[0].url;        
     	}
 
-		if(patent.p3sServicesWithFees[0].serviceStatus == 'validation saved') {
-			vm.validationStage = 2;
-    		vm.validationTemplate = vm.templates[2].url;
-    	}
+        if(patent.p3sServicesWithFees[0].serviceStatus == 'Preparing Quote') { //VALIDATION TEST DATA - REMOVE NotUsed
+            vm.validationTemplate = vm.templates[1].url;        
+        }        
+
     }
 
     init();
 
     $scope.$parent.promise
     .then(
-        function(response){
-
+        function(){
             $scope.isChecked = true;
-            validationService.fetchDesignatedStates(patent.patentID)
-            .then(
-                function(response){
-                    vm.validationInfo = response;
-                    $scope.formData.corresdpondenceName = response.firstName +' ' + response.lastName;
-                    $scope.formData.corresdpondenceEmailaddress = response.emailaddress;
-                    $scope.formData.designatedStates = response.designatedStates;
-                    $scope.formData.extensionStates = response.extensionStates;
-                    $scope.formData.validationStates = response.validationStates;
-                    allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates)
-                }
-            )
+            if(patent.p3sServicesWithFees[0].serviceStatus == 'Validation Available') {
+                validationService.fetchDesignatedStates(patent.patentID)
+                .then(
+                    function(response){
+                        vm.validationInfo = response;
+                        $scope.formData.corresdpondenceName = response.firstName +' ' + response.lastName;
+                        $scope.formData.corresdpondenceEmailaddress = response.emailaddress;
+                        $scope.formData.designatedStates = response.designatedStates;
+                        $scope.formData.extensionStates = response.extensionStates;
+                        $scope.formData.validationStates = response.validationStates;
+                        allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates)
+                    }
+                )
+            }
 
         }
     )

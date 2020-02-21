@@ -13,7 +13,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.portfolioLoaded = false;
     vm.setTab = setTab;
     vm.checkAvailableAction = checkAvailableAction;
-    $scope.availableServices = [];
     $scope.notInProgress = true;
     $scope.caseoverview_tab = 'details';
     $scope.showOptions = false;
@@ -72,19 +71,21 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
                     return item.saleType == 'Not In Progress';
                 })
-    
-                patent.p3sServicesWithFees.forEach(function(data, index){
+
+                $scope.availableServices = patent.p3sServicesWithFees.map(function(data, index){
                     if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
                     if(data.saleType !== 'Not In Progress' || data.serviceType == 'postgrant') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
-                        $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
+                       return {id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType}
                     }
                 })
 
                 $scope.availableServices.forEach(function(obj){
-                    if(obj.action == 'postgrant') {
+
+                    if(obj.type == 'Not In Progress') { return; }
+
+                    if(obj.action == 'validation') {
                         vm.displayValidationTab = true;
                     }
-                    if(obj.type == 'Not In Progress') { return; }
                     if(obj.action == 'Euro-PCT') {
                         if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
                             vm.displayForm1200Tab = true;
