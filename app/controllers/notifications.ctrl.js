@@ -57,13 +57,11 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
             vm.toBlueOrNotToBlue = true;
         }
 
-        if(action == 'grant') {
+        if(action == 'grant' || action == 'validation') {
             vm.notificationUi = 'allGrantNotificationUIs';
             vm.notificationUrl = 'rest-grant-notifications/';
             vm.toBlueOrNotToBlue = false;
-        }        
-
-
+        }
 
         phaseNotifications()
 
