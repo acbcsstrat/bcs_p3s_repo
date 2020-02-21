@@ -12,7 +12,7 @@ function validationService($http, $q) {
 
 		var deferred = $q.defer()
 
-		$http.get('assets/dev_json/QuoteRequest.json') //VALIDATION TEST DATA 
+		$http.get('rest-validation-quote-request/'+id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				deferred.resolve(response.data)
