@@ -73,17 +73,20 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 })
 
                 $scope.availableServices = patent.p3sServicesWithFees.map(function(data, index){
+                    console.log('data : ', data)
                     if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
-                    if(data.saleType !== 'Not In Progress' || data.serviceType == 'postgrant') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
+                    if(data.saleType !== 'Not In Progress') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
+                         console.log('returning new object')
                        return {id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType}
                     }
                 })
 
                 $scope.availableServices.forEach(function(obj){
-
+                    console.log('looping through obj: ', obj)
                     if(obj.type == 'Not In Progress') { return; }
 
                     if(obj.action == 'validation') {
+                        console.log('should display validation tab')
                         vm.displayValidationTab = true;
                     }
                     if(obj.action == 'Euro-PCT') {

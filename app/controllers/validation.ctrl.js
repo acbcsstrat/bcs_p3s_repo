@@ -29,8 +29,9 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function init() {
 
     	vm.activeTab = 0;
-
+        console.log('from validaiton ctrl', patent.p3sServicesWithFees[0].serviceStatus)
 		if(patent.p3sServicesWithFees[0].serviceStatus == 'Validation Available') { //VALIDATION TEST DATA - REMOVE NotUsed
+            console.log('should display validations available tab')
     		vm.validationTemplate = vm.templates[0].url;        
     	}
 
