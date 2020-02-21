@@ -84,6 +84,7 @@
             overflow-y: scroll;
             height: 560px;
             background: $white;
+            border-bottom: 40px solid #fff;            
             &::-webkit-scrollbar-thumb {
                 background: $grey; 
                 border-radius: 10px;

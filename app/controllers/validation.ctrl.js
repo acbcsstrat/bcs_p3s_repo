@@ -9,11 +9,21 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 	vm.patent = patent;
     vm.checkStates = checkStates;
     vm.submitValidationData = submitValidationData;
+    vm.stateSelection = stateSelection;
     vm.templates = [
         { name: 'validationintro.html', url: 'app/templates/validation/validation-available.tpl.htm'}
     ];
     $scope.formData = {};
     var validationAction;
+    var allState;
+
+    function stateSelection(selection) {
+        $scope.selectionBoolean =  selection == 'De-select all' ? false : true;
+        for(var i = 0; 0 < allState.length; i++ ) {
+            if(allState[i] === undefined) { return; }
+            allState[i].selected = $scope.selectionBoolean;
+        }
+    }
 
     function init() {
 
@@ -37,7 +47,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         function(response){
 
             $scope.isChecked = true;
-
             validationService.fetchDesignatedStates(patent.patentID)
             .then(
                 function(response){
@@ -47,20 +56,30 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                     $scope.formData.designatedStates = response.designatedStates;
                     $scope.formData.extensionStates = response.extensionStates;
                     $scope.formData.validationStates = response.validationStates;
+                    allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates)
                 }
             )
 
         }
     )
 
-    function submitValidationData(data){    
-
+    function submitValidationData(data){
         var formData = new FormData();
         var config = { headers: {'Content-Type': undefined} };
-
     }
 
     function checkStates(item, index, type) {
+
+        for(var i = 0; 0 < allState.length; i++ ) {
+            if(allState[i] === undefined) { break; }
+            if(allState[i].selected === true) {
+                $scope.isChecked = true;
+                break;
+            }
+            $scope.isChecked = false;
+        }
+
+        if(type === undefined) { return };
 
         var validateType = type+ 'States';
 
@@ -68,17 +87,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             $scope.formData[validateType][index].selected = true;
         } else {
             $scope.formData[validateType][index].selected = false;
-        }  
+        } 
 
-        var allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates)
-
-        for(var i = 0; 0 < allState.length; i++ ) {
-            if(allState[i].selected === true) {
-                $scope.isChecked = true;
-                break;
-            }
-            $scope.isChecked = false;
-        }
 
     }
 
