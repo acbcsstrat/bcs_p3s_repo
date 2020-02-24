@@ -73,22 +73,24 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 })
 
                 $scope.availableServices = patent.p3sServicesWithFees.map(function(data, index){
-                    console.log('data : ', data)
+                    console.log('caseoverview ctrl: availableServices data : ', data)
                     if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
-                    if(data.saleType !== 'Not In Progress') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
-                         console.log('returning new object')
+                    if(data.saleType !== 'Not In Progress' || data.serviceType == 'postgrant') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
+                         console.log('caseoverview ctrl: returning new object to availableServices')
                        return {id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType}
                     }
                 })
 
                 $scope.availableServices.forEach(function(obj){
-                    console.log('looping through obj: ', obj)
-                    if(obj.type == 'Not In Progress') { return; }
+                    vm.testdisplay = true;
+                    console.log('hello caseoverview ctrl: looping through obj: ', obj)
 
-                    if(obj.action == 'validation') {
-                        console.log('should display validation tab')
+                    if(obj.action == 'validation' || obj.action == 'postgrant') {
+                        console.log('HELLO caseoverview ctrl: should display validation tab')
                         vm.displayValidationTab = true;
+                        console.log('HELLO caseoverview ctrl displayValidationTab: ', vm.displayValidationTab)
                     }
+                    if(obj.type == 'Not In Progress') { return; }
                     if(obj.action == 'Euro-PCT') {
                         if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
                             vm.displayForm1200Tab = true;

@@ -29,10 +29,11 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function init() {
 
     	vm.activeTab = 0;
-        console.log('from validaiton ctrl', patent.p3sServicesWithFees[0].serviceStatus)
-		if(patent.p3sServicesWithFees[0].serviceStatus == 'Validation Available') { //VALIDATION TEST DATA - REMOVE NotUsed
-            console.log('should display validations available tab')
+        console.log('validations ctrl from validaiton ctrl', patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
+		if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available' || patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'notused') { //VALIDATION TEST DATA - REMOVE NotUsed
+            console.log('validations ctrl should display validations available tab')
     		vm.validationTemplate = vm.templates[0].url;        
+            console.log('validations ctrl validaiton template: ', vm.validationTemplate)
     	}
 
         if(patent.p3sServicesWithFees[0].serviceStatus == 'Preparing Quote') { //VALIDATION TEST DATA - REMOVE NotUsed
@@ -47,10 +48,11 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     .then(
         function(){
             $scope.isChecked = true;
-            if(patent.p3sServicesWithFees[0].serviceStatus == 'Validation Available') {
+            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available' || patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'notused') {
                 validationService.fetchDesignatedStates(patent.patentID)
                 .then(
                     function(response){
+                        console.log('validations ctrl response fetching designated state: ', response)
                         vm.validationInfo = response;
                         $scope.formData.corresdpondenceName = response.firstName +' ' + response.lastName;
                         $scope.formData.corresdpondenceEmailaddress = response.emailaddress;
