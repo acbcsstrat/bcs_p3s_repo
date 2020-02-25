@@ -105,7 +105,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         formData.append('extensionStates', JSON.parse(angular.toJson(data.extensionStates)));
         formData.append('validationStates', JSON.parse(angular.toJson(data.validationStates)));
 
-        var config = { headers: {'Content-Type': undefined} };
+        var config = { headers: {'Content-Type': 'application/json'} };
 
         validationService.requestQuote(formData, config)
         .then(
