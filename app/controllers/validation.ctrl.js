@@ -17,6 +17,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     $scope.formData = {};
     var validationAction;
     var allState;
+    vm.validationInfo = {};
 
     function stateSelection(selection) {
         $scope.selectionBoolean =  selection == 'De-select all' ? false : true;
@@ -68,14 +69,28 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     )
 
     function submitValidationData(data){
-        console.log('validation ctrl: data', data)
+        console.log('validation ctrl: data', data);
         var formData = new FormData();
 
         var names = data.corresdpondenceName.split(' ');
 
+        data.designatedStates =  data.designatedStates.filter(function(data){
+            return data.selected === true;
+        })
+        data.extensionStates =  data.extensionStates.filter(function(data){
+            return data.selected === true;
+        })
+        data.validationStates =  data.validationStates.filter(function(data){
+            return data.selected === true;
+        })                
+        console.log('ADADADAADDA',data.designatedStates)
+        console.log('ADeeADADAADDA',data.extensionStates)
+        console.log('ADADADAADDAvalidationStates',data.validationStates)
         formData.append('patentID', patent.patentID);
         formData.append('firstName', names[0]);
         formData.append('lastName', names[1]);
+        formData.append('latestDateToRequestQuote', vm.validationInfo.latestDateToRequestQuote);
+        formData.append('latestDateToPurchaseQuote', vm.validationInfo.latestDateToPurchaseQuote);
         formData.append('emailaddress', data.corresdpondenceEmailaddress);
         formData.append('designatedStates', data.designatedStates);
         formData.append('extensionStates', data.extensionStates);

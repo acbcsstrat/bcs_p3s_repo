@@ -30,8 +30,6 @@ function validationService($http, $q) {
 
 	function requestQuote(formData, config) {
 
-		console.log(formData.entries())
-
 		for (var pair of formData.entries()) {
 		    console.log('validation service:formData : ', pair[0]+ ', ' + pair[1]); 
 		}
