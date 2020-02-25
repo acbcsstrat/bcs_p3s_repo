@@ -6,13 +6,6 @@ function currentTransactionsCtrl($rootScope, $scope, $timeout, $state, currentTr
 
 	var vm = this;
 
-	vm.pageTitle = 'Current Transactions';
-
-    var loadTimeout = $timeout(function() {
-      	vm.transactionsLoaded = true;
-    }, 300);
-
-	vm.tableData = currentTransactions;
 	vm.patentAppData = { defaultSelect: null };
   	vm.clientRefData = { defaultSelect: null };
    	vm.sortType  = sortType; // set the default sort type

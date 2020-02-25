@@ -82,6 +82,7 @@ require("app/controllers/notifications.ctrl.js")
 require("app/controllers/patent.case-overview.ctrl.js");
 require("app/controllers/patent.details.ctrl.js");
 require("app/controllers/validation.ctrl.js");
+require("app/controllers/transaction.list.ctrl.js");
 
 
 require("app/components/core.mainNav.comp.js");

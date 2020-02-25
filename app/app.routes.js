@@ -155,63 +155,62 @@ function appRoutes($stateProvider) {
                 }
             }
         })
+        // .state('transactions', {
+        //     url: '/transactions',
+        //     templateUrl: 'app/templates/transactions/transactions.current-transactions.tpl.htm',
+        //     controller: 'transactionsCtrl',
+        //     controllerAs: '$ctrl'
+
+        // })
         .state('current-transactions', {
-            url: '/current-transactions',
+            url: '/transactions',
             templateUrl: 'app/templates/transactions/transactions.current-transactions.tpl.htm',
-            controller: 'currentTransactionsCtrl',
-            controllerAs: '$ctrl',
-            resolve: {
-                currentTransactions: ['currentTransactionsService', function(currentTransactionsService){
-                    return currentTransactionsService.fetchCurrentTransactions();
-                }]
-            },
-            params: {
-                navigation: 'transactionnav'
-            }            
+            controller: 'transactionsCtrl',
+            controllerAs: '$ctrl'
         })
-        .state('current-transactions.current-transaction-item', {
-            url: '/{transId}/:transHref',
-            templateUrl: 'app/templates/transactions/transactions.current-transaction-item.tpl.htm',
-            controller: 'currentTransactionItemCtrl',
-            controllerAs: '$ctrl',
-            resolve: {
-                currentTransactionItem: ['currentTransactions', '$stateParams', function(currentTransactions, $stateParams) {
-                    return currentTransactions.find(function(transaction){
-                        return transaction.id == $stateParams.transId;
-                    })
-                }]
-            },
-            params: {
-                transHref: null
-            }
-        })
-        .state('transaction-history', {
-            url: '/transaction-history',
-            templateUrl: 'app/templates/transactions/transactions.transaction-history.tpl.htm',
-            controller: 'transactionHistoryCtrl',
-            controllerAs: '$ctrl',
-            resolve: {
-                transactionHistory: ['transactionHistoryService', function(transactionHistoryService){
-                    return transactionHistoryService.fetchTransactionHistory();
-                }]
-            },
-            params: {
-                navigation: 'transactionnav'
-            }
-        })
-        .state('transaction-history.transaction-history-item', {
-            url: '/{transHistoryId}',
-            templateUrl: 'app/templates/transactions/transactions.transaction-history-item.tpl.htm',
-            controller: 'transactionHistoryItemCtrl',
-            controllerAs: '$ctrl',            
-            resolve: {
-                transactionHistoryItem: ['transactionHistory', '$stateParams', function(transactionHistory, $stateParams){
-                    return transactionHistory.find(function(transaction){
-                        return transaction.id == $stateParams.transHistoryId;
-                    })
-                }]
-            }
-        })
+        // .state('current-transactions.current-transaction-item', {
+        //     url: '/{transId}/:transHref',
+        //     templateUrl: 'app/templates/transactions/transactions.current-transaction-item.tpl.htm',
+        //     controller: 'currentTransactionItemCtrl',
+        //     controllerAs: '$ctrl',
+        //     resolve: {
+        //         currentTransactionItem: ['currentTransactions', '$stateParams', function(currentTransactions, $stateParams) {
+        //             return currentTransactions.find(function(transaction){
+        //                 return transaction.id == $stateParams.transId;
+        //             })
+        //         }]
+        //     },
+        //     params: {
+        //         transHref: null
+        //     }
+        // })
+        // .state('transaction-history', {
+        //     url: '/transaction-history',
+        //     templateUrl: 'app/templates/transactions/transactions.transaction-history.tpl.htm',
+        //     controller: 'transactionHistoryCtrl',
+        //     controllerAs: '$ctrl',
+        //     resolve: {
+        //         transactionHistory: ['transactionHistoryService', function(transactionHistoryService){
+        //             return transactionHistoryService.fetchTransactionHistory();
+        //         }]
+        //     },
+        //     params: {
+        //         navigation: 'transactionnav'
+        //     }
+        // })
+        // .state('transaction-history.transaction-history-item', {
+        //     url: '/{transHistoryId}',
+        //     templateUrl: 'app/templates/transactions/transactions.transaction-history-item.tpl.htm',
+        //     controller: 'transactionHistoryItemCtrl',
+        //     controllerAs: '$ctrl',            
+        //     resolve: {
+        //         transactionHistoryItem: ['transactionHistory', '$stateParams', function(transactionHistory, $stateParams){
+        //             return transactionHistory.find(function(transaction){
+        //                 return transaction.id == $stateParams.transHistoryId;
+        //             })
+        //         }]
+        //     }
+        // })
         .state('basket', {
             url: '/basket',
             templateUrl: 'app/templates/checkout/checkout.basket.tpl.htm',
