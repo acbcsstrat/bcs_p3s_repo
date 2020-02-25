@@ -70,38 +70,73 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     function submitValidationData(data){
         console.log('validation ctrl: data', data);
-        var formData = new FormData();
+        var formData = {};
 
         var names = data.corresdpondenceName.split(' ');
 
-        data.designatedStates =  data.designatedStates.filter(function(data){
+        data.designatedStates = data.designatedStates.filter(function(data){
             return data.selected === true;
+        }).map(function(filtered){
+            delete filtered.selected;
+            return filtered;
         })
-        data.extensionStates =  data.extensionStates.filter(function(data){
+        data.extensionStates = data.extensionStates.filter(function(data){
             return data.selected === true;
+        }).map(function(filtered){
+            delete filtered.selected;
+            return filtered;
         })
-        data.validationStates =  data.validationStates.filter(function(data){
+        data.validationStates = data.validationStates.filter(function(data){
             return data.selected === true;
-        })                
-        console.log('ADADADAADDA',data.designatedStates)
-        console.log('ADeeADADAADDA',data.extensionStates)
-        console.log('ADADADAADDAvalidationStates',data.validationStates)
-        formData.append('patentID', patent.patentID);
-        formData.append('firstName', names[0]);
-        formData.append('lastName', names[1]);
-        formData.append('latestDateToRequestQuote', vm.validationInfo.latestDateToRequestQuote);
-        formData.append('latestDateToPurchaseQuote', vm.validationInfo.latestDateToPurchaseQuote);
-        formData.append('emailaddress', data.corresdpondenceEmailaddress);
-        formData.append('designatedStates', data.designatedStates);
-        formData.append('extensionStates', data.extensionStates);
-        formData.append('validationStates', data.validationStates);
+        }).map(function(filtered){
+            delete filtered.selected;
+            return filtered;
+        })
 
-        var config = { headers: {'Content-Type': undefined} };
+        formData.patentID = patent.patentID;
+        formData.firstName = names[0];
+        formData.lastName = names[1];
+        formData.latestDateToRequestQuote = vm.validationInfo.latestDateToRequestQuote;
+        formData.latestDateToPurchaseQuote = vm.validationInfo.latestDateToPurchaseQuote;
+        formData.emailaddress = data.corresdpondenceEmailaddress;
+        formData.designatedStates = JSON.parse(angular.toJson(data.designatedStates));
+        formData.extensionStates = JSON.parse(angular.toJson(data.extensionStates));
+        formData.validationStates = JSON.parse(angular.toJson(data.validationStates));
 
-        validationService.requestQuote(formData, config)
+        validationService.requestQuote(formData)
         .then(
             function(response){
-                console.log('validation ctrl: requestQuote response', response)
+                console.log('validation ctrl: requestQuote response', response);
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.validation-quote-requested.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
+                });
+
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+            },
+            function(errResponse) {
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.validation-quote-failed.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
+                });
+
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID}, {reload: true})
             }
         )
 

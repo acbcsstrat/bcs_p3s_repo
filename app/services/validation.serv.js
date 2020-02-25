@@ -28,15 +28,11 @@ function validationService($http, $q) {
 
 	}
 
-	function requestQuote(formData, config) {
-
-		for (var pair of formData.entries()) {
-		    console.log('validation service:formData : ', pair[0]+ ', ' + pair[1]); 
-		}
-		console.log('validation service: received config', config)
+	function requestQuote(formData) {
+		console.log('validation service: formdData ', formData)
 		var deferred = $q.defer()
 
-		$http.post('rest-validation-quote-request/', formData, config) //VALIDATION TEST DATA 
+		$http.post('rest-validation-quote-request/', formData) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				console.log('validation service success response: ', response)
