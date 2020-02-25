@@ -30,7 +30,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     	vm.activeTab = 0;
         console.log('validations ctrl from validaiton ctrl', patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
-		if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available' || patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'notused') { //VALIDATION TEST DATA - REMOVE NotUsed
+		if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
             console.log('validations ctrl should display validations available tab')
     		vm.validationTemplate = vm.templates[0].url;        
             console.log('validations ctrl validaiton template: ', vm.validationTemplate)
@@ -48,7 +48,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     .then(
         function(){
             $scope.isChecked = true;
-            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available' || patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'notused') {
+            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
                 validationService.fetchDesignatedStates(patent.patentID)
                 .then(
                     function(response){
@@ -68,8 +68,28 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     )
 
     function submitValidationData(data){
+        console.log('validation ctrl: data', data)
         var formData = new FormData();
+
+        var names = data.corresdpondenceName.split(' ');
+
+        formData.append('patentID', patent.patentID);
+        formData.append('firstName', names[0]);
+        formData.append('lastName', names[1]);
+        formData.append('emailaddress', data.corresdpondenceEmailaddress);
+        formData.append('designatedStates', data.designatedStates);
+        formData.append('extensionStates', data.extensionStates);
+        formData.append('validationStates', data.validationStates);
+
         var config = { headers: {'Content-Type': undefined} };
+
+        validationService.requestQuote(formData, config)
+        .then(
+            function(response){
+                console.log('validation ctrl: requestQuote response', response)
+            }
+        )
+
     }
 
     function checkStates(item, index, type) {
