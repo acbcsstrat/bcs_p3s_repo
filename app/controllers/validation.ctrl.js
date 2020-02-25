@@ -76,25 +76,34 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         data.designatedStates =  data.designatedStates.filter(function(data){
             return data.selected === true;
-        })
+        }).map(function(filtered){
+            delete filtered.selected;
+            return filtered;
+        })  
         data.extensionStates =  data.extensionStates.filter(function(data){
             return data.selected === true;
+        }).map(function(filtered){
+            delete filtered.selected;
+            return filtered;
         })
         data.validationStates =  data.validationStates.filter(function(data){
             return data.selected === true;
-        })                
-        console.log('ADADADAADDA',data.designatedStates)
-        console.log('ADeeADADAADDA',data.extensionStates)
-        console.log('ADADADAADDAvalidationStates',data.validationStates)
+        }).map(function(filtered){
+            delete filtered.selected;
+            return filtered;
+        })
+        console.log('ADADADAADDA',angular.toJson(data.designatedStates))
+        console.log('ADeeADADAADDA',angular.toJson(data.extensionStates))
+        console.log('ADADADAADDAvalidationStates',angular.toJson(data.validationStates))
         formData.append('patentID', patent.patentID);
         formData.append('firstName', names[0]);
         formData.append('lastName', names[1]);
         formData.append('latestDateToRequestQuote', vm.validationInfo.latestDateToRequestQuote);
         formData.append('latestDateToPurchaseQuote', vm.validationInfo.latestDateToPurchaseQuote);
         formData.append('emailaddress', data.corresdpondenceEmailaddress);
-        formData.append('designatedStates', data.designatedStates);
-        formData.append('extensionStates', data.extensionStates);
-        formData.append('validationStates', data.validationStates);
+        formData.append('designatedStates', angular.toJson(data.designatedStates));
+        formData.append('extensionStates', angular.toJson(data.extensionStates));
+        formData.append('validationStates', angular.toJson(data.validationStates));
 
         var config = { headers: {'Content-Type': undefined} };
 
