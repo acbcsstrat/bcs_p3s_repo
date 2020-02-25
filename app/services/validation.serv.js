@@ -29,7 +29,7 @@ function validationService($http, $q) {
 	}
 
 	function requestQuote(formData) {
-
+		console.log('validation service: formdData ', formData)
 		var deferred = $q.defer()
 
 		$http.post('rest-validation-quote-request/', formData) //VALIDATION TEST DATA 

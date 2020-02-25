@@ -99,6 +99,7 @@ function appRoutes($stateProvider) {
             params: {
                 patentId: null,
                 prepareGrant: null,
+                validationQuote: null,
                 form1200generate: null
             },
             views:{

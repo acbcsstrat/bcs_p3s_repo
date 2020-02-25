@@ -74,36 +74,24 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         var names = data.corresdpondenceName.split(' ');
 
-        data.designatedStates =  data.designatedStates.filter(function(data){
-            return data.selected === true;
-        }).map(function(filtered){
-            delete filtered.selected;
-            return filtered;
-        })  
-        data.extensionStates =  data.extensionStates.filter(function(data){
+        data.designatedStates = data.designatedStates.filter(function(data){
             return data.selected === true;
         }).map(function(filtered){
             delete filtered.selected;
             return filtered;
         })
-        data.validationStates =  data.validationStates.filter(function(data){
+        data.extensionStates = data.extensionStates.filter(function(data){
             return data.selected === true;
         }).map(function(filtered){
             delete filtered.selected;
             return filtered;
         })
-        console.log('validation ctrl toJson(data.designatedStates:',JSON.parse(angular.toJson(data.designatedStates)));
-        console.log('validation ctrl toJson(data.extensionStates):',JSON.parse(angular.toJson(data.extensionStates)));
-        console.log('validation ctrl toJson(data.validationState:',JSON.parse(angular.toJson(data.validationStates)));
-        // formData.append('patentID', patent.patentID);
-        // formData.append('firstName', names[0]);
-        // formData.append('lastName', names[1]);
-        // formData.append('latestDateToRequestQuote', vm.validationInfo.latestDateToRequestQuote);
-        // formData.append('latestDateToPurchaseQuote', vm.validationInfo.latestDateToPurchaseQuote);
-        // formData.append('emailaddress', data.corresdpondenceEmailaddress);
-        // formData.append('designatedStates', JSON.parse(angular.toJson(data.designatedStates)));
-        // formData.append('extensionStates', JSON.parse(angular.toJson(data.extensionStates)));
-        // formData.append('validationStates', JSON.parse(angular.toJson(data.validationStates)));
+        data.validationStates = data.validationStates.filter(function(data){
+            return data.selected === true;
+        }).map(function(filtered){
+            delete filtered.selected;
+            return filtered;
+        })
 
         formData.patentID = patent.patentID;
         formData.firstName = names[0];
@@ -118,7 +106,37 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         validationService.requestQuote(formData)
         .then(
             function(response){
-                console.log('validation ctrl: requestQuote response', response)
+                console.log('validation ctrl: requestQuote response', response);
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.validation-quote-requested.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
+                });
+
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+            },
+            function(errResponse) {
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.validation-quote-failed.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
+                });
+
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID}, {reload: true})
             }
         )
 
