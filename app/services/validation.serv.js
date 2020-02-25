@@ -30,10 +30,6 @@ function validationService($http, $q) {
 
 	function requestQuote(formData) {
 
-		for (var pair of formData.entries()) {
-		    console.log('validation service:formData : ', pair[0]+ ', ' + pair[1]); 
-		}
-
 		var deferred = $q.defer()
 
 		$http.post('rest-validation-quote-request/', formData) //VALIDATION TEST DATA 
