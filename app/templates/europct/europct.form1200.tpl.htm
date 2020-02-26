@@ -1,0 +1,18 @@
+<div data-ng-if="$ctrl.epctStage == 1" data-ng-class="fade-in" class="d-flex flex-grow-1">
+    <div class="row flex-grow-1">
+        <div class="d-flex col-md-12 col-xl-12">
+            <div class="m-b-sm d-flex flex-column flex-grow-1" data-ng-include="$ctrl.form1200Template">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div data-ng-if="$ctrl.epctStage == 2" data-ng-class="fade-in" class="d-flex flex-grow-1" data-ng-controller="form1200GeneratedCtrl">
+    <div class="row flex-grow-1">
+        <div class="d-flex col-md-12 col-xl-12">
+            <div class="m-b-sm d-flex flex-grow-1" data-ng-include="$ctrl.form1200Template">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,178 @@
+<div data-ng-if="$ctrl.portfolioLoaded" class="animate-show modal-box">
+	<div class="modal-caseoverview d-flex flex-column bg-white">
+		<div class="caseoverview--options-panel cursor-pointer d-flex align-items-center">
+			<i class="fas fa-times fa-2x cursor-pointer" data-ng-click="$ctrl.closeCaseoverview()"></i>
+		</div>
+		<div class="d-flex flex-grow-1 brbl-10 brtl-10">
+			<div class="row flex-grow-1">
+				<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-grow-1">
+					<div class="d-flex flex-grow-1">
+						<div class="width197 brbl-10 brtl-10 bg-light-grey">
+							<ul class="tabs-left nav tabs-left--width197 m-t-lg">
+								<li class="nav-item">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 0 }" data-ng-click="$ctrl.setTab('details'); activeLeft = 0;">
+										<span><i class="fal fa-info-circle font-h3"></i></span>
+										<span>Details</span>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 1 }" data-ng-click="$ctrl.setTab('notifications'); activeLeft = 1;" >
+										<span><i class="fal fa-exclamation-circle font-h3"></i></span>							
+										<span>Notifications</span>
+									</a>
+								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayForm1200Tab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 2 }" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">
+										<span> <i class="fal fa-file-alt font-h3"></i></span>
+										<span>Form 1200</span>
+									</a>
+								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayRenewalHistoryTab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 3 }" data-ng-click="$ctrl.setTab('renewalhistory'); activeLeft = 3;">
+										<span><i class="fal fa-usd-circle font-h3"></i></span>
+										<span>Renewal History</span>
+									</a>
+								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayGrantTab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 4 }" data-ng-click="$ctrl.setTab('grantandpublishing');  activeLeft = 4;">
+										<span> <i class="fal fa-file-alt font-h3"></i></span>
+										<span>Grant & Publishing</span>
+									</a>
+								</li>
+								<li class="nav-item" data-ng-show="$ctrl.displayValidationTab">
+									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 8 }" data-ng-click="$ctrl.setTab('validation');  activeLeft = 8;">
+										<span> <i class="fal fa-file-alt font-h3"></i></span>
+										<span>Validation</span>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a 
+									class="nav-link d-flex flex-column" 
+									data-ng-disabled="notInProgress" 
+									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  5};" 
+									data-ng-click="$ctrl.processView('feebreakdown', 5); activeLeft = 5;" >
+										<span><i class="fal fa-usd-circle font-h3"></i></span>
+										<span>Fee Breakdown</span>
+									</a>
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="notInProgress" class="font-h4">
+						              	This tab provides no information due the current status(es) of the European action(s).<br> Please check again once there is any progress with the application.
+						            </md-tooltip>
+								</li>
+								<li class="nav-item">
+									<a 
+									class="nav-link d-flex flex-column" 
+									data-ng-disabled="notInProgress" 
+									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  6};" 
+									data-ng-click="$ctrl.processView('fxchart', 6, 'chart'); activeLeft = 6;">
+										<span><i class="fal fa-chart-line font-h3"></i></span>
+										<span>FX Chart</span>
+									</a>
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="notInProgress" class="font-h4">
+						              	This tab provides no information due the current status(es) of the European action(s).<br> Please check again once there is any progress with the application.
+						            </md-tooltip>
+								</li>
+								<li class="nav-item">
+									<a 
+									class="nav-link d-flex flex-column" 
+									data-ng-disabled="notInProgress" 
+									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  7}" 
+									data-ng-click="$ctrl.processView('costchart', 7, 'chart'); activeLeft = 7;">
+										<span> <i class="fal fa-chart-bar font-h3"></i> </span>
+										<span>Cost Chart</span>
+									</a>
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="notInProgress" class="font-h4">
+						              	This tab provides no information due the current status(es) of the European action(s).<br> Please check again once there is any progress with the application.
+						            </md-tooltip>									
+								</li>								
+							</ul>
+						</div>
+						<div class="d-flex flex-column flex-grow-1 modal-caseoverview__view">
+							<div class=" p-t-4 p-r-3 p-l-3 ">
+								<div class="row">
+									<div class="col-md-6 d-flex align-items-center">
+										<p class="font-h3 font-weight-bold">Application Number: <span class="font-weight-normal">{{$ctrl.patent.ep_ApplicationNumber}}</span></p>
+									</div>
+				                	<div class="col-md-6 text-right">
+		                                <md-menu md-position-mode="target-left target" md-offset="20 20" md-disable-backdrop>
+		                                  	<md-button aria-label="Open phone interactions menu" ng-click="$ctrl.openMenu($mdMenu, $event)">
+		                                    	<md-icon md-menu-origin md-font-icon="fas fa-ellipsis-h" class="font-h3 cursor-pointer"></md-icon>
+		                                  	</md-button>
+		                                  	<md-menu-content width="4">
+		                                    	<md-menu-item>
+		                                      		<md-button ng-click="$ctrl.confirmDeletePatent($ctrl.patent.patentID)" class="font-body">
+	                                        			Remove Patent
+		                                      		</md-button>
+		                                    	</md-menu-item>
+		                                    	<md-menu-divider></md-menu-divider>
+										        <md-menu-item>
+										          	<md-button ng-click="ctrl.toggleNotifications()" class="font-body">
+										            	Close menu
+										          	</md-button>
+										        </md-menu-item>	                                    	
+		                                  	</md-menu-content>
+	                                	</md-menu>
+							        </div>
+							        <div class="col-md-12">
+							        	<div class="border-grey-xs--btm m-t-sm m-b-sm"></div>  	
+							        </div>
+							        
+						        </div>						
+								<div class="row" data-ng-show="$ctrl.actionsAvailable">
+									<div class="col-md-6">
+										<p class="font-h4 font-weight-bold m-b-xs">Available actions</p>
+									</div>
+								</div>
+								<div class="row" data-ng-show="$ctrl.actionsAvailable" data-ng-init="$ctrl.checkAvailableAction($ctrl.patent.p3sServicesWithFees)">
+									<div class="col-md-12 d-flex">
+				                		<div data-ng-repeat="item in $ctrl.patent.p3sServicesWithFees track by $index" data-ng-class="{'d-none' : item.saleType == 'Not In Progress'}" >
+				                			<div class="d-flex align-items-center">
+								               	<p class="font-h4 font-weight-medium m-r-xs text-capitalize" data-ng-if="item.saleType == 'Online' || item.saleType == 'Offline' || item.saleType == 'In Progress'" data-ng-bind="item.serviceType"></p>
+									            <transaction-link trans-id="{{$ctrl.patent.patentID}}" trans-servicetype="{{item.serviceType}}" data-ng-if="item.saleType == 'In Progress'" class="m-r-xl"></transaction-link>
+	                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--lg btn--green pill-radius m-r-xl" data-ng-click="$ctrl.setTab('grantandpublishing');  activeLeft = 4;">Prepare Grant
+	                                            </a>
+	                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Validation available'" class="btn btn--lg btn--green pill-radius m-r-xl" data-ng-click="$ctrl.setTab('validation');  activeLeft = 4;">Request Quote
+	                                            </a>	                                            
+	                                            <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--lg btn--green pill-radius m-r-xl" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">Generate Form 1200</a>
+	                                            <p data-ng-if="item.serviceStatus == 'Epct being generated'" class="font-h4">: {{item.serviceStatusUI}}</p>
+									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="epct" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"></ngcart-addtocart>
+									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
+									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
+									            <p class="font-weight-medium font-h4" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">: Call +44 203 696 0949</p>
+				                			</div>
+				                		</div>
+			                		</div>
+								</div>
+		                		<div class="row" data-ng-show="$ctrl.actionsAvailable">
+		                			<div class="col-md-12">
+		                				<div class="border-grey-xs--btm m-t-md m-b-sm"></div>
+		                			</div>
+		                		</div>
+							</div>
+
+							<div class="p-r-3 p-b-3 p-l-3 modal-caseoverview__view__body brbr-10 m-t-sm">
+								<div class="row">
+									<div class="col-md-12">
+										<div ui-view="details" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'details'"></div>
+										<div ui-view="notifications" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'notifications'"></div>
+										<div ui-view="form1200" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'form1200'"></div>
+										<div ui-view="renewalhistory" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'renewalhistory'"></div>
+										<div ui-view="grantandpublishing" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'grantandpublishing'"></div>
+										<div ui-view="validation" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'validation'"></div>
+										<div ui-view="fee-breakdown" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'feebreakdown'"></div>
+										<div ui-view="fxchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'fxchart'"></div>
+										<div ui-view="costchart" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'costchart'"></div>
+									</div>
+								</div>
+							</div>			
+						</div>
+					</div>			
+				</div>					
+			</div>
+		</div>
+<!-- 		<div class="row m-t-md">
+			<div class="col-xl-12 text-left">
+				<input type="button" id="delete" class="btn btn--lg btn--red pill-radius" value="Remove patent" data-ng-click="$ctrl.confirmDeletePatent($ctrl.patent.patentID)">
+			</div>
+		</div> -->
+	</div>
+</div>
