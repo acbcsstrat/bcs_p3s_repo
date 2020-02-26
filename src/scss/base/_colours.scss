@@ -1,0 +1,29 @@
+$phase-grey: $grey-dark;
+$border-grey: $grey-dark;
+
+.bg-light-grey { background:  $grey; } 
+.bg-light-grey2 { background: $grey-lighter; } 
+
+.bg-white { background: $white; } 
+.bg-phase-green { background: $green; } 
+.bg-phase-amber { background: $amber; } 
+.bg-phase-red { background: $red; } 
+.bg-phase-blue { background: $blue; } 
+.bg-phase-black { background: $black; } 
+.bg-phase-grey { background: $phase-grey; } 
+
+.txt-black { color: $blacktxt; } 
+.txt-grey { color: $grey-dark; } 
+.txt-grey-light { color: $grey-lighter; }
+.txt-white { color: $white; } 
+.txt-phase-green { color: $green; } 
+.txt-phase-amber { color: $amber; } 
+.txt-phase-red { color: $red; } 
+.txt-phase-blue { color: $blue; } 
+.txt-phase-black { color: $black; } 
+
+.border-phase-green { border-left: 3px solid $green; } 
+.border-phase-amber { border-left: 3px solid $amber; } 
+.border-phase-red { border-left: 3px solid $red; } 
+.border-phase-blue { border-left: 3px solid $blue; } 
+.border-phase-black { border-left: 3px solid $black; } 

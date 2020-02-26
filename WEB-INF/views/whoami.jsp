@@ -47,8 +47,7 @@
  </tr>
  <tr>
 	<td>P3S product version</td>
-	<td>v3.2</td>
- </tr>
+	<td>v3.1dev (with Avatar2)</td>
 </table>
 
 </body>
