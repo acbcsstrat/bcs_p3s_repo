@@ -1,0 +1,45 @@
+.bg-phase-amber {
+	.progress-bar { 
+		background: $green; 
+	} 
+}
+.bg-phase-red {
+	.progress-bar { 
+		background: $amber; 
+	}
+} 
+.bg-phase-blue {
+	.progress-bar { 
+		background: $red; 
+	}
+}
+.bg-phase-black {
+	.progress-bar { 
+		background: $blue; 
+	}
+}
+.bg-phase-white {
+	.progress-bar { 
+		background: $black; 
+	}
+}
+
+.progress-phase__progress-15 { min-width: 15%; }
+.progress-phase__progress-10 { min-width: 10%; }
+
+// .bg-phase-amber .progress-bar{ background: #53ab58; } /*green stage */
+// .bg-phase-red .progress-bar{ background: #f9b233; } /*amber stage */
+// .bg-phase-blue .progress-bar{ background: #e30613; } /*red stage */
+// .bg-phase-black .progress-bar{ background: #0097ce; } /*blue stage */
+// .bg-phase-white .progress-bar { background: #000; }
+ 
+.progress-15 { min-width: 15%; }
+
+.progress-bar-tall { height: 2rem; line-height: 1.2rem; min-width: 5%;}
+.progress {
+	margin-right: 2px; 
+	position: relative; 
+	border-radius: 20px; 
+	z-index: 0;
+	height: 1.5rem; 
+}

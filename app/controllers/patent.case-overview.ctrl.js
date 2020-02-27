@@ -51,6 +51,12 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             activeTabService.setTab(0);
         }
 
+        if($stateParams.validationQuote === 1) {
+            $scope.activeLeft = 8;
+            $scope.caseoverview_tab = 'validation';
+            activeTabService.setTab(0);
+        }        
+
         $scope.$parent.promise.then(
             function(){
 
