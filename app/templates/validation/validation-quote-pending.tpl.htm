@@ -1,60 +1,51 @@
 <div class="row m-b-sm">
 	<div class="col-xl-12 m-b-sm">	
 	    <h3 class="font-weight-bold font-h3 m-b-sm">Validations</h3>
-	    <p class="m-b-xs font-body">Deadline for requesting quote: <span class="font-weight-bold" data-ng-bind="$ctrl.patent.validationQuoteUI | date: 'MMMM d, y'"></span></p>
-	    <p class="font-body">Deadline for instruction and payment: <span class="font-weight-bold" data-ng-bind="$ctrl.patent.validationQuoteUI | date: 'MMMM d, y'"></span></p>
+	    <p class="m-b-xs font-body">Deadline for requesting quote: <span class="font-weight-bold" data-ng-bind="$ctrl.patent.requestQuoteDate | date: 'MMMM d, y'"></span></p>
+	    <p class="font-body">Deadline for instruction and payment: <span class="font-weight-bold" data-ng-bind="$ctrl.patent.purchaseQuoteDate | date: 'MMMM d, y'"></span></p>
 	</div>
 	<div class="col-xl-12">	
-		<p>Displayed below are the states that were included in the submitted validaiton quote. If you want to request a new quote, youmust wait for the pending quote to be provided before requesting a new one.</p>
+		<p>Displayed below are the states that were included in the submitted validaiton quote. If you want to request a new quote, you must wait for the pending quote to be provided before requesting a new one.</p>
 	</div>
 </div>
-<div class="form-group row m-b-md" data-ng-if="$ctrl.patent.validationQuoteUI.validationFeetUI.designatedStates.length">
+<div class="form-group row m-b-md" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.length">
 	<div class="col-xl-12">
 		<h4 class="font-weight-medium font-h4">Contracting States</h4>
 	    <div class="row">
-	    	<div class="col-xl-2 m-t-sm text-right" data-ng-repeat="designatedStates in $ctrl.patent.validationQuoteUI.validationFeeUI.designatedStates" data-ng-init="designatedStates.selected = true;">	    		
-				<div class="form-check form-check-inline">
-				  	<label class="form-check-label cursor-pointer" for="designatedStates.stateName">{{designatedStates.stateCode}}
-			            <md-tooltip md-delay="200" md-direction="right" md-z-index="999">
-			              	{{designatedStates.stateName}}
-			            </md-tooltip>					  		
-				  	</label>
-				  	<input class="form-check-input" type="checkbox" id="{{designatedStates.stateName}}" data-ng-model="designatedStates.selected"  data-ng-change="$ctrl.checkStates(designatedStates.selected, $index, 'designated');">
-				</div>
+	    	<div class="col-xl-2 m-t-sm d-flex justify-content-center" data-ng-repeat="designatedStates in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates" data-ng-init="designatedStates.selected = true;">
+				<p class="cursor-help">{{designatedStates.stateCode}}
+		            <md-tooltip md-delay="200" md-direction="right" md-z-index="999">
+		              	{{designatedStates.stateName}}
+		            </md-tooltip>
+				</p>
 	    	</div>
 		</div>
 	</div>
 </div>
-<div class="form-group row m-b-md" data-ng-if="$ctrl.patent.validationQuoteUI.validationFeetUI.extensionStates.length > 0">
+<div class="form-group row m-b-md" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates.length > 0">
 	<div class="col-xl-12">	
 	    <h4 class="font-weight-medium font-h4">Extension States</h4>
 	    <div class="row">
-		    <div class="col-xl-2 m-t-sm text-right" data-ng-repeat="extensionStates in $ctrl.patent.validationQuoteUI.validationFeeUI.extensionStates" data-ng-init="extensionStates.selected = true;">
-				<div class="form-check form-check-inline">
-				  	<label class="form-check-label cursor-pointer" for="extensionStates.stateName">{{extensionStates.stateCode}}
-			            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
-			              	{{extensionStates.stateName}}
-			            </md-tooltip>	
-				  	</label>
-				  	<input class="form-check-input" type="checkbox" id="{{extensionStates.stateName}}" data-ng-model="extensionStates.selected"  data-ng-change="$ctrl.checkStates(extensionStates.selected, $index, 'extension');">
-				</div>
+		    <div class="col-xl-2 m-t-sm d-flex justify-content-center" data-ng-repeat="extensionStates in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates" data-ng-init="extensionStates.selected = true;">
+				<p class="cursor-help">{{extensionStates.stateCode}}
+		            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
+		              	{{extensionStates.stateName}}
+		            </md-tooltip>	
+				</p>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="form-group row m-b-md" data-ng-if="$ctrl.patent.validationQuoteUI.validationFeeUI.validationStates.length > 0">
+<div class="form-group row m-b-md" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.validationStates.length > 0">
 	<div class="col-xl-12">	
 	    <h4 class="font-weight-medium font-h4">Validation States</h4>
 	    <div class="row">
-		    <div class="col-xl-2 m-t-sm text-right" data-ng-repeat="validationStates in $ctrl.patent.validationQuoteUI.validationFeeUI.validationStates" data-ng-init="validationStates.selected = true;">
-				<div class="form-check form-check-inline cursor-pointer">
-				  	<label class="form-check-label" for="{{validationStates.stateName}}">{{validationStates.stateCode}}
-			            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
-			              	{{validationStates.stateName}}
-			            </md-tooltip>	
-				  	</label>
-				  	<input class="form-check-input" type="checkbox" id="{{validationStates.stateName}}" data-ng-model="validationStates.selected"  data-ng-change="$ctrl.checkStates(validationStates.selected, $index, 'validation');">
-				</div>
+		    <div class="col-xl-2 m-t-sm d-flex justify-content-center" data-ng-repeat="validationStates in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.validationStates" data-ng-init="validationStates.selected = true;">
+				<p class="cursor-help">{{validationStates.stateCode}}
+		            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
+		              	{{validationStates.stateName}}
+		            </md-tooltip>	
+				</p>
 			</div>
 		</div>
 	</div>
