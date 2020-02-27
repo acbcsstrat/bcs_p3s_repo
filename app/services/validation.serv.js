@@ -6,7 +6,8 @@ function validationService($http, $q) {
 
 	var factory = {
 		fetchDesignatedStates: fetchDesignatedStates,
-		requestQuote: requestQuote
+		requestQuote: requestQuote,
+		fetchPreparedQuote: fetchPreparedQuote
 	}
 
 	function fetchDesignatedStates(id) {
@@ -29,7 +30,9 @@ function validationService($http, $q) {
 	}
 
 	function requestQuote(formData) {
+
 		console.log('validation service: formdData ', formData)
+
 		var deferred = $q.defer()
 
 		$http.post('rest-validation-quote-request/', formData) //VALIDATION TEST DATA 
@@ -46,7 +49,29 @@ function validationService($http, $q) {
 
 		return deferred.promise;
 
-	}	
+	}
+
+	function fetchPreparedQuote(id) {
+
+		console.log('validation service fetchPreparedQuote: id', id)
+
+		var deferred = $q.defer()
+
+		$http.get('rest-validation-quote/'+ id) //VALIDATION TEST DATA 
+		.then(
+			function(response){
+				console.log('validation service fetchPreparedQuote success response: ', response)
+				deferred.resolve(response.data)
+			},
+			function(errResponse){
+				console.error('Error returning validation service fetchPreparedQuote : ', errResponse)
+				deferred.reject(errResponse)
+			}	
+		)
+
+		return deferred.promise;
+
+	}		
 
 	return factory;
 

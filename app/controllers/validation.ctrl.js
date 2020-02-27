@@ -6,7 +6,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
 	var vm = this;
 
-	vm.patent = patent;
     vm.checkStates = checkStates;
     vm.submitValidationData = submitValidationData;
     vm.stateSelection = stateSelection;
@@ -30,15 +29,18 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function init() {
 
     	vm.activeTab = 0;
-        console.log('validations ctrl from validaiton ctrl', patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
+        
 		if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
             console.log('validations ctrl should display validations available tab')
     		vm.validationTemplate = vm.templates[0].url;        
             console.log('validations ctrl validaiton template: ', vm.validationTemplate)
     	}
 
-        if(patent.p3sServicesWithFees[0].serviceStatus == 'Preparing Quote') { //VALIDATION TEST DATA - REMOVE NotUsed
+        console.log('validations ctrl from validaiton ctrl', patent.p3sServicesWithFees[0].serviceStatus)
+        if(patent.p3sServicesWithFees[0].serviceStatus == 'Preparing quote') { //VALIDATION TEST DATA - REMOVE NotUsed
+            console.log('it is preparing quote')
             vm.validationTemplate = vm.templates[1].url;        
+            console.log('vm.validationTemplate : ', vm.validationTemplate)
         }        
 
     }
@@ -49,10 +51,15 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     .then(
         function(){
             $scope.isChecked = true;
+
+            vm.patent = patent; 
+            console.log(vm.patent)
+
             if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
                 validationService.fetchDesignatedStates(patent.patentID)
                 .then(
                     function(response){
+
                         console.log('validations ctrl response fetching designated state: ', response);
                         vm.validationInfo = response;
                         $scope.formData.corresdpondenceName = response.firstName +' ' + response.lastName;
@@ -65,6 +72,21 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                 )
             }
 
+
+            console.log(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
+
+            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'preparing quote') { 
+                console.log('im in')
+                 validationService.fetchPreparedQuote(patent.patentID)
+                 .then(
+                    function(response){
+                        console.log('validation ctrl prepraredQuote response : ', response)
+                        vm.preparedQuote = response;
+                    }
+                )
+
+            }
+
         }
     )
 
@@ -73,6 +95,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         var formData = {};
 
         var names = data.corresdpondenceName.split(' ');
+
 
         data.designatedStates = data.designatedStates.filter(function(data){
             return data.selected === true;
@@ -106,6 +129,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         validationService.requestQuote(formData)
         .then(
             function(response){
+
                 console.log('validation ctrl: requestQuote response', response);
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.validation-quote-requested.tpl.htm',
@@ -137,6 +161,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                 });
 
                 $state.go('portfolio.modal.patent', {patentId: patent.patentID}, {reload: true})
+
             }
         )
 

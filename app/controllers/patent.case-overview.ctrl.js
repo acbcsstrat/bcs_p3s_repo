@@ -216,7 +216,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     function checkAvailableAction(services) {
         vm.actionsAvailable = services.some(function(item){
-            return item.saleType === 'Online' || item.saleType === 'Offline' || item.saleType === 'In Progress';
+            return item.saleType === 'Online' || item.saleType === 'Offline' || (item.saleType === 'In Progress' && item.serviceStatus !== 'Preparing quote');
         })
     }
 
