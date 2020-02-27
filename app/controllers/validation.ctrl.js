@@ -11,7 +11,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     vm.stateSelection = stateSelection;
     vm.templates = [
         { name: 'validationAvailable', url: 'app/templates/validation/validation-available.tpl.htm'},
-        { name: 'quotePending', url: 'app/templates/validation/validation-quote-pending.tpl.htm'}
+        { name: 'quotePending', url: 'app/templates/validation/validation-quote-pending.tpl.htm'},
+        { name: 'quoteProvided', url: 'app/templates/validation/validation-quote-provided.tpl.htm'},
     ];
     $scope.formData = {};
     var validationAction;
@@ -41,7 +42,13 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             console.log('it is preparing quote')
             vm.validationTemplate = vm.templates[1].url;        
             console.log('vm.validationTemplate : ', vm.validationTemplate)
-        }        
+        }
+
+        if(patent.p3sServicesWithFees[0].serviceStatus == 'Quote provided') { //VALIDATION TEST DATA - REMOVE NotUsed
+            console.log('it is preparing quote')
+            vm.validationTemplate = vm.templates[2].url;        
+            console.log('vm.validationTemplate : ', vm.validationTemplate)
+        }                
 
     }
 
