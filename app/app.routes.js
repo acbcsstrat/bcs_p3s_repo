@@ -163,11 +163,54 @@ function appRoutes($stateProvider) {
         //     controllerAs: '$ctrl'
 
         // })
-        .state('current-transactions', {
+        .state('transactions', {
             url: '/transactions',
-            templateUrl: 'app/templates/transactions/transactions.current-transactions.tpl.htm',
+            templateUrl: 'app/templates/transactions/transactions.tpl.htm',
             controller: 'transactionsCtrl',
             controllerAs: '$ctrl'
+        })
+        .state('transactions.modal', {
+            abstract: true,
+            views: {
+                "modal": {
+                    templateUrl: "app/templates/transactions/modal.html"
+                }
+            }
+        })   
+        .state('transactions.modal.transaction-item', {
+            url: '/:transHref',
+            templateUrl: 'app/templates/transactions/transactions.item.tpl.htm',
+            controller: 'caseOverviewCtrl',
+            controllerAs: '$ctrl',            
+            resolve: {
+                transactionItem: ['$stateParams', '$q', 'transactionService', function($stateParams, $q, transactionService) {
+                    console.log('hello')
+                    return function() {
+                        console.log('in function')
+                        var deferred = $q.defer();
+
+                        $q.all([transactionService.fetchCurrentTransactions(), transactionService.fetchTransactionHistory()])
+                        .then(
+                            function(transactions){
+                                console.log('transactions : ', transactions)
+                                var concatinated = transactions[0].concat(transactions[1]);
+                                var item = concatinated.find(function(transaction){
+                                    return transaction.id == $stateParams.transId;
+                                })
+                                console.log('item', item)
+                                deferred.resolve(item)
+                            }
+                        )
+
+                        return deferred.promise;
+                    }
+
+
+                }]
+            },
+            params: {
+                transHref: null
+            }                       
         })
         // .state('current-transactions.current-transaction-item', {
         //     url: '/{transId}/:transHref',

@@ -9,10 +9,8 @@ require("app/app.routes.js");
 require("app/directives/app.dir.js");
 require("app/directives/form1200.dir.js");
 require("app/directives/checkout.dir.js");
-require("app/directives/current-transactions.transactions.dir.js");
 require("app/directives/patents.list-patents.dir.js");
 require("app/directives/validations.dir.js");
-require("app/directives/transactions.dir.js");
 require("app/directives/patents.search-patent.dir.js");
 require("app/directives/portfolio.nav.dir.js");
 require('app/directives/vendors/ngCart.directives.js');
@@ -45,8 +43,7 @@ require("app/services/patents.patents.serv.js");
 require("app/services/patents.patentsRest.serv.js");
 require("app/services/patents.searchPatent.serv.js");
 require("app/services/renewal.renewalRest.serv.js")
-require("app/services/transactions.transactionHistory.serv.js");
-require("app/services/transactions.currentTransactions.serv.js");
+require("app/services/transactions.serv.js");
 require("app/services/user.user.serv.js");
 require("app/services/vendors/ngCart.fulfilment.js");
 require("app/services/app.uploadAvatar.serv.js");
@@ -70,10 +67,7 @@ require("app/controllers/grant.ctrl.js");// !!!!!!! GRANT TEST DAT
 require("app/controllers/europct.form1200generated.ctrl.js");
 require("app/controllers/portfolio.ctrl.js");
 require("app/controllers/renewal.renewalHistory.ctrl.js");
-require("app/controllers/transactions.currentTransactionItem.ctrl.js");
-require("app/controllers/transactions.currentTransactions.ctrl.js");
-require("app/controllers/transactions.transactionHistory.ctrl.js");
-require("app/controllers/transactions.transactionHistoryItem.ctrl.js");
+require("app/controllers/transactions.item.ctrl.js");
 require("app/controllers/user.userProfile.ctrl.js");
 require("app/controllers/fee-breakdown.ctrl.js")
 require("app/controllers/fxchart.ctrl.js")
@@ -84,6 +78,4 @@ require("app/controllers/patent.details.ctrl.js");
 require("app/controllers/validation.ctrl.js");
 require("app/controllers/transaction.list.ctrl.js");
 
-
 require("app/components/core.mainNav.comp.js");
-require("app/components/transactions.transNav.comp.js");
