@@ -101,12 +101,30 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     function requestNewQuote() {
 
-        validationService.deleteQuote(vm.patent.patentID)
-        .then(
-            function(response){
-                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
-            }
-        )
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.validation-confirm-deletion.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.confirmDeletion = function() {
+                    validationService.deleteQuote(vm.patent.patentID)
+                    .then(
+                        function(response){
+                            $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                        }
+                    )
+                }
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
+
+            }]
+        });
+
+
+
 
     }
 
@@ -115,7 +133,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         var formData = {};
 
         var names = data.corresdpondenceName.split(' ');
-
 
         data.designatedStates = data.designatedStates.filter(function(data){
             return data.selected === true;
