@@ -6,7 +6,7 @@ function validationService($http, $q) {
 
 	var factory = {
 		fetchDesignatedStates: fetchDesignatedStates,
-		requestQuote: requestQuote,
+		deleteQuote: deleteQuote,
 		fetchPreparedQuote: fetchPreparedQuote
 	}
 
@@ -72,6 +72,30 @@ function validationService($http, $q) {
 		return deferred.promise;
 
 	}		
+
+	function deleteQuote(id) {
+		console.log('deletequote, ', id)
+		console.log('validation service deleteQuote: id', id)
+
+		var deferred = $q.defer()
+
+		$http.delete('rest-validation-quotes/'+ id) //VALIDATION TEST DATA 
+		.then(
+			function(response){
+				console.log('validation service deleteQuote success response: ', response)
+				deferred.resolve(response.data)
+			},
+			function(errResponse){
+				console.error('Error returning validation service deleteQuote : ', errResponse)
+				deferred.reject(errResponse)
+			}	
+		)
+
+		return deferred.promise;
+
+	}	
+
+
 
 	return factory;
 

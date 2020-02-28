@@ -9,6 +9,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     vm.checkStates = checkStates;
     vm.submitValidationData = submitValidationData;
     vm.stateSelection = stateSelection;
+    vm.requestNewQuote = requestNewQuote;
+    vm.patent = '';
     vm.templates = [
         { name: 'validationAvailable', url: 'app/templates/validation/validation-available.tpl.htm'},
         { name: 'quotePending', url: 'app/templates/validation/validation-quote-pending.tpl.htm'},
@@ -30,7 +32,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function init() {
 
     	vm.activeTab = 0;
-        
+        console.log(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
 		if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
             console.log('validations ctrl should display validations available tab')
     		vm.validationTemplate = vm.templates[0].url;        
@@ -96,6 +98,17 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         }
     )
+
+    function requestNewQuote() {
+
+        validationService.deleteQuote(vm.patent.patentID)
+        .then(
+            function(response){
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+            }
+        )
+
+    }
 
     function submitValidationData(data){
         console.log('validation ctrl: data', data);
