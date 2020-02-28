@@ -1,0 +1,22 @@
+<div class="container-filter-list" ng-cloak>
+    <md-list class="box" ng-repeat="cat in categories" ng-init="filter[cat]={}">
+        <md-subheader class="md-no-sticky">
+            <h2>{{cat == 'currentStageColour' ? 'Current Stage Colour' : 'European Action'}}</h2>
+        </md-subheader>
+        <md-list-item ng-repeat="value in getItems(cat, portfolioData)">
+            <md-checkbox class="md-secondary" data-ng-model="filter[cat][value]" data-ng-change="updateFiltered(value, filter[cat][value])">
+            </md-checkbox>
+            <p>({{(filtered | filter:value:true).length}})&nbsp;
+                <span class="text-capitalize" data-ng-if="value == 'GREY'">Grey</span>
+                <span class="text-capitalize" data-ng-if="value == 'epct'">Euro-PCT</span>
+                <span class="text-capitalize" data-ng-if="value !== 'epct' && value !== 'GREY'">{{value}}</span>
+            </p>
+        </md-list-item>
+        <md-divider></md-divider>
+    </md-list>
+    <div layout="row" class="demo-dialog-button">
+        <md-button md-autofocus flex class="md-primary" data-ng-click="closeDialog();">
+            Close
+        </md-button>
+    </div>
+</div>
