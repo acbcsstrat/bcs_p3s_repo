@@ -9,9 +9,12 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     vm.checkStates = checkStates;
     vm.submitValidationData = submitValidationData;
     vm.stateSelection = stateSelection;
+    vm.requestNewQuote = requestNewQuote;
+    vm.patent = '';
     vm.templates = [
         { name: 'validationAvailable', url: 'app/templates/validation/validation-available.tpl.htm'},
-        { name: 'quotePending', url: 'app/templates/validation/validation-quote-pending.tpl.htm'}
+        { name: 'quotePending', url: 'app/templates/validation/validation-quote-pending.tpl.htm'},
+        { name: 'quoteProvided', url: 'app/templates/validation/validation-quote-provided.tpl.htm'},
     ];
     $scope.formData = {};
     var validationAction;
@@ -29,7 +32,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function init() {
 
     	vm.activeTab = 0;
-        
+        console.log(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
 		if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
             console.log('validations ctrl should display validations available tab')
     		vm.validationTemplate = vm.templates[0].url;        
@@ -41,7 +44,13 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             console.log('it is preparing quote')
             vm.validationTemplate = vm.templates[1].url;        
             console.log('vm.validationTemplate : ', vm.validationTemplate)
-        }        
+        }
+
+        if(patent.p3sServicesWithFees[0].serviceStatus == 'Quote provided') { //VALIDATION TEST DATA - REMOVE NotUsed
+            console.log('it is preparing quote')
+            vm.validationTemplate = vm.templates[2].url;        
+            console.log('vm.validationTemplate : ', vm.validationTemplate)
+        }                
 
     }
 
@@ -90,12 +99,40 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         }
     )
 
+    function requestNewQuote() {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.validation-confirm-deletion.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.confirmDeletion = function() {
+                    validationService.deleteQuote(vm.patent.patentID)
+                    .then(
+                        function(response){
+                            $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                        }
+                    )
+                }
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
+
+            }]
+        });
+
+
+
+
+    }
+
     function submitValidationData(data){
         console.log('validation ctrl: data', data);
         var formData = {};
 
         var names = data.corresdpondenceName.split(' ');
-
 
         data.designatedStates = data.designatedStates.filter(function(data){
             return data.selected === true;

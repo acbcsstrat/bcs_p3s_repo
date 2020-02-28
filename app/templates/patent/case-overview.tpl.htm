@@ -16,10 +16,16 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 1 }" data-ng-click="$ctrl.setTab('notifications'); activeLeft = 1;" >
+									<a class="nav-link d-flex flex-column" 
+									data-ng-disabled="validationNotification"
+									data-ng-class="{'disabled': validationNotification, 'active': activeLeft === 1 }" 
+									data-ng-click="$ctrl.processView('notifications', 1); activeLeft = 1;">
 										<span><i class="fal fa-exclamation-circle font-h3"></i></span>							
 										<span>Notifications</span>
 									</a>
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="notInProgress" class="font-h4">
+						              	Currently reminders are not provided for validations though this feature is coming soon.
+						            </md-tooltip>
 								</li>
 								<li class="nav-item" data-ng-show="$ctrl.displayForm1200Tab">
 									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 2 }" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">
@@ -74,8 +80,8 @@
 								<li class="nav-item">
 									<a 
 									class="nav-link d-flex flex-column" 
-									data-ng-disabled="notInProgress" 
-									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  7}" 
+									data-ng-disabled="notInProgress || validationNotification" 
+									data-ng-class="{'disabled': notInProgress, 'disabled': validationNotification,'active': activeLeft ===  7}" 
 									data-ng-click="$ctrl.processView('costchart', 7, 'chart'); activeLeft = 7;">
 										<span> <i class="fal fa-chart-bar font-h3"></i> </span>
 										<span>Cost Chart</span>
@@ -137,6 +143,7 @@
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="epct" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"></ngcart-addtocart>
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
+									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="validation" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Quote provided'"></ngcart-addtocart>									            
 									            <p class="font-weight-medium font-h4" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">: Call +44 203 696 0949</p>
 				                			</div>
 				                		</div>
