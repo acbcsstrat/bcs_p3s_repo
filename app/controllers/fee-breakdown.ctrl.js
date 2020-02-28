@@ -35,7 +35,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
     }
 
     function setFees(action) {
-
+        console.log('actionnnnn', action)
         vm.availableFees = {};
 
         if(feeUIAvailable(patent.p3sServicesWithFees))
@@ -44,6 +44,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.displayForm1200 = true;
             vm.displayRenewal = false;
             vm.displayGrant = false;
+            vm.displayValidation = false;
             vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'Euro-PCT';
             }).map(function(fee) {
@@ -57,7 +58,8 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
         if(action == 'renewal') {
             vm.displayForm1200 = false;
             vm.displayRenewal = true;
-            vm.displayGrant = false;            
+            vm.displayGrant = false;
+            vm.displayValidation = false;
             vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'renewal';
             }).map(function(fee) {
@@ -71,7 +73,8 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
         if(action == 'grant') {
             vm.displayForm1200 = false;
             vm.displayRenewal = false;
-            vm.displayGrant = true;       
+            vm.displayGrant = true;
+            vm.displayValidation = false;
             vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'grant';
             }).map(function(fee) {
@@ -81,10 +84,40 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
                 return fee.grantFeeUI;
             })
         }
+        console.log('ACTION : ',  action)
+        if(action == 'validation') {
+            vm.displayForm1200 = false;
+            vm.displayRenewal = false;
+            vm.displayGrant = false;
+            vm.displayValidation = true;
+            
+
+            var official = patent.p3sServicesWithFees.filter(function(item){
+                return item.serviceType === 'validation';
+            }).map(function(fee) {
+                fee.validationFeeUI.savings = Number(Math.round((fee.nextStageCostUSD - fee.currentStageCostUSD) + 'e2') +'e-2');
+                fee.validationFeeUI.data = fee;
+                vm.availableFees.fxRate = fee.validationFeeUI.fxRate;
+                return fee.validationFeeUI;
+            })
+            console.log('whatatatat', official)
+            vm.availableFees.official = official[0];
+            console.log('after')
+            vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.official.subTotalUSD - vm.availableFees.official.currentOfficialFeeUSD) + 'e2') +'e-2');
+            vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.official.subTotalEUR - vm.availableFees.official.currentOfficialFeeEUR) +'e2')+'e-2');
+            vm.availableFees.savings = Number(Math.round((patent.p3sServicesWithFees.nextStageCostUSD - patent.p3sServicesWithFees.currentStageCostUSD) + 'e2') +'e-2'); 
+             console.log('vm.availableFees : ', vm.availableFees)
+            return;           
+
+        }        
+
+       console.log(vm.availableFees)
 
         vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.official[0].subTotalUSD - vm.availableFees.official[0].currentOfficialFeeUSD) + 'e2') +'e-2');
         vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.official[0].subTotalEUR - vm.availableFees.official[0].currentOfficialFeeEUR) +'e2')+'e-2');
         vm.availableFees.savings = Number(Math.round((patent.p3sServicesWithFees[0].nextStageCostUSD - patent.p3sServicesWithFees[0].currentStageCostUSD) + 'e2') +'e-2');
+
+        
 
     }
 
