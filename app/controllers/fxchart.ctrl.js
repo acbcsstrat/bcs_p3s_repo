@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('fxChartCtrl', fxChartCtrl);
 
-fxChartCtrl.$inject = ['patent', 'ca', '$scope', '$timeout', '$state', 'organiseTextService', '$location', 'currentTransactionsService', '$anchorScroll']
+fxChartCtrl.$inject = ['patent', 'ca', '$scope', '$timeout', '$state', 'organiseTextService', '$location', '$anchorScroll']
 
-function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, $location, currentTransactionsService, $anchorScroll) {
+function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, $location, $anchorScroll) {
 
     var vm = this;
 

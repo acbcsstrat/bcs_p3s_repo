@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('costChartCtrl', costChartCtrl);
 
-costChartCtrl.$inject = ['patent', 'ca','$scope', '$timeout', '$state', 'organiseTextService', '$location', 'currentTransactionsService', '$anchorScroll']
+costChartCtrl.$inject = ['patent', 'ca','$scope', '$timeout', '$state', 'organiseTextService', '$location', '$anchorScroll']
 
-function costChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, $location, currentTransactionsService, $anchorScroll) {
+function costChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, $location, $anchorScroll) {
 
     var vm = this;
 

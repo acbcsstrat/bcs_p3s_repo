@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('feeBreakDownCtrl', feeBreakDownCtrl);
 
-feeBreakDownCtrl.$inject = ['patent', '$scope', '$timeout', '$state', 'organiseTextService', '$location', 'currentTransactionsService', '$anchorScroll', 'organiseColourService']
+feeBreakDownCtrl.$inject = ['patent', '$scope', '$timeout', '$state', 'organiseTextService', '$location', '$anchorScroll', 'organiseColourService']
 
-function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService, $location, currentTransactionsService, $anchorScroll, organiseColourService) {
+function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService, $location, $anchorScroll, organiseColourService) {
 
     var vm = this;
 
