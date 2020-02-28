@@ -14,6 +14,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.setTab = setTab;
     vm.checkAvailableAction = checkAvailableAction;
     $scope.notInProgress = true;
+    $scope.validationNotification = false;
     $scope.caseoverview_tab = 'details';
     $scope.showOptions = false;
     $scope.activeLeft = 0;
@@ -22,6 +23,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     var originatorEv;
 
     vm.processView = function(tab, index, chart) {
+        console.log(tab, index, chart)
+        if((tab == 'notifications' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification)) { return; }
         if(!$scope.notInProgress) {
             vm.setTab(tab)
             $scope.activeLeft = index;
@@ -74,9 +77,13 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                     }
                 )
 
+                $scope.validationNotification = patent.p3sServicesWithFees.some(function(item){
+                    return item.serviceType == 'validation';
+                })
+
                 $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
                     console.log('item : ',item)
-                    return item.saleType == 'Not In Progress' || item.serviceType == 'validation';
+                    return item.saleType == 'Not In Progress' || (item.serviceType == 'validation' && item.serviceStatus !== 'Quote provided');
                 })
 
                 $scope.availableServices = patent.p3sServicesWithFees.map(function(data, index){

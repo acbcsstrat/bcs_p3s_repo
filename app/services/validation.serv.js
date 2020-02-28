@@ -79,7 +79,7 @@ function validationService($http, $q) {
 
 		var deferred = $q.defer()
 
-		$http.delete('rest-validation-quotes/'+ id) //VALIDATION TEST DATA 
+		$http.delete('rest-validation-quote/'+ id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				console.log('validation service deleteQuote success response: ', response)

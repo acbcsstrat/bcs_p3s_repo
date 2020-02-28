@@ -17,8 +17,8 @@
 								</li>
 								<li class="nav-item">
 									<a class="nav-link d-flex flex-column" 
-									data-ng-disabled="notInProgress"
-									data-ng-class="{'disabled': notInProgress, 'active': activeLeft === 1 }" 
+									data-ng-disabled="validationNotification"
+									data-ng-class="{'disabled': validationNotification, 'active': activeLeft === 1 }" 
 									data-ng-click="$ctrl.processView('notifications', 1); activeLeft = 1;">
 										<span><i class="fal fa-exclamation-circle font-h3"></i></span>							
 										<span>Notifications</span>
@@ -80,8 +80,8 @@
 								<li class="nav-item">
 									<a 
 									class="nav-link d-flex flex-column" 
-									data-ng-disabled="notInProgress" 
-									data-ng-class="{'disabled': notInProgress, 'active': activeLeft ===  7}" 
+									data-ng-disabled="notInProgress || validationNotification" 
+									data-ng-class="{'disabled': notInProgress, 'disabled': validationNotification,'active': activeLeft ===  7}" 
 									data-ng-click="$ctrl.processView('costchart', 7, 'chart'); activeLeft = 7;">
 										<span> <i class="fal fa-chart-bar font-h3"></i> </span>
 										<span>Cost Chart</span>
