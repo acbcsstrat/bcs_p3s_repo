@@ -16,10 +16,16 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 1 }" data-ng-click="$ctrl.setTab('notifications'); activeLeft = 1;" >
+									<a class="nav-link d-flex flex-column" 
+									data-ng-disabled="notInProgress"
+									data-ng-class="{'disabled': notInProgress, 'active': activeLeft === 1 }" 
+									data-ng-click="$ctrl.processView('notifications', 1); activeLeft = 1;">
 										<span><i class="fal fa-exclamation-circle font-h3"></i></span>							
 										<span>Notifications</span>
 									</a>
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="notInProgress" class="font-h4">
+						              	Currently reminders are not provided for validations though this feature is coming soon.
+						            </md-tooltip>
 								</li>
 								<li class="nav-item" data-ng-show="$ctrl.displayForm1200Tab">
 									<a class="nav-link d-flex flex-column" data-ng-class="{'active': activeLeft === 2 }" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">

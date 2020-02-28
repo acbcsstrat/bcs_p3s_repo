@@ -62,7 +62,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
                 vm.patent = patent;
                 vm.portfolioLoaded = true;
-
+                console.log('caseoverview : ', vm.patent)
                 renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
                     function(response){
@@ -75,7 +75,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 )
 
                 $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
-                    return item.saleType == 'Not In Progress';
+                    console.log('item : ',item)
+                    return item.saleType == 'Not In Progress' || item.serviceType == 'validation';
                 })
 
                 $scope.availableServices = patent.p3sServicesWithFees.map(function(data, index){
@@ -86,10 +87,9 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                        return {id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType}
                     }
                 })
-
+                console.log('$scope.availableServices : ', $scope.availableServices)
                 $scope.availableServices.forEach(function(obj){
 
-                    vm.testdisplay = true;
                     console.log('hello caseoverview ctrl: looping through obj: ', obj)
 
                     if(obj.action == 'validation') {
