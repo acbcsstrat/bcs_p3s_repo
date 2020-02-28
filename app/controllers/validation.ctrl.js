@@ -108,6 +108,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
                 this.confirmDeletion = function() {
+                    $uibModalInstance.close();
                     validationService.deleteQuote(vm.patent.patentID)
                     .then(
                         function(response){

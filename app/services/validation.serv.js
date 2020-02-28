@@ -7,6 +7,7 @@ function validationService($http, $q) {
 	var factory = {
 		fetchDesignatedStates: fetchDesignatedStates,
 		deleteQuote: deleteQuote,
+		requestQuote: requestQuote,
 		fetchPreparedQuote: fetchPreparedQuote
 	}
 
