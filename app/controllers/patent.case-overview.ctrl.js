@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
 
-caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal', 'renewalRestService', 'activeTabService', '$mdDialog']
+caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal', 'renewalRestService', 'activeTabService', '$mdDialog', 'validationService']
 
-function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, patentsRestService, $uibModal, renewalRestService, activeTabService, $mdDialog) {
+function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, patentsRestService, $uibModal, renewalRestService, activeTabService, $mdDialog, validationService) {
 
     var vm = this;
 
@@ -13,6 +13,9 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.portfolioLoaded = false;
     vm.setTab = setTab;
     vm.checkAvailableAction = checkAvailableAction;
+    vm.requestNewQuote = requestNewQuote;
+    vm.processView = processView
+    vm.openMenu = openMenu;
     $scope.notInProgress = true;
     $scope.validationNotification = false;
     $scope.caseoverview_tab = 'details';
@@ -22,8 +25,8 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     var chartTimeout;
     var originatorEv;
 
-    vm.processView = function(tab, index, chart) {
-        console.log(tab, index, chart)
+    function processView(tab, index, chart) {
+
         if((tab == 'notifications' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification)) { return; }
         if(!$scope.notInProgress) {
             vm.setTab(tab)
@@ -35,10 +38,37 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     }
 
-    vm.openMenu = function($mdMenu, ev) {
+    function openMenu($mdMenu, ev) {
         originatorEv = ev;
         $mdMenu.open(ev);
     };
+
+    function requestNewQuote() {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.validation-confirm-deletion.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.confirmDeletion = function() {
+                    $uibModalInstance.close();
+                    validationService.deleteQuote(vm.patent.patentID)
+                    .then(
+                        function(response){
+                            $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                        }
+                    )
+                }
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
+
+            }]
+        });
+
+    }    
 
     function init() {
 
