@@ -1,0 +1,22 @@
+<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
+    <div class="col-xl-12">
+        <p>Select an action from the drop-down menu below</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-xs-left">                            
+        <div data-ng-if="$ctrl.lineData !== null">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-inline">
+                        <div class="form-group">                      
+                            <label class="font-h4 font-weight-bold text-uppercase m-r-sm">Display FX data for</label>
+                            <select name="actions" id="actions" class="form-control text-capitalize" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-change="$ctrl.setData($ctrl.data.selectedAction.action)"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nvd3 options="$ctrl.lineOptions" data="$ctrl.lineData" class="with-transitions"></nvd3>
+        </div>
+    </div>
+</div>
