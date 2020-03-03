@@ -10,11 +10,13 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     vm.submitValidationData = submitValidationData;
     vm.stateSelection = stateSelection;
     vm.requestNewQuote = requestNewQuote;
+    vm.submitPoaDocuments = submitPoaDocuments;
     vm.patent = '';
     vm.templates = [
         { name: 'validationAvailable', url: 'app/templates/validation/validation-available.tpl.htm'},
         { name: 'quotePending', url: 'app/templates/validation/validation-quote-pending.tpl.htm'},
         { name: 'quoteProvided', url: 'app/templates/validation/validation-quote-provided.tpl.htm'},
+        { name: 'poasProvided', url: 'app/templates/validation/validation-poa-available.tpl.htm'},
     ];
     $scope.formData = {};
     var validationAction;
@@ -28,6 +30,20 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             allState[i].selected = $scope.selectionBoolean;
         }
     }
+
+
+    vm.poaStates = [
+        {
+            stateCode: 'UK',
+            stateName: 'United Kingdom'
+
+        },
+        {
+            stateCode: 'BA',
+            stateName: 'Bosnia'
+
+        }
+    ]
 
     function init() {
 
@@ -48,7 +64,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         if(patent.p3sServicesWithFees[0].serviceStatus == 'Quote provided') { //VALIDATION TEST DATA - REMOVE NotUsed
             console.log('it is preparing quote')
-            vm.validationTemplate = vm.templates[2].url;        
+            vm.validationTemplate = vm.templates[3].url;        
             console.log('vm.validationTemplate : ', vm.validationTemplate)
         }                
 
@@ -126,6 +142,12 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
 
 
+
+    }
+
+    function submitPoaDocuments(data) {
+
+        console.log(data)
 
     }
 

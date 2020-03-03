@@ -1,0 +1,44 @@
+<div class="row m-b-sm">
+	<div class="col-xl-12">	
+		<p class="m-b-xs">We have instructed the necessary associates and the states below require POA documents to be signed, scanned and uploaded to Patent Place. Please find the necessary documents available for download below</p>
+	</div>
+</div>
+<div class="row m-b-sm">
+	<div class="col-xl-12">	
+		<h4 class="font-h4 font-weight-medium text-uppercase m-b-xs">Notice</h4>
+		<p class="m-b-xs">The provider requires the original signed PoA documents to be sent in the post for all states listed below to:</p>
+		<address class="font-body font-weight-medium">
+			Mr Validation<br>
+			25 Meer Street<br>
+			S-O-A<br>
+			Warwickshire<br>
+			CV37 6QB<br>
+			United Kingdom
+		</address>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xl-12">
+		<h4 class="font-weight-medium font-h4 m-b-xs d-flex align-items-center">PoA documents | Download </h4>
+		<a class="btn-underlined pill-radius font-h4 txt-phase-green m-b-sm" target="_blank" data-ng-href="{{$ctrl.patent.certificateUrl}}">Download all PoA documents</a>
+		<h4 class="font-weight-medium font-h4  m-b-xs">PoA documents | Upload</h4>
+		<p>Upload all Power of Attorney documents for the states listed below:</p>
+		<form name="validationForm" novalidate>
+			<div  data-ng-repeat="states in $ctrl.poaStates">
+				<div class="border-grey-xs--btm m-b-md m-t-md"></div>
+	            <div class="form-group row">
+	                <label for="{{states.stateName}}" class="col-xl-4 col-form-label font-weight-medium font-h4">{{states.stateName}}: </label>
+	                <div class="col-xl-8">                	
+		                <input type="file" name="{{states.stateName}}" class="form-control-file font-h4"  data-ng-model="formData.documents[states.stateName]"  elect-ng-files accept="application/pdf" select-ng-files accept="application/pdf" required>
+	                </div>
+	                
+	            </div>    			    		
+			</div>
+			<div class="row">
+				<div class="col-xl-12 text-right">
+	        		<button type="button" id="submit" class="btn btn--green btn--lg pill-radius"  data-ng-click="$ctrl.submitPoaDocuments(formData);" data-ng-disabled="validationForm.$invalid || formDataSubmitted">Submit PoA documents</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
