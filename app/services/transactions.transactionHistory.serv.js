@@ -34,9 +34,14 @@ function transactionHistoryService($http, $q) {
 	                	el.epctUIs.map(function(o){ 
 	                		o.newType = 'Euro-PCT';
 	                	})
-                	}                	
+                	}
+                	if(el.validationUIs.length) {
+	                	el.validationUIs.map(function(o){ 
+	                		o.newType = 'Validation';
+	                	})
+                	}                         	         	
                     el.serviceUIs = [];
-                    el.serviceUIs = el.serviceUIs.concat(el.renewalUIs, el.grantUIs, el.epctUIs)
+                    el.serviceUIs = el.serviceUIs.concat(el.renewalUIs, el.grantUIs, el.epctUIs, el.validationUIs)
                     return el;
    
                 })
