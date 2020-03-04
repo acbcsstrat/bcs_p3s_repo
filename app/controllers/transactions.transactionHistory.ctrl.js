@@ -27,9 +27,20 @@ function transactionHistoryCtrl($rootScope, $scope, $timeout, $state, transactio
 
         transactionHistory.forEach(function(data){
             data.serviceUIs.map(function(o, i){ 
-                o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
-                if(o.patentUI.clientRef == '') {
-                    o.patentUI.clientRef = '[No Client Reference Provided]'
+
+                if(o.patentUI) {                
+                    o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
+                    if(o.patentUI.clientRef == '') {
+                        o.patentUI.clientRef = '[No Client Reference Provided]'
+                    }
+                } else {
+                    o.patentUI = {};
+                    o.patentUI.clientRef = o.clientRef;
+                    o.patentUI.ep_ApplicationNumber = o.patentApplicationNumber;
+                    o.appAndType = o.patentUI.ep_ApplicationNumber  + ' (' + o.newType +')';
+                    if(o.patentUI.clientRef == '') {
+                        o.patentUI.clientRef = '[No Client Reference Provided]';
+                    }
                 }
             })
         })    

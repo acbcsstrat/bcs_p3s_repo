@@ -1,0 +1,57 @@
+<html><body>
+tmpDev page to invoke API : 2.2	Generate & Save FORM1200 
+<p/>
+
+Form for Generate/SAVE EPCT / Form1200:
+<form action="/p3sweb/rest-form1200-tmpGenF1200/" method="post">
+
+Patent_ID<input type="number" value="141" name="Patent_ID" />
+<br/>
+clientRef<input type="text" value="genF1200 default" name="clientRef" />
+<br/>
+totalClaims<input type="text" value="18" name="totalClaims" />
+<br/>
+isYear3RenewalPaying<input type="checkbox" checked="checked" name="isYear3RenewalPaying" />
+<br/>
+totalPages<input type="text" value="157" name="totalPages" />
+<p/>
+
+extansionStates<input type="String" value="BA, ME" name="extsnStatesCSV" />
+<br/>
+validationStates<input type="String" value="MA, MD,TN, KH" name="validStatesCSV" />
+<br/>
+
+
+<p/>
+desc<input type="String" value="5" name="descStart" /><input type="String" value="6" name="descEnd" />
+<br/>
+claims<input type="String" value="7" name="claimsStart" /><input type="String" value="8" name="claimsEnd" />
+<br/>
+drgs<input type="String" value="9" name="drgsStart" /><input type="String" value="10" name="drgsEnd" />
+
+<p/>
+<input type="submit" name="submit" />
+   
+</form>
+End of Form
+<p/>
+&nbsp;
+<p/>
+
+
+
+
+
+For REJECT : issue command having form
+<br/>
+<a href="http://localhost:8080/p3sweb/rest-reject-form1200/141,NaturalPerson">
+http://localhost:8080/p3sweb/rest-reject-form1200/141,NaturalPerson
+</a>
+<br/> where params are patent_id and fail_reason.
+<br/> fail_reason is 1 of :&nbsp;&nbsp;&nbsp;NaturalPerson&nbsp;&nbsp;&nbsp;Amended&nbsp;&nbsp;&nbsp;DocsRequired
+<p/>
+&nbsp;
+<p/>
+
+
+</body></html>

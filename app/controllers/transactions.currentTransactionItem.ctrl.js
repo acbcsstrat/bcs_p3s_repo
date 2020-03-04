@@ -36,6 +36,12 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 			item.serviceType = 'grant'; 
 			item.serviceFeeUI = item.grantFeeUI; 
 		}
+
+		if(item.validationFeeUI) { 
+			item.serviceType = 'validation'; 
+			item.serviceFeeUI = item.validationFeeUI; 
+		}		
+
 	}
 
 	vm.checkProgress = checkProgress;

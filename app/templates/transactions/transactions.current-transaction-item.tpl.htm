@@ -250,7 +250,54 @@
 					                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.renewalExtensionFeeEUR | number: 2) || '0.00'}}</p>
 					                                </div>                  
 					                            </div>
-								            </div>								            
+								            </div>
+								            <div data-ng-if="transaction.serviceType == 'validation'">
+					                            <div class="row m-b-sm" data-ng-if="transaction.serviceFeeUI.designatedStates.length">
+					                                <div class="col-md-5 col-xl-5 m-b-sm">
+					                                    <p class="font-weight-medium m-l-sm">Designation State Fees:</p>
+					                                </div>
+					                                <div class="col-md-12 col-xl-12" data-ng-repeat="state in transaction.serviceFeeUI.designatedStates">     
+					                                    <div class="row m-b-sm">
+					                                        <div class="col-md-5 col-xl-5">
+					                                            <p class="m-l-lg">{{state.stateCode}}</p>
+					                                        </div>
+					                                        <div class="col-md-4 col-xl-4">
+					                                            <p class="text-left font-body">$ {{(state.validationCost_USD | number: 2) || '0.00'}}</p>
+					                                        </div>                                                                                      
+					                                    </div>
+					                                </div>
+					                            </div>                             
+					                            <div class="row m-b-sm" data-ng-if="transaction.serviceFeeUI.extensionStates.length">
+					                                <div class="col-md-5 col-xl-5 m-b-sm">
+					                                    <p class="font-weight-medium m-l-sm">Extension State Fees:</p>
+					                                </div>
+					                                <div class="col-md-12 col-xl-12" data-ng-repeat="state in transaction.serviceFeeUI.extensionStates">
+					                                    <div class="row m-b-sm">
+					                                        <div class="col-md-5 col-xl-5">
+					                                            <p class="m-l-lg">{{state.stateCode}}</p>
+					                                        </div>
+					                                        <div class="col-md-4 col-xl-4">
+					                                            <p class="text-left font-body">$ {{(state.validationCost_USD | number: 2) || '0.00'}}</p>
+					                                        </div>
+					                                    </div>
+					                                </div>
+					                            </div>
+					                            <div class="row m-b-sm" data-ng-if="transaction.serviceFeeUI.validationStates.length">
+					                                <div class="col-md-5 col-xl-5  m-b-sm">
+					                                    <p class="font-weight-medium m-l-sm">Validation State Fees:</p>
+					                                </div>
+					                                <div class="col-md-12 col-xl-12" data-ng-repeat="state in transaction.serviceFeeUI.validationStates">
+					                                    <div class="row m-b-sm">
+					                                        <div class="col-md-5 col-xl-5">
+					                                            <p class="m-l-lg">{{state.stateCode}}</p>
+					                                        </div>
+					                                        <div class="col-md-4 col-xl-4"> 
+					                                            <p class="text-left font-body">$ {{(state.validationCost_USD | number: 2) || '0.00'}}</p>
+					                                        </div>
+					                                    </div>
+					                                </div>
+					                            </div> 
+								            </div>
 								        </div>
 									</div>
 						        </div>
