@@ -23,6 +23,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     var validationAction;
     var allState;
     vm.validationInfo = {};
+    vm.domain = ppdomain;
 
     function stateSelection(selection) {
         $scope.selectionBoolean =  selection == 'De-select all' ? false : true;
@@ -49,7 +50,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function init() {
 
     	vm.activeTab = 0;
-        console.log(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
+        console.log('patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() INIT : ', patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
 		if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
             console.log('validations ctrl should display validations available tab')
     		vm.validationTemplate = vm.templates[0].url;        
@@ -75,7 +76,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             console.log('vm.validationTemplate : ', vm.validationTemplate)
         }        
 
-        if(patent.p3sServicesWithFees[0].serviceStatus == 'blank poas provided') { //VALIDATION TEST DATA - REMOVE NotUsed
+        if(patent.p3sServicesWithFees[0].serviceStatus == 'Blank PoAs provided') { //VALIDATION TEST DATA - REMOVE NotUsed
             console.log('PoAs Available')
             vm.validationTemplate = vm.templates[4].url;        
             console.log('vm.validationTemplate : ', vm.validationTemplate)
@@ -111,7 +112,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             }
 
 
-            console.log(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
+            console.log('patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() promise: ', patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
 
             if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'preparing quote') { 
                 console.log('im in')
@@ -123,19 +124,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                     }
                 )
 
-            }
-
-            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'poas available') { 
-                console.log('im in')
-                 validationService.downloadPoa(patent.patentID)
-                 .then(
-                    function(response){
-                        console.log('validation ctrl prepraredQuote response : ', response)
-                        vm.preparedQuote = response;
-                    }
-                )
-
-            }            
+            }      
 
         }
     )

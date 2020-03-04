@@ -8,15 +8,14 @@ function validationService($http, $q) {
 		fetchDesignatedStates: fetchDesignatedStates,
 		deleteQuote: deleteQuote,
 		requestQuote: requestQuote,
-		fetchPreparedQuote: fetchPreparedQuote,
-		downloadPoas: downloadPoas
+		fetchPreparedQuote: fetchPreparedQuote
 	}
 
 	function fetchDesignatedStates(id) {
 
 		var deferred = $q.defer()
 
-		$http.get('rest-validation-quote-request/'+id) //VALIDATION TEST DATA 
+		$http.get(ppdomain+'rest-validation-quote-request/'+id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				deferred.resolve(response.data)
@@ -35,9 +34,9 @@ function validationService($http, $q) {
 
 		console.log('validation service: formdData ', formData)
 
-		var deferred = $q.defer()
+		var deferred = $q.defer();
 
-		$http.post('rest-validation-quote-request/', formData) //VALIDATION TEST DATA 
+		$http.post(ppdomain+'rest-validation-quote-request/', formData) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				console.log('validation service success response: ', response)
@@ -57,9 +56,9 @@ function validationService($http, $q) {
 
 		console.log('validation service fetchPreparedQuote: id', id)
 
-		var deferred = $q.defer()
+		var deferred = $q.defer();
 
-		$http.get('rest-validation-quote/'+ id) //VALIDATION TEST DATA 
+		$http.get(ppdomain+'rest-validation-quote/'+ id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				console.log('validation service fetchPreparedQuote success response: ', response)
@@ -77,7 +76,7 @@ function validationService($http, $q) {
 
 	function deleteQuote(id) {
 
-		var deferred = $q.defer()
+		var deferred = $q.defer();
 
 		$http.delete('rest-validation-quote/'+ id) //VALIDATION TEST DATA 
 		.then(
@@ -94,27 +93,6 @@ function validationService($http, $q) {
 		return deferred.promise;
 
 	}	
-
-	function downloadPoas(id) {
-		console.log('validaitonservice poas id', id)
-		var deferred = $q.defer()
-
-		$http.get('/rest-validation-downloadPOA/'+id)
-		.then(
-			function(response){
-				console.log('validaitonservice poa response ', response)
-				deferred.resolve(response.data)
-			},
-			function(errResponse) {
-				deferred.reject(errResponse.data)
-			}
-		)
-
-		return deferred.promise;
-
-	}
-
-
 
 	return factory;
 
