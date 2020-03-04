@@ -10,11 +10,14 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     vm.submitValidationData = submitValidationData;
     vm.stateSelection = stateSelection;
     vm.requestNewQuote = requestNewQuote;
+    vm.submitPoaDocuments = submitPoaDocuments;
     vm.patent = '';
     vm.templates = [
         { name: 'validationAvailable', url: 'app/templates/validation/validation-available.tpl.htm'},
         { name: 'quotePending', url: 'app/templates/validation/validation-quote-pending.tpl.htm'},
         { name: 'quoteProvided', url: 'app/templates/validation/validation-quote-provided.tpl.htm'},
+        { name: 'quoteProvided', url: 'app/templates/validation/validation-payment-in-progress.tpl.htm'},
+        { name: 'poasProvided', url: 'app/templates/validation/validation-poa-available.tpl.htm'},
     ];
     $scope.formData = {};
     var validationAction;
@@ -28,6 +31,20 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             allState[i].selected = $scope.selectionBoolean;
         }
     }
+
+
+    vm.poaStates = [
+        {
+            stateCode: 'UK',
+            stateName: 'United Kingdom'
+
+        },
+        {
+            stateCode: 'BA',
+            stateName: 'Bosnia'
+
+        }
+    ]
 
     function init() {
 
@@ -50,7 +67,19 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             console.log('it is preparing quote')
             vm.validationTemplate = vm.templates[2].url;        
             console.log('vm.validationTemplate : ', vm.validationTemplate)
-        }                
+        }
+
+        if(patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress') { //VALIDATION TEST DATA - REMOVE NotUsed
+            console.log('it is preparing quote')
+            vm.validationTemplate = vm.templates[3].url;        
+            console.log('vm.validationTemplate : ', vm.validationTemplate)
+        }        
+
+        if(patent.p3sServicesWithFees[0].serviceStatus == 'blank poas provided') { //VALIDATION TEST DATA - REMOVE NotUsed
+            console.log('PoAs Available')
+            vm.validationTemplate = vm.templates[4].url;        
+            console.log('vm.validationTemplate : ', vm.validationTemplate)
+        }                    
 
     }
 
@@ -96,6 +125,18 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
             }
 
+            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'poas available') { 
+                console.log('im in')
+                 validationService.downloadPoa(patent.patentID)
+                 .then(
+                    function(response){
+                        console.log('validation ctrl prepraredQuote response : ', response)
+                        vm.preparedQuote = response;
+                    }
+                )
+
+            }            
+
         }
     )
 
@@ -126,6 +167,12 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
 
 
+
+    }
+
+    function submitPoaDocuments(data) {
+
+        console.log(data)
 
     }
 

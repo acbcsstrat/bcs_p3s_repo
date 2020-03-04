@@ -20,7 +20,10 @@ function transactionLink($document, $interval, $anchorScroll, $state, $location,
 
                         var match = response.filter(function(el){
                             return el.serviceUIs.find(function(item){
-                                return item.patentUI.id == id;
+                                if(item.patentUI) {
+                                    return item.patentUI.id == id;
+                                }
+                                return item.patentId == id;
                             })
                         }).filter(function(item){
                             return item.serviceUIs[0].newType.toLowerCase() === type;

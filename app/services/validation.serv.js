@@ -8,7 +8,8 @@ function validationService($http, $q) {
 		fetchDesignatedStates: fetchDesignatedStates,
 		deleteQuote: deleteQuote,
 		requestQuote: requestQuote,
-		fetchPreparedQuote: fetchPreparedQuote
+		fetchPreparedQuote: fetchPreparedQuote,
+		downloadPoas: downloadPoas
 	}
 
 	function fetchDesignatedStates(id) {
@@ -75,8 +76,6 @@ function validationService($http, $q) {
 	}		
 
 	function deleteQuote(id) {
-		console.log('deletequote, ', id)
-		console.log('validation service deleteQuote: id', id)
 
 		var deferred = $q.defer()
 
@@ -95,6 +94,25 @@ function validationService($http, $q) {
 		return deferred.promise;
 
 	}	
+
+	function downloadPoas(id) {
+		console.log('validaitonservice poas id', id)
+		var deferred = $q.defer()
+
+		$http.get('/rest-validation-downloadPOA/'+id)
+		.then(
+			function(response){
+				console.log('validaitonservice poa response ', response)
+				deferred.resolve(response.data)
+			},
+			function(errResponse) {
+				deferred.reject(errResponse.data)
+			}
+		)
+
+		return deferred.promise;
+
+	}
 
 
 
