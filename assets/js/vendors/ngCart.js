@@ -40,9 +40,40 @@ angular.module('ngCart', ['ngCart.directives'])
             };
         };
 
+        function differentTypes(type) {
+            if(type == 'validation') { //if newly added item is a validation
+                return vm.getCart().items.some(function(cartItems){ //check that there are no nonvalidaitons orders
+                    return cartItems._name !== 'validation';
+                })
+            }
+            if(type !== 'validation') { //if newly added item is a validation
+                return vm.getCart().items.some(function(cartItems){ //check that there are no nonvalidaitons orders
+                    return cartItems._name == 'validation';
+                })
+            }            
+        }
+
         this.addItem = function (id, name, price, quantity, data) {
 
             var inCart = this.getItemById(id);
+
+            if(differentTypes(name)) { 
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.validation-in-basket.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', function($uibModalInstance) {
+                        this.dismissModal = function () {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
+                })
+
+
+                return; 
+            }
 
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/templates/modals/modal.confirm-add-action.tpl.htm',
@@ -51,15 +82,16 @@ angular.module('ngCart', ['ngCart.directives'])
                 controller: ['$uibModalInstance', function($uibModalInstance) {
 
                     this.order = {}
+                    console.log('price modal: ', price)
                     this.order.price = price;
 
                     if(data.p3sServices) {
-
                         this.order.euroAction = data.p3sServices.map(function(item){
                             if(action.serviceType === 'epct') { action.serviceType = 'Euro-PCT'; }
                             return  item.serviceType;
                         })
                     }
+
                     if(data.p3sServicesWithFees) {
                         this.order.euroAction = data.p3sServicesWithFees.map(function(item){
                             if(action.serviceType === 'epct') { action.serviceType = 'Euro-PCT'; }
@@ -266,6 +298,10 @@ angular.module('ngCart', ['ngCart.directives'])
                         if(prop.grantFeeUI) {
                             prop.grantFeeUI.data = null;
                         }
+
+                        if(prop.validationFeeUI) {
+                            prop.validationFeeUI.data = null;
+                        }                        
                     })
 
                 } 

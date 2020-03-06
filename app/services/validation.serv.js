@@ -7,14 +7,36 @@ function validationService($http, $q) {
 	var factory = {
 		fetchDesignatedStates: fetchDesignatedStates,
 		deleteQuote: deleteQuote,
-		fetchPreparedQuote: fetchPreparedQuote
+		requestQuote: requestQuote,
+		fetchPreparedQuote: fetchPreparedQuote,
+		submitPoas: submitPoas
 	}
+
+
+	function submitPoas(formData) {
+
+		var deferred = $q.defer()
+
+		$http.post(ppdomain+'/rest-validation-uploadPOA/', formData)
+		.then(
+			function(response){
+				deferred.resolve(response);
+			},
+			function(errResponse){
+				console.error('Error submitting poas. Error: ', errResponse)
+				deferred.reject(errResponse)
+			}
+		)
+
+		return deferred.promise;
+
+	}	
 
 	function fetchDesignatedStates(id) {
 
 		var deferred = $q.defer()
 
-		$http.get('rest-validation-quote-request/'+id) //VALIDATION TEST DATA 
+		$http.get(ppdomain+'rest-validation-quote-request/'+id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				deferred.resolve(response.data)
@@ -33,9 +55,9 @@ function validationService($http, $q) {
 
 		console.log('validation service: formdData ', formData)
 
-		var deferred = $q.defer()
+		var deferred = $q.defer();
 
-		$http.post('rest-validation-quote-request/', formData) //VALIDATION TEST DATA 
+		$http.post(ppdomain+'rest-validation-quote-request/', formData) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				console.log('validation service success response: ', response)
@@ -55,9 +77,9 @@ function validationService($http, $q) {
 
 		console.log('validation service fetchPreparedQuote: id', id)
 
-		var deferred = $q.defer()
+		var deferred = $q.defer();
 
-		$http.get('rest-validation-quote/'+ id) //VALIDATION TEST DATA 
+		$http.get(ppdomain+'rest-validation-quote/'+ id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				console.log('validation service fetchPreparedQuote success response: ', response)
@@ -74,10 +96,8 @@ function validationService($http, $q) {
 	}		
 
 	function deleteQuote(id) {
-		console.log('deletequote, ', id)
-		console.log('validation service deleteQuote: id', id)
 
-		var deferred = $q.defer()
+		var deferred = $q.defer();
 
 		$http.delete('rest-validation-quote/'+ id) //VALIDATION TEST DATA 
 		.then(
@@ -94,8 +114,6 @@ function validationService($http, $q) {
 		return deferred.promise;
 
 	}	
-
-
 
 	return factory;
 
