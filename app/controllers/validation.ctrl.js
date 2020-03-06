@@ -18,6 +18,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         { name: 'quoteProvided', url: 'app/templates/validation/validation-quote-provided.tpl.htm'},
         { name: 'quoteProvided', url: 'app/templates/validation/validation-payment-in-progress.tpl.htm'},
         { name: 'poasProvided', url: 'app/templates/validation/validation-poa-available.tpl.htm'},
+        { name: 'poasProvided', url: 'app/templates/validation/validation-nopoas-required.tpl.htm'},
     ];
     $scope.formData = {};
     var validationAction;
@@ -33,24 +34,12 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         }
     }
 
-
-    // vm.poaStates = [
-    //     {
-    //         stateCode: 'UK',
-    //         stateName: 'United Kingdom'
-
-    //     },
-    //     {
-    //         stateCode: 'BA',
-    //         stateName: 'Bosnia'
-
-    //     }
-    // ]
-
     function init() {
 
+        if(patent.p3sServicesWithFees[0].validationFeeUI !== null) {
+            allState = patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.concat(patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
+        }
     	vm.activeTab = 0;
-        console.log('patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() INIT : ', patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
 		if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
             console.log('validations ctrl should display validations available tab')
     		vm.validationTemplate = vm.templates[0].url;        
@@ -76,8 +65,16 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             console.log('vm.validationTemplate : ', vm.validationTemplate)
         }        
 
-        if(patent.p3sServicesWithFees[0].serviceStatus == 'Blank PoAs provided') { //VALIDATION TEST DATA - REMOVE NotUsed
-            vm.validationTemplate = vm.templates[4].url;        
+        if(patent.p3sServicesWithFees[0].serviceStatus == 'Blank PoAs provided' || patent.p3sServicesWithFees[0].serviceStatus == 'Awaiting PoAs') { //VALIDATION TEST DATA - REMOVE NotUsed
+
+            var noPoasNeeded = allState.every(function(item){
+                return item.poaNeeded === false;
+            })            
+            if(noPoasNeeded) {
+                vm.validationTemplate = vm.templates[5].url;  
+            } else {
+                vm.validationTemplate = vm.templates[4].url;        
+            }
             console.log('vm.validationTemplate : ', vm.validationTemplate)
         }                    
 
@@ -89,10 +86,10 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     .then(
         function(){
             $scope.isChecked = true;
-
             vm.patent = patent; 
+
             if(patent.p3sServicesWithFees[0].validationFeeUI !== null) {
-                patent.p3sServicesWithFees[0].validationFeeUI.allValidationStates = patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.concat(patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
+                allState = patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.concat(patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
             }
             if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
                 validationService.fetchDesignatedStates(patent.patentID)
@@ -106,7 +103,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                         $scope.formData.designatedStates = response.designatedStates;
                         $scope.formData.extensionStates = response.extensionStates;
                         $scope.formData.validationStates = response.validationStates;
-                        // allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates)
+                        allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates);
                         console.log('$scope.formData response: ', $scope.formData)
                     }
                 )
@@ -137,9 +134,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                 $scope.formData.extensionStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates;
                 $scope.formData.validationStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.validationStates;   
 
-                $scope.formData.designatedStates.map(addSignedPoaDoc)
-                $scope.formData.extensionStates.map(addSignedPoaDoc)
-                $scope.formData.validationStates.map(addSignedPoaDoc)
             }
 
             console.log('IASHFDKAJSDFKAJSD', $scope.formData)
@@ -174,12 +168,21 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     }
 
+    function removeCost(item) {
+        delete item.validationCost_EUR;
+        delete item.validationCost_USD;
+        return item;
+    }
+
     function submitPoaDocuments(data) {
         
+        data.designatedStates.map
+
+
         $scope.formData.patentID = patent.patentID;
-        $scope.formData.designatedStates = data.designatedStates;
-        $scope.formData.extensionStates = data.extensionStates;
-        $scope.formData.validationStates = data.validationStates;
+        $scope.formData.designatedStates = data.designatedStates.map(removeCost);
+        $scope.formData.extensionStates = data.extensionStates.map(removeCost);
+        $scope.formData.validationStates = data.validationStates.map(removeCost);
 
         console.log('$scope.formData : ', $scope.formData)
 
