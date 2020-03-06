@@ -19,7 +19,8 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
     }
 
   	function rowSelect(event, transaction){
-  		$state.go('transactions.modal.transaction-item', {}, {notify: false})
+  		console.log(event, transaction)
+  		$state.go('transactions.modal.transaction-item', {transHref: transaction.id}, {notify: false})
   	};
 
 	$q.all([transactionService.fetchCurrentTransactions(), transactionService.fetchTransactionHistory()])
@@ -30,19 +31,12 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 				data.transTypeUI = data.historic === true ? 'Historic' : 'Current';
 				data.actionProgress = currentTransactionsService.actionProgress(o.latestTransStatus);
 				data.serviceUIs.map(function(o, i){
-					o.appAndType = o.patentUI.ep_ApplicationNumber || o.patentApplicationNumber + ' (' + o.newType +')';
-					if(o.patentUI) {				
-						o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
-					} else {
-						o.patentUI = {};
-						o.patentUI.clientRef = o.clientRef;
-						o.patentUI.ep_ApplicationNumber = o.patentApplicationNumber;
-						o.appAndType = o.patentUI.ep_ApplicationNumber  + ' (' + o.newType +')';
-					}					
+					o.appAndType = o.patentUI.ep_ApplicationNumber || o.patentApplicationNumber + ' (' + o.newType +')';		
 				})
 				return data;
 			})
 			vm.transactionsLoaded = true;
+			console.log(transactions)
 
 		}
 	)

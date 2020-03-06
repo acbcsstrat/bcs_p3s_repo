@@ -14,7 +14,7 @@
                 </md-chips>
                 <div class="m-r-lg">
                     <div class="input-group m-r-sm">
-                        <input type="text" class="form-control pill-radius" name="portfolioSearch" data-ng-model="searchPortfolio" placeholder="Search Portfolio..." autocomplete="off">  
+                        <input type="text" class="form-control pill-radius" name="portfolioSearch" data-ng-model="searchTransactions" placeholder="Search Portfolio..." autocomplete="off">  
                         <div class="input-group-append">
                             <i class="d-flex input-group-text pill-radius fa fa-search"></i>
                         </div>
@@ -124,7 +124,7 @@
 				</tr>
 			</thead>
 			<tbody class="sticky-tbody">
-			    <tr data-ng-repeat="transaction in filtered=($ctrl.transactions | filter:filterByPropertiesMatchingAND | filter:searchPortfolio) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, transaction); $ctrl.select(transaction.transactionID)"  class="t-data__row t-data__row--select" data-ng-class="{active: transaction.id == $ctrl.selected}">
+			    <tr data-ng-repeat="transaction in filtered=($ctrl.transactions | filter:filterByPropertiesMatchingAND | filter:searchTransactions) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, transaction); $ctrl.select(transaction.transactionID)"  class="t-data__row t-data__row--select" data-ng-class="{active: transaction.id == $ctrl.selected}">
 			        <td class="t-data__td sticky-td">
 						<a class="t-data__a" data-ui-sref="transactions.modal.transaction-item({transId: transaction.id})">{{transaction.p3S_TransRef}}</a>
 			        </td>
@@ -150,7 +150,7 @@
 						<span data-ng-if="transaction.serviceUIs.length === 1" data-ng-repeat="patent in transaction.serviceUIs">
 							<span data-ng-if="patent.patentUI.ep_ApplicationNumber.length">
 								<span class="txt-grey">
-									{{patent.patentUI.ep_ApplicationNumber}} {{patent.serviceType}}
+									{{patent.serviceUIs.appAndType }}
 								</span>
 							</span>
 						</span>						

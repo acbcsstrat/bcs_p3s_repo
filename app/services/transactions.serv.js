@@ -10,10 +10,33 @@ function transactionService($http, $q) {
 	var factory = {
 		fetchCurrentTransactions:fetchCurrentTransactions,
 		fetchTransactionHistory: fetchTransactionHistory,
+		fetchAllTransactions: fetchAllTransactions,
 		actionProgress: actionProgress
 	};
 
 	return factory;
+
+	function fetchAllTransactions() {
+
+
+		console.log(this)
+
+		var deferred = $q.defer();
+
+		$q.all([this.fetchCurrentTransactions(), this.fetchTransactionHistory()])
+		.then(
+			function(response){
+				deferred.resolve(response[0].concat(response[1]));
+			},
+			function(errResponse) {
+				console.log('Error fetching all transactions. Error: ', errResponse);
+			}
+		)
+
+		return deferred.promise;
+
+	}
+
 
 	function fetchCurrentTransactions() {
 
@@ -80,7 +103,12 @@ function transactionService($http, $q) {
 	                	el.epctUIs.map(function(o){ 
 	                		o.newType = 'Euro-PCT';
 	                	})
-                	}                	
+                	}
+                	if(el.validationUIs.length) {
+	                	el.validationUIs.map(function(o){ 
+	                		o.newType = 'Validation';
+	                	})
+                	}                        	  	
                     el.serviceUIs = [];
                     el.serviceUIs = el.serviceUIs.concat(el.renewalUIs, el.grantUIs, el.epctUIs)
                     return el;

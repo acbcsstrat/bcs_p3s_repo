@@ -1,8 +1,8 @@
-angular.module('ppApp').controller('currentTransactionItemCtrl', currentTransactionItemCtrl);
+angular.module('ppApp').controller('transactionItemCtrl', transactionItemCtrl);
 
-currentTransactionItemCtrl.$inject = ['currentTransactionItem', 'currentTransactionsService', '$scope'];
+transactionItemCtrl.$inject = ['transactionItem', 'transactionService', '$scope'];
 
-function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsService, $scope) {
+function transactionItemCtrl(transactionItem, transactionService, $scope) {
 
 	var vm = this;
 
@@ -19,11 +19,11 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 		}
 	});
 
-	var currTransStatus = currentTransactionItem.latestTransStatus;
-	vm.currentTransactionItem = currentTransactionItem;
+	var currTransStatus = transactionItem.latestTransStatus;
+	vm.transactionItem = transactionItem;
 
-	for(var i = 0; i < vm.currentTransactionItem.serviceUIs.length; i++) {
-		var item = vm.currentTransactionItem.serviceUIs[i];
+	for(var i = 0; i < vm.transactionItem.serviceUIs.length; i++) {
+		var item = vm.transactionItem.serviceUIs[i];
 		if(item.renewalFeeUI) { 
 			item.serviceType = 'renewal'; 
 			item.serviceFeeUI = item.renewalFeeUI; 
@@ -99,8 +99,8 @@ function currentTransactionItemCtrl(currentTransactionItem, currentTransactionsS
 	];
 
 	vm.$onInit = function() {
-
-		switch(currentTransactionItem.latestTransStatus) { //add current transaction progress value to scope
+		console.log('hello', transactionItem)
+		switch(transactionItem.latestTransStatus) { //add current transaction progress value to scope
 
 			case 'Initiated':
 				vm.transactionProgress = 0;
