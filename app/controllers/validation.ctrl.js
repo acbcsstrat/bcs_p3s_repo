@@ -175,22 +175,31 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     }
 
     function submitPoaDocuments(data) {
-        
+        console.log('data entry')
+        var formData = new FormData();
+        var config = { headers: {'Content-Type': 'multipart/form-data'} };
+        formData.append('patentID', patent.patentID);
+        formData.append('designatedStates', data.designatedStates.map(removeCost))
+        formData.append('extensionStates', data.extensionStates.map(removeCost))
+        formData.append('validationStates', data.validationStates.map(removeCost))
+        // $scope.formData.patentID = patent.patentID;
+        // $scope.formData.designatedStates = JSON.parse(angular.toJson(data.designatedStates.map(removeCost)));
+        // $scope.formData.extensionStates = JSON.parse(angular.toJson(data.extensionStates.map(removeCost)));
+        // $scope.formData.validationStates = JSON.parse(angular.toJson(data.validationStates.map(removeCost)));
 
-        $scope.formData.patentID = patent.patentID;
-        $scope.formData.designatedStates = JSON.parse(angular.toJson(data.designatedStates.map(removeCost)));
-        $scope.formData.extensionStates = JSON.parse(angular.toJson(data.extensionStates.map(removeCost)));
-        $scope.formData.validationStates = JSON.parse(angular.toJson(data.validationStates.map(removeCost)));
+        console.log('$scope.formData : ', formData)
 
-        console.log('$scope.formData : ', $scope.formData)
+        for(var pair of formData.entries()) {
+           console.log(pair[0]+ ', '+ pair[1]); 
+        }
 
-        validationService.submitPoas($scope.formData)
+        validationService.submitPoas(formData, config)
         .then(
             function(){
-                alert('POAS SUBMITTED')
+                console.log('POAS SUBMITTED')
             },
             function(){
-                alert('ERROR SUBMITTING POAS')
+                console.log('ERROR SUBMITTING POAS')
             }
         )
 
