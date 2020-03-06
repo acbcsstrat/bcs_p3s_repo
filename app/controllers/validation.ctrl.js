@@ -176,13 +176,11 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     function submitPoaDocuments(data) {
         
-        data.designatedStates.map
-
 
         $scope.formData.patentID = patent.patentID;
-        $scope.formData.designatedStates = data.designatedStates.map(removeCost);
-        $scope.formData.extensionStates = data.extensionStates.map(removeCost);
-        $scope.formData.validationStates = data.validationStates.map(removeCost);
+        $scope.formData.designatedStates = JSON.parse(angular.toJson(data.designatedStates.map(removeCost)));
+        $scope.formData.extensionStates = JSON.parse(angular.toJson(data.extensionStates.map(removeCost)));
+        $scope.formData.validationStates = JSON.parse(angular.toJson(data.validationStates.map(removeCost)));
 
         console.log('$scope.formData : ', $scope.formData)
 
