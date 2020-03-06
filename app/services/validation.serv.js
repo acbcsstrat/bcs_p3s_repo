@@ -17,7 +17,7 @@ function validationService($http, $q) {
 
 		var deferred = $q.defer()
 
-		$http.post(ppdomain+'/rest-validation-uploadPOA/', formData)
+		$http.post(ppdomain+'rest-validation-uploadPOA/', formData)
 		.then(
 			function(response){
 				deferred.resolve(response);
