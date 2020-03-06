@@ -34,18 +34,18 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     }
 
 
-    vm.poaStates = [
-        {
-            stateCode: 'UK',
-            stateName: 'United Kingdom'
+    // vm.poaStates = [
+    //     {
+    //         stateCode: 'UK',
+    //         stateName: 'United Kingdom'
 
-        },
-        {
-            stateCode: 'BA',
-            stateName: 'Bosnia'
+    //     },
+    //     {
+    //         stateCode: 'BA',
+    //         stateName: 'Bosnia'
 
-        }
-    ]
+    //     }
+    // ]
 
     function init() {
 
@@ -77,7 +77,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         }        
 
         if(patent.p3sServicesWithFees[0].serviceStatus == 'Blank PoAs provided') { //VALIDATION TEST DATA - REMOVE NotUsed
-            console.log('PoAs Available')
             vm.validationTemplate = vm.templates[4].url;        
             console.log('vm.validationTemplate : ', vm.validationTemplate)
         }                    
@@ -92,8 +91,9 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             $scope.isChecked = true;
 
             vm.patent = patent; 
-            console.log(vm.patent)
-
+            if(patent.p3sServicesWithFees[0].validationFeeUI !== null) {
+                patent.p3sServicesWithFees[0].validationFeeUI.allValidationStates = patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.concat(patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
+            }
             if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
                 validationService.fetchDesignatedStates(patent.patentID)
                 .then(
@@ -106,25 +106,43 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                         $scope.formData.designatedStates = response.designatedStates;
                         $scope.formData.extensionStates = response.extensionStates;
                         $scope.formData.validationStates = response.validationStates;
-                        allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates)
+                        // allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates)
+                        console.log('$scope.formData response: ', $scope.formData)
                     }
                 )
             }
 
-
-            console.log('patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() promise: ', patent.p3sServicesWithFees[0].serviceStatus.toLowerCase())
-
             if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'preparing quote') { 
                 console.log('im in')
-                 validationService.fetchPreparedQuote(patent.patentID)
-                 .then(
+                validationService.fetchPreparedQuote(patent.patentID)
+                .then(
                     function(response){
                         console.log('validation ctrl prepraredQuote response : ', response)
                         vm.preparedQuote = response;
                     }
                 )
 
-            }      
+            }
+
+            function addSignedPoaDoc(item) {
+                console.log('HERE WE GO')
+                item.signedPoaDoc = '';
+                return item;
+            }
+
+            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas provided') {
+                console.log('we are in')
+                console.log('we are in patent', vm.patent)
+                $scope.formData.designatedStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates;
+                $scope.formData.extensionStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates;
+                $scope.formData.validationStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.validationStates;   
+
+                $scope.formData.designatedStates.map(addSignedPoaDoc)
+                $scope.formData.extensionStates.map(addSignedPoaDoc)
+                $scope.formData.validationStates.map(addSignedPoaDoc)
+            }
+
+            console.log('IASHFDKAJSDFKAJSD', $scope.formData)
 
         }
     )
@@ -154,14 +172,28 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             }]
         });
 
-
-
-
     }
 
     function submitPoaDocuments(data) {
+        
+        $scope.formData.patentID = patent.patentID;
+        $scope.formData.designatedStates = data.designatedStates;
+        $scope.formData.extensionStates = data.extensionStates;
+        $scope.formData.validationStates = data.validationStates;
 
-        console.log(data)
+        console.log('$scope.formData : ', $scope.formData)
+
+        validationService.submitPoas($scope.formData)
+        .then(
+            function(){
+                alert('POAS SUBMITTED')
+            },
+            function(){
+                alert('ERROR SUBMITTING POAS')
+            }
+        )
+
+
 
     }
 

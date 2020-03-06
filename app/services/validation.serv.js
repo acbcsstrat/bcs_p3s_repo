@@ -8,8 +8,29 @@ function validationService($http, $q) {
 		fetchDesignatedStates: fetchDesignatedStates,
 		deleteQuote: deleteQuote,
 		requestQuote: requestQuote,
-		fetchPreparedQuote: fetchPreparedQuote
+		fetchPreparedQuote: fetchPreparedQuote,
+		submitPoas: submitPoas
 	}
+
+
+	function submitPoas(formData) {
+
+		var deferred = $q.defer()
+
+		$http.post(ppdomain+'/rest-validation-uploadPOA/', formData)
+		.then(
+			function(response){
+				deferred.resolve(response);
+			},
+			function(errResponse){
+				console.error('Error submitting poas. Error: ', errResponse)
+				deferred.reject(errResponse)
+			}
+		)
+
+		return deferred.promise;
+
+	}	
 
 	function fetchDesignatedStates(id) {
 
