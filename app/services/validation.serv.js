@@ -15,7 +15,12 @@ function validationService($http, $q) {
 
 	function submitPoas(formData, config) {
 
-		var deferred = $q.defer()
+
+		for (var pair of formData.entries()) {
+		    console.log(pair[0]+ ', ' + pair[1]); 
+		}
+
+		var deferred = $q.defer();
 		console.log(config)
 		$http.post(ppdomain+'rest-validation-uploadPOA/', formData, config)
 		.then(

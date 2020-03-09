@@ -179,14 +179,14 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         var formData = new FormData();
 
-        var designatedMap = data.designatedStates.map(removeCost);
-        var extensionMap = data.extensionStates.map(removeCost);
-        var validationMap = data.validationStates.map(removeCost);
+        // var designatedMap = data.designatedStates.map(removeCost);
+        // var extensionMap = data.extensionStates.map(removeCost);
+        // var validationMap = data.validationStates.map(removeCost);
 
         formData.append('patentID', patent.patentID);
-        formData.append('designatedStates', designatedMap);
-        formData.append('extensionStates', extensionMap);
-        formData.append('validationStates', validationMap);
+        formData.append('designatedStates', data.designatedStates);
+        formData.append('extensionStates', data.extensionStates);
+        formData.append('validationStates', data.validationStates);
 
         var config = {
             transformRequest: angular.identity,
