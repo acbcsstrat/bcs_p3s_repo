@@ -171,6 +171,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function removeCost(item) {
         delete item.validationCost_EUR;
         delete item.validationCost_USD;
+        if(!item.signedPoaDoc) { item.signedPoaDoc = null; }
         return item;
     }
 
@@ -201,7 +202,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
 
         console.log('$scope.formData : ', formData)
-
+ 
         // for(var pair of formData.entries()) {
         //    console.log(pair[0]+ ', '+ pair[1]); 
         // }
