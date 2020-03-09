@@ -182,16 +182,21 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
         var validationMap = data.validationStates.map(removeCost);
-        
+
         formData.append('patentID', patent.patentID);
         formData.append('designatedStates', designatedMap);
         formData.append('extensionStates', extensionMap);
         formData.append('validationStates', validationMap);
 
+        var config = {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }
+
 
         console.log('$scope.formData : ', formData)
 
-        validationService.submitPoas(formData)
+        validationService.submitPoas(formData, config)
         .then(
             function(){
                 console.log('POAS SUBMITTED')
