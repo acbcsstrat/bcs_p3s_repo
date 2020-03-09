@@ -176,16 +176,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     }
 
     function submitPoaDocuments(data) {
-        console.log('data entry')
+
         var formData = {};
-        // var config = {
-        //     // transformRequest: angular.identity,
-        //     headers: {
-        //         'Content-Type': undefined
-        //     }
-
-        // }; 
-
 
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
@@ -195,27 +187,41 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         formData.designatedStates= designatedMap;
         formData.extensionStates = extensionMap;
         formData.validationStates = validationMap;
-        // $scope.formData.patentID = patent.patentID;
-        // $scope.formData.designatedStates = JSON.parse(angular.toJson(data.designatedStates.map(removeCost)));
-        // $scope.formData.extensionStates = JSON.parse(angular.toJson(data.extensionStates.map(removeCost)));
-        // $scope.formData.validationStates = JSON.parse(angular.toJson(data.validationStates.map(removeCost)));
 
 
         console.log('$scope.formData : ', formData)
- 
-        // for(var pair of formData.entries()) {
-        //    console.log(pair[0]+ ', '+ pair[1]); 
-        // }
-        // console.log('$scope.formData : ', $scope.formData)
-
 
         validationService.submitPoas(formData)
         .then(
             function(){
                 console.log('POAS SUBMITTED')
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.validation-poas-submitted.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
+                });                
             },
-            function(){
-                console.log('ERROR SUBMITTING POAS')
+            function(errResponse){
+                console.error('Error submitting POAS. Error: ', errResponse)
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.validation-poas-submitted-error.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
+                });                
             }
         )
 
