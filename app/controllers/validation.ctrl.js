@@ -176,11 +176,11 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     function submitPoaDocuments(data) {
         console.log('data entry')
-        var formData = new FormData();
+        var formData = {};
         var config = {
-            transformRequest: angular.identity,
+            // transformRequest: angular.identity,
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': undefined
             }
 
         }; 
@@ -189,11 +189,11 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
         var validationMap = data.validationStates.map(removeCost);
-
-        formData.append('patentID', patent.patentID);
-        formData.append('designatedStates', designatedMap)
-        formData.append('extensionStates', extensionMap)
-        formData.append('validationStates', validationMap)
+        
+        formData.patentID = patent.patentID;
+        formData.designatedStates= designatedMap;
+        formData.extensionStates = extensionMap;
+        formData.validationStates = validationMap;
         // $scope.formData.patentID = patent.patentID;
         // $scope.formData.designatedStates = JSON.parse(angular.toJson(data.designatedStates.map(removeCost)));
         // $scope.formData.extensionStates = JSON.parse(angular.toJson(data.extensionStates.map(removeCost)));
@@ -202,9 +202,9 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         console.log('$scope.formData : ', formData)
 
-        for(var pair of formData.entries()) {
-           console.log(pair[0]+ ', '+ pair[1]); 
-        }
+        // for(var pair of formData.entries()) {
+        //    console.log(pair[0]+ ', '+ pair[1]); 
+        // }
         // console.log('$scope.formData : ', $scope.formData)
 
 
