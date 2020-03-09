@@ -171,20 +171,20 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function removeCost(item) {
         delete item.validationCost_EUR;
         delete item.validationCost_USD;
-        if(!item.signedPoaDoc) { item.signedPoaDoc = null; }
+        if(!item.signedPoaDoc) { item.signedPoaDoc = null; };
         return item;
     }
 
     function submitPoaDocuments(data) {
         console.log('data entry')
         var formData = {};
-        var config = {
-            // transformRequest: angular.identity,
-            headers: {
-                'Content-Type': undefined
-            }
+        // var config = {
+        //     // transformRequest: angular.identity,
+        //     headers: {
+        //         'Content-Type': undefined
+        //     }
 
-        }; 
+        // }; 
 
 
         var designatedMap = data.designatedStates.map(removeCost);
@@ -209,7 +209,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         // console.log('$scope.formData : ', $scope.formData)
 
 
-        validationService.submitPoas(formData, config)
+        validationService.submitPoas(formData)
         .then(
             function(){
                 console.log('POAS SUBMITTED')
