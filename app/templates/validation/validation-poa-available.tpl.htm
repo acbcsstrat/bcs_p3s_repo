@@ -26,7 +26,7 @@
 		<form name="validationForm" novalidate>
 			<!-- <input type="file" name="testFile" class="form-control-file font-h4" data-ng-model="formData.testFile" select-ng-files accept="application/pdf" required> -->
 			<div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.length" data-ng-init="formData.designatedStates">
-				<div data-ng-repeat="states in formData.designatedStates" data-ng-init="formData.designatedStates.states; states.signedPoaDoc" data-ng-if="states.poaNeeded"> 
+				<div data-ng-repeat="states in formData.designatedStates" data-ng-if="states.poaNeeded"> 
 					<div class="border-grey-xs--btm m-b-md m-t-md"></div>
 		            <div class="form-group row">
 		                <label for="{{states.stateName}}" class="col-xl-4 col-form-label font-weight-medium font-h4">{{states.stateName}}: </label>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates.length" data-ng-init="formData.extensionStates">
-				<div data-ng-repeat="states in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates" data-ng-init="states.signedPoaDoc" data-ng-if="states.poaNeeded"> 
+				<div data-ng-repeat="states in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates" data-ng-if="states.poaNeeded"> 
 					<div class="border-grey-xs--btm m-b-md m-t-md"></div>
 		            <div class="form-group row">
 		                <label for="{{states.stateName}}" class="col-xl-4 col-form-label font-weight-medium font-h4">{{states.stateName}}: </label>
@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.validationStates.length" data-ng-init="formData.validationStates">
-				<div data-ng-repeat="states in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.validationStates" data-ng-init="states.signedPoaDoc"	 data-ng-if="states.poaNeeded"> 
+				<div data-ng-repeat="states in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.validationStates" data-ng-if="states.poaNeeded"> 
 					<div class="border-grey-xs--btm m-b-md m-t-md"></div>
 		            <div class="form-group row">
 		                <label for="{{states.stateName}}" class="col-xl-4 col-form-label font-weight-medium font-h4">{{states.stateName}}: </label>
