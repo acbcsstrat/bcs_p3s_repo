@@ -207,18 +207,32 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
         var validationMap = data.validationStates.map(removeCost);
+        var allStatesMapped = designatedMap.concat(extensionMap, validationMap)
 
+        var filtered = allStatesMapped.filter(function(item){
+            if(item.signedPoaDoc == null) { return false; }
+            return true;
+        })
+
+        console.log('allStatesMapped : ', allStatesMapped)
+        console.log('filtered : ', filtered)
+
+        formData.append('patentID', patent.patentID);
+
+        for(var i = 0; i < filtered.length; i++) {
+            formData.append(filtered[i].stateCode, filtered[i].signedPoaDoc)
+        }
         // formData.patentID = patent.patentID;
         // formData.testFile = data.files.testFile;
         // formData.designatedStates = data.designatedStates;
         // formData.extensionStates = data.extensionStates;
         // formData.validationStates = data.validationStates;
 
-        formData.append('patentID', patent.patentID);
+        
         // formData.append('testFile', data.testFile);
-        formData.append('designatedStates', designatedMap);
-        formData.append('extensionStates', extensionMap);
-        formData.append('validationStates', validationMap);
+        // formData.append('designatedStates', designatedMap);
+        // formData.append('extensionStates', extensionMap);
+        // formData.append('validationStates', validationMap);
 
         // var config = {
         //     transformRequest: angular.identity,
