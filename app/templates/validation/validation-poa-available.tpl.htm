@@ -24,7 +24,7 @@
 		<h4 class="font-weight-medium font-h4  m-b-xs">PoA documents | Upload</h4>
 		<p>Upload all Power of Attorney documents for the states listed below:</p>
 		<form name="validationForm" novalidate>
-			<input type="file" name="testFile" class="form-control-file font-h4" data-ng-model="formData.testFile" select-ng-files accept="application/pdf" required>
+			<!-- <input type="file" name="testFile" class="form-control-file font-h4" data-ng-model="formData.testFile" select-ng-files accept="application/pdf" required> -->
 			<div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.length" data-ng-init="formData.designatedStates">
 				<div data-ng-repeat="states in formData.designatedStates" data-ng-init="formData.designatedStates.states; states.signedPoaDoc" data-ng-if="states.poaNeeded"> 
 					<div class="border-grey-xs--btm m-b-md m-t-md"></div>

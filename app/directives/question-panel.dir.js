@@ -331,6 +331,8 @@ angular.module("ppApp").directive("selectNgFiles", function() { //if files to be
                 });
             });
             ngModel.$render = function () {
+                console.log('elem[0].files : ', elem[0].files)
+                console.log('elem[0].files[0] : ', elem[0].files[0])
                 ngModel.$setViewValue(elem[0].files[0]);
             };
             function validFile(bool) {

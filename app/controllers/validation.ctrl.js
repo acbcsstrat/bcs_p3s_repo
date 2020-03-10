@@ -201,17 +201,24 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     function submitPoaDocuments(data) {
 
-        var formData = {};
+        var formData = new FormData();
+        var config = { headers: {'Content-Type': undefined} };
 
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
         var validationMap = data.validationStates.map(removeCost);
 
-        formData.patentID = patent.patentID;
-        formData.testFile = data.testFile;
-        formData.designatedStates = data.designatedStates;
-        formData.extensionStates = data.extensionStates;
-        formData.validationStates = data.validationStates;
+        // formData.patentID = patent.patentID;
+        // formData.testFile = data.files.testFile;
+        // formData.designatedStates = data.designatedStates;
+        // formData.extensionStates = data.extensionStates;
+        // formData.validationStates = data.validationStates;
+
+        formData.append('patentID', patent.patentID);
+        // formData.append('testFile', data.testFile);
+        formData.append('designatedStates', designatedMap);
+        formData.append('extensionStates', extensionMap);
+        formData.append('validationStates', validationMap);
 
         // var config = {
         //     transformRequest: angular.identity,
@@ -221,7 +228,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         console.log('$scope.formData : ', formData)
 
-        validationService.submitPoas(formData)
+        validationService.submitPoas(formData, config)
         .then(
             function(){
                 console.log('POAS SUBMITTED')
