@@ -14,7 +14,7 @@ require("popper.js/dist/popper.min.js");
 require("bootstrap/dist/js/bootstrap.min.js");
 require("angular-cookies/angular-cookies.min.js");
 require("angular-animate/angular-animate.min.js");
-require("angular-animate/angular-animate.min.js");
+require("ng-file-upload/dist/ng-file-upload-all.min.js");
 require("angular-aria/angular-aria.min.js");
 require("angular-material/angular-material.min.js");
 require("angular-ui-bootstrap/dist/ui-bootstrap-tpls.js");

@@ -306,34 +306,50 @@ angular.module("ppApp").directive("ngUploadChange",function(){
 //   }
 // });
 
-angular.module("ppApp").directive("selectNgFiles", function() { //if files to be uploaded vary in future, add condition to check type or create new directive
+angular.module("ppApp").directive("selectMultiNgFiles", function() {
   return {
     require: "ngModel",
     link: function postLink(scope,elem,attrs,ngModel) {
-       var validFormats = ['pdf'];
-        elem.bind('change', function () {
-            validFile(false);
-            scope.$apply(function () {
-                ngModel.$render();
-            });
-        });
-        ngModel.$render = function () {
-            ngModel.$setViewValue(elem[0].files[0]);
-        };
-        function validFile(bool) {
-            ngModel.$setValidity('pdfIncorrect', bool);
-        }
-        ngModel.$parsers.push(function(value) {
-            var ext = value.name.substr(value.name.lastIndexOf('.')+1);
-            if(ext=='') return;
-            if(validFormats.indexOf(ext) == -1){
-                return value;
-            }
-            validFile(true);
-            return value;
-        });
+      elem.on("change", function(e) {
+        var files = elem[0].files;
+        console.log(files)
+        ngModel.$setViewValue(files);
+      })
     }
   }
+});
+
+angular.module("ppApp").directive("selectNgFiles", function() { //if files to be uploaded vary in future, add condition to check type or create new directive
+    return {
+        require: "ngModel",
+        link: function postLink(scope,elem,attrs,ngModel) {
+            var validFormats = ['pdf'];
+            elem.bind('change', function () {
+                validFile(false);
+                scope.$apply(function () {
+                    ngModel.$render();
+                });
+            });
+            ngModel.$render = function () {
+                ngModel.$setViewValue(elem[0].files[0]);
+            };
+            function validFile(bool) {
+                ngModel.$setValidity('pdfIncorrect', bool);
+            }
+            ngModel.$parsers.push(function(value) {
+              console.log(value)
+                var ext = value.name.substr(value.name.lastIndexOf('.')+1);
+                console.log('ext : ', ext)
+                if(ext=='') return;
+                if(validFormats.indexOf(ext) == -1){
+                    return value;
+                }
+                console.log('trueeeeeeee')
+                validFile(true);
+                return value;
+            });
+        }
+    }
 });
 
 angular.module('ppApp').directive('anchorDisable', function() {

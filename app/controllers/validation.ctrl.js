@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('validationCtrl', validationCtrl);
 
-validationCtrl.$inject = ['patent', '$scope', '$rootScope', '$uibModal', 'validationService', '$state', '$timeout', 'activeTabService'];
+validationCtrl.$inject = ['patent', '$scope', '$rootScope', '$uibModal', 'validationService', '$state', '$timeout', 'activeTabService', 'Upload'];
 
-function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService, $state, $timeout, activeTabService) {
+function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService, $state, $timeout, activeTabService, Upload) {
 
 	var vm = this;
 
@@ -175,28 +175,53 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         return item;
     }
 
+    // function submitPoaDocuments(files) {
+    //     console.log('files : ',files)
+    //     if (files) {
+    //         // for (var i = 0; i < files.length; i++) {
+
+    //             file.upload = Upload.upload({
+    //                 url: ppdomain+'rest-validation-uploadPOA/',
+    //                 data: {file: files},
+    //             });
+
+    //             file.upload.then(function (response) {
+    //                 $timeout(function () {
+    //                     console.log('HELLOOOOO ', response)
+    //                     file.result = response.data;
+    //                 });
+    //             }, function (response) {
+    //                 if (response.status > 0)
+    //                     $scope.errorMsg = response.status + ': ' + response.data;
+    //             });
+
+            
+    //     }
+    // }    
+
     function submitPoaDocuments(data) {
 
-        var formData = new FormData();
+        var formData = {};
 
-        // var designatedMap = data.designatedStates.map(removeCost);
-        // var extensionMap = data.extensionStates.map(removeCost);
-        // var validationMap = data.validationStates.map(removeCost);
+        var designatedMap = data.designatedStates.map(removeCost);
+        var extensionMap = data.extensionStates.map(removeCost);
+        var validationMap = data.validationStates.map(removeCost);
 
-        formData.append('patentID', patent.patentID);
-        formData.append('designatedStates', data.designatedStates);
-        formData.append('extensionStates', data.extensionStates);
-        formData.append('validationStates', data.validationStates);
+        formData.patentID = patent.patentID;
+        formData.testFile = data.testFile;
+        formData.designatedStates = data.designatedStates;
+        formData.extensionStates = data.extensionStates;
+        formData.validationStates = data.validationStates;
 
-        var config = {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }
+        // var config = {
+        //     transformRequest: angular.identity,
+        //     headers: {'Content-Type': undefined}
+        // }
 
 
         console.log('$scope.formData : ', formData)
 
-        validationService.submitPoas(formData, config)
+        validationService.submitPoas(formData)
         .then(
             function(){
                 console.log('POAS SUBMITTED')

@@ -13,16 +13,16 @@ function validationService($http, $q) {
 	}
 
 
-	function submitPoas(formData, config) {
+	function submitPoas(formData) {
 
 
-		for (var pair of formData.entries()) {
-		    console.log(pair[0]+ ', ' + pair[1]); 
-		}
+		// for (var pair of formData.entries()) {
+		//     console.log(pair[0]+ ', ' + pair[1]); 
+		// }
 
 		var deferred = $q.defer();
-		console.log(config)
-		$http.post(ppdomain+'rest-validation-uploadPOA/', formData, config)
+		// console.log(config)
+		$http.post(ppdomain+'rest-validation-uploadPOA/', formData)
 		.then(
 			function(response){
 				deferred.resolve(response);
