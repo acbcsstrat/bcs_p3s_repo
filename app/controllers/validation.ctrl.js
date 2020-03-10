@@ -202,10 +202,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function submitPoaDocuments(data) {
 
         var formData = {};
-        // var config = { 
-        //     transformRequest: angular.identity,
-        //     headers: {'Content-Type': undefined}
-        // };
+
 
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
@@ -217,47 +214,31 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             return true;
         })
 
-        // console.log('allStatesMapped : ', allStatesMapped)
-        // console.log('filtered : ', filtered)
-
-        // formData.append('patentID', patent.patentID);
 
         formData.patentID = patent.patentID;
+        var newArray = []
         var allStatesFiltered = [];
         for(var i = 0; i < filtered.length; i++) {
             var obj = {};
-            obj['stateCode'] = filtered[i].stateCode;
-            obj['file'] = filtered[i].signedPoaDoc;
+            obj.stateCode = filtered[i].stateCode;
+            obj.signedPoaDoc = filtered[i].signedPoaDoc;
             allStatesFiltered.push(obj)
         }
-        // formData.testFile = data.files.testFile;
-        // formData.extensionStates = data.extensionStates;
-        // formData.validationStates = data.validationStates;
 
-        
-        // formData.append('testFile', JSON.strindata.testFile);
-        // formData.append('validationStates', filtered);
-        // formData.append('extensionStates', extensionMap);
-        // formData.append('validationStates', validationMap);
 
-        // var config = {
-        //     transformRequest: angular.identity,
-        //     headers: {'Content-Type': undefined}
-        // }
+        for(var i = 0; i < allStatesFiltered.length; i++) {
 
-        // if (files) {
-            // for (var i = 0; i < files.length; i++) {
-
-        console.log('here')
-
-        
-        
                 data.upload = Upload.upload({
                     url: ppdomain+'rest-validation-uploadPOA/',
-                    data: {
+                    // fields: {
+                    //     patentID: patent.patentID,
+                    // },
+                    data:{ 
                         patentID: patent.patentID,
-                        validationStates: allStatesFiltered 
-                    }
+                        stateCode: allStatesFiltered[i].stateCode,
+                        signedPoaDoc: allStatesFiltered[i].signedPoaDoc
+                    },
+                    arrayKey: ''
                 });
 
                 data.upload.then(function (response) {
@@ -273,9 +254,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                 });
 
             
-        // }
+        }
 
-        console.log('$scope.formData : ', formData)
 
         // validationService.submitPoas(formData, config)
         // .then(

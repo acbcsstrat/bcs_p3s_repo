@@ -19,11 +19,6 @@ function validationService($http, $q) {
 		//     console.log(pair[0]+ ', ' + pair[1]); 
 		// }
 
-		var data = JSON.stringify(formData)
-
-
-		console.log(data)
-
 		var deferred = $q.defer();
 		// console.log(config)
 		$http.post(ppdomain+'rest-validation-uploadPOA/', formData, config)
