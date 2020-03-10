@@ -15,10 +15,14 @@ function validationService($http, $q) {
 
 	function submitPoas(formData, config) {
 
+		// for (var pair of formData.entries()) {
+		//     console.log(pair[0]+ ', ' + pair[1]); 
+		// }
 
-		for (var pair of formData.entries()) {
-		    console.log(pair[0]+ ', ' + pair[1]); 
-		}
+		var data = JSON.stringify(formData)
+
+
+		console.log(data)
 
 		var deferred = $q.defer();
 		// console.log(config)

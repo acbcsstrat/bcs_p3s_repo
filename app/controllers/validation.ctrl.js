@@ -201,8 +201,11 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     function submitPoaDocuments(data) {
 
-        var formData = new FormData();
-        var config = { headers: {'Content-Type': undefined} };
+        var formData = {};
+        // var config = { 
+        //     transformRequest: angular.identity,
+        //     headers: {'Content-Type': undefined}
+        // };
 
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
@@ -214,23 +217,26 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             return true;
         })
 
-        console.log('allStatesMapped : ', allStatesMapped)
-        console.log('filtered : ', filtered)
+        // console.log('allStatesMapped : ', allStatesMapped)
+        // console.log('filtered : ', filtered)
 
-        formData.append('patentID', patent.patentID);
+        // formData.append('patentID', patent.patentID);
 
+        formData.patentID = patent.patentID;
+        var allStatesFiltered = [];
         for(var i = 0; i < filtered.length; i++) {
-            formData.append(filtered[i].stateCode, filtered[i].signedPoaDoc)
+            var obj = {};
+            obj['stateCode'] = filtered[i].stateCode;
+            obj['file'] = filtered[i].signedPoaDoc;
+            allStatesFiltered.push(obj)
         }
-        // formData.patentID = patent.patentID;
         // formData.testFile = data.files.testFile;
-        // formData.designatedStates = data.designatedStates;
         // formData.extensionStates = data.extensionStates;
         // formData.validationStates = data.validationStates;
 
         
-        // formData.append('testFile', data.testFile);
-        // formData.append('designatedStates', designatedMap);
+        // formData.append('testFile', JSON.strindata.testFile);
+        // formData.append('validationStates', filtered);
         // formData.append('extensionStates', extensionMap);
         // formData.append('validationStates', validationMap);
 
@@ -239,42 +245,71 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         //     headers: {'Content-Type': undefined}
         // }
 
+        // if (files) {
+            // for (var i = 0; i < files.length; i++) {
+
+        console.log('here')
+
+        
+        
+                data.upload = Upload.upload({
+                    url: ppdomain+'rest-validation-uploadPOA/',
+                    data: {
+                        patentID: patent.patentID,
+                        validationStates: allStatesFiltered 
+                    }
+                });
+
+                data.upload.then(function (response) {
+                    console.log('what resposne', response)
+                    $timeout(function () {
+                        console.log('HELLOOOOO ', response)
+                        file.result = response.data;
+                    });
+                }, function (response) {
+                    console.log('WHATTTTT')
+                    if (response.status > 0)
+                        $scope.errorMsg = response.status + ': ' + response.data;
+                });
+
+            
+        // }
 
         console.log('$scope.formData : ', formData)
 
-        validationService.submitPoas(formData, config)
-        .then(
-            function(){
-                console.log('POAS SUBMITTED')
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modals/modal.validation-poas-submitted.tpl.htm',
-                    appendTo: undefined,
-                    controllerAs: '$ctrl',
-                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+        // validationService.submitPoas(formData, config)
+        // .then(
+        //     function(){
+        //         console.log('POAS SUBMITTED')
+        //         var modalInstance = $uibModal.open({
+        //             templateUrl: 'app/templates/modals/modal.validation-poas-submitted.tpl.htm',
+        //             appendTo: undefined,
+        //             controllerAs: '$ctrl',
+        //             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
-                        this.dismissModal = function() {
-                            $uibModalInstance.close();
-                        };
+        //                 this.dismissModal = function() {
+        //                     $uibModalInstance.close();
+        //                 };
 
-                    }]
-                });                
-            },
-            function(errResponse){
-                console.error('Error submitting POAS. Error: ', errResponse)
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modals/modal.validation-poas-submitted-error.tpl.htm',
-                    appendTo: undefined,
-                    controllerAs: '$ctrl',
-                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+        //             }]
+        //         });                
+        //     },
+        //     function(errResponse){
+        //         console.error('Error submitting POAS. Error: ', errResponse)
+        //         var modalInstance = $uibModal.open({
+        //             templateUrl: 'app/templates/modals/modal.validation-poas-submitted-error.tpl.htm',
+        //             appendTo: undefined,
+        //             controllerAs: '$ctrl',
+        //             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
-                        this.dismissModal = function() {
-                            $uibModalInstance.close();
-                        };
+        //                 this.dismissModal = function() {
+        //                     $uibModalInstance.close();
+        //                 };
 
-                    }]
-                });                
-            }
-        )
+        //             }]
+        //         });                
+        //     }
+        // )
 
 
 
