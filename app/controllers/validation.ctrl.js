@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('validationCtrl', validationCtrl);
 
-validationCtrl.$inject = ['patent', '$scope', '$rootScope', '$uibModal', 'validationService', '$state', '$timeout', 'activeTabService', 'Upload'];
+validationCtrl.$inject = ['patent', '$scope', '$rootScope', '$uibModal', 'validationService', '$state', '$timeout', 'activeTabService', 'Upload', '$q'];
 
-function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService, $state, $timeout, activeTabService, Upload) {
+function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService, $state, $timeout, activeTabService, Upload, $q) {
 
 	var vm = this;
 
@@ -122,21 +122,16 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             }
 
             function addSignedPoaDoc(item) {
-                console.log('HERE WE GO')
                 item.signedPoaDoc = '';
                 return item;
             }
 
             if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas provided') {
-                console.log('we are in')
-                console.log('we are in patent', vm.patent)
                 $scope.formData.designatedStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates;
                 $scope.formData.extensionStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates;
                 $scope.formData.validationStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.validationStates;   
 
             }
-
-            console.log('IASHFDKAJSDFKAJSD', $scope.formData)
 
         }
     )
@@ -175,128 +170,74 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         return item;
     }
 
-    // function submitPoaDocuments(files) {
-    //     console.log('files : ',files)
-    //     if (files) {
-    //         // for (var i = 0; i < files.length; i++) {
-
-    //             file.upload = Upload.upload({
-    //                 url: ppdomain+'rest-validation-uploadPOA/',
-    //                 data: {file: files},
-    //             });
-
-    //             file.upload.then(function (response) {
-    //                 $timeout(function () {
-    //                     console.log('HELLOOOOO ', response)
-    //                     file.result = response.data;
-    //                 });
-    //             }, function (response) {
-    //                 if (response.status > 0)
-    //                     $scope.errorMsg = response.status + ': ' + response.data;
-    //             });
-
-            
-    //     }
-    // }    
-
     function submitPoaDocuments(data) {
 
         var formData = {};
-
 
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
         var validationMap = data.validationStates.map(removeCost);
         var allStatesMapped = designatedMap.concat(extensionMap, validationMap)
 
-        var filtered = allStatesMapped.filter(function(item){
+        allStatesMapped = allStatesMapped.filter(function(item){
             if(item.signedPoaDoc == null) { return false; }
             return true;
         })
+        .map(function(item){
+            var newObj = {};
+            newObj.stateCode = item.stateCode;
+            newObj.signedPoaDoc = item.signedPoaDoc;
+            return newObj;
+        })
 
+        var promiseArray = [];
 
-        formData.patentID = patent.patentID;
-        var newArray = []
-        var allStatesFiltered = [];
-        for(var i = 0; i < filtered.length; i++) {
-            var obj = {};
-            obj.stateCode = filtered[i].stateCode;
-            obj.signedPoaDoc = filtered[i].signedPoaDoc;
-            allStatesFiltered.push(obj)
+        for(var i = 0; i < allStatesMapped.length; i++) {
+            promiseArray.push(validationService.submitPoas(patent.patentID, allStatesMapped[i]))
         }
 
+        console.log(promiseArray)
 
-        for(var i = 0; i < allStatesFiltered.length; i++) {
+        $q.all(promiseArray)
+        .then(
+            function(response){
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.validation-poas-submitted.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
-                data.upload = Upload.upload({
-                    url: ppdomain+'rest-validation-uploadPOA/',
-                    // fields: {
-                    //     patentID: patent.patentID,
-                    // },
-                    data:{ 
-                        patentID: patent.patentID,
-                        stateCode: allStatesFiltered[i].stateCode,
-                        signedPoaDoc: allStatesFiltered[i].signedPoaDoc
-                    },
-                    arrayKey: ''
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
                 });
 
-                data.upload.then(function (response) {
-                    console.log('what resposne', response)
-                    $timeout(function () {
-                        console.log('HELLOOOOO ', response)
-                        file.result = response.data;
-                    });
-                }, function (response) {
-                    console.log('WHATTTTT')
-                    if (response.status > 0)
-                        $scope.errorMsg = response.status + ': ' + response.data;
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+            },
+            function(errResponse){
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/templates/modals/modal.validation-poas-submitted-error.tpl.htm',
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
+
+                    }]
                 });
 
-            
-        }
-
-
-        // validationService.submitPoas(formData, config)
-        // .then(
-        //     function(){
-        //         console.log('POAS SUBMITTED')
-        //         var modalInstance = $uibModal.open({
-        //             templateUrl: 'app/templates/modals/modal.validation-poas-submitted.tpl.htm',
-        //             appendTo: undefined,
-        //             controllerAs: '$ctrl',
-        //             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-        //                 this.dismissModal = function() {
-        //                     $uibModalInstance.close();
-        //                 };
-
-        //             }]
-        //         });                
-        //     },
-        //     function(errResponse){
-        //         console.error('Error submitting POAS. Error: ', errResponse)
-        //         var modalInstance = $uibModal.open({
-        //             templateUrl: 'app/templates/modals/modal.validation-poas-submitted-error.tpl.htm',
-        //             appendTo: undefined,
-        //             controllerAs: '$ctrl',
-        //             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-        //                 this.dismissModal = function() {
-        //                     $uibModalInstance.close();
-        //                 };
-
-        //             }]
-        //         });                
-        //     }
-        // )
-
-
+                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+            }
+        )
 
     }
 
     function submitValidationData(data){
-        console.log('validation ctrl: data', data);
+
         var formData = {};
 
         var names = data.corresdpondenceName.split(' ');
