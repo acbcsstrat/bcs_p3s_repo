@@ -94,6 +94,9 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             function(){
 
                 vm.patent = patent;
+
+                console.log(patent)
+
                 vm.portfolioLoaded = true;
                 renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(

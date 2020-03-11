@@ -80,7 +80,6 @@ function appRoutes($stateProvider) {
             url: '/:patentId',
             resolve: {
                 patent: ['$stateParams', 'patentsRestService', '$state', function($stateParams, patentsRestService, $state) {
-                    console.log($stateParams.patentId)
                     return patentsRestService.fetchPatentItem($stateParams.patentId)
                     .then(
                         function(response){
@@ -94,7 +93,6 @@ function appRoutes($stateProvider) {
                     
                 }],
                 ca: ['costAnalysisService', 'patent', function(costAnalysisService,  patent) {
-                    console.log(patent)
                     return costAnalysisService.fetchCa(patent.patentID, patent.p3sServicesWithFees);  
                 }]
             },

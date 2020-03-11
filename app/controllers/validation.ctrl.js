@@ -23,7 +23,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     ];
     $scope.formData = {};
     var validationAction;
-    var allState;
+    var allState = [];
     vm.validationInfo = {};
     vm.domain = ppdomain;
 
@@ -39,7 +39,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         var serviceStatusL = patent.p3sServicesWithFees[0].serviceStatus.toLowerCase();
 
         if(patent.p3sServicesWithFees[0].validationFeeUI !== null) {
-            allState = patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.concat(patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
+            var array = [];
+            allState = array.concat(patent.p3sServicesWithFees[0].validationFeeUI.designatedStates, patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
         }
     	vm.activeTab = 0;
 		if(serviceStatusL == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
@@ -85,8 +86,10 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             vm.patent = patent; 
 
             if(patent.p3sServicesWithFees[0].validationFeeUI !== null) {
-                allState = patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.concat(patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
+                var array = [];
+                allState = array.concat(patent.p3sServicesWithFees[0].validationFeeUI.designatedStates, patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
             }
+
             if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
                 validationService.fetchDesignatedStates(patent.patentID)
                 .then(
@@ -97,7 +100,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                         $scope.formData.designatedStates = response.designatedStates;
                         $scope.formData.extensionStates = response.extensionStates;
                         $scope.formData.validationStates = response.validationStates;
-                        allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates);
+                        var array = [];
+                        allState = array.concat($scope.formData.designatedStates, $scope.formData.extensionStates, $scope.formData.validationStates);
                     }
                 )
             }
