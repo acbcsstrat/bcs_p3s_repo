@@ -9,8 +9,18 @@ function validationService($http, $q, Upload) {
 		deleteQuote: deleteQuote,
 		requestQuote: requestQuote,
 		fetchPreparedQuote: fetchPreparedQuote,
-		submitPoas: submitPoas
+		submitPoas: submitPoas,
+		poaUploadSuccessNotify: poaUploadSuccessNotify,
+		poaUploadFailNotify: poaUploadFailNotify
 	}
+
+	function poaUploadSuccessNotify(id) {
+		$http.post(ppdomain+'rest-validation-uploadPOACompleted/'+id)
+	}
+
+	function poaUploadFailNotify(id) {
+		$http.post(ppdomain+'rest-validation-uploadPOACompleted/'+id)
+	}	
 
 
 	function submitPoas(id, data) {
@@ -26,15 +36,11 @@ function validationService($http, $q, Upload) {
             },
             arrayKey: ''
         }).then(function (response) {
-            console.log('what resposne', response)
             $timeout(function () {
-                console.log('HELLOOOOO ', response)
                 deferred.resolve(response.data)
             });
         }, function (errResponse) {
-            console.log('WHATTTTT')
-            // if (response.status > 0)
-             deferred.reject(errResponse)
+            deferred.reject(errResponse)
         });
 
 		return deferred.promise;

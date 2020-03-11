@@ -95,7 +95,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
                 vm.patent = patent;
                 vm.portfolioLoaded = true;
-                console.log('caseoverview : ', vm.patent)
                 renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
                     function(response){
@@ -112,28 +111,18 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 })
 
                 $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
-                    console.log('item : ',item)
                     return item.saleType == 'Not In Progress' || (item.serviceType == 'validation' && item.serviceStatus !== 'Quote provided');
                 })
 
                 $scope.availableServices = patent.p3sServicesWithFees.map(function(data, index){
-                    console.log('caseoverview ctrl: availableServices data : ', data)
                     if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
                     if(data.saleType !== 'Not In Progress') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
-                         console.log('caseoverview ctrl: returning new object to availableServices')
                        return {id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType}
                     }
                 })
-                console.log('$scope.availableServices : ', $scope.availableServices)
+
                 $scope.availableServices.forEach(function(obj){
 
-                    console.log('hello caseoverview ctrl: looping through obj: ', obj)
-
-                    if(obj.action == 'validation') {
-                        console.log('HELLO caseoverview ctrl: should display validation tab')
-                        vm.displayValidationTab = true;
-                        console.log('HELLO caseoverview ctrl displayValidationTab: ', vm.displayValidationTab)
-                    }
                     if(obj.type == 'Not In Progress') { return; }
 
                     if(obj.action == 'Euro-PCT') {
@@ -147,6 +136,10 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                         if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
                             vm.displayGrantTab = true;
                         }
+                    }
+
+                    if(obj.action == 'validation') {
+                        vm.displayValidationTab = true;
                     }
                 })
             }
