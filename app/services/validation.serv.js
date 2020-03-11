@@ -1,32 +1,47 @@
 angular.module('ppApp').factory('validationService', validationService);
 
-validationService.$inject = ['$http', '$q'];
+validationService.$inject = ['$http', '$q', 'Upload'];
 
-function validationService($http, $q) {
+function validationService($http, $q, Upload) {
 
 	var factory = {
 		fetchDesignatedStates: fetchDesignatedStates,
 		deleteQuote: deleteQuote,
 		requestQuote: requestQuote,
 		fetchPreparedQuote: fetchPreparedQuote,
-		submitPoas: submitPoas
+		submitPoas: submitPoas,
+		poaUploadSuccessNotify: poaUploadSuccessNotify,
+		poaUploadFailNotify: poaUploadFailNotify
 	}
 
+	function poaUploadSuccessNotify(id) {
+		$http.post(ppdomain+'rest-validation-uploadPOACompleted/'+id)
+	}
 
-	function submitPoas(formData) {
+	function poaUploadFailNotify(id) {
+		$http.post(ppdomain+'rest-validation-uploadPOACompleted/'+id)
+	}	
 
-		var deferred = $q.defer()
 
-		$http.post(ppdomain+'rest-validation-uploadPOA/', formData)
-		.then(
-			function(response){
-				deferred.resolve(response);
-			},
-			function(errResponse){
-				console.error('Error submitting poas. Error: ', errResponse)
-				deferred.reject(errResponse)
-			}
-		)
+	function submitPoas(id, data) {
+
+		var deferred = $q.defer();
+
+        Upload.upload({
+            url: ppdomain+'rest-validation-uploadPOA/',
+            data:{ 
+                patentID: id,
+                stateCode: data.stateCode,
+                signedPoaDoc: data.signedPoaDoc
+            },
+            arrayKey: ''
+        }).then(function (response) {
+            $timeout(function () {
+                deferred.resolve(response.data)
+            });
+        }, function (errResponse) {
+            deferred.reject(errResponse)
+        });
 
 		return deferred.promise;
 
