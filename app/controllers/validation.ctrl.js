@@ -97,6 +97,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                         $scope.formData.designatedStates = response.designatedStates;
                         $scope.formData.extensionStates = response.extensionStates;
                         $scope.formData.validationStates = response.validationStates;
+                        console.log()
                         allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates);
                     }
                 )
@@ -118,7 +119,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                 return item;
             }
 
-            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas provided') {
+            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas provided' || patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas downloaded') {
                 $scope.formData.designatedStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates;
                 $scope.formData.extensionStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates;
                 $scope.formData.validationStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.validationStates;   
@@ -165,6 +166,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function submitPoaDocuments(data) {
 
         var formData = {};
+
+        console.log(data)
 
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
