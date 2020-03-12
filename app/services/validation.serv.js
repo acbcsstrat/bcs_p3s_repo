@@ -15,18 +15,20 @@ function validationService($http, $q, Upload) {
 	}
 
 	function poaUploadSuccessNotify(id) {
+		console.log(id)
 		$http.post(ppdomain+'rest-validation-uploadPOACompleted/'+id)
 	}
 
 	function poaUploadFailNotify(id) {
-		$http.post(ppdomain+'rest-validation-uploadPOACompleted/'+id)
+		console.log(id)
+		$http.post(ppdomain+'rest-validation-uploadPOAFailed/'+id)
 	}	
 
 
 	function submitPoas(id, data) {
 
 		var deferred = $q.defer();
-
+		console.log(id, data)
         Upload.upload({
             url: ppdomain+'rest-validation-uploadPOA/',
             data:{ 
@@ -36,16 +38,19 @@ function validationService($http, $q, Upload) {
             },
             arrayKey: ''
         }).then(function (response) {
-            $timeout(function () {
-                deferred.resolve(response.data)
-            });
+        	console.log('service good', response)
+
+                deferred.resolve(response)
+
         }, function (errResponse) {
+        	console.log('service bad', errResponse)
             deferred.reject(errResponse)
         });
 
 		return deferred.promise;
 
 	}	
+
 
 	function fetchDesignatedStates(id) {
 
