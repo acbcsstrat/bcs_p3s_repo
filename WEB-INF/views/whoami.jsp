@@ -47,8 +47,22 @@
  </tr>
  <tr>
 	<td>P3S product version</td>
+<<<<<<< HEAD
 	<td>v3.2</td>
  </tr>
+=======
+<<<<<<< HEAD
+	<td>v3.2</td>
+ </tr>
+=======
+<<<<<<< HEAD
+	<td>v3.2</td>
+ </tr>
+=======
+	<td>v3.1dev (with Avatar2)</td>
+>>>>>>> fe-branch-v4
+>>>>>>> fe-branch-v4
+>>>>>>> fe-branch-v4
 </table>
 
 </body>

@@ -1,0 +1,58 @@
+// @font-face {
+//     font-family: 'Maven standard';
+//     src: url('assets/fonts/MavenPro-Black.ttf') format('truetype');
+//     font-weight: normal;
+//     font-style: normal;
+// }
+
+.font-body, 
+.tooltip.trackerStep { 
+  font-size: $font-normal; 
+  &.font-body--content {
+    line-height: 2.2rem;
+  }
+}
+
+.no-line-height { line-height: 1.2rem!important; }
+
+.font-h4 { 
+  font-size: $font-h4!important;
+  line-height: 2.2rem;
+  &.lh-default {
+    line-height: 2.5rem;
+  }
+}
+
+.font-h3 {  
+  font-size: $font-h3!important;
+  line-height: 1.2rem;
+  &.font-h3--content {
+    line-height: 2.4rem;
+  }
+}
+
+.font-h2 {   
+  font-size: $font-h2!important;
+  line-height: 1.4rem;
+  &.lh-default {
+    line-height: 4rem;
+  }
+  &.lh-head {
+    line-height: 2.5rem;
+  }
+}
+
+.font-h1 {  
+  font-size: $font-h1!important;
+  line-height: 2.2rem; 
+  font-weight: 700;
+  &.lh-default {
+    line-height: 4.8rem;
+  }  
+  &.lh-head {
+    line-height: 2.2rem
+  }
+}
+
+.font-weight-medium { font-weight: 600; }
+.font-weight-heavy { font-weight: 800; }

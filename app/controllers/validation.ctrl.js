@@ -97,7 +97,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                         $scope.formData.designatedStates = response.designatedStates;
                         $scope.formData.extensionStates = response.extensionStates;
                         $scope.formData.validationStates = response.validationStates;
-                        console.log()
                         allState = $scope.formData.designatedStates.concat($scope.formData.extensionStates, $scope.formData.validationStates);
                     }
                 )
@@ -194,9 +193,9 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         $q.all(promiseArray)
         .then(
             function(response){
-
+                console.log('WHAT', response)
                 validationService.poaUploadSuccessNotify(patent.patentID)
-
+                console.log('pass')
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.validation-poas-submitted.tpl.htm',
                     appendTo: undefined,
@@ -213,9 +212,9 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                 $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
             },
             function(errResponse){
-
+                  console.log('WHAT error', errResponse)
                 validationService.poaUploadFailNotify(patent.patentID)
-
+                   console.log('pass error')
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.validation-poas-submitted-error.tpl.htm',
                     appendTo: undefined,
