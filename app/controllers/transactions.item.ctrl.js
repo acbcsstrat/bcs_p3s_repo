@@ -1,3 +1,4 @@
+console.log('FOUND')
 angular.module('ppApp').controller('transactionItemCtrl', transactionItemCtrl);
 
 transactionItemCtrl.$inject = ['transactionItem', 'transactionService', '$scope'];

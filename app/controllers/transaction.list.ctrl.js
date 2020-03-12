@@ -20,7 +20,7 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 
   	function rowSelect(event, transaction){
   		console.log(event, transaction)
-  		$state.go('transactions.modal.transaction-item', {transHref: transaction.id}, {notify: false})
+  		$state.go('transactions.modal.transaction-item', {transId: transaction.id}, {reload: false})
   	};
 
 	$q.all([transactionService.fetchCurrentTransactions(), transactionService.fetchTransactionHistory()])

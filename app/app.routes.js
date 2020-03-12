@@ -171,21 +171,26 @@ function appRoutes($stateProvider) {
             }
         })   
         .state('transactions.modal.transaction-item', {
-            url: '/:transHref',
+            url: '/{transId}/:transHref',
             templateUrl: 'app/templates/transactions/transactions.item.tpl.htm',
             controller: 'transactionItemCtrl',
             controllerAs: '$ctrl',            
             resolve: {
                 transactionItem: ['$stateParams', '$q', 'transactionService', function($stateParams, $q, transactionService) {
-                    return transactionService.fetchAllTransactions()
+                    return  transactionService.fetchAllTransactions()
                     .then(
                         function(response){
                             return response.find(function(transaction){
-                                console.log(transaction)
-                                return transaction.id == $stateParams.transId;
+                                console.log('transaction : ', transaction)
+                                console.log('$stateParams : ', $stateParams)
+                                return transaction.id == $stateParams.tranID;
                             })
+                        },
+                        function(errResponse) {
+                            console.log('error: ', errResponse)
                         }
                     )
+          
                 }]
             },
             params: {
