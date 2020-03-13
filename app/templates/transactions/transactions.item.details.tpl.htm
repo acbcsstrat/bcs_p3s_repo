@@ -1,0 +1,330 @@
+<uib-tabset type="pills" active="activeSelectedTab">
+	<uib-tab heading="Transaction Details" index="0" data-ng-hide="true">
+		<div data-ng-repeat="transaction in $ctrl.transactionItem.serviceUIs | filter: transactionsFilter">
+			<div class="row">
+				<div class="col-md-12 col-lg-12 col-xl-12 md-m-b-md">
+					<p class="font-body font-weight-medium m-b-xs">Transaction item {{$index + 1}} of {{$ctrl.transactionItem.serviceUIs.length}}</p>
+					<p class="font-h4 text-uppercase font-weight-bold m-b-xs">Details</p>
+					<p class="font-weight-bold font-body m-b-xs lh-default">Client Ref: 
+						<span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal lh-default" data-ng-bind="transaction.patentUI.clientRef"></span>
+						<span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey lh-default">[No client description provided]</span>
+					</p>
+					<p class="font-weight-bold font-body m-b-xs lh-default">European Action: <span class="font-weight-normal lh-default text-capitalize" data-ng-bind="transaction.serviceType"></span></p>
+					<p class="font-weight-bold font-body m-b-xs lh-default">App No: <span class="font-weight-normal lh-default" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
+					<p class="font-weight-bold font-body m-b-xs lh-default">Transaction item status: <span class="font-weight-normal font-body lh-default" data-ng-bind="transaction.patentUI.patentApplicationNumber"></span></p>
+					 
+				</div>
+			</div>
+			<div class="m-b-lg m-t-lg"></div>
+			<div class="row">
+				<div class="col-md-12">
+					<p class="font-body text-uppercase font-weight-bold m-b-xs">DOCUMENTS</p>
+
+					<a class="btn-underlined pill-radius font-body txt-phase-green font-weight-normal m-b-sm" target="_blank" data-ng-href="{{transaction.epoReceiptUrl}}" data-ng-if="transaction.epoReceiptUrl">{{transaction.serviceType}} receipt</a>
+					<a data-ng-href="{{transaction.certificateUrl}}" class="btn-underlined pill-radius font-body txt-phase-green font-weight-normal m-b-sm" target="_blank" data-ng-if="transaction.certificateUrl">Certificate</a>
+					<p class="font-body font-weight-bold">Invoice : <a data-ng-href="{{$ctrl.transactionItem.invoiceUrl}}" class="btn-underlined pill-radius font-body txt-phase-green font-weight-normal" target="_blank">Download</a></p>
+				</div>
+			</div>
+			<div class="m-b-lg m-t-lg"></div> 
+	    	<div class="row m-b-sm">
+		    	<div class="col-xl-12">
+		    		<p class="font-body text-uppercase font-weight-bold m-b-xs">Fees</p>
+		    	</div>
+		        <div class="col-md-5 col-xl-5">
+		            <p class="font-weight-bold font-body">Official Fees:
+		                <i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !panelActive}" data-ng-click="panelActive = !panelActive"></i>
+		            </p>
+		        </div>								
+		        <div class="col-md-4 col-xl-4">
+		            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
+		        </div>
+		        <div class="col-md-12 col-xl-12">								
+					<div class="expandcollapse-item">
+						<div class="slideDown m-t-sm" data-ng-init="panelActive = true" data-ng-hide="panelActive">
+							<div data-ng-if="transaction.serviceType == 'Euro-PCT'">
+			                
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Designation fee:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.designationFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>                                                                                     
+			                    </div>
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Examination fee:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.examinationFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>                                                                                      
+			                    </div>
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Excess Page fee:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.excessPageFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>                                                                                       
+			                    </div>
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Filing fee:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.filingFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>                                                                                    
+			                    </div>
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Supplmentary Search fee:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.supplementarySearchFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>                                                                                       
+			                    </div>
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Validation State fee:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.validationFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>                                                                                    
+			                    </div>
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Extension State fee:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>                                                                                      
+			                    </div>                                        
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Claims fee 1:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.claimsFee1USD | number: 2) || '0.00'}}</p>
+			                        </div>                                                                                      
+			                    </div>   
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Claims fee 2:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.claimsFee2USD | number: 2) || '0.00'}}</p>
+			                        </div>                                                                                    
+			                    </div>                                                                                                
+			                    <div class="border-grey-xs--btm"></div> 
+			                </div>
+				            <div data-ng-if="transaction.serviceType == 'renewal'">
+		                        <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Renewal Fee:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                
+	                            </div>
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Extension Fee:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.extensionFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                       
+	                            </div>   
+				            </div>
+				            <div data-ng-if="transaction.serviceType == 'grant'">
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Grant Fee:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.grantFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.grantFeeEUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div>                             
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Claims for the 16th and each subsequent claim to the limit of 50:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.claimsFee1USD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.claimsFee1EUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div>
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Claims for the 51st and each subsequent claim:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.claimsFee2USD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.claimsFee2EUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div>      
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Excess pages:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.excessPageFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.excessPageFeeEUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div>   
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Renewal Fee:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.renewalFeeEUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div> 
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Renewal Extension Fee:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.renewalExtensionFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.renewalExtensionFeeEUR | number: 2) || '0.00'}}</p>
+	                                </div>                  
+	                            </div>
+				            </div>
+				            <div data-ng-if="transaction.serviceType == 'validation'">
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Grant Fee:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.grantFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.grantFeeEUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div>                             
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Claims for the 16th and each subsequent claim to the limit of 50:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.claimsFee1USD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.claimsFee1EUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div>
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Claims for the 51st and each subsequent claim:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.claimsFee2USD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.claimsFee2EUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div>      
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Excess pages:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.excessPageFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.excessPageFeeEUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div>   
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Renewal Fee:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.renewalFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.renewalFeeEUR | number: 2) || '0.00'}}</p>
+	                                </div>                                                                                        
+	                            </div> 
+	                            <div class="row m-b-sm">
+	                                <div class="col-md-5 col-xl-5">
+	                                    <p class="font-weight-medium m-l-sm">Renewal Extension Fee:</p>
+	                                </div>
+	                                <div class="col-md-4 col-xl-4">
+	                                    <p class="text-left font-body">$ {{(transaction.serviceFeeUI.renewalExtensionFeeUSD | number: 2) || '0.00'}}</p>
+	                                </div>
+	                                <div class="col-md-3 col-xl-3">
+	                                    <p class="text-left font-body">&euro; {{(transaction.serviceFeeUI.renewalExtensionFeeEUR | number: 2) || '0.00'}}</p>
+	                                </div>                  
+	                            </div>
+				            </div>				            						            
+				        </div>
+					</div>
+		        </div>
+		    </div><!--row end-->
+		    <div class="row m-b-sm">
+		        <div class="col-md-5 col-xl-5">
+		            <p class="font-weight-bold font-body">Patent Place Fees:
+		                <i class="fas fa-lg fa-caret-right accordion-caret" data-ng-class="{'active': !ppPanelActive}" data-ng-click="ppPanelActive = !ppPanelActive"></i>
+		            </p>
+		        </div>
+		        <div class="col-md-4 col-xl-4">
+		            <p class="text-left font-body">$ {{(transaction.serviceFeeUI.subTotalUSD - transaction.serviceFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</p>
+		        </div> 
+		        <div class="col-xl-12">
+		        	<div class="slideDown m-t-sm" data-ng-init="ppPanelActive = true" data-ng-hide="ppPanelActive">
+		            	<div class="expandcollapse-item">
+	                         <div class="row m-b-sm">
+	                            <div class="col-md-5 col-xl-5">
+	                                <p class="font-weight-medium m-l-sm">Processing fee:</p>
+	                            </div>
+		                            <div class="col-md-4 col-xl-4">
+		                                <p class="text-left font-body">$ {{(transaction.serviceFeeUI.processingFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>
+			                    </div>
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Express fee:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left">$ {{(transaction.serviceFeeUI.expressFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>
+			                    </div>
+			                    <div class="row m-b-sm">
+			                        <div class="col-md-5 col-xl-5">
+			                            <p class="font-weight-medium m-l-sm">Urgent fee:</p>
+			                        </div>
+			                        <div class="col-md-4 col-xl-4">
+			                            <p class="text-left">$ {{(transaction.serviceFeeUI.urgentFeeUSD | number: 2) || '0.00'}}</p>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+		        </div>
+		    </div> <!--row end-->
+			<div class="row">
+				<div class="col-md-1 col-lg-6 col-xl-5">
+					<p class="font-weight-bold font-body">Total: </p>
+				</div>
+				<div class="col-md-2 col-lg-6 col-xl-4">
+					<p class="font-body">$ {{(transaction.serviceFeeUI.subTotalUSD || '0.00') | number: 2}}</p>
+				</div>	
+			</div>
+			<div class="border-grey-xs--btm m-t-lg m-b-lg"></div> 
+		</div><!-- end of repeat-->
+
+	</uib-tab>
+</uib-tabset>

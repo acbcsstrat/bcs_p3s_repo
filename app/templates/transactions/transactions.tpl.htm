@@ -124,19 +124,19 @@
 				</tr>
 			</thead>
 			<tbody class="sticky-tbody">
-			    <tr data-ng-repeat="transaction in filtered=($ctrl.transactions | filter:filterByPropertiesMatchingAND | filter:searchTransactions) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, transaction); $ctrl.select(transaction.transactionID)"  class="t-data__row t-data__row--select" data-ng-class="{active: transaction.id == $ctrl.selected}">
+			    <tr data-ng-repeat="transaction in filtered=($ctrl.transactions | filter:filterByPropertiesMatchingAND | filter:searchTransactions) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, transaction);"  class="t-data__row t-data__row--select">
 			        <td class="t-data__td sticky-td">
-						<a class="t-data__a" data-ui-sref="transactions.modal.transaction-item({transId: transaction.id})">{{transaction.p3S_TransRef}}</a>
+						<a class="t-data__a" data-ng-attr-id="{{transaction.id}}">{{transaction.p3S_TransRef}}</a>
 			        </td>
 			        <td class="t-data__td">
 			        	{{transaction.transTypeUI}}
-			        </td>	        
+			        </td>
 			        <td class="t-data__td">
 		        		{{transaction.transStartDate | date: 'MM/dd/yy'}}
 			        </td>
 			        <td class="t-data__td">
 			        	$ {{transaction.transAmount_USD | number: 2}}
-			        </td>					        
+			        </td>
 			        <td class="t-data__td">
 						<p class="font-weight-bold m-b-xs">{{transaction.latestTransStatus}}</p>
 						<div class="progress-tracker progress-trans">
@@ -175,3 +175,5 @@
 		</table>
 	</div><!--scrollable area end-->
 </div>
+
+<div data-ui-view="modal" autoscroll="false"></div>

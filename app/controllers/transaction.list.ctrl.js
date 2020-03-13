@@ -9,6 +9,7 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
    	vm.rowSelect = rowSelect;
    	vm.select = select;
    	vm.selectedSortType = 'p3S_TransRef';
+   	var transStatusArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Funds Sent', 'EPO Received', 'EPO Instructed', 'Completed'];
 
     var loadTimeout = $timeout(function() {
       	vm.transactionsLoaded = true;
@@ -19,25 +20,34 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
     }
 
   	function rowSelect(event, transaction){
-  		console.log(event, transaction)
-  		$state.go('transactions.modal.transaction-item', {transId: transaction.id}, {reload: false})
+  		$state.go('transactions.modal.transaction-item', {transId: transaction.id})
   	};
 
-	$q.all([transactionService.fetchCurrentTransactions(), transactionService.fetchTransactionHistory()])
-	.then(
+  	$scope.transactionProgress = function(status) {
+		var index = transStatusArray.indexOf(status);
+		var pecentage = Math.round(((index+1) * 100) / 7);
+		return pecentage;
+  	}
+
+	$scope.promise = $q.all([transactionService.fetchCurrentTransactions(), transactionService.fetchTransactionHistory()])
+	$scope.promise.then(
 		function(response){
 			vm.transactions = response[0].concat(response[1]);
 			vm.transactions.map(function(data){
 				data.transTypeUI = data.historic === true ? 'Historic' : 'Current';
-				data.actionProgress = currentTransactionsService.actionProgress(o.latestTransStatus);
+				data.actionProgress = $scope.transactionProgress(data.latestTransStatus);
 				data.serviceUIs.map(function(o, i){
-					o.appAndType = o.patentUI.ep_ApplicationNumber || o.patentApplicationNumber + ' (' + o.newType +')';		
+					if(o.patentUI !== undefined) {
+						o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';	
+					} else {
+						o.appAndType = o.patentApplicationNumber + ' (' + o.newType +')';	
+					}
+					
+					return o;	
 				})
 				return data;
 			})
 			vm.transactionsLoaded = true;
-			console.log(transactions)
-
 		}
 	)
 

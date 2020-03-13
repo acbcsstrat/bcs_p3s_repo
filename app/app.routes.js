@@ -171,19 +171,16 @@ function appRoutes($stateProvider) {
             }
         })   
         .state('transactions.modal.transaction-item', {
-            url: '/{transId}/:transHref',
-            templateUrl: 'app/templates/transactions/transactions.item.tpl.htm',
-            controller: 'transactionItemCtrl',
-            controllerAs: '$ctrl',            
+            url: '/:transId',
             resolve: {
                 transactionItem: ['$stateParams', '$q', 'transactionService', function($stateParams, $q, transactionService) {
-                    return  transactionService.fetchAllTransactions()
+                    return transactionService.fetchAllTransactions()
                     .then(
                         function(response){
                             return response.find(function(transaction){
                                 console.log('transaction : ', transaction)
                                 console.log('$stateParams : ', $stateParams)
-                                return transaction.id == $stateParams.tranID;
+                                return transaction.id == $stateParams.transId;
                             })
                         },
                         function(errResponse) {
@@ -193,8 +190,21 @@ function appRoutes($stateProvider) {
           
                 }]
             },
+            views: {
+                "" : {
+                    templateUrl: 'app/templates/transactions/transactions.item.tpl.htm',
+                    controller: 'transactionItemCtrl',
+                    controllerAs: '$ctrl',                    
+                },
+                "details@transactions.modal.transaction-item" : {
+                    templateUrl: 'app/templates/transactions/transactions.item.details.tpl.htm',
+                    controller: 'transactionItemCtrl',
+                    controllerAs: '$ctrl',                    
+                }                               
+
+            },
             params: {
-                transHref: null
+                transId: null
             }                       
         })
         .state('basket', {
