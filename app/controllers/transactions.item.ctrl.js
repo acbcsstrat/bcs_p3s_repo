@@ -10,22 +10,73 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
 	vm.closeCaseoverview = closeCaseoverview;
 	vm.caseoverview_tab = 'details';
 
+	vm.transStatus = [
+		{
+			status: 'Initiated', 
+			active: false, 
+			complete: false,
+			tip: 'You\'ve checked out your basket on the Patent Place, and we\'re now doing our work in the background. We will now send the request over to our payment partners Moneycorp, requesting that they book the currency exchange, and to expect a payment from you.',
+			position: 'bottom-left'
+		}, 
+		{
+			status: 'Awaiting Funds', 
+			active: false, 
+			complete: false,
+			tip: 'MoneyCorp have booked the currency exchange, and are now waiting for your payment. They\'ll expect the funds by the date and time specified, and for it to have the correct reference on it so that the payment can be matched to the transation.',
+			position: 'bottom-left'
+		}, 
+		{
+			status: 'Funds Received', 
+			active: false, 
+			complete: false,
+			tip: 'MoneyCorp have received your payment and they\'re now completing the foreign exchange. This happens the day after your funds were expected by MoneyCorp.',
+			position: 'bottom-left'
+		},
+		{
+			status: 'Funds Sent', 
+			active: false, 
+			complete: false,
+			tip: 'MoneyCorp have completed the currency exchange and the Euros have been sent to the European Patent Office.',
+			position: 'bottom-right'
+		},
+		{
+			status: 'EPO Received', 
+			active: false, 
+			complete: false,
+			tip: 'We\'ve had confirmation that the funds have been received by the EPO.',
+			position: 'bottom-right'
+		}, 
+		{
+			status: 'EPO Instructed', 
+			active: false, 
+			complete: false,
+			tip: 'Everything is in place, and we’ve instructed the EPO.',
+			position: 'bottom-right'
+		},
+		{
+			status: 'Completed', 
+			active: false, 
+			complete: false,
+			tip: 'We\'ve had confirmation that your transaction has been completed. You can download a copy of the invoice or any relevant certificate below.',
+			position: 'bottom-right'
+		}
+	];	
+
     function closeCaseoverview() {
         $state.go('transactions', {}, {reload: false})
     }
-
-	function transProgress(status) {
-		var index = transStatusArray.indexOf('Funds Received');
-		var pecentage = (index * 100) / 7; 
-		return pecentage;
-	}
 
     function setTab(tab) {
         vm.caseoverview_tab = tab;
     }
 
-    function transItemStatus() {
-
+    function transItemStatus(status) {
+    	var index = transStatusArray.indexOf(status);
+    	if(index < 5) {
+    		return 'Payment in progress'
+    	} else {
+    		return status;
+    	}
     }
 
     $scope.promise //assigned promise to scope so child state can also resolve this promise to invoke functions
@@ -35,11 +86,12 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
     })
     .then(
     	function(response){
-    		vm.transactionLoaded = true;
+
     		vm.transactionItem = transactionItem;
-    		vm.transactionItem.transItemStatus = 
-    		vm.transactionProgress = $scope.transactionProgress(transactionItem.latestTransStatus)
-			vm.transactionItem.serviceUIs.map(function(item){
+
+			vm.transactionItem.serviceUIs.map(function(item, index){
+
+				item.transItemStatus = transItemStatus(transactionItem.latestTransStatus);
 
 				if(item.renewalFeeUI) { 
 					item.serviceType = 'renewal'; 
@@ -55,66 +107,31 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
 				}
 
 				if(item.validationFeeUI) { 
+
+					var obj1 = {
+						status: 'Processing', 
+						active: false, 
+						complete: false,
+						tip: 'We are in the process of gathering and forwarding on the required documents to the appropriate European associates',
+						position: 'bottom-right'
+					}
+
+					vm.transStatus.splice(4, 2);
+					vm.transStatus.splice(3, 1, obj1);
+
+
 					item.serviceType = 'validation'; 
-					item.serviceFeeUI = item.validationFeeUI; 
-				}		
+					item.serviceFeeUI = item.validationFeeUI;
+					item.allStates = item.validationFeeUI.designatedStates.concat(item.validationFeeUI.validationStates, item.validationFeeUI.extensionStates)
+				}
+
+				return item;
+
 			})
 
 			vm.checkProgress = checkProgress;
-			vm.patents = [];
-			vm.transStatus = [
-				{
-					status: 'Initiated', 
-					active: false, 
-					complete: false,
-					tip: 'You\'ve checked out your basket on the Patent Place, and we\'re now doing our work in the background. We will now send the request over to our payment partners Moneycorp, requesting that they book the currency exchange, and to expect a payment from you.',
-					position: 'bottom-left'
-				}, 
-				{
-					status: 'Awaiting Funds', 
-					active: false, 
-					complete: false,
-					tip: 'MoneyCorp have booked the currency exchange, and are now waiting for your payment. They\'ll expect the funds by the date and time specified, and for it to have the correct reference on it so that the payment can be matched to the transation.',
-					position: 'bottom-left'
-				}, 
-				{
-					status: 'Funds Received', 
-					active: false, 
-					complete: false,
-					tip: 'MoneyCorp have received your payment and they\'re now completing the foreign exchange. This happens the day after your funds were expected by MoneyCorp.',
-					position: 'bottom-left'
-				},
-				{
-					status: 'Funds Sent', 
-					active: false, 
-					complete: false,
-					tip: 'MoneyCorp have completed the currency exchange and the Euros have been sent to the European Patent Office.',
-					position: 'bottom-right'
-				},
-				{
-					status: 'EPO Received', 
-					active: false, 
-					complete: false,
-					tip: 'We\'ve had confirmation that the funds have been received by the EPO.',
-					position: 'bottom-right'
-				}, 
-				{
-					status: 'EPO Instructed', 
-					active: false, 
-					complete: false,
-					tip: 'Everything is in place, and we’ve instructed the EPO.',
-					position: 'bottom-right'
-				},
-				{
-					status: 'Completed', 
-					active: false, 
-					complete: false,
-					tip: 'We\'ve had confirmation that your transaction has been completed. You can download a copy of the invoice or any relevant certificate below.',
-					position: 'bottom-right'
-				}
-			];
-
-			
+			vm.transactionLoaded = true;
+		
 
     	}
     )

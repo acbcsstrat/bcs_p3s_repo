@@ -18,15 +18,31 @@ function transactionService($http, $q) {
 
 	function fetchAllTransactions() {
 
-
-		console.log(this)
-
 		var deferred = $q.defer();
 
 		$q.all([this.fetchCurrentTransactions(), this.fetchTransactionHistory()])
 		.then(
 			function(response){
-				deferred.resolve(response[0].concat(response[1]));
+				var concat = response[0].concat(response[1]).map(function(data){	
+					data.serviceUIs.map(function(o, i){ 
+						if(o.patentUI) {				
+							o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
+							if(o.patentUI.clientRef == '') {
+								o.patentUI.clientRef = '[No Client Reference Provided]'
+							}
+						} else {
+							o.patentUI = {};
+							o.patentUI.clientRef = o.clientRef;
+							o.patentUI.ep_ApplicationNumber = o.patentApplicationNumber;
+							o.appAndType = o.patentUI.ep_ApplicationNumber  + ' (' + o.newType +')';
+							if(o.patentUI.clientRef == '') {
+								o.patentUI.clientRef = '[No Client Reference Provided]';
+							}
+						}
+					})
+					return data;		
+				})
+				deferred.resolve(concat);
 			},
 			function(errResponse) {
 				console.log('Error fetching all transactions. Error: ', errResponse);
@@ -110,7 +126,7 @@ function transactionService($http, $q) {
 	                	})
                 	}                        	  	
                     el.serviceUIs = [];
-                    el.serviceUIs = el.serviceUIs.concat(el.renewalUIs, el.grantUIs, el.epctUIs)
+                    el.serviceUIs = el.serviceUIs.concat(el.renewalUIs, el.grantUIs, el.epctUIs, el.validationUIs)
                     return el;
    
                 })

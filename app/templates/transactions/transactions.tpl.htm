@@ -147,10 +147,9 @@
 						{{transaction.serviceUIs.length}}
 			        </td>				        
 			        <td class="t-data__td">
-						<span data-ng-if="transaction.serviceUIs.length === 1" data-ng-repeat="patent in transaction.serviceUIs">
-							<span data-ng-if="patent.patentUI.ep_ApplicationNumber.length">
+						<span data-ng-if="transaction.serviceUIs.length === 1" data-ng-repeat="item in transaction.serviceUIs">
 								<span class="txt-grey">
-									{{patent.serviceUIs.appAndType }}
+									{{item.appAndType }}
 								</span>
 							</span>
 						</span>						

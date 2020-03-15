@@ -9,6 +9,7 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
    	vm.rowSelect = rowSelect;
    	vm.select = select;
    	vm.selectedSortType = 'p3S_TransRef';
+   	vm.transactions = null;
    	var transStatusArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Funds Sent', 'EPO Received', 'EPO Instructed', 'Completed'];
 
     var loadTimeout = $timeout(function() {
@@ -23,7 +24,7 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
   		$state.go('transactions.modal.transaction-item', {transId: transaction.id})
   	};
 
-  	$scope.transactionProgress = function(status) {
+  	$scope.transactionProgress = function(status) { //assigned to scope for child scope to access
 		var index = transStatusArray.indexOf(status);
 		var pecentage = Math.round(((index+1) * 100) / 7);
 		return pecentage;

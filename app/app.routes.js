@@ -178,13 +178,11 @@ function appRoutes($stateProvider) {
                     .then(
                         function(response){
                             return response.find(function(transaction){
-                                console.log('transaction : ', transaction)
-                                console.log('$stateParams : ', $stateParams)
                                 return transaction.id == $stateParams.transId;
                             })
                         },
                         function(errResponse) {
-                            console.log('error: ', errResponse)
+                            console.error('Error fetching trans item. Error: ', errResponse)
                         }
                     )
           
