@@ -9,7 +9,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: "eval",
+  devtool: "inline-cheap-source-map",
   plugins: [
     new MiniCssExtractPlugin({
       sourceMap: true,
