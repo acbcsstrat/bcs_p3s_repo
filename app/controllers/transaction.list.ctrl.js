@@ -6,23 +6,13 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 
 	var vm = this;
 
-   	vm.rowSelect = rowSelect;
-   	vm.select = select;
-   	vm.selectedSortType = 'p3S_TransRef';
+
+
    	vm.transactions = null;
    	var transStatusArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Funds Sent', 'EPO Received', 'EPO Instructed', 'Completed'];
-
     var loadTimeout = $timeout(function() {
       	vm.transactionsLoaded = true;
     }, 300);   	
-
-    function select(i) {
-        vm.selected = i;
-    }
-
-  	function rowSelect(event, transaction){
-  		$state.go('transactions.modal.transaction-item', {transId: transaction.id})
-  	};
 
   	$scope.transactionProgress = function(status) { //assigned to scope for child scope to access
 		var index = transStatusArray.indexOf(status);
@@ -49,6 +39,24 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 				return data;
 			})
 			vm.transactionsLoaded = true;
+			vm.sortBy = sortBy;
+   			vm.rowSelect = rowSelect;
+		   	vm.select = select;
+		   	vm.selectedSortType = 'p3S_TransRef';   			
+
+            function sortBy(propertyName) {
+                vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
+                vm.propertyName = propertyName;
+            };
+
+		    function select(i) {
+		        vm.selected = i;
+		    }            
+
+		  	function rowSelect(event, transaction){
+		  		$state.go('transactions.modal.transaction-item', {transId: transaction.id})
+		  	};		    
+
 		}
 	)
 

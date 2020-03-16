@@ -124,7 +124,7 @@
 				</tr>
 			</thead>
 			<tbody class="sticky-tbody">
-			    <tr data-ng-repeat="transaction in filtered=($ctrl.transactions | filter:filterByPropertiesMatchingAND | filter:searchTransactions) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, transaction);"  class="t-data__row t-data__row--select">
+			    <tr data-ng-repeat="transaction in filtered=($ctrl.transactions | filter:filterByPropertiesMatchingAND | filter:searchTransactions) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, transaction); $ctrl.select(transaction.id)"  class="t-data__row t-data__row--select" data-ng-class="{active: transaction.id == $ctrl.selected}">
 			        <td class="t-data__td sticky-td">
 						<a class="t-data__a" data-ng-attr-id="{{transaction.id}}">{{transaction.p3S_TransRef}}</a>
 			        </td>
