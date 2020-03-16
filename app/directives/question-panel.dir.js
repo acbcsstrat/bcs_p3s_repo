@@ -82,7 +82,6 @@ angular.module("ppApp").directive("selectMultiNgFiles", function() {
     link: function postLink(scope,elem,attrs,ngModel) {
       elem.on("change", function(e) {
         var files = elem[0].files;
-        console.log(files)
         ngModel.$setViewValue(files);
       })
     }

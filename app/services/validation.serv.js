@@ -15,12 +15,10 @@ function validationService($http, $q, Upload) {
 	}
 
 	function poaUploadSuccessNotify(id) {
-		console.log(id)
 		$http.post(ppdomain+'rest-validation-uploadPOACompleted/'+id)
 	}
 
 	function poaUploadFailNotify(id) {
-		console.log(id)
 		$http.post(ppdomain+'rest-validation-uploadPOAFailed/'+id)
 	}	
 
@@ -38,12 +36,10 @@ function validationService($http, $q, Upload) {
             },
             arrayKey: ''
         }).then(function (response) {
-        	console.log('service good', response)
-
-                deferred.resolve(response)
+            deferred.resolve(response)
 
         }, function (errResponse) {
-        	console.log('service bad', errResponse)
+        	console.error('Error submiting poas. Error: ', errResponse)
             deferred.reject(errResponse)
         });
 
@@ -102,7 +98,6 @@ function validationService($http, $q, Upload) {
 		$http.get(ppdomain+'rest-validation-quote/'+ id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
-				console.log('validation service fetchPreparedQuote success response: ', response)
 				deferred.resolve(response.data)
 			},
 			function(errResponse){
@@ -122,7 +117,6 @@ function validationService($http, $q, Upload) {
 		$http.delete('rest-validation-quote/'+ id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
-				console.log('validation service deleteQuote success response: ', response)
 				deferred.resolve(response.data)
 			},
 			function(errResponse){

@@ -193,17 +193,26 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div data-ng-if="item.serviceType == 'validation'">
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex justify-content-start"><!--display costs-->
+                                            <p class="font-weight-bold m-r-sm" data-ng-if="item.serviceStatus == 'Quote provided'"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssCurrent"></i>$ {{item.currentStageCostUSD | number: 2}}</p>
+                                            <p class="font-weight-bold txt-phase-green" data-ng-if="item.serviceStatus == 'Validation available'">Request Quote</p>
+                                            <p class="font-weight-bold txt-phase-green" data-ng-if="item.serviceStatus == 'Preparing quote'">Preparing Quote</p>
+                                        </div>
+                                    </div>
+                                </div>                                      
                                 <div data-ng-if="item.serviceType == 'validation' && item.serviceStatus == 'Quote provided'">
                                     <div class="d-flex flex-column">
                                         <div class="d-flex justify-content-start align-items-center"><!--display costs-->
-                                            <p class="font-weight-bold m-r-sm"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssCurrent"></i>$ {{item.currentStageCostUSD | number: 2}}</p>
+                                            
                                         </div>
                                     </div>
                                 </div>                                
 <!--                                 <div data-ng-if="item.serviceType == 'validation' && item.serviceStatus !== 'Quote provided'">
                                     <p class="txt-grey">N/A</p>
                                 </div> -->
-                                <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated'">
+                                <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated' && item.serviceStatus !== 'Preparing quote'">
                                     <p class="txt-grey">N/A</p>
                                 </div>                                
                             </td>
@@ -218,7 +227,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated'">
+                                    <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated' && item.serviceStatus !== 'Preparing quote'">
                                         <p class="txt-grey">N/A</p>
                                     </div>                                
                                 </td>

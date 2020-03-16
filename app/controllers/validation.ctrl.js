@@ -37,7 +37,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
     function init() {
         var serviceStatusL = patent.p3sServicesWithFees[0].serviceStatus.toLowerCase();
-
         if(patent.p3sServicesWithFees[0].validationFeeUI !== null) {
             var array = [];
             allState = array.concat(patent.p3sServicesWithFees[0].validationFeeUI.designatedStates, patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
@@ -55,11 +54,13 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             vm.validationTemplate = vm.templates[2].url;        
         }
 
-        if(serviceStatusL == 'payment in progress') {
+        if(serviceStatusL == 'payment in progress' || serviceStatusL == 'pa instructed') {
             vm.validationTemplate = vm.templates[3].url;        
-        }        
+        }
 
         if(serviceStatusL == 'blank poas provided' || serviceStatusL == 'blank poas downloaded') { //VALIDATION TEST DATA - REMOVE NotUsed
+
+            patent.postAddress = patent.validationQuoteUI.poaPostalAddress.split(',');
 
             var noPoasNeeded = allState.every(function(item){
                 return item.poaNeeded === false;
@@ -84,7 +85,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         function(){
             $scope.isChecked = true;
             vm.patent = patent; 
-
             if(patent.p3sServicesWithFees[0].validationFeeUI !== null) {
                 var array = [];
                 allState = array.concat(patent.p3sServicesWithFees[0].validationFeeUI.designatedStates, patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
@@ -107,7 +107,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             }
 
             if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'preparing quote') { 
-                console.log('im in')
                 validationService.fetchPreparedQuote(patent.patentID)
                 .then(
                     function(response){
@@ -170,8 +169,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         var formData = {};
 
-        console.log(data)
-
         var designatedMap = data.designatedStates.map(removeCost);
         var extensionMap = data.extensionStates.map(removeCost);
         var validationMap = data.validationStates.map(removeCost);
@@ -197,9 +194,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         $q.all(promiseArray)
         .then(
             function(response){
-                console.log('WHAT', response)
                 validationService.poaUploadSuccessNotify(patent.patentID)
-                console.log('pass')
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.validation-poas-submitted.tpl.htm',
                     appendTo: undefined,
@@ -216,9 +211,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                 $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
             },
             function(errResponse){
-                  console.log('WHAT error', errResponse)
+
                 validationService.poaUploadFailNotify(patent.patentID)
-                   console.log('pass error')
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.validation-poas-submitted-error.tpl.htm',
                     appendTo: undefined,
@@ -265,7 +259,9 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         formData.patentID = patent.patentID;
         formData.firstName = names[0];
-        formData.lastName = names[1];
+        names.shift();
+        formData.lastName = names.toString().replace(/,/g, ' '); //add all proceeding names after first name to last name
+
         formData.latestDateToRequestQuote = vm.validationInfo.latestDateToRequestQuote;
         formData.latestDateToPurchaseQuote = vm.validationInfo.latestDateToPurchaseQuote;
         formData.emailaddress = data.corresdpondenceEmailaddress;

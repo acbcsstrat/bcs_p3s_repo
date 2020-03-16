@@ -1,20 +1,13 @@
 <div class="row m-b-sm">
 	<div class="col-xl-12">	
-		<p class="m-b-xs">We have instructed the necessary associates and the states below require POA documents to be signed, scanned and uploaded to Patent Place. Please find the necessary documents available for download below</p>
+		<p class="m-b-xs">We have instructed the necessary associates and the states below require Power of Attorney (PoA) documents to be signed, scanned and uploaded to Patent Place. Please find the necessary documents available for download below</p>
 	</div>
 </div>
 <div class="row m-b-sm">
 	<div class="col-xl-12">	
 		<h4 class="font-h4 font-weight-medium text-uppercase m-b-xs">Notice</h4>
-		<p class="m-b-xs">We require the original signed PoA documents to be sent in the post for all states listed below to:</p>
-		<address class="font-body font-weight-medium">
-			Mr Validation<br>
-			25 Meer Street<br>
-			S-O-A<br>
-			Warwickshire<br>
-			CV37 6QB<br>
-			United Kingdom
-		</address>
+		<p class="m-b-sm">We also require the original signed PoA documents to be sent in the post for all states listed below to:</p>
+		<p class="font-h4 text-uppercase m-b-sm" data-ng-repeat="line in $ctrl.patent.postAddress">{{line}}</p>
 	</div>
 </div>
 <div class="row">
@@ -63,7 +56,7 @@
 			</div>
 			<div class="row m-b-md m-t-md">
 				<div class="col-md-12 m-b-xs">
-					<p class="font-weight-medium">I confirm that all the correct PoA documents have been uploaded for each required state listed above <input type="checkbox" class="m-r-xs" name="rightpoas" data-ng-model="rightPoas"></p>
+					<p class="font-weight-medium">I confirm that all the correct PoA documents have been selected for each required state listed above <input type="checkbox" class="m-r-xs" name="rightpoas" data-ng-model="rightPoas"></p>
 				</div>
 				<div class="col-md-12">
 					<p class="font-weight-medium">I confirm that all original PoA documents are in transit to the address provided above <input type="checkbox" name="transit" class="m-r-xs" data-ng-model="inTransit"></p>
