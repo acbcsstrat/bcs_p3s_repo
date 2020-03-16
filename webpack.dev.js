@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(common, {
     mode: 'development',
-  	devtool: 'source-map',
+  	devtool: 'eval',
     devServer: {
       contentBase: "./dist",
       // compress: true,

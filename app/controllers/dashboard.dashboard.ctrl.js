@@ -6,32 +6,28 @@ function dashboardCtrl ($scope, $state, $timeout, dashboardService, patentsRestS
 
     var vm = this;
 
-    vm.animate = false;
     vm.pageTitle = 'Dashboard';
     vm.date = new Date().getTime();
+    $scope.formalityData = {}
+    $scope.dashboardLoaded = false;
+    $scope.graphsLoaded = false;
 
-
-    var promise = patentsRestService.fetchAllPatents();
-
-    promise
+    $scope.promise = patentsRestService.fetchAllPatents();
+    $scope.promise
     .then(function(response) {
+
         if ($scope.$$destroyed) throw "Scope destroyed";
         return response;
     })
     .then(
         function(response){
+            dashboardService.sortPatents(response)
+            $scope.formalityData = dashboardService.getPatents;
             if($state.current.name === 'dashboard') {
-                dashboardService.sortPatents(response);
-                $scope.dashboardData = response;
                 $state.go('dashboard.content', {patents: response}, {reload: false});
-                vm.dashboardLoaded = true;
             }
         }
     )
-
-    $scope.$on('updatePatent', function(e, o){
-        $scope.$broadcast('updateCost');
-    })    
 
 
 }

@@ -58,12 +58,13 @@ require("app/controllers/checkout.basket.ctrl.js");
 require("app/controllers/core.core.ctrl.js");
 require("app/controllers/dashboard.dashboard.ctrl.js");
 require("app/controllers/dashboard.fxChart.ctrl.js");
-require("app/controllers/dashboard.graphDonut.ctrl.js");
-require("app/controllers/dashboard.recentActivity.ctrl.js");
-require("app/controllers/dashboard.action-cost.ctrl.js");
+require("app/controllers/dashboard.europcts-graph.ctrl.js");
+require("app/controllers/dashboard.renewals-graph.ctrl.js");
+require("app/controllers/dashboard.grants-graph.ctrl.js");
+require("app/controllers/dashboard.validations-graph.ctrl.js");
 require("app/controllers/dashboard.actions-available.ctrl.js");
 require("app/controllers/europct.form1200.ctrl.js");
-require("app/controllers/grant.ctrl.js");// !!!!!!! GRANT TEST DAT
+require("app/controllers/grant.ctrl.js");
 require("app/controllers/europct.form1200generated.ctrl.js");
 require("app/controllers/portfolio.ctrl.js");
 require("app/controllers/renewal.renewalHistory.ctrl.js");

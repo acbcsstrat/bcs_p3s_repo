@@ -21,34 +21,34 @@ function appRoutes($stateProvider) {
                 }]                    
             },
             views: {
-                'graphdonutwidget@dashboard': {
-                    controller: 'graphDonutCtrl',
+                'europctsgraph@dashboard': {
+                    controller: 'europctsGraphCtrl',
                     controllerAs: '$ctrl',
-                    templateUrl: 'app/templates/dashboard/dashboard.graph-donut-widget.tpl.htm',         
+                    templateUrl: 'app/templates/dashboard/dashboard.europcts-graph.tpl.htm',         
                 },
+                'renewalsgraph@dashboard': {
+                    controller: 'renewalsGraphCtrl',
+                    controllerAs: '$ctrl',
+                    templateUrl: 'app/templates/dashboard/dashboard.renewals-graph.tpl.htm',         
+                },                
+                'grantsgraph@dashboard': {
+                    controller: 'grantsGraphCtrl',
+                    controllerAs: '$ctrl',
+                    templateUrl: 'app/templates/dashboard/dashboard.grants-graph.tpl.htm',         
+                },
+                'validationsgraph@dashboard': {
+                    controller: 'validationsGraphCtrl',
+                    controllerAs: '$ctrl',
+                    templateUrl: 'app/templates/dashboard/dashboard.validations-graph.tpl.htm',         
+                },                                
                 'actionsavailable@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.actions-available.tpl.htm',
                     controller: 'renewalsCarouselCtrl',
                     controllerAs: '$ctrl'                
-                },
-                'actioncost@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
-                    controller: 'renewalCostCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'actioncostmd@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.action-cost.tpl.htm',
-                    controller: 'renewalCostCtrl',
-                    controllerAs: '$ctrl'                
-                },            
+                },           
                 'fxchartwidget@dashboard': {
                     templateUrl: 'app/templates/dashboard/dashboard.fxchart-widget.tpl.htm',
                     controller: 'dbfxChartCtrl',
-                    controllerAs: '$ctrl'
-                },
-                'recentactivitywidget@dashboard': {
-                    templateUrl: 'app/templates/dashboard/dashboard.recent-activity-widget.tpl.htm',
-                    controller: 'recentActivityCtrl',
                     controllerAs: '$ctrl'
                 }
             }
