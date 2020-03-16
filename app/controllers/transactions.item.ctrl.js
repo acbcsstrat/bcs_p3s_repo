@@ -88,7 +88,7 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
     	function(response){
 
     		vm.transactionItem = transactionItem;
-
+    		console.log(transactionItem)
 			vm.transactionItem.serviceUIs.map(function(item, index){
 
 				item.transItemStatus = transItemStatus(transactionItem.latestTransStatus);
@@ -118,7 +118,6 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
 
 					vm.transStatus.splice(4, 2);
 					vm.transStatus.splice(3, 1, obj1);
-
 
 					item.serviceType = 'validation'; 
 					item.serviceFeeUI = item.validationFeeUI;

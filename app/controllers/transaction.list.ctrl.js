@@ -6,13 +6,9 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 
 	var vm = this;
 
-
-
    	vm.transactions = null;
    	var transStatusArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Funds Sent', 'EPO Received', 'EPO Instructed', 'Completed'];
-    var loadTimeout = $timeout(function() {
-      	vm.transactionsLoaded = true;
-    }, 300);   	
+    $scope.filter = {};   	
 
   	$scope.transactionProgress = function(status) { //assigned to scope for child scope to access
 		var index = transStatusArray.indexOf(status);
@@ -20,11 +16,41 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 		return pecentage;
   	}
 
+    function noSubFilter(obj) {
+        for (var key in obj) {
+            if (obj[key]) { //if one of the $scope.filter ($scope.filter) properties evaluates to true (is selected) return false 
+                return false;
+            }
+        }
+        return true; //if no subfilters return true. This will result in all filtered data items being returned a true value
+    }
+
+    function checkArray(obj, service, prop) {
+        return service.some(function(item) { //if filter[curretStageColour][red]
+            return obj[prop][item[prop]] === true;
+        })
+    }
+
+    $scope.filterByPropertiesMatchingAND = function (data) { //all data sent from filter 
+        var matchesAND = true; //set macthes to true (default)
+        for (var obj in $scope.filter) { //$scope.filter is populated by $scope.filter within the panel controller below. Scope filter properties are initiated from front-end. currentStageColour/serviceType
+            if( $scope.filter.hasOwnProperty(obj) ) {
+                if (noSubFilter($scope.filter[obj])) continue; //Check if there are any sub filter options with the value of true, if so, break from loop to return value of true
+                if (!$scope.filter[obj][data[obj]]) { //If the property from the data matches the property from $scope.filter ($scope.filter) return false. It will not turn up in the table
+                    matchesAND = false;
+                    break; //break from the loop and return matchesAND which would now return false
+                }
+                
+            }
+        }
+        return matchesAND;
+    };   	
+
 	$scope.promise = $q.all([transactionService.fetchCurrentTransactions(), transactionService.fetchTransactionHistory()])
 	$scope.promise.then(
 		function(response){
-			vm.transactions = response[0].concat(response[1]);
-			vm.transactions.map(function(data){
+            $scope.transactions = response[0].concat(response[1]);
+			$scope.transactions.map(function(data){
 				data.transTypeUI = data.historic === true ? 'Historic' : 'Current';
 				data.actionProgress = $scope.transactionProgress(data.latestTransStatus);
 				data.serviceUIs.map(function(o, i){
@@ -38,11 +64,18 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 				})
 				return data;
 			})
-			vm.transactionsLoaded = true;
+
+			
 			vm.sortBy = sortBy;
    			vm.rowSelect = rowSelect;
 		   	vm.select = select;
-		   	vm.selectedSortType = 'p3S_TransRef';   			
+		   	vm.showFilter = showFilter;
+		   	vm.selectedSortType = 'p3S_TransRef';   
+		   	vm.updateFiltered = updateFiltered;
+            vm.chipOptions = [];		   				
+            $scope.selectedChip = selectedChip;
+
+            vm.transactionsLoaded = true;
 
             function sortBy(propertyName) {
                 vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
@@ -57,11 +90,44 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 		  		$state.go('transactions.modal.transaction-item', {transId: transaction.id})
 		  	};		    
 
+            function selectedChip(prop, value, cat) {
+                $scope.filter[cat][prop] = false;
+            }
+
+            function updateFiltered(prop, value, cat) {
+                if(value === true) {
+                    vm.chipOptions.push({cat: cat, value: value, prop: prop})
+                } 
+                if(value === false) {
+                    var index = vm.chipOptions.indexOf(cat);
+                    vm.chipOptions.splice(index, 1);
+                }
+            }
+
+            function showFilter(mdMenu, $event) {
+                mdMenu.open($event)
+                $scope.categories = ['transTypeUI', 'latestTransStatus'];     
+
+                //return items to filter panel
+                $scope.getItems = function (obj, array) { //obj is cat currentStageColour or serviceType
+                    return (array || []).map(function (w) {
+                        return w[obj]; //select property in p3sservices 
+                    }).filter(function (w, idx, arr) {
+                        if (typeof w === 'undefined') {
+                            return false;
+                        }
+                        return arr.indexOf(w) === idx;
+                    });
+                };
+
+
+                $scope.closeDialog = function() {
+                    $mdDialog.hide();                            
+                }
+
+            } //showFilter function end			
+
 		}
 	)
-
-  	$scope.$on('$destroy', function(){
-  		$timeout.cancel(loadTimeout)
-  	})
 
 }
