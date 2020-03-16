@@ -39,7 +39,7 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
             validation: {           
                 Green: [],
                 Grey: []
-            },                                    
+            }
         }
 
         var newPatents = patents.map(function(patent){

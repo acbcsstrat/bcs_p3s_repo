@@ -1,13 +1,21 @@
 <div class="widget-panel widget-panel-sq">
 	<div class="widget-panel__body bg-white d-flex flex-column">
+		<div>		
+			<p class="font-h4 font-weight-bold">Renewal formalities</p>
+		</div>
 		<div class="row d-flex flex-grow-1 just-content-center align-items-center">
 			<div class="col-md-12 col-lg-12 col-xl-12">
-				<p>Renewals</p>
-				<nvd3 options="$ctrl.donutOptions" data="$ctrl.donutData.phases" class="with-transitions"></nvd3>
-				<div class="donut-inner">
-					<h4 class="font-h4 font-weight-bold">Total</h4>
-					<span class="font-h2 font-weight-bold">{{$ctrl.donutData.total || 0}}</span>							
+				
+				<div data-ng-if="$ctrl.donutData.total !== 0">
+					<nvd3 options="$ctrl.donutOptions" data="$ctrl.donutData.phases" class="with-transitions"></nvd3>
+					<div class="donut-inner">
+						<h4 class="font-h4 font-weight-bold">Total</h4>
+						<span class="font-h2 font-weight-bold">{{$ctrl.donutData.total}}</span>							
+					</div>
 				</div>
+				<div data-ng-if="$ctrl.donutData.total === 0">
+					<p class="font-body text-center">There are currently no Renewal formalities on the system</p>
+				</div>		
 				<!--check whether it works when its back online-->
 			</div>
 		</div>

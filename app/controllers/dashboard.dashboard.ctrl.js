@@ -15,7 +15,6 @@ function dashboardCtrl ($scope, $state, $timeout, dashboardService, patentsRestS
     $scope.promise = patentsRestService.fetchAllPatents();
     $scope.promise
     .then(function(response) {
-
         if ($scope.$$destroyed) throw "Scope destroyed";
         return response;
     })

@@ -40,8 +40,9 @@
                                         </md-checkbox>
                                         <p>({{(filtered | filter:value:true).length}})&nbsp;
                                             <span class="text-capitalize" data-ng-if="value == 'GREY'">Grey</span>
+                                            <span class="text-capitalize" data-ng-if="value == 'Offline'">Offline (Manual/Urgent)</span>
                                             <span class="text-capitalize" data-ng-if="value == 'epct'">Euro-PCT</span>
-                                            <span class="text-capitalize" data-ng-if="value !== 'epct' && value !== 'GREY'">{{value}}</span>
+                                            <span class="text-capitalize" data-ng-if="value !== 'epct' && value !== 'GREY' && value !== 'Offline'">{{value}}</span>
                                         </p>
                                     </md-list-item>
                                     <md-divider></md-divider>
