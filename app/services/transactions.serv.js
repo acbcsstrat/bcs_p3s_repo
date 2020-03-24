@@ -16,6 +16,22 @@ function transactionService($http, $q) {
 
 	return factory;
 
+  	function transactionProgress(val, status) { //assigned to scope for child scope to access
+	    var transStatusArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Funds Sent', 'EPO Received', 'EPO Instructed', 'Completed'];
+	    var transStatusValidationArray = ['Initiated', 'Awaiting Funds', 'Processing Funds', 'Processing', 'Completed'];
+  		var arrayType;
+  		if(val == true) {
+  			arrayType = transStatusValidationArray;
+  		} else {
+  			arrayType = transStatusArray;
+  		}
+		var index = arrayType.indexOf(status);
+		var length = arrayType.length;
+		var percentage = Math.round(((index+1) * 100) / length);
+		return percentage;
+  	}
+
+
 	function fetchAllTransactions() {
 
 		var deferred = $q.defer();
@@ -24,21 +40,37 @@ function transactionService($http, $q) {
 		.then(
 			function(response){
 				var concat = response[0].concat(response[1]).map(function(data){	
+
+					data.transTypeUI = data.historic === true ? 'Historic' : 'Current';
+	                var isValidation = data.serviceUIs.some(function(item){
+	                    return item.newType == 'Validation' ? true : false;
+	                })
+
+	                if(isValidation === true) {
+	                    if(data.latestTransStatus === 'Funds Sent') {
+	                        data.latestTransStatus = 'Processing Funds';
+	                    }
+	                    if(data.latestTransStatus === 'EPO Received' || data.latestTransStatus === 'Associates Instructed') {
+	                        data.latestTransStatus = 'Processing';
+	                    }
+	                }
+					data.actionProgress = transactionProgress(isValidation, data.latestTransStatus);
+
 					data.serviceUIs.map(function(o, i){ 
-						if(o.patentUI) {				
-							o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';
+						if(o.patentUI !== undefined) {				
+							o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';	
 							if(o.patentUI.clientRef == '') {
 								o.patentUI.clientRef = '[No Client Reference Provided]'
 							}
 						} else {
 							o.patentUI = {};
 							o.patentUI.clientRef = o.clientRef;
-							o.patentUI.ep_ApplicationNumber = o.patentApplicationNumber;
-							o.appAndType = o.patentUI.ep_ApplicationNumber  + ' (' + o.newType +')';
+							o.appAndType = o.patentApplicationNumber + ' (' + o.newType +')';	
 							if(o.patentUI.clientRef == '') {
 								o.patentUI.clientRef = '[No Client Reference Provided]';
 							}
 						}
+						return o;
 					})
 					return data;		
 				})

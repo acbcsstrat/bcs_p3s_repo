@@ -7,14 +7,8 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 	var vm = this;
 
    	vm.transactions = null;
-   	var transStatusArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Funds Sent', 'EPO Received', 'EPO Instructed', 'Completed'];
-    $scope.filter = {};   	
 
-  	$scope.transactionProgress = function(status) { //assigned to scope for child scope to access
-		var index = transStatusArray.indexOf(status);
-		var pecentage = Math.round(((index+1) * 100) / 7);
-		return pecentage;
-  	}
+    $scope.filter = {};   	
 
     function noSubFilter(obj) {
         for (var key in obj) {
@@ -46,25 +40,10 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
         return matchesAND;
     };   	
 
-	$scope.promise = $q.all([transactionService.fetchCurrentTransactions(), transactionService.fetchTransactionHistory()])
+	$scope.promise = transactionService.fetchAllTransactions()
 	$scope.promise.then(
 		function(response){
-            $scope.transactions = response[0].concat(response[1]);
-			$scope.transactions.map(function(data){
-				data.transTypeUI = data.historic === true ? 'Historic' : 'Current';
-				data.actionProgress = $scope.transactionProgress(data.latestTransStatus);
-				data.serviceUIs.map(function(o, i){
-					if(o.patentUI !== undefined) {
-						o.appAndType = o.patentUI.ep_ApplicationNumber + ' (' + o.newType +')';	
-					} else {
-						o.appAndType = o.patentApplicationNumber + ' (' + o.newType +')';	
-					}
-					
-					return o;	
-				})
-				return data;
-			})
-
+            $scope.transactions = response;
 			
 			vm.sortBy = sortBy;
    			vm.rowSelect = rowSelect;
@@ -75,7 +54,7 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
             vm.chipOptions = [];		   				
             $scope.selectedChip = selectedChip;
 
-            vm.transactionsLoaded = true;
+            $scope.transactionsLoaded = true;
 
             function sortBy(propertyName) {
                 vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
