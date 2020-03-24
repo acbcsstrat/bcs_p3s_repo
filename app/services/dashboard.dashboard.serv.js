@@ -37,7 +37,7 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
                 Grey: []
             },
             validation: {           
-                Green: [],
+                Green: [],            
                 Grey: []
             }
         }
@@ -60,7 +60,14 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
             patent.p3sServices.forEach(function(action, idx){
                 var string = action.currentStageColour.toLowerCase();
                 var capitalized = string.charAt(0).toUpperCase() + string.slice(1);
-                obj[action.serviceType][capitalized].push(patent);
+
+                if(action.serviceType == 'validation') {
+                    obj.validation.Green.push(patent); //handle validation manual processing
+                }
+                if(action.serviceType !== 'postgrant' && action.serviceType !== 'validation') {
+                    obj[action.serviceType][capitalized].push(patent);
+                }
+                
             })
         })
         

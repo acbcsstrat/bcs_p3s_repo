@@ -20,8 +20,9 @@ function dashboardCtrl ($scope, $state, $timeout, dashboardService, patentsRestS
     })
     .then(
         function(response){
-            dashboardService.sortPatents(response)
+            dashboardService.sortPatents(response);
             $scope.formalityData = dashboardService.getPatents;
+            console.log('$scope.formalityData : ', $scope.formalityData)
             if($state.current.name === 'dashboard') {
                 $state.go('dashboard.content', {patents: response}, {reload: false});
             }
