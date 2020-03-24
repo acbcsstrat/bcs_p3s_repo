@@ -15,11 +15,14 @@
 		            </span>
 	            	<i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">
 			            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="999" md-font-icon="far fa-question-circle" data-ng-if="transaction.transItemStatus == 'Payment in progress'">
-							This is the process between asking us to complete a transaction and us sending the money to the patent office. We send an instruction to our payment partner who book the currency exchange transaction. Once we receive the money it's exchanged and sent on directly to the patent office.	              			              	
+							This is the process between asking us to complete a transaction and us sending the money to the patent office. We send an instruction to our payment partner who book the currency exchange transaction. Once we receive the money it's exchanged and sent on to the patent office.	              			              	
 			            </md-tooltip>
 			            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="right" md-z-index="999" md-font-icon="far fa-question-circle" data-ng-if="transaction.transItemStatus == 'EPO Instructed'">
 			              	This means that we've asked the EPO to complete the transaction. We're now just waiting for them to action this.          			              	
 			            </md-tooltip>
+			            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="right" md-z-index="999" md-font-icon="far fa-question-circle" data-ng-if="transaction.transItemStatus == 'Processing'">
+			              	The European patent validation work is now in progress. When the work is completed, you will be emailed a notification and the status of the transaciton will be updated to 'Completed'.              	
+			            </md-tooltip>			            
 
 			            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="right" md-z-index="999" md-font-icon="far fa-question-circle" data-ng-if="transaction.transItemStatus == 'Completed'">
 			              	We've had confirmation that the instruction has gone through. You can download a copy of the invoice or any relevant certificates.       			              	
