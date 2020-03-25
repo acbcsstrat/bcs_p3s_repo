@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="form-row">
+            <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant's or representatives reference: </label>
+                <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-init="isOptionValid(question.data, question); addToFormData('clientRef', question.data);" data-ng-model="question.data" data-ng-change="addToFormData('clientRef', question.data); isOptionValid(formData.clientRef, question.index);" placeholder="Applicant/representative reference" ref-validate required>
+
+            </div>
+            <div class="col-md-12 m-b-xs">
+                <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.validRef && form1200Form.reference.$dirty">Special characters &, > and < are not permitted to be included in the Client Reference.</p>                
+                <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.maxlength && form1200Form.reference.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>                   
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row m-b-xs">
+    <div class="col-xl-12">
+        <p data-ng-click="question.displayHelp = !question.displayHelp" class="btn btn-underlined font-weight-medium">What does this mean? 
+            <i class="fas fa-chevron-down fa-sm" data-ng-show="question.displayHelp"></i>
+            <i class="fas fa-chevron-right fa-sm" data-ng-show="!question.displayHelp"></i>
+        </p>
+        <div class="expandcollapse-item">
+            <div class="slideDown m-b-sm" data-ng-show="question.displayHelp">
+                <p class="font-body">You can include any reference here that you want to appear on the Form 1200 as the applicant or representatives reference</p>
+            </div>
+        </div>
+    </div>    
+</div>
