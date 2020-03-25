@@ -118,6 +118,36 @@ angular.module("ppApp").directive("selectNgFiles", function() { //if files to be
     }
 });
 
+angular.module("ppApp").directive("selectNgValidationFiles", function() { //if files to be uploaded vary in future, add condition to check type or create new directive
+    return {
+        require: "ngModel",
+        link: function postLink(scope,elem,attrs,ngModel) {
+            var validFormats = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
+            elem.bind('change', function () {
+                validFile(false);
+                scope.$apply(function () {
+                    ngModel.$render();
+                });
+            });
+            ngModel.$render = function () {
+                ngModel.$setViewValue(elem[0].files[0]);
+            };
+            function validFile(bool) {
+                ngModel.$setValidity('pdfIncorrect', bool);
+            }
+            ngModel.$parsers.push(function(value) {
+                var ext = value.name.substr(value.name.lastIndexOf('.')+1);
+                if(ext=='') return;
+                if(validFormats.indexOf(ext) == -1){
+                    return value;
+                }
+                validFile(true);
+                return value;
+            });
+        }
+    }
+});
+
 angular.module('ppApp').directive('anchorDisable', function() {
     return {
         restrict: 'E',

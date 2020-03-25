@@ -41,6 +41,7 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 	$scope.promise = transactionService.fetchAllTransactions()
 	$scope.promise.then(
 		function(response){
+            console.log('response : ',response)
             $scope.transactions = response;
 			
 			vm.sortBy = sortBy;
