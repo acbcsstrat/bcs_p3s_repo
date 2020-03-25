@@ -1,0 +1,18 @@
+<div class="widget-panel">
+	<div class="widget-panel__body bg-white">
+		<div class="row m-b-md">
+			<div class="col-md-12">
+				<h3 class="font-h3"><span class="font-weight-bold">FX Chart</span> - USD:EUR</h3>
+			</div>
+		</div>
+
+		<div data-ng-hide="$ctrl.fxChartLoaded" class=" d-flex flex-column justify-content-center align-items-center h-100">
+	        <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
+	        <p>We are just fetching latest FX data</p>
+        </div>
+		
+		<div data-ng-show="$ctrl.fxChartLoaded">
+			<nvd3 options="$ctrl.lineOptions" data="$ctrl.lineData" class="with-transitions"></nvd3> <!--xAxisTickFormat="xAxisTickFormatFunction()"-->
+		</div>
+	</div>
+</div>
