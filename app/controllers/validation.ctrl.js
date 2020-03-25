@@ -258,9 +258,10 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         })
 
         formData.patentID = patent.patentID;
-        formData.firstName = names[0];
+        
         names.shift();
-        formData.lastName = names.toString().replace(/,/g, ' '); //add all proceeding names after first name to last name
+        formData.lastName = names.pop();
+        formData.firstName = names.toString().replace(/,/g, ' ');
 
         formData.latestDateToRequestQuote = vm.validationInfo.latestDateToRequestQuote;
         formData.latestDateToPurchaseQuote = vm.validationInfo.latestDateToPurchaseQuote;

@@ -6,6 +6,8 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
 
 	var vm = this;
 	var transStatusArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Funds Sent', 'EPO Received', 'EPO Instructed', 'Completed'];
+	var transStatusValidationArray = ['Initiated', 'Awaiting Funds', 'Processing Funds', 'Processing', 'Completed'];
+
 	vm.setTab = setTab;
 	vm.closeCaseoverview = closeCaseoverview;
 	vm.caseoverview_tab = 'details';
@@ -70,28 +72,43 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
         vm.caseoverview_tab = tab;
     }
 
-    function transItemStatus(status) {
-    	var index = transStatusArray.indexOf(status);
-    	if(index < 5) {
-    		return 'Payment in progress'
+    function transItemStatus(val, status) {
+
+    	var index;
+
+    	if(val === true) {
+    		index = transStatusValidationArray.indexOf(status);
+	    	if(index < 3) {
+	    		return 'Payment in progress'
+	    	} else {
+	    		return status;
+	    	}    		
     	} else {
-    		return status;
+    		index = transStatusArray.indexOf(status);
+	    	if(index < 5) {
+	    		return 'Payment in progress'
+	    	} else {
+	    		return status;
+	    	}        		
     	}
+
     }
 
     $scope.promise //assigned promise to scope so child state can also resolve this promise to invoke functions
     .then(function(response) {
         if ($scope.$$destroyed) throw "Scope destroyed";
-        return response[0].concat(response[1]);
+        return response;;
     })
     .then(
     	function(response){
 
     		vm.transactionItem = transactionItem;
-    		console.log(transactionItem)
-			vm.transactionItem.serviceUIs.map(function(item, index){
 
-				item.transItemStatus = transItemStatus(transactionItem.latestTransStatus);
+            var isValidation = transactionItem.serviceUIs.some(function(item){
+                return item.newType == 'Validation' ? true : false;
+            })
+			vm.transactionItem.serviceUIs.map(function(item, index){
+				item.transItemStatus = transItemStatus(isValidation, transactionItem.latestTransStatus);
 
 				if(item.renewalFeeUI) { 
 					item.serviceType = 'renewal'; 
@@ -109,6 +126,14 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
 				if(item.validationFeeUI) { 
 
 					var obj1 = {
+						status: 'Processing funds', 
+						active: false, 
+						complete: false,
+						tip: 'We are currently processing your funds',
+						position: 'bottom-right'
+					}
+
+					var obj2 = {
 						status: 'Processing', 
 						active: false, 
 						complete: false,
@@ -116,8 +141,9 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
 						position: 'bottom-right'
 					}
 
-					vm.transStatus.splice(4, 2);
-					vm.transStatus.splice(3, 1, obj1);
+					vm.transStatus.splice(3, 3);
+					vm.transStatus.splice(3, 0, obj1);
+					vm.transStatus.splice(4, 0, obj2);
 
 					item.serviceType = 'validation'; 
 					item.serviceFeeUI = item.validationFeeUI;
