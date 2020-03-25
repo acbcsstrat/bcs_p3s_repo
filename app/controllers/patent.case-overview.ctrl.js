@@ -92,7 +92,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         $scope.$parent.promise.then(
             function(){
-
+                console.log(patent)
                 vm.patent = patent;
 
                 vm.portfolioLoaded = true;

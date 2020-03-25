@@ -164,9 +164,12 @@
                                     <div data-ng-if="!item.isUrgentAttention"> <!-- cover manual processing-->
                                         <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
                                     </div>
-                                    <div data-ng-if="item.isUrgentAttention"> <!-- cover manual processing-->
+                                    <div data-ng-if="item.isUrgentAttention && item.serviceType !== 'validation'"> <!-- cover manual processing-->
                                         <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
-                                    </div>                                            
+                                    </div>     
+                                    <div data-ng-if="item.isUrgentAttention && item.serviceType == 'validation'"> <!-- cover manual processing-->
+                                        <p>Manual Processing Only</p>
+                                    </div>                                                                            
                                 </td>
                             </tr>
                         </table>                       
@@ -196,23 +199,17 @@
                                 <div data-ng-if="item.serviceType == 'validation'">
                                     <div class="d-flex flex-column">
                                         <div class="d-flex justify-content-start"><!--display costs-->
-                                            <p class="font-weight-bold m-r-sm" data-ng-if="item.serviceStatus == 'Quote provided'"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssCurrent"></i>$ {{item.currentStageCostUSD | number: 2}}</p>
+                                            <p class="font-weight-bold m-r-sm" data-ng-if="item.currentStageCostUSD !== null"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssCurrent"></i>$ {{item.currentStageCostUSD | number: 2}}</p>
                                             <p class="font-weight-bold txt-phase-green" data-ng-if="item.serviceStatus == 'Validation available'">Request Quote</p>
                                             <p class="font-weight-bold txt-phase-green" data-ng-if="item.serviceStatus == 'Preparing quote'">Preparing Quote</p>
                                         </div>
                                     </div>
-                                </div>                                      
-                                <div data-ng-if="item.serviceType == 'validation' && item.serviceStatus == 'Quote provided'">
-                                    <div class="d-flex flex-column">
-                                        <div class="d-flex justify-content-start align-items-center"><!--display costs-->
-                                            
-                                        </div>
-                                    </div>
-                                </div>                                
+                                </div>
+
 <!--                                 <div data-ng-if="item.serviceType == 'validation' && item.serviceStatus !== 'Quote provided'">
                                     <p class="txt-grey">N/A</p>
                                 </div> -->
-                                <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated' && item.serviceStatus !== 'Preparing quote'">
+                                <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated' && item.serviceStatus !== 'Preparing quote' && item.serviceStatus !== 'Scanned PoAs received'  && item.serviceStatus !== 'Blank PoAs downloaded'">
                                     <p class="txt-grey">N/A</p>
                                 </div>                                
                             </td>
@@ -299,7 +296,7 @@
                                             </ngcart-addtocart>
                                         </div>                                                  
                                                                                   
-                                        <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
+                                        <p class="font-weight-medium" data-ng-class="item.isUrgentAttention && item.serviceType !== 'validation' ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
                                     </div>
                                 </td>
                             </tr>

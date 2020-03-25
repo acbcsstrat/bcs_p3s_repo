@@ -88,7 +88,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
     })
     .then(
         function(response){
-
+            console.log(response)
             if(!response.length) {
                 vm.noPatents = true;
             }
