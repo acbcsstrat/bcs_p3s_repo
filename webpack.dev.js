@@ -6,7 +6,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(common, {
     mode: 'development',
+<<<<<<< HEAD
   	devtool: 'source-map',
+=======
+>>>>>>> fe-branch-v4
     devServer: {
       contentBase: "./dist",
       // compress: true,
