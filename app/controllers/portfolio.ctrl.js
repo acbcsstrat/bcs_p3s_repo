@@ -21,24 +21,7 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
         })
     }
 
-    function rowSelect(event, patent){
 
-        vm.stateParams = $stateParams;
-        if($(event.target).hasClass('generateForm1200')) {
-            $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
-        }
-
-        if($(event.target).hasClass('prepareGrant')) {
-            $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
-        }        
-
-        if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {
-            var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
-            var patentId = id[0].id; //gets data from data-id
-            $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: null}, {notify: false})            
-        }
-
-    };
 
     function noSubFilter(obj) {
         for (var key in obj) {
@@ -114,6 +97,28 @@ function portfolioCtrl($scope, $state, $stateParams, $rootScope, patentsRestServ
 
             vm.propertyName = 'ep_ApplicationNumber';
             vm.reverse = false;
+
+            function rowSelect(event, patent){
+                console.log('iddd ', patent.patentID)
+
+                vm.stateParams = $stateParams;
+                if($(event.target).hasClass('generateForm1200')) {
+                    $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
+                }
+
+                if($(event.target).hasClass('prepareGrant')) {
+                    $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
+                }        
+
+                if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {
+                    var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
+                    var patentId = id[0].id; //gets data from data-id
+                    console.log('patentId : ', patentId)
+                    console.log('should go')
+                    $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: null})            
+                }
+
+            };
 
             function sortBy(propertyName) {
                 vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;

@@ -65,6 +65,7 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 		    }            
 
 		  	function rowSelect(event, transaction){
+                console.log('id ', transaction.id)
 		  		$state.go('transactions.modal.transaction-item', {transId: transaction.id})
 		  	};		    
 

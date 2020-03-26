@@ -69,7 +69,7 @@ function patentsRestService($http, $q, organiseColourService) {
     };
 
     function fetchPatentItem(id) {
-
+        console.log('id : ', id)
         var deferred = $q.defer();
         $http.get(ppdomain+'rest-patent/'+ id)
             .then(
