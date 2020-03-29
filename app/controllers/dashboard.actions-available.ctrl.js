@@ -39,7 +39,7 @@ function renewalsCarouselCtrl($scope, $timeout, $state, dashboardService) {
 	            })
 	        })
 
-	        var result = [].concat(...response);
+	        var result = [].concat.apply([], response);
 
 			$scope.availableActions = result.filter(function(item){
 				return item.p3sServices[0].saleType == 'Online' || item.p3sServices[0].saleType == 'Offline';

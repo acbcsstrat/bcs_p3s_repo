@@ -80,13 +80,10 @@ function appRoutes($stateProvider) {
             url: '/:patentId',
             resolve: {
                 patent: ['$stateParams', 'patentsRestService', '$state', function($stateParams, patentsRestService, $state) {
-                    console.log('$stateParams.patentId : ', $stateParams.patentId) //EDGE RESOLVE ISSUES
                     return patentsRestService.fetchPatentItem($stateParams.patentId)
                     .then(
                         function(response){
-                             console.log('response : ', response)
                             return response;
-                            // return patentsRestService.fetchPatentItem($stateParams.patentId);
                         },
                         function(errResponse){
                             $state.go('portfolio', {}, {reload: true})
@@ -96,7 +93,6 @@ function appRoutes($stateProvider) {
                     
                 }],
                 ca: ['costAnalysisService', 'patent', function(costAnalysisService,  patent) {
-                    console.log(patent)
                     return costAnalysisService.fetchCa(patent.patentID, patent.p3sServicesWithFees);  
                 }]
             },

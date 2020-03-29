@@ -54,7 +54,7 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
         })
 
 
-        var result = [].concat(...newPatents);
+        var result = [].concat.apply([], newPatents);
 
         result.forEach(function(patent){
             patent.p3sServices.forEach(function(action, idx){

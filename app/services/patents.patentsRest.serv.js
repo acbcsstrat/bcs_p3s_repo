@@ -69,7 +69,6 @@ function patentsRestService($http, $q, organiseColourService) {
     };
 
     function fetchPatentItem(id) {
-        console.log('id : ', id)
         var deferred = $q.defer();
         $http.get(ppdomain+'rest-patent/'+ id)
             .then(
@@ -79,8 +78,10 @@ function patentsRestService($http, $q, organiseColourService) {
                     deferred.reject(response.data);
                 }
                 if(actionsArray.length) {
+                     
+                    var merged = [].concat.apply([], actionsArray); //dont use flat() method because of IE. This is alternative
                     response.data.p3sServicesWithFees.map(function(property){
-                        var item = actionsArray.flat().filter(function(action){
+                        var item = merged.filter(function(action){
                             return action.serviceType === property.serviceType && id == action.patentID;
                         }).map(function(filtered){
                             return filtered.actionID
