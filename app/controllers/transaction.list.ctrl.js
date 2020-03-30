@@ -41,7 +41,7 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 	$scope.promise = transactionService.fetchAllTransactions()
 	$scope.promise.then(
 		function(response){
-            console.log('response : ',response)
+
             $scope.transactions = response;
 			
 			vm.sortBy = sortBy;
@@ -65,7 +65,6 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 		    }            
 
 		  	function rowSelect(event, transaction){
-                console.log('id ', transaction.id)
 		  		$state.go('transactions.modal.transaction-item', {transId: transaction.id})
 		  	};		    
 

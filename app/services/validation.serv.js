@@ -26,7 +26,7 @@ function validationService($http, $q, Upload) {
 	function submitPoas(id, data) {
 
 		var deferred = $q.defer();
-		console.log(id, data)
+
         Upload.upload({
             url: ppdomain+'rest-validation-uploadPOA/',
             data:{ 
@@ -69,14 +69,11 @@ function validationService($http, $q, Upload) {
 
 	function requestQuote(formData) {
 
-		console.log('validation service: formdData ', formData)
-
 		var deferred = $q.defer();
 
 		$http.post(ppdomain+'rest-validation-quote-request/', formData) //VALIDATION TEST DATA 
 		.then(
 			function(response){
-				console.log('validation service success response: ', response)
 				deferred.resolve(response.data)
 			},
 			function(errResponse){
@@ -90,8 +87,6 @@ function validationService($http, $q, Upload) {
 	}
 
 	function fetchPreparedQuote(id) {
-
-		console.log('validation service fetchPreparedQuote: id', id)
 
 		var deferred = $q.defer();
 
