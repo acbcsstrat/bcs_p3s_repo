@@ -7,6 +7,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   devtool: "source-map",
+  // devtool: "eval",
   entry: {
     // vendor: './src/js/vendor.js',   
     app: './src/js/app.js',
@@ -36,11 +37,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
-        loader: 'babel-loader'
-      },
       {
         test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         use: [

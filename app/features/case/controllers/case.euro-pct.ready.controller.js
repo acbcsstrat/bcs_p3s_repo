@@ -84,7 +84,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                  email: support@ip.place, or phone: +44 203 696 0949';
         }
         if(question == 'amendments' && value === true) {
-            message = 'Amendedx ';
+            message = 'Amended';
             obj.title = 'Amendments made';
             obj.message = 'If you confirm that amendments have been made to the application, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
@@ -209,7 +209,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                 $state.go('portfolio.modal.patent', {form1200generate: 1, prepareGrant: 0}, {reload: true});
             },
             function(errResponse){
-                console.log(response)
+
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/templates/modals/modal.generate-form1200-error.tpl.htm',
                     appendTo: undefined,
@@ -248,10 +248,9 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', '$state', function($uibModalInstance, $timeout, $state){
 
-                
+               
 
                 this.confirm = function() {
-                    console.log('confirm')
                     form1200Service.inhibitForm1200(patent.patentID, reason)
                     .then(
                         function(response) {

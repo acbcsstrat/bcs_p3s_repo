@@ -9,9 +9,6 @@ function DashboardService($http, $q, PatentsRestService) {
     var factory = {
         sortPatents: sortPatents,
         getPatents: {},
-        setActionCost: setActionCost,
-        fetchActionCost: fetchActionCost,
-        actionCost: '',
     };
 
     return factory;
@@ -21,25 +18,31 @@ function DashboardService($http, $q, PatentsRestService) {
     function sortPatents(patents) {
 
         var obj = {
-            Green: [],
-            Amber: [],
-            Red: [],
-            Blue: [],
-            Black: [],
-            Grey: []
-        }
-
-        for(var property in obj) {
-            if(obj.hasOwnProperty(property)){
-                if(Array.isArray(obj[property])) {
-                    obj[property].length = 0;
-                } else {
-                    obj[property] = 0; //for totoal obj.Total
-                }
+            epct: {           
+                Green: [],
+                Amber: [],
+                Red: [],
+                Grey: []
+            },
+            renewal: {           
+                Green: [],
+                Amber: [],
+                Red: [],
+                Blue: [],
+                Black: [],
+                Grey: []
+            },
+            grant: {           
+                Green: [],
+                Amber: [],
+                Red: [],
+                Grey: []
+            },
+            validation: {
+                Green: [],
+                Grey: []
             }
         }
-
-        obj.Total = patents.length;
 
         var newPatents = patents.map(function(patent){
             return patent.p3sServices.map(function(serv){
@@ -53,64 +56,24 @@ function DashboardService($http, $q, PatentsRestService) {
         })
 
 
-        var result = [].concat(...newPatents);
+        var result = [].concat.apply([], newPatents);
 
         result.forEach(function(patent){
             patent.p3sServices.forEach(function(action, idx){
                 var string = action.currentStageColour.toLowerCase();
-                var capitlized = string.charAt(0).toUpperCase() + string.slice(1);
-                obj[capitlized].push(patent);
+                var capitalized = string.charAt(0).toUpperCase() + string.slice(1);
+
+                if(action.serviceType == 'validation') {
+                    obj.validation.Green.push(patent); //handle validation manual processing
+                }
+                if(action.serviceType !== 'postgrant' && action.serviceType !== 'validation') {
+                    obj[action.serviceType][capitalized].push(patent);
+                }
+                
             })
         })
-
+        
         factory.getPatents = obj;
-    }
-
-
-    function setActionCost(patent) {
-
-        if(patent === undefined || patent.saleType === 'Not In Progress') {
-            factory.actionCost = undefined;
-            return
-        }
-
-        var action = patent.p3sServices[0].serviceType;
-
-        PatentsRestService.fetchPatentItem(patent.patentID)
-        .then(
-            function(patent){
-
-                var service = patent.p3sServicesWithFees.filter(function(el){
-                    return el.serviceType == action;
-                });
-
-                var fee = Object.keys(service[0]).find(function(el){
-                    if(el.indexOf('FeeUI') > 0 && service[0][el] !== null) {
-                        return true;
-                    }
-                    return false
-                })
-
-                if(service[0][fee]) {
-
-                    if(service[0].saleType === 'Online' || service[0].saleType === 'Offline') {
-                        patent.cartService = fee.replace('FeeUI','');
-                        patent.serviceCost = service[0][fee];
-                    }
-                }
-
-                return patent
-            }
-        )
-        .then(
-            function(patent){
-                factory.actionCost = patent;
-        })
-
-    }
-
-    function fetchActionCost() {
-        return factory.actionCost;
     }
     
 

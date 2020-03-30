@@ -8,7 +8,6 @@ function openHelpPanel($rootScope) {
 		restrict: 'E',
 		templateUrl: 'app/templates/directives/open-help-button.tpl.htm',
 		link: function(scope, elem, attr) {
-
 			elem.bind('click', function(){				
 				scope.$broadcast('helpRequired', true)
 			})

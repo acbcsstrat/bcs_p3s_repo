@@ -21,7 +21,7 @@ function PatentsRestService($http, $q, OrganiseColourService) {
     var actionsArray = [];
 
     function fetchAllPatents() {
-
+        console.log('get patent')
         var deferred = $q.defer();
          $http.get(ppdomain+'rest-patents-portfolio/')
             .then(
@@ -66,12 +66,11 @@ function PatentsRestService($http, $q, OrganiseColourService) {
                 deferred.reject(errResponse);
             }
         );
-
+            console.log('return')
         return deferred.promise;
     };
 
     function fetchPatentItem(id) {
-
         var deferred = $q.defer();
         $http.get(ppdomain+'rest-patent/'+ id)
             .then(
@@ -81,8 +80,10 @@ function PatentsRestService($http, $q, OrganiseColourService) {
                     deferred.reject(response.data);
                 }
                 if(actionsArray.length) {
+                     
+                    var merged = [].concat.apply([], actionsArray); //dont use flat() method because of IE. This is alternative
                     response.data.p3sServicesWithFees.map(function(property){
-                        var item = actionsArray.flat().filter(function(action){
+                        var item = merged.filter(function(action){
                             return action.serviceType === property.serviceType && id == action.patentID;
                         }).map(function(filtered){
                             return filtered.actionID
@@ -116,11 +117,11 @@ function PatentsRestService($http, $q, OrganiseColourService) {
 
     function updatePatent(patent, id) {
         //quick fix for resolving issues with converting circule structure to JSON(loop) 
-        if(patent.p3sServicesWithFees.length > 1) {
-            patent.p3sServicesWithFees.map(function(action){
-                action.grantFeeUI = null;
-            })
-        }
+        patent.p3sServicesWithFees.map(function(action){
+            action.grantFeeUI = null;
+            action.validationFeeUI = null;
+        })
+   
         var deferred = $q.defer();
         $http.put(REST_SERVICE_URI+id, patent)
             .then(

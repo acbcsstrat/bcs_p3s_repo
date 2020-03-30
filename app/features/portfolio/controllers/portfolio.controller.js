@@ -19,24 +19,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
         })
     }
 
-    function rowSelect(event, patent){
 
-        vm.stateParams = $stateParams;
-        if($(event.target).hasClass('generateForm1200')) {
-            $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
-        }
-
-        if($(event.target).hasClass('prepareGrant')) {
-            $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
-        }        
-
-        if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {
-            var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
-            var patentId = id[0].id; //gets data from data-id
-            $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: null}, {notify: false})            
-        }
-
-    };
 
     function noSubFilter(obj) {
         for (var key in obj) {
@@ -112,6 +95,25 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
 
             vm.propertyName = 'ep_ApplicationNumber';
             vm.reverse = false;
+
+            function rowSelect(event, patent){
+
+                vm.stateParams = $stateParams;
+                if($(event.target).hasClass('generateForm1200')) {
+                    $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
+                }
+
+                if($(event.target).hasClass('prepareGrant')) {
+                    $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
+                }        
+
+                if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {
+                    var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
+                    var patentId = id[0].id; //gets data from data-id
+                    $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: null})            
+                }
+
+            };
 
             function sortBy(propertyName) {
                 vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
@@ -196,7 +198,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                                     if(errResponse.status == 409){ //incorrect check digit
                                         $scope.searchError = 'It looks like the provided check digit differs from the check digit found at the European Patent Register. Please make sure the check digit is correct and try again.';
                                     }
-                                    if(errResponse.status == 400) { //incorrect syntax
+                                    if(errResponse.status == 400 || errResponse.status == 404) { //incorrect syntax
                                         $scope.searchError = 'We\'ve not been able to find that patent in the European Patent Register. Please enter an application number such as EP18123456.2';
                                     }
 

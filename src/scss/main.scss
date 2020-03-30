@@ -82,6 +82,7 @@
             overflow-y: scroll;
             height: 560px;
             background: $white;
+            border-bottom: 40px solid #fff;            
             &::-webkit-scrollbar-thumb {
                 background: $grey; 
                 border-radius: 10px;
@@ -425,4 +426,15 @@ md-chips.md-default-theme .md-chips, md-chips .md-chips {
 
 .opacity-0 {
   opacity: 0;
+}
+
+
+.cursor-help {
+    cursor: help;
+}
+
+md-tooltip.mdtooltip-md {
+    height: auto;
+    width: 40rem;
+    white-space: normal;
 }

@@ -60,7 +60,7 @@ angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ng
 startUpRun.$inject = ['Idle', 'userService', '$rootScope', '$timeout'];
 
 function startUpRun(Idle, userService, $rootScope, $timeout) {
-
+	console.log('startUp')
     Idle.watch();
 
 };

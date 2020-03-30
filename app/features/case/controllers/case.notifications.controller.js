@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('notificationsCtrl', notificationsCtrl);
 
-notificationsCtrl.$inject = ['patent', '$scope', '$state', '$timeout', '$location', '$anchorScroll', 'chunkDataService', 'notificationService', '$uibModal', 'organiseTextService', 'organiseColourService', 'currentTransactionsService', 'coreService', '$rootScope'];
+notificationsCtrl.$inject = ['patent', '$scope', '$state', '$timeout', '$location', '$anchorScroll', 'chunkDataService', 'notificationService', '$uibModal', 'organiseTextService', 'organiseColourService', 'coreService', '$rootScope'];
 
-function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorScroll, chunkDataService, notificationService, $uibModal, organiseTextService, organiseColourService, currentTransactionsService, coreService, $rootScope) {
+function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorScroll, chunkDataService, notificationService, $uibModal, organiseTextService, organiseColourService, coreService, $rootScope) {
 
     var vm = this;
 
@@ -61,11 +61,12 @@ function notificationsCtrl(patent, $scope, $state, $timeout, $location, $anchorS
             vm.notificationUi = 'allGrantNotificationUIs';
             vm.notificationUrl = 'rest-grant-notifications/';
             vm.toBlueOrNotToBlue = false;
-        }        
+        }
 
+        if(action !== 'validation') { 
+            phaseNotifications();
+        }
 
-
-        phaseNotifications()
 
     };
 

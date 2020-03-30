@@ -21,7 +21,6 @@ function patentDetailsCtrl(patent, ca, $rootScope, $scope, $state, $stateParams,
 
                 this.dismissModal = function() {
                     $uibModalInstance.close();
-                    
                 };
 
             }]

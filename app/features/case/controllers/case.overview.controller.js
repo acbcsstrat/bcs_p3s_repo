@@ -1,8 +1,8 @@
 angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
 
-caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal', 'renewalRestService', 'activeTabService', '$mdDialog']
+caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal', 'renewalRestService', 'activeTabService', '$mdDialog', 'validationService']
 
-function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, patentsRestService, $uibModal, renewalRestService, activeTabService, $mdDialog) {
+function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, patentsRestService, $uibModal, renewalRestService, activeTabService, $mdDialog, validationService) {
 
     var vm = this;
 
@@ -13,8 +13,11 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.portfolioLoaded = false;
     vm.setTab = setTab;
     vm.checkAvailableAction = checkAvailableAction;
-    $scope.availableServices = [];
+    vm.requestNewQuote = requestNewQuote;
+    vm.processView = processView
+    vm.openMenu = openMenu;
     $scope.notInProgress = true;
+    $scope.validationNotification = false;
     $scope.caseoverview_tab = 'details';
     $scope.showOptions = false;
     $scope.activeLeft = 0;
@@ -22,7 +25,9 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     var chartTimeout;
     var originatorEv;
 
-    vm.processView = function(tab, index, chart) {
+    function processView(tab, index, chart) {
+
+        if((tab == 'notifications' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification)) { return; }
         if(!$scope.notInProgress) {
             vm.setTab(tab)
             $scope.activeLeft = index;
@@ -33,10 +38,37 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     }
 
-    vm.openMenu = function($mdMenu, ev) {
+    function openMenu($mdMenu, ev) {
         originatorEv = ev;
         $mdMenu.open(ev);
     };
+
+    function requestNewQuote() {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.validation-confirm-deletion.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.confirmDeletion = function() {
+                    $uibModalInstance.close();
+                    validationService.deleteQuote(vm.patent.patentID)
+                    .then(
+                        function(response){
+                            $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                        }
+                    )
+                }
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
+
+            }]
+        });
+
+    }    
 
     function init() {
 
@@ -52,12 +84,17 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             activeTabService.setTab(0);
         }
 
+        if($stateParams.validationQuote === 1) {
+            $scope.activeLeft = 8;
+            $scope.caseoverview_tab = 'validation';
+            activeTabService.setTab(0);
+        }        
+
         $scope.$parent.promise.then(
             function(){
-
                 vm.patent = patent;
-                vm.portfolioLoaded = true;
 
+                vm.portfolioLoaded = true;
                 renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
                     function(response){
@@ -69,24 +106,25 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                     }
                 )
 
-                $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
-                    return item.saleType == 'Not In Progress';
+                $scope.validationNotification = patent.p3sServicesWithFees.some(function(item){
+                    return item.serviceType == 'validation';
                 })
-    
-                patent.p3sServicesWithFees.forEach(function(data, index){
+
+                $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
+                    return item.saleType == 'Not In Progress' || (item.serviceType == 'validation' && (item.serviceStatus == 'Validation available' || item.serviceStatus == 'Preparing quote'));
+                })
+
+                $scope.availableServices = patent.p3sServicesWithFees.map(function(data, index){
                     if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
-                    if(data.saleType !== 'Not In Progress' || data.serviceType == 'postgrant') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
-                        $scope.availableServices.push({id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType})
+                    if(data.saleType !== 'Not In Progress') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
+                       return {id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType}
                     }
                 })
 
                 $scope.availableServices.forEach(function(obj){
 
-                    if(obj.action == 'postgrant') {
-                        vm.displayValidationTab = true;
-                    }
-
                     if(obj.type == 'Not In Progress') { return; }
+
                     if(obj.action == 'Euro-PCT') {
                         if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
                             vm.displayForm1200Tab = true;
@@ -100,8 +138,9 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                         }
                     }
 
-
-
+                    if(obj.action == 'validation') {
+                        vm.displayValidationTab = true;
+                    }
                 })
             }
         )
@@ -207,7 +246,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     function checkAvailableAction(services) {
         vm.actionsAvailable = services.some(function(item){
-            return item.saleType === 'Online' || item.saleType === 'Offline' || item.saleType === 'In Progress';
+            return item.saleType === 'Online' || item.saleType === 'Offline' || (item.saleType === 'In Progress' && item.serviceStatus !== 'Preparing quote');
         })
     }
 

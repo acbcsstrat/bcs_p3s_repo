@@ -30,6 +30,9 @@
         vertical-align: middle;
         text-align: left;
         @include padding-mixin(1rem 3rem);
+        &.t-data__td--xs {
+            min-width: 100px;
+        }        
         &.t-data__td--sm {
             min-width: 200px;
         }
@@ -38,7 +41,7 @@
         }
         &.t-data__td--lg {
             min-width: 400px;
-        }      
+        }
     }
     
 
@@ -47,6 +50,9 @@
         text-align: left;
         @include padding-mixin(1.5rem 3rem);
         // min-width: 300px;
+        &.t-data__th--xs {
+            min-width: 100px;
+        }        
         &.t-data__th--sm {
             min-width: 200px;
         }
@@ -116,6 +122,9 @@
         height: calc(100vh - 50.5rem);
         max-height: calc(100vh - 50.5rem);
     }
+    &.scrollable-area--set-height-md {
+        height: 50rem;
+    }    
     &::-webkit-scrollbar-thumb {
         background: $grey; 
         border-radius: 10px;
@@ -125,9 +134,6 @@
     &::-webkit-scrollbar {
         width: 15px;
     }    
-    &.scrollable-area--full-height  {
-        
-    }
     &.dashboard-table {
         height: 280px;
     }    

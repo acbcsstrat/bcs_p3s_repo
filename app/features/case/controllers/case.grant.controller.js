@@ -45,8 +45,6 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
     init();
 
-    var destroyFrom;
-
     function submitGrantData(data){
 
         var formData = new FormData();
@@ -258,11 +256,5 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
             }]
         });
-
     }
-
-    $scope.$on('$destroy', function() {
-      destroyFrom(); // remove listener.
-    });         
-
 }
