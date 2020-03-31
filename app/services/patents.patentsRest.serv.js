@@ -128,8 +128,10 @@ function patentsRestService($http, $q, organiseColourService) {
     function updatePatent(patent, id) {
         //quick fix for resolving issues with converting circule structure to JSON(loop) 
         patent.p3sServicesWithFees.map(function(action){
+            action.form1200FeeUI = null;
             action.grantFeeUI = null;
             action.validationFeeUI = null;
+            action.renewalFeeUI = null;
         })
    
         var deferred = $q.defer();
