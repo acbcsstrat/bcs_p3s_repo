@@ -264,7 +264,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         formData.patentID = patent.patentID;
         
-        names.shift();
         formData.lastName = names.pop();
         formData.firstName = names.toString().replace(/,/g, ' ');
 
