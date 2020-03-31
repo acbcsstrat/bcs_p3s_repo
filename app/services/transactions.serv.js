@@ -47,10 +47,11 @@ function transactionService($http, $q) {
 	                })
 
 	                if(isValidation === true) {
-	                    if(data.latestTransStatus === 'Funds Sent') {
+	                	var valStatus = data.serviceUIs[0].validationStatus;
+	                    if((data.latestTransStatus === 'Funds Sent' && valStatus == 'Payment in progress' )|| (valStatus == 'Payment in progress' && data.latestTransStatus === 'EPO Received') || (valStatus == 'PA instructed' && data.latestTransStatus === 'EPO Received') ) {
 	                        data.latestTransStatus = 'Processing Funds';
 	                    }
-	                    if(data.latestTransStatus === 'EPO Received' || data.latestTransStatus === 'Associates Instructed') {
+	                    if((valStatus !== 'Payment in progress' && data.latestTransStatus === 'EPO Received') || data.latestTransStatus === 'Associates Instructed') {
 	                        data.latestTransStatus = 'Processing';
 	                    }
 	                }
@@ -77,7 +78,7 @@ function transactionService($http, $q) {
 				deferred.resolve(concat);
 			},
 			function(errResponse) {
-				console.log('Error fetching all transactions. Error: ', errResponse);
+				console.error('Error fetching all transactions. Error: ', errResponse);
 			}
 		)
 
