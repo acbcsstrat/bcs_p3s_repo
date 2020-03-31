@@ -111,7 +111,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 })
 
                 $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
-                    return item.saleType == 'Not In Progress' || (item.serviceType == 'validation' && (item.serviceStatus == 'Validation available' || item.serviceStatus == 'Preparing quote'));
+                    return item.saleType == 'Not In Progress' || (item.serviceType == 'validation' && (item.serviceStatus == 'Validation available' || item.serviceStatus == 'Preparing quote')) || (item.saleType == 'Offline' && item.serviceType == 'validation');
                 })
 
                 $scope.availableServices = patent.p3sServicesWithFees.map(function(data, index){
