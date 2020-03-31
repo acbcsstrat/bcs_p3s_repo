@@ -18,7 +18,10 @@
             <div class="d-flex align-items-center">
                 <md-chips data-ng-model="$ctrl.chipOptions" readonly="true" md-removable="true" class="text-capitalize font-weight-medium cursor-pointer" md-on-remove="selectedChip($chip.prop, $chip.value, $chip.cat); getItems($chip.cat, portfolioData)">
                     <md-chip-template>
-                        <strong class="font-body"><span data-ng-show="{{$chip.prop}} == 'epct'">Euro-PCT</span><span data-ng-hide="{{$chip.prop}} == 'epct'">{{$chip.prop}}</span></strong>
+                        <strong class="font-body">
+                            <span data-ng-show="$chip.prop == 'Epct'">Euro-PCT</span>
+                            <span data-ng-hide="$chip.prop == 'Epct'">{{$chip.prop}}</span>
+                        </strong>
                         <em class="font-body" data-ng-if="$chip.cat ==='serviceType'">(action)</em><em class="font-body" data-ng-if="$chip.cat ==='currentStageColour'">(phase)</em>                     
                     </md-chip-template>
                     <!-- <md-icon><i class="d-flex input-group-text pill-radius fa fa-search"></i></md-icon> -->

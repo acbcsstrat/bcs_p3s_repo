@@ -63,7 +63,7 @@ function dashboardService($http, $q, organiseColourService, organiseTextService,
                 if(action.serviceType == 'validation') {
                     obj.validation.Green.push(patent); //handle validation manual processing
                 }
-                if(action.serviceType !== 'postgrant' && action.serviceType !== 'validation' && action.serviceType !== 'postvalidation') {
+                if(action.serviceType !== 'postgrant' && action.serviceType !== 'validation' && action.serviceType !== '----') { //validated changed fro postvalidation
                     obj[action.serviceType][capitalized].push(patent);
                 }
                 

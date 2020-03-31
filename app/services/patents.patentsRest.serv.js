@@ -35,6 +35,16 @@ function patentsRestService($http, $q, organiseColourService) {
 
                 response.data.map(function(patent){
                     return patent.p3sServices.map(function(property){
+                        
+                        if(property.serviceType === 'postvalidation') {
+                            property.serviceType = '----';
+                            property.serviceStatusUI = 'N/A';
+
+                        }
+                        if(property.serviceType == 'postgrant') {
+                            property.serviceType = '----';
+                        }
+
                         property.actionID = patent.patentID + generateId(property.serviceType); //generate unique id based on patent id and service type (get char codes)
                         if(property.currentStageColour) {
                             property.cssCurrent = organiseColourService.getCurrColour(property.currentStageColour, 'text')
@@ -81,6 +91,8 @@ function patentsRestService($http, $q, organiseColourService) {
                      
                     var merged = [].concat.apply([], actionsArray); //dont use flat() method because of IE. This is alternative
                     response.data.p3sServicesWithFees.map(function(property){
+                        property.serviceType = property.serviceType == 'postvalidation' ? 'N/A' : property.serviceType;
+                        property.serviceStatus = property.serviceType == 'postvalidation' ? 'validated' : property.serviceStatus;
                         var item = merged.filter(function(action){
                             return action.serviceType === property.serviceType && id == action.patentID;
                         }).map(function(filtered){
