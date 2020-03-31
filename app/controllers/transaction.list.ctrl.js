@@ -42,7 +42,7 @@ function transactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
 	$scope.promise.then(
 		function(response){
 
-            $scope.transactions = [];
+            $scope.transactions = response;
 			
 			vm.sortBy = sortBy;
    			vm.rowSelect = rowSelect;
