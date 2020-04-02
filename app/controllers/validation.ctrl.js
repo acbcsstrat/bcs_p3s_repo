@@ -43,6 +43,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             allState = array.concat(patent.p3sServicesWithFees[0].validationFeeUI.designatedStates, patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
         }
     	vm.activeTab = 0;
+
 		if(serviceStatusL == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
     		vm.validationTemplate = vm.templates[0].url;        
     	}
@@ -73,7 +74,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             }
         }                    
 
-        if(serviceStatusL == 'scanned poas received' || serviceStatusL == 'poas provided to pa') { //VALIDATION TEST DATA - REMOVE NotUsed
+        if(serviceStatusL == 'scanned poas received' || serviceStatusL == 'poas provided to pa' || serviceStatusL == 'paper documents received') { //VALIDATION TEST DATA - REMOVE NotUsed
             vm.validationTemplate = vm.templates[6].url;  
         }
 
