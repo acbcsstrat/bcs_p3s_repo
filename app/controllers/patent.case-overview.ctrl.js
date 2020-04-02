@@ -25,7 +25,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     var originatorEv;
 
     function processView(tab, index, chart) {
-        if((tab == 'notifications' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification)) { return; }
+        if((tab == 'notifications' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification) || (tab == 'fxchart' && $scope.validationNotification)) { return; }
         if(!$scope.notInProgress || tab == 'notifications' || tab == 'details') {
             vm.setTab(tab)
             $scope.activeLeft = index;
@@ -153,7 +153,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     }
 
     function setTab(tab) {
-        console.log('tab : ', tab)
         $scope.caseoverview_tab = tab;
     }
 
