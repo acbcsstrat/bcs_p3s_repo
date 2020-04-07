@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-xl-12">
+        <p class="m-b-xs">IP Place are required to act as your proffesional representatives in order to file your action. Do you agree to these terms?</p>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" name="checkYes" data-ng-model="validModel[question.title].yes" class="form-check-input checkbox-round" data-ng-required="!validModel[question.title].no" data-ng-change="question.checkError(validModel[question.title].no); isOptionValid(validModel[question.title].yes, question);" data-ng-click="validModel[question.title].no = false">
+            <label for="checkYes" class="form-check-label">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" name="checkNo" data-ng-model="validModel[question.title].no" class="form-check-input checkbox-round" data-ng-required="!validModel[question.title].yes" data-ng-change="question.checkError(validModel[question.title].no); isOptionValid(validModel[question.title].yes, question);" data-ng-click="validModel[question.title].yes = false; ">
+            <label for="checkNo" class="form-check-label">No</label>  
+        </div>
+
+    </div>
+</div>

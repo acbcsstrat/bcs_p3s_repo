@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="col-xl-12">
+		<div class="content-panel border-b-none">
+			<nav>
+				<ul class="view-nav-secondary">
+					<li>
+						<a class="view-nav__item" data-ui-sref-active="{'active': 'portfolio.patent.patent-info'}" data-ui-sref="portfolio.patent.patent-info">Patent Info</a><!-- {} acts as ng-class condition to add state if active state is portfolio.patent.patent-info or portfolio.patent.euro-pct and any of their child states-->
+					</li>
+					<li data-ng-if="$ctrl.showForm1200">
+						<a class="view-nav__item" data-ui-sref-active="{'active': 'portfolio.patent.euro-pct'}" data-ui-sref="portfolio.patent.euro-pct.info">Euro-PCT</a> <!--add   data-ng-disabled="$ctrl.serviceAvailable('Form1200')"-->
+					</li>
+					<li data-ng-if="$ctrl.showRenewal">
+						<a class="view-nav__item" data-ui-sref-active="{'active': 'portfolio.patent.renewal'}" data-ui-sref="portfolio.patent.renewal.info">Renewal</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
