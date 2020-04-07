@@ -7,6 +7,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   devtool: "source-map",
+  // devtool: "eval",
   entry: {
     vendor: './src/js/vendor.js',   
     app: './src/js/index.js',
@@ -24,18 +25,6 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.js$/,
-      //   exclude: /(node_modules|bower_components)/,
-      //   use: {
-      //     loader: 'babel-loader',
-      //     options: {
-      //       presets: ['@babel/preset-env'],
-      //       plugins: ['@babel/plugin-transform-runtime']
-
-      //     }
-      //   }
-      // },
       {
         test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         use: [
