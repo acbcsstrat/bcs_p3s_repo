@@ -15,17 +15,17 @@ function fetchHelpService() {
 			titles: [
 				{
 					index: 0, 
-					title: 'Portfolio',
+					title: 'What is the portfolio?',
 					info: [
 						{
 							title: 'Portfolio page',
-							content: 'From this page you can add patents and view them in the Portfolio table. The concept of the Portfolio page is to be able to access all Patent Details and available European actions from a single  location. A user can select a patent  from the Portfolio table, which will display all relevant content below in the Case Overview panel'
+							content: 'From this page you can add patents and view them in the Portfolio table. The concept of the Portfolio page is to be able to access all Patent Details and available European actions from a single  location. A user can select a patent  from the Portfolio table, which will display all relevant content below in the case-overview panel'
 						}
 					]
 				},
 				{ 
 					index: 1, 
-					title: 'List Patents',
+					title: 'Portfolio table',
 					info: [
 						{
 							title: 'Client Ref',
@@ -44,32 +44,36 @@ function fetchHelpService() {
 							content: 'This is a status assigned by Patent Place that indicates the current progress of a European action and what features are or are not available. If the European action has been committed to a transaction via Patent Place then a it will display a transactional status.'
 						},													
 						{
-							title: 'Case Overview',
-							content: 'This column displays what action is available for each application. (Renewal, Generate Form 1200, No Action Available.)'
-						}
+							title: 'European action (EP formality)',
+							content: 'This column displays what European action is available for each European patent case. (Renewal, Euro-PCT, Grant, Validation). If the application has been validated and/or there are no more actions available, this will be signifed by the symbols \'----\''
+						},
+						{
+							title: 'Current and next phases',
+							content: 'If the window for an EP formality has opened and an action is available, Patent Place will provide the current and next color phase, including the costs. Some EP formalities require steps to be taken to be able to view the phases and their costs. For example, a validation order requires the user to request a quote, providing the states in which they wish to validate the patent.'
+						}						
 					]
 				},
 				{ 
 					index: 2, 
-					title: 'Add Patent',
+					title: 'Adding patent applications',
 					info: [
 						{
-							title: 'Adding a patent',
-							content: 'Users can add patents by providing the EP Application number. Please ensure the check digit is correct while adding the patent.'
+							title: 'Adding patent applications',
+							content: 'To add a patent, click the add symbol on the portfolio page and enter the required EP Application number (please ensure the check digit is correct while adding the patent). Upon search, the system will provide you with the Euopean patent case, where you have the option to add a client reference and/or description '
 						}
 					]					
 				},
 				{ 
 					index: 3, 
-					title: 'Case Overview',
+					title: 'Case-overview',
 					info: [
 						{
-							title: 'Case Overview',
-							content: 'This panel provides the user with all informatin relevant to the patent selected from the Portoflio table. From this panel the user can access basic details, notification settings, fee breakdown and any functions required for processing a European action. \n From here the user can also add the action to the basket or remove the patent from the system'
+							title: 'Case-overview',
+							content: 'This panel provides the user with all informatin relevant to the patent selected from the Portoflio table. From this panel the user can access basic details, notification settings, fee breakdown and any functions required for processing a European action.  From here the user can also add the action to the basket or remove the patent from the system'
 						},
 						{
 							title: 'Notifications',
-							content: 'Patent Place provide notifications via email. The user can configure when they receive these notifications via the Case Overview, though default notification settings are initially applied when the patent is added to the system. Notiications are there to help users keep track of what stage of a color phase the european action is at.'
+							content: 'Patent Place provide notifications via email. The user can configure when they receive these notifications via the Case-overview, though default notification settings are initially applied when the patent is added to the system. Notiications are there to help users keep track of what stage of a color phase the european action is at.'
 						},
 						{
 							title: 'Renewal History',
@@ -86,7 +90,11 @@ function fetchHelpService() {
 						{
 							title: 'Fee Breakdown',
 							content: 'This displays the breakdown of the total cost, split between the official EPO fees and Patent Place fees. It also provides further details relevant to the action such as the current color phase, next color phase, how much money can be saved by processing the action now and when the deadline is.'
-						},				
+						},
+						{
+							title: 'EP formality tabs',
+							content: 'Dynamic tabs are provided witih varying information and tools, depending on the progress of the European patent application, and the status of the oustanding European patent formality. The purpose of these tabs are to help prepare instructions for either Grant (rule 71(3)), European phase entry (Form 1200) or validation.'
+						},						
 					]	
 				}
 			]
@@ -96,22 +104,11 @@ function fetchHelpService() {
 			titles: [
 				{
 					index: 0,
-					title: 'Current transactions',
+					title: 'Transaction list',
 					info: [
 						{
-
-							title: 'Current transactions',
-							content: 'This displays the details of all ongoing transactions. Once a individial item is completed, the relevant documents will be available to download when a transaction has been selected from the table.'
-						}
-					]
-				},
-				{
-					index: 1,
-					title: 'Transaction history',
-					info: [
-						{	
-							title: 'Transaction History',
-							content: 'This displays the details of all completed or failed transactions. All relevant doucments will be available for download when a transaction has been selected from the table.'
+							title: 'Transaction list',
+							content: 'All transactions whether current or historic are available from one location under the transactions page. If required, to help filter and find a specific transaction, users are provided with filtering and sorting tools in the transaction table. If you would like find further information on a transaction, such as the fee breakdown, select one of the transactions from the table and a transaction overview modal will be displayed. Any invoices or other documents, such as receipts from the EPO, can be found in the transaction overview panel, where they can be downloaded and printed off.'
 						}
 					]
 				},
@@ -127,16 +124,6 @@ function fetchHelpService() {
 				},
 				{
 					index: 3,
-					title: 'No. of Actions',
-					info: [
-						{						
-							title: 'No. of Actions',
-							content: 'This shows how many European actions were inlcuded in a single transaction.'
-						}
-					]
-				},
-				{
-					index: 4,
 					title: 'Trans Initiated',
 					info: [
 						{						
@@ -146,7 +133,7 @@ function fetchHelpService() {
 					]
 				},
 				{
-					index: 5,
+					index: 4,
 					title: 'Cost',
 					info: [
 						{
@@ -156,7 +143,7 @@ function fetchHelpService() {
 					]
 				},
 				{
-					index: 6,
+					index: 5,
 					title: 'Trans Status',
 					info: [
 						{
@@ -183,39 +170,17 @@ function fetchHelpService() {
 				},
 				{
 					index: 1,
-					title: 'Action Cost',
+					title: 'EP Formality totals',
 					info: [
 						{
-							title: 'Action Cost',
-							content: 'The cost of an action depending on the FX varitaions for the selected time period can be viewed in this panel which is displayed when a user selects an item from the \'Actions available\' table.'
+							title: 'EP Formality totals',
+							content: 'Patent Place provide pie charts to help summarize each EP formality type, representing the total formalities in each color phase.'
 
 						}
 					]
 				},
 				{
 					index: 2,
-					title: 'Recent Activity',
-					info: [
-						{
-							title: 'Recent Activity',
-							content: 'This widget displays a list of actions that have transititioned into a new colour phase or a transaction that has been initiated in the last 48 hours.'
-
-						}
-					]
-				},
-				{
-					index: 3,
-					title: 'Total Patents',
-					info: [
-						{
-							title: 'Total Patents',
-							content: 'This widget helpfully displays the total number of patents in the portfolio, and indicating how mnay are in each color phase. Hovering over the colored segments in donut chart displays how many patents are in that color phase.'
-
-						}
-					]
-				},
-				{
-					index: 4,
 					title: 'FX Chart',
 					info: [
 						{
