@@ -10,39 +10,18 @@ function mainNavService(){
 		}];    
   	sections.push({
   		name: 'Portfolio',
-  		type: 'toggle',
-  		pages: [
-  			{
-      		name: 'Portfolio',
-      		type: 'link',
-      		state: 'portfolio'
-		    },
-		    {
-				  name: 'Add Patent',
-				  type: 'link',
-				  state: 'search-patent'
-		    }
-		  ],
+  		type: 'link',
+      state: 'portfolio',
 		  icon: 'far fa-folders'
     })
 
   	sections.push({
   		
   		name: 'Transactions',
-  		type: 'toggle',
-  		pages: [
-  			{
-            name: 'Current',
-            state: 'current-transactions',
-            type: 'link',
-        },
-        {
-            name: 'History',
-            state: 'transaction-history',
-            type: 'link',
-        }
-      ],
+  		type: 'link',
+      state: 'transactions',
       icon: 'far fa-money-check-alt'
+      
 	})
      
      	// console.log(sections)
