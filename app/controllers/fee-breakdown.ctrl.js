@@ -8,16 +8,17 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
     vm.patent = patent;
     vm.setFees = setFees;
+    var loadFeeTimeout;
     
     $scope.$parent.promise
     .then(
         function(response){
-            if(response.length > 0) {
+            loadFeeTimeout = $timeout(function() {
                 setFees($scope.$parent.availableServices[0].action)
                 vm.data = {};
                 vm.data.availableAction = $scope.$parent.availableServices;
                 vm.data.selectedAction = { id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action };
-            }
+            }, 10);
 
         }
     )
@@ -33,7 +34,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
     }
 
     function setFees(action) {
-
+        console.log('Action', $scope.$parent.availableServices)
         vm.availableFees = {};
 
         if(feeUIAvailable(patent.p3sServicesWithFees))
@@ -110,5 +111,9 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
         vm.availableFees.savings = Number(Math.round((vm.availableFees.official[0].nextStageCostUSD - vm.availableFees.official[0].currentStageCostUSD) + 'e2') +'e-2');
 
     }
+
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(loadFeeTimeout)
+    })
 
 }
