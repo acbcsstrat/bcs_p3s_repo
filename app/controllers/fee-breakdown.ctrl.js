@@ -34,7 +34,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
     }
 
     function setFees(action) {
-        console.log('Action', $scope.$parent.availableServices)
+
         vm.availableFees = {};
 
         if(feeUIAvailable(patent.p3sServicesWithFees))
