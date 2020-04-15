@@ -5,8 +5,8 @@
                 <h4 class="font-h4 lh-default font-weight-bold">Question 1.</h4>
                 <p class="m-b-xs">The/Each applicant hereby declares that he is an entity or a natural person under Rule 6(4) EPC.</p>
                 <div class="form-check form-check-inline">
-                    <input type="checkbox" name="entityYes" data-ng-model="validate.quesitonOne.yes" class="form-check-input checkbox-square" data-ng-click="validate.entity.no = false">
-                    <label for="entityYes" class="form-check-label" required>Yes</label>
+                    <input type="checkbox" name="entityYes" data-ng-model="validate.quesitonOne.yes" class="form-check-input checkbox-square" data-ng-click="validate.entity.no = false" required>
+                    <label for="entityYes" class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input type="checkbox" name="entityNo" data-ng-model="validate.entity.no" class="form-check-input checkbox-square" data-ng-change="$ctrl.checkError('entity', validate.entity.no);" data-ng-click="validate.quesitonOne.yes = false; ">
@@ -28,8 +28,8 @@
                         <label for="amendmentsYes" class="form-check-label">Yes</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="checkbox" name="amendmentsNo" data-ng-model="validate.amendments.no" class="form-check-input checkbox-square" data-ng-click="validate.amendments.yes = false">
-                        <label for="amendmentsNo" class="form-check-label" required>No</label>   
+                        <input type="checkbox" name="amendmentsNo" data-ng-model="validate.amendments.no" class="form-check-input checkbox-square" data-ng-click="validate.amendments.yes = false" required>
+                        <label for="amendmentsNo" class="form-check-label">No</label>   
                     </div>
                     <p data-ng-show="validate.amendments.yes" class="txt-phase-red m-t-xs">If amendments have been made you will be unable to proceed online.</p>
 <!--                     <p data-ng-show="form1200Form.amendmentsYes.$invalid && form1200Form.amendmentsNo.$invalid && (form1200Form.amendmentsYes.$dirty || form1200Form.amendmentsNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select yes and confirm this choice, you will be unable to process this action via online.</p>    -->                   
@@ -94,7 +94,7 @@
                             <label for="item.abbr" class="m-r-xs">
                                 <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
                             </label>
-                            <input type="checkbox" id="'{{item.name}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkExtStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
+                            <input type="checkbox" id="extensions-{{$index}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkExtStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                             <label for="item.abbr" class="m-r-xs">
                                 <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
                             </label>
-                            <input type="checkbox" id="'{{item.name}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkValidStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
+                            <input type="checkbox" id="validation-{{$index}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkValidStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
                         </div>
                     </div>
                 </div>
@@ -258,7 +258,7 @@
     </div>
     <div class="row">
         <div class="col-xl-12 text-right">
-            <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$invalid || formDataSubmitted" data-ng-click="$ctrl.submitForm1200Data(formData); formDataSubmitted = true">Generate form</button>
+            <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$invalid || formDataSubmitted" data-ng-click="$ctrl.submitForm1200Data(formData);">Generate form</button>
         </div>
     </div>
 </form>

@@ -144,7 +144,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
 
     function sortPageDetails(data) {
 
-        var arr = []
+        var arr = [];
 
         for(var property in data) {
             if(data.hasOwnProperty(property)) {
@@ -169,9 +169,67 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
 
     }
 
-    function submitForm1200Data(data){    
+    function invalidPageNos(error) {
+
+        $scope.formDataSubmitted = false;
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/templates/modals/modal.invalid-page-nos.tpl.htm',
+            appendTo: undefined,
+            controllerAs: '$ctrl',
+            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                this.dismissModal = function() {
+                    $uibModalInstance.close();
+                };
+
+            }]
+        });
+    }
+
+
+    function submitForm1200Data(data){
+
+        $scope.formDataSubmitted = true;
 
         var arr = sortPageDetails(data.pageDetailsData);
+        var descriptionStart = arr[0].typeStart;
+        var descriptionEnd = arr[0].typeEnd;
+        var claimsStart = arr[1].typeStart;
+        var claimsEnd = arr[1].typeEnd;
+        var drawingsStart = arr[2].typeStart;
+        var drawingsEnd =  arr[2].typeEnd;
+
+        if((descriptionStart > claimsStart && descriptionStart < claimsEnd) || (descriptionStart > drawingsStart && descriptionStart < drawingsEnd) ) {
+            invalidPageNos('descriptionStart');
+            return;
+        }
+
+        if((descriptionEnd > claimsStart && descriptionEnd < claimsEnd) || (descriptionEnd > drawingsStart && descriptionEnd < drawingsEnd) ) {
+            invalidPageNos('descriptionEnd');
+            return;
+        }
+
+        //claims
+        if((claimsStart > descriptionStart && claimsStart < descriptionEnd) || (claimsStart > drawingsStart && claimsStart < drawingsEnd) ) {
+            invalidPageNos('claimsStart');
+            return;
+        }
+
+        if((claimsEnd >  descriptionStart && claimsEnd <  descriptionStart) || (claimsEnd > drawingsStart && claimsEnd < drawingsEnd) ) {
+            invalidPageNos('claimsEnd');
+            return;
+        }             
+
+        //drawings
+        if((drawingsStart > descriptionStart && drawingsStart < descriptionEnd) || (drawingsStart > claimsStart && drawingsStart < claimsEnd) ) {
+            invalidPageNos('drawingsStart');
+            return;
+        }
+
+        if((drawingsEnd >  descriptionStart && drawingsEnd <  descriptionStart) || (drawingsEnd > claimsStart && drawingsEnd < claimsEnd) ) {
+            invalidPageNos('drawingsEnd');
+            return;
+        }                
 
         var formData = {};
 

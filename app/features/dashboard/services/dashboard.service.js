@@ -61,12 +61,11 @@ function DashboardService($http, $q, PatentsRestService) {
         result.forEach(function(patent){
             patent.p3sServices.forEach(function(action, idx){
                 var string = action.currentStageColour.toLowerCase();
-                var capitalized = string.charAt(0).toUpperCase() + string.slice(1);
-
+                var capitalized = string.charAt(0).toUpperCase() + string.slice(1);     
                 if(action.serviceType == 'validation') {
                     obj.validation.Green.push(patent); //handle validation manual processing
                 }
-                if(action.serviceType !== 'postgrant' && action.serviceType !== 'validation') {
+                if(action.serviceType !== 'postgrant' && action.serviceType !== 'validation' && action.serviceType !== '----') { //validated changed fro postvalidation
                     obj[action.serviceType][capitalized].push(patent);
                 }
                 

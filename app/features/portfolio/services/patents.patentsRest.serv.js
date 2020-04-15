@@ -37,6 +37,16 @@ function PatentsRestService($http, $q, OrganiseColourService) {
 
                 response.data.map(function(patent){
                     return patent.p3sServices.map(function(property){
+                        
+                        if(property.serviceType === 'postvalidation') {
+                            property.serviceType = '----';
+                            property.serviceStatusUI = 'N/A';
+
+                        }
+                        if(property.serviceType == 'postgrant') {
+                            property.serviceType = '----';
+                        }
+
                         property.actionID = patent.patentID + generateId(property.serviceType); //generate unique id based on patent id and service type (get char codes)
                         if(property.currentStageColour) {
                             property.cssCurrent = OrganiseColourService.getCurrColour(property.currentStageColour, 'text')
@@ -83,6 +93,8 @@ function PatentsRestService($http, $q, OrganiseColourService) {
                      
                     var merged = [].concat.apply([], actionsArray); //dont use flat() method because of IE. This is alternative
                     response.data.p3sServicesWithFees.map(function(property){
+                        property.serviceType = property.serviceType == 'postvalidation' ? 'N/A' : property.serviceType;
+                        property.serviceStatus = property.serviceType == 'postvalidation' ? 'validated' : property.serviceStatus;
                         var item = merged.filter(function(action){
                             return action.serviceType === property.serviceType && id == action.patentID;
                         }).map(function(filtered){
@@ -118,8 +130,10 @@ function PatentsRestService($http, $q, OrganiseColourService) {
     function updatePatent(patent, id) {
         //quick fix for resolving issues with converting circule structure to JSON(loop) 
         patent.p3sServicesWithFees.map(function(action){
+            action.form1200FeeUI = null;
             action.grantFeeUI = null;
             action.validationFeeUI = null;
+            action.renewalFeeUI = null;
         })
    
         var deferred = $q.defer();

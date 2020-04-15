@@ -17,7 +17,6 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     vm.processView = processView
     vm.openMenu = openMenu;
     $scope.notInProgress = true;
-    $scope.validationNotification = false;
     $scope.caseoverview_tab = 'details';
     $scope.showOptions = false;
     $scope.activeLeft = 0;
@@ -26,16 +25,14 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     var originatorEv;
 
     function processView(tab, index, chart) {
-
-        if((tab == 'notifications' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification)) { return; }
-        if(!$scope.notInProgress) {
+        if((tab == 'notifications' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification) || (tab == 'fxchart' && $scope.validationNotification)) { return; }
+        if(!$scope.notInProgress || tab == 'notifications' || tab == 'details') {
             vm.setTab(tab)
             $scope.activeLeft = index;
             if(chart !== undefined) {
                 vm.refreshChart()
             }
         }
-
     }
 
     function openMenu($mdMenu, ev) {
@@ -109,27 +106,25 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                 $scope.validationNotification = patent.p3sServicesWithFees.some(function(item){
                     return item.serviceType == 'validation';
                 })
-
+                 
                 $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
-                    return item.saleType == 'Not In Progress' || (item.serviceType == 'validation' && (item.serviceStatus == 'Validation available' || item.serviceStatus == 'Preparing quote'));
+                    return item.saleType == 'Not In Progress' || (item.serviceType == 'validation' && (item.serviceStatus == 'Validation available' || item.serviceStatus == 'Preparing quote')) || (item.saleType == 'Offline' && item.serviceType == 'validation');
                 })
 
-                $scope.availableServices = patent.p3sServicesWithFees.map(function(data, index){
-                    if(data.serviceType == 'epct') { data.serviceType = 'Euro-PCT' }
-                    if(data.saleType !== 'Not In Progress') { //VALIDAITON TEST DATA - REMOVE POSTGRANT
-                       return {id: index, action: data.serviceType, status: data.serviceStatus, type: data.saleType}
-                    }
+                $scope.availableServices = patent.p3sServicesWithFees.filter(function(o){
+                    return o.saleType !== 'Not In Progress';
+                }).map(function(k, index){
+                    if(k.serviceType == 'epct') { k.serviceType = 'Euro-PCT' }
+                    return {id: index, action: k.serviceType, status: k.serviceStatus, type: k.saleType}
                 })
 
                 $scope.availableServices.forEach(function(obj){
-
                     if(obj.type == 'Not In Progress') { return; }
 
                     if(obj.action == 'Euro-PCT') {
                         if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
                             vm.displayForm1200Tab = true;
                         }
-                        
                     }
 
                     if(obj.action == 'grant') {

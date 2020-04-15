@@ -113,10 +113,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div data-ng-if="patent.p3sServices[0].serviceType == 'validation' && patent.p3sServices[0].serviceStatus == 'Validation available'">
+                            <div data-ng-if="patent.p3sServices[0].serviceType == 'validation' && (patent.p3sServices[0].serviceStatus == 'Validation available' || patent.p3sServices[0].serviceStatus == 'Preparing quote')">
                                 <div class="d-flex flex-column">
                                     <div class="d-flex justify-content-start"><!--display costs-->
-                                        <p class="font-weight-bold txt-phase-green">Request Quote</p>
+                                        <p class="font-weight-bold txt-phase-green" data-ng-if="patent.p3sServices[0].serviceStatus == 'Validation available'">Request Quote</p>
+                                        <p class="font-weight-bold txt-phase-green" data-ng-if="patent.p3sServices[0].serviceStatus == 'Preparing quote'">Preparing Quote</p>
                                     </div>
                                 </div>
                             </div>                            
@@ -127,12 +128,9 @@
                                     </div>
                                 </div>
                             </div>                                
-<!--                                 <div data-ng-if="patent.p3sServices[0].serviceType == 'validation' && patent.p3sServices[0].serviceStatus !== 'Quote provided'">
+                            <div data-ng-if="(patent.p3sServices[0].saleType !== 'Online' && patent.p3sServices[0].saleType !== 'Offline' && patent.p3sServices[0].serviceStatus !== 'Epct being generated') || (patent.p3sServices[0].saleType == 'Offline' && patent.p3sServices[0].serviceType == 'validation')">
                                 <p class="txt-grey">N/A</p>
-                            </div> -->
-                            <div data-ng-if="patent.p3sServices[0].saleType !== 'Online' && patent.p3sServices[0].saleType !== 'Offline' && patent.p3sServices[0].serviceStatus !== 'Epct being generated'">
-                                <p class="txt-grey">N/A</p>
-                            </div>                                
+                            </div>                           
                            
                         </table>                         
                     </td><!--when multiple services begin-->     
@@ -143,7 +141,8 @@
                                     <div class="d-flex flex-column">
                                         <div class="d-flex justify-content-start align-patent.p3sServices[0]s-center"><!--display costs-->
 
-                                            <p data-ng-if="(!patent.p3sServices[0].isUrgentAttention && patent.p3sServices[0].currentStageColour !== 'Black' && (patent.p3sServices[0].saleType === 'Online' || patent.p3sServices[0].saleType === 'Offline')) || (!patent.p3sServices[0].isUrgentAttention && patent.p3sServices[0].currentStageColour == 'Black' && (patent.p3sServices[0].saleType === 'Online' || patent.p3sServices[0].saleType === 'Offline'))" class="font-weight-bold"><i class="fas fa-circle m-r-xs" data-ng-class="patent.p3sServices[0].cssNext"></i> $ {{patent.p3sServices[0].nextStageCostUSD | number: 2}}</p> 
+                                            <p data-ng-if="(!patent.p3sServices[0].isUrgentAttention && patent.p3sServices[0].currentStageColour !== 'Black' && (patent.p3sServices[0].saleType === 'Online' || patent.p3sServices[0].saleType === 'Offline')) || (!patent.p3sServices[0].isUrgentAttention && patent.p3sServices[0].currentStageColour == 'Black' && (patent.p3sServices[0].saleType === 'Online' || patent.p3sServices[0].saleType === 'Offline')) || 
+                                            (patent.p3sServices[0].isUrgentAttention && patent.p3sServices[0].currentStageColour == 'Red' && (patent.p3sServices[0].saleType === 'Online' || patent.p3sServices[0].saleType === 'Offline'))" class="font-weight-bold"><i class="fas fa-circle m-r-xs" data-ng-class="patent.p3sServices[0].cssNext"></i> $ {{patent.p3sServices[0].nextStageCostUSD | number: 2}}</p> 
                                             <p data-ng-if="patent.p3sServices[0].isUrgentAttention && patent.p3sServices[0].currentStageColour == 'Black' && patent.p3sServices[0].serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
                                             <p data-ng-if="patent.p3sServices[0].isUrgentAttention && patent.p3sServices[0].currentStageColour == 'Red' && patent.p3sServices[0].serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
                                         </div>    

@@ -56,7 +56,7 @@ export default function ActionsAvailableController($scope, $timeout) {
 		            return (array || []).map(function (w) {
 		                return w.p3sServices[0][obj]; //select property in p3sservices 
 		            }).filter(function (w, idx, arr) {
-		                if (typeof w === 'undefined') {
+		                if (typeof w === 'undefined' || w === null) {
 		                    return false;
 		                }
 		                return arr.indexOf(w) === idx;

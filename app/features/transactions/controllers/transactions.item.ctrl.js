@@ -75,7 +75,6 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
     function transItemStatus(val, status) {
 
     	var index;
-
     	if(val === true) {
     		index = transStatusValidationArray.indexOf(status);
 	    	if(index < 3) {
@@ -126,7 +125,7 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
 				if(item.validationFeeUI) { 
 
 					var obj1 = {
-						status: 'Processing funds', 
+						status: 'Processing Funds', 
 						active: false, 
 						complete: false,
 						tip: 'We are currently processing your funds',
@@ -161,7 +160,7 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
     	}
     )
 
-	function checkProgress() {
+	function checkProgress() { //function to add statuses complete or active to view so it provides proggress bar to user
 
 		var statusIndex;
 
@@ -175,7 +174,13 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
 			vm.transStatus[i].complete = true; //change property complete to true to all items
 			if(transactionItem.latestTransStatus == vm.transStatus[i].status) { //until it matches current tran statues
 				vm.transStatus[i].active = true; // change active property value to true
-				vm.transStatus[i].complete = false;
+				if(transactionItem.latestTransStatus !== 'Completed') {
+					vm.transStatus[i].complete = false;
+				} else {
+					vm.transStatus[i].active = false;
+					vm.transStatus[i].complete = true;
+				}
+				
 			}
 		}
 		

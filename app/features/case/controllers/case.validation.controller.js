@@ -20,6 +20,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         { name: 'poasProvided', url: 'app/templates/validation/validation-poa-available.tpl.htm'},
         { name: 'noPoasProvided', url: 'app/templates/validation/validation-nopoas-required.tpl.htm'},
         { name: 'workInProgress', url: 'app/templates/validation/validation-wip.tpl.htm'},
+        { name: 'workInProgress', url: 'app/templates/validation/validation-manual.tpl.htm'},
     ];
     $scope.formData = {};
     var validationAction;
@@ -42,6 +43,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             allState = array.concat(patent.p3sServicesWithFees[0].validationFeeUI.designatedStates, patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
         }
     	vm.activeTab = 0;
+
 		if(serviceStatusL == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
     		vm.validationTemplate = vm.templates[0].url;        
     	}
@@ -72,9 +74,13 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             }
         }                    
 
-        if(serviceStatusL == 'scanned poas received' || serviceStatusL == 'poas provided to pa') { //VALIDATION TEST DATA - REMOVE NotUsed
+        if(serviceStatusL == 'scanned poas received' || serviceStatusL == 'poas provided to pa' || serviceStatusL == 'paper documents received') { //VALIDATION TEST DATA - REMOVE NotUsed
             vm.validationTemplate = vm.templates[6].url;  
-        }           
+        }
+
+        if(patent.p3sServicesWithFees[0].saleType.toLowerCase() == 'offline') { //VALIDATION TEST DATA - REMOVE NotUsed
+            vm.validationTemplate = vm.templates[7].url;  
+        }               
 
     }
 
@@ -259,7 +265,6 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         formData.patentID = patent.patentID;
         
-        names.shift();
         formData.lastName = names.pop();
         formData.firstName = names.toString().replace(/,/g, ' ');
 

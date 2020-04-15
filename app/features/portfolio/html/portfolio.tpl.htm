@@ -18,7 +18,10 @@
             <div class="d-flex align-items-center">
                 <md-chips data-ng-model="$ctrl.chipOptions" readonly="true" md-removable="true" class="text-capitalize font-weight-medium cursor-pointer" md-on-remove="selectedChip($chip.prop, $chip.value, $chip.cat); getItems($chip.cat, portfolioData)">
                     <md-chip-template>
-                        <strong class="font-body"><span data-ng-show="{{$chip.prop}} == 'epct'">Euro-PCT</span><span data-ng-hide="{{$chip.prop}} == 'epct'">{{$chip.prop}}</span></strong>
+                        <strong class="font-body">
+                            <span data-ng-show="$chip.prop == 'Epct'">Euro-PCT</span>
+                            <span data-ng-hide="$chip.prop == 'Epct'">{{$chip.prop}}</span>
+                        </strong>
                         <em class="font-body" data-ng-if="$chip.cat ==='serviceType'">(action)</em><em class="font-body" data-ng-if="$chip.cat ==='currentStageColour'">(phase)</em>                     
                     </md-chip-template>
                     <!-- <md-icon><i class="d-flex input-group-text pill-radius fa fa-search"></i></md-icon> -->
@@ -134,7 +137,7 @@
                         <span data-ng-if="patent.clientRef !== ''">{{patent.clientRef}}</span>
                     </td>
                     <td class="t-data__td t-data__td--md">
-                        <span class="txt-grey" data-ng-if="patent.shortTitle == ''">[No client reference provided]</span>
+                        <span class="txt-grey" data-ng-if="patent.shortTitle == ''">[No client description provided]</span>
                         <span data-ng-if="patent.shortTitle !== ''">{{patent.shortTitle}}</span>
                     </td>
                     <td class="t-data__th--sm">
@@ -211,7 +214,7 @@
 <!--                                 <div data-ng-if="item.serviceType == 'validation' && item.serviceStatus !== 'Quote provided'">
                                     <p class="txt-grey">N/A</p>
                                 </div> -->
-                                <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated' && item.serviceStatus !== 'Preparing quote' && item.serviceStatus !== 'Scanned PoAs received'  && item.serviceStatus !== 'Blank PoAs downloaded' && item.serviceStatus !== 'Paper documents received'">
+                                <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated' && item.serviceStatus !== 'Preparing quote' && item.serviceStatus !== 'Scanned PoAs received'  && item.serviceStatus !== 'Blank PoAs downloaded' && item.serviceStatus !== 'Paper documents received' &&  item.saleType !== 'In Progress' ">
                                     <p class="txt-grey">N/A</p>
                                 </div>                                
                             </td>

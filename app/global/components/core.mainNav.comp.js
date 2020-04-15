@@ -1,6 +1,6 @@
 angular.module('ppApp').component('mainnav', {
 	templateUrl: 'app/templates/nav/nav.main-nav.tpl.htm',
-	controller: ['userService', 'mainNavService', '$scope', '$rootScope', '$mdSidenav', 'ngCart', 'coreService', '$timeout', 'moment', 'fxService', '$rootScope', function(userService, mainNavService, $scope, $rootScope, $mdSidenav, ngCart, coreService, $timeout, moment, fxService, $rootScope){
+	controller: ['userService', 'mainNavService', '$scope', '$rootScope', '$mdSidenav', 'ngCart', 'coreService', '$timeout', 'moment', 'fxService', '$rootScope', '$http', function(userService, mainNavService, $scope, $rootScope, $mdSidenav, ngCart, coreService, $timeout, moment, fxService, $rootScope, $http){
 
 		var vm = this;
 
@@ -15,7 +15,7 @@ angular.module('ppApp').component('mainnav', {
         	isFirstOpen: true,
         	isFirstDisabled: false
       	};
-      	vm.avatarimage = '../p3sweb/avatar-image/';
+
 
         vm.utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
         vm.est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
@@ -26,6 +26,15 @@ angular.module('ppApp').component('mainnav', {
       	})
 
       	function init() {
+
+      		$http.get('../p3sweb/avatar-image/')
+      		.then(
+      			function(response){
+      				if(response.data !== '') {
+      					vm.avatarimage = '../p3sweb/avatar-image/';
+      				}
+      			}
+      		)
 
 			userService.fetchUser()
 			.then(
@@ -39,7 +48,7 @@ angular.module('ppApp').component('mainnav', {
 	    			vm.fxRate = response.currentFXRate.rate
 	    		},
 	    		function(errResponse){
-	    			console.log(errResponse)
+	    			console.error('Error fetching fx: ', errResponse)
 	    		}
 	    	)	
 
