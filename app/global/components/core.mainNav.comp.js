@@ -1,6 +1,6 @@
 angular.module('ppApp').component('mainnav', {
 	templateUrl: 'app/templates/nav/nav.main-nav.tpl.htm',
-	controller: ['userService', 'mainNavService', '$scope', '$rootScope', '$mdSidenav', 'ngCart', 'coreService', '$timeout', 'moment', 'fxService', '$rootScope', '$http', function(userService, mainNavService, $scope, $rootScope, $mdSidenav, ngCart, coreService, $timeout, moment, fxService, $rootScope, $http){
+	controller: ['userService', 'mainNavService', '$scope', '$rootScope', '$mdSidenav', 'ngCart', 'coreService', '$timeout', 'moment', 'FxService', '$rootScope', '$http', function(userService, mainNavService, $scope, $rootScope, $mdSidenav, ngCart, coreService, $timeout, moment, FxService, $rootScope, $http){
 
 		var vm = this;
 
@@ -42,7 +42,7 @@ angular.module('ppApp').component('mainnav', {
 					vm.user = response;
 				}
 			)
-	    	fxService.fetchFx()
+	    	FxService.fetchFx()
 	    	.then(
 	    		function(response){
 	    			vm.fxRate = response.currentFXRate.rate

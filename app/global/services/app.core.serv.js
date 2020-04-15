@@ -1,10 +1,8 @@
-import fxService from './app.fx.serv.js';
+export default angular.module('services.core-service', []).factory('coreService', coreService).name;
 
-export default angular.module('services.core-service', [fxService]).factory('coreService', coreService).name;
+coreService.$inject = ['$q', '$timeout', '$http'];
 
-coreService.$inject = ['$q', '$timeout', 'fxService', '$http'];
-
-function coreService($q, $timeout, fxService, $http) {
+function coreService($q, $timeout, $http) {
 
     var REST_SERVICE_URI = ppdomain+'partner-details/'; 
 

@@ -1,8 +1,8 @@
 angular.module('ppApp').factory('fxCalculationService', fxCalculationService);
 
-fxCalculationService.$inject = ['$q', '$timeout', 'fxService']
+fxCalculationService.$inject = ['$q', '$timeout', 'FxService']
 
-function fxCalculationService($q, $timeout, fxService) {
+function fxCalculationService($q, $timeout, FxService) {
 
 	return {
 
@@ -20,7 +20,7 @@ function fxCalculationService($q, $timeout, fxService) {
 
 				fxRateData.todaysPriceEUR = patent.feeUI.subTotalEUR;
 
-				fxService.fetchFxWeek()
+				FxService.fetchFxWeek()
 		    	.then(
 		    		function(data){
 
@@ -60,7 +60,7 @@ function fxCalculationService($q, $timeout, fxService) {
 		    		}
 				);
 
-				fxService.fetchFxMonth()
+				FxService.fetchFxMonth()
 		    	.then(
 		    		function(data){
 

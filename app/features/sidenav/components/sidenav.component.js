@@ -1,7 +1,7 @@
 export default angular.module('components.sidenav', []).component('sidenav', {
 
 		template: require('html-loader!../html/sidenav.tpl.htm'),
-		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', 'userService', 'SidenavService',  'ngCart', 'coreService',  'moment', 'fxService', function($scope, $rootScope, $mdSidenav, $timeout, userService, SidenavService, ngCart, coreService, moment, fxService){
+		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', 'userService', 'SidenavService',  'ngCart', 'coreService',  'moment', 'FxService', function($scope, $rootScope, $mdSidenav, $timeout, userService, SidenavService, ngCart, coreService, moment, FxService){
 
 			var vm = this;
 
@@ -27,7 +27,7 @@ export default angular.module('components.sidenav', []).component('sidenav', {
 						console.log(errResponse)
 					}
 				)
-		    	fxService.fetchFx()
+		    	FxService.fetchFx()
 		    	.then(
 		    		function(response){
 		    			vm.fxRate = response.currentFXRate.rate

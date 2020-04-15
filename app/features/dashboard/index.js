@@ -3,6 +3,7 @@ import './_dashboard.scss';
 import angular from 'angular';
 
 import DashboardService from './services/dashboard.service.js';
+import FxService from '../../global/services/fx.service.js';
 import PatentsRestService from '../portfolio/services/patents.patentsRest.serv.js';
 import CalculateService from '../../global/services/calculate.service.js';
 import CostAnalysisService from '../../global/services/cost-analysis.service.js';
@@ -18,7 +19,7 @@ import ValidationsDonutController from './controllers/dashboard.validations-grap
 
 import routing  from './dashboard.routes';
 console.log('dashboard')
-export default angular.module('ppApp.dashboard', [DashboardService, PatentsRestService, CalculateService, CostAnalysisService, TransactionService]) //import dashboard view controllers
+export default angular.module('ppApp.dashboard', [DashboardService, PatentsRestService, CalculateService, CostAnalysisService, TransactionService, FxService]) //import dashboard view controllers
 	.config(routing)
   	.controller('DashboardController', DashboardController)
   	.controller('AvailableActionsController', AvailableActionsController)

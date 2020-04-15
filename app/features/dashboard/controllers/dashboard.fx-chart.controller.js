@@ -1,7 +1,7 @@
 DbFxChartCtrl.$inject = ['$scope', '$timeout', 'fxRatesMonth'];
 
 export default function DbFxChartCtrl($scope, $timeout, fxRatesMonth) {
-
+    console.log('fxchart')
     var vm = this;
     var fxChartTimeout;
 
