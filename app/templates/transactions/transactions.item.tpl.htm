@@ -26,7 +26,7 @@
 									</div>
 
 									<div class="col-md-12 col-lg-12 col-xl-12">
-										<p class="font-weight-bold font-h3 d-none d-xl-block">Transaction progress: <span class="font-weight-normal">{{$ctrl.transactionItem.latestTransStatus}}</span></p>
+										<p class="font-weight-bold font-h3 d-none d-xl-block">Transaction progress: <span data-ng-if="!$ctrl.transactionItem.hasFailed" class="font-weight-normal">{{$ctrl.transactionItem.latestTransStatus}}</span> <span data-ng-if="$ctrl.transactionItem.hasFailed" class="font-weight-normal">Failed - {{$ctrl.transactionItem.failureReason}}</p>
 										<div data-ng-class="($ctrl.transactionItem.hasFailed !== true ? 'success' : 'failed')">
 											<div class="steps">
 											    <ul id="progressTracker" class="steps-container d-flex justify-content-between">

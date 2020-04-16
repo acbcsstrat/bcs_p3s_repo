@@ -131,10 +131,11 @@
     			        </td>
     			        <td class="t-data__td">
     						<p class="font-weight-bold m-b-xs">
-                               {{transaction.latestTransStatus}}
+                               <span data-ng-if="!transaction.hasFailed">{{transaction.latestTransStatus}}</span>
+                               <span data-ng-if="transaction.hasFailed">Failed</span>
                             </p>
-    						<div class="progress-tracker progress-trans">
-    							<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="transaction.actionProgress" max="100"></uib-bar></uib-progress>
+    						<div class="progress-tracker progress-trans" data-ng-class="transaction.hasFailed ? 'progress-red' : 'progress-green'" >
+    							<uib-progress><uib-bar class="pill-radius tracker-item" value="transaction.actionProgress" max="100"></uib-bar></uib-progress>
     						</div>	
     			        </td>		        
     			        <td class="t-data__td">

@@ -440,3 +440,16 @@ md-tooltip.mdtooltip-md {
     width: 40rem;
     white-space: normal;
 }
+
+.progress-red {
+    .progress-bar {
+        background: $red;
+    }
+}
+
+.progress-green {
+    .progress-bar {
+        background: $green;
+    }
+}
+

@@ -19,9 +19,6 @@ function userProfileCtrl($state, userService, $rootScope, $scope, $timeout, $uib
         .then(
             function(response){
                 vm.ustimezones = response;
-            },
-            function(errResponse){
-
             }
         )
             
@@ -29,9 +26,6 @@ function userProfileCtrl($state, userService, $rootScope, $scope, $timeout, $uib
         .then(
             function(response){
                 vm.user = response;
-            },
-            function(errResponse){
-
             }
         )
 
@@ -61,7 +55,7 @@ function userProfileCtrl($state, userService, $rootScope, $scope, $timeout, $uib
 
             },
             function(errResponse){
-                console.log(errResponse);
+                console.error('Error listing users. Error: ', errResponse);
             }
         );
        
@@ -147,7 +141,7 @@ function userProfileCtrl($state, userService, $rootScope, $scope, $timeout, $uib
                 })
             },
             function(errResponse){
-                console.log(errResponse)
+                console.error('Error updating user. Error : ', errResponse)
             }
         
         )

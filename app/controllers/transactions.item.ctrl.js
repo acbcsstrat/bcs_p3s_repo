@@ -72,23 +72,30 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
         vm.caseoverview_tab = tab;
     }
 
-    function transItemStatus(val, status) {
+    function transItemStatus(val, status, failed) {
 
-    	var index;
-    	if(val === true) {
-    		index = transStatusValidationArray.indexOf(status);
-	    	if(index < 3) {
-	    		return 'Payment in progress'
-	    	} else {
-	    		return status;
-	    	}    		
+
+    	if(failed) {
+    		return 'Failed'
     	} else {
-    		index = transStatusArray.indexOf(status);
-	    	if(index < 5) {
-	    		return 'Payment in progress'
+	    	
+	    	var index;
+	    	if(val === true) {
+	    		index = transStatusValidationArray.indexOf(status);
+		    	if(index < 3) {
+		    		return 'Payment in progress'
+		    	} else {
+		    		return status;
+		    	}    		
 	    	} else {
-	    		return status;
-	    	}        		
+	    		index = transStatusArray.indexOf(status);
+		    	if(index < 5) {
+		    		return 'Payment in progress'
+		    	} else {
+		    		return status;
+		    	}        		
+	    	}
+
     	}
 
     }
@@ -107,7 +114,7 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
                 return item.newType == 'Validation' ? true : false;
             })
 			vm.transactionItem.serviceUIs.map(function(item, index){
-				item.transItemStatus = transItemStatus(isValidation, transactionItem.latestTransStatus);
+				item.transItemStatus = transItemStatus(isValidation, transactionItem.latestTransStatus, vm.transactionItem.hasFailed);
 
 				if(item.renewalFeeUI) { 
 					item.serviceType = 'renewal'; 

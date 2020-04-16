@@ -151,7 +151,7 @@
 }
 
 .failed .steps .steps-container li.failed .step .step-image span:after {
-    content: "\f00d";
+    content: "\f00c"!important;
 }
 
 .success .steps .steps-container li.active .step .step-image span:after {
@@ -222,7 +222,7 @@
     font-family: 'Font Awesome\ 5 Pro';
     font-weight: 900;
     font-size: 1.4rem; 
-    content: "\f00d";
+    content: "\f00c";
     position: absolute;
     z-index: 1;
     width: 47px;
