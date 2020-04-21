@@ -11,6 +11,9 @@
             <p class="m-b-xs font-h4">We are currently generating your Form 1200. When the document is ready, you will be able to access it here.</p> 
             <p class="font-h4">You can view the fees in the 'Fee Breakdown' tab through the panel.</p>                      
         </div>
+        <div class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'EPO Instructed'">
+            <p class="font-h4">Your European phase entry (Form 1200) action has been committed to a transaction. Navigate to transactions if you want to download a pro forma invoice. Once the transaction is completed, you'll be able to download receipts and final invoice.</p>
+        </div>   
         <div class="row m-t-md">
             <div class="col-md-12 d-flex flex-wrap justify-content-end align-items-middle">
                 <button data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved'" class="btn btn-underlined font-weight-medium m-r-sm" data-ng-click="confirmDeleteApplication()" data-ng-disabled="deleteApplicationReq">Delete Form 1200</button>

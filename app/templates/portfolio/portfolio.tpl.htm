@@ -202,9 +202,10 @@
                                 <div data-ng-if="item.serviceType == 'validation'">
                                     <div class="d-flex flex-column">
                                         <div class="d-flex justify-content-start"><!--display costs-->
-                                            <p class="font-weight-bold m-r-sm" data-ng-if="item.currentStageCostUSD !== null"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssCurrent"></i>$ {{item.currentStageCostUSD | number: 2}}</p>
+                                            <p class="font-weight-bold m-r-sm" data-ng-if="item.serviceStatus == 'Quote provided'"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssCurrent"></i>$ {{item.currentStageCostUSD | number: 2}}</p>
                                             <p class="font-weight-bold txt-phase-green" data-ng-if="item.serviceStatus == 'Validation available'">Request Quote</p>
                                             <p class="font-weight-bold txt-phase-green" data-ng-if="item.serviceStatus == 'Preparing quote'">Preparing Quote</p>
+                                            <p class="txt-grey" data-ng-if="item.serviceStatus !== 'Quote provided' && item.serviceStatus !== 'Validation available' && item.serviceStatus !== 'Preparing quote'">N/A</p>
                                         </div>
                                     </div>
                                 </div>
@@ -214,7 +215,10 @@
                                 </div> -->
                                 <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated' && item.serviceStatus !== 'Preparing quote' && item.serviceStatus !== 'Scanned PoAs received'  && item.serviceStatus !== 'Blank PoAs downloaded' && item.serviceStatus !== 'Paper documents received' &&  item.saleType !== 'In Progress' ">
                                     <p class="txt-grey">N/A</p>
-                                </div>                                
+                                </div>
+                                <div data-ng-if="item.saleType == 'In Progress' &&   item.serviceType !== 'validation'">
+                                    <p class="txt-grey">N/A</p>
+                                </div>            
                             </td>
                         </table>
                         <table data-ng-if="patent.p3sServices.length > 1">
