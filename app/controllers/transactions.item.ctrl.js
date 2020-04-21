@@ -113,6 +113,7 @@ function transactionItemCtrl(transactionItem, transactionService, $scope, $state
             var isValidation = transactionItem.serviceUIs.some(function(item){
                 return item.newType == 'Validation' ? true : false;
             })
+
 			vm.transactionItem.serviceUIs.map(function(item, index){
 				item.transItemStatus = transItemStatus(isValidation, transactionItem.latestTransStatus, vm.transactionItem.hasFailed);
 
