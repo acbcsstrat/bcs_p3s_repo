@@ -17,7 +17,7 @@
 <div>
     <div class="row">
         <div class="col-xl-12 text-right">
-            <p class="font-h4">1 USD = {{$ctrl.availableFees.official[0].feeUI.fxRate}} EUR</p>
+            <p class="font-h4">1 USD = {{$ctrl.availableFees.official[0].feeUI.fxRate || $ctrl.availableFees.official.feeUI.fxRate}} EUR</p>
         </div>  
     </div>
     <div class="m-t-md">

@@ -1,14 +1,14 @@
 DbFxChartCtrl.$inject = ['$scope', '$timeout', 'fxRatesMonth'];
 
 export default function DbFxChartCtrl($scope, $timeout, fxRatesMonth) {
-    console.log('fxchart')
+
     var vm = this;
     var fxChartTimeout;
 
     $scope.$parent.promise
     .then(
         function(response){
-            console.log('f chart')
+
             fxChartTimeout = $timeout(function() { 
                 vm.lineData = lineData;
                 vm.lineOptions = {

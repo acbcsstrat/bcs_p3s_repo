@@ -3,12 +3,12 @@
         <p class="font-weight-medium font-h4 font-weight-medium">There are currently no transactions.</p>
     </div>
 </div>
-<div data-ng-hide="transactions.length === 0" >
-    <div data-ng-hide="transactionsLoaded" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
-        <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
-        <p>We are just fetching your transactions</p>
-    </div>
-    <div data-ng-show="transactionsLoaded" class="animate-show container__scrollable-area">
+<div data-ng-hide="transactionsLoaded" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
+    <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
+    <p>We are just fetching your transactions</p>
+</div>
+<div data-ng-show="transactionsLoaded" class="animate-show">
+    <div  class="animate-show container__scrollable-area">
         <div class="p-l-3 p-r-3 p-tb-sm br-tx-1">                            
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex">
@@ -131,10 +131,11 @@
     			        </td>
     			        <td class="t-data__td">
     						<p class="font-weight-bold m-b-xs">
-                               {{transaction.latestTransStatus}}
+                               <span data-ng-if="!transaction.hasFailed">{{transaction.latestTransStatus}}</span>
+                               <span data-ng-if="transaction.hasFailed">Failed</span>
                             </p>
-    						<div class="progress-tracker progress-trans">
-    							<uib-progress><uib-bar class="bg-phase-green pill-radius tracker-item" value="transaction.actionProgress" max="100"></uib-bar></uib-progress>
+    						<div class="progress-tracker progress-trans" data-ng-class="transaction.hasFailed ? 'progress-red' : 'progress-green'" >
+    							<uib-progress><uib-bar class="pill-radius tracker-item" value="transaction.actionProgress" max="100"></uib-bar></uib-progress>
     						</div>	
     			        </td>		        
     			        <td class="t-data__td">

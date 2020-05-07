@@ -93,22 +93,33 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
                 return item.serviceType === 'validation';
             }).map(function(fee) {
                 fee.feeUI = fee.validationFeeUI;
-                fee.feeUI.savings = Number(Math.round((fee.nextStageCostUSD - fee.currentStageCostUSD) + 'e2') +'e-2');
-                fee.fxRate = fee.validationFeeUI.fxRate;
+                if(fee.feeUI !== null) {
+                    fee.fxRate = fee.validationFeeUI.fxRate;
+                    fee.feeUI.savings = Number(Math.round((fee.nextStageCostUSD - fee.currentStageCostUSD) + 'e2') +'e-2');
+                }
+                
                 return fee;
             })
 
             vm.availableFees.official = official[0];
 
-            vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.official.feeUI.subTotalUSD - vm.availableFees.official.feeUI.currentOfficialFeeUSD) + 'e2') +'e-2');
-            vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.official.feeUI.subTotalEUR - vm.availableFees.official.feeUI.currentOfficialFeeEUR) +'e2')+'e-2');
+            if(vm.availableFees.official.feeUI !== null) {            
+                
+
+                vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.official.feeUI.subTotalUSD - vm.availableFees.official.feeUI.currentOfficialFeeUSD) + 'e2') +'e-2');
+                vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.official.feeUI.subTotalEUR - vm.availableFees.official.feeUI.currentOfficialFeeEUR) +'e2')+'e-2');
+            }
+
             return;           
 
         }
 
-        vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.official[0].feeUI.subTotalUSD - vm.availableFees.official[0].feeUI.currentOfficialFeeUSD) + 'e2') +'e-2');
-        vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.official[0].feeUI.subTotalEUR - vm.availableFees.official[0].feeUI.currentOfficialFeeEUR) +'e2')+'e-2');
-        vm.availableFees.savings = Number(Math.round((vm.availableFees.official[0].nextStageCostUSD - vm.availableFees.official[0].currentStageCostUSD) + 'e2') +'e-2');
+        if(action !== 'validation') {        
+            vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.official[0].feeUI.subTotalUSD - vm.availableFees.official[0].feeUI.currentOfficialFeeUSD) + 'e2') +'e-2');
+            vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.official[0].feeUI.subTotalEUR - vm.availableFees.official[0].feeUI.currentOfficialFeeEUR) +'e2')+'e-2');
+            vm.availableFees.savings = Number(Math.round((vm.availableFees.official[0].nextStageCostUSD - vm.availableFees.official[0].currentStageCostUSD) + 'e2') +'e-2');
+            
+        }
 
     }
 

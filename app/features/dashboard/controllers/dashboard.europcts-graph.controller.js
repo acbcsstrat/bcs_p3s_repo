@@ -1,6 +1,6 @@
-EuropctsGraphController.$inject = ['$stateParams', '$scope', '$timeout'];
+EuropctsDonutController.$inject = ['$stateParams', '$scope', '$timeout'];
 
-export default function EuropctsGraphController($stateParams, $scope, $timeout) {
+export default function EuropctsDonutController($stateParams, $scope, $timeout) {
 
 	var vm = this;
 	var epctGraphTimeout;
@@ -8,7 +8,6 @@ export default function EuropctsGraphController($stateParams, $scope, $timeout) 
 	$scope.$parent.promise
 	.then(
 		function(response){
-			console.log('europct graph')
 			
 			epctGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view
 	      		vm.donutOptions = {

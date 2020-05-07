@@ -149,7 +149,7 @@
 }
 
 .failed .steps .steps-container li.failed .step .step-image span:after {
-    content: "\f00d";
+    content: "\f00c";
 }
 
 .success .steps .steps-container li.active .step .step-image span:after {
@@ -217,7 +217,7 @@
     align-items: center;
     font-family: FontAwesome;
     font-size: 1.4rem; 
-    content: "\f00d";
+    content: "\f00c";
     position: absolute;
     z-index: 1;
     width: 47px;

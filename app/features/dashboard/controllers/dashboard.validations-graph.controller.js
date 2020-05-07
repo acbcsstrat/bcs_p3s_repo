@@ -1,6 +1,6 @@
-VaidationsGraphController.$inject = ['$stateParams', '$scope', '$timeout'];
+VaidationsDonutController.$inject = ['$stateParams', '$scope', '$timeout'];
 
-export default function VaidationsGraphController($stateParams, $scope, $timeout) {
+export default function VaidationsDonutController($stateParams, $scope, $timeout) {
 
 	var vm = this;
 	var validationGraphTimeout;
@@ -8,7 +8,7 @@ export default function VaidationsGraphController($stateParams, $scope, $timeout
 	$scope.$parent.promise
 	.then(
 		function(response){
-			console.log('validations graph')
+
 			validationGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view
 	      		vm.donutOptions = {
 		            chart: {

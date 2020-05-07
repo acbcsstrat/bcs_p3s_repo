@@ -6,7 +6,7 @@
 @import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../../node_modules/angular-material/angular-material.scss";
 @import "../../node_modules/nvd3/build/nv.d3.css";
-@import "../../node_modules/font-awesome/css/font-awesome.css";
+@import "../../node_modules/font-awesome/scss/font-awesome.scss";
 @import "./vendors/extensions/_angularJS-materials-ext.scss";
 @import "./vendors/extensions/_bootstrap-ext.scss";
 @import "./vendors/extensions/_parsley-ext.scss";
@@ -30,7 +30,7 @@
 @import "./layouts/_panels.scss";
 @import "./layouts/_sidenav.scss";
 
-// @import "./pages/_dashboard.scss";
+@import "./pages/_dashboard.scss";
 @import "./pages/_transactions.scss";
 @import "./pages/_user-profile.scss";
 // @import "./pages/_portfolio.scss";
@@ -438,3 +438,16 @@ md-tooltip.mdtooltip-md {
     width: 40rem;
     white-space: normal;
 }
+
+.progress-red {
+    .progress-bar {
+        background: $red;
+    }
+}
+
+.progress-green {
+    .progress-bar {
+        background: $green;
+    }
+}
+

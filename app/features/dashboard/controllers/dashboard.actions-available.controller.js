@@ -25,7 +25,7 @@ export default function ActionsAvailableController($scope, $timeout) {
 	$scope.$parent.promise
 	.then(
 		function(response){
-			console.log('actions available')
+
 	        response = response.map(function(patent){
 	            return patent.p3sServices.map(function(serv){
 	                return {                

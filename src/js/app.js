@@ -45,6 +45,7 @@ import userService from '../../app/features/user/services/user.user.serv.js';
 import coreCtrl from '../../app/global/controllers/core.core.ctrl.js';
 import dashboard from '../../app/features/dashboard/index.js';
 import portfolio from '../../app/features/portfolio/index.js';
+import transactions from '../../app/features/transactions/index.js';
 import sidenav from '../../app/features/sidenav/index.js';
 
 import '@fortawesome/fontawesome-pro/js/fontawesome'
@@ -54,13 +55,10 @@ import '@fortawesome/fontawesome-pro/js/brands'
 
 import "../scss/main.scss";
 
-
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', uirouter, userService, ngCart, coreCtrl, dashboard, portfolio, sidenav]).config(config).run(startUpRun)
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', uirouter, userService, ngCart, coreCtrl, dashboard, portfolio, transactions, sidenav]).config(config).run(startUpRun)
 
 startUpRun.$inject = ['Idle', 'userService', '$rootScope', '$timeout'];
 
 function startUpRun(Idle, userService, $rootScope, $timeout) {
-	console.log('startUp')
     Idle.watch();
-
 };

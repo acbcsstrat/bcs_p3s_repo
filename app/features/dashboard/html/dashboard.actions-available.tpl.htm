@@ -17,10 +17,12 @@
                         <div class="input-group m-r-sm">
                             <input type="text" class="form-control pill-radius" name="availableActionsSearch" data-ng-model="searchAvailableActions" placeholder="Search available actions..." autocomplete="off">  
                             <div class="input-group-append">
-                                <i class="d-flex input-group-text pill-radius fa fa-search"></i>
+                                <div class="input-group-text">
+                                    <i class="d-flex input-group-text pill-radius fa fa-search"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>                
+                    </div>     
                     <div>
                         <md-menu md-position-mode="target-right target">
                             <md-button class="icon-stretch icon-stretch--icon black pill-radius" data-ng-click="$ctrl.showFilter($mdMenu, $event)">

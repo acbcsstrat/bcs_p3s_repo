@@ -21,7 +21,7 @@ function PatentsRestService($http, $q, OrganiseColourService) {
     var actionsArray = [];
 
     function fetchAllPatents() {
-        console.log('get patent')
+
         var deferred = $q.defer();
          $http.get(ppdomain+'rest-patents-portfolio/')
             .then(
@@ -76,7 +76,6 @@ function PatentsRestService($http, $q, OrganiseColourService) {
                 deferred.reject(errResponse);
             }
         );
-            console.log('return')
         return deferred.promise;
     };
 

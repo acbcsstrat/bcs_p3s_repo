@@ -6,8 +6,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  devtool: "source-map",
-  // devtool: "eval",
+  // devtool: "source-map",
+  devtool: "eval",
   entry: {
     // vendor: './src/js/vendor.js',   
     app: './src/js/app.js',
@@ -42,10 +42,10 @@ module.exports = {
         use: [
             'file-loader',
             {
-              loader: 'image-webpack-loader',
-              options: {
-                bypassOnDebug: true,
-              },
+                loader: 'image-webpack-loader',
+                options: {
+                    bypassOnDebug: true,
+                },
             },            
         ]
       }, 
@@ -73,25 +73,7 @@ module.exports = {
               MiniCssExtractPlugin.loader,
               { loader: 'css-loader', options: { url: false, sourceMap: true } },
               { loader: 'sass-loader', options: { sourceMap: true } }
-              // {
-              //   loader: 'postcss-loader', // Run post css actions
-
-              //   options: {
-              //     sourceMap: true,
-              //     parser: "postcss-scss",
-              //     plugins: function () { // post css plugins, can be exported to postcss.config.js
-              //       return [
-              //         require('precss'),
-              //         require('autoprefixer')
-              //       ];
-              //     }
-              //   }
-              // }
           ],
-      },
-      { 
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
-        loader: 'url-loader?limit=100000' 
       }
     ]
   },

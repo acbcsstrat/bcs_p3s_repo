@@ -1,4 +1,4 @@
-import './_dashboard.scss';
+// import './_dashboard.scss';
 
 import angular from 'angular';
 
@@ -18,7 +18,7 @@ import RenewalsDonutController from './controllers/dashboard.renewals-graph.cont
 import ValidationsDonutController from './controllers/dashboard.validations-graph.controller';
 
 import routing  from './dashboard.routes';
-console.log('dashboard')
+
 export default angular.module('ppApp.dashboard', [DashboardService, PatentsRestService, CalculateService, CostAnalysisService, TransactionService, FxService]) //import dashboard view controllers
 	.config(routing)
   	.controller('DashboardController', DashboardController)

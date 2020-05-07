@@ -34,7 +34,7 @@ function form1200Ctrl($scope, $rootScope, patent, $state, organiseTextService, $
                 vm.epctStage = 1;
             }
 
-            if(service[0].status == 'Epct being generated' || service[0].status == 'Epct saved' || service[0].status == 'Epct rejected') {
+            if(service[0].status == 'Epct being generated' || service[0].status == 'Epct saved' || service[0].status == 'Epct rejected' || service[0].status == 'Payment in progress') {
                 vm.form1200Template = vm.templates[2].url;
                 vm.epctStage = 2;
             }

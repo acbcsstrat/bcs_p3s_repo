@@ -28,7 +28,7 @@ function transactionLink($document, $interval, $anchorScroll, $state, $location,
                                 
                             })
                         }).filter(function(item){
-                            return item.serviceUIs[0].newType.toLowerCase() === type;
+                            return item.serviceUIs[0].newType.toLowerCase() === type.toLowerCase();
                         })
 
                         if(match !== undefined || typeof match !== 'undefined') {

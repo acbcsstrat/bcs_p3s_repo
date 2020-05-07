@@ -46,13 +46,12 @@ function FxService($q, $http) {
 
 
 	function fetchFxMonth() {
-		console.log('fetch what')
+
 		var deferred = $q.defer()
 
 		$http.get(ppdomain+'rest-fxrates/month')
 		.then(
 			function(response){
-				console.log('fetch response', response)
 				deferred.resolve(response.data)
 			},
 			function(errResponse){

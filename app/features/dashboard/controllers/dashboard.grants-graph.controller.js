@@ -1,6 +1,6 @@
-GrantsGraphController.$inject = ['$stateParams', '$scope', '$timeout'];
+GrantsDonutController.$inject = ['$stateParams', '$scope', '$timeout'];
 
-export default function GrantsGraphController($stateParams, $scope, $timeout) {
+export default function GrantsDonutController($stateParams, $scope, $timeout) {
 
 	var vm = this;
 	var grantGraphTimeout;
@@ -8,7 +8,7 @@ export default function GrantsGraphController($stateParams, $scope, $timeout) {
 	$scope.$parent.promise
 	.then(
 		function(response){
-			 console.log('grants graph')
+
 			$scope.$parent.dashboardLoaded = true;
 			grantGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view
 	      		vm.donutOptions = {

@@ -1,6 +1,6 @@
-RenewalsGraphController.$inject = ['$stateParams', '$scope', '$timeout'];
+RenewalsDonutController.$inject = ['$stateParams', '$scope', '$timeout'];
 
-export default function RenewalsGraphController($stateParams, $scope, $timeout) {
+export default function RenewalsDonutController($stateParams, $scope, $timeout) {
 
 	var vm = this;
 	var renewalGraphTimeout;
@@ -8,7 +8,7 @@ export default function RenewalsGraphController($stateParams, $scope, $timeout) 
 	$scope.$parent.promise
 	.then(
 		function(response){
- 			console.log('renewals graph')
+
 			renewalGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view
 	      		vm.donutOptions = {
 		            chart: {
