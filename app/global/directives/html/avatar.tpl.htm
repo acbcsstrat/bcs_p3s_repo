@@ -1,0 +1,20 @@
+<div class="avatar" data-ng-click="openUpload()">
+	<div class="avatar-container">	
+		<div class="avatar-icon"> 
+			<span class="fa-stack fa-2x">	
+				<i class="fas fa-circle fa-stack-2x fa-inverse"></i>
+				<i class="fas fa-camera fa-stack-1x"></i>
+			</span>
+		</div>	
+		<div class="avatar-img-container">
+			<img class="avatar-img" data-ng-src="{{avatarImg}}" data-ng-if="avatarImg">
+			<img src="assets/imgs/avatar-default.png" data-ng-if="!avatarImg"></i>
+		</div>
+		<div class="avatar-prompt-container d-flex align-items-center justify-content-center">
+			<div class="d-flex flex-column align-items-center justify-content-center">			
+				<i class="far fa-edit fa-2x txt-white m-b-xs"></i>
+				<p class="font-h4 font-weight-medium txt-white">Change Profile Pic</p>
+			</div>
+		</div>
+	</div>
+</div>
