@@ -1,8 +1,8 @@
-angular.module('ppApp').service('fetchHelpService', fetchHelpService);
+export default angular.module('services.helpinfo-service', []).service('FetchHelpService', FetchHelpService).name;
 
-fetchHelpService.$inject = [];
+FetchHelpService.$inject = [];
 
-function fetchHelpService() {
+function FetchHelpService() {
 
 	var factory = {
 		getSelectedInformation: getSelectedInformation,

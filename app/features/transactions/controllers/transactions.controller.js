@@ -1,6 +1,6 @@
-TransactionsCtrl.$inject = ['transactionService', '$scope', '$q', '$state', '$timeout'];
+TransactionsCtrl.$inject = ['TransactionService', '$scope', '$q', '$state', '$timeout'];
 
-export default function TransactionsCtrl(transactionService, $scope, $q, $state, $timeout) {
+export default function TransactionsCtrl(TransactionService, $scope, $q, $state, $timeout) {
 
 	var vm = this;
 
@@ -36,7 +36,7 @@ export default function TransactionsCtrl(transactionService, $scope, $q, $state,
         return matchesAND;
     };   	
 
-	$scope.promise = transactionService.fetchAllTransactions()
+	$scope.promise = TransactionService.fetchAllTransactions()
 	$scope.promise.then(
 		function(response){
 

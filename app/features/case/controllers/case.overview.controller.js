@@ -1,25 +1,23 @@
-angular.module('ppApp').controller('caseOverviewCtrl', caseOverviewCtrl);
+CaseOverviewController.$inject = ['caseSelected', '$scope', '$state', '$stateParams', '$timeout', 'CasesRestService', '$uibModal', 'RenewalHistoryService', 'ActiveTabService', '$mdDialog']
 
-caseOverviewCtrl.$inject = ['patent', '$scope', '$state', '$stateParams', '$timeout', '$location', '$anchorScroll', 'patentsRestService', '$uibModal', 'renewalRestService', 'activeTabService', '$mdDialog', 'validationService']
-
-function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $location, $anchorScroll, patentsRestService, $uibModal, renewalRestService, activeTabService, $mdDialog, validationService) {
+export default function CaseOverviewController(caseSelected, $scope, $state, $stateParams, $timeout, CasesRestService, $uibModal, RenewalHistoryService, ActiveTabService, $mdDialog) {
 
     var vm = this;
 
     vm.confirmDeletePatent = confirmDeletePatent;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
-    vm.closeCaseoverview = closeCaseoverview;
+
     vm.portfolioLoaded = false;
     vm.setTab = setTab;
     vm.checkAvailableAction = checkAvailableAction;
-    vm.requestNewQuote = requestNewQuote;
     vm.processView = processView
     vm.openMenu = openMenu;
     $scope.notInProgress = true;
     $scope.caseoverview_tab = 'details';
     $scope.showOptions = false;
     $scope.activeLeft = 0;
+    $scope.closeCaseoverview = closeCaseoverview;
 
     var chartTimeout;
     var originatorEv;
@@ -40,59 +38,33 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
         $mdMenu.open(ev);
     };
 
-    function requestNewQuote() {
-
-        var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.validation-confirm-deletion.tpl.htm',
-            appendTo: undefined,
-            controllerAs: '$ctrl',
-            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-                this.confirmDeletion = function() {
-                    $uibModalInstance.close();
-                    validationService.deleteQuote(vm.patent.patentID)
-                    .then(
-                        function(response){
-                            $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
-                        }
-                    )
-                }
-
-                this.dismissModal = function() {
-                    $uibModalInstance.close();
-                };
-
-            }]
-        });
-
-    }    
-
     function init() {
 
         if($stateParams.form1200generate === 1) {
             $scope.activeLeft = 2;
             $scope.caseoverview_tab = 'form1200';
-            activeTabService.setTab(0);
+            ActiveTabService.setTab(0);
         }
 
         if($stateParams.prepareGrant === 1) {
             $scope.activeLeft = 4;
             $scope.caseoverview_tab = 'grantandpublishing';
-            activeTabService.setTab(0);
+            ActiveTabService.setTab(0);
         }
 
         if($stateParams.validationQuote === 1) {
             $scope.activeLeft = 8;
             $scope.caseoverview_tab = 'validation';
-            activeTabService.setTab(0);
+            ActiveTabService.setTab(0);
         }        
 
         $scope.$parent.promise.then(
             function(){
-                vm.patent = patent;
+
+                vm.patent = caseSelected;
 
                 vm.portfolioLoaded = true;
-                renewalRestService.fetchHistory(patent.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
+                RenewalHistoryService.fetchHistory(caseSelected.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
                     function(response){
                         if(response.length > 0) {
@@ -103,15 +75,15 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                     }
                 )
 
-                $scope.validationNotification = patent.p3sServicesWithFees.some(function(item){
+                $scope.validationNotification = caseSelected.p3sServicesWithFees.some(function(item){
                     return item.serviceType == 'validation';
                 })
                  
-                $scope.notInProgress = patent.p3sServicesWithFees.every(function(item){
+                $scope.notInProgress = caseSelected.p3sServicesWithFees.every(function(item){
                     return item.saleType == 'Not In Progress' || (item.serviceType == 'validation' && (item.serviceStatus == 'Validation available' || item.serviceStatus == 'Preparing quote')) || (item.saleType == 'Offline' && item.serviceType == 'validation');
                 })
 
-                $scope.availableServices = patent.p3sServicesWithFees.filter(function(o){
+                $scope.availableServices = caseSelected.p3sServicesWithFees.filter(function(o){
                     return o.saleType !== 'Not In Progress';
                 }).map(function(k, index){
                     if(k.serviceType == 'epct') { k.serviceType = 'Euro-PCT' }
@@ -137,6 +109,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
                         vm.displayValidationTab = true;
                     }
                 })
+
             }
         )
 
@@ -153,17 +126,19 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
     }
 
     function setTab(tab) {
+        console.log(tab)
         $scope.caseoverview_tab = tab;
     }
 
     function closeCaseoverview() {
+        console.log('should be going')
         $state.go('portfolio', {}, {reload: false})
     }
 
     function confirmDeletePatent(id) {
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.confirm-delete-patent.tpl.htm',
+            template: require('html-loader!../html/modals/modal.confirm-delete-patent.tpl.htm'),
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -189,13 +164,13 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
     function deletePatent(id){
 
-        patentsRestService.deletePatent(id)
+        CasesRestService.deletePatent(id)
         .then(
             function(response){
                 $state.go('portfolio', {}, {reload: true})
                 .then(function(){
                     $timeout(function(){
-                        patentsRestService.fetchAllPatents()
+                        CasesRestService.fetchAllCases()
                     }, 400);
                 });
             },
@@ -209,7 +184,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
 
         if(errResponse.status === 304) {
             var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modals/modal.delete-patent-error-trans.tpl.htm',
+                template: require('html-loader!../html/modals/modal.delete-patent-error-trans.tpl.htm'),
                 appendTo: undefined,
                 controllerAs: '$ctrl',
                 controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -223,7 +198,7 @@ function caseOverviewCtrl(patent, $scope, $state, $stateParams, $timeout, $locat
             });
         } else {
             var modalInstance = $uibModal.open({
-                templateUrl: 'app/templates/modals/modal.delete-patent-error.tpl.htm',
+                template: require('html-loader!../html/modals/modal.delete-patent-error.tpl.htm'),
                 appendTo: undefined,
                 controllerAs: '$ctrl',
                 controller: ['$uibModalInstance', function($uibModalInstance) {

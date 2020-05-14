@@ -1,8 +1,8 @@
-angular.module('ppApp').factory('basketService', basketService);
+export default angular.module('services.basket-service', []).factory('BasketService', BasketService).name;
 
-basketService.$inject = ['$http', '$q'];
+BasketService.$inject = ['$http', '$q'];
 
-function basketService($http, $q){
+function BasketService($http, $q){
 
 	var factory = {};
 

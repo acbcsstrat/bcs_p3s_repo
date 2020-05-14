@@ -1,13 +1,13 @@
-DashboardController.$inject = ['$state',  '$timeout', '$scope', 'DashboardService', 'PatentsRestService'];
+DashboardController.$inject = ['$state',  '$timeout', '$scope', 'DashboardService', 'CasesRestService'];
 
-export default function DashboardController($state, $timeout, $scope,  DashboardService, PatentsRestService) {
+export default function DashboardController($state, $timeout, $scope,  DashboardService, CasesRestService) {
 
     var vm = this;
 
     $scope.formalityData = {}
     $scope.dashboardLoaded = false;
     $scope.graphsLoaded = false;
-    $scope.promise = PatentsRestService.fetchAllPatents();
+    $scope.promise = CasesRestService.fetchAllCases();
     $scope.promise
     .then(function(response) {
         if ($scope.$$destroyed) throw "Scope destroyed";

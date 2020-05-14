@@ -1,6 +1,6 @@
-TransactionItemCtrl.$inject = ['transactionItem', 'transactionService', '$scope', '$state'];
+TransactionItemController.$inject = ['transactionItem', '$scope', '$state'];
 
-export default function TransactionItemCtrl(transactionItem, transactionService, $scope, $state) {
+export default function TransactionItemController(transactionItem, $scope, $state) {
 
 	var vm = this;
 	var transStatusArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Funds Sent', 'EPO Received', 'EPO Instructed', 'Completed'];

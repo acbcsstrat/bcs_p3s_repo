@@ -1,12 +1,10 @@
-angular.module('ppApp').controller('costChartCtrl', costChartCtrl);
+CostChartController.$inject = ['caseSelected', 'ca','$scope', '$timeout']
 
-costChartCtrl.$inject = ['patent', 'ca','$scope', '$timeout', '$state', 'organiseTextService', '$location', '$anchorScroll']
-
-function costChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, $location, $anchorScroll) {
+export default function CostChartController(caseSelected, ca, $scope, $timeout) {
 
     var vm = this;
 
-    vm.patent = patent;
+    vm.patent = caseSelected;
     vm.setData = setData;
     vm.barData = null;
     var costTimeout;
@@ -17,7 +15,6 @@ function costChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService
 
             if(response.length > 0) {
                 costTimeout = $timeout(function(){
-
 
                     vm.data = {};
                     vm.data.availableAction = $scope.$parent.availableServices;

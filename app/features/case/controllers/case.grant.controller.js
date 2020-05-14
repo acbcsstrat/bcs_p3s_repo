@@ -1,17 +1,15 @@
-angular.module('ppApp').controller('grantCtrl', grantCtrl);
+GrantController.$inject = ['caseSelected', '$scope', '$uibModal', '$state', '$timeout', 'GrantService'];
 
-grantCtrl.$inject = ['patent', '$scope', '$rootScope', '$uibModal', 'grantService', '$state', '$timeout', 'activeTabService'];
-
-function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, $timeout, activeTabService) {
+export default function GrantController(caseSelected, $scope, $uibModal, $state, $timeout, GrantService) {
 
 	var vm = this;
 
-	vm.patent = patent;
+	vm.patent = caseSelected;
 	vm.initiateGrantOrder = initiateGrantOrder;
     vm.templates = [
-        { name: 'grantintro.html', url: 'app/templates/grant/grant.intro.tpl.htm'},
-        { name: 'grantquestions.html', url: 'app/templates/grant/grant.questionnaire.tpl.htm'},
-        { name: 'grantgenerated.html', url: 'app/templates/grant/grant.ready.tpl.htm'}
+        { name: 'grantintro.html', url:  require('html-loader!../html/grant/grant.intro.tpl.htm')},
+        { name: 'grantquestions.html', url: require('html-loader!../html/grant/grant.questionnaire.tpl.htm')},
+        { name: 'grantgenerated.html', url: require('html-loader!../html/grant/grant.ready.tpl.htm')}
     ];
     vm.highestPoint = 0;
     vm.uninhibitGrantConfirm = uninhibitGrantConfirm;
@@ -20,24 +18,22 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     vm.submitGrantData = submitGrantData;
     $scope.formData = {};
     $scope.validate = {};
-    var grantAction;
-
 
     function init() {
 
     	vm.activeTab = 0;
 
-        if(patent.clientRef !== '') {
-            $scope.formData.clientRef = patent.clientRef;
+        if(caseSelected.clientRef !== '') {
+            $scope.formData.clientRef = caseSelected.clientRef;
         }
 
-		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant available') {
+		if(caseSelected.p3sServicesWithFees[0].serviceStatus == 'Grant available') {
 
 			vm.grantStage = 1;
     		vm.grantTemplate = vm.templates[0].url;        
     	}
 
-		if(patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' || patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing' || patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || patent.p3sServicesWithFees[0].serviceStatus == 'EPO Instrcted') {
+		if(caseSelected.p3sServicesWithFees[0].serviceStatus == 'Grant saved' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'Manual processing' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'EPO Instrcted') {
 			vm.grantStage = 2;
     		vm.grantTemplate = vm.templates[2].url;
     	}
@@ -50,7 +46,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         var formData = new FormData();
         var config = { headers: {'Content-Type': undefined} };
         var notifyWhenValidationAvailable = true; //REMOVE EVENTALLY. QUICK FIX. PROPERTY NOT REQUIRED
-        formData.append('patentID', patent.patentID);
+        formData.append('patentID', caseSelected.patentID);
         formData.append('clientRef', data.clientRef);
         formData.append('totalClaims', parseInt(data.totalClaims));
         formData.append('ofWhichClaimsUnpaid', parseInt(data.totalAdditionalClaims));
@@ -60,12 +56,12 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
         formData.append('frenchTranslation', data.translations.frenchTranslation);
         formData.append('germanTranslation', data.translations.germanTranslation);
 
-        grantService.submitGrant(formData, config)
+        GrantService.submitGrant(formData, config)
         .then(
             function(response){
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modals/modal.grant-order-prepared.tpl.htm',
+                    template:  require('html-loader!../html/modals/modal.grant-order-prepared.tpl.htm'),
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -77,13 +73,13 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                     }]
                 });
 
-                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
 
             },
             function(errResponse){
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modals/modal.grant-order-not-prepared.tpl.htm',
+                    template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -95,7 +91,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
                     }]
                 });
 
-                $state.go('portfolio.modal.patent', {patentId: patent.patentID}, {reload: true})
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
 
             }
         )
@@ -122,7 +118,7 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
 
 	function initiateGrantOrder() {
 
-        grantService.representativeCheck(patent.patentID)
+        GrantService.representativeCheck(caseSelected.patentID)
         .then(
             function(response){
                 if(response === true) {
@@ -138,19 +134,19 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     function uninhibitGrantConfirm() {
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.confirm-uninhibit-grant-order.tpl.htm',
+            template:  require('html-loader!../html/modals/modal.confirm-uninhibit-grant-order.tpl.htm'),
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
                 this.uninhibitGrant = function() {
                     $uibModalInstance.close();
-                    grantService.unhibitGrant(patent.patentID)
+                    GrantService.unhibitGrant(caseSelected.patentID)
                     .then(
                         function(response){
                             $state.reload();
                             var modalInstance = $uibModal.open({
-                                templateUrl: 'app/templates/modals/modal.grant-order-uninhibited.tpl.htm',
+                                template:  require('html-loader!../html/modals/modal.grant-order-uninhibited.tpl.htm'),
                                 appendTo: undefined,
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -196,10 +192,10 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', '$state', function($uibModalInstance, $timeout, $state){
 
-                if(patent.p3sServicesWithFees[0].serviceStatus === 'Grant available') {
+                if(caseSelected.p3sServicesWithFees[0].serviceStatus === 'Grant available') {
 
                     this.confirm = function() {
-                        grantService.inhibitGrant(patent.patentID)
+                        GrantService.inhibitGrant(caseSelected.patentID)
                         .then(
                             function(response) {
                                 $state.reload();
@@ -221,19 +217,19 @@ function grantCtrl(patent, $scope, $rootScope, $uibModal, grantService, $state, 
     function deleteGrantConfirm() {
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.confirm-delete-grant-order.tpl.htm',
+            template:  require('html-loader!../html/modals/modal.confirm-delete-grant-order.tpl.htm'),
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
                 this.deleteGrant = function() {
                     $uibModalInstance.close();
-                    grantService.deleteGrant(patent.patentID)
+                    GrantService.deleteGrant(caseSelected.patentID)
                     .then(
                         function(response){
                             $state.reload()
                             var modalInstance = $uibModal.open({
-                                templateUrl: 'app/templates/modals/modal.grant-order-deleted.tpl.htm',
+                                template:  require('html-loader!../html/modals/modal.grant-order-deleted.tpl.htm'),
                                 appendTo: undefined,
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){

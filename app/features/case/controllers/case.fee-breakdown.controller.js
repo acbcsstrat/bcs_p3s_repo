@@ -1,12 +1,10 @@
-angular.module('ppApp').controller('feeBreakDownCtrl', feeBreakDownCtrl);
+FeeBreakDownController.$inject = ['caseSelected', '$scope', '$timeout'];
 
-feeBreakDownCtrl.$inject = ['patent', '$scope', '$timeout', '$state', 'organiseTextService', '$location', '$anchorScroll', 'organiseColourService']
-
-function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService, $location, $anchorScroll, organiseColourService) {
+export default function FeeBreakDownController(caseSelected, $scope, $timeout) {
 
     var vm = this;
 
-    vm.patent = patent;
+    vm.patent = caseSelected;
     vm.setFees = setFees;
     var loadFeeTimeout;
     
@@ -37,14 +35,14 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
 
         vm.availableFees = {};
 
-        if(feeUIAvailable(patent.p3sServicesWithFees))
+        if(feeUIAvailable(caseSelected.p3sServicesWithFees))
 
         if(action == 'Euro-PCT') {
             vm.displayForm1200 = true;
             vm.displayRenewal = false;
             vm.displayGrant = false;
             vm.displayValidation = false;
-            vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
+            vm.availableFees.official = caseSelected.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'Euro-PCT';
             }).map(function(fee) {
                 fee.feeUI = fee.form1200FeeUI;
@@ -59,7 +57,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.displayRenewal = true;
             vm.displayGrant = false;
             vm.displayValidation = false;
-            vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
+            vm.availableFees.official = caseSelected.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'renewal';
             }).map(function(fee) {
                 fee.feeUI = fee.renewalFeeUI;
@@ -74,7 +72,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.displayRenewal = false;
             vm.displayGrant = true;
             vm.displayValidation = false;
-            vm.availableFees.official = patent.p3sServicesWithFees.filter(function(item){
+            vm.availableFees.official = caseSelected.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'grant';
             }).map(function(fee) {
                 fee.feeUI = fee.grantFeeUI;
@@ -89,7 +87,7 @@ function feeBreakDownCtrl(patent, $scope, $timeout, $state, organiseTextService,
             vm.displayRenewal = false;
             vm.displayGrant = false;
             vm.displayValidation = true;
-            var official = patent.p3sServicesWithFees.filter(function(item){
+            var official = caseSelected.p3sServicesWithFees.filter(function(item){
                 return item.serviceType === 'validation';
             }).map(function(fee) {
                 fee.feeUI = fee.validationFeeUI;

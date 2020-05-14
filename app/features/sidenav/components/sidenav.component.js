@@ -1,95 +1,89 @@
 export default angular.module('components.sidenav', []).component('sidenav', {
 
 		template: require('html-loader!../html/sidenav.tpl.htm'),
-		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', 'userService', 'SidenavService',  'ngCart', 'coreService',  'moment', 'FxService', function($scope, $rootScope, $mdSidenav, $timeout, userService, SidenavService, ngCart, coreService, moment, FxService){
+		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', '$http', 'ProfileService', 'SidenavService',  'ngCart', 'moment', 'FxService', function($scope, $rootScope, $mdSidenav, $timeout, $http, ProfileService, SidenavService, ngCart, moment, FxService){
 
-			var vm = this;
+		var vm = this;
 
-		 	vm.toggleLeft = buildToggler('left');
-		    vm.toggleRight = buildToggler('right');
-			vm.isOpen = isOpen;
-	      	vm.toggleOpen = toggleOpen;
-	      	vm.autoFocusContent = false;
-	      	vm.menu = SidenavService;
-	      	vm.status = {
-	        	isFirstOpen: true,
-	        	isFirstDisabled: false
+	 	vm.toggleLeft = buildToggler('left');
+	    vm.toggleRight = buildToggler('right');
+	    // vm.openGuide = openGuide;
+		vm.isOpen = isOpen;
+      	vm.toggleOpen = toggleOpen;
+      	vm.autoFocusContent = false;
+      	vm.menu = SidenavService;
+      	vm.status = {
+        	isFirstOpen: true,
+        	isFirstDisabled: false
+      	};
+
+
+        vm.utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
+        vm.est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
+
+      	$rootScope.$on('refreshAvatar', function(){
+	        var timestamp = new Date().getTime();
+	        vm.avatarimage = '../p3sweb/avatar-image/' + '?' + timestamp;
+      	})
+
+      	function init() {
+
+      		$http.get('../p3sweb/avatar-image/')
+      		.then(
+      			function(response){
+      				if(response.data !== '') {
+      					vm.avatarimage = '../p3sweb/avatar-image/';
+      				}
+      			}
+      		)
+
+			ProfileService.fetchUser()
+			.then(
+				function(response){
+					vm.user = response;
+				}
+			)
+	    	FxService.fetchFx()
+	    	.then(
+	    		function(response){
+	    			vm.fxRate = response.currentFXRate.rate
+	    		},
+	    		function(errResponse){
+	    			console.error('Error fetching fx: ', errResponse)
+	    		}
+	    	)	
+
+		    setInterval(function() {
+		    	timeZoneClocks();
+		    }, 1000)
+
+      	}
+
+
+      	init()
+
+      	function isOpen(section) {
+        	return vm.menu.isSectionSelected(section);
+      	}
+      	function toggleOpen(section) {
+        	vm.menu.toggleSelectSection(section);
+      	}
+
+
+	    function buildToggler(componentId) {
+	      	return function() {
+	        	$mdSidenav(componentId).toggle();
 	      	};
-		    
-	      	function init() {
+	    }
 
-				userService.fetchUser()
-				.then(
-					function(response){
-						vm.user = response;
-					},
-					function(errResponse){
-						console.log(errResponse)
-					}
-				)
-		    	FxService.fetchFx()
-		    	.then(
-		    		function(response){
-		    			vm.fxRate = response.currentFXRate.rate
-		    		},
-		    		function(errResponse){
-		    			console.log(errResponse)
-		    		}
-		    	)	
+	    function timeZoneClocks() {
+	        vm.utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
+	        vm.est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
+	    }
 
-			    $timeout(function() {
-			    	timeZoneClocks();
-			    	vm.timeLoaded = true;   
-			    })	    	
+		vm.empty = function() {
+			ngCart.empty();
+		}
 
-	      	}
-
-
-	      	init()
-
-	      	function isOpen(section) {
-	        	return vm.menu.isSectionSelected(section);
-	      	}
-	      	function toggleOpen(section) {
-	        	vm.menu.toggleSelectSection(section);
-	      	}
-
-
-		    function buildToggler(componentId) {
-		      	return function() {
-		        	$mdSidenav(componentId).toggle();
-		      	};
-		    }
-
-		    function timeZoneClocks() {
-
-		        var utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
-		        var est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
-		    
-		        var t = $timeout(function() {
-		            vm.utcTime = utc;
-		            vm.estTime =  est;
-		            timeZoneClocks()
-		        }, 500);
-
-		    }
-
-			vm.empty = function() {
-				ngCart.empty();
-			}    
-
-			function welcomeMessageModal() {
-				var modalInstance = $uibModal.open({
-					templateUrl: 'app/templates/modals/modal.welcome-message.tpl.htm',
-					scope: $scope,
-					controllerAs:'$ctrl',
-					controller: ['$uibModalInstance', function($uibModalInstance) {
-
-				 	  	this.dismissWelcomeModal = function () {
-					    	$uibModalInstance.close();
-					  	};
-					}]
-				});
-		 	}    
 		}]
 }).name

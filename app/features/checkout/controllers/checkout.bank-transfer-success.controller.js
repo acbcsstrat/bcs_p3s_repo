@@ -1,8 +1,6 @@
-angular.module('ppApp').controller('bankTransferSuccessCtrl', bankTransferSuccessCtrl);
+BankTransferSuccessController.$inject = ['$scope', '$stateParams']
 
-bankTransferSuccessCtrl.$inject = ['$scope', '$rootScope', '$stateParams']
-
-function bankTransferSuccessCtrl($scope, $rootScope, $stateParams) {
+export default function BankTransferSuccessController($scope, $stateParams) {
 
 	var vm = this;
 

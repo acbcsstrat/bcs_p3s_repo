@@ -2,9 +2,9 @@ import angular from 'angular';
 
 export default angular.module('services.DashboardService', []).factory('DashboardService', DashboardService).name;
 
-DashboardService.$inject = ['$http', '$q', 'PatentsRestService']
+DashboardService.$inject = ['$http', '$q', 'CasesRestService']
 
-function DashboardService($http, $q, PatentsRestService) {
+function DashboardService($http, $q, CasesRestService) {
 
     var factory = {
         sortPatents: sortPatents,

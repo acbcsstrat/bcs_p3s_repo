@@ -8,6 +8,10 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
 
     window.ppdomain = "http://localhost:8080/p3sweb/";
 
+    $urlRouterProvider 
+        .when('', '/dashboard')
+        .otherwise("/dashboard")    
+
     $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
 
     $mdIconProvider

@@ -1,7 +1,9 @@
 <div data-ng-if="$ctrl.portfolioLoaded" class="animate-show modal-box">
 	<div class="modal-caseoverview d-flex flex-column bg-white">
 		<div class="caseoverview--options-panel cursor-pointer d-flex align-items-center">
-			<i class="fas fa-times fa-2x cursor-pointer" data-ng-click="$ctrl.closeCaseoverview()"></i>
+			<div >
+				<button class="btn btn-no-bg" data-ng-click="closeCaseoverview()"><i class="fas fa-times fa-2x cursor-pointer"></i></button>
+			</div>
 		</div>
 		<div class="d-flex flex-grow-1 brbl-10 brtl-10">
 			<div class="row flex-grow-1">
@@ -19,9 +21,9 @@
 									<a class="nav-link d-flex flex-column" 
 									data-ng-disabled="validationNotification"
 									data-ng-class="{'disabled': validationNotification, 'active': activeLeft === 1 }" 
-									data-ng-click="$ctrl.processView('notifications', 1); activeLeft = 1;">
+									data-ng-click="$ctrl.processView('reminders', 1); activeLeft = 1;">
 										<span><i class="fal fa-exclamation-circle font-h3"></i></span>							
-										<span>Notifications</span>
+										<span>Reminders</span>
 									</a>
 						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="validationNotification" class="font-h4">
 						              	Currently reminders are not provided for validations though this feature is coming soon.
@@ -162,7 +164,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div ui-view="details" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'details'"></div>
-										<div ui-view="notifications" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'notifications'"></div>
+										<div ui-view="reminders" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'reminders'"></div>
 										<div ui-view="form1200" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'form1200'"></div>
 										<div ui-view="renewalhistory" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'renewalhistory'"></div>
 										<div ui-view="grantandpublishing" class="d-flex flex-column flex-grow-1" data-ng-show="caseoverview_tab == 'grantandpublishing'"></div>

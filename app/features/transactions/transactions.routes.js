@@ -16,14 +16,14 @@ export default function routes($stateProvider) {
         abstract: true,
         views: {
             "modal": {
-                templateUrl: "app/templates/transactions/modal.html"
+                template: require("html-loader!./html/modal.html")
             }
         }
     })   
     .state('transactions.modal.transaction-item', {
         url: '/:transId',
         resolve: {
-            transactionItem: ['$stateParams', '$q', 'transactionService', function($stateParams, $q, TransactionService) {
+            transactionItem: ['$stateParams', '$q', 'TransactionService', function($stateParams, $q, TransactionService) {
                 return TransactionService.fetchAllTransactions()
                 .then(
                     function(response){
@@ -40,13 +40,13 @@ export default function routes($stateProvider) {
         },
         views: {
             "" : {
-                templateUrl: 'app/templates/transactions/transactions.item.tpl.htm',
-                controller: 'TransactionItemCtrl',
+                template: require('html-loader!./html/transactions.item.tpl.htm'),
+                controller: 'TransactionItemController',
                 controllerAs: '$ctrl',                    
             },
             "details@transactions.modal.transaction-item" : {
-                templateUrl: 'app/templates/transactions/transactions.item.details.tpl.htm',
-                controller: 'TransactionItemCtrl',
+                template: require('html-loader!./html/transactions.item.details.tpl.htm'),
+                controller: 'TransactionItemController',
                 controllerAs: '$ctrl',                    
             }                               
 

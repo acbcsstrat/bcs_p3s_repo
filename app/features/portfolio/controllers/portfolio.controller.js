@@ -1,17 +1,17 @@
-PortfolioController.$inject = ['$scope', '$state', '$stateParams','$rootScope', '$timeout', '$uibModal', '$mdPanel', '$mdDialog', '$mdMenu', 'SearchPatentService',  'PatentsRestService'];
+PortfolioController.$inject = ['$scope', '$state', '$stateParams','$rootScope', '$timeout', '$uibModal', '$mdPanel', '$mdDialog', '$mdMenu', 'SearchPatentService',  'CasesRestService'];
 
-export default function PortfolioController($scope, $state, $stateParams, $rootScope, $timeout, $uibModal, $mdPanel, $mdDialog, $mdMenu, SearchPatentService, PatentsRestService) {
+export default function PortfolioController($scope, $state, $stateParams, $rootScope, $timeout, $uibModal, $mdPanel, $mdDialog, $mdMenu, SearchPatentService, CasesRestService) {
 
     var vm = this;
 
-    $scope.promise = PatentsRestService.fetchAllPatents();
+    $scope.promise = CasesRestService.fetchAllCases();
     $scope.filter = {};
 
     function select(i) {
         vm.selected = i;
     }
 
-    select($stateParams.patentId)
+    select($stateParams.caseId)
 
     function uniqueArray(array) {
         return array.filter(function(item, pos, self) {
@@ -54,7 +54,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
     }; 
 
     function updatePortfolioData() {
-        PatentsRestService.fetchAllPatents()
+        CasesRestService.fetchAllCases()
         .then(function(response) {
             $scope.portfolioData = response;            
             vm.recentlyAdded.push(response.slice(-1).pop())
@@ -100,17 +100,17 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
 
                 vm.stateParams = $stateParams;
                 if($(event.target).hasClass('generateForm1200')) {
-                    $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
+                    $state.go('portfolio.modal.case', {caseId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
                 }
 
                 if($(event.target).hasClass('prepareGrant')) {
-                    $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
+                    $state.go('portfolio.modal.case', {caseId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
                 }        
 
                 if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {
                     var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
                     var patentId = id[0].id; //gets data from data-id
-                    $state.go('portfolio.modal.patent', {patentId: patent.patentID, form1200generate: null})            
+                    $state.go('portfolio.modal.case', {caseId: patent.patentID, form1200generate: null})
                 }
 
             };
@@ -123,7 +123,6 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
             function selectedChip(prop, value, cat) {
                 if(cat == 'Euro-PCT') {cat = 'epct'}
                 $scope.filter[cat][prop] = false;
-                // $scope.portfolioData = $scope.portfolioData;
             }
 
             function showFilter(mdMenu, $event) {
@@ -211,7 +210,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                         $scope.openConfirmModal = function(patent) {
 
                             var modalInstance = $uibModal.open({
-                                templateUrl: 'app/templates/modals/modal.confirm-found-patent.tpl.htm',
+                                template: require('html-loader!../html/modals/modal.confirm-found-patent.tpl.htm'),
                                 appendTo: undefined,
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
@@ -219,7 +218,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                                     this.addPatent = function () {
                                         vm.addingPatent = true;
                                         $uibModalInstance.close();
-                                        PatentsRestService.savePatent(patent)
+                                        CasesRestService.savePatent(patent)
                                         .then(
                                             function(response){
                                                 
@@ -236,7 +235,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
 
                                             },
                                             function(errResponse){
-                                                console.error('Error while saving Patent');
+                                                console.error('Error while saving Patent. Error: ', errResponse);
                                             }
                                         )
 
@@ -266,7 +265,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                     // animation: panelAnimation,
                     hasBackdrop: true,
                     targetEvent: $event,
-                    templateUrl: 'app/templates/portfolio/add-patent.tpl.htm',
+                    template: require('html-loader!../html/add-patent.tpl.htm'),
                     clickOutsideToClose: true,
                     escapeToClose: true,
                     focusOnOpen: true

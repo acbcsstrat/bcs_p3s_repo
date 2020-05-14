@@ -1,12 +1,8 @@
-angular.module('ppApp').controller('basketCtrl', basketCtrl);
+BasketController.$inject = ['$rootScope'];
 
-basketCtrl.$inject = ['$rootScope'];
-
-function basketCtrl($rootScope) {
+export default function BasketController($rootScope) {
 
 	var vm = this;
-
-   	vm.pageTitle = 'Basket';
 
 }
 

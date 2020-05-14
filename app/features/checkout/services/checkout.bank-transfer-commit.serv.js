@@ -1,8 +1,8 @@
-angular.module('ppApp').factory('bankTransferCommitService', bankTransferCommitService);
+export default angular.module('services.banktransfercommit-service', []).factory('BankTransferCommitService', BankTransferCommitService).name;
 
-bankTransferCommitService.$inject = ['$http', '$q', '$state'];
+BankTransferCommitService.$inject = ['$http', '$q', '$state'];
 
-function bankTransferCommitService($http, $q, $state){
+function BankTransferCommitService($http, $q, $state){
 
 	var factory = {
 		commitTransfer: commitTransfer

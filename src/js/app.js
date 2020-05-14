@@ -15,6 +15,8 @@ import "angular-aria/angular-aria.min.js";
 import "angular-material/angular-material.min.js";
 import 'angular-touch/angular-touch.min.js';
 import "angular-local-storage/dist/angular-local-storage.min.js";
+import "ng-file-upload/dist/ng-file-upload.min.js";
+import "angular-bind-html-compile/angular-bind-html-compile.min.js";
 
 import "tether/dist/js/tether.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -24,7 +26,6 @@ import "popper.js/dist/popper.min.js";
 import "moment/min/moment.min.js";
 import "moment-timezone/builds/moment-timezone.min.js";
 import "moment-timezone/builds/moment-timezone-with-data-2012-2022.min.js";
-// import 'bootstrap/dist/css/bootstrap.css';
 
 import "d3/d3.min.js";
 import "nvd3/build/nv.d3.min.js";
@@ -33,32 +34,35 @@ import "angular-nvd3/dist/angular-nvd3.min.js";
 import angular from 'angular';
 import uirouter from 'angular-ui-router';
 import ngIdle from "ng-idle/angular-idle.min.js";
-import ngCart from "../../assets/js/vendors/ngCart.js";
+import ngCart from "../../app/global/vendors/ngCart/ngCart.js";
 import angularMoment from "angular-moment";
 import nvd3 from "angular-nvd3";
 import croppie from "angular-croppie/angular-croppie.js";
 
 import config from '../../app/app.config.js';
 
-import userService from '../../app/features/user/services/user.user.serv.js';
+import ProfileService from '../../app/features/profile/services/profile.details.serv.js';
 
-import coreCtrl from '../../app/global/controllers/core.core.ctrl.js';
+import coreCtrl from '../../app/global/controllers/core.ctrl.js';
 import dashboard from '../../app/features/dashboard/index.js';
 import portfolio from '../../app/features/portfolio/index.js';
+import caseoverview from '../../app/features/case/index.js';
 import transactions from '../../app/features/transactions/index.js';
+import profile from '../../app/features/profile/index.js';
 import sidenav from '../../app/features/sidenav/index.js';
+import checkout from '../../app/features/checkout/index.js';
 
-import '@fortawesome/fontawesome-pro/js/fontawesome'
-import '@fortawesome/fontawesome-pro/js/solid'
-import '@fortawesome/fontawesome-pro/js/regular'
-import '@fortawesome/fontawesome-pro/js/brands'
+import '@fortawesome/fontawesome-pro/js/fontawesome';
+import '@fortawesome/fontawesome-pro/js/solid';
+import '@fortawesome/fontawesome-pro/js/regular';
+import '@fortawesome/fontawesome-pro/js/brands';
 
 import "../scss/main.scss";
 
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', uirouter, userService, ngCart, coreCtrl, dashboard, portfolio, transactions, sidenav]).config(config).run(startUpRun)
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', uirouter, ProfileService, ngCart, coreCtrl, dashboard, portfolio, caseoverview, transactions, sidenav, profile, checkout]).config(config).run(startUpRun)
 
-startUpRun.$inject = ['Idle', 'userService', '$rootScope', '$timeout'];
+startUpRun.$inject = ['Idle', '$rootScope', '$timeout'];
 
-function startUpRun(Idle, userService, $rootScope, $timeout) {
+function startUpRun(Idle, $rootScope, $timeout) {
     Idle.watch();
 };

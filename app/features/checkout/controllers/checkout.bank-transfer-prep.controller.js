@@ -1,8 +1,6 @@
-angular.module('ppApp').controller('bankTransferPrepCtrl', bankTransferPrepCtrl);
+BankTransferPrepController.$inject = ['BankTransferCommitService', '$state', '$scope', '$stateParams', '$uibModal', 'ngCart']
 
-bankTransferPrepCtrl.$inject = ['bankTransferCommitService', '$state', '$scope', '$stateParams', '$rootScope', '$uibModal', 'ngCart']
-
-function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateParams, $rootScope, $uibModal, ngCart) {
+export default function BankTransferPrepController(BankTransferCommitService, $state, $scope, $stateParams, $uibModal, ngCart) {
 
 	var vm = this;
 
@@ -22,7 +20,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 		function openCancelTransModal() {
 
 			var modalInstance = $uibModal.open({
-				templateUrl: 'app/templates/modals/modal.cancel-transaction.tpl.htm',
+				template: require('html-loader!../html/modals/modal.cancel-transaction.tpl.htm'),
 				appendTo: undefined,
 				controllerAs: '$ctrl',
 				controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -45,7 +43,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 		function commitTransfer() {
 
 			vm.orderObj.billingDetails = $stateParams.details.billingDetails;
-			bankTransferCommitService.commitTransfer(vm.orderObj) //SERVICE HANDLES STATE.GO
+			BankTransferCommitService.commitTransfer(vm.orderObj) //SERVICE HANDLES STATE.GO
 			.then(
 	            function(response){
 	            	$state.go('bank-transfer-success', {orderObj: response});
@@ -53,7 +51,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 	            function(errResponse){
 	            	if(errResponse.status === 500) {
 						var modalInstance = $uibModal.open({
-							templateUrl: 'app/templates/modals/modal.commit-error.tpl.htm',
+							template: require('html-loader!../html/modals/modal.commit-error.tpl.htm'),
 							appendTo: undefined,
            					controllerAs: '$ctrl',							
 							controller: ['$uibModalInstance', function($uibModalInstance) {
@@ -68,7 +66,7 @@ function bankTransferPrepCtrl(bankTransferCommitService, $state, $scope, $stateP
 					}
 	            	if(errResponse.status === 409) {
 						var modalInstance = $uibModal.open({
-							templateUrl: 'app/templates/modals/modal.commit-error-price.tpl.htm',
+							template: require('html-loader!../html/modals/modal.commit-error-price.tpl.htm'),
 							appendTo: undefined,
            					controllerAs: '$ctrl',								
 							controller: ['$uibModalInstance', function($uibModalInstance) {

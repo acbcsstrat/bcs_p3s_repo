@@ -140,11 +140,11 @@
     			        </td>		        
     			        <td class="t-data__td">
     						<span data-ng-if="transaction.serviceUIs.length === 1" data-ng-repeat="item in transaction.serviceUIs">
-    								<span class="txt-grey">
-    									{{item.appAndType }}
-    								</span>
-    							</span>
-    						</span>						
+								<span class="txt-grey">
+									{{item.appAndType }}
+								</span>
+							</span>
+    									
     						<select 
     							data-ng-if="transaction.serviceUIs.length > 1"
     					        data-ng-options="ui.appAndType for ui in transaction.serviceUIs"

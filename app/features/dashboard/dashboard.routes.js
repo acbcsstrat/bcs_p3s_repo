@@ -25,7 +25,7 @@ export default function routes($stateProvider) {
                 template: require('html-loader!./html/dashboard.actions-available.tpl.htm')
             },           
             'fxchartwidget@dashboard': {
-                controller: 'FxChartController',
+                controller: 'DbFxChartController',
                 controllerAs: '$ctrl',
                 template: require('html-loader!./html/dashboard.fxchart-widget.tpl.htm')
             },

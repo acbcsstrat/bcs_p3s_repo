@@ -1,12 +1,10 @@
-angular.module('ppApp').controller('fxChartCtrl', fxChartCtrl);
+FxChartController.$inject = ['caseSelected', 'ca', '$scope', '$timeout', '$state']
 
-fxChartCtrl.$inject = ['patent', 'ca', '$scope', '$timeout', '$state', 'organiseTextService', '$location', '$anchorScroll']
-
-function fxChartCtrl(patent, ca, $scope, $timeout, $state, organiseTextService, $location, $anchorScroll) {
+export default function FxChartController(caseSelected, ca, $scope, $timeout, $state) {
 
     var vm = this;
 
-    vm.patent = patent;
+    vm.patent = caseSelected;
     vm.setData = setData;
     vm.lineData = null;
     var fxTimeout;

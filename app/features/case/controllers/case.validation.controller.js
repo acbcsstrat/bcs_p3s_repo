@@ -1,8 +1,6 @@
-angular.module('ppApp').controller('validationCtrl', validationCtrl);
+ValidationController.$inject = ['caseSelected', '$scope', '$uibModal', '$state', '$timeout', '$q', 'ValidationService'];
 
-validationCtrl.$inject = ['patent', '$scope', '$rootScope', '$uibModal', 'validationService', '$state', '$timeout', 'activeTabService', 'Upload', '$q'];
-
-function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService, $state, $timeout, activeTabService, Upload, $q) {
+export default function ValidationController(caseSelected, $scope, $uibModal, $state, $timeout, $q, ValidationService) {
 
 	var vm = this;
 
@@ -13,15 +11,16 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     vm.submitPoaDocuments = submitPoaDocuments;
     vm.patent = '';
     vm.templates = [
-        { name: 'validationAvailable', url: 'app/templates/validation/validation-available.tpl.htm'},
-        { name: 'quotePending', url: 'app/templates/validation/validation-quote-pending.tpl.htm'},
-        { name: 'quoteProvided', url: 'app/templates/validation/validation-quote-provided.tpl.htm'},
-        { name: 'quoteProvided', url: 'app/templates/validation/validation-payment-in-progress.tpl.htm'},
-        { name: 'poasProvided', url: 'app/templates/validation/validation-poa-available.tpl.htm'},
-        { name: 'noPoasProvided', url: 'app/templates/validation/validation-nopoas-required.tpl.htm'},
-        { name: 'workInProgress', url: 'app/templates/validation/validation-wip.tpl.htm'},
-        { name: 'workInProgress', url: 'app/templates/validation/validation-manual.tpl.htm'},
+        { name: 'validationAvailable', url: require('html-loader!../html/validation/validation-available.tpl.htm')},
+        { name: 'quotePending', url: require('html-loader!../html/validation/validation-quote-pending.tpl.htm')},
+        { name: 'quoteProvided', url: require('html-loader!../html/validation/validation-quote-provided.tpl.htm')},
+        { name: 'paymentInProgress', url: require('html-loader!../html/validation/validation-payment-in-progress.tpl.htm')},
+        { name: 'poasProvided', url: require('html-loader!../html/validation/validation-poa-available.tpl.htm')},
+        { name: 'noPoasProvided', url: require('html-loader!../html/validation/validation-nopoas-required.tpl.htm')},
+        { name: 'workInProgress', url: require('html-loader!../html/validation/validation-wip.tpl.htm')},
+        { name: 'manual', url: require('html-loader!../html/validation/validation-available.tpl.htm')}
     ];
+
     $scope.formData = {};
     var validationAction;
     var allState = [];
@@ -37,24 +36,21 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     }
 
     function init() {
-        var serviceStatusL = patent.p3sServicesWithFees[0].serviceStatus.toLowerCase();
-        if(patent.p3sServicesWithFees[0].validationFeeUI !== null) {
+        var serviceStatusL = caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase();
+        if(caseSelected.p3sServicesWithFees[0].validationFeeUI !== null) {
             var array = [];
-            allState = array.concat(patent.p3sServicesWithFees[0].validationFeeUI.designatedStates, patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
+            allState = array.concat(caseSelected.p3sServicesWithFees[0].validationFeeUI.designatedStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.extensionStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.validationStates)
         }
     	vm.activeTab = 0;
 
-		if(serviceStatusL == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
-    		vm.validationTemplate = vm.templates[0].url;        
-    	}
-
-        if(serviceStatusL == 'preparing quote') {
+        if(serviceStatusL == 'quote pending') {
             vm.validationTemplate = vm.templates[1].url;        
-        }
+        }        
 
         if(serviceStatusL == 'quote provided') {
             vm.validationTemplate = vm.templates[2].url;        
         }
+
 
         if(serviceStatusL == 'payment in progress' || serviceStatusL == 'pa instructed') {
             vm.validationTemplate = vm.templates[3].url;        
@@ -62,7 +58,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
 
         if(serviceStatusL == 'blank poas provided' || serviceStatusL == 'blank poas downloaded') { //VALIDATION TEST DATA - REMOVE NotUsed
 
-            patent.postAddress = patent.validationQuoteUI.poaPostalAddress.split(',');
+            caseSelected.postAddress = caseSelected.validationQuoteUI.poaPostalAddress.split(',');
 
             var noPoasNeeded = allState.every(function(item){
                 return item.poaNeeded === false;
@@ -78,9 +74,10 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             vm.validationTemplate = vm.templates[6].url;  
         }
 
-        if(patent.p3sServicesWithFees[0].saleType.toLowerCase() == 'offline') { //VALIDATION TEST DATA - REMOVE NotUsed
+        if(caseSelected.p3sServicesWithFees[0].saleType.toLowerCase() == 'offline') { //VALIDATION TEST DATA - REMOVE NotUsed
             vm.validationTemplate = vm.templates[7].url;  
-        }               
+        }
+
 
     }
 
@@ -91,13 +88,13 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         function(){
             $scope.isChecked = true;
             vm.patent = patent; 
-            if(patent.p3sServicesWithFees[0].validationFeeUI !== null) {
+            if(caseSelected.p3sServicesWithFees[0].validationFeeUI !== null) {
                 var array = [];
-                allState = array.concat(patent.p3sServicesWithFees[0].validationFeeUI.designatedStates, patent.p3sServicesWithFees[0].validationFeeUI.extensionStates, patent.p3sServicesWithFees[0].validationFeeUI.validationStates)
+                allState = array.concat(caseSelected.p3sServicesWithFees[0].validationFeeUI.designatedStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.extensionStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.validationStates)
             }
 
-            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
-                validationService.fetchDesignatedStates(patent.patentID)
+            if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
+                ValidationService.fetchDesignatedStates(caseSelected.patentID)
                 .then(
                     function(response){
                         vm.validationInfo = response;
@@ -112,8 +109,8 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                 )
             }
 
-            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'preparing quote') { 
-                validationService.fetchPreparedQuote(patent.patentID)
+            if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'preparing quote') { 
+                ValidationService.fetchPreparedQuote(caseSelected.patentID)
                 .then(
                     function(response){
                         vm.preparedQuote = response;
@@ -127,7 +124,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                 return item;
             }
 
-            if(patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas provided' || patent.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas downloaded') {
+            if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas provided' || caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas downloaded') {
                 $scope.formData.designatedStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates;
                 $scope.formData.extensionStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates;
                 $scope.formData.validationStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.validationStates;   
@@ -140,17 +137,17 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
     function requestNewQuote() {
 
         var modalInstance = $uibModal.open({
-            templateUrl: 'app/templates/modals/modal.validation-confirm-deletion.tpl.htm',
+            template: require('html-loader!../html/modals/modal.validation-confirm-deletion.tpl.htm'),
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
                 this.confirmDeletion = function() {
                     $uibModalInstance.close();
-                    validationService.deleteQuote(vm.patent.patentID)
+                    ValidationService.deleteQuote(caseSelected.patentID)
                     .then(
                         function(response){
-                            $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                            $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
                         }
                     )
                 }
@@ -194,15 +191,15 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         var promiseArray = [];
 
         for(var i = 0; i < allStatesMapped.length; i++) {
-            promiseArray.push(validationService.submitPoas(patent.patentID, allStatesMapped[i]))
+            promiseArray.push(ValidationService.submitPoas(caseSelected.patentID, allStatesMapped[i]))
         }
 
         $q.all(promiseArray)
         .then(
             function(response){
-                validationService.poaUploadSuccessNotify(patent.patentID)
+                ValidationService.poaUploadSuccessNotify(caseSelected.patentID)
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modals/modal.validation-poas-submitted.tpl.htm',
+                    template: require('html-loader!../html/modals/modal.validation-poas-submitted.tpl.htm'),
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -214,13 +211,13 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                     }]
                 });
 
-                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
             },
             function(errResponse){
 
-                validationService.poaUploadFailNotify(patent.patentID)
+                ValidationService.poaUploadFailNotify(caseSelected.patentID)
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modals/modal.validation-poas-submitted-error.tpl.htm',
+                    template: require('html-loader!../html/modals/modal.validation-poas-submitted-error.tpl.htm'),
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -232,7 +229,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                     }]
                 });
 
-                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
             }
         )
 
@@ -263,7 +260,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
             return filtered;
         })
 
-        formData.patentID = patent.patentID;
+        formData.patentID = caseSelected.patentID;
         
         formData.lastName = names.pop();
         formData.firstName = names.toString().replace(/,/g, ' ');
@@ -275,12 +272,12 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
         formData.extensionStates = JSON.parse(angular.toJson(data.extensionStates));
         formData.validationStates = JSON.parse(angular.toJson(data.validationStates));
 
-        validationService.requestQuote(formData)
+        ValidationService.requestQuote(formData)
         .then(
             function(response){
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modals/modal.validation-quote-requested.tpl.htm',
+                    template: require('html-loader!../html/modals/modal.validation-quote-requested.tpl.htm'),
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -292,11 +289,11 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                     }]
                 });
 
-                $state.go('portfolio.modal.patent', {patentId: patent.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 0, form1200generate: 0, validationQuote: 1}, {reload: true})
             },
             function(errResponse) {
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'app/templates/modals/modal.validation-quote-failed.tpl.htm',
+                    template: require('html-loader!../html/modals/modal.validation-quote-failed.tpl.htm'),
                     appendTo: undefined,
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
@@ -308,7 +305,7 @@ function validationCtrl(patent, $scope, $rootScope, $uibModal, validationService
                     }]
                 });
 
-                $state.go('portfolio.modal.patent', {patentId: patent.patentID}, {reload: true})
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
 
             }
         )
