@@ -31,6 +31,8 @@ import "d3/d3.min.js";
 import "nvd3/build/nv.d3.min.js";
 import "angular-nvd3/dist/angular-nvd3.min.js";
 
+import "../scss/main.scss";
+
 import angular from 'angular';
 import uirouter from 'angular-ui-router';
 import ngIdle from "ng-idle/angular-idle.min.js";
@@ -42,6 +44,8 @@ import croppie from "angular-croppie/angular-croppie.js";
 import config from '../../app/app.config.js';
 
 import ProfileService from '../../app/features/profile/services/profile.details.serv.js';
+
+
 
 import coreCtrl from '../../app/global/controllers/core.ctrl.js';
 import dashboard from '../../app/features/dashboard/index.js';
@@ -57,7 +61,7 @@ import '@fortawesome/fontawesome-pro/js/solid';
 import '@fortawesome/fontawesome-pro/js/regular';
 import '@fortawesome/fontawesome-pro/js/brands';
 
-import "../scss/main.scss";
+
 
 angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', uirouter, ProfileService, ngCart, coreCtrl, dashboard, portfolio, caseoverview, transactions, sidenav, profile, checkout]).config(config).run(startUpRun)
 

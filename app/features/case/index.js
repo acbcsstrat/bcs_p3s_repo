@@ -1,3 +1,5 @@
+import './_case-overview.scss';
+
 import angular from 'angular';
 
 import CasesRestService from '../portfolio/services/portfolio.cases.serv.js';

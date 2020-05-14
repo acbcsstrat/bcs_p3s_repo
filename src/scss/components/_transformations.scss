@@ -9,3 +9,9 @@
         cursor: pointer;
     }
 }
+
+@keyframes animatedBackground {
+    from { opacity: 0 ; }
+    to { opacity: 0.6; }
+}
+

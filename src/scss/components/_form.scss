@@ -62,46 +62,46 @@
 /* Style the indicator (dot/circle) */
 .notification-radio .checkmark {
 
-  &.green:after {
-    top: 2px;
-    left: 2px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;    
-    background: $green;
-  }
-  &.amber:after {
-    top: 2px;
-    left: 2px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;    
-    background: $amber;
-  }
-  &.red:after {
-    top: 2px;
-    left: 2px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;    
-    background: $red;
-  }
-  &.blue:after {
-    top: 2px;
-    left: 2px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;    
-    background: $blue;
-  }
-  &.black:after {
-    top: 2px;
-    left: 2px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;    
-    background: $black;
-  } 
+    &.green:after {
+        top: 2px;
+        left: 2px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;    
+        background: $green;
+    }
+    &.amber:after {
+        top: 2px;
+        left: 2px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;    
+        background: $amber;
+    }
+    &.red:after {
+        top: 2px;
+        left: 2px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;    
+        background: $red;
+    }
+    &.blue:after {
+        top: 2px;
+        left: 2px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;    
+        background: $blue;
+    }
+    &.black:after {
+        top: 2px;
+        left: 2px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;    
+        background: $black;
+    } 
 }
 
 .checkbox-text {
@@ -110,15 +110,15 @@
 
 
 .icon-field{
-  position: relative;
-  .icon {
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    margin-top: -7px;
-    font-size: 1.5rem;
-    color: $grey-dark;
-  }
+    position: relative;
+    .icon {
+        position: absolute;
+        right: 1.5rem;
+        top: 50%;
+        margin-top: -7px;
+        font-size: 1.5rem;
+        color: $grey-dark;
+    }
 }
 
 .checkbox-round {
@@ -135,4 +135,43 @@
 
 .checkbox-round:checked {
     background-color: $green;
+}
+
+
+.checkbox-square {
+    width: 1.3em;
+    height: 1.3em;
+    background-color: $white;
+    border-radius: 2px;
+    vertical-align: middle;
+    border: 1px solid #AFAFAF;//#AFAFAF new colour
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    -moz-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2); 
+    -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-square:checked {
+    background-color: $green;
+}
+
+.form-section.current {
+    display: inherit;
+}
+.form-section {
+    display: none;
+}
+
+.progress-red {
+    .progress-bar {
+        background: $red;
+    }
+}
+
+.progress-green {
+    .progress-bar {
+        background: $green;
+    }
 }

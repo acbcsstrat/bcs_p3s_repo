@@ -1,3 +1,5 @@
+import './_profile.scss';
+
 import angular from 'angular';
 
 import ProfileService from './services/profile.details.serv.js';

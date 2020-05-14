@@ -1,14 +1,14 @@
 .panel-nav, .view-nav,.view-nav-secondary { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; /* nowrap if you only want one row */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; /* nowrap if you only want one row */
 }
 
 .view-nav {
@@ -78,14 +78,6 @@
 
 .app-guide {
     .carousel-inner {
-        // .carousel-item:not(.active) {
-        //     .nav-tabs {
-        //         height: 0!important;
-        //         border-top: 0; //!important overrides other overide for bootstraps nav-tabs border
-        //         border-bottom: 0;
-        //         display: none;
-        //     }
-        // }      
         .carousel-item {
             border-bottom: 1px solid $grey;
             .nav-tabs {
@@ -293,3 +285,43 @@
 
     // padding: 1.75rem 1rem;
     /* border-bottom: 4px solid black!important; */
+
+.tabs-left {
+    padding: 0;
+    flex-direction: column;
+    height: 600px;
+    width: 197px;
+    max-width: 197px;
+    &.tabs-left--width19 {
+        min-width: 197px;
+        max-width: 197px;
+    }
+    .nav-item {
+        background: $grey;
+        transition: background .3s ease-in-out;
+        cursor: pointer;
+
+        .nav-link {
+            font-size: $font-body;
+            font-weight: 500;
+            padding: 1.4rem 3rem;
+            text-align: center;
+            line-height: 1.8rem;    
+            &:not([disabled]):not(.active):hover {
+                background: $white;
+            }  
+            &:not([disabled]).active {
+                background: $white;
+                border-right: 5px solid $green;
+                font-weight: 700;
+                .nav-link span {
+                    margin-right: -5px;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+    .nav-tabs {
+        margin-bottom: 2.5rem;
+    }
+}

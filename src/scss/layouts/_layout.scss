@@ -17,14 +17,6 @@
 .container-pre-app__center-box-40 { width: 30%; min-width: 50rem; max-width: 50rem }
 .container-pre-app__center-box-70 { width: 70%; }
 
-.w-50 { width: 50%; } /*modules*/ /*components*/ /*_layout.scss*/
-
-.inline-container { display: inline-block; }
-
-.position-bottom { position: absolute; bottom: 0 } /*modules*/ /*components*/ /*_layout.scss*/
-
-.z-index-1 { z-index: 1; } /*modules*/ /*components*/ /*_layout.scss*/
-
 .bg-info-icon, 
 .bg-no-chart, 
 .bg-no-data { /*modules*/ /*components*/ /*_layout.scss*/
@@ -77,14 +69,82 @@
 .side-menu a:hover, 
 .side-menu a:focus { color: #fff; }
 
-md-sidenav {
-  overflow: visible;
-  z-index: 1001!important;
+.container-add-patent {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+          0 13px 19px 2px rgba(0, 0, 0, 0.14),
+          0 5px 24px 4px rgba(0, 0, 0, 0.12);
+    z-index: 999;
+    min-height: 13rem;
+    max-height: 30rem;
+    -moz-transition:all ease-in-out .25s;
+    -o-transition:all ease-in-out .25s;
+    -webkit-transition:all ease-in-out .25s;
+    transition:all ease-in-out .25s;
+    .add-patent-panel {
+        width: 70rem;
+    }
+    &.active {
+        max-height: 60rem;
+        min-height: 55rem;
+        .add-patent-panel {
+            .found-patent-panel {
+                &.ng-enter {
+
+                    opacity: 0;
+                    -moz-transition: all ease-in-out .25s .3s;
+                    -o-transition: all ease-in-out .25s .3s;
+                    -webkit-transition: all ease-in-out .25s .3s;
+                    transition: all ease-in-out .25s .3s;
+                }
+                &.ng-enter.ng-enter-active {
+                  opacity:1;
+                }
+            }
+        }
+    }
+    .recently-added-panel {
+        width: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display:block!important;
+        -moz-transition:all ease-in-out .25s;
+        -o-transition:all ease-in-out .25s;
+        -webkit-transition:all ease-in-out .25s;
+        transition:all ease-in-out .25s;
+        &.active {
+            width: 20rem;
+        }
+    }
 }
 
-.form-section.current {
-    display: inherit;
-}
-.form-section {
-    display: none;
+
+.container-filter-list {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+          0 13px 19px 2px rgba(0, 0, 0, 0.14),
+          0 5px 24px 4px rgba(0, 0, 0, 0.12);
+    min-height: 50rem;
+    height: 50rem;
+    max-height: 50rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 28.6rem;
+    z-index: 9999999;
+    &::-webkit-scrollbar-thumb {
+        background: $grey; 
+        border-radius: 10px;
+        height: 30px;
+    }      
+
+    &::-webkit-scrollbar {
+        width: 15px;
+    }    
+    ::-webkit-scrollbar-thumb {
+        background: $grey; 
+        border-radius: 10px;
+        height: 30px;
+    }    
 }

@@ -1,3 +1,5 @@
+import './_transactions.scss';
+
 import angular from 'angular';
 
 import TransactionService from './services/transactions.service.js';

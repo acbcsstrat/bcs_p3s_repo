@@ -77,3 +77,59 @@
   max-height: 600px;
   overflow-y: scroll;
 }
+
+.modal-backdrop {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    z-index: 999;
+    opacity: 0.6;
+    animation: animatedBackground .25s ease-in-out;    
+}
+
+.modal-overview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    max-width: 900px;
+    height: 660px;
+    z-index: 999;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    .modal-overview--options-panel {
+        position: absolute;
+        right: 14px;
+        top: 8px;
+        z-index: 1;
+    }    
+    .modal-overview__view {
+        max-width: 703px;
+        .modal-overview__view__body {
+            overflow-y: scroll;
+            height: 560px;
+            background: $white;
+            border-bottom: 40px solid #fff;            
+            &::-webkit-scrollbar-thumb {
+                background: $grey; 
+                border-radius: 10px;
+                height: 30px;
+            }      
+
+            &::-webkit-scrollbar {
+                width: 15px;
+            }    
+            &::-webkit-scrollbar-thumb {
+                background: $grey; 
+                border-radius: 10px;
+                height: 30px;
+            }
+        }
+    }
+}
