@@ -31,6 +31,16 @@ import "d3/d3.min.js";
 import "nvd3/build/nv.d3.min.js";
 import "angular-nvd3/dist/angular-nvd3.min.js";
 
+import { library, dom } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/fontawesome-pro-solid';
+import { fal } from '@fortawesome/fontawesome-pro-light';
+import { far } from '@fortawesome/fontawesome-pro-regular';
+
+library.add(fas, fal, far)
+
+import 'bootstrap';
+import "bootstrap/scss/bootstrap.scss";
+
 import "../scss/main.scss";
 
 import angular from 'angular';
@@ -52,6 +62,7 @@ import dashboard from '../../app/features/dashboard/index.js';
 import portfolio from '../../app/features/portfolio/index.js';
 import caseoverview from '../../app/features/case/index.js';
 import transactions from '../../app/features/transactions/index.js';
+import transactionitem from '../../app/features/transaction-item/index.js';
 import profile from '../../app/features/profile/index.js';
 import sidenav from '../../app/features/sidenav/index.js';
 import checkout from '../../app/features/checkout/index.js';
@@ -63,7 +74,7 @@ import '@fortawesome/fontawesome-pro/js/brands';
 
 
 
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', uirouter, ProfileService, ngCart, coreCtrl, dashboard, portfolio, caseoverview, transactions, sidenav, profile, checkout]).config(config).run(startUpRun)
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', uirouter, ProfileService, ngCart, coreCtrl, dashboard, portfolio, caseoverview, transactions, transactionitem, sidenav, profile, checkout]).config(config).run(startUpRun)
 
 startUpRun.$inject = ['Idle', '$rootScope', '$timeout'];
 

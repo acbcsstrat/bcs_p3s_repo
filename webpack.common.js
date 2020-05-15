@@ -11,6 +11,7 @@ module.exports = {
   entry: {
     // vendor: './src/js/vendor.js',   
     app: './src/js/app.js',
+    // vendorStyles: './src/scss/vendorStyles.scss',
     style: './src/scss/main.scss'
   },
   output: {

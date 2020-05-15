@@ -1,12 +1,13 @@
-
-@import "./helpers/_variables.scss";
 @import "./base/_reset.scss";
 @import "./base/_base.scss";
 
-@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+// $fa-font-path: "~font-awesome/fonts";
+// @import "../../node_modules/@fortawesome/fontawesome-pro/css/all.css";
+// @import "../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome.scss";
+
+// @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../../node_modules/angular-material/angular-material.scss";
 @import "../../node_modules/nvd3/build/nv.d3.css";
-@import "../../node_modules/font-awesome/scss/font-awesome.scss";
 @import "./vendors/extensions/_angularJS-materials-ext.scss";
 @import "./vendors/extensions/_bootstrap-ext.scss";
 @import "./vendors/extensions/_parsley-ext.scss";
@@ -14,7 +15,9 @@
 @import "./vendors/extensions/_font-awesome.scss";
 @import "./vendors/extensions/_croppie.scss";
 @import "./vendors/_stepProgress.scss";
-
+// fa-solid-900.woff
+// fa-solid-900.ttf
+// fa-light-300.woff2
 @import "./base/_colours.scss";
 @import "./base/_typography.scss";
 @import "./base/_angular.scss";
@@ -27,12 +30,6 @@
 @import "./layouts/_modal.scss";
 @import "./layouts/_panels.scss";
 @import "./layouts/_sidenav.scss";
-
-// @import "./pages/_dashboard.scss";
-// @import "./pages/_transactions.scss";
-// @import "./pages/_user-profile.scss";
-// @import "./pages/_portfolio.scss";
-// @import "./pages/_case-overview.scss";
 
 @import "./components/_buttons.scss";
 @import "./components/_form.scss";

@@ -1,3 +1,6 @@
+@import '../helpers/_variables.scss';
+@import '../helpers/_mixins.scss';
+
 .panel-nav, .view-nav,.view-nav-secondary { /*modules*/ /*components*/ /*_navigation.scss*/ //PANEL NAV
     list-style-type: none;
     padding: 0;

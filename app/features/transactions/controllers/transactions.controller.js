@@ -63,7 +63,7 @@ export default function TransactionsCtrl(TransactionService, $scope, $q, $state,
 		    }            
 
 		  	function rowSelect(event, transaction){
-		  		$state.go('transactions.modal.transaction-item', {transId: transaction.id})
+		  		$state.go('transactions.modal.transaction-item', {transId: transaction.p3s_TransRef})
 		  	};		    
 
             function selectedChip(prop, value, cat) {

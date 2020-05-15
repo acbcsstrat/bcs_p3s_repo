@@ -7,7 +7,7 @@
     <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
     <p>We are just fetching your transactions</p>
 </div>
-<div data-ng-show="transactionsLoaded" class="animate-show">
+<div data-ng-show="transactionsLoaded" class="animate-show container__scrollable-area">
     <div  class="animate-show container__scrollable-area">
         <div class="p-l-3 p-r-3 p-tb-sm br-tx-1">                            
             <div class="d-flex justify-content-between align-items-center">
@@ -25,7 +25,9 @@
                         <div class="input-group m-r-sm">
                             <input type="text" class="form-control pill-radius" name="transactionSearch" data-ng-model="searchTransactions" placeholder="Search transactions..." autocomplete="off">  
                             <div class="input-group-append">
-                                <i class="d-flex input-group-text pill-radius fa fa-search"></i>
+                                <div class="input-group-text">
+                                    <i class="pill-radius fa fa-search fa-lg"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -116,9 +118,9 @@
     				</tr>
     			</thead>
     			<tbody class="sticky-tbody">
-    			    <tr data-ng-repeat="transaction in filtered=(transactions | filter:filterByPropertiesMatchingAND | filter:searchTransactions) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, transaction); $ctrl.select(transaction.id)"  class="t-data__row t-data__row--select" data-ng-class="{active: transaction.id == $ctrl.selected}">
+    			    <tr data-ng-repeat="transaction in filtered=(transactions | filter:filterByPropertiesMatchingAND | filter:searchTransactions) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, transaction); $ctrl.select(transaction.p3s_TransRef)"  class="t-data__row t-data__row--select" data-ng-class="{active: transaction.p3s_TransRef == $ctrl.selected}">
     			        <td class="t-data__td sticky-td">
-    						<a class="t-data__a" data-ng-attr-id="{{transaction.id}}">{{transaction.p3S_TransRef}}</a>
+    						<a class="t-data__a" data-ng-attr-id="{{transaction.p3s_TransRef}}">{{transaction.p3s_TransRef}}</a>
     			        </td>
     			        <td class="t-data__td">
     			        	{{transaction.transTypeUI}}

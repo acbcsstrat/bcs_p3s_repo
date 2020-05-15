@@ -1,0 +1,66 @@
+<div data-ng-if="$ctrl.transactionLoaded" class="animate-show modal-box">
+	<div class="modal-overview d-flex flex-column bg-white">
+		<div class="overview--options-panel cursor-pointer d-flex align-items-center">
+			<i class="fas fa-times fa-2x cursor-pointer" data-ng-click="$ctrl.closeoverview()"></i>
+		</div>
+		<div class="d-flex flex-grow-1 brbl-10 brtl-10">
+			<div class="row flex-grow-1">
+				<div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-grow-1">
+					<div class="d-flex flex-grow-1">
+						<div class="width197 brbl-10 brtl-10 bg-light-grey">
+							<ul class="tabs-left nav tabs-left--width197 m-t-lg">
+								<li class="nav-item">
+									<a class="nav-link d-flex flex-column active">
+										<span><i class="fal fa-info-circle font-h3"></i></span>
+										<span>Details</span>
+									</a>
+								</li>					
+							</ul>
+						</div>
+						<div class="d-flex flex-column flex-grow-1 modal-overview__view">
+							<div class=" p-t-4 p-r-3 p-l-3 ">
+								<div class="row">
+									<div class="col-md-12 col-xl-12 d-flex justify-content-between align-items-center m-b-sm">
+										<p class="font-h3 font-weight-bold">Transaction ID: <span class="font-weight-normal">{{$ctrl.transactionItem.p3S_TransRef}}</span></p>	
+										<p class="font-h3 font-weight-bold font-weight-bold">Transaction initiated on: <span class="font-weight-normal">{{$ctrl.transactionItem.transStartDate | date: 'MM/dd/yy'}}</span></p>
+									</div>
+
+									<div class="col-md-12 col-lg-12 col-xl-12">
+										<p class="font-weight-bold font-h3 d-none d-xl-block">Transaction progress: 
+											<span data-ng-if="!$ctrl.transactionItem.hasFailed" class="font-weight-normal"><{{$ctrl.transactionItem.latestTransStatus}}</span> 
+											<span data-ng-if="$ctrl.transactionItem.hasFailed" class="font-weight-normal">Failed - {{$ctrl.transactionItem.failureReason}}</span>
+										</p>
+										<div data-ng-class="($ctrl.transactionItem.hasFailed !== true ? 'success' : 'failed')">
+											<div class="steps">
+											    <ul id="progressTracker" class="steps-container d-flex justify-content-between">
+											        <li data-ng-repeat="li in $ctrl.transStatus track by $index" data-ng-init="$ctrl.checkProgress()" data-ng-class="(li.complete == true ? 'complete': '') + '' + (li.active == true ? 'active': '')"> 
+											            <div class="step font-body cursor-help" tooltip-placement="{{li.position}}" uib-tooltip="{{li.tip}}" tooltip-class="trackerStep">
+											                <div class="step-image"><span></span></div>
+											                <div class="step-current"><span>{{li.status}}</span></div>
+											            </div>
+											        </li>
+											    </ul>
+											</div>
+										</div>
+									</div>
+						
+							        <div class="col-md-12">
+							        	<div class="border-grey-xs--btm m-t-sm m-b-sm"></div>  	
+							        </div>
+						        </div>
+							</div>
+							<div class="p-r-3 p-b-3 p-l-3 modal-overview__view__body brbr-10 m-t-sm">
+								<div class="row">
+									<div class="col-md-12">
+										<div ui-view="details" class="d-flex flex-column flex-grow-1"></div>
+									</div>
+								</div>
+							</div>			
+						</div>
+					</div>			
+				</div>					
+			</div>
+		</div>
+	</div>
+</div>
+

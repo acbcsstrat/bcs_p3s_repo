@@ -1,0 +1,12 @@
+$fa-font-path: "~font-awesome/fonts";
+@import "../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/angular-material/angular-material.scss";
+@import "../../node_modules/nvd3/build/nv.d3.css";
+@import "./vendors/extensions/_angularJS-materials-ext.scss";
+@import "./vendors/extensions/_bootstrap-ext.scss";
+@import "./vendors/extensions/_parsley-ext.scss";
+@import "./vendors/extensions/_nvd3.scss";
+@import "./vendors/extensions/_font-awesome.scss";
+@import "./vendors/extensions/_croppie.scss";
+@import "./vendors/_stepProgress.scss";
