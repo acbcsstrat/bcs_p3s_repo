@@ -39,7 +39,7 @@ export default function TransactionsCtrl(TransactionService, $scope, $q, $state,
 	$scope.promise = TransactionService.fetchAllTransactions()
 	$scope.promise.then(
 		function(response){
-
+            console.log('responseeee', response)
             $scope.transactions = response;
 			
 			vm.sortBy = sortBy;
