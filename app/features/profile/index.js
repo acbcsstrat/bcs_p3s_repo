@@ -1,4 +1,4 @@
-import './_profile.scss';
+// import './_profile.scss';
 
 import angular from 'angular';
 

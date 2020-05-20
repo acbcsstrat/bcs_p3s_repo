@@ -4,41 +4,32 @@
     min-height: 90px;
     padding: 30px 0 0 0;
     font-family: 'Open Sans', sans-serif;
-    position: relative
+    position: relative;
+    .steps-container {
+        background: #DDD;
+        height: 6px;
+        width: 100%;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -ms-border-radius: 10px;
+        margin: 0;
+        list-style: none;
+        padding-left: 0;
+        li {
+            text-align: left;
+            list-style: none;
+            float: left
+        }       
+    } 
 }
 
 
-
-.steps .steps-container {
-    background: #DDD;
-    height: 6px;
-    width: 100%;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -ms-border-radius: 10px;
-    margin: 0;
-    list-style: none;
-    padding-left: 0;
-}
-.steps .steps-container li {
-    text-align: left;
-    list-style: none;
-    float: left
-}
-
-.steps .steps-container li.active .step .step-image, .steps .steps-container li.complete .step .step-image, .failed .steps .steps-container li.active .step .step-image, .failed .steps .steps-container li.complete .step .step-image {
+.steps .steps-container li.active .step .step-image, 
+.steps .steps-container li.complete .step .step-image, 
+.failed .steps .steps-container li.active .step .step-image, 
+.failed .steps .steps-container li.complete .step .step-image {
     margin: -12px 0 0 0
-}
-
-.steps .steps-container li .step .step-image {
-    margin: -1.5px 0 0 0;
-    display: flex;
-    -moz-justify-content: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -ms-flex-direction: column;
 }
 
 .steps .steps-container li:last-child .step .step-image {
@@ -56,17 +47,7 @@
     justify-content: flex-end;
 }
 
- .steps  .steps-container li .step .step-image span {
-    background-color: #DDD;
-    display: block;
-    width: 10px;
-    height: 10px;
-    margin: 0 auto;
-    border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -ms-border-radius: 15px
- }
+
 
 .success .steps .steps-container {
     background: $green;
@@ -86,7 +67,7 @@
 
 .success .steps .steps-container li.complete .step .step-image span,  .success .steps  .steps-container li.active .step .step-image span, .failed .steps .steps-container li.complete .step .step-image span,  .failed .steps  .steps-container li.active .step .step-image span {
 /*    background-color: #DDD;*/
-    display: block;
+    display: flex;
     width: 57px;
     height: 30px;
     border-radius: 15px;
@@ -95,8 +76,19 @@
     -ms-border-radius: 15px
 }
 
-.steps .steps-container li:not(.active):not(.complete) .step .step-current {
-     margin: 17px 0 0 0
+.steps .steps-container li .step .step-image span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #DDD;
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 0 auto;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -ms-border-radius: 15px    
 }
 
 .steps .steps-container li .step .step-current {
@@ -106,17 +98,8 @@
     margin: 8px 0 0 0
 }
 
-.steps .steps-container li .step .step-description {
-    font-size: 13px;
-    font-style: italic;
-    color: #538897
-}
-
-.success .steps .steps-container li.complete .step .step-image span:after, .failed .steps .steps-container li.complete .step .step-image span:after {
-    display: block;
-    font-family: 'Font Awesome\ 5 Pro';
-    font-weight: 900;
-    content: "\f00c";
+.success .steps .steps-container li.complete .step .step-image span:after, 
+.failed .steps .steps-container li.complete .step .step-image span:after {
     position: absolute;
     z-index: 1;
     width: 47px;
@@ -126,9 +109,9 @@
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     -ms-border-radius: 15px;
-/*    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.15)*/
+    display: flex;
+    align-items: center;
+    justify-content: center;    
 }
 
 .success .steps .steps-container li.complete .step .step-image span, .success .steps .steps-container li.active .step .step-image span {
@@ -146,14 +129,11 @@
     -ms-flex-pack: center;      
     justify-content: center;
     align-items: center;
-    color: #fff;
-    font-family: 'Font Awesome\ 5 Pro';
+display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.4rem;
 
-}
-
-.failed .steps .steps-container li.failed .step .step-image span:after {
-    content: "\f00c"!important;
 }
 
 .success .steps .steps-container li.active .step .step-image span:after {
@@ -169,9 +149,9 @@
     justify-content: center;
     -webkit-align-items: center;
     align-items: center;
-    font-family: 'Font Awesome\ 5 Pro';
-    font-weight: 900; 
-    content: "\f111";
+display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #FFF;
     position: absolute;
     z-index: 1;
@@ -184,7 +164,9 @@
     -ms-border-radius: 15px;
 }
 
-.failed .steps .steps-container li.complete .step .step-image span:after, .success .steps .steps-container li.complete .step .step-image span:after {
+.failed .steps .steps-container li.complete .step .step-image span:after, 
+.success .steps .steps-container li.complete .step .step-image span:after,
+.failed .steps .steps-container li.active .step .step-image span:after {
     display: -webkit-box; 
     display: -moz-box;
     display: -ms-flexbox;
@@ -197,34 +179,10 @@
     justify-content: center;
     -webkit-align-items: center;
     align-items: center;
-    font-family: 'Font Awesome\ 5 Pro';
-    font-weight: 900;
-    font-size: 1.4rem; 
-    content: "\f00c";
-    position: absolute;
-    z-index: 1;
-    width: 47px;
-    height: 20px;
-    margin: 5px;
-    border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -ms-border-radius: 15px;
-}
-
-.failed .steps .steps-container li.active .step .step-image span:after {
-    display: -webkit-box; 
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex; 
-    display: flex;
-    color: #fff;
-    justify-content: center;
+display: flex;
     align-items: center;
-    font-family: 'Font Awesome\ 5 Pro';
-    font-weight: 900;
+    justify-content: center;
     font-size: 1.4rem; 
-    content: "\f00c";
     position: absolute;
     z-index: 1;
     width: 47px;
@@ -236,31 +194,8 @@
     -ms-border-radius: 15px;
 }
 
-.steps .failed-step-bar {
-    background-color: #ed1c24;
-    height: 6px;
-    position: absolute;
-    top: 30px;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -ms-border-radius: 10px    
-}
 
-.steps .step-bar {
-    background-color: #4EAA5A;
-    height: 6px;
-    position: absolute;
-    top: 30px;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -ms-border-radius: 10px
-}
-.steps .step-bar.last {
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -ms-border-radius: 10px
-}
+
+
+
 /*# sourceMappingURL=step-progress.min.css.map */
