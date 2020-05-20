@@ -13,7 +13,7 @@ export default function CostChartController(caseSelected, ca, $scope, $timeout) 
     .then(
         function(response){
 
-            if(response.length > 0) {
+            if(response.length > 0 && $scope.$parent.availableServices.length) {
                 costTimeout = $timeout(function(){
 
                     vm.data = {};

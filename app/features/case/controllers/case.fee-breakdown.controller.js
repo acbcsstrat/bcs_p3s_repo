@@ -11,12 +11,14 @@ export default function FeeBreakDownController(caseSelected, $scope, $timeout) {
     $scope.$parent.promise
     .then(
         function(response){
-            loadFeeTimeout = $timeout(function() {
-                setFees($scope.$parent.availableServices[0].action)
-                vm.data = {};
-                vm.data.availableAction = $scope.$parent.availableServices;
-                vm.data.selectedAction = { id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action };
-            }, 10);
+            if($scope.$parent.availableServices.length) {            
+                loadFeeTimeout = $timeout(function() {
+                    setFees($scope.$parent.availableServices[0].action)
+                    vm.data = {};
+                    vm.data.availableAction = $scope.$parent.availableServices;
+                    vm.data.selectedAction = { id: vm.data.availableAction[0].id, action: vm.data.availableAction[0].action };
+                }, 10);
+            }
 
         }
     )

@@ -12,7 +12,7 @@ export default function FxChartController(caseSelected, ca, $scope, $timeout, $s
     $scope.$parent.promise
     .then(
         function(response){
-            if(response.length > 0) {
+            if(response.length > 0 && $scope.$parent.availableServices.length) {
                 fxTimeout = $timeout(function(){
 
                     vm.data = {};

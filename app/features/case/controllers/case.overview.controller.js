@@ -23,8 +23,8 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     var originatorEv;
 
     function processView(tab, index, chart) {
-        if((tab == 'notifications' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification) || (tab == 'fxchart' && $scope.validationNotification)) { return; }
-        if(!$scope.notInProgress || tab == 'notifications' || tab == 'details') {
+        if((tab == 'reminders' && $scope.validationNotification) || (tab == 'costchart' && $scope.validationNotification) || (tab == 'fxchart' && $scope.validationNotification)) { return; }
+        if(!$scope.notInProgress || tab == 'reminders' || tab == 'details') {
             vm.setTab(tab)
             $scope.activeLeft = index;
             if(chart !== undefined) {
@@ -110,6 +110,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                     }
                 })
 
+
             }
         )
 
@@ -126,12 +127,10 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     }
 
     function setTab(tab) {
-        console.log(tab)
         $scope.caseoverview_tab = tab;
     }
 
     function closeCaseoverview() {
-        console.log('should be going')
         $state.go('portfolio', {}, {reload: false})
     }
 
