@@ -1,11 +1,12 @@
-TransactionsCtrl.$inject = ['TransactionService', '$scope', '$q', '$state', '$timeout'];
+TransactionsController.$inject = ['TransactionService', '$scope', '$q', '$state', '$timeout'];
 
-export default function TransactionsCtrl(TransactionService, $scope, $q, $state, $timeout) {
+export default function TransactionsController(TransactionService, $scope, $q, $state, $timeout) {
 
-	var vm = this;
+    var vm = this;
 
-   	vm.transactions = null;
-    $scope.filter = {};   	
+    vm.transactions = null;
+
+    $scope.filter = {};     
     function noSubFilter(obj) {
         for (var key in obj) {
             if (obj[key]) { //if one of the $scope.filter ($scope.filter) properties evaluates to true (is selected) return false 
@@ -34,21 +35,21 @@ export default function TransactionsCtrl(TransactionService, $scope, $q, $state,
             }
         }
         return matchesAND;
-    };   	
+    };      
 
-	$scope.promise = TransactionService.fetchAllTransactions()
-	$scope.promise.then(
-		function(response){
-            console.log('responseeee', response)
+    $scope.promise = TransactionService.fetchAllTransactions()
+    $scope.promise.then(
+        function(response){
+
             $scope.transactions = response;
-			
-			vm.sortBy = sortBy;
-   			vm.rowSelect = rowSelect;
-		   	vm.select = select;
-		   	vm.showFilter = showFilter;
-		   	vm.selectedSortType = 'p3S_TransRef';   
-		   	vm.updateFiltered = updateFiltered;
-            vm.chipOptions = [];		   				
+            
+            vm.sortBy = sortBy;
+            vm.rowSelect = rowSelect;
+            vm.select = select;
+            vm.showFilter = showFilter;
+            vm.selectedSortType = 'p3S_TransRef';   
+            vm.updateFiltered = updateFiltered;
+            vm.chipOptions = [];                        
             $scope.selectedChip = selectedChip;
 
             $scope.transactionsLoaded = true;
@@ -58,13 +59,13 @@ export default function TransactionsCtrl(TransactionService, $scope, $q, $state,
                 vm.propertyName = propertyName;
             };
 
-		    function select(i) {
-		        vm.selected = i;
-		    }            
+            function select(i) {
+                vm.selected = i;
+            }            
 
-		  	function rowSelect(event, transaction){
-		  		$state.go('transactions.modal.transaction-item', {transId: transaction.p3s_TransRef})
-		  	};		    
+            function rowSelect(event, transaction){
+                $state.go('transactions.modal.transaction-item', {transId: transaction.p3s_TransRef})
+            };          
 
             function selectedChip(prop, value, cat) {
                 $scope.filter[cat][prop] = false;
@@ -101,9 +102,11 @@ export default function TransactionsCtrl(TransactionService, $scope, $q, $state,
                     $mdDialog.hide();                            
                 }
 
-            } //showFilter function end			
+            } //showFilter function end         
 
-		}
-	)
+        }
+
+    )
+
 
 }
