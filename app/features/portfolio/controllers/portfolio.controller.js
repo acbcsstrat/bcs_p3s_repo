@@ -3,7 +3,6 @@ PortfolioController.$inject = ['$scope', '$state', '$stateParams','$rootScope', 
 export default function PortfolioController($scope, $state, $stateParams, $rootScope, $timeout, $uibModal, $mdPanel, $mdDialog, $mdMenu, SearchPatentService, CasesRestService) {
 
     var vm = this;
-
     $scope.promise = CasesRestService.fetchAllCases();
     $scope.filter = {};
 
@@ -158,7 +157,6 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                 }
 
             } //showFilter function end
-
 
             function showAddPatent($event) {
 

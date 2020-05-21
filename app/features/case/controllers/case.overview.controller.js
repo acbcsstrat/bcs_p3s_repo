@@ -58,7 +58,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
             ActiveTabService.setTab(0);
         }        
 
-        $scope.$parent.promise.then(
+        $scope.promise.then(
             function(){
 
                 vm.patent = caseSelected;

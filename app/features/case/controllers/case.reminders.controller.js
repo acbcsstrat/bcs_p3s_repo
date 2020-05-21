@@ -23,7 +23,6 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
 
     function checkServices() {
 
-
         vm.data.availableAction = caseSelected.p3sServicesWithFees.filter(function(item){
             return item.serviceType !== 'postgrant';
         }).map(function(action, idx){
@@ -110,7 +109,7 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
 
     function updateNotificationsSuccess() {
         var modalInstance = $uibModal.open({
-            template: requite('html-loader!../html/modals/modal.update-epct-notifications-success.tpl.htm'), //create html for notifications update success
+            template: require('html-loader!../html/modals/modal.update-epct-notifications-success.tpl.htm'), //create html for notifications update success
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
@@ -125,7 +124,7 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
     function updateNotificationsError(errResponse) {
 
         var modalInstance = $uibModal.open({
-            template: requite('html-loader!../html/modals/modal.update-epct-notifications-error.tpl.htm'), //create html for notifications update fail
+            template: require('html-loader!../html/modals/modal.update-epct-notifications-error.tpl.htm'), //create html for notifications update fail
             appendTo: undefined,
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){

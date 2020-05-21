@@ -1,5 +1,3 @@
-// import './_case-overview.scss';
-
 import angular from 'angular';
 
 import CasesRestService from '../portfolio/services/portfolio.cases.serv.js';
@@ -28,10 +26,9 @@ import RenewalHistoryController from './controllers/case.renewal-history.control
 import ValidationController from './controllers/case.validation.controller';
 import FeeBreakDownController from './controllers/case.fee-breakdown.controller';
 
-import routing  from './case.routes';
+// import routing  from './case.routes';
 
 export default angular.module('ppApp.caseoverview', [CasesRestService, Form1200Service, GrantService, RemindersService, RenewalHistoryService, ValidationService, ActiveTabService, CoreService, ChunkDataService, dynamic])
-	.config(routing)
   	.controller('CaseOverviewController', CaseOverviewController)
   	.controller('CostChartController', CostChartController)
   	.controller('CaseDetailsController', CaseDetailsController)

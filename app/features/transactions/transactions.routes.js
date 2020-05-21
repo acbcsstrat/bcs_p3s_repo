@@ -7,7 +7,19 @@ export default function routes($stateProvider) {
         url: '/transactions',
         template: require('html-loader!./html/transactions.tpl.htm'),
         controller: 'TransactionsController',
-        controllerAs: '$ctrl'
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./index.js")
+            .then(mod => 
+                $ocLazyLoad.inject(mod.default)
+            )
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        }        
     })
     .state('transactions.modal', {
         abstract: true,
@@ -35,6 +47,18 @@ export default function routes($stateProvider) {
       
             }]
         },
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./index.js")
+            .then(mod => 
+                $ocLazyLoad.inject(mod.default)
+            )
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        },        
         views: {
             "" : {
                 template: require('html-loader!./html/transaction-item.tpl.htm'),

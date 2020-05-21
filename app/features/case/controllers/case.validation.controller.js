@@ -36,21 +36,24 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
     }
 
     function init() {
+
+        $scope.isChecked = true;
+        vm.patent = caseSelected; 
+
         var serviceStatusL = caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase();
         if(caseSelected.p3sServicesWithFees[0].validationFeeUI !== null) {
             var array = [];
             allState = array.concat(caseSelected.p3sServicesWithFees[0].validationFeeUI.designatedStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.extensionStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.validationStates)
         }
-    	vm.activeTab = 0;
+        vm.activeTab = 0;
 
-        if(serviceStatusL == 'quote pending') {
+        if(serviceStatusL == 'preparing quote' || serviceStatusL == 'quote pending') {
             vm.validationTemplate = vm.templates[1].url;        
         }        
 
         if(serviceStatusL == 'quote provided') {
             vm.validationTemplate = vm.templates[2].url;        
         }
-
 
         if(serviceStatusL == 'payment in progress' || serviceStatusL == 'pa instructed') {
             vm.validationTemplate = vm.templates[3].url;        
@@ -78,61 +81,52 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
             vm.validationTemplate = vm.templates[7].url;  
         }
 
+        if(caseSelected.p3sServicesWithFees[0].validationFeeUI !== null) {
+            var array = [];
+            allState = array.concat(caseSelected.p3sServicesWithFees[0].validationFeeUI.designatedStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.extensionStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.validationStates)
+        }
+
+        if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
+            ValidationService.fetchDesignatedStates(caseSelected.patentID)
+            .then(
+                function(response){
+                    vm.validationInfo = response;
+                    $scope.formData.corresdpondenceName = response.firstName +' ' + response.lastName;
+                    $scope.formData.corresdpondenceEmailaddress = response.emailaddress;
+                    $scope.formData.designatedStates = response.designatedStates;
+                    $scope.formData.extensionStates = response.extensionStates;
+                    $scope.formData.validationStates = response.validationStates;
+                    var array = [];
+                    allState = array.concat($scope.formData.designatedStates, $scope.formData.extensionStates, $scope.formData.validationStates);
+                }
+            )
+        }
+
+        if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'preparing quote') { 
+            ValidationService.fetchPreparedQuote(caseSelected.patentID)
+            .then(
+                function(response){
+                    vm.preparedQuote = response;
+                }
+            )
+
+        }
+
+        function addSignedPoaDoc(item) {
+            item.signedPoaDoc = '';
+            return item;
+        }
+
+        if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas provided' || caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas downloaded') {
+            $scope.formData.designatedStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates;
+            $scope.formData.extensionStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates;
+            $scope.formData.validationStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.validationStates;   
+
+        }
 
     }
 
-    init();
-
-    $scope.$parent.promise
-    .then(
-        function(){
-            $scope.isChecked = true;
-            vm.patent = patent; 
-            if(caseSelected.p3sServicesWithFees[0].validationFeeUI !== null) {
-                var array = [];
-                allState = array.concat(caseSelected.p3sServicesWithFees[0].validationFeeUI.designatedStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.extensionStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.validationStates)
-            }
-
-            if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'validation available') {
-                ValidationService.fetchDesignatedStates(caseSelected.patentID)
-                .then(
-                    function(response){
-                        vm.validationInfo = response;
-                        $scope.formData.corresdpondenceName = response.firstName +' ' + response.lastName;
-                        $scope.formData.corresdpondenceEmailaddress = response.emailaddress;
-                        $scope.formData.designatedStates = response.designatedStates;
-                        $scope.formData.extensionStates = response.extensionStates;
-                        $scope.formData.validationStates = response.validationStates;
-                        var array = [];
-                        allState = array.concat($scope.formData.designatedStates, $scope.formData.extensionStates, $scope.formData.validationStates);
-                    }
-                )
-            }
-
-            if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'preparing quote') { 
-                ValidationService.fetchPreparedQuote(caseSelected.patentID)
-                .then(
-                    function(response){
-                        vm.preparedQuote = response;
-                    }
-                )
-
-            }
-
-            function addSignedPoaDoc(item) {
-                item.signedPoaDoc = '';
-                return item;
-            }
-
-            if(caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas provided' || caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase() == 'blank poas downloaded') {
-                $scope.formData.designatedStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates;
-                $scope.formData.extensionStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates;
-                $scope.formData.validationStates = vm.patent.p3sServicesWithFees[0].validationFeeUI.validationStates;   
-
-            }
-
-        }
-    )
+    init()
 
     function requestNewQuote() {
 

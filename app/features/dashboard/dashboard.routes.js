@@ -7,7 +7,20 @@ export default function routes($stateProvider) {
         url: '/dashboard',
         template: require('html-loader!./html/dashboard.tpl.htm'),
         controller: 'DashboardController',
-        controllerAs: '$ctrl'
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./index.js")
+            .then(mod =>    {
+                $ocLazyLoad.inject(mod.default)
+            } 
+            )
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        }        
     })    
     .state('dashboard.content', {
         params: {

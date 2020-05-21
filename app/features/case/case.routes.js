@@ -31,17 +31,24 @@ export default function routes($stateProvider) {
                 return CostAnalysisService.fetchCa(caseSelected.patentID, caseSelected.p3sServicesWithFees);  
             }]
         },
-        params: {
-            caseId: null,
-            prepareGrant: null,
-            form1200generate: null
-        },
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./index.js")
+            .then(mod => {
+
+                $ocLazyLoad.inject(mod.default);
+            })
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        },        
         views:{
             "": {
                 template: require('html-loader!./html/case.overview.tpl.htm'),
                 controller: 'CaseOverviewController',
-                controllerAs: '$ctrl',
-
+                controllerAs: '$ctrl'
             },
             "details@portfolio.modal.case": {
                 template: require('html-loader!./html/details/case-details.tpl.htm'),
@@ -88,6 +95,11 @@ export default function routes($stateProvider) {
                 controller: 'CostChartController',
                 controllerAs: '$ctrl',  
             }
-        }
+        },
+        params: {
+            caseId: null,
+            prepareGrant: null,
+            form1200generate: null
+        }        
     })
 }
