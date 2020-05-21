@@ -5,8 +5,6 @@ import SearchPatentService from './services/portfolio.search-patent.serv.js';
 
 import PortfolioController from './controllers/portfolio.controller';
 
-import routing  from './portfolio.routes';
-
 export default angular.module('ppApp.portfolio', [CasesRestService, SearchPatentService]) //import dashboard view controllers
   	.controller('PortfolioController', PortfolioController)
   	.name;

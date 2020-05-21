@@ -10,9 +10,27 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
 
     $urlRouterProvider 
         .when('', '/dashboard')
-        .otherwise("/dashboard")    
+        .otherwise("/dashboard")
 
     $stateProvider
+    .state('profile', {
+        url: '/profile',
+        template: require('html-loader!./features/profile/html/profile.tpl.htm'),
+        controller: 'ProfileController',
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./features/profile/index.js")
+            .then(mod => {
+                $ocLazyLoad.inject(mod.default)
+            })
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        },             
+    })    
     .state('portfolio', {
         url: '/portfolio',
         template: require('html-loader!./features/portfolio/html/portfolio.tpl.htm'),
