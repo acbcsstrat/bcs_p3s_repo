@@ -19,7 +19,12 @@ export default function routes($stateProvider) {
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
-        }        
+        },
+        resolve: {
+            transactions: ['$stateParams', '$q', 'TransactionService', function($stateParams, $q, TransactionService) {
+                return TransactionService.fetchAllTransactions();
+            }
+        }
     })
     .state('transactions.modal', {
         abstract: true,
@@ -32,19 +37,10 @@ export default function routes($stateProvider) {
     .state('transactions.modal.transaction-item', {
         url: '/:transId',
         resolve: {            
-            transactionItem: ['$stateParams', '$q', 'TransactionService', function($stateParams, $q, TransactionService) {
-                return TransactionService.fetchAllTransactions()
-                .then(
-                    function(response){
-                        return response.find(function(transaction){
-                            return transaction.p3s_TransRef == $stateParams.transId;
-                        })
-                    },
-                    function(errResponse) {
-                        console.error('Error fetching trans item. Error: ', errResponse)
-                    }
-                )
-      
+            transactionItem: ['$stateParams', 'transactions', function($stateParams, transactions) {
+                return transactions.find(function(transaction){
+                    return transaction.p3s_TransRef == $stateParams.transId;
+                })
             }]
         },
         lazyLoad: function($transition$) {

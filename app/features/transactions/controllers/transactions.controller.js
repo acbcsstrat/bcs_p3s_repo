@@ -35,7 +35,7 @@ export default function TransactionsController(TransactionService, $scope, $q, $
             }
         }
         return matchesAND;
-    };      
+    };
 
     $scope.promise = TransactionService.fetchAllTransactions()
     $scope.promise.then(
