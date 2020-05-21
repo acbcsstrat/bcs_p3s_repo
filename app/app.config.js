@@ -13,6 +13,25 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         .otherwise("/dashboard")    
 
     $stateProvider
+    .state('portfolio', {
+        url: '/portfolio',
+        template: require('html-loader!./features/portfolio/html/portfolio.tpl.htm'),
+        controller: 'PortfolioController',
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+
+            return import(/* webpackChunkName: "index" */ "./features/portfolio/index.js")
+            .then(mod => {
+                $ocLazyLoad.inject(mod.default)
+
+            }
+            )
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        }
+    })    
     .state('portfolio.modal', {
         abstract: true,
         views: {
