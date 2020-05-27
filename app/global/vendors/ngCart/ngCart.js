@@ -43,12 +43,12 @@ export default angular.module('ngCart', [directives])
 
         function differentTypes(type) {
             if(type == 'validation') { //if newly added item is a validation
-                return vm.getCart().items.some(function(cartItems){ //check that there are no nonvalidaitons orders
+                return vm.getCart().items.some(function(cartItems){ //check that there are no nonvalidations orders
                     return cartItems._name !== 'validation';
                 })
             }
             if(type !== 'validation') { //if newly added item is a validation
-                return vm.getCart().items.some(function(cartItems){ //check that there are no nonvalidaitons orders
+                return vm.getCart().items.some(function(cartItems){ //check that there are no nonvalidations orders
                     return cartItems._name == 'validation';
                 })
             }            
