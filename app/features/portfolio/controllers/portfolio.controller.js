@@ -206,7 +206,6 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                         }  
 
                         $scope.openConfirmModal = function(patent) {
-
                             var modalInstance = $uibModal.open({
                                 template: require('html-loader!../html/modals/modal.confirm-found-patent.tpl.htm'),
                                 appendTo: undefined,
@@ -225,7 +224,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                                                 var match = response.find(function(item){
                                                     return item.ep_ApplicationNumber == patent.ep_ApplicationNumber;
                                                 });
-
+                                                console.log('match' , match)
                                                 $scope.recently.added.push(match);
                                                 $scope.foundPatent = false;
                                                 $scope.searchPatent = '';

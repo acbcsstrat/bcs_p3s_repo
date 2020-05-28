@@ -47,6 +47,10 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
         }
         vm.activeTab = 0;
 
+        if(serviceStatusL == 'validation available') { //VALIDATION TEST DATA - REMOVE NotUsed
+            vm.validationTemplate = vm.templates[0].url;        
+        }
+        
         if(serviceStatusL == 'preparing quote' || serviceStatusL == 'quote pending') {
             vm.validationTemplate = vm.templates[1].url;        
         }        
@@ -62,19 +66,19 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
         if(serviceStatusL == 'blank poas provided' || serviceStatusL == 'blank poas downloaded') { //VALIDATION TEST DATA - REMOVE NotUsed
 
             caseSelected.postAddress = caseSelected.validationQuoteUI.poaPostalAddress.split(',');
+            vm.validationTemplate = vm.templates[4].url;        
+            
+        }                    
 
+        if(serviceStatusL == 'scanned poas received' || serviceStatusL == 'poas provided to pa' || serviceStatusL == 'paper documents received') { //VALIDATION TEST DATA - REMOVE NotUsed
             var noPoasNeeded = allState.every(function(item){
                 return item.poaNeeded === false;
             })            
             if(noPoasNeeded) {
                 vm.validationTemplate = vm.templates[5].url;  
             } else {
-                vm.validationTemplate = vm.templates[4].url;        
+                vm.validationTemplate = vm.templates[6].url;
             }
-        }                    
-
-        if(serviceStatusL == 'scanned poas received' || serviceStatusL == 'poas provided to pa' || serviceStatusL == 'paper documents received') { //VALIDATION TEST DATA - REMOVE NotUsed
-            vm.validationTemplate = vm.templates[6].url;  
         }
 
         if(caseSelected.p3sServicesWithFees[0].saleType.toLowerCase() == 'offline') { //VALIDATION TEST DATA - REMOVE NotUsed

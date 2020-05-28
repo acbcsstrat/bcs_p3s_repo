@@ -89,26 +89,28 @@ export default function TransactionItemController($scope, $state, $timeout, tran
 				}
 
 				if(item.validationFeeUI) { 
+					if(vm.transStatus[3].status !== 'Processing Funds') {
+						
+						var obj1 = {
+							status: 'Processing Funds', 
+							active: false, 
+							complete: false,
+							tip: 'We are currently processing your funds',
+							position: 'bottom-right'
+						}
 
-					var obj1 = {
-						status: 'Processing Funds', 
-						active: false, 
-						complete: false,
-						tip: 'We are currently processing your funds',
-						position: 'bottom-right'
+						var obj2 = {
+							status: 'Processing', 
+							active: false, 
+							complete: false,
+							tip: 'We are in the process of gathering and forwarding on the required documents to the appropriate European associates',
+							position: 'bottom-right'
+						}
+
+						vm.transStatus.splice(3, 3);
+						vm.transStatus.splice(3, 0, obj1);
+						vm.transStatus.splice(4, 0, obj2);
 					}
-
-					var obj2 = {
-						status: 'Processing', 
-						active: false, 
-						complete: false,
-						tip: 'We are in the process of gathering and forwarding on the required documents to the appropriate European associates',
-						position: 'bottom-right'
-					}
-
-					vm.transStatus.splice(3, 3);
-					vm.transStatus.splice(3, 0, obj1);
-					vm.transStatus.splice(4, 0, obj2);
 
 					item.serviceType = 'validation'; 
 					item.serviceFeeUI = item.validationFeeUI;
