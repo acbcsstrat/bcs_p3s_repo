@@ -88,15 +88,26 @@ export default angular.module('ngCart', [directives])
                     if(data.p3sServices) {
                         this.order.euroAction = data.p3sServices.map(function(item){
                             if(item.serviceType === 'epct') { item.serviceType = 'Euro-PCT'; }
-                            return  item.serviceType;
+                            return  item
+                        }).find(function(item){
+                            if(item.serviceType == 'Euro-PCT') {
+                                return item.serviceType === 'Euro-PCT';
+                            }                            
+                            return item.serviceType === name;
                         })
                     }
 
                     if(data.p3sServicesWithFees) {
                         this.order.euroAction = data.p3sServicesWithFees.map(function(item){
+                            console.log('data.p3sServicesWithFees : ', item)
                             if(item.serviceType === 'epct') { item.serviceType = 'Euro-PCT'; }
-                            return  item.serviceType;
-                        })
+                            return  item.serviceType === name;
+                        }).find(function(item){
+                            if(item.serviceType == 'Euro-PCT') {
+                                return item.serviceType === 'Euro-PCT';
+                            }
+                            return item.serviceType === name;
+                        })                    
                     }
 
                     this.order.ep_ApplicationNumber = data.ep_ApplicationNumber;
