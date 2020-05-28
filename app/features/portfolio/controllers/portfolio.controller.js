@@ -224,7 +224,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                                                 var match = response.find(function(item){
                                                     return item.ep_ApplicationNumber == patent.ep_ApplicationNumber;
                                                 });
-                                                console.log('match' , match)
+
                                                 $scope.recently.added.push(match);
                                                 $scope.foundPatent = false;
                                                 $scope.searchPatent = '';

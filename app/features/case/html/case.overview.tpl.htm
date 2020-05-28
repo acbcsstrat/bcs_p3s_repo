@@ -136,7 +136,7 @@
 									            <transaction-link trans-id="{{$ctrl.patent.patentID}}" trans-servicetype="{{item.serviceType}}" data-ng-if="item.saleType == 'In Progress' && item.serviceStatus !== 'Preparing quote'" class="m-r-xl"></transaction-link>
 	                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--lg btn--green pill-radius m-r-xl" data-ng-click="$ctrl.setTab('grantandpublishing');  activeLeft = 4;">Prepare Grant
 	                                            </a>
-	                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Validation available'" class="btn btn--lg btn--green pill-radius m-r-xl" data-ng-click="$ctrl.setTab('validation');  activeLeft = 4;">Request Quote
+	                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Validation available'" class="btn btn--lg btn--green pill-radius m-r-xl" data-ng-click="$ctrl.setTab('validation');  activeLeft = 4;">Select states
 	                                            </a>                                            
 	                                            <a data-ng-if="item.saleType == 'Online' && (item.serviceStatus === 'Epct available' || item.serviceStatus === 'Epct rejected')" class="btn btn--lg btn--green pill-radius m-r-xl" data-ng-click="$ctrl.setTab('form1200'); activeLeft = 2;">Generate Form 1200</a>
 	                                            <p data-ng-if="item.serviceStatus == 'Epct being generated'" class="font-h4">: {{item.serviceStatusUI}}</p>
