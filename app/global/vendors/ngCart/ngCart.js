@@ -99,7 +99,6 @@ export default angular.module('ngCart', [directives])
 
                     if(data.p3sServicesWithFees) {
                         this.order.euroAction = data.p3sServicesWithFees.map(function(item){
-                            console.log('data.p3sServicesWithFees : ', item)
                             if(item.serviceType === 'epct') { item.serviceType = 'Euro-PCT'; }
                             return  item.serviceType === name;
                         }).find(function(item){
@@ -209,7 +208,6 @@ export default angular.module('ngCart', [directives])
         };
 
         this.totalCost = function () {
-            // console.log('this.getShipping()', this.getShipping()) BEEEN REMOVED
             return +parseFloat(this.getSubTotal() + this.getTax()).toFixed(2);
         };
 
@@ -222,11 +220,11 @@ export default angular.module('ngCart', [directives])
         };
 
         this.removeItemById = function (id) {
-
+            
             var item;
             var cart = this.getCart();
             angular.forEach(cart.items, function (item, index) {
-                if(item.getId() === id) {
+                if(parseInt(item.getId()) === parseInt(id)) {
                     item = cart.items.splice(index, 1)[0] || {};
                 }
             });
