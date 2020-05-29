@@ -1,19 +1,13 @@
-RenewalHistoryController.$inject = ['caseSelected', 'RenewalHistoryService']
+RenewalHistoryController.$inject = ['$scope', 'caseSelected', 'RenewalHistoryService']
 
-export default function RenewalHistoryController(caseSelected, RenewalHistoryService) {
+export default function RenewalHistoryController($scope, caseSelected, RenewalHistoryService) {
 
     var vm = this;
 
     vm.patent = caseSelected;
 
     function init(){
-
-        RenewalHistoryService.fetchHistory(caseSelected.patentID)
-        .then(
-        	function(response){
-                vm.renewal = response;
-            }
-        )
+        vm.renewal = $scope.$parent.renewalHistory;
     }
 
     init();

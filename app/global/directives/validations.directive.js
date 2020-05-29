@@ -238,7 +238,7 @@ function refValidate() {
 
 }
 
-export default angular.module('directives.validations', [])
+export default angular.module('directives.validation-rules', [])
     .directive('validateName', validateName)
     .directive('validateNumbers', validateNumbers)
     .directive('validatePhone', validatePhone)

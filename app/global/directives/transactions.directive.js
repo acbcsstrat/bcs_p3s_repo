@@ -12,25 +12,20 @@ function transactionLink($anchorScroll, $state, $location, TransactionService) {
                 var id = attrs.transId;
                 var type = attrs.transServicetype;
 
-                TransactionService.fetchCurrentTransactions()
+                TransactionService.fetchAllTransactions()
                 .then(
                     function(response) {
 
                         var match = response.filter(function(el){
                             return el.serviceUIs.find(function(item){
-                                if(item.patentUI) {
-                                    return item.patentUI.id == id;
-                                } else {
-                                    return item.patentId == id;
-                                }
-                                
+                                return item.patentId == parseInt(id);
                             })
                         }).filter(function(item){
                             return item.serviceUIs[0].newType.toLowerCase() === type.toLowerCase();
                         })
 
                         if(match !== undefined || typeof match !== 'undefined') {
-                            $state.go('transactions.modal.transaction-item',{transId: match[0].id}) //if match, go current-transaction-item
+                            $state.go('transactions.modal.transaction-item',{transId: match[0].p3s_TransRef}) //if match, go current-transaction-item
                             .then(
                                 function(response){
                                     elem.on('$destroy', function(){
@@ -53,6 +48,6 @@ function transactionLink($anchorScroll, $state, $location, TransactionService) {
     }
 }
 
-export default angular.module('directives.transaction-link')
+export default angular.module('directives.transaction-link', [])
     .directive('transactionLink', transactionLink)
     .name;

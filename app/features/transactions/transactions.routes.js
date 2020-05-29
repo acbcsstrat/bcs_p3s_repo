@@ -39,6 +39,8 @@ export default function routes($stateProvider) {
         resolve: {            
             transactionItem: ['$stateParams', 'transactions', function($stateParams, transactions) {
                 return transactions.find(function(transaction){
+                    console.log('transaction.p3s_TransRef : ', transaction.p3s_TransRef)
+                    console.log('$stateParams.transId : ', $stateParams.transId)
                     return transaction.p3s_TransRef == $stateParams.transId;
                 })
             }]

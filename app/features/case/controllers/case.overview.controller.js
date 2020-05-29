@@ -1,6 +1,6 @@
-CaseOverviewController.$inject = ['caseSelected', '$scope', '$state', '$stateParams', '$timeout', 'CasesRestService', '$uibModal', 'RenewalHistoryService', 'ActiveTabService', '$mdDialog']
+CaseOverviewController.$inject = ['caseSelected', '$scope', '$state', '$stateParams', '$timeout', 'CasesRestService', '$uibModal', 'RenewalHistoryService', 'ActiveTabService', '$mdDialog', 'ngCart']
 
-export default function CaseOverviewController(caseSelected, $scope, $state, $stateParams, $timeout, CasesRestService, $uibModal, RenewalHistoryService, ActiveTabService, $mdDialog) {
+export default function CaseOverviewController(caseSelected, $scope, $state, $stateParams, $timeout, CasesRestService, $uibModal, RenewalHistoryService, ActiveTabService, $mdDialog, ngCart) {
 
     var vm = this;
 
@@ -67,6 +67,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                 RenewalHistoryService.fetchHistory(caseSelected.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
                     function(response){
+                        $scope.renewalHistory = response;
                         if(response.length > 0) {
                            vm.displayRenewalHistoryTab = true;
                            return;
@@ -161,17 +162,26 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
         });
     };
 
-    function deletePatent(id){
+    function deletePatent(patent){
 
-        CasesRestService.deletePatent(id)
+        var actionIds = patent.p3sServicesWithFees.map(function(r){
+            return r.actionID;
+        })
+
+        var cartItems = ngCart.getItems().map(function(r){
+            return parseInt(r._id);
+        })
+
+        var found = actionIds.find(function(r) {
+            return cartItems.indexOf(r) >= 0;
+        })      
+
+        ngCart.removeItemById(found)
+
+        CasesRestService.deletePatent(patent.patentID)
         .then(
             function(response){
                 $state.go('portfolio', {}, {reload: true})
-                .then(function(){
-                    $timeout(function(){
-                        CasesRestService.fetchAllCases()
-                    }, 400);
-                });
             },
             function(errResponse){
                 deletePatentError(errResponse);
