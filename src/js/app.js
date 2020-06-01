@@ -18,6 +18,10 @@ import dashboard from '../../app/features/dashboard/index.js';
 import sidenav from '../../app/features/sidenav/index.js';
 import transactionlink from '../../app/global/directives/transactions.directive.js';
 import validationrules from '../../app/global/directives/validations.directive.js';
+import selectavatar from '../../app/global/directives/avatar.directive.js';
+import dynamic from '../../app/global/directives/dynamic.directive.js';
+import helppanel from '../../app/global/directives/open-help.directive.js';
+import mobileredirect from '../../app/global/directives/mobile-redirect.directive.js';
 
 import '@fortawesome/fontawesome-pro/js/fontawesome';
 import '@fortawesome/fontawesome-pro/js/solid';
@@ -26,7 +30,7 @@ import '@fortawesome/fontawesome-pro/js/brands';
 
 
 
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', 'oc.lazyLoad', uirouter, ProfileService, PpnumberService, ngCart, coreCtrl, dashboard, sidenav, transactionlink, validationrules]).config(config).run(startUpRun)
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', 'oc.lazyLoad', uirouter, ProfileService, PpnumberService, ngCart, coreCtrl, dashboard, sidenav, transactionlink, validationrules, selectavatar, dynamic, helppanel, mobileredirect]).config(config).run(startUpRun)
 
 startUpRun.$inject = ['Idle', '$rootScope', '$timeout', 'PpnumberService'];
 
