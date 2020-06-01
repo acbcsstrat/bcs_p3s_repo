@@ -60,7 +60,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
 
         $scope.promise.then(
             function(){
-
+                $scope.phoneNumber = $scope.ppDetails.partnerPhone;
                 vm.patent = caseSelected;
 
                 vm.portfolioLoaded = true;

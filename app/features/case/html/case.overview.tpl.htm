@@ -144,7 +144,7 @@
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-r-xl" name="validation" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Quote provided'"></ngcart-addtocart>									            
-									            <p class="font-weight-medium font-h4 m-r-xl" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">: Call +44 203 696 0949</p>
+									            <p class="font-weight-medium font-h4 m-r-xl" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">: Call {{{{phoneNumber}}}}</p>
 				                			</div>
 				                		</div>
 			                		</div>

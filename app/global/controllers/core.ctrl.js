@@ -5,7 +5,7 @@ export default angular.module('ppApp.core', [CoreService, CasesRestService]).con
 
 coreCtrl.$inject = ['$uibModal', '$scope', '$timeout', '$http', '$cookies', 'CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive'];
 
-function coreCtrl($uibModal, $scope, $timeout, $http, $cookies, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive) {
+function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive) {
 
 	var vm = this;
 
@@ -52,7 +52,6 @@ function coreCtrl($uibModal, $scope, $timeout, $http, $cookies, CoreService, loc
 	});
 
     function init() {
-
 
         CasesRestService.fetchAllCases()
         .then(

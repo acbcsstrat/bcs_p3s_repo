@@ -4,9 +4,17 @@ export default function Form1200GeneratedController($scope, $state, Form1200Serv
 
     var vm = this;
 
-    $scope.patent = $scope.$parent.patent
-    $scope.confirmDeleteApplication = confirmDeleteApplication;
-    $scope.deleteApplicationReq = false;
+
+    function init() {
+
+        $scope.phoneNumber = $scope.ppDetails.partnerPhone;
+        $scope.patent = $scope.$parent.patent
+        $scope.confirmDeleteApplication = confirmDeleteApplication;
+        $scope.deleteApplicationReq = false;
+
+    }
+
+    init()
 
     function confirmDeleteApplication(id) {
 

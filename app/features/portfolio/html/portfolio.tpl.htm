@@ -301,7 +301,7 @@
                                             <ngcart-addtocart id="{{item.actionID}}" class="tablebtn" name="validation" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Quote provided'"> <!--secret to different button labels checkngcartdirective.js-->
                                             </ngcart-addtocart>
                                         </div>                                                  
-                                        <p class="font-weight-medium" data-ng-class="item.isUrgentAttention && item.serviceType !== 'validation' ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
+                                        <p class="font-weight-medium" data-ng-class="item.isUrgentAttention && item.serviceType !== 'validation' ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call {{phoneNumber}}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -321,7 +321,7 @@
                                             <ngcart-addtocart id="{{item.actionID}}" class="tablebtn" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                             </ngcart-addtocart>
                                         </div>                                                
-                                        <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call +44 203 696 0949</p>
+                                        <p class="font-weight-medium" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : ''" data-ng-if="item.saleType == 'Offline'">Call {{phoneNumber}}</p>
                                         <p class="invisible" data-ng-if="item.saleType !== 'Online' && item.serviceStatus !== 'Show price' && item.serviceStatus !== 'Grant available'">Fill space</p>
                                     </div>
                                 </td>

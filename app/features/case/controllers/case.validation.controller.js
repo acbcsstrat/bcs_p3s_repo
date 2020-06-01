@@ -39,6 +39,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
 
         $scope.isChecked = true;
         vm.patent = caseSelected; 
+        $scope.phoneNumber = $scope.ppDetails.partnerPhone;
 
         var serviceStatusL = caseSelected.p3sServicesWithFees[0].serviceStatus.toLowerCase();
         if(caseSelected.p3sServicesWithFees[0].validationFeeUI !== null) {

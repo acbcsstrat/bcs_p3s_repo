@@ -11,8 +11,7 @@ import croppie from "angular-croppie/angular-croppie.js";
 import config from '../../app/app.config.js';
 
 import ProfileService from '../../app/features/profile/services/profile.details.serv.js';
-
-
+import PpnumberService from '../../app/global/services/app.ppnumber.serv.js';
 
 import coreCtrl from '../../app/global/controllers/core.ctrl.js';
 import dashboard from '../../app/features/dashboard/index.js';
@@ -27,10 +26,20 @@ import '@fortawesome/fontawesome-pro/js/brands';
 
 
 
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', 'oc.lazyLoad', uirouter, ProfileService, ngCart, coreCtrl, dashboard, sidenav, transactionlink, validationrules]).config(config).run(startUpRun)
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', 'oc.lazyLoad', uirouter, ProfileService, PpnumberService, ngCart, coreCtrl, dashboard, sidenav, transactionlink, validationrules]).config(config).run(startUpRun)
 
-startUpRun.$inject = ['Idle', '$rootScope', '$timeout'];
+startUpRun.$inject = ['Idle', '$rootScope', '$timeout', 'PpnumberService'];
 
-function startUpRun(Idle, $rootScope, $timeout) {
+function startUpRun(Idle, $rootScope, $timeout, PpnumberService) {
     Idle.watch();
+
+
+	PpnumberService.fetchNumber()
+	.then(
+		function(response){
+			$rootScope.ppDetails = response;
+			console.log($rootScope.ppnumber)
+		}
+	)
+
 };

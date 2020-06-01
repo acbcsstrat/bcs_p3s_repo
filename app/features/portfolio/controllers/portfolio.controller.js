@@ -69,6 +69,8 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
     .then(
         function(response){
 
+            $scope.phoneNumber = $scope.ppDetails.partnerPhone;
+
             if(!response.length) {
                 vm.noPatents = true;
             }

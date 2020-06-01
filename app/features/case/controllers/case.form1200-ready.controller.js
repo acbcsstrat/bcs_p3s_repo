@@ -27,7 +27,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     $scope.$parent.promise
     .then(
         function(response){
-
+            $scope.phoneNumber = $scope.ppDetails.partnerPhone;
             var service = $scope.$parent.availableServices;
 
             if(service[0].status == 'Epct available') {
@@ -82,21 +82,21 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             obj.title = 'Entity or a natural person, Rule 6(4)';
             obj.message = 'If you do not wish to delcare that you are an entity or a natural person, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                 email: support@ip.place, or phone: +44 203 696 0949';
+                 email: support@ip.place, or phone: {{{{phoneNumber}}}}';
         }
         if(question == 'amendments' && value === true) {
             message = 'Amended';
             obj.title = 'Amendments made';
             obj.message = 'If you confirm that amendments have been made to the application, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                 email: support@ip.place, or phone: +44 203 696 0949';  
+                 email: support@ip.place, or phone: {{{{phoneNumber}}}}';  
         }
         if(question == 'documents' && value === true) {
             message = 'DocsRequired'
             obj.title = 'Additional copies required';
             obj.message = 'If you confirm that you require additional copies of the document cited in the supplementary European search report,\
                 The Patent Place can offer help with your application offline via a Patent Administrator, and the order will become unavailable to process online.\
-                For further help please contact The Patent Place via email: support@ip.place, or phone: +44 203 696 0949'; 
+                For further help please contact The Patent Place via email: support@ip.place, or phone: {{{{phoneNumber}}}}'; 
         }              
         manualProcess(obj, message);  
     }

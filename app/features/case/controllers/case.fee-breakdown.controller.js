@@ -11,6 +11,7 @@ export default function FeeBreakDownController(caseSelected, $scope, $timeout) {
     $scope.$parent.promise
     .then(
         function(response){
+            $scope.phoneNumber = $scope.ppDetails.partnerPhone;
             if($scope.$parent.availableServices.length) {            
                 loadFeeTimeout = $timeout(function() {
                     setFees($scope.$parent.availableServices[0].action)
