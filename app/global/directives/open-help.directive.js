@@ -1,6 +1,8 @@
+import FetchHelpService from '../services/app.helpInfo.serv.js';
+
 openHelpPanel.$inject = ['$rootScope'];
 
-function openHelpPanel($rootScope) {
+function openHelpPanel($rootScope) { //1st opens panel
 
 	return {
 		restrict: 'E',
@@ -16,15 +18,17 @@ function openHelpPanel($rootScope) {
 }
 
 
-helpPanel.$inject = ['$rootScope', 'fetchHelpService'];
+helpPanel.$inject = ['$rootScope', 'FetchHelpService'];
 
-function helpPanel($rootScope, fetchHelpService) {
+function helpPanel($rootScope, FetchHelpService) { //2nd
 
     return {
         restrict: 'AE',
         transclude: true,
         template: require('html-loader!./html/help-panel.tpl.htm'),
         link: function(scope, elem, attr) {
+           
+            var panel = elem[0].querySelector('.help-panel-default');
 
             function displayPanel(open) {
                 if(open) {
@@ -43,15 +47,18 @@ function helpPanel($rootScope, fetchHelpService) {
                 displayPanel(false);
             }
 
-            scope.helpList = fetchHelpService.getAllInformation();
+            scope.helpList = FetchHelpService.getAllInformation();
 
             scope.backOut = function() {
-                $rootScope.$broadcast('backOut')
+                $rootScope.$broadcast('backOut');
+                angular.element(panel).removeClass('hide-help-panel') 
             }
 
             scope.helpItemSelected = function(category, item) {
-                var helpInfo = fetchHelpService.getSelectedInformation(category, item);
-                $rootScope.$broadcast('itemSeleted', helpInfo, category);               
+                var helpInfo = FetchHelpService.getSelectedInformation(category, item);
+                $rootScope.$broadcast('itemSeleted', helpInfo, category); 
+                var panel = elem[0].querySelector('.help-panel-default');
+                angular.element(panel).addClass('hide-help-panel')              
             }
 
         },
@@ -69,19 +76,6 @@ function helpPanelGroup($rootScope) {
         transclude: true, //transclude makes the contents of a directive with this option have access to the scope outside of the directive rather than inside.
         scope: {
           heading: '@' //use &attr in the scope option when you want your directive to expose an API for binding to behaviors
-        },
-        link: function(scope, elem, attr) { //helpInformation access
-
-            $rootScope.$on('itemSeleted', function(event, data) {
-                angular.element(document).find('#helpPanelId').addClass('hide-help-panel') //selected in help-panel.dir.js
-            });
-
-            $rootScope.$on('backOut', function(event, data) {
-                angular.element(document).find('#helpPanelId').removeClass('hide-help-panel')
-                angular.element(document).find('#helpPanelId').css('margin-left', '0')
-            });
-
-
         }
     }
 
@@ -101,13 +95,8 @@ function helpInformation($rootScope, $compile) {
 
             $rootScope.$on('itemSeleted', function(event, data, cat) {
                 compileTemplate(data, cat);
-                angular.element(document).find('#helpPanelId').css("margin-left", "-100%")
+                angular.element(document).find('.help-panel-default').css("margin-left", "-50%")
             })
-
-            function generateTemplate(data) {
-
-
-            }
 
             var setIndex, setTitle;
 
@@ -142,9 +131,9 @@ function helpInformation($rootScope, $compile) {
     }
 }
 
-export default angular.module('directives.help-panel')
+export default angular.module('directives.help-panel', [FetchHelpService])
 	.directive('openHelpPanel', openHelpPanel)
-	.directive('helpInformation', helpInformation)
 	.directive('helpPanelGroup', helpPanelGroup)
 	.directive('helpPanel', helpPanel)
+    .directive('helpInformation', helpInformation)    
 	.name;

@@ -1,6 +1,4 @@
-export default angular.module('services.helpinfo-service', []).service('FetchHelpService', FetchHelpService).name;
-
-FetchHelpService.$inject = [];
+export default angular.module('services.fetch-help-service', []).factory('FetchHelpService', FetchHelpService).name;
 
 function FetchHelpService() {
 
