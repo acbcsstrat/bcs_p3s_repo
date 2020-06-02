@@ -65,6 +65,6 @@ function mobileRedirect($window, $interval) {
 
 }
 
-export default angular.module('directives.mobile-redirect')
+export default angular.module('directives.mobile-redirect', [])
 	.directive('mobileRedirect', mobileRedirect)
 	.name;

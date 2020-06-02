@@ -55,7 +55,7 @@ function selectAvatar() {
 };
 
 
-export default angular.module('directives.select-avatar')
+export default angular.module('directives.select-avatar', [])
     .directive('selectAvatar', selectAvatar)
     .directive('avatarImg', avatarImg)    
     .name;
