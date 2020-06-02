@@ -18,7 +18,8 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
         { name: 'poasProvided', url: require('html-loader!../html/validation/validation-poa-available.tpl.htm')},
         { name: 'noPoasProvided', url: require('html-loader!../html/validation/validation-nopoas-required.tpl.htm')},
         { name: 'workInProgress', url: require('html-loader!../html/validation/validation-wip.tpl.htm')},
-        { name: 'manual', url: require('html-loader!../html/validation/validation-available.tpl.htm')}
+        { name: 'manual', url: require('html-loader!../html/validation/validation-available.tpl.htm')},
+        { name: 'completed', url: require('html-loader!../html/validation/validation-completed.tpl.htm')}
     ];
 
     $scope.formData = {};
@@ -80,6 +81,12 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
             } else {
                 vm.validationTemplate = vm.templates[6].url;
             }
+        }
+
+        if(serviceStatusL == 'completed') {
+            vm.validationTemplate = vm.templates[8].url;
+            var array = [];
+            vm.statesCompleted = array.concat(caseSelected.p3sServicesWithFees[0].validationFeeUI.designatedStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.extensionStates, caseSelected.p3sServicesWithFees[0].validationFeeUI.validationStates);
         }
 
         if(caseSelected.p3sServicesWithFees[0].saleType.toLowerCase() == 'offline') { //VALIDATION TEST DATA - REMOVE NotUsed

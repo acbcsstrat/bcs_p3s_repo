@@ -62,7 +62,6 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
             function(){
                 $scope.phoneNumber = $scope.ppDetails.partnerPhone;
                 vm.patent = caseSelected;
-
                 vm.portfolioLoaded = true;
                 RenewalHistoryService.fetchHistory(caseSelected.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
@@ -81,18 +80,19 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                 })
                  
                 $scope.notInProgress = caseSelected.p3sServicesWithFees.every(function(item){
-                    return item.saleType == 'Not In Progress' || (item.serviceType == 'validation' && (item.serviceStatus == 'Validation available' || item.serviceStatus == 'Preparing quote')) || (item.saleType == 'Offline' && item.serviceType == 'validation');
+                    return (item.saleType == 'Not In Progress' && item.serviceType !== 'validation' && item.serviceStatus !== 'Completed')|| (item.serviceType == 'validation' && (item.serviceStatus == 'Validation available' || item.serviceStatus == 'Preparing quote')) || (item.saleType == 'Offline' && item.serviceType == 'validation');
                 })
 
                 $scope.availableServices = caseSelected.p3sServicesWithFees.filter(function(o){
-                    return o.saleType !== 'Not In Progress';
+                    return o.saleType !== 'Not In Progress' || (o.saleType == 'Not In Progress' && o.serviceType == 'validation' && o.serviceStatus == 'Completed');
                 }).map(function(k, index){
                     if(k.serviceType == 'epct') { k.serviceType = 'Euro-PCT' }
                     return {id: index, action: k.serviceType, status: k.serviceStatus, type: k.saleType}
                 })
 
                 $scope.availableServices.forEach(function(obj){
-                    if(obj.type == 'Not In Progress') { return; }
+
+                    if(obj.type == 'Not In Progress' && obj.action !== 'validation' && obj.status !== 'Completed') { return; }
 
                     if(obj.action == 'Euro-PCT') {
                         if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
