@@ -23,7 +23,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             
             // !!! Dynamic import !!!
             return import(/* webpackChunkName: "index" */ "./features/profile/index.js")
-            .then(mod => {
+            .then(function(mod) {
                 $ocLazyLoad.inject(mod.default)
             })
             .catch(err => {
@@ -31,6 +31,67 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             });
         },             
     })    
+    .state('dashboard', {
+        url: '/dashboard',
+        template: require('html-loader!./features/dashboard/html/dashboard.tpl.htm'),
+        controller: 'DashboardController',
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./features/dashboard/index.js")
+            .then(mod =>    {
+                $ocLazyLoad.inject(mod.default)
+            } 
+            )
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        }        
+    })    
+    .state('dashboard.content', {
+        params: {
+            patents: null
+        },
+        resolve: {
+            fxRatesMonth: ['FxService', function(FxService) {
+                return FxService.fetchFxMonth();
+            }]                    
+        },
+        views: {
+            'actionsavailable@dashboard': {
+                controller: 'AvailableActionsController',
+                controllerAs: '$ctrl',
+                template: require('html-loader!./features/dashboard/html/dashboard.actions-available.tpl.htm')
+            },           
+            'fxchartwidget@dashboard': {
+                controller: 'DbFxChartController',
+                controllerAs: '$ctrl',
+                template: require('html-loader!./features/dashboard/html/dashboard.fxchart-widget.tpl.htm')
+            },
+            'europctsgraph@dashboard': {
+                controller: 'EuropctsDonutController',
+                controllerAs: '$ctrl',
+                template: require('html-loader!./features/dashboard/html/dashboard.europcts-graph.tpl.htm')     
+            },
+            'renewalsgraph@dashboard': {
+                controller: 'RenewalsDonutController',
+                controllerAs: '$ctrl',
+                template: require('html-loader!./features/dashboard/html/dashboard.renewals-graph.tpl.htm')
+            },                
+            'grantsgraph@dashboard': {
+                controller: 'GrantsDonutController',
+                controllerAs: '$ctrl',
+                template: require('html-loader!./features/dashboard/html/dashboard.grants-graph.tpl.htm')
+            },
+            'validationsgraph@dashboard': {
+                controller: 'ValidationsDonutController',
+                controllerAs: '$ctrl',
+                template: require('html-loader!./features/dashboard/html/dashboard.validations-graph.tpl.htm')
+            }                          
+        }
+    })
     .state('portfolio', {
         url: '/portfolio',
         template: require('html-loader!./features/portfolio/html/portfolio.tpl.htm'),
@@ -40,11 +101,10 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
 
             return import(/* webpackChunkName: "index" */ "./features/portfolio/index.js")
-            .then(mod => {
+            .then(function(mod) {
                 $ocLazyLoad.inject(mod.default)
 
-            }
-            )
+            })
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
@@ -81,7 +141,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         lazyLoad: function($transition$) {
             const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
             return import(/* webpackChunkName: "index" */ "./features/case/index.js")
-            .then(mod => {
+            .then(function(mod) {
                 $ocLazyLoad.inject(mod.default);
             })
             .catch(err => {
@@ -158,9 +218,9 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             
             // !!! Dynamic import !!!
             return import(/* webpackChunkName: "index" */ "./features/transactions/index.js")
-            .then(mod => 
+            .then(function(mod) {
                 $ocLazyLoad.inject(mod.default)
-            )
+            })
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
@@ -197,9 +257,9 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             
             // !!! Dynamic import !!!
             return import(/* webpackChunkName: "index" */ "./features/transactions/index.js")
-            .then(mod => 
+            .then(function(mod) {
                 $ocLazyLoad.inject(mod.default)
-            )
+            })
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
@@ -231,10 +291,9 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             
             // !!! Dynamic import !!!
             return import(/* webpackChunkName: "index" */ "./features/checkout/index.js")
-            .then(mod =>    {
+            .then(function(mod) {
                 $ocLazyLoad.inject(mod.default)
-            } 
-            )
+            })
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
@@ -250,10 +309,9 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             
             // !!! Dynamic import !!!
             return import(/* webpackChunkName: "index" */ "./features/checkout/index.js")
-            .then(mod =>    {
+            .then(function(mod) {
                 $ocLazyLoad.inject(mod.default)
-            } 
-            )
+            })
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
@@ -273,10 +331,9 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             
             // !!! Dynamic import !!!
             return import(/* webpackChunkName: "index" */ "./features/checkout/index.js")
-            .then(mod =>    {
+            .then(function(mod) {
                 $ocLazyLoad.inject(mod.default)
-            } 
-            )
+            })
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });

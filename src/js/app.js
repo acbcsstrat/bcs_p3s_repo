@@ -35,14 +35,13 @@ angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ng
 startUpRun.$inject = ['Idle', '$rootScope', '$timeout', 'PpnumberService'];
 
 function startUpRun(Idle, $rootScope, $timeout, PpnumberService) {
-    Idle.watch();
 
+    Idle.watch();
 
 	PpnumberService.fetchNumber()
 	.then(
 		function(response){
 			$rootScope.ppDetails = response;
-			console.log($rootScope.ppnumber)
 		}
 	)
 

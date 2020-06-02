@@ -17,10 +17,7 @@ import GrantsDonutController from './controllers/dashboard.grants-graph.controll
 import RenewalsDonutController from './controllers/dashboard.renewals-graph.controller';
 import ValidationsDonutController from './controllers/dashboard.validations-graph.controller';
 
-import routing  from './dashboard.routes';
-
 export default angular.module('ppApp.dashboard', [DashboardService, CasesRestService, CalculateService, CostAnalysisService, TransactionService, FxService]) //import dashboard view controllers
-	.config(routing)
   	.controller('DashboardController', DashboardController)
   	.controller('AvailableActionsController', AvailableActionsController)
   	.controller('DbFxChartController', DbFxChartController)
