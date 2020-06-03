@@ -3,9 +3,9 @@ import CasesRestService from '../../features/portfolio/services/portfolio.cases.
 
 export default angular.module('ppApp.core', [CoreService, CasesRestService]).controller('coreCtrl', coreCtrl).name
 
-coreCtrl.$inject = ['$uibModal', '$scope', '$timeout', '$http', '$cookies', 'CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive'];
+coreCtrl.$inject = ['$uibModal', '$scope', '$timeout', '$http', '$cookies', 'CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive', '$location'];
 
-function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive) {
+function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive, $location) {
 
 	var vm = this;
 
@@ -39,12 +39,13 @@ function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, lo
 	  	closeModals();
 
      	ngCart.empty();
-    	$http.post('http://localhost:8080/p3sweb/resources/j_spring_security_logout')
+    	$http.post(ppdomain+'resources/j_spring_security_logout')
       	.then(
       		function(response){
-      		  	window.location.reload('http://localhost:8080/p3sweb/login');
+      			window.location=ppdomain+'login';
       		},
           	function(errResponse) {
+          		console.log('howdy ney')
             	console.error('Error with idle timeout. Error: ', errResponse);
           	}    
 		)    	
