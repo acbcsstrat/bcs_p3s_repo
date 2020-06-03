@@ -66,16 +66,19 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
         }
 
         if(serviceStatusL == 'blank poas provided' || serviceStatusL == 'blank poas downloaded') { //VALIDATION TEST DATA - REMOVE NotUsed
-
+            var noPoasNeeded = allState.every(function(item){
+                return item.poaNeeded === false;
+            })            
             caseSelected.postAddress = caseSelected.validationQuoteUI.poaPostalAddress.split(',');
             vm.validationTemplate = vm.templates[4].url;        
             
         }                    
 
         if(serviceStatusL == 'scanned poas received' || serviceStatusL == 'poas provided to pa' || serviceStatusL == 'paper documents received') { //VALIDATION TEST DATA - REMOVE NotUsed
+            
             var noPoasNeeded = allState.every(function(item){
                 return item.poaNeeded === false;
-            })            
+            })                   
             if(noPoasNeeded) {
                 vm.validationTemplate = vm.templates[5].url;  
             } else {
