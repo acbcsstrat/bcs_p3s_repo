@@ -1,0 +1,29 @@
+<div class="row m-b-sm">
+	<div class="col-xl-12">	
+	    <h3 class="font-weight-bold font-h3 m-b-sm">Grant, Rule 71(3), Questionnaire</h3>
+	    <p class="m-b-xs">You'll be asked a small number of questions, that will help calculate fees and preprare the grant order, Rule 71(3), for instruction to the European Patent Office. When the Grant instruction has been prepared, you can commit it to a transaction.</p>
+	    <p class="font-weight-bold">Please confirm that you understand the following statements:</p>
+	</div>
+</div>
+<form name="grantInitiate" class="d-flex flex-column flex-grow-1">
+	<div class="form-group m-b-sm">
+		<p class="font-body m-b-xs font-weight-medium">The French and German translations of this application are required to be uploaded</p>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" name="translations" data-ng-model="initiate.translations" class="form-check-input checkbox-square" required>
+            <label for="translations" class="form-check-label">I understand</label>
+        </div>
+	</div>
+	<div class="form-group m-b-sm">
+		<p class="font-body m-b-xs font-weight-medium">Details of total number of claims and pages are required (if applicable)</p>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" name="totals" data-ng-model="initiate.totals" class="form-check-input checkbox-square" required>
+            <label for="totals" class="form-check-label">I understand</label>
+        </div>
+	</div>
+	<div class="row d-flex flex-grow-1">
+		<div class="col-xl-12 d-flex justify-content-end align-items-end">
+			<button class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.initiateGrantOrder()" data-ng-disabled="grantInitiate.$invalid">Start Process</button>
+		</div>
+	</div>	
+</form>
+
