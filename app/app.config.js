@@ -236,22 +236,6 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     })        
     .state('transactions.modal.transaction-item', {
         url: '/:transId',
-        resolve: {            
-            transactionItem: ['$stateParams', '$q', 'TransactionService', function($stateParams, $q, TransactionService) {
-                return TransactionService.fetchAllTransactions()
-                .then(
-                    function(response){
-                        return response.find(function(transaction){
-                            return transaction.p3s_TransRef == $stateParams.transId;
-                        })
-                    },
-                    function(errResponse) {
-                        console.error('Error fetching trans item. Error: ', errResponse)
-                    }
-                )
-      
-            }]
-        },
         lazyLoad: function($transition$) {
             const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
             

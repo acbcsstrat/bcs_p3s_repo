@@ -1,9 +1,8 @@
-TransactionItemController.$inject = ['$scope', '$state', '$timeout', 'transactionItem' ];
+TransactionItemController.$inject = ['$scope', '$state', '$timeout', '$stateParams'];
 
-export default function TransactionItemController($scope, $state, $timeout, transactionItem) {
+export default function TransactionItemController($scope, $state, $timeout, $stateParams) {
 
 	var vm = this;
-
 	vm.setTab = setTab;
 	vm.closeOverview = closeOverview;
 	vm.caseoverview_tab = 'details';
@@ -69,9 +68,11 @@ export default function TransactionItemController($scope, $state, $timeout, tran
     }
 
     //assigned promise to scope so child state can also resolve this promise to invoke functions
- 	$scope.promise.then(function(){
-
-    		vm.transactionItem = transactionItem;
+ 	$scope.promise.then(function(response){
+            vm.transactionItem = response.find(function(transaction){
+                return transaction.p3s_TransRef == $stateParams.transId;
+            })
+            console.log('trans item item : ', vm.transactionItem)
 			vm.transactionItem.serviceUIs.map(function(item, index){
 				// item.transItemStatus = transItemStatus(isValidation, transactionItem.latestTransStatus, vm.transactionItem.hasFailed);
 
@@ -120,37 +121,41 @@ export default function TransactionItemController($scope, $state, $timeout, tran
 				return item;
 
 			})
+
+
+			function checkProgress() { //function to add statuses complete or active to view so it provides proggress bar to user
+
+				var statusIndex;
+
+				vm.transStatus.forEach(function(data, index){
+					if(data.status == vm.transactionItem.latestTransStatus) {
+						statusIndex = index; //find current active status
+					}
+				});
+
+				for(var i=0; i <= statusIndex; i++){
+					vm.transStatus[i].complete = true; //change property complete to true to all items
+					if(vm.transactionItem.latestTransStatus == vm.transStatus[i].status) { //until it matches current tran statues
+						vm.transStatus[i].active = true; // change active property value to true
+						if(vm.transactionItem.latestTransStatus !== 'Completed') {
+							vm.transStatus[i].complete = false;
+						} else {
+							vm.transStatus[i].active = false;
+							vm.transStatus[i].complete = true;
+						}
+						
+					}
+				}
+				
+			};
+			
 			vm.checkProgress = checkProgress;
 			vm.transactionLoaded = true;
 
 	})
 		
 
-	function checkProgress() { //function to add statuses complete or active to view so it provides proggress bar to user
 
-		var statusIndex;
-
-		vm.transStatus.forEach(function(data, index){
-			if(data.status == transactionItem.latestTransStatus) {
-				statusIndex = index; //find current active status
-			}
-		});
-
-		for(var i=0; i <= statusIndex; i++){
-			vm.transStatus[i].complete = true; //change property complete to true to all items
-			if(transactionItem.latestTransStatus == vm.transStatus[i].status) { //until it matches current tran statues
-				vm.transStatus[i].active = true; // change active property value to true
-				if(transactionItem.latestTransStatus !== 'Completed') {
-					vm.transStatus[i].complete = false;
-				} else {
-					vm.transStatus[i].active = false;
-					vm.transStatus[i].complete = true;
-				}
-				
-			}
-		}
-		
-	};
 
 
 }
