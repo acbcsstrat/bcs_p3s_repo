@@ -17,7 +17,7 @@ function UploadAvatarService($http, $q) {
 
         var config = { headers: {'Content-Type': undefined} };
 
-        $http.post('../p3sweb/upload-avatar/', data, config)
+        $http.post('../upload-avatar/', data, config)
         .then(
             function(response){
                 deferred.resolve(response.data)
