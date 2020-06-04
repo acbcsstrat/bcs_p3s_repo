@@ -60,7 +60,7 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
             vm.toBlueOrNotToBlue = false;
         }
 
-        if(action !== 'validation') { 
+        if(action !== 'validation' && action !== 'N/A') { 
             phaseNotifications();
         }
 

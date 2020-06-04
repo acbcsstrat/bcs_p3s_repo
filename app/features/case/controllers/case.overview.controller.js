@@ -78,6 +78,10 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                 $scope.validationNotification = caseSelected.p3sServicesWithFees.some(function(item){
                     return item.serviceType == 'validation';
                 })
+
+                $scope.noReminders = caseSelected.p3sServicesWithFees.some(function(item){
+                    return item.saleType == 'Not In Progress' && item.serviceStatus == 'NotUsed';
+                })
                  
                 $scope.notInProgress = caseSelected.p3sServicesWithFees.every(function(item){
                     return (item.saleType == 'Not In Progress' && item.serviceType !== 'validation' && item.serviceStatus !== 'Completed')|| (item.serviceType == 'validation' && (item.serviceStatus == 'Validation available' || item.serviceStatus == 'Preparing quote')) || (item.saleType == 'Offline' && item.serviceType == 'validation');
