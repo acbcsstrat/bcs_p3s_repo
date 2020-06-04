@@ -125,7 +125,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                 return CasesRestService.fetchCase($stateParams.caseId)
                 .then(
                     function(response){
-                        return CasesRestService.fetchCase($stateParams.caseId);
+                        return response;
                     },
                     function(errResponse){
                         $state.go('portfolio', {}, {reload: true})
