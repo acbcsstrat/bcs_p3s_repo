@@ -23,16 +23,16 @@ export default angular.module('components.sidenav', []).component('sidenav', {
 
       	$rootScope.$on('refreshAvatar', function(){
 	        var timestamp = new Date().getTime();
-	        vm.avatarimage = '../p3sweb/avatar-image/' + '?' + timestamp;
+	        vm.avatarimage = '../avatar-image/' + '?' + timestamp;
       	})
 
       	function init() {
 
-      		$http.get('../p3sweb/avatar-image/')
+      		$http.get('../avatar-image/')
       		.then(
       			function(response){
       				if(response.data !== '') {
-      					vm.avatarimage = '../p3sweb/avatar-image/';
+      					vm.avatarimage = '../avatar-image/';
       				}
       			}
       		)

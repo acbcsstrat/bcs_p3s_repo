@@ -6,14 +6,14 @@ function avatarImg($http) {
 		template: require('html-loader!./html/avatar.tpl.htm'),
 		link: function(scope, elem, attr) {
 
-			$http.get('../p3sweb/avatar-image/')
+			$http.get('../avatar-image/')
 			.then(
 				function(response){
 					if(response.data == '' || response.data == undefined) {
 						scope.avatarImg = null;
 					}
 					else {
-						scope.avatarImg = '../p3sweb/avatar-image/';
+						scope.avatarImg = '../avatar-image/';
 					}
 				}
 			)
