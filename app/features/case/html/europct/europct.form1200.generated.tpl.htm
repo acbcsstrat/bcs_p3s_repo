@@ -1,0 +1,25 @@
+<div class="row d-flex flex-grow-1">
+    <div class="col-xl-12 d-flex flex-column">
+        <div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved'" class="flex-grow-1">
+            <p class="m-b-xs font-h4">Your Form 1200 has been generated and is avaialble to check out or review. If you have entered any incorrect information, you can delete the Form 1200 by selecting the 'delete form 1200' button. If you delete the Form 1200, please leave up to 24 hours for these changes to be applied to your portfolio. You must then check the availability of the European action to see whether the Form 1200 can be generated again.</p>
+        </div>
+        <div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct rejected'" class="flex-grow-1">
+            <p class="font-h4 m-b-sm">The answer(s) provided in the questionnaire has resulted in the Form 1200 not being available to check out online. However, The Patent Place can help submit the Form 1200 offline so please contact us via email: support@ip.place, or phone: {{{{phoneNumber}}}}.</p>
+            <p class="font-h4 m-b-sm">If you have entered any incorrect information, you can reset the Form 1200 by selecting the 'reset Form 1200' button. If you reset the order, please leave up to 24 hours for these changes to be applied to your portfolio. You must then check the availability of the European action to see whether the Form 1200 can be generated. </p>
+        </div>
+        <div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct being generated' || $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Await pdf gen start'" class="flex-grow-1">
+            <p class="m-b-xs font-h4">We are currently generating your Form 1200. When the document is ready, you will be able to access it here.</p> 
+            <p class="font-h4">You can view the fees in the 'Fee Breakdown' tab through the panel.</p>                      
+        </div>
+        <div class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'EPO Instructed'">
+            <p class="font-h4">Your European phase entry (Form 1200) action has been committed to a transaction. Navigate to transactions if you want to download a pro forma invoice. Once the transaction is completed, you'll be able to download receipts and final invoice.</p>
+        </div>   
+        <div class="row m-t-md">
+            <div class="col-md-12 d-flex flex-wrap justify-content-end align-items-middle">
+                <button data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved'" class="btn btn-underlined font-weight-medium m-r-sm" data-ng-click="confirmDeleteApplication()" data-ng-disabled="deleteApplicationReq">Delete Form 1200</button>
+                <button data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct rejected'" class="btn btn-underlined font-weight-medium m-r-sm" data-ng-click="confirmDeleteApplication()" data-ng-disabled="deleteApplicationReq">Reset Form 1200</button>
+                <a data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Epct saved' || $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress'" class="btn btn--lg btn--green pill-radius" href="{{$ctrl.patent.form1200PdfUrl}}&download=true" target="_blank" download>Download Form 1200</a>
+            </div>
+        </div>     
+    </div>
+</div>

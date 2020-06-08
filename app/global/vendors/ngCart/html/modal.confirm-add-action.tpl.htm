@@ -1,0 +1,45 @@
+<div class="bg-white px-5 py-5 flex-column br-1">
+	<span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+
+	<div class="row m-b-lg">
+		<div class="col-md-12 d-flex justify-content-end align-items-center flex-column">	
+			<p class="font-h2 font-weight-bold"><span data-ng-bind="$ctrl.order.totalOrderLength"></span> European Action added to your basket!</p>
+		</div>
+	</div>	
+	<div class="row m-b-lg">
+		<div class="col-xl-12">
+			<table>
+				<thead>
+					<tr class="py-2">
+						<td class="font-h4 font-weight-bold">App No</td>
+						<td class="font-h4 font-weight-bold">European Action</td>
+						<td class="font-h4 font-weight-bold">Cost</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="py-2">
+						<td class="font-body" data-ng-bind="$ctrl.order.ep_ApplicationNumber"></td>
+						<td class="font-body text-capitalize" data-ng-bind="$ctrl.order.euroAction.serviceType"></td>
+						<td class="font-body text-uppercase">$ <span data-ng-bind="$ctrl.order.price | number: 2"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="d-flex justify-content-between flex-column">
+				<p class="font-h4 font-weight-medium m-b-lg text-center">Would you like to proceed to checkout, or return to your portfolio?</p>
+				<div class="d-flex justify-content-between">				
+					<div>
+						<button data-ng-click="$ctrl.dismissModal()" class="btn btn--lg btn--green pill-radius">Add more actions</button>
+					</div>
+					
+					<div>				
+						<button data-ng-click="$ctrl.continueBasket()" class="btn btn--lg btn--grey pill-radius">Proceed to checkout</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
