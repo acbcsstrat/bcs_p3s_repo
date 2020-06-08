@@ -1,0 +1,152 @@
+@import '../helpers/_variables.scss';
+
+.app-container {     /*layout*/ /*layout*/ /*_layout.scss */
+  padding: 0 0;
+  width: -webkit-calc(100% - 145px)!important;
+  width: -moz-calc(100% - 145px)!important;
+  width: calc(100% - 120px)!important;
+  left: 85px;
+  top: 85px;
+  position: absolute;
+  max-width: 180rem;
+  height: calc(100vh - 80px)
+}
+
+/*RETHINK ALL OF THE CONTAINERS BELOW*/
+// .container-content-40 { width: 30%; max-width: 40rem;  }  /*layout*/ /*layout /* _layout.scss */ /*rethink to see if anything can be done in sass*/
+
+// .container-pre-app  {  width: 90%!important; margin: 0 auto; height: 100%;  }
+.container-pre-app__center-box-40 { width: 30%; min-width: 50rem; max-width: 50rem }
+.container-pre-app__center-box-70 { width: 70%; }
+
+.bg-info-icon, 
+.bg-no-chart, 
+.bg-no-data { /*modules*/ /*components*/ /*_layout.scss*/
+    position: relative;
+    overflow: hidden;
+    height: 28rem; //swappred from min-height due to IE11
+    z-index: 1;
+}
+
+.bg-info-icon:after { /*modules*/ /*components*/ /*_layout.scss*/
+    content: url(../../p3sweb/assets/imgs/icons/info_icon.png);
+    position: absolute;
+    bottom: -4px;
+    right: -1px;
+    z-index: -1;
+}
+
+.bg-no-data:after { /*modules*/ /*components*/ /*_layout.scss*/
+    content:'';
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto;
+    top: 50%;
+    left:0;
+    right:0;
+    background: url(../../p3sweb/assets/imgs/icons/chart_icon.png) no-repeat center center;
+    background-size: contain;
+    width: 100%;
+    z-index: -1;
+    margin-top: -10rem;  
+    height: 20rem;
+}
+
+.bg-no-chart:after { /*modules*/ /*components*/ /*_layout.scss*/
+    content:'';
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto;
+    top: 50%;
+    left:0;
+    right:0;
+    background: url(../../p3sweb/assets/imgs/icons/chart_icon.png) no-repeat center center;
+    background-size: contain;
+    width: 100%;
+    z-index: -1;
+    margin-top: -10rem;
+    height: 20rem;
+}
+
+.side-menu a:hover, 
+.side-menu a:focus { color: #fff; }
+
+.container-add-patent {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+          0 13px 19px 2px rgba(0, 0, 0, 0.14),
+          0 5px 24px 4px rgba(0, 0, 0, 0.12);
+    z-index: 999;
+    min-height: 13rem;
+    max-height: 30rem;
+    -moz-transition:all ease-in-out .25s;
+    -o-transition:all ease-in-out .25s;
+    -webkit-transition:all ease-in-out .25s;
+    transition:all ease-in-out .25s;
+    .add-patent-panel {
+        width: 70rem;
+    }
+    &.active {
+        max-height: 60rem;
+        min-height: 55rem;
+        .add-patent-panel {
+            .found-patent-panel {
+                &.ng-enter {
+
+                    opacity: 0;
+                    -moz-transition: all ease-in-out .25s .3s;
+                    -o-transition: all ease-in-out .25s .3s;
+                    -webkit-transition: all ease-in-out .25s .3s;
+                    transition: all ease-in-out .25s .3s;
+                }
+                &.ng-enter.ng-enter-active {
+                  opacity:1;
+                }
+            }
+        }
+    }
+    .recently-added-panel {
+        width: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display:block!important;
+        -moz-transition:all ease-in-out .25s;
+        -o-transition:all ease-in-out .25s;
+        -webkit-transition:all ease-in-out .25s;
+        transition:all ease-in-out .25s;
+        &.active {
+            width: 20rem;
+        }
+    }
+}
+
+
+.container-filter-list {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+          0 13px 19px 2px rgba(0, 0, 0, 0.14),
+          0 5px 24px 4px rgba(0, 0, 0, 0.12);
+    min-height: 50rem;
+    height: 50rem;
+    max-height: 50rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 28.6rem;
+    z-index: 9999999;
+    &::-webkit-scrollbar-thumb {
+        background: $grey; 
+        border-radius: 10px;
+        height: 30px;
+    }      
+
+    &::-webkit-scrollbar {
+        width: 15px;
+    }    
+    ::-webkit-scrollbar-thumb {
+        background: $grey; 
+        border-radius: 10px;
+        height: 30px;
+    }    
+}

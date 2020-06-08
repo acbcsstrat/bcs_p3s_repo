@@ -1,0 +1,138 @@
+@import '../helpers/_variables.scss';
+
+.modal-cross { /*modules*/ /*components*/ /*_modal.scss*/
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-top: 5px; /*change when correct image is provided*/
+}
+
+.bar-phase { width: 100%; } /*modules*/ /*components*/ /*_modal.scss*/
+
+.modal-backdrop .fade .in { opacity: 0.5 !important; }
+.modal-backdrop.fade { opacity: 0.5 !important; }
+
+
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.modal-content {
+  background: transparent;
+}
+.modal-header {
+  background: $white;
+  border-bottom: 0;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1); 
+
+}
+
+.modal-body {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.modal-footer {
+  border-top: 0;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.modal-footer>:not(:last-child) {
+  margin-right: 1.5rem;
+}
+
+.modal-body--multiple {
+  padding-left: 5rem;
+  padding-right: 5rem;  
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;  
+}
+
+.modal-header--multiple {
+  padding-left: 5rem;
+  padding-right: 5rem;  
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;  
+}
+
+.modal-content--multiple {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.modal-content--table {
+  width: 500px;
+}
+
+.modal-max {
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    z-index: 999;
+    opacity: 0.6;
+    animation: animatedBackground .25s ease-in-out;    
+}
+
+.modal-overview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    max-width: 900px;
+    height: 660px;
+    z-index: 999;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    .modal-overview--options-panel {
+        position: absolute;
+        right: 14px;
+        top: 8px;
+        z-index: 1;
+    }    
+    .modal-overview__view {
+        max-width: 703px;
+        .modal-overview__view__body {
+            overflow-y: scroll;
+            height: 470px;
+            background: $white;
+            border-bottom: 40px solid #fff;            
+            &::-webkit-scrollbar-thumb {
+                background: $grey; 
+                border-radius: 10px;
+                height: 30px;
+            }      
+
+            &::-webkit-scrollbar {
+                width: 15px;
+            }    
+            &::-webkit-scrollbar-thumb {
+                background: $grey; 
+                border-radius: 10px;
+                height: 30px;
+            }
+        }
+    }
+}
