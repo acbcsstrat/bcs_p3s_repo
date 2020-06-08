@@ -54,16 +54,13 @@ function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, lo
 
     function init() {
 
-        CasesRestService.fetchAllCases()
+        CoreService.checkCases()
         .then(
-            function(response){
-                if(response.length === 0) {
-                    welcomeMessageModal();
-                }
-            },
-            function(errResponse){
-                console.log(errResponse);
-            }
+        	function(response){
+        		if(!response) {
+        			welcomeMessageModal()
+        		}
+        	}
         )
 
     }

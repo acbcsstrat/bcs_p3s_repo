@@ -4,19 +4,17 @@ CoreService.$inject = ['$q', '$timeout', '$http'];
 
 function CoreService($q, $timeout, $http) {
 
-    var REST_SERVICE_URI = ppdomain+'partner-details/'; 
 
-    var factory = {
-        getMessages: getMessages,
-        supressMessages: supressMessages,        
+    var factory = {     
         ppContact: ppContact,
         openAppGuide: openAppGuide,
-        appGuideOpen: false
+        appGuideOpen: false,
+        checkCases: checkCases
     };
 
     function ppContact() {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI)
+        $http.get(ppdomain+'partner-details/')
         .then(
             function(response){
                 deferred.resolve(response.data)
@@ -28,40 +26,23 @@ function CoreService($q, $timeout, $http) {
         return deferred.promise;
     }
 
-    function getMessages() {
+    function openAppGuide() {
+        return factory.appGuideOpen = !factory.appGuideOpen;
+    }
+
+    function checkCases() {
         var deferred = $q.defer();
-        $http.get(ppdomain+'login-messages/')
+        $http.get(ppdomain+'haveGotAnyPatents/')
         .then(
-            function (response) {
+            function(response) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
-                console.error('Error while fetching messages');
-                deferred.reject(errResponse);
+                console.error('Error : ', errResponse);
+                deferred.resolve(errResponse);
             }
-        );
-
+        )
         return deferred.promise;
-    };
-
-
-
-    function supressMessages(id) {
-        var deferred = $q.defer();
-        $http.post(ppdomain+'suppress-login-messages/' , id)
-        .then(
-            function(response){
-                deferred.resolve(response);
-            }, 
-            function(errResponse){
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
-    };    
-
-    function openAppGuide() {
-        return factory.appGuideOpen = !factory.appGuideOpen;
     }
 
     return factory;
