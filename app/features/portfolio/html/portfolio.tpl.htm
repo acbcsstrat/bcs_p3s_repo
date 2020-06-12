@@ -316,7 +316,7 @@
                                             </ngcart-addtocart>
                                         </div>
                                         <div data-ng-if="item.serviceType == 'grant'">
-                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--bordered btn-underlined txt-phase-green prepareGrant" data-ng-click="$ctrl.prepareGrant(patent.patentID)">Prepare Grant
+                                            <a data-ng-if="item.saleType == 'Online' && item.serviceStatus === 'Grant available'" class="btn btn--bordered btn-underlined font-weight-bold txt-phase-green prepareGrant" data-ng-click="$ctrl.prepareGrant(patent.patentID)">Prepare Grant
                                             </a>
                                             <ngcart-addtocart id="{{item.actionID}}" class="tablebtn font-weight-bold" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"> <!--secret to different button labels checkngcartdirective.js-->
                                             </ngcart-addtocart>

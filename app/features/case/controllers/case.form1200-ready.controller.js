@@ -23,6 +23,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     vm.submitForm1200Data = submitForm1200Data;
     $scope.formData = {};
     $scope.validate = {};
+    $scope.phoneNumber = '';
 
     $scope.$parent.promise
     .then(
@@ -80,23 +81,26 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         if(question == 'entity' && value === true) {
             message = 'NaturalPerson';
             obj.title = 'Entity or a natural person, Rule 6(4)';
-            obj.message = 'If you do not wish to delcare that you are an entity or a natural person, The Patent Place can offer help with your application offline\
+            var template = '<p>If you do not wish to delcare that you are an entity or a natural person, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                 email: support@ip.place, or phone: {{{{phoneNumber}}}}';
+                 email: support@ip.place, or phone: '+ $scope.phoneNumber +'</p>';
+            obj.message = $compile(template)($scope); 
         }
         if(question == 'amendments' && value === true) {
             message = 'Amended';
             obj.title = 'Amendments made';
-            obj.message = 'If you confirm that amendments have been made to the application, The Patent Place can offer help with your application offline\
+            var template = '<p>If you confirm that amendments have been made to the application, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                 email: support@ip.place, or phone: {{{{phoneNumber}}}}';  
+                 email: support@ip.place, or phone: '+ $scope.phoneNumber +'</p>';
+            obj.message = $compile(template)($scope);
         }
         if(question == 'documents' && value === true) {
             message = 'DocsRequired'
             obj.title = 'Additional copies required';
-            obj.message = 'If you confirm that you require additional copies of the document cited in the supplementary European search report,\
+            var template = '<p>If you confirm that you require additional copies of the document cited in the supplementary European search report,\
                 The Patent Place can offer help with your application offline via a Patent Administrator, and the order will become unavailable to process online.\
-                For further help please contact The Patent Place via email: support@ip.place, or phone: {{{{phoneNumber}}}}'; 
+                For further help please contact The Patent Place via email: support@ip.place, or phone: '+ $scope.phoneNumber +'</p>';
+            obj.message = $compile(template)($scope);
         }              
         manualProcess(obj, message);  
     }
@@ -297,7 +301,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                                 <i class="fas fa-exclamation-circle fa-4x txt-phase-red"></i>\
                             </div>\
                             <p class="font-h3 font-weight-medium">'+message.title+'</p>\
-                            <p class="font-body w-100 text-center m-b-sm m-t-xs">'+ message.message+'</p>\
+                            <p class="font-body w-100 text-center m-b-sm m-t-xs">'+ message.message[0].innerHTML+'</p>\
                             <div class="d-flex">\
                                 <button class="btn btn--lg btn--red pill-radius m-r-md" data-ng-click="$ctrl.dismissModal()">Cancel</button>\
                                 <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.confirm()">Confirm</button>\

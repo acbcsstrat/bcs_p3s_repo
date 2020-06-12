@@ -1,6 +1,6 @@
-GrantController.$inject = ['caseSelected', '$scope', '$uibModal', '$state', '$timeout', 'GrantService'];
+GrantController.$inject = ['caseSelected', '$scope', '$uibModal', '$state', '$timeout', 'GrantService', '$compile'];
 
-export default function GrantController(caseSelected, $scope, $uibModal, $state, $timeout, GrantService) {
+export default function GrantController(caseSelected, $scope, $uibModal, $state, $timeout, GrantService, $compile) {
 
 	var vm = this;
 
@@ -18,6 +18,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
     vm.submitGrantData = submitGrantData;
     $scope.formData = {};
     $scope.validate = {};
+    $scope.phoneNumber = '';
 
     function init() {
         $scope.phoneNumber = $scope.ppDetails.partnerPhone;
@@ -103,16 +104,19 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
         var obj = {};
         if(question == 'representative' && value === true) {
             obj.title = 'Representative';
-            obj.message = 'If you confirm that you do not wish IP Place to act as representative, The Patent Place can offer help with your application offline\
+            var template = '<p>If you confirm that you do not wish IP Place to act as representative, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                 email: support@ip.place, or phone: {{{{phoneNumber}}}}';
+                 email: support@ip.place, or phone: '+ $scope.phoneNumber + '</p>';
+            obj.message = $compile(template)($scope);
         }
         if(question == 'approveText' && value === true) {
             obj.title = 'Patent Specification';
-            obj.message = 'If you confirm that you do not approve the text of the Patent Specification, The Patent Place can offer help with your application offline\
+            var template = '<p>If you confirm that you do not approve the text of the Patent Specification, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
-                 email: support@ip.place, or phone: {{{{phoneNumber}}}}';            
-        }      
+                 email: support@ip.place, or phone: '+ $scope.phoneNumber + '</p>';     
+            obj.message = $compile(template)($scope);      
+        }
+
         inhibitGrantConfirm(obj);  
     }
 
@@ -182,7 +186,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                                 <i class="fas fa-exclamation-circle fa-4x txt-phase-red"></i>\
                             </div>\
                             <p class="font-h3 font-weight-medium">'+message.title+'</p>\
-                            <p class="font-body w-100 text-center m-b-sm m-t-xs">'+ message.message+'</p>\
+                            <p class="font-body w-100 text-center m-b-sm m-t-xs">'+ message.message[0].innerHTML+'</p>\
                             <div class="d-flex">\
                                 <button class="btn btn--lg btn--red pill-radius m-r-md" data-ng-click="$ctrl.dismissModal()">Cancel</button>\
                                 <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.confirm()">Confirm</button>\
