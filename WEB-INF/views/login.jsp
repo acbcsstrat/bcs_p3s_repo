@@ -75,7 +75,7 @@
                         <div class="col-md-12 text-center d-flex justify-content-between m-t-sm">
                            <div class="d-flex">                     
                               <p class="font-body m-r-xs">Don't have an account?</p>
-                              <a href="/p3sweb/register" class="inline-link font-weight-medium font-weight-medium ">Register Now</a>
+                              <a href="/p3sweb/register" class="inline-link font-weight-bold font-weight-medium txt-phase-green">Register Now</a>
                            </div>                           
                            <a href="/p3sweb/forgot-password" class="btn-no-bg font-weight-medium btn-underlined">Forgot Password?</a>
                         </div>

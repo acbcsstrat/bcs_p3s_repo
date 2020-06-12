@@ -57,7 +57,7 @@ function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, lo
         CoreService.checkCases()
         .then(
         	function(response){
-        		if(!response) {
+        		if(response) {
         			welcomeMessageModal()
         		}
         	}

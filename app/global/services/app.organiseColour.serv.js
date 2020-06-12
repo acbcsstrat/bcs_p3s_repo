@@ -17,7 +17,7 @@ function OrganiseColourService($http, $q) {
         if(item === 'text') {
             switch(colour) {
                 case 'Green':
-                    color =  'txt-phase-green'
+                    color =  'txt-phase-green-phase'
                 break;
                 case 'Amber':
                     color =  'txt-phase-amber'
@@ -37,7 +37,7 @@ function OrganiseColourService($http, $q) {
         if(item === 'bg') {
             switch(colour) {
                 case 'Green':
-                    color =  'bg-phase-green'
+                    color =  'bg-phase-green-phase'
                 break;
                 case 'Amber':
                     color =  'bg-phase-amber'

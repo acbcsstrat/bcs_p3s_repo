@@ -19928,7 +19928,7 @@ uib-progress.progressblue {
 }
 
 .success .steps .steps-container {
-  background: #62AB5D
+  background: #18d383
 }
 
 .failed .steps .steps-container {
@@ -19936,7 +19936,7 @@ uib-progress.progressblue {
 }
 
 .success .steps .steps-container li .step .step-image span {
-  background: #62AB5D
+  background: #18d383
 }
 
 .failed .steps .steps-container li .step .step-image span {
@@ -19996,7 +19996,7 @@ uib-progress.progressblue {
 
 .success .steps .steps-container li.complete .step .step-image span,
 .success .steps .steps-container li.active .step .step-image span {
-  background-color: #62AB5D
+  background-color: #18d383
 }
 
 .failed .steps .steps-container li.complete .step .step-image span,
@@ -20090,7 +20090,7 @@ uib-progress.progressblue {
 }
 
 .bg-phase-green {
-  background: #62AB5D
+  background: #18d383
 }
 
 .bg-phase-amber {
@@ -20130,7 +20130,7 @@ uib-progress.progressblue {
 }
 
 .txt-phase-green {
-  color: #62AB5D !important
+  color: #18d383 !important
 }
 
 .txt-phase-amber {
@@ -20150,7 +20150,7 @@ uib-progress.progressblue {
 }
 
 .border-phase-green {
-  border-left: 3px solid #62AB5D
+  border-left: 3px solid #18d383
 }
 
 .border-phase-amber {
@@ -21272,7 +21272,7 @@ md-content a.nav-link {
 .btn-underlined-selector .btn.cartbtn.add::after,
 .btn-underlined-selector .btn.cartbtn.add::after,
 .btn-underlined-selector a:not([href]):not([tabindex]):not([data-ng-attr-id]).cartbtn.add::after {
-  color: #62AB5D
+  color: #18d383
 }
 
 .btn-underlined-selector .btn.cartbtn.remove::after,
@@ -21368,7 +21368,7 @@ a:not([href]):not([tabindex]):not([data-ng-attr-id]).btn-help {
   height: 40px;
   width: 40px;
   border-radius: 50%;
-  background: #62AB5D;
+  background: #18d383;
   color: #fff;
   -webkit-box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
@@ -21386,7 +21386,7 @@ a:not([href]):not([tabindex]):not([data-ng-attr-id]).btn--plain {
 
 .btn.btn--green,
 a:not([href]):not([tabindex]):not([data-ng-attr-id]).btn--green {
-  background: #62AB5D;
+  background: #18d383;
   color: #fff
 }
 
@@ -21464,12 +21464,12 @@ a:not([href]):not([tabindex]):not([data-ng-attr-id]).btn-underlined:focus {
 }
 
 .btn--bordered.green {
-  border: 2px solid #62AB5D;
-  color: #62AB5D
+  border: 2px solid #18d383;
+  color: #18d383
 }
 
 .btn--bordered.green:not([disabled]):hover {
-  background: #62AB5D;
+  background: #18d383;
   color: #fff
 }
 
@@ -21569,7 +21569,7 @@ a:not([href]):not([tabindex]):not([data-ng-attr-id]).btn-underlined:focus {
 }
 
 .checkbox-round:checked {
-  background-color: #62AB5D
+  background-color: #18d383
 }
 
 .checkbox-square {
@@ -21588,7 +21588,7 @@ a:not([href]):not([tabindex]):not([data-ng-attr-id]).btn-underlined:focus {
 }
 
 .checkbox-square:checked {
-  background-color: #62AB5D
+  background-color: #18d383
 }
 
 .form-section.current {
@@ -21604,7 +21604,7 @@ a:not([href]):not([tabindex]):not([data-ng-attr-id]).btn-underlined:focus {
 }
 
 .progress-green .progress-bar {
-  background: #62AB5D
+  background: #18d383
 }
 
 .view-nav-secondary .view-nav__item.active {

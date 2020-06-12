@@ -43,7 +43,7 @@
         }
         &.btn--green, &.btn--red, .btn--lg {
             padding: 0;
-            color: $black;
+            color: $green;
             background: none;
             text-transform: capitalize; 
             -webkit-box-shadow: 0 0 0 0;
@@ -215,8 +215,8 @@
     box-sizing: content-box;
     &.icon-stretch--icon {
         background: white;
-        min-width: 2.25rem;
-        width: 2.25rem;
+        min-width: 2.2rem;
+        width: 2.2rem;
         height: 3.4rem;
         color: $grey-dark;
         &.black {
@@ -240,7 +240,7 @@
             background: $green;
             color: $white;
             .icon {
-                margin-right: 3px;
+                margin-right: 2px;
             }
             &:not([disabled]):hover {
                 width: 11rem;

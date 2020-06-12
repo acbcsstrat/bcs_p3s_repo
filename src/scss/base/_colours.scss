@@ -7,7 +7,7 @@ $border-grey: $grey-dark;
 .bg-light-grey2 { background: $grey-lighter; } 
 
 .bg-white { background: $white; } 
-.bg-phase-green { background: $green; } 
+
 .bg-phase-amber { background: $amber; } 
 .bg-phase-red { background: $red; } 
 .bg-phase-blue { background: $blue; } 
@@ -18,7 +18,7 @@ $border-grey: $grey-dark;
 .txt-grey { color: $grey-dark; } 
 .txt-grey-light { color: $grey-lighter; }
 .txt-white { color: $white; } 
-.txt-phase-green { color: $green!important; } 
+
 .txt-phase-amber { color: $amber; } 
 .txt-phase-red { color: $red; } 
 .txt-phase-blue { color: $blue; } 
@@ -29,3 +29,11 @@ $border-grey: $grey-dark;
 .border-phase-red { border-left: 3px solid $red; } 
 .border-phase-blue { border-left: 3px solid $blue; } 
 .border-phase-black { border-left: 3px solid $black; } 
+
+
+
+.bg-phase-green { background: $green; } 
+.bg-phase-green-phase { background: $green-phase; } 
+
+.txt-phase-green { color: $green!important; } 
+.txt-phase-green-phase {color: $green-phase!important;}
