@@ -11,7 +11,7 @@
 					</p>
 					<p class="font-weight-bold font-body m-b-xs lh-default">European Action: <span class="font-weight-normal lh-default text-capitalize" data-ng-bind="transaction.serviceType"></span></p>
 					<p class="font-weight-bold font-body m-b-xs lh-default">App No: <span class="font-weight-normal lh-default" data-ng-bind="transaction.patentUI.patentApplicationNumber || transaction.patentApplicationNumber"></span></p>
-					<p class="font-weight-bold font-body lh-default m-r-md">Transaction item status: {{}}
+					<p class="font-weight-bold font-body lh-default m-r-md">Transaction item status:
 						<span class="font-weight-normal font-body lh-default" data-ng-bind="transaction.transItemStatus"></span>
 						<button class="btn btn-no-bg">						
 							<i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg" data-ng-if="$ctrl.transactionItem.hasFailed"></i>

@@ -72,7 +72,7 @@ export default function TransactionItemController($scope, $state, $timeout, $sta
             vm.transactionItem = response.find(function(transaction){
                 return transaction.p3s_TransRef == $stateParams.transId;
             })
-            console.log('trans item item : ', vm.transactionItem)
+
 			vm.transactionItem.serviceUIs.map(function(item, index){
 				// item.transItemStatus = transItemStatus(isValidation, transactionItem.latestTransStatus, vm.transactionItem.hasFailed);
 

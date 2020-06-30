@@ -23,8 +23,6 @@ function SidenavService(){
       icon: 'far fa-money-check-alt'
       
 	})
-     
-     	// console.log(sections)
 
  	var self;
 

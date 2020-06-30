@@ -3,9 +3,9 @@ import CasesRestService from '../../features/portfolio/services/portfolio.cases.
 
 export default angular.module('ppApp.core', [CoreService, CasesRestService]).controller('coreCtrl', coreCtrl).name
 
-coreCtrl.$inject = ['$uibModal', '$scope', '$timeout', '$http', '$cookies', 'CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive', '$location'];
+coreCtrl.$inject = ['$uibModal', '$scope', '$timeout', '$http', '$cookies', 'CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive', '$location', '$rootScope'];
 
-function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive, $location) {
+function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive, $location, $rootScope) {
 
 	var vm = this;
 
@@ -45,7 +45,6 @@ function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, lo
       			window.location=ppdomain+'login';
       		},
           	function(errResponse) {
-          		console.log('howdy ney')
             	console.error('Error with idle timeout. Error: ', errResponse);
           	}    
 		)    	
@@ -53,15 +52,11 @@ function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, lo
 	});
 
     function init() {
-
-        CoreService.checkCases()
-        .then(
-        	function(response){
-        		if(!response) {
-        			welcomeMessageModal()
-        		}
-        	}
-        )
+    	$timeout(function(){
+	        if(!$scope.firstTime) {
+	            welcomeMessageModal()
+	        }
+    	}, 300)
 
     }
 

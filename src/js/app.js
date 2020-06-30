@@ -32,17 +32,37 @@ import '@fortawesome/fontawesome-pro/js/brands';
 
 angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', 'oc.lazyLoad', uirouter, ProfileService, PpnumberService, ngCart, coreCtrl, dashboard, sidenav, transactionlink, validationrules, selectavatar, dynamic, helppanel, mobileredirect]).config(config).run(startUpRun)
 
-startUpRun.$inject = ['Idle', '$rootScope', '$timeout', 'PpnumberService'];
+startUpRun.$inject = ['Idle', '$rootScope', '$timeout', 'PpnumberService', 'CoreService'];
 
-function startUpRun(Idle, $rootScope, $timeout, PpnumberService) {
+function startUpRun(Idle, $rootScope, $timeout, PpnumberService, CoreService) {
 
     Idle.watch();
 
-	PpnumberService.fetchNumber()
-	.then(
-		function(response){
-			$rootScope.ppDetails = response;
-		}
-	)
+
+
+
+    function init() {
+
+		PpnumberService.fetchNumber()
+		.then(
+			function(response){
+				$rootScope.ppDetails = response;
+			}
+		)
+
+        CoreService.checkCases()
+        .then(
+            function(response){
+
+            	if(response.length) {
+            		$rootScope.firstTime = true;
+            	}
+                
+            }
+        )
+
+    }
+
+    init();	
 
 };

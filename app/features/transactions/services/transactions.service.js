@@ -5,12 +5,9 @@ TransactionService.$inject = ['$http', '$q'];
 function TransactionService($http, $q) {
 
 	var REST_SERVICE_URI_CURRENT = ppdomain+'rest-current-transactions/';
-	// var REST_SERVICE_URI_HISTORY = ppdomain+'rest-historic-transactions/';
 
 	var factory = {
 		fetchCurrentTransactions:fetchCurrentTransactions,
-		// fetchTransactionHistory: fetchTransactionHistory,
-		// fetchAllTransactions: fetchAllTransactions
 		fetchAllTransactions: fetchAllTransactions,
 		actionProgress: actionProgress
 	};
@@ -40,9 +37,8 @@ function TransactionService($http, $q) {
 		$http.get(ppdomain+'rest-all-transactions/')
 		.then(
 			function(response){
-				// console.log('success response: ', response)
+
 				response.data.map(function(data){	
-					// console.log(data)
       	
                 	if(data.renewalV4UIs.length) {
 	                	data.renewalV4UIs.map(function(o){ 
