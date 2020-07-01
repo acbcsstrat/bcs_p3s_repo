@@ -1,3 +1,4 @@
+
 <div class="widget-panel widget-panel-sq">
 	<div class="widget-panel__body bg-white d-flex flex-column">
 		<div>		
@@ -20,4 +21,10 @@
 			</div>
 		</div>
 	</div>
+    <md-tooltip md-direction="right" md-z-index="999" class="font-body mdtooltio-sm" data-ng-init="tooltip1 = false" data-ng-if="!tooltip1" data-ng-hide="tooltip1" md-visible="displayHelp">
+        <button class="btn btn-no-bg mdtooltip-close" data-ng-click="tooltip1 = true">
+            <i class="fal fa-times fa-lg txt-white"></i>
+        </button>
+        <p class="font-body m-t-xs">The donut charts represent the total number European actions within each color phase</p>
+    </md-tooltip> 	   
 </div>

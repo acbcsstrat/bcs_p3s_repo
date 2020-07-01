@@ -4,6 +4,12 @@
             <div class="d-flex align-items-center justify-content-between py-3 px-4">
                 <div>
                     <h4 class="font-h4 font-weight-bold">Available European Actions</h4>
+                    <md-tooltip md-direction="top" md-z-index="999" class="font-body mdtooltio-sm" data-ng-init="tooltip1 = false" data-ng-if="!tooltip1" data-ng-hide="tooltip1" md-visible="displayHelp">
+                        <button class="btn btn-no-bg mdtooltip-close" data-ng-click="tooltip1 = true">
+                            <i class="fal fa-times fa-lg txt-white"></i>
+                        </button>
+                        <p class="font-body m-t-xs">This table will display all actions available for individual cases</p>
+                    </md-tooltip>    
                 </div>
                 <div class="d-flex align-items-center">                
                     <md-chips data-ng-model="$ctrl.chipOptions" readonly="true" md-removable="true" class="text-capitalize font-weight-medium cursor-pointer" md-on-remove="selectedChip($chip.prop, $chip.value, $chip.cat); getItems($chip.cat, availableActions)">
@@ -168,4 +174,5 @@
             </tbody>
         </table>
     </div><!-- response table end-->
+
 </div>

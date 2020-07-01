@@ -53,7 +53,7 @@ function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, lo
 
     function init() {
     	$timeout(function(){
-	        if(!$scope.firstTime) {
+	        if($scope.firstTime) {
 	            welcomeMessageModal()
 	        }
     	}, 300)

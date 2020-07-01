@@ -118,9 +118,9 @@ md-tooltip[md-direction="right"].md-tooltip:after {
 }
 
 @media (min-width: 960px) {
-  .md-tooltip {
-      height: auto;
-  }
+    .md-tooltip {
+        height: auto;
+    }
 
 }
 
@@ -159,4 +159,34 @@ md-tooltip.mdtooltip-md {
     height: auto;
     width: 40rem;
     white-space: normal;
+}
+
+md-tooltip.mdtooltio-sm {
+    width: 22rem;
+    white-space: normal;
+}
+
+md-tooltip[md-direction="top"].md-tooltip {
+
+    &:after {
+        position: absolute;
+        content: " ";
+        bottom: -20px;
+        left: 50%;
+        margin-left: -24px;
+        margin-top: -11px;
+        width: 0;
+        height: 0;
+        border-top: 10px solid #1b2032;
+        border-bottom: 11px solid transparent;
+        border-left: 11px solid transparent;
+        border-right: 11px solid transparent;
+    }
+
+}
+
+.mdtooltip-close {
+    position: absolute;
+    right: 5px;
+    top: 4px;
 }
