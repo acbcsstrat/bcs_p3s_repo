@@ -1,6 +1,6 @@
-DashboardController.$inject = ['$state',  '$timeout', '$scope', 'DashboardService', 'CasesRestService', '$rootScope'];
+DashboardController.$inject = ['$state',  '$timeout', '$scope', 'DashboardService', 'CasesRestService', '$rootScope', '$cookies'];
 
-export default function DashboardController($state, $timeout, $scope,  DashboardService, CasesRestService, $rootScope) {
+export default function DashboardController($state, $timeout, $scope,  DashboardService, CasesRestService, $rootScope, $cookies) {
 
     var vm = this;
 
@@ -15,17 +15,14 @@ export default function DashboardController($state, $timeout, $scope,  Dashboard
     })
     .then(
         function(response){
-            console.log(response)
+
             if(response.length) {
                 DashboardService.sortPatents(response);
                 $scope.formalityData = DashboardService.getPatents;
             }            
-
-
-
             
             if($state.current.name === 'dashboard') {
-                $state.go('dashboard.content', {patents: response}, {reload: false});          
+                $state.go('dashboard.content', {patents: response}, {reload: false});
             }
         }
     )

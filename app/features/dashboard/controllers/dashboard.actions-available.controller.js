@@ -1,6 +1,6 @@
-ActionsAvailableController.$inject = ['$scope', '$timeout']
+ActionsAvailableController.$inject = ['$scope', '$timeout', '$cookies']
 
-export default function ActionsAvailableController($scope, $timeout) {
+export default function ActionsAvailableController($scope, $timeout, $cookies) {
 
 	var vm = this;
 
@@ -27,10 +27,16 @@ export default function ActionsAvailableController($scope, $timeout) {
 	$scope.$parent.promise
 	.then(
 		function(response){
-            if($scope.firstTime) {
+            var dashboardLoaded = $cookies.get('dashboardLoaded');
+            if($scope.firstTime && dashboardLoaded == undefined) {
             	displayHelpTimeout = $timeout(function(){
             		$scope.displayHelp = true;
-            	}, 2000)
+            		$cookies.put('dashboardLoaded', 'hasloaded'); 
+            	}, 5000)
+
+            } else {
+            	$scope.displayHelp = false;
+            	$scope.tooltip1 = true;
             }
 
             if(response.length) {
@@ -109,7 +115,7 @@ export default function ActionsAvailableController($scope, $timeout) {
             }
 
 			$scope.$on('$destroy', function(){
-				$timeout.cancel(dispayHelpTimeout);
+				$timeout.cancel(displayHelpTimeout);
 			})
             
 		}

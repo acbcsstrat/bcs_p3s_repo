@@ -1,6 +1,6 @@
-RenewalsDonutController.$inject = ['$stateParams', '$scope', '$timeout'];
+RenewalsDonutController.$inject = ['$stateParams', '$scope', '$timeout', '$cookies'];
 
-export default function RenewalsDonutController($stateParams, $scope, $timeout) {
+export default function RenewalsDonutController($stateParams, $scope, $timeout, $cookies) {
 
 	var vm = this;
 	var renewalGraphTimeout, dispayHelpTimeout;
@@ -8,10 +8,14 @@ export default function RenewalsDonutController($stateParams, $scope, $timeout) 
 	$scope.$parent.promise
 	.then(
 		function(response){
-            if($scope.firstTime) {
+			var dashboardLoaded = $cookies.get('dashboardLoaded');
+            if($scope.firstTime && dashboardLoaded == undefined) {
             	dispayHelpTimeout = $timeout(function(){
             		$scope.displayHelp = true;
-            	}, 2000)
+            	}, 5000)
+            } else {
+            	$scope.displayHelp = false;
+            	$scope.tooltip1 = true;
             }
             if(response.length) {        	
 				renewalGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view

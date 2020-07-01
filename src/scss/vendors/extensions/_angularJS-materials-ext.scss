@@ -168,6 +168,22 @@ md-tooltip.mdtooltio-sm {
 
 md-tooltip[md-direction="top"].md-tooltip {
 
+  &.help-button:after {
+      position: absolute;
+      content: " ";
+      bottom: -20px;
+      left: 84%;
+      margin-left: -24px;
+      margin-top: -11px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid #1b2032;
+      border-bottom: 11px solid transparent;
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;   
+  }  
+
+
     &:after {
         position: absolute;
         content: " ";
@@ -182,6 +198,7 @@ md-tooltip[md-direction="top"].md-tooltip {
         border-left: 11px solid transparent;
         border-right: 11px solid transparent;
     }
+
 
 }
 
