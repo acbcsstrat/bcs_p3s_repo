@@ -11,9 +11,21 @@
     <div  class="animate-show container__scrollable-area">
         <div class="p-l-3 p-r-3 p-tb-sm br-tx-1">                            
             <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex">
-                    <h1 class="font-h1 lh-default m-r-lg">Transactions</h1>
-                </div>
+
+                <div uib-popover-template="'transactiontpl.html'" popover-trigger="'none'" popover-is-open="true"  popover-placement="right">
+                    <div class="d-flex">
+                        <h1 class="font-h1 lh-default m-r-lg">Transactions</h1>
+                    </div>
+                    <script type="text/ng-template" id="transactiontpl.html" class="left">
+                        <button class="btn btn-no-bg mdtooltip-close" data-ng-click="displayFirstHelp('portfolio', false)">
+                            <i class="fal fa-times fa-lg txt-black"></i>
+                        </button>
+                        <div>
+                            <p class="m-b-xs">The transaction table displays both current and historic transactions. </p>
+                            <p>Select one of the transactions and further information will be provided</p>
+                        </div>
+                    </script>   
+                </div>                
                 <div class="d-flex align-items-center">
                     <md-chips data-ng-model="$ctrl.chipOptions" readonly="true" md-removable="true" class="text-capitalize font-weight-medium cursor-pointer" md-on-remove="selectedChip($chip.prop, $chip.value, $chip.cat); getItems($chip.cat, transactions)">
                         <md-chip-template>      
