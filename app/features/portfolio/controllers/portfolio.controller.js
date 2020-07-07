@@ -78,14 +78,13 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
 
             if($scope.firstTime && portfolioLoaded == undefined) {
                 displayHelpTimeout = $timeout(function(){
-                    $scope.tooltip1 = false;
-                    $scope.displayHelp = true;
-                    // $scope.tooltip1 = true;
+                    $scope.displayCaseHelp = true;
+                    $scope.displayPortfolioHelp = true
                     $cookies.put('portfolioLoaded', 'hasloaded'); 
-                }, 3000)
+                }, 5000)
             } else {
-                $scope.displayHelp = false;
-                $scope.tooltip1 = true;
+                $scope.displayCaseHelp = false;
+                $scope.displayPortfolioHelp = false
             }
 
             if(!response.length) {
@@ -114,8 +113,12 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
             vm.propertyName = 'ep_ApplicationNumber';
             vm.reverse = false;
 
-            function displayFirstHelp(value) {
-                $scope.displayHelp = value;
+            function displayFirstHelp(help, value) {
+                if(help === 'portfolio') {
+                    $scope.displayPortfolioHelp = value;
+                } else {
+                    $scope.displayCaseHelp = value;
+                }
             }
 
             function rowSelect(event, patent){
@@ -182,8 +185,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
             } //showFilter function end
 
             function showAddPatent($event) {
-                $scope.displayHelp = false;
-                $scope.tooltip1 = true;
+
                 var panelPosition = $mdPanel.newPanelPosition()
                     .absolute()
                     .center();
