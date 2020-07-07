@@ -1,14 +1,30 @@
 import FetchHelpService from '../services/app.helpInfo.serv.js';
 
-openHelpPanel.$inject = ['$rootScope'];
+openHelpPanel.$inject = ['$rootScope', '$timeout', '$cookies'];
 
-function openHelpPanel($rootScope) { //1st opens panel
+function openHelpPanel($rootScope, $timeout, $cookies) { //1st opens panel
 
 	return {
 		restrict: 'E',
 		template: require('html-loader!./html/open-help-button.tpl.htm'),
 		link: function(scope, elem, attr) {
-			elem.bind('click', function(){				
+
+            scope.displayFirstHelp = displayFirstHelp;
+
+            function displayFirstHelp(value) {
+                scope.displayHelp = value;
+            }
+
+            $timeout(function(){
+                var dashboardLoaded = $cookies.get('dashboardLoaded');
+                if(scope.firstTime && dashboardLoaded == undefined) {
+                    scope.displayHelp = true;
+                }  else {
+                    scope.displayHelp = false;
+                    scope.tooltip1 = true;
+                }
+            }, 5000);     
+			elem.bind('click', function(what, you){	
 				scope.$broadcast('helpRequired', true)
 			})
 			

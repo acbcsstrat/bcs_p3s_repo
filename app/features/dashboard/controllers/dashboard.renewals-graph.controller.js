@@ -9,10 +9,11 @@ export default function RenewalsDonutController($stateParams, $scope, $timeout, 
 	.then(
 		function(response){
 			var dashboardLoaded = $cookies.get('dashboardLoaded');
+
             if($scope.firstTime && dashboardLoaded == undefined) {
-            	dispayHelpTimeout = $timeout(function(){
-            		$scope.displayHelp = true;
-            	}, 5000)
+	        	dispayHelpTimeout = $timeout(function(){
+	        		$scope.displayHelp = true;
+	        	}, 5000)
             } else {
             	$scope.displayHelp = false;
             	$scope.tooltip1 = true;
@@ -96,6 +97,12 @@ export default function RenewalsDonutController($stateParams, $scope, $timeout, 
 
 		  		}, 300);
             }
+
+            $scope.displayFirstHelp = displayFirstHelp;
+
+            function displayFirstHelp(value) {
+                $scope.displayHelp = value;
+            }            
 
 			$scope.$on('$destroy', function(){
 				$timeout.cancel(renewalGraphTimeout, dispayHelpTimeout);

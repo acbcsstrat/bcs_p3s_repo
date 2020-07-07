@@ -9,7 +9,6 @@ export default function GrantsDonutController($stateParams, $scope, $timeout) {
 	.then(
 		function(response){
 
-			$scope.$parent.dashboardLoaded = true;
 			grantGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view
 	      		vm.donutOptions = {
 		            chart: {

@@ -61,6 +61,12 @@ export default function ActionsAvailableController($scope, $timeout, $cookies) {
 				vm.chipOptions = [];
 				vm.showFilter = showFilter;
 
+	            $scope.displayFirstHelp = displayFirstHelp;
+
+	            function displayFirstHelp(value) {
+	                $scope.displayHelp = value;
+	            }				
+
 			    function showFilter(mdMenu, $event) {
 			 
 			        mdMenu.open($event)

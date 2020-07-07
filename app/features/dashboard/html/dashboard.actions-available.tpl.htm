@@ -2,14 +2,16 @@
     <div class="row">
         <div class="col-md-12">
             <div class="d-flex align-items-center justify-content-between py-3 px-4">
-                <div>
+                <div uib-popover-template="'availableactionstpl.html'" popover-trigger="'none'" popover-is-open="displayHelp"  popover-placement="right">
                     <h4 class="font-h4 font-weight-bold">Available European Actions</h4>
-                    <md-tooltip md-direction="top" md-z-index="999" class="font-body mdtooltio-sm" data-ng-init="tooltip1 = false" data-ng-if="!tooltip1" data-ng-hide="tooltip1" md-visible="displayHelp">
-                        <button class="btn btn-no-bg mdtooltip-close" data-ng-click="tooltip1 = true">
-                            <i class="fal fa-times fa-lg txt-white"></i>
+                    <script type="text/ng-template" id="availableactionstpl.html" class="left">
+                        <button class="btn btn-no-bg mdtooltip-close" data-ng-click="displayFirstHelp(false)">
+                            <i class="fal fa-times fa-lg txt-black"></i>
                         </button>
-                        <p class="font-body m-t-xs">This table will display all actions available for individual cases</p>
-                    </md-tooltip>    
+                        <div>
+                            <p>The donut charts represent the total number European actions within each color phase</p>
+                        </div>
+                    </script>   
                 </div>
                 <div class="d-flex align-items-center">                
                     <md-chips data-ng-model="$ctrl.chipOptions" readonly="true" md-removable="true" class="text-capitalize font-weight-medium cursor-pointer" md-on-remove="selectedChip($chip.prop, $chip.value, $chip.cat); getItems($chip.cat, availableActions)">

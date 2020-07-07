@@ -1,10 +1,12 @@
-PortfolioController.$inject = ['$scope', '$state', '$stateParams','$rootScope', '$timeout', '$uibModal', '$mdPanel', '$mdDialog', '$mdMenu', 'SearchPatentService',  'CasesRestService'];
+PortfolioController.$inject = ['$scope', '$state', '$stateParams','$rootScope', '$timeout', '$uibModal', '$mdPanel', '$mdDialog', '$mdMenu', 'SearchPatentService',  'CasesRestService', '$cookies'];
 
-export default function PortfolioController($scope, $state, $stateParams, $rootScope, $timeout, $uibModal, $mdPanel, $mdDialog, $mdMenu, SearchPatentService, CasesRestService) {
+export default function PortfolioController($scope, $state, $stateParams, $rootScope, $timeout, $uibModal, $mdPanel, $mdDialog, $mdMenu, SearchPatentService, CasesRestService, $cookies) {
 
     var vm = this;
     $scope.promise = CasesRestService.fetchAllCases();
     $scope.filter = {};
+    $scope.tooltip1 = true;
+    var displayHelpTimeout;
 
     function select(i) {
         vm.selected = i;
@@ -68,8 +70,23 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
     })
     .then(
         function(response){
-
+            vm.portfolioLoaded = true;
             $scope.phoneNumber = $scope.ppDetails.partnerPhone;
+            var portfolioLoaded = $cookies.get('portfolioLoaded');
+
+
+
+            if($scope.firstTime && portfolioLoaded == undefined) {
+                displayHelpTimeout = $timeout(function(){
+                    $scope.tooltip1 = false;
+                    $scope.displayHelp = true;
+                    // $scope.tooltip1 = true;
+                    $cookies.put('portfolioLoaded', 'hasloaded'); 
+                }, 3000)
+            } else {
+                $scope.displayHelp = false;
+                $scope.tooltip1 = true;
+            }
 
             if(!response.length) {
                 vm.noPatents = true;
@@ -88,14 +105,18 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
             vm.chipOptions = [];
             vm.showFilter = showFilter;
             vm.showAddPatent = showAddPatent;
-            vm.portfolioLoaded = true;
+            
             vm.sortBy = sortBy;
             $scope.selectedChip = selectedChip;
             $scope.portfolioData = response;
-            $scope.portfolioLoaded = false;
+            $scope.displayFirstHelp = displayFirstHelp;
 
             vm.propertyName = 'ep_ApplicationNumber';
             vm.reverse = false;
+
+            function displayFirstHelp(value) {
+                $scope.displayHelp = value;
+            }
 
             function rowSelect(event, patent){
 
@@ -161,7 +182,8 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
             } //showFilter function end
 
             function showAddPatent($event) {
-
+                $scope.displayHelp = false;
+                $scope.tooltip1 = true;
                 var panelPosition = $mdPanel.newPanelPosition()
                     .absolute()
                     .center();

@@ -23,6 +23,7 @@ export default function DashboardController($state, $timeout, $scope,  Dashboard
             
             if($state.current.name === 'dashboard') {
                 $state.go('dashboard.content', {patents: response}, {reload: false});
+                $scope.dashboardLoaded = true;
             }
         }
     )

@@ -14,6 +14,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex">
                 <h1 class="font-h1 lh-default m-r-lg">Portfolio</h1>
+
             </div>
             <div class="d-flex align-items-center">
                 <md-chips data-ng-model="$ctrl.chipOptions" readonly="true" md-removable="true" class="text-capitalize font-weight-medium cursor-pointer" md-on-remove="selectedChip($chip.prop, $chip.value, $chip.cat); getItems($chip.cat, portfolioData)">
@@ -67,10 +68,19 @@
                     </md-menu>
                 </div>
                 <div>
-                    <md-button class="icon-stretch icon-stretch--icon green pill-radius" data-ng-click="$ctrl.showAddPatent($event)">
-                        <span class="icon-text">Add Patent</span>
+ 
+                    <md-button class="icon-stretch icon-stretch--icon green pill-radius left" data-ng-click="$ctrl.showAddPatent($event)" uib-popover-template="'addcasestemplate.html'" popover-trigger="'none'" popover-is-open="displayHelp"  popover-placement="left" type="button">
+                        <span class="icon-text">Add Case</span>
                         <i class="fal fa-plus fa-2x txt-white cursor-pointer icon"></i>
                     </md-button>
+                    <script type="text/ng-template" id="addcasestemplate.html">
+                        <button class="btn btn-no-bg mdtooltip-close" data-ng-click="displayFirstHelp(false)">
+                            <i class="fal fa-times fa-lg txt-black"></i>
+                        </button>
+                        <div>
+                            <p>Start adding cases to your portfolio here</p>
+                        </div>
+                    </script>
                 </div>
             </div>
         </div>

@@ -87,6 +87,15 @@
         -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
         box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);  
     } 
+    &.btn-help-outer {
+        position: relative;
+        height: 40px;
+        width: 40px;
+    }
+    &.btn-help-outer {
+        height: 40px;
+        width: 40px;
+    }    
     &.btn-help {
         height: 40px;
         width: 40px;
