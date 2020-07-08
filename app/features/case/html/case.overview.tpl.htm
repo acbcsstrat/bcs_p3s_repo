@@ -114,18 +114,22 @@
 										          	<md-button ng-click="ctrl.toggleNotifications()" class="font-body">
 										            	Close menu
 										          	</md-button>
-										        </md-menu-item>	                                    	
+										        </md-menu-item>
 		                                  	</md-menu-content>
 	                                	</md-menu>
 							        </div>
 							        <div class="col-md-12">
-							        	<div class="border-grey-xs--btm m-t-sm m-b-sm"></div>  	
+							        	<div class="border-grey-xs--btm m-t-sm m-b-sm"></div>
 							        </div>
-							        
-						        </div>						
+						        </div>
 								<div class="row" data-ng-show="$ctrl.actionsAvailable">
 									<div class="col-md-6">
-										<p class="font-h4 font-weight-bold m-b-xs">Available actions</p>
+										<p class="font-h4 font-weight-bold m-b-xs">Available actions 
+											<i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg"></i>
+								            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="999">
+												Either transaction links or 'call to action' buttons for tasks required to be taken to process available European formalities are displayed here
+								            </md-tooltip>
+							        	</p>
 									</div>
 								</div>
 								<div class="row" data-ng-show="$ctrl.actionsAvailable" data-ng-init="$ctrl.checkAvailableAction($ctrl.patent.p3sServicesWithFees)">

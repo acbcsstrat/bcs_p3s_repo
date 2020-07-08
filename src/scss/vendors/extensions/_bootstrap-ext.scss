@@ -216,16 +216,17 @@ uib-progress.progressblue { height: 3rem; }
 .popover>.arrow:after {
     content: "";
     border-width: 10px;
+
 }
 
-.popover>.arrow, .popover>.arrow:after {
-    position: absolute;
-    display: block;
-    width: 0;
-    height: 0;
-    border-color: transparent;
-    border-style: solid;
-}
+// .popover>.arrow, .popover>.arrow:after {
+//     position: absolute;
+//     display: block;
+//     width: 0;
+//     height: 0;
+//     border-color: transparent;
+//     border-style: solid;
+// }
 
 .popover.left>.arrow {
     top: 50%;
