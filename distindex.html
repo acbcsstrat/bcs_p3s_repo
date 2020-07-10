@@ -29,8 +29,14 @@
 	</head>
 
 	<body detect-device mobile-redirect data-ng-app="ppApp">
-		
-		<div data-ng-if="!smallDevice">
+
+		<div data-ng-if="!smallDevice && !authorised" class="h-100 d-flex flex-column">
+			<ui-view class="flex-grow-1">
+
+			</ui-view>
+		</div>
+
+		<div data-ng-if="!smallDevice && authorised">
 				
 			<sidenav></sidenav>
 

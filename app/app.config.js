@@ -13,6 +13,24 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         .otherwise("/dashboard")
 
     $stateProvider
+    .state('login', {
+        url: '/login',
+        template: require('html-loader!./features/login/html/login.tpl.htm'),
+        controller: 'LoginController',
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./features/login/index.js")
+            .then(function(mod) {
+                $ocLazyLoad.inject(mod.default)
+            })
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        }
+    })
     .state('profile', {
         url: '/profile',
         template: require('html-loader!./features/profile/html/profile.tpl.htm'),
@@ -29,7 +47,11 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
-        },             
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
+        }        
     })    
     .state('dashboard', {
         url: '/dashboard',
@@ -48,7 +70,11 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
-        }        
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
+        }             
     })    
     .state('dashboard.content', {
         params: {
@@ -108,7 +134,11 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
-        }
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
+        }        
     })    
     .state('portfolio.modal', {
         abstract: true,
@@ -206,7 +236,11 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             caseId: null,
             prepareGrant: null,
             form1200generate: null
-        }
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
+        }           
     })
     .state('transactions', {
         url: '/transactions',
@@ -224,7 +258,11 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
-        }        
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
+        }               
     })
     .state('transactions.modal', {
         abstract: true,
@@ -232,7 +270,11 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             "modal": {
                 template: require("./features/transactions/html/modal.html")
             }
-        }
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
+        }           
     })        
     .state('transactions.modal.transaction-item', {
         url: '/:transId',
@@ -263,7 +305,11 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         },
         params: {
             transId: null
-        }
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
+        }           
     })
     .state('basket', {
         url: '/basket',
@@ -281,6 +327,10 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
         }
     })
     .state('bank-transfer-preparation', {
@@ -303,7 +353,11 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         params: {
             orderObj: null,
             details: null
-        }
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
+        }        
     })
     .state('bank-transfer-success', {
         url: '/bank-transfer-success',
@@ -325,7 +379,11 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         params: {
             orderObj: null,
             details: null
-        }
+        },
+        data: {
+            authorisation: true,
+            redirectTo: 'login'
+        }        
     })    
 
     $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';

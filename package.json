@@ -97,6 +97,7 @@
     "font-awesome": "^4.7.0",
     "gifsicle": "^3.0.4",
     "jquery": "^3.5.1",
+    "lodash": "^4.17.17",
     "moment": "^2.25.3",
     "moment-timezone": "^0.5.28",
     "ng-croppie": "^1.0.0",

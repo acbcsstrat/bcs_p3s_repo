@@ -1,16 +1,16 @@
 @import '../../helpers/_variables.scss';
 
 .nav-pills .uib-tab { /*bootstrap*/
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  align-items: center;
-  -moz-align-items: center;
-  -webkit-align-items: center;
-  justify-content: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    justify-content: center;
 } 
 
 .form-control, .btn { 
@@ -18,45 +18,46 @@
 }
 
 .form-control {
-  line-height: 1.8rem;
-  border-radius: 2rem;
-  padding: .75rem 1.125rem;
-  &[readonly] {
-    background-color: $grey-lighter;
-    border: 0;
+    line-height: 1.5;
+    border-radius: 2rem;
+    padding: .75rem 1.125rem;
+    height: auto;
+    &[readonly] {
+        background-color: $grey-lighter;
+        border: 0;
 
-  }
-  &:focus {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0)
-  }
+    }
+    &:focus {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0)
+    }
 }
 
 select.form-control {
-  &:not([size]):not([multiple]) {
-    height: inherit;
-  }
+    &:not([size]):not([multiple]) {
+        height: inherit;
+    }
 }
 
 .btn {
-  line-height: $line-none;
+    line-height: $line-none;
 }
 
 .nav-link {
-  padding: 0;
+    padding: 0;
 }
 
 .btn {
-  padding-left: 0;
-  padding-bottom: 0;
-  padding-right: 0;
-  padding-top: 0;
-  border-radius: 0;
+    padding-left: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+    padding-top: 0;
+    border-radius: 0;
 }
 
 .table tr:first-child {
-  > td {
-    border-top: 0;
-  }
+    > td {
+        border-top: 0;
+    }
 } 
 
 uib-progress.progressblue { height: 3rem; }
@@ -64,11 +65,11 @@ uib-progress.progressblue { height: 3rem; }
 .table thead th { border-bottom: 1px solid #dee2e6!important; }
 
 .tab-content {
-  width: 100%;
+    width: 100%;
 }
 
 .nav-tabs {
-  border: none!important;
+    border: none!important;
 }
 
 .modal-open {
@@ -76,7 +77,7 @@ uib-progress.progressblue { height: 3rem; }
 }
 
 .navbar {
-  padding: 0!important;
+    padding: 0!important;
 }
 
 
@@ -86,9 +87,10 @@ uib-progress.progressblue { height: 3rem; }
 
 .justify-content-between ul.nav-pills, 
 .justify-content-between .notification-pills { 
-  -webkit-justify-content: space-between;
-  -moz-justify-content: space-between;
-  justify-content: space-between; /*for uib elements*/ }
+    -webkit-justify-content: space-between;
+    -moz-justify-content: space-between;
+    justify-content: space-between; /*for uib elements*/ 
+}
 
 .btn-block+.btn-block { margin-top: 0px; }
 
@@ -116,46 +118,46 @@ uib-progress.progressblue { height: 3rem; }
 }
 
 .modal-content {
-  border: none!important;
-  width: auto;
+    border: none!important;
+    width: auto;
 }
 
 
 .modal.in .modal-dialog {
-  -webkit-transform: translate(0, 0);
-  -o-transform: translate(0, 0);
-  transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
 }
 
 .wide-modal {
-  .modal-dialog {
-      max-width: 80rem;
-  }
+    .modal-dialog {
+        max-width: 80rem;
+    }
 }
 
 .modal-dialog {
-  height: 100%;
-  width: auto;
-  max-width: 65rem;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -moz-justify-content: space-between;    
-  justify-content: center;
-  min-height: 100%;  
+    height: 100%;
+    width: auto;
+    max-width: 65rem;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -moz-justify-content: space-between;    
+    justify-content: center;
+    min-height: 100%;  
 }
 
 .modal-content {
-  width: 100%;
+    width: 100%;
 }
 
 .offset-xl-5 {
-  margin-left: 41.666667%;
+    margin-left: 41.666667%;
 }
 
 .form-check-input, .form-check-inline .form-check-input {
@@ -163,8 +165,8 @@ uib-progress.progressblue { height: 3rem; }
 }
 
 .form-check-label {
-  margin-left: 1rem;
-  margin-top: 1px;
+    margin-left: 1rem;
+    margin-top: 1px;
 }
 
 .popover {
