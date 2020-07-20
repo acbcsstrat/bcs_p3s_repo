@@ -19,7 +19,8 @@
 				<tbody>
 					<tr class="py-2">
 						<td class="font-body" data-ng-bind="$ctrl.order.ep_ApplicationNumber"></td>
-						<td class="font-body text-capitalize" data-ng-bind="$ctrl.order.euroAction.serviceType"></td>
+						<td class="font-body text-capitalize" data-ng-if="$ctrl.order.euroAction.serviceType !== 'epct'" data-ng-bind="$ctrl.order.euroAction.serviceType"></td>
+						<td class="font-body text-capitalize" data-ng-if="$ctrl.order.euroAction.serviceType == 'epct'">Euro-PCT</td>
 						<td class="font-body text-uppercase">$ <span data-ng-bind="$ctrl.order.price | number: 2"></span></td>
 					</tr>
 				</tbody>
