@@ -54,8 +54,8 @@ function startUpRun(Idle, $rootScope, $timeout, PpnumberService, CoreService) {
         .then(
             function(response){
 
-            	if(response) {
-            		$rootScope.firstTime = true;
+            	if(response.length) {
+            		$rootScope.firstTime = false;
             	}
                 
             }
