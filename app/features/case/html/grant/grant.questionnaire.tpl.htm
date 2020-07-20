@@ -55,13 +55,12 @@
                 <p class="font-body txt-phase-red">Please ensure that the file you have uploaded is saved in a .pdf format.</p>        
             </div>
 
-            <div class="col-md-6 m-b-xs m-t-sm">
-                <p data-ng-init="question3.displayHelp = false" data-ng-click="question3.displayHelp = !question3.displayHelp" class="btn btn-underlined font-weight-medium">Are you making sure the file is Annex F compliant? 
-                    <i class="fas fa-chevron-down fa-sm" data-ng-show="question3.displayHelp"></i>
-                    <i class="fas fa-chevron-right fa-sm" data-ng-show="!question3.displayHelp"></i>
+            <div class="col-md-6 m-b-xs m-t-sm d-flex">
+                <p data-ng-init="question3.displayHelp = false"  class="btn btn-underlined font-weight-medium">Are you making sure the file is Annex F compliant? 
                 </p>
+                <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': question3.displayHelp}" data-ng-click="question3.displayHelp = !question3.displayHelp" ><i class="fas fa-chevron-right fa-sm" ></i></button>
             </div>
-            <div class="col-md-12 col-xl-12">    
+            <div class="col-md-12 col-xl-12" data-ng-show="question3.displayHelp">    
                 <div class="expandcollapse-item">
                     <div class="slideDown m-b-sm" data-ng-hide="question3.displayHelp === false">
                         <p class="font-body m-b-sm">In order for your grant to be processed, the EPO require that the PDF file you upload is Annex F compliant. Please see the checklist below to ensure that the document meets the criteria.</p>
@@ -93,11 +92,10 @@
                 <p class="font-body txt-phase-red" data-ng-show="grantForm.clientRef.$error.required && grantForm.clientRef.$dirty">Please fill out this field</p>
                 <p class="txt-phase-red m-t-xs" data-ng-show="grantForm.clientRef.$error.maxlength && grantForm.clientRef.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
                 <div class="row m-b-xs m-t-sm">
-                    <div class="col-md-8 col-lg-7 col-xl-6">
+                    <div class="col-md-8 col-lg-7 col-xl-6  d-flex">
                         <p data-ng-click="question4.displayHelp = !question4.displayHelp" class="btn btn-underlined font-weight-medium">Applicant/representative reference? 
-                            <i class="fas fa-chevron-down fa-sm" data-ng-show="question4.displayHelp"></i>
-                            <i class="fas fa-chevron-right fa-sm" data-ng-show="!question4.displayHelp"></i>
                         </p>
+                        <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': question4.displayHelp}" data-ng-click="question4.displayHelp = !question4.displayHelp" ><i class="fas fa-chevron-right fa-sm" ></i></button>
                     </div>
                 </div>
                 <div class="expandcollapse-item" data-ng-init="question4.displayHelp = false">
