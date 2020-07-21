@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-import TransactionsService from './services/transactions.service.js';
+import TransactionsService from './services/transactions.serv.js';
 
 import TransactionsController from './controllers/transactions.controller';
 import TransactionItemController from './controllers/transaction-item.controller';

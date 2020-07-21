@@ -10,7 +10,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
 
     $urlRouterProvider 
         .when('', '/dashboard')
-        .otherwise("/dashboard")
+        .otherwise("/login")
 
     $stateProvider
     .state('login', {
@@ -31,6 +31,36 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             });
         }
     })
+    .state('register', {
+        url: '/register',
+        template: require('html-loader!./features/register/html/register.tpl.htm'),
+        controller: 'RegisterController',
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./features/register/index.js")
+            .then(function(mod) {
+                $ocLazyLoad.inject(mod.default)
+            })
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        }
+    })
+    .state('register.user-details', {
+        url: '/user-details',
+        template: require('html-loader!./features/register/html/register.user-details.tpl.htm'),
+    })
+    .state('register.business-details', {
+        url: '/business-details',
+        template: require('html-loader!./features/register/html/register.business-details.tpl.htm'),
+    })
+    .state('register.billing-details', {
+        url: '/billing-details',
+        template: require('html-loader!./features/register/html/register.billing-details.tpl.htm'),
+    })        
     .state('profile', {
         url: '/profile',
         template: require('html-loader!./features/profile/html/profile.tpl.htm'),
@@ -384,7 +414,8 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             authorisation: true,
             redirectTo: 'login'
         }        
-    })    
+    })
+
 
     $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
 

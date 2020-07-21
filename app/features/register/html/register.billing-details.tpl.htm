@@ -1,0 +1,63 @@
+<h2 class="m-b-sm">Billing Details</h2>
+<div>
+    <div id="sameAsBusiness" class="row m-b-md">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <div class="row m-t-xs">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <div class="onoffswitch d-flex align-items-center justify-content-between">
+                        <span class="font-body font-weight-medium m-r-sm">Billing same as business address?</span>
+                        <label class="switch font-body">
+                            <input type="checkbox" name="same_as_business" id="same_as_business">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="pasteBusiness">
+        <div class="form-group row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <input type="text" name="billingStreet" class="form-control pill-radius font-body" id="billing_street" placeholder="Billing Street" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <input type="text" name="billingCity" class="form-control pill-radius font-body" id="billing_city" placeholder="Billing City" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <input type="text" name="billingState" class="form-control pill-radius font-body" id="billing_state" placeholder="Billing State" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <input type="text" name="billingZip" class="form-control pill-radius font-body" id="billing_zip" placeholder="Billing Zip"  data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+            </div>
+        </div>
+    </div>
+
+    <div class="row m-b-sm ">
+        <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-center">
+        <div
+            vc-recaptcha
+            theme="'light'"
+            key="$ctrl.recap.publicKey"
+        ></div>
+        </div>
+    </div>
+    <div class="row m-b-sm">
+        <div class="col-md-12 col-xl-12 text-right">
+            <label class="form-check-label m-r-xs">
+                I accept the <a href="http://thepatent.place/terms/" target="__blank" class="font-weight-medium inline-link">Terms and Conditions</a>
+                <input type="checkbox" name="terms-register" id="terms-register" data-parsley-required-message="Please read and accept out terms and conditions" data-parsley-required="true">      
+            </label> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-xl-12 text-right">
+            <input type="submit" name="formSubmit" class="btn btn--lg btn--green pill-radius" value="Create account" data-ng-disabled="registrationForm.$invalid">
+        </div>
+    </div>
+</div>

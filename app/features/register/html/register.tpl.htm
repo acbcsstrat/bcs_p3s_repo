@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-center align-items-center content-panel">
+ 	<div class="container-pre-app__center-box-40">
+        <div class="content-panel__body bg-white p-t-xxxl p-b-xxxl p-r-6 p-l-6">
+           	<div class="row">
+              	<div class="col-xl-12 text-center">
+                 	<img src="../../../../assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-lg">
+              	</div>  
+           	</div>
+           
+           	<div class="row">
+              	<div class="col-md-12 text-center">
+                 	<h1 ></h1>
+			      	<div class="page-header text-center">
+				        <h2 class="font-h2 font-weight-light">Register account</h2>
+				          
+				          <!-- the links to our nested states using relative paths -->
+				          <!-- add the active class if the state matches our ui-sref -->
+				        <div id="status-buttons" class="text-center m-t-md">
+				            <a ui-sref-active="active" ui-sref=".user-details"><span>1</span>Usere</a>
+				            <a ui-sref-active="active" ui-sref=".business-details"><span>2</span>Business</a>
+				            <a ui-sref-active="active" ui-sref=".billing-details"><span>3</span>Billing</a>
+				        </div>
+			      	</div>           	
+              	</div>
+           	</div>
+           	<div class="row">
+              	<div class="col-md-12">
+				    <form name="registrationForm" id="registration-form" data-ng-submit="$ctrl.register()" role="form">
+				    	<div id="form-views" ui-view></div>
+				    </form>
+          		</div>
+       		</div>
+    	</div>
+	</div>
+</div>

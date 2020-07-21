@@ -14,7 +14,7 @@
            	</div>
            	<div class="row">
               	<div class="col-md-12">
-                 	<form name="loginForm" novalidate>
+<!--                  	<form name="loginForm" novalidate>
 	                    <div class="form-group row m-b-sm">
 	                       	<div class="col-md-12">
 	                          	<input type="text" name="email" class="form-control font-body pill-radius input-p-sm" data-ng-model="form.email" placeholder="Username/Email" required data-validate-email>
@@ -34,7 +34,22 @@
 	                       <p id="loginMessage" class="m-b-sm font-body txt-phase-red"></p>
 	                       <input type="submit" name="loginBtn" value="Login" class="btn btn--lg font-body btn-block btn--green pill-radius" data-ng-disabled="loginForm.$invalid" data-ng-click="$ctrl.authorise()">
 	                    </div>
-                 	</form>
+                 	</form>        -->       		
+				    <form name="form" ng-submit="$ctrl.login()" role="form">
+				        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+				            <label for="username">Username</label>
+				            <input type="text" name="username" id="username" class="form-control" ng-model="$ctrl.username" required />
+				            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+				        </div>
+				        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+				            <label for="password">Password</label>
+				            <input type="password" name="password" id="password" class="form-control" ng-model="$ctrl.password" required />
+				            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+				        </div>
+				        <div class="form-actions">
+				            <button type="submit" ng-disabled="form.$invalid || $ctrl.dataLoading" class="btn btn-primary">Login</button>
+				        </div>
+				    </form>
              		<div class="row">
 	                    <div class="col-md-12 text-center d-flex justify-content-between m-t-sm">
 	                       <div class="d-flex">                     

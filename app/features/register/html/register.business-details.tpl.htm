@@ -1,0 +1,94 @@
+<h2 class="m-b-sm">Business Details</h2>
+<div data-ng-show="$ctrl.notSelectedCompanyReg && !$ctrl.displayBusinessDetails" class="animate-show">
+    <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <h4 class="font-h4 font-weight-medium m-b-sm">Has your firm already registered?</h4>
+            <div class="form-check form-check-inline">
+                <input class="m-l-xs" type="radio" class="form-check-input checkbox-square" name="businessRegyes" data-ng-init="business.registered.yes = false" data-ng-model="business.registered.yes" data-ng-click="business.notregistered.yes = false;" data-ng-change="$ctrl.checkFetchBusiness('registered', business)">
+                <label  class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="m-l-xs" type="radio" class="form-check-input checkbox-square" name="businessRegno" data-ng-init="business.notregistered.yes = false"  data-ng-model="business.notregistered.yes" data-ng-click="business.registered.yes = false" data-ng-change="$ctrl.checkFetchBusiness('notregistered', business)">
+                <label  class="form-check-label">No</label>
+            </div>
+        </div>
+    </div>
+</div>
+<!--                 <div class="form-check form-check-inline">
+                    <input type="checkbox" name="businessRegyes" data-ng-model="business.registered.yes" class="form-check-input checkbox-square" data-ng-click="validate.representative.no = false" required>
+                    <label for="representativeYes" class="form-check-label">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox"  name="businessRegno" data-ng-model="business.notregistered.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.checkError('representative', validate.representative.no);" data-ng-click="validate.representative.yes = false; ">
+                    <label for="representativeNo" class="form-check-label">No</label>  
+                </div> -->
+<div data-ng-show="$ctrl.displayCompanyPIN && !$ctrl.displayBusinessDetails" class="animate-show">
+    <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <input class="form-control pill-radius font-body" name="companyNumber" placeholder="Company Number" data-ng-model="companyNumber" data-parsley-type-message="Only letters and numbers are valid charcters in this field."  data-parsley-maxlength="6" data-parsley-maxlength-message="This fields value has a maximum length of 6 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-type="alphanum"  data-parsley-required="true">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <input class="form-control pill-radius font-body" name="companyPin" placeholder="Company PIN" data-ng-model="companyPin" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+        </div>
+    </div>
+<!--     <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <p class="$ctrl.searchCompanyresponse.success == false" class="txt-phase-red font-weight-medium">We were unable </p>
+        </div>
+    </div> -->
+    <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <button type="button" name="companyDetailsSubmit"  class="btn btn--lg btn--green pill-radius" value="Search" data-ng-click="$ctrl.searchCompany(companyPin, companyNumber)">Search Company</button>
+            <i class="fa fa-spinner fa-spin fa-2x fa-fw" data-ng-if="$ctrl.companyPinLoading"></i>
+        </div>
+    </div>    
+
+</div>
+<div data-ng-show="$ctrl.displayBusinessDetails" class="animate-show">
+    
+
+    <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <input type="text" name="businessName" class="form-control pill-radius font-body" id="businessName" placeholder="Business Name" data-parsley-validate-company-name="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <input type="text" name="phoneNumber" class="form-control pill-radius font-body" id="phoneNumber" data-parsley-validate-phone="" placeholder="Business Tel" data-parsley-minlength="10" data-parsley-minlength-message="This fields value has a minimum length of 10 characters." data-parsley-maxlength-messsage="This fields value has a maximum length of 40 characters." data-parsley-maxlength="40" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">     
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <input type="text" name="street" class="form-control pill-radius font-body" id="street" placeholder="Business Street" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <input type="text" name="city" class="form-control pill-radius font-body" id="city" placeholder="Business City" data-parsley-validate-address="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <input type="text" name="USstate" class="form-control pill-radius font-body" id="USstate" placeholder="Business State" data-parsley-required-message="Please ensure this field has been completed." data-parsley-validate-address="" data-parsley-required="true">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-6 col-lg-6 col-xl-6">
+            <input type="text" name="zip" class="form-control pill-radius font-body" id="zip" placeholder="Business Zip" data-parsley-validate-zip="" data-parsley-maxlength="10" data-parsley-maxlength-message="This fields value has a maxium length of 10 characters." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+            <select class="form-control pill-radius font-body form-control" name="timezone" id="timezone" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+                <option value="" selected disabled hidden class="txt-grey">Time Zone</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row m-b-none">
+        <div class="col-md-12 col-lg-12 col-xl-12 text-right">
+            <a ui-sref="register.billing-details" class="btn btn--lg btn--green pill-radius txt-white">
+                Billing Details <i class="far fa-angle-right"></i>
+            </a>
+        </div>
+    </div>
+</div>

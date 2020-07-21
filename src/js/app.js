@@ -8,6 +8,7 @@ import ngCart from "../../app/global/vendors/ngCart/ngCart.js";
 import angularMoment from "angular-moment";
 import nvd3 from "angular-nvd3";
 import croppie from "angular-croppie/angular-croppie.js";
+import RecaptchaModule from 'angular-recaptcha';
 
 
 import config from '../../app/app.config.js';
@@ -19,6 +20,7 @@ import AuthorisationService from '../../app/features/login/services/authorisatio
 import coreCtrl from '../../app/global/controllers/core.ctrl.js';
 import dashboard from '../../app/features/dashboard/index.js';
 import sidenav from '../../app/features/sidenav/index.js';
+import register from '../../app/features/register/index.js';
 import transactionlink from '../../app/global/directives/transactions.directive.js';
 import validationrules from '../../app/global/directives/validations.directive.js';
 import selectavatar from '../../app/global/directives/avatar.directive.js';
@@ -31,11 +33,11 @@ import '@fortawesome/fontawesome-pro/js/solid';
 import '@fortawesome/fontawesome-pro/js/regular';
 import '@fortawesome/fontawesome-pro/js/brands';
 
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', 'oc.lazyLoad', uirouter, ProfileService, PpnumberService, AuthorisationService, ngCart, coreCtrl, dashboard, sidenav, transactionlink, validationrules, selectavatar, dynamic, helppanel, mobileredirect]).config(config).constant('_', window._).run(startUpRun);
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', 'oc.lazyLoad', uirouter, ProfileService, PpnumberService, AuthorisationService, ngCart, coreCtrl, dashboard, sidenav, transactionlink, validationrules, selectavatar, dynamic, helppanel, mobileredirect, register, RecaptchaModule]).config(config).constant('_', window._).run(startUpRun);
 
-startUpRun.$inject = ['$state', 'Idle', '$rootScope', '$timeout', '$transitions', 'PpnumberService', 'CoreService', 'AuthorisationService'];
+startUpRun.$inject = ['$state', '$cookies', '$location', '$http', 'Idle', '$rootScope', '$timeout', '$transitions', 'PpnumberService', 'CoreService', 'AuthorisationService'];
 
-function startUpRun($state, Idle, $rootScope, $timeout, $transitions, PpnumberService, CoreService, AuthorisationService) {
+function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeout, $transitions, PpnumberService, CoreService, AuthorisationService) {
 
     $rootScope._ = window._;
 
@@ -59,15 +61,19 @@ function startUpRun($state, Idle, $rootScope, $timeout, $transitions, PpnumberSe
         }
     )
 
-    $transitions.onStart({}, function(transition) { //restrict access to the states which were given the authorization
 
-        console.log('transition', transition.to())
-        console.log('whattttttt', AuthorisationService.authorised)
-        $rootScope.authorised = AuthorisationService.authorised;
-        
-        
-        if(!AuthorisationService.authorised && _.has(transition.to(), 'data.authorisation') && _.has(transition.to(), 'data.redirectTo')) {
-            return transition.router.stateService.target(transition.to().data.redirectTo);
+    $rootScope.globals = $cookies.getObject('globals') || {};
+    if ($rootScope.globals.currentUser) {
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+    }
+
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        // redirect to login page if not logged in and trying to access a restricted page
+        var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/register/user-details', '/register/business-details', '/register/billing-details']) === -1; //if it doesnt contain logi or registr
+        var loggedIn = $rootScope.globals.currentUser;
+        if (restrictedPage && !loggedIn) {
+            console.log('hello')
+            $state.go('login', {}, {reload: true});
         }
     });
 

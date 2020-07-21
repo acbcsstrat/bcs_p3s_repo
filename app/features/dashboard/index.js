@@ -2,12 +2,12 @@
 
 import angular from 'angular';
 
-import DashboardService from './services/dashboard.service.js';
-import FxService from '../../global/services/app.fx.service.js';
+import DashboardService from './services/dashboard.serv.js';
+import FxService from '../../global/services/app.fx.serv.js';
 import CasesRestService from '../portfolio/services/portfolio.cases.serv.js';
-import CalculateService from '../../global/services/app.calculate.service.js';
-import CostAnalysisService from '../../global/services/app.cost-analysis.service.js';
-import TransactionService from '../../features/transactions/services/transactions.service.js';
+import CalculateService from '../../global/services/app.calculate.serv.js';
+import CostAnalysisService from '../../global/services/app.cost-analysis.serv.js';
+import TransactionService from '../../features/transactions/services/transactions.serv.js';
 
 import DashboardController from './controllers/dashboard.controller';
 import AvailableActionsController from './controllers/dashboard.actions-available.controller';
