@@ -1,12 +1,13 @@
-TransactionsController.$inject = ['TransactionService', '$scope', '$q', '$state', '$timeout'];
+TransactionsController.$inject = ['TransactionService', '$scope', '$cookies', '$q', '$state', '$timeout'];
 
-export default function TransactionsController(TransactionService, $scope, $q, $state, $timeout) {
+export default function TransactionsController(TransactionService, $scope, $cookies,  $q, $state, $timeout) {
 
     var vm = this;
 
     vm.transactions = null;
+    var displayHelpTimeout;
+    $scope.filter = {};    
 
-    $scope.filter = {};     
     function noSubFilter(obj) {
         for (var key in obj) {
             if (obj[key]) { //if one of the $scope.filter ($scope.filter) properties evaluates to true (is selected) return false 
@@ -42,6 +43,15 @@ export default function TransactionsController(TransactionService, $scope, $q, $
         function(response){
 
             $scope.transactions = response;
+            var transactionLoaded = $cookies.get('transactionLoaded');
+            if($scope.firstTime && transactionLoaded == undefined) {
+                displayHelpTimeout = $timeout(function(){
+                    $scope.displayTransactionHelp = true;
+                    $cookies.put('transactionLoaded', 'hasloaded'); 
+                }, 5000)
+            } else {
+                $scope.displayTransactionHelp = false
+            }
             
             vm.sortBy = sortBy;
             vm.rowSelect = rowSelect;

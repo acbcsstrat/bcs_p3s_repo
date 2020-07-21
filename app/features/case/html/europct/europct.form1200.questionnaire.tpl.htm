@@ -61,7 +61,7 @@
                 <h4 class="font-h4 lh-default font-weight-bold">Question .{{$ctrl.additionalDocuments === true ?  4 : 3 }}</h4>
                 <div class="form-row">
                     <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                        <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant's or representatives reference: </label>
+                        <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant's or representative's reference: </label>
                         <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-model="formData.clientRef" placeholder="Applicant/representative reference" required>
                         <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.maxlength && form1200Form.reference.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
                     </div>
@@ -69,11 +69,14 @@
             </div>
         </div>
         <div class="row m-b-lg">
-            <div class="col-xl-12">
-                <p data-ng-init="clientRef.displayHelp = false" data-ng-click="clientRef.displayHelp = !clientRef.displayHelp" class="btn btn-underlined font-weight-medium">What does this mean? 
-                    <i class="fas fa-chevron-down fa-sm" data-ng-show="clientRef.displayHelp"></i>
-                    <i class="fas fa-chevron-right fa-sm" data-ng-show="!clientRef.displayHelp"></i>
+            <div class="col-md-12 col-xl-12 d-flex">
+                <p data-ng-init="clientRef.displayHelp = false" class="btn btn-underlined font-weight-medium">What does this mean? 
                 </p>
+                <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': clientRef.displayHelp}" data-ng-click="clientRef.displayHelp = !clientRef.displayHelp" >
+                    <i class="fas fa-chevron-right fa-sm" ></i>
+                </button>      
+            </div>         
+            <div class="col-md-12 col-xl-12 m-t-xs"> 
                 <div class="expandcollapse-item">
                     <div class="slideDown m-b-sm" data-ng-show="clientRef.displayHelp">
                         <p class="font-body">You can include any reference here that you want to appear on the Form 1200 as the applicant or representatives reference</p>
@@ -116,11 +119,14 @@
             </div>
         </div>
         <div class="row m-b-lg">
-            <div class="col-xl-12">
-                <p data-ng-init="validation.displayHelp = false" data-ng-click="validation.displayHelp = !validation.displayHelp" class="btn btn-underlined m-b-xs">Which countries are included? 
-                    <i class="fas fa-chevron-down fa-sm" data-ng-show="validation.displayHelp"></i>
-                    <i class="fas fa-chevron-right fa-sm" data-ng-show="!validation.displayHelp"></i>
+            <div class="col-md-12 col-xl-12 d-flex">
+                <p data-ng-init="validation.displayHelp = false" class="btn btn-underlined">Which countries are included? 
                 </p>  
+                <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': validation.displayHelp}" data-ng-click="validation.displayHelp = !validation.displayHelp" >
+                    <i class="fas fa-chevron-right fa-sm" ></i>
+                </button>      
+            </div> 
+            <div class="col-md-12 col-xl-12 m-t-xs">             
                 <div class="expandcollapse-item">
                     <div class="slideDown m-b-sm" data-ng-show="validation.displayHelp">
                         <p class="m-b-xs">The countries that are included by default are:</p>

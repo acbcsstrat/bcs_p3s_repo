@@ -39,8 +39,6 @@ function startUpRun($state, Idle, $rootScope, $timeout, $transitions, PpnumberSe
 
     $rootScope._ = window._;
 
-
-
     Idle.watch();
 
 	PpnumberService.fetchNumber()
@@ -68,7 +66,7 @@ function startUpRun($state, Idle, $rootScope, $timeout, $transitions, PpnumberSe
         $rootScope.authorised = AuthorisationService.authorised;
         
         
-        if (!AuthorisationService.authorised && _.has(transition.to(), 'data.authorisation') && _.has(transition.to(), 'data.redirectTo')) {
+        if(!AuthorisationService.authorised && _.has(transition.to(), 'data.authorisation') && _.has(transition.to(), 'data.redirectTo')) {
             return transition.router.stateService.target(transition.to().data.redirectTo);
         }
     });

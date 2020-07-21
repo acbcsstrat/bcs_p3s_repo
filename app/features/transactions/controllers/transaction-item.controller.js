@@ -67,8 +67,11 @@ export default function TransactionItemController($scope, $state, $timeout, $sta
         vm.caseoverview_tab = tab;
     }
 
+
+
     //assigned promise to scope so child state can also resolve this promise to invoke functions
  	$scope.promise.then(function(response){
+
             vm.transactionItem = response.find(function(transaction){
                 return transaction.p3s_TransRef == $stateParams.transId;
             })
