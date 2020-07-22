@@ -180,7 +180,18 @@
         &.txt-black {
             color: $black;
         }
-    }  
+    }
+    &.grey {
+        border: 2px solid $grey-dark;
+        color: $grey-dark;
+        &:not([disabled]):hover {
+            background: $grey-dark;
+            color: $white;
+        }
+        &.txt-grey {
+            color: $grey-dark;
+        }
+    }
 }
 
 .help-panel__item {

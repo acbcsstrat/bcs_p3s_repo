@@ -120,7 +120,12 @@ function UserService($http, $q, $timeout, $filter) {
             // simulate api call with $timeout
             $timeout(function () {
                 if(pin == 1) {
-                    deferred.resolve({ success: true, message: 'Pin "' + pin + '" is good' })
+                    deferred.resolve({ success: true, message: {
+                        street: 'street',
+                        city: 'city',
+                        usstate: 'usstate',
+                        zip: 'zip'          
+                    }})
                 } else {
                     deferred.reject({ success: false, message: 'Pin "' + pin + '" is bad' })
                 }

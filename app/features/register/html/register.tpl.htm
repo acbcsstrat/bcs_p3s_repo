@@ -1,20 +1,280 @@
 <div class="d-flex justify-content-center align-items-center content-panel">
- 	<div class="container-pre-app__center-box-40">
-        <div class="content-panel__body bg-white p-t-xxxl p-b-xxxl p-r-6 p-l-6">
-           	<div class="row">
-              	<div class="col-xl-12 text-center">
-                 	<img src="../../../../assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-lg">
-              	</div>  
-           	</div>
+
+          <div class="content-panel__body  flex-grow-0 bg-white p-t-xxxl p-b-xxxl p-r-6 p-l-6">
+            <form name="registrationForm" class="form-validation" role="form" novalidate>
+                  <div class="animate-switch-container" data-ng-switch on="stage" ng-class="{forward: direction, backward:!direction}">
+                    <div class="row">
+                        <div class="col-xl-12 text-center">
+                          <img src="../../../../assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-lg">
+                        </div>  
+                    </div>                    
+                    <div class="animate-switch" ng-switch-default>
+                        <h2 class="m-b-sm">User Details</h2>
+                        <div class="form-group row">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <input type="email" name="emailAddress" class="form-control pill-radius font-body" data-ng-model="$ctrl.formData.emailAddress" placeholder="Email" data-ng-class="{'input-error': formValidation && registrationForm.emailAddress.$error.required}" data-validate-email required>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.emailAddress.$error.required && registrationForm.emailAddress.$dirty">Please fill out this field</p>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.emailAddress.$error.email && registrationForm.emailAddress.$dirty">Please enter a valid email address</p>        
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <input type="text" name="firstName" class="form-control pill-radius font-body"data-ng-model="$ctrl.formData.firstName" placeholder="First Name" data-ng-class="{'input-error': formValidation && registrationForm.firstName.$error.required}" data-validate-name required>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.firstName.$error.required && registrationForm.firstName.$dirty">Please fill out this field</p>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.firstName.$error.validName && registrationForm.firstName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>        
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <input type="text" class="form-control pill-radius font-body" name="lastName" data-ng-model="$ctrl.formData.LastName" placeholder="Last Name" data-ng-class="{'input-error': formValidation && registrationForm.lastName.$error.required}" data-validate-name required>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.lastName.$error.required && registrationForm.lastName.$dirty">Please fill out this field</p>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.lastName.$error.validName && registrationForm.lastName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>              
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-none">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <div class="icon-field">
+                                    <input type="password" name="password" data-ng-model="$ctrl.formData.password" zxcvbn="passwordStrength" id="password" class="form-control font-body pill-radius m-b-xs" data-ng-class="{'input-error': formValidation && registrationForm.password.$error.required}"  data-ng-blur="visitedPassword=true" data-ng-minlength="8" data-ng-maxlength="20" autocomplete="off" placeholder="Password">
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.password.$error.required && registrationForm.password.$dirty">Please fill out this field</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.password.$error.minlength && registrationForm.password.$dirty">Password needs to be a minimum of 8 characters</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.password.$error.maxlength && registrationForm.password.$dirty">Password needs to be a maximum of 20 characters</p>
+                                </div>
+                        <!--         <div class="col-md-12 col-xl-12">
+                                    <zx-password-meter value="{{ passwordStrength.score }}" max="4"></zx-password-meter>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <input type="password" name="confirmPassword" class="form-control font-body pill-radius" data-ng-model="$ctrl.formData.confirmPassword" data-confrim-pw-to="$ctrl.formData.password" data-ng-class="{'input-error': formValidation && registrationForm.confirmPassword.$error.required}" required>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.confirmPassword.$invalid && registrationForm.password.$dirty">Passwords don't match.</p>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-none">
+                            <div class="col-md-12 col-lg-12 col-xl-12 text-right">
+                                <a class="btn btn--lg btn--green pill-radius txt-white" data-ng-click="next('stage1')">
+                                    Business Details <i class="far fa-angle-right"></i>
+                                </a>            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="animate-switch" ng-switch-when="stage1">
+                        <h2 class="m-b-sm">Business Details</h2>
+                        <div data-ng-show="$ctrl.notSelectedCompanyReg && !$ctrl.displayBusinessDetails" class="animate-show">
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <h4 class="font-body font-weight-medium m-b-sm">Has your firm already registered?</h4>
+                                    <div class="form-check form-check-inline">
+                                        <input class="m-l-xs" type="radio" class="form-check-input checkbox-square" name="businessRegyes" data-ng-init="business.registered.yes = false" data-ng-model="business.registered.yes" data-ng-click="business.notregistered.yes = false;" data-ng-change="$ctrl.checkFetchBusiness('registered', business)">
+                                        <label  class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="m-l-xs" type="radio" class="form-check-input checkbox-square" name="businessRegno" data-ng-init="business.notregistered.yes = false"  data-ng-model="business.notregistered.yes" data-ng-click="business.registered.yes = false" data-ng-change="$ctrl.checkFetchBusiness('notregistered', business)">
+                                        <label  class="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-ng-show="$ctrl.displayCompanyPIN && !$ctrl.displayBusinessDetails" class="animate-show">
+<!--                             <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input class="form-control pill-radius font-body" name="companyNumber" placeholder="Company Number" data-ng-model="companyNumber" data-ng-maxlength="6"  required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.companyNumber.$error.maxlength && registrationForm.companyNumber.$dirty">Maximum of 6 alphanumeric characters are permitted in this field.</p>            
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input class="form-control pill-radius font-body" name="companyPin" placeholder="Company PIN" data-ng-model="companyPin" data-parsley-type="digits" data-parsley-type-message="Only numbers are valid charcters in this field." data-parsley-range="[100, 9999]"  data-parsley-range-message="Invalid PIN entered. Please try again." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.companyPin.$error.minlength && registrationForm.companyPin.$dirty">Minimum of 3 numbers are permitted in this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.companyPin.$error.maxlength && registrationForm.companyPin.$dirty">Maximum of 4 numbers are permitted in this field.</p>            
+                                </div>
+                            </div> -->
+                        <!--     <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <p class="$ctrl.searchCompanyresponse.success == false" class="txt-phase-red font-weight-medium">We were unable </p>
+                                </div>
+                            </div> -->
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <button type="button" name="companyDetailsSubmit"  class="btn btn--lg btn--green pill-radius" value="Search" data-ng-click="$ctrl.searchCompany(companyPin, companyNumber)">Search Company</button>
+                                    <i class="fa fa-spinner fa-spin fa-2x fa-fw" data-ng-if="$ctrl.companyPinLoading"></i>
+                                </div>
+                            </div>    
+                        </div>
+
+                        <div data-ng-show="$ctrl.displayBusinessDetails" class="animate-show">
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input type="text" name="businessName" class="form-control pill-radius font-body" placeholder="Business Name" data-ng-model="$ctrl.formData.businessName" data-ng-class="{'input-error': formValidation && registrationForm.businessName.$error.required}"  data-validate-company-name required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.businessName.$error.required && registrationForm.businessName.$dirty">Please fill out this field</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.businessName.$error.validCompanyName && registrationForm.businessName.$dirty">Only letters, numbers, -, (), ., + and spaces are valid charcters in this field.</p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input type="text" name="phoneNumber" class="form-control pill-radius font-body" placeholder="Business phone number"  data-ng-model="$ctrl.formData.phoneNumber" data-ng-class="{'input-error': formValidation && registrationForm.phoneNumber.$error.required}"   data-ng-minlength="10" data-ng-maxlength="40" data-validate-phone required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.phoneNumber.$error.required && registrationForm.phoneNumber.$dirty">Please fill out this field</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.phoneNumber.$error.minlength && registrationForm.phoneNumber.$dirty">Minimum of 10 numbers are permitted in this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.phoneNumber.$error.maxlength && registrationForm.phoneNumber.$dirty">Maximum of 40 numbers are permitted in this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.phoneNumber.$error.validPhone && registrationForm.phoneNumber.$dirty">Please enter a valid phone number.</p>               
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input type="text" name="street" class="form-control pill-radius font-body"  placeholder="Business Street" data-ng-model="$ctrl.formData.street" data-ng-class="{'input-error': formValidation && registrationForm.street.$error.required}"  data-validate-address required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.street.$error.required && registrationForm.street.$dirty">Please fill out this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.street.$error.validAddress && registrationForm.street.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input type="text" name="city" class="form-control pill-radius font-body" placeholder="Business City" data-ng-model="$ctrl.formData.city" data-ng-class="{'input-error': formValidation && registrationForm.city.$error.required}"  data-validate-address required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.city.$error.required && registrationForm.city.$dirty">Please fill out this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.city.$error.validAddress && registrationForm.city.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input type="text" name="USstate" class="form-control pill-radius font-body" placeholder="Business State" data-ng-model="$ctrl.formData.state" data-ng-class="{'input-error': formValidation && registrationForm.USstate.$error.required}"  data-validate-address required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.USstate.$error.required && registrationForm.USstate.$dirty">Please fill out this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.USstate.$error.validAddress && registrationForm.USstate.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>            
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <input type="text" name="zip" class="form-control pill-radius font-body" placeholder="Business Zip" data-ng-model="$ctrl.formData.zip"  data-ng-maxlength="10" data-ng-class="{'input-error': formValidation && registrationForm.zip.$error.required}"  data-validate-zip required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.zip.$error.required && registrationForm.zip.$dirty">Please fill out this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.zip.$error.validZip && registrationForm.zip.$dirty">Please provide a valid ZIP.</p> 
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.zip.$error.maxlength && registrationForm.zip.$dirty">Maximum of 10 numbers are permitted in this field</p> 
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <select name="timezone" id="timezone" class="form-control font-body pill-radius"
+                                        data-ng-model="$ctrl.formData.timezone"
+                                        data-ng-options="zone.abbr for zone in $ctrl.ustimezones" 
+                                        data-ng-class="{'input-error': formValidation && registrationForm.timezone.$error.required}" 
+                                        required>
+                                       <option value="" disabled selected>Select timezone</option>
+                                    </select>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationFormzip.$error.required && registrationFormzip.$dirty">Please select a timezone.</p>
+                                </div>
+                            </div>
+                            <div class="form-group row m-b-none">
+                                <div class="col-md-12 col-lg-12 col-xl-12 text-right d-flex justify-content-between">
+                                    <a class="btn btn--lg btn--bordered grey pill-radius txt-white" data-ng-click="back('')" >
+                                        <i class="far fa-angle-left"></i> User Details 
+                                    </a>                                  
+                                    <a class="btn btn--lg btn--green pill-radius txt-white" data-ng-click="next('stage2')" >
+                                        Billing Details <i class="far fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="animate-switch" ng-switch-when="stage2">
+                        <h2 class="m-b-sm">Billing Details</h2>
+                        <div>
+                            <div class="row m-b-md">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="d-flex align-items-center">
+                                        <label class="font-body font-weight-medium">
+                                            Use business address for billing address?
+                                            <input type="checkbox" name="same_as_business" class=" m-l-sm" data-ng-model="copyAddress" data-ng-change="$ctrl.copyBusinessAddress(copyAddress)">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input type="text" name="billingStreet" class="form-control pill-radius font-body" placeholder="Billing Street" data-ng-model="$ctrl.formData.billingStreet" data-ng-class="{'input-error': formValidation && registrationForm.billingStreet.$error.required}" data-validate-address required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingStreet.$error.required && registrationForm.billingStreet.$dirty">Please fill out this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingStreet.$error.validAddress && registrationForm.billingStreet.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>                
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input type="text" name="billingCity" class="form-control pill-radius font-body" placeholder="Billing City" data-ng-model="$ctrl.formData.billingCity" data-ng-class="{'input-error': formValidation && registrationForm.billingCity.$error.required}" data-validate-address required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingCity.$error.required && registrationForm.billingCity.$dirty">Please fill out this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingCity.$error.validAddress && registrationForm.billingCity.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>                  
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input type="text" name="billingState" class="form-control pill-radius font-body" placeholder="Billing State" data-ng-model="$ctrl.formData.billingState" data-ng-class="{'input-error': formValidation && registrationForm.billingState.$error.required}" data-validate-address required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingState.$error.required && registrationForm.billingState.$dirty">Please fill out this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingState.$error.validAddress && registrationForm.billingState.$dirty">Only letters, numbers, -, (), . and spaces are valid charcters in this field.</p>                
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <input type="text" name="billingZip" class="form-control pill-radius font-body" placeholder="Billing Zip"  data-ng-model="$ctrl.formData.billingZip" data-ng-class="{'input-error': formValidation && registrationForm.billingZip.$error.required}" data-validate-zip required>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingZip.$error.required && registrationForm.billingZip.$dirty">Please fill out this field.</p>
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingZip.$error.validZip && registrationForm.billingZip.$dirty">Please provide a valid ZIP.</p> 
+                                    <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingZip.$error.maxlength && registrationForm.billingZip.$dirty">Maximum of 10 numbers are permitted in this field</p>                 
+                                </div>
+                            </div>
+                            <div class="row m-b-sm ">
+                                <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-end">
+                                    <div
+                                        vc-recaptcha
+                                        theme="'light'"
+                                        key="$ctrl.recap.publicKey"
+                                    ></div>
+                                </div>
+                            </div>
+                            <div class="row m-b-sm">
+                                <div class="col-md-12 col-xl-12 text-right">
+                                    <label class="form-check-label m-r-xs">
+                                        I accept the <a href="http://thepatent.place/terms/" target="__blank" class="font-weight-medium inline-link">Terms and Conditions</a>
+                                        <input type="checkbox" name="terms-register" data-ng-model="$ctrl.formData.tandc" required>      
+                                    </label> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-xl-12 d-flex justify-content-between">
+                                      <a class="btn btn--lg btn--bordered grey pill-radius txt-white" data-ng-click="back('stage1')">
+                                          <i class="far fa-angle-left"></i> Business Details 
+                                      </a>    
+                                      <input type="submit" name="formSubmit" class="btn btn--lg btn--green pill-radius" value="Create account" data-ng-disabled="registrationForm.$invalid">
+                                </div>
+
+                            </div>
+                        </div>
+                      
+                  </div>
+
+
+
+<!-- 
+
+                    <div class="animate-switch" ng-switch-when="success">
+                        <div class="success-wrap">
+                        <h2 class="confirmation-text">Thank you</h2>
+                        <p>Your message has been sent.<br>You should receive a confirmation email.</p>
+                        <div><button type="button" class="btn btn-success" ng-click="reset()" >Send Another</button></div>
+                      </div>
+                    </div>
+                    <div class="animate-switch" ng-switch-when="error" >
+                      <div class="error-wrap">
+                        <h2 class="confirmation-text">Error</h2>
+                        <p>There was an error when attempting to submit your request.<br>Please try again later.</p>
+                        <p><strong>*This will always error until a web service URL is set.*</strong></p>
+                        <div><button type="button" class="btn btn-danger" ng-click="reset()" >Try again</button></div>
+                      </div>
+                    </div>
+                  </div> -->
+    </form>
+
+
+
            
-           	<div class="row">
+<!--            	<div class="row">
               	<div class="col-md-12 text-center">
                  	<h1 ></h1>
 			      	<div class="page-header text-center">
 				        <h2 class="font-h2 font-weight-light">Register account</h2>
-				          
-				          <!-- the links to our nested states using relative paths -->
-				          <!-- add the active class if the state matches our ui-sref -->
+				           -->
+				          <!-- the links to our nested states using relative paths 
+				          <!-- add the active class if the state matches our ui-sref 
 				        <div id="status-buttons" class="text-center m-t-md">
 				            <a ui-sref-active="active" ui-sref=".user-details"><span>1</span>Usere</a>
 				            <a ui-sref-active="active" ui-sref=".business-details"><span>2</span>Business</a>
@@ -25,11 +285,11 @@
            	</div>
            	<div class="row">
               	<div class="col-md-12">
-				    <form name="registrationForm" id="registration-form" data-ng-submit="$ctrl.register()" role="form" novalidate>
-				    	<div id="form-views" ui-view></div>
-				    </form>
+      				    <form name="registrationForm" id="registration-form" data-ng-submit="$ctrl.register()" role="form" novalidate>
+      				    	<div id="form-views" ui-view></div>
+      				    </form>
           		</div>
-       		</div>
+       		</div> -->
     	</div>
 	</div>
 </div>
