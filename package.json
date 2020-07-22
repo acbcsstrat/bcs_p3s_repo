@@ -95,6 +95,7 @@
     "angular-touch": "^1.7.9",
     "angular-ui-bootstrap": "^2.5.6",
     "angular-ui-router": "^1.0.26",
+    "angular-zxcvbn": "^3.2.2",
     "babel-polyfill": "^6.26.0",
     "croppie": "^2.6.4",
     "d3": "^3.5.17",
@@ -116,6 +117,7 @@
     "postcss-scss": "^2.0.0",
     "precss": "^4.0.0",
     "tether": "^1.4.4",
-    "ui-bootstrap4": "^3.0.5"
+    "ui-bootstrap4": "^3.0.5",
+    "zxcvbn": "^4.4.2"
   }
 }

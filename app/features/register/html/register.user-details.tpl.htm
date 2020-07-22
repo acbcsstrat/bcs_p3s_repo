@@ -1,22 +1,42 @@
 <h2 class="m-b-sm">User Details</h2>
 <div class="form-group row">
     <div class="col-md-12 col-lg-12 col-xl-12">
-        <input name="emailAddress" class="form-control pill-radius font-body" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+        <input type="email" name="emailAddress" class="form-control pill-radius font-body" data-ng-model="$ctrl.formData.emailAddress" placeholder="Email" data-validate-email required>
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.emailAddress.$error.required && registrationForm.emailAddress.$dirty">Please fill out this field</p>
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.emailAddress.$error.email && registrationForm.emailAddress.$dirty">Please enter a valid email address</p>        
     </div>
 </div>
 <div class="form-group row">
     <div class="col-md-12 col-lg-12 col-xl-12">
-        <input type="text" name="firstName" class="form-control pill-radius font-body" id="firstName" placeholder="First Name" data-parsley-validate-name="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+        <input type="text" name="firstName" class="form-control pill-radius font-body"data-ng-model="$ctrl.formData.firstName" placeholder="First Name" data-validate-name required>
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.firstName.$error.required && registrationForm.firstName.$dirty">Please fill out this field</p>
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.firstName.$error.validName && registrationForm.firstName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>        
     </div>
 </div>
 <div class="form-group row">
     <div class="col-md-12 col-lg-12 col-xl-12">
-        <input type="text" class="form-control pill-radius font-body" name="lastName"  id="lastName" placeholder="Last Name" data-parsley-validate-name="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
+        <input type="text" class="form-control pill-radius font-body" name="lastName" data-ng-model="$ctrl.formData.LastName" placeholder="Last Name" data-validate-name required>
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.lastName.$error.required && registrationForm.lastName.$dirty">Please fill out this field</p>
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.lastName.$error.validName && registrationForm.lastName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>              
+    </div>
+</div>
+<div class="form-group row m-b-none">
+    <div class="col-md-12 col-lg-12 col-xl-12">
+        <div class="icon-field">
+            <input type="password" name="password" id="password" data-ng-model="$ctrl.formData.password" zxcvbn="passwordStrength" id="password" class="form-control font-body pill-radius m-b-xs" data-ng-blur="visitedPassword=true" data-ng-minlength="8" data-ng-maxlength="20" autocomplete="off" placeholder="Password">
+            <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.password.$error.required && registrationForm.password.$dirty">Please fill out this field</p>
+            <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.password.$error.minlength && registrationForm.password.$dirty">Password needs to be a minimum of 8 characters</p>
+            <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.password.$error.maxlength && registrationForm.password.$dirty">Password needs to be a maximum of 20 characters</p>
+        </div>
+<!--         <div class="col-md-12 col-xl-12">
+            <zx-password-meter value="{{ passwordStrength.score }}" max="4"></zx-password-meter>
+        </div> -->
     </div>
 </div>
 <div class="form-group row">
     <div class="col-md-12 col-lg-12 col-xl-12">
-        <input type="password" name="password" class="form-control pill-radius font-body" id="password" placeholder="Password" data-parsley-length="[8, 20]" data-parsley-length-message="Your password needs to be between 8 and 20 characters long." data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
+        <input type="password" name="confirmPassword" class="form-control font-body pill-radius" data-ng-model="confirmPassword" data-confrim-pw-to="$ctrl.formData.password" required>
+        <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.confirmPassword.$invalid && registrationForm.password.$dirty">Passwords don't match.</p>
     </div>
 </div>
 <div class="form-group row m-b-none">
