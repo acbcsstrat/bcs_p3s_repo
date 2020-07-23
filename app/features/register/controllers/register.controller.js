@@ -13,17 +13,13 @@ export default function RegisterController($scope, $state, UserService, $locatio
     vm.copyBusinessAddress = copyBusinessAddress;
     vm.companyPinLoading = false;
     vm.recap.publicKey = '6LezdHEUAAAAABvniybP4wWGWWztRMQXT5r0_WMs';
-    
+    vm.searchCompanyresponse;
     $scope.formParams = {};
+    $scope.business = {}
     $scope.stage = "";
     $scope.formValidation = false;
     $scope.toggleJSONView = false;
     $scope.toggleFormErrorsView = false;
-  
-    // $scope.formParams = {
-    //     ccEmail: '',
-    //     ccEmailList: []
-    // };
   
   // Navigation functions
     $scope.next = function (stage) { //https://codepen.io/jaa2015/pen/GqparY
@@ -36,6 +32,7 @@ export default function RegisterController($scope, $state, UserService, $locatio
             $scope.direction = 1;
             $scope.stage = stage;
             $scope.formValidation = false;
+            console.log('$scope.stage : ', $scope.stage)
         }
     };
 
@@ -44,51 +41,14 @@ export default function RegisterController($scope, $state, UserService, $locatio
         $scope.stage = stage;
     }; 
   
-  // Post to desired exposed web service.
-    $scope.submitForm = function () {
-        var wsUrl = "someURL";
-
-    // Check form validity and submit data using $http
-        if ($scope.registrationForm.$valid) {
-      $scope.formValidation = false;
-
-      $http({
-        method: 'POST',
-        url: wsUrl,
-        data: JSON.stringify($scope.formParams)
-      }).then(function successCallback(response) {
-        if (response
-          && response.data
-          && response.data.status
-          && response.data.status === 'success') {
-          $scope.stage = "success";
-        } else {
-          if (response
-            && response.data
-            && response.data.status
-            && response.data.status === 'error') {
-            $scope.stage = "error";
-          }
-        }
-      }, function errorCallback(response) {
-        $scope.stage = "error";
-        console.log(response);
-      });
+    $scope.reset = function() {
+        // Clean up scope before destorying
+        $scope.formParams = {};
+        $scope.stage = "";
     }
-  };
-  
-  $scope.reset = function() {
-    // Clean up scope before destorying
-    $scope.formParams = {};
-    $scope.stage = "";
-  }
-
-
-
-
 
     function init() {
-        $state.go('register.user-details', {})
+        vm.companyDetailsRequired = false;
         TimezoneService.fetchUsaTimeZones()
         .then(
             function(response){
@@ -104,7 +64,7 @@ export default function RegisterController($scope, $state, UserService, $locatio
         if(value === true) {
             vm.formData.billingStreet = vm.formData.street;
             vm.formData.billingCity = vm.formData.city;
-            vm.formData.billingState = vm.formData.state;
+            vm.formData.billingState = vm.formData.usstate;
             vm.formData.billingZip = vm.formData.zip;
         } else {
             vm.formData.billingStreet = '';
@@ -117,27 +77,63 @@ export default function RegisterController($scope, $state, UserService, $locatio
 
     function checkFetchBusiness(type, obj) {
         if(type == 'registered' && obj[type].yes == undefined) { //if user has selected that the company is already registered
+
+            vm.companyDetailsRequired = true;
             vm.displayBusinessDetails = false; //hide business form until they have fetched detgails of company
             vm.displayCompanyPIN = true; //display company fields to fetch company details
         } else {  //if user has indicated that is is the first person from the firm to register
+            vm.companyDetailsRequired = false;            
             vm.displayBusinessDetails = true;
             vm.displayCompanyPIN = false; //hide company fields to fetch company details
         }
     }
 
+    $scope.test = function() {
+        console.log('holla')
+    }
+
     function searchCompany(pin, number) {
         console.log(pin, number)
+
         vm.companyPinLoading = true;
         console.log(vm.companyPinLoading)
         UserService.SearchCompany(pin, number)
         .then(
             function(response){
+                console.log('response : ', response)
+
                 vm.companyPinLoading = false;
-                if(response.success) {
+                vm.noCompany = false;
+                vm.searchCompanyresponse = response;
+                vm.hideSearchBtn = true;
+                vm.acceptDetails = function() {
                     vm.displayBusinessDetails = true;
                     vm.displayCompanyPIN = false;
-                    vm.searchCompanyresponse = response
+                    Object.keys(response.message).map(function(o, k){
+                        console.log('response.message[o] : ', response.message[o])
+                        console.log('k : ', k)
+                        vm.formData[o] = response.message[o];
+                    })
+                    console.log('response.message.timezone.abbr : ', response.message.timezone)
+                    $scope.selectedItemvalue = response.message.timezone;
+                    console.log('vm.formData : ', vm.formData)
                 }
+
+                vm.declineDetails = function() {
+                    $scope.business.company.yes = false; //reset checkboxes
+                    $scope.business.notcompany.yes = false;
+                    vm.searchCompanyresponse = undefined;
+                    vm.displayBusinessDetails = false;
+                    vm.displayCompanyPIN = true;
+                    vm.hideSearchBtn = false;                
+                }
+                
+            
+            },
+            function(errResponse) {
+                console.log('error : ', errResponse);
+                vm.companyPinLoading = false;
+                vm.noCompany = true;
             }
         )
     }
@@ -145,16 +141,47 @@ export default function RegisterController($scope, $state, UserService, $locatio
     function register() {
         vm.dataLoading = true;
         console.log('hit')
+        console.log($scope.registrationForm)
+        console.log($scope.registrationForm.$valid)
+        if($scope.registrationForm.$valid) {
+            $scope.formValidation = false;
+            console.log('yellow')
 
+            UserService.Create(vm.formData)
+            .then(
+                function(response) {
+                    console.log(response)
+                    if(response.success) {
+                        $state.go('login');
+                    } else {
+                        vm.dataLoading = false;
+                    }
+                },
+                function(errResponse){
+                    console.log(errResponse)
+                }
+            );
 
+// .then(function successCallback(response) {
+//                 if (response
+//                     && response.data
+//                     && response.data.status
+//                     && response.data.status === 'success') {
+//                     $scope.stage = "success";
+//                 } else {
+//                     if (response
+//                         && response.data
+//                         && response.data.status
+//                         && response.data.status === 'error') {
+//                             $scope.stage = "error";
+//                         }
+//                 }
+//             }, function errorCallback(response) {
+//                     $scope.stage = "error";
+//                     console.log(response);
+//                 });
+//         }
+        }
 
-        // UserService.Create(vm.user)
-        //     .then(function (response) {
-        //         if(response.success) {
-        //             $state.go('login');
-        //         } else {
-        //             vm.dataLoading = false;
-        //         }
-        //     });
     }
 }

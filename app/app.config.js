@@ -49,18 +49,6 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             });
         }
     })
-    .state('register.user-details', {
-        url: '/user-details',
-        template: require('html-loader!./features/register/html/register.user-details.tpl.htm'),
-    })
-    .state('register.business-details', {
-        url: '/business-details',
-        template: require('html-loader!./features/register/html/register.business-details.tpl.htm'),
-    })
-    .state('register.billing-details', {
-        url: '/billing-details',
-        template: require('html-loader!./features/register/html/register.billing-details.tpl.htm'),
-    })        
     .state('profile', {
         url: '/profile',
         template: require('html-loader!./features/profile/html/profile.tpl.htm'),

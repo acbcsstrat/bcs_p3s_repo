@@ -10,8 +10,8 @@ function UserService($http, $q, $timeout, $filter) {
         service.GetById = GetById;
         service.GetByUsername = GetByUsername;
         service.Create = Create;
-        service.Update = Update;
-        service.Delete = Delete;
+        // service.Update = Update;
+        // service.Delete = Delete;
         service.SearchCompany = SearchCompany;
 
         return service;
@@ -46,7 +46,7 @@ function UserService($http, $q, $timeout, $filter) {
                 GetByUsername(user.username)
                     .then(function (duplicateUser) {
                         if (duplicateUser !== null) {
-                            deferred.resolve({ success: false, message: 'Username "' + user.username + '" is already taken' });
+                            deferred.reject({ success: false, message: 'Username "' + user.username + '" is already taken' });
                         } else {
                             var users = getUsers();
 
@@ -66,38 +66,38 @@ function UserService($http, $q, $timeout, $filter) {
             return deferred.promise;
         }
 
-        function Update(user) {
-            var deferred = $q.defer();
+        // function Update(user) {
+        //     var deferred = $q.defer();
 
-            var users = getUsers();
-            for (var i = 0; i < users.length; i++) {
-                if (users[i].id === user.id) {
-                    users[i] = user;
-                    break;
-                }
-            }
-            setUsers(users);
-            deferred.resolve();
+        //     var users = getUsers();
+        //     for (var i = 0; i < users.length; i++) {
+        //         if (users[i].id === user.id) {
+        //             users[i] = user;
+        //             break;
+        //         }
+        //     }
+        //     setUsers(users);
+        //     deferred.resolve();
 
-            return deferred.promise;
-        }
+        //     return deferred.promise;
+        // }
 
-        function Delete(id) {
-            var deferred = $q.defer();
+        // function Delete(id) {
+        //     var deferred = $q.defer();
 
-            var users = getUsers();
-            for (var i = 0; i < users.length; i++) {
-                var user = users[i];
-                if (user.id === id) {
-                    users.splice(i, 1);
-                    break;
-                }
-            }
-            setUsers(users);
-            deferred.resolve();
+        //     var users = getUsers();
+        //     for (var i = 0; i < users.length; i++) {
+        //         var user = users[i];
+        //         if (user.id === id) {
+        //             users.splice(i, 1);
+        //             break;
+        //         }
+        //     }
+        //     setUsers(users);
+        //     deferred.resolve();
 
-            return deferred.promise;
-        }
+        //     return deferred.promise;
+        // }
 
         // private functions
 
@@ -121,10 +121,18 @@ function UserService($http, $q, $timeout, $filter) {
             $timeout(function () {
                 if(pin == 1) {
                     deferred.resolve({ success: true, message: {
-                        street: 'street',
-                        city: 'city',
-                        usstate: 'usstate',
-                        zip: 'zip'          
+                        businessName: 'Zion Tech',
+                        phoneNumber: '02031417035',
+                        timezone: 'EST',
+                        street: 'Meer Street',
+                        city: 'STRATFORD-UPON-AVON',
+                        zip: '34567',
+                        billingStreet: 'Meer Street',
+                        billingCity: 'STRATFORD-UPON-AVON',
+                        billingState: 'WRTY',
+                        billingZip: '34567',
+                        usstate: 'WRTY'
+
                     }})
                 } else {
                     deferred.reject({ success: false, message: 'Pin "' + pin + '" is bad' })
