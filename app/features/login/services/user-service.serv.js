@@ -30,11 +30,28 @@ function UserService($http, $q, $timeout, $filter) {
             return deferred.promise;
         }
 
-        function GetByUsername(username) {
+        function GetByUsername(data) {
+            console.log(data)
+            var config = { headers: {'Content-Type': undefined} };
+            var formData = new FormData();
+            formData.append('j_username', data.username.$modelValue)
+            formData.append('j_password', data.password.$modelValue)
+           for (var pair of formData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]); 
+            }
             var deferred = $q.defer();
-            var filtered = $filter('filter')(getUsers(), { username: username });
-            var user = filtered.length ? filtered[0] : null;
-            deferred.resolve(user);
+            $http.post('../resources/j_spring_security_check',  formData, config)
+            .then(
+                function(response){
+                    console.log('response : ', response)
+                    deferred.resolve(response);
+                },
+                function(errResponse){
+                    console.log('errResponse : ', errResponse)
+                    deferred.reject(errResponse)
+                }
+            )
+
             return deferred.promise;
         }
 
@@ -45,8 +62,9 @@ function UserService($http, $q, $timeout, $filter) {
             $timeout(function () {
                 GetByUsername(user.username)
                     .then(function (duplicateUser) {
+                        console.log('duplicateUser: ', duplicateUser)
                         if (duplicateUser !== null) {
-                            deferred.reject({ success: false, message: 'Username "' + user.username + '" is already taken' });
+                            deferred.resolve({ success: false});
                         } else {
                             var users = getUsers();
 
@@ -65,43 +83,10 @@ function UserService($http, $q, $timeout, $filter) {
 
             return deferred.promise;
         }
-
-        // function Update(user) {
-        //     var deferred = $q.defer();
-
-        //     var users = getUsers();
-        //     for (var i = 0; i < users.length; i++) {
-        //         if (users[i].id === user.id) {
-        //             users[i] = user;
-        //             break;
-        //         }
-        //     }
-        //     setUsers(users);
-        //     deferred.resolve();
-
-        //     return deferred.promise;
-        // }
-
-        // function Delete(id) {
-        //     var deferred = $q.defer();
-
-        //     var users = getUsers();
-        //     for (var i = 0; i < users.length; i++) {
-        //         var user = users[i];
-        //         if (user.id === id) {
-        //             users.splice(i, 1);
-        //             break;
-        //         }
-        //     }
-        //     setUsers(users);
-        //     deferred.resolve();
-
-        //     return deferred.promise;
-        // }
-
         // private functions
 
         function getUsers() {
+            // console.log(localStorage.users)
             if(!localStorage.users){
                 localStorage.users = JSON.stringify([]);
             }

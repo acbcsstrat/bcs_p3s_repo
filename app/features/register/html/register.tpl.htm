@@ -2,7 +2,7 @@
 
         <div class="content-panel__body  flex-grow-0 bg-white p-t-xxxl p-b-xxxl p-r-6 p-l-6">
             <form name="registrationForm" class="form-validation" role="form" data-ng-submit="$ctrl.register()" novalidate>
-                <div class="animate-switch-container" data-ng-switch on="stage" ng-class="{forward: direction, backward:!direction}">
+                <div class="animate-switch-container" data-ng-switch on="stage" data-ng-class="{forward: direction, backward:!direction}">
                     <div class="row">
                         <div class="col-xl-12 text-center">
                             <img src="../../../../assets/imgs/logos/pp-logo-text-black.png" alt="patent place logo with text" width="200" class="m-b-lg">
@@ -15,15 +15,15 @@
                            
                                 <!-- the links to our nested states using relative paths -->
                                 <!-- add the active class if the state matches our ui-sref -->
-                                <div id="status-buttons" class="text-center m-t-md">{{stage1}}
-                                    <a data-ng-class="{'active': !stage1 && !stage2}" data-ng-click="next('')"><span>1</span>User</a>
-                                    <a data-ng-class="{'active': stage1}" data-ng-click="next('stage1')"><span>2</span>Business</a>
-                                    <a data-ng-class="{'active': stage2}" data-ng-click="next('stage2')"><span>3</span>Billing</a>
+                                <div id="status-buttons" class="text-center m-t-md">{{stage}}
+                                    <a data-ng-class="{'active': stage == ''}" data-ng-click="next('')"><span>1</span>User</a>
+                                    <a data-ng-class="{'active': stage == 'stage1'}" data-ng-click="next('stage1')"><span>2</span>Business</a>
+                                    <a data-ng-class="{'active': stage == 'stage2'}" data-ng-click="next('stage2')"><span>3</span>Billing</a>
                                 </div>
                             </div>                    
                         </div>
                     </div>
-                    <div class="animate-switch" ng-switch-default>
+                    <div class="animate-switch" data-ng-switch-default>
                         <h2 class="m-b-sm">User Details</h2>
                         <div class="form-group row">
                             <div class="col-md-12 col-lg-12 col-xl-12">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="animate-switch" ng-switch-when="stage1">
+                    <div class="animate-switch" data-ng-switch-when="stage1">
 
                         <!--find company -->
 
@@ -96,16 +96,16 @@
 
                         <div data-ng-show="$ctrl.displayCompanyPIN && !$ctrl.displayBusinessDetails" class="animate-show">
 
-                            <div data-ng-show="$ctrl.displayCompanyPIN && !$ctrl.displayBusinessDetails && !$ctrl.searchCompanyresponse">
+                            <div data-ng-show="!$ctrl.searchCompanyresponse">
                                 <div class="form-group row">
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <input class="form-control pill-radius font-body" name="companyNumber" placeholder="Company Number" data-ng-model="companyNumber" data-ng-maxlength="6" data-ng-required="$ctrl.companyDetailsRequired">
+                                        <input class="form-control pill-radius font-body" name="companyNumber" placeholder="Company Number" data-ng-model="companyNumber" data-ng-maxlength="6">
                                         <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.companyNumber.$error.maxlength && registrationForm.companyNumber.$dirty">Maximum of 6 alphanumeric characters are permitted in this field.</p>            
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <input class="form-control pill-radius font-body" name="companyPin" placeholder="Company PIN" data-ng-model="companyPin" data-validate-numbers data-ng-required="$ctrl.companyDetailsRequired">
+                                        <input class="form-control pill-radius font-body" name="companyPin" placeholder="Company PIN" data-ng-model="companyPin" data-validate-numbers>
                                         <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.companyPin.$error.minlength && registrationForm.companyPin.$dirty">Minimum of 3 numbers are permitted in this field.</p>
                                         <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.companyPin.$error.maxlength && registrationForm.companyPin.$dirty">Maximum of 4 numbers are permitted in this field.</p>
                                         <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.validNumbers.$error.maxlength && registrationForm.companyPin.$dirty">Only numeric characters are permitted in this field</p>            
@@ -222,7 +222,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="animate-switch" ng-switch-when="stage2">
+                    <div class="animate-switch" data-ng-switch-when="stage2">
                         <h2 class="m-b-sm">Billing Details</h2>
                         <div>
                             <div class="row m-b-md">
@@ -298,19 +298,19 @@
 
 <!-- 
 
-                    <div class="animate-switch" ng-switch-when="success">
+                    <div class="animate-switch" data-ng-switch-when="success">
                         <div class="success-wrap">
                         <h2 class="confirmation-text">Thank you</h2>
                         <p>Your message has been sent.<br>You should receive a confirmation email.</p>
-                        <div><button type="button" class="btn btn-success" ng-click="reset()" >Send Another</button></div>
+                        <div><button type="button" class="btn btn-success" data-ng-click="reset()" >Send Another</button></div>
                       </div>
                     </div>
-                    <div class="animate-switch" ng-switch-when="error" >
+                    <div class="animate-switch" data-ng-switch-when="error" >
                       <div class="error-wrap">
                         <h2 class="confirmation-text">Error</h2>
                         <p>There was an error when attempting to submit your request.<br>Please try again later.</p>
                         <p><strong>*This will always error until a web service URL is set.*</strong></p>
-                        <div><button type="button" class="btn btn-danger" ng-click="reset()" >Try again</button></div>
+                        <div><button type="button" class="btn btn-danger" data-ng-click="reset()" >Try again</button></div>
                       </div>
                     </div>
                   </div> -->

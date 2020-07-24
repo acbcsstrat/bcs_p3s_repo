@@ -60,7 +60,6 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
         }
     )
 
-
     $rootScope.globals = $cookies.getObject('globals') || {};
     if ($rootScope.globals.currentUser) {
         $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
@@ -68,11 +67,11 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/register/user-details', '/register/business-details', '/register/billing-details']) === -1; //if it doesnt contain logi or registr
+        var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1; //if it doesnt contain logi or registr
         var loggedIn = $rootScope.globals.currentUser;
+
         if (restrictedPage && !loggedIn) {
-            console.log('hello')
-            $state.go('login', {}, {reload: true});
+            $location.path('/login');
         }
     });
 

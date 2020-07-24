@@ -12,17 +12,22 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, Use
 
     return service;
 
-    function Login(username, password, callback) {
-      console.log(username, password, callback)
+    function Login(data) {
+
         /* Dummy authentication for testing, uses $timeout to simulate api call
          ----------------------------------------------*/
-        $timeout(function () {
-            var response;
-            UserService.GetByUsername(username)
+        //  $http.post(ppdomain+'resources/j_spring_security_check')
+        //  .then(
+        //     function(response){
 
+        //     },
+        //     function(){
+
+        //     }
+        // )
+
+            UserService.GetByUsername(data)
                 .then(function (user) {
-                   console.log('user : ', user)
-                   console.log('username : ', username)
                     if (user !== null && user.password === password) {
                         response = { success: true };
                     } else {
@@ -30,8 +35,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, Use
                     }
                     callback(response);
                 });
-        }, 1000);
-
+     
         /* Use this for real authentication
          ----------------------------------------------*/
         //$http.post('/api/authenticate', { username: username, password: password })

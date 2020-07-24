@@ -11,14 +11,11 @@ export default function LoginController($state, $http, $scope, AuthorisationServ
         console.log('init controller')
         AuthorisationService.ClearCredentials();
     })();
-    console.log('say what')
-    function login() {
-        console.log('login invoke')
+    function login(data) {
+        console.log('data : ', data)
         vm.dataLoading = true;
-        console.log('vm.username : ', vm.username)
-        console.log('vm.password : ', vm.password)
-        AuthorisationService.Login(vm.username, vm.password, function (response) {
-            console.log('response : ', response)
+        AuthorisationService.Login(data, function (response) {
+            console.log('responseeeee : ', response)
             if (response.success) {
                 AuthorisationService.SetCredentials(vm.username, vm.password);
                 $state.go('dashboard');

@@ -35,19 +35,19 @@
 	                       <input type="submit" name="loginBtn" value="Login" class="btn btn--lg font-body btn-block btn--green pill-radius" data-ng-disabled="loginForm.$invalid" data-ng-click="$ctrl.authorise()">
 	                    </div>
                  	</form>        -->       		
-				    <form name="form" ng-submit="$ctrl.login()" role="form">
-				        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+				    <form name="form" data-ng-submit="$ctrl.login(form)" role="form">
+				        <div class="form-group" data-ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
 				            <label for="username">Username</label>
-				            <input type="text" name="username" id="username" class="form-control" ng-model="$ctrl.username" required />
-				            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+				            <input type="text" name="username" id="username" class="form-control" data-ng-model="$ctrl.username" required />
+				            <span data-ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
 				        </div>
-				        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+				        <div class="form-group" data-ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
 				            <label for="password">Password</label>
-				            <input type="password" name="password" id="password" class="form-control" ng-model="$ctrl.password" required />
-				            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+				            <input type="password" name="password" id="password" class="form-control" data-ng-model="$ctrl.password" required />
+				            <span data-ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
 				        </div>
-				        <div class="form-actions">
-				            <button type="submit" ng-disabled="form.$invalid || $ctrl.dataLoading" class="btn btn-primary">Login</button>
+				        <div class="form-actions text-right">
+				            <button type="submit" data-ng-disabled="form.$invalid || $ctrl.dataLoading" class="btn btn--lg btn-block btn--green pill-radius">Login</button>
 				        </div>
 				    </form>
              		<div class="row">

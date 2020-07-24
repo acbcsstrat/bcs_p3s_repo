@@ -25,10 +25,11 @@ export default function RegisterController($scope, $state, UserService, $locatio
     $scope.next = function (stage) { //https://codepen.io/jaa2015/pen/GqparY
         //$scope.direction = 1;
         //$scope.stage = stage;
-        console.log(stage)
+        console.log('stage : ', stage)
         $scope.formValidation = true;
-        console.log($scope.registrationForm)
+        console.log('$scope.registrationForm : ', $scope.registrationForm)
         if($scope.registrationForm.$valid) {
+            console.log('valid')
             $scope.direction = 1;
             $scope.stage = stage;
             $scope.formValidation = false;
@@ -48,6 +49,8 @@ export default function RegisterController($scope, $state, UserService, $locatio
     }
 
     function init() {
+        $scope.stage1 =  false;
+        $scope.stage2 = false;
         vm.companyDetailsRequired = false;
         TimezoneService.fetchUsaTimeZones()
         .then(
@@ -88,19 +91,13 @@ export default function RegisterController($scope, $state, UserService, $locatio
         }
     }
 
-    $scope.test = function() {
-        console.log('holla')
-    }
-
     function searchCompany(pin, number) {
-        console.log(pin, number)
 
         vm.companyPinLoading = true;
-        console.log(vm.companyPinLoading)
+
         UserService.SearchCompany(pin, number)
         .then(
             function(response){
-                console.log('response : ', response)
 
                 vm.companyPinLoading = false;
                 vm.noCompany = false;
@@ -110,13 +107,9 @@ export default function RegisterController($scope, $state, UserService, $locatio
                     vm.displayBusinessDetails = true;
                     vm.displayCompanyPIN = false;
                     Object.keys(response.message).map(function(o, k){
-                        console.log('response.message[o] : ', response.message[o])
-                        console.log('k : ', k)
                         vm.formData[o] = response.message[o];
                     })
-                    console.log('response.message.timezone.abbr : ', response.message.timezone)
                     $scope.selectedItemvalue = response.message.timezone;
-                    console.log('vm.formData : ', vm.formData)
                 }
 
                 vm.declineDetails = function() {
