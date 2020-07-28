@@ -25,7 +25,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, Use
 
         //     }
         // )
-
+            console.log('attempt made')
             UserService.GetByUsername(data)
                 .then(function (user) {
                     if (user !== null && user.password === password) {

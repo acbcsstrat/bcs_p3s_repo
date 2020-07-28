@@ -17,7 +17,7 @@ export default function LoginController($state, $http, $scope, AuthorisationServ
         AuthorisationService.Login(data, function (response) {
             console.log('responseeeee : ', response)
             if (response.success) {
-                AuthorisationService.SetCredentials(vm.username, vm.password);
+                // AuthorisationService.SetCredentials(vm.username, vm.password);
                 $state.go('dashboard');
             } else {
                 vm.dataLoading = false;

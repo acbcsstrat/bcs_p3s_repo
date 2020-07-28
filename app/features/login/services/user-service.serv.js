@@ -34,8 +34,8 @@ function UserService($http, $q, $timeout, $filter) {
             console.log(data)
             var config = { headers: {'Content-Type': undefined} };
             var formData = new FormData();
-            formData.append('j_username', data.username.$modelValue)
-            formData.append('j_password', data.password.$modelValue)
+            formData.append('j_username', data.j_username.$modelValue)
+            formData.append('j_password', data.j_password.$modelValue)
            for (var pair of formData.entries()) {
                 console.log(pair[0]+ ', ' + pair[1]); 
             }
