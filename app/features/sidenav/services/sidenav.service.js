@@ -5,7 +5,7 @@ function SidenavService(){
 		var sections = [{
   		name: 'Dashboard',
   		type: 'link',
-  		state: 'dashboard',
+  		state: 'dashboard.content',
   		icon: 'far fa-tachometer-alt'
 		}];    
   	sections.push({
