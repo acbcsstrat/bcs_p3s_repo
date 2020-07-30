@@ -42,7 +42,15 @@ function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, lo
     	$http.post(ppdomain+'resources/j_spring_security_logout')
       	.then(
       		function(response){
-      			window.location=ppdomain+'login';
+      			console.log(response)
+	            $rootScope.globals = {
+	                currentUser: {
+	                    username: null,
+	                    authdata: null
+	                }
+	            };
+	            $http.defaults.headers.common['Authorization'] = null;
+      			$location.path('/login');
       		},
           	function(errResponse) {
             	console.error('Error with idle timeout. Error: ', errResponse);
