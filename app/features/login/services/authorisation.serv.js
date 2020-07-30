@@ -1,8 +1,8 @@
 export default angular.module('services.authorisation', []).service('AuthorisationService', AuthorisationService).name;
 
-AuthorisationService.$inject = ['$rootScope', '$cookies', '$http', '$state', '$timeout', 'UserService'];
+AuthorisationService.$inject = ['$rootScope', '$cookies', '$http', '$state', '$timeout', '$q', 'UserService'];
 
-function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, UserService) {
+function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q, UserService) {
 
     var service = {};
 
@@ -12,36 +12,21 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, Use
 
     return service;
 
-    function Login(data) {
+    function Login(params) {
+        console.log('params : ', params)
+        var deferred = $q.defer();
 
-        /* Dummy authentication for testing, uses $timeout to simulate api call
-         ----------------------------------------------*/
-        //  $http.post(ppdomain+'resources/j_spring_security_check')
-        //  .then(
-        //     function(response){
+        $http({
+            method: 'POST',
+            url: 'http://localhost:8080/p3sweb/resources/j_spring_security_check',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            params: params
+        })
+        .then(function(data){
+            deferred.resolve(data)
+        })
 
-        //     },
-        //     function(){
-
-        //     }
-        // )
-            console.log('attempt made')
-            UserService.GetByUsername(data)
-                .then(function (user) {
-                    if (user !== null && user.password === password) {
-                        response = { success: true };
-                    } else {
-                        response = { success: false, message: 'Username or password is incorrect' };
-                    }
-                    callback(response);
-                });
-     
-        /* Use this for real authentication
-         ----------------------------------------------*/
-        //$http.post('/api/authenticate', { username: username, password: password })
-        //    .success(function (response) {
-        //        callback(response);
-        //    });
+        return deferred.promise;
 
     }
 

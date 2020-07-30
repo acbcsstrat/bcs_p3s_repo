@@ -36,13 +36,15 @@
 			</ui-view>
 		</div>
 
-		<div data-ng-if="!smallDevice && authorised">
+		<div data-ng-if="!smallDevice && authorised" class="h-100 d-flex flex-column">
 				
-			<sidenav></sidenav>
+			
 
 			<main class="app-container" data-ng-controller="coreCtrl">
-				<basketnav></basketnav>
+
 				<ui-view class="h-100 d-flex flex-column">
+					<sidenav></sidenav>
+					<basketnav></basketnav>					
 					<div class="screen-load">
 						<div class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
 						    <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
@@ -66,5 +68,5 @@
 			</div>
 		</div>
 
-	<script type="text/javascript" src="runtime.6f6d8531d6813d269e84.js"></script><script type="text/javascript" src="vendors.bc78aaa7c1a94bed5c6b.js"></script><script type="text/javascript" src="vendor.1357a245d5029d8ccb99.js"></script><script type="text/javascript" src="app.53e79b37c5c55bab8f91.js"></script><script type="text/javascript" src="vendorStyle.25760a91a6cad239de2b.js"></script><script type="text/javascript" src="style.f3dabae87b7c1da97759.js"></script></body>
+	<script type="text/javascript" src="runtime.b4bb2ddd9e8c2e2d6f0e.js"></script><script type="text/javascript" src="vendors.bc78aaa7c1a94bed5c6b.js"></script><script type="text/javascript" src="vendor.1357a245d5029d8ccb99.js"></script><script type="text/javascript" src="app.34f7ebd498096fc7fd4b.js"></script><script type="text/javascript" src="vendorStyle.25760a91a6cad239de2b.js"></script><script type="text/javascript" src="style.f3dabae87b7c1da97759.js"></script></body>
 </html>

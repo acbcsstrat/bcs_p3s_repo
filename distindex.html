@@ -36,13 +36,15 @@
 			</ui-view>
 		</div>
 
-		<div data-ng-if="!smallDevice && authorised">
+		<div data-ng-if="!smallDevice && authorised" class="h-100 d-flex flex-column">
 				
-			<sidenav></sidenav>
+			
 
 			<main class="app-container" data-ng-controller="coreCtrl">
-				<basketnav></basketnav>
+
 				<ui-view class="h-100 d-flex flex-column">
+					<sidenav></sidenav>
+					<basketnav></basketnav>					
 					<div class="screen-load">
 						<div class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
 						    <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>

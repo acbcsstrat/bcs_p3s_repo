@@ -1,5 +1,4 @@
 export default angular.module('components.sidenav', []).component('sidenav', {
-
 		template: require('html-loader!../html/sidenav.tpl.htm'),
 		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', '$http', 'ProfileService', 'SidenavService',  'ngCart', 'moment', 'FxService', function($scope, $rootScope, $mdSidenav, $timeout, $http, ProfileService, SidenavService, ngCart, moment, FxService){
 
@@ -16,7 +15,7 @@ export default angular.module('components.sidenav', []).component('sidenav', {
         	isFirstOpen: true,
         	isFirstDisabled: false
       	};
-
+      	console.log('whattttttttt')
 
         vm.utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
         vm.est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
