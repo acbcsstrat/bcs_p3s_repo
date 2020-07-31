@@ -13,7 +13,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q,
     return service;
 
     function Login(params) {
-        console.log('params : ', params)
+
         var deferred = $q.defer();
 
         $http({

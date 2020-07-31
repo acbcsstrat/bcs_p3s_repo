@@ -47,7 +47,7 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, CoreSer
           	function(errResponse) {
             	console.error('Error with idle timeout. Error: ', errResponse);
           	}    
-		)    	
+		)
       	
 	});
 
