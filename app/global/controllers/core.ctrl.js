@@ -3,9 +3,9 @@ import CasesRestService from '../../features/portfolio/services/portfolio.cases.
 
 export default angular.module('ppApp.core', [CoreService, CasesRestService]).controller('coreCtrl', coreCtrl).name
 
-coreCtrl.$inject = ['$uibModal', '$scope', '$timeout', '$http', '$cookies', 'CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive', '$location', '$rootScope'];
+coreCtrl.$inject = ['$uibModal', '$scope', '$state', '$timeout', '$http', '$cookies', 'CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive', '$location', '$rootScope'];
 
-function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive, $location, $rootScope) {
+function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive, $location, $rootScope) {
 
 	var vm = this;
 
@@ -41,21 +41,14 @@ function coreCtrl($uibModal, $scope,  $timeout, $http, $cookies, CoreService, lo
      	ngCart.empty();
     	$http.post(ppdomain+'resources/j_spring_security_logout')
       	.then(
-      		function(response){
-      			console.log(response)
-	            $rootScope.globals = {
-	                currentUser: {
-	                    username: null,
-	                    authdata: null
-	                }
-	            };
-	            $http.defaults.headers.common['Authorization'] = null;
-      			$location.path('/login');
+      		function(response){   			
+  				$state.go('login', { reload: false })
+
       		},
           	function(errResponse) {
             	console.error('Error with idle timeout. Error: ', errResponse);
           	}    
-		)    	
+		)
       	
 	});
 

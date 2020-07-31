@@ -1,6 +1,6 @@
 export default angular.module('components.sidenav', []).component('sidenav', {
 		template: require('html-loader!../html/sidenav.tpl.htm'),
-		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', '$http', 'ProfileService', 'SidenavService',  'ngCart', 'moment', 'FxService', function($scope, $rootScope, $mdSidenav, $timeout, $http, ProfileService, SidenavService, ngCart, moment, FxService){
+		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', '$http', '$state',  'ProfileService', 'SidenavService',  'ngCart', 'moment', 'FxService', function($scope, $rootScope, $mdSidenav, $timeout, $http, $state, ProfileService, SidenavService, ngCart, moment, FxService){
 
 		var vm = this;
 
@@ -15,7 +15,6 @@ export default angular.module('components.sidenav', []).component('sidenav', {
         	isFirstOpen: true,
         	isFirstDisabled: false
       	};
-      	console.log('whattttttttt')
 
         vm.utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
         vm.est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
@@ -79,6 +78,18 @@ export default angular.module('components.sidenav', []).component('sidenav', {
 	        vm.utc = moment.tz("Etc/UTC").format('HH:mm MM/DD/YYYY');
 	        vm.est = moment.tz("America/New_York").format('HH:mm MM/DD/YYYY');
 	    }
+
+		vm.logout = function() {
+	    	$http.post(ppdomain+'resources/j_spring_security_logout')
+	      	.then(
+	      		function(response){   			
+	  				$state.go('login', { reload: false })
+	      		},
+	          	function(errResponse) {
+	            	console.error('Error with idle timeout. Error: ', errResponse);
+	          	}    
+			)
+		}
 
 		vm.empty = function() {
 			ngCart.empty();

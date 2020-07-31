@@ -39,41 +39,53 @@ startUpRun.$inject = ['$state', '$cookies', '$location', '$http', 'Idle', '$root
 function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeout, $transitions, PpnumberService, CoreService, AuthorisationService) {
 
     $rootScope._ = window._;
+    $rootScope.logout = false;
 
     Idle.watch();
 
-	PpnumberService.fetchNumber()
-	.then(
-		function(response){
-			$rootScope.ppDetails = response;
-		}
-	)
 
-    CoreService.checkCases()
-    .then(
-        function(response){
-
-        	if(response) {
-        		$rootScope.firstTime = false;
-        	}
-            
-        }
-    )
 
     $rootScope.globals = $cookies.getObject('globals') || {};
+
     if ($rootScope.globals.currentUser) {
         $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
+
         // redirect to login page if not logged in and trying to access a restricted page
         var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1; //if it doesnt contain logi or registr
         var loggedIn = $rootScope.globals.currentUser;
+
+        if(!restrictedPage) {
+            $rootScope.authorised = false;
+        }
+
         if (restrictedPage && !loggedIn) {
             $rootScope.authorised = false;
             $location.path('/login');
-        } else {
+
+        }
+
+        if(restrictedPage && loggedIn) {
             $rootScope.authorised = true;
+            PpnumberService.fetchNumber()
+            .then(
+                function(response){
+                    $rootScope.ppDetails = response;
+                }
+            )
+
+            CoreService.checkCases()
+            .then(
+                function(response){
+
+                    if(response) {
+                        $rootScope.firstTime = false;
+                    }
+                    
+                }
+            )            
         }
     });
 

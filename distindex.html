@@ -29,16 +29,15 @@
 	</head>
 
 	<body detect-device mobile-redirect data-ng-app="ppApp">
+
 		<div data-ng-if="!smallDevice && !$root.authorised" class="h-100 d-flex flex-column">
 			<ui-view class="flex-grow-1">
-
+				
 			</ui-view>
 		</div>
 
-		<div data-ng-if="!smallDevice && $root.authorised" class="h-100 d-flex flex-column">
-				
-			<sidenav></sidenav>
-
+		<div data-ng-if="!smallDevice && $root.authorised">
+			<sidenav></sidenav>		
 			<main class="app-container" data-ng-controller="coreCtrl">
 				<basketnav></basketnav>
 				<ui-view class="h-100 d-flex flex-column">
