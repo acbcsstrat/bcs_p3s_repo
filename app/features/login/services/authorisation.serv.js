@@ -31,7 +31,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q,
     }
 
     function SetCredentials(username, password) {
-      console.log('say what')
+      console.log('say whattttttt')
         var authdata = Base64.encode(username + ':' + password);
 
         $rootScope.globals = {

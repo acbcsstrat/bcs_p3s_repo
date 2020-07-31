@@ -22,7 +22,7 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
         AuthorisationService.Login(params)
         .then(function(data, status){
 
-            $rootScope.authorised = true;
+            // $rootScope.authorised = true;
 
             var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
             // console.log('XMLHttpRequest.getAllResponseHeaders() : ', XMLHttpRequest.getAllResponseHeaders())
@@ -38,7 +38,6 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
             var cookieExp = new Date();
             cookieExp.setDate(cookieExp.getDate() + 7);
             $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
-
             $state.go('dashboard', {})
              //login success
         })

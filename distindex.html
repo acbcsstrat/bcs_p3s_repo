@@ -32,12 +32,11 @@
 
 		<div data-ng-if="!smallDevice && !$root.authorised" class="h-100 d-flex flex-column">
 			<ui-view class="flex-grow-1">
-
+				
 			</ui-view>
 		</div>
 
 		<div data-ng-if="!smallDevice && $root.authorised" class="h-100 d-flex flex-column">
-				
 			<sidenav></sidenav>		
 			<basketnav></basketnav>				
 			<main class="app-container" data-ng-controller="coreCtrl">
