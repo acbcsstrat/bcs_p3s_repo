@@ -72,6 +72,12 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
         var loggedIn = $rootScope.globals.currentUser;
         console.log('restrictedPage : ', restrictedPage)
         console.log('loggedIn : ', loggedIn)
+        console.log('$rootScope.globals', $rootScope.globals)
+        if(!loggedIn) {
+            $rootScope.authorised = false;
+        } else {
+            $rootScope.authorised = true;
+        }
         if (restrictedPage && !loggedIn) {
             $location.path('/login');
         }

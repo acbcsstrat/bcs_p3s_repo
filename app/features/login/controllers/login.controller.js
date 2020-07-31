@@ -7,13 +7,13 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
     vm.login = login;
     vm.credentials = {};
 
-    (function initController() {
-        // reset login status
-        console.log('init controller')
-        AuthorisationService.ClearCredentials();
-    })();
+    // (function initController() {
+    //     // reset login status
+    //     console.log('init controller')
+    //     AuthorisationService.ClearCredentials();
+    // })();
     function login(data) {
-        console.log('data : ', data)
+
         vm.dataLoading = true;
         var params = {
             j_username: vm.credentials.username,
@@ -21,9 +21,9 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
         }
         AuthorisationService.Login(params)
         .then(function(data, status){
-            console.log('data', data)
-            console.log('vm.credentials.username', vm.credentials.username)
-            console.log('vm.credentials.password', vm.credentials.password)
+
+            $rootScope.authorised = true;
+
             var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
             // console.log('XMLHttpRequest.getAllResponseHeaders() : ', XMLHttpRequest.getAllResponseHeaders())
             $rootScope.globals = {
