@@ -36,9 +36,9 @@
 			</ui-view>
 		</div>
 
-		<div data-ng-if="!smallDevice && $root.authorised" class="h-100 d-flex flex-column">
+		<div data-ng-if="!smallDevice && $root.authorised">
 			<sidenav></sidenav>		
-			<basketnav></basketnav>				
+<!-- 			<basketnav></basketnav>	 -->			
 			<main class="app-container" data-ng-controller="coreCtrl">
 
 				<ui-view class="h-100 d-flex flex-column">
