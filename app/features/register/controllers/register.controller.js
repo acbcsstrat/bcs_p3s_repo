@@ -67,7 +67,7 @@ export default function RegisterController($scope, $state, UserService, $locatio
         if(value === true) {
             vm.formData.billingStreet = vm.formData.street;
             vm.formData.billingCity = vm.formData.city;
-            vm.formData.billingState = vm.formData.usstate;
+            vm.formData.billingState = vm.formData.USstate;
             vm.formData.billingZip = vm.formData.zip;
         } else {
             vm.formData.billingStreet = '';
@@ -132,18 +132,18 @@ export default function RegisterController($scope, $state, UserService, $locatio
     }
 
     function register() {
-        vm.dataLoading = true;
-        console.log('hit')
+        console.log('vm.formData : ', vm.formData)
         console.log($scope.registrationForm)
-        console.log($scope.registrationForm.$valid)
+        vm.dataLoading = true;
+
         if($scope.registrationForm.$valid) {
             $scope.formValidation = false;
             console.log('yellow')
-
+            console.log('vm.formDat : ', vm.formData)
             UserService.Create(vm.formData)
             .then(
                 function(response) {
-                    console.log(response)
+                    console.log('response : ', response)
                     if(response.success) {
                         $state.go('login');
                     } else {
@@ -155,25 +155,6 @@ export default function RegisterController($scope, $state, UserService, $locatio
                 }
             );
 
-// .then(function successCallback(response) {
-//                 if (response
-//                     && response.data
-//                     && response.data.status
-//                     && response.data.status === 'success') {
-//                     $scope.stage = "success";
-//                 } else {
-//                     if (response
-//                         && response.data
-//                         && response.data.status
-//                         && response.data.status === 'error') {
-//                             $scope.stage = "error";
-//                         }
-//                 }
-//             }, function errorCallback(response) {
-//                     $scope.stage = "error";
-//                     console.log(response);
-//                 });
-//         }
         }
 
     }

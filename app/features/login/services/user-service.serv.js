@@ -55,33 +55,61 @@ function UserService($http, $q, $timeout, $filter) {
             return deferred.promise;
         }
 
-        function Create(user) {
+        function Create(formData) {
             var deferred = $q.defer();
-
+            var stringify = JSON.stringify(formData)
             // simulate api call with $timeout
-            $timeout(function () {
-                GetByUsername(user.username)
-                    .then(function (duplicateUser) {
-                        console.log('duplicateUser: ', duplicateUser)
-                        if (duplicateUser !== null) {
-                            deferred.resolve({ success: false});
-                        } else {
-                            var users = getUsers();
-
-                            // assign id
-                            var lastUser = users[users.length - 1] || { id: 0 };
-                            user.id = lastUser.id + 1;
-
-                            // save to local storage
-                            users.push(user);
-                            setUsers(users);
-
-                            deferred.resolve({ success: true });
-                        }
-                    });
-            }, 1000);
+            console.log('formdata service', formData)
+            $http.post('../register/rest-user/', formData)
+            .then(
+                function(response){
+                    deferred.resolve(response)
+                },
+                function(errResponse){
+                    deferred.reject(errResponse)
+                }
+            )
 
             return deferred.promise;
+
+            // $http({
+            //     type: 'POST',
+            //     url: 
+            //     data: JSON.stringify(data),
+            //     contentType: "application/json",
+            //     success: function(response) {
+            //         $('#initialRegistration, #register-intro,  divQn').addClass('d-none');  
+            //         $('#register-success').delay(520).removeClass('d-none');               
+            //     },
+            //     error:function(errResponse) {
+            //         $('#initialRegistration,  #register-intro, divQn').addClass('d-none');  
+            //         $('#register-failure').delay(520).removeClass('d-none');                          
+            //     }
+            // });
+
+            // $timeout(function () {
+            //     GetByUsername(user.username)
+            //         .then(function (duplicateUser) {
+            //             console.log('duplicateUser: ', duplicateUser)
+            //             if (duplicateUser !== null) {
+            //                 deferred.resolve({ success: false});
+            //             } else {
+            //                 var users = getUsers();
+
+            //                 // assign id
+            //                 var lastUser = users[users.length - 1] || { id: 0 };
+            //                 user.id = lastUser.id + 1;
+
+            //                 // save to local storage
+            //                 users.push(user);
+            //                 setUsers(users);
+
+            //                 deferred.resolve({ success: true });
+            //             }
+            //         });
+            // }, 1000);
+
+
         }
         // private functions
 
