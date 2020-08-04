@@ -82,7 +82,10 @@ export default angular.module('components.sidenav', []).component('sidenav', {
 		vm.logout = function() {
 	    	$http.post(ppdomain+'resources/j_spring_security_logout')
 	      	.then(
-	      		function(response){   			
+	      		function(response){
+		            $rootScope.globals = {
+		                currentUser: null
+		            };	      			
 	  				$state.go('login', { reload: false })
 	      		},
 	          	function(errResponse) {

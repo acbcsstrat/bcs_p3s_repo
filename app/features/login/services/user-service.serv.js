@@ -56,11 +56,29 @@ function UserService($http, $q, $timeout, $filter) {
         }
 
         function Create(formData) {
+
             var deferred = $q.defer();
-            var stringify = JSON.stringify(formData)
-            // simulate api call with $timeout
-            console.log('formdata service', formData)
-            $http.post('../register/rest-user/', formData)
+
+            var newFormData = new FormData();
+
+            Object.keys(formData).forEach(function(o, k){
+                newFormData.append(o, formData[o])
+            })
+            console.log(newFormData)
+            for (var pair of newFormData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]); 
+            }
+            var req = {
+                 method: 'POST',
+                 url: '../register/rest-user/',
+                 headers: {
+                   'Content-Type': 'application/json'
+                 },
+                 data: newFormData
+            }
+
+
+            $http(req)
             .then(
                 function(response){
                     deferred.resolve(response)

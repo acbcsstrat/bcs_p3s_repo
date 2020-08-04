@@ -41,7 +41,10 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, CoreSer
      	ngCart.empty();
     	$http.post(ppdomain+'resources/j_spring_security_logout')
       	.then(
-      		function(response){   			
+      		function(response){
+	            $rootScope.globals = {
+	                currentUser: null
+	            };	       			
   				$state.go('login', { reload: false })
 
       		},

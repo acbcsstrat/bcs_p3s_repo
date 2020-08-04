@@ -49,7 +49,7 @@
                         <div class="form-group row m-b-none">
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <div class="icon-field">
-                                    <input type="password" name="new_password" data-ng-model="$ctrl.formData.new_password" zxcvbn="passwordStrength" id="password" class="form-control font-body pill-radius m-b-xs" data-ng-class="{'input-error': formValidation && registrationForm.password.$error.required}"  data-ng-blur="visitedPassword=true" data-ng-minlength="8" data-ng-maxlength="20" autocomplete="off" placeholder="Password">
+                                    <input type="password" name="password" data-ng-model="$ctrl.formData.password" zxcvbn="passwordStrength" id="password" class="form-control font-body pill-radius m-b-xs" data-ng-class="{'input-error': formValidation && registrationForm.password.$error.required}"  data-ng-blur="visitedPassword=true" data-ng-minlength="8" data-ng-maxlength="20" autocomplete="off" placeholder="Password">
                                     <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.password.$error.required && registrationForm.password.$dirty">Please fill out this field</p>
                                     <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.password.$error.minlength && registrationForm.password.$dirty">Password needs to be a minimum of 8 characters</p>
                                     <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.password.$error.maxlength && registrationForm.password.$dirty">Password needs to be a maximum of 20 characters</p>
@@ -61,8 +61,8 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12 col-lg-12 col-xl-12">
-                                <input type="password" name="confirmPassword" class="form-control font-body pill-radius" data-ng-model="$ctrl.formData.confirmPassword" data-confrim-pw-to="$ctrl.formData.new_password" data-ng-class="{'input-error': formValidation && registrationForm.confirmPassword.$error.required}" placeholder="Confirm Password" required>
-                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.confirmPassword.$invalid && registrationForm.new_password.$dirty">Passwords don't match.</p>
+                                <input type="password" name="confirmPassword" class="form-control font-body pill-radius" data-ng-model="$ctrl.formData.confirmPassword" data-confrim-pw-to="$ctrl.formData.password" data-ng-class="{'input-error': formValidation && registrationForm.confirmPassword.$error.required}" placeholder="Confirm Password" required>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.confirmPassword.$invalid && registrationForm.password.$dirty">Passwords don't match.</p>
                             </div>
                         </div>
                         <div class="form-group row m-b-none">
@@ -264,7 +264,7 @@
                                     <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingZip.$error.maxlength && registrationForm.billingZip.$dirty">Maximum of 10 numbers are permitted in this field</p>                 
                                 </div>
                             </div>
-                            <div class="row m-b-sm ">
+<!--                             <div class="row m-b-sm ">
                                 <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-end">
                                     <div
                                         vc-recaptcha
@@ -272,7 +272,7 @@
                                         key="$ctrl.recap.publicKey"
                                     ></div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row m-b-sm">
                                 <div class="col-md-12 col-xl-12 text-right">
                                     <label class="form-check-label m-r-xs">
