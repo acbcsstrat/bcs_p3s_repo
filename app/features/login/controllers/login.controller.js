@@ -22,10 +22,7 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
         AuthorisationService.Login(params)
         .then(function(data, status){
 
-            // $rootScope.authorised = true;
-
             var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
-            // console.log('XMLHttpRequest.getAllResponseHeaders() : ', XMLHttpRequest.getAllResponseHeaders())
             $rootScope.globals = {
                 currentUser: {
                     username: vm.credentials.username,

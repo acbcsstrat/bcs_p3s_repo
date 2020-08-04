@@ -113,7 +113,7 @@
                                 </div>
                             </div>
 
-                            <div data-ng-show="$ctrl.searchCompanyresponse.success" class="animate-show">
+                            <div data-ng-show="$ctrl.searchCompanyresponse" class="animate-show">
                                 <p class="font-body font-weight-medium m-b-sm">Is this your company?</p>
                                 <div class="form-check form-check-inline">
                                     <input class="m-l-xs" type="radio" class="form-check-input checkbox-square" name="correctCompany" data-ng-init="business.company.yes = false" data-ng-model="business.company.yes" data-ng-click="business.notcompany.yes = false;" data-ng-change="$ctrl.acceptDetails()">
@@ -126,7 +126,7 @@
                                 <div class="m-t-md m-b-md">
                                     <table class="t-data">
                                         <tbody>
-                                            <tr class="t-data__row" data-ng-repeat="(key, value) in $ctrl.searchCompanyresponse.message">
+                                            <tr class="t-data__row" data-ng-repeat="(key, value) in $ctrl.searchCompanyresponse">
                                                 <td class="t-data__td t-data__td--sm font-body font-weight-medium text-capitalize">{{key}}</td>
                                                 <td class="t-data__td t-data__td--sm font-body text-capatalize">{{value}}</td>
                                             </tr>
@@ -138,7 +138,7 @@
                             <div data-ng-show="$ctrl.noCompany" class="animate-show">
                                 <div class="row m-b-sm">
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <p class="font-weight-medium">We were unable find the company with the provided information. Please check and try again.</p>
+                                        <p class="font-weight-medium txt-phase-red">We were unable find the company with the provided information. Please check and try again.</p>
                                     </div>
                                 </div>
                             </div>

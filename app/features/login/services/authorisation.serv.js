@@ -1,8 +1,8 @@
 export default angular.module('services.authorisation', []).service('AuthorisationService', AuthorisationService).name;
 
-AuthorisationService.$inject = ['$rootScope', '$cookies', '$http', '$state', '$timeout', '$q', 'UserService'];
+AuthorisationService.$inject = ['$rootScope', '$cookies', '$http', '$state', '$timeout', '$q'];
 
-function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q, UserService) {
+function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q) {
 
     var service = {};
 
@@ -31,7 +31,6 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q,
     }
 
     function SetCredentials(username, password) {
-      console.log('say whattttttt')
         var authdata = Base64.encode(username + ':' + password);
 
         $rootScope.globals = {

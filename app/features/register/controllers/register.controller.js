@@ -1,6 +1,6 @@
-RegisterController.$inject = ['$scope', '$state', 'UserService', '$location', '$rootScope', 'vcRecaptchaService', 'TimezoneService'];
+RegisterController.$inject = ['$scope', '$state', '$http', 'RegisterService', '$location', '$rootScope', 'vcRecaptchaService', 'TimezoneService'];
 
-export default function RegisterController($scope, $state, UserService, $location, $rootScope, vcRecaptchaService, TimezoneService) {
+export default function RegisterController($scope, $state, $http, RegisterService, $location, $rootScope, vcRecaptchaService, TimezoneService) {
     var vm = this;
 
     vm.formData = {};
@@ -95,10 +95,15 @@ export default function RegisterController($scope, $state, UserService, $locatio
 
         vm.companyPinLoading = true;
 
-        UserService.SearchCompany(pin, number)
+        var params = {
+            businessNumber: number,
+            businessPin: pin
+        }
+
+        RegisterService.SearchCompany(params)
         .then(
             function(response){
-
+                console.log('RESPONSE', response)
                 vm.companyPinLoading = false;
                 vm.noCompany = false;
                 vm.searchCompanyresponse = response;
@@ -106,10 +111,10 @@ export default function RegisterController($scope, $state, UserService, $locatio
                 vm.acceptDetails = function() {
                     vm.displayBusinessDetails = true;
                     vm.displayCompanyPIN = false;
-                    Object.keys(response.message).map(function(o, k){
-                        vm.formData[o] = response.message[o];
+                    Object.keys(response).map(function(o, k){
+                        vm.formData[o] = response[o];
                     })
-                    $scope.selectedItemvalue = response.message.timezone;
+                    $scope.selectedItemvalue = response.timezone;
                 }
 
                 vm.declineDetails = function() {
@@ -125,19 +130,24 @@ export default function RegisterController($scope, $state, UserService, $locatio
             },
             function(errResponse) {
                 console.log('error : ', errResponse);
+                vm.searchCompanyresponse = null;
                 vm.companyPinLoading = false;
                 vm.noCompany = true;
             }
         )
+
     }
 
     function register() {
-        console.log('vm.formData : ', vm.formData)
-        console.log($scope.registrationForm)
+        var type;
+        if(vm.searchCompanyresponse !== null || vm.searchCompanyresponse !== undefined) {
+            type = 'subsequent'
+        } 
+
         vm.dataLoading = true;
         if($scope.registrationForm.$valid) {
             $scope.formValidation = false;
-            UserService.Create(vm.formData)
+            RegisterService.Create(vm.formData, type)
             .then(
                 function(response) {
                     console.log('response : ', response)
