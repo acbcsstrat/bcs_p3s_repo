@@ -135,11 +135,8 @@ export default function RegisterController($scope, $state, UserService, $locatio
         console.log('vm.formData : ', vm.formData)
         console.log($scope.registrationForm)
         vm.dataLoading = true;
-        var stringify = JSON.stringify(vm.formData)
         if($scope.registrationForm.$valid) {
             $scope.formValidation = false;
-            console.log('yellow')
-            console.log('vm.formDat : ', vm.formData)
             UserService.Create(vm.formData)
             .then(
                 function(response) {

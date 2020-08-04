@@ -72,7 +72,7 @@ function UserService($http, $q, $timeout, $filter) {
                  method: 'POST',
                  url: '../register/rest-user/',
                  headers: {
-                   'Content-Type': 'application/json'
+                   'Content-Type': undefined
                  },
                  data: newFormData
             }
