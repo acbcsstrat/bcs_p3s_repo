@@ -4,7 +4,6 @@ export default function ForgotPasswordController($state, $rootScope, $http, $sco
 
 	var vm = this;
 
-
 	vm.submitEmail = submitEmail;
 
 	function submitEmail(emailAddress) {

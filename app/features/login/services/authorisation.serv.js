@@ -10,6 +10,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
     service.SetCredentials = SetCredentials;
     service.ClearCredentials = ClearCredentials;
     service.SubmitForgottenEmail = SubmitForgottenEmail;
+    service.ResetPassword = ResetPassword;
 
     return service;
 
@@ -74,13 +75,39 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
                 deferred.resolve(response)
             },
             function(errResponse){
-                console.log('errResponse : ', errResponse)
+                console.error('Error submitting request. Error : ', errResponse)
                 deferred.reject(errResponse)
             }
         )
 
         return deferred.promise;
 
+    }
+
+    function ResetPassword(params) {
+        console.log('params : ', params)
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: 'http://localhost:8080/p3sweb/prelogin/rest-reset-password/',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params: params
+        })
+        .then(
+            function(response){
+                console.log('response : ', response)
+                deferred.resolve(response)
+            },
+            function(errResponse){
+                console.error('Error submitting request. Error : ', errResponse)
+                deferred.reject(errResponse)
+            }
+        )
+
+        return deferred.promise;
     }
 }
 

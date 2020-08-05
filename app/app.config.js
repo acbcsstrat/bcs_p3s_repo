@@ -49,6 +49,24 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             });
         }
     })    
+    .state('reset-password', {
+        url: '/reset-password',
+        template: require('html-loader!./features/forgot-password/html/reset-password.tpl.htm'),
+        controller: 'ResetPasswordController',
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./features/forgot-password/index.js")
+            .then(function(mod) {
+                $ocLazyLoad.inject(mod.default)
+            })
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        }
+    })     
     .state('register', {
         url: '/register',
         template: require('html-loader!./features/register/html/register.tpl.htm'),
@@ -87,7 +105,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         data: {
             authorisation: true,
             redirectTo: 'login'
-        }        
+        }
     })    
     .state('dashboard', {
         url: '/dashboard',
