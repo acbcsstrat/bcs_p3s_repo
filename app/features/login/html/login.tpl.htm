@@ -9,33 +9,12 @@
            
            	<div class="row m-b-lg">
               	<div class="col-md-12 text-center">
-                 	<h1 class="font-h1 font-weight-light">Login into your accountttt</h1>
+                 	<h1 class="font-h1 font-weight-light">Login into your account</h1>
               	</div>
            	</div>
            	<div class="row">
-              	<div class="col-md-12">
-<!--                  	<form name="loginForm" novalidate>
-	                    <div class="form-group row m-b-sm">
-	                       	<div class="col-md-12">
-	                          	<input type="text" name="email" class="form-control font-body pill-radius input-p-sm" data-ng-model="form.email" placeholder="Username/Email" required data-validate-email>
-								<p class="font-body txt-phase-red m-t-xs" data-ng-show="loginForm.email.$error.validEmail && loginForm.email.$dirty">Please enter a valid email address</p>
-								<p class="font-body txt-phase-red m-t-xs" data-ng-show="loginForm.email.$required && loginForm.email.$dirty">Please fill out this field</p>								
-	                       	</div>
-	                    </div>
-	                    <div class="form-group row m-b-sm">
-	                       	<div class="col-md-12">
-	                          	<input type="password" name="password" class="form-control font-body pill-radius input-p-sm" data-ng-model="form.password" placeholder="Password" data-ng-minlength="8" data-ng-maxlength="20" required>
-								<p class="font-body txt-phase-red m-t-xs" data-ng-show="loginForm.password.$error.required && loginForm.password.$dirty">Please fill out this field</p>
-								<p class="font-body txt-phase-red m-t-xs" data-ng-show="loginForm.password.$error.minlength && loginForm.password.$dirty">Password needs to be a minimum of 8 characters</p>
-								<p class="font-body txt-phase-red m-t-xs" data-ng-show="loginForm.password.$error.maxlength && loginForm.password.$dirty">Password needs to be a maximum of 20 characters</p>                         
-	                       	</div>
-	                    </div>
-	                    <div class="form-group text-center m-b-md m-t-md">
-	                       <p id="loginMessage" class="m-b-sm font-body txt-phase-red"></p>
-	                       <input type="submit" name="loginBtn" value="Login" class="btn btn--lg font-body btn-block btn--green pill-radius" data-ng-disabled="loginForm.$invalid" data-ng-click="$ctrl.authorise()">
-	                    </div>
-                 	</form>        -->       		
-				    <form name="form" data-ng-submit="$ctrl.login(form)" role="form">
+              	<div class="col-md-12">   		
+				    <form name="form" data-ng-submit="$ctrl.login(form)" novalidate>
 				        <div class="form-group" data-ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
 				            <label for="username">Username</label>
 				            <input type="text" name="j_username" id="username" class="form-control" data-ng-model="$ctrl.credentials.username" required />
@@ -56,7 +35,7 @@
 	                          <p class="font-body m-r-xs">Don't have an account?</p>
 	                          <a data-ui-sref="register" class="inline-link font-weight-bold font-weight-medium txt-phase-green">Register Now</a>
 	                       </div>                           
-	                       <a href="/p3sweb/forgot-password" class="btn-no-bg font-weight-medium btn-underlined">Forgot Password?</a>
+	                       <a data-ui-sref="forgot-password" class="btn-no-bg font-weight-medium btn-underlined">Forgot Password?</a>
 	                    </div>
              		</div>
           		</div>

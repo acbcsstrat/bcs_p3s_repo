@@ -9,6 +9,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
     service.Login = Login;
     service.SetCredentials = SetCredentials;
     service.ClearCredentials = ClearCredentials;
+    service.SubmitForgottenEmail = SubmitForgottenEmail;
 
     return service;
 
@@ -53,6 +54,33 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
         $rootScope.globals = {};
         $cookies.remove('globals');
         $http.defaults.headers.common.Authorization = 'Basic';
+    }
+
+    function SubmitForgottenEmail(params) {
+        console.log('params : ', params)
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: 'http://localhost:8080/p3sweb/prelogin/rest-forgot-password/',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params: params
+        })
+        .then(
+            function(response){
+                console.log('response : ', response)
+                deferred.resolve(response)
+            },
+            function(errResponse){
+                console.log('errResponse : ', errResponse)
+                deferred.reject(errResponse)
+            }
+        )
+
+        return deferred.promise;
+
     }
 }
 

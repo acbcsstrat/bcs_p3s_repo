@@ -54,7 +54,7 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
 
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1; //if it doesnt contain logi or registr
+        var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/forgot-password']) === -1; //if it doesnt contain logi or registr
         var loggedIn = $rootScope.globals.currentUser;
 
         if(!restrictedPage) {

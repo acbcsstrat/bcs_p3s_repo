@@ -31,6 +31,24 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             });
         }
     })
+    .state('forgot-password', {
+        url: '/forgot-password',
+        template: require('html-loader!./features/forgot-password/html/forgot-password.tpl.htm'),
+        controller: 'ForgotPasswordController',
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./features/forgot-password/index.js")
+            .then(function(mod) {
+                $ocLazyLoad.inject(mod.default)
+            })
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+        }
+    })    
     .state('register', {
         url: '/register',
         template: require('html-loader!./features/register/html/register.tpl.htm'),
