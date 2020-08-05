@@ -14,43 +14,35 @@ export default function RegisterController($scope, $state, $http, RegisterServic
     vm.companyPinLoading = false;
     vm.recap.publicKey = '6LezdHEUAAAAABvniybP4wWGWWztRMQXT5r0_WMs';
     vm.searchCompanyresponse;
-    $scope.formParams = {};
-    $scope.business = {}
-    $scope.stage = "";
-    $scope.formValidation = false;
-    $scope.toggleJSONView = false;
-    $scope.toggleFormErrorsView = false;
+    vm.next = next;
+    vm.back = back;
+    vm.business = {}
+    vm.stage = "";
+    vm.formValidation = false;
   
   // Navigation functions
-    $scope.next = function (stage) { //https://codepen.io/jaa2015/pen/GqparY
-        //$scope.direction = 1;
-        //$scope.stage = stage;
-        console.log('stage : ', stage)
-        $scope.formValidation = true;
-        console.log('$scope.registrationForm : ', $scope.registrationForm)
+    function next(stage) { //https://codepen.io/jaa2015/pen/GqparY
+        vm.formValidation = true;
         if($scope.registrationForm.$valid) {
-            console.log('valid')
-            $scope.direction = 1;
-            $scope.stage = stage;
-            $scope.formValidation = false;
-            console.log('$scope.stage : ', $scope.stage)
+            vm.direction = 1;
+            vm.stage = stage;
+            vm.formValidation = false;
         }
     };
 
-    $scope.back = function (stage) {
-        $scope.direction = 0;
-        $scope.stage = stage;
+    function back(stage) {
+        vm.direction = 0;
+        vm.stage = stage;
     }; 
   
     $scope.reset = function() {
         // Clean up scope before destorying
-        $scope.formParams = {};
-        $scope.stage = "";
+        vm.stage = "";
     }
 
     function init() {
-        $scope.stage1 =  false;
-        $scope.stage2 = false;
+        vm.stage1 =  false;
+        vm.stage2 = false;
         vm.companyDetailsRequired = false;
         TimezoneService.fetchUsaTimeZones()
         .then(
@@ -118,8 +110,8 @@ export default function RegisterController($scope, $state, $http, RegisterServic
                 }
 
                 vm.declineDetails = function() {
-                    $scope.business.company.yes = false; //reset checkboxes
-                    $scope.business.notcompany.yes = false;
+                    vm.business.company.yes = false; //reset checkboxes
+                    vm.business.notcompany.yes = false;
                     vm.searchCompanyresponse = undefined;
                     vm.displayBusinessDetails = false;
                     vm.displayCompanyPIN = true;
@@ -146,7 +138,7 @@ export default function RegisterController($scope, $state, $http, RegisterServic
 
         vm.dataLoading = true;
         if($scope.registrationForm.$valid) {
-            $scope.formValidation = false;
+            vm.formValidation = false;
             RegisterService.Create(vm.formData, type)
             .then(
                 function(response) {
