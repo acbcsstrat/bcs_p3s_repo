@@ -1,3 +1,5 @@
+import zxcvbn from 'zxcvbn';
+
 RegisterController.$inject = ['$scope', '$state', '$http', 'RegisterService', '$location', '$rootScope', 'vcRecaptchaService', 'TimezoneService'];
 
 export default function RegisterController($scope, $state, $http, RegisterService, $location, $rootScope, vcRecaptchaService, TimezoneService) {
@@ -19,7 +21,43 @@ export default function RegisterController($scope, $state, $http, RegisterServic
     vm.business = {}
     vm.stage = "";
     vm.formValidation = false;
+    vm.passwordUpdate = passwordUpdate
   
+    function passwordUpdate(password) {
+
+        if(password !== undefined) {
+            if(vm.formData.password.length < 8){ //https://stackoverflow.com/questions/56314220/angularjs-minlength-validation-stop-characters-counter
+                $scope.registrationForm.password.$setValidity('minlength', false);
+            } else{
+                $scope.registrationForm.password.$setValidity('minlength', true);
+            }
+
+            if(vm.formData.password.length > 20){
+                $scope.registrationForm.password.$setValidity('maxlength', false);
+            } else{
+                $scope.registrationForm.password.$setValidity('maxlength', true);
+            }
+
+            vm.passwordStrength = zxcvbn(password);
+        }
+        
+    }
+
+    $scope.checkTextLength = function(){ 
+
+    }
+
+    vm.toggleTableState = function() {
+        if (vm.isCollapsed) {
+          vm.isCollapsed = false;
+          vm.tableText = "Hide Table";
+        } else {
+          vm.isCollapsed = true;
+          vm.tableText = "Show Table";
+        }
+    };
+
+
   // Navigation functions
     function next(stage) { //https://codepen.io/jaa2015/pen/GqparY
         vm.formValidation = true;
@@ -95,7 +133,7 @@ export default function RegisterController($scope, $state, $http, RegisterServic
         RegisterService.SearchCompany(params)
         .then(
             function(response){
-                console.log('RESPONSE', response)
+
                 vm.companyPinLoading = false;
                 vm.noCompany = false;
                 vm.searchCompanyresponse = response;
@@ -142,7 +180,6 @@ export default function RegisterController($scope, $state, $http, RegisterServic
             RegisterService.Create(vm.formData, type)
             .then(
                 function(response) {
-                    console.log('response : ', response)
                     if(response.success) {
                         $state.go('login');
                     } else {

@@ -10,6 +10,8 @@ import nvd3 from "angular-nvd3";
 import croppie from "angular-croppie/angular-croppie.js";
 import RecaptchaModule from 'angular-recaptcha';
 
+import zxcvbn from 'zxcvbn';
+
 import config from '../../app/app.config.js';
 
 import ProfileService from '../../app/features/profile/services/profile.details.serv.js';
@@ -32,7 +34,7 @@ import '@fortawesome/fontawesome-pro/js/solid';
 import '@fortawesome/fontawesome-pro/js/regular';
 import '@fortawesome/fontawesome-pro/js/brands';
 
-angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', 'oc.lazyLoad', uirouter, ProfileService, PpnumberService, AuthorisationService, ngCart, coreCtrl, dashboard, sidenav, transactionlink, validationrules, selectavatar, dynamic, helppanel, mobileredirect, register, RecaptchaModule, ]).config(config).constant('_', window._).run(startUpRun);
+angular.module('ppApp', ['ui.router', 'ngIdle', 'ngAnimate', 'ui.bootstrap', 'ngMaterial', 'ngTouch', 'angularMoment', 'LocalStorageModule', 'nvd3', 'ngCookies','angularCroppie', 'ngSanitize', 'ngFileUpload', 'angular-bind-html-compile', 'oc.lazyLoad',  uirouter, ProfileService, PpnumberService, AuthorisationService, ngCart, coreCtrl, dashboard, sidenav, transactionlink, validationrules, selectavatar, dynamic, helppanel, mobileredirect, register, RecaptchaModule, ]).config(config).constant('_', window._).run(startUpRun);
 
 startUpRun.$inject = ['$state', '$cookies', '$location', '$http', 'Idle', '$rootScope', '$timeout', '$transitions', 'PpnumberService', 'CoreService', 'AuthorisationService'];
 

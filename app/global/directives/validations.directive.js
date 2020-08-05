@@ -339,41 +339,6 @@ function selectNgValidationFiles() { //if files to be uploaded vary in future, a
     }
 };
 
-function zxPasswordMeter() {
-    return {
-        scope: {
-            value: "@",
-            max: "@?"
-        },
-        template: require("html-loader!./html/password-meter.tpl.htm"),
-        link: function(scope) {
-            scope.type = 'danger';
-            scope.max = (!scope.max) ? 100 : scope.max;
-
-            scope.$watch('value', function(newValue) {
-                console.log(newValue)
-                var strenghPercent = newValue / scope.max;
-            
-                if (strenghPercent === 0) {
-                  scope.text = 'V.Weak';
-                } else if (strenghPercent <= 0.25) {
-                  scope.type = 'danger';
-                  scope.text = 'Weak';
-                } else if (strenghPercent <= 0.50) {
-                  scope.type = 'warning';
-                  scope.text = 'Moderate';
-                } else if (strenghPercent <= 0.75) {
-                  scope.type = 'warning';
-                  scope.text = 'Strong';
-                } else {
-                  scope.type = 'success';
-                  scope.text = 'Perfect';
-                }
-
-            });
-        }
-    }
-}
 
 export default angular.module('directives.validation-rules', [])
     .directive('validateName', validateName)
@@ -382,7 +347,6 @@ export default angular.module('directives.validation-rules', [])
     .directive('validateEmail', validateEmail)
     .directive('validateAddress', validateAddress)
     .directive('validateZip', validateZip)
-    .directive('zxPasswordMeter', zxPasswordMeter)
     .directive('refValidate', refValidate)
     .directive('selectNgFiles', selectNgFiles)
     .directive('selectNgValidationFiles', selectNgValidationFiles)
