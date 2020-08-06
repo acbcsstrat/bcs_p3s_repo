@@ -1,8 +1,8 @@
 import zxcvbn from 'zxcvbn';
 
-ResestPasswordController.$inject = ['$state', '$rootScope','$http', '$scope', '$cookies', 'AuthorisationService']
+ResestPasswordController.$inject = ['$state', '$rootScope','$http', '$scope', '$cookies', '$uibModal', 'AuthorisationService']
 
-export default function ResestPasswordController($state, $rootScope, $http, $scope, $cookies, AuthorisationService) {
+export default function ResestPasswordController($state, $rootScope, $http, $scope, $cookies, $uibModal, AuthorisationService) {
 
 	var vm = this;
 
@@ -34,7 +34,7 @@ export default function ResestPasswordController($state, $rootScope, $http, $sco
     }	
 
 	function submitEmail(password) {
-
+        vm.dataLoading = true;
 		var params = {
 			password: password
 		}
@@ -42,10 +42,40 @@ export default function ResestPasswordController($state, $rootScope, $http, $sco
 		AuthorisationService.ResetPassword(params)
 		.then(
 			function(response){
+                vm.dataLoading = false;
+                var modalInstance = $uibModal.open({
+                    template: require('html-loader!../html/modals/modal.reset-password-success.tpl.htm'),
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
 
+                       
+                        this.dismissModal = function () {
+                            $uibModalInstance.close();
+                        };
+
+
+                    }]
+                })
+                $state.go('login'); 
 			},
 			function(errResponse){
+                vm.dataLoading = false;
+                $state.go($state.current, {}, {reload: true});
+                var modalInstance = $uibModal.open({
+                    template: require('html-loader!../html/modals/modal.reset-password-error.tpl.htm'),
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
 
+                       
+                        this.dismissModal = function () {
+                            $uibModalInstance.close();
+                        };
+
+
+                    }]
+                })                
 			}
 		)
 
