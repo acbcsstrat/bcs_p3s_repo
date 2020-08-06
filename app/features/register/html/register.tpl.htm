@@ -266,7 +266,7 @@
                                 <p class="font-body txt-phase-red m-t-xs" data-ng-show="registrationForm.billingZip.$error.maxlength && registrationForm.billingZip.$dirty">Maximum of 10 numbers are permitted in this field</p>                 
                             </div>
                         </div>
-<!--                             <div class="row m-b-sm ">
+                        <div class="row m-b-sm ">
                             <div class="col-md-12 col-lg-12 col-xl-12 d-flex justify-content-end">
                                 <div
                                     vc-recaptcha
@@ -274,7 +274,7 @@
                                     key="$ctrl.recap.publicKey"
                                 ></div>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="row m-b-sm">
                             <div class="col-md-12 col-xl-12 text-right">
                                 <label class="form-check-label m-r-xs">
@@ -288,7 +288,7 @@
                                   <a class="btn btn--lg btn--bordered grey pill-radius txt-white" data-ng-click="$ctrl.back('stage1')">
                                       <i class="far fa-angle-left"></i> Business Details 
                                   </a>    
-                                  <input type="submit" name="formSubmit" class="btn btn--lg btn--green pill-radius" value="Create account">
+                                  <input type="submit" name="formSubmit" class="btn btn--lg btn--green pill-radius" value="Create account" data-ng-disabled="registrationForm.$invalid">
                             </div>
 
                         </div>

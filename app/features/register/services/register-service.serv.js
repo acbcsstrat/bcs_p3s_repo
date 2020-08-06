@@ -42,9 +42,11 @@ function RegisterService($http, $q) {
         $http(req)
         .then(
             function(response){
+                console.log('response : ', response)
                 deferred.resolve(response)
             },
             function(errResponse){
+                console.log('errResponse : ', errResponse)
                 deferred.reject(errResponse)
             }
         )

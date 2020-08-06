@@ -1,8 +1,8 @@
 import zxcvbn from 'zxcvbn';
 
-RegisterController.$inject = ['$scope', '$state', '$http', 'RegisterService', '$location', '$rootScope', 'vcRecaptchaService', 'TimezoneService'];
+RegisterController.$inject = ['$scope', '$state', '$http', '$uibModal', 'RegisterService', '$location', '$rootScope', 'vcRecaptchaService', 'TimezoneService'];
 
-export default function RegisterController($scope, $state, $http, RegisterService, $location, $rootScope, vcRecaptchaService, TimezoneService) {
+export default function RegisterController($scope, $state, $http, $uibModal, RegisterService, $location, $rootScope, vcRecaptchaService, TimezoneService) {
     var vm = this;
 
     vm.formData = {};
@@ -41,10 +41,6 @@ export default function RegisterController($scope, $state, $http, RegisterServic
             vm.passwordStrength = zxcvbn(password);
         }
         
-    }
-
-    $scope.checkTextLength = function(){ 
-
     }
 
     vm.toggleTableState = function() {
@@ -144,6 +140,8 @@ export default function RegisterController($scope, $state, $http, RegisterServic
                     Object.keys(response).map(function(o, k){
                         vm.formData[o] = response[o];
                     })
+                    vm.formData.USstate = vm.formData.usstate;
+                    delete vm.formData.usstate;
                     $scope.selectedItemvalue = response.timezone;
                 }
 
@@ -159,7 +157,6 @@ export default function RegisterController($scope, $state, $http, RegisterServic
             
             },
             function(errResponse) {
-                console.log('error : ', errResponse);
                 vm.searchCompanyresponse = null;
                 vm.companyPinLoading = false;
                 vm.noCompany = true;
@@ -170,20 +167,52 @@ export default function RegisterController($scope, $state, $http, RegisterServic
 
     function register() {
         var type;
-        if(vm.searchCompanyresponse !== null || vm.searchCompanyresponse !== undefined) {
+        console.log(vm.searchCompanyresponse)
+        if(vm.searchCompanyresponse !== null && vm.searchCompanyresponse !== undefined) {
             type = 'subsequent'
         } 
 
         vm.dataLoading = true;
         if($scope.registrationForm.$valid) {
             vm.formValidation = false;
+            console.log(vm.formData)
             RegisterService.Create(vm.formData, type)
             .then(
                 function(response) {
+                    console.log('response register controller : ', response)
                     if(response.success) {
+                        var modalInstance = $uibModal.open({
+                            template: require('html-loader!../html/modals/modal.register-success.tpl.htm'),
+                            appendTo: undefined,
+                            controllerAs: '$ctrl',
+                            controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
+
+                               
+                                this.dismissModal = function () {
+                                    $uibModalInstance.close();
+                                };
+
+
+                            }]
+                        })                        
                         $state.go('login');
                     } else {
                         vm.dataLoading = false;
+                        $state.reload();
+                        var modalInstance = $uibModal.open({
+                            template: require('html-loader!../html/modals/modal.register-error.tpl.htm'),
+                            appendTo: undefined,
+                            controllerAs: '$ctrl',
+                            controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
+
+                               
+                                this.dismissModal = function () {
+                                    $uibModalInstance.close();
+                                };
+
+
+                            }]
+                        })                              
                     }
                 },
                 function(errResponse){
