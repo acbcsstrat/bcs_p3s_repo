@@ -1,0 +1,11 @@
+<div class="row m-b-sm">
+	<div class="col-xl-12">	
+		<p class="m-b-xs font-h4">Your validation order has been completed.</p>
+		<p class="m-b-xs font-h4">As per your order, your patent has been Validated in the following state(s):</p>
+		<ul>
+			<li data-ng-repeat="li in $ctrl.statesCompleted" class="font-h4">
+				{{li.stateCode}} - {{li.stateName}}
+			</li>
+		</ul>
+	</div>
+</div>
