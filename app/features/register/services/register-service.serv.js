@@ -42,11 +42,10 @@ function RegisterService($http, $q) {
         $http(req)
         .then(
             function(response){
-                console.log('response : ', response)
                 deferred.resolve(response)
             },
             function(errResponse){
-                console.log('errResponse : ', errResponse)
+                console.error('Error creating account. Error details:  ', errResponse)
                 deferred.reject(errResponse)
             }
         )

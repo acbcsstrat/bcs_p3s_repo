@@ -168,7 +168,6 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
     function register() {
         var type;
 
-        console.log(vm.searchCompanyresponse)
         if(vm.searchCompanyresponse !== null && vm.searchCompanyresponse !== undefined) {
             type = 'subsequent'
         } 
@@ -176,11 +175,12 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
         vm.dataLoading = true;
         if($scope.registrationForm.$valid) {
             vm.formValidation = false;
-            console.log(vm.formData)
+            delete vm.formData.confirmPassword;
+            delete vm.formData.tandc;
             RegisterService.Create(vm.formData, type)
             .then(
                 function(response) {
-                    console.log('response register controller : ', response)
+                    vm.dataLoading = false;
                     if(response.success) {
                         var modalInstance = $uibModal.open({
                             template: require('html-loader!../html/modals/modal.register-success.tpl.htm'),
@@ -198,8 +198,13 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
                         })                        
                         $state.go('login');
                     } else {
-                        vm.dataLoading = false;
-                        $state.reload();
+                        
+
+                    }
+                },
+                function(errResponse){
+                    vm.dataLoading = false;
+                    $state.go($state.current, {}, {reload: true});
                         var modalInstance = $uibModal.open({
                             template: require('html-loader!../html/modals/modal.register-error.tpl.htm'),
                             appendTo: undefined,
@@ -213,11 +218,7 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
 
 
                             }]
-                        })
-                    }
-                },
-                function(errResponse){
-                    console.log(errResponse)
+                        })                  
                 }
             );
 
