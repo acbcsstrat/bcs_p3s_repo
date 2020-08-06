@@ -62,7 +62,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6 col-lg-6 col-xl-6">
                         <label for="reference" class="font-weight-medium col-form-label font-body">Please enter applicant's or representative's reference: </label>
-                        <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-model="formData.clientRef" placeholder="Applicant/representative reference" required>
+                        <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-model="formData.clientRef" placeholder="Applicant/representative reference" ref-validate required>
                         <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.maxlength && form1200Form.reference.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
                     </div>
                 </div>

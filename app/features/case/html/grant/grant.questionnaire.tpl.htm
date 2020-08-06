@@ -86,7 +86,7 @@
                 <div class="form-group row">
                     <label for="clientRef" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please provide an applicant or representative reference:</label>
                     <div class="col-md-8 col-lg-7 col-xl-8 d-flex align-items-center">
-                        <input type="text" name="clientRef" id="clientRef" class="form-control pill-radius" data-ng-model="formData.clientRef" placeholder="Applicant/representative reference" data-ng-maxlength="15" required>
+                        <input type="text" name="clientRef" id="clientRef" class="form-control pill-radius" data-ng-model="formData.clientRef" placeholder="Applicant/representative reference" data-ng-maxlength="15" ref-validate required>                 
                     </div>
                 </div>
                 <p class="font-body txt-phase-red" data-ng-show="grantForm.clientRef.$error.required && grantForm.clientRef.$dirty">Please fill out this field</p>
