@@ -53,14 +53,6 @@
                                     <div class="col-md-12 col-lg-12 col-xl-12 m-b-sm">
 
                                         <div class="form-group row">
-                                            <label class="col-form-label font-body col-xl-4 font-weight-medium">Client Description:</label>
-                                            <div class="col-xl-8">                            
-                                                <input type="text" name="patentShortTitle" class="form-control" data-ng-maxlength="25" data-ng-model="foundPatent.shortTitle">
-                                            </div>
-                                            <p class="txt-phase-red" data-ng-show="addPatentForm.patentShortTitle.$error.maxlength && addPatentForm.patentShortTitle.$dirty" required>The field exceeds the maximum value of 25 characters</p>
-                                        </div>
-
-                                        <div class="form-group row">
                                             <label class="col-form-label font-body col-xl-4 font-weight-medium">Client Reference:</label>
                                             <div class="col-xl-8">                            
                                                 <input type="text" name="patentClientRef" class="form-control" data-ng-maxlength="15" data-ng-model="foundPatent.clientRef" ref-validate>
@@ -68,6 +60,14 @@
                                             <p class="txt-phase-red" data-ng-show="addPatentForm.patentClientRef.$error.validRef && addPatentForm.patentClientRef.$dirty">Special characters &, > and < are not permitted to be included in the Client Reference.</p>
                                             <p class="txt-phase-red" data-ng-show="addPatentForm.patentClientRef.$error.maxlength && addPatentForm.patentClientRef.$dirty">The field exceeds the maximum value of 15 characters</p>
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label font-body col-xl-4 font-weight-medium">Client Description:</label>
+                                            <div class="col-xl-8">                            
+                                                <input type="text" name="patentShortTitle" class="form-control" data-ng-maxlength="25" data-ng-model="foundPatent.shortTitle">
+                                            </div>
+                                            <p class="txt-phase-red" data-ng-show="addPatentForm.patentShortTitle.$error.maxlength && addPatentForm.patentShortTitle.$dirty" required>The field exceeds the maximum value of 25 characters</p>
+                                        </div>
+
 
                                         <div class="form-group row">
                                             <label class="col-form-label font-body col-xl-4 font-weight-medium">Primary Applicant Name:</label>
