@@ -9,7 +9,8 @@ export default function ResestPasswordController($state, $rootScope, $http, $sco
 	vm.submitEmail = submitEmail;
 
 	vm.formData = {};
-
+    vm.recap = {};
+    vm.recap.publicKey = '6LezdHEUAAAAABvniybP4wWGWWztRMQXT5r0_WMs';
     vm.passwordUpdate = passwordUpdate
   
     function passwordUpdate(password) {
