@@ -22,11 +22,12 @@
 				<a data-ui-sref="basket" class="m-r-md">
 					<ngcart-summary class="font-body txt-black"></ngcart-summary>
 				</a>
-				<div>
+				<div class="d-flex">
 					<p class="txt-black">
 						<a data-ui-sref="profile" class="font-weight-medium font-h4">{{$ctrl.user.firstName}}</a> | 
-						<button class="font-h4 txt-black inline-link btn btn-no-bg" data-ng-click="$ctrl.empty(); $ctrl.logout()">Logout</button>
+
 					</p>
+					<button class="font-h4 txt-black inline-link btn btn-no-bg m-l-xs" data-ng-click="$ctrl.empty(); $ctrl.logout()">Logout</button>
 				</div>
 			</div>
 		</div>

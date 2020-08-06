@@ -7,11 +7,6 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
     vm.login = login;
     vm.credentials = {};
 
-    // (function initController() {
-    //     // reset login status
-    //     console.log('init controller')
-    //     AuthorisationService.ClearCredentials();
-    // })();
     function login(data) {
 
         vm.dataLoading = true;
@@ -20,23 +15,24 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
             j_password: vm.credentials.password
         }
         AuthorisationService.Login(params)
-        .then(function(data, status){
+        .then(
+            function(response){
+                console.log('response : ', response)
+                var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
+                $rootScope.globals = {
+                    currentUser: {
+                        username: vm.credentials.username,
+                        authdata: authdata
+                    }
+                };
+                $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
 
-            var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
-            $rootScope.globals = {
-                currentUser: {
-                    username: vm.credentials.username,
-                    authdata: authdata
-                }
-            };
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-
-            // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
-            var cookieExp = new Date();
-            cookieExp.setDate(cookieExp.getDate() + 7);
-            $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
-            $state.go('dashboard', {})
-             //login success
+                // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
+                var cookieExp = new Date();
+                cookieExp.setDate(cookieExp.getDate() + 7);
+                $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
+                $state.go('dashboard', {})
+                 //login success
         })
     };
 

@@ -1,7 +1,7 @@
 export default angular.module('services.sidenav', []).factory('SidenavService', SidenavService).name;
 
 function SidenavService(){
-	 console.log('yelllloww')
+
 		var sections = [{
   		name: 'Dashboard',
   		type: 'link',

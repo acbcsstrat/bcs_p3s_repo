@@ -6,7 +6,7 @@ import MenuToggle from './directives/menu-toggle.directive';
 import MenuLink from './directives/menu-link.directive';
 
 import sidenav from './components/sidenav.component';
-console.log('sidenav : ', sidenav)
+
 import ppIcon from './ppIcon.png';
 import avatarDefault from './avatarDefault.png';
 
