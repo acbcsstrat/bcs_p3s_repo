@@ -71,7 +71,6 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
         })
         .then(
             function(response){
-                console.log('response : ', response)
                 deferred.resolve(response)
             },
             function(errResponse){
@@ -98,7 +97,6 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
         })
         .then(
             function(response){
-                console.log('response : ', response)
                 deferred.resolve(response)
             },
             function(errResponse){
