@@ -1,6 +1,9 @@
-RegisterController.$inject = ['$scope', '$state', '$http', 'RegisterService', '$location', '$rootScope', 'vcRecaptchaService', 'TimezoneService'];
+import zxcvbn from 'zxcvbn';
 
-export default function RegisterController($scope, $state, $http, RegisterService, $location, $rootScope, vcRecaptchaService, TimezoneService) {
+RegisterController.$inject = ['$scope', '$state', '$http', '$uibModal', 'RegisterService', '$location', '$rootScope', 'vcRecaptchaService', 'TimezoneService'];
+
+export default function RegisterController($scope, $state, $http, $uibModal, RegisterService, $location, $rootScope, vcRecaptchaService, TimezoneService) {
+
     var vm = this;
 
     vm.formData = {};
@@ -19,7 +22,38 @@ export default function RegisterController($scope, $state, $http, RegisterServic
     vm.business = {}
     vm.stage = "";
     vm.formValidation = false;
+    vm.passwordUpdate = passwordUpdate
   
+    function passwordUpdate(password) {
+
+        if(password !== undefined) {
+            if(vm.formData.password.length < 8){ //https://stackoverflow.com/questions/56314220/angularjs-minlength-validation-stop-characters-counter
+                $scope.registrationForm.password.$setValidity('minlength', false);
+            } else{
+                $scope.registrationForm.password.$setValidity('minlength', true);
+            }
+
+            if(vm.formData.password.length > 20){
+                $scope.registrationForm.password.$setValidity('maxlength', false);
+            } else{
+                $scope.registrationForm.password.$setValidity('maxlength', true);
+            }
+
+            vm.passwordStrength = zxcvbn(password);
+        }
+        
+    }
+
+    vm.toggleTableState = function() {
+        if (vm.isCollapsed) {
+          vm.isCollapsed = false;
+          vm.tableText = "Hide Table";
+        } else {
+          vm.isCollapsed = true;
+          vm.tableText = "Show Table";
+        }
+    };
+
   // Navigation functions
     function next(stage) { //https://codepen.io/jaa2015/pen/GqparY
         vm.formValidation = true;
@@ -95,7 +129,7 @@ export default function RegisterController($scope, $state, $http, RegisterServic
         RegisterService.SearchCompany(params)
         .then(
             function(response){
-                console.log('RESPONSE', response)
+
                 vm.companyPinLoading = false;
                 vm.noCompany = false;
                 vm.searchCompanyresponse = response;
@@ -106,6 +140,8 @@ export default function RegisterController($scope, $state, $http, RegisterServic
                     Object.keys(response).map(function(o, k){
                         vm.formData[o] = response[o];
                     })
+                    vm.formData.USstate = vm.formData.usstate;
+                    delete vm.formData.usstate;
                     $scope.selectedItemvalue = response.timezone;
                 }
 
@@ -121,7 +157,6 @@ export default function RegisterController($scope, $state, $http, RegisterServic
             
             },
             function(errResponse) {
-                console.log('error : ', errResponse);
                 vm.searchCompanyresponse = null;
                 vm.companyPinLoading = false;
                 vm.noCompany = true;
@@ -132,21 +167,53 @@ export default function RegisterController($scope, $state, $http, RegisterServic
 
     function register() {
         var type;
-        if(vm.searchCompanyresponse !== null || vm.searchCompanyresponse !== undefined) {
+
+        console.log(vm.searchCompanyresponse)
+        if(vm.searchCompanyresponse !== null && vm.searchCompanyresponse !== undefined) {
             type = 'subsequent'
         } 
 
         vm.dataLoading = true;
         if($scope.registrationForm.$valid) {
             vm.formValidation = false;
+            console.log(vm.formData)
             RegisterService.Create(vm.formData, type)
             .then(
                 function(response) {
-                    console.log('response : ', response)
+                    console.log('response register controller : ', response)
                     if(response.success) {
+                        var modalInstance = $uibModal.open({
+                            template: require('html-loader!../html/modals/modal.register-success.tpl.htm'),
+                            appendTo: undefined,
+                            controllerAs: '$ctrl',
+                            controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
+
+                               
+                                this.dismissModal = function () {
+                                    $uibModalInstance.close();
+                                };
+
+
+                            }]
+                        })                        
                         $state.go('login');
                     } else {
                         vm.dataLoading = false;
+                        $state.reload();
+                        var modalInstance = $uibModal.open({
+                            template: require('html-loader!../html/modals/modal.register-error.tpl.htm'),
+                            appendTo: undefined,
+                            controllerAs: '$ctrl',
+                            controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
+
+                               
+                                this.dismissModal = function () {
+                                    $uibModalInstance.close();
+                                };
+
+
+                            }]
+                        })
                     }
                 },
                 function(errResponse){

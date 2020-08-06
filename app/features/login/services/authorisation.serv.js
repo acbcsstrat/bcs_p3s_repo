@@ -58,7 +58,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
     }
 
     function SubmitForgottenEmail(params) {
-        console.log('params : ', params)
+
         var deferred = $q.defer();
 
         $http({
@@ -85,7 +85,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
     }
 
     function ResetPassword(params) {
-        console.log('params : ', params)
+
         var deferred = $q.defer();
 
         $http({

@@ -7,6 +7,8 @@ import TimezoneService from '../../global/services/app.timezone.serv.js';
 
 import confrimPwTo from '../../global/directives/confirm-password-check.directive.js';
 
-export default angular.module('ppApp.register', [RegisterService, confrimPwTo, TimezoneService])
+import zxPasswordMeter from '../../global/directives/zx-password-meter.directive.js';
+
+export default angular.module('ppApp.register', [RegisterService, confrimPwTo, zxPasswordMeter, TimezoneService])
 	.controller('RegisterController', RegisterController)
 	.name

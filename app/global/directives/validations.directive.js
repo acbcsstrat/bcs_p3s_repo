@@ -180,81 +180,6 @@ function uiSelectRequired() {
         }
     };
 };
-// function checkStrength() {
-
-//     return {
-//         replace: false,
-//         restrict: 'EACM',
-//         link: function (scope, iElement, iAttrs) {
-//             console.log(scope)
-//             var strength = {
-//                 colors: ['#e30613', '#f9b233', '#53ab58', '#418746'],
-//                 measureStrength: function (p) {
-//                     var _force = 0;                    
-//                     var _regex = /[$-/:-?{-~!"^_`\[\]]/g;
-                                          
-//                     var _lowerLetters = /[a-z]+/.test(p);                    
-//                     var _upperLetters = /[A-Z]+/.test(p);
-//                     var _numbers = /[0-9]+/.test(p);
-//                     var _symbols = _regex.test(p);
-                                          
-//                     var _flags = [_lowerLetters, _upperLetters, _numbers, _symbols];                    
-//                     var _passedMatches = $.grep(_flags, function (el) { return el === true; }).length;                                          
-                    
-//                     _force += 2 * p.length + ((p.length >= 10) ? 1 : 0);
-//                     _force += _passedMatches * 10;
-                        
-//                     // penality (short password)
-//                     _force = (p.length <= 6) ? Math.min(_force, 10) : _force;                                      
-                    
-//                     // penality (poor variety of characters)
-//                     _force = (_passedMatches == 1) ? Math.min(_force, 10) : _force;
-//                     _force = (_passedMatches == 2) ? Math.min(_force, 20) : _force;
-//                     _force = (_passedMatches == 3) ? Math.min(_force, 30) : _force;
-                    
-//                     return _force;
-
-//                 },
-//                 getColor: function (s) {
-
-//                     var idx = 0;
-//                     if (s <= 10) { idx = 0; }
-//                     else if (s <= 20) { idx = 1; }
-//                     else if (s <= 30) { idx = 2; }
-//                     else { idx = 3; }
-//                     // else { idx = 4; }
-//                     return { idx: idx + 1, col: this.colors[idx] };
-
-//                 }
-//             };
-
-//             var updatePasswordStrength = function (viewValue) {
-//                 iElement.css({ "display": "inline" });
-//                 if (!viewValue || viewValue === '') {
-//                     iElement.children('li')
-//                     .css({ "background": "#DDD" })
-//                 } else {
-
-//                     var color = strength.getColor(strength.measureStrength(viewValue));
-//                     iElement.children('li')
-//                     .css({ "background": "#DDD" })
-//                     .slice(0, color.idx)
-//                     .css({ "background": color.col });
-
-//                 }
-
-//                 return viewValue;
-
-//             };
-
-//             scope.userProfileForm[iAttrs.checkStrength].$parsers.unshift(updatePasswordStrength);
-//             scope.userProfileForm[iAttrs.checkStrength].$formatters.unshift(updatePasswordStrength);
-
-//         },
-//         template: '<li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li><li class="point md-point lg-point"></li>'
-//     };
-// }
-
 
 function refValidate() {
 
@@ -339,42 +264,6 @@ function selectNgValidationFiles() { //if files to be uploaded vary in future, a
     }
 };
 
-function zxPasswordMeter() {
-    return {
-        scope: {
-            value: "@",
-            max: "@?"
-        },
-        template: require("html-loader!./html/password-meter.tpl.htm"),
-        link: function(scope) {
-            scope.type = 'danger';
-            scope.max = (!scope.max) ? 100 : scope.max;
-
-            scope.$watch('value', function(newValue) {
-                console.log(newValue)
-                var strenghPercent = newValue / scope.max;
-            
-                if (strenghPercent === 0) {
-                  scope.text = 'V.Weak';
-                } else if (strenghPercent <= 0.25) {
-                  scope.type = 'danger';
-                  scope.text = 'Weak';
-                } else if (strenghPercent <= 0.50) {
-                  scope.type = 'warning';
-                  scope.text = 'Moderate';
-                } else if (strenghPercent <= 0.75) {
-                  scope.type = 'warning';
-                  scope.text = 'Strong';
-                } else {
-                  scope.type = 'success';
-                  scope.text = 'Perfect';
-                }
-
-            });
-        }
-    }
-}
-
 export default angular.module('directives.validation-rules', [])
     .directive('validateName', validateName)
     .directive('validateNumbers', validateNumbers)
@@ -382,7 +271,6 @@ export default angular.module('directives.validation-rules', [])
     .directive('validateEmail', validateEmail)
     .directive('validateAddress', validateAddress)
     .directive('validateZip', validateZip)
-    .directive('zxPasswordMeter', zxPasswordMeter)
     .directive('refValidate', refValidate)
     .directive('selectNgFiles', selectNgFiles)
     .directive('selectNgValidationFiles', selectNgValidationFiles)
