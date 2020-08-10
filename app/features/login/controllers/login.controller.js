@@ -6,6 +6,7 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
 
     vm.login = login;
     vm.credentials = {};
+    vm.incorrectCredentials = false;
 
     function login(data) {
 
@@ -21,6 +22,7 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
                 vm.dataLoading = false;
 
                 if(response.data.response === 'success') {
+                    vm.incorrectCredentials = false;
                     var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
                     $rootScope.globals = {
                         currentUser: {
@@ -36,6 +38,8 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
                     $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
                     $state.go('dashboard', {})
                          
+                } else {
+                    vm.incorrectCredentials = true;
                 }
 
         })
