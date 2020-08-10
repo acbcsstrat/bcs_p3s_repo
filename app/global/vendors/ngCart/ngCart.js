@@ -212,7 +212,7 @@ export default angular.module('ngCart', [directives])
 
         };
 
-        this.removeItemById = function (id) {
+        this.removeItemById = function (id, patentpace) {
             
             var item;
             var cart = this.getCart();
@@ -224,18 +224,19 @@ export default angular.module('ngCart', [directives])
             this.setCart(cart);
             $rootScope.$broadcast('ngCart:itemRemoved', item);
             $rootScope.$broadcast('ngCart:change', {});
+            if(patentcase !== true) {            
+                var modalInstance = $uibModal.open({
+                    template: require('html-loader!./html/modal.confirm-remove-action.tpl.htm'),
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', function($uibModalInstance) {
+                        this.dismissModal = function () {
+                            $uibModalInstance.close();
+                        };
 
-            var modalInstance = $uibModal.open({
-                template: require('html-loader!./html/modal.confirm-remove-action.tpl.htm'),
-                appendTo: undefined,
-                controllerAs: '$ctrl',
-                controller: ['$uibModalInstance', function($uibModalInstance) {
-                    this.dismissModal = function () {
-                        $uibModalInstance.close();
-                    };
-
-                }]
-            })
+                    }]
+                })
+            }
 
         };
 

@@ -180,7 +180,11 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
             return cartItems.indexOf(r) >= 0;
         })      
 
-        ngCart.removeItemById(found)
+        if(found) {
+            ngCart.removeItemById(found, true)
+        }
+
+        
 
         CasesRestService.deletePatent(patent.patentID)
         .then(
