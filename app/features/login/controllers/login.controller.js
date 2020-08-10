@@ -16,40 +16,27 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
         }
         AuthorisationService.Login(params)
         .then(
-            function(){
-                vm.dataLoading = false;
-                // CoreService.checkCases()
-                // .then(
-                //     function(response){
-                //         console.log('response : ', response)
-                //         return response
-                //     },
-                //     function(errReponse){
-                //         console.log('errReponse : ', errReponse)
-                //         return errResponse
-                //     }
-                // )
-                // .then(
-                //     function(status){
-                //         console.log(status)
-                //         if(status === true) {
-                //             var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
-                //             $rootScope.globals = {
-                //                 currentUser: {
-                //                     username: vm.credentials.username,
-                //                     authdata: authdata
-                //                 }
-                //             };
-                //             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+            function(response){
 
-                //             // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
-                //             var cookieExp = new Date();
-                //             cookieExp.setDate(cookieExp.getDate() + 7);
-                //             $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
-                //             $state.go('dashboard', {})
-                //         } 
-                //     }
-                // )
+                vm.dataLoading = false;
+
+                if(response.data.response === 'success') {
+                    var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
+                    $rootScope.globals = {
+                        currentUser: {
+                            username: vm.credentials.username,
+                            authdata: authdata
+                        }
+                    };
+                    $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+
+                    // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
+                    var cookieExp = new Date();
+                    cookieExp.setDate(cookieExp.getDate() + 7);
+                    $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
+                    $state.go('dashboard', {})
+                         
+                }
 
         })
     };

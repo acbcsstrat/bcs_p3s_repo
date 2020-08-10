@@ -33,6 +33,14 @@
          }
 
       </script>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> fe-branch-registration
+>>>>>>> fe-branch-registration
       
        <script> 
           
@@ -64,6 +72,13 @@
 				});
        });
         </script> 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> master-merge
+>>>>>>> fe-branch-registration
+>>>>>>> fe-branch-registration
 
    </head>
 
@@ -86,7 +101,19 @@
                </div>
                <div class="row">
                   <div class="col-md-12">
+<<<<<<< HEAD
                      <form id="ppLoginForm"  class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm"  class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+=======
+                     <form id="ppLoginForm"  class="form" data-parsley-validate="">
+>>>>>>> master-merge
+>>>>>>> fe-branch-registration
+>>>>>>> fe-branch-registration
                         <div class="form-group row m-b-sm">
                            <div class="col-md-12">
                               <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username/Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
