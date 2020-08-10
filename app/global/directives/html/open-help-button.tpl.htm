@@ -1,0 +1,15 @@
+<div class="open-help-panel">
+	<div class="btn-help-inner" uib-popover-template="'openpaneltpl.html'" popover-trigger="'none'" popover-is-open="displayHelp"  popover-placement="left">
+		<div class="btn btn-help d-flex align-items-center justify-content-center" >
+			<i class="fas fa-question fa-2x"></i>
+		</div>
+	</div>
+</div>
+<script type="text/ng-template" id="openpaneltpl.html">
+    <button class="btn btn-no-bg mdtooltip-close" data-ng-click="displayFirstHelp(false)">
+        <i class="fal fa-times fa-lg txt-black"></i>
+    </button>
+    <div>
+        <p>If you need help or information on any features within the application, just click on the question mark</p>
+    </div>
+</script>
