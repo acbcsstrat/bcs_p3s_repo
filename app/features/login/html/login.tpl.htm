@@ -25,7 +25,7 @@
 				        </div>
 				        <p class="font-body m-t-xs m-b-xs txt-phase-red" data-ng-show="$ctrl.incorrectCredentials">You have entered incorrect username and/or password details. Please try again</p>
 				        <div class="form-actions text-right">
-				            <button type="submit" data-ng-disabled="form.$invalid || $ctrl.dataLoading" class="btn btn--lg btn-block btn--green pill-radius">Login</button>
+				            <button type="submit" data-ng-disabled="form.$invalid || $ctrl.dataLoading" class="btn btn--lg btn-block btn--green d-flex justify-content-center align-items-center pill-radius" ><i class="fa fa-spinner fa-spin fa-2x fa-fw btn-spinner m-r-xs" data-ng-if="$ctrl.dataLoading"></i>Login</button>
 				        </div>
 				    </form>
              		<div class="row">
