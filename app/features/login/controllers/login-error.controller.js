@@ -1,6 +1,6 @@
-LoginController.$inject = ['$state', '$rootScope','$http', '$scope', '$cookies', 'AuthorisationService', 'CoreService']
+LoginErrorController.$inject = ['$state', '$rootScope','$http', '$scope', '$cookies', 'AuthorisationService', 'CoreService']
 
-export default function LoginController($state, $rootScope, $http, $scope, $cookies, AuthorisationService, CoreService) {
+export default function LoginErrorController($state, $rootScope, $http, $scope, $cookies, AuthorisationService, CoreService) {
 
     var vm = this;
 

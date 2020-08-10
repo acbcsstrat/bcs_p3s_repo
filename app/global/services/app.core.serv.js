@@ -31,13 +31,16 @@ function CoreService($q, $timeout, $http) {
     }
 
     function checkCases() {
+        console.log('cases service hit')
         var deferred = $q.defer();
         $http.get(ppdomain+'haveGotAnyPatents/')
         .then(
             function(response) {
+                console.log(response)
                 deferred.resolve(response.data);
             },
             function(errResponse){
+                console.log(errResponse)
                 console.error('Error : ', errResponse);
                 deferred.resolve(errResponse);
             }
