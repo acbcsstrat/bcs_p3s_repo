@@ -180,8 +180,9 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
             RegisterService.Create(vm.formData, type)
             .then(
                 function(response) {
+  
                     vm.dataLoading = false;
-                    if(response.success) {
+                    if(response.response === 'success') {
                         var modalInstance = $uibModal.open({
                             template: require('html-loader!../html/modals/modal.register-success.tpl.htm'),
                             appendTo: undefined,
@@ -197,11 +198,9 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
                             }]
                         })                        
                         $state.go('login');
-                    } 
-                },
-                function(errResponse){
-                    vm.dataLoading = false;
-                    $state.go($state.current, {}, {reload: true});
+                    } else {
+                        vm.dataLoading = false;
+                        $state.go($state.current, {}, {reload: true});
                         var modalInstance = $uibModal.open({
                             template: require('html-loader!../html/modals/modal.register-error.tpl.htm'),
                             appendTo: undefined,
@@ -215,7 +214,10 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
 
 
                             }]
-                        })                  
+                        })                            
+                    }
+
+
                 }
             );
 
