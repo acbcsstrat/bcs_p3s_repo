@@ -197,10 +197,7 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
                             }]
                         })                        
                         $state.go('login');
-                    } else {
-                        
-
-                    }
+                    } 
                 },
                 function(errResponse){
                     vm.dataLoading = false;

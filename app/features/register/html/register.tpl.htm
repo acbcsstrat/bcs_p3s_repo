@@ -284,11 +284,8 @@
                             <div class="col-md-12 col-xl-12 d-flex justify-content-between">
                                 <a class="btn btn--lg btn--bordered grey pill-radius txt-white" data-ng-click="$ctrl.back('stage1')">
                                     <i class="far fa-angle-left"></i> Business Details 
-                                </a>    
-                                <div data-ng-if="$ctrl.dataLoading" class="d-inline m-l-sm">
-                                    <i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>
-                                </div>                                  
-                                <input type="submit" name="formSubmit" class="btn btn--lg btn--green pill-radius" value="Create account" data-ng-disabled="registrationForm.$invalid">
+                                </a>                             
+                                <button type="submit" name="formSubmit" class="btn btn--lg btn--green pill-radius" value="" data-ng-disabled="registrationForm.$invalid"><i class="fa fa-spinner fa-spin fa-2x fa-fw  m-r-xs" data-ng-if="$ctrl.dataLoading"></i>Create account</button>
                             </div>
 
                         </div>
