@@ -31,26 +31,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                 throw new Error("Ooops, something went wrong, " + err);
             });
         }
-    })
-    .state('login_error', {
-        url: '/login_error',
-        template: require('html-loader!./features/login/html/login-error.tpl.htm'),
-        controller: 'LoginErrorController',
-        controllerAs: '$ctrl',
-        lazyLoad: function($transition$) {
-
-            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
-            
-            // !!! Dynamic import !!!
-            return import(/* webpackChunkName: "index" */ "./features/login/index.js")
-            .then(function(mod) {
-                $ocLazyLoad.inject(mod.default)
-            })
-            .catch(err => {
-                throw new Error("Ooops, something went wrong, " + err);
-            });
-        }
-    })    
+    }) 
     .state('forgot-password', {
         url: '/forgot-password',
         template: require('html-loader!./features/forgot-password/html/forgot-password.tpl.htm'),
