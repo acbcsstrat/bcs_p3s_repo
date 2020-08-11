@@ -7,6 +7,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
     $scope.filter = {};
     $scope.tooltip1 = true;
     var displayHelpTimeout;
+    var panelRef;
 
     function select(i) {
         vm.selected = i;
@@ -303,10 +304,18 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                     }
                 );
 
+
             } //showAddPatentPanel end]
 
         }
     )
+
+    
+    $scope.$on('$destroy', function(){
+        if(panelRef) {
+            panelRef.close()
+        }
+    })
 
     //SEARCH ADD PATENT
 
