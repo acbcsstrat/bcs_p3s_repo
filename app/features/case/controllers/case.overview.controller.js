@@ -18,6 +18,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     $scope.showOptions = false;
     $scope.activeLeft = 0;
     $scope.closeCaseoverview = closeCaseoverview;
+    $scope.renewalHistory = null;
 
     var chartTimeout;
     var originatorEv;

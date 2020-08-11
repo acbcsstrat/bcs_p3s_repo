@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-xl-12">
 				<div class="scrollable-area renewalhistory-table scrollable-area--no-shadow sticky-table">
-					<table class="t-data" data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+					<table class="t-data m-t-lg" data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
 						<tbody class="sticky-tbody">
 							<tr class="t-data__row border-grey-xs--btm">
 								<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold sticky-td">Renewal Year</td>
@@ -18,11 +18,11 @@
 								<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold sticky-td">Cost Breakdown</td>
 								<td class="text-left align-top t-data__w15">
 									<table class="t-data table-borderless">
-										<tr class="t-data__row">
+										<tr>
 											<td class="t-data__td text-left font-h4">Official fee:</td>
 											<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>
 										</tr>
-										<tr class="t-data__row">
+										<tr>
 											<td class="t-data__td text-left font-h4">Patent Place fees:</td>							
 											<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.subTotalUSD - renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>							
 											
