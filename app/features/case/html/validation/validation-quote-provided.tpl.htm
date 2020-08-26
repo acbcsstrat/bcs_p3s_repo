@@ -1,0 +1,57 @@
+<div class="row m-b-sm">
+	<div class="col-xl-12 m-b-sm">	
+	    <h3 class="font-weight-bold font-h3 m-b-sm">Validations</h3>
+	    <p class="font-body">Deadline for instruction and payment: <span class="font-weight-bold" data-ng-bind="$ctrl.patent.purchaseQuoteDate | date: 'MMMM d, y'"></span></p>
+	</div>
+	<div class="col-xl-12">	
+		<p class="m-b-sm">Your validation quote has been generated and the fees are now available to view through the 'Fee breakdown' tab. Displayed below are the states that are included in the quote. If you want to request a new quote, click 'Request new quote'.</p>
+		<p class="font-h4">This generated quote will exprie on: <span lass="font-weight-bold" data-ng-bind="$ctrl.patent.validationQuoteUI.quoteExpiryDate | date: 'MMMM d, y'"></span></p>
+	</div>
+</div>
+<div class="form-group row m-b-md" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates.length">
+	<div class="col-xl-12">
+		<h4 class="font-weight-medium font-h4">Contracting States</h4>
+	    <div class="row">
+	    	<div class="col-xl-2 m-t-sm d-flex justify-content-center" data-ng-repeat="designatedStates in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.designatedStates" data-ng-init="designatedStates.selected = true;">
+				<p class="cursor-help">{{designatedStates.stateCode}}
+		            <md-tooltip md-delay="200" md-direction="right" md-z-index="999">
+		              	{{designatedStates.stateName}}
+		            </md-tooltip>
+				</p>
+	    	</div>
+		</div>
+	</div>
+</div>
+<div class="form-group row m-b-md" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates.length > 0">
+	<div class="col-xl-12">	
+	    <h4 class="font-weight-medium font-h4">Extension States</h4>
+	    <div class="row">
+		    <div class="col-xl-2 m-t-sm d-flex justify-content-center" data-ng-repeat="extensionStates in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.extensionStates" data-ng-init="extensionStates.selected = true;">
+				<p class="cursor-help">{{extensionStates.stateCode}}
+		            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
+		              	{{extensionStates.stateName}}
+		            </md-tooltip>	
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="form-group row m-b-md" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].validationFeeUI.validationStates.length > 0">
+	<div class="col-xl-12">	
+	    <h4 class="font-weight-medium font-h4">Validation States</h4>
+	    <div class="row">
+		    <div class="col-xl-2 m-t-sm d-flex justify-content-center" data-ng-repeat="validationStates in $ctrl.patent.p3sServicesWithFees[0].validationFeeUI.validationStates" data-ng-init="validationStates.selected = true;">
+				<p class="cursor-help">{{validationStates.stateCode}}
+		            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
+		              	{{validationStates.stateName}}
+		            </md-tooltip>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 text-right">
+		<button class="btn btn--green btn--lg pill-radius m-t-sm" data-ng-click="$ctrl.requestNewQuote()">Request new quote</button>
+	</div>
+</div>
