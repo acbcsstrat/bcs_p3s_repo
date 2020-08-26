@@ -179,10 +179,10 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
             delete vm.formData.tandc;
             RegisterService.Create(vm.formData, type)
             .then(
-                function(response) {
-  
+                function(data) {
+
                     vm.dataLoading = false;
-                    if(response.response === 'success') {
+                    if(data.response === 'success') {
                         var modalInstance = $uibModal.open({
                             template: require('html-loader!../html/modals/modal.register-success.tpl.htm'),
                             appendTo: undefined,
@@ -218,6 +218,24 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
                     }
 
 
+                },
+                function(errResponse){
+                    vm.dataLoading = false;
+                    $state.go($state.current, {}, {reload: true});
+                    var modalInstance = $uibModal.open({
+                        template: require('html-loader!../html/modals/modal.register-error.tpl.htm'),
+                        appendTo: undefined,
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
+
+                           
+                            this.dismissModal = function () {
+                                $uibModalInstance.close();
+                            };
+
+
+                        }]
+                    })        
                 }
             );
 
