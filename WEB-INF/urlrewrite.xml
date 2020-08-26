@@ -30,6 +30,10 @@
 	    <from>/index.htm</from>
 	    <to type="passthrough">/dist/index.html</to>
     </rule>
+    <!-- <rule>
+	    <from>/index.htm</from>
+	    <to type="redirect">%{context-path}/index.htm#!/login</to>
+    </rule> -->
     <rule>
 	    <from>/login</from>
 	    <to type="redirect">%{context-path}/index.htm#!/login</to>

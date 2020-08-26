@@ -304,12 +304,10 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                     }
                 );
 
-
             } //showAddPatentPanel end]
 
         }
     )
-
     
     $scope.$on('$destroy', function(){
         if(panelRef) {

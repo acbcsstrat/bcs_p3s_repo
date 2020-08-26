@@ -34,6 +34,7 @@
 
       </script>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
@@ -41,6 +42,8 @@
 =======
 >>>>>>> fe-branch-registration
 >>>>>>> fe-branch-registration
+=======
+>>>>>>> master
       
        <script> 
           
@@ -73,12 +76,15 @@
        });
         </script> 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
 >>>>>>> master-merge
 >>>>>>> fe-branch-registration
 >>>>>>> fe-branch-registration
+=======
+>>>>>>> master
 
    </head>
 
@@ -102,6 +108,7 @@
                <div class="row">
                   <div class="col-md-12">
 <<<<<<< HEAD
+<<<<<<< HEAD
                      <form id="ppLoginForm"  class="form" data-parsley-validate="">
 =======
 <<<<<<< HEAD
@@ -114,6 +121,9 @@
 >>>>>>> master-merge
 >>>>>>> fe-branch-registration
 >>>>>>> fe-branch-registration
+=======
+                     <form id="ppLoginForm"  class="form" data-parsley-validate="">
+>>>>>>> master
                         <div class="form-group row m-b-sm">
                            <div class="col-md-12">
                               <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username/Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
