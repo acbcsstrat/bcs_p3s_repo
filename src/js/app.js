@@ -57,20 +57,25 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
 
         // redirect to login page if not logged in and trying to access a restricted page
 
-        var restrictedPage = $.inArray($location.path(), ['/login', '/login_error','/register', '/forgot-password', '/reset-password']) === -1; //if it doesnt contain logi or registr
+        var restrictedPage = $.inArray($location.path(), ['/login', '/login_error','/register', '/forgot-password', '/reset-password', '/reset-password/']) === -1; //if it doesnt contain logi or registr
         var loggedIn = $rootScope.globals.currentUser;
 
-        if(!restrictedPage) {
+        var phrase = $location.path();
+        var myRegexp = /reset-password\/(.*)/;
+        var match = myRegexp.exec(phrase); //if match == null, means that they are not on reset-password
+
+        if(!restrictedPage || match !== null) { //if pre login or on reset-password
             $rootScope.authorised = false;
         }
 
-        if (restrictedPage && !loggedIn) {
+        if (restrictedPage && !loggedIn && match == null) {
+            
             $rootScope.authorised = false;
             $location.path('/login');
 
         }
 
-        if(restrictedPage && loggedIn) {
+        if(restrictedPage && loggedIn && match == null) {
             $rootScope.authorised = true;
             PpnumberService.fetchNumber()
             .then(

@@ -9,7 +9,6 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     window.ppdomain = "http://localhost:8080/p3sweb/";
 
     $urlRouterProvider 
-        .when('', '/login')
         .otherwise("/login")
 
     $stateProvider
@@ -51,7 +50,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         }
     })    
     .state('reset-password', {
-        url: '/reset-password',
+        url: '/reset-password/{path:.*}',
         template: require('html-loader!./features/forgot-password/html/reset-password.tpl.htm'),
         controller: 'ResetPasswordController',
         controllerAs: '$ctrl',
@@ -449,7 +448,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         .fontSet('fa', 'FontAwesome');
 
 
-    IdleProvider.idle(500);
+    IdleProvider.idle(240);
     IdleProvider.timeout(30);
     KeepaliveProvider.interval(20);
 
