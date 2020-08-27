@@ -9,6 +9,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     window.ppdomain = "http://localhost:8080/p3sweb/";
 
     $urlRouterProvider 
+        .when('/reset-password', '/reset-password/')
         .otherwise("/login")
 
     $stateProvider
@@ -54,6 +55,35 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         template: require('html-loader!./features/forgot-password/html/reset-password.tpl.htm'),
         controller: 'ResetPasswordController',
         controllerAs: '$ctrl',
+        resolve: {
+            verification: ['$http', '$state', '$location', '$timeout', function($http, $state, $location, $timeout) {
+
+                var params = {
+                    verifyLink: link,
+                    emailAddress: email
+                }
+
+                $http({
+                    method: 'POST',
+                    url: 'http://localhost:8080/p3sweb/prelogin/rest-reset-password/',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    params: params
+                })
+                .then(
+                    function(response){
+                        return;
+                    },
+                    function(errResponse){
+                        console.error('Error submitting request. Error : ', errResponse)
+                        if(response.data.response == 'error') {
+                            $state.go('login', {})
+                        }
+                    }
+                )
+            }]
+        },
         lazyLoad: function($transition$) {
             const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
             
