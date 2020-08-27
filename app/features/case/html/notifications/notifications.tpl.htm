@@ -57,25 +57,25 @@
 	            </div>
 			</div>
 		</div>
-		<div data-ng-if="$ctrl.toBlueOrNotToBlue">
-			<div class="d-flex align-items-center">
-				<div class="notification-heading">
-					<span class="font-h4 font-weight-bold txt-phase-red">Red</span>
-				</div>	
-				<div class="border-grey-xs--left">
-					<div class="py-2 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.red track by $index" index="$index">
-			    		<div class="d-flex flex-wrap">
-			                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
-		                        <label class="notification-radio">
-		                          	<input type="checkbox" data-ng-model="item.isOn">
-		                          	<span class="checkmark red"></span>
-		                        </label>
-			                    <span class="font-body checkbox-text">{{item.title}}</span>
-			                </div>
-			            </div>
-					</div>
+		<div class="d-flex align-items-center">
+			<div class="notification-heading">
+				<span class="font-h4 font-weight-bold txt-phase-red">Red</span>
+			</div>	
+			<div class="border-grey-xs--left">
+				<div class="py-2 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.red track by $index" index="$index">
+		    		<div class="d-flex flex-wrap">
+		                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+	                        <label class="notification-radio">
+	                          	<input type="checkbox" data-ng-model="item.isOn">
+	                          	<span class="checkmark red"></span>
+	                        </label>
+		                    <span class="font-body checkbox-text">{{item.title}}</span>
+		                </div>
+		            </div>
 				</div>
 			</div>
+		</div>
+		<div data-ng-if="$ctrl.toBlueOrNotToBlue">
 			<div class="d-flex align-items-center">
 				<div class="notification-heading">
 					<span class="font-h4 font-weight-bold txt-phase-blue">Blue</span>

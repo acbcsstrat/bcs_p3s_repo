@@ -74,7 +74,7 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
                 vm.notifications[colors[i]] = ChunkDataService.chunkData(fetchNotificationUi(colors[i], caseSelected[vm.notificationUi]), 6)//chunk data makes sure the coluns go no more than 6
             }
             if(!vm.toBlueOrNotToBlue) {
-                if(i == 2) { break }; //if only green and amber available
+                if(i == 3) { break }; //if only green, amber and red available
                 vm.notifications[colors[i]] = ChunkDataService.chunkData(fetchNotificationUi(colors[i], caseSelected[vm.notificationUi]), 6)
             }
         }        
