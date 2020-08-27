@@ -58,6 +58,10 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         resolve: {
             verification: ['$http', '$state', '$location', '$timeout', function($http, $state, $location, $timeout) {
 
+                var location = $location.url()
+                var link = parseInt(location.replace(/[^0-9]/g,''));
+                var email = location.split('=')[1];
+
                 var params = {
                     verifyLink: link,
                     emailAddress: email
