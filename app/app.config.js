@@ -56,10 +56,10 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         controller: 'ResetPasswordController',
         controllerAs: '$ctrl',
         resolve: {
-            verification: ['$http', '$state', '$location', '$timeout', function($http, $state, $location, $timeout) {
+            verification: ['$http', '$state', '$location', '$timeout', '$uibModal', function($http, $state, $location, $timeout, $uibModal) {
 
                 var location = $location.url()
-                var link = parseInt(location.replace(/[^0-9]/g,''));
+                var link = location.replace(/[^0-9]/g,'');
                 var email = location.split('=')[1];
 
                 var params = {
@@ -69,7 +69,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
 
                 $http({
                     method: 'POST',
-                    url: 'http://localhost:8080/p3sweb/prelogin/rest-reset-password/',
+                    url: 'http://localhost:8080/p3sweb/rest-reset-password/',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
@@ -81,9 +81,34 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                     },
                     function(errResponse){
                         console.error('Error submitting request. Error : ', errResponse)
-                        if(response.data.response == 'error') {
-                            $state.go('login', {})
-                        }
+
+                        
+                        var modalInstance = $uibModal.open({
+                            template: require('html-loader!./features/forgot-password/html/modals/modal.reset-password-verification-error.tpl.htm'),
+                            appendTo: undefined,
+                            controllerAs: '$ctrl',
+                            controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                                this.dismissModal = function() {
+                                    $uibModalInstance.close();
+                                };
+                                
+                                this.deletePatent = function() {
+                                    deletePatent(id);
+                                    $timeout(function() {
+                                        $uibModalInstance.close();
+                                    }, 300);
+                                };
+
+                                this.cancelDeletion = function() {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+
+                            }]
+                        });
+
+                        $state.go('login', {})
+
                     }
                 )
             }]

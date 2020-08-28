@@ -43,7 +43,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
 
         $http({
             method: 'POST',
-            url: 'http://localhost:8080/p3sweb/prelogin/rest-forgot-password/',
+            url: 'http://localhost:8080/p3sweb/rest-forgot-password/',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
