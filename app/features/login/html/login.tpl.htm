@@ -14,18 +14,24 @@
            	</div>
            	<div class="row">
               	<div class="col-md-12">   		
-				    <form name="form" data-ng-submit="$ctrl.login(form)" novalidate>
-				        <div class="form-group" data-ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
-				            <input type="text" name="j_username" id="username" class="form-control" data-ng-model="$ctrl.credentials.username" placeholder="Username" required />
-				            <span data-ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+				           	
+
+				    <form name="loginForm" data-ng-submit="$ctrl.login(form)" novalidate>
+				        <div class="form-group" data-ng-class="{ 'has-error': loginForm.j_username.$dirty && loginForm.j_username.$error.required &&  loginForm.j_username.$error.email}">
+				            <input type="text" name="j_username" class="form-control" data-ng-model="$ctrl.credentials.username" placeholder="Username" data-validate-email required>
+				            <p data-ng-show="loginForm.j_username.$dirty && loginForm.j_username.$error.required" class="txt-phase-red m-t-xs">Please provide a username</p>
+
+                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="loginForm.j_username.$error.validEmail && loginForm.j_username.$dirty">Please enter a valid email address</p>
+
+
 				        </div>
-				        <div class="form-group" data-ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-				            <input type="password" name="j_password" id="password" class="form-control" data-ng-model="$ctrl.credentials.password" placeholder="Password" required />
-				            <span data-ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+				        <div class="form-group" data-ng-class="{ 'has-error': loginForm.password.$dirty && loginForm.password.$error.required }">
+				            <input type="password" name="j_password" class="form-control" data-ng-model="$ctrl.credentials.password" placeholder="Password" required />
+				            <span data-ng-show="loginForm.password.$dirty && loginForm.password.$error.required" class="txt-phase-red">Password is required</span>
 				        </div>
 				        <p class="font-body m-t-xs m-b-xs txt-phase-red" data-ng-show="$ctrl.incorrectCredentials">You have entered incorrect username and/or password details. Please try again</p>
 				        <div class="form-actions text-right">
-				            <button type="submit" data-ng-disabled="form.$invalid || $ctrl.dataLoading" class="btn btn--lg btn-block btn--green d-flex justify-content-center align-items-center pill-radius" ><i class="fa fa-spinner fa-spin fa-2x fa-fw  m-r-xs" data-ng-if="$ctrl.dataLoading"></i>Login</button>
+				            <button type="submit" data-ng-disabled="$ctrl.dataLoading" class="btn btn--lg btn-block btn--green d-flex justify-content-center align-items-center pill-radius" ><i class="fa fa-spinner fa-spin fa-2x fa-fw  m-r-xs" data-ng-show="$ctrl.dataLoading"></i>Login</button>
 				        </div>
 				    </form>
              		<div class="row">

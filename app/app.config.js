@@ -507,7 +507,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         .fontSet('fa', 'FontAwesome');
 
 
-    IdleProvider.idle(240);
+    IdleProvider.idle(600);
     IdleProvider.timeout(30);
     KeepaliveProvider.interval(20);
 

@@ -1,6 +1,6 @@
-LoginController.$inject = ['$state', '$rootScope','$http', '$scope', '$cookies', 'AuthorisationService', 'CoreService']
+LoginController.$inject = ['$state', '$rootScope','$http', '$scope', '$timeout', '$cookies', 'AuthorisationService', 'CoreService']
 
-export default function LoginController($state, $rootScope, $http, $scope, $cookies, AuthorisationService, CoreService) {
+export default function LoginController($state, $rootScope, $http, $scope, $timeout,$cookies, AuthorisationService, CoreService) {
 
     var vm = this;
 
@@ -19,9 +19,13 @@ export default function LoginController($state, $rootScope, $http, $scope, $cook
         .then(
             function(response){
 
-                vm.dataLoading = false;
+                $timeout(function(){
+                    vm.dataLoading = false;
+                })
+                
 
                 if(response.data.response === 'success') {
+                    
                     vm.incorrectCredentials = false;
                     var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
                     $rootScope.globals = {

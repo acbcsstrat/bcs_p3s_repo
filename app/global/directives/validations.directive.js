@@ -101,6 +101,7 @@ function validateEmail(){
         link: function(scope, elem, attr, ctrl) {
 
             function myValidation(value) {
+                console.log(value)
                 if (regExp.test(value)) {
                     ctrl.$setValidity('validEmail', true);
                 } else {
