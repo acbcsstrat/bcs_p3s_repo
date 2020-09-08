@@ -10,6 +10,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
 
     $urlRouterProvider 
         .when('/reset-password', '/reset-password/')
+        .when('/new-user-verify', '/new-user-verify/')
         .otherwise("/login")
 
     $stateProvider
@@ -136,7 +137,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         }
     })
     .state('new-user-verify', {
-        url: '/new-user-verify',
+        url: '/new-user-verify/{path:.*}',
         template: require('html-loader!./features/register/html/verification.tpl.htm'),
         controller: 'VerifyAccountController',
         controllerAs: '$ctrl',
