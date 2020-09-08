@@ -54,6 +54,34 @@ function RegisterService($http, $q) {
 
     }
 
+    // function verifyDirect(params) {
+
+    //     var deferred = $q.defer();
+
+    //     var req = {
+    //         method: 'POST',
+    //         url: '../register/rest-new-user-verify/',
+    //         headers: {
+    //            'Content-Type': undefined
+    //         },
+    //         params: params
+            
+    //     }        
+
+    //     $http()
+    //     .then(
+    //         function(response){
+    //             console.log('success : ', response)
+    //         },
+    //         function(errResponse){
+    //             console.error('Error verifying account. Error: ', errResponse)
+    //         }
+    //     )
+
+    //     return deferred.promise
+
+    // }
+
     function SearchCompany(params) {
 
         var deferred = $q.defer();

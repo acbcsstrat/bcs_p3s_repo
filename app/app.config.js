@@ -92,17 +92,6 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                                 this.dismissModal = function() {
                                     $uibModalInstance.close();
                                 };
-                                
-                                this.deletePatent = function() {
-                                    deletePatent(id);
-                                    $timeout(function() {
-                                        $uibModalInstance.close();
-                                    }, 300);
-                                };
-
-                                this.cancelDeletion = function() {
-                                    $uibModalInstance.dismiss('cancel');
-                                };
 
                             }]
                         });
@@ -132,6 +121,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         controller: 'RegisterController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
+            console.log('yellow')
             const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
             
             // !!! Dynamic import !!!
@@ -142,6 +132,68 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             .catch(err => {
                 throw new Error("Ooops, something went wrong, " + err);
             });
+        },
+        resolve: {        
+            verification: ['$http', '$state', '$location', '$timeout', '$uibModal', function($http, $state, $location, $timeout, $uibModal) {
+ 
+                var location = $location.url()
+                var link = location.replace(/[^0-9]/g,'');
+                var email = location.split('=')[1];
+
+                var params = {
+                    verifyLink: link,
+                    emailAddress: email
+                }
+
+                if(link !== "" && email !== undefined) {                
+                    $http({
+                        method: 'POST',
+                        url: '../register/rest-new-user-verify/',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        params: params
+                    })
+                    .then(
+                        function(response){
+                            var modalInstance = $uibModal.open({
+                                template: require('html-loader!./features/register/html/modals/modal.verify-success.tpl.htm'),
+                                appendTo: undefined,
+                                controllerAs: '$ctrl',
+                                controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                                    this.dismissModal = function() {
+                                        $uibModalInstance.close();
+                                    };
+
+                                }]
+                            });                            
+                            $state.go('login', {})
+                            return;
+                        },
+                        function(errResponse){
+                            console.error('Error verifying account. Error : ', errResponse)
+
+                            
+                            var modalInstance = $uibModal.open({
+                                template: require('html-loader!./features/register/html/modals/modal.verify-error.tpl.htm'),
+                                appendTo: undefined,
+                                controllerAs: '$ctrl',
+                                controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                                    this.dismissModal = function() {
+                                        $uibModalInstance.close();
+                                    };
+
+                                }]
+                            });
+
+                            $state.go('login', {})
+
+                        }
+                    )
+                }
+            }]        
         }
     })
     .state('profile', {
