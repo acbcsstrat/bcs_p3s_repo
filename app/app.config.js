@@ -121,7 +121,27 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         controller: 'RegisterController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {
-            console.log('yellow')
+
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./features/register/index.js")
+            .then(function(mod) {
+                $ocLazyLoad.inject(mod.default)
+            })
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });
+
+        }
+    })
+    .state('new-user-verify', {
+        url: '/new-user-verify',
+        template: require('html-loader!./features/register/html/verification.tpl.htm'),
+        controller: 'VerifyAccountController',
+        controllerAs: '$ctrl',
+        lazyLoad: function($transition$) {
+
             const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
             
             // !!! Dynamic import !!!
@@ -148,7 +168,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                 if(link !== "" && email !== undefined) {                
                     $http({
                         method: 'POST',
-                        url: '../register/rest-new-user-verify/',
+                        url: '../rest-new-user-verify/',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },
@@ -195,7 +215,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                 }
             }]        
         }
-    })
+    })    
     .state('profile', {
         url: '/profile',
         template: require('html-loader!./features/profile/html/profile.tpl.htm'),
