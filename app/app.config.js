@@ -70,7 +70,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
 
                 $http({
                     method: 'POST',
-                    url: 'http://localhost:8080/p3sweb/rest-reset-password/',
+                    url: ppdomain + 'prelogin/rest-reset-password/',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
@@ -169,7 +169,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                 if(link !== "" && email !== undefined) {                
                     $http({
                         method: 'POST',
-                        url: '../rest-new-user-verify/',
+                        url: ppdomain+'prelogin/rest-new-user-verify/',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },

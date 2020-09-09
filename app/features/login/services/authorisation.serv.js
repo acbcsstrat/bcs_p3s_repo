@@ -19,7 +19,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
 
         $http({
             method: 'POST',
-            url: 'http://localhost:8080/p3sweb/resources/j_spring_security_check',
+            url: ppdomain+'resources/j_spring_security_check',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             params: params
         })
@@ -43,7 +43,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
 
         $http({
             method: 'POST',
-            url: 'http://localhost:8080/p3sweb/rest-forgot-password/',
+            url: ppdomain+'prelogin/rest-forgot-password/',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -69,7 +69,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
 
         $http({
             method: 'POST',
-            url: 'http://localhost:8080/p3sweb/rest-reset-password-submit/',
+            url: ppdomain+'prelogin/rest-reset-password-submit/',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
