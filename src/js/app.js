@@ -59,17 +59,17 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
         console.log('event : ', event)
         console.log('next : ', next)
 
-        var restrictedPage = $.inArray($location.path(), ['/login', '/login_error','/register', '/new-user-verify','/forgot-password', '/reset-password', '/reset-password/']) === -1; //if it doesnt contain logi or registr
+        var restrictedPage = $.inArray($location.path(), ['/login', '/login_error','/register', '/prelogin/new-user-verify','/forgot-password', '/reset-password', '/prelogin/reset-password/']) === -1; //if it doesnt contain logi or registr
         var loggedIn = $rootScope.globals.currentUser;
 
         var phrase = $location.path();
         var myRegexp; 
         if(next.includes('reset-password')) {
-            myRegexp = /reset-password\/(.*)/;
+            myRegexp = /prelogin\/reset-password\/(.*)/;
         } 
 
         if(next.includes('new-user-verify')) {
-             myRegexp = /new-user-verify\/(.*)/;
+             myRegexp = /prelogin\/new-user-verify\/(.*)/;
         }
 
         console.log('myRegexp : ', myRegexp)

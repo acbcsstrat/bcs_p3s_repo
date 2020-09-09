@@ -9,8 +9,9 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
     window.ppdomain = "http://localhost:8080/p3sweb/";
 
     $urlRouterProvider 
-        .when('/reset-password', '/reset-password/')
-        .when('/new-user-verify', '/new-user-verify/')
+
+        .when('/prelogin/reset-password', '/prelogin/reset-password')
+        .when('/prelogin/new-user-verify', '/prelogin/new-user-verify/')
         .otherwise("/login")
 
     $stateProvider
@@ -52,7 +53,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         }
     })    
     .state('reset-password', {
-        url: '/reset-password/{path:.*}',
+        url: '/prelogin/reset-password/{path:.*}',
         template: require('html-loader!./features/forgot-password/html/reset-password.tpl.htm'),
         controller: 'ResetPasswordController',
         controllerAs: '$ctrl',
@@ -137,7 +138,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         }
     })
     .state('new-user-verify', {
-        url: '/new-user-verify/{path:.*}',
+        url: '/prelogin/new-user-verify/{path:.*}',
         template: require('html-loader!./features/register/html/verification.tpl.htm'),
         controller: 'VerifyAccountController',
         controllerAs: '$ctrl',
@@ -165,7 +166,7 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                     verifyLink: link,
                     emailAddress: email
                 }
-
+                console.log(params)
                 if(link !== "" && email !== undefined) {                
                     $http({
                         method: 'POST',
@@ -213,6 +214,21 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
 
                         }
                     )
+                } else {
+                    var modalInstance = $uibModal.open({
+                        template: require('html-loader!./features/register/html/modals/modal.verify-error.tpl.htm'),
+                        appendTo: undefined,
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+                            this.dismissModal = function() {
+                                $uibModalInstance.close();
+                            };
+
+                        }]
+                    });
+
+                    $state.go('login', {})
                 }
             }]        
         }
