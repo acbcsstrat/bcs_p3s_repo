@@ -307,3 +307,10 @@ uib-progress.progressblue { height: 3rem; }
 .progress-bar-success {
     background-color: #5cb85c;
 }
+
+.nav-link {
+    &.disabled {
+        pointer-events: auto;
+        cursor: not-allowed;
+    }
+ }

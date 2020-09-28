@@ -18,12 +18,12 @@
 								<li class="nav-item">
 									<a class="nav-link d-flex flex-column" 
 									data-ng-disabled="validationNotification || noReminders"
-									data-ng-class="{'disabled': validationNotification, 'disabled' : noReminders, 'active': activeLeft === 1 }" 
+									data-ng-class="{'disabled': validationNotification || noReminders, 'active': activeLeft === 1 }" 
 									data-ng-click="$ctrl.processView('reminders', 1); activeLeft = 1;">
 										<span><i class="fal fa-exclamation-circle font-h3"></i></span>							
 										<span>Reminders</span>
 									</a>
-						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="validationNotification" class="font-h4">
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="99999" data-ng-show="validationNotification" class="font-h4">
 						              	Currently reminders are not provided for validations though this feature is coming soon.
 						            </md-tooltip>
 								</li>
@@ -60,7 +60,7 @@
 										<span><i class="fal fa-usd-circle font-h3"></i></span>
 										<span>Fee Breakdown</span>
 									</a>
-						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="notInProgress" class="font-h4">
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="99999" data-ng-show="notInProgress" class="font-h4">
 						              	This tab provides no information due the current status(es) of the European action(s).<br> Please check again once there is any progress with the application.
 						            </md-tooltip>
 								</li>
@@ -73,7 +73,7 @@
 										<span><i class="fal fa-chart-line font-h3"></i></span>
 										<span>FX Chart</span>
 									</a>
-						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="notInProgress || validationNotification" class="font-h4">
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="99999" data-ng-show="notInProgress || validationNotification" class="font-h4">
 						              	This tab provides no information due the current status(es) of the European action(s).<br> Please check again once there is any progress with the application.
 						            </md-tooltip>
 								</li>
@@ -86,7 +86,7 @@
 										<span> <i class="fal fa-chart-bar font-h3"></i> </span>
 										<span>Cost Chart</span>
 									</a>
-						            <md-tooltip md-delay="500" md-direction="right" md-z-index="999" data-ng-show="notInProgress || validationNotification" class="font-h4">
+						            <md-tooltip md-delay="500" md-direction="right" md-z-index="99999" data-ng-show="notInProgress || validationNotification" class="font-h4">
 						              	This tab provides no information due the current status(es) of the European action(s).<br> Please check again once there is any progress with the application.
 						            </md-tooltip>									
 								</li>								
