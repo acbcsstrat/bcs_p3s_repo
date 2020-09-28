@@ -24,7 +24,7 @@
 		    	<div class="col-xl-2 m-t-sm text-right" data-ng-repeat="designatedStates in $ctrl.validationInfo.designatedStates" data-ng-init="designatedStates.selected = true;">	    		
 					<div class="form-check form-check-inline">
 					  	<label class="form-check-label cursor-pointer" for="designatedStates.stateName">{{designatedStates.stateCode}}
-				            <md-tooltip md-delay="200" md-direction="right" md-z-index="999">
+				            <md-tooltip md-delay="200" md-direction="right" md-z-index="99999">
 				              	{{designatedStates.stateName}}
 				            </md-tooltip>					  		
 					  	</label>
@@ -42,7 +42,7 @@
 			    <div class="col-xl-2 m-t-sm text-right" data-ng-repeat="extensionStates in $ctrl.validationInfo.extensionStates" data-ng-init="extensionStates.selected = true;">
 					<div class="form-check form-check-inline">
 					  	<label class="form-check-label cursor-pointer" for="extensionStates.stateName">{{extensionStates.stateCode}}
-				            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
+				            <md-tooltip md-delay="300" md-direction="right" md-z-index="99999">
 				              	{{extensionStates.stateName}}
 				            </md-tooltip>	
 					  	</label>
@@ -59,7 +59,7 @@
 			    <div class="col-xl-2 m-t-sm text-right" data-ng-repeat="validationStates in $ctrl.validationInfo.validationStates" data-ng-init="validationStates.selected = true;">
 					<div class="form-check form-check-inline cursor-pointer">
 					  	<label class="form-check-label" for="{{validationStates.stateName}}">{{validationStates.stateCode}}
-				            <md-tooltip md-delay="300" md-direction="right" md-z-index="999">
+				            <md-tooltip md-delay="300" md-direction="right" md-z-index="99999">
 				              	{{validationStates.stateName}}
 				            </md-tooltip>	
 					  	</label>
