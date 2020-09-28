@@ -16,7 +16,7 @@ function TransactionService($http, $q) {
 
   	function transactionProgress(val, status) { //assigned to scope for child scope to access
 	    var transStatusArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Funds Sent', 'EPO Received', 'EPO Instructed', 'Completed'];
-	    var transStatusValidationArray = ['Initiated', 'Awaiting Funds', 'Processing Funds', 'Processing', 'Completed'];
+	    var transStatusValidationArray = ['Initiated', 'Awaiting Funds', 'Funds Received', 'Processing Funds', 'Processing', 'Completed'];
   		var arrayType;
   		if(val == true) {
   			arrayType = transStatusValidationArray;
@@ -26,6 +26,7 @@ function TransactionService($http, $q) {
 		var index = arrayType.indexOf(status);
 		var length = arrayType.length;
 		var percentage = Math.round(((index+1) * 100) / length);
+
 		return percentage;
   	}
 
@@ -77,6 +78,7 @@ function TransactionService($http, $q) {
 	                        data.latestTransStatus = 'Processing';
 	                    }
 	                }
+
 					data.actionProgress = transactionProgress(isValidation, data.latestTransStatus);
 
 					data.serviceUIs.map(function(o, i){ 
