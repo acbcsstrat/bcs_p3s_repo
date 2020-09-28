@@ -18,7 +18,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
         { name: 'poasProvided', url: require('html-loader!../html/validation/validation-poa-available.tpl.htm')},
         { name: 'noPoasProvided', url: require('html-loader!../html/validation/validation-nopoas-required.tpl.htm')},
         { name: 'workInProgress', url: require('html-loader!../html/validation/validation-wip.tpl.htm')},
-        { name: 'manual', url: require('html-loader!../html/validation/validation-available.tpl.htm')},
+        { name: 'manual', url: require('html-loader!../html/validation/validation-manual.tpl.htm')},
         { name: 'completed', url: require('html-loader!../html/validation/validation-completed.tpl.htm')}
     ];
 
