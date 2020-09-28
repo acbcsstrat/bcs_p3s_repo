@@ -6,11 +6,10 @@
 					<p class="font-body font-weight-medium m-b-sm">Transaction item {{$index + 1}} of {{$ctrl.transactionItem.serviceUIs.length}}</p>
 					<p class="font-body text-uppercase font-weight-bold m-b-xs">Details</p>
 					<p class="font-weight-bold font-body m-b-xs lh-default">Client Ref: 
-						<span data-ng-if="transaction.patentUI.clientRef !== ''" class="font-weight-normal lh-default" data-ng-bind="transaction.patentUI.clientRef"></span>
-						<span data-ng-if="transaction.patentUI.clientRef == ''" class="font-weight-normal txt-grey lh-default">[No client description provided]</span>
+						<span class="font-weight-normal lh-default" data-ng-bind="transaction.clientRef"></span>
 					</p>
 					<p class="font-weight-bold font-body m-b-xs lh-default">European Action: <span class="font-weight-normal lh-default text-capitalize" data-ng-bind="transaction.serviceType"></span></p>
-					<p class="font-weight-bold font-body m-b-xs lh-default">App No: <span class="font-weight-normal lh-default" data-ng-bind="transaction.patentUI.patentApplicationNumber || transaction.patentApplicationNumber"></span></p>
+					<p class="font-weight-bold font-body m-b-xs lh-default">App No: <span class="font-weight-normal lh-default" data-ng-bind="transaction.patentApplicationNumber || transaction.patentApplicationNumber"></span></p>
 					<p class="font-weight-bold font-body lh-default m-r-md">Transaction item status:
 						<span class="font-weight-normal font-body lh-default" data-ng-bind="transaction.transItemStatus"></span>
 						<button class="btn btn-no-bg">						

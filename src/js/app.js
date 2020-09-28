@@ -56,9 +56,6 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
 
         // redirect to login page if not logged in and trying to access a restricted page
-        console.log('event : ', event)
-        console.log('next : ', next)
-
         var restrictedPage = $.inArray($location.path(), ['/login', '/login_error','/register', '/prelogin/new-user-verify','/forgot-password', '/reset-password', '/prelogin/reset-password/']) === -1; //if it doesnt contain logi or registr
         var loggedIn = $rootScope.globals.currentUser;
 
@@ -72,7 +69,6 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
              myRegexp = /prelogin\/new-user-verify\/(.*)/;
         }
 
-        console.log('myRegexp : ', myRegexp)
         if(myRegexp !== undefined) {
             var match = myRegexp.exec(phrase); //if match == null, means that they are not on reset-password
         }
@@ -81,7 +77,7 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
         if(!restrictedPage || match !== null) { //if pre login or on reset-password
             $rootScope.authorised = false;
         }
-        console.log('match : ', match)
+
         if (restrictedPage && !loggedIn && match == null) {
             
             $rootScope.authorised = false;
