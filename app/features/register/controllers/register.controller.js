@@ -1,10 +1,11 @@
 import zxcvbn from 'zxcvbn';
 
-RegisterController.$inject = ['$scope', '$state', '$http', '$uibModal', 'RegisterService', '$location', '$rootScope', 'vcRecaptchaService', 'TimezoneService'];
+RegisterController.$inject = ['$scope', '$state', '$http', '$uibModal','$timeout', 'RegisterService', '$location', '$rootScope', 'vcRecaptchaService', 'TimezoneService'];
 
-export default function RegisterController($scope, $state, $http, $uibModal, RegisterService, $location, $rootScope, vcRecaptchaService, TimezoneService) {
+export default function RegisterController($scope, $state, $http, $uibModal, $timeout, RegisterService, $location, $rootScope, vcRecaptchaService, TimezoneService) {
 
     var vm = this;
+    var timezomeTimeout;
 
     vm.formData = {};
     vm.recap = {};
@@ -81,7 +82,10 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
         TimezoneService.fetchUsaTimeZones()
         .then(
             function(response){
-                vm.ustimezones = response;
+                timezomeTimeout = $timeout(function(){
+                    vm.ustimezones = response;
+                }, 300)
+                
             }
         )        
     }
@@ -242,4 +246,9 @@ export default function RegisterController($scope, $state, $http, $uibModal, Reg
         }
 
     }
+
+    $scope.$on('$destroy', function(){
+        console.log('destroy')
+        $timeout.cancel(timezomeTimeout)
+    })
 }
