@@ -14,23 +14,23 @@
 						<span class="font-weight-normal font-body lh-default" data-ng-bind="transaction.transItemStatus"></span>
 						<button class="btn btn-no-bg">						
 							<i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg" data-ng-if="$ctrl.transactionItem.hasFailed"></i>
-				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="999">
+				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="99999">
 								Unfortunately this transaction item has failed due to the reason of <span class="font-weight-medium">'{{$ctrl.transactionItem.failureReason}}'</span>. If you require further information or assitance, please email us at: support@ip.place. 			              	
 				            </md-tooltip>							
 						</button>
 						<button class="btn btn-no-bg">
 			            	<i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg" data-ng-if="!$ctrl.transactionItem.hasFailed">
 			            	</i>
-				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="999" data-ng-if="transaction.transItemStatus == 'Payment in progress'">
+				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="99999" data-ng-if="transaction.transItemStatus == 'Payment in progress'">
 								This is the process between asking us to complete a transaction and us sending the money to the patent office. We send an instruction to our payment partner who book the currency exchange transaction. Once we receive the money it's exchanged and sent on to the patent office.	              			              	
 				            </md-tooltip>
-				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="right" md-z-index="999" data-ng-if="transaction.transItemStatus == 'EPO Instructed'">
+				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="right" md-z-index="99999" data-ng-if="transaction.transItemStatus == 'EPO Instructed'">
 				              	This means that we've asked the EPO to complete the transaction. We're now just waiting for them to action this.          			              	
 				            </md-tooltip>
-				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="right" md-z-index="999" data-ng-if="transaction.transItemStatus == 'Processing'">
+				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="right" md-z-index="99999" data-ng-if="transaction.transItemStatus == 'Processing'">
 				              	The European patent validation work is now in progress. When the work is completed, you will be emailed a notification and the status of the transaciton will be updated to 'Completed'.              	
 				            </md-tooltip>
-				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="right" md-z-index="999" data-ng-if="transaction.transItemStatus == 'Completed'">
+				            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="right" md-z-index="99999" data-ng-if="transaction.transItemStatus == 'Completed'">
 				              	We've had confirmation that the instruction has gone through. You can download a copy of the invoice or any relevant certificates.       			              	
 				            </md-tooltip>
 						</button>
@@ -215,7 +215,7 @@
 	                            <div class="row m-b-sm" data-ng-repeat="state in transaction.allStates">
 	                                <div class="col-md-5 col-xl-5">
 	                                    <p class="font-weight-medium m-l-sm">{{state.stateCode}}:
-								            <md-tooltip md-delay="200" md-direction="right" md-z-index="999">
+								            <md-tooltip md-delay="200" md-direction="right" md-z-index="99999">
 								              	{{states.stateName}}
 								            </md-tooltip>
 							            </p>	  			                                    
