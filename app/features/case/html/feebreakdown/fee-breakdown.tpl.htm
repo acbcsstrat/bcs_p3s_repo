@@ -361,13 +361,25 @@
         </div>   
         <div class="d-flex flex-column align-items-start text-left" data-ng-if="$ctrl.availableFees.official[0].saleType !== 'In Progress' && $ctrl.availableFees.official.serviceType !== 'validation'">
             <span class="txt-grey text-uppercase font-body font-weight-heavy m-b-xs">Future cost</span>
-
-            <p class="font-h3 font-weight-bold nowrap" data-ng-class="$ctrl.availableFees.official[0].cssNext" data-ng-if="(!$ctrl.availableFees.official[0].isUrgentAttention && $ctrl.availableFees.official[0].currentStageColour !== 'Black' && ($ctrl.availableFees.official[0].saleType === 'Online' || $ctrl.availableFees.official[0].saleType === 'Offline')) || (!$ctrl.availableFees.official[0].isUrgentAttention && $ctrl.availableFees.official[0].currentStageColour == 'Black' && ($ctrl.availableFees.official[0].saleType === 'Online' || $ctrl.availableFees.official[0].saleType === 'Offline'))">$ {{$ctrl.availableFees.official[0].nextStageCostUSD | number: 2}}</p>
-            <p class="font-h3 font-weight-bold" data-ng-if="($ctrl.availableFees.official[0].isUrgentAttention && $ctrl.availableFees.official[0].currentStageColour === 'Red' && $ctrl.availableFees.official[0].serviceType !== 'renewal') || ($ctrl.availableFees.official[0].isUrgentAttention && $ctrl.availableFees.official[0].currentStageColour === 'Black' && $ctrl.availableFees.official[0].serviceType == 'renewal')">LAPSE</p>   
+            <p class="font-h3 font-weight-bold nowrap" data-ng-class="$ctrl.availableFees.official[0].cssNext" data-ng-if="(!$ctrl.availableFees.official[0].isUrgentAttention 
+            && $ctrl.availableFees.official[0].currentStageColour !== 'Black' 
+            && ($ctrl.availableFees.official[0].saleType === 'Online' || $ctrl.availableFees.official[0].saleType === 'Offline')) 
+            || 
+            ($ctrl.availableFees.official[0].currentStageColour == 'Red' 
+            && $ctrl.availableFees.official[0].serviceType == 'renewal')
+            ||
+            (!$ctrl.availableFees.official[0].isUrgentAttention 
+            && $ctrl.availableFees.official[0].currentStageColour == 'Black' 
+            && ($ctrl.availableFees.official[0].saleType === 'Online' || $ctrl.availableFees.official[0].saleType === 'Offline'))">$ {{$ctrl.availableFees.official[0].nextStageCostUSD | number: 2}}</p>
+            <p class="font-h3 font-weight-bold" data-ng-if="
+            ($ctrl.availableFees.official[0].isUrgentAttention && $ctrl.availableFees.official[0].currentStageColour === 'Red' && $ctrl.availableFees.official[0].serviceType !== 'renewal') 
+            || ($ctrl.availableFees.official[0].isUrgentAttention && $ctrl.availableFees.official[0].currentStageColour === 'Black' && $ctrl.availableFees.official[0].serviceType == 'renewal')">LAPSE</p>   
         </div>
     </div>
-    <div class="col-md-6 col-lg-12 col-xl-6 lg-m-t-sm d-flex justify-content-center align-items-end flex-column" data-ng-if="(!$ctrl.availableFees.official[0].isUrgentAttention && $ctrl.availableFees.official[0].saleType !== 'In Progress') && $ctrl.availableFees.official.serviceType !== 'validation'">
-        <p class="font-h3 font-weight-heavy font-h3--content">Save: <span class="txt-phase-green">$ {{($ctrl.availableFees.savings | number: 2) || '0.00'}}</span></p>
-        <p class="font-body">Instruct before: <span class="font-weight-bold">{{$ctrl.availableFees.official[0].costBandEndDateUI}}</span></p>
+    <div class="col-md-6 col-lg-12 col-xl-6 lg-m-t-sm d-flex justify-content-center align-items-end flex-column" >
+        <p class="font-h3 font-weight-heavy font-h3--content" data-ng-if="
+        ((!$ctrl.availableFees.official[0].isUrgentAttention && $ctrl.availableFees.official[0].saleType !== 'In Progress') && $ctrl.availableFees.official.serviceType !== 'validation') 
+        || ($ctrl.availableFees.official[0].isUrgentAttention && $ctrl.availableFees.official[0].currentStageColour === 'Red' && $ctrl.availableFees.official[0].serviceType == 'renewal')">Save: <span class="txt-phase-green">$ {{($ctrl.availableFees.savings | number: 2) || '0.00'}}</span></p>
+        <p class="font-body" data-ng-if="$ctrl.availableFees.official[0].saleType === 'Online' || $ctrl.availableFees.official[0].saleType === 'Offline'">Instruct before: <span class="font-weight-bold">{{$ctrl.availableFees.official[0].costBandEndDateUI}}</span></p>
     </div>
 </div>
