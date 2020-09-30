@@ -266,7 +266,14 @@
                                     <div class="d-flex flex-column">
                                         <div class="d-flex justify-content-start align-items-center"><!--display costs-->
 
-                                            <p data-ng-if="(!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')) || (!item.isUrgentAttention && item.currentStageColour == 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline'))" class="font-weight-bold"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssNext"></i> $ {{item.nextStageCostUSD | number: 2}}</p> 
+                                            <p data-ng-if="
+                                            (!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')) 
+                                            || 
+                                            (!item.isUrgentAttention && item.currentStageColour == 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline'))
+                                            || 
+                                            (item.currentStageColour == 'Red' && item.serviceType === 'renewal')
+                                            " 
+                                            class="font-weight-bold"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssNext"></i> $ {{item.nextStageCostUSD | number: 2}}</p> 
                                             <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
                                             <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
                                         </div>    
@@ -283,8 +290,13 @@
                                     <div data-ng-if="(item.saleType === 'Online' || item.saleType === 'Offline') && item.serviceType !== 'validation'">
                                         <div class="d-flex flex-column">
                                             <div class="d-flex justify-content-start align-items-center"><!--display costs-->
-
-                                                <p data-ng-if="(!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')) || (!item.isUrgentAttention && item.currentStageColour == 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline'))" class="font-weight-bold"><i class="fas fa-circle m-r-xs" data-ng-class="item.cssNext"></i> $ {{item.nextStageCostUSD | number: 2}}</p> 
+                                                <p data-ng-if="
+                                                (!item.isUrgentAttention && item.currentStageColour !== 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline')) 
+                                                || 
+                                                (!item.isUrgentAttention && item.currentStageColour == 'Black' && (item.saleType === 'Online' || item.saleType === 'Offline'))" class="font-weight-bold
+                                                ||
+                                                (item.currentStageColour == 'Red' && item.serviceType === 'renewal')
+                                                "><i class="fas fa-circle m-r-xs" data-ng-class="item.cssNext"></i> $ {{item.nextStageCostUSD | number: 2}}</p> 
                                                 <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Black' && item.serviceType === 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black and is renewal-->
                                                 <p data-ng-if="item.isUrgentAttention && item.currentStageColour == 'Red' && item.serviceType !== 'renewal'" class="font-weight-bold">LAPSE</p> <!--if current colour is black and urgent attention required. Means that it is the second stage of black-->
                                             </div>    

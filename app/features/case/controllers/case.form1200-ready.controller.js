@@ -12,7 +12,8 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     vm.templates = [ //compiled with help of dynamic directive
         { name: 'form1200intro.html', url: require('html-loader!../html/europct/europct.form1200.intro.tpl.htm')},
         { name: 'form1200questions.html', url: require('html-loader!../html/europct/europct.form1200.questionnaire.tpl.htm')},
-        { name: 'form1200generated.html', url: require('html-loader!../html/europct/europct.form1200.generated.tpl.htm')}
+        { name: 'form1200generated.html', url: require('html-loader!../html/europct/europct.form1200.generated.tpl.htm')},
+        { name: 'form1200manual.html', url: require('html-loader!../html/europct/europct.form1200.manual.tpl.htm')}
     ];
 
     vm.questionsParam = '';
@@ -28,6 +29,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     $scope.$parent.promise
     .then(
         function(response){
+
             $scope.phoneNumber = $scope.ppDetails.partnerPhone;
             var service = $scope.$parent.availableServices;
 
@@ -38,6 +40,12 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
             if(service[0].status == 'Epct being generated' || service[0].status == 'Epct saved' || service[0].status == 'Epct rejected' || service[0].status == 'Payment in progress') {
                 vm.form1200Template = vm.templates[2].url;
+                vm.epctStage = 2;
+            }
+
+            if(service[0].type === 'Offline') {
+                vm.form1200Template = vm.templates[3].url;
+                vm.urgent = service[0].urgent;
                 vm.epctStage = 2;
             }
 

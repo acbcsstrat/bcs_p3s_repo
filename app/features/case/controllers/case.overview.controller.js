@@ -93,17 +93,15 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                     return o.saleType !== 'Not In Progress' || (o.saleType == 'Not In Progress' && o.serviceType == 'validation' && o.serviceStatus == 'Completed');
                 }).map(function(k, index){
                     if(k.serviceType == 'epct') { k.serviceType = 'Euro-PCT' }
-                    return {id: index, action: k.serviceType, status: k.serviceStatus, type: k.saleType}
+                    return {id: index, action: k.serviceType, status: k.serviceStatus, type: k.saleType, urgent: k.isUrgentAttention}
                 })
 
                 $scope.availableServices.forEach(function(obj){
-
+  
                     if(obj.type == 'Not In Progress' && obj.action !== 'validation' && obj.status !== 'Completed') { return; }
 
                     if(obj.action == 'Euro-PCT') {
-                        if(obj.status == 'Epct available' || obj.status == 'Epct rejected' || obj.status == 'Await pdf gen start' || obj.status == 'Epct being generated' || obj.status == 'Epct saved' || obj.status == 'EPO Instructed' || obj.status == 'Payment in progress') {
-                            vm.displayForm1200Tab = true;
-                        }
+                        vm.displayForm1200Tab = true;
                     }
 
                     if(obj.action == 'grant') {
