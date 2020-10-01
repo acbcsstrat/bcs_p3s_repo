@@ -63,7 +63,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
             function(){
                 $scope.phoneNumber = $scope.ppDetails.partnerPhone;
                 vm.patent = caseSelected;
-
+                console.log(vm.patent)
                 vm.portfolioLoaded = true;
                 RenewalHistoryService.fetchHistory(caseSelected.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
@@ -105,9 +105,9 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                     }
 
                     if(obj.action == 'grant') {
-                        if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
+                        // if(obj.status == 'Grant available' || obj.status == 'Grant saved' || obj.status == 'Manual processing' || obj.status == 'Payment in progress' || obj.status == 'EPO instructed' ) {
                             vm.displayGrantTab = true;
-                        }
+                        // }
                     }
 
                     if(obj.action == 'validation') {

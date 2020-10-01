@@ -34,7 +34,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
     		vm.grantTemplate = vm.templates[0].url;        
     	}
 
-		if(caseSelected.p3sServicesWithFees[0].serviceStatus == 'Grant saved' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'Manual processing' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'EPO Instrcted') {
+		if(caseSelected.p3sServicesWithFees[0].serviceStatus == 'Grant saved' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'Too Late Online' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'Manual processing' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || caseSelected.p3sServicesWithFees[0].serviceStatus == 'EPO Instrcted') {
 			vm.grantStage = 2;
     		vm.grantTemplate = vm.templates[2].url;
     	}
