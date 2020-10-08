@@ -8,6 +8,7 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
 
     service.Login = Login;
     service.ClearCredentials = ClearCredentials;
+    service.SetCredentials = SetCredentials;
     service.SubmitForgottenEmail = SubmitForgottenEmail;
     service.ResetPassword = ResetPassword;
 
@@ -28,6 +29,26 @@ function AuthorisationService($rootScope, $cookies, $http, $state, $timeout, $q)
         })
 
         return deferred.promise;
+
+    }
+
+    function SetCredentials(username, password) {
+
+        var authdata = Base64.encode(username + ':' + password);
+
+        $rootScope.globals = {
+            currentUser: {
+                username: username,
+                authdata: authdata
+            }
+        };
+
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+
+        // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
+        var cookieExp = new Date();
+        cookieExp.setDate(cookieExp.getDate() + 7);
+        $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
 
     }
 

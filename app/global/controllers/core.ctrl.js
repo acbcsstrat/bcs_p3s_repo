@@ -3,9 +3,9 @@ import CasesRestService from '../../features/portfolio/services/portfolio.cases.
 
 export default angular.module('ppApp.core', [CoreService, CasesRestService]).controller('coreCtrl', coreCtrl).name
 
-coreCtrl.$inject = ['$uibModal', '$scope', '$state', '$timeout', '$http', '$cookies', 'CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive', '$location', '$rootScope'];
+coreCtrl.$inject = ['$uibModal', '$scope', '$state', '$timeout', '$http', '$cookies', '$location', '$rootScope','CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive',  'AuthorisationService'];
 
-function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive, $location, $rootScope) {
+function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $location, $rootScope, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive,  AuthorisationService) {
 
 	var vm = this;
 
@@ -20,7 +20,7 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, CoreSer
 	});
 
 	$scope.$on('IdleStart', function() {
-		
+
 	  	closeModals();
 
 	  	$scope.warning = $uibModal.open({
@@ -42,9 +42,7 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, CoreSer
     	$http.post(ppdomain+'resources/j_spring_security_logout')
       	.then(
       		function(response){
-	            $rootScope.globals = {
-	                currentUser: null
-	            };	       			
+	            AuthorisationService.ClearCredentials()      			
   				$state.go('login', { reload: false })
 
       		},

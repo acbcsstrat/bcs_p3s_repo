@@ -1,6 +1,6 @@
 export default angular.module('components.sidenav', []).component('sidenav', {
 		template: require('html-loader!../html/sidenav.tpl.htm'),
-		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', '$http', '$state',  'ProfileService', 'SidenavService',  'ngCart', 'moment', 'FxService', function($scope, $rootScope, $mdSidenav, $timeout, $http, $state, ProfileService, SidenavService, ngCart, moment, FxService){
+		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', '$http', '$state',  'ProfileService', 'SidenavService',  'ngCart', 'moment', 'FxService', 'AuthorisationService', function($scope, $rootScope, $mdSidenav, $timeout, $http, $state, ProfileService, SidenavService, ngCart, moment, FxService, AuthorisationService){
 
 		var vm = this;
 
@@ -83,13 +83,11 @@ export default angular.module('components.sidenav', []).component('sidenav', {
 	    	$http.post(ppdomain+'resources/j_spring_security_logout')
 	      	.then(
 	      		function(response){
-		            $rootScope.globals = {
-		                currentUser: null
-		            };	      			
+					AuthorisationService.ClearCredentials();
 	  				$state.go('login', { reload: false })
 	      		},
 	          	function(errResponse) {
-	            	console.error('Error with idle timeout. Error: ', errResponse);
+	            	console.error('Error when logging out. Error: ', errResponse);
 	          	}    
 			)
 		}

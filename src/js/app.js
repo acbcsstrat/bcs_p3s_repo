@@ -45,8 +45,6 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
 
     Idle.watch();
 
-
-
     $rootScope.globals = $cookies.getObject('globals') || {};
 
     if ($rootScope.globals.currentUser) {
@@ -60,7 +58,7 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
         var loggedIn = $rootScope.globals.currentUser;
 
         var phrase = $location.path();
-        var myRegexp; 
+        var myRegexp, match; 
         if(next.includes('reset-password')) {
             myRegexp = /prelogin\/reset-password\/(.*)/;
         } 
@@ -72,20 +70,18 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
         if(myRegexp !== undefined) {
             var match = myRegexp.exec(phrase); //if match == null, means that they are not on reset-password
         }
-        
 
         if(!restrictedPage || match !== null) { //if pre login or on reset-password
             $rootScope.authorised = false;
         }
 
         if (restrictedPage && !loggedIn && match == null) {
-            
             $rootScope.authorised = false;
-            // $location.path('/login');
-
+            $location.path('/login');
         }
 
         if(restrictedPage && loggedIn && match == null) {
+
             $rootScope.authorised = true;
             PpnumberService.fetchNumber()
             .then(

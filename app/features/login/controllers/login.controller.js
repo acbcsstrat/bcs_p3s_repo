@@ -1,52 +1,46 @@
 LoginController.$inject = ['$state', '$rootScope','$http', '$scope', '$timeout', '$cookies', 'AuthorisationService', 'CoreService']
 
-export default function LoginController($state, $rootScope, $http, $scope, $timeout,$cookies, AuthorisationService, CoreService) {
+export default function LoginController($state, $rootScope, $http, $scope, $timeout, $cookies, AuthorisationService, CoreService) {
 
     var vm = this;
 
     vm.login = login;
     vm.credentials = {};
     vm.incorrectCredentials = false;
-
+    var dataLoadingTimeout;
     function login(data) {
 
         vm.dataLoading = true;
+
         var params = {
             j_username: vm.credentials.username,
             j_password: vm.credentials.password
         }
+
         AuthorisationService.Login(params)
         .then(
             function(response){
 
-                $timeout(function(){
+                dataLoadingTimeout = $timeout(function(){
                     vm.dataLoading = false;
                 })
-                
 
                 if(response.data.response === 'success') {
-                    
-                    vm.incorrectCredentials = false;
-                    var authdata = Base64.encode(vm.credentials.username + ':' + vm.credentials.password);
-                    $rootScope.globals = {
-                        currentUser: {
-                            username: vm.credentials.username,
-                            authdata: authdata
-                        }
-                    };
-                    $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-
-                    // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
-                    var cookieExp = new Date();
-                    cookieExp.setDate(cookieExp.getDate() + 7);
-                    $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
-                    $state.go('dashboard', {})
-                         
+                    return;    
                 } else {
                     vm.incorrectCredentials = true;
                 }
 
-        })
+            }
+        )
+        .then(
+            function(){
+                AuthorisationService.SetCredentials(vm.credentials.username, vm.credentials.password)
+                vm.incorrectCredentials = false;
+                $state.go('dashboard', {})
+
+            }
+        )
     };
 
     var Base64 = {
@@ -131,5 +125,8 @@ export default function LoginController($state, $rootScope, $http, $scope, $time
     };
 
 
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(dataLoadingTimeout)
+    })
 
 }

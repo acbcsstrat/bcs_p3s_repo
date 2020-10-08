@@ -16,7 +16,7 @@
               	<div class="col-md-12">   		
 				           	
 
-				    <form name="loginForm" data-ng-submit="$ctrl.login(form)" novalidate>
+				    <form name="loginForm" data-ng-submit="$ctrl.login(loginForm)" novalidate>
 				        <div class="form-group" data-ng-class="{ 'has-error': loginForm.j_username.$dirty && loginForm.j_username.$error.required &&  loginForm.j_username.$error.email}">
 				            <input type="text" name="j_username" class="form-control" data-ng-model="$ctrl.credentials.username" placeholder="Username" data-validate-email required>
 				            <p data-ng-show="loginForm.j_username.$dirty && loginForm.j_username.$error.required" class="txt-phase-red m-t-xs">Please provide a username</p>
