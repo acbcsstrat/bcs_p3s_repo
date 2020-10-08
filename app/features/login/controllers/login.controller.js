@@ -1,6 +1,6 @@
-LoginController.$inject = ['$state', '$rootScope','$http', '$scope', '$timeout', '$cookies', 'AuthorisationService', 'CoreService']
+LoginController.$inject = ['$state', '$rootScope','$http', '$scope', '$timeout', '$cookies', 'AuthorisationService', 'CoreService', 'Idle']
 
-export default function LoginController($state, $rootScope, $http, $scope, $timeout, $cookies, AuthorisationService, CoreService) {
+export default function LoginController($state, $rootScope, $http, $scope, $timeout, $cookies, AuthorisationService, CoreService, Idle) {
 
     var vm = this;
 
@@ -8,9 +8,20 @@ export default function LoginController($state, $rootScope, $http, $scope, $time
     vm.credentials = {};
     vm.incorrectCredentials = false;
     var dataLoadingTimeout;
+
+    function init() {
+        Idle.unwatch()
+    }
+
+    init();
+
     function login(data) {
 
         vm.dataLoading = true;
+
+        if(!Idle.running()) {
+            Idle.watch()
+        }
 
         var params = {
             j_username: vm.credentials.username,

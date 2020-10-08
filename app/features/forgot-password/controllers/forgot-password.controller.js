@@ -1,10 +1,16 @@
-ForgotPasswordController.$inject = ['$state', '$rootScope','$http', '$scope', '$cookies', 'AuthorisationService', '$uibModal']
+ForgotPasswordController.$inject = ['$state', '$rootScope','$http', '$scope', '$cookies', 'AuthorisationService', '$uibModal', 'Idle']
 
-export default function ForgotPasswordController($state, $rootScope, $http, $scope, $cookies, AuthorisationService, $uibModal) {
+export default function ForgotPasswordController($state, $rootScope, $http, $scope, $cookies, AuthorisationService, $uibModal, Idle) {
 
 	var vm = this;
 
 	vm.submitEmail = submitEmail;
+
+    function init() {
+        Idle.unwatch()
+    }
+
+    init();    
 
 	function submitEmail(emailAddress) {
 

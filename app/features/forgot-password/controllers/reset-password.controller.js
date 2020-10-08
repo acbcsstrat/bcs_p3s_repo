@@ -1,8 +1,8 @@
 import zxcvbn from 'zxcvbn';
 
-ResestPasswordController.$inject = ['$state', '$rootScope','$http', '$scope', '$cookies', '$uibModal', 'AuthorisationService']
+ResestPasswordController.$inject = ['$state', '$rootScope','$http', '$scope', '$cookies', '$uibModal', 'AuthorisationService', 'Idle']
 
-export default function ResestPasswordController($state, $rootScope, $http, $scope, $cookies, $uibModal, AuthorisationService) {
+export default function ResestPasswordController($state, $rootScope, $http, $scope, $cookies, $uibModal, AuthorisationService, Idle) {
 
 	var vm = this;
 
@@ -11,7 +11,13 @@ export default function ResestPasswordController($state, $rootScope, $http, $sco
 	vm.formData = {};
     vm.recap = {};
     vm.recap.publicKey = '6LezdHEUAAAAABvniybP4wWGWWztRMQXT5r0_WMs';
-    vm.passwordUpdate = passwordUpdate
+    vm.passwordUpdate = passwordUpdate;
+
+    function init() {
+        Idle.unwatch()
+    }
+
+    init();    
   
     function passwordUpdate(password) {
 

@@ -16,7 +16,7 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $locati
 	var messageArr = [];
 
 	$scope.$on('Keepalive', function() {
-		$http.get(ppdomain+'keep-session-alive/');
+		$http.get(ppdomain+'keep-session-alive/')
 	});
 
 	$scope.$on('IdleStart', function() {

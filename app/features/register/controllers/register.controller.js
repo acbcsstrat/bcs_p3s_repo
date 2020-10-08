@@ -23,7 +23,13 @@ export default function RegisterController($scope, $state, $http, $uibModal, $ti
     vm.business = {}
     vm.stage = "";
     vm.formValidation = false;
-    vm.passwordUpdate = passwordUpdate
+    vm.passwordUpdate = passwordUpdate;
+
+    function init() {
+        Idle.unwatch()
+    }
+
+    init();    
   
     function passwordUpdate(password) {
 
@@ -248,7 +254,6 @@ export default function RegisterController($scope, $state, $http, $uibModal, $ti
     }
 
     $scope.$on('$destroy', function(){
-        console.log('destroy')
         $timeout.cancel(timezomeTimeout)
     })
 }
