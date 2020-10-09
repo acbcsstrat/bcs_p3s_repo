@@ -60,8 +60,8 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
         resolve: {
             verification: ['$http', '$state', '$location', '$timeout', '$uibModal', function($http, $state, $location, $timeout, $uibModal) {
 
-                var location = $location.url()
-                var link = location.replace(/[^0-9]/g,'');
+                var location = $location.url();
+                var link = location.match(/^\d+|\d+\b|\d+(?=\w)/g)[0];
                 var email = location.split('=')[1];
 
                 var params = {
@@ -82,9 +82,9 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
                         return;
                     },
                     function(errResponse){
+
                         console.error('Error submitting request. Error : ', errResponse)
 
-                        
                         var modalInstance = $uibModal.open({
                             template: require('html-loader!./features/forgot-password/html/modals/modal.reset-password-verification-error.tpl.htm'),
                             appendTo: undefined,
@@ -159,14 +159,14 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             verification: ['$http', '$state', '$location', '$timeout', '$uibModal', function($http, $state, $location, $timeout, $uibModal) {
  
                 var location = $location.url()
-                var link = location.replace(/[^0-9]/g,'');
+                var link = location.match(/^\d+|\d+\b|\d+(?=\w)/g)[0];
                 var email = location.split('=')[1];
 
                 var params = {
                     verifyLink: link,
                     emailAddress: email
                 }
-                console.log(params)
+
                 if(link !== "" && email !== undefined) {                
                     $http({
                         method: 'POST',
