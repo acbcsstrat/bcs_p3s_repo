@@ -32,26 +32,30 @@ export default function LoginController($state, $rootScope, $http, $scope, $time
         .then(
             function(response){
 
+                console.log('response : ', response)
+
                 dataLoadingTimeout = $timeout(function(){
                     vm.dataLoading = false;
                 })
 
                 if(response.data.response === 'success') {
-                    return;    
+                    AuthorisationService.SetCredentials(vm.credentials.username, vm.credentials.password)
+                    vm.incorrectCredentials = false;
+                    $state.go('dashboard', {})
                 } else {
                     vm.incorrectCredentials = true;
                 }
 
             }
         )
-        .then(
-            function(){
-                AuthorisationService.SetCredentials(vm.credentials.username, vm.credentials.password)
-                vm.incorrectCredentials = false;
-                $state.go('dashboard', {})
+        // .then(
+        //     function(){
+        //         AuthorisationService.SetCredentials(vm.credentials.username, vm.credentials.password)
+        //         vm.incorrectCredentials = false;
+        //         $state.go('dashboard', {})
 
-            }
-        )
+        //     }
+        // )
     };
 
     var Base64 = {
