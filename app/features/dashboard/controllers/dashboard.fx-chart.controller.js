@@ -66,7 +66,7 @@ export default function DbFxChartController($scope, $timeout, fxRatesMonth) {
                     }
                 }
                 
-            })
+            }, 300)
             vm.fxChartLoaded = true;
     })
 

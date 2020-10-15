@@ -3,9 +3,9 @@ import CasesRestService from '../../features/portfolio/services/portfolio.cases.
 
 export default angular.module('ppApp.core', [CoreService, CasesRestService]).controller('coreCtrl', coreCtrl).name
 
-coreCtrl.$inject = ['$uibModal', '$scope', '$state', '$timeout', '$http', '$cookies', '$location', '$rootScope','CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive',  'AuthorisationService'];
+coreCtrl.$inject = ['$uibModal', '$scope', '$state', '$timeout', '$http', '$cookies', '$location', '$rootScope','CoreService', 'localStorageService', 'ngCart', 'CasesRestService', 'Idle', 'Keepalive',  'AuthorisationService', '$transitions'];
 
-function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $location, $rootScope, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive,  AuthorisationService) {
+function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $location, $rootScope, CoreService, localStorageService, ngCart,  CasesRestService, Idle, Keepalive,  AuthorisationService, $transitions) {
 
 	var vm = this;
 
@@ -13,7 +13,38 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $locati
 	var systemResponse = [];
 	var patentsFound = true;
 	var userTimedOut = false;
-	var messageArr = [];
+	var messageArr = []
+
+	$transitions.onSuccess({}, function(transition) {
+		var dashboardLoaded = $cookies.get('dashboardLoaded');
+	    if($scope.firstTime && transition.to().name == 'dashboard.content') {
+	    	var sessionLoggedin = $cookies.get('loggedin');
+	    	if(!sessionLoggedin) {    		
+		        welcomeMessageModal();
+		        var cookieExp = new Date();
+		        cookieExp.setDate(cookieExp.getDate() + 1)		        
+		        $cookies.putObject('loggedin', 'loggedin', { expires: cookieExp });
+	    	}
+
+	    }	
+
+	});
+
+    function welcomeMessageModal() {
+
+        var modalInstance = $uibModal.open({
+            template: require('html-loader!../html/modals/modal.welcome-message.tpl.htm'),
+            scope: $scope,
+            controllerAs:'$ctrl',
+            controller: ['$uibModalInstance', function($uibModalInstance) {
+
+                this.dismissModal = function () {
+                    $uibModalInstance.close();
+                };
+            }]
+        });
+    }
+
 
 	$scope.$on('Keepalive', function() {
 		$http.get(ppdomain+'keep-session-alive/')
