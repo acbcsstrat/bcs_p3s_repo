@@ -18,7 +18,12 @@ function transactionLink($anchorScroll, $state, $location, TransactionService) {
 
                         var match = response.filter(function(el){
                             return el.serviceUIs.find(function(item){
-                                return item.patentId == parseInt(id);
+                                if(item.patentId) {
+                                    return item.patentId == parseInt(id);
+                                } else {
+                                    return item.patentID == parseInt(id);                        
+                                }
+                                
                             })
                         }).filter(function(item){
                             return item.serviceUIs[0].newType.toLowerCase() === type.toLowerCase();
