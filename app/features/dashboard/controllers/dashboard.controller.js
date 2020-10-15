@@ -10,24 +10,22 @@ export default function DashboardController($state, $timeout, $scope, $rootScope
     $scope.promise = CasesRestService.fetchAllCases();
     $scope.promise
     .then(function(response) {
+        console.log('response', response)
         if ($scope.$$destroyed) throw "Scope destroyed";
         return response;
     })
     .then(
         function(response){
-
-            console.log('scope.firstime',$scope.firstTime)
+            console.log('follow up')
             if($scope.firstTime) {
                 welcomeMessageModal()
             }
-
-
 
             if(response.length) {
                 DashboardService.sortPatents(response);
                 $scope.formalityData = DashboardService.getPatents;
             }            
-            
+            console.log('$state.current.name : ', $state.current.name)
             if($state.current.name === 'dashboard') {
                 $state.go('dashboard.content', {patents: response}, {reload: false});
                 $scope.dashboardLoaded = true;
