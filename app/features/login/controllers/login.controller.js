@@ -32,8 +32,6 @@ export default function LoginController($state, $rootScope, $http, $scope, $time
         .then(
             function(response){
 
-                console.log('response : ', response)
-
                 dataLoadingTimeout = $timeout(function(){
                     vm.dataLoading = false;
                 })

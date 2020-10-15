@@ -39,7 +39,6 @@ function CoreService($q, $timeout, $http) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
-                console.log(errResponse)
                 console.error('Error : ', errResponse);
                 deferred.resolve(errResponse);
             }

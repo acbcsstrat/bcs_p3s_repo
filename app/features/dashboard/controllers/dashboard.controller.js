@@ -1,6 +1,6 @@
-DashboardController.$inject = ['$state',  '$timeout', '$scope', 'DashboardService', 'CasesRestService', '$rootScope', '$cookies'];
+DashboardController.$inject = ['$state',  '$timeout', '$scope','$rootScope', '$cookies', '$uibModal', 'DashboardService', 'CasesRestService'];
 
-export default function DashboardController($state, $timeout, $scope,  DashboardService, CasesRestService, $rootScope, $cookies) {
+export default function DashboardController($state, $timeout, $scope, $rootScope, $cookies, $uibModal, DashboardService, CasesRestService) {
 
     var vm = this;
 
@@ -16,6 +16,13 @@ export default function DashboardController($state, $timeout, $scope,  Dashboard
     .then(
         function(response){
 
+            console.log('scope.firstime',$scope.firstTime)
+            if($scope.firstTime) {
+                welcomeMessageModal()
+            }
+
+
+
             if(response.length) {
                 DashboardService.sortPatents(response);
                 $scope.formalityData = DashboardService.getPatents;
@@ -27,5 +34,20 @@ export default function DashboardController($state, $timeout, $scope,  Dashboard
             }
         }
     )
+
+    function welcomeMessageModal() {
+
+        var modalInstance = $uibModal.open({
+            template: require('html-loader!../html/modals/modal.welcome-message.tpl.htm'),
+            scope: $scope,
+            controllerAs:'$ctrl',
+            controller: ['$uibModalInstance', function($uibModalInstance) {
+                        console.log('what')
+                this.dismissModal = function () {
+                    $uibModalInstance.close();
+                };
+            }]
+        });
+    }
 
 }

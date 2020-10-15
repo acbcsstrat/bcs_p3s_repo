@@ -59,7 +59,7 @@ function ppTooltip() {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-                console.log(attrs)
+
             var id = attrs['ppTooltip'].match(/#?(.+)/)[1];
             if (!id) throw "bad id";
             

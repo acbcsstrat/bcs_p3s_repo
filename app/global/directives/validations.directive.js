@@ -169,12 +169,11 @@ function uiSelectRequired() {
         restrict: 'A',
         require: 'ngModel',
         link: function (scope, element, attrs, ngModelCtrl) {
-            console.log('what')
+
             if (angular.isUndefined(attrs.multiple)) {
                  return;
             }
             ngModelCtrl.$isEmpty = function (modelValue) {
-                console.log(modelValue)
                 return !modelValue.length;
             };
         }

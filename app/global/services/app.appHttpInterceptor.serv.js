@@ -6,8 +6,6 @@ function myHttpInterceptor() {
 
     return {
         response: function (response) {
-            // do something on success
-            console.log(response)
             if(response.headers()['content-type'] === "application/json; charset=utf-8"){
                 // Validate response, if not ok reject
                 var data = examineJSONResponse(response); // assumes this function is available
@@ -18,9 +16,6 @@ function myHttpInterceptor() {
             return response;
         },
         responseError: function (response) {
-            // do something on error
-            console.log(response)
-            // return $q.reject(response);
         }
     };
 

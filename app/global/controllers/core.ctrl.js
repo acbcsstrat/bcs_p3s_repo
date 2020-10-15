@@ -53,31 +53,6 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $locati
       	
 	});
 
-    function init() {
-    	$timeout(function(){
-	        if($scope.firstTime) {
-	            welcomeMessageModal()
-	        }
-    	}, 300)
-
-    }
-
-    init();
-
-	function welcomeMessageModal() {
-		var modalInstance = $uibModal.open({
-			template: require('html-loader!../html/modals/modal.welcome-message.tpl.htm'),
-			scope: $scope,
-			controllerAs:'$ctrl',
-			controller: ['$uibModalInstance', function($uibModalInstance) {
-
-		 	  	this.dismissModal = function () {
-			    	$uibModalInstance.close();
-			  	};
-			}]
-		});
- 	}
-
 	function closeModals() {
 	    if ($scope.warning) {
 	      	$scope.warning.close();
