@@ -22,8 +22,11 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     vm.chkExtStates = chkExtStates;
     vm.checkError = checkError;
     vm.submitForm1200Data = submitForm1200Data;
+    vm.excessClaimsCheck = excessClaimsCheck;
+    vm.notPayingExcess = notPayingExcess;
     $scope.formData = {};
     $scope.validate = {};
+    $scope.excessobject = {};
     $scope.phoneNumber = '';
 
     $scope.$parent.promise
@@ -80,6 +83,31 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
     }
 
+    function notPayingExcess(value) {
+
+        if(value === true) {
+            var modalInstance = $uibModal.open({
+                template: require('html-loader!../html/modals/modal.not-paying-excess.tpl.htm'),
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+
+                    this.ok = function () {
+                        $state.go('portfolio', {reload: true});
+                        $uibModalInstance.close();
+                    };
+
+
+                }]
+            });
+        }
+
+    }
+
 
     function checkError(question, value) {
 
@@ -111,6 +139,10 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             obj.message = $compile(template)($scope);
         }              
         manualProcess(obj, message);  
+    }
+
+    function excessClaimsCheck(value) {
+        vm.excessClaimsDue = value > 15 ? true : false;
     }
 
     function chkValidStates(item, index) {

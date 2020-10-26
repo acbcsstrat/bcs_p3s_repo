@@ -24,7 +24,6 @@
                                 <label for="entityNo" class="form-check-label">No</label>  
                             </div>
                             <p data-ng-show="validate.entity.no" class="txt-phase-red m-t-xs">If you do not wish to declare that the/each applicant is not an entity or natural person, you will be unable to proceed online.</p>
-            <!--                 <p data-ng-show="form1200Form.entityNo.$invalid && (form1200Form.entityYes.$dirty || form1200Form.entityNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select no and confirm this choice, you will be unable to process this action via online.</p> -->
                         </div>
                     </div>
                     <div class="row m-b-sm">
@@ -42,11 +41,12 @@
                 </div>
             </div>
         </div>
+
         <div class="card">
             <div class="card-header" id="headingTwo">
-                <h4 class="mb-0">
+                <h4 class="mb-0 font-h4">
                     <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        2. Additional copies
+                        2. Claims
                     </button>
                 </h4>
             </div>
@@ -55,48 +55,35 @@
                     <div class="row m-b-lg">
                         <div class="col-xl-12">
                             <h4 class="font-h4 lh-default font-weight-bold">Question 2.1</h4>
-                            <p class="font-weight-medium m-b-xs">Are additional copies of the document cited in the supplementary European search report requested?</p>
-                            <div class="form-check form-check-inline">
-                                <input type="checkbox" name="documentsYes" data-ng-model="validate.documents.yes" class="form-check-input checkbox-square" data-ng-required="!validate.documents.no" data-ng-change="$ctrl.checkError('documents', validate.documents.yes);" data-ng-click="validate.documents.no = false">
-                                <label for="documentsYes" class="form-check-label">Yes</label>  
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input type="checkbox" name="documentsNo" data-ng-model="validate.documents.no" class="form-check-input checkbox-square" data-ng-required="!validate.documents.yes" data-ng-click="validate.documents.yes = false" required>
-                                <label for="documentsNo" class="form-check-label" required>No</label>  
-                            </div>            
-                            <p data-ng-show="validate.documents.yes" class="txt-phase-red m-t-xs">If additional documents are required you will be unable to proceed online.</p>               
-                            <p data-ng-show="form1200Form.documentsYes.$invalid && form1200Form.documentsNo.$invalid && (form1200Form.documentsYes.$dirty || form1200Form.documentsNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select yes and confirm this choice, you will be unable to process this action via online.</p>  
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingThree">
-                <h4 class="mb-0 font-h4">
-                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        3. Claims
-                    </button>
-                </h4>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                <div class="card-body">
-                    <div class="row m-b-lg">
-                        <div class="col-xl-12">
-                            <h4 class="font-h4 lh-default font-weight-bold">Question 3.1</h4>
                             <div class="form-group row">
                                 <label for="totalClaims" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">How many total claims are being filed?</label>
                                 <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
-                                    <input type="number" name="totalClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalClaims)" data-ng-model="formData.totalClaims" placeholder="Total Claims" validate-numbers required>
+                                    <input type="number" name="totalClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalClaims); $ctrl.excessClaimsCheck(formData.totalClaims)" data-ng-model="formData.totalClaims" placeholder="Total Claims" validate-numbers required>
                                     <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>
                                 </div>
                             </div>
+                            
+                            <div class="form-group m-l-md slideDown" data-ng-show="$ctrl.excessClaimsDue">
+                                <div class="border-grey-xs--btm m-b-md m-t-md"></div>
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 2.1.1</h4>
+                                <p class="font-weight-medium m-r-sm font-body m-b-xs">Are you required to pay excess claims fee on filing?</p>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="excessclaimsYes" data-ng-model="excessobject.excessclaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.yes);" data-ng-click="excessobject.excessclaims.no = false" data-ng-required="!excessobject.excessclaims.no">
+                                    <label for="excessclaimsYes" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="excessclaimsNo" data-ng-model="excessobject.excessclaims.no" class="form-check-input checkbox-square" data-ng-click="excessobject.excessclaims.yes = false" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.yes);" data-ng-required="!excessobject.excessclaims.yes">
+                                    <label for="excessclaimsNo" class="form-check-label">No</label>   
+                                </div>
+                                <div class="border-grey-xs--btm m-t-md"></div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="row m-b-lg">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <h4 class="font-h4 lh-default font-weight-bold">Question 3.2</h4>
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 2.2</h4>
                                 <p class="font-weight-medium m-r-sm font-body m-b-xs">Have any amendments been made to the claims?</p>
                                 <div class="form-check form-check-inline">
                                     <input type="checkbox" name="amendmentsYes" data-ng-model="validate.amendments.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.checkError('amendments', validate.amendments.yes);" data-ng-click="validate.amendments.no = false">
@@ -110,22 +97,23 @@
                             </div>
                         </div>
                     </div>                
+                    </div>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div class="card-header" id="headingFour">
+            <div class="card-header" id="headingThree">
                 <h4 class="mb-0 font-h4">
-                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                        4. Extension/Validation states
+                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        3. Extension/Validation states
                     </button>
                 </h4>
             </div>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                             <h4 class="font-h4 lh-default font-weight-bold m-b-sm">Question 4.1</h4>
+                             <h4 class="font-h4 lh-default font-weight-bold m-b-sm">Question 3.1</h4>
                         </div>
                     </div>
                     <div class="row m-b-md">
@@ -219,18 +207,18 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-header" id="headingFive">
+            <div class="card-header" id="headingFour">
                 <h4 class="mb-0 font-h4">
-                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                        5. Page details
+                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        4. Page details
                     </button>
                 </h4>
             </div>
-            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <h4 class="font-h4 lh-default font-weight-bold">Question 5.1</h4>
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 4.1</h4>
                         </div>
                         <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter start and end pages of description</label>
                         <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
@@ -246,7 +234,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <h4 class="font-h4 lh-default font-weight-bold">Question 5.2</h4>
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 4.2</h4>
                         </div>
                         <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter the start and end pages of claims</label>
                         <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
@@ -280,6 +268,35 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-header" id="headingFive">
+                <h4 class="mb-0">
+                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        5. Additional copies
+                    </button>
+                </h4>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row m-b-lg">
+                        <div class="col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 2.1</h4>
+                            <p class="font-weight-medium m-b-xs">Are additional copies of the document cited in the supplementary European search report requested?</p>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="documentsYes" data-ng-model="validate.documents.yes" class="form-check-input checkbox-square" data-ng-required="!validate.documents.no" data-ng-change="$ctrl.checkError('documents', validate.documents.yes);" data-ng-click="validate.documents.no = false">
+                                <label for="documentsYes" class="form-check-label">Yes</label>  
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="documentsNo" data-ng-model="validate.documents.no" class="form-check-input checkbox-square" data-ng-required="!validate.documents.yes" data-ng-click="validate.documents.yes = false" required>
+                                <label for="documentsNo" class="form-check-label" required>No</label>  
+                            </div>            
+                            <p data-ng-show="validate.documents.yes" class="txt-phase-red m-t-xs">If additional documents are required you will be unable to proceed online.</p>               
+                            <p data-ng-show="form1200Form.documentsYes.$invalid && form1200Form.documentsNo.$invalid && (form1200Form.documentsYes.$dirty || form1200Form.documentsNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select yes and confirm this choice, you will be unable to process this action via online.</p>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
         <div class="card" data-ng-if="$ctrl.additionalDocuments === true">
             <div class="card-header" id="headingSix">
                 <h4 class="mb-0 font-h4">
