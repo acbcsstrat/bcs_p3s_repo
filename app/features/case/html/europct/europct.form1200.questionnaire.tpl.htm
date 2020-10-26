@@ -268,7 +268,7 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        <div class="card" data-ng-if="$ctrl.additionalDocuments">
             <div class="card-header" id="headingFive">
                 <h4 class="mb-0">
                     <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
@@ -280,7 +280,7 @@
                 <div class="card-body">
                     <div class="row m-b-lg">
                         <div class="col-xl-12">
-                            <h4 class="font-h4 lh-default font-weight-bold">Question 2.1</h4>
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 5.1</h4>
                             <p class="font-weight-medium m-b-xs">Are additional copies of the document cited in the supplementary European search report requested?</p>
                             <div class="form-check form-check-inline">
                                 <input type="checkbox" name="documentsYes" data-ng-model="validate.documents.yes" class="form-check-input checkbox-square" data-ng-required="!validate.documents.no" data-ng-change="$ctrl.checkError('documents', validate.documents.yes);" data-ng-click="validate.documents.no = false">
@@ -297,11 +297,11 @@
                 </div>
             </div>
         </div>        
-        <div class="card" data-ng-if="$ctrl.additionalDocuments === true">
+        <div class="card"  data-ng-if="$ctrl.isYear3RenewalDue">
             <div class="card-header" id="headingSix">
                 <h4 class="mb-0 font-h4">
                     <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                        6. Request Renewal
+                        {{$ctrl.additionalDocuments === true ?  6 : 5 }}. Request Renewal
                     </button>
                 </h4>
             </div>
@@ -309,7 +309,7 @@
                 <div class="card-body">
                     <div class="row m-b-lg">
                         <div class="col-xl-12">
-                            <h4 class="font-h4 lh-default font-weight-bold">Question 6.1</h4> 
+                            <h4 class="font-h4 lh-default font-weight-bold">Question {{$ctrl.additionalDocuments === true ?  6 : 5 }}.1</h4> 
                             <p class="m-b-xs">We can see that the third year renewal can be renewed. Would you like to process the renewal in this transaction?</p>
                             <div class="form-check form-check-inline">
                                 
