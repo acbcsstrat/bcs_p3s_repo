@@ -12,7 +12,7 @@
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
                     <div class="row m-b-lg">
-                        <div class="col-xl-12">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
                             <h4 class="font-h4 lh-default font-weight-bold">Question 1.1</h4>
                             <p class="m-b-xs">The/Each applicant hereby declares that he is an entity or a natural person under Rule 6(4) EPC.</p>
                             <div class="form-check form-check-inline">
@@ -23,6 +23,8 @@
                                 <input type="checkbox" name="entityNo" data-ng-model="validate.entity.no" class="form-check-input checkbox-square" data-ng-change="$ctrl.checkError('entity', validate.entity.no);" data-ng-click="validate.quesitonOne.yes = false; ">
                                 <label for="entityNo" class="form-check-label">No</label>  
                             </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
                             <p data-ng-show="validate.entity.no" class="txt-phase-red m-t-xs">If you do not wish to declare that the/each applicant is not an entity or natural person, you will be unable to proceed online.</p>
                         </div>
                     </div>
@@ -57,8 +59,11 @@
                             <h4 class="font-h4 lh-default font-weight-bold">Question 2.1</h4>
                             <div class="form-group row">
                                 <label for="totalClaims" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">How many total claims are being filed?</label>
-                                <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                                <div class="col-md-6 col-lg-6 col-xl-4 align-items-center">
                                     <input type="number" name="totalClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalClaims); $ctrl.excessClaimsCheck(formData.totalClaims)" data-ng-model="formData.totalClaims" placeholder="Total Claims" validate-numbers required>
+
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12">
                                     <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>
                                 </div>
                             </div>
@@ -240,49 +245,57 @@
                             <h4 class="font-h4 lh-default font-weight-bold">Question 4.1</h4>
                         </div>
                         <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter start and end pages of description</label>
-                        <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <div class="col-md-6 col-lg-6 col-xl-4 align-items-center">
                             <input type="number" name="descStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.description.typeStart)" data-ng-model="formData.pageDetailsData.description.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required>
-                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.validNumber && form1200Form.descStart.$dirty">Only numbers are valid charcters in this field.</p>
-                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.max && form1200Form.descStart.$dirty">The end page exceeds the total number of pages.</p>
+
                         </div>
-                        <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <div class="col-md-6 col-lg-6 col-xl-4 align-items-center">
                             <input type="number" name="descEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.description.typeEnd)" data-ng-model="formData.pageDetailsData.description.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers ng-valid-max required>
+                                                  
+                        </div>   
+                        <div class="col-md-12 col-lg-12 col-xl-12 m-t-xs">
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.validNumber && form1200Form.descStart.$dirty">Only numbers are valid charcters in this field.</p>
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.max && form1200Form.descStart.$dirty">The end page exceeds the total number of pages.</p> 
                             <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.validNumber && form1200Form.descEnd.$dirty">Only numbers are valid charcters in this field.</p>
-                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.max && form1200Form.descEnd.$dirty">The end page exceeds the total number of pages.</p>                                                  
-                        </div>                                        
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.max && form1200Form.descEnd.$dirty">The end page exceeds the total number of pages.</p>
+                        </div>                                     
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
                             <h4 class="font-h4 lh-default font-weight-bold">Question 4.2</h4>
                         </div>
                         <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter the start and end pages of claims</label>
-                        <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <div class="col-md-4 col-lg-4 col-xl-4 align-items-center">
                             <input type="number" name="claimsStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.clams.typeStart)" data-ng-model="formData.pageDetailsData.claims.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required>
-                            <p class="font-body txt-phase-red"  placeholder="Start" data-ng-show="form1200Form.claimsStart.$error.validNumber && form1200Form.claimsStart.$dirty">Only numbers are valid charcters in this field.</p>
-                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsStart.$error.max && form1200Form.claimsStart.$dirty">The end page exceeds the total number of pages.</p>                                                  
                         </div>
-                        <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
+                        <div class="col-md-4 col-lg-4 col-xl-4 align-items-center">
                             <input type="number" name="claimsEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.clams.typeEnd)" data-ng-model="formData.pageDetailsData.claims.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers ng-valid-max required>
+                        </div>   
+                        <div class="col-md-12 col-lg-12 col-xl-12 m-t-xs">
+                            <p class="font-body txt-phase-red"  placeholder="Start" data-ng-show="form1200Form.claimsStart.$error.validNumber && form1200Form.claimsStart.$dirty">Only numbers are valid charcters in this field.</p>
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsStart.$error.max && form1200Form.claimsStart.$dirty">The end page exceeds the total number of pages.</p>
                             <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.validNumber && form1200Form.claimsEnd.$dirty">Only numbers are valid charcters in this field.</p>    
                             <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.max && form1200Form.claimsEnd.$dirty">The end page exceeds the total number of pages.</p>
-                        </div>                                        
+                        </div>                                     
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
                             <h4 class="font-h4 lh-default font-weight-bold">Question 5.3</h4>
                         </div>
                         <label for="claimsStart" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter start and end pages of drawings</label>
-                        <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
-                            <input type="number" name="drawingStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.drawings.typeStart)" data-ng-model="formData.pageDetailsData.drawings.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers  
-                          required>
+                        <div class="col-md-4 col-lg-4 col-xl-4 align-items-center">
+                            <input type="number" name="drawingStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.drawings.typeStart)" data-ng-model="formData.pageDetailsData.drawings.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4 align-items-center">
+                            <input type="number" name="drawingEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.drawings.typeStart)" data-ng-model="formData.pageDetailsData.drawings.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers required>
+
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12 m-t-xs">
                             <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.validNumber && form1200Form.drawingStart.$dirty">Only numbers are valid charcters in this field.</p>
                             <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.max && form1200Form.drawingStart.$dirty">The end page exceeds the total number of pages.</p>
-                        </div>
-                        <div class="col-md-4 col-lg-4 col-xl-4 d-flex align-items-center">
-                            <input type="number" name="drawingEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.drawings.typeStart)" data-ng-model="formData.pageDetailsData.drawings.typeEnd" max="{{totalPages}}" placeholder="End" validate-number required>
                             <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.validNumber && form1200Form.drawingEnd.$dirty">Only numbers are valid charcters in this field.</p>
                             <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.max && form1200Form.drawingEnd.$dirty">The end page exceeds the total number of pages.</p>
-                        </div>                                        
+                        </div>                                                           
                     </div>
                 </div>
             </div>

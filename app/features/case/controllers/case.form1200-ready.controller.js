@@ -87,10 +87,31 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
     function amendmentsMade(value) {
         vm.amendedOptions = value === true ? true : false;
+
     }
 
     function uploadAmended(value) {
         vm.displayAmendedUpload = value === true ? true : false;
+        if(value) {
+            var modalInstance = $uibModal.open({
+                template: require('html-loader!../html/modals/modal.not-checking-claims.tpl.htm'),
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+
+                    this.ok = function () {
+                        $state.go('portfolio', {reload: true});
+                        $uibModalInstance.close();
+                    };
+
+
+                }]
+            });
+        }        
     }
 
     function notPayingExcess(value) {
