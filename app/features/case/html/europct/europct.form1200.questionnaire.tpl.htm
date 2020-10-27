@@ -68,11 +68,11 @@
                                 <h4 class="font-h4 lh-default font-weight-bold">Question 2.1.1</h4>
                                 <p class="font-weight-medium m-r-sm font-body m-b-xs">Are you required to pay excess claims fee on filing?</p>
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="excessclaimsYes" data-ng-model="excessobject.excessclaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.yes);" data-ng-click="excessobject.excessclaims.no = false" data-ng-required="!excessobject.excessclaims.no">
+                                    <input type="checkbox" name="excessclaimsYes" data-ng-model="excessobject.excessclaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.yes);" data-ng-click="excessobject.excessclaims.no = false" data-ng-required="!excessobject.excessclaims.no && $ctrl.excessClaimsDue">
                                     <label for="excessclaimsYes" class="form-check-label">Yes</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="excessclaimsNo" data-ng-model="excessobject.excessclaims.no" class="form-check-input checkbox-square" data-ng-click="excessobject.excessclaims.yes = false" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.yes);" data-ng-required="!excessobject.excessclaims.yes">
+                                    <input type="checkbox" name="excessclaimsNo" data-ng-model="excessobject.excessclaims.no" class="form-check-input checkbox-square" data-ng-click="excessobject.excessclaims.yes = false" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.yes);" data-ng-required="!excessobject.excessclaims.yes && $ctrl.excessClaimsDue">
                                     <label for="excessclaimsNo" class="form-check-label">No</label>   
                                 </div>
                                 <div class="border-grey-xs--btm m-t-md"></div>
@@ -86,15 +86,34 @@
                                 <h4 class="font-h4 lh-default font-weight-bold">Question 2.2</h4>
                                 <p class="font-weight-medium m-r-sm font-body m-b-xs">Have any amendments been made to the claims?</p>
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="amendmentsYes" data-ng-model="validate.amendments.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.checkError('amendments', validate.amendments.yes);" data-ng-click="validate.amendments.no = false">
+                                    <input type="checkbox" name="amendmentsYes" data-ng-model="validate.amendments.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.amendmentsMade(validate.amendments.yes)" data-ng-click="validate.amendments.no = false" data-ng-required="!validate.amendments.no">
                                     <label for="amendmentsYes" class="form-check-label">Yes</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="amendmentsNo" data-ng-model="validate.amendments.no" class="form-check-input checkbox-square" data-ng-click="validate.amendments.yes = false" required>
+                                    <input type="checkbox" name="amendmentsNo" data-ng-model="validate.amendments.no" class="form-check-input checkbox-square" data-ng-change="$ctrl.amendmentsMade(validate.amendments.yes)" data-ng-click="validate.amendments.yes = false" data-ng-required="!validate.amendments.yes">
                                     <label for="amendmentsNo" class="form-check-label">No</label>   
                                 </div>
-                                <p data-ng-show="validate.amendments.yes" class="txt-phase-red m-t-xs">If amendments have been made you will be unable to proceed online.</p>
                             </div>
+
+                            <div class="form-group m-l-md slideDown" data-ng-show="$ctrl.amendedOptions">
+                                <div class="border-grey-xs--btm m-b-md m-t-md"></div>
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 2.2.1</h4>
+                                <p class="font-weight-medium m-r-sm font-body m-b-xs">Are you presenting the amendments on filing, or, have you filed amendments under Article 19 PCT?</p>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="excessdocsYes" data-ng-model="excessobject.excessdocs.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.uploadAmended(excessobject.excessdocs.yes);" data-ng-click="excessobject.excessdocs.no = false" data-ng-required="!excessobject.excessdocs.no && $ctrl.amendedOptions">
+                                    <label for="excessdocsYes" class="form-check-label">Presenting the amendments on filing</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="excessdocsNo" data-ng-model="excessobject.excessdocs.no" class="form-check-input checkbox-square" data-ng-click="excessobject.excessdocs.yes = false" data-ng-change="$ctrl.uploadAmended(excessobject.excessdocs.yes);" data-ng-required="!excessobject.excessdocs.yes && $ctrl.amendedOptions">
+                                    <label for="excessdocsNo" class="form-check-label">Filed amendments under Article 19</label>   
+                                </div>
+                                <div class="form-group slideDown m-t-md" data-ng-show="$ctrl.displayAmendedUpload">
+                                    <label for="amendmentsAnnotation font-weight-bold font-h4">Upload copy of amendments with annotations: </label>
+                                    <input type="file" name="amendmentsAnnotation" data-ng-model="formData.amendedClaims" class="form-control-file m-t-xs font-h4" select-ng-files accept="application/pdf" data-ng-required="$ctrl.displayAmendedUpload">
+                                </div>
+                                <div class="border-grey-xs--btm m-t-md"></div>
+                            </div>
+
                         </div>
                     </div>                
                     </div>

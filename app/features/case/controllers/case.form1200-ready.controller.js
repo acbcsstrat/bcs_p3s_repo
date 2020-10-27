@@ -24,6 +24,8 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     vm.submitForm1200Data = submitForm1200Data;
     vm.excessClaimsCheck = excessClaimsCheck;
     vm.notPayingExcess = notPayingExcess;
+    vm.amendmentsMade = amendmentsMade;
+    vm.uploadAmended = uploadAmended;
     $scope.formData = {};
     $scope.validate = {};
     $scope.excessobject = {};
@@ -81,6 +83,14 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             }
         )
 
+    }
+
+    function amendmentsMade(value) {
+        vm.amendedOptions = value === true ? true : false;
+    }
+
+    function uploadAmended(value) {
+        vm.displayAmendedUpload = value === true ? true : false;
     }
 
     function notPayingExcess(value) {
