@@ -76,7 +76,6 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                         vm.isYear3RenewalDue = true;
                     }
 
-
                     vm.form1200Template = vm.templates[1].url;
                     
                 }
@@ -309,8 +308,8 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         var formData = {};
 
-        if(data.isYear3RenewalDue) {
-            formData.isYear3RenewalDue = data.isYear3RenewalDue;
+        if(data.isYear3RenewalPaying.yes) {
+            formData.isYear3RenewalPaying = data.isYear3RenewalPaying.yes;
         }
         if(data.showOptionalQuestion) {
             formData.showOptionalQuestion = data.showOptionalQuestion;
