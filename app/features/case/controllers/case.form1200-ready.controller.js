@@ -69,7 +69,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                     if(response.clientRef !== '') {
                         $scope.formData.clientRef = response.clientRef;
                     }
-                    if(response.showOptionalQuestion === false) {
+                    if(response.showOptionalQuestion === true) {
                         vm.additionalDocuments = true;
                     }
                     if(response.isYear3RenewalDue === true) {
@@ -308,7 +308,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         console.log('data : ', data);
         var formData = {};
 
-        if(data.isYear3RenewalPaying.yes) {
+        if(data.isYear3RenewalPaying) {
             formData.isYear3RenewalPaying = data.isYear3RenewalPaying.yes;
         }
 
