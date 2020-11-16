@@ -71,7 +71,7 @@
                             <div class="form-group m-l-md slideDown" data-ng-show="$ctrl.excessClaimsDue">
                                 <div class="border-grey-xs--btm m-b-md m-t-md"></div>
                                 <h4 class="font-h4 lh-default font-weight-bold">Question 2.1.1</h4>
-                                <p class="font-weight-medium m-r-sm font-body m-b-xs">Are you required to pay excess claims fee on filing?</p>
+                                <p class="font-weight-medium m-r-sm font-body m-b-xs">Do you want to pay excess claims fee on filing?</p>
                                 <div class="form-check form-check-inline">
                                     <input type="checkbox" name="excessclaimsYes" data-ng-model="excessobject.excessclaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.yes);" data-ng-click="excessobject.excessclaims.no = false" data-ng-required="!excessobject.excessclaims.no && $ctrl.excessClaimsDue">
                                     <label for="excessclaimsYes" class="form-check-label">Yes</label>
@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="form-group slideDown m-t-md" data-ng-show="$ctrl.displayAmendedUpload">
                                     <label for="amendmentsAnnotation font-weight-bold font-h4">Upload copy of amendments with annotations: </label>
-                                    <input type="file" name="amendmentsAnnotation" data-ng-model="formData.amendedClaims" class="form-control-file m-t-xs font-h4" select-ng-files accept="application/pdf" data-ng-required="$ctrl.displayAmendedUpload">
+                                    <input type="file" name="amendmentsAnnotation" data-ng-init="formData.amended.amendedDoc = {};"  data-ng-model="formData.amended.amendedDoc" class="form-control-file m-t-xs font-h4" select-ng-files accept="application/pdf" data-ng-required="$ctrl.displayAmendedUpload">
                                 </div>
                                 <div class="border-grey-xs--btm m-t-md"></div>
                             </div>
@@ -311,19 +311,14 @@
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
                 <div class="card-body">
                     <div class="row m-b-lg">
-                        <div class="col-xl-12">
+                        <div class="col-md-12 col-xl-12">
                             <h4 class="font-h4 lh-default font-weight-bold">Question 5.1</h4>
-                            <p class="font-weight-medium m-b-xs">Are additional copies of the document cited in the supplementary European search report requested?</p>
-                            <div class="form-check form-check-inline">
-                                <input type="checkbox" name="documentsYes" data-ng-model="validate.documents.yes" class="form-check-input checkbox-square" data-ng-required="!validate.documents.no" data-ng-change="$ctrl.checkError('documents', validate.documents.yes);" data-ng-click="validate.documents.no = false">
-                                <label for="documentsYes" class="form-check-label">Yes</label>  
+                            <p class="font-weight-medium m-b-xs">If additional copies of the document cited in the supplementary European search report are requested, enter the total number below. If no additional copies are required, please leave the value of 0</p>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3 align-items-center">
+                            <div class="form-group">
+                                <input type="number" name="documentsYes" class="form-control" data-ng-init="formData.numAdditionalCopies = 0" data-ng-model="formData.numAdditionalCopies" data-ng-required="!validate.documents.no" data-ng-change="$ctrl.checkError('documents', validate.documents.yes);" data-ng-click="validate.documents.no = false">
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input type="checkbox" name="documentsNo" data-ng-model="validate.documents.no" class="form-check-input checkbox-square" data-ng-required="!validate.documents.yes" data-ng-click="validate.documents.yes = false" required>
-                                <label for="documentsNo" class="form-check-label" required>No</label>  
-                            </div>            
-                            <p data-ng-show="validate.documents.yes" class="txt-phase-red m-t-xs">If additional documents are required you will be unable to proceed online.</p>               
-                            <p data-ng-show="form1200Form.documentsYes.$invalid && form1200Form.documentsNo.$invalid && (form1200Form.documentsYes.$dirty || form1200Form.documentsNo.$dirty)" class="txt-phase-red m-t-xs">One of these options must be selected. If you select yes and confirm this choice, you will be unable to process this action via online.</p>  
                         </div>
                     </div>
                 </div>

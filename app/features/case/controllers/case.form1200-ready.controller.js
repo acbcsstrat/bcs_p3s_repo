@@ -69,7 +69,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                     if(response.clientRef !== '') {
                         $scope.formData.clientRef = response.clientRef;
                     }
-                    if(response.showOptionalQuestion === true) {
+                    if(response.showOptionalQuestion === false) {
                         vm.additionalDocuments = true;
                     }
                     if(response.isYear3RenewalDue === true) {
@@ -305,24 +305,26 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             invalidPageNos('drawingsEnd');
             return;
         }                
-
+        console.log('data : ', data);
         var formData = {};
 
         if(data.isYear3RenewalPaying.yes) {
             formData.isYear3RenewalPaying = data.isYear3RenewalPaying.yes;
         }
-        if(data.showOptionalQuestion) {
-            formData.showOptionalQuestion = data.showOptionalQuestion;
-        }
 
         formData.pageDescriptionsUI = arr;
-        formData.id = caseSelected.patentID;
+        formData.patentID = caseSelected.patentID;
         formData.clientRef = data.clientRef;
         formData.totalClaims = parseInt(data.totalClaims);
-        formData.totalPages = parseInt(data.totalPages);
         formData.validationStatesUI = data.validationStatesUI;
         formData.extensionStatesUI = data.extensionStatesUI;
-
+        formData.amendedDoc = data.amended.amendedDoc;
+        formData.isAmendmentsMade = $scope.validate.amendments.yes
+        formData.numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies
+        formData.amendedDoc = data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc;
+        formData.isExcessClaimsPaying = $scope.excessobject.excessclaims?  $scope.excessobject.excessclaims.yes : false;
+        
+        console.log('formData : ', formData)
         Form1200Service.submitForm1200(formData)
         .then(
             function(response){
@@ -342,7 +344,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                 $state.go('portfolio.modal.case', {form1200generate: 1, prepareGrant: 0}, {reload: true});
             },
             function(errResponse){
-
+                console.log('Error : ', errResponse)
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.generate-form1200-error.tpl.htm'),
                     appendTo: undefined,
