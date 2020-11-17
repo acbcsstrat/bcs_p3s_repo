@@ -319,8 +319,8 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         formData.validationStatesUI = data.validationStatesUI;
         formData.extensionStatesUI = data.extensionStatesUI;
         formData.amendedDoc = data.amended.amendedDoc;
-        formData.isAmendmentsMade = $scope.validate.amendments.yes
-        formData.numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies
+        formData.isAmendmentsMade = $scope.validate.amendments.yes;
+        formData.numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
         formData.amendedDoc = data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc;
         formData.isExcessClaimsPaying = $scope.excessobject.excessclaims?  $scope.excessobject.excessclaims.yes : false;
         

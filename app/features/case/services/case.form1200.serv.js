@@ -1,8 +1,8 @@
 export default angular.module('services.form1200-service', []).service('Form1200Service', Form1200Service).name;
 
-Form1200Service.$inject = ['$http', '$q'];
+Form1200Service.$inject = ['$http', '$q', 'Upload'];
 
-function Form1200Service($http, $q) {
+function Form1200Service($http, $q, Upload) {
 
     var factory = {
         fetchQuestions: fetchQuestions,
@@ -62,16 +62,28 @@ function Form1200Service($http, $q) {
 
         var deferred = $q.defer();
 
-        $http.post(ppdomain+'rest-form1200/', data)
-        .then(
-            function(response){
-                deferred.resolve(response.data)
-            },
-            function(errResponse){
-                console.error('Error: Unable to submit form1200. Error response:', errResponse);
-                deferred.reject(errResponse.data)
-            }
-        )
+        Upload.upload({
+            url: ppdomain+'rest-form1200/', 
+            data: data,
+            arrayKey: ''
+        }).then(function (response) {
+            deferred.resolve(response.data)
+
+        }, function (errResponse) {
+            console.error('Error: Unable to submit form1200. Error response:', errResponse);
+            deferred.reject(errResponse)
+        });
+
+        // $http.post(ppdomain+'rest-form1200/', data)
+        // .then(
+        //     function(response){
+        //         deferred.resolve(response.data)
+        //     },
+        //     function(errResponse){
+        //         console.error('Error: Unable to submit form1200. Error response:', errResponse);
+        //         deferred.reject(errResponse.data)
+        //     }
+        // )
 
         return deferred.promise;
 
