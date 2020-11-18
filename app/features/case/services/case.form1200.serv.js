@@ -65,7 +65,7 @@ function Form1200Service($http, $q, Upload) {
         Upload.upload({
             url: ppdomain+'rest-form1200/', 
             data: data,
-            arrayKey: ''
+            arrayKey: '[i]'
         }).then(function (response) {
             deferred.resolve(response.data)
 
