@@ -312,22 +312,45 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             formData.isYear3RenewalPaying = data.isYear3RenewalPaying.yes;
         }
 
-        formData.append('pageDescriptionsUI', arr)
+        formData.append('pageDescriptionsUI', JSON.stringify(arr))
         formData.append('patentID', caseSelected.patentID)
         formData.append('clientRef', data.clientRef)
         formData.append('totalClaims', parseInt(data.totalClaims))
-        formData.append('validationStatesUI', data.validationStatesUI)
-        formData.append('extensionStatesUI', data.extensionStatesUI)
+        formData.append('validationStatesUI', JSON.stringify(data.validationStatesUI))
+        formData.append('extensionStatesUI', JSON.stringify(data.extensionStatesUI))
         formData.append('amendedDoc', data.amended.amendedDoc)
         formData.append('isAmendmentsMade', $scope.validate.amendments.yes)
         formData.append('numAdditionalCopies', data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies)
         formData.append('amendedDoc', data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc)
         formData.append('isExcessClaimsPaying', $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false)
-        
-        // console.log('formData : ', formData)
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-        }
+
+
+
+        // formData.pageDescriptionsUI = JSON.parse(angular.toJson(arr));
+        // formData.patentID = caseSelected.patentID;
+        // formData.clientRef = data.clientRef;
+        // formData.totalClaims = parseInt(data.totalClaims);
+        // formData.validationStatesUI = JSON.parse(angular.toJson(data.validationStatesUI));
+        // formData.extensionStatesUI = JSON.parse(angular.toJson(data.extensionStatesUI));
+        // formData.amendedDoc = data.amended.amendedDoc;
+        // formData.isAmendmentsMade = $scope.validate.amendments.yes;
+        // formData.numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
+        // formData.amendedDoc = data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc;
+        // formData.isExcessClaimsPaying = $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false;
+            var fileReader = new FileReader();
+            var base64;
+            // Onload of file read the file content
+            // Convert data to base64
+            var testt = fileReader.readAsDataURL(data.amended.amendedDoc);
+
+            console.log('testt', testt)
+
+        var blobltest = new Blob([formData.amendedDoc], {type: 'application/pdf'});
+        console.log(blobltest)
+        console.log('formData : ', formData)
+        // for (var pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]); 
+        // }
         Form1200Service.submitForm1200(formData, config)
         .then(
             function(response){
