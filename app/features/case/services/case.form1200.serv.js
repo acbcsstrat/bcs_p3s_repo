@@ -58,32 +58,32 @@ function Form1200Service($http, $q, Upload) {
         return deferred.promise;
     }
 
-    function submitForm1200(data) {
+    function submitForm1200(data, config) {
 
         var deferred = $q.defer();
 
-        Upload.upload({
-            url: ppdomain+'rest-form1200/', 
-            data: data,
-            arrayKey: '[i]'
-        }).then(function (response) {
-            deferred.resolve(response.data)
+        // Upload.upload({
+        //     url: ppdomain+'rest-form1200/', 
+        //     data: data,
+        //     arrayKey: '[i]'
+        // }).then(function (response) {
+        //     deferred.resolve(response.data)
 
-        }, function (errResponse) {
-            console.error('Error: Unable to submit form1200. Error response:', errResponse);
-            deferred.reject(errResponse)
-        });
+        // }, function (errResponse) {
+        //     console.error('Error: Unable to submit form1200. Error response:', errResponse);
+        //     deferred.reject(errResponse)
+        // });
 
-        // $http.post(ppdomain+'rest-form1200/', data)
-        // .then(
-        //     function(response){
-        //         deferred.resolve(response.data)
-        //     },
-        //     function(errResponse){
-        //         console.error('Error: Unable to submit form1200. Error response:', errResponse);
-        //         deferred.reject(errResponse.data)
-        //     }
-        // )
+        $http.post(ppdomain+'rest-form1200/', data, config)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                console.error('Error: Unable to submit form1200. Error response:', errResponse);
+                deferred.reject(errResponse.data)
+            }
+        )
 
         return deferred.promise;
 
