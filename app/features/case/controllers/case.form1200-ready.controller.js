@@ -306,7 +306,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             return;
         }                
         console.log('data : ', data);
-        var formData = new FormData();
+        var formData = {};
         var config = { headers: {'Content-Type': undefined} };
         if(data.isYear3RenewalPaying) {
             formData.isYear3RenewalPaying = data.isYear3RenewalPaying.yes;
@@ -315,31 +315,31 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         var numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
         var isExcessClaimsPaying = $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false;
 
-        formData.append('pageDescriptionsUI', arr)
-        formData.append('patentID', caseSelected.patentID)
-        formData.append('clientRef', data.clientRef)
-        formData.append('totalClaims', parseInt(data.totalClaims))
-        formData.append('validationStatesUI', data.validationStatesUI)
-        formData.append('extensionStatesUI', data.extensionStatesUI)
-        // formData.append('amendedDoc', data.amended.amendedDoc)
-        formData.append('isAmendmentsMade', $scope.validate.amendments.yes)
-        formData.append('numAdditionalCopies', numAdditionalCopies)
-        // formData.append('amendedDoc', data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc)
-        formData.append('isExcessClaimsPaying', isExcessClaimsPaying)
+        // formData.append('pageDescriptionsUI', arr)
+        // formData.append('patentID', caseSelected.patentID)
+        // formData.append('clientRef', data.clientRef)
+        // formData.append('totalClaims', parseInt(data.totalClaims))
+        // formData.append('validationStatesUI', data.validationStatesUI)
+        // formData.append('extensionStatesUI', data.extensionStatesUI)
+        // // formData.append('amendedDoc', data.amended.amendedDoc)
+        // formData.append('isAmendmentsMade', $scope.validate.amendments.yes)
+        // formData.append('numAdditionalCopies', numAdditionalCopies)
+        // // formData.append('amendedDoc', data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc)
+        // formData.append('isExcessClaimsPaying', isExcessClaimsPaying)
 
 
 
-        // formData.pageDescriptionsUI = JSON.parse(angular.toJson(arr));
-        // formData.patentID = caseSelected.patentID;
-        // formData.clientRef = data.clientRef;
-        // formData.totalClaims = parseInt(data.totalClaims);
-        // formData.validationStatesUI = JSON.parse(angular.toJson(data.validationStatesUI));
-        // formData.extensionStatesUI = JSON.parse(angular.toJson(data.extensionStatesUI));
+        formData.pageDescriptionsUI = arr;
+        formData.patentID = caseSelected.patentID;
+        formData.clientRef = data.clientRef;
+        formData.totalClaims = data.totalClaims;
+        formData.validationStatesUI = data.validationStatesUI;
+        formData.extensionStatesUI = data.extensionStatesUI;
         // formData.amendedDoc = data.amended.amendedDoc;
-        // formData.isAmendmentsMade = $scope.validate.amendments.yes;
-        // formData.numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
-        // formData.amendedDoc = data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc;
-        // formData.isExcessClaimsPaying = $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false;
+        formData.isAmendmentsMade = $scope.validate.amendments.yes;
+        formData.numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
+        formData.amendedDoc = data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc;
+        formData.isExcessClaimsPaying = $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false;
             // var fileReader = new FileReader();
             // var base64;
             // // Onload of file read the file content
@@ -350,7 +350,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         // var blobltest = new Blob([formData.amendedDoc], {type: 'application/pdf'});
         // console.log(blobltest)
-        // console.log('formData : ', formData)
+        console.log('formData : ', formData)
         // for (var pair of formData.entries()) {
         //     console.log(pair[0]+ ', ' + pair[1]); 
         // }
