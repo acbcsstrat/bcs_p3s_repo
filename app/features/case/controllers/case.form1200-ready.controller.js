@@ -312,17 +312,20 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             formData.isYear3RenewalPaying = data.isYear3RenewalPaying.yes;
         }
 
-        formData.append('pageDescriptionsUI', JSON.stringify(arr))
+        var numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
+        var isExcessClaimsPaying = $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false;
+
+        formData.append('pageDescriptionsUI', arr)
         formData.append('patentID', caseSelected.patentID)
         formData.append('clientRef', data.clientRef)
         formData.append('totalClaims', parseInt(data.totalClaims))
-        formData.append('validationStatesUI', JSON.stringify(data.validationStatesUI))
-        formData.append('extensionStatesUI', JSON.stringify(data.extensionStatesUI))
+        formData.append('validationStatesUI', data.validationStatesUI)
+        formData.append('extensionStatesUI', data.extensionStatesUI)
         // formData.append('amendedDoc', data.amended.amendedDoc)
         formData.append('isAmendmentsMade', $scope.validate.amendments.yes)
-        formData.append('numAdditionalCopies', data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies)
+        formData.append('numAdditionalCopies', numAdditionalCopies)
         // formData.append('amendedDoc', data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc)
-        formData.append('isExcessClaimsPaying', $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false)
+        formData.append('isExcessClaimsPaying', isExcessClaimsPaying)
 
 
 
