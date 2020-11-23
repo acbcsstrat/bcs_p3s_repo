@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="form-group slideDown m-t-md" data-ng-show="$ctrl.displayAmendedUpload">
                                     <label for="amendmentsAnnotation font-weight-bold font-h4">Upload copy of amendments with annotations: </label>
-                                    <input type="file" name="amendmentsAnnotation" data-ng-init="formData.amended.amendedDoc = {};"  data-ng-model="formData.amended.amendedDoc" class="form-control-file m-t-xs font-h4" select-ng-files accept="application/pdf" data-ng-required="$ctrl.displayAmendedUpload">
+                                    <input type="file" name="amendmentsAnnotation" data-ng-init="formData.amended.amendedDoc = {};"  data-ng-model="formData.amended.amendedDoc" class="form-control-file m-t-xs font-h4" file-model="myFile" select-ng-files accept="application/pdf" data-ng-required="$ctrl.displayAmendedUpload">
                                 </div>
                                 <div class="border-grey-xs--btm m-t-md"></div>
                             </div>

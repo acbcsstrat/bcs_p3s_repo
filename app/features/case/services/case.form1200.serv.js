@@ -74,7 +74,7 @@ function Form1200Service($http, $q, Upload) {
         //     deferred.reject(errResponse)
         // });
 
-        $http.post(ppdomain+'rest-form1200/', data)
+        $http.post(ppdomain+'rest-form1200/', data, config)
         .then(
             function(response){
                 deferred.resolve(response.data)
