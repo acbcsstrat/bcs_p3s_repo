@@ -308,13 +308,6 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         }                
         console.log('data : ', data);
         console.log('heyyy',data.amended.amendedDoc)
-        console.log('what', data.amended.amendedDoc[0])
-        // var reader = new FileReader()
-        // reader.readAsBinaryString()
-        // console.log('1',reader.readAsText(data.amended.amendedDoc.file))
-        // console.log('2', reader.readAsText(data.amended.amendedDoc[0]))
-        // console.log('3',reader.readAsText(data.amended.amendedDoc))
-
 // Convert file to base64 string
         var fileToBase64 = (filename, filepath) => {
             return new Promise(resolve => {
@@ -360,9 +353,21 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         //https://stackoverflow.com/questions/43142129/sending-files-via-post-with-angularjs
 
-        fileToBase64("test.pdf", data.amended.amendedDoc)
-        .then(result => {
-          console.log(result);
+        // fileToBase64("test.pdf", data.amended.amendedDoc)
+        // .then(result => {
+        //   console.log(result);
+
+          var file = data.amended.amendedDoc;
+          var reader = new FileReader();
+          reader.addEventListener('load', readFile);
+          reader.readAsText(file);        
+        
+        function readFile(event) {
+            console.log('EVENT', event)
+          console.log();
+        
+
+
         
 
 
@@ -372,7 +377,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         formData.totalClaims = data.totalClaims;
         formData.validationStatesUI = data.validationStatesUI;
         formData.extensionStatesUI = data.extensionStatesUI;
-        formData.amendedDoc = result;
+        formData.amendedDoc = event.target.result;
         formData.isAmendmentsMade = $scope.validate.amendments.yes;
         formData.numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
         // formData.amendedDoc = data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc;
@@ -416,7 +421,8 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                     $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true});
                 }
             )
-    });
+    // });
+    }
     }
     
 
