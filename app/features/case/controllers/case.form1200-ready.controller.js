@@ -306,24 +306,6 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             invalidPageNos('drawingsEnd');
             return;
         }                
-        // console.log('data : ', data);
-        // console.log('heyyy',data.amended.amendedDoc)
-// Convert file to base64 string
-        var fileToBase64 = (filename, filepath) => {
-            return new Promise(resolve => {
-                var file = new File([data.amended.amendedDoc], filepath);
-                var reader = new FileReader();
-                // Read file content on file loaded event
-                reader.onload = function(event) {
-                    console.log('event : ',event)
-                    resolve(event.target.result);
-                };
-            
-                // Convert data to base64 
-                 reader.readAsDataURL(file);
-          });
-        };//https://medium.com/@simmibadhan/converting-file-to-base64-on-javascript-client-side-b2dfdfed75f6
-        // Example call:
 
         var config = { 
             headers: { 'Content-Type': undefined},
@@ -333,8 +315,12 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         var formData = new FormData();
 
-        if(data.isYear3RenewalPaying) {
-            formData.isYear3RenewalPaying = data.isYear3RenewalPaying.yes;
+        function isEmpty(obj) {
+            for(var key in obj) {
+                if(obj.hasOwnProperty(key))
+                    return false;
+            }
+            return true;
         }
 
         var numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
@@ -346,90 +332,51 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         formData.append('totalClaims', parseInt(data.totalClaims))
         formData.append('validationStatesUI', JSON.stringify(data.validationStatesUI))
         formData.append('extensionStatesUI', JSON.stringify(data.extensionStatesUI))
-        formData.append('amendedDoc', data.amended.amendedDoc)
+        // formData.append('amendedDoc', data.amended.amendedDoc)
         formData.append('isAmendmentsMade', $scope.validate.amendments.yes)
         formData.append('numAdditionalCopies', numAdditionalCopies)
-        // formData.append('amendedDoc', data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc)
+        formData.append('amendedDoc', isEmpty(data.amended.amendedDoc) ? null : data.amended.amendedDoc)
+        formData.append('isYear3RenewalPaying', data.isYear3RenewalPaying ? data.isYear3RenewalPaying.yes : false);
         formData.append('isExcessClaimsPaying', isExcessClaimsPaying)
 
 
-        //https://stackoverflow.com/questions/43142129/sending-files-via-post-with-angularjs
+        Form1200Service.submitForm1200(formData, config)
+        .then(
+            function(response){
 
-        // fileToBase64("test.pdf", data.amended.amendedDoc)
-        // .then(result => {
-        //   console.log(result);
+                var modalInstance = $uibModal.open({
+                    template: require('html-loader!../html/modals/modal.form1200-generating.tpl.htm'), //create html for notifications update success
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', function($uibModalInstance){
+                        this.dismissModal = function () {
+                            $uibModalInstance.close();
+                        };
+                    }]
 
-          // var file = data.amended.amendedDoc;
-          // var reader = new FileReader();
-          // reader.addEventListener('load', readFile);
-          // reader.readAsText(file);        
-        
-        // function readFile(event) {
-        //     console.log('EVENT', event)
-        //   console.log();
-        
+                })
+                ActiveTabService.setTab(2);
+                $state.go('portfolio.modal.case', {form1200generate: 1, prepareGrant: 0}, {reload: true});
+            },
+            function(errResponse){
+                console.log('Error : ', errResponse)
+                var modalInstance = $uibModal.open({
+                    template: require('html-loader!../html/modals/modal.generate-form1200-error.tpl.htm'),
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
 
+                        vm.proceedMsgAmend  = true;
+                        this.dismissModal = function () {
+                            $uibModalInstance.close();
+                        };
 
-        
+                    }]
+                });
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true});
+            }
+        )
 
-
-        formData.pageDescriptionsUI = arr;
-        formData.patentID = caseSelected.patentID;
-        formData.clientRef = data.clientRef;
-        formData.totalClaims = data.totalClaims;
-        formData.validationStatesUI = data.validationStatesUI;
-        formData.extensionStatesUI = data.extensionStatesUI;
-        // formData.amendedDoc = data.amended.amendedDoc;
-        formData.isAmendmentsMade = $scope.validate.amendments.yes;
-        formData.numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
-        // formData.amendedDoc = data.amended.amendedDoc == undefined ? null : data.amended.amendedDoc;
-        formData.isExcessClaimsPaying = $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false;
-
-
-        // for(var pair of formData.entries()) {
-        //    console.log(pair[0]+ ', '+ pair[1]); 
-        // }
-
-        console.log('formData : ', formData)
-
-            Form1200Service.submitForm1200(formData, config)
-            .then(
-                function(response){
-
-                    var modalInstance = $uibModal.open({
-                        template: require('html-loader!../html/modals/modal.form1200-generating.tpl.htm'), //create html for notifications update success
-                        appendTo: undefined,
-                        controllerAs: '$ctrl',
-                        controller: ['$uibModalInstance', function($uibModalInstance){
-                            this.dismissModal = function () {
-                                $uibModalInstance.close();
-                            };
-                        }]
-
-                    })
-                    ActiveTabService.setTab(2);
-                    $state.go('portfolio.modal.case', {form1200generate: 1, prepareGrant: 0}, {reload: true});
-                },
-                function(errResponse){
-                    console.log('Error : ', errResponse)
-                    var modalInstance = $uibModal.open({
-                        template: require('html-loader!../html/modals/modal.generate-form1200-error.tpl.htm'),
-                        appendTo: undefined,
-                        controllerAs: '$ctrl',
-                        controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
-
-                            vm.proceedMsgAmend  = true;
-                            this.dismissModal = function () {
-                                $uibModalInstance.close();
-                            };
-
-                        }]
-                    });
-                    $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true});
-                }
-            )
-    // });
-    // }
     }
     
 
