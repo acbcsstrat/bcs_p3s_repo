@@ -264,49 +264,11 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
 
     function submitForm1200Data(data){
-        $scope.test = {};
+
         $scope.formDataSubmitted = true;
 
         var arr = sortPageDetails(data.pageDetailsData);
-        var descriptionStart = arr[0].typeStart;
-        var descriptionEnd = arr[0].typeEnd;
-        var claimsStart = arr[1].typeStart;
-        var claimsEnd = arr[1].typeEnd;
-        var drawingsStart = arr[2].typeStart;
-        var drawingsEnd =  arr[2].typeEnd;
-
-        if((descriptionStart > claimsStart && descriptionStart < claimsEnd) || (descriptionStart > drawingsStart && descriptionStart < drawingsEnd) ) {
-            invalidPageNos('descriptionStart');
-            return;
-        }
-
-        if((descriptionEnd > claimsStart && descriptionEnd < claimsEnd) || (descriptionEnd > drawingsStart && descriptionEnd < drawingsEnd) ) {
-            invalidPageNos('descriptionEnd');
-            return;
-        }
-
-        //claims
-        if((claimsStart > descriptionStart && claimsStart < descriptionEnd) || (claimsStart > drawingsStart && claimsStart < drawingsEnd) ) {
-            invalidPageNos('claimsStart');
-            return;
-        }
-
-        if((claimsEnd >  descriptionStart && claimsEnd <  descriptionStart) || (claimsEnd > drawingsStart && claimsEnd < drawingsEnd) ) {
-            invalidPageNos('claimsEnd');
-            return;
-        }             
-
-        //drawings
-        if((drawingsStart > descriptionStart && drawingsStart < descriptionEnd) || (drawingsStart > claimsStart && drawingsStart < claimsEnd) ) {
-            invalidPageNos('drawingsStart');
-            return;
-        }
-
-        if((drawingsEnd >  descriptionStart && drawingsEnd <  descriptionStart) || (drawingsEnd > claimsStart && drawingsEnd < claimsEnd) ) {
-            invalidPageNos('drawingsEnd');
-            return;
-        }                
-
+     
         var config = { 
             headers: { 'Content-Type': undefined},
             transformRequest: angular.identity,
@@ -316,15 +278,17 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         var formData = new FormData();
 
         function isEmpty(obj) {
+
             for(var key in obj) {
+
                 if(obj.hasOwnProperty(key))
                     return false;
             }
             return true;
         }
 
-        var numAdditionalCopies = data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies;
-        var isExcessClaimsPaying = $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false;
+        console.log('isEmpty( : ', typeof data.amended.amendedDoc === 'object' && data.amended.amendedDoc !== null)
+        console.log('amended : ', data.amended.amendedDoc)
 
         formData.append('pageDescriptionsUI', JSON.stringify(arr))
         formData.append('patentID', caseSelected.patentID)
@@ -332,12 +296,11 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         formData.append('totalClaims', parseInt(data.totalClaims))
         formData.append('validationStatesUI', JSON.stringify(data.validationStatesUI))
         formData.append('extensionStatesUI', JSON.stringify(data.extensionStatesUI))
-        // formData.append('amendedDoc', data.amended.amendedDoc)
         formData.append('isAmendmentsMade', $scope.validate.amendments.yes)
-        formData.append('numAdditionalCopies', numAdditionalCopies)
-        formData.append('amendedDoc', isEmpty(data.amended.amendedDoc) ? null : data.amended.amendedDoc)
+        formData.append('numAdditionalCopies', data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies)
+        formData.append('amendedDoc', data.amended.amendedDoc ? data.amended.amendedDoc : null)
         formData.append('isYear3RenewalPaying', data.isYear3RenewalPaying ? data.isYear3RenewalPaying.yes : false);
-        formData.append('isExcessClaimsPaying', isExcessClaimsPaying)
+        formData.append('isExcessClaimsPaying', $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false)
 
 
         Form1200Service.submitForm1200(formData, config)

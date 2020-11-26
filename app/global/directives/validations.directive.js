@@ -269,12 +269,10 @@ function fileModel($parse) {
     return {
        restrict: 'A',
        link: function(scope, element, attrs) {
-            console.log(element, 'heyyyy')
               var model = $parse(attrs.fileModel);
               var modelSetter = model.assign;
 
               element.bind('change', function(){
-                console.log('heyyyy', element[0].files[0])
                  scope.$apply(function(){
                     modelSetter(scope, element[0].files[0]);
                  });
