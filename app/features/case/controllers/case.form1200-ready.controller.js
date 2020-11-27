@@ -277,18 +277,23 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         var formData = new FormData();
 
-        function isEmpty(obj) {
+        var uploadRequired;
 
-            for(var key in obj) {
-
-                if(obj.hasOwnProperty(key))
-                    return false;
+        if($scope.validate.amendments) {
+            if($scope.validate.amendments.no) {
+                uploadRequired = null;
             }
-            return true;
+            
         }
-
-        console.log('isEmpty( : ', typeof data.amended.amendedDoc === 'object' && data.amended.amendedDoc !== null)
-        console.log('amended : ', data.amended.amendedDoc)
+        if($scope.excessobject.excessdocs){
+            if($scope.excessobject.excessdocs.yes) {
+                uploadRequired = true;
+            }
+            if($scope.excessobject.excessdocs.no) {
+                uploadRequired = false;
+            }
+            
+        }
 
         formData.append('pageDescriptionsUI', JSON.stringify(arr))
         formData.append('patentID', caseSelected.patentID)
@@ -301,7 +306,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         formData.append('amendedDoc', data.amended.amendedDoc ? data.amended.amendedDoc : null)
         formData.append('isYear3RenewalPaying', data.isYear3RenewalPaying ? data.isYear3RenewalPaying.yes : false);
         formData.append('isExcessClaimsPaying', $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false)
-
+        formData.append('isUploadRequired', uploadRequired)
 
         Form1200Service.submitForm1200(formData, config)
         .then(
