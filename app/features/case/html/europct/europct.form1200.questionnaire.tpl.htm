@@ -73,11 +73,11 @@
                                 <h4 class="font-h4 lh-default font-weight-bold">Question 2.1.1</h4>
                                 <p class="font-weight-medium m-r-sm font-body m-b-xs">Do you want to pay excess claims fee on filing?</p>
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="excessclaimsYes" data-ng-model="excessobject.excessclaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.yes);" data-ng-click="excessobject.excessclaims.no = false" data-ng-required="!excessobject.excessclaims.no && $ctrl.excessClaimsDue">
+                                    <input type="checkbox" name="excessclaimsYes" data-ng-model="excessobject.excessclaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.no);" data-ng-click="excessobject.excessclaims.no = false" data-ng-required="!excessobject.excessclaims.no && $ctrl.excessClaimsDue">
                                     <label for="excessclaimsYes" class="form-check-label">Yes</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="excessclaimsNo" data-ng-model="excessobject.excessclaims.no" class="form-check-input checkbox-square" data-ng-click="excessobject.excessclaims.yes = false" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.yes);" data-ng-required="!excessobject.excessclaims.yes && $ctrl.excessClaimsDue">
+                                    <input type="checkbox" name="excessclaimsNo" data-ng-model="excessobject.excessclaims.no" class="form-check-input checkbox-square" data-ng-click="excessobject.excessclaims.yes = false" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.no);" data-ng-required="!excessobject.excessclaims.yes && $ctrl.excessClaimsDue">
                                     <label for="excessclaimsNo" class="form-check-label">No</label>   
                                 </div>
                                 <div class="border-grey-xs--btm m-t-md"></div>
