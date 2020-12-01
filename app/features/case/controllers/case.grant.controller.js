@@ -16,6 +16,8 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
     vm.deleteGrantConfirm = deleteGrantConfirm;
     vm.checkError = checkError;
     vm.submitGrantData = submitGrantData;
+    vm.excessClaims = excessClaims;
+    vm.excessPages = excessPages;
     $scope.formData = {};
     $scope.validate = {};
     $scope.phoneNumber = '';
@@ -97,6 +99,22 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
             }
         )
 
+    }
+
+    function excessClaims(value) {
+        if(value) {
+            vm.excessClaimsDue = true;
+        } else {
+            vm.excessClaimsDue = false;
+        }
+    }
+
+    function excessPages(value) {
+        if(value) {
+            vm.excessPagesDue = true;
+        } else {
+            vm.excessPagesDue = false;
+        }
     }
 
     function checkError(question, value) {
