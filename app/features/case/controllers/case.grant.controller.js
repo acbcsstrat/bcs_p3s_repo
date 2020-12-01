@@ -51,53 +51,80 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
         var notifyWhenValidationAvailable = true; //REMOVE EVENTALLY. QUICK FIX. PROPERTY NOT REQUIRED
         formData.append('patentID', caseSelected.patentID);
         formData.append('clientRef', data.clientRef);
-        formData.append('totalClaims', parseInt(data.totalClaims));
-        formData.append('ofWhichClaimsUnpaid', parseInt(data.totalAdditionalClaims));
-        formData.append('totalPages', parseInt(data.totalPages));
-        formData.append('ofWhichPagesUnpaid', parseInt(data.totalAdditionalPages));
-        formData.append('notifyWhenValidationAvailable', notifyWhenValidationAvailable);
+        // formData.append('notifyWhenValidationAvailable', notifyWhenValidationAvailable);
         formData.append('frenchTranslation', data.translations.frenchTranslation);
         formData.append('germanTranslation', data.translations.germanTranslation);
-
-        GrantService.submitGrant(formData, config)
-        .then(
-            function(response){
-
-                var modalInstance = $uibModal.open({
-                    template:  require('html-loader!../html/modals/modal.grant-order-prepared.tpl.htm'),
-                    appendTo: undefined,
-                    controllerAs: '$ctrl',
-                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-                        this.dismissModal = function() {
-                            $uibModalInstance.close();
-                        };
-
-                    }]
-                });
-
-                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
-
-            },
-            function(errResponse){
-
-                var modalInstance = $uibModal.open({
-                    template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
-                    appendTo: undefined,
-                    controllerAs: '$ctrl',
-                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-                        this.dismissModal = function() {
-                            $uibModalInstance.close();
-                        };
-
-                    }]
-                });
-
-                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
-
+        
+        if(data.isExcessClaims) {
+            formData.append('isExcessClaims', data.isExcessClaims.yes);
+            if(data.isExcessClaims.yes) {
+                formData.append('feePayable_016', data.feePayable_016);
+                formData.append('feePayable_016e', data.feePayable_016e);
+                formData.append('totalClaimsAmountPayable', data.totalClaimsAmountPayable);
+                formData.append('numClaimsPaid', data.numClaimsPaid);
             }
-        )
+        }
+
+        if(data.isExcessPages) {
+            formData.append('isExcessPages', data.isExcessPages.yes);
+            if(data.isExcessPages.yes) {
+                formData.append('feePayable_008', data.feePayable_008);
+                formData.append('totalPagesAmountPayable', data.totalPagesAmountPayable);
+                formData.append('numPagesPaid', data.numPagesPaid);
+            }
+        }
+        
+
+        // for(var pair of formData.entries()) {
+        //    console.log(pair[0]+ ', '+ pair[1]); 
+        // }
+
+
+
+
+
+
+
+
+        // GrantService.submitGrant(formData, config)
+        // .then(
+        //     function(response){
+
+        //         var modalInstance = $uibModal.open({
+        //             template:  require('html-loader!../html/modals/modal.grant-order-prepared.tpl.htm'),
+        //             appendTo: undefined,
+        //             controllerAs: '$ctrl',
+        //             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+        //                 this.dismissModal = function() {
+        //                     $uibModalInstance.close();
+        //                 };
+
+        //             }]
+        //         });
+
+        //         $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
+
+        //     },
+        //     function(errResponse){
+
+        //         var modalInstance = $uibModal.open({
+        //             template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
+        //             appendTo: undefined,
+        //             controllerAs: '$ctrl',
+        //             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+
+        //                 this.dismissModal = function() {
+        //                     $uibModalInstance.close();
+        //                 };
+
+        //             }]
+        //         });
+
+        //         $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
+
+        //     }
+        // )
 
     }
 

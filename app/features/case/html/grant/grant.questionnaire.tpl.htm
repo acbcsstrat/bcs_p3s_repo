@@ -141,11 +141,12 @@
                             <h4 class="font-h4 lh-default font-weight-bold">Question 3.1</h4>
                             <p>Are there any excess claims payable according to 71(3)?</p>
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" name="excessClaimsYes" data-ng-model="grant.excessClaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.excessClaims(grant.excessClaims.yes);" data-ng-click="grant.excessClaims.no = false" required>
+                                <input type="checkbox" name="excessClaimsYes" data-ng-model="formData.isExcessClaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.excessClaims(formData.isExcessClaims.yes);" data-ng-click="formData.isExcessClaims.no = false" data-ng-required="!formData.isExcessClaims.no">
                                 <label for="excessClaimsYes" class="form-check-label">Yes</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" name="excessClaimsNo" data-ng-model="grant.excessClaims.no" class="form-check-input checkbox-square" data-ng-click="grant.excessClaims.yes = false; ">
+                                <input type="checkbox" name="excessClaimsNo" data-ng-model="formData.isExcessClaims.no" class="form-check-input checkbox-square"
+                                data-ng-change="$ctrl.excessClaims(formData.isExcessClaims.yes);" data-ng-click="formData.isExcessClaims.yes = false; " data-ng-required="!formData.isExcessClaims.yes">
                                 <label for="excessClaimsNo" class="form-check-label">No</label>  
                             </div>                            
                         </div>
@@ -161,7 +162,7 @@
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Amount payable under fee code 016:</label>
                             <div class="col-md-6 col-xl-4">
-                                <input type="number" name="payable016" class="form-control pill-radius" data-ng-change="addToFormData('', formData.claimsDetails.payable016)" data-ng-model="formData.claimsDetails.payable016" validate-numbers required>
+                                <input type="number" name="feePayable_016" class="form-control pill-radius" data-ng-change="addToFormData('', formData.feePayable_016)" data-ng-model="formData.feePayable_016" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>
                         </div>
                 
@@ -171,7 +172,7 @@
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Amount payable under fee code 016e:</label>
                             <div class="col-md-6 col-xl-4">
-                                <input type="number" name="payable016e" class="form-control pill-radius" data-ng-change="addToFormData('', formData.claimsDetails.payable016e)" data-ng-model="formData.claimsDetails.payable016e" validate-numbers required>
+                                <input type="number" name="feePayable_016e" class="form-control pill-radius" data-ng-change="addToFormData('', formData.feePayable_016e)" data-ng-model="formData.feePayable_016e" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>
                         </div>
                    
@@ -181,7 +182,7 @@
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Total amount payable:</label>
                             <div class="col-md-6 col-xl-4">
-                                <input type="number" name="totalPayable" class="form-control pill-radius" data-ng-change="addToFormData('', formData.claimsDetails.totalPayable)" data-ng-model="formData.totalClaimsAmountPayable" validate-numbers required>
+                                <input type="number" name="totalPayable" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalPayable)" data-ng-model="formData.totalClaimsAmountPayable" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>  
                         </div>
                   
@@ -191,7 +192,7 @@
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Number of claims already paid. If no claims have been paid for previously, please enter 0:</label>
                             <div class="col-md-6 col-xl-4">
-                                <input type="number" name="alreadyPaidClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.claimsDetails.alreadyPaidClaims)" data-ng-model="formData.numClaimsPaid" validate-numbers required>
+                                <input type="number" name="alreadyPaidClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.alreadyPaidClaims)" data-ng-model="formData.numClaimsPaid" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>
                         </div>
         
@@ -217,11 +218,11 @@
                             <h4 class="font-h4 lh-default font-weight-bold">Question 4.1</h4>
                             <p>Are there any excess pages payable according to 71(3)?</p>
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" name="excessPagesYes" data-ng-model="grant.excessPages.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.excessPages(grant.excessPages.yes);" data-ng-click="grant.excessPages.no = false" required>
+                                <input type="checkbox" name="excessPagesYes" data-ng-model="formData.isExcessPages.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.excessPages(formData.isExcessPages.yes);" data-ng-click="formData.isExcessPages.no = false" data-ng-required="!formData.isExcessPages.no">
                                 <label for="excessPagesYes" class="form-check-label">Yes</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" name="excessPagesNo" data-ng-model="grant.excessPages.no" class="form-check-input checkbox-square" data-ng-click="grant.excessPages.yes = false; ">
+                                <input type="checkbox" name="excessPagesNo" data-ng-model="formData.isExcessPages.no" class="form-check-input checkbox-square" data-ng-change="$ctrl.excessPages(formData.isExcessPages.yes);" data-ng-click="formData.isExcessPages.yes = false; " data-ng-required="!formData.isExcessPages.yes">
                                 <label for="excessPagesNo" class="form-check-label">No</label>  
                             </div>                            
                         </div>
@@ -237,7 +238,7 @@
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Amount payable under fee code 008:</label>
                             <div class="col-md-6 col-xl-4">
-                                <input type="number" name="payable016" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.payable016)" data-ng-model="formData.feePayable_008" validate-numbers required>
+                                <input type="number" name="payable016" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.payable016)" data-ng-model="formData.feePayable_008" validate-numbers data-ng-required="formData.isExcessPages.yes">
                             </div>
                         </div>
                    
@@ -247,7 +248,7 @@
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Total amount payable:</label>
                             <div class="col-md-6 col-xl-4">
-                                <input type="number" name="totalPayable" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.totalPayable)" data-ng-model="formData.totalPagesAmountPayable" validate-numbers required>
+                                <input type="number" name="totalPayable" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.totalPayable)" data-ng-model="formData.totalPagesAmountPayable" validate-numbers data-ng-required="formData.isExcessPages.yes">
                             </div>  
                         </div>
                   
@@ -257,7 +258,7 @@
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Number of pages already paid. If no pages have been paid for previously, please enter 0:</label>
                             <div class="col-md-6 col-xl-4">
-                                <input type="number" name="alreadyPaidPages" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.alreadyPaidPages)" data-ng-model="formData.numPagesPaid" validate-numbers required>
+                                <input type="number" name="alreadyPaidPages" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.alreadyPaidPages)" data-ng-model="formData.numPagesPaid" validate-numbers data-ng-required="formData.isExcessPages.yes">
                             </div>
                         </div>
         
