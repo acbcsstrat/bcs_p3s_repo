@@ -119,18 +119,59 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
             },
             function(errResponse){
 
-                var modalInstance = $uibModal.open({
-                    template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
-                    appendTo: undefined,
-                    controllerAs: '$ctrl',
-                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                if(errResponse.status !== 406) {
+                    var modalInstance = $uibModal.open({
+                        template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
+                        appendTo: undefined,
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                            console.log($scope.ppDetails.partnerPhone)
+                            this.phoneNumber = $scope.ppDetails.partnerPhone;
 
-                        this.dismissModal = function() {
-                            $uibModalInstance.close();
-                        };
+                            this.dismissModal = function() {
+                                $uibModalInstance.close();
+                            };
 
-                    }]
-                });
+                        }]
+                    });     
+                }
+
+                if(errResponse.status == 406 && attempts !== 2) {
+                    var modalInstance = $uibModal.open({
+                        template:  require('html-loader!../html/modals/modal.grant-first-mismatch.tpl.htm'),
+                        appendTo: undefined,
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                            console.log($scope.ppDetails.partnerPhone)
+
+                            this.phoneNumber = $scope.ppDetails.partnerPhone;
+
+                            this.dismissModal = function() {
+                                $uibModalInstance.close();
+                            };
+
+                        }]
+                    });   
+                }
+
+                if(errResponse.status == 406 && attempts == 2) {
+                    var modalInstance = $uibModal.open({
+                        template:  require('html-loader!../html/modals/modal.grant-second-mismatch.tpl.htm'),
+                        appendTo: undefined,
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                            console.log($scope.ppDetails.partnerPhone)
+                            this.phoneNumber = $scope.ppDetails.partnerPhone;
+
+                            this.dismissModal = function() {
+                                $uibModalInstance.close();
+                            };
+
+                        }]
+                    });   
+                }                
+
+
 
                 $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
 
