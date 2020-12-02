@@ -9,6 +9,7 @@ import angularMoment from "angular-moment";
 import nvd3 from "angular-nvd3";
 import croppie from "angular-croppie/angular-croppie.js";
 import RecaptchaModule from 'angular-recaptcha';
+import ngCookies from 'angular-cookies';
 
 import zxcvbn from 'zxcvbn';
 

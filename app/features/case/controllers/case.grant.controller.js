@@ -1,6 +1,6 @@
-GrantController.$inject = ['caseSelected', '$scope', '$uibModal', '$state', '$timeout', 'GrantService', '$compile'];
+GrantController.$inject = ['caseSelected', '$scope', '$uibModal', '$state', '$timeout', 'GrantService', '$compile', '$cookies'];
 
-export default function GrantController(caseSelected, $scope, $uibModal, $state, $timeout, GrantService, $compile) {
+export default function GrantController(caseSelected, $scope, $uibModal, $state, $timeout, GrantService, $compile, $cookies) {
 
 	var vm = this;
 
@@ -23,6 +23,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
     $scope.phoneNumber = '';
 
     function init() {
+        // $cookies.remove('grantAttempts');
         $scope.phoneNumber = $scope.ppDetails.partnerPhone;
     	vm.activeTab = 0;
 
@@ -78,53 +79,63 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
         // for(var pair of formData.entries()) {
         //    console.log(pair[0]+ ', '+ pair[1]); 
         // }
+        var cookieExp = new Date();
+        cookieExp.setDate(cookieExp.getDate() + 1);
+
+        var attempts = $cookies.get('grantAttempts');
+
+        if(!attempts) {
+            $cookies.put('grantAttempts', 1, { expires: cookieExp } );
+            formData.append('isFirstTime', true);
+        } else {
+            if(attempts < 2) {
+                $cookies.put('grantAttempts', Number(attempts) + Number(1));
+                formData.append('isFirstTime', false);
+            }
+            
+        }
 
 
 
+        GrantService.submitGrant(formData, config)
+        .then(
+            function(response){
 
+                var modalInstance = $uibModal.open({
+                    template:  require('html-loader!../html/modals/modal.grant-order-prepared.tpl.htm'),
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
 
+                    }]
+                });
 
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
 
-        // GrantService.submitGrant(formData, config)
-        // .then(
-        //     function(response){
+            },
+            function(errResponse){
 
-        //         var modalInstance = $uibModal.open({
-        //             template:  require('html-loader!../html/modals/modal.grant-order-prepared.tpl.htm'),
-        //             appendTo: undefined,
-        //             controllerAs: '$ctrl',
-        //             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                var modalInstance = $uibModal.open({
+                    template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
+                    appendTo: undefined,
+                    controllerAs: '$ctrl',
+                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
-        //                 this.dismissModal = function() {
-        //                     $uibModalInstance.close();
-        //                 };
+                        this.dismissModal = function() {
+                            $uibModalInstance.close();
+                        };
 
-        //             }]
-        //         });
+                    }]
+                });
 
-        //         $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
 
-        //     },
-        //     function(errResponse){
-
-        //         var modalInstance = $uibModal.open({
-        //             template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
-        //             appendTo: undefined,
-        //             controllerAs: '$ctrl',
-        //             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-
-        //                 this.dismissModal = function() {
-        //                     $uibModalInstance.close();
-        //                 };
-
-        //             }]
-        //         });
-
-        //         $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
-
-        //     }
-        // )
+            }
+        )
 
     }
 
