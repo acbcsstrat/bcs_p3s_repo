@@ -90,8 +90,9 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
         } else {
             if(attempts < 2) {
                 $cookies.put('grantAttempts', Number(attempts) + Number(1));
-                formData.append('isFirstTime', false);
+                
             }
+            formData.append('isFirstTime', false);
             
         }
 

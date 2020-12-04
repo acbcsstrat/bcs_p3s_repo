@@ -161,6 +161,14 @@
                                 <h4 class="font-h4 lh-default font-weight-bold">Question 3.1.1</h4>
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Amount payable under fee code 016:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg" data-ng-if="!$ctrl.transactionItem.hasFailed">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body" md-direction="bottom" md-z-index="99999">
+                                    This is the process between asking us to complete a transaction and us sending the money to the patent office. We send an instruction to our payment partner who book the currency exchange transaction. Once we receive the money it's exchanged and sent on to the patent office.  
+                                    <img src="../../../../../assets/imgs/logos/pp_icon.png">                                       
+                                </md-tooltip>
+                            </button>
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="feePayable_016" class="form-control pill-radius" data-ng-change="addToFormData('', formData.feePayable_016)" data-ng-model="formData.feePayable_016" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>
