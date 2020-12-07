@@ -82,7 +82,7 @@ function GrantService($http, $q, $timeout){
             },
             function(errResponse){
                 console.error('Error: Unable to submit grant data. Error response:', errResponse);
-                deferred.reject(errResponse.data)
+                deferred.reject(errResponse)
             }
         )
 

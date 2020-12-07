@@ -1,6 +1,6 @@
-GrantController.$inject = ['caseSelected', '$scope', '$uibModal', '$state', '$timeout', 'GrantService', '$compile'];
+GrantController.$inject = ['caseSelected', '$scope', '$uibModal', '$state', '$timeout', 'GrantService', '$compile', '$cookies'];
 
-export default function GrantController(caseSelected, $scope, $uibModal, $state, $timeout, GrantService, $compile) {
+export default function GrantController(caseSelected, $scope, $uibModal, $state, $timeout, GrantService, $compile, $cookies) {
 
 	var vm = this;
 
@@ -16,11 +16,14 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
     vm.deleteGrantConfirm = deleteGrantConfirm;
     vm.checkError = checkError;
     vm.submitGrantData = submitGrantData;
+    vm.excessClaims = excessClaims;
+    vm.excessPages = excessPages;
     $scope.formData = {};
     $scope.validate = {};
     $scope.phoneNumber = '';
 
     function init() {
+
         $scope.phoneNumber = $scope.ppDetails.partnerPhone;
     	vm.activeTab = 0;
 
@@ -49,13 +52,49 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
         var notifyWhenValidationAvailable = true; //REMOVE EVENTALLY. QUICK FIX. PROPERTY NOT REQUIRED
         formData.append('patentID', caseSelected.patentID);
         formData.append('clientRef', data.clientRef);
-        formData.append('totalClaims', parseInt(data.totalClaims));
-        formData.append('ofWhichClaimsUnpaid', parseInt(data.totalAdditionalClaims));
-        formData.append('totalPages', parseInt(data.totalPages));
-        formData.append('ofWhichPagesUnpaid', parseInt(data.totalAdditionalPages));
-        formData.append('notifyWhenValidationAvailable', notifyWhenValidationAvailable);
+        // formData.append('notifyWhenValidationAvailable', notifyWhenValidationAvailable);
         formData.append('frenchTranslation', data.translations.frenchTranslation);
         formData.append('germanTranslation', data.translations.germanTranslation);
+        
+        if(data.isExcessClaims) {
+            formData.append('isExcessClaims', data.isExcessClaims.yes);
+            if(data.isExcessClaims.yes) {
+                formData.append('feePayable_016', data.feePayable_016);
+                formData.append('feePayable_016e', data.feePayable_016e);
+                formData.append('totalClaimsAmountPayable', data.totalClaimsAmountPayable);
+                formData.append('numClaimsPaid', data.numClaimsPaid);
+            }
+        }
+
+        if(data.isExcessPages) {
+            formData.append('isExcessPages', data.isExcessPages.yes);
+            if(data.isExcessPages.yes) {
+                formData.append('feePayable_008', data.feePayable_008);
+                formData.append('totalPagesAmountPayable', data.totalPagesAmountPayable);
+                formData.append('numPagesPaid', data.numPagesPaid);
+            }
+        }
+        
+
+        // for(var pair of formData.entries()) {
+        //    console.log(pair[0]+ ', '+ pair[1]); 
+        // }
+        var cookieExp = new Date();
+        cookieExp.setDate(cookieExp.getDate() + 1);
+
+        var attempts = $cookies.get('grantAttempts');
+
+        if(!attempts) {
+            $cookies.put('grantAttempts', 1);
+            formData.append('isFirstTime', true);
+        } else {
+            if(attempts < 2) {
+                $cookies.put('grantAttempts', Number(attempts) + Number(1));
+                
+            }
+            formData.append('isFirstTime', false);
+            
+        }
 
         GrantService.submitGrant(formData, config)
         .then(
@@ -78,25 +117,80 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
             },
             function(errResponse){
+                console.log('attempts : ', attempts)
+                if(errResponse.status !== 406) {
+                    var modalInstance = $uibModal.open({
+                        template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
+                        appendTo: undefined,
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                            console.log($scope.ppDetails.partnerPhone)
+                            this.phoneNumber = $scope.ppDetails.partnerPhone;
 
-                var modalInstance = $uibModal.open({
-                    template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
-                    appendTo: undefined,
-                    controllerAs: '$ctrl',
-                    controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                            this.dismissModal = function() {
+                                $uibModalInstance.close();
+                            };
 
-                        this.dismissModal = function() {
-                            $uibModalInstance.close();
-                        };
+                        }]
+                    });     
+                }
 
-                    }]
-                });
+                if(errResponse.status == 406 && attempts == 1) {
+                    var modalInstance = $uibModal.open({
+                        template:  require('html-loader!../html/modals/modal.grant-first-mismatch.tpl.htm'),
+                        appendTo: undefined,
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                            console.log($scope.ppDetails.partnerPhone)
+
+                            this.phoneNumber = $scope.ppDetails.partnerPhone;
+
+                            this.dismissModal = function() {
+                                $uibModalInstance.close();
+                            };
+
+                        }]
+                    });   
+                }
+
+                if(errResponse.status == 406 && attempts >= 2) {
+                    var modalInstance = $uibModal.open({
+                        template:  require('html-loader!../html/modals/modal.grant-second-mismatch.tpl.htm'),
+                        appendTo: undefined,
+                        controllerAs: '$ctrl',
+                        controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
+                            console.log($scope.ppDetails.partnerPhone)
+                            this.phoneNumber = $scope.ppDetails.partnerPhone;
+
+                            this.dismissModal = function() {
+                                $uibModalInstance.close();
+                            };
+
+                        }]
+                    });   
+                }                
 
                 $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
 
             }
         )
 
+    }
+
+    function excessClaims(value) {
+        if(value) {
+            vm.excessClaimsDue = true;
+        } else {
+            vm.excessClaimsDue = false;
+        }
+    }
+
+    function excessPages(value) {
+        if(value) {
+            vm.excessPagesDue = true;
+        } else {
+            vm.excessPagesDue = false;
+        }
     }
 
     function checkError(question, value) {

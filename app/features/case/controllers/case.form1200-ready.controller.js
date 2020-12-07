@@ -22,10 +22,15 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     vm.chkExtStates = chkExtStates;
     vm.checkError = checkError;
     vm.submitForm1200Data = submitForm1200Data;
+    vm.excessClaimsCheck = excessClaimsCheck;
+    vm.notPayingExcess = notPayingExcess;
+    vm.amendmentsMade = amendmentsMade;
+    vm.uploadAmended = uploadAmended;
     $scope.formData = {};
     $scope.validate = {};
+    $scope.excessobject = {};
     $scope.phoneNumber = '';
-
+    $scope.test = {};
     $scope.$parent.promise
     .then(
         function(response){
@@ -71,7 +76,6 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                         vm.isYear3RenewalDue = true;
                     }
 
-
                     vm.form1200Template = vm.templates[1].url;
                     
                 }
@@ -80,6 +84,59 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
     }
 
+    function amendmentsMade(value) {
+        vm.amendedOptions = value === true ? true : false;
+
+    }
+
+    function uploadAmended(value) {
+        vm.displayAmendedUpload = value === true ? true : false;
+        if(value) {
+            var modalInstance = $uibModal.open({
+                template: require('html-loader!../html/modals/modal.not-checking-claims.tpl.htm'),
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+
+                    this.ok = function () {
+                        $state.go('portfolio', {reload: true});
+                        $uibModalInstance.close();
+                    };
+
+
+                }]
+            });
+        }        
+    }
+
+    function notPayingExcess(value) {
+
+        if(value === true) {
+            var modalInstance = $uibModal.open({
+                template: require('html-loader!../html/modals/modal.not-paying-excess.tpl.htm'),
+                appendTo: undefined,
+                controllerAs: '$ctrl',
+                controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
+
+                    this.dismissModal = function () {
+                        $uibModalInstance.close();
+                    };
+
+                    this.ok = function () {
+                        $state.go('portfolio', {reload: true});
+                        $uibModalInstance.close();
+                    };
+
+
+                }]
+            });
+        }
+
+    }
 
     function checkError(question, value) {
 
@@ -111,6 +168,10 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             obj.message = $compile(template)($scope);
         }              
         manualProcess(obj, message);  
+    }
+
+    function excessClaimsCheck(value) {
+        vm.excessClaimsDue = value > 15 ? true : false;
     }
 
     function chkValidStates(item, index) {
@@ -205,63 +266,47 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         $scope.formDataSubmitted = true;
 
         var arr = sortPageDetails(data.pageDetailsData);
-        var descriptionStart = arr[0].typeStart;
-        var descriptionEnd = arr[0].typeEnd;
-        var claimsStart = arr[1].typeStart;
-        var claimsEnd = arr[1].typeEnd;
-        var drawingsStart = arr[2].typeStart;
-        var drawingsEnd =  arr[2].typeEnd;
+     
+        var config = { 
+            headers: { 'Content-Type': undefined},
+            transformRequest: angular.identity,
+            // params: { amendedDoc: paramsData }       
+        }; 
 
-        if((descriptionStart > claimsStart && descriptionStart < claimsEnd) || (descriptionStart > drawingsStart && descriptionStart < drawingsEnd) ) {
-            invalidPageNos('descriptionStart');
-            return;
+        var formData = new FormData();
+
+        var uploadRequired;
+
+        if($scope.validate.amendments) {
+            if($scope.validate.amendments.no) {
+                uploadRequired = null;
+            }
+            
+        }
+        if($scope.excessobject.excessdocs){
+            if($scope.excessobject.excessdocs.yes) {
+                uploadRequired = true;
+            }
+            if($scope.excessobject.excessdocs.no) {
+                uploadRequired = false;
+            }
+            
         }
 
-        if((descriptionEnd > claimsStart && descriptionEnd < claimsEnd) || (descriptionEnd > drawingsStart && descriptionEnd < drawingsEnd) ) {
-            invalidPageNos('descriptionEnd');
-            return;
-        }
+        formData.append('pageDescriptionsUI', JSON.stringify(arr))
+        formData.append('patentID', caseSelected.patentID)
+        formData.append('clientRef', data.clientRef)
+        formData.append('totalClaims', parseInt(data.totalClaims))
+        formData.append('validationStatesUI', JSON.stringify(data.validationStatesUI))
+        formData.append('extensionStatesUI', JSON.stringify(data.extensionStatesUI))
+        formData.append('isAmendmentsMade', $scope.validate.amendments.yes)
+        formData.append('numAdditionalCopies', data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies)
+        formData.append('amendedDoc', data.amended.amendedDoc ? data.amended.amendedDoc : null)
+        formData.append('isYear3RenewalPaying', data.isYear3RenewalPaying ? data.isYear3RenewalPaying.yes : false);
+        formData.append('isExcessClaimsPaying', $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false)
+        formData.append('isUploadRequired', uploadRequired)
 
-        //claims
-        if((claimsStart > descriptionStart && claimsStart < descriptionEnd) || (claimsStart > drawingsStart && claimsStart < drawingsEnd) ) {
-            invalidPageNos('claimsStart');
-            return;
-        }
-
-        if((claimsEnd >  descriptionStart && claimsEnd <  descriptionStart) || (claimsEnd > drawingsStart && claimsEnd < drawingsEnd) ) {
-            invalidPageNos('claimsEnd');
-            return;
-        }             
-
-        //drawings
-        if((drawingsStart > descriptionStart && drawingsStart < descriptionEnd) || (drawingsStart > claimsStart && drawingsStart < claimsEnd) ) {
-            invalidPageNos('drawingsStart');
-            return;
-        }
-
-        if((drawingsEnd >  descriptionStart && drawingsEnd <  descriptionStart) || (drawingsEnd > claimsStart && drawingsEnd < claimsEnd) ) {
-            invalidPageNos('drawingsEnd');
-            return;
-        }                
-
-        var formData = {};
-
-        if(data.isYear3RenewalDue) {
-            formData.isYear3RenewalDue = data.isYear3RenewalDue;
-        }
-        if(data.showOptionalQuestion) {
-            formData.showOptionalQuestion = data.showOptionalQuestion;
-        }
-
-        formData.pageDescriptionsUI = arr;
-        formData.id = caseSelected.patentID;
-        formData.clientRef = data.clientRef;
-        formData.totalClaims = parseInt(data.totalClaims);
-        formData.totalPages = parseInt(data.totalPages);
-        formData.validationStatesUI = data.validationStatesUI;
-        formData.extensionStatesUI = data.extensionStatesUI;
-
-        Form1200Service.submitForm1200(formData)
+        Form1200Service.submitForm1200(formData, config)
         .then(
             function(response){
 
@@ -280,7 +325,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                 $state.go('portfolio.modal.case', {form1200generate: 1, prepareGrant: 0}, {reload: true});
             },
             function(errResponse){
-
+                console.log('Error : ', errResponse)
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.generate-form1200-error.tpl.htm'),
                     appendTo: undefined,
@@ -337,9 +382,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                 };
 
             }]
-        });
+        });    
 
-    }
-
-} 
-
+    } 
+}

@@ -1,8 +1,8 @@
 export default angular.module('services.form1200-service', []).service('Form1200Service', Form1200Service).name;
 
-Form1200Service.$inject = ['$http', '$q'];
+Form1200Service.$inject = ['$http', '$q', 'Upload'];
 
-function Form1200Service($http, $q) {
+function Form1200Service($http, $q, Upload) {
 
     var factory = {
         fetchQuestions: fetchQuestions,
@@ -58,11 +58,11 @@ function Form1200Service($http, $q) {
         return deferred.promise;
     }
 
-    function submitForm1200(data) {
+    function submitForm1200(data, config) {
 
         var deferred = $q.defer();
 
-        $http.post(ppdomain+'rest-form1200/', data)
+        $http.post(ppdomain+'rest-form1200/', data, config)
         .then(
             function(response){
                 deferred.resolve(response.data)

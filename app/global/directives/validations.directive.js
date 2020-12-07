@@ -263,7 +263,27 @@ function selectNgValidationFiles() { //if files to be uploaded vary in future, a
     }
 };
 
+
+fileModel.$inject = ['$parse'];
+
+function fileModel($parse) {
+    return {
+       restrict: 'A',
+       link: function(scope, element, attrs) {
+              var model = $parse(attrs.fileModel);
+              var modelSetter = model.assign;
+
+              element.bind('change', function(){
+                 scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                 });
+              });
+       }
+    };
+}
+
 export default angular.module('directives.validation-rules', [])
+    .directive('fileModel', fileModel)
     .directive('validateName', validateName)
     .directive('validateNumbers', validateNumbers)
     .directive('validatePhone', validatePhone)
