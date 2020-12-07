@@ -165,8 +165,13 @@
                                 <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg" data-ng-if="!$ctrl.transactionItem.hasFailed">
                                 </i>
                                 <md-tooltip md-delay="200" class="mdtooltip-md font-body" md-direction="bottom" md-z-index="99999">
-                                    This is the process between asking us to complete a transaction and us sending the money to the patent office. We send an instruction to our payment partner who book the currency exchange transaction. Once we receive the money it's exchanged and sent on to the patent office.  
-                                    <img src="../../../../../assets/imgs/logos/pp_icon.png">                                       
+                                    <div>
+                                        At section 2.1 (3) of the rule 71(3), the top number of the second column within the 016 fee section holds the amount payable for 016 fees. Please provide this amount. Check below snippet from a rule 71(3) for an example.
+                                    </div>
+                                    <div>
+                                        <img src="../../../../../assets/imgs/logos/pp_icon.png"> 
+                                    </div>                                    
+                                                                           
                                 </md-tooltip>
                             </button>
                             <div class="col-md-6 col-xl-4">
@@ -179,6 +184,19 @@
                                 <h4 class="font-h4 lh-default font-weight-bold">Question 3.1.2</h4>
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Amount payable under fee code 016e:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg" data-ng-if="!$ctrl.transactionItem.hasFailed">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body" md-direction="bottom" md-z-index="99999">
+                                    <div>
+                                        (If required) At section 2.1 (3) of the rule 71(3), the top number of the second column within the 016e fee section holds the amount payable for 016e fees. Please provide this amount. Check below snippet from a rule 71(3) for an example.
+                                    </div>
+                                    <div>
+                                        <img src="../../../../../assets/imgs/logos/pp_icon.png"> 
+                                    </div>                                    
+                                                                           
+                                </md-tooltip>
+                            </button>                            
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="feePayable_016e" class="form-control pill-radius" data-ng-change="addToFormData('', formData.feePayable_016e)" data-ng-model="formData.feePayable_016e" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>
@@ -189,6 +207,19 @@
                                 <h4 class="font-h4 lh-default font-weight-bold">Question 3.1.3</h4>
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Total amount payable:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg" data-ng-if="!$ctrl.transactionItem.hasFailed">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body" md-direction="bottom" md-z-index="99999">
+                                    <div>
+                                        At section 2.1 (3) of the rule 71(3), you fill find the total amount owed in the second column within the 016 fee section. Please provide this amount. Check below snippet from a rule 71(3) for an example.
+                                    </div>
+                                    <div>
+                                        <img src="../../../../../assets/imgs/logos/pp_icon.png"> 
+                                    </div>                                    
+                                                                           
+                                </md-tooltip>
+                            </button>                              
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="totalPayable" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalPayable)" data-ng-model="formData.totalClaimsAmountPayable" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>  
@@ -199,6 +230,19 @@
                                 <h4 class="font-h4 lh-default font-weight-bold">Question 3.1.4</h4>
                             </div>
                             <label class="col-md-6 col-xl-6 col-form-label font-body">Number of claims already paid. If no claims have been paid for previously, please enter 0:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg" data-ng-if="!$ctrl.transactionItem.hasFailed">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body" md-direction="bottom" md-z-index="99999">
+                                    <div>
+                                        If any claims have been paid prior to the most recent rule 71(3) communication, please state the total number of claims that have been paid.
+                                    </div>
+                                    <div>
+                                        <img src="../../../../../assets/imgs/logos/pp_icon.png"> 
+                                    </div>                                    
+                                                                           
+                                </md-tooltip>
+                            </button>                              
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="alreadyPaidClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.alreadyPaidClaims)" data-ng-model="formData.numClaimsPaid" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>
