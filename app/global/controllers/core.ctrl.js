@@ -73,7 +73,8 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $locati
     	$http.post(ppdomain+'resources/j_spring_security_logout')
       	.then(
       		function(response){
-	            AuthorisationService.ClearCredentials()      			
+	            AuthorisationService.ClearCredentials();
+	            $cookies.remove("grantAttempts");
   				$state.go('login', { reload: false })
 
       		},

@@ -117,7 +117,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
             },
             function(errResponse){
-                console.log('attempts : ', attempts)
+
                 if(errResponse.status !== 406) {
                     var modalInstance = $uibModal.open({
                         template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
@@ -135,13 +135,12 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                     });     
                 }
 
-                if(errResponse.status == 406 && attempts == 1) {
+                if(errResponse.status == 406 && attempts == undefined ) {
                     var modalInstance = $uibModal.open({
                         template:  require('html-loader!../html/modals/modal.grant-first-mismatch.tpl.htm'),
                         appendTo: undefined,
                         controllerAs: '$ctrl',
                         controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-                            console.log($scope.ppDetails.partnerPhone)
 
                             this.phoneNumber = $scope.ppDetails.partnerPhone;
 
@@ -153,13 +152,13 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                     });   
                 }
 
-                if(errResponse.status == 406 && attempts >= 2) {
+                if(errResponse.status == 406 && attempts >= 1) {
                     var modalInstance = $uibModal.open({
                         template:  require('html-loader!../html/modals/modal.grant-second-mismatch.tpl.htm'),
                         appendTo: undefined,
                         controllerAs: '$ctrl',
                         controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-                            console.log($scope.ppDetails.partnerPhone)
+
                             this.phoneNumber = $scope.ppDetails.partnerPhone;
 
                             this.dismissModal = function() {

@@ -89,12 +89,12 @@
                             <p>Please provide both the French and German translations of the claims:</p>
                             <div class="form-check form-check-inline m-t-sm">
                                 <label for="frenchTranslation" class="form-check-label m-r-xs font-weight-medium">French: 
-                                <input type="file" name="frenchTranslation" data-ng-init="formData.translations.frenchTranslation = {};" data-ng-model="formData.translations.frenchTranslation" class="form-control-file" select-ng-files accept="application/pdf" required>
+                                <input type="file" name="frenchTranslation" data-ng-init="formData.translations.frenchTranslation = {};" data-ng-model="formData.translations.frenchTranslation" class="form-control-file" select-ng-files accept="application/pdf" required></label>  
                             </div>                    
                   
                             <div class="form-check form-check-inline m-t-sm">
-                                <label for="germanTranslation" class="form-check-label m-r-xs font-weight-medium">German: </label>  
-                                <input type="file" name="germanTranslation" data-ng-init="formData.translations.germanTranslation = {};" data-ng-model="formData.translations.germanTranslation" class="form-control-file" select-ng-files accept="application/pdf" required>              
+                                <label for="germanTranslation" class="form-check-label m-r-xs font-weight-medium">German: 
+                                <input type="file" name="germanTranslation" data-ng-init="formData.translations.germanTranslation = {};" data-ng-model="formData.translations.germanTranslation" class="form-control-file" select-ng-files accept="application/pdf" required></label>           
                             </div>
                         </div>
                         <div class="col-md-12 m-t-xs" data-ng-show="grantForm.germanTranslation.$error.pdfIncorrect || grantForm.frenchTranslation.$error.pdfIncorrect">
@@ -102,9 +102,7 @@
                         </div>
 
                         <div class="col-md-12 col-xl-12 m-b-xs m-t-sm d-flex">
-                            <p data-ng-init="question3.displayHelp = false"  class="btn btn-underlined font-weight-medium">Are you making sure the file is Annex F compliant? 
-                            </p>
-                            <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': question3.displayHelp}" data-ng-click="question3.displayHelp = !question3.displayHelp" ><i class="fas fa-chevron-right fa-sm" ></i></button>
+                            <button data-ng-init="question3.displayHelp = false"  class="btn btn-underlined font-weight-medium btn-no-ng d-inline accordion-caret" data-ng-class="{'active': question3.displayHelp}" data-ng-click="question3.displayHelp = !question3.displayHelp" >Are you making sure the file is Annex F compliant? <i class="fas fa-chevron-right fa-sm" ></i></button>
                         </div>
                         <div class="col-md-12 col-xl-12" data-ng-show="question3.displayHelp">    
                             <div class="expandcollapse-item">

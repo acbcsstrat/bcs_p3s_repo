@@ -1,6 +1,6 @@
 export default angular.module('components.sidenav', []).component('sidenav', {
 		template: require('html-loader!../html/sidenav.tpl.htm'),
-		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', '$http', '$state',  'ProfileService', 'SidenavService',  'ngCart', 'moment', 'FxService', 'AuthorisationService', function($scope, $rootScope, $mdSidenav, $timeout, $http, $state, ProfileService, SidenavService, ngCart, moment, FxService, AuthorisationService){
+		controller: ['$scope', '$rootScope', '$mdSidenav', '$timeout', '$http', '$state',  'ProfileService', 'SidenavService',  'ngCart', 'moment', 'FxService', 'AuthorisationService', '$cookies', function($scope, $rootScope, $mdSidenav, $timeout, $http, $state, ProfileService, SidenavService, ngCart, moment, FxService, AuthorisationService, $cookies){
 
 		var vm = this;
 
@@ -84,6 +84,7 @@ export default angular.module('components.sidenav', []).component('sidenav', {
 	      	.then(
 	      		function(response){
 					AuthorisationService.ClearCredentials();
+					$cookies.remove("grantAttempts");
 	  				$state.go('login', { reload: false })
 	      		},
 	          	function(errResponse) {
