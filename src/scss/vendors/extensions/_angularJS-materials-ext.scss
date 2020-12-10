@@ -101,6 +101,18 @@
     -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
     -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
     box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    &.tooltip-image {
+        width: 50rem;
+    }
+    .tooltip-content-container {
+      width: 100%;
+      .tooltip-content-container__image {
+          max-width: 100%;
+      }
+    }
+    &.md-show {
+      opacity: 1
+    }
 }
 
 md-tooltip[md-direction="right"].md-tooltip:after {
