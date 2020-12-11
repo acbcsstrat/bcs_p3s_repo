@@ -107,8 +107,8 @@ export default function FeeBreakDownController(caseSelected, $scope, $timeout) {
             if(vm.availableFees.official.feeUI !== null) {            
                 
 
-                vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.official.feeUI.subTotalUSD - vm.availableFees.official.feeUI.currentOfficialFeeUSD) + 'e2') +'e-2');
-                vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.official.feeUI.subTotalEUR - vm.availableFees.official.feeUI.currentOfficialFeeEUR) +'e2')+'e-2');
+                vm.availableFees.ppFeesUSD = Number(vm.availableFees.official.feeUI.processingFeeUSD + vm.availableFees.official.feeUI.expressFeeUSD + vm.availableFees.official.feeUI.urgentFeeUSD);
+                vm.availableFees.ppFeesEUR = Number(vm.availableFees.official.feeUI.processingFeeEUR + vm.availableFees.official.feeUI.expressFeeEUR + vm.availableFees.official.feeUI.urgentFeeEUR);
             }
 
             return;           
@@ -116,12 +116,12 @@ export default function FeeBreakDownController(caseSelected, $scope, $timeout) {
         }
 
         if(action !== 'validation') {        
-            vm.availableFees.ppFeesUSD = Number(Math.round((vm.availableFees.official[0].feeUI.subTotalUSD - vm.availableFees.official[0].feeUI.currentOfficialFeeUSD) + 'e2') +'e-2');
-            vm.availableFees.ppFeesEUR = Number(Math.round((vm.availableFees.official[0].feeUI.subTotalEUR - vm.availableFees.official[0].feeUI.currentOfficialFeeEUR) +'e2')+'e-2');
+            vm.availableFees.ppFeesUSD = Number(vm.availableFees.official[0].feeUI.processingFeeUSD + vm.availableFees.official[0].feeUI.expressFeeUSD + vm.availableFees.official[0].feeUI.urgentFeeUSD);
+            vm.availableFees.ppFeesEUR = Number(vm.availableFees.official[0].feeUI.processingFeeEUR + vm.availableFees.official[0].feeUI.expressFeeEUR + vm.availableFees.official[0].feeUI.urgentFeeEUR);
             vm.availableFees.savings = Number(Math.round((vm.availableFees.official[0].nextStageCostUSD - vm.availableFees.official[0].currentStageCostUSD) + 'e2') +'e-2');
             
         }
-
+        
     }
 
     $scope.$on('$destroy', function(){
