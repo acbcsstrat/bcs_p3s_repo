@@ -300,8 +300,15 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         formData.append('validationStatesUI', JSON.stringify(data.validationStatesUI))
         formData.append('extensionStatesUI', JSON.stringify(data.extensionStatesUI))
         formData.append('isAmendmentsMade', $scope.validate.amendments.yes)
-        formData.append('numAdditionalCopies', data.numAdditionalCopies == undefined ? null : data.numAdditionalCopies)
-        formData.append('amendedDoc', data.amended.amendedDoc ? data.amended.amendedDoc : null)
+
+        if(data.numAdditionalCopies) {
+            formData.append('numAdditionalCopies', data.numAdditionalCopies)
+        }
+
+        if(data.amended.amendedDoc) {
+            formData.append('amendedDoc', data.amended.amendedDoc)
+        }
+
         formData.append('isYear3RenewalPaying', data.isYear3RenewalPaying ? data.isYear3RenewalPaying.yes : false);
         formData.append('isExcessClaimsPaying', $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false)
         formData.append('isUploadRequired', uploadRequired)
