@@ -124,7 +124,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                         appendTo: undefined,
                         controllerAs: '$ctrl',
                         controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
-                            console.log($scope.ppDetails.partnerPhone)
+
                             this.phoneNumber = $scope.ppDetails.partnerPhone;
 
                             this.dismissModal = function() {

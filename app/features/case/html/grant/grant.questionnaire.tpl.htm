@@ -175,6 +175,9 @@
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="feePayable_016" class="form-control pill-radius" data-ng-change="addToFormData('', formData.feePayable_016)" data-ng-model="formData.feePayable_016" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.feePayable_016.$error.validNumber && grantForm.feePayable_016.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>
                         </div>
                 
                         <div class="form-group row align-items-center">
@@ -198,6 +201,9 @@
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="feePayable_016e" class="form-control pill-radius" data-ng-change="addToFormData('', formData.feePayable_016e)" data-ng-model="formData.feePayable_016e" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.feePayable_016e.$error.validNumber && grantForm.feePayable_016e.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>
                         </div>
                    
                         <div class="form-group row align-items-center">
@@ -220,6 +226,10 @@
                             </button>                              
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="totalPayable" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalPayable)" data-ng-model="formData.totalClaimsAmountPayable" validate-numbers data-ng-required="formData.isExcessClaims.yes">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <p class="font-body txt-phase-red" data-ng-show="grantForm.totalPayable.$error.validNumber && grantForm.totalPayable.$dirty">Only numbers are valid charcters in this field.</p>
+                                </div>
+
                             </div>  
                         </div>
                   
@@ -240,11 +250,11 @@
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="alreadyPaidClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.alreadyPaidClaims)" data-ng-model="formData.numClaimsPaid" validate-numbers data-ng-required="formData.isExcessClaims.yes">
                             </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.alreadyPaidClaims.$error.validNumber && grantForm.alreadyPaidClaims.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>                              
                         </div>
-        
-
                         <div class="border-grey-xs--btm m-b-md m-t-md"></div> 
-                       
                     </div>
                 </div>
             </div>
@@ -297,8 +307,11 @@
                                 </md-tooltip>
                             </button>                            
                             <div class="col-md-6 col-xl-4">
-                                <input type="number" name="payable016" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.payable016)" data-ng-model="formData.feePayable_008" validate-numbers data-ng-required="formData.isExcessPages.yes">
+                                <input type="number" name="feePayable_008" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.payable016)" data-ng-model="formData.feePayable_008" validate-numbers data-ng-required="formData.isExcessPages.yes">
                             </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.feePayable_008.$error.validNumber && grantForm.feePayable_008.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>                               
                         </div>
                    
                         <div class="form-group row align-items-center">
@@ -321,7 +334,10 @@
                             </button>                            
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="totalPayable" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.totalPayable)" data-ng-model="formData.totalPagesAmountPayable" validate-numbers data-ng-required="formData.isExcessPages.yes">
-                            </div>  
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.totalPayable.$error.validNumber && grantForm.totalPayable.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>                              
                         </div>
                   
                         <div class="form-group row align-items-center">
@@ -341,6 +357,9 @@
                             <div class="col-md-6 col-xl-4">
                                 <input type="number" name="alreadyPaidPages" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.alreadyPaidPages)" data-ng-model="formData.numPagesPaid" validate-numbers data-ng-required="formData.isExcessPages.yes">
                             </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.alreadyPaidPages.$error.validNumber && grantForm.alreadyPaidPages.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>                            
                         </div>
         
 
