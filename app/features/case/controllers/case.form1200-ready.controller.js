@@ -277,19 +277,16 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         var uploadRequired;
 
-        if($scope.validate.amendments) {
-            if($scope.validate.amendments.no) {
-                uploadRequired = null;
-            }
-            
-        }
+
         if($scope.excessobject.excessdocs){
+
             if($scope.excessobject.excessdocs.yes) {
                 uploadRequired = true;
             }
             if($scope.excessobject.excessdocs.no) {
                 uploadRequired = false;
             }
+            formData.append('isUploadRequired', uploadRequired)
             
         }
 
@@ -311,7 +308,18 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         formData.append('isYear3RenewalPaying', data.isYear3RenewalPaying ? data.isYear3RenewalPaying.yes : false);
         formData.append('isExcessClaimsPaying', $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false)
-        formData.append('isUploadRequired', uploadRequired)
+        
+
+        if($scope.validate.amendments) {
+            if($scope.validate.amendments.no) {
+                if(formData.get('isUploadRequired')) {
+                    delete formData.delete('isUploadRequired');
+                }
+            }
+            
+        }
+
+
 
         Form1200Service.submitForm1200(formData, config)
         .then(

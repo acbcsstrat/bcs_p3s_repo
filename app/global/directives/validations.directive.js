@@ -207,7 +207,7 @@ function selectNgFiles() { //if files to be uploaded vary in future, add conditi
     return {
         require: "ngModel",
         link: function postLink(scope,elem,attrs,ngModel) {
-            var validFormats = ['pdf'];
+            var validFormats = ['pdf', 'PDF'];
             elem.bind('change', function () {
                 validFile(false);
                 scope.$apply(function () {
