@@ -147,6 +147,17 @@
                                     <p class="text-left font-body">&euro; {{($ctrl.availableFees.official[0].feeUI.claimsFee2EUR | number: 2) || '0.00'}}</p>
                                 </div>
                             </div>
+                            <div class="row m-b-sm">
+                                <div class="col-md-5 col-xl-5">
+                                    <p class="font-weight-medium m-l-sm">Additional Documents:</p>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <p class="text-left font-body">$ {{($ctrl.availableFees.official[0].feeUI.additionalCopiesFeeUSD | number: 2) || '0.00'}}</p>
+                                </div>
+                                <div class="col-md-3 col-xl-3">
+                                    <p class="text-left font-body">&euro; {{($ctrl.availableFees.official[0].feeUI.additionalCopiesFeeEUR | number: 2) || '0.00'}}</p>
+                                </div>                                                                                        
+                            </div>                                  
                         </div>
                         <div data-ng-if="$ctrl.displayRenewal">
                             <div class="row m-b-sm">
@@ -217,18 +228,7 @@
                                     <p class="text-left font-body">&euro; {{($ctrl.availableFees.official[0].feeUI.excessPageFeeEUR | number: 2) || '0.00'}}</p>
                                 </div>                                                                                        
                             </div>                           
-                        </div>
-                        <div class="row m-b-sm">
-                            <div class="col-md-5 col-xl-5">
-                                <p class="font-weight-medium m-l-sm">Additional Documents:</p>
-                            </div>
-                            <div class="col-md-4 col-xl-4">
-                                <p class="text-left font-body">$ {{($ctrl.availableFees.official[0].feeUI.additionalCopiesFeeUSD | number: 2) || '0.00'}}</p>
-                            </div>
-                            <div class="col-md-3 col-xl-3">
-                                <p class="text-left font-body">&euro; {{($ctrl.availableFees.official[0].feeUI.additionalCopiesFeeEUR | number: 2) || '0.00'}}</p>
-                            </div>                                                                                        
-                        </div>                         
+                        </div>                   
                         <div data-ng-if="$ctrl.displayValidation">
                             <div class="row m-b-sm" data-ng-if="$ctrl.availableFees.official.feeUI.designatedStates.length">
                                 <div class="col-md-5 col-xl-5 m-b-sm">
