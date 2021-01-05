@@ -8,7 +8,6 @@ function validateNumbers(){
         link: function(scope, elem, attr, ctrl) {
 
             function myValidation(value) {
-                console.log(regExp.test(value))
                 if (regExp.test(value)) {
                     ctrl.$setValidity('validNumber', true);
                 } else {
