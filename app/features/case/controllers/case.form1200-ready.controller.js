@@ -302,8 +302,10 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             formData.append('numAdditionalCopies', data.numAdditionalCopies)
         }
 
-        if(data.amended.amendedDoc) {
-            formData.append('amendedDoc', data.amended.amendedDoc)
+        if(data.amended) {
+            if(data.amended.amendedDoc) {
+                formData.append('amendedDoc', data.amended.amendedDoc)
+            }
         }
 
         formData.append('isYear3RenewalPaying', data.isYear3RenewalPaying ? data.isYear3RenewalPaying.yes : false);

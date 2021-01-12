@@ -47,12 +47,12 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
     function submitGrantData(data){
 
+        vm.formDataSubmitted = true; 
         var formData = new FormData();
         var config = { headers: {'Content-Type': undefined} };
         var notifyWhenValidationAvailable = true; //REMOVE EVENTALLY. QUICK FIX. PROPERTY NOT REQUIRED
         formData.append('patentID', caseSelected.patentID);
         formData.append('clientRef', data.clientRef);
-        // formData.append('notifyWhenValidationAvailable', notifyWhenValidationAvailable);
         formData.append('frenchTranslation', data.translations.frenchTranslation);
         formData.append('germanTranslation', data.translations.germanTranslation);
         
@@ -75,10 +75,6 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
             }
         }
         
-
-        // for(var pair of formData.entries()) {
-        //    console.log(pair[0]+ ', '+ pair[1]); 
-        // }
         var cookieExp = new Date();
         cookieExp.setDate(cookieExp.getDate() + 1);
 
@@ -119,6 +115,8 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
             function(errResponse){
 
                 if(errResponse.status !== 406) {
+
+                    vm.formDataSubmitted = false; 
                     var modalInstance = $uibModal.open({
                         template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
                         appendTo: undefined,
@@ -136,6 +134,8 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                 }
 
                 if(errResponse.status == 406 && attempts == undefined ) {
+
+                    vm.formDataSubmitted = false; 
                     var modalInstance = $uibModal.open({
                         template:  require('html-loader!../html/modals/modal.grant-first-mismatch.tpl.htm'),
                         appendTo: undefined,
@@ -167,9 +167,9 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
                         }]
                     });   
-                }                
 
-                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
+                    $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
+                }
 
             }
         )
