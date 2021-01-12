@@ -1,0 +1,382 @@
+<form name="grantForm" method="get" post-action="grantService" novalidate>
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h4 class="mb-0">
+                    <button class="btn btn-link font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        1. Applicant requirements
+                    </button>
+                </h4>
+            </div>                        
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row m-b-lg" data-ng-if="$ctrl.representativeRequired">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 1.1</h4>
+                            <p class="m-b-xs">IP Place are required to act as your professional representatives in order to file your action. Do you agree to these terms?</p>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="representativeYes" data-ng-model="validate.representative.yes" class="form-check-input checkbox-square" data-ng-click="validate.representative.no = false" required>
+                                <label for="representativeYes" class="form-check-label">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="representativeNo" data-ng-model="validate.representative.no" class="form-check-input checkbox-square" data-ng-change="$ctrl.checkError('representative', validate.representative.no);" data-ng-click="validate.representative.yes = false; ">
+                                <label for="representativeNo" class="form-check-label">No</label>  
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">                
+                            <p data-ng-show="validate.representative.no" class="txt-phase-red m-t-xs">If you do not wish IP Place to act as a proffesional representative, you will be unable to proceed online.</p>
+                        </div>
+                    </div>
+                    <div class="row m-b-lg">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 1.<span>{{$ctrl.representativeRequired ? '1' : '2'}}</span></h4>
+                            <p class="m-b-xs">Do you approve the allowed text attached to the article 71(3) communication?</p>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="approveTextYes" data-ng-model="validate.approveText.yes" class="form-check-input checkbox-square" data-ng-click="validate.approveText.no = false" required>
+                                <label for="approveTextYes" class="form-check-label">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="approveTextNo" data-ng-model="validate.approveText.no" class="form-check-input checkbox-square" data-ng-click="validate.approveText.yes = false;" data-ng-change="$ctrl.checkError('approveText', validate.approveText.no);">
+                                <label for="approveTextNo" class="form-check-label">No</label>  
+                            </div>                        
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <p data-ng-show="validate.approveText.no" class="txt-phase-red m-t-xs">If you do not approve the allowed text attached to article 71(3) communication, you will be unable to proceed online.</p>    
+                        </div>
+                    </div>  
+                    <div class="row m-b-lg">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 1.<span>{{$ctrl.representativeRequired ? '2' : '3'}}</span></h4>
+                            <div class="form-group row">
+                                <label for="reference" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please provide an applicant or representative reference:</label>
+                                <div class="col-md-8 col-lg-7 col-xl-8 d-flex align-items-center">
+                                    <input type="text" name="clientRef" id="clientRef" class="form-control pill-radius" data-ng-model="formData.clientRef" placeholder="Applicant/representative reference" data-ng-maxlength="15" ref-validate required>                 
+                                </div>
+                            </div>
+                            <p class="font-body txt-phase-red" data-ng-show="grantForm.clientRef.$error.required && grantForm.clientRef.$dirty">Please fill out this field</p>
+                            <p class="txt-phase-red m-t-xs" data-ng-show="grantForm.clientRef.$error.maxlength && grantForm.clientRef.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
+                            <div class="row m-b-xs m-t-sm">
+                                <div class="col-md-8 col-lg-7 col-xl-6  d-flex">
+                                    <p data-ng-click="question4.displayHelp = !question4.displayHelp" class="btn btn-underlined font-weight-medium">Applicant/representative reference? 
+                                    </p>
+                                    <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': question4.displayHelp}" data-ng-click="question4.displayHelp = !question4.displayHelp" ><i class="fas fa-chevron-right fa-sm" ></i></button>
+                                </div>
+                            </div>
+                            <div class="expandcollapse-item" data-ng-init="question4.displayHelp = false">
+                                <div class="slideDown m-b-sm" data-ng-hide="question4.displayHelp === false">
+                                    <p class="font-body">This reference is required when submitting the Form 1038 to the European Patent Office. If you initially provided a Client Reference when adding the patent to your portfolio, it will default to this value, but you can provide any reference of your choice.</p>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>                                          
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h4 class="mb-0">
+                    <button class="btn btn-link font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        2. Translations
+                    </button>
+                </h4>                
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row m-b-lg">
+                        <div class="col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold" data-ng-hide="$ctrl.representativeRequired">Question 2.1</h4>           
+                            <p>Please provide both the French and German translations of the claims:</p>
+                            <div class="form-check form-check-inline m-t-sm">
+                                <label for="frenchTranslation" class="form-check-label m-r-xs font-weight-medium">French: 
+                                <input type="file" name="frenchTranslation" data-ng-init="formData.translations.frenchTranslation = {};" data-ng-model="formData.translations.frenchTranslation" class="form-control-file" select-ng-files accept="application/pdf" required></label>  
+                            </div>                    
+                  
+                            <div class="form-check form-check-inline m-t-sm">
+                                <label for="germanTranslation" class="form-check-label m-r-xs font-weight-medium">German: 
+                                <input type="file" name="germanTranslation" data-ng-init="formData.translations.germanTranslation = {};" data-ng-model="formData.translations.germanTranslation" class="form-control-file" select-ng-files accept="application/pdf" required></label>           
+                            </div>
+                        </div>
+                        <div class="col-md-12 m-t-xs" data-ng-show="grantForm.germanTranslation.$error.pdfIncorrect || grantForm.frenchTranslation.$error.pdfIncorrect">
+                            <p class="font-body txt-phase-red">Please ensure that the file you have uploaded is saved in a .pdf format.</p>        
+                        </div>
+
+                        <div class="col-md-12 col-xl-12 m-b-xs m-t-sm d-flex">
+                            <button data-ng-init="question3.displayHelp = false"  class="btn btn-underlined font-weight-medium btn-no-ng d-inline accordion-caret" data-ng-class="{'active': question3.displayHelp}" data-ng-click="question3.displayHelp = !question3.displayHelp" >Are you making sure the file is Annex F compliant? <i class="fas fa-chevron-right fa-sm" ></i></button>
+                        </div>
+                        <div class="col-md-12 col-xl-12" data-ng-show="question3.displayHelp">    
+                            <div class="expandcollapse-item">
+                                <div class="slideDown m-b-sm" data-ng-hide="question3.displayHelp === false">
+                                    <p class="font-body m-b-sm">In order for your grant to be processed, the EPO require that the PDF file you upload is Annex F compliant. Please see the checklist below to ensure that the document meets the criteria.</p>
+                                    <ul class="m-b-sm">
+                                        <li>all fonts are embedded (exception: Base 14 fonts are accepted even if they are not embedded)</li>
+                                        <li>the page size is A4 +/- 5%</li>
+                                        <li>the PDF is not encrypted</li>
+                                        <li>it does not contain colour or grey scale images and drawings</li>
+                                        <li>the PDF is Version 1.1 (or later)</li>
+                                        <li>the PDF does not contain embedded OLE objects</li>
+                                    </ul>
+                                    <p>If you require further information, please contact us: support@ip.place</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h4 class="mb-0">
+                    <button class="btn btn-link font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        3. Claims
+                    </button>
+                </h4>                
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row m-b-lg">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 3.1</h4>
+                            <p>Are there any excess claims payable according to 71(3)?</p>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="excessClaimsYes" data-ng-model="formData.isExcessClaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.excessClaims(formData.isExcessClaims.yes);" data-ng-click="formData.isExcessClaims.no = false" data-ng-required="!formData.isExcessClaims.no">
+                                <label for="excessClaimsYes" class="form-check-label">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="excessClaimsNo" data-ng-model="formData.isExcessClaims.no" class="form-check-input checkbox-square"
+                                data-ng-change="$ctrl.excessClaims(formData.isExcessClaims.yes);" data-ng-click="formData.isExcessClaims.yes = false; " data-ng-required="!formData.isExcessClaims.yes">
+                                <label for="excessClaimsNo" class="form-check-label">No</label>  
+                            </div>                            
+                        </div>
+                    </div>
+
+                    <div class="m-l-md m-r-md slideDown" data-ng-show="$ctrl.excessClaimsDue">
+                        
+                        <div class="border-grey-xs--btm m-b-md m-t-md"></div> 
+
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-12 col-xl-12">
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 3.1.1</h4>
+                            </div>
+                            <label class="col-md-6 col-xl-6 col-form-label font-body">Amount payable under fee code 016:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body tooltip-image" md-direction="bottom" md-z-index="99999">
+                                    <div class="tooltip-content-container m-b-xs">
+                                        At section 2.1 (3) of the rule 71(3), the top number of the second column within the 016 fee section holds the amount payable for 016 fees. Please provide this amount. Check below snippet from a rule 71(3) for an example.
+                                    </div>
+                                    <div class="tooltip-content-container">
+                                        <img src="../../../../../assets/imgs/app-images/016-payable.jpg" alt="screen shot of rule 71(3) 016 fee" class="tooltip-content-container__image">
+                                    </div>                                    
+                                                                           
+                                </md-tooltip>
+                            </button>
+                            <div class="col-md-6 col-xl-4">
+                                <input type="number" name="feePayable_016" class="form-control pill-radius" data-ng-change="addToFormData('', formData.feePayable_016)" data-ng-model="formData.feePayable_016" validate-numbers data-ng-required="formData.isExcessClaims.yes">
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.feePayable_016.$error.validNumber && grantForm.feePayable_016.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>
+                        </div>
+                
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-12 col-xl-12">
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 3.1.2</h4>
+                            </div>
+                            <label class="col-md-6 col-xl-6 col-form-label font-body">Amount payable under fee code 016e:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body tooltip-image" md-direction="bottom" md-z-index="99999">
+                                    <div class="tooltip-content-container m-b-xs">
+                                        (If required) At section 2.1 (3) of the rule 71(3), the top number of the second column within the 016e fee section holds the amount payable for 016e fees. Please provide this amount. Check below snippet from a rule 71(3) for an example.
+                                    </div>
+                                    <div class="tooltip-content-container">
+                                        <img src="../../../../../assets/imgs/app-images/016e-payable.jpg" alt="screen shot of rule 71(3) 016e fee" class="tooltip-content-container__image"> 
+                                    </div>                                    
+                                                                           
+                                </md-tooltip>
+                            </button>                            
+                            <div class="col-md-6 col-xl-4">
+                                <input type="number" name="feePayable_016e" class="form-control pill-radius" data-ng-change="addToFormData('', formData.feePayable_016e)" data-ng-model="formData.feePayable_016e" validate-numbers data-ng-required="formData.isExcessClaims.yes">
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.feePayable_016e.$error.validNumber && grantForm.feePayable_016e.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>
+                        </div>
+                   
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-12 col-xl-12">
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 3.1.3</h4>
+                            </div>
+                            <label class="col-md-6 col-xl-6 col-form-label font-body">Total amount payable:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg" data-ng-if="!$ctrl.transactionItem.hasFailed">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body tooltip-image" md-direction="bottom" md-z-index="99999">
+                                    <div class="tooltip-content-container m-b-xs">
+                                        At section 2.1 (3) of the rule 71(3), you will find the total amount owed in the second column within the 016 fee section. Please provide this amount. Check below snippet from a rule 71(3) for an example.
+                                    </div>
+                                    <div class="tooltip-content-container">
+                                        <img src="../../../../../assets/imgs/app-images/016-total-payable.jpg" alt="screen shot of rule 71(3) total amount payable for excess claims" class="tooltip-content-container__image"> 
+                                    </div>                                    
+                                                                           
+                                </md-tooltip>
+                            </button>                              
+                            <div class="col-md-6 col-xl-4">
+                                <input type="number" name="totalPayable" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalPayable)" data-ng-model="formData.totalClaimsAmountPayable" validate-numbers data-ng-required="formData.isExcessClaims.yes">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <p class="font-body txt-phase-red" data-ng-show="grantForm.totalPayable.$error.validNumber && grantForm.totalPayable.$dirty">Only numbers are valid charcters in this field.</p>
+                                </div>
+
+                            </div>  
+                        </div>
+                  
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-12 col-xl-12">
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 3.1.4</h4>
+                            </div>
+                            <label class="col-md-6 col-xl-6 col-form-label font-body">Number of claims already paid. If no claims paid before, please enter 0:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body tooltip-image" md-direction="bottom" md-z-index="99999">
+                                    <div class="tooltip-content-container">
+                                        If any, please state the total number of excess claims that have been paid for prior to the current rule 71(3) communication.
+                                    </div>                                                                           
+                                </md-tooltip>
+                            </button>
+                            <div class="col-md-6 col-xl-4">
+                                <input type="number" name="alreadyPaidClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.alreadyPaidClaims)" data-ng-model="formData.numClaimsPaid" validate-numbers data-ng-required="formData.isExcessClaims.yes">
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.alreadyPaidClaims.$error.validNumber && grantForm.alreadyPaidClaims.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>                              
+                        </div>
+                        <div class="border-grey-xs--btm m-b-md m-t-md"></div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingFour">
+                <h4 class="mb-0">
+                    <button class="btn btn-link font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        4. Pages
+                    </button>
+                </h4>                
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row m-b-lg">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 4.1</h4>
+                            <p>Are there any excess pages payable according to 71(3)?</p>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="excessPagesYes" data-ng-model="formData.isExcessPages.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.excessPages(formData.isExcessPages.yes);" data-ng-click="formData.isExcessPages.no = false" data-ng-required="!formData.isExcessPages.no">
+                                <label for="excessPagesYes" class="form-check-label">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="excessPagesNo" data-ng-model="formData.isExcessPages.no" class="form-check-input checkbox-square" data-ng-change="$ctrl.excessPages(formData.isExcessPages.yes);" data-ng-click="formData.isExcessPages.yes = false; " data-ng-required="!formData.isExcessPages.yes">
+                                <label for="excessPagesNo" class="form-check-label">No</label>  
+                            </div>                            
+                        </div>
+                    </div>
+
+                    <div class="m-l-md m-r-md slideDown" data-ng-show="$ctrl.excessPagesDue">
+                        
+                        <div class="border-grey-xs--btm m-b-md m-t-md"></div> 
+
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-12 col-xl-12">
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 4.1.1</h4>
+                            </div>
+                            <label class="col-md-6 col-xl-6 col-form-label font-body">Amount payable under fee code 008:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body tooltip-image" md-direction="bottom" md-z-index="99999">
+                                    <div class="tooltip-content-container m-b-xs">
+                                       At section 2.1 (2b) of the rule 71(3), the top number of the second column within the 008 fee section holds the amount payable for 008 fees. Please provide this amount. Check below snippet from a rule 71(3) for an example.
+                                    </div>
+                                    <div class="tooltip-content-container">
+                                        <img src="../../../../../assets/imgs/app-images/008-payable.jpg" alt="screen shot of rule 71(3) total amount payable under fee code 008" class="tooltip-content-container__image"> 
+                                    </div>                                    
+                                                                           
+                                </md-tooltip>
+                            </button>                            
+                            <div class="col-md-6 col-xl-4">
+                                <input type="number" name="feePayable_008" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.payable016)" data-ng-model="formData.feePayable_008" validate-numbers data-ng-required="formData.isExcessPages.yes">
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.feePayable_008.$error.validNumber && grantForm.feePayable_008.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>                               
+                        </div>
+                   
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-12 col-xl-12">
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 4.1.2</h4>
+                            </div>
+                            <label class="col-md-6 col-xl-6 col-form-label font-body">Total amount payable:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body tooltip-image" md-direction="bottom" md-z-index="99999">
+                                    <div class="tooltip-content-container m-b-xs">
+                                        At section 2.1 (2b) of the rule 71(3), you will find the total amount owed in the second column within the 008 fee section. Please provide this amount. Check below snippet from a rule 71(3) for an example.
+                                    </div>
+                                    <div class="tooltip-content-container">
+                                        <img src="../../../../../assets/imgs/app-images/008-total-payable.jpg" alt="screen shot of rule 71(3) total amount payable for excess pages" class="tooltip-content-container__image"> 
+                                    </div>                                    
+                                                                           
+                                </md-tooltip>
+                            </button>                            
+                            <div class="col-md-6 col-xl-4">
+                                <input type="number" name="totalPayable" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.totalPayable)" data-ng-model="formData.totalPagesAmountPayable" validate-numbers data-ng-required="formData.isExcessPages.yes">
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.totalPayable.$error.validNumber && grantForm.totalPayable.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>                              
+                        </div>
+                  
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-12 col-xl-12">
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 4.1.3</h4>
+                            </div>
+                            <label class="col-md-6 col-xl-6 col-form-label font-body">Number of pages already paid. If no pages have been paid for previously, please enter 0:</label>
+                            <button class="btn btn-no-bg">
+                                <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">
+                                </i>
+                                <md-tooltip md-delay="200" class="mdtooltip-md font-body" md-direction="bottom" md-z-index="99999">
+                                    <div class="tooltip-content-container">
+                                        If any, please state the total number of excess pages that have been paid for prior to the current rule 71(3) communication.
+                                    </div>                                                                           
+                                </md-tooltip>
+                            </button>                            
+                            <div class="col-md-6 col-xl-4">
+                                <input type="number" name="alreadyPaidPages" class="form-control pill-radius" data-ng-change="addToFormData('', formData.PagesDetails.alreadyPaidPages)" data-ng-model="formData.numPagesPaid" validate-numbers data-ng-required="formData.isExcessPages.yes">
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <p class="font-body txt-phase-red" data-ng-show="grantForm.alreadyPaidPages.$error.validNumber && grantForm.alreadyPaidPages.$dirty">Only numbers are valid charcters in this field.</p>
+                            </div>                            
+                        </div>
+        
+
+                        <div class="border-grey-xs--btm m-b-md m-t-md"></div> 
+                       
+                    </div>
+
+                </div>
+            </div>
+        </div>                
+    </div> <!-- accordion end-->
+    <div class="row m-t-md">
+        <div class="col-md-12 col-xl-12 d-flex align-items-center justify-content-end">
+       <!-- these two buttons invoke selectQuestion-->
+            <div class="d-flex align-items-center justify-content-end">
+                <button type="button" id="submit" class="btn btn--green btn--lg pill-radius"  data-ng-click="formDataSubmitted = true; $ctrl.submitGrantData(formData);" data-ng-disabled="grantForm.$invalid || formDataSubmitted">Save Grant Order</button>
+            </div>
+        </div>
+    </div>    
+</form>
