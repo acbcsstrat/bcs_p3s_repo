@@ -321,8 +321,6 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             
         }
 
-
-
         Form1200Service.submitForm1200(formData, config)
         .then(
             function(response){
