@@ -25,8 +25,12 @@ function transactionLink($anchorScroll, $state, $location, TransactionService) {
                                 }
                                 
                             })
-                        }).filter(function(item){
-                            return item.serviceUIs[0].newType.toLowerCase() === type.toLowerCase();
+                        }).filter(function(el){
+                            return el.serviceUIs.find(function(item){
+                                if(item.newType.toLowerCase() === type.toLowerCase()) {
+                                    return item.patentId == parseInt(id);
+                                } 
+                            })
                         })
 
                         if(match !== undefined || typeof match !== 'undefined') {
