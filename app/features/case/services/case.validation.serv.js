@@ -109,7 +109,7 @@ function ValidationService($http, $q, Upload) {
 
 		var deferred = $q.defer();
 
-		$http.delete('rest-validation-quote/'+ id) //VALIDATION TEST DATA 
+		$http.delete(ppdomain+'rest-validation-quote/'+ id) //VALIDATION TEST DATA 
 		.then(
 			function(response){
 				deferred.resolve(response.data)
