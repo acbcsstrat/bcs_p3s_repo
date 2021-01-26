@@ -40,7 +40,7 @@ export default function CostChartController(caseSelected, ca, $scope, $timeout) 
                                 stacked: true,
                                 duration: 500,
                                 margin: {
-                                    left: 70,
+                                    left: 90,
                                     right: 10
                                 },
                                 x: function(d){
@@ -55,17 +55,17 @@ export default function CostChartController(caseSelected, ca, $scope, $timeout) 
                                 xAxis: {
                                     axisLabel: 'Date',
                                     tickFormat: function(d) {
-                                        return d3.time.format('%B %d')(new Date(d))
+                                        return d3.time.format('%x')(new Date(d))
                                     },
-                                    axisLabelDistance: 20,                         
-                                    showMaxMin: false
+                                    axisLabelDistance: 25,                         
+                                    showMaxMin: false,
+                                    rotateYLabel: true, orient: 'left', css:{ 'transform':'rotate(45deg)' }
                                 },
                                 yAxis: {
                                     axisLabel: 'Cost',
                                     tickFormat: function(d){
                                         return d3.format('.02f')(d);
                                     },       
-                                    axisLabelDistance: -10,
                                     showMaxMin: false
                                 }
                             }
