@@ -9,7 +9,7 @@ export default function VaidationsDonutController($stateParams, $scope, $timeout
 	.then(
 		function(response){
 
-			if($scope.formalityData.validation) {
+			if(response.length) {
 
 				validationGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view
 		      		vm.donutOptions = {

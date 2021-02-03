@@ -18,7 +18,7 @@ export default function RenewalsDonutController($stateParams, $scope, $timeout, 
             	$scope.displayHelp = false;
             	$scope.tooltip1 = true;
             }
-            if(response.length) {        	
+            if(response.length) {
 				renewalGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view
 		      		vm.donutOptions = {
 			            chart: {

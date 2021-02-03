@@ -9,7 +9,7 @@ export default function EuropctsDonutController($stateParams, $scope, $timeout) 
 	.then(
 		function(response){
 
-			if($scope.formalityData.epct) {
+			if(response.length) {
 
 				epctGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view
 		      		vm.donutOptions = {

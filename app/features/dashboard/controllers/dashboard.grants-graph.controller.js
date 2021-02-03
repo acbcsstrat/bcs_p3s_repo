@@ -9,7 +9,7 @@ export default function GrantsDonutController($stateParams, $scope, $timeout) {
 	.then(
 		function(response){
 
-			if($scope.formalityData.grant) {
+			if(response.length) {
 
 				grantGraphTimeout = $timeout(function() { //required to load correct size of donut graph in view
 		      		vm.donutOptions = {
