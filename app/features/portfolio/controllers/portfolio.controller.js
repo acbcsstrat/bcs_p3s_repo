@@ -39,6 +39,8 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
     }
 
     $scope.filterByPropertiesMatchingAND = function (data) { //all data sent from filter 
+
+        $scope.test = true;
         var matchesAND = true; //set macthes to true (default)
 
         for (var obj in $scope.filter) { //$scope.filter is populated by $scope.filter within the panel controller below. Scope filter properties are initiated from front-end. currentStageColour/serviceType
@@ -71,11 +73,10 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
     })
     .then(
         function(response){
+
             vm.portfolioLoaded = true;
             $scope.phoneNumber = $scope.ppDetails.partnerPhone;
             var portfolioLoaded = $cookies.get('portfolioLoaded');
-
-
 
             if($scope.firstTime && portfolioLoaded == undefined) {
                 displayHelpTimeout = $timeout(function(){
