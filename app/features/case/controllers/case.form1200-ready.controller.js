@@ -310,7 +310,6 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
         formData.append('isYear3RenewalPaying', data.isYear3RenewalPaying ? data.isYear3RenewalPaying.yes : false);
         formData.append('isExcessClaimsPaying', $scope.excessobject.excessclaims ?  $scope.excessobject.excessclaims.yes : false)
-        
 
         if($scope.validate.amendments) {
             if($scope.validate.amendments.no) {
@@ -340,7 +339,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                 $state.go('portfolio.modal.case', {form1200generate: 1, prepareGrant: 0}, {reload: true});
             },
             function(errResponse){
-                console.log('Error : ', errResponse)
+                console.error('Error : ', errResponse)
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.generate-form1200-error.tpl.htm'),
                     appendTo: undefined,

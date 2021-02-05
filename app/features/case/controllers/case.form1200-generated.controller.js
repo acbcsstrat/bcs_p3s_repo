@@ -25,7 +25,7 @@ export default function Form1200GeneratedController($scope, $state, Form1200Serv
             controller: ['$uibModalInstance', function($uibModalInstance){
 
                 this.confirm = function() {
-                    deleteApplication($scope.patent.patentID)
+                    deleteApplication($scope.patent)
                     $uibModalInstance.close();
                 }
 
@@ -40,9 +40,9 @@ export default function Form1200GeneratedController($scope, $state, Form1200Serv
 
     }
 
-    function deleteApplication(id) {
+    function deleteApplication(patent) {
         $scope.deleteApplicationReq = true;
-        Form1200Service.deleteApplication(id)
+        Form1200Service.deleteApplication(patent)
         .then(
             function(response){
                 deleteApplicationSuccess();

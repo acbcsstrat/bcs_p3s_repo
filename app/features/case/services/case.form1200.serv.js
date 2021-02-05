@@ -1,8 +1,8 @@
 export default angular.module('services.form1200-service', []).service('Form1200Service', Form1200Service).name;
 
-Form1200Service.$inject = ['$http', '$q', 'Upload'];
+Form1200Service.$inject = ['$http', '$q', 'Upload', 'ngCart'];
 
-function Form1200Service($http, $q, Upload) {
+function Form1200Service($http, $q, Upload, ngCart) {
 
     var factory = {
         fetchQuestions: fetchQuestions,
@@ -122,11 +122,27 @@ function Form1200Service($http, $q, Upload) {
         return deferred.promise;
     }        
 
-    function deleteApplication(id) {
+    function deleteApplication(patent) {
             
         var deferred = $q.defer()
 
-        $http.delete(ppdomain+'rest-form1200/'+id)
+        var actionIds = patent.p3sServicesWithFees.map(function(r){
+            return r.actionID;
+        })
+
+        var cartItems = ngCart.getItems().map(function(r){
+            return parseInt(r._id);
+        })
+
+        var found = actionIds.find(function(r) {
+            return cartItems.indexOf(r) >= 0;
+        })      
+
+        if(found) {
+            ngCart.removeItemById(found, true)
+        }
+
+        $http.delete(ppdomain+'rest-form1200/'+patent.patentID)
         .then(
             function(response){
                 deferred.resolve(response.data)
@@ -141,7 +157,7 @@ function Form1200Service($http, $q, Upload) {
 
     function editApplication(id) {
             
-        var deferred = $q.defer()
+        var deferred = $q.defer()  
 
         $http.put(ppdomain+'rest-form1200/'+id)
         .then(

@@ -212,8 +212,8 @@ export default angular.module('ngCart', [directives])
 
         };
 
-        this.removeItemById = function (id, patentpace) {
-            
+        this.removeItemById = function (id, patentcase) {
+
             var item;
             var cart = this.getCart();
             angular.forEach(cart.items, function (item, index) {
