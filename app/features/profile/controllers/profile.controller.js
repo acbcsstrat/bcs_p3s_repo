@@ -124,6 +124,7 @@ export default function ProfileController($state, $rootScope, $scope, $timeout, 
         ProfileService.updateUser(user)
         .then(
             function(response){  
+
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.update-profile-success.tpl.htm'),
                     appendTo: undefined,
