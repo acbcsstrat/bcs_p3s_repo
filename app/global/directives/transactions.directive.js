@@ -16,7 +16,7 @@ function transactionLink($anchorScroll, $state, $location, TransactionService) {
                 .then(
                     function(response) {
 
-                        var match = response.filter(function(el){
+                        var match = response.filter(function(el){ //find transations containign patent ID (Ccan be multiple)
                             return el.serviceUIs.find(function(item){
                                 if(item.patentId) {
                                     return item.patentId == parseInt(id);
@@ -25,9 +25,9 @@ function transactionLink($anchorScroll, $state, $location, TransactionService) {
                                 }
                                 
                             })
-                        }).filter(function(el){
+                        }).filter(function(el){ //find which transactionc contains the action type (requried for grants with accompanied renewal)
                             return el.serviceUIs.find(function(item){
-                                if(item.newType.toLowerCase() === type.toLowerCase()) {
+                                if(item.newType.toLowerCase() === type.toLowerCase()) { //if matched with directive attr value
                                     return item.patentId == parseInt(id);
                                 } 
                             })

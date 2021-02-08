@@ -1,8 +1,8 @@
 export default angular.module('services.grant-service', []).factory('GrantService', GrantService).name;
 
-GrantService.$inject = ['$http', '$q', '$timeout'];
+GrantService.$inject = ['$http', '$q', '$timeout', 'ngCart'];
 
-function GrantService($http, $q, $timeout){
+function GrantService($http, $q, $timeout, ngCart){
 
     var factory = {
         submitGrant: submitGrant,
@@ -15,11 +15,9 @@ function GrantService($http, $q, $timeout){
     }
 
 
-    function unhibitGrant(id) {
+    function unhibitGrant(patent) { //for manual processing items
 
-        var deferred = $q.defer();
-
-        $http.delete(ppdomain+'rest-inhibit-grant/'+id)
+        $http.delete(ppdomain+'rest-inhibit-grant/'+patent.patentID)
         .then(
             function(response){
                 deferred.resolve(response.data)
@@ -52,11 +50,27 @@ function GrantService($http, $q, $timeout){
         return deferred.promise;
     }
 
-    function deleteGrant(id) {
+    function deleteGrant(patent) {
 
         var deferred = $q.defer();
 
-        $http.delete(ppdomain+'rest-grant/'+id)
+        var actionIds = patent.p3sServicesWithFees.map(function(r){
+            return r.actionID;
+        })
+
+        var cartItems = ngCart.getItems().map(function(r){
+            return parseInt(r._id);
+        })
+
+        var found = actionIds.find(function(r) {
+            return cartItems.indexOf(r) >= 0;
+        })      
+
+        if(found) {
+            ngCart.removeItemById(found, true)
+        }        
+
+        $http.delete(ppdomain+'rest-grant/'+patent.patentID)
         .then(
             function(response){
                 deferred.resolve(response.data)

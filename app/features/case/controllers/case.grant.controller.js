@@ -238,7 +238,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
                 this.uninhibitGrant = function() {
                     $uibModalInstance.close();
-                    GrantService.unhibitGrant(caseSelected.patentID)
+                    GrantService.unhibitGrant(caseSelected)
                     .then(
                         function(response){
                             $state.reload();
@@ -321,7 +321,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
                 this.deleteGrant = function() {
                     $uibModalInstance.close();
-                    GrantService.deleteGrant(caseSelected.patentID)
+                    GrantService.deleteGrant(caseSelected)
                     .then(
                         function(response){
                             $state.reload()
