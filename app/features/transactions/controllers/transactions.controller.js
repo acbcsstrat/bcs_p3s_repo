@@ -6,7 +6,8 @@ export default function TransactionsController(TransactionService, $scope, $cook
 
     vm.transactions = null;
     var displayHelpTimeout;
-    $scope.filter = {};    
+    $scope.filter = {};
+    $scope.displayFirstHelp = displayFirstHelp;  
 
     function noSubFilter(obj) {
         for (var key in obj) {
@@ -37,6 +38,11 @@ export default function TransactionsController(TransactionService, $scope, $cook
         }
         return matchesAND;
     };
+
+    function displayFirstHelp(help, value) {
+        $scope.displayTransactionHelp = value;
+
+    }    
 
     $scope.promise = TransactionService.fetchAllTransactions()
     $scope.promise.then(

@@ -94,6 +94,7 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
             CoreService.checkCases()
             .then(
                 function(response){
+
                     if(!response) {
                         $rootScope.firstTime = true;
                     }
