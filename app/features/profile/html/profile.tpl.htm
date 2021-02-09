@@ -81,28 +81,27 @@
 											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.lastName.$error.validName && userProfileForm.lastName.$dirty">Only letters, numbers, ' - and spaces are valid charcters in this field.</p>								
 										</div>
 									</div>
-									<div class="form-group row m-b-none">
-										<label class="col-md-4 d-flex flex-column justify-content-start font-body font-weight-medium" for="newPassword">Password:</label>
-										<div class="col-md-4 col-lg-8">
-											<div class="icon-field">
-												<input type="password" name="newPassword" data-ng-model="newPassword" class="form-control font-body pill-radius m-b-xs" id="newPassword" data-ng-blur="visitednewPassword=true" data-ng-minlength="8" data-ng-maxlength="20" autocomplete="off">
-											</div>
-											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.required && userProfileForm.newPassword.$dirty">Please fill out this field</p>
-											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.minlength && visitednewPassword">Password needs to be a minimum of 8 characters</p>
-											<p class="font-body txt-phase-red" data-ng-show="userProfileForm.newPassword.$error.minlength && visitednewPassword">Password needs to be a maximum of 20 characters</p>
-											<div class="m-t-10 m-b-10 m-l-sm">
-												<ul id="strength" data-check-strength="newPassword"></ul>
-											</div>
-										</div>
-									</div>
+				                    <div class="form-group row m-b-none">
+										<label class="col-md-4 d-flex flex-column font-body font-weight-medium m-t-xs" for="password">Password:</label>
+				                        <div class="col-md-6 col-lg-8">
+				                            <div class="icon-field">
+				                                <input type="password" name="password"  id="password" class="form-control font-body pill-radius m-b-xs"  data-ng-blur="visitedPassword=true" autocomplete="off" placeholder="Password" data-ng-model="$ctrl.formData.password" zxcvbn="$ctrl.passwordStrength" data-ng-change="$ctrl.passwordUpdate($ctrl.formData.password);">
+				                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="userProfileForm.password.$error.required && userProfileForm.password.$dirty">Please fill out this field</p>
+				                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="userProfileForm.password.$error.minlength && userProfileForm.password.$dirty">Password needs to be a minimum of 8 characters</p>
+				                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="userProfileForm.password.$error.maxlength && userProfileForm.password.$dirty">Password needs to be a maximum of 20 characters</p>
+				                            </div>
+				                        </div>
+				                        <div class="col-md-6 offset-md-4 col-lg-8 offset-lg-4">
+				                   			<div class="m-t-xs m-b-sm">
+				                                <zx-password-meter value="{{ $ctrl.passwordStrength.score }}" max="4"></zx-password-meter>
+				                            </div>
+				                        </div>
+				                    </div>
 									<div class="form-group row">
-										<label class="col-md-4 d-flex flex-column justify-content-center font-body font-weight-medium" for="password2">Confirm password:</label>
-										<div class="col-md-4 col-lg-8">	
-											<input type="password" name="password2" id="password2" class="form-control font-body pill-radius" data-ng-model="password2" data-pw-check="newPassword" data-ng-blur="visitedPassword2=true">
-											 
-										</div>
-										<div class="col-md-4 offset-md-4 col-lg-8">	
-											<span class="font-body txt-phase-red" data-ng-show="userProfileForm.password2.$error.pwmatch && visitedPassword2">Passwords don't match.</span>
+										<label class="col-md-4 d-flex flex-column font-body font-weight-medium m-t-xs" for="password">Password:</label>
+										<div class="col-md-6 col-lg-8">
+			                            	<input type="password" name="confirmPassword" class="form-control font-body pill-radius" data-ng-model="$ctrl.formData.confirmPassword" data-confrim-pw-to="$ctrl.formData.password" placeholder="Confirm Password" data-ng-required="$ctrl.formData.password">
+			                            	<p class="font-body txt-phase-red m-t-xs" data-ng-show="userProfileForm.confirmPassword.$invalid && userProfileForm.password.$dirty && userProfileForm.confirmPassword.$dirty">Passwords don't match.</p>				                            	
 										</div>
 									</div>
 								</fieldset>

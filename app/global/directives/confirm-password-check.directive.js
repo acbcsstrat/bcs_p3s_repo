@@ -7,6 +7,9 @@ function confrimPwTo() {
         link: function(scope, element, attributes, ngModel) {
 
             ngModel.$validators.confrimPwTo = function(modelValue) {
+                if(!modelValue) {
+                    return true;
+                }
                 return modelValue == scope.otherModelValue;
             };
  

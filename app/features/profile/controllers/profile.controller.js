@@ -1,3 +1,5 @@
+import zxcvbn from 'zxcvbn';
+
 ProfileController.$inject = ['$state', '$rootScope', '$scope', '$timeout', '$uibModal', '$http', 'UploadAvatarService', 'ProfileService', 'TimezoneService',]
 
 export default function ProfileController($state, $rootScope, $scope, $timeout, $uibModal, $http, UploadAvatarService, ProfileService, TimezoneService) {
@@ -8,8 +10,9 @@ export default function ProfileController($state, $rootScope, $scope, $timeout, 
     vm.updateTimezone = updateTimezone;
     vm.updateUser = updateUser;
     vm.openAvatarModal = openAvatarModal;
+    vm.passwordUpdate = passwordUpdate;
 
-    vm.$onInit = function() {
+    function init() {
 
         TimezoneService.fetchUsaTimeZones()
         .then(
@@ -56,6 +59,31 @@ export default function ProfileController($state, $rootScope, $scope, $timeout, 
         );
        
     }; //init end
+
+    init();
+
+    function passwordUpdate(password) {
+
+        if(password) {
+            vm.confirmPasswordReq = true;
+            if(vm.formData.password.length < 8){ //https://stackoverflow.com/questions/56314220/angularjs-minlength-validation-stop-characters-counter
+                $scope.userProfileForm.password.$setValidity('minlength', false);
+            } else{
+                $scope.userProfileForm.password.$setValidity('minlength', true);
+            }
+
+            if(vm.formData.password.length > 20){
+                $scope.userProfileForm.password.$setValidity('maxlength', false);
+            } else{
+                $scope.userProfileForm.password.$setValidity('maxlength', true);
+            }
+
+            vm.passwordStrength = zxcvbn(password);
+        } else {
+            vm.confirmPasswordReq = false;
+        }
+        
+    }
 
     function openAvatarModal() {
         var modalInstance = $uibModal.open({
