@@ -122,8 +122,9 @@
                                 <input class="m-l-xs" type="radio" class="form-check-input checkbox-square" name="incorrectCompany" data-ng-init="$ctrl.business.notcompany.yes = false"  data-ng-model="$ctrl.business.notcompany.yes" data-ng-click="$ctrl.business.company.yes = false" data-ng-change="$ctrl.declineDetails()">
                                 <label  class="form-check-label">No</label>
                             </div>                                
-                            <div class="m-t-md m-b-md">
+                            <div class="m-t-md m-b-md company-table">
                                 <table class="t-data">
+
                                     <tbody>
                                         <tr class="t-data__row" data-ng-repeat="(key, value) in $ctrl.searchCompanyresponse">
                                             <td class="t-data__td t-data__td--sm font-body font-weight-medium text-capitalize">{{key}}</td>
