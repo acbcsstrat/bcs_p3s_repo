@@ -25,10 +25,15 @@ function transactionLink($anchorScroll, $state, $location, TransactionService) {
                                 }
                             })
                         }).filter(function(el){ //find which transactionc contains the action type (requried for grants with accompanied renewal)
+
                             if(el.transStatusUI !== 'Completed') { //handles issue with a patent with a renewal history. directs the user to the 'in progress one', rather than completed one.                      
                                 return el.serviceUIs.find(function(item){
                                     if(item.newType.toLowerCase() === type.toLowerCase()) { //if matched with directive attr value
-                                        return item.patentId == parseInt(id);
+                                        if(item.patentId) {
+                                            return item.patentId == parseInt(id);
+                                        } else {
+                                            return item.patentID == parseInt(id);                        
+                                        }
                                     } 
                                 })
                             }
