@@ -21,6 +21,7 @@ export default function Form1200GeneratedController($scope, $state, Form1200Serv
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.confirm-delete-epct-application-success.tpl.htm'), //create html for notifications update success
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
 
@@ -61,15 +62,15 @@ export default function Form1200GeneratedController($scope, $state, Form1200Serv
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.delete-epct-application-success.tpl.htm'), //create html for notifications update success
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
                 this.dismissModal = function () {
                     $uibModalInstance.close();
                     
                 };
-                var timeout = $timeout(function() {
-                    $state.reload(); //go to patent info on successful deletion                    
-                }, 200);
+
+                $state.reload('portfolio.modal.case'); //go to patent info on successful deletion                    
 
                 $scope.$on('$destroy', function(){
                     $timeout.cancel(timeout)
@@ -85,6 +86,7 @@ export default function Form1200GeneratedController($scope, $state, Form1200Serv
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.delete-epct-application-error.tpl.htm'), //create html for notifications update success
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
 
@@ -105,6 +107,7 @@ export default function Form1200GeneratedController($scope, $state, Form1200Serv
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.edit-epct-application-error.tpl.htm'), //create html for notifications update success
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', function($uibModalInstance){
 

@@ -95,6 +95,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             var modalInstance = $uibModal.open({
                 template: require('html-loader!../html/modals/modal.not-checking-claims.tpl.htm'),
                 appendTo: undefined,
+                backdropClass: 'second-backdrop',
                 controllerAs: '$ctrl',
                 controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
 
@@ -119,6 +120,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             var modalInstance = $uibModal.open({
                 template: require('html-loader!../html/modals/modal.not-paying-excess.tpl.htm'),
                 appendTo: undefined,
+                backdropClass: 'second-backdrop',
                 controllerAs: '$ctrl',
                 controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
 
@@ -195,6 +197,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.confirm-cancel-1200.tpl.htm'),
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
 
@@ -249,6 +252,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.invalid-page-nos.tpl.htm'),
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -327,6 +331,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.form1200-generating.tpl.htm'), //create html for notifications update success
                     appendTo: undefined,
+                    backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', function($uibModalInstance){
                         this.dismissModal = function () {
@@ -336,13 +341,14 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
                 })
                 ActiveTabService.setTab(2);
-                $state.go('portfolio.modal.case', {form1200generate: 1, prepareGrant: 0}, {reload: true});
+                $state.reload('portfolio.modal.case');
             },
             function(errResponse){
                 console.error('Error : ', errResponse)
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.generate-form1200-error.tpl.htm'),
                     appendTo: undefined,
+                    backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$scope', '$timeout', function($uibModalInstance, $scope, $timeout){
 
@@ -375,6 +381,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
                             </div>\
                         </div>',
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', '$state', function($uibModalInstance, $timeout, $state){
 
