@@ -138,7 +138,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                     var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
                     var patentId = id[0].id; //gets data from data-id
                     $state.go('portfolio.modal.case', {caseId: patent.patentID, form1200generate: null})
-                }
+                }                        
 
             };
 

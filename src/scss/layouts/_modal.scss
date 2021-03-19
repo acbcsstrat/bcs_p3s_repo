@@ -10,9 +10,6 @@
 
 .bar-phase { width: 100%; } /*modules*/ /*components*/ /*_modal.scss*/
 
-.modal-backdrop .fade .in { opacity: 0.5 !important; }
-.modal-backdrop.fade { opacity: 0.5 !important; }
-
 
 
 .modal-header,
@@ -26,49 +23,48 @@
   background: transparent;
 }
 .modal-header {
-  background: $white;
-  border-bottom: 0;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  border-radius: 10px;
-  -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
-  -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
-  box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1); 
-
+    background: $white;
+    border-bottom: 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1); 
 }
 
 .modal-body {
-  padding-top: 0;
-  padding-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .modal-footer {
-  border-top: 0;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+    border-top: 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 .modal-footer>:not(:last-child) {
-  margin-right: 1.5rem;
+    margin-right: 1.5rem;
 }
 
 .modal-body--multiple {
-  padding-left: 5rem;
-  padding-right: 5rem;  
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;  
+    padding-left: 5rem;
+    padding-right: 5rem;  
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;  
 }
 
 .modal-header--multiple {
-  padding-left: 5rem;
-  padding-right: 5rem;  
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;  
+    padding-left: 5rem;
+    padding-right: 5rem;  
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;  
 }
 
 .modal-content--multiple {
-  max-height: 300px;
-  overflow: auto;
+    max-height: 300px;
+    overflow: auto;
 }
 
 .modal-content--table {
@@ -76,11 +72,11 @@
 }
 
 .modal-max {
-  max-height: 600px;
-  overflow-y: scroll;
+    max-height: 600px;
+    overflow-y: scroll;
 }
 
-.modal-backdrop {
+.caseoverview-modal-backdrop {
     position: fixed;
     top: 0px;
     left: 0px;
@@ -88,9 +84,36 @@
     width:100%;
     background: #000;
     z-index: 1040;
-    opacity: 0.6;
-    animation: animatedBackground .25s ease-in-out;    
+    opacity: 0.8!important;
+
 }
+
+.modal.fade {
+    transition: all 0.2s ease-in-out;
+}
+
+
+.modal.fade .modal-dialog {
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+}
+.modal.fade.in .modal-dialog {
+    opacity: 1;
+}
+
+.modal-backdrop {
+    &.second-backdrop {
+        z-index: 1042!important;
+    }
+    &.fade {
+        transition: all 0.2s ease-in-out;
+        opacity: 0;
+        &.in {
+            opacity: 0.8;
+        }
+    }  
+}
+
 
 .modal-overview {
     position: absolute;

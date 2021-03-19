@@ -144,6 +144,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.confirm-delete-patent.tpl.htm'),
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -159,7 +160,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                 };
 
                 this.cancelDeletion = function() {
-                    $uibModalInstance.dismiss('cancel');
+                    $uibModalInstance.close();
                 };
 
             }]
