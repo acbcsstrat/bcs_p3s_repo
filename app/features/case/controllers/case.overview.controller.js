@@ -5,6 +5,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     var vm = this;
 
     vm.confirmDeletePatent = confirmDeletePatent;
+    vm.closeCaseoverview = closeCaseoverview;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
 
@@ -17,7 +18,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     $scope.caseoverview_tab = 'details';
     $scope.showOptions = false;
     $scope.activeLeft = 0;
-    $scope.closeCaseoverview = closeCaseoverview;
+    
     $scope.renewalHistory = null;
 
     var chartTimeout;

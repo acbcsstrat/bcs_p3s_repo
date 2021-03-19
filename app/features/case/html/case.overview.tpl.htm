@@ -1,7 +1,12 @@
 <div data-ng-if="$ctrl.portfolioLoaded" class="animate-show modal-box">
 	<div class="modal-overview d-flex flex-column bg-white">
-		<div class="modal-overview--options-panel cursor-pointer d-flex align-items-center">
-			<button class="btn btn-no-bg" data-ng-click="closeCaseoverview()"><i class="fas fa-times fa-2x cursor-pointer"></i></button>
+		<div class="modal-overview__options-panel cursor-pointer d-flex align-items-center">
+			<div class="options-panel__item">
+				<button class="btn btn-no-bg" data-ng-click="$ctrl.confirmDeletePatent()"><i class="fas fa-trash-alt fa-lg action-icon cursor-pointer"></i></button>
+			</div>
+			<div  class="options-panel__item">
+				<button class="btn btn-no-bg" data-ng-click="$ctrl.closeCaseoverview()"><i class="fas fa-times fa-2x action-icon cursor-pointer"></i></button>
+			</div>
 		</div>
 		<div class="d-flex flex-grow-1 brbl-10 brtl-10">
 			<div class="row flex-grow-1">

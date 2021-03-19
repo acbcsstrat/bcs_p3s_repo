@@ -111,14 +111,21 @@ a.cursor-pointer,
 button.cursor-pointer, 
 input.cursor-pointer,
 span.cursor-pointer,
-i.cursor-pointer { cursor: pointer }
+i.cursor-pointer { 
+    cursor: pointer;
+    &.action-icon {
+        &:hover {
+            opacity: .8;
+        }
+    }
+}
 div.cursor-help { cursor: help; }
 
 .btn-reset { 
-  background: none;
-  border: none;
-  margin: 0;
-  padding: 0;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nowrap { white-space: nowrap; }

@@ -107,11 +107,17 @@
     -moz-border-radius: 10px;
     border-radius: 10px;
     overflow: hidden;
-    .modal-overview--options-panel {
+    .modal-overview__options-panel {
         position: absolute;
         right: 14px;
         top: 8px;
         z-index: 1;
+        .options-panel__item {
+            margin-right: 1rem;
+            &:last-child {
+              margin-right: 0;
+            }
+        }
     }    
     .modal-overview__view {
         max-width: 703px;
