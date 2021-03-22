@@ -8,7 +8,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     vm.closeCaseoverview = closeCaseoverview;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
-
+    vm.patent = caseSelected;
     vm.portfolioLoaded = false;
     vm.setTab = setTab;
     vm.checkAvailableAction = checkAvailableAction;
@@ -63,7 +63,6 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
         $scope.promise.then(
             function(){
                 $scope.phoneNumber = $scope.ppDetails.partnerPhone;
-                vm.patent = caseSelected;
                 vm.portfolioLoaded = true;
                 RenewalHistoryService.fetchHistory(caseSelected.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
