@@ -2,10 +2,18 @@
 	<div class="modal-overview d-flex flex-column bg-white">
 		<div class="modal-overview__options-panel cursor-pointer d-flex align-items-center">
 			<div class="options-panel__item">
-				<button class="btn btn-no-bg" data-ng-click="$ctrl.confirmDeletePatent()"><i class="fas fa-trash-alt fa-lg action-icon cursor-pointer"></i></button>
+				<button class="btn btn-no-bg" data-ng-click="$ctrl.confirmDeletePatent()"  data-ng-disabled="!$ctrl.patent.patentDeletable"><i class="fas fa-trash-alt fa-lg action-icon"></i>
+				</button>
+				<md-tooltip md-delay="500" md-direction="bottom" md-z-index="99999" data-ng-show="!$ctrl.patent.patentDeletable" class="font-h4">
+					<div class="tooltip-inner text-left">
+						<p class="font-h4 m-b-xs">Unable to delete case</p>
+						<p class="font-body" data-ng-bind="$ctrl.patent.patentNotDeletableReason">
+						</p>
+					</div>
+				</md-tooltip>
 			</div>
 			<div  class="options-panel__item">
-				<button class="btn btn-no-bg" data-ng-click="$ctrl.closeCaseoverview()"><i class="fas fa-times fa-2x action-icon cursor-pointer"></i></button>
+				<button class="btn btn-no-bg" data-ng-click="$ctrl.closeCaseoverview()"><i class="fas fa-times fa-2x action-icon"></i></button>
 			</div>
 		</div>
 		<div class="d-flex flex-grow-1 brbl-10 brtl-10">

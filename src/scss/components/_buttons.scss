@@ -136,6 +136,11 @@
         &:focus {
             outline: 0;
         }
+        &:not([disabled]):hover {
+            .action-icon {
+                opacity: .8
+            }
+        }
     }
 
     &.btn-underlined {
@@ -151,13 +156,13 @@
 
 .t-data .t-data__btn-portal { min-width: 183.48px; } //required from ngCart
 
-.btn-no-bg {
-    background: none;
-    border: 0;
-    &:focus {
-        outline: 0;
-    }
-}
+// .btn-no-bg {
+//     background: none;
+//     border: 0;
+//     &:focus {
+//         outline: 0;
+//     }
+// }
 
 .btn-underlined {
     cursor: pointer;
