@@ -137,12 +137,14 @@
 						        </div>
 								<div class="row" data-ng-show="$ctrl.actionsAvailable">
 									<div class="col-md-6">
-										<p class="font-h4 font-weight-bold m-b-xs">Available actions 
+										<p class="font-h4 font-weight-bold m-b-xs d-inline">Available actions 
+							        	</p>
+<!-- 							        	<div class="d-inline"> 
 											<i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg"></i>
 								            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="1050">
 												Either transaction links or 'call to action' buttons are displayed here. The call to action buttons help you carry out tasks required to be taken to process available European formalities
 								            </md-tooltip>
-							        	</p>
+							            </div>		 -->        	
 									</div>
 								</div>
 								<div class="row" data-ng-show="$ctrl.actionsAvailable" data-ng-init="$ctrl.checkAvailableAction($ctrl.patent.p3sServicesWithFees)">
@@ -160,8 +162,24 @@
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-l-sm m-r-xl" name="epct" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Epct saved'"></ngcart-addtocart>
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-l-sm m-r-xl" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-l-sm m-r-xl" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
-									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-l-sm m-r-xl" name="validation" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Quote provided'"></ngcart-addtocart>									            
-									            <p class="font-weight-medium font-h4 m-r-xl" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : 'txt-phase-green'" data-ng-if="item.saleType == 'Offline'">Call {{phoneNumber}}</p>
+									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-l-sm m-r-xl" name="validation" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Quote provided'"></ngcart-addtocart>
+									            <div data-ng-if="item.saleType == 'Offline'">
+									            	<p class="font-weight-medium font-h4 m-r-xs d-inline" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : 'txt-phase-green'" >Call {{phoneNumber}}</p>
+			                                        <div class="d-inline">                            
+			                                            <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">
+			                                            </i>			                                            
+			                                            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="99999" data-ng-if="item.isUrgentAttention">
+			                                                <p class="font-body">
+                        										This formality's deadline is too close for it to be processed online. Call our patent administrator on {{phoneNumber}} who will attempt to process it manually before the deadline hits
+			                                                </p>
+			                                            </md-tooltip>  
+			                                            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="99999" data-ng-if="!item.isUrgentAttention && item.saleType == 'Offline'">
+			                                                <p class="font-body">
+			                                                    This formality can only be processed manually offline. To find out more details as to why, please select the appropriate formality tab on the left
+			                                                </p>
+			                                            </md-tooltip>  			                                            
+			                                        </div>									            	
+									            </div>
 				                			</div>
 				                		</div>
 			                		</div>
