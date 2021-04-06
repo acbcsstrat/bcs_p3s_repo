@@ -99,6 +99,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                 var modalInstance = $uibModal.open({
                     template:  require('html-loader!../html/modals/modal.grant-order-prepared.tpl.htm'),
                     appendTo: undefined,
+                    backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -120,6 +121,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                     var modalInstance = $uibModal.open({
                         template:  require('html-loader!../html/modals/modal.grant-order-not-prepared.tpl.htm'),
                         appendTo: undefined,
+                        backdropClass: 'second-backdrop',
                         controllerAs: '$ctrl',
                         controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -139,6 +141,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                     var modalInstance = $uibModal.open({
                         template:  require('html-loader!../html/modals/modal.grant-first-mismatch.tpl.htm'),
                         appendTo: undefined,
+                        backdropClass: 'second-backdrop',
                         controllerAs: '$ctrl',
                         controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -156,6 +159,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                     var modalInstance = $uibModal.open({
                         template:  require('html-loader!../html/modals/modal.grant-second-mismatch.tpl.htm'),
                         appendTo: undefined,
+                        backdropClass: 'second-backdrop',
                         controllerAs: '$ctrl',
                         controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -233,6 +237,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
         var modalInstance = $uibModal.open({
             template:  require('html-loader!../html/modals/modal.confirm-uninhibit-grant-order.tpl.htm'),
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -245,6 +250,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                             var modalInstance = $uibModal.open({
                                 template:  require('html-loader!../html/modals/modal.grant-order-uninhibited.tpl.htm'),
                                 appendTo: undefined,
+                                backdropClass: 'second-backdrop',
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -286,6 +292,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                             </div>\
                         </div>',
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', '$state', function($uibModalInstance, $timeout, $state){
 
@@ -316,6 +323,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
         var modalInstance = $uibModal.open({
             template:  require('html-loader!../html/modals/modal.confirm-delete-grant-order.tpl.htm'),
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -328,6 +336,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                             var modalInstance = $uibModal.open({
                                 template:  require('html-loader!../html/modals/modal.grant-order-deleted.tpl.htm'),
                                 appendTo: undefined,
+                                backdropClass: 'second-backdrop',
                                 controllerAs: '$ctrl',
                                 controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 

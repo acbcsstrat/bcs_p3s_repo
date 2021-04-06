@@ -1,6 +1,17 @@
 <div class="row m-b-sm">
 	<div class="col-xl-12">	
 		<p class="m-b-xs" data-ng-show="$ctrl.urgent">It is too close to the deadline for processing this Euro-PCT filing online. You can process the Euro-PCT filing offline by contacting one of our patent administrators via either phone: {{phoneNumber}} or email: support@ip.place.</p>
-		<p class="m-b-xs" data-ng-hide="$ctrl.urgent">We unfortunately are unable to process your Euro-PCT filing online. However, one of our patent administrators will be able to assist you offline and help you further in regards to the Euro-PCT filing. Please contact us via either phone: {{phoneNumber}} or email: support@ip.place.</p>		
+		<div class="m-b-xs offline-processing-panel" data-ng-hide="$ctrl.urgent">
+			<div class="row">
+				<div class="col-md-2 d-flex justify-content-center align-items-center">
+					<i class="fas fa-exclamation-circle fa-4x txt-phase-amber"></i>
+				</div>
+				<div class="col-md-10">
+					<p class="m-b-xs font-h4 font-weight-bold" data-ng-bind="$ctrl.patent.p3sServicesWithFees.manualProcessingUI.title"></p>
+					<p class="m-b-xs" data-ng-bind="$ctrl.patent.p3sServicesWithFees.manualProcessingUI.description"></p>
+					<p data-ng-bind="$ctrl.patent.p3sServicesWithFees.manualProcessingUI.solution"></p>
+				</div>
+			</div>
+		<div>
 	</div>
 </div>

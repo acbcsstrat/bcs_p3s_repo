@@ -125,20 +125,30 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
 
             function rowSelect(event, patent){
 
+                vm.caseoverviewLoading = true;
+                var stateObj = '';
+
                 vm.stateParams = $stateParams;
                 if($(event.target).hasClass('generateForm1200')) {
-                    $state.go('portfolio.modal.case', {caseId: patent.patentID, form1200generate: 1, prepareGrant: 0}, {notify: false})
+                    stateObj = {caseId: patent.patentID, form1200generate: 1, prepareGrant: 0};                       
                 }
 
                 if($(event.target).hasClass('prepareGrant')) {
-                    $state.go('portfolio.modal.case', {caseId: patent.patentID, prepareGrant: 1, form1200generate: 0}, {notify: false})
+                    stateObj = {caseId: patent.patentID, prepareGrant: 1, form1200generate: 0}
                 }        
 
                 if(!$(event.target).hasClass('cartbtn') && !$(event.target).hasClass('generateForm1200') && !$(event.target).hasClass('prepareGrant')) {
                     var id = ($($(event.currentTarget).find('a'))); //find the anchor tag within row (patentApplicationNumber)
                     var patentId = id[0].id; //gets data from data-id
-                    $state.go('portfolio.modal.case', {caseId: patent.patentID, form1200generate: null})
-                }
+                    stateObj =  {caseId: patent.patentID, form1200generate: null}
+                }                        
+
+                $state.go('portfolio.modal.case', stateObj)
+                .then(
+                    function(){
+                        vm.caseoverviewLoading = false;
+                    }
+                )
 
             };
 

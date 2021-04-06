@@ -5,7 +5,7 @@
 </div>
 <div data-ng-hide="$ctrl.portfolioLoaded" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
     <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
-    <p>We are just fetching all your cases</p>
+    <p class="font-h4 font-weight-bold">We are just fetching all your cases</p>
 </div>
 
 
@@ -187,12 +187,29 @@
                                 <td data-ng-repeat="item in patent.p3sServices track by $index" class="t-data__td">
                                     <div data-ng-if="!item.isUrgentAttention"> <!-- cover manual processing-->
                                         <span data-ng-bind="item.serviceStatusUI" class="font-weight-medium"></span>
+                                        <div data-ng-if="item.serviceStatusUI == 'Manual Processing Only'" class="d-inline">                            
+                                            <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-1x">
+                                            </i>
+                                            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="99999">
+                                                <p class="font-body">
+                                                    Check the case overview tab for this case to find out further information as to why the status has been set to 'Manual Processing Only'
+                                                </p>
+                                            </md-tooltip>                                            
+                                        </div>
                                     </div>
                                     <div data-ng-if="item.isUrgentAttention && item.serviceType !== 'validation'"> <!-- cover manual processing-->
                                         <p class="txt-phase-red">URGENT ACTION REQUIRED</p>
                                     </div>     
-                                    <div data-ng-if="item.isUrgentAttention && item.serviceType == 'validation'"> <!-- cover manual processing-->
-                                        <p>Manual Processing Only</p>
+                                    <div data-ng-if="item.isUrgentAttention && item.serviceType == 'validation'"> <!-- cover manual processing for validations-->
+                                        <p class="d-inline">Manual Processing Only</p>
+                                        <div class="d-inline">                                        
+                                            <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-1x"></i>
+                                            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="99999">
+                                                <p class="font-body">
+                                                    Check the case overview tab for this case to find out further information as to why the status has been set to 'Manual Processing Only'
+                                                </p>
+                                            </md-tooltip>            
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -230,10 +247,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-<!--                                 <div data-ng-if="item.serviceType == 'validation' && item.serviceStatus !== 'Quote provided'">
-                                    <p class="txt-grey">N/A</p>
-                                </div> -->
                                 <div data-ng-if="item.saleType !== 'Online' && item.saleType !== 'Offline' && item.serviceStatus !== 'Epct being generated' && item.serviceStatus !== 'Preparing quote' && item.serviceStatus !== 'Scanned PoAs received'  && item.serviceStatus !== 'Blank PoAs downloaded' && item.serviceStatus !== 'Paper documents received' &&  item.saleType !== 'In Progress' && item.serviceType !== 'validation'">
                                     <p class="txt-grey">N/A</p>
                                 </div>
@@ -370,6 +383,18 @@
             </tbody>
         </table>
     </div><!-- response table end-->
+</div>
+
+<div class="caseoverview-load" data-ng-show="$ctrl.caseoverviewLoading">
+    <div class="caseoverview-load-backdrop"  data-ng-show="$ctrl.caseoverviewLoading">
+        
+    </div>
+    <div class="caseoverview-loader d-flex justify-content-center align-items-center">   
+        <div>
+            <i class="fas fa-cog fa-spin fa-2x m-b-xs txt-white"></i>
+            <p class="txt-white font-h4 font-weight-bold">We are just fetching your case</p>
+        </div>
+    </div>
 </div>
 
 <div data-ui-view="modal" autoscroll="false"></div>

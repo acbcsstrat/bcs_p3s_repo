@@ -5,9 +5,10 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     var vm = this;
 
     vm.confirmDeletePatent = confirmDeletePatent;
+    vm.closeCaseoverview = closeCaseoverview;
     vm.deletePatent = deletePatent;
     vm.refreshChart = refreshChart;
-
+    vm.patent = caseSelected;
     vm.portfolioLoaded = false;
     vm.setTab = setTab;
     vm.checkAvailableAction = checkAvailableAction;
@@ -17,7 +18,6 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     $scope.caseoverview_tab = 'details';
     $scope.showOptions = false;
     $scope.activeLeft = 0;
-    $scope.closeCaseoverview = closeCaseoverview;
     $scope.renewalHistory = null;
 
     var chartTimeout;
@@ -61,8 +61,8 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
 
         $scope.promise.then(
             function(){
+
                 $scope.phoneNumber = $scope.ppDetails.partnerPhone;
-                vm.patent = caseSelected;
                 vm.portfolioLoaded = true;
                 RenewalHistoryService.fetchHistory(caseSelected.patentID) //needs to be invoked outside of availableServices. A service wont be available even if there is renewal history
                 .then(
@@ -143,6 +143,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.confirm-delete-patent.tpl.htm'),
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -158,7 +159,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                 };
 
                 this.cancelDeletion = function() {
-                    $uibModalInstance.dismiss('cancel');
+                    $uibModalInstance.close();
                 };
 
             }]

@@ -148,6 +148,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.validation-confirm-deletion.tpl.htm'),
             appendTo: undefined,
+            backdropClass: 'second-backdrop',
             controllerAs: '$ctrl',
             controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -210,6 +211,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.validation-poas-submitted.tpl.htm'),
                     appendTo: undefined,
+                    backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -228,6 +230,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.validation-poas-submitted-error.tpl.htm'),
                     appendTo: undefined,
+                    backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -288,6 +291,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.validation-quote-requested.tpl.htm'),
                     appendTo: undefined,
+                    backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
@@ -304,6 +308,7 @@ export default function ValidationController(caseSelected, $scope, $uibModal, $s
                 var modalInstance = $uibModal.open({
                     template: require('html-loader!../html/modals/modal.validation-quote-failed.tpl.htm'),
                     appendTo: undefined,
+                    backdropClass: 'second-backdrop',
                     controllerAs: '$ctrl',
                     controller: ['$uibModalInstance', '$timeout', function($uibModalInstance, $timeout){
 
