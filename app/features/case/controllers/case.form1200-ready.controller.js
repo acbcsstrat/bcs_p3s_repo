@@ -7,6 +7,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
 
     vm.patent = caseSelected;
     $scope.patent = caseSelected; //needed for generated controller
+
     vm.initiateForm1200 = initiateForm1200;
     
     vm.templates = [ //compiled with help of dynamic directive
