@@ -139,12 +139,6 @@
 									<div class="col-md-6">
 										<p class="font-h4 font-weight-bold m-b-xs d-inline">Available actions 
 							        	</p>
-<!-- 							        	<div class="d-inline"> 
-											<i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg"></i>
-								            <md-tooltip md-delay="200" class="mdtooltip-md" md-direction="bottom" md-z-index="1050">
-												Either transaction links or 'call to action' buttons are displayed here. The call to action buttons help you carry out tasks required to be taken to process available European formalities
-								            </md-tooltip>
-							            </div>		 -->
 									</div>
 								</div>
 								<div class="row" data-ng-show="$ctrl.actionsAvailable" data-ng-init="$ctrl.checkAvailableAction($ctrl.patent.p3sServicesWithFees)">
@@ -163,7 +157,7 @@
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-l-sm m-r-xl" name="renewal" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Show price'"></ngcart-addtocart>
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-l-sm m-r-xl" name="grant" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Grant saved'"></ngcart-addtocart>
 									            <ngcart-addtocart id="{{item.actionID}}" class="cartbtn m-l-sm m-r-xl" name="validation" price="{{item.currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="item.saleType == 'Online' && item.serviceStatus == 'Quote provided'"></ngcart-addtocart>
-									            <div data-ng-if="item.saleType == 'Offline'">
+									            <div data-ng-if="item.saleType == 'Offline'" class="d-flex align-items-center m-r-sm">
 									            	<p class="font-weight-medium font-h4 m-r-xs d-inline" data-ng-class="item.isUrgentAttention ? 'txt-phase-red' : 'txt-phase-green'" >Call {{phoneNumber}}</p>
 			                                        <div class="d-inline">                            
 			                                            <i class="fas fa-question-circle txt-phase-green cursor-pointer fa-lg">

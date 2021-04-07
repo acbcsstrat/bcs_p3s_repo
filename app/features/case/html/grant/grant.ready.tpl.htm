@@ -1,9 +1,30 @@
 <div class="row">
 	<div class="col-md-12">
 		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved'">Your grant action is ready and you can now add it to the basket. If you need to make amendments to the grant order, reset it and then check the European action availability. If the grant action is still available, the questionnaire will be available again to provide new answers.</p>
-		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved'"> The break down of fees are available to view in the 'Fee Breakdown' tab to the <span class="d-md-none d-lg-inline">right.</span> <span class="d-md-inline d-lg-none">below.</span></p>
+		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved'"> The break down of fees are available to view in the 'Fee Breakdown' tab to the <span class="d-md-none d-lg-inline">left.</span> <span class="d-md-inline d-lg-none">below.</span></p>
+
+		<div class="m-b-xs offline-processing-panel" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing'">
+			<div class="row">
+				<div class="col-md-2 d-flex justify-content-center align-items-center">
+					<i class="fas fa-exclamation-circle fa-4x txt-phase-amber"></i>
+				</div>
+				<div class="col-md-10">
+					<p class="m-b-xs font-h4 font-weight-bold" data-ng-bind="$ctrl.patent.p3sServicesWithFees.manualProcessingUI.title"></p>
+					<p class="m-b-xs" data-ng-bind="$ctrl.patent.p3sServicesWithFees.manualProcessingUI.description"></p>
+					<p data-ng-bind="$ctrl.patent.p3sServicesWithFees.manualProcessingUI.solution"></p>
+				</div>
+			</div>
+			<div class="row m-t-sm">
+				<div class="col-md-12 d-flex justify-content-end">
+					<button class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing' && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Offline'" data-ng-click="$ctrl.uninhibitGrantConfirm()">Reset Grant Order</button>	
+				</div>
+			</div>
+
+		</div>
+<!-- 
 		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing'">The answer(s) provided in the questionnaire has resulted in the grant action not being available to check out online. However, The Patent Place can help submit the grant action offline so please contact us via email: support@ip.place, or phone: {{phoneNumber}}.</p>
-		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing'">If you have entered any incorrect information, you can reset the grant order by selecting the 'reset grant order' button. If you reset the order, please leave up to 24 hours for these changes to be applied to your portfolio. You must then check the availability of the European action to see whether the grant order can be prepared again. </p>
+		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing'">If you have entered any incorrect information, you can reset the grant order by selecting the 'reset grant order' button. If you reset the order, please leave up to 24 hours for these changes to be applied to your portfolio. You must then check the availability of the European action to see whether the grant order can be prepared again. </p> -->
+
 		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Too Late Online'">We unfortunately are unable to process your Grant order online. However, one of our patent administrators will be able to assist you offline and help you further in regards to the Grant instruction. Please contact us via either phone: {{phoneNumber}} or email: support@ip.place.</p>
 		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing mandated'">The data received from the EPO has resulted in this grant action not being available online. The Patent Place can offer help with this action offline via a Patent Administrator. For further help please contact The Patent Place via email: support@ip.place, or phone: {{phoneNumber}}.</p>
 		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Payment in progress' || $ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'EPO Instructed'">Your grant action has been committed to a transaction. Navigate to transactions if you want to download a proforma invoice. Once the transaction is completed, you'll be able to download receipts and final invoice.</p>
@@ -11,7 +32,6 @@
 </div>
 <div class="row m-t-sm">
 	<div class="col-md-12 d-flex justify-content-end">
-		<button class="btn btn--lg btn--green pill-radius" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing' && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Offline'" data-ng-click="$ctrl.uninhibitGrantConfirm()">Reset Grant Order</button>
 		<button class="btn btn--lg btn--red pill-radius" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Online'" data-ng-click="$ctrl.deleteGrantConfirm()">Reset Grant Order</button>
 <!--         <ngcart-addtocart id="{{$ctrl.patent.patentID}}" class="cartbtn m-l-sm" name="service.grant" price="{{$ctrl.patent.p3sServicesWithFees[0].currentStageCostUSD}}" quantity="1" quantity-max="10" data="$ctrl.patent" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Grant saved' && $ctrl.patent.p3sServicesWithFees[0].saleType == 'Online'"></ngcart-addtocart> -->
 	</div>

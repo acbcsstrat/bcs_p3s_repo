@@ -110,7 +110,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                     }]
                 });
 
-                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 1, form1200generate: 0}, {reload: true})
+                $state.go('portfolio.modal.case', {caseId: caseSelected.patentID, prepareGrant: 1, form1200generate: 0}, {reload: false})
 
             },
             function(errResponse){
@@ -170,9 +170,9 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                             };
 
                         }]
-                    });   
+                    });
 
-                    $state.go('portfolio.modal.case', {caseId: caseSelected.patentID}, {reload: true})
+                    $state.reload('portfolio.modal.case');
                 }
 
             }
@@ -246,7 +246,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                     GrantService.unhibitGrant(caseSelected)
                     .then(
                         function(response){
-                            $state.reload();
+                            $state.reload('portfolio.modal.case');
                             var modalInstance = $uibModal.open({
                                 template:  require('html-loader!../html/modals/modal.grant-order-uninhibited.tpl.htm'),
                                 appendTo: undefined,
@@ -267,7 +267,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
                 this.dismissModal = function() {
                     $uibModalInstance.close();
-                    $state.reload()
+                    $state.reload('portfolio.modal.case');
                 };
 
             }]
@@ -302,7 +302,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                         GrantService.inhibitGrant(caseSelected.patentID)
                         .then(
                             function(response) {
-                                $state.reload();
+                                $state.reload('portfolio.modal.case');
                                 $uibModalInstance.close();
                             }
                         )
@@ -332,7 +332,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                     GrantService.deleteGrant(caseSelected)
                     .then(
                         function(response){
-                            $state.reload()
+                            $state.reload('portfolio.modal.case');
                             var modalInstance = $uibModal.open({
                                 template:  require('html-loader!../html/modals/modal.grant-order-deleted.tpl.htm'),
                                 appendTo: undefined,
@@ -353,7 +353,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
 
                 this.dismissModal = function() {
                     $uibModalInstance.close();
-                    $state.reload()
+                    $state.reload('portfolio.modal.case');
                 };
 
             }]

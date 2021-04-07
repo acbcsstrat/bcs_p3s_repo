@@ -17,6 +17,8 @@ function GrantService($http, $q, $timeout, ngCart){
 
     function unhibitGrant(patent) { //for manual processing items
 
+        var deferred = $q.defer();
+
         $http.delete(ppdomain+'rest-inhibit-grant/'+patent.patentID)
         .then(
             function(response){
