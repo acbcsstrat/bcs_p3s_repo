@@ -1,0 +1,378 @@
+<form name="form1200Form" method="get" post-action="form1200Service" novalidate>    
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h4 class="mb-0">
+                    <button class="btn btn-link font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        1. Applicant requirements
+                    </button>
+                </h4>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row m-b-lg">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 1.1</h4>
+                            <p class="m-b-xs">The/Each applicant hereby declares that he is an entity or a natural person under Rule 6(4) EPC.</p>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="entityYes" data-ng-model="validate.quesitonOne.yes" class="form-check-input checkbox-square" data-ng-click="validate.entity.no = false" required>
+                                <label for="entityYes" class="form-check-label">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="entityNo" data-ng-model="validate.entity.no" class="form-check-input checkbox-square" data-ng-change="$ctrl.checkError('entity', validate.entity.no);" data-ng-click="validate.quesitonOne.yes = false; ">
+                                <label for="entityNo" class="form-check-label">No</label>  
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <p data-ng-show="validate.entity.no" class="txt-phase-red m-t-xs">If you do not wish to declare that the/each applicant is not an entity or natural person, you will be unable to proceed online.</p>
+                        </div>
+                    </div>
+                    <div class="row m-b-sm">
+                        <div class="col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 1.2</h4>
+                            <div class="form-row">
+                                <label for="reference" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter applicant's or representative's reference: </label>
+                                <div class="form-group col-md-12 col-lg-8 col-xl-6">
+                                    <input type="text" name="reference" class="form-control pill-radius" class="m-l-xs" data-ng-maxlength="15" data-ng-model="formData.clientRef" placeholder="Applicant/representative reference" ref-validate required>
+                                    <p class="txt-phase-red" data-ng-show="form1200Form.reference.$error.maxlength && form1200Form.reference.$dirty">A maximum of 15 characters is allowed for a Client Reference</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h4 class="mb-0 font-h4">
+                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        2. Claims
+                    </button>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row m-b-lg">
+                        <div class="col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 2.1</h4>
+                            <div class="form-group row">
+                                <label for="totalClaims" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">How many total claims are being filed?</label>
+                                <div class="col-md-6 col-lg-6 col-xl-4 align-items-center">
+                                    <input type="number" name="totalClaims" class="form-control pill-radius" data-ng-change="addToFormData('', formData.totalClaims); $ctrl.excessClaimsCheck(formData.totalClaims)" data-ng-model="formData.totalClaims" placeholder="Total Claims" validate-numbers required>
+
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <p class="font-body txt-phase-red" data-ng-show="form1200Form.totalClaims.$error.validNumber && form1200Form.totalClaims.$dirty">Only numbers are valid charcters in this field.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group m-l-md slideDown" data-ng-show="$ctrl.excessClaimsDue">
+                                <div class="border-grey-xs--btm m-b-md m-t-md"></div>
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 2.1.1</h4>
+                                <p class="font-weight-medium m-r-sm font-body m-b-xs">Do you want to pay excess claims fee on filing?</p>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="excessclaimsYes" data-ng-model="excessobject.excessclaims.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.no);" data-ng-click="excessobject.excessclaims.no = false" data-ng-required="!excessobject.excessclaims.no && $ctrl.excessClaimsDue">
+                                    <label for="excessclaimsYes" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="excessclaimsNo" data-ng-model="excessobject.excessclaims.no" class="form-check-input checkbox-square" data-ng-click="excessobject.excessclaims.yes = false" data-ng-change="$ctrl.notPayingExcess(excessobject.excessclaims.no);" data-ng-required="!excessobject.excessclaims.yes && $ctrl.excessClaimsDue">
+                                    <label for="excessclaimsNo" class="form-check-label">No</label>   
+                                </div>
+                                <div class="border-grey-xs--btm m-t-md"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row m-b-lg">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 2.2</h4>
+                                <p class="font-weight-medium m-r-sm font-body m-b-xs">Have any amendments been made to the claims?</p>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="amendmentsYes" data-ng-model="validate.amendments.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.amendmentsMade(validate.amendments.yes)" data-ng-click="validate.amendments.no = false" data-ng-required="!validate.amendments.no">
+                                    <label for="amendmentsYes" class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="amendmentsNo" data-ng-model="validate.amendments.no" class="form-check-input checkbox-square" data-ng-change="$ctrl.amendmentsMade(validate.amendments.yes)" data-ng-click="validate.amendments.yes = false" data-ng-required="!validate.amendments.yes">
+                                    <label for="amendmentsNo" class="form-check-label">No</label>   
+                                </div>
+                            </div>
+
+                            <div class="form-group m-l-md slideDown" data-ng-show="$ctrl.amendedOptions">
+                                <div class="border-grey-xs--btm m-b-md m-t-md"></div>
+                                <h4 class="font-h4 lh-default font-weight-bold">Question 2.2.1</h4>
+                                <p class="font-weight-medium m-r-sm font-body m-b-xs">Are you presenting the amendments on filing, or, have you filed amendments under Article 19 PCT?</p>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="excessdocsYes" data-ng-model="excessobject.excessdocs.yes" class="form-check-input checkbox-square" data-ng-change="$ctrl.uploadAmended(excessobject.excessdocs.yes);" data-ng-click="excessobject.excessdocs.no = false" data-ng-required="!excessobject.excessdocs.no && $ctrl.amendedOptions">
+                                    <label for="excessdocsYes" class="form-check-label">Presenting the amendments on filing</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="excessdocsNo" data-ng-model="excessobject.excessdocs.no" class="form-check-input checkbox-square" data-ng-click="excessobject.excessdocs.yes = false" data-ng-change="$ctrl.uploadAmended(excessobject.excessdocs.yes);" data-ng-required="!excessobject.excessdocs.yes && $ctrl.amendedOptions">
+                                    <label for="excessdocsNo" class="form-check-label">Filed amendments under Article 19</label>   
+                                </div>
+                                <div class="form-group slideDown m-t-md" data-ng-if="$ctrl.displayAmendedUpload">
+                                    <label for="amendmentsAnnotation font-weight-bold font-h4">Upload copy of amendments with annotations: </label>
+                                    <input type="file" name="amendmentsAnnotation" data-ng-init="formData.amended = {};"  data-ng-model="formData.amended.amendedDoc" class="form-control-file m-t-xs font-h4" accept="application/pdf" select-ng-files required="$ctrl.displayAmendedUpload">
+                                </div>
+                                <div class="col-md-12 m-t-xs" data-ng-show="form1200Form.amendmentsAnnotation.$error.pdfIncorrect">
+                                    <p class="font-body txt-phase-red">Please ensure that the file you have uploaded is saved in a .pdf format.</p>        
+                                </div>
+                                <div class="border-grey-xs--btm m-t-md"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h4 class="mb-0 font-h4">
+                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        3. Extension/Validation states
+                    </button>
+                </h4>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                             <h4 class="font-h4 lh-default font-weight-bold m-b-sm">Question 3.1</h4>
+                        </div>
+                    </div>
+                    <div class="row m-b-md">
+                        <div class="col-xl-12">
+                            <h4 class="m-b-xs font-weight-medium font-body">Extension states</h4>
+                            <div class="row">
+                                <div class="col-md-6" data-ng-repeat="item in formData.extensionStatesUI track by $index">
+                                    <div> 
+                                        <label for="item.abbr" class="m-r-xs">
+                                            <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
+                                        </label>
+                                        <input type="checkbox" id="extensions-{{$index}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkExtStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="row m-b-md">
+                        <div class="col-xl-12">
+                            <h4 class="m-b-xs font-weight-medium font-body">Validation states</h4>
+                            <div class="row">
+                                <div class="col-md-6" data-ng-repeat="item in formData.validationStatesUI track by $index">
+                                    <div class="m-b-sm"> 
+                                        <label for="item.abbr" class="m-r-xs">
+                                            <span class="font-weight-medium">{{item.stateCode}}</span> - {{item.stateName}}
+                                        </label>
+                                        <input type="checkbox" id="validation-{{$index}}'" data-ng-true-value="'{{item.name}}'" data-ng-change="$ctrl.chkValidStates(checkbox.selected, $index);" data-ng-model="checkbox.selected">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-b-lg">
+                        <div class="col-md-12 col-xl-12 d-flex">
+                            <p data-ng-init="validation.displayHelp = false" class="btn btn-underlined">Which countries are included? 
+                            </p>  
+                            <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': validation.displayHelp}" data-ng-click="validation.displayHelp = !validation.displayHelp" >
+                                <i class="fas fa-chevron-right fa-sm" ></i>
+                            </button>      
+                        </div> 
+                        <div class="col-md-12 col-xl-12 m-t-xs">             
+                            <div class="expandcollapse-item">
+                                <div class="slideDown m-b-sm" data-ng-show="validation.displayHelp">
+                                    <p class="m-b-xs">The countries that are included by default are:</p>
+                                    <div class="d-flex">
+                                        <ul>
+                                            <li>Albania</li>
+                                            <li>Austria</li>
+                                            <li>Belgium</li>
+                                            <li>Bulgaria</li>
+                                            <li>Switzerland</li>
+                                            <li>Cyprus</li>
+                                            <li>Czech Republic</li>
+                                            <li>Germany</li>
+                                            <li>Denmark</li>
+
+                                        </ul>
+                                        <ul>
+                                            <li>Estonia</li>
+                                            <li>Spain</li>
+                                            <li>Finland</li>
+                                            <li>France</li>                        
+                                            <li>United Kingdom</li>
+                                            <li>Croatia</li>
+                                            <li>Hungary</li>
+                                            <li>Ireland</li>
+                                            <li>Iceland</li>
+
+                                        </ul>
+                                        <ul>
+                                            <li>Netherlands</li>
+                                            <li>Norway</li>
+                                            <li>Poland</li>
+                                            <li>Portugal</li>
+                                            <li>Romania</li>
+                                            <li>Serbia</li>
+                                            <li>Sweden</li>
+                                            <li>Slovenia</li>
+                                            <li>Slovakia</li>
+                                            <li>San Marino</li>
+                                            <li>Turkey</li>
+                                        </ul>
+                                        <ul>
+                                        </ul>                                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingFour">
+                <h4 class="mb-0 font-h4">
+                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        4. Page details
+                    </button>
+                </h4>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 4.1</h4>
+                        </div>
+                        <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter start and end pages of description</label>
+                        <div class="col-md-6 col-lg-6 col-xl-4 align-items-center">
+                            <input type="number" name="descStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.description.typeStart)" data-ng-model="formData.pageDetailsData.description.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required>
+
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-4 align-items-center">
+                            <input type="number" name="descEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.description.typeEnd)" data-ng-model="formData.pageDetailsData.description.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers ng-valid-max required>
+                                                  
+                        </div>   
+                        <div class="col-md-12 col-lg-12 col-xl-12 m-t-xs">
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.validNumber && form1200Form.descStart.$dirty">Only numbers are valid charcters in this field.</p>
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descStart.$error.max && form1200Form.descStart.$dirty">The end page exceeds the total number of pages.</p> 
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.validNumber && form1200Form.descEnd.$dirty">Only numbers are valid charcters in this field.</p>
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.descEnd.$error.max && form1200Form.descEnd.$dirty">The end page exceeds the total number of pages.</p>
+                        </div>                                     
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 4.2</h4>
+                        </div>
+                        <label class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter the start and end pages of claims</label>
+                        <div class="col-md-4 col-lg-4 col-xl-4 align-items-center">
+                            <input type="number" name="claimsStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.clams.typeStart)" data-ng-model="formData.pageDetailsData.claims.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4 align-items-center">
+                            <input type="number" name="claimsEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.clams.typeEnd)" data-ng-model="formData.pageDetailsData.claims.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers ng-valid-max required>
+                        </div>   
+                        <div class="col-md-12 col-lg-12 col-xl-12 m-t-xs">
+                            <p class="font-body txt-phase-red"  placeholder="Start" data-ng-show="form1200Form.claimsStart.$error.validNumber && form1200Form.claimsStart.$dirty">Only numbers are valid charcters in this field.</p>
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsStart.$error.max && form1200Form.claimsStart.$dirty">The end page exceeds the total number of pages.</p>
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.validNumber && form1200Form.claimsEnd.$dirty">Only numbers are valid charcters in this field.</p>    
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.claimsEnd.$error.max && form1200Form.claimsEnd.$dirty">The end page exceeds the total number of pages.</p>
+                        </div>                                     
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 4.3</h4>
+                        </div>
+                        <label for="claimsStart" class="col-md-12 col-lg-12 col-xl-12 col-form-label font-body">Please enter start and end pages of drawings</label>
+                        <div class="col-md-4 col-lg-4 col-xl-4 align-items-center">
+                            <input type="number" name="drawingStart" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.drawings.typeStart)" data-ng-model="formData.pageDetailsData.drawings.typeStart" placeholder="Start" max="{{totalPages}}" validate-numbers required>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4 align-items-center">
+                            <input type="number" name="drawingEnd" class="form-control pill-radius" data-ng-change="addToFormData('', formData.pageDetailsData.drawings.typeStart)" data-ng-model="formData.pageDetailsData.drawings.typeEnd" max="{{totalPages}}" placeholder="End" validate-numbers required>
+
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12 m-t-xs">
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.validNumber && form1200Form.drawingStart.$dirty">Only numbers are valid charcters in this field.</p>
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingStart.$error.max && form1200Form.drawingStart.$dirty">The end page exceeds the total number of pages.</p>
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.validNumber && form1200Form.drawingEnd.$dirty">Only numbers are valid charcters in this field.</p>
+                            <p class="font-body txt-phase-red" data-ng-show="form1200Form.drawingEnd.$error.max && form1200Form.drawingEnd.$dirty">The end page exceeds the total number of pages.</p>
+                        </div>                                                           
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" data-ng-if="$ctrl.additionalDocuments">
+            <div class="card-header" id="headingFive">
+                <h4 class="mb-0">
+                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        5. Additional copies
+                    </button>
+                </h4>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row m-b-lg">
+                        <div class="col-md-12 col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question 5.1</h4>
+                            <p class="font-weight-medium m-b-xs">If additional copies of the document cited in the supplementary European search report are requested, enter the total number below. If no additional copies are required, please leave the value of 0</p>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3 align-items-center">
+                            <div class="form-group">
+                                <input type="number" name="documentsYes" class="form-control" data-ng-init="formData.numAdditionalCopies = 0" data-ng-model="formData.numAdditionalCopies" data-ng-required="!validate.documents.no" data-ng-change="$ctrl.checkError('documents', validate.documents.yes);" data-ng-click="validate.documents.no = false">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="card"  data-ng-if="$ctrl.isYear3RenewalDue">
+            <div class="card-header" id="headingSix">
+                <h4 class="mb-0 font-h4">
+                    <button class="btn btn-link collapsed font-h3 font-h3--content" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        {{$ctrl.additionalDocuments === true ?  6 : 5 }}. Request Renewal
+                    </button>
+                </h4>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row m-b-lg">
+                        <div class="col-xl-12">
+                            <h4 class="font-h4 lh-default font-weight-bold">Question {{$ctrl.additionalDocuments === true ?  6 : 5 }}.1</h4> 
+                            <p class="m-b-xs">We can see that the third year renewal can be renewed. Would you like to process the renewal in this transaction?</p>
+                            <div class="form-check form-check-inline">
+                                
+                                <input 
+                                type="checkbox" 
+                                name="renewalYes" 
+                                class="form-check-input" 
+                                data-ng-model="formData.isYear3RenewalPaying.yes" 
+                                data-ng-click="formData.isYear3RenewalPaying.no = false; addToFormData('', formData.isYear3RenewalPaying)"
+                                data-ng-required="!formData.isYear3RenewalPaying.no"
+                                required
+                                >
+                                <label for="renewalYes" class="form-check-label">Yes</label>
+                              
+                                <input 
+                                type="checkbox" 
+                                name="renewalNo" 
+                                class="form-check-input" 
+                                data-ng-model="formData.isYear3RenewalPaying.no" 
+                                data-ng-click="formData.isYear3RenewalPaying.yes = false; addToFormData('', formData.isYear3RenewalPaying)"
+                                data-ng-required="!formData.isYear3RenewalPaying.yes"
+                                required
+                                >
+                                <label for="renewalNo" class="form-check-label">No</label>            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>            
+    </div>
+    <div class="row m-t-sm">
+        <div class="col-xl-12 text-right">
+            <button type="submit" id="submit" class="btn btn--green btn--lg pill-radius" type="button" data-ng-disabled="form1200Form.$invalid || formDataSubmitted" data-ng-click="$ctrl.submitForm1200Data(formData);">Generate form</button>
+        </div>
+    </div>
+</form>
