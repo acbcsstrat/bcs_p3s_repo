@@ -34,7 +34,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     $scope.$parent.promise
     .then(
         function(response){
-            console.log('caseSelected : ', caseSelected)
+            console.log(caseSelected)
             $scope.phoneNumber = $scope.ppDetails.partnerPhone;
             var service = $scope.$parent.availableServices;
 

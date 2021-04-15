@@ -7,7 +7,8 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     devtool: "source-map",
-    // devtool: "eval",
+    devtool: "eval",
+    // devtool: "source-map",
     entry: {
         vendor: './src/js/vendor.js',   
         app: './src/js/app.js',
