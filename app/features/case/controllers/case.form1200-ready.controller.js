@@ -34,7 +34,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
     $scope.$parent.promise
     .then(
         function(response){
-            console.log(caseSelected)
+
             $scope.phoneNumber = $scope.ppDetails.partnerPhone;
             var service = $scope.$parent.availableServices;
 
@@ -51,6 +51,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
             if(service[0].type === 'Offline') {
                 vm.form1200Template = vm.templates[3].url;
                 vm.urgent = service[0].urgent;
+                vm.patent.test = 'test;'
                 vm.epctStage = 2;
             }
 
