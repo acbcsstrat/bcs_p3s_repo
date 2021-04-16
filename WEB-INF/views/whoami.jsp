@@ -4,13 +4,63 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<<<<<<< HEAD
 <title>About p3sweb</title>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+=======
+<<<<<<< HEAD
+<title>About p3sweb</title>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+=======
+<<<<<<< HEAD
+<title>About p3sweb</title>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+=======
+<<<<<<< HEAD
+<title>About p3sweb</title>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+=======
+<<<<<<< HEAD
+<title>About p3sweb</title>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+=======
+<<<<<<< HEAD
+<title>About p3sweb</title>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+=======
+<title>Insert title here</title>
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
 </head>
 <body>
 
 <table border="0">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
 
   <c:choose>
 	<c:when test="${isloggedin}">
@@ -45,6 +95,39 @@
 
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+ <tr>
+	<td>You are logged in as:</td>
+	<td>${me.emailAddress} &nbsp; &nbsp; &nbsp; &nbsp; (ID=${me.id})</td>
+ </tr>
+ <tr>
+	<td>You are:</td>
+	<td>${me.firstName} ${me.lastName}</td>  
+ </tr>
+ <tr>
+	<td>Your Buisness is:</td>
+	<td>${myBusiness.businessName} &nbsp; &nbsp; &nbsp; &nbsp; (ID=${myBusiness.id})</td>
+ </tr>
+ <tr>
+	<td>Your number of patents:</td>
+	<td>${numpatents}</td>
+ </tr>
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
  <tr>
 	<td>&nbsp;</td>
 	<td></td>
@@ -67,6 +150,22 @@
  </tr>
  <tr>
 	<td>P3S product version</td>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
 	<td>${version}</td>
  </tr>
 
@@ -77,6 +176,25 @@
    </tr>
  </c:if>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+	<td>v4.1</td>
+ </tr>
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
 </table>
 
 </body>

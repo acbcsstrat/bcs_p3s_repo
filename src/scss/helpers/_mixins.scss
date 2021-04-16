@@ -1,0 +1,43 @@
+@import '../helpers/_variables.scss';
+
+@mixin list-item($min, $max) {
+    text-align: center;  
+    min-width: $min;
+    max-width: $max;
+}
+
+@mixin list-item-transition {
+    -webkit-transition: opacity .2s ease-in-out, background .2s ease-in-out;
+    -o-transition: opacity .2s ease-in-out, background .2s ease-in-out;
+    transition: opacity .2s ease-in-out, background .2s ease-in-out;
+}
+
+@mixin list-item-hover {
+    opacity: 0.85; color: #fff;
+}
+
+@mixin hover-white {
+	color: #fff;
+}
+
+@mixin opacity($val) {
+	opacity: $val;
+}
+
+@mixin padding-mixin($some-number) {
+  padding: $some-number;
+}
+
+@mixin margin-mixin($some-number) {
+  margin: $some-number;
+}
+
+@mixin rfs($font-size: 1rem) {
+    font-size: $font-size;
+}
+
+// @mixin font-mixin($size: 1.3rem, $letterspacing, $lineheight) {
+//     font-size: $size;
+//     line-height: $lineheight;
+//     letter-spacing: $letterspacing
+// }
