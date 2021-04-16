@@ -1,0 +1,28 @@
+// import './_dashboard.scss';
+
+import angular from 'angular';
+
+import DashboardService from './services/dashboard.serv.js';
+import FxService from '../../global/services/app.fx.serv.js';
+import CasesRestService from '../portfolio/services/portfolio.cases.serv.js';
+import CalculateService from '../../global/services/app.calculate.serv.js';
+import CostAnalysisService from '../../global/services/app.cost-analysis.serv.js';
+import TransactionService from '../../features/transactions/services/transactions.serv.js';
+
+import DashboardController from './controllers/dashboard.controller';
+import AvailableActionsController from './controllers/dashboard.actions-available.controller';
+import DbFxChartController from './controllers/dashboard.fx-chart.controller';
+import EuropctsDonutController from './controllers/dashboard.europcts-graph.controller';
+import GrantsDonutController from './controllers/dashboard.grants-graph.controller';
+import RenewalsDonutController from './controllers/dashboard.renewals-graph.controller';
+import ValidationsDonutController from './controllers/dashboard.validations-graph.controller';
+
+export default angular.module('ppApp.dashboard', [DashboardService, CasesRestService, CalculateService, CostAnalysisService, TransactionService, FxService]) //import dashboard view controllers
+  	.controller('DashboardController', DashboardController)
+  	.controller('AvailableActionsController', AvailableActionsController)
+  	.controller('DbFxChartController', DbFxChartController)
+  	.controller('EuropctsDonutController', EuropctsDonutController)
+  	.controller('GrantsDonutController', GrantsDonutController)
+  	.controller('RenewalsDonutController', RenewalsDonutController)
+  	.controller('ValidationsDonutController', ValidationsDonutController)
+  	.name;
