@@ -199,22 +199,25 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
     function checkError(question, value) {
         if(value === false || typeof value === 'undefined' || value === undefined) { return;}
         var obj = {};
+        var reason = ''
         if(question == 'representative' && value === true) {
             obj.title = 'Representative';
             var template = '<p>If you confirm that you do not wish IP Place to act as representative, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
                  email: support@ip.place, or phone: '+ $scope.phoneNumber + '</p>';
             obj.message = $compile(template)($scope);
+            reason = 'RefusedRepresentativeChange';
         }
         if(question == 'approveText' && value === true) {
             obj.title = 'Patent Specification';
             var template = '<p>If you confirm that you do not approve the text of the Patent Specification, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
                  email: support@ip.place, or phone: '+ $scope.phoneNumber + '</p>';     
-            obj.message = $compile(template)($scope);      
+            obj.message = $compile(template)($scope);
+            reason = 'NotApproved71(3)';      
         }
 
-        inhibitGrantConfirm(obj);  
+        inhibitGrantConfirm(obj, reason);  
     }
 
 	function initiateGrantOrder() {
@@ -276,7 +279,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
     }
 
 
-    function inhibitGrantConfirm(message) {
+    function inhibitGrantConfirm(message, reason) {
 
         var modalInstance = $uibModal.open({
             template: '<div class="modal-header d-flex flex-column align-items-center justify-content-center">\
@@ -299,7 +302,7 @@ export default function GrantController(caseSelected, $scope, $uibModal, $state,
                 if(caseSelected.p3sServicesWithFees[0].serviceStatus === 'Grant available') {
 
                     this.confirm = function() {
-                        GrantService.inhibitGrant(caseSelected.patentID)
+                        GrantService.inhibitGrant(caseSelected.patentID, reason)
                         .then(
                             function(response) {
                                 $state.reload('portfolio.modal.case');

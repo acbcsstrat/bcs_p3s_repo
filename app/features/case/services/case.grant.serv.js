@@ -34,11 +34,15 @@ function GrantService($http, $q, $timeout, ngCart){
 
     }
 
-    function inhibitGrant(id) {
+    function inhibitGrant(id, reason) {
 
         var deferred = $q.defer();
 
-        $http.get(ppdomain+'rest-inhibit-grant/'+id)
+        var config = {
+            params: {patent_id: id, failure_reason: reason}
+        }        
+
+        $http.get(ppdomain+'rest-inhibit-grant/', config)
         .then(
             function(response){
                 deferred.resolve(response.data)
