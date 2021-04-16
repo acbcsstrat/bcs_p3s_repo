@@ -11,27 +11,18 @@
 				<div class="col-md-10">
 					<p class="m-b-xs font-h4 font-weight-bold" data-ng-bind="$ctrl.patent.p3sServicesWithFees[0].manualProcessingUI.title"></p>
 					<p class="m-b-xs" data-ng-bind="$ctrl.patent.p3sServicesWithFees[0].manualProcessingUI.description"></p>
-					<div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].manualProcessingUI.title == 'Refused Representative Change'">
-						<p class="m-b-xs">We are unable, online, to proceed with your Grant order unless you agree to change representative to IP Place Limited.</p>
-					</div>
-					<div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].manualProcessingUI.title == 'Refused Representative Change'">
-						<p class="m-b-xs">We are unable, online, to proceed with your Grant order until you agree the text provided in the 71(3) communication.</p>
-					</div>
-					<div data-ng-if="$ctrl.patent.p3sServicesWithFees[0].manualProcessingUI.title == 'Unsupported Data'">
-						<p class="m-b-xs">We are unable, online, to proceed with your Grant order as the answers you provided under claims/pages do not match with system calculated values. Please check your answers</p>
-					</div>
 					<p class="m-b-xs">The answer(s) provided in the questionnaire has resulted in the grant action not being available to check out online. However, The Patent Place can help submit the grant action offline so please contact us via email: support@ip.place, or phone: {{phoneNumber}}.</p>
-				</div>
-			</div>
-			<div class="row m-t-sm" data-ng-show="$ctrl.patent.p3sServicesWithFees[0].manualProcessingUI.canUserReset">
-				<div class="col-md-12 d-flex justify-content-end">			
-					<p class="m-b-xs">If you have entered any incorrect information, you can reset the grant order by selecting the 'reset grant order' button. If you reset the order, please leave up to 24 hours for these changes to be applied to your portfolio. You must then check the availability of the European action to see whether the grant order can be prepared again.</p>
-					<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.uninhibitGrantConfirm()">Reset Grant Order</button>	
+					<div data-ng-show="$ctrl.patent.p3sServicesWithFees[0].manualProcessingUI.canUserReset">	
+						<p class="m-b-sm">If you have entered any incorrect information, you can reset the grant order by selecting the 'reset grant order' button. If you reset the order, please leave up to 24 hours for these changes to be applied to your portfolio. You must then check the availability of the European action to see whether the grant order can be prepared again.</p>
+						<div class="text-right">						
+							<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.uninhibitGrantConfirm()">Reset Grant Order</button>	
+						</div>
+					</div>
+		
 				</div>
 			</div>
 
-		</div>
-		<button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.uninhibitGrantConfirm()">Reset Grant Order</button>	
+		</div>	
 <!-- 	
 		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing'">The answer(s) provided in the questionnaire has resulted in the grant action not being available to check out online. However, The Patent Place can help submit the grant action offline so please contact us via email: support@ip.place, or phone: {{phoneNumber}}.</p>
 		<p class="font-h4 m-b-sm" data-ng-if="$ctrl.patent.p3sServicesWithFees[0].serviceStatus == 'Manual processing'">If you have entered any incorrect information, you can reset the grant order by selecting the 'reset grant order' button. If you reset the order, please leave up to 24 hours for these changes to be applied to your portfolio. You must then check the availability of the European action to see whether the grant order can be prepared again. </p> -->
