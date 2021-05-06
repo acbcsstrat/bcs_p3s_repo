@@ -1,0 +1,53 @@
+
+<div class="content-panel bg-white border-t-none">
+	<div class="bg-white">
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="scrollable-area renewalhistory-table scrollable-area--no-shadow sticky-table">
+					<table class="t-data m-t-lg" data-ng-repeat="renewal in $ctrl.renewal | orderBy:$ctrl.sortType:$ctrl.sortReverse">
+						<tbody class="sticky-tbody">
+							<tr class="t-data__row border-grey-xs--btm">
+								<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold sticky-td">Renewal Year</td>
+								<td class="t-data__td text-left align-top t-data__w15 font-h4">Year <span data-ng-bind="renewal.renewalYear"></span></td>
+							</tr>
+	<!-- 						<tr class="t-data__row border-grey-xs--btm">
+								<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold">Date Renewed</td>
+								<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold">{{renewal.renewalDueDate | date: 'MM/dd/yy'}}</td>
+							</tr> --> <!--ask backend to provide data ASAP at appropriate time -->
+							<tr class="t-data__row border-grey-xs--btm">
+								<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold sticky-td">Cost Breakdown</td>
+								<td class="text-left align-top t-data__w15">
+									<table class="t-data table-borderless">
+										<tr>
+											<td class="t-data__td text-left font-h4">Official fee:</td>
+											<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>
+										</tr>
+										<tr>
+											<td class="t-data__td text-left font-h4">Patent Place fees:</td>							
+											<td class="t-data__td text-left">$ {{(renewal.renewalFeeUI.subTotalUSD - renewal.renewalFeeUI.currentOfficialFeeUSD | number: 2) || '0.00'}}</td>							
+											
+										</tr>												
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td class="t-data__td text-left align-top t-data__w15 font-h4 font-weight-bold sticky-td">Downloads</td>
+								<td class="t-data__td text-left align-top t-data__w15 font-h4">
+									<div class="row">
+										<div class="col-xl-12 text-left">
+											<a class="btn btn--lg btn--green pill-radius m-r-sm" data-ng-href="{{renewal.certificateUrl}}" target="_blank" data-ng-if="renewal.certificateUrl">Certificate
+							 				</a>
+											<a class="btn btn--lg btn--green pill-radius" data-ng-href="{{renewal.invoiceUrl}}" target="_blank">Invoice
+											</a>
+										</div>	
+									</div>
+								</td>
+							</tr>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
