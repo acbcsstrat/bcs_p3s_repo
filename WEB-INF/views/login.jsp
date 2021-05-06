@@ -33,6 +33,79 @@
          }
 
       </script>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> fe-branch-registration
+>>>>>>> fe-branch-registration
+=======
+>>>>>>> master
+      
+       <script> 
+          
+    
+       var domain = 'http://localhost:8080/p3sweb/';
+       
+       $(document).ready(function() {
+			$(document).on('submit', '#ppLoginForm', function(e){
+ 				e.preventDefault();
+					//var dataString = JSON.stringify($('#resetPassForm').serializeArray());
+					var dataString = $('#ppLoginForm').serializeArray();
+					console.log("I am new");
+					console.log(dataString);
+					$.ajax({
+						type: 'POST',
+						url: domain + 'resources/j_spring_security_check',
+						data: dataString,
+						//dataType: 'json',
+						success: function(response) {
+
+							$('#initialResetPassForm').fadeOut(500);	
+						$('#resetPassSuccess').delay(520).fadeIn(500);		      				
+						},
+						error:function(errResponse) {
+							$('#initialResetPassForm').fadeOut(500);	
+						$('#resetPassFail').delay(520).fadeIn(500);							
+						}
+					});
+				});
+       });
+        </script> 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> master-merge
+>>>>>>> fe-branch-registration
+>>>>>>> fe-branch-registration
+=======
+>>>>>>> master
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
 
    </head>
 
@@ -55,7 +128,51 @@
                </div>
                <div class="row">
                   <div class="col-md-12">
+<<<<<<< HEAD
                      <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+                     <form id="ppLoginForm"  class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm"  class="form" data-parsley-validate="">
+=======
+<<<<<<< HEAD
+                     <form id="ppLoginForm" action="resources/j_spring_security_check" method="post" class="form" data-parsley-validate="">
+=======
+                     <form id="ppLoginForm"  class="form" data-parsley-validate="">
+>>>>>>> master-merge
+>>>>>>> fe-branch-registration
+>>>>>>> fe-branch-registration
+=======
+                     <form id="ppLoginForm"  class="form" data-parsley-validate="">
+>>>>>>> master
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
                         <div class="form-group row m-b-sm">
                            <div class="col-md-12">
                               <input type="text" name="j_username" class="form-control font-body pill-radius input-p-sm" placeholder="Username/Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure all fields have been completed." data-parsley-required="true">
