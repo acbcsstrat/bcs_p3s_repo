@@ -135,7 +135,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
         $state.go('portfolio', {}, {reload: false})
     }
 
-    function confirmDeletePatent(id) {
+    function confirmDeletePatent(patent) {
 
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.confirm-delete-patent.tpl.htm'),
@@ -149,7 +149,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
                 };
                 
                 this.deletePatent = function() {
-                    deletePatent(id);
+                    deletePatent(patent);
                     $timeout(function() {
                         $uibModalInstance.close();
                     }, 300);
@@ -164,6 +164,7 @@ export default function CaseOverviewController(caseSelected, $scope, $state, $st
     };
 
     function deletePatent(patent){
+
 
         var actionIds = patent.p3sServicesWithFees.map(function(r){
             return r.actionID;
