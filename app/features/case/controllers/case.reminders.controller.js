@@ -13,6 +13,7 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
     vm.notificationUi; //required for uopdating notifications
     vm.notificationUrl;
     var colors = ['green', 'amber', 'red', 'blue', 'black'];
+    vm.validationReminders = false;
     vm.toBlueOrNotToBlue = false;
     vm.data = {    
         availableAction: [],
@@ -60,7 +61,15 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
             vm.toBlueOrNotToBlue = false;
         }
 
-        if(action !== 'validation' && action !== 'N/A') { 
+        if(action == 'validation') {
+            vm.notificationUi = 'allValidationNotificationUIs';
+            vm.notificationUrl = 'rest-validation-notifications/';
+            vm.toBlueOrNotToBlue = false;
+            colors = ['green', 'red'];
+            vm.validationReminders = true;
+        }        
+
+        if(action !== 'N/A') { 
             phaseNotifications();
         }
 
@@ -74,8 +83,13 @@ export default function RemindersController(caseSelected, $scope, $rootScope, $u
                 vm.notifications[colors[i]] = ChunkDataService.chunkData(fetchNotificationUi(colors[i], caseSelected[vm.notificationUi]), 6)//chunk data makes sure the coluns go no more than 6
             }
             if(!vm.toBlueOrNotToBlue) {
-                if(i == 3) { break }; //if only green, amber and red available
-                vm.notifications[colors[i]] = ChunkDataService.chunkData(fetchNotificationUi(colors[i], caseSelected[vm.notificationUi]), 6)
+                if(!vm.validationReminders) {                
+                    if(i == 3) { break }; //if only green, amber and red available
+                    vm.notifications[colors[i]] = ChunkDataService.chunkData(fetchNotificationUi(colors[i], caseSelected[vm.notificationUi]), 6)
+                } else {
+                    if(i == 2) { break }; //if only green, amber and red available
+                    vm.notifications[colors[i]] = ChunkDataService.chunkData(fetchNotificationUi(colors[i], caseSelected[vm.notificationUi]), 6)
+                }
             }
         }        
 
