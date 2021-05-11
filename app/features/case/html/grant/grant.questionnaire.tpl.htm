@@ -100,26 +100,15 @@
                         <div class="col-md-12 m-t-xs" data-ng-show="grantForm.germanTranslation.$error.pdfIncorrect || grantForm.frenchTranslation.$error.pdfIncorrect">
                             <p class="font-body txt-phase-red">Please ensure that the file you have uploaded is saved in a .pdf format.</p>        
                         </div>
-
-
-                            <div class="col-md-12 col-lg-12 col-xl-12 m-b-xs m-t-sm d-flex">
-                                <p data-ng-click="question3.displayHelp = !question3.displayHelp" class="btn btn-underlined font-weight-medium">Are you making sure the file is Annex F compliant?
-                                </p>
-                                <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': question3.displayHelp}" data-ng-click="question3.displayHelp = !question3.displayHelp" ><i class="fas fa-chevron-right fa-sm" ></i></button>
-                            </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12 m-b-xs m-t-sm d-flex">
+                            <p data-ng-click="question3.displayHelp = !question3.displayHelp" class="btn btn-underlined font-weight-medium">Are you making sure the file is Annex F compliant?
+                            </p>
+                            <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': question3.displayHelp}" data-ng-click="question3.displayHelp = !question3.displayHelp" ><i class="fas fa-chevron-right fa-sm" ></i></button>
+                        </div>
                         <div class="col-md-12">                        
                             <div class="expandcollapse-item" data-ng-init="question3.displayHelp = false">
                                 <div class="slideDown m-b-sm" data-ng-hide="question3.displayHelp === false">
-                                    <p class="font-body m-b-sm">In order for your grant to be processed, the EPO require that the PDF file you upload is Annex F compliant. Please see the checklist below to ensure that the document meets the criteria.</p>
-                                    <ul class="m-b-sm">
-                                        <li>all fonts are embedded (exception: Base 14 fonts are accepted even if they are not embedded)</li>
-                                        <li>the page size is A4 +/- 5%</li>
-                                        <li>the PDF is not encrypted</li>
-                                        <li>it does not contain color or grey scale images and drawings</li>
-                                        <li>the PDF is Version 1.1 (or later)</li>
-                                        <li>the PDF does not contain embedded OLE objects</li>
-                                    </ul>
-                                    <p>If you require further information, please contact us: support@ip.place. If your uploaded document(s) is not Annex F compliant, we may notify you and/or attempt to make it Annex F compliant.</p>
+                                    <p class="font-body m-b-sm">In order for your application to be processed, the EPO require that your PDF documents are Annex F compliant. If either of your documents are not Annex F compliant, you will be able to upload them here, but they will be rejected when submitted to the EPO. However, at that time, or earlier, we will attempt to make the document Annex F compliant. This will incur a delay. Be aware that if you are applying very late in the timeframe, this delay may cause your application to fail.</p>
                                 </div>
                             </div>
                         </div>

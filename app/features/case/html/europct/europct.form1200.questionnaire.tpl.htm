@@ -119,6 +119,18 @@
                                 <div class="col-md-12 m-t-xs" data-ng-show="form1200Form.amendmentsAnnotation.$error.pdfIncorrect">
                                     <p class="font-body txt-phase-red">Please ensure that the file you have uploaded is saved in a .pdf format.</p>        
                                 </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12 m-b-xs m-t-sm d-flex">
+                                    <p data-ng-click="question3.displayHelp = !question3.displayHelp" class="btn btn-underlined font-weight-medium">Are you making sure the file is Annex F compliant?
+                                    </p>
+                                    <button class="btn btn-no-ng d-inline accordion-caret" data-ng-class="{'active': question3.displayHelp}" data-ng-click="question3.displayHelp = !question3.displayHelp" ><i class="fas fa-chevron-right fa-sm" ></i></button>
+                                </div>
+                                <div class="col-md-12">                        
+                                    <div class="expandcollapse-item" data-ng-init="question3.displayHelp = false">
+                                        <div class="slideDown m-b-sm" data-ng-hide="question3.displayHelp === false">
+                                            <p class="font-body m-b-sm">In order for your application to be processed, the EPO require that your PDF documents are Annex F compliant. If either of your documents are not Annex F compliant, you will be able to upload them here, but they will be rejected when submitted to the EPO. However, at that time, or earlier, we will attempt to make the document Annex F compliant. This will incur a delay. Be aware that if you are applying very late in the timeframe, this delay may cause your application to fail.</p>
+                                        </div>
+                                    </div>
+                                </div>                                
                                 <div class="border-grey-xs--btm m-t-md"></div>
                             </div>
 
