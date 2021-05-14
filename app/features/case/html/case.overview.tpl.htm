@@ -108,26 +108,6 @@
 									<div class="col-md-6 d-flex align-items-center">
 										<p class="font-h3 font-weight-bold">Application Number: <span class="font-weight-normal">{{$ctrl.patent.ep_ApplicationNumber}}</span></p>
 									</div>
-				                	<div class="col-md-6 text-right">
-		                                <md-menu md-position-mode="target-left target" md-offset="20 20" md-disable-backdrop>
-		                                  	<md-button aria-label="Open phone interactions menu" ng-click="$ctrl.openMenu($mdMenu, $event)">
-		                                    	<md-icon md-menu-origin md-font-icon="fas fa-ellipsis-h" class="font-h3 cursor-pointer"></md-icon>
-		                                  	</md-button>
-		                                  	<md-menu-content width="4">
-		                                    	<md-menu-item>
-		                                      		<md-button ng-click="$ctrl.confirmDeletePatent($ctrl.patent)" class="font-body" data-ng-disabled="!$ctrl.patent.patentDeletable">
-	                                        			Remove Patent
-		                                      		</md-button>
-		                                    	</md-menu-item>
-		                                    	<md-menu-divider></md-menu-divider>
-										        <md-menu-item>
-										          	<md-button ng-click="$ctrl.toggleNotifications()" class="font-body">
-										            	Close menu
-										          	</md-button>
-										        </md-menu-item>
-		                                  	</md-menu-content>
-	                                	</md-menu>
-							        </div>
 							        <div class="col-md-12">
 							        	<div class="border-grey-xs--btm m-t-sm m-b-sm"></div>
 							        </div>
