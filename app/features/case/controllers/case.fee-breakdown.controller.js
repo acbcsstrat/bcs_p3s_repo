@@ -104,11 +104,11 @@ export default function FeeBreakDownController(caseSelected, $scope, $timeout) {
 
             vm.availableFees.official = official[0];
 
-            if(vm.availableFees.official.feeUI !== null) {
-                vm.availableFees.ppFeesUSD = Number(vm.availableFees.official.feeUI.processingFeeUSD + vm.availableFees.official.feeUI.expressFeeUSD + vm.availableFees.official.feeUI.urgentFeeUSD);
-                vm.availableFees.ppFeesEUR = Number(vm.availableFees.official.feeUI.processingFeeEUR + vm.availableFees.official.feeUI.expressFeeEUR + vm.availableFees.official.feeUI.urgentFeeEUR);
+            if(vm.availableFees.official.feeUI !== null) {  
+                vm.availableFees.ppFeesUSD = Number(vm.availableFees.official.feeUI.processingFeeUSD);
+                vm.availableFees.ppFeesEUR = Number(vm.availableFees.official.feeUI.processingFeeEUR);
             }
-
+            
             return;           
 
         }
