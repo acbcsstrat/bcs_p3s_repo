@@ -149,7 +149,7 @@ export default function Form1200ReadyController(caseSelected, $scope, $state, $t
         if(question == 'entity' && value === true) {
             message = 'NaturalPerson';
             obj.title = 'Entity or a natural person, Rule 6(4)';
-            var template = '<p>If you do not wish to delcare that you are an entity or a natural person, The Patent Place can offer help with your application offline\
+            var template = '<p>﻿﻿If you are not able to declare that you are an entity or a natural person, The Patent Place can offer help with your application offline\
                 via a Patent Administrator, and the order will become unavailable to process online. For further help please contact The Patent Place via\
                  email: support@ip.place, or phone: '+ $scope.phoneNumber +'</p>';
             obj.message = $compile(template)($scope); 
