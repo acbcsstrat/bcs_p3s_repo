@@ -173,10 +173,8 @@
         max-width: 70.3rem;
         .modal-overview__view__body {
             overflow-y: scroll;
-            height: 100%;
-            max-height: 58.6rem;
-            background: $white;
-            border-bottom: 4rem solid #fff;            
+            height: 50rem;
+            background: $white;          
             &::-webkit-scrollbar-thumb {
                 background: $grey; 
                 border-radius: 1rem;
