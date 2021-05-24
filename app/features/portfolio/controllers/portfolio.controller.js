@@ -5,7 +5,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
     var vm = this;
     $scope.promise = CasesRestService.fetchAllCases();
     $scope.filter = {};
-    $scope.tooltip1 = true;
+    vm.addingPatent = false;
     var displayHelpTimeout;
     var panelRef;
 
@@ -40,7 +40,6 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
 
     $scope.filterByPropertiesMatchingAND = function (data) { //all data sent from filter 
 
-        $scope.test = true;
         var matchesAND = true; //set macthes to true (default)
 
         for (var obj in $scope.filter) { //$scope.filter is populated by $scope.filter within the panel controller below. Scope filter properties are initiated from front-end. currentStageColour/serviceType
@@ -226,7 +225,7 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                                     $scope.queriedPatent = false;
                                     $scope.loadingPatent = false;
                                     $scope.error = true;
-                                    // $state.go('search-patent', {}, {reload: false});
+
                                     if(errResponse.status == 412) { //already added patent
                                         $scope.searchError = 'It looks like we\'ve already added Patent Application '+patentNo+' in to the system.  You should be able to find it in the List Patents page using the search boxes.';
                                     } 
@@ -251,12 +250,14 @@ export default function PortfolioController($scope, $state, $stateParams, $rootS
                                 controller: ['$uibModalInstance', '$location', '$anchorScroll', function($uibModalInstance, $location, $anchorScroll) {
 
                                     this.addPatent = function () {
+
                                         vm.addingPatent = true;
                                         $uibModalInstance.close();
                                         CasesRestService.savePatent(patent)
                                         .then(
                                             function(response){
-                                                
+                                                vm.addingPatent = false;
+
                                                 updatePortfolioData();
 
                                                 var match = response.find(function(item){
