@@ -4,7 +4,7 @@ export default function TransactionsController(TransactionService, $scope, $cook
 
     var vm = this;
 
-    vm.transactions = null;
+    // vm.transactions = null;
     var displayHelpTimeout;
     $scope.filter = {};
     $scope.displayFirstHelp = displayFirstHelp;  
