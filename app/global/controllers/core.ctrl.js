@@ -67,16 +67,15 @@ function coreCtrl($uibModal, $scope,  $state, $timeout, $http, $cookies, $locati
 
 	$scope.$on('IdleTimeout', function() {
 
-	  	closeModals();
 
-     	ngCart.empty();
     	$http.post(ppdomain+'resources/j_spring_security_logout')
       	.then(
       		function(response){
+      			$state.go('login', { reload: false })
+			  	closeModals();
+		     	ngCart.empty();      			
 	            AuthorisationService.ClearCredentials();
 	            $cookies.remove("grantAttempts");
-  				$state.go('login', { reload: false })
-
       		},
           	function(errResponse) {
             	console.error('Error with idle timeout. Error: ', errResponse);
