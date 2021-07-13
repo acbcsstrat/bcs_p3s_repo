@@ -1,0 +1,185 @@
+<div data-ng-show="transactions.length === 0" class="col-md-12">
+    <div class="bg-white p-a-sm">
+        <p class="font-weight-medium font-h4 font-weight-medium">There are currently no transactions.</p>
+    </div>
+</div>
+<div data-ng-hide="transactionsLoaded" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
+    <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
+    <p>We are just fetching your transactions</p>
+</div>
+<div data-ng-show="transactionsLoaded" class="animate-show container__scrollable-area">
+    <div  class="animate-show container__scrollable-area">
+        <div class="p-l-3 p-r-3 p-tb-sm br-tx-1">                            
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div uib-popover-template="'transactiontpl.html'" popover-trigger="'none'" popover-is-open="displayTransactionHelp"   popover-placement="right">
+                    <div class="d-flex">
+                        <h1 class="font-h1 lh-default m-r-lg">Transactions</h1>
+                    </div>
+                    <script type="text/ng-template" id="transactiontpl.html" class="left">
+                        <button class="btn btn-no-bg mdtooltip-close" data-ng-click="displayFirstHelp('transaction', false)">
+                            <i class="fal fa-times fa-lg txt-black"></i>
+                        </button>
+                        <div>
+                            <p class="m-b-xs">The transaction table displays both current and historic transactions. </p>
+                            <p>Select one of the transactions and further information will be provided</p>
+                        </div>
+                    </script>   
+                </div>                
+                <div class="d-flex align-items-center">
+                    <md-chips data-ng-model="$ctrl.chipOptions" readonly="true" md-removable="true" class="text-capitalize font-weight-medium cursor-pointer" md-on-remove="selectedChip($chip.prop, $chip.value, $chip.cat); getItems($chip.cat, transactions)">
+                        <md-chip-template>      
+                            {{$chip.prop}}   
+                        </md-chip-template>
+                        <!-- <md-icon><i class="d-flex input-group-text pill-radius fa fa-search"></i></md-icon> -->
+                    </md-chips>
+                    <div class="m-r-lg">
+                        <div class="input-group m-r-sm">
+                            <input type="text" class="form-control pill-radius" name="transactionSearch" data-ng-model="searchTransactions" placeholder="Search transactions..." autocomplete="off">  
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="pill-radius fa fa-search fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <md-menu md-position-mode="target-right target">
+                            <md-button class="icon-stretch icon-stretch--icon black pill-radius" data-ng-click="$ctrl.showFilter($mdMenu, $event)">
+                                <span class="icon-text">Filter</span>              
+                                <i class="fal fa-filter fa-2x cursor-pointer icon"></i> 
+                            </md-button>
+                            <md-menu-content class="container-filter-list">
+                                <md-list class="box" data-ng-repeat="cat in categories" ng-init="filter[cat]={}">
+                                    <md-subheader class="md-no-sticky">
+                                        <h2 class="font-h3">{{cat == 'latestTransStatus' ? 'Transaction Status' : 'Transaction Type'}}</h2>
+                                    </md-subheader>
+                                    <md-list-item data-ng-repeat="value in getItems(cat, transactions)">
+                                        <md-checkbox class="md-secondary" data-ng-model="filter[cat][value]" data-ng-change="$ctrl.updateFiltered(value, filter[cat][value], cat);"> <!--used to update filtered patents totals, not filter portfolio-->
+                                        </md-checkbox>
+                                        <p>({{(filtered | filter:value:true).length}})&nbsp;
+                                            <span class="text-capitalize">{{value}}</span>
+                                        </p>
+                                    </md-list-item>
+                                    <md-divider></md-divider>
+                                </md-list>
+                                <div layout="row" class="demo-dialog-button">
+                                    <md-button md-autofocus flex class="md-primary" data-ng-click="closeDialog();">
+                                        Close
+                                    </md-button>
+                                </div>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scrollable-area scrollable-area--full-height">
+            <table class="t-data sticky-table">
+                <thead class="sticky-thead">
+    				<tr class="t-data__row t-data__row--select t-data__head">
+    					<th class="t-data__th t-data__th--sm sticky-th" data-ng-click="$ctrl.sortBy('p3S_TransRef');">
+    						<span>Transaction ID</span>
+                            <span data-ng-show="$ctrl.propertyName == 'p3S_TransRef' && !$ctrl.reverse">
+                                <i class="fas fa-angle-down fa-lg"></i>
+                            </span>
+                            <span data-ng-show="$ctrl.propertyName == 'p3S_TransRef' && $ctrl.reverse">
+                                <i class="fas fa-angle-up fa-lg"></i>
+                            </span>    					
+    					</th>
+    					<th class="t-data__th" data-ng-click="$ctrl.sortBy('transTypeUI');">
+    						<span>Transaction Type</span>
+                            <span data-ng-show="$ctrl.propertyName == 'transTypeUI' && !$ctrl.reverse">
+                                <i class="fas fa-angle-down fa-lg"></i>
+                            </span>
+                            <span data-ng-show="$ctrl.propertyName == 'transTypeUI' && $ctrl.reverse">
+                                <i class="fas fa-angle-up fa-lg"></i>
+                            </span>    									
+    					</th>					
+    					<th class="t-data__th" data-ng-click="$ctrl.sortBy('transStartDate');">
+    						<span>Transaction Initiated</span>
+                            <span data-ng-show="$ctrl.propertyName == 'transStartDate' && !$ctrl.reverse">
+                                <i class="fas fa-angle-down fa-lg"></i>
+                            </span>
+                            <span data-ng-show="$ctrl.propertyName == 'transStartDate' && $ctrl.reverse">
+                                <i class="fas fa-angle-up fa-lg"></i>
+                            </span>    									
+    					</th>
+    					<th class="t-data__th" data-ng-click="$ctrl.sortBy('transAmount_USD');">
+    						<span>Cost</span>
+                            <span data-ng-show="$ctrl.propertyName == 'transAmount_USD' && !$ctrl.reverse">
+                                <i class="fas fa-angle-down fa-lg"></i>
+                            </span>
+                            <span data-ng-show="$ctrl.propertyName == 'transAmount_USD' && $ctrl.reverse">
+                                <i class="fas fa-angle-up fa-lg"></i>
+                            </span> 
+    					</th>
+    					<th class="t-data__th" data-ng-click="$ctrl.sortBy('latestTransStatus');">
+    						<span>Status</span>
+                            <span data-ng-show="$ctrl.propertyName == 'latestTransStatus' && !$ctrl.reverse">
+                                <i class="fas fa-angle-down fa-lg"></i>
+                            </span>
+                            <span data-ng-show="$ctrl.propertyName == 'latestTransStatus' && $ctrl.reverse">
+                                <i class="fas fa-angle-up fa-lg"></i>
+                            </span> 								
+    					</th>
+    					<th class="t-data__th">
+    						<span>Application No.(s)</span>
+    					</th>
+    				</tr>
+    			</thead>
+    			<tbody class="sticky-tbody">
+    			    <tr data-ng-repeat="transaction in filtered=(transactions | filter:filterByPropertiesMatchingAND | filter:searchTransactions) | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" data-ng-click="$ctrl.rowSelect($event, transaction); $ctrl.select(transaction.p3s_TransRef)"  class="t-data__row t-data__row--select" data-ng-class="{active: transaction.p3s_TransRef == $ctrl.selected}">
+    			        <td class="t-data__td sticky-td">
+    						<a class="t-data__a" data-ng-attr-id="{{transaction.p3s_TransRef}}">{{transaction.p3s_TransRef}}</a>
+    			        </td>
+    			        <td class="t-data__td">
+    			        	{{transaction.transTypeUI}}
+    			        </td>
+    			        <td class="t-data__td">
+    		        		{{transaction.transStartDate | date: 'MM/dd/yy'}}
+    			        </td>
+    			        <td class="t-data__td">
+    			        	$ {{transaction.transAmount_USD | number: 2}}
+    			        </td>
+    			        <td class="t-data__td">
+    						<p class="font-weight-bold m-b-xs">
+                               <span data-ng-if="!transaction.hasFailed">{{transaction.latestTransStatus}}</span>
+                               <span data-ng-if="transaction.hasFailed">Failed</span>
+                            </p>
+    						<div class="progress-tracker progress-trans" data-ng-class="transaction.hasFailed ? 'progress-red' : 'progress-green'" >
+    							<uib-progress><uib-bar class="pill-radius tracker-item" value="transaction.actionProgress" max="100"></uib-bar></uib-progress>
+    						</div>	
+    			        </td>		        
+    			        <td class="t-data__td">
+    						<span data-ng-if="transaction.serviceUIs.length === 1" data-ng-repeat="item in transaction.serviceUIs">
+								<span class="txt-grey">
+									{{item.appAndType }}
+								</span>
+							</span>
+    									
+    						<select 
+    							data-ng-if="transaction.serviceUIs.length > 1"
+    					        data-ng-options="ui.appAndType for ui in transaction.serviceUIs"
+    					        data-ng-model="transaction.selectedUi"
+    							data-ng-change="$ctrl.transactionListFilter(item,$index)"
+    							id="{{outerIndex}}"
+    							class="pill-radius form-control font-body"
+    							transaction-select="selectedItem">
+    							<option value="">Multiple</option>
+    						</select>
+    			        </td>
+    			    </tr>
+    			 	<tr data-ng-show="Result.length==0">
+    			 		<td class="t-data__td text-left" colspan="7">
+    			 			No Results Found
+    			 		</td>
+    			 	</tr>						    						
+    			</tbody>
+    		</table>
+    	</div><!--scrollable area end-->
+    </div>
+</div>
+
+<div data-ui-view="modal" autoscroll="false"></div>
