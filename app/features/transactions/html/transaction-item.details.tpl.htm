@@ -44,8 +44,8 @@
 				<div class="col-md-12">
 					<p class="font-body text-uppercase font-weight-bold m-b-xs">Documents</p>
 
-					<a class="btn-underlined pill-radius font-body txt-phase-green font-weight-normal text-capitalize" target="_blank" data-ng-href="{{transaction.epoReceiptUrl}}" data-ng-if="transaction.epoReceiptUrl">{{transaction.serviceType}} receipt</a><br data-ng-if="transaction.epoReceiptUrl">
-					<a data-ng-href="{{transaction.certificateUrl}}" class="btn-underlined pill-radius font-body txt-phase-green font-weight-normal" target="_blank" data-ng-if="transaction.certificateUrl">Certificate</a>
+					<a class="btn-underlined pill-radius font-body txt-phase-green font-weight-normal text-capitalize" download data-ng-href="{{transaction.epoReceiptUrl}}" data-ng-if="transaction.epoReceiptUrl">{{transaction.serviceType}} receipt</a><br data-ng-if="transaction.epoReceiptUrl">
+					<a data-ng-href="{{transaction.certificateUrl}}" class="btn-underlined pill-radius font-body txt-phase-green font-weight-normal" download data-ng-if="transaction.certificateUrl">Certificate</a>
 				</div>
 			</div>
 			<div class="m-b-md m-t-md"></div> 

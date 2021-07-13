@@ -114,6 +114,7 @@
     "npm-check-updates": "^4.1.2",
     "nvd3": "^1.8.6",
     "oclazyload": "^1.1.0",
+    "pdfmake": "^0.2.0",
     "popper.js": "^1.16.1",
     "postcss-scss": "^2.0.0",
     "precss": "^4.0.0",
