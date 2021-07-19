@@ -1,0 +1,35 @@
+
+<div class="bg-phase-green p-5 d-flex align-items-center justify-content-between">
+	<button class="btn-no-bg" data-ng-click="backOut()">
+		<i class="fas fa-angle-left fa-3x txt-white cursor-pointer" ></i>
+	</button>
+	<div class="d-flex align-items-center">
+		<i class="fal fa-question-circle m-r-xs fa-3x txt-white "></i><h4 class="font-h2 txt-white font-weight-medium">Help</h4>
+	</div>
+	<button class="btn-no-bg" data-ng-click="closeHelpPanel()">
+		<i class="fal fa-times fa-2x txt-white cursor-pointer"></i>
+	</button>
+	
+</div>
+<div class="p-5 text-nowrap overflow-x-hidden">
+
+	<div class="position-relative overflow-x-hidden">
+		<div class="help-panel-default"><!-- helpPanelId-->
+			<help-panel-group data-ng-repeat="help in helpList track by $index" heading="{{help.category}}" class="help-panel__groups m-b-md">	
+				<div class="help-panel__list">
+					<div class="help-panel__item" data-ng-repeat="item in help.titles" data-ng-click="helpItemSelected(help.category, item.index)">
+						<div class="px-4 py-2 d-flex justify-content-between">
+							<p class="font-h4 font-weight-bold">{{item.title}}</p>
+							<i class="far fa-angle-right fa-2x"></i>
+						</div>
+					 	<div ng-transclude></div>
+					</div>
+				</div>
+			</help-panel-group>
+		</div>
+		<help-information class="help-panel__information"><!-- style="position: relative; right: -100%; top: 0;" -->
+		</help-information>					
+	</div>					
+
+</div>
+

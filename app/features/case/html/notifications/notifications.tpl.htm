@@ -1,0 +1,139 @@
+<div class="row m-b-sm" data-ng-if="$ctrl.data.availableAction.length == 0">
+	<div class="col-md-12 col-xl-12">
+		<p class="font-h4 font-weight-medium">There are currently no European Actions available via The Patent Place. If a European Action becomes available, you can configure your notification settings here for the available action(s).</p>
+	</div>
+</div>
+
+<div data-ng-if="$ctrl.data.availableAction.length !== 0" class="d-flex flex-column flex-grow-1">
+	<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved-->
+	    <div class="col-md-12 col-xl-12">
+	        <p class="font-body">Reminders are emails sent to your inbox to help keep you up to date on the progress of your patent’s available formalities. Below you can configure each phase reminder settings to best suit your needs for when you receive a reminder email.</p>
+	        <p data-ng-if="$ctrl.validationReminders" class="font-body m-t-xs">Due to additional elements required for processing validations through Patent Place, reminders work on an Online then Offline reminder basis.</p>	        
+	    </div>
+	</div>	
+	<div class="row m-b-sm"> <!-- add if condition to check data-ng-if application has been saved -->
+	    <div class="col-md-12 col-xl-12">
+	    	<div class="form-inline">
+	    		<div class="form-group">                      
+	            	<label class="font-h4 font-weight-bold text-uppercase m-r-sm">Display notifications for: </label>
+		        	<select name="actions" id="actions" class="form-control text-capitalize" data-ng-model="$ctrl.data.selectedAction" data-ng-options="option.action for option in $ctrl.data.availableAction track by option.id" data-ng-init="$ctrl.displayNotifications($ctrl.data.selectedAction.action)" data-ng-change="$ctrl.displayNotifications($ctrl.data.selectedAction.action)">
+			        </select>
+	    		</div>
+	    	</div>
+	    </div>
+	</div>	
+
+	<div class="d-flex flex-column">
+		<div class="d-flex align-items-center">
+			<div class="notification-heading">
+				<span data-ng-if="!$ctrl.validationReminders" class="font-h4 font-weight-bold txt-phase-green">Green</span>
+				<span data-ng-if="$ctrl.validationReminders" class="font-h4 font-weight-bold txt-phase-green">Online
+					<i class="fas fa-question-circle txt-phase-green cursor-pointer fa-1x"></i>
+		            <md-tooltip md-delay="500" md-direction="right" md-z-index="99999" class="font-body mdtooltip-md">
+		              	The Online (Green) period lasts from the Administrative Grant Date, up until 6 weeks prior to the validation deadline. Within this timeframe, the instruction can be processed Online via the platform.
+		            </md-tooltip>
+				</span>
+			</div>
+			<div class="py-2 pl-5 notification-body border-grey-xs--left" data-ng-repeat="checkbox in $ctrl.notifications.green track by $index" index="$index">
+	    		<div class="d-flex flex-wrap">
+	                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+	                    <label class="notification-radio">
+	                      	<input type="checkbox" data-ng-model="item.isOn">
+	                      	<span class="checkmark green"></span>
+	                    </label>
+	                    <span class="font-body checkbox-text">{{item.title}}</span>
+	                </div>
+	            </div>
+			</div>
+			</div>
+		</div>
+		<div class="d-flex align-items-center" data-ng-if="!$ctrl.validationReminders">
+			<div class="notification-heading">
+				<span class="font-h4 font-weight-bold txt-phase-amber">Amber</span>
+			</div>			
+		
+			<div class="py-2 pl-5 notification-body  border-grey-xs--left" data-ng-repeat="checkbox in $ctrl.notifications.amber track by $index" index="$index">
+	    		<div class="d-flex flex-wrap">
+	                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+	                    <label class="notification-radio">
+	                      	<input type="checkbox" data-ng-model="item.isOn">
+	                      	<span class="checkmark amber"></span>
+	                    </label>
+	                    <span class="font-body checkbox-text">{{item.title}}</span>
+	                </div>
+	            </div>
+			</div>
+		</div>
+		<div class="d-flex align-items-center">
+			<div class="notification-heading">
+				<p data-ng-if="!$ctrl.validationReminders" class="font-h4 font-weight-bold txt-phase-red">Red</p>
+				<div data-ng-if="$ctrl.validationReminders">				
+					<p class="font-h4 font-weight-bold txt-phase-red">
+						Offline
+						<i class="fas fa-question-circle txt-phase-green cursor-pointer fa-1x"></i>
+			            <md-tooltip md-delay="500" md-direction="right" md-z-index="99999" class="font-body mdtooltip-md">
+			              	The Offline (Red) period lasts from 6 weeks prior to the validation deadline. Within this timeframe, if you phone or email one of our patent administrators they may be able to assist.
+			            </md-tooltip>
+
+					</p>
+				</div>
+			</div>	
+			<div class="border-grey-xs--left">
+				<div class="py-2 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.red track by $index" index="$index">
+		    		<div class="d-flex flex-wrap">
+		                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+	                        <label class="notification-radio">
+	                          	<input type="checkbox" data-ng-model="item.isOn">
+	                          	<span class="checkmark red"></span>
+	                        </label>
+		                    <span class="font-body checkbox-text">{{item.title}}</span>
+		                </div>
+		            </div>
+				</div>
+			</div>
+		</div>
+		<div data-ng-if="$ctrl.toBlueOrNotToBlue">
+			<div class="d-flex align-items-center">
+				<div class="notification-heading">
+					<span class="font-h4 font-weight-bold txt-phase-blue">Blue</span>
+				</div>	
+				<div class="border-grey-xs--left">	
+					<div class="py-2 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.blue track by $index" index="$index">
+			    		<div class="d-flex flex-wrap">
+			                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+		                        <label class="notification-radio">
+		                          	<input type="checkbox" data-ng-model="item.isOn">
+		                          	<span class="checkmark blue"></span>
+		                        </label>
+			                    <span class="font-body checkbox-text">{{item.title}}</span>
+			                </div>
+			            </div>
+					</div>
+				</div>	
+			</div>
+			<div class="d-flex align-items-center">
+				<div class="notification-heading">
+					<span class="font-h4 font-weight-bold txt-phase-black">Black</span>
+				</div>		
+				<div class="border-grey-xs--left">	
+					<div class="py-2 pl-5 notification-body" data-ng-repeat="checkbox in $ctrl.notifications.black track by $index" index="$index">
+			    		<div class="d-flex flex-wrap">
+			                <div class="d-flex align-items-center m-r-md" data-ng-repeat="item in checkbox">
+			                        <label class="notification-radio">
+			                          	<input type="checkbox" data-ng-model="item.isOn">
+			                          	<span class="checkmark black"></span>
+			                        </label>
+			                    <span class="font-body checkbox-text">{{item.title}}</span>
+			                </div>
+			            </div>
+					</div>
+				</div>		
+			</div>
+		</div><!--blue and black end-->
+	
+	<div class="row m-t-md flex-grow-1">
+		<div class="col-xl-12 text-right d-flex align-items-end justify-content-end">
+	        <input type="submit" id="submit" class="btn btn--green btn--lg pill-radius" value="Save" data-ng-click="$ctrl.updateNotifications($ctrl.patent.patentID, $ctrl.notificationUi, $ctrl.notificationUrl)" data-ng-disabled="$ctrl.updatingNotifications">
+		</div>
+	</div>
+</div>
