@@ -532,9 +532,27 @@ export default function appConfig($httpProvider, $urlRouterProvider, $uibModalPr
             redirectTo: 'login'
         }           
     })
+    .state('general-support', {
+        url: '/support',
+        template: require('html-loader!./features/support/general/html/general-support.tpl.htm'),
+        controller: 'GeneralSupportController',
+        controllAs: '$ctrl',
+        lazyLoad: function($transition$) {
+            const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+            
+            // !!! Dynamic import !!!
+            return import(/* webpackChunkName: "index" */ "./features/support/general/index.js")
+            .then(function(mod) {
+                $ocLazyLoad.inject(mod.default)
+            })
+            .catch(err => {
+                throw new Error("Ooops, something went wrong, " + err);
+            });   
+        }
+    })
     .state('basket', {
         url: '/basket',
-        template:  require('html-loader!./features/checkout/html/checkout.basket.tpl.htm'),
+        template: require('html-loader!./features/checkout/html/checkout.basket.tpl.htm'),
         controller: 'BasketController',
         controllerAs: '$ctrl',
         lazyLoad: function($transition$) {

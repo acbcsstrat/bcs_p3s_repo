@@ -17,12 +17,19 @@ function SidenavService(){
 
   	sections.push({
   		
-  		name: 'Transactions',
-  		type: 'link',
-      state: 'transactions',
-      icon: 'far fa-money-check-alt'
+    		name: 'Transactions',
+    		type: 'link',
+        state: 'transactions',
+        icon: 'far fa-money-check-alt'
       
-	})
+	  })
+
+    sections.push({
+        name: 'Support',
+        type: 'link',
+        state: 'general-support',
+        icon: 'fal fa-user-headset'
+    })    
 
  	var self;
 
