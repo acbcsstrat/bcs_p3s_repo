@@ -1,12 +1,82 @@
-<div data-ng-class="fade-in" class="d-flex flex-grow-1" >
-    <div class="row flex-grow-1">
-        <div class="d-flex col-md-12 col-xl-12">
-            <div class="m-b-sm d-flex flex-column flex-grow-1">
-            	<form name="grantForm" method="get" post-action="grantService" novalidate>
-            		<div class="form-group">
-            			<label for="subject">Subject</label>
-            			<input type="text" name="subject">            			
-            		</div>
+<div class="content-panel m-b-md">
+    <div class="row">
+        <div class="col-md-8 col-xl-8 d-flex">
+            <div class="content-panel__body bg-white flex-grow-1">
+                <p class="font-h1 m-b-md">Support form</p>
+            	<form name="supportForm" method="get" novalidate>
+                    <div class="form-group row">
+                		<div class=" col-md-6">
+                			<label for="subject" class="font-h4 m-b-xs">Subject</label>
+                			<input type="text" name="subject" class="form-control">            			
+                		</div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="category" class="font-h4 font-weight-bold">Category</label>
+                            <select name="category" class="form-control font-body pill-radius"
+                                data-ng-model="$ctrl.formData.category"
+                                data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}" data-ng-change="$ctrl.checkSubcategories($ctrl.formData.category)"
+                                required>
+                                <option value="" disabled selected>--Please select--</option>
+                                <option data-ng-repeat="item in $ctrl.categories" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row" data-ng-show="$ctrl.subCategoryRequired">
+                        <div class="col-md-6">
+                            <label for="subcategory" class="font-h4 font-weight-bold">Sub-category</label>
+                            <select name="subcategory" class="form-control font-body pill-radius"
+                                data-ng-model="$ctrl.formData.subcategory"
+                                data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}"
+                                required>
+                                <option value="" disabled selected>--Please select--</option>
+                                <option data-ng-repeat="item in $ctrl.subcategory" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
+                             </select>
+                        </div>   
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">                        
+                            <label for="subject" class="font-h4 font-weight-bold">Message</label>
+                            <input type="text" name="subject" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-8">                        
+                            <label for="subject" class="font-h4">Attach files</label>
+                            <input type="file" nv-file-select="" uploader="uploader" multiple class="form-control-file font-h4" /><br/>
+                            <table class="table" data-ng-if="uploader.queue.length">
+                                <thead>
+                                    <tr>
+                                        <th width="50%" class="font-h4">Name</th>
+                                        <th ng-show="uploader.isHTML5" class="font-h4">Size</th>
+                                        <th ng-show="uploader.isHTML5" class="font-h4">Progress</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td><strong>{{ item.file.name }}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td ng-show="uploader.isHTML5">
+                                            <div class="progress" style="margin-bottom: 0;">
+                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                            </div>
+                                        </td>
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-xs" ng-click="item.remove()">
+                                                <i class="far fa-trash-alt fa-lg"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <div class="col-md-8 text-right">
+                            <button type="submit" class="btn btn--green btn--lg pill-radius">Request support</button>
+                        </div>
+                    </div>                    
             	</form>
             </div>
         </div>

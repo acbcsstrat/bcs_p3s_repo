@@ -10,6 +10,7 @@ import nvd3 from "angular-nvd3";
 import croppie from "angular-croppie/angular-croppie.js";
 import RecaptchaModule from 'angular-recaptcha';
 import ngCookies from 'angular-cookies';
+// import angularFileUpload from 'angular-file-upload';
 
 import zxcvbn from 'zxcvbn';
 
