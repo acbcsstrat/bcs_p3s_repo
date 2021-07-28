@@ -7,7 +7,7 @@
                     <div class="form-group row">
                 		<div class=" col-md-6">
                 			<label for="subject" class="font-h4 m-b-xs">Subject</label>
-                			<input type="text" name="subject" class="form-control">            			
+                			<input type="text" name="subject" class="form-control" data-ng-model="$ctrl.formData.subject">            			
                 		</div>
                     </div>
                     <div class="form-group row">
@@ -37,44 +37,44 @@
                     <div class="form-group row">
                         <div class="col-md-6">                        
                             <label for="subject" class="font-h4 font-weight-bold">Message</label>
-                            <input type="text" name="subject" class="form-control">
+                            <input type="text" name="subject" class="form-control" data-ng-model="$ctrl.formData.message">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-8">                        
                             <label for="subject" class="font-h4">Attach files</label>
-                            <input type="file" nv-file-select="" uploader="uploader" multiple class="form-control-file font-h4" /><br/>
-                            <table class="table" data-ng-if="uploader.queue.length">
+                            <input type="file" class="form-control-file font-h4" multiple onchange="angular.element(this).scope().getFileDetails(this)">
+<!--                             <table class="table" data-ng-if="uploader.queue.length">
                                 <thead>
                                     <tr>
                                         <th width="50%" class="font-h4">Name</th>
-                                        <th ng-show="uploader.isHTML5" class="font-h4">Size</th>
-                                        <th ng-show="uploader.isHTML5" class="font-h4">Progress</th>
+                                        <th data-ng-show="uploader.isHTML5" class="font-h4">Size</th>
+                                        <th data-ng-show="uploader.isHTML5" class="font-h4">Progress</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
+                                    <tr data-ng-repeat="item in uploader.queue">
                                         <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td ng-show="uploader.isHTML5">
+                                        <td data-ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td data-ng-show="uploader.isHTML5">
                                             <div class="progress" style="margin-bottom: 0;">
-                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                                <div class="progress-bar" role="progressbar" data-ng-style="{ 'width': item.progress + '%' }"></div>
                                             </div>
-                                        </td>
+                                        </td>   
                                         <td nowrap>
-                                            <button type="button" class="btn btn-xs" ng-click="item.remove()">
+                                            <button type="button" class="btn btn-xs" data-ng-click="item.remove()">
                                                 <i class="far fa-trash-alt fa-lg"></i>
                                             </button>
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table> -->
                         </div>
                     </div> 
                     <div class="form-group">
                         <div class="col-md-8 text-right">
-                            <button type="submit" class="btn btn--green btn--lg pill-radius">Request support</button>
+                            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData)">Request support</button>
                         </div>
                     </div>                    
             	</form>
