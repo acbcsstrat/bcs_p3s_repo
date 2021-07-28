@@ -74,7 +74,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 		if(data == 'Intellectual Property') {
 			vm.subCategoryRequired = true;
-			vm.subcategory = ['Euro-PCT (Form 1200)', 'Renewals', 'Grant and Publishing Fees, 71(3)', 'EP Validation', 'Other IP']
+			vm.subcategory = ['Euro-PCT (Form 1200)', 'Renewals / Annuities', 'Grant and Publishing Fees, 71(3)', 'EP Validation', 'Other IP']
 		}
 
 		if(data == 'WebApp Technical') {
@@ -99,7 +99,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		} else {
 			formData.append('subcategory', null);
 		}
-		formData.append('numUploads', vm.formData.uploadedDocs.length);
+		formData.append('numUploads', $scope.files.length);
 		formData.append('message', data.message);
 
 		// if(vm.formData.uploadedDocs.length > 0) {
