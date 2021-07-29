@@ -12,7 +12,7 @@ function SupportService($q, $http) {
 
         var deferred = $q.defer()
 
-        $http.put(ppdomain+'rest-support-form/', data, config)
+        $http.post(ppdomain+'rest-support-form/', data, config)
         .then(
             function(response){
                 console.log('service response', response)

@@ -6,6 +6,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.subCategoryRequired = false;
 	vm.formData = {};
 	vm.formData.uploadedDocs = [];
+	vm.files = [];
 	vm.categories = ['Intellectual Property', 'WebApp Technical', 'Other'];
 	vm.subcategory = [];
 	vm.checkSubcategories = checkSubcategories;
@@ -58,12 +59,11 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
         $scope.getFileDetails = function (e) {
 
-            $scope.files = [];
             $scope.$apply(function () {
 
                 // STORE THE FILE OBJECT IN AN ARRAY.
                 for (var i = 0; i < e.files.length; i++) {
-                    $scope.files.push(e.files[i])
+                   vm.files.push(e.files[i])
                 }
 
             });
@@ -99,13 +99,13 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		} else {
 			formData.append('subcategory', null);
 		}
-		formData.append('numUploads', $scope.files.length);
+		formData.append('numUploads', vm.files.length);
 		formData.append('message', data.message);
 
 		// if(vm.formData.uploadedDocs.length > 0) {
-			console.log('$scope.files :', $scope.files)
-           for (var i in $scope.files) {
-                formData.append("uploadedDocs", $scope.files[i]);
+			console.log('vm.files :', vm.files)
+           for (var i in vm.files) {
+                formData.append("uploadedDocs", vm.files[i]);
             }
 
 

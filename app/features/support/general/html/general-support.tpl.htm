@@ -41,9 +41,14 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-8">                        
+                        <div class="col-md-8">                       
                             <label for="subject" class="font-h4">Attach files</label>
                             <input type="file" class="form-control-file font-h4" multiple onchange="angular.element(this).scope().getFileDetails(this)">
+                                <div data-ng-repeat="file in $ctrl.files">
+                                    <span class="m-r-sm">{{file.name}}</span>
+                                    <span data-ng-click="$ctrl.files.splice($index,1)">Delete</span>
+                                    
+                                </div>
 <!--                             <table class="table" data-ng-if="uploader.queue.length">
                                 <thead>
                                     <tr>
