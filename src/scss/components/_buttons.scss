@@ -151,18 +151,22 @@
             text-decoration: none;
         }
     }
+
+    &.btn-file-upload {
+        max-width: 12rem;
+        text-overflow: ellipsis;
+        position: relative;
+        .btn-close {
+            position: absolute;
+            top: 50%;
+            margin-top: -6px;
+            right: 8px;
+        }
+    }
 }
 
 
 .t-data .t-data__btn-portal { min-width: 183.48px; } //required from ngCart
-
-// .btn-no-bg {
-//     background: none;
-//     border: 0;
-//     &:focus {
-//         outline: 0;
-//     }
-// }
 
 .btn-underlined {
     cursor: pointer;

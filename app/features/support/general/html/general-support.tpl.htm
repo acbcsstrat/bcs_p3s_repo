@@ -5,13 +5,13 @@
                 <p class="font-h1 m-b-md">Support form</p>
             	<form name="supportForm" method="get" novalidate>
                     <div class="form-group row">
-                		<div class=" col-md-6">
+                		<div class="col-md-8 col-xl-7">
                 			<label for="subject" class="font-h4 m-b-xs">Subject</label>
                 			<input type="text" name="subject" class="form-control" data-ng-model="$ctrl.formData.subject">            			
                 		</div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-6">
+                        <div class="col-md-8 col-xl-7">
                             <label for="category" class="font-h4 font-weight-bold">Category</label>
                             <select name="category" class="form-control font-body pill-radius"
                                 data-ng-model="$ctrl.formData.category"
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="form-group row" data-ng-show="$ctrl.subCategoryRequired">
-                        <div class="col-md-6">
+                        <div class="col-md-8 col-xl-7">
                             <label for="subcategory" class="font-h4 font-weight-bold">Sub-category</label>
                             <select name="subcategory" class="form-control font-body pill-radius"
                                 data-ng-model="$ctrl.formData.subcategory"
@@ -35,50 +35,27 @@
                         </div>   
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-6">                        
+                        <div class="col-md-8 col-xl-7">                        
                             <label for="subject" class="font-h4 font-weight-bold">Message</label>
                             <input type="text" name="subject" class="form-control" data-ng-model="$ctrl.formData.message">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-8">                       
-                            <label for="subject" class="font-h4">Attach files</label>
-                            <input type="file" class="form-control-file font-h4" multiple onchange="angular.element(this).scope().getFileDetails(this)">
-                                <div data-ng-repeat="file in $ctrl.files">
-                                    <span class="m-r-sm">{{file.name}}</span>
-                                    <span data-ng-click="$ctrl.files.splice($index,1)">Delete</span>
-                                    
-                                </div>
-<!--                             <table class="table" data-ng-if="uploader.queue.length">
-                                <thead>
-                                    <tr>
-                                        <th width="50%" class="font-h4">Name</th>
-                                        <th data-ng-show="uploader.isHTML5" class="font-h4">Size</th>
-                                        <th data-ng-show="uploader.isHTML5" class="font-h4">Progress</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr data-ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td data-ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td data-ng-show="uploader.isHTML5">
-                                            <div class="progress" style="margin-bottom: 0;">
-                                                <div class="progress-bar" role="progressbar" data-ng-style="{ 'width': item.progress + '%' }"></div>
-                                            </div>
-                                        </td>   
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-xs" data-ng-click="item.remove()">
-                                                <i class="far fa-trash-alt fa-lg"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table> -->
+                    <div class="form-group row" data-ng-if="$ctrl.files.length > 0">
+                        <div class="col-md-8">
+                            <p class="font-body m-b-xs">Files uploaded:</p>
+                            <div data-ng-repeat="file in $ctrl.files" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm">
+                                <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
+                                <span data-ng-click="$ctrl.files.splice($index,1)"><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
+                            </div>
+                            
                         </div>
                     </div> 
-                    <div class="form-group">
-                        <div class="col-md-8 text-right">
+                    <div class="form-group row">
+                        <div class="col-md-6 col-xl-4 text-left">
+                            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" multiple onchange="angular.element(this).scope().getFileDetails(this)">
+                            <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
+                        </div>
+                        <div class="col-md-6 col-xl-3 text-right">
                             <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData)">Request support</button>
                         </div>
                     </div>                    

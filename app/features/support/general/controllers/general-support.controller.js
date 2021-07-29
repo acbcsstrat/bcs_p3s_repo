@@ -59,6 +59,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
         $scope.getFileDetails = function (e) {
 
+        	console.log(e)
+
             $scope.$apply(function () {
 
                 // STORE THE FILE OBJECT IN AN ARRAY.
@@ -67,6 +69,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
                 }
 
             });
+
+            e.value = null;
         };
 
 
