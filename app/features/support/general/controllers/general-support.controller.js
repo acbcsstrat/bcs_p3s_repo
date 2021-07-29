@@ -70,7 +70,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
             });
 
-            e.value = null;
+            e.value = null; //required to reset file input so the same file can be uploaded either twice, or in case they remove it and want to re-upload it
         };
 
 

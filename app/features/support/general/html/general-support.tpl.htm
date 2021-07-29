@@ -6,13 +6,13 @@
             	<form name="supportForm" method="get" novalidate>
                     <div class="form-group row">
                 		<div class="col-md-8 col-xl-7">
-                			<label for="subject" class="font-h4 m-b-xs">Subject</label>
+                			<label for="subject" class="font-h4 font-weight-bold m-b-xs">Subject</label>
                 			<input type="text" name="subject" class="form-control" data-ng-model="$ctrl.formData.subject">            			
                 		</div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-8 col-xl-7">
-                            <label for="category" class="font-h4 font-weight-bold">Category</label>
+                            <label for="category" class="font-h4 font-weight-bold m-b-xs">Category</label>
                             <select name="category" class="form-control font-body pill-radius"
                                 data-ng-model="$ctrl.formData.category"
                                 data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}" data-ng-change="$ctrl.checkSubcategories($ctrl.formData.category)"
@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group row" data-ng-show="$ctrl.subCategoryRequired">
                         <div class="col-md-8 col-xl-7">
-                            <label for="subcategory" class="font-h4 font-weight-bold">Sub-category</label>
+                            <label for="subcategory" class="font-h4 font-weight-bold m-b-xs">Sub-category</label>
                             <select name="subcategory" class="form-control font-body pill-radius"
                                 data-ng-model="$ctrl.formData.subcategory"
                                 data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}"
@@ -36,21 +36,25 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-8 col-xl-7">                        
-                            <label for="subject" class="font-h4 font-weight-bold">Message</label>
-                            <input type="text" name="subject" class="form-control" data-ng-model="$ctrl.formData.message">
+                            <label for="subject" class="font-h4 font-weight-bold m-b-xs">Message</label>
+                            <textarea name="subject" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message"></textarea>
                         </div>
                     </div>
-                    <div class="form-group row" data-ng-if="$ctrl.files.length > 0">
+                    <div class="form-group row" >
                         <div class="col-md-8">
-                            <p class="font-body m-b-xs">Files uploaded:</p>
-                            <div data-ng-repeat="file in $ctrl.files" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm">
-                                <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
-                                <span data-ng-click="$ctrl.files.splice($index,1)"><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
+                            <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
+                            <p class="font-body">If you have any documents that will help our team with your enquiry, please upload them here</p>
+                            <div data-ng-if="$ctrl.files.length > 0">                            
+                                <p class="font-body m-b-xs">Files uploaded:</p>
+                                <div data-ng-repeat="file in $ctrl.files" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm">
+                                    <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
+                                    <span data-ng-click="$ctrl.files.splice($index,1)"><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
+                                </div>
                             </div>
                             
                         </div>
                     </div> 
-                    <div class="form-group row">
+                    <div class="form-group row m-t-md">
                         <div class="col-md-6 col-xl-4 text-left">
                             <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" multiple onchange="angular.element(this).scope().getFileDetails(this)">
                             <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
