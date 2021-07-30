@@ -125,8 +125,6 @@ export default function TransactionItemController($scope, $state, $timeout, $sta
 
 			})
 
-			console.log('vm.transactionItem : ', vm.transactionItem)
-
 			function checkProgress() { //function to add statuses complete or active to view so it provides proggress bar to user
 
 				var statusIndex;

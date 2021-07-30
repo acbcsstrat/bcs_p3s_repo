@@ -15,11 +15,9 @@ function SupportService($q, $http) {
         $http.post(ppdomain+'rest-support-form/', data, config)
         .then(
             function(response){
-                console.log('service response', response)
                 deferred.resolve(response.data)
             },
             function(errResponse){
-                console.log('service errResponse', errResponse)
                 deferred.reject(errResponse.data)
             }
         )
