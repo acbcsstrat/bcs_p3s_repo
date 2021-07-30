@@ -22,6 +22,32 @@ function validateNumbers(){
 
 }
 
+function validateTextField() {
+
+    var regExp = /[[\]<>"%;&+*/\\]/g;
+
+    return {
+
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+
+            function myValidation(value) {
+
+                if(regExp.test(value)) {
+                     ctrl.$setValidity('validTextField', false);                  
+                } else {
+
+                     ctrl.$setValidity('validTextField', true);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+        }
+
+    };
+
+}
+
 function validateCompanyName() {
 
     var regExp = /^[a-zA-z0-9\'\+\.\(\), -]*$/;
@@ -295,4 +321,5 @@ export default angular.module('directives.validation-rules', [])
     .directive('selectNgValidationFiles', selectNgValidationFiles)
     .directive('validateCompanyName', validateCompanyName)
     .directive('uiSelectRequired', uiSelectRequired)
+    .directive('validateTextField', validateTextField)
     .name;

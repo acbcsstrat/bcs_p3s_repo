@@ -2,12 +2,19 @@
     <div class="row">
         <div class="col-md-8 col-xl-8 d-flex">
             <div class="content-panel__body bg-white flex-grow-1">
-                <p class="font-h1 m-b-md">Support form</p>
-            	<form name="supportForm" method="get" novalidate>
+                <div class="row m-b-md">
+                    <div class="col-md-12 col-xl-12">                
+                        <p class="font-h1 m-b-md">Support form</p>
+                        <p>Our proffesional team are always here to help with your enquiries, whether it is IP or technical related. Use the form below below to provide as much informaiton as you can to ensure that we direct your enquiry to the appropriate team.</p>
+                    </div>
+                </div>
+            	<form name="supportForm" novalidate>
                     <div class="form-group row">
                 		<div class="col-md-8 col-xl-7">
                 			<label for="subject" class="font-h4 font-weight-bold m-b-xs">Subject</label>
-                			<input type="text" name="subject" class="form-control" data-ng-model="$ctrl.formData.subject">            			
+                			<input type="text" name="subject" id="subject" class="form-control" data-ng-model="$ctrl.formData.subject" validate-text-field required>
+                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.required && supportForm.subject.$dirty">Please fill out this field</p>
+                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.validTextField">Special characters: []\<\>"%;&+\/* are not permitted.</p>
                 		</div>
                     </div>
                     <div class="form-group row">
@@ -28,7 +35,7 @@
                             <select name="subcategory" class="form-control font-body pill-radius"
                                 data-ng-model="$ctrl.formData.subcategory"
                                 data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}"
-                                required>
+                                data-ng-required="$ctrl.subCategoryRequired">
                                 <option value="" disabled selected>--Please select--</option>
                                 <option data-ng-repeat="item in $ctrl.subcategory" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
                              </select>
@@ -36,8 +43,10 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-8 col-xl-7">                        
-                            <label for="subject" class="font-h4 font-weight-bold m-b-xs">Message</label>
-                            <textarea name="subject" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message"></textarea>
+                            <label for="message" class="font-h4 font-weight-bold m-b-xs">Message</label>
+                            <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message" validate-text-field required></textarea>
+                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.required && supportForm.message.$dirty">Please fill out this field</p>
+                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.validTextField && supportForm.message.$dirty">Special characters: []\<\>"%;&+\/* are not permitted.</p>                            
                         </div>
                     </div>
                     <div class="form-group row" >
@@ -60,7 +69,7 @@
                             <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
                         </div>
                         <div class="col-md-6 col-xl-3 text-right">
-                            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData)">Request support</button>
+                            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData)" data-ng-disabled="supportForm.$invalid">Request support</button>
                         </div>
                     </div>                    
             	</form>

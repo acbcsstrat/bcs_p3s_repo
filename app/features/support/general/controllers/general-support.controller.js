@@ -1,6 +1,6 @@
-GeneralSupportController.$inject = ['$scope', '$state', '$timeout', '$stateParams', 'FileUploader', 'SupportService'];
+GeneralSupportController.$inject = ['$scope', '$state', '$timeout', '$stateParams', 'SupportService'];
 
-export default function GeneralSupportController($scope, $state, $timeout, $stateParams, FileUploader, SupportService) {
+export default function GeneralSupportController($scope, $state, $timeout, $stateParams, SupportService) {
 
 	var vm = this;
 	vm.subCategoryRequired = false;
@@ -12,66 +12,19 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.checkSubcategories = checkSubcategories;
 	vm.submitForm = submitForm;
 
-    var uploader = $scope.uploader = new FileUploader({
-    	autoUpload: true
-    });	
+    $scope.getFileDetails = function (e) {
 
-	// $scope.uploader.onBeforeUploadItem = onBeforeUploadItem;
+        $scope.$apply(function () {
 
-	// function onBeforeUploadItem(item) {
+            // STORE THE FILE OBJECT IN AN ARRAY.
+            for (var i = 0; i < e.files.length; i++) {
+               vm.files.push(e.files[i])
+            }
 
-	//   item.formData.push({your: 'data'});
-	//   console.log('item : ', item);
-	// }
+        });
 
-	// const toBase64 = file => new Promise((resolve, reject) => {
-	//     const reader = new FileReader();
-	//     reader.readAsDataURL(file);
-	//     reader.onload = () => resolve(reader.result);
-	//     reader.onerror = error => reject(error);
-	// });
-
-	// async function Main() {
-	//    const file = document.querySelector('#myfile').files[0];
-	//    console.log(await toBase64(file));
-	// }
-
-
-    // uploader.onCompleteItem = function(fileItem, response, status, headers) {
-    // 	console.log('fileItem :', fileItem)
-
-    // 	// toBase64(fileItem._file)
-    // 	// .then(function(data){
-    // 		vm.formData.uploadedDocs.push(JSON.stringify(fileItem.file))
-    	
-
-    // 	// console.log(await toBase64(fileItem._file))
-    // 	// vm.formData.uploadedDocs.push(await toBase64(fileItem._file));
-    // 	// console.log('vm.formData', vm.formData)
-    //  //    console.info('onCompleteItem', fileItem, response, status, headers);
-	   // 		 // var r = new FileReader();
-	   //    // r.onloadend = function(e){
-	   //    //   $scope.data = e.target.result;
-	   //    // }
-	   //    // r.readAsDataURL(fileItem._file);     
-	   //    // console.log(r.readAsDataURL(fileItem._file))
-    // };    
-
-        $scope.getFileDetails = function (e) {
-
-        	console.log(e)
-
-            $scope.$apply(function () {
-
-                // STORE THE FILE OBJECT IN AN ARRAY.
-                for (var i = 0; i < e.files.length; i++) {
-                   vm.files.push(e.files[i])
-                }
-
-            });
-
-            e.value = null; //required to reset file input so the same file can be uploaded either twice, or in case they remove it and want to re-upload it
-        };
+        e.value = null; //required to reset file input so the same file can be uploaded either twice, or in case they remove it and want to re-upload it
+    };
 
 
 	function checkSubcategories(data) {
@@ -98,34 +51,19 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		var config = { headers: {'Content-Type': undefined} };
 		formData.append('subject', data.subject);
 		formData.append('category', data.category);
+
 		if(data.subcategory) {
 			formData.append('subcategory', data.subcategory);
 		} else {
 			formData.append('subcategory', null);
 		}
+
 		formData.append('numUploads', vm.files.length);
 		formData.append('message', data.message);
 
-		// if(vm.formData.uploadedDocs.length > 0) {
-			console.log('vm.files :', vm.files)
-           for (var i in vm.files) {
-                formData.append("uploadedDocs", vm.files[i]);
-            }
-
-
-
-
-		    // for (var i = 0, j = vm.formData.uploadedDocs.length; i < j; i++) {
-		    //     formData.append('uploadedDocs', vm.formData.uploadedDocs[i]);
-		    // }			
-			// formData.append('uploadedDocs', vm.formData.uploadedDocs);
-		// } else {
-		// 	formData.append('uploadedDocs', null);
-		// }
-
-		for(var pair of formData.entries()) {
-		   console.log(pair[0]+ ', '+ pair[1]);
-		}		
+		for (var i in vm.files) {
+            formData.append("uploadedDocs", vm.files[i]);
+        }
 
 		SupportService.requestSupport(formData, config)
 		.then(

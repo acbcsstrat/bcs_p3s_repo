@@ -101,17 +101,9 @@
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
+textarea.ng-dirty.ng-invalid {
+    border: 2px solid #D9272D;
+}
 /* Style the indicator (dot/circle) */
 .notification-radio .checkmark {
 
