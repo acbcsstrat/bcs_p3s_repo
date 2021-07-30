@@ -55,7 +55,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		if(data.subcategory) {
 			formData.append('subcategory', data.subcategory);
 		} else {
-			formData.append('subcategory', null);
+			formData.append('subcategory', '');
 		}
 
 		formData.append('numUploads', vm.files.length);
