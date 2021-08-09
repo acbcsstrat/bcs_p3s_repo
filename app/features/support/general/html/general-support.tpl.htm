@@ -5,7 +5,7 @@
                 <div class="row m-b-md">
                     <div class="col-md-8 col-xl-7">                
                         <p class="font-h1 m-b-md">Support form</p>
-                        <p>Our proffesional team are always here to help with your enquiries, whether it is IP or technical related. Use the form below below to provide as much informaiton as you can to ensure that we direct your enquiry to the appropriate team.</p>
+                        <p>Our professional team are always here to help with your enquiries, whether they are IP-related or technical. Use the form below to provide as much information as you can to ensure that we direct your enquiry to the appropriate team.</p>
                     </div>
                 </div>
             	<form name="supportForm" novalidate>
@@ -46,7 +46,7 @@
                             <label for="message" class="font-h4 font-weight-bold m-b-xs">Message</label>
                             <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message" validate-text-field required></textarea>
                             <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.required && supportForm.message.$dirty">Please fill out this field</p>
-                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.validTextField && supportForm.message.$dirty">Special characters: []\<\>"%;&+\/* are not permitted.</p>                            
+                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.validTextField && supportForm.message.$dirty">Special characters: &lsqb;&rsqb;&lt;&gt;&quot;&percnt;&semi;&amp;&plus;&bsol;&sol;&ast; are not permitted.</p>                            
                         </div>
                     </div>
                     <div class="form-group row" >
