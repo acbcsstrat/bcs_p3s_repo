@@ -92,9 +92,17 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             formData.append("uploadedDocs", vm.files[i]);
         }
 
+        
+
 		SupportService.requestSupport(formData, config)
 		.then(
 			function(response){
+
+				vm.formData = {}; //resets field values
+				vm.subCategoryRequired = false;
+				vm.files = [];
+				$scope.supportForm.$setPristine(); //rest forms properties
+
 		        var modalInstance = $uibModal.open({
 		            template: require('html-loader!../html/modals/modal.support-success.tpl.htm'),
 		            scope: $scope,
@@ -110,7 +118,9 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		        });
 			},
 			function(errResponse){
+				
 				console.error('controller errResponse', errResponse)
+
 		        var modalInstance = $uibModal.open({
 		            template: require('html-loader!../html/modals/modal.support-error.tpl.htm'),
 		            scope: $scope,
