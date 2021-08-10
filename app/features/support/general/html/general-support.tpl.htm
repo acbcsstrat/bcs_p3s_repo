@@ -12,9 +12,10 @@
                     <div class="form-group row">
                 		<div class="col-md-8 col-xl-7">
                 			<label for="subject" class="font-h4 font-weight-bold m-b-xs">Subject</label>
-                			<input type="text" name="subject" id="subject" class="form-control" data-ng-model="$ctrl.formData.subject" validate-text-field required>
+                			<input type="text" name="subject" id="subject" class="form-control" data-ng-model="$ctrl.formData.subject" data-ng-maxlength="50" validate-text-field required>
                             <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.required && supportForm.subject.$dirty">Please fill out this field</p>
                             <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.validTextField">Special characters: []\<\>"%;&+\/* are not permitted.</p>
+                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.maxlength && supportForm.subject.$dirty">Subject field has a maximum limit of 50 characters</p>                            
                 		</div>
                     </div>
                     <div class="form-group row">
@@ -44,7 +45,8 @@
                     <div class="form-group row">
                         <div class="col-md-8 col-xl-7">                        
                             <label for="message" class="font-h4 font-weight-bold m-b-xs">Message</label>
-                            <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message" validate-text-field required></textarea>
+                            <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message" maxlength="1500" validate-text-field required></textarea>
+                            <p class="form-help font-body m-t-xs">{{!$ctrl.formData.message.length ? 0 : $ctrl.formData.message.length}} / 1500 Characters</p>                        
                             <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.required && supportForm.message.$dirty">Please fill out this field</p>
                             <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.validTextField && supportForm.message.$dirty">Special characters: &lsqb;&rsqb;&lt;&gt;&quot;&percnt;&semi;&amp;&plus;&bsol;&sol;&ast; are not permitted.</p>                            
                         </div>
