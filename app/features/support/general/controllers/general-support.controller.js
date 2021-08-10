@@ -5,12 +5,14 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	var vm = this;
 	vm.subCategoryRequired = false;
 	vm.formData = {};
+	$scope.fileStore = {}
 	vm.formData.uploadedDocs = [];
 	vm.files = [];
 	vm.categories = ['Intellectual Property', 'WebApp Technical', 'Other'];
 	vm.subcategory = [];
 	vm.checkSubcategories = checkSubcategories;
 	vm.submitForm = submitForm;
+	vm.submittingRequest = false;
 
 	function init() {
 		
@@ -45,12 +47,14 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			            }]
 			        });
 			   	} else {
-		   			vm.files.push(e.files[i])
+			   		if(e.files[i].size > 0) {
+			   			vm.files.push(e.files[i])
+			   			e.value = null; //required to reset file input so the same file can be uploaded either twice, or in case they remove it and want to re-upload it
+			   		}
+		   			
 			   	}
             }
         });
-
-        e.value = null; //required to reset file input so the same file can be uploaded either twice, or in case they remove it and want to re-upload it
     };
 
 
@@ -74,6 +78,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	function submitForm(data) {
 
+		vm.submittingRequest = true;
+
 		var formData = new FormData();
 		var config = { headers: {'Content-Type': undefined} };
 		formData.append('subject', data.subject);
@@ -92,8 +98,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             formData.append("uploadedDocs", vm.files[i]);
         }
 
-        
-
 		SupportService.requestSupport(formData, config)
 		.then(
 			function(response){
@@ -102,6 +106,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 				vm.subCategoryRequired = false;
 				vm.files = [];
 				$scope.supportForm.$setPristine(); //rest forms properties
+
+				vm.submittingRequest = false;
 
 		        var modalInstance = $uibModal.open({
 		            template: require('html-loader!../html/modals/modal.support-success.tpl.htm'),
@@ -118,8 +124,10 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		        });
 			},
 			function(errResponse){
-				
+
 				console.error('controller errResponse', errResponse)
+
+				vm.submittingRequest = false;
 
 		        var modalInstance = $uibModal.open({
 		            template: require('html-loader!../html/modals/modal.support-error.tpl.htm'),

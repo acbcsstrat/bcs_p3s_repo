@@ -67,11 +67,17 @@
                     </div> 
                     <div class="form-group row m-t-md">
                         <div class="col-md-6 col-xl-4 text-left">
-                            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" multiple onchange="angular.element(this).scope().getFileDetails(this)">
+                            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="fileStore.file" multiple onchange="angular.element(this).scope().getFileDetails(this)" valid-file-size>
                             <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
+                            <p class="txt-phase-red m-t-xs font-body" data-ng-show="fileStore.maxSizeError">You cannot upload a document with a file size of 0KB.</p>
                         </div>
                         <div class="col-md-6 col-xl-3 text-right">
-                            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData)" data-ng-disabled="supportForm.$invalid">Request support</button>
+                            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData)" data-ng-disabled="supportForm.$invalid">
+                                <span data-ng-show="$ctrl.submittingRequest">                                
+                                    <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
+                                </span>
+                                Request support
+                            </button>
                         </div>
                     </div>                    
             	</form>

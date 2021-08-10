@@ -1,3 +1,36 @@
+function validFileSize($parse){
+
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function(scope, el, attrs, ngModel) {
+
+            var model = $parse(attrs.ngModel);
+            var modelSetter = model.assign;
+            var maxSize = 2000; //2000 B
+            el.bind('change', function() {
+                scope.$apply(function() {
+                    scope.fileStore.maxSizeError = false;
+                    if (el[0].files.length > 1) {
+                        modelSetter(scope, el[0].files);
+                    } else {
+                        modelSetter(scope, el[0].files[0]);
+                    }
+
+                    if(el[0].files.length > 0) {
+                        var fileSize = el[0].files[0].size;
+                        if (fileSize === 0) {
+                           scope.fileStore.maxSizeError = true;
+                        }
+                    }
+                    
+                });
+            });
+        }
+
+    }
+}
+
 function validateNumbers(){
 
     var regExp = /^[0-9]*$/;
@@ -322,4 +355,5 @@ export default angular.module('directives.validation-rules', [])
     .directive('validateCompanyName', validateCompanyName)
     .directive('uiSelectRequired', uiSelectRequired)
     .directive('validateTextField', validateTextField)
+    .directive('validFileSize', validFileSize)
     .name;
