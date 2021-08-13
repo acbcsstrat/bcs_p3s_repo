@@ -12,14 +12,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.subcategory = [];
 	vm.checkSubcategories = checkSubcategories;
 	vm.submitForm = submitForm;
-	vm.submittingRequest = false;
-
-	function init() {
-		
-	}
-
-	init();
-	
+	vm.submittingRequest = false;	
 
    	function checkDuplicate(file) {
    		return vm.files.some(function(e){
@@ -28,12 +21,15 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	}
 
     $scope.getFileDetails = function (e) {
-
+    	
     	var timeout;
+        var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];    	
 
-        $scope.$apply(function () {
+        // $scope.$apply(function () {
             // STORE THE FILE OBJECT IN AN ARRAY.
             for (var i = 0; i < e.files.length; i++) {
+            	var ext = e.files[i].name.substr(e.files[i].name.lastIndexOf('.')+1);
+ 
 			   	if(checkDuplicate(e.files[i])) {
 			        var modalInstance = $uibModal.open({
 			            template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
@@ -47,14 +43,13 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			            }]
 			        });
 			   	} else {
-			   		if(e.files[i].size > 0) {
+			   		if(e.files[i].size > 0 && validFormats.includes(ext)) {
 			   			vm.files.push(e.files[i])
-			   			e.value = null; //required to reset file input so the same file can be uploaded either twice, or in case they remove it and want to re-upload it
 			   		}
 		   			
 			   	}
             }
-        });
+        // });
     };
 
 
