@@ -12,10 +12,10 @@
                     <div class="form-group row">
                 		<div class="col-md-8 col-xl-7">
                 			<label for="subject" class="font-h4 font-weight-bold m-b-xs">Subject</label>
-                			<input type="text" name="subject" id="subject" class="form-control" data-ng-model="$ctrl.formData.subject" data-ng-maxlength="50" validate-text-field required>
+                			<input type="text" name="subject" id="subject" class="form-control" data-ng-model="$ctrl.formData.subject" data-ng-maxlength="150" validate-text-field required>
                             <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.required && supportForm.subject.$dirty">Please fill out this field</p>
                             <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.validTextField">Special characters: []\<\>"%;&+\/* are not permitted.</p>
-                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.maxlength && supportForm.subject.$dirty">Subject field has a maximum limit of 50 characters</p>                            
+                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.maxlength && supportForm.subject.$dirty">Subject field has a maximum limit of 150 characters</p>                            
                 		</div>
                     </div>
                     <div class="form-group row">
@@ -68,14 +68,14 @@
                         <div class="col-md-12 col-xl-7m-b-sm">
                             <p class="txt-phase-red font-body" data-ng-show="fileStore.maxSizeError">You cannot upload a document with a file size of 0KB.</p>
                             <div ng-messages="supportForm.uploadedDocs.$error" data-ng-if="supportForm.uploadedDocs.$error.validfile">
-                                <p class="txt-phase-red m-t-xs" ng-message="validfile">Invalid file format uploaded. Only the following file formats are permitted (not case sensitive): .pdf, .docx, .png, .jpg, .jpeg, .pptx, .csv, .xlsx, .zip</p> 
+                                <p class="txt-phase-red m-t-xs" ng-message="validfile">Invalid file format uploaded. Only the following file formats are permitted (not case sensitive): .pdf, .docx, .png, .gif, .jpg, .jpeg, .pptx, .csv, .xlsx, .zip</p> 
                             </div>   
                         </div>              
                     </div>
                     <div class="form-group row m-t-md">
                        
                         <div class="col-md-6 col-xl-4 text-left">
-                            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="fileStore.file" support-file-upload onchange="angular.element(this).scope().getFileDetails(this)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
+                            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="fileStore.file" support-file-upload onchange="angular.element(this).scope().getFileDetails(this)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
                             <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
                          
                         </div>
