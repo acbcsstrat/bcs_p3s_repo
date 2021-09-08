@@ -76,7 +76,59 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <form name="register" id="registerForm" class="form" data-parsley-validate="">
+<<<<<<< HEAD
                                 <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+                                <div class="form-section current m-b-sm">
+=======
+<<<<<<< HEAD
+<!--                                 <div class="form-section current m-b-sm">
+=======
+                                <div class="form-section current m-b-sm">
+>>>>>>> master-merge
+>>>>>>> fe-branch-registration
+>>>>>>> fe-branch-registration
+=======
+                                <div class="form-section current m-b-sm">
+>>>>>>> master
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.7
                                     <div class="form-group row">
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <input name="emailAddress" class="form-control pill-radius font-body" id="emailAddress" placeholder="Email" data-parsley-validate-email="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
@@ -112,8 +164,73 @@
                                             <input type="password" name="confirm_password" class="form-control pill-radius font-body" id="confirm_password" placeholder="Confirm Password" data-parsley-equalto-message="Your passwords don't match.  Please re-enter." data-parsley-equalto="#password" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true" autocomplete="off">
                                         </div>
                                     </div>
+<<<<<<< HEAD
                                 </div>                                                  
                                 <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+=======
+<<<<<<< HEAD
+                                </div>  -->                                                 
+<!--                                 <div class="form-section m-b-md" id="businessDetails"> 
+=======
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+>>>>>>> master-merge
+>>>>>>> fe-branch-registration
+>>>>>>> fe-branch-registration
+=======
+                                </div>                                                  
+                                <div class="form-section m-b-md" id="businessDetails"> <!--business details-->
+>>>>>>> master
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.7
                                     <div class="form-group row">
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <input type="text" name="businessName" class="form-control pill-radius font-body" id="businessName" placeholder="Business Name" data-parsley-validate-company-name="" data-parsley-required-message="Please ensure this field has been completed." data-parsley-required="true">
@@ -151,7 +268,59 @@
                                             </div>
                                         </div>
                                     </div>
+<<<<<<< HEAD
                                 </div>
+=======
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+                                </div>
+=======
+<<<<<<< HEAD
+                                </div> -->
+=======
+                                </div>
+>>>>>>> master-merge
+>>>>>>> fe-branch-registration
+>>>>>>> fe-branch-registration
+=======
+                                </div>
+>>>>>>> master
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-grant
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.5
+>>>>>>> fe-branch-v4.7
                                 <div class="form-section">
                                     <div id="sameAsBusiness" class="row m-b-md">
                                         <div class="col-md-12 col-lg-12 col-xl-12">

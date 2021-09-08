@@ -1,0 +1,272 @@
+@import '../../helpers/_variables.scss';
+
+.side-menu, .side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  display: inline-block;
+}
+
+.side-menu .md-button.active, 
+.side-menu .md-button.active:hover, 
+.side-menu .md-button:hover {
+  color: #fff; /* deep-orange 500 */
+  background: $green-interface;
+}
+
+.side-menu .menu-toggle-list a.md-button {
+  display: block;
+  padding: 10px 30px 10px 50px;
+  text-transform: capitalize!important;
+  text-rendering: optimizeLegibility;
+  // min-height: 5.5rem;
+}
+
+.side-menu .menu-toggle-list .md-button {
+  min-height: auto;
+  line-height: 0;
+  display: block;
+  padding: 10px 30px;
+  text-transform: capitalize!important;
+}
+
+.md-button {
+    text-transform: capitalize!important;
+}
+
+.md-button-toggle .md-toggle-icon.toggled {
+  transform: rotateX(180deg);
+  -webkit-transform: rotateX(180deg);
+}
+
+.md-button-toggle.toggled {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.side-menu .md-button-toggle .md-toggle-icon {
+  margin: auto 0 auto auto;
+  width: 15px;
+  float: right;
+  transition: transform .3s ease-in-out;
+  -webkit-transition: -webkit-transform .3s ease-in-out;
+}
+
+.menu-toggle-list.ng-hide {
+  max-height: 0;
+}
+
+.side-menu .md-button {
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  margin: 0;
+  overflow: hidden;
+  padding: 10px 30px;
+  text-align: left;
+  text-decoration: none;
+  white-space: normal;
+  width: 100%;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.menu-toggle-list {
+    max-height: 1300px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    border-right: 4px solid $green-interface;
+    -webkit-transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
+    -webkit-transition-property: max-height;
+    -moz-transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
+    -moz-transition-property: max-height;
+    transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
+    transition-property: max-height;
+}
+
+.side-menu menu-toggle span, .side-menu menu-link span{
+    font-family: 'Muli', sans-serif, arial, helvetica;
+}
+
+.md-panel.md-tooltip {
+    background: $grey-dark;
+    font-size: 11px;
+    color: rgba(255,255,255,1);
+    font-family: 'Muli', sans-serif, arial, helvetica;
+    padding: 10px;
+    height: auto;
+    border-radius: 5px;
+    background: $grey-dark;
+    overflow: visible;
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.2);
+    &.tooltip-image {
+        width: 50rem;
+    }
+    .tooltip-content-container {
+        width: 100%;
+        .tooltip-content-container__image {
+            max-width: 100%;
+        }
+    }
+    &.md-show {
+        opacity: 1
+    }
+}
+
+.tooltip-inner {
+    max-width: 40rem;
+    white-space: normal;
+    background: $grey-dark;
+}
+
+md-tooltip[md-direction="right"].md-tooltip:after {
+    position: absolute;
+    content: " ";
+    top: 50%;
+    left: 0%;
+    margin-left: -7px;
+    margin-top: -11px;
+    width: 0;
+    height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 11px solid $grey-dark;
+}
+
+@media (min-width: 960px) {
+    .md-tooltip {
+        height: auto;
+    }
+
+}
+
+.md-open-menu-container {
+    z-index: 1042;
+}
+
+.md-button.md-default-theme:not([disabled]).md-icon-button:hover, .md-button:not([disabled]).md-icon-button:hover {
+    background-color: transparent;
+}
+
+md-menu-item {
+    .md-button.font-body {
+        font-size: 1.2rem;
+    }
+}
+
+md-sidenav {
+    overflow: visible;
+    z-index: 1039!important;
+}
+
+.md-chips md-chip {
+    background: $grey;
+    border-radius: 1px solid $grey-dark;
+    box-shadow: none;
+    font-family: $font-body!important;
+    font-size: $font-h4;
+}
+
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+    box-shadow: none!important;
+}
+
+md-tooltip.mdtooltip-md {
+    height: auto;
+    width: 40rem;
+    white-space: normal;
+}
+
+md-tooltip.mdtooltio-sm {
+    width: 22rem;
+    white-space: normal;
+}
+
+md-tooltip[md-direction="top"].md-tooltip {
+
+  &.help-button:after {
+      position: absolute;
+      content: " ";
+      bottom: -20px;
+      left: 84%;
+      margin-left: -24px;
+      margin-top: -11px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid #1b2032;
+      border-bottom: 11px solid transparent;
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;   
+  }  
+
+
+    &:after {
+        position: absolute;
+        content: " ";
+        bottom: -20px;
+        left: 50%;
+        margin-left: -24px;
+        margin-top: -11px;
+        width: 0;
+        height: 0;
+        border-top: 10px solid #1b2032;
+        border-bottom: 11px solid transparent;
+        border-left: 11px solid transparent;
+        border-right: 11px solid transparent;
+    }
+
+
+}
+
+md-tooltip[md-direction="left"].md-tooltip {
+    &:after {
+        position: absolute;
+        content: " ";
+        right: -11px;
+        top: 50%;
+        width: 0;
+        margin-top: -10px;
+        height: 0;
+        border-top: 11px solid transparent;
+        border-bottom: 11px solid transparent;
+        border-left: 11px solid #1b2032;
+        // border-right: 10px solid transparent;  
+    }
+}
+
+.mdtooltip-close {
+    position: absolute;
+    right: 5px;
+    top: 4px;
+}
+
+button[pp-tooltip] {
+
+    &.top {top:0;}
+    &.bottom {bottom:0;}
+    &.left {left:0;}
+    &.right {right:0;} 
+
+}
+
+.pptooltip {
+    position: relative; /* for arrow positioning */
+    background: #ffffcb;
+    border: 1px solid #c0c09a;
+    color: #666666;
+    border-radius: 1px;
+    font-family: 'HelveticaNeue','Helvetica',sans-serif;
+    font-size: 1em;
+    line-height: 1.3;
+    padding: 0.3em 0.5em;
+    z-index: 5;
+    &.white {
+        background: #fff;
+        border: none;
+        border-radius: .5em;
+        box-shadow: .1em .1em .6em #bbb;
+    }    
+   
+}
