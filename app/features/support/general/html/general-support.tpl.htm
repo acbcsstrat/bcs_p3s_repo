@@ -8,88 +8,107 @@
                         <p>Our professional team are always here to help with your enquiries, whether they are IP-related or technical. Use the form below to provide as much information as you can to ensure that we direct your enquiry to the appropriate team.</p>
                     </div>
                 </div>
-            	<form name="supportForm" novalidate>
-                    <div class="form-group row">
-                		<div class="col-md-8 col-xl-7">
-                			<label for="subject" class="font-h4 font-weight-bold m-b-xs">Subject</label>
-                			<input type="text" name="subject" id="subject" class="form-control" data-ng-model="$ctrl.formData.subject" data-ng-maxlength="150" validate-text-field required>
-                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.required && supportForm.subject.$dirty">Please fill out this field</p>
-                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.validTextField">Special characters: []\<\>"%;&+\/* are not permitted.</p>
-                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.maxlength && supportForm.subject.$dirty">Subject field has a maximum limit of 150 characters</p>                            
-                		</div>
+                <div class="row">
+                    <div class="col-md-8 col-xl-7">
+                        <p class="font-body">Is your enquiry in relation to specific case(s)?</p>
+                        <label for="specificCase">
+                            Yes
+                            <input type="checkbox" name="specificCase" data-ng-click="specificCase.no = false; specificCase.unsure = false;" data-ng-model="specificCase.yes" data-ng-change="$ctrl.specificCaseCheck('yes', specificCase.yes)"> <!--ng-required if caseCheck == 'yes'-->
+                        </label>
+                        <label for="notSpecificCase">
+                            No
+                            <input type="checkbox" name="notSpecificCase" data-ng-click="specificCase.yes = false; specificCase.unsure = false;" data-ng-model="specificCase.no" data-ng-change="$ctrl.specificCaseCheck('no', specificCase.no)">
+                        </label>
+                        <label for="unsureSpecificCase">
+                            Unsure
+                            <input type="checkbox" name="unsureSpecificCase" data-ng-click="specificCase.yes = false; specificCase.no = false;" data-ng-model="specificCase.unsure" data-ng-change="$ctrl.specificCaseCheck('unsure', specificCase.unsure)">
+                        </label>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-8 col-xl-7">
-                            <label for="category" class="font-h4 font-weight-bold m-b-xs">Category</label>
-                            <select name="category" class="form-control font-body pill-radius"
-                                data-ng-model="$ctrl.formData.category"
-                                data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}" data-ng-change="$ctrl.checkSubcategories($ctrl.formData.category)"
-                                required>
-                                <option value="" disabled selected>--Please select--</option>
-                                <option data-ng-repeat="item in $ctrl.categories" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
-                            </select>
+                </div>
+                <div data-ng-if="!$ctrl.caseSpecific && $ctrl.optionSelected">
+                	<form name="supportForm" novalidate>
+                        <div class="form-group row">
+                    		<div class="col-md-8 col-xl-7">
+                    			<label for="subject" class="font-h4 font-weight-bold m-b-xs">Subject</label>
+                    			<input type="text" name="subject" id="subject" class="form-control" data-ng-model="$ctrl.formData.subject" data-ng-maxlength="150" validate-text-field required>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.required && supportForm.subject.$dirty">Please fill out this field</p>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.validTextField">Special characters: []\<\>"%;&+\/* are not permitted.</p>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.maxlength && supportForm.subject.$dirty">Subject field has a maximum limit of 150 characters</p>                            
+                    		</div>
                         </div>
-                    </div>
-                    <div class="form-group row" data-ng-show="$ctrl.subCategoryRequired">
-                        <div class="col-md-8 col-xl-7">
-                            <label for="subcategory" class="font-h4 font-weight-bold m-b-xs">Sub-category</label>
-                            <select name="subcategory" class="form-control font-body pill-radius"
-                                data-ng-model="$ctrl.formData.subcategory"
-                                data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}"
-                                data-ng-required="$ctrl.subCategoryRequired">
-                                <option value="" disabled selected>--Please select--</option>
-                                <option data-ng-repeat="item in $ctrl.subcategory" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
-                             </select>
-                        </div>   
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-8 col-xl-7">                        
-                            <label for="message" class="font-h4 font-weight-bold m-b-xs">Message</label>
-                            <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message" maxlength="1500" validate-text-field required></textarea>
-                            <p class="form-help font-body m-t-xs">{{!$ctrl.formData.message.length ? 0 : $ctrl.formData.message.length}} / 1500 Characters</p>                        
-                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.required && supportForm.message.$dirty">Please fill out this field</p>
-                            <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.validTextField && supportForm.message.$dirty">Special characters: &lsqb;&rsqb;&lt;&gt;&quot;&percnt;&semi;&amp;&plus;&bsol;&sol;&ast; are not permitted.</p>                            
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-8">
-                            <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
-                            <p class="font-body">If you have any documents that will help our team with your enquiry, please upload them here.</p>
-                            <div data-ng-if="$ctrl.files.length > 0" class="m-t-xs">                            
-                                <p class="font-body m-b-xs">Files uploaded:</p>
-                                <div data-ng-repeat="file in $ctrl.files" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm">
-                                    <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
-                                    <span data-ng-click="$ctrl.files.splice($index,1)"><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
-                                </div>
+                        <div class="form-group row">
+                            <div class="col-md-8 col-xl-7">
+                                <label for="category" class="font-h4 font-weight-bold m-b-xs">Category</label>
+                                <select name="category" class="form-control font-body pill-radius"
+                                    data-ng-model="$ctrl.formData.category"
+                                    data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}" data-ng-change="$ctrl.checkSubcategories($ctrl.formData.category)"
+                                    required>
+                                    <option value="" disabled selected>--Please select--</option>
+                                    <option data-ng-repeat="item in $ctrl.categories" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
+                                </select>
                             </div>
                         </div>
-                    </div> 
-                    <div class="form-group row"  data-ng-if="fileStore.maxSizeError || supportForm.uploadedDocs.$error.validfile">
-                        <div class="col-md-12 col-xl-7m-b-sm">
-                            <p class="txt-phase-red font-body" data-ng-show="fileStore.maxSizeError">You cannot upload a document with a file size of 0KB.</p>
-                            <div ng-messages="supportForm.uploadedDocs.$error" data-ng-if="supportForm.uploadedDocs.$error.validfile">
-                                <p class="txt-phase-red m-t-xs" ng-message="validfile">Invalid file format uploaded. Only the following file formats are permitted (not case sensitive): .pdf, .docx, .png, .gif, .jpg, .jpeg, .pptx, .csv, .xlsx, .zip</p> 
+                        <div class="form-group row" data-ng-show="$ctrl.subCategoryRequired">
+                            <div class="col-md-8 col-xl-7">
+                                <label for="subcategory" class="font-h4 font-weight-bold m-b-xs">Sub-category</label>
+                                <select name="subcategory" class="form-control font-body pill-radius"
+                                    data-ng-model="$ctrl.formData.subcategory"
+                                    data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}"
+                                    data-ng-required="$ctrl.subCategoryRequired">
+                                    <option value="" disabled selected>--Please select--</option>
+                                    <option data-ng-repeat="item in $ctrl.subcategory" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
+                                 </select>
                             </div>   
-                        </div>              
-                    </div>
-                    <div class="form-group row m-t-md">
-                       
-                        <div class="col-md-6 col-xl-4 text-left">
-                            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="fileStore.file" support-file-upload onchange="angular.element(this).scope().getFileDetails(this)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
-                            <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
-                         
                         </div>
-                        <div class="col-md-6 col-xl-3 text-right">
-                            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData)" data-ng-disabled="supportForm.$invalid">
-                                <span data-ng-show="$ctrl.submittingRequest">                                
-                                    <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
-                                </span>
-                                Request support
-                            </button>
+                        <div class="form-group row">
+                            <div class="col-md-8 col-xl-7">                        
+                                <label for="message" class="font-h4 font-weight-bold m-b-xs">Message</label>
+                                <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message" maxlength="1500" validate-text-field required></textarea>
+                                <p class="form-help font-body m-t-xs">{{!$ctrl.formData.message.length ? 0 : $ctrl.formData.message.length}} / 1500 Characters</p>                        
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.required && supportForm.message.$dirty">Please fill out this field</p>
+                                <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.validTextField && supportForm.message.$dirty">Special characters: &lsqb;&rsqb;&lt;&gt;&quot;&percnt;&semi;&amp;&plus;&bsol;&sol;&ast; are not permitted.</p>                            
+                            </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-md-8">
+                                <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
+                                <p class="font-body">If you have any documents that will help our team with your enquiry, please upload them here.</p>
+                                <div data-ng-if="$ctrl.files.length > 0" class="m-t-xs">                            
+                                    <p class="font-body m-b-xs">Files uploaded:</p>
+                                    <div data-ng-repeat="file in $ctrl.files" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm">
+                                        <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
+                                        <span data-ng-click="$ctrl.files.splice($index,1)"><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="form-group row"  data-ng-if="fileStore.maxSizeError || supportForm.uploadedDocs.$error.validfile">
+                            <div class="col-md-12 col-xl-7m-b-sm">
+                                <p class="txt-phase-red font-body" data-ng-show="fileStore.maxSizeError">You cannot upload a document with a file size of 0KB.</p>
+                                <div ng-messages="supportForm.uploadedDocs.$error" data-ng-if="supportForm.uploadedDocs.$error.validfile">
+                                    <p class="txt-phase-red m-t-xs" ng-message="validfile">Invalid file format uploaded. Only the following file formats are permitted (not case sensitive): .pdf, .docx, .png, .gif, .jpg, .jpeg, .pptx, .csv, .xlsx, .zip</p> 
+                                </div>   
+                            </div>              
+                        </div>
+                        <div class="form-group row m-t-md">
+                           
+                            <div class="col-md-6 col-xl-4 text-left">
+                                <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="fileStore.file" support-file-upload onchange="angular.element(this).scope().getFileDetails(this)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
+                                <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
+                             
+                            </div>
+                            <div class="col-md-6 col-xl-3 text-right">
+                                <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData)" data-ng-disabled="supportForm.$invalid">
+                                    <span data-ng-show="$ctrl.submittingRequest">                                
+                                        <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
+                                    </span>
+                                    Request support
+                                </button>
+                            </div>
 
-                    </div>                    
-            	</form>
+                        </div>                    
+                	</form>
+                </div>
             </div>
         </div>
     </div>

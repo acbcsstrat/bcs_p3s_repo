@@ -12,7 +12,15 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.subcategory = [];
 	vm.checkSubcategories = checkSubcategories;
 	vm.submitForm = submitForm;
-	vm.submittingRequest = false;	
+	vm.submittingRequest = false;
+	vm.specificCaseCheck = specificCaseCheck;
+	vm.optionSelected = false;
+	vm.caseSpecific = false;
+
+	function specificCaseCheck(value, boolean) {
+		vm.optionSelected = !boolean ? false : true;
+		vm.caseSpecific = value == 'yes' && boolean ? true : false;
+	}
 
    	function checkDuplicate(file) {
    		return vm.files.some(function(e){
