@@ -232,7 +232,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		var formData = new FormData();
 		var config = { headers: {'Content-Type': undefined} };
 		formData.append('category', data.category);
-		formData.append('patentEnquiries', JSON.stringify(vm.caseSpecificCases));
+		formData.append('patentEnquiries', vm.caseSpecificCases);
 
 
 		var value = Object.fromEntries(formData.entries());
