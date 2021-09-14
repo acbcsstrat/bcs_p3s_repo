@@ -105,6 +105,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	//https://stackoverflow.com/questions/34485420/how-do-you-put-an-image-file-in-a-json-object
 	//https://www.learnwithjason.dev/blog/get-form-values-as-json
 	//https://stackoverflow.com/questions/27232604/json-stringify-or-how-to-serialize-binary-data-as-base64-encoded-json
+	//https://careerkarma.com/blog/javascript-object-object/
 
 
 
@@ -214,7 +215,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		uploadedDocs: caseFiles
 	            	}
 
-                	vm.caseSpecificCases.push(obj)	
+                	vm.caseSpecificCases.push(obj);	
 
 					$uibModalInstance.close();
 
@@ -232,7 +233,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		var formData = new FormData();
 		var config = { headers: {'Content-Type': undefined} };
 		formData.append('category', data.category);
-		formData.append('patentEnquiries', vm.caseSpecificCases);
+		// formData.append('test', JSON.stringify([{test: '1'}, {test: '2'}, {test: '3'}]))
+		formData.append('patentEnquiries', JSON.stringify(vm.caseSpecificCases));
 
 
 		var value = Object.fromEntries(formData.entries());
