@@ -93,11 +93,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	function checkSpecificType(data) {
 		vm.assistedFiling = data == 'Assisted Formality Filing' ? true : false
-		// if(data == 'Assisted Formality Filing') {
-		// 	vm.assistedFiling = true;
-		// } else {
-
-		// }
+		vm.categorySelected = true;
 	}
 
 	//FOR CASE SPECIFIC https://stackoverflow.com/questions/6664967/how-to-give-a-blob-uploaded-as-formdata-a-file-name

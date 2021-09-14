@@ -39,93 +39,93 @@
                                     <option data-ng-repeat="item in $ctrl.specificCategories" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
                                 </select>
                             </div>
-                        </div>   
-                        <div class="row" data-ng-if="$ctrl.assistedFiling">
-                            <div class="col-md-6 col-xl-5">
-                                <table class="t-data sticky-table"  style="table-layout: fixed;width: 100%;">
-                                    <thead class="sticky-thead">
-                                        <tr class="t-data__row t-data__row--select">
-                                            <th class="t-data__th t-data__th--sm sticky-th" data-ng-click="$ctrl.sortBy('epApplicationNumber');">
-                                                <span>App No.</span>
-                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && !$ctrl.reverse">
-                                                    <i class="fas fa-angle-down fa-lg"></i>
-                                                </span>
-                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && $ctrl.reverse">
-                                                    <i class="fas fa-angle-up fa-lg"></i>
-                                                </span>
-                                            </th>
-                                            <th class="t-data__th t-data__th--sm sticky-th" data-ng-click="$ctrl.sortBy('epApplicationNumber');">
-                                                <span>Formality Type</span>
-                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && !$ctrl.reverse">
-                                                    <i class="fas fa-angle-down fa-lg"></i>
-                                                </span>
-                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && $ctrl.reverse">
-                                                    <i class="fas fa-angle-up fa-lg"></i>
-                                                </span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="sticky-tbody">
-                                        <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select">
-                                            <td class="t-data__td t-data__td--sm sticky-td">
-                                                <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
-                                            </td>
-                                            <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="patent.formalityAvailable">
-                                            </td>
-                                            <td class="t-data__td t-data__td--sm sticky-td">
-                                                <button class="btn btn--green" data-ng-click="$ctrl.formalitySelect(patent)">Add</button>
-                                            </td>                                            
-                                        </tr>
-                                    </tbody>  
-                                </table>                                                                          
-                            </div>
-                            <div class="col-xl-7">
-                                <table class="t-data sticky-table" style="table-layout: fixed;width: 100%;">
-                                    <thead class="sticky-thead">
-                                        <tr class="t-data__row t-data__row--select">
-                                            <th class="t-data__th t-data__th--sm sticky-th">
-                                                App No.
-                                            </th>
-                                            <th class="t-data__th t-data__th--sm sticky-th">
-                                                Message
-                                            </th>
-                                            <th class="t-data__th t-data__th--sm sticky-th">
-                                                Files
-                                            </th>
-                                            <th class="t-data__th t-data__th--sm sticky-th">
-                                                Indicative cost
-                                            </th>
-                                            <th class="t-data__th t-data__th--sm sticky-th">
-                                            </th>
-                                            <th class="t-data__th t-data__th--sm sticky-th">
-                                            </th>                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody class="sticky-tbody">
-                                        <tr data-ng-repeat="case in $ctrl.caseSpecificCases">
-                                            <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.epApplicationNumber">
-                                            </td>
-                                            <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.message">
-                                            </td>
-                                            <td class="t-data__td t-data__td--sm sticky-td">
-                                                <span data-ng-repeat="file in case.uploadedDocs">{{file.name}}</span>
-                                            </td>                                                                        
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
-                        <div class="row">
-                            
-                            <div class="col-md-6 col-xl-3 text-right">
-                                <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.caseFormData, true)" data-ng-disabled="supportForm.$invalid">
-                                    <span data-ng-show="$ctrl.submittingRequest">                                
-                                        <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
-                                    </span>
-                                    Request support
-                                </button>
+                        <div data-ng-if="$ctrl.categorySelected">
+                            <div class="row" >
+                                <div class="col-md-6 col-xl-5">
+                                    <p data-ng-if="$ctrl.assistedFiling">Select below any cases you wish to request assisted formality filing for. Upon selection you will have the option to provide a message and, if required, any supporting documents.</p>
+                                    <p data-ng-if="!$ctrl.assistedFiling">Select below any cases you wish to include in your enquiry. Upon selection you will be prompted to provide a message and, if required, any supporting documents.</p>
+                                    <table class="t-data sticky-table" style="table-layout: fixed;width: 100%;">
+                                        <thead class="sticky-thead">
+                                            <tr class="t-data__row t-data__row--select">
+                                                <th class="t-data__th t-data__th--sm sticky-th" data-ng-click="$ctrl.sortBy('epApplicationNumber');">
+                                                    <span>App No.</span>
+                                                    <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && !$ctrl.reverse">
+                                                        <i class="fas fa-angle-down fa-lg"></i>
+                                                    </span>
+                                                    <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && $ctrl.reverse">
+                                                        <i class="fas fa-angle-up fa-lg"></i>
+                                                    </span>
+                                                </th>
+                                                <th class="t-data__th t-data__th--sm sticky-th">
+                                                    Formality Type
+                                                </th>                                            
+                                                <th class="t-data__th t-data__th--sm sticky-th">
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="sticky-tbody">
+                                            <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select">
+                                                <td class="t-data__td t-data__td--sm sticky-td">
+                                                    <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
+                                                </td>
+                                                <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="patent.formalityAvailable">
+                                                </td>
+                                                <td class="t-data__td t-data__td--sm sticky-td">
+                                                    <button class="btn btn--green" data-ng-click="$ctrl.formalitySelect(patent)">Add</button>
+                                                </td>                                            
+                                            </tr>
+                                        </tbody>  
+                                    </table>                                                                          
+                                </div>
+                                <div class="col-xl-7">
+                                    <table class="t-data sticky-table" style="table-layout: fixed;width: 100%;">
+                                        <thead class="sticky-thead">
+                                            <tr class="t-data__row t-data__row--select">
+                                                <th class="t-data__th t-data__th--sm sticky-th">
+                                                    App No.
+                                                </th>
+                                                <th class="t-data__th t-data__th--sm sticky-th">
+                                                    Message
+                                                </th>
+                                                <th class="t-data__th t-data__th--sm sticky-th">
+                                                    Files
+                                                </th>
+                                                <th class="t-data__th t-data__th--sm sticky-th">
+                                                    Indicative cost
+                                                </th>
+                                                <th class="t-data__th t-data__th--sm sticky-th">
+                                                </th>
+                                                <th class="t-data__th t-data__th--sm sticky-th">
+                                                </th>                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody class="sticky-tbody">
+                                            <tr data-ng-repeat="case in $ctrl.caseSpecificCases">
+                                                <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.epApplicationNumber">
+                                                </td>
+                                                <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.message">
+                                                </td>
+                                                <td class="t-data__td t-data__td--sm sticky-td">
+                                                    <span data-ng-repeat="file in case.uploadedDocs">{{file.name}}</span>
+                                                </td>                                                                        
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
+                            <div class="row">
+                                
+                                <div class="col-md-6 col-xl-3 text-right">
+                                    <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.caseFormData, true)" data-ng-disabled="supportForm.$invalid">
+                                        <span data-ng-show="$ctrl.submittingRequest">                                
+                                            <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
+                                        </span>
+                                        Request support
+                                    </button>
+                                </div>
+                            </div>
+                        </div> 
                     </form>
                 </div>
 
