@@ -92,9 +92,12 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	}
 
 	function checkSpecificType(data) {
-		if(data == 'Assisted Formality Filing') {
-			vm.assistedFiling = true;
-		}
+		vm.assistedFiling = data == 'Assisted Formality Filing' ? true : false
+		// if(data == 'Assisted Formality Filing') {
+		// 	vm.assistedFiling = true;
+		// } else {
+
+		// }
 	}
 
 	//FOR CASE SPECIFIC https://stackoverflow.com/questions/6664967/how-to-give-a-blob-uploaded-as-formdata-a-file-name
@@ -202,12 +205,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 
 
-                this.add = function(data) {
-	
-
-                	var imagesb64 = []
-
-	
+                this.add = function(data) {	
 
 	            	var obj = {
 	            		patentID: selectedPatent.patentID,
@@ -220,7 +218,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		uploadedDocs: caseFiles
 	            	}
 
-                	vm.caseSpecificCases.push(JSON.stringify(obj))	
+                	vm.caseSpecificCases.push(obj)	
 
 					$uibModalInstance.close();
 
@@ -251,7 +249,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		}		
 
 		if(caseSpecific) {
-			SupportService.requestSpecificSupport(formData)
+			SupportService.requestSpecificSupport(formData, config)
 			.then(
 				function(response){
 
