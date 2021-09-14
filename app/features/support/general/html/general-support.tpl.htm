@@ -1,9 +1,9 @@
 <div class="content-panel m-b-md">
     <div class="row">
-        <div class="col-md-8 col-xl-8 d-flex">
+        <div class="col-md-12 col-xl-12 d-flex">
             <div class="content-panel__body bg-white flex-grow-1">
                 <div class="row m-b-md">
-                    <div class="col-md-8 col-xl-7">                
+                    <div class="col-md-6 col-xl-6">                
                         <p class="font-h1 m-b-md">Support form</p>
                         <p>Our professional team are always here to help with your enquiries, whether they are IP-related or technical. Use the form below to provide as much information as you can to ensure that we direct your enquiry to the appropriate team.</p>
                     </div>
@@ -25,10 +25,128 @@
                         </label>
                     </div>
                 </div>
+
+                <div data-ng-if="$ctrl.caseSpecific && $ctrl.optionSelected">
+                    <form name="specificSupportForm" novalidate>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-xl-5">
+                                <label for="category" class="font-h4 font-weight-bold m-b-xs">Category</label>
+                                <select name="category" class="form-control font-body pill-radius"
+                                    data-ng-model="$ctrl.caseFormData.category"
+                                    data-ng-change="$ctrl.checkSpecificType($ctrl.caseFormData.category)"
+                                    required>
+                                    <option value="" disabled selected>--Please select--</option>
+                                    <option data-ng-repeat="item in $ctrl.specificCategories" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
+                                </select>
+                            </div>
+                        </div>   
+                        <div class="row" data-ng-if="$ctrl.assistedFiling">
+                            <div class="col-md-6 col-xl-5">
+                                <table class="t-data sticky-table"  style="table-layout: fixed;width: 100%;">
+                                    <thead class="sticky-thead">
+                                        <tr class="t-data__row t-data__row--select">
+                                            <th class="t-data__th t-data__th--sm sticky-th" data-ng-click="$ctrl.sortBy('epApplicationNumber');">
+                                                <span>App No.</span>
+                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && !$ctrl.reverse">
+                                                    <i class="fas fa-angle-down fa-lg"></i>
+                                                </span>
+                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && $ctrl.reverse">
+                                                    <i class="fas fa-angle-up fa-lg"></i>
+                                                </span>
+                                            </th>
+                                            <th class="t-data__th t-data__th--sm sticky-th" data-ng-click="$ctrl.sortBy('epApplicationNumber');">
+                                                <span>Formality Type</span>
+                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && !$ctrl.reverse">
+                                                    <i class="fas fa-angle-down fa-lg"></i>
+                                                </span>
+                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && $ctrl.reverse">
+                                                    <i class="fas fa-angle-up fa-lg"></i>
+                                                </span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="sticky-tbody">
+                                        <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select">
+                                            <td class="t-data__td t-data__td--sm sticky-td">
+                                                <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
+                                            </td>
+                                            <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="patent.formalityAvailable">
+                                            </td>
+                                            <td class="t-data__td t-data__td--sm sticky-td">
+                                                <button class="btn btn--green" data-ng-click="$ctrl.formalitySelect(patent)">Add</button>
+                                            </td>                                            
+                                        </tr>
+                                    </tbody>  
+                                </table>                                                                          
+                            </div>
+                            <div class="col-xl-7">
+                                <table class="t-data sticky-table" style="table-layout: fixed;width: 100%;">
+                                    <thead class="sticky-thead">
+                                        <tr class="t-data__row t-data__row--select">
+                                            <th class="t-data__th t-data__th--sm sticky-th">
+                                                App No.
+                                            </th>
+                                            <th class="t-data__th t-data__th--sm sticky-th">
+                                                Message
+                                            </th>
+                                            <th class="t-data__th t-data__th--sm sticky-th">
+                                                Files
+                                            </th>
+                                            <th class="t-data__th t-data__th--sm sticky-th">
+                                                Indicative cost
+                                            </th>
+                                            <th class="t-data__th t-data__th--sm sticky-th">
+                                            </th>
+                                            <th class="t-data__th t-data__th--sm sticky-th">
+                                            </th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody class="sticky-tbody">
+                                        <tr data-ng-repeat="case in $ctrl.filesUploaded">
+                                            <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.epApplicationNumber">
+                                            </td>
+                                            <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.message">
+                                            </td>
+                                            <td class="t-data__td t-data__td--sm sticky-td">
+                                                <span data-ng-repeat="file in case.uploadedDocs">{{file.name}}</span>
+                                            </td>                                                                        
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-md-6 col-xl-3 text-right">
+                                <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.caseFormData, true)" data-ng-disabled="supportForm.$invalid">
+                                    <span data-ng-show="$ctrl.submittingRequest">                                
+                                        <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
+                                    </span>
+                                    Request support
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <div data-ng-if="!$ctrl.caseSpecific && $ctrl.optionSelected">
                 	<form name="supportForm" novalidate>
                         <div class="form-group row">
-                    		<div class="col-md-8 col-xl-7">
+                    		<div class="col-md-6 col-xl-6">
                     			<label for="subject" class="font-h4 font-weight-bold m-b-xs">Subject</label>
                     			<input type="text" name="subject" id="subject" class="form-control" data-ng-model="$ctrl.formData.subject" data-ng-maxlength="150" validate-text-field required>
                                 <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.required && supportForm.subject.$dirty">Please fill out this field</p>
@@ -41,7 +159,7 @@
                                 <label for="category" class="font-h4 font-weight-bold m-b-xs">Category</label>
                                 <select name="category" class="form-control font-body pill-radius"
                                     data-ng-model="$ctrl.formData.category"
-                                    data-ng-class="{'input-error': $ctrl.formValidation && upportForm.timezone.$error.required}" data-ng-change="$ctrl.checkSubcategories($ctrl.formData.category)"
+                                    data-ng-class="{'input-error': $ctrl.formValidation && supportForm.timezone.$error.required}" data-ng-change="$ctrl.checkSubcategories($ctrl.formData.category)"
                                     required>
                                     <option value="" disabled selected>--Please select--</option>
                                     <option data-ng-repeat="item in $ctrl.categories" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
@@ -63,7 +181,7 @@
                         <div class="form-group row">
                             <div class="col-md-8 col-xl-7">                        
                                 <label for="message" class="font-h4 font-weight-bold m-b-xs">Message</label>
-                                <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message" maxlength="1500" validate-text-field required></textarea>
+                                <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message" maxlength="5000" validate-text-field required></textarea>
                                 <p class="form-help font-body m-t-xs">{{!$ctrl.formData.message.length ? 0 : $ctrl.formData.message.length}} / 1500 Characters</p>                        
                                 <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.required && supportForm.message.$dirty">Please fill out this field</p>
                                 <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.validTextField && supportForm.message.$dirty">Special characters: &lsqb;&rsqb;&lt;&gt;&quot;&percnt;&semi;&amp;&plus;&bsol;&sol;&ast; are not permitted.</p>                            
@@ -98,7 +216,7 @@
                              
                             </div>
                             <div class="col-md-6 col-xl-3 text-right">
-                                <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData)" data-ng-disabled="supportForm.$invalid">
+                                <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.formData, false)" data-ng-disabled="supportForm.$invalid">
                                     <span data-ng-show="$ctrl.submittingRequest">                                
                                         <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
                                     </span>
