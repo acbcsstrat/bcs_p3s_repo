@@ -27,11 +27,42 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		vm.caseSpecific = value == 'yes' && boolean ? true : false;
 	}
 
-   	function checkDuplicate(file) {
-   		return vm.files.some(function(e){
-   			return e.name == file.name;
-   		})
+	function checkSpecificType(data) {
+		vm.assistedFiling = data == 'Assisted Formality Filing' ? true : false
+		vm.categorySelected = true;
+	}	
+
+   	function checkDuplicate(file, caseSpecific) {
+   		if(caseSpecific) {
+	   		return filesUploaded.some(function(e){
+	   			return e.name == file.name;
+	   		})	
+   		} else {
+	   		return vm.files.some(function(e){
+	   			return e.name == file.name;
+	   		})
+
+   		}
 	}
+
+	function checkSubcategories(data) {
+
+		if(data == 'Intellectual Property') {
+			vm.subCategoryRequired = true;
+			vm.subcategory = ['Euro-PCT (Form 1200)', 'Renewals / Annuities', 'Grant and Publishing Fees, 71(3)', 'EP Validation', 'Other IP']
+		}
+
+		if(data == 'WebApp Technical') {
+			vm.subCategoryRequired = true;
+			vm.subcategory = ['Account Management', 'Patent applications', 'Fees', 'Reminders', 'Transactions', 'Technical Issue']
+		}
+
+		if(data !== 'Intellectual Property' && data !== 'WebApp Technical') {
+			vm.subCategoryRequired = false;
+		}
+
+	}
+	
 
     $scope.getFileDetails = function (e, specific) {
     	
@@ -43,7 +74,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             for (var i = 0; i < e.files.length; i++) {
             	var ext = e.files[i].name.substr(e.files[i].name.lastIndexOf('.')+1);
  
-			   	if(checkDuplicate(e.files[i])) {
+			   	if(checkDuplicate(e.files[i], false)) {
 			        var modalInstance = $uibModal.open({
 			            template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
 			            scope: $scope,
@@ -71,30 +102,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
     };
 
 
-	function checkSubcategories(data) {
 
-
-
-		if(data == 'Intellectual Property') {
-			vm.subCategoryRequired = true;
-			vm.subcategory = ['Euro-PCT (Form 1200)', 'Renewals / Annuities', 'Grant and Publishing Fees, 71(3)', 'EP Validation', 'Other IP']
-		}
-
-		if(data == 'WebApp Technical') {
-			vm.subCategoryRequired = true;
-			vm.subcategory = ['Account Management', 'Patent applications', 'Fees', 'Reminders', 'Transactions', 'Technical Issue']
-		}
-
-		if(data !== 'Intellectual Property' && data !== 'WebApp Technical') {
-			vm.subCategoryRequired = false;
-		}
-
-	}
-
-	function checkSpecificType(data) {
-		vm.assistedFiling = data == 'Assisted Formality Filing' ? true : false
-		vm.categorySelected = true;
-	}
 
 	//FOR CASE SPECIFIC https://stackoverflow.com/questions/6664967/how-to-give-a-blob-uploaded-as-formdata-a-file-name
 	//https://laracasts.com/discuss/channels/javascript/formdata-append-javascript-array-jsonstringify-how-to-cast-as-php-array
@@ -137,7 +145,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		    "isUrgent": false,
 		    "isManualProcessing": false    
 	  	}
-
   	]
 
 
@@ -164,12 +171,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
                     $uibModalInstance.close();
                 };
 
-			   	function checkSpecificDuplicate(file) {
-			   		return filesUploaded.some(function(e){
-			   			return e.name == file.name;
-			   		})
-				}
-
 				var caseFiles = [];
 
 				const blobToBase64 = (blob) => {
@@ -193,7 +194,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		            for (var i = 0; i < e.files.length; i++) {
 		            	var ext = e.files[i].name.substr(e.files[i].name.lastIndexOf('.')+1);
  
-					   	if(checkSpecificDuplicate(e.files[i])) {
+					   	if(checkDuplicate(e.files[i], true)) {
 					        var modalInstance = $uibModal.open({
 					            template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
 					            scope: $scope,
