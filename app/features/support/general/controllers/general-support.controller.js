@@ -3,6 +3,8 @@ GeneralSupportController.$inject = ['$scope', '$state', '$timeout', '$stateParam
 export default function GeneralSupportController($scope, $state, $timeout, $stateParams, SupportService, $uibModal) {
 
 	var vm = this;
+	var filesUploaded = []; //required for checking duplicates
+	var caseFiles = [];
 	vm.subCategoryRequired = false;
 	vm.formData = {};
 	vm.caseFormData = {};
@@ -62,46 +64,103 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		}
 
 	}
-	
 
-    $scope.getFileDetails = function (e, specific) {
-    	
+
+    $scope.getFileDetails = function (e, caseSpecific) {
+
+    	console.log(e, caseSpecific)
+
     	var timeout;
-        var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];    	
+        var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];
+        var blobToBase64 = (blob) => {
+		  	return new Promise((resolve) => {
+			    	const reader = new FileReader();
+			    	reader.readAsDataURL(blob);
+			    	reader.onloadend = function () {
+			      	resolve(reader.result);
+			    };
+		  	});
+		};
 
-        // $scope.$apply(function () {
             // STORE THE FILE OBJECT IN AN ARRAY.
-            for (var i = 0; i < e.files.length; i++) {
-            	var ext = e.files[i].name.substr(e.files[i].name.lastIndexOf('.')+1);
- 
-			   	if(checkDuplicate(e.files[i], false)) {
-			        var modalInstance = $uibModal.open({
-			            template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
-			            scope: $scope,
-			            controllerAs:'$ctrl',
-			            controller: ['$uibModalInstance', function($uibModalInstance) {
+        for (var i = 0; i < e.files.length; i++) {
+        	var ext = e.files[i].name.substr(e.files[i].name.lastIndexOf('.')+1);
 
-			                this.dismissModal = function () {
-			                    $uibModalInstance.close();
-			                };
-			            }]
-			        });
-			   	} else {
+		   	if(checkDuplicate(e.files[i], false)) {
+		        var modalInstance = $uibModal.open({
+		            template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
+		            scope: $scope,
+		            controllerAs:'$ctrl',
+		            controller: ['$uibModalInstance', function($uibModalInstance) {
 
-			    	if(specific) {
-			    		return e.files[i];
-			    	}
+		                this.dismissModal = function () {
+		                    $uibModalInstance.close();
+		                };
+		            }]
+		        });
+		   	} else {
 
-			   		if(e.files[i].size > 0 && validFormats.includes(ext)) {
+		   		if(e.files[i].size > 0 && validFormats.includes(ext)) {
+
+			    	if(caseSpecific) {
+
+	   					(async () => {
+
+						  	const b64 = await blobToBase64(e.files[i]);
+						  	const jsonString = JSON.stringify(b64);
+				   			caseFiles.push(jsonString)
+			   			})()
+
+		   				filesUploaded.push(e.files[i])
+
+			    	} else {
 			   			vm.files.push(e.files[i])
-			   		}
-		   			
-			   	}
-            }
-        // });
+				   		
+			    	}
+			    }
+
+	   			
+		   	}
+        }
+
     };
 
 
+  //   $scope.getSpecificFileDetails = function(e) {
+
+		// var timeout;
+		// var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];    	
+
+  //   	var files = $scope.getFileDetails(e, true);
+    	
+  //       for (var i = 0; i < e.files.length; i++) {
+  //       	var ext = e.files[i].name.substr(e.files[i].name.lastIndexOf('.')+1);
+
+		//    	if(checkDuplicate(e.files[i], true)) {
+		//         var modalInstance = $uibModal.open({
+		//             template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
+		//             scope: $scope,
+		//             controllerAs:'$ctrl',
+		//             controller: ['$uibModalInstance', function($uibModalInstance) {
+
+		//                 this.dismissModal = function () {
+		//                     $uibModalInstance.close();
+		//                 };
+		//             }]
+		//         });
+		//    	} else {
+
+		//    		if(e.files[i].size > 0 && validFormats.includes(ext)) {
+
+	
+
+		//    		}
+	   			
+		//    	}
+		// }
+
+
+  //   }
 
 
 	//FOR CASE SPECIFIC https://stackoverflow.com/questions/6664967/how-to-give-a-blob-uploaded-as-formdata-a-file-name
@@ -148,7 +207,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
   	]
 
 
-	var filesUploaded = [];
+	
 
 	function formalitySelect(patent) {
 
@@ -171,63 +230,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
                     $uibModalInstance.close();
                 };
 
-				var caseFiles = [];
-
-				const blobToBase64 = (blob) => {
-					  	return new Promise((resolve) => {
-					    	const reader = new FileReader();
-					    	reader.readAsDataURL(blob);
-					    	reader.onloadend = function () {
-					      	resolve(reader.result);
-					    };
-				  	});
-				};
-
-
-			    $scope.getSpecificFileDetails = function(e) {
-
-					var timeout;
-        			var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];    	
-
-			    	var files = $scope.getFileDetails(e, 'specific');
-			    	
-		            for (var i = 0; i < e.files.length; i++) {
-		            	var ext = e.files[i].name.substr(e.files[i].name.lastIndexOf('.')+1);
- 
-					   	if(checkDuplicate(e.files[i], true)) {
-					        var modalInstance = $uibModal.open({
-					            template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
-					            scope: $scope,
-					            controllerAs:'$ctrl',
-					            controller: ['$uibModalInstance', function($uibModalInstance) {
-
-					                this.dismissModal = function () {
-					                    $uibModalInstance.close();
-					                };
-					            }]
-					        });
-					   	} else {
-
-					   		if(e.files[i].size > 0 && validFormats.includes(ext)) {
-
-					   			(async () => {
-
-								  	const b64 = await blobToBase64(e.files[i]);
-								  	const jsonString = JSON.stringify(b64);
-						   			caseFiles.push(jsonString)
-					   			})()
-
-					   			filesUploaded.push(e.files[i])
-
-					   		}
-				   			
-					   	}
-					}
-
-
-			    }
-
-
+				
 
                 this.add = function(data) {
     		
@@ -269,9 +272,9 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		formData.append('category', data.category);
 		formData.append('patentEnquiries', JSON.stringify(vm.caseSpecificCases));
 
-		// for(var pair of formData.entries()) {
-		//    console.log(pair[0]+ ', '+ pair[1]);
-		// }		
+		for(var pair of formData.entries()) {
+		   console.log(pair[0]+ ', '+ pair[1]);
+		}		
 
 		if(caseSpecific) {
 			SupportService.requestSpecificSupport(formData, config)

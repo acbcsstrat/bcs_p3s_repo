@@ -28,7 +28,7 @@
     <div class="form-group row m-t-md">
        
         <div class="col-md-6 col-xl-4 text-left">
-            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="fileStore.file" support-file-upload onchange="angular.element(this).scope().getSpecificFileDetails(this)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
+            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="fileStore.file" support-file-upload onchange="angular.element(this).scope().getFileDetails(this, true)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
             <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
          
         </div>
