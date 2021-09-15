@@ -109,11 +109,41 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 
 
+	vm.patents = [
+		{
+		    "patentID": 321,
+		    "epApplicationNumber": "EP17796838",
+		    "formalityAvailable": "renewal",
+		    "formalityStatus": "open for renewal",
+		    "indicativeCost": 1200,
+		    "isUrgent": true,
+		    "isManualProcessing": false    
+	  	},
+		{
+		    "patentID": 189,
+		    "epApplicationNumber": "EP23946839",
+		    "formalityAvailable": "epct",
+		    "formalityStatus": "epct ready",
+		    "indicativeCost": 4400,
+		    "isUrgent": false,
+		    "isManualProcessing": false    
+	  	},
+	  	{
+		    "patentID": 200,
+		    "epApplicationNumber": "EP44422448",
+		    "formalityAvailable": "renewal",
+		    "formalityStatus": "open for renewal",
+		    "indicativeCost": 2200,
+		    "isUrgent": false,
+		    "isManualProcessing": false    
+	  	}
+
+  	]
+
+
 	var filesUploaded = [];
 
 	function formalitySelect(patent) {
-
-		console.log('patent : ', patent)
 
 		var selectedPatent = patent;
 
@@ -149,8 +179,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 					    	reader.onloadend = function () {
 					      	resolve(reader.result);
 					    };
-					  });
-					};
+				  	});
+				};
 
 
 			    $scope.getSpecificFileDetails = function(e) {
@@ -178,8 +208,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 					   	} else {
 
 					   		if(e.files[i].size > 0 && validFormats.includes(ext)) {
-					   			
-
 
 					   			(async () => {
 
@@ -190,8 +218,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 					   			filesUploaded.push(e.files[i])
 
-					   			// vm.files.push(e.files[i])
-					   			// console.log('caseFiles1111 : ', caseFiles)
 					   		}
 				   			
 					   	}
@@ -202,7 +228,15 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 
 
-                this.add = function(data) {	
+                this.add = function(data) {
+    		
+                	vm.patents.find(function(item){ //disable the row
+					    if(selectedPatent.patentID === item.patentID) {
+					        item.selectedForEnquiry = true;
+					        return true;
+					    }
+					    return false;
+                	})
 
 	            	var obj = {
 	            		patentID: selectedPatent.patentID,
@@ -227,24 +261,16 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	function submitForm(data, caseSpecific) {
 
-		console.log('vm.caseSpecificCases', vm.caseSpecificCases)
 		vm.submittingRequest = true;
 
 		var formData = new FormData();
 		var config = { headers: {'Content-Type': undefined} };
 		formData.append('category', data.category);
-		// formData.append('test', JSON.stringify([{test: '1'}, {test: '2'}, {test: '3'}]))
 		formData.append('patentEnquiries', JSON.stringify(vm.caseSpecificCases));
 
-
-		var value = Object.fromEntries(formData.entries());
-
-		console.log({ value });	
-
-
-		for(var pair of formData.entries()) {
-		   console.log(pair[0]+ ', '+ pair[1]);
-		}		
+		// for(var pair of formData.entries()) {
+		//    console.log(pair[0]+ ', '+ pair[1]);
+		// }		
 
 		if(caseSpecific) {
 			SupportService.requestSpecificSupport(formData, config)
@@ -328,34 +354,4 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	} //submitform function end
 
-	vm.patents = [
-		{
-		    "patentID": 321,
-		    "epApplicationNumber": "EP17796838",
-		    "formalityAvailable": "renewal",
-		    "formalityStatus": "open for renewal",
-		    "indicativeCost": 1200,
-		    "isUrgent": true,
-		    "isManualProcessing": false    
-	  	},
-		{
-		    "patentID": 189,
-		    "epApplicationNumber": "EP23946839",
-		    "formalityAvailable": "epct",
-		    "formalityStatus": "epct ready",
-		    "indicativeCost": 4400,
-		    "isUrgent": false,
-		    "isManualProcessing": false    
-	  	},
-	  	{
-		    "patentID": 200,
-		    "epApplicationNumber": "EP44422448",
-		    "formalityAvailable": "renewal",
-		    "formalityStatus": "open for renewal",
-		    "indicativeCost": 2200,
-		    "isUrgent": false,
-		    "isManualProcessing": false    
-	  	}
-
-  	]
 }
