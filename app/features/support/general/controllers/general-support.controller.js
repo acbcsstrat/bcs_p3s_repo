@@ -104,11 +104,44 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 			    	if(caseSpecific) {
 
+
+
 	   					(async () => {
+
+	   						// console.log(e.files[i])
+	   						// console.log(e.files[i][0])
+	   						// console.log(e.files[i].lastModified)
+							var newObject  = {
+							   'lastModified'     : e.files[i].lastModified,
+							   'lastModifiedDate' : e.files[i].lastModifiedDate,
+							   'name'             : e.files[i].name,
+							   'size'             : e.files[i].size,
+							   'type'             : e.files[i].type
+							   // 'fileData'		  : jsonString
+							};  	   						
 
 						  	const b64 = await blobToBase64(e.files[i]);
 						  	const jsonString = JSON.stringify(b64);
-				   			caseFiles.push(jsonString)
+						  	newObject.fileData = jsonString;
+
+							// var imageObject = {};
+
+							// for (const key in e.files[i]) {
+							// 	console.log('key', )
+							//     const value = e.files[i][key];
+							//     console.log('value : ', value)
+							//     const notFunction = typeof value !== "function";
+							//     notFunction && (imageObject[key] = value);
+							// }
+
+							// console.log(imageObject)
+
+							// // reCreate new Object and set File Data into it
+
+							 
+
+							console.log('newObject', newObject)
+				   			caseFiles.push(newObject)
 			   			})()
 
 		   				filesUploaded.push(e.files[i])
