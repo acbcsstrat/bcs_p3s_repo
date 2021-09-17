@@ -103,6 +103,4 @@ function startUpRun($state, $cookies, $location, $http, Idle, $rootScope, $timeo
             )            
         }
     });
-
-
 };

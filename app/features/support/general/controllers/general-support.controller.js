@@ -9,6 +9,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.formData = {};
 	vm.caseFormData = {};
 	$scope.fileStore = {}
+	// $scope.specificSupportForm = {};
 	vm.formData.uploadedDocs = [];
 	vm.files = [];
 	vm.caseSpecificCases = [];
@@ -22,11 +23,72 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.submittingRequest = false;
 	vm.specificCaseCheck = specificCaseCheck;
 	vm.optionSelected = false;
-	vm.caseSpecific = false;
+	vm.caseSpecific = '';
 
-	function specificCaseCheck(value, boolean) {
+	function specificCaseCheck(newValue, oldValue, boolean) {
+		console.log('CHECING')
 		vm.optionSelected = !boolean ? false : true;
-		vm.caseSpecific = value == 'yes' && boolean ? true : false;
+	
+		if(newValue == oldValue) return;
+
+		if(vm.caseSpecificCases.length > 0) { //if a case has been added to enquiry
+
+	        var modalInstance = $uibModal.open({
+	            template: require('html-loader!../html/modals/modal.loss-of-data.tpl.htm'),
+	            scope: $scope,
+	            controllerAs:'$ctrl',
+                backdrop: 'static',
+                keyboard: false,     
+	            controller: ['$uibModalInstance', function($uibModalInstance) {
+	                
+	                this.dismissModal = function () {
+	                    $uibModalInstance.close(false);
+	                };
+
+	                this.cancel  = function() {
+	                	$uibModalInstance.close(false);
+	                }
+
+	                this.confirm  = function() {
+	                	$uibModalInstance.close(true);
+	                }
+
+	            }]
+	        })
+
+	        function updateCheckBoxes(value) {
+			  	Object.keys($scope.specificCase).forEach(function(key, o){
+			  		if(key === value) {
+			  			$scope.specificCase[key] = true; 
+			  		} else {
+			  			$scope.specificCase[key] = false;
+			  		}
+	  			});			        					
+	        }
+
+			modalInstance.result.then(function(value) {
+
+				if(value) {//if they are confirming they want to change option and lose any data
+					vm.caseSpecific = newValue;
+					vm.caseSpecificCases.length = 0;
+
+					vm.patents.forEach(function(item){ //required for removing css class in view
+						item.selectedForEnquiry = false;
+					})
+					updateCheckBoxes(newValue)
+
+					  	// return $scope.specificCase;
+				} else {
+					vm.caseSpecific = oldValue;
+					updateCheckBoxes(oldValue)
+				}
+
+        	})
+
+		} else {
+			vm.caseSpecific = newValue;
+		}
+
 	}
 
 	function checkSpecificType(data) {
@@ -65,10 +127,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	}
 
-
     $scope.getFileDetails = function (e, caseSpecific) {
-
-    	console.log(e, caseSpecific)
 
     	var timeout;
         var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];
@@ -192,6 +251,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             template: require('html-loader!../html/modals/modal.add-information-for-case.tpl.htm'),
             scope: $scope,
             controllerAs:'$ctrl',
+            backdrop: 'static',
+            keyboard: false,              
             controller: ['$uibModalInstance', function($uibModalInstance) {
 
             	//REQUIRES EDITING TO ACCOUNT FOR GRANTS WITH RENEWAL
@@ -204,8 +265,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
                 this.dismissModal = function () {
                     $uibModalInstance.close();
                 };
-
-				
 
                 this.add = function(data) {
     		

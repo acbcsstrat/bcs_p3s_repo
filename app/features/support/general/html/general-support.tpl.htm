@@ -13,21 +13,21 @@
                         <p class="font-body">Is your enquiry in relation to specific case(s)?</p>
                         <label for="specificCase">
                             Yes
-                            <input type="checkbox" name="specificCase" data-ng-click="specificCase.no = false; specificCase.unsure = false;" data-ng-model="specificCase.yes" data-ng-change="$ctrl.specificCaseCheck('yes', specificCase.yes)"> <!--ng-required if caseCheck == 'yes'-->
+                            <input type="checkbox" name="specificCase" data-ng-click="specificCase.no = false; specificCase.unsure = false;" data-ng-model="specificCase.yes" data-ng-checked="$ctrl.caseSpecific == 'yes'" data-ng-change="$ctrl.specificCaseCheck('yes', $ctrl.caseSpecific, specificCase.yes)"> <!--ng-required if caseCheck == 'yes'-->
                         </label>
                         <label for="notSpecificCase">
                             No
-                            <input type="checkbox" name="notSpecificCase" data-ng-click="specificCase.yes = false; specificCase.unsure = false;" data-ng-model="specificCase.no" data-ng-change="$ctrl.specificCaseCheck('no', specificCase.no)">
+                            <input type="checkbox" name="notSpecificCase" data-ng-click="specificCase.yes = false; specificCase.unsure = false;" data-ng-model="specificCase.no"  data-ng-checked="$ctrl.caseSpecific == 'no'"  data-ng-checked="$ctrl.caseSpecific == 'yes'" data-ng-change="$ctrl.specificCaseCheck('no', $ctrl.caseSpecific, specificCase.no)">
                         </label>
                         <label for="unsureSpecificCase">
                             Unsure
-                            <input type="checkbox" name="unsureSpecificCase" data-ng-click="specificCase.yes = false; specificCase.no = false;" data-ng-model="specificCase.unsure" data-ng-change="$ctrl.specificCaseCheck('unsure', specificCase.unsure)">
+                            <input type="checkbox" name="unsureSpecificCase" data-ng-click="specificCase.yes = false; specificCase.no = false;" data-ng-model="specificCase.unsure"  data-ng-checked="$ctrl.caseSpecific == 'unsure'"  data-ng-change="$ctrl.specificCaseCheck('unsure', $ctrl.caseSpecific, specificCase.unsure)">
                         </label>
                     </div>
                 </div>
 
-                <div data-ng-if="$ctrl.caseSpecific && $ctrl.optionSelected">
-                    <form name="specificSupportForm" novalidate>
+                <div data-ng-if="$ctrl.caseSpecific == 'yes' && $ctrl.optionSelected">
+                    <form name="specificSupportForm" data-ng-model="$ctrl.specificSupportForm" novalidate>
                         <div class="form-group row">
                             <div class="col-md-6 col-xl-5">
                                 <label for="category" class="font-h4 font-weight-bold m-b-xs">Category</label>
@@ -144,7 +144,7 @@
 
 
 
-                <div data-ng-if="!$ctrl.caseSpecific && $ctrl.optionSelected">
+                <div data-ng-if="$ctrl.caseSpecific == 'no' || $ctrl.caseSpecific == 'unsure' && $ctrl.optionSelected">
                 	<form name="supportForm" novalidate>
                         <div class="form-group row">
                     		<div class="col-md-6 col-xl-6">
