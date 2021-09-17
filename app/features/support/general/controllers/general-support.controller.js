@@ -104,13 +104,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 			    	if(caseSpecific) {
 
-
-
 	   					(async () => {
 
-	   						// console.log(e.files[i])
-	   						// console.log(e.files[i][0])
-	   						// console.log(e.files[i].lastModified)
 							var newObject  = {
 							   'lastModified'     : e.files[i].lastModified,
 							   'lastModifiedDate' : e.files[i].lastModifiedDate,
@@ -124,23 +119,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 						  	const jsonString = JSON.stringify(b64);
 						  	newObject.fileData = jsonString;
 
-							// var imageObject = {};
-
-							// for (const key in e.files[i]) {
-							// 	console.log('key', )
-							//     const value = e.files[i][key];
-							//     console.log('value : ', value)
-							//     const notFunction = typeof value !== "function";
-							//     notFunction && (imageObject[key] = value);
-							// }
-
-							// console.log(imageObject)
-
 							// // reCreate new Object and set File Data into it
 
-							 
-
-							console.log('newObject', newObject)
 				   			caseFiles.push(newObject)
 			   			})()
 
@@ -157,44 +137,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
         }
 
     };
-
-
-  //   $scope.getSpecificFileDetails = function(e) {
-
-		// var timeout;
-		// var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];    	
-
-  //   	var files = $scope.getFileDetails(e, true);
-    	
-  //       for (var i = 0; i < e.files.length; i++) {
-  //       	var ext = e.files[i].name.substr(e.files[i].name.lastIndexOf('.')+1);
-
-		//    	if(checkDuplicate(e.files[i], true)) {
-		//         var modalInstance = $uibModal.open({
-		//             template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
-		//             scope: $scope,
-		//             controllerAs:'$ctrl',
-		//             controller: ['$uibModalInstance', function($uibModalInstance) {
-
-		//                 this.dismissModal = function () {
-		//                     $uibModalInstance.close();
-		//                 };
-		//             }]
-		//         });
-		//    	} else {
-
-		//    		if(e.files[i].size > 0 && validFormats.includes(ext)) {
-
-	
-
-		//    		}
-	   			
-		//    	}
-		// }
-
-
-  //   }
-
 
 	//FOR CASE SPECIFIC https://stackoverflow.com/questions/6664967/how-to-give-a-blob-uploaded-as-formdata-a-file-name
 	//https://laracasts.com/discuss/channels/javascript/formdata-append-javascript-array-jsonstringify-how-to-cast-as-php-array
