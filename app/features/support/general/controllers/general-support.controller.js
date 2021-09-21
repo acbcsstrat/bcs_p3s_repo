@@ -24,6 +24,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.optionSelected = false;
 	vm.caseSpecific = '';
 	vm.caseSpecificCategory = '';
+	var selectedPatent;
 
     function updateCheckBoxes(value) {
  
@@ -197,7 +198,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
     $scope.getFileDetails = function (e, caseSpecific) {
 
-
     	var timeout;
         var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];
         var blobToBase64 = (blob) => {
@@ -235,21 +235,25 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	   					(async () => {
 
 							var newObject  = {
-							   'lastModified'     : e.files[i].lastModified,
-							   'lastModifiedDate' : e.files[i].lastModifiedDate,
-							   'name'             : e.files[i].name,
-							   'size'             : e.files[i].size,
-							   'type'             : e.files[i].type
-							   // 'fileData'		  : jsonString
+								'epApplicationNumber' : selectedPatent.epApplicationNumber,
+								'fileDetails': {								
+								   	'lastModified'     : e.files[i].lastModified,
+								   	'lastModifiedDate' : e.files[i].lastModifiedDate,
+								   	'name'             : e.files[i].name,
+								   	'size'             : e.files[i].size,
+								   	'type'             : e.files[i].type
+								   // 'fileData'		  : jsonString
+								}
 							};  	   						
 
 						  	const b64 = await blobToBase64(e.files[i]);
 						  	const jsonString = JSON.stringify(b64);
-						  	newObject.fileData = jsonString;
+						  	newObject.fileDetails.fileData = jsonString;
 
 							// // reCreate new Object and set File Data into it
-
+							console.log('newObject : ', newObject)
 				   			caseFiles.push(newObject)
+				   			console.log('caseFiles : ', caseFiles)
 			   			})()
 
 		   				filesUploaded.push(e.files[i])
@@ -312,9 +316,18 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	  	}
   	]
 
-	function formalitySelect(patent, edit) { //handles both initial add and editing of patent
+	function formalitySelect(patent, type) { //handles both initial add and editing of patent
 
-		var selectedPatent = patent;
+		selectedPatent = patent;
+
+		if(type == 'delete') {
+			var index = vm.caseSpecificCases.map(x => {
+			  return x.epApplicationNumber;
+			}).indexOf(selectedPatent.epApplicationNumber);
+
+			vm.caseSpecificCases.splice(index, 1);
+			return;
+		}
 
         var modalInstance = $uibModal.open({
             template: require('html-loader!../html/modals/modal.add-information-for-case.tpl.htm'),
@@ -330,7 +343,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             	this.applicationNo = patent.epApplicationNumber;
             	this.formalityType = patent.formalityAvailable;
 
-            	if(edit == 'edit') {
+            	if(type == 'edit') {
         			$scope.caseFormData.message = patent.message;
         			$scope.caseFormData.files = patent.uploadedDocs;
 
@@ -343,7 +356,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
                 this.add = function(data) {
 
-                	if(edit == 'edit') { //reove current patent that is being updated so it can be replaced with the new version
+                	if(type == 'edit') { //reove current patent that is being updated so it can be replaced with the new version
 						var index = vm.caseSpecificCases.map(x => {
 						  return x.epApplicationNumber;
 						}).indexOf(selectedPatent.epApplicationNumber);
@@ -360,6 +373,24 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 					    return false;
                 	})
 
+
+                	console.log('caseFiles :', caseFiles)
+
+                	function checkUploadedDocs()  {
+
+                		var cases = caseFiles.filter(function(item){
+            				return item.epApplicationNumber == selectedPatent.epApplicationNumber;
+            			}).map(function(item){
+            				return item.fileDetails;
+            			})
+
+            			if(cases.length > 0) {
+            				return cases;
+            			} else {
+            				return null;
+            			}
+                	}
+
 	            	var obj = {
 	            		patentID: selectedPatent.patentID,
 	            		epApplicationNumber: selectedPatent.epApplicationNumber,
@@ -367,17 +398,21 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		isUrgent: true,
 	            		isManualProcessing: true,
 	            		message: data.message,
-	            		
-	            		uploadedDocs: caseFiles
+	            		numDocsUploaded: caseFiles.length,
+	            		uploadedDocs: checkUploadedDocs() || null
 	            	}
 
-	            	obj.numDocsUploaded = caseFiles.length > 0 ? caseFiles.length : null;
+
+
+	            	//need to identify correct files by comparing applicationNo
 
 	            	if(vm.caseSpecificCategory == 'Assisted Formality Filing') {
 	            		obj.indicativeCost = selectedPatent.indicativeCost;
 	            	}
 
-                	vm.caseSpecificCases.push(obj);	
+                	vm.caseSpecificCases.push(obj);	//used to loop in FE
+
+                	$scope.caseFormData = {};
 
 					$uibModalInstance.close();
 

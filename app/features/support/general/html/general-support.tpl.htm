@@ -114,8 +114,11 @@
                                                 <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.indicativeCost">
                                                 </td>
                                                 <td class="t-data__td t-data__td--sm sticky-td">
-                                                    <button class="btn btn--green" data-ng-click="$ctrl.formalitySelect(case, 'edit')" data-ng-disabled="patent.selectedForEnquiry">Edd</button>
+                                                    <button class="btn btn--green" data-ng-click="$ctrl.formalitySelect(case, 'edit')" data-ng-disabled="patent.selectedForEnquiry">Edit</button>
                                                 </td>
+                                                <td class="t-data__td t-data__td--sm sticky-td">
+                                                    <button class="btn btn--green" data-ng-click="$ctrl.formalitySelect(case, 'delete')" data-ng-disabled="patent.selectedForEnquiry">Delete</button>
+                                                </td>                                                
                                             </tr>
                                         </tbody>
                                     </table>
