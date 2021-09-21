@@ -3,7 +3,7 @@
     <p class="font-h3">Providing support details case details for patent application</p>
     <p class="font-h3">Application No.: {{$ctrl.applicationNo}}</p>
     <p class="font-h3">Formality type: {{$ctrl.formalityType}}</p>
-    <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.caseFormData.message" maxlength="5000" validate-text-field required></textarea>
+    <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="caseFormData.message" maxlength="5000" validate-text-field required></textarea>
     <div class="form-group row">
         <div class="col-md-8">
             <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
@@ -27,13 +27,13 @@
     </div> -->
     <div class="form-group row m-t-md">
        
-        <div class="col-md-6 col-xl-4 text-left">
-            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="fileStore.file" support-file-upload onchange="angular.element(this).scope().getFileDetails(this, true)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
+        <div class="col-md-6 col-xl-4 text-left"><!--fileStore.file-->
+            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="caseFormData.files" support-file-upload onchange="angular.element(this).scope().getFileDetails(this, true)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
             <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
          
         </div>
         <div class="col-md-6 col-xl-3 text-right">
-            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.add($ctrl.caseFormData, patent)">
+            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.add(caseFormData, patent)">
 <!--                                     <span data-ng-show="$ctrl.submittingRequest">                                
                     <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
                 </span> -->

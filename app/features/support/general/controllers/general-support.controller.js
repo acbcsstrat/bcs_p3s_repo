@@ -7,9 +7,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	var caseFiles = [];
 	vm.subCategoryRequired = false;
 	vm.formData = {};
-	vm.caseFormData = {};
+	$scope.caseFormData = {};
 	$scope.fileStore = {}
-	// $scope.specificSupportForm = {};
 	vm.formData.uploadedDocs = [];
 	vm.files = [];
 	vm.caseSpecificCases = [];
@@ -24,76 +23,145 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.specificCaseCheck = specificCaseCheck;
 	vm.optionSelected = false;
 	vm.caseSpecific = '';
+	vm.caseSpecificCategory = '';
+
+    function updateCheckBoxes(value) {
+ 
+	  	Object.keys($scope.specificCase).forEach(function(key, o){
+	  		if(key === value) {
+	  			$scope.specificCase[key] = true; 
+	  		} else {
+	  			$scope.specificCase[key] = false;
+	  		}
+		});
+    }	
+
+	function warningCheckboxChange(newValue, oldValue) {
+
+        var modalInstance = $uibModal.open({
+            template: require('html-loader!../html/modals/modal.loss-of-data.tpl.htm'),
+            scope: $scope,
+            controllerAs:'$ctrl',
+            backdrop: 'static',
+            keyboard: false,     
+            controller: ['$uibModalInstance', function($uibModalInstance) {
+                
+                this.dismissModal = function () {
+                    $uibModalInstance.close(false);
+                };
+
+                this.cancel  = function() {
+                	$uibModalInstance.close(false);
+                }
+
+                this.confirm  = function() {
+                	$uibModalInstance.close(true);
+                }
+
+            }]
+        })
+
+		modalInstance.result.then(function(value) {
+
+			if(value) {//if they are confirming they want to change option and lose any data
+
+				vm.caseSpecific = newValue;
+				vm.caseSpecificCases.length = 0;
+
+				$scope.caseFormData = {};
+
+				vm.patents.forEach(function(item){ //required for removing css class in view
+					item.selectedForEnquiry = false;
+				})
+				updateCheckBoxes(newValue)
+
+			} else {
+				vm.caseSpecific = oldValue;
+				updateCheckBoxes(oldValue)
+			}
+
+    	})
+
+	}
+
+	function warningCategoryChange(newValue, oldValue) {
+
+        var modalInstance = $uibModal.open({
+            template: require('html-loader!../html/modals/modal.loss-of-data.tpl.htm'),
+            scope: $scope,
+            controllerAs:'$ctrl',
+            backdrop: 'static',
+            keyboard: false,     
+            controller: ['$uibModalInstance', function($uibModalInstance) {
+
+                this.dismissModal = function () {
+                    $uibModalInstance.close(false);
+                };
+
+                this.cancel  = function() {
+                	$uibModalInstance.close(false);
+                }
+
+                this.confirm  = function() {
+                	$uibModalInstance.close(true);
+                }
+
+            }]
+        })
+
+		modalInstance.result.then(function(value) {
+
+			if(value) {//if they are confirming they want to change option and lose any data
+				$scope.caseFormData = {};
+				vm.caseSpecificCategory = newValue;
+				$scope.caseFormData.category = newValue;
+				vm.caseSpecificCases.length = 0;
+
+
+
+				vm.patents.forEach(function(item){ //required for removing css class in view
+					item.selectedForEnquiry = false;
+				})
+
+			} else {
+				vm.caseSpecificCategory = oldValue;
+				$scope.caseFormData.category = oldValue;
+			}
+
+    	})
+
+	}
 
 	function specificCaseCheck(newValue, oldValue, boolean) {
-		console.log('CHECING')
+
 		vm.optionSelected = !boolean ? false : true;
 	
 		if(newValue == oldValue) return;
 
 		if(vm.caseSpecificCases.length > 0) { //if a case has been added to enquiry
-
-	        var modalInstance = $uibModal.open({
-	            template: require('html-loader!../html/modals/modal.loss-of-data.tpl.htm'),
-	            scope: $scope,
-	            controllerAs:'$ctrl',
-                backdrop: 'static',
-                keyboard: false,     
-	            controller: ['$uibModalInstance', function($uibModalInstance) {
-	                
-	                this.dismissModal = function () {
-	                    $uibModalInstance.close(false);
-	                };
-
-	                this.cancel  = function() {
-	                	$uibModalInstance.close(false);
-	                }
-
-	                this.confirm  = function() {
-	                	$uibModalInstance.close(true);
-	                }
-
-	            }]
-	        })
-
-	        function updateCheckBoxes(value) {
-			  	Object.keys($scope.specificCase).forEach(function(key, o){
-			  		if(key === value) {
-			  			$scope.specificCase[key] = true; 
-			  		} else {
-			  			$scope.specificCase[key] = false;
-			  		}
-	  			});			        					
-	        }
-
-			modalInstance.result.then(function(value) {
-
-				if(value) {//if they are confirming they want to change option and lose any data
-					vm.caseSpecific = newValue;
-					vm.caseSpecificCases.length = 0;
-
-					vm.patents.forEach(function(item){ //required for removing css class in view
-						item.selectedForEnquiry = false;
-					})
-					updateCheckBoxes(newValue)
-
-					  	// return $scope.specificCase;
-				} else {
-					vm.caseSpecific = oldValue;
-					updateCheckBoxes(oldValue)
-				}
-
-        	})
-
+			warningCheckboxChange(newValue, oldValue);
 		} else {
 			vm.caseSpecific = newValue;
 		}
 
 	}
 
-	function checkSpecificType(data) {
-		vm.assistedFiling = data == 'Assisted Formality Filing' ? true : false
+	function checkSpecificType(newValue, oldValue) { //category check 
+
+		if(newValue == oldValue) return;
+
+		vm.assistedFiling = newValue == 'Assisted Formality Filing' ? true : false
 		vm.categorySelected = true;
+
+		if(vm.caseSpecificCases.length > 0) { //if a case has been added to enquiry
+
+			warningCategoryChange(newValue, oldValue);
+
+		} else {
+			vm.caseSpecificCategory = newValue;
+		}
+
+
 	}	
 
    	function checkDuplicate(file, caseSpecific) {
@@ -129,6 +197,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
     $scope.getFileDetails = function (e, caseSpecific) {
 
+
     	var timeout;
         var validFormats = ['pdf', 'PDF', 'doc', 'DOC', 'docx', 'DOCX', 'jpg', 'JPG', 'jpeg', 'JPEG','png', 'PNG', 'gif', 'GIF', 'pptx', 'PPTX', 'csv', 'CSV', 'xlsx', 'XLSX', 'zip', 'ZIP'];
         var blobToBase64 = (blob) => {
@@ -145,7 +214,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
         for (var i = 0; i < e.files.length; i++) {
         	var ext = e.files[i].name.substr(e.files[i].name.lastIndexOf('.')+1);
 
-		   	if(checkDuplicate(e.files[i], false)) {
+		   	if(checkDuplicate(e.files[i], caseSpecific)) {
 		        var modalInstance = $uibModal.open({
 		            template: require('html-loader!../html/modals/modal.duplicate-file.tpl.htm'),
 		            scope: $scope,
@@ -218,7 +287,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		    "formalityStatus": "open for renewal",
 		    "indicativeCost": 1200,
 		    "isUrgent": true,
-		    "isManualProcessing": false    
+		    "isManualProcessing": false,
+		    "indicativeCost": 2010    
 	  	},
 		{
 		    "patentID": 189,
@@ -227,7 +297,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		    "formalityStatus": "epct ready",
 		    "indicativeCost": 4400,
 		    "isUrgent": false,
-		    "isManualProcessing": false    
+		    "isManualProcessing": false,
+		    "indicativeCost": 3870   
 	  	},
 	  	{
 		    "patentID": 200,
@@ -236,14 +307,12 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		    "formalityStatus": "open for renewal",
 		    "indicativeCost": 2200,
 		    "isUrgent": false,
-		    "isManualProcessing": false    
+		    "isManualProcessing": false,
+		    "indicativeCost": 9999 
 	  	}
   	]
 
-
-	
-
-	function formalitySelect(patent) {
+	function formalitySelect(patent, edit) { //handles both initial add and editing of patent
 
 		var selectedPatent = patent;
 
@@ -256,10 +325,16 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             controller: ['$uibModalInstance', function($uibModalInstance) {
 
             	//REQUIRES EDITING TO ACCOUNT FOR GRANTS WITH RENEWAL
-            	
+
             	this.phoneNumber = $scope.ppDetails.partnerPhone;
             	this.applicationNo = patent.epApplicationNumber;
             	this.formalityType = patent.formalityAvailable;
+
+            	if(edit == 'edit') {
+        			$scope.caseFormData.message = patent.message;
+        			$scope.caseFormData.files = patent.uploadedDocs;
+
+            	}
 
 
                 this.dismissModal = function () {
@@ -267,6 +342,15 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
                 };
 
                 this.add = function(data) {
+
+                	if(edit == 'edit') { //reove current patent that is being updated so it can be replaced with the new version
+						var index = vm.caseSpecificCases.map(x => {
+						  return x.epApplicationNumber;
+						}).indexOf(selectedPatent.epApplicationNumber);
+
+						vm.caseSpecificCases.splice(index, 1);           		
+         
+                	}
     		
                 	vm.patents.find(function(item){ //disable the row
 					    if(selectedPatent.patentID === item.patentID) {
@@ -283,8 +367,14 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		isUrgent: true,
 	            		isManualProcessing: true,
 	            		message: data.message,
-	            		numDocsUploaded: caseFiles.length,
+	            		
 	            		uploadedDocs: caseFiles
+	            	}
+
+	            	obj.numDocsUploaded = caseFiles.length > 0 ? caseFiles.length : null;
+
+	            	if(vm.caseSpecificCategory == 'Assisted Formality Filing') {
+	            		obj.indicativeCost = selectedPatent.indicativeCost;
 	            	}
 
                 	vm.caseSpecificCases.push(obj);	
@@ -306,9 +396,9 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		formData.append('category', data.category);
 		formData.append('patentEnquiries', JSON.stringify(vm.caseSpecificCases));
 
-		for(var pair of formData.entries()) {
-		   console.log(pair[0]+ ', '+ pair[1]);
-		}		
+		// for(var pair of formData.entries()) {
+		//    console.log(pair[0]+ ', '+ pair[1]);
+		// }		
 
 		if(caseSpecific) {
 			SupportService.requestSpecificSupport(formData, config)
