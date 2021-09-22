@@ -12,9 +12,18 @@ function SupportService($q, $http) {
 
     function requestSpecificPatents(cat) {
         console.log('cat : ', cat)
+
+        var param = '';
+
+        if(cat !== 'Assisted Formality Filing') {
+            param = 'nonassistedFiling';
+        } else {
+            param = 'assistedFiling';
+        }
+
         var deferred = $q.defer();
 
-        $http.get(ppdomain+'rest-patent-enquiry/'+ cat)
+        $http.get(ppdomain+'rest-patent-enquiry/'+ param)
         .then(
             function(response){
                 deferred.resolve(response.data)
@@ -25,7 +34,7 @@ function SupportService($q, $http) {
         )        
 
     }
-    
+
     function requestNonSpecificSupport(data, config) {
 
         var deferred = $q.defer();
