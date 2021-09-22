@@ -24,7 +24,23 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.optionSelected = false;
 	vm.caseSpecific = '';
 	vm.caseSpecificCategory = '';
+	// vm.fetchPatents = fetchPatents;
 	var selectedPatent;
+
+	function fetchPatents(cat) {
+		console.log('cat 1', cat)
+		SupportService.requestSpecificPatents(cat)
+		.then(
+			function(response){
+				console.log('response : ', response)
+				vm.patents = response.patentEnquiries;
+			},
+			function(errResponse){
+				console.error('controller errResponse', errResponse)
+			}
+		)
+
+	}
 
     function updateCheckBoxes(value) {
  
@@ -122,7 +138,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 				caseFiles.length = 0;
 				filesUploaded.length = 0;
 
-
+				fetchPatents(newValue);
 
 				vm.patents.forEach(function(item){ //required for removing css class in view
 					item.selectedForEnquiry = false;
@@ -163,6 +179,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			warningCategoryChange(newValue, oldValue);
 
 		} else {
+			fetchPatents(newValue);
 			vm.caseSpecificCategory = newValue;
 		}
 
@@ -463,7 +480,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            formData.append("uploadedDocs", vm.files[i]);
 	        }
 
-			SupportService.requestSupport(formData, config)
+			SupportService.requestNonSpecificSupport(formData, config)
 			.then(
 				function(response){
 

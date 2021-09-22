@@ -5,15 +5,32 @@ SupportService.$inject = ['$q', '$http'];
 function SupportService($q, $http) {
 
     var factory = {
-        requestSupport: requestSupport,
-        requestSpecificSupport: requestSpecificSupport
+        requestNonSpecificSupport: requestNonSpecificSupport,
+        requestSpecificSupport: requestSpecificSupport,
+        requestSpecificPatents: requestSpecificPatents
     }
 
-    function requestSupport(data, config) {
+    function requestSpecificPatents(cat) {
+        console.log('cat : ', cat)
+        var deferred = $q.defer();
 
-        var deferred = $q.defer()
+        $http.get(ppdomain+'rest-patent-enquiry/'+ cat)
+        .then(
+            function(response){
+                deferred.resolve(response.data)
+            },
+            function(errResponse){
+                deferred.reject(errResponse.data)
+            }
+        )        
 
-        $http.post(ppdomain+'rest-support-form/', data, config)
+    }
+    
+    function requestNonSpecificSupport(data, config) {
+
+        var deferred = $q.defer();
+
+        $http.post(ppdomain+'rest-non-case-specific-form/', data, config)
         .then(
             function(response){
                 deferred.resolve(response.data)
@@ -29,7 +46,7 @@ function SupportService($q, $http) {
 
     function requestSpecificSupport(data, config) {
 
-        var deferred = $q.defer()
+        var deferred = $q.defer();
 
         $http.post(ppdomain+'rest-case-specific-form/', data, config)
         .then(
