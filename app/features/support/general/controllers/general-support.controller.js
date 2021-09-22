@@ -68,6 +68,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 				vm.caseSpecific = newValue;
 				vm.caseSpecificCases.length = 0;
+				caseFiles.length = 0;
+				filesUploaded.length = 0;
 
 				$scope.caseFormData = {};
 
@@ -117,6 +119,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 				vm.caseSpecificCategory = newValue;
 				$scope.caseFormData.category = newValue;
 				vm.caseSpecificCases.length = 0;
+				caseFiles.length = 0;
+				filesUploaded.length = 0;
 
 
 
@@ -242,7 +246,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 								   	'name'             : e.files[i].name,
 								   	'size'             : e.files[i].size,
 								   	'type'             : e.files[i].type
-								   // 'fileData'		  : jsonString
 								}
 							};  	   						
 
@@ -251,12 +254,10 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 						  	newObject.fileDetails.fileData = jsonString;
 
 							// // reCreate new Object and set File Data into it
-							console.log('newObject : ', newObject)
 				   			caseFiles.push(newObject)
-				   			console.log('caseFiles : ', caseFiles)
 			   			})()
 
-		   				filesUploaded.push(e.files[i])
+		   				filesUploaded.push(e.files[i]) //for duplication 
 
 			    	} else {
 			   			vm.files.push(e.files[i])
@@ -342,6 +343,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             	this.phoneNumber = $scope.ppDetails.partnerPhone;
             	this.applicationNo = patent.epApplicationNumber;
             	this.formalityType = patent.formalityAvailable;
+            	this.caseHolder; //NEEDS TO HOLD THE FILES UPLOADED. REVIEW CODE TOMORROW 
 
             	if(type == 'edit') {
         			$scope.caseFormData.message = patent.message;
@@ -374,8 +376,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
                 	})
 
 
-                	console.log('caseFiles :', caseFiles)
-
                 	function checkUploadedDocs()  {
 
                 		var cases = caseFiles.filter(function(item){
@@ -399,7 +399,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		isManualProcessing: true,
 	            		message: data.message,
 	            		numDocsUploaded: caseFiles.length,
-	            		uploadedDocs: checkUploadedDocs() || null
+	            		uploadedDocs: checkUploadedDocs()
 	            	}
 
 
