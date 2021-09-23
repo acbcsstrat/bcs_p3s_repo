@@ -300,40 +300,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	//https://careerkarma.com/blog/javascript-object-object/
 
 
-
-	vm.patents = [
-		{
-		    "patentID": 321,
-		    "epApplicationNumber": "EP17796838",
-		    "formalityAvailable": "renewal",
-		    "formalityStatus": "open for renewal",
-		    "indicativeCost": 1200,
-		    "isUrgent": true,
-		    "isManualProcessing": false,
-		    "indicativeCost": 2010    
-	  	},
-		{
-		    "patentID": 189,
-		    "epApplicationNumber": "EP23946839",
-		    "formalityAvailable": "epct",
-		    "formalityStatus": "epct ready",
-		    "indicativeCost": 4400,
-		    "isUrgent": false,
-		    "isManualProcessing": false,
-		    "indicativeCost": 3870   
-	  	},
-	  	{
-		    "patentID": 200,
-		    "epApplicationNumber": "EP44422448",
-		    "formalityAvailable": "renewal",
-		    "formalityStatus": "open for renewal",
-		    "indicativeCost": 2200,
-		    "isUrgent": false,
-		    "isManualProcessing": false,
-		    "indicativeCost": 9999 
-	  	}
-  	]
-
 	function formalitySelect(patent, type) { //handles both initial add and editing of patent
 
 		selectedPatent = patent;
