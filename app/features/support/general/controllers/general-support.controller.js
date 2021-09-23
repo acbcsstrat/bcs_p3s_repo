@@ -378,14 +378,12 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		patentID: selectedPatent.patentID,
 	            		epApplicationNumber: selectedPatent.epApplicationNumber,
 	            		formalityAvailable: selectedPatent.formalityAvailable,
-	            		isUrgent: true,
-	            		isManualProcessing: true,
+	            		isUrgent: selectedPatent.isUrgent,
+	            		isManualProcessing: selectedPatent.isManualProcessing,
 	            		message: data.message,
 	            		numDocsUploaded: caseFiles.length,
 	            		uploadedDocs: checkUploadedDocs()
 	            	}
-
-
 
 	            	//need to identify correct files by comparing applicationNo
 
