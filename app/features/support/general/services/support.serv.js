@@ -31,7 +31,11 @@ function SupportService($q, $http) {
             function(errResponse){
                 deferred.reject(errResponse.data)
             }
-        )        
+        )
+
+        console.log('deferred : ', deferred.promise)
+
+        return deferred.promise;
 
     }
 
