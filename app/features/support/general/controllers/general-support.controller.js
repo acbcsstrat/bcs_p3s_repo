@@ -4,10 +4,11 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	var vm = this;
 	var filesUploaded = []; //required for checking duplicates
-	$scope.currentCaseFiles = [];
+
 	vm.subCategoryRequired = false;
 	vm.formData = {};
 	$scope.caseFormData = {};
+	$scope.caseFormData.uploadedDocs = [];
 	$scope.fileStore = {}
 	vm.formData.uploadedDocs = [];
 	vm.files = [];
@@ -25,7 +26,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.caseSpecific = '';
 	vm.caseSpecificCategory = '';
 	$scope.removeSpecificFile = removeSpecificFile;
-	$scope.caseHolder = [];
 	var selectedPatent;
 	var latestFileUploaded;
 
@@ -271,13 +271,10 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
    	function checkDuplicate(file, caseSpecific) {
 
-			console.log('$scope.currentCaseFiles : ', $scope.currentCaseFiles)
-			console.log('$scope.allEnquiryCases : ', $scope.allEnquiryCases)
+   		if($scope.caseFormData.uploadedDocs.length == 0 && $scope.allEnquiryCases.length == 0) return false;
 
-   		if($scope.currentCaseFiles.length == 0 && $scope.allEnquiryCases.length == 0) return false;
-
-   		var individualCaseFiles = $scope.currentCaseFiles.map(function(obj){ //currentCaseFiles
-   			return obj.fileDetails;
+   		var individualCaseFiles = $scope.caseFormData.uploadedDocs.map(function(obj){ //caseFormData.uploadedDocs
+   			return obj;
    		}).some(function(e){
    			return e.name == file.name;
    		})
@@ -336,41 +333,23 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	   					(async () => {
 
-							var newObject  = {
-								'epApplicationNumber' : selectedPatent.epApplicationNumber,
-								'fileDetails': {								
-								   	'lastModified'     : e.files[i].lastModified,
-								   	'lastModifiedDate' : e.files[i].lastModifiedDate,
-								   	'name'             : e.files[i].name,
-								   	'size'             : e.files[i].size,
-								   	'type'             : e.files[i].type
-								}
+							var newObject  = {						
+							   	'lastModified'     : e.files[i].lastModified,
+							   	'lastModifiedDate' : e.files[i].lastModifiedDate,
+							   	'name'             : e.files[i].name,
+							   	'size'             : e.files[i].size,
+							   	'type'             : e.files[i].type
 							};
 
 						  	const b64 = await blobToBase64(e.files[i]);
 						  	const jsonString = JSON.stringify(b64);		
-						  	newObject.fileDetails.fileData = jsonString;
+						  	newObject.fileData = jsonString;
 
-						  	$scope.currentCaseFiles.push(newObject) //to be pushed for individualCase ADD
-
-							// var index = $scope.currentCaseFiles.findIndex(function(item){
-							// 	return item.epApplicationNumber == selectedPatent.epApplicationNumber && item.fileDetails.name == newObject.fileDetails.name;
-							
-							// })
-								// console.log('index : ', index)
-							// var item = $scope.currentCaseFiles.splice(index, 1);
-
-				   			// $scope.caseHolder.push($scope.currentCaseFiles[index].fileDetails)		
-
-				   			console.log('been added')
+						  	$scope.caseFormData.uploadedDocs.push(newObject) //to be pushed for individualCase ADD
 
 				   			$scope.$applyAsync(); //NEEDED				  	
 
 			   			})()
-
-			   			// latestFileUploaded = e.files[i];
-
-		   				// filesUploaded.push(e.files[i]) //for duplication 
 
 			    	} else {
 			   			vm.files.push(e.files[i]) //Required for no case specific cases
@@ -383,6 +362,11 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
         }
 
     };
+
+    function resetFormData() {
+    	$scope.caseFormData = {};
+    	$scope.caseFormData.uploadedDocs = []; //reset current case file as it has been added to allEnquiryCases
+    }
 
 	function formalitySelect(patent, type) { //handles both initial add and editing of patent
 
@@ -416,7 +400,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             			return x.epApplicationNumber == selectedPatent.epApplicationNumber
             		})
 
-            		console.log('findCase : ', findCase)
         			$scope.caseFormData = findCase;
         			// $scope.caseFormData.files = patent.uploadedDocs;
             	}
@@ -428,7 +411,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
                 this.add = function(data) {
 
-                	if(type == 'edit') { //reove current patent that is being updated so it can be replaced with the new version
+                	if(type == 'edit') { //remove current patent that is being updated so it can be replaced with the new version
 						var index = $scope.allEnquiryCases.map(x => {
 						  	return x.epApplicationNumber;
 						}).indexOf(selectedPatent.epApplicationNumber);
@@ -445,22 +428,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 					    return false;
                 	})
 
-
-                	function checkUploadedDocs()  {
-
-                		var cases = $scope.currentCaseFiles.filter(function(item){
-            				return item.epApplicationNumber == selectedPatent.epApplicationNumber;
-            			}).map(function(item){
-            				return item.fileDetails;
-            			})
-
-            			if(cases.length > 0) {
-            				return cases;
-            			} else {
-            				return null;
-            			}
-                	}
-
 	            	var obj = {
 	            		patentID: selectedPatent.patentID,
 	            		epApplicationNumber: selectedPatent.epApplicationNumber,
@@ -468,8 +435,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		isUrgent: selectedPatent.isUrgent,
 	            		isManualProcessing: selectedPatent.isUrgent,
 	            		message: data.message,
-	            		numDocsUploaded: $scope.currentCaseFiles.length,
-	            		uploadedDocs: checkUploadedDocs()
+	            		numDocsUploaded: $scope.caseFormData.uploadedDocs.length,
+	            		uploadedDocs: $scope.caseFormData.uploadedDocs
 	            	}
 
 	            	//need to identify correct files by comparing applicationNo
@@ -478,7 +445,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		obj.indicativeCost = selectedPatent.indicativeCost;
 	            	}
 
-	            	$scope.currentCaseFiles.length = 0; //reset current case file as it has been added to allEnquiryCases
+	            	resetFormData()
 
                 	$scope.allEnquiryCases.push(obj);	//used to loop in FE
 
@@ -490,23 +457,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
         modalInstance.result.then(function(value) {
 
-        	if(value == 'notAdded') {    		
-
-	        	$scope.caseFormData = {};
-
-				var index = $scope.caseHolder.findIndex(function(item){
-					return item.epApplicationNumber == selectedPatent.epApplicationNumber && item.fileDetails.name == latestFileUploaded.name;
-				
-				})
-
-				$scope.caseHolder.splice(index, 1)
-
-
-				var index = filesUploaded.map(x => {
-				  return x.name;
-				}).indexOf(latestFileUploaded);			
-
-				filesUploaded.splice(index, 1)        	
+        	if(value == 'notAdded') {
+        		resetFormData();
         	}
         	//need to remove any files uploaded before adding
         })
@@ -522,9 +474,9 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		formData.append('category', data.category);
 		formData.append('patentEnquiries', JSON.stringify($scope.allEnquiryCases));
 
-		// for(var pair of formData.entries()) {
-		//    console.log(pair[0]+ ', '+ pair[1]);
-		// }		
+		for(var pair of formData.entries()) {
+		   console.log(pair[0]+ ', '+ pair[1]);
+		}		
 
 		if(caseSpecific) {
 			SupportService.requestSpecificSupport(formData, config)
