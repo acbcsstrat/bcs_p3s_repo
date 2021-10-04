@@ -66,7 +66,6 @@
                                         </thead>
                                         <tbody class="sticky-tbody">
                                             <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select" data-ng-class="{'disabled-row': patent.selectedForEnquiry}">
-                                                {{patent.selectedForEnquiry}}
                                                 <td class="t-data__td t-data__td--sm sticky-td">
                                                     <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
                                                 </td>

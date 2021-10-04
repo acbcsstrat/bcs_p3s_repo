@@ -102,7 +102,18 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	  			$scope.specificCase[key] = false;
 	  		}
 		});
-    }	
+    }
+
+    function resetFormData(allCases) {
+    	$scope.caseFormData = {};
+    	$scope.caseFormData.uploadedDocs = []; //reset current case file as it has been added to allEnquiryCases
+    	if(allCases) {
+			$scope.allEnquiryCases.length = 0;
+			vm.patents.forEach(function(item){ //required for removing css class in view
+				item.selectedForEnquiry = false;
+			})
+    	}
+    }
 
 
 	function warningCheckboxChange(newValue, oldValue) {
@@ -135,15 +146,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			if(value) {//if they are confirming they want to change option and lose any data
 
 				vm.caseSpecific = newValue;
-				$scope.allEnquiryCases.length = 0;
-				caseFiles.length = 0;
-				filesUploaded.length = 0;
-
-				$scope.caseFormData = {};
-
-				vm.patents.forEach(function(item){ //required for removing css class in view
-					item.selectedForEnquiry = false;
-				})
+				resetFormData(true);
 				updateCheckBoxes(newValue)
 
 			} else {
@@ -183,18 +186,11 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		modalInstance.result.then(function(value) {
 
 			if(value) {//if they are confirming they want to change option and lose any data
-				$scope.caseFormData = {};
-				vm.caseSpecificCategory = newValue;
-				$scope.caseFormData.category = newValue;
-				$scope.allEnquiryCases.length = 0;
-				caseFiles.length = 0;
-				filesUploaded.length = 0;
 
+				vm.caseSpecificCategory = newValue; //required for comparing old and new values
+				$scope.caseFormData.category = newValue; //required for formData request
+				resetFormData(true);
 				fetchPatents(newValue);
-
-				vm.patents.forEach(function(item){ //required for removing css class in view
-					item.selectedForEnquiry = false;
-				})
 
 			} else {
 				vm.caseSpecificCategory = oldValue;
@@ -342,21 +338,27 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
     };
 
-    function resetFormData() {
-    	$scope.caseFormData = {};
-    	$scope.caseFormData.uploadedDocs = []; //reset current case file as it has been added to allEnquiryCases
-    }
+
 
 	function formalitySelect(patent, type) { //handles both initial add and editing of patent
 
 		selectedPatent = patent;
 
 		if(type == 'delete') {
+
 			var index = $scope.allEnquiryCases.map(x => {
 			  return x.epApplicationNumber;
 			}).indexOf(selectedPatent.epApplicationNumber);
 
+			vm.patents.map(x => { //required for removing css class in view
+				if(x.epApplicationNumber == selectedPatent.epApplicationNumber) {
+					x.selectedForEnquiry = false;
+				}
+				return x;
+			})
+
 			$scope.allEnquiryCases.splice(index, 1);
+
 			return;
 		}
 
@@ -378,9 +380,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             		var findCase = $scope.allEnquiryCases.find(function(x){
             			return x.epApplicationNumber == selectedPatent.epApplicationNumber
             		})
-
         			$scope.caseFormData = findCase;
-        			// $scope.caseFormData.files = patent.uploadedDocs;
             	}
 
 
