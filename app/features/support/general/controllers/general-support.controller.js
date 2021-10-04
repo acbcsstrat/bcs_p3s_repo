@@ -358,7 +358,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			})
 
 			$scope.allEnquiryCases.splice(index, 1);
-
+			
 			return;
 		}
 
