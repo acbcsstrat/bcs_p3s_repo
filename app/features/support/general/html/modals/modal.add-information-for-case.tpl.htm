@@ -8,12 +8,11 @@
         <div class="col-md-8">
             <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
             <p class="font-body">If you have any documents that will help our team with your enquiry, please upload them here.</p>
-            <div data-ng-if="$ctrl.files.length > 0" class="m-t-xs">                            
+            <div  class="m-t-xs">                            
                 <p class="font-body m-b-xs">Files uploaded:</p>
-                <div data-ng-repeat="files in $ctrl.caseSpecificCases" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm">
-                	{{files}}
+                <div data-ng-repeat="file in caseFormData.uploadedDocs" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm" data-ng-click="removeSpecificFile(file.name)">
                     <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
-                    <span data-ng-click="$ctrl.files.splice($index,1)"><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
+                    <span ><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
                 </div>
             </div>
         </div>

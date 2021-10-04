@@ -4,14 +4,14 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	var vm = this;
 	var filesUploaded = []; //required for checking duplicates
-	var caseFiles = [];
+	$scope.currentCaseFiles = [];
 	vm.subCategoryRequired = false;
 	vm.formData = {};
 	$scope.caseFormData = {};
 	$scope.fileStore = {}
 	vm.formData.uploadedDocs = [];
 	vm.files = [];
-	vm.caseSpecificCases = [];
+	$scope.allEnquiryCases = [];
 	vm.categories = ['Intellectual Property', 'WebApp Technical', 'Other'];
 	vm.specificCategories = ['Intellectual Property', 'Assisted Formality Filing', 'WebApp Technical', 'Other'];
 	vm.subcategory = [];
@@ -24,21 +24,72 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	vm.optionSelected = false;
 	vm.caseSpecific = '';
 	vm.caseSpecificCategory = '';
-	// vm.fetchPatents = fetchPatents;
+	$scope.removeSpecificFile = removeSpecificFile;
+	$scope.caseHolder = [];
 	var selectedPatent;
+	var latestFileUploaded;
+
+
+
+ 	//entireSupportEnquiry 
+
+ 	//needs to hold array of all objects ready to sent to BE
+ 	//items need to be updated if user edits individualCase
+ 	//items need to be deleated if user requests they are deleted
+
+
+ 	//individualCase
+ 	//needs to create new Object that holds the individualCase property ready to be pushed to entireSupportEnquiry ready to submission
+ 	//case needs to be editable
+ 	//needs to check if duplicates in current individualCase
+ 	//needs to check if duplicates in the entireSupprtEnquiry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	function fetchPatents(cat) {
-		console.log('cat 1', cat)
 		SupportService.requestSpecificPatents(cat)
 		.then(
 			function(response){
-				console.log('response : ', response)
 				vm.patents = response.patentEnquiries;
 			},
 			function(errResponse){
 				console.error('controller errResponse', errResponse)
 			}
 		)
+
+	}
+
+	function checkSubcategories(data) {
+
+		if(data == 'Intellectual Property') {
+			vm.subCategoryRequired = true;
+			vm.subcategory = ['Euro-PCT (Form 1200)', 'Renewals / Annuities', 'Grant and Publishing Fees, 71(3)', 'EP Validation', 'Other IP']
+		}
+
+		if(data == 'WebApp Technical') {
+			vm.subCategoryRequired = true;
+			vm.subcategory = ['Account Management', 'Patent applications', 'Fees', 'Reminders', 'Transactions', 'Technical Issue']
+		}
+
+		if(data !== 'Intellectual Property' && data !== 'WebApp Technical') {
+			vm.subCategoryRequired = false;
+		}
 
 	}
 
@@ -52,6 +103,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	  		}
 		});
     }	
+
 
 	function warningCheckboxChange(newValue, oldValue) {
 
@@ -83,7 +135,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			if(value) {//if they are confirming they want to change option and lose any data
 
 				vm.caseSpecific = newValue;
-				vm.caseSpecificCases.length = 0;
+				$scope.allEnquiryCases.length = 0;
 				caseFiles.length = 0;
 				filesUploaded.length = 0;
 
@@ -134,7 +186,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 				$scope.caseFormData = {};
 				vm.caseSpecificCategory = newValue;
 				$scope.caseFormData.category = newValue;
-				vm.caseSpecificCases.length = 0;
+				$scope.allEnquiryCases.length = 0;
 				caseFiles.length = 0;
 				filesUploaded.length = 0;
 
@@ -153,19 +205,50 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	}
 
+
 	function specificCaseCheck(newValue, oldValue, boolean) {
 
 		vm.optionSelected = !boolean ? false : true;
 	
 		if(newValue == oldValue) return;
 
-		if(vm.caseSpecificCases.length > 0) { //if a case has been added to enquiry
+		if($scope.allEnquiryCases.length > 0) { //if a case has been added to enquiry
 			warningCheckboxChange(newValue, oldValue);
 		} else {
 			vm.caseSpecific = newValue;
 		}
 
 	}
+
+
+
+
+
+
+
+
+
+
+	function removeSpecificFile(fileName) {
+
+		var indexFilesUploaded = filesUploaded.map(x => {
+		  return x.name;
+		}).indexOf(fileName);
+
+		var indexCaseFiles = caseFiles.map(x => {
+		  return x.fileDetails.name;
+		}).indexOf(fileName);
+
+		var indexCaseHolder = $scope.caseHolder.map(x => {
+		  return x.name;
+		}).indexOf(fileName);
+
+		caseFiles.splice(indexCaseFiles, 1)
+		$scope.caseHolder.splice(indexCaseHolder, 1)
+		filesUploaded.splice(indexFilesUploaded, 1)
+
+	}
+
 
 	function checkSpecificType(newValue, oldValue) { //category check 
 
@@ -174,7 +257,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		vm.assistedFiling = newValue == 'Assisted Formality Filing' ? true : false
 		vm.categorySelected = true;
 
-		if(vm.caseSpecificCases.length > 0) { //if a case has been added to enquiry
+		if($scope.allEnquiryCases.length > 0) { //if a case has been added to enquiry
 
 			warningCategoryChange(newValue, oldValue);
 
@@ -187,35 +270,32 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	}	
 
    	function checkDuplicate(file, caseSpecific) {
-   		if(caseSpecific) {
-	   		return filesUploaded.some(function(e){
-	   			return e.name == file.name;
-	   		})	
-   		} else {
-	   		return vm.files.some(function(e){
-	   			return e.name == file.name;
-	   		})
 
+			console.log('$scope.currentCaseFiles : ', $scope.currentCaseFiles)
+			console.log('$scope.allEnquiryCases : ', $scope.allEnquiryCases)
+
+   		if($scope.currentCaseFiles.length == 0 && $scope.allEnquiryCases.length == 0) return false;
+
+   		var individualCaseFiles = $scope.currentCaseFiles.map(function(obj){ //currentCaseFiles
+   			return obj.fileDetails;
+   		}).some(function(e){
+   			return e.name == file.name;
+   		})
+
+   		var allCaseFiles = $scope.allEnquiryCases.map(function(item){ //allEnquiryCases
+   			return item.uploadedDocs;
+   		}).flat().some(function(e){
+   			return e.name == file.name;
+   		})
+
+   		if(allCaseFiles || individualCaseFiles) {
+   			return true;
    		}
-	}
 
-	function checkSubcategories(data) {
-
-		if(data == 'Intellectual Property') {
-			vm.subCategoryRequired = true;
-			vm.subcategory = ['Euro-PCT (Form 1200)', 'Renewals / Annuities', 'Grant and Publishing Fees, 71(3)', 'EP Validation', 'Other IP']
-		}
-
-		if(data == 'WebApp Technical') {
-			vm.subCategoryRequired = true;
-			vm.subcategory = ['Account Management', 'Patent applications', 'Fees', 'Reminders', 'Transactions', 'Technical Issue']
-		}
-
-		if(data !== 'Intellectual Property' && data !== 'WebApp Technical') {
-			vm.subCategoryRequired = false;
-		}
+   		return false;
 
 	}
+
 
     $scope.getFileDetails = function (e, caseSpecific) {
 
@@ -226,8 +306,8 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			    	const reader = new FileReader();
 			    	reader.readAsDataURL(blob);
 			    	reader.onloadend = function () {
-			      	resolve(reader.result);
-			    };
+				      	resolve(reader.result);
+				    };
 		  	});
 		};
 
@@ -253,6 +333,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 			    	if(caseSpecific) {
 
+
 	   					(async () => {
 
 							var newObject  = {
@@ -264,20 +345,35 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 								   	'size'             : e.files[i].size,
 								   	'type'             : e.files[i].type
 								}
-							};  	   						
+							};
 
 						  	const b64 = await blobToBase64(e.files[i]);
-						  	const jsonString = JSON.stringify(b64);
+						  	const jsonString = JSON.stringify(b64);		
 						  	newObject.fileDetails.fileData = jsonString;
 
-							// // reCreate new Object and set File Data into it
-				   			caseFiles.push(newObject)
+						  	$scope.currentCaseFiles.push(newObject) //to be pushed for individualCase ADD
+
+							// var index = $scope.currentCaseFiles.findIndex(function(item){
+							// 	return item.epApplicationNumber == selectedPatent.epApplicationNumber && item.fileDetails.name == newObject.fileDetails.name;
+							
+							// })
+								// console.log('index : ', index)
+							// var item = $scope.currentCaseFiles.splice(index, 1);
+
+				   			// $scope.caseHolder.push($scope.currentCaseFiles[index].fileDetails)		
+
+				   			console.log('been added')
+
+				   			$scope.$applyAsync(); //NEEDED				  	
+
 			   			})()
 
-		   				filesUploaded.push(e.files[i]) //for duplication 
+			   			// latestFileUploaded = e.files[i];
+
+		   				// filesUploaded.push(e.files[i]) //for duplication 
 
 			    	} else {
-			   			vm.files.push(e.files[i])
+			   			vm.files.push(e.files[i]) //Required for no case specific cases
 				   		
 			    	}
 			    }
@@ -288,28 +384,16 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
     };
 
-	//FOR CASE SPECIFIC https://stackoverflow.com/questions/6664967/how-to-give-a-blob-uploaded-as-formdata-a-file-name
-	//https://laracasts.com/discuss/channels/javascript/formdata-append-javascript-array-jsonstringify-how-to-cast-as-php-array
-	//https://stackoverflow.com/questions/54914593/appending-formdata-nested-object-along-with-a-file
-	//https://stackoverflow.com/questions/24139216/how-can-i-serialize-an-input-file-object-to-json
-	//https://stackoverflow.com/questions/43891966/send-array-value-on-javascript-but-it-show-as-object-object
-	//https://stackoverflow.com/questions/50774176/sending-file-and-json-in-post-multipart-form-data-request-with-axios
-	//https://stackoverflow.com/questions/34485420/how-do-you-put-an-image-file-in-a-json-object
-	//https://www.learnwithjason.dev/blog/get-form-values-as-json
-	//https://stackoverflow.com/questions/27232604/json-stringify-or-how-to-serialize-binary-data-as-base64-encoded-json
-	//https://careerkarma.com/blog/javascript-object-object/
-
-
 	function formalitySelect(patent, type) { //handles both initial add and editing of patent
 
 		selectedPatent = patent;
 
 		if(type == 'delete') {
-			var index = vm.caseSpecificCases.map(x => {
+			var index = $scope.allEnquiryCases.map(x => {
 			  return x.epApplicationNumber;
 			}).indexOf(selectedPatent.epApplicationNumber);
 
-			vm.caseSpecificCases.splice(index, 1);
+			$scope.allEnquiryCases.splice(index, 1);
 			return;
 		}
 
@@ -326,27 +410,30 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
             	this.phoneNumber = $scope.ppDetails.partnerPhone;
             	this.applicationNo = patent.epApplicationNumber;
             	this.formalityType = patent.formalityAvailable;
-            	this.caseHolder; //NEEDS TO HOLD THE FILES UPLOADED. REVIEW CODE TOMORROW 
 
             	if(type == 'edit') {
-        			$scope.caseFormData.message = patent.message;
-        			$scope.caseFormData.files = patent.uploadedDocs;
+            		var findCase = $scope.allEnquiryCases.find(function(x){
+            			return x.epApplicationNumber == selectedPatent.epApplicationNumber
+            		})
 
+            		console.log('findCase : ', findCase)
+        			$scope.caseFormData = findCase;
+        			// $scope.caseFormData.files = patent.uploadedDocs;
             	}
 
 
                 this.dismissModal = function () {
-                    $uibModalInstance.close();
+                    $uibModalInstance.close('notAdded');
                 };
 
                 this.add = function(data) {
 
                 	if(type == 'edit') { //reove current patent that is being updated so it can be replaced with the new version
-						var index = vm.caseSpecificCases.map(x => {
-						  return x.epApplicationNumber;
+						var index = $scope.allEnquiryCases.map(x => {
+						  	return x.epApplicationNumber;
 						}).indexOf(selectedPatent.epApplicationNumber);
 
-						vm.caseSpecificCases.splice(index, 1);           		
+						$scope.allEnquiryCases.splice(index, 1);           		
          
                 	}
     		
@@ -361,7 +448,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
                 	function checkUploadedDocs()  {
 
-                		var cases = caseFiles.filter(function(item){
+                		var cases = $scope.currentCaseFiles.filter(function(item){
             				return item.epApplicationNumber == selectedPatent.epApplicationNumber;
             			}).map(function(item){
             				return item.fileDetails;
@@ -378,14 +465,12 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		patentID: selectedPatent.patentID,
 	            		epApplicationNumber: selectedPatent.epApplicationNumber,
 	            		formalityAvailable: selectedPatent.formalityAvailable,
-	            		isUrgent: true,
-	            		isManualProcessing: true,
+	            		isUrgent: selectedPatent.isUrgent,
+	            		isManualProcessing: selectedPatent.isUrgent,
 	            		message: data.message,
-	            		numDocsUploaded: caseFiles.length,
+	            		numDocsUploaded: $scope.currentCaseFiles.length,
 	            		uploadedDocs: checkUploadedDocs()
 	            	}
-
-
 
 	            	//need to identify correct files by comparing applicationNo
 
@@ -393,15 +478,38 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		obj.indicativeCost = selectedPatent.indicativeCost;
 	            	}
 
-                	vm.caseSpecificCases.push(obj);	//used to loop in FE
+	            	$scope.currentCaseFiles.length = 0; //reset current case file as it has been added to allEnquiryCases
 
-                	$scope.caseFormData = {};
+                	$scope.allEnquiryCases.push(obj);	//used to loop in FE
 
 					$uibModalInstance.close();
 
                 }
             }]
         });	
+
+        modalInstance.result.then(function(value) {
+
+        	if(value == 'notAdded') {    		
+
+	        	$scope.caseFormData = {};
+
+				var index = $scope.caseHolder.findIndex(function(item){
+					return item.epApplicationNumber == selectedPatent.epApplicationNumber && item.fileDetails.name == latestFileUploaded.name;
+				
+				})
+
+				$scope.caseHolder.splice(index, 1)
+
+
+				var index = filesUploaded.map(x => {
+				  return x.name;
+				}).indexOf(latestFileUploaded);			
+
+				filesUploaded.splice(index, 1)        	
+        	}
+        	//need to remove any files uploaded before adding
+        })
 
 	}
 
@@ -412,7 +520,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		var formData = new FormData();
 		var config = { headers: {'Content-Type': undefined} };
 		formData.append('category', data.category);
-		formData.append('patentEnquiries', JSON.stringify(vm.caseSpecificCases));
+		formData.append('patentEnquiries', JSON.stringify($scope.allEnquiryCases));
 
 		// for(var pair of formData.entries()) {
 		//    console.log(pair[0]+ ', '+ pair[1]);
@@ -499,5 +607,53 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		
 
 	} //submitform function end
+
+
+	//FOR CASE SPECIFIC https://stackoverflow.com/questions/6664967/how-to-give-a-blob-uploaded-as-formdata-a-file-name
+	//https://laracasts.com/discuss/channels/javascript/formdata-append-javascript-array-jsonstringify-how-to-cast-as-php-array
+	//https://stackoverflow.com/questions/54914593/appending-formdata-nested-object-along-with-a-file
+	//https://stackoverflow.com/questions/24139216/how-can-i-serialize-an-input-file-object-to-json
+	//https://stackoverflow.com/questions/43891966/send-array-value-on-javascript-but-it-show-as-object-object
+	//https://stackoverflow.com/questions/50774176/sending-file-and-json-in-post-multipart-form-data-request-with-axios
+	//https://stackoverflow.com/questions/34485420/how-do-you-put-an-image-file-in-a-json-object
+	//https://www.learnwithjason.dev/blog/get-form-values-as-json
+	//https://stackoverflow.com/questions/27232604/json-stringify-or-how-to-serialize-binary-data-as-base64-encoded-json
+	//https://careerkarma.com/blog/javascript-object-object/
+
+
+
+	vm.patents = [
+		{
+		    "patentID": 321,
+		    "epApplicationNumber": "EP17796838",
+		    "formalityAvailable": "renewal",
+		    "formalityStatus": "open for renewal",
+		    "indicativeCost": 1200,
+		    "isUrgent": true,
+		    "isManualProcessing": false,
+		    "indicativeCost": 2010    
+	  	},
+		{
+		    "patentID": 189,
+		    "epApplicationNumber": "EP23946839",
+		    "formalityAvailable": "epct",
+		    "formalityStatus": "epct ready",
+		    "indicativeCost": 4400,
+		    "isUrgent": false,
+		    "isManualProcessing": false,
+		    "indicativeCost": 3870   
+	  	},
+	  	{
+		    "patentID": 200,
+		    "epApplicationNumber": "EP44422448",
+		    "formalityAvailable": "renewal",
+		    "formalityStatus": "open for renewal",
+		    "indicativeCost": 2200,
+		    "isUrgent": false,
+		    "isManualProcessing": false,
+		    "indicativeCost": 9999 
+	  	}
+  	]
+
 
 }

@@ -103,7 +103,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="sticky-tbody">
-                                            <tr data-ng-repeat="case in $ctrl.caseSpecificCases">
+                                            <tr data-ng-repeat="case in allEnquiryCases">
                                                 <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.epApplicationNumber">
                                                 </td>
                                                 <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.message">
@@ -127,7 +127,7 @@
                             <div class="row">
                                 
                                 <div class="col-md-6 col-xl-3 text-right">
-                                    <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.caseFormData, true)" data-ng-disabled="specificSupportForm.$invalid && $ctrl.caseSpecificCases.length == 0">
+                                    <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.caseFormData, true)" data-ng-disabled="specificSupportForm.$invalid && allEnquiryCases.length == 0">
                                         <span data-ng-show="$ctrl.submittingRequest">                                
                                             <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
                                         </span>
