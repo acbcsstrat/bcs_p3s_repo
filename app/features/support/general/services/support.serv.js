@@ -11,7 +11,6 @@ function SupportService($q, $http) {
     }
 
     function requestSpecificPatents(cat) {
-        console.log('cat : ', cat)
 
         var param = '';
 
@@ -32,8 +31,6 @@ function SupportService($q, $http) {
                 deferred.reject(errResponse.data)
             }
         )
-
-        console.log('deferred : ', deferred.promise)
 
         return deferred.promise;
 
