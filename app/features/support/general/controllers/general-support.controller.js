@@ -220,32 +220,13 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	}
 
-
-
-
-
-
-
-
-
-
 	function removeSpecificFile(fileName) {
 
-		var indexFilesUploaded = filesUploaded.map(x => {
-		  return x.name;
+		var index = $scope.caseFormData.uploadedDocs.map(x => {
+		  	return x.name;
 		}).indexOf(fileName);
 
-		var indexCaseFiles = caseFiles.map(x => {
-		  return x.fileDetails.name;
-		}).indexOf(fileName);
-
-		var indexCaseHolder = $scope.caseHolder.map(x => {
-		  return x.name;
-		}).indexOf(fileName);
-
-		caseFiles.splice(indexCaseFiles, 1)
-		$scope.caseHolder.splice(indexCaseHolder, 1)
-		filesUploaded.splice(indexFilesUploaded, 1)
+		$scope.caseFormData.uploadedDocs.splice(index, 1)
 
 	}
 
@@ -258,9 +239,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		vm.categorySelected = true;
 
 		if($scope.allEnquiryCases.length > 0) { //if a case has been added to enquiry
-
 			warningCategoryChange(newValue, oldValue);
-
 		} else {
 			fetchPatents(newValue);
 			vm.caseSpecificCategory = newValue;
