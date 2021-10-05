@@ -1,0 +1,49 @@
+<div class="modal-header d-flex flex-column align-items-center justify-content-center">
+    <span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
+    <p class="font-h3">Providing support details case details for patent application</p>
+    <p class="font-h3">Application No.: {{$ctrl.applicationNo}}</p>
+    <p class="font-h3">Formality type: {{$ctrl.formalityType}}</p>
+    <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="caseFormData.message" maxlength="5000" validate-text-field required></textarea>
+    <div class="form-group row">
+        <div class="col-md-8">
+            <p class="font-h4 font-weight-bold m-b-xs">Supporting documents</p>
+            <p class="font-body">If you have any documents that will help our team with your enquiry, please upload them here.</p>
+            <div data-ng-if="$ctrl.files.length > 0" class="m-t-xs">                            
+                <p class="font-body m-b-xs">Files uploaded:</p>
+                <div data-ng-repeat="files in $ctrl.caseSpecificCases" class="btn btn--lg btn--plain br-1 btn-file-upload m-r-sm">
+                	{{files}}
+                    <span class="m-r-sm" title="{{file.name}}">{{file.name}}</span>
+                    <span data-ng-click="$ctrl.files.splice($index,1)"><i class="fas fa-times fa-lg action-icon btn-close"></i></span>
+                </div>
+            </div>
+        </div>
+    </div> 
+<!--     <div class="form-group row"  data-ng-if="fileStore.maxSizeError || supportForm.uploadedDocs.$error.validfile">
+        <div class="col-md-12 col-xl-7m-b-sm">
+            <p class="txt-phase-red font-body" data-ng-show="fileStore.maxSizeError">You cannot upload a document with a file size of 0KB.</p>
+            <div ng-messages="supportForm.uploadedDocs.$error" data-ng-if="supportForm.uploadedDocs.$error.validfile">
+                <p class="txt-phase-red m-t-xs" ng-message="validfile">Invalid file format uploaded. Only the following file formats are permitted (not case sensitive): .pdf, .docx, .png, .gif, .jpg, .jpeg, .pptx, .csv, .xlsx, .zip</p> 
+            </div>
+        </div>              
+    </div> -->
+    <div class="row m-t-md">
+       
+        <div class="col-md-6 col-xl-4 text-left"><!--fileStore.file-->
+            <input type="file" name="uploadedDocs" id="uploadedDocs" class="d-none" data-ng-model="caseFormData.files" support-file-upload onchange="angular.element(this).scope().getFileDetails(this, true)" accept=".pdf, .PDF, .docx, .DOCX, .png, .PNG, .gif, .GIF, ,.jpg, .JPG, .jpeg, .JPEG, .pptx, .PPTX, .csv, .CSV, .xlsx, .XLSX, .zip, .ZIP" multiple>
+            <label for="uploadedDocs" class="btn btn--lg pill-radius btn--plain">Attach file(s)</label>
+         
+        </div>
+    </div>
+    <div class="row">     
+        <div class="col-md-6 col-xl-3 text-right">
+            <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.add(caseFormData, patent)">
+<!--                                     <span data-ng-show="$ctrl.submittingRequest">                                
+                    <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
+                </span> -->
+                Add
+            </button>
+        </div>        
+    </div>    
+<!--     <p class="font-body w-100 text-center m-b-sm m-t-xs">Your request for support has been successfully submitted. A member of our support team will aim to reply within two working days. If you have any other queries or issues, please do not hesitate to submit another enquiry, or email us at support@ip.place</p>
+    <button class="btn btn--lg btn--green pill-radius" data-ng-click="$ctrl.dismissModal()">Dismiss</button> -->
+</div>

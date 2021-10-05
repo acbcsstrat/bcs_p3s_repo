@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+		<meta http-equiv="Pragma" content="no-cache">		
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css">
+
+		<base href="./dist/">
+
+		<title>Patent Place | European Patent formality filing</title>
+
+		<style id="antiClickjack">body{display:none !important;}</style>
+
+		<script type="text/javascript">
+			
+			if(self === top) {
+				var antiClickjack = document.getElementById("antiClickjack");
+				antiClickjack.parentNode.removeChild(antiClickjack)
+			} else {
+				top.location = self.location
+			}
+
+		</script>
+	
+	<link href="0.css" rel="stylesheet"><link href="4.css" rel="stylesheet"><link href="5.css" rel="stylesheet"></head>
+
+	<body detect-device data-ng-app="ppApp" class="d-flex">
+
+		<div data-ng-controller="coreCtrl" class="d-flex flex-grow-1">
+
+			<div mobile-redirect class="d-flex flex-grow-1">
+				<div class="flex-grow-1 d-flex justify-content-center">	
+					<div data-ng-if="!smallDevice && !$root.authorised" class="d-flex">
+						<ui-view class="d-flex flex-grow-1">
+							
+						</ui-view>
+					</div>
+				</div>
+
+
+				<div data-ng-if="!smallDevice && $root.authorised">
+					<sidenav></sidenav>		
+					<main class="app-container">
+						<basketnav></basketnav>
+						<ui-view class="h-100 d-flex flex-column">
+							<div class="screen-load">
+								<div class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
+								    <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
+								    <p>Loading interface</p>
+								</div>
+							</div>
+						</ui-view>
+						<idle></idle>
+						<open-help-panel class="animate-show"></open-help-panel>
+						<help-panel class="help-panel"></help-panel>
+					</main>
+				</div>
+
+			</div>
+
+			<div data-ng-if="smallDevice" class="h-100 container-pre-app__center-box-70 mx-auto my-0 d-none" id="mobileRedirectId">
+				<div class="d-flex h-100 p5">			
+					<div class="d-flex justify-content-center align-items-center flex-column flex-grow-1 flex-column">
+						<img src="60bb1394d0886dc8bddaede1f8e4d25c.svg" width="300" height="300">
+						<h4 class="font-h3 font-h3--content font-weight-bold">We're sorry... we don't offer The Patent Place via small devices.</h4>
+						<p class="font-body text-center">An application design for small devices is in on the way but for now we recommend you access The Patent Place via a device such as a large tablet or desktop.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	<script type="text/javascript" src="runtime.1e4c0be21dfc9d3d8784.js"></script><script type="text/javascript" src="vendors.59056de55555fa5e1891.js"></script><script type="text/javascript" src="vendor.1357a245d5029d8ccb99.js"></script><script type="text/javascript" src="app.b064be855a5f7699be34.js"></script><script type="text/javascript" src="vendorStyle.25760a91a6cad239de2b.js"></script><script type="text/javascript" src="style.f3dabae87b7c1da97759.js"></script></body>
+</html>
