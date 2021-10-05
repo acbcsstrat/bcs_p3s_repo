@@ -32,15 +32,15 @@
                             <div class="col-md-6 col-xl-5">
                                 <label for="category" class="font-h4 font-weight-bold m-b-xs">Category</label>
                                 <select name="category" class="form-control font-body pill-radius"
-                                    data-ng-model="$ctrl.caseFormData.category"
-                                    data-ng-change="$ctrl.checkSpecificType($ctrl.caseFormData.category, $ctrl.caseSpecificCategory)"
+                                    data-ng-model="caseFormData.category"
+                                    data-ng-change="$ctrl.checkSpecificType(caseFormData.category, $ctrl.caseSpecificCategory)"
                                     required>
                                     <option value="" disabled selected>--Please select--</option>
                                     <option data-ng-repeat="item in $ctrl.specificCategories" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
                                 </select>
                             </div>
                         </div>
-                        <div data-ng-if="$ctrl.categorySelected && $ctrl.caseFormData.category">
+                        <div data-ng-if="$ctrl.categorySelected">
                             <div class="row" >
                                 <div class="col-md-6 col-xl-5">
                                     <p data-ng-if="$ctrl.assistedFiling">Select below any cases you wish to request assisted formality filing for. Upon selection you will have the option to provide a message and, if required, any supporting documents.</p>
@@ -66,7 +66,6 @@
                                         </thead>
                                         <tbody class="sticky-tbody">
                                             <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select" data-ng-class="{'disabled-row': patent.selectedForEnquiry}">
-                                                {{patent.selectedForEnquiry}}
                                                 <td class="t-data__td t-data__td--sm sticky-td">
                                                     <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
                                                 </td>
@@ -79,7 +78,7 @@
                                         </tbody>  
                                     </table>                                                                          
                                 </div>
-                                <div class="col-xl-12">
+                                <div class="col-xl-12" data-ng-if="allEnquiryCases.length > 0">
                                     <table class="t-data sticky-table" style="table-layout: fixed;width: 100%;">
                                         <thead class="sticky-thead">
                                             <tr class="t-data__row t-data__row--select">
@@ -103,7 +102,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="sticky-tbody">
-                                            <tr data-ng-repeat="case in $ctrl.caseSpecificCases">
+                                            <tr data-ng-repeat="case in allEnquiryCases">
                                                 <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.epApplicationNumber">
                                                 </td>
                                                 <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.message">
@@ -127,7 +126,7 @@
                             <div class="row">
                                 
                                 <div class="col-md-6 col-xl-3 text-right">
-                                    <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm($ctrl.caseFormData, true)" data-ng-disabled="specificSupportForm.$invalid && $ctrl.caseSpecificCases.length == 0">
+                                    <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm(caseFormData, true)" data-ng-disabled="specificSupportForm.$invalid && allEnquiryCases.length == 0">
                                         <span data-ng-show="$ctrl.submittingRequest">                                
                                             <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
                                         </span>
