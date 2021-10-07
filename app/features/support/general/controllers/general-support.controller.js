@@ -28,6 +28,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	$scope.removeSpecificFile = removeSpecificFile;
 	var selectedPatent;
 	var latestFileUploaded;
+	var assistedFormaltyAgreement = false; //used for displaying modal the one time
 
 
 
@@ -63,9 +64,37 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 
 	function fetchPatents(cat) {
+
 		SupportService.requestSpecificPatents(cat)
 		.then(
 			function(response){
+				vm.fetchingPatents = false;
+				if(cat == 'Assisted Formality Filing' && !assistedFormaltyAgreement) {
+					assistedFormaltyAgreement = true;
+			        var modalInstance = $uibModal.open({
+			            template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm'),
+			            scope: $scope,
+			            controllerAs:'$ctrl',
+			            backdrop: 'static',
+			            keyboard: false,
+			            windowClass: 'wide-modal',
+			            controller: ['$uibModalInstance', function($uibModalInstance) {
+			                
+			                this.dismissModal = function () {
+			                    $uibModalInstance.close(false);
+			                };
+
+			                this.feeOject = {		                	
+								'epctSupportFee': 300,
+								'grantSupportFee': 200,
+								'valAnySupportFee': 150,
+								'valLondonSupportFee': 100,
+			                }
+
+			            }]
+			        })
+				}
+
 				vm.patents = response.patentEnquiries;
 			},
 			function(errResponse){
@@ -74,6 +103,24 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		)
 
 	}
+
+
+	function checkSpecificType(newValue, oldValue) { //category check 
+
+		if(newValue == oldValue) return;
+
+		vm.assistedFiling = newValue == 'Assisted Formality Filing' ? true : false
+		vm.categorySelected = true;
+		if($scope.allEnquiryCases.length > 0) { //if a case has been added to enquiry
+			warningCategoryChange(newValue, oldValue);
+		} else {
+			vm.fetchingPatents = true;
+			fetchPatents(newValue);
+			vm.caseSpecificCategory = newValue;
+		}
+
+
+	}		
 
 	function checkSubcategories(data) {
 
@@ -224,22 +271,6 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	}
 
-	function checkSpecificType(newValue, oldValue) { //category check 
-
-		if(newValue == oldValue) return;
-
-		vm.assistedFiling = newValue == 'Assisted Formality Filing' ? true : false
-		vm.categorySelected = true;
-
-		if($scope.allEnquiryCases.length > 0) { //if a case has been added to enquiry
-			warningCategoryChange(newValue, oldValue);
-		} else {
-			fetchPatents(newValue);
-			vm.caseSpecificCategory = newValue;
-		}
-
-
-	}	
 
    	function checkDuplicate(file, caseSpecific) {
 

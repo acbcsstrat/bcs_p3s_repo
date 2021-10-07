@@ -50,6 +50,11 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        &.t-data__td--no-side-padding {
+            padding-left: 0!important;
+            padding-right: 0!important;
+        }
     }
     
 
@@ -70,6 +75,10 @@
         &.t-data__th--lg {
             min-width: 400px;
         }       
+    }
+
+    &.table-fixed {
+        table-layout: fixed;
     }
 
 

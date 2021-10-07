@@ -26,12 +26,12 @@
 
                         <div class="form-check form-check-inline">
                             <label for="notSpecificCase">No</label>
-                            <input type="radio" class="m-l-xs m-r-sm"  name="specificCase" data-ng-model="specificCase.no" data-ng-click="$ctrl.specificCaseCheck('no', $ctrl.caseSpecific, specificCase.no)" value="false">
+                            <input type="radio" class="m-l-xs m-r-sm" name="specificCase" data-ng-model="specificCase.no" data-ng-click="$ctrl.specificCaseCheck('no', $ctrl.caseSpecific, specificCase.no)" value="false">
                         </div>
 
                         <div class="form-check form-check-inline">
                             <label for="unsureSpecificCase">Unsure</label>
-                            <input type="radio" class="m-l-xs name="specificCase" data-ng-model="specificCase.unsure" data-ng-click="$ctrl.specificCaseCheck('unsure', $ctrl.caseSpecific, specificCase.unsure)" value="false">
+                            <input type="radio" class="m-l-xs" name="specificCase" data-ng-model="specificCase.unsure" data-ng-click="$ctrl.specificCaseCheck('unsure', $ctrl.caseSpecific, specificCase.unsure)" value="false">
                         </div>
 
                     </div>
@@ -45,6 +45,7 @@
                                 <select name="category" class="form-control font-body pill-radius"
                                     data-ng-model="caseFormData.category"
                                     data-ng-change="$ctrl.checkSpecificType(caseFormData.category, $ctrl.caseSpecificCategory)"
+                                    data-ng-disabled="$ctrl.fetchingPatents"
                                     required>
                                     <option value="" disabled selected>--Please select--</option>
                                     <option data-ng-repeat="item in $ctrl.specificCategories" value="{{item}}" data-ng-selected="item == selectedItemvalue">{{item}}</option>
@@ -55,52 +56,56 @@
      <!--                        <div class="row" >
 
                             </div> -->
-                            <div class="row">
-                                <div class="col-md-6 col-xl-6">
-
-                                    <div data-ng-hide="$ctrl.patents" class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
+                            <div class="row" data-ng-show="$ctrl.fetchingPatents" >
+                                <div class="col-md-6 col-xl-5">
+                                    <div class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
                                         <i class="fas fa-cog fa-spin fa-2x m-b-xs"></i>
                                         <p class="font-body font-weight-bold">We are just fetching available cases</p>
                                     </div>
-                                    <div data-ng-show="$ctrl.patents">
-                                        <p class="font-h4 font-weight-bold m-b-xs">Cases available for <span data-ng-if="!$ctrl.assistedFiling">enquiry</span><span data-ng-if="$ctrl.assistedFiling">assisted formality filing</span></p>
-                                        <p data-ng-if="$ctrl.assistedFiling" class="m-b-xs">Select below any cases you wish to request assisted formality filing for. Upon selection you will have the option to provide a message and, if required, any supporting documents.</p>
-                                        <p data-ng-if="!$ctrl.assistedFiling" class="m-b-xs">Select below any cases you wish to include in your enquiry. Upon selection you will be prompted to provide a message and, if required, any supporting documents.</p>  
-                                        <div class="container__scrollable-area">
-                                            <div class="scrollable-area scrollable-area--250">
-                                                <table class="t-data support-table">
-                                                    <thead>
-                                                        <tr class="t-data__row t-data__row--select">
-                                                            <th class="t-data__th t-data__th--sm sticky-th" data-ng-click="$ctrl.sortBy('epApplicationNumber');">
-                                                                <span>App No.</span>
-                                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && !$ctrl.reverse">
-                                                                    <i class="fas fa-angle-down fa-lg"></i>
-                                                                </span>
-                                                                <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && $ctrl.reverse">
-                                                                    <i class="fas fa-angle-up fa-lg"></i>
-                                                                </span>
-                                                            </th>
-                                                            <th class="t-data__th t-data__th--sm sticky-th">
-                                                                Formality Type
-                                                            </th>                                            
-                                                            <th class="t-data__th t-data__th--sm sticky-th">
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="sticky-tbody">
-                                                        <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select" data-ng-class="{'disabled-row': patent.selectedForEnquiry}">
-                                                            <td class="t-data__td t-data__td--sm sticky-td">
-                                                                <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
-                                                            </td>
-                                                            <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="patent.formalityAvailable">
-                                                            </td>
-                                                            <td class="t-data__td t-data__td--sm sticky-td">
-                                                                <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(patent)" data-ng-disabled="patent.selectedForEnquiry">Add</button>
-                                                            </td>                                            
-                                                        </tr>
-                                                    </tbody>  
-                                                </table>
-                                            </div>
+                                </div>
+                            </div>
+                            <div class="row" data-ng-hide="$ctrl.fetchingPatents">
+                                <div class="col-md-6 col-xl-6">
+
+
+                      
+                                    <p class="font-h4 font-weight-bold m-b-xs">Cases available for <span data-ng-if="!$ctrl.assistedFiling">enquiry</span><span data-ng-if="$ctrl.assistedFiling">assisted formality filing</span></p>
+                                    <p data-ng-if="$ctrl.assistedFiling" class="m-b-xs">Select below any cases you wish to request assisted formality filing for. Upon selection you will have the option to provide a message and, if required, any supporting documents.</p>
+                                    <p data-ng-if="!$ctrl.assistedFiling" class="m-b-xs">Select below any cases you wish to include in your enquiry. Upon selection you will be prompted to provide a message and, if required, any supporting documents.</p>  
+                                    <div class="container__scrollable-area">
+                                        <div class="scrollable-area scrollable-area--250">
+                                            <table class="t-data support-table">
+                                                <thead>
+                                                    <tr class="t-data__row t-data__row--select">
+                                                        <th class="t-data__th t-data__th--sm sticky-th" data-ng-click="$ctrl.sortBy('epApplicationNumber');">
+                                                            <span>App No.</span>
+                                                            <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && !$ctrl.reverse">
+                                                                <i class="fas fa-angle-down fa-lg"></i>
+                                                            </span>
+                                                            <span data-ng-show="$ctrl.propertyName == 'ep_ApplicationNumber' && $ctrl.reverse">
+                                                                <i class="fas fa-angle-up fa-lg"></i>
+                                                            </span>
+                                                        </th>
+                                                        <th class="t-data__th t-data__th--sm sticky-th">
+                                                            Formality Type
+                                                        </th>                                            
+                                                        <th class="t-data__th t-data__th--sm sticky-th">
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="sticky-tbody">
+                                                    <tr data-ng-repeat="patent in $ctrl.patents | orderBy:$ctrl.propertyName:$ctrl.reverse as Result" class="t-data__row t-data__row--select" data-ng-class="{'disabled-row': patent.selectedForEnquiry}">
+                                                        <td class="t-data__td t-data__td--sm sticky-td">
+                                                            <a class="t-data__a" data-ng-bind="patent.epApplicationNumber" data-ng-attr-id="{{patent.patentID}}"></a>
+                                                        </td>
+                                                        <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="patent.formalityAvailable">
+                                                        </td>
+                                                        <td class="t-data__td t-data__td--sm sticky-td">
+                                                            <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(patent)" data-ng-disabled="patent.selectedForEnquiry">Add</button>
+                                                        </td>                                            
+                                                    </tr>
+                                                </tbody>  
+                                            </table>
                                         </div>
                                     </div>                                                                         
                                 </div>
