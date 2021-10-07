@@ -155,6 +155,10 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
     function resetFormData(allCases) {
     	$scope.caseFormData = {};
     	$scope.caseFormData.uploadedDocs = []; //reset current case file as it has been added to allEnquiryCases
+    	if(vm.caseSpecificCategory) {
+    		$scope.caseFormData.category = vm.caseSpecificCategory;
+    	}
+
     	if(allCases) {
 			$scope.allEnquiryCases.length = 0;
 			vm.patents.forEach(function(item){ //required for removing css class in view
@@ -237,6 +241,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 				vm.caseSpecificCategory = newValue; //required for comparing old and new values
 				$scope.caseFormData.category = newValue; //required for formData request
 				resetFormData(true);
+				vm.fetchingPatents = true;
 				fetchPatents(newValue);
 
 			} else {
@@ -447,7 +452,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	            		obj.indicativeCost = selectedPatent.indicativeCost;
 	            	}
 
-	            	resetFormData()
+	            	resetFormData();
 
                 	$scope.allEnquiryCases.push(obj);	//used to loop in FE
 
