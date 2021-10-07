@@ -203,10 +203,9 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 
 	function specificCaseCheck(newValue, oldValue, boolean) {
 
-		vm.optionSelected = !boolean ? false : true;
+		vm.optionSelected = true;
 	
 		if(newValue == oldValue) return;
-
 		if($scope.allEnquiryCases.length > 0) { //if a case has been added to enquiry
 			warningCheckboxChange(newValue, oldValue);
 		} else {
