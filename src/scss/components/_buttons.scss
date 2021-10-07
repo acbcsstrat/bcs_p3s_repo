@@ -153,8 +153,9 @@
     }
 
     &.btn-file-upload {
-        max-width: 12rem;
+        max-width: 15rem;
         text-overflow: ellipsis;
+        white-space: nowrap;
         position: relative;
         .btn-close {
             position: absolute;
