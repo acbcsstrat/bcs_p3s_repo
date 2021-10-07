@@ -25,6 +25,12 @@ function SupportService($q, $http) {
         $http.get(ppdomain+'rest-patent-enquiry/'+ param)
         .then(
             function(response){
+                var amendedData = response.data.patentEnquiries.map(function(x){
+                    if(x.formalityAvailable == 'epct') {
+                        x.formalityAvailable = 'Euro-PCT'
+                    }
+                    return x;
+                })
                 deferred.resolve(response.data)
             },
             function(errResponse){
