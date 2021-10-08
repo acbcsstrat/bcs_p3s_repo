@@ -1,8 +1,13 @@
 <div class="modal-header d-flex flex-column align-items-stretch">
     <span class="modal-cross cursor-pointer" data-ng-click="$ctrl.dismissModal()"><i class="txt-grey fa fa-times fa-2x"></i></span>
     <p class="font-h2 font-weight-bold m-b-sm">Support details</p>
-    <p class="font-h3 m-b-sm">Application No.: <span class="font-weight-bold">{{$ctrl.applicationNo}}</span></p>
-    <p class="font-h3 m-b-sm">Formality type: <span class="font-weight-bold text-capitalize">{{$ctrl.formalityType}}</span></p>
+    <p class="font-h3 m-b-sm"><span class="font-weight-bold">Application No. :</span> {{$ctrl.applicationNo}}</span></p>
+    <p class="font-h3 m-b-sm">
+        <span class="font-weight-bold">Formality type:</span>
+        <span data-ng-if="$ctrl.formalityType == 'epct'">Euro-PCT</span>
+        <span data-ng-if="$ctrl.formalityType == 'postvalidation' || $ctrl.formalityType == 'postgrant'">----</span>
+        <span class="text-capitalize" data-ng-if="$ctrl.formalityType !== 'postvalidation' && $ctrl.formalityType !== 'postgrant' && $ctrl.formalityType !== 'epct'">{{$ctrl.formalityType}}</span>    
+    </p>
     <form name="caseDetailsForm" novalidate>    
         <textarea name="message" id="message" class="form-control br-1 m-b-sm" rows="10" data-ng-model="caseFormData.message" maxlength="5000" placeholder="Message.." validate-text-field data-ng-required="!$ctrl.assistedFiling"></textarea>
         <div class="form-group row">

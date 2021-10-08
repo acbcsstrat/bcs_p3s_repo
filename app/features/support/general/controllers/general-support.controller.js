@@ -31,7 +31,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	var assistedFormaltyAgreement = false; //used for displaying modal the one time
 
 	function fetchPatents(cat) {
-		
+
 		SupportService.requestSpecificPatents(cat)
 		.then(
 			function(response){
@@ -299,7 +299,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		            }]
 		        });
 		   	} else {
-
+		   		console.log('file hit 1', caseSpecific)
 		   		if(e.files[i].size > 0 && validFormats.includes(ext)) {
 
 			    	if(caseSpecific) {
@@ -325,6 +325,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			   			})()
 
 			    	} else {
+			    		console.log('files should be uploaded')
 			   			vm.files.push(e.files[i]) //Required for no case specific cases				   		
 			    	}
 			    }
@@ -447,51 +448,20 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		var formData = new FormData();
 		var config = { headers: {'Content-Type': undefined} };
 		formData.append('category', data.category);
-		formData.append('patentEnquiries', JSON.stringify($scope.allEnquiryCases));
 
-		for(var pair of formData.entries()) {
-		   console.log(pair[0]+ ', '+ pair[1]);
-		}		
+
+
 
 		if(caseSpecific) {
+			formData.append('patentEnquiries', JSON.stringify($scope.allEnquiryCases));			
 			SupportService.requestSpecificSupport(formData, config)
 			.then(
 				function(response){
 
-				},
-				function(errResponse){
-
-				}
-			)
-		}
-
-		if(!caseSpecific) {
-
-
-			if(data.subcategory) {
-				formData.append('subcategory', data.subcategory);
-			} else {
-				formData.append('subcategory', '');
-			}
-
-			formData.append('numUploads', vm.files.length);
-			formData.append('message', data.message);
-
-			for (var i in vm.files) {
-	            formData.append("uploadedDocs", vm.files[i]);
-	        }
-
-			SupportService.requestNonSpecificSupport(formData, config)
-			.then(
-				function(response){
-
-					vm.formData = {}; //resets field values
-					vm.subCategoryRequired = false;
-					vm.files = [];
-					$scope.supportForm.$setPristine(); //rest forms properties
-
 					vm.submittingRequest = false;
-
+					resetFormData(true);
+					$scope.specificSupportForm.$setPristine();
+					
 			        var modalInstance = $uibModal.open({
 			            template: require('html-loader!../html/modals/modal.support-success.tpl.htm'),
 			            scope: $scope,
@@ -504,7 +474,83 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 			                    $uibModalInstance.close();
 			                };
 			            }]
+			        });	
+
+			        modalInstance.result.then(function(){
+			        	$state.go($state.current, {}, {reload: true});
+			        })
+				},
+				function(errResponse){
+
+					vm.submittingRequest = false;
+
+			        var modalInstance = $uibModal.open({
+			            template: require('html-loader!../html/modals/modal.support-error.tpl.htm'),
+			            scope: $scope,
+			            controllerAs:'$ctrl',
+			            controller: ['$uibModalInstance', function($uibModalInstance) {
+
+			            	this.phoneNumber = $scope.ppDetails.partnerPhone;
+
+			                this.dismissModal = function () {
+			                    $uibModalInstance.close();
+			                };
+			            }]
+			        });	
+
+				}
+			)
+		}
+
+		if(!caseSpecific) {
+
+			if(data.subcategory) {
+				formData.append('subcategory', data.subcategory);
+			} else {
+				formData.append('subcategory', '');
+			}
+
+			formData.append('subject', data.subject);
+			formData.append('numUploads', vm.files.length);
+			formData.append('message', data.message);
+
+			for (var i in vm.files) {
+	            formData.append("uploadedDocs", vm.files[i]);
+	        }
+
+			// for(var pair of formData.entries()) {
+			//    console.log(pair[0]+ ', '+ pair[1]);
+			// }		
+
+			SupportService.requestNonSpecificSupport(formData, config)
+			.then(
+				function(response){
+
+					vm.formData = {}; //resets field values
+					vm.subCategoryRequired = false;
+					vm.files = [];
+					$scope.supportForm.$setPristine(); //rest forms properties
+					vm.submittingRequest = false;
+
+			        var modalInstance = $uibModal.open({
+			            template: require('html-loader!../html/modals/modal.support-success.tpl.htm'),
+			            scope: $scope,
+			            backdrop: 'static',
+			            keyboard: false,  			            
+			            controllerAs:'$ctrl',
+			            controller: ['$uibModalInstance', function($uibModalInstance) {
+
+			            	this.phoneNumber = $scope.ppDetails.partnerPhone;
+
+			                this.dismissModal = function () {
+			                    $uibModalInstance.close();
+			                };
+			            }]
 			        });
+
+			        modalInstance.result.then(function(){
+			        	$state.go($state.current, {}, {reload: true});
+			        })			        
 				},
 				function(errResponse){
 

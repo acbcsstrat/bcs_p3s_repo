@@ -11,14 +11,6 @@
                 <div class="form-group row m-b-md">
                     <div class="col-md-8 col-xl-7">
                         <p class="font-body m-b-xs">Is your enquiry in relation to specific case(s)?</p>
-
-<!-- 
-
-                                <div class="form-check form-check-inline">
-                                    <input class="m-l-xs" type="radio" class="form-check-input checkbox-square" name="businessRegyes" data-ng-init="$ctrl.business.registered.yes = false" data-ng-model="$ctrl.business.registered.yes" data-ng-click="$ctrl.business.notregistered.yes = false;" data-ng-change="$ctrl.checkFetchBusiness('registered', $ctrl.business)">
-                                    <label  class="form-check-label">Yes</label>
-                                </div> -->
-
                         <div class="form-check form-check-inline">
                             <label for="specificCase">Yes</label>
                             <input type="radio" class="m-l-xs m-r-sm" name="specificCase" data-ng-model="specificCase.yes" data-ng-click="$ctrl.specificCaseCheck('yes', $ctrl.caseSpecific, specificCase.yes)" data-ng-disabled="$ctrl.fetchingPatents" value="false"> <!--ng-required if caseCheck == 'yes'-->
@@ -28,16 +20,14 @@
                             <label for="notSpecificCase">No</label>
                             <input type="radio" class="m-l-xs m-r-sm" name="specificCase" data-ng-model="specificCase.no" data-ng-click="$ctrl.specificCaseCheck('no', $ctrl.caseSpecific, specificCase.no)" data-ng-disabled="$ctrl.fetchingPatents" value="false">
                         </div>
-
                         <div class="form-check form-check-inline">
                             <label for="unsureSpecificCase">Unsure</label>
                             <input type="radio" class="m-l-xs" name="specificCase" data-ng-model="specificCase.unsure" data-ng-click="$ctrl.specificCaseCheck('unsure', $ctrl.caseSpecific, specificCase.unsure)" data-ng-disabled="$ctrl.fetchingPatents" value="false">
                         </div>
-
                     </div>
                 </div>
 
-                <div data-ng-if="$ctrl.caseSpecific == 'yes' && $ctrl.optionSelected">
+                <div data-ng-show="$ctrl.caseSpecific == 'yes' && $ctrl.optionSelected">
                     <form name="specificSupportForm" novalidate>
                         <div class="form-group row  m-b-md">
                             <div class="col-md-6 col-xl-5">
@@ -53,9 +43,6 @@
                             </div>
                         </div>
                         <div data-ng-if="$ctrl.categorySelected">
-     <!--                        <div class="row" >
-
-                            </div> -->
                             <div class="row" data-ng-show="$ctrl.fetchingPatents" >
                                 <div class="col-md-6 col-xl-5">
                                     <div class="animate-hide d-flex flex-column justify-content-center align-items-center flex-grow-1">
@@ -66,9 +53,6 @@
                             </div>
                             <div class="row" data-ng-hide="$ctrl.fetchingPatents">
                                 <div class="col-md-6 col-xl-6">
-
-
-                      
                                     <p class="font-h4 font-weight-bold m-b-xs">Cases available for <span data-ng-if="!$ctrl.assistedFiling">enquiry</span><span data-ng-if="$ctrl.assistedFiling">assisted formality filing</span></p>
                                     <p data-ng-if="$ctrl.assistedFiling" class="m-b-xs">Select below any cases you wish to request assisted formality filing for. Upon selection you will have the option to provide a message and, if required, any supporting documents.</p>
                                     <p data-ng-if="!$ctrl.assistedFiling" class="m-b-xs">Select below any cases you wish to include in your enquiry. Upon selection you will be prompted to provide a message and, if required, any supporting documents.</p>  
@@ -118,49 +102,49 @@
                                     <p class="font-h4 font-weight-bold m-b-xs">Cases selected:</p>
                                     <div class="container__scrollable-area">
                                         <div class="scrollable-area scrollable-area--250">
-                                        <table class="t-data support-table">
-                                            <thead>
-                                                <tr class="t-data__row t-data__row--select">
-                                                    <th class="t-data__th t-data__th--sm sticky-th">
-                                                        App No.
-                                                    </th>
-                                                    <th class="t-data__th t-data__th--sm sticky-th th-w-25">
-                                                        Message
-                                                    </th>
-                                                    <th class="t-data__th t-data__th--sm sticky-th th-w-25">
-                                                        Files
-                                                    </th>
-                                                    <th class="t-data__th t-data__th--sm sticky-th">
-                                                        Indicative cost
-                                                    </th>
-                                                    <th class="t-data__th t-data__th--sm sticky-th">
-                                                    </th>
-                                                    <th class="t-data__th t-data__th--sm sticky-th">
+                                            <table class="t-data support-table">
+                                                <thead>
+                                                    <tr class="t-data__row t-data__row--select">
+                                                        <th class="t-data__th t-data__th--sm sticky-th">
+                                                            App No.
+                                                        </th>
+                                                        <th class="t-data__th t-data__th--sm sticky-th th-w-25">
+                                                            Message
+                                                        </th>
+                                                        <th class="t-data__th t-data__th--sm sticky-th th-w-25">
+                                                            Files
+                                                        </th>
+                                                        <th class="t-data__th t-data__th--sm sticky-th">
+                                                            Indicative cost
+                                                        </th>
+                                                        <th class="t-data__th t-data__th--sm sticky-th">
+                                                        </th>
+                                                        <th class="t-data__th t-data__th--sm sticky-th">
 
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="sticky-tbody">
-                                                <tr data-ng-repeat="case in allEnquiryCases">
-                                                    <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.epApplicationNumber">
-                                                    </td>
-                                                    <td class="t-data__td t-data__td--sm sticky-td t-data-ellipsis" data-ng-bind="case.message">
-                                                    </td>
-                                                    <td class="t-data__td t-data__td--sm sticky-td">
-                                                        <span class="d-block" data-ng-repeat="file in case.uploadedDocs">{{file.name}}</span>
-                                                    </td>
-                                                    <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.indicativeCost">
-                                                    </td>
-                                                    <td class="t-data__td t-data__td--sm sticky-td">
-                                                        <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(case, 'edit')" data-ng-disabled="patent.selectedForEnquiry">Edit</button>
-                                                    </td>
-                                                    <td class="t-data__td t-data__td--sm sticky-td">
-                                                        <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(case, 'delete')" data-ng-disabled="patent.selectedForEnquiry">Delete</button>
-                                                    </td>                                                
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="sticky-tbody">
+                                                    <tr data-ng-repeat="case in allEnquiryCases">
+                                                        <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.epApplicationNumber">
+                                                        </td>
+                                                        <td class="t-data__td t-data__td--sm sticky-td t-data-ellipsis" data-ng-bind="case.message">
+                                                        </td>
+                                                        <td class="t-data__td t-data__td--sm sticky-td">
+                                                            <span class="d-block" data-ng-repeat="file in case.uploadedDocs">{{file.name}}</span>
+                                                        </td>
+                                                        <td class="t-data__td t-data__td--sm sticky-td" data-ng-bind="case.indicativeCost">
+                                                        </td>
+                                                        <td class="t-data__td t-data__td--sm sticky-td">
+                                                            <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(case, 'edit')" data-ng-disabled="patent.selectedForEnquiry">Edit</button>
+                                                        </td>
+                                                        <td class="t-data__td t-data__td--sm sticky-td">
+                                                            <button class="btn btn--bordered btn-underlined txt-phase-green font-weight-bold" data-ng-click="$ctrl.formalitySelect(case, 'delete')" data-ng-disabled="patent.selectedForEnquiry">Delete</button>
+                                                        </td>                                                
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -194,23 +178,11 @@
                 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <div data-ng-if="($ctrl.caseSpecific == 'no' || $ctrl.caseSpecific == 'unsure') && $ctrl.optionSelected">
-                	<form name="supportForm" novalidate>
+                <!--non case specific form-->
+                <div data-ng-show="($ctrl.caseSpecific == 'no' || $ctrl.caseSpecific == 'unsure') && $ctrl.optionSelected">
+                	<form name="supportForm" id="supportForm" data-ng-init="" data-ng-model="$ctrl.supportForm" novalidate>
                         <div class="form-group row">
-                    		<div class="col-md-6 col-xl-6">
+                    		<div class="col-md-7 col-xl-6">
                     			<label for="subject" class="font-h4 font-weight-bold m-b-xs">Subject</label>
                     			<input type="text" name="subject" id="subject" class="form-control" data-ng-model="$ctrl.formData.subject" data-ng-maxlength="150" validate-text-field required>
                                 <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.subject.$error.required && supportForm.subject.$dirty">Please fill out this field</p>
@@ -219,7 +191,7 @@
                     		</div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-8 col-xl-7">
+                            <div class="col-md-7 col-xl-6">
                                 <label for="category" class="font-h4 font-weight-bold m-b-xs">Category</label>
                                 <select name="category" class="form-control font-body pill-radius"
                                     data-ng-model="$ctrl.formData.category"
@@ -231,7 +203,7 @@
                             </div>
                         </div>
                         <div class="form-group row" data-ng-show="$ctrl.subCategoryRequired">
-                            <div class="col-md-8 col-xl-7">
+                            <div class="col-md-7 col-xl-6">
                                 <label for="subcategory" class="font-h4 font-weight-bold m-b-xs">Sub-category</label>
                                 <select name="subcategory" class="form-control font-body pill-radius"
                                     data-ng-model="$ctrl.formData.subcategory"
@@ -243,10 +215,10 @@
                             </div>   
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-8 col-xl-7">                        
+                            <div class="col-md-8 col-xl-6">                        
                                 <label for="message" class="font-h4 font-weight-bold m-b-xs">Message</label>
                                 <textarea name="message" id="message" class="form-control br-1" rows="10" data-ng-model="$ctrl.formData.message" maxlength="5000" validate-text-field required></textarea>
-                                <p class="form-help font-body m-t-xs">{{!$ctrl.formData.message.length ? 0 : $ctrl.formData.message.length}} / 1500 Characters</p>                        
+                                <p class="form-help font-body m-t-xs">{{!$ctrl.formData.message.length ? 0 : $ctrl.formData.message.length}} / 5000 Characters</p>                        
                                 <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.required && supportForm.message.$dirty">Please fill out this field</p>
                                 <p class="font-body txt-phase-red m-t-xs" data-ng-show="supportForm.message.$error.validTextField && supportForm.message.$dirty">Special characters: &lsqb;&rsqb;&lt;&gt;&quot;&percnt;&semi;&amp;&plus;&bsol;&sol;&ast; are not permitted.</p>                            
                             </div>
