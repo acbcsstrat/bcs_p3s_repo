@@ -36,7 +36,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 		.then(
 			function(response){
 				vm.fetchingPatents = false;
-				if(cat == 'Assisted Formality Filing' && !assistedFormaltyAgreement) {
+				if(cat == 'Assisted Formality Filing' && !assistedFormaltyAgreement && response.length > 0) {
 					assistedFormaltyAgreement = true;
 			        var modalInstance = $uibModal.open({
 			            template: require('html-loader!../html/modals/modal.assisted-formality-details.tpl.htm'),
