@@ -31,7 +31,7 @@ export default function GeneralSupportController($scope, $state, $timeout, $stat
 	var assistedFormaltyAgreement = false; //used for displaying modal the one time
 
 	function fetchPatents(cat) {
-
+		
 		SupportService.requestSpecificPatents(cat)
 		.then(
 			function(response){

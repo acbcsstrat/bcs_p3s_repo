@@ -21,17 +21,17 @@
 
                         <div class="form-check form-check-inline">
                             <label for="specificCase">Yes</label>
-                            <input type="radio" class="m-l-xs m-r-sm" name="specificCase" data-ng-model="specificCase.yes" data-ng-click="$ctrl.specificCaseCheck('yes', $ctrl.caseSpecific, specificCase.yes)" value="false"> <!--ng-required if caseCheck == 'yes'-->
+                            <input type="radio" class="m-l-xs m-r-sm" name="specificCase" data-ng-model="specificCase.yes" data-ng-click="$ctrl.specificCaseCheck('yes', $ctrl.caseSpecific, specificCase.yes)" data-ng-disabled="$ctrl.fetchingPatents" value="false"> <!--ng-required if caseCheck == 'yes'-->
                         </div>
 
                         <div class="form-check form-check-inline">
                             <label for="notSpecificCase">No</label>
-                            <input type="radio" class="m-l-xs m-r-sm" name="specificCase" data-ng-model="specificCase.no" data-ng-click="$ctrl.specificCaseCheck('no', $ctrl.caseSpecific, specificCase.no)" value="false">
+                            <input type="radio" class="m-l-xs m-r-sm" name="specificCase" data-ng-model="specificCase.no" data-ng-click="$ctrl.specificCaseCheck('no', $ctrl.caseSpecific, specificCase.no)" data-ng-disabled="$ctrl.fetchingPatents" value="false">
                         </div>
 
                         <div class="form-check form-check-inline">
                             <label for="unsureSpecificCase">Unsure</label>
-                            <input type="radio" class="m-l-xs" name="specificCase" data-ng-model="specificCase.unsure" data-ng-click="$ctrl.specificCaseCheck('unsure', $ctrl.caseSpecific, specificCase.unsure)" value="false">
+                            <input type="radio" class="m-l-xs" name="specificCase" data-ng-model="specificCase.unsure" data-ng-click="$ctrl.specificCaseCheck('unsure', $ctrl.caseSpecific, specificCase.unsure)" data-ng-disabled="$ctrl.fetchingPatents" value="false">
                         </div>
 
                     </div>
@@ -160,11 +160,25 @@
                                             </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
+                            <div class="row m-t-md" data-ng-if="allEnquiryCases.length > 0 && $ctrl.assistedFiling">
+                                <div class="col-md-12 col-xl-12 text-right m-b-xs">
+                                    <label class="form-check-label m-r-xs">
+                                        I understand additional fees are added when requesting assisted formality filing 
+                                        <input type="checkbox" name="tandcFees" class="m-l-xs" data-ng-model="caseFormData.tandcFees" data-ng-required="$ctrl.assistedFiling">      
+                                    </label> 
+                                </div>
+                               <div class="col-md-12 col-xl-12 text-right">
+                                    <label class="form-check-label m-r-xs">
+                                        I understand a professional from Patent Place is granted temporary access to my account when preparing a formality
+                                        <input type="checkbox" name="tandcAccess" class="m-l-xs" data-ng-model="caseFormData.tandcAccess" data-ng-required="$ctrl.assistedFiling">      
+                                    </label> 
+                                </div>                                
+                            </div>
                             <div class="row m-t-sm" data-ng-if="allEnquiryCases.length > 0">
                                 
                                 <div class="col-md-12 col-xl-12 text-right">
-                                    <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm(caseFormData, true)" data-ng-disabled="specificSupportForm.$invalid && allEnquiryCases.length == 0">
+                                    <button type="submit" class="btn btn--green btn--lg pill-radius" data-ng-click="$ctrl.submitForm(caseFormData, true)" data-ng-disabled="specificSupportForm.$invalid">
                                         <span data-ng-show="$ctrl.submittingRequest">                                
                                             <i class="fa fa-spinner fa-spin fa-lg m-r-xs" ></i>
                                         </span>
